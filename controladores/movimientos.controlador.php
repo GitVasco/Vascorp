@@ -1,0 +1,135 @@
+<?php
+
+class ControladorMovimientos{
+
+    /* 
+    * total unidades vendidas del mes actual y pasado
+    */
+    static public function ctrTotUndVen($valor){
+
+        $respuesta = ModeloMovimientos::mdlTotUndVen($valor);
+
+        return $respuesta;
+
+    }
+
+    /* 
+    * total unidades producidas del mes actual y pasado
+    */
+    static public function ctrTotUndProd($valor){
+
+        $respuesta = ModeloMovimientos::mdlTotUndProd($valor);
+
+        return $respuesta;
+
+    }
+
+    /* 
+    * sacar los meses codigo y nombre
+    */
+    static public function ctrMesesMov(){
+
+        $respuesta = ModeloMovimientos::mldMesesMov();
+
+        return $respuesta;
+
+    }
+
+    /* 
+    * sacamos los totales de ventas por mes
+    */
+    static public function ctrTotalMesVent(){
+
+        $respuesta = ModeloMovimientos::mdlTotalMesVent();
+
+        return $respuesta;
+    }
+
+    /* 
+    * sacamos los totales de produccion por mes
+    */
+    static public function ctrTotalMesProd(){
+
+        $respuesta = ModeloMovimientos::mdlTotalMesProd();
+
+        return $respuesta;
+    } 
+    
+    /* 
+    * sacamos los totales por mes de la  nueva tabla TOTALES
+    */
+    static public function ctrMostrarTotales(){
+
+        $respuesta = ModeloMovimientos::mldMostrarTotales();
+
+        return $respuesta;
+
+    }
+
+    /* 
+    * sacamos los totales por mes de la  nueva tabla TOTALES
+    */
+    static public function ctrTotalesSolesVenta(){
+
+        $respuesta = ModeloMovimientos::mdlTotalesSolesVenta();
+
+        return $respuesta;
+
+    }
+
+    /* 
+    * sacamos los totales por mes de la  nueva tabla TOTALES
+    */
+    static public function ctrTotalesSolesPagos(){
+
+        $respuesta = ModeloMovimientos::mdlTotalesSolesPagos();
+
+        return $respuesta;
+
+    }
+
+    /* 
+    * total de dias con produccion del mes pasado
+    */
+    static public function ctrTotDiasProd($valor){
+
+        $respuesta = ModeloMovimientos::mdlTotDiasProd($valor);
+
+        return $respuesta;
+
+    }
+
+    /* 
+    * top 10 de ventas modelos
+    */
+    static public function ctrMovMes($valor){
+
+        $respuesta = ModeloMovimientos::mdlMovMes($valor);
+
+        return $respuesta;
+
+    }
+    /* 
+    * sacamos los totales por mes de la  nueva tabla TOTALES
+    */
+    static public function ctrSumaUnd($valor){
+
+        $respuesta = ModeloMovimientos::mdlSumaUnd($valor);
+
+        return $respuesta;
+
+    }
+    
+    /* 
+    * MOSTRAR ULTIMO NUMERO DE TALONARIO
+    */
+    static public function ctrMostrarTalonario(){
+
+        $respuesta = ModeloMovimientos::mdlMostrarTalonario();
+
+        return $respuesta;
+
+    }         
+    
+
+}
