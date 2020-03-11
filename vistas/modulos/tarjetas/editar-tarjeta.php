@@ -175,7 +175,7 @@
                 ! ver si llegar el codigo del articulo y que trae lista productos
                 */
                 /* var_dump("articulo", $tarjeta["articulo"]); */
-                /* var_dump("listaProductos", $listaProductos); */
+                //var_dump("listaProductos", $listaProductos);
                 
                 foreach($listaProductos as $key=>$value){
 
@@ -186,7 +186,7 @@
                   ! que captura infoproducto
                   */
 
-                  /* var_dump("infoproducto", $infoProducto); */
+                  //var_dump("infoproducto", $infoProducto);
                    
                  
                   echo '<div class="row" style="padding:5px 15px">

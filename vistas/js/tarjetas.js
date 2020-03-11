@@ -102,7 +102,7 @@ $(".tablaMateriaPrimaTarjetas tbody").on("click", "button.agregarMP", function (
   
 /* 		console.log("respuesta", respuesta); */
 
-		var codigo=respuesta["Codpro"];
+		var codigo=respuesta["codpro"];
 		var descripcion = respuesta["descripcion"];
 		var stock = respuesta["CodAlm01"];
 		var precio = respuesta["cospro"];

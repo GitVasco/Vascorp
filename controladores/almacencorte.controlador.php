@@ -6,7 +6,7 @@ class ControladorAlmacenCorte{
     */
     static public function ctrUltimoCodigoAC(){
 
-        $respuesta = ModeloOrdenCorte::mdlUltimoCodigoOC($tabla);
+        $respuesta = ModeloAlmacenCorte::mdlUltimoCodigoAC();
 
         return $respuesta;
 
