@@ -96,7 +96,7 @@
 
 </div>
 <!--=====================================
-MODAL AGREGAR USUARIO
+MODAL AGREGAR TIPO DOCUMENTO
 ======================================-->
 
 <div id="modalAgregarTipoDocumento" class="modal fade" role="dialog">

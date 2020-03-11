@@ -30,7 +30,7 @@ class ControladorTipoDocumento{
 						  }).then(function(result){
 									if (result.value) {
 
-									window.location = "categorias";
+									window.location = "tipodocumentos";
 
 									}
 								})
@@ -53,7 +53,7 @@ class ControladorTipoDocumento{
 						  }).then(function(result){
 							if (result.value) {
 
-							window.location = "categorias";
+							window.location = "tipodocumentos";
 
 							}
 						})
