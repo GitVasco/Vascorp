@@ -162,6 +162,7 @@ CUERPO DOCUMENTO
             $_GET["ruta"] == "editar-tarjeta" ||
             $_GET["ruta"] == "copiar-tarjeta" ||
             $_GET["ruta"] == "marcas" ||
+            $_GET["ruta"] == "operaciones" ||
             $_GET["ruta"] == "colores" ||
             $_GET["ruta"] == "movimientos" ||
             $_GET["ruta"] == "backupDB" ||
