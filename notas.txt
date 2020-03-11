@@ -1,8 +1,6 @@
 HOLA MUNDO
 
-hola SOY CARLOS
-
-hola SOY BREAN
+HOLA CARLOS
 
 para cambiar el directorio de inicio de git
 
