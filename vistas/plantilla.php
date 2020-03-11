@@ -175,7 +175,10 @@ CUERPO DOCUMENTO
             $_GET["ruta"] == "mailbox" ||
             $_GET["ruta"] == "mensajes" ||
             $_GET["ruta"] == "pedidoscv" ||
-            $_GET["ruta"] == "crear-pedidocv"){
+            $_GET["ruta"] == "crear-pedidocv" ||
+            $_GET["ruta"] == "almacencorte" ||
+            $_GET["ruta"] == "crear-almacencorte" ||
+            $_GET["ruta"] == "editar-almacencorte"){
 
           include "modulos/".$_GET["ruta"].".php";
 
@@ -227,6 +230,8 @@ CUERPO DOCUMENTO
   <script src="vistas/js/contactos.js"></script>
   <script src="vistas/js/mensajes.js"></script>
   <script src="vistas/js/pedidoscv.js"></script>
+  <script src="vistas/js/almacencorte.js"></script>
+
 
 
 </body>
