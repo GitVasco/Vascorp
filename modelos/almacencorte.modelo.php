@@ -6,15 +6,13 @@ class ModeloAlmacenCorte{
   	/* 
 	* Método para sacar el ultimo codigo del almacen de corte
 	*/	
-	static public function mdlUltimoCodigoOC(){
+	static public function mdlUltimoCodigoAC(){
 
-        $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item ORDER BY id DESC");
-
-        $stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+        $stmt = Conexion::conectar()->prepare("CALL sp_1054_almcorte_ultcod()");
 
 		$stmt->execute();
 
-		return $stmt->fetchAll();
+		return $stmt->fetch();
 
 		$stmt=null;
 

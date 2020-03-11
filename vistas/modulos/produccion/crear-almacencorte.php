@@ -69,8 +69,7 @@
 
                     <?php
 
-
-                      $ult_codigo = ControladorOrdenCorte::ctrUltimoCodigoOC();
+                      $ult_codigo = ControladorAlmacenCorte::ctrUltimoCodigoAC();
 
                       /* var_dump("ult_codigo", $ult_codigo); */
 
@@ -82,7 +81,7 @@
                       }else{
 
                         foreach ($ult_codigo as $key => $value) {
-                                             
+                                            
                         }
 
                         /* var_dump("prueba", $value["ultimo_codigo"]); */
@@ -95,6 +94,7 @@
 
 
                       }
+
 
                   ?>
 
