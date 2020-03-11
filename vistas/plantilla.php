@@ -228,6 +228,7 @@ CUERPO DOCUMENTO
   <script src="vistas/js/contactos.js"></script>
   <script src="vistas/js/mensajes.js"></script>
   <script src="vistas/js/pedidoscv.js"></script>
+  <script src="vistas/js/operaciones.js"></script>
 
 
 </body>
