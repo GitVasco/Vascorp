@@ -188,7 +188,7 @@
             
                                 </li>
 
-                                </li>
+                                <li>
                                     <a href="tipodocumentos">
             
                                         <i class="fa fa-circle-o"></i>
