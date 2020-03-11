@@ -180,7 +180,8 @@ CUERPO DOCUMENTO
             $_GET["ruta"] == "crear-pedidocv" ||
             $_GET["ruta"] == "almacencorte" ||
             $_GET["ruta"] == "crear-almacencorte" ||
-            $_GET["ruta"] == "editar-almacencorte"){
+            $_GET["ruta"] == "editar-almacencorte" ||
+            $_GET["ruta"] == "tipodocumentos"){
 
           include "modulos/".$_GET["ruta"].".php";
 
