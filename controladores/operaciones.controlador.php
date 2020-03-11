@@ -8,29 +8,29 @@ class ControladorOperaciones{
 
 	static public function ctrCrearOperacion(){
 
-		if(isset($_POST["nuevoColor"])){
+		if(isset($_POST["nuevaOperacion"])){
 
-			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevoColor"]) &&
+			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevaOperacion"]) &&
 			   preg_match('/^[0-9]+$/', $_POST["nuevoCodigo"])){
+				$tabla="operacionesjf";
+			   	$datos = array("codigo"=>$_POST["nuevoCodigo"],
+					           "nombre"=>$_POST["nuevaOperacion"]);
 
-			   	$datos = array("color"=>$_POST["nuevoColor"],
-					           "codigo"=>$_POST["nuevoCodigo"]);
-
-			   	$respuesta = ModeloColores::mdlIngresarColor($datos);
-
+			   	$respuesta = ModeloOperaciones::mdlIngresarOperacion($tabla,$datos);
+				var_dump($respuesta);
 			   	if($respuesta == "ok"){
 
 					echo'<script>
 
 					swal({
 						  type: "success",
-						  title: "El color ha sido guardado correctamente",
+						  title: "La operación ha sido guardada correctamente",
 						  showConfirmButton: true,
 						  confirmButtonText: "Cerrar"
 						  }).then(function(result){
 									if (result.value) {
 
-									window.location = "colores";
+									window.location = "operaciones";
 
 									}
 								})
@@ -45,13 +45,13 @@ class ControladorOperaciones{
 
 					swal({
 						  type: "error",
-						  title: "¡El color no puede ir vacío o llevar caracteres especiales!",
+						  title: "¡La operación no puede ir vacío o llevar caracteres especiales!",
 						  showConfirmButton: true,
 						  confirmButtonText: "Cerrar"
 						  }).then(function(result){
 							if (result.value) {
 
-							window.location = "colores";
+							window.location = "operaciones";
 
 							}
 						})
@@ -85,16 +85,19 @@ class ControladorOperaciones{
 
 	static public function ctrEditarOperacion(){
 
-		if(isset($_POST["editarColor"])){
+		if(isset($_POST["editarOperacion"])){
 
-			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["editarColor"]) &&
+			var_dump("editarOperacion", $_POST["editarOperacion"]);
+
+			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["editarOperacion"]) &&
 			   preg_match('/^[0-9]+$/', $_POST["editarCodigo"])){
 
-			   	$datos = array("id"=>$_POST["idColor"],
-                               "color"=>$_POST["editarColor"],
-					           "codigo"=>$_POST["editarCodigo"]);
+			   	$datos = array("id"=>$_POST["idOperacion"],
+							   "codigo"=>$_POST["editarCodigo"],
+							   "nombre"=>$_POST["editarOperacion"]);
 
-			   	$respuesta = ModeloColores::mdlEditarColor($datos);
+				$tabla="operacionesjf";
+			   	$respuesta = ModeloOperaciones::mdlEditarOperacion($tabla,$datos);
 
 			   	if($respuesta == "ok"){
 
@@ -102,13 +105,13 @@ class ControladorOperaciones{
 
 					swal({
 						  type: "success",
-						  title: "El color ha sido cambiado correctamente",
+						  title: "La operacion ha sido cambiado correctamente",
 						  showConfirmButton: true,
 						  confirmButtonText: "Cerrar"
 						  }).then(function(result){
 									if (result.value) {
 
-									window.location = "colores";
+									window.location = "operaciones";
 
 									}
 								})
@@ -123,13 +126,13 @@ class ControladorOperaciones{
 
 					swal({
 						  type: "error",
-						  title: "¡El cliente no puede ir vacío o llevar caracteres especiales!",
+						  title: "¡La operacion no puede ir vacío o llevar caracteres especiales!",
 						  showConfirmButton: true,
 						  confirmButtonText: "Cerrar"
 						  }).then(function(result){
 							if (result.value) {
 
-							window.location = "colores";
+							window.location = "operaciones";
 
 							}
 						})
@@ -150,11 +153,12 @@ class ControladorOperaciones{
 
 	static public function ctrEliminarOperacion(){
 
-		if(isset($_GET["idColor"])){
+		if(isset($_GET["idOperacion"])){
 
-			$datos = $_GET["idColor"];
+			$tabla ="operacionesjf";
+			$datos = $_GET["idOperacion"];
 
-			$respuesta = ModeloColores::mdlEliminarColor($datos);
+			$respuesta = ModeloOperaciones::mdlEliminarOperacion($tabla,$datos);
 
 			if($respuesta == "ok"){
 
@@ -162,14 +166,14 @@ class ControladorOperaciones{
 
 				swal({
 					  type: "success",
-					  title: "El cliente ha sido borrado correctamente",
+					  title: "La operación ha sido borrado correctamente",
 					  showConfirmButton: true,
 					  confirmButtonText: "Cerrar",
 					  closeOnConfirm: false
 					  }).then(function(result){
 								if (result.value) {
 
-								window.location = "colores";
+								window.location = "operaciones";
 
 								}
 							})

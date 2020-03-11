@@ -30,3 +30,47 @@ $('.tablaOperaciones').DataTable( {
 
 	}
 } );
+
+// EDITAR OPERACIÓN
+$(".tablaOperaciones tbody").on("click","button.btnEditarOperacion",function(){
+	var idOperacion =$(this).attr("idOperacion");
+	var datos= new FormData();
+	datos.append("idOperacion",idOperacion);
+	$.ajax({
+		url:"ajax/operaciones.ajax.php",
+		method:"POST",
+		data:datos,
+		cache: false,
+		contentType:false,
+		processData:false,
+		dataType: "json",
+		success:function(respuesta){
+			$("#editarCodigo").val(respuesta["codigo"]);
+			$("#editarOperacion").val(respuesta["nombre"]);
+			$("#idOperacion").val(respuesta["id"]);
+		}
+	});
+	
+});
+
+// ELIMINAR OPERACIÓN
+$(".tablaOperaciones tbody").on("click","button.btnEliminarOperacion",function(){
+	var idOperacion =$(this).attr("idOperacion");
+	//console.log("idOperacion", idOperacion);
+	swal({
+		title: "¿Está seguro de borrar la operación?",
+		text: "¡Si no lo está se puede cancelar la acción!",
+		type:"warning",
+		showCancelButton: true,
+		confirmButtonColor: "#3085d6",
+		cancelButtonColor: "#d33",
+		cancelButtonText: "Cancelar",
+		confirmButtonText: "Si, borrar operación!" 
+	}).then((result)=>{
+		if(result.value){
+			window.location = "index.php?ruta=operaciones&idOperacion="+idOperacion;
+		}
+	})
+	
+	
+});

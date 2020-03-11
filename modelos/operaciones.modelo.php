@@ -8,12 +8,13 @@ class ModeloOperaciones{
 	CREAR COLOR
 	=============================================*/
 
-	static public function mdlIngresarOperacion($datos){
+	static public function mdlIngresarOperacion($tabla,$datos){
 
-		$stmt = Conexion::conectar()->prepare("CALL sp_1018_insert_colores_p(:codigo, :color)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(codigo,nombre) VALUES (:codigo,:nombre)");
 
 		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
-		$stmt->bindParam(":color", $datos["color"], PDO::PARAM_STR);
+		$stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
+		
 
 		if($stmt->execute()){
 
@@ -27,6 +28,7 @@ class ModeloOperaciones{
 
 		$stmt->close();
 		$stmt = null;
+
 
 	}    
 
@@ -66,13 +68,13 @@ class ModeloOperaciones{
 	EDITAR COLOR
 	=============================================*/
 
-	static public function mdlEditarOperacion($datos){
+	static public function mdlEditarOperacion($tabla,$datos){
 
-		$stmt = Conexion::conectar()->prepare("CALL sp_1021_update_colores_p(:codigo, :color, :valor)");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET codigo = :codigo , nombre = :nombre WHERE id = :id");
 
-		$stmt->bindParam(":valor", $datos["id"], PDO::PARAM_INT);
+		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
 		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
-		$stmt->bindParam(":color", $datos["color"], PDO::PARAM_STR);
+		$stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
 
 		if($stmt->execute()){
 
@@ -91,14 +93,14 @@ class ModeloOperaciones{
 	
 	
 	/*=============================================
-	ELIMINAR COLOR
+	ELIMINAR OPERACION
 	=============================================*/
 
-	static public function mdlEliminarColor($datos){
+	static public function mdlEliminarOperacion($tabla,$datos){
 
-		$stmt = Conexion::conectar()->prepare("CALL sp_1022_delete_colores_p(:valor)");
+		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
 
-		$stmt -> bindParam(":valor", $datos, PDO::PARAM_INT);
+		$stmt -> bindParam(":id", $datos, PDO::PARAM_INT);
 
 		if($stmt -> execute()){
 

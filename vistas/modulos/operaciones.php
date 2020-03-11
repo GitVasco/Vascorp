@@ -24,7 +24,7 @@
 
       <div class="box-header with-border">
   
-        <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarColor">
+        <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarOperacion">
           
           Agregar operaciones
 
@@ -34,7 +34,7 @@
 
       <div class="box-body">
         
-       <table class="table table-bordered table-striped dt-responsive tablas">
+       <table class="table table-bordered table-striped dt-responsive tablaOperaciones">
          
         <thead>
          
@@ -67,7 +67,7 @@
 MODAL AGREGAR OPERACION
 ======================================-->
 
-<div id="modalAgregarColor" class="modal fade" role="dialog">
+<div id="modalAgregarOperacion" class="modal fade" role="dialog">
   
   <div class="modal-dialog">
 
@@ -81,8 +81,7 @@ MODAL AGREGAR OPERACION
 
         <div class="modal-header" style="background:#3c8dbc; color:white">
 
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-
+          <button type="button" class="close" data-dismiss="modal">&times;</butOperacion
           <h4 class="modal-title">Agregar Operación</h4>
 
         </div>
@@ -117,7 +116,7 @@ MODAL AGREGAR OPERACION
               
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="nuevoColor" placeholder="Ingresar nombre" required>
+                <input type="text" class="form-control input-lg" name="nuevaOperacion" placeholder="Ingresar nombre" required>
 
               </div>
 
@@ -144,8 +143,8 @@ MODAL AGREGAR OPERACION
 
       <?php
 
-        $crearColor = new ControladorColores();
-        $crearColor -> ctrCrearColor();
+        $crearOperacion = new ControladorOperaciones();
+        $crearOperacion -> ctrCrearOperacion();
 
       ?>
 
@@ -161,7 +160,7 @@ MODAL AGREGAR OPERACION
 MODAL EDITAR OPERACION
 ======================================-->
 
-<div id="modalEditarColor" class="modal fade" role="dialog">
+<div id="modalEditarOperacion" class="modal fade" role="dialog">
   
   <div class="modal-dialog">
 
@@ -190,7 +189,7 @@ MODAL EDITAR OPERACION
           <div class="box-body">
 
           
-            <!-- ENTRADA PARA EL DOCUMENTO ID -->
+            <!-- ENTRADA PARA EL CODIGO -->
             
             <div class="form-group">
               
@@ -198,7 +197,7 @@ MODAL EDITAR OPERACION
               
                 <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
-                <input type="number" min="0" class="form-control input-lg" name="editarCodigo" id="editarCodigo" required>
+                <input type="text" min="0" class="form-control input-lg" name="editarCodigo" id="editarCodigo" required>
 
               </div>
 
@@ -212,8 +211,8 @@ MODAL EDITAR OPERACION
               
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="editarColor" id="editarColor" required>
-                <input type="hidden" id="idColor" name="idColor">
+                <input type="text" class="form-control input-lg" name="editarOperacion" id="editarOperacion" required>
+                <input type="hidden" id="idOperacion" name="idOperacion">
               </div>
 
             </div>
@@ -238,8 +237,8 @@ MODAL EDITAR OPERACION
 
       <?php
 
-        $editarColor = new ControladorColores();
-        $editarColor -> ctrEditarColor();
+        $editarOperacion = new ControladorOperaciones();
+        $editarOperacion -> ctrEditarOperacion();
 
       ?>   
 
@@ -253,7 +252,7 @@ MODAL EDITAR OPERACION
 
 <?php
 
-  $eliminarColor = new ControladorColores();
-  $eliminarColor -> ctrEliminarColor();
+  $eliminarOperacion = new ControladorOperaciones();
+  $eliminarOperacion -> ctrEliminarOperacion();
 
 ?>
