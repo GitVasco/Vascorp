@@ -1,9 +1,3 @@
-HOLA MUNDO
-
-hola SOY CARLOS
-
-hola SOY BREAN
-
 para cambiar el directorio de inicio de git
 
 https://www.codigonexo.com/blog/programacion/entornos-de-trabajo/cambiar-ruta-de-inicio-git-bash/
