@@ -261,6 +261,31 @@
                                 
                                                         </ul>
                                                     </li>';
+
+
+                    echo '<li class="treeview">
+                                                    <a href="#"><i class="fa fa-scissors"></i> Almacen de Corte
+                                                        <span class="pull-right-container">
+                                                            <i class="fa fa-angle-left pull-right"></i>
+                                                        </span>
+                                                    </a>
+                            
+                                                    <ul class="treeview-menu">
+                                           
+                                                        <li>
+                                                            <a href="almacencorte">
+                                                                <i class="fa fa-circle-o"></i> Alm. de Corte
+                                                            </a>
+                                                        </li>
+                            
+                                                        <li>
+                                                            <a href="crear-almacencorte">
+                                                                <i class="fa fa-circle-o"></i> Crear Corte
+                                                            </a>
+                                                        </li>
+                            
+                                                    </ul>
+                                                </li>';                                                    
                 }
 
                 echo '<li class="treeview">

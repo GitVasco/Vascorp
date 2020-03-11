@@ -25,6 +25,7 @@ require_once "controladores/pedidos.controlador.php";
 require_once "modelos/tipodocumento.modelo.php";
 require_once "controladores/tipodocumento.controlador.php";
 
+require_once "controladores/almacencorte.controlador.php";
 
 
 
@@ -48,6 +49,8 @@ require_once "modelos/contactos.modelo.php";
 require_once "modelos/mensajes.modelo.php";
 
 require_once "modelos/pedidos.modelo.php";
+
+require_once "modelos/almacencorte.modelo.php";
 
 
 
