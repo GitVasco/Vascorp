@@ -22,6 +22,10 @@ require_once "controladores/mensajes.controlador.php";
 
 require_once "controladores/pedidos.controlador.php";
 
+require_once "modelos/tipodocumento.modelo.php";
+require_once "controladores/tipodocumento.controlador.php";
+
+
 
 
 require_once "modelos/usuarios.modelo.php";

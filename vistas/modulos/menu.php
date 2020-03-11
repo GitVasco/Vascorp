@@ -187,6 +187,17 @@
                                     </a>
             
                                 </li>
+
+                                <li>
+            
+                                    <a href="tipoDocumentos">
+            
+                                        <i class="fa fa-circle-o"></i>
+                                        <span>Administrar Documentos</span>
+            
+                                    </a>
+            
+                                </li>                                
             
                             </ul>
             
