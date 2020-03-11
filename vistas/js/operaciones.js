@@ -1,5 +1,5 @@
 $('.tablaOperaciones').DataTable( {
-    "ajax": "ajax/tabla-productos.ajax.php",
+    "ajax": "ajax/tabla-operaciones.ajax.php",
     "deferRender": true,
 	"retrieve": true,
 	"processing": true,

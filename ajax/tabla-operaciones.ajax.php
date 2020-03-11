@@ -14,45 +14,12 @@ class TablaProductos{
         $item = null;     
         $valor = null;
 
-        $productos = ControladorOperaciones::ctrMostrarOperaciones($item, $valor);	
+        $operaciones = ControladorOperaciones::ctrMostrarOperaciones($item, $valor);	
 
         $datosJson = '{
         "data": [';
 
-        for($i = 0; $i < count($productos); $i++){
-
-        /*=============================================
-        TRAEMOS LA IMAGEN
-        =============================================*/ 
-
-        $imagen = "<img src='".$productos[$i]["imagen"]."' width='40px'>";
-
-        /*=============================================
-        TRAEMOS LA CATEGORÍA
-        =============================================*/ 
-
-        $item = "id";
-        $valor = $productos[$i]["id_categoria"];
-
-        $categorias = ControladorCategorias::ctrMostrarCategorias($item, $valor);
-        
-        /*=============================================
-        STOCK
-        =============================================*/ 
-
-        if($productos[$i]["stock"] <= 10){
-
-            $stock = "<button class='btn btn-danger'>".$productos[$i]["stock"]."</button>";
-
-        }else if($productos[$i]["stock"] > 11 && $productos[$i]["stock"] <= 15){
-
-            $stock = "<button class='btn btn-warning'>".$productos[$i]["stock"]."</button>";
-
-        }else{
-
-            $stock = "<button class='btn btn-success'>".$productos[$i]["stock"]."</button>";
-
-        }        
+        for($i = 0; $i < count($operaciones); $i++){  
 
         /*=============================================
         TRAEMOS LAS ACCIONES
