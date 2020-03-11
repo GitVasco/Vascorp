@@ -198,6 +198,14 @@
                                     </a>
             
                                 </li>                                
+                                    <a href="operaciones">
+            
+                                        <i class="fa fa-circle-o"></i>
+                                        <span>Operaciones</span>
+            
+                                    </a>
+            
+                                </li>
             
                             </ul>
             
