@@ -188,6 +188,16 @@
             
                                 </li>
 
+                                </li>
+                                    <a href="tipodocumentos">
+            
+                                        <i class="fa fa-circle-o"></i>
+                                        <span>Administrar Documentos</span>
+            
+                                    </a>
+        
+                                </li> 
+
                                 <li>
             
                                     <a href="tipoDocumentos">
@@ -202,10 +212,13 @@
             
                                         <i class="fa fa-circle-o"></i>
                                         <span>Operaciones</span>
+                                        
             
                                     </a>
-            
+                                
                                 </li>
+            
+                               
             
                             </ul>
             
