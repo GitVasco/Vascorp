@@ -194,6 +194,7 @@
             
                                         <i class="fa fa-circle-o"></i>
                                         <span>Operaciones</span>
+                                        
             
                                     </a>
             
