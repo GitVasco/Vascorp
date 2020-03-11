@@ -3,7 +3,7 @@
 require_once "../controladores/operaciones.controlador.php";
 require_once "../modelos/operaciones.modelo.php";
 
-class TablaProductos{
+class TablaOperaciones{
 
     /*=============================================
     MOSTRAR LA TABLA DE PRODUCTOS
@@ -25,18 +25,12 @@ class TablaProductos{
         TRAEMOS LAS ACCIONES
         =============================================*/         
         
-        $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarProducto' idProducto='".$productos[$i]["id"]."' data-toggle='modal' data-target='#modalEditarProducto'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarProducto' idProducto='".$productos[$i]["id"]."' codigo='".$productos[$i]["codigo"]."' imagen='".$productos[$i]["imagen"]."'><i class='fa fa-times'></i></button></div>"; 
+        $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarOperacion' idOperacion='".$operaciones[$i]["id"]."' data-toggle='modal' data-target='#modalEditarOperacion'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarOperacion' idOperacion='".$operaciones[$i]["id"]."' codigo='".$operaciones[$i]["codigo"]."'><i class='fa fa-times'></i></button></div>"; 
 
             $datosJson .= '[
             "'.($i+1).'",
-            "'.$imagen.'",
-            "'.$productos[$i]["codigo"].'",
-            "'.$productos[$i]["descripcion"].'",
-            "'.$categorias["categoria"].'",
-            "'.$stock.'",
-            "'.$productos[$i]["precio_compra"].'",
-            "'.$productos[$i]["precio_venta"].'",
-            "'.$productos[$i]["fecha"].'",
+            "'.$operaciones[$i]["codigo"].'",
+            "'.$operaciones[$i]["nombre"].'",
             "'.$botones.'"
             ],';        
             }
@@ -54,7 +48,7 @@ class TablaProductos{
 }
 
 /*=============================================
-ACTIVAR TABLA DE PRODUCTOS
+ACTIVAR TABLA DE OPERACIONES
 =============================================*/ 
-$activarProductos = new TablaProductos();
-$activarProductos -> mostrarTablaProductos();
+$activarOperaciones = new TablaOperaciones();
+$activarOperaciones -> mostrarTablaOperaciones();

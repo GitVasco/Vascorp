@@ -50,63 +50,6 @@
         </thead>
 
         <tbody>
-
-        <?php
-
-          $item = null;
-          $valor = null;
-
-          $operaciones = ControladorOperaciones::ctrMostrarOperaciones($item, $valor);
-          foreach ($operaciones as $key => $value) {
-            
-
-            echo '<tr>
-
-                    <td>'.($key+1).'</td>
-
-                    <td>'.$value["codigo"].'</td>
-
-                    <td>'.$value["nombre"].'</td>';
-
-                    if( $_SESSION["perfil"] == "Supervisores" ||
-                        $_SESSION["perfil"] == "Sistemas"){
-
-                          echo '<td>
-
-                                <div class="btn-group">
-                                    
-                                  <button class="btn btn-warning btnEditarColor" data-toggle="modal" data-target="#modalEditarColor" idColor="'.$value["id"].'"><i class="fa fa-pencil"></i></button>
-          
-                                  <button class="btn btn-danger btnEliminarColor" idColor="'.$value["id"].'"><i class="fa fa-times"></i></button>
-          
-                                </div>  
-          
-                              </td>';
-
-                    }else{
-
-                      echo '<td>
-
-                              <div class="btn-group">
-                                  
-                                <button class="btn btn-warning btnEditarColor" data-toggle="modal" data-target="#modalEditarColor" idColor="'.$value["cod_color"].'"><i class="fa fa-pencil"></i></button>
-
-                              </div>  
-
-                            </td>';
-
-                      
-                    }
-
-
-
-
-                  echo '</tr>';
-          
-            }
-
-        ?>
-         
          
         </tbody>
 
