@@ -199,6 +199,16 @@
                                 </li> 
 
                                 <li>
+                                    <a href="tipotrabajador">
+            
+                                        <i class="fa fa-circle-o"></i>
+                                        <span>Tipo Trabajador</span>
+            
+                                    </a>
+        
+                                </li> 
+
+                                <li>
                                      
                                     <a href="operaciones">
             

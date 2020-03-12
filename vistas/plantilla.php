@@ -164,6 +164,8 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "marcas" ||
                   $_GET["ruta"] == "colores" ||
                   $_GET["ruta"] == "tipodocumentos" ||
+                  $_GET["ruta"] == "tipotrabajador" ||
+                  $_GET["ruta"] == "trabajador" ||
                   $_GET["ruta"] == "operaciones"){
 
               include "modulos/maestros/".$_GET["ruta"].".php"; 
@@ -255,6 +257,7 @@ CUERPO DOCUMENTO
   <script src="vistas/js/ventas.js"></script>
   <script src="vistas/js/reportes.js"></script>
   <script src="vistas/js/tipodocumento.js"></script>
+  <script src="vistas/js/tipotrabajador.js"></script>
 
   <script src="vistas/js/articulos.js"></script>
   <script src="vistas/js/marcas.js"></script>
@@ -269,6 +272,7 @@ CUERPO DOCUMENTO
   <script src="vistas/js/pedidoscv.js"></script>
   <script src="vistas/js/almacencorte.js"></script>
   <script src="vistas/js/operaciones.js"></script>
+  <script src="vistas/js/trabajador.js"></script>
 
 
 </body>

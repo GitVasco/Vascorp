@@ -21,12 +21,15 @@ require_once "controladores/contactos.controlador.php";
 require_once "controladores/mensajes.controlador.php";
 
 require_once "controladores/pedidos.controlador.php";
+
 require_once "controladores/operaciones.controlador.php";
 
-require_once "modelos/tipodocumento.modelo.php";
 require_once "controladores/tipodocumento.controlador.php";
 
 require_once "controladores/almacencorte.controlador.php";
+
+require_once "controladores/tipotrabajador.controlador.php";
+require_once "controladores/trabajador.controlador.php";
 
 
 
@@ -50,9 +53,15 @@ require_once "modelos/contactos.modelo.php";
 require_once "modelos/mensajes.modelo.php";
 
 require_once "modelos/pedidos.modelo.php";
+
 require_once "modelos/operaciones.modelo.php";
 
+require_once "modelos/tipodocumento.modelo.php";
+
 require_once "modelos/almacencorte.modelo.php";
+
+require_once "modelos/tipotrabajador.modelo.php";
+require_once "modelos/trabajador.modelo.php";
 
 
 
