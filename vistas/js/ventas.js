@@ -397,7 +397,7 @@ $(".formularioVenta").on("change", "input.nuevaCantidadProducto", function() {
     .children()
     .children(".nuevoPrecioProducto");
 
-  /* console.log("precio", precio.val()); */
+  //console.log("precio", precio.val());
 
   var precioFinal = $(this).val() * precio.attr("precioReal");
 
@@ -678,8 +678,7 @@ FUNCIÓN PARA DESACTIVAR LOS BOTONES AGREGAR CUANDO EL PRODUCTO YA HABÍA SIDO S
 function quitarAgregarProducto() {
   //Capturamos todos los id de productos que fueron elegidos en la venta
   var idProductos = $(".quitarProducto");
-
-  /* console.log("idProductos", idProductos); */
+  //console.log("idProductos", idProductos);
 
   //Capturamos todos los botones de agregar que aparecen en la tabla
   var botonesTabla = $(".tablaVentas tbody button.agregarProducto");

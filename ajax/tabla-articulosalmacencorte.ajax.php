@@ -22,7 +22,7 @@ class TablaArticulosAlmacenCorte{
         /* 
         todo: BOTONES
         */                
-        $botones =  "<div class='btn-group'><button class='btn btn-primary btn-xs agregarArtAC recuperarBoton' idCorte='".$articulos[$i]["id"]."' ordcorte='".$articulos[$i]["ordencorte"]."' articuloAC='".$articulos[$i]["articulo"]."'><i class='fa fa-plus-circle'></i> Agregar</button></div>";
+        $botones =  "<div class='btn-group'><button class='btn btn-primary btn-xs agregarArtAC recuperarBoton' idCorte='".$articulos[$i]["id"]."' ordcorte='".$articulos[$i]["ordencorte"]."'  saldo='".$articulos[$i]["saldo"]."' articuloAC='".$articulos[$i]["articulo"]."'><i class='fa fa-plus-circle'></i> Agregar</button></div>";
         
             $datosJson .= '[
             "'.$articulos[$i]["ordencorte"].'",

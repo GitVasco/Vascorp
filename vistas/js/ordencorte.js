@@ -279,7 +279,7 @@ function sumarTotalOC() {
 
     var cantidadOc = $(".nuevaCantidadArticuloOC");
   
-    /* console.log("cantidadOc", cantidadOc); */
+    //console.log("cantidadOc", cantidadOc);
   
     var arraySumarCantidades = [];
 
@@ -335,7 +335,8 @@ function listarArticulosOC() {
     /* console.log("listaArticulos", JSON.stringify(listaArticulos)); */
   
     $("#listaArticulosOC").val(JSON.stringify(listaArticulos));
-  }
+
+}
 
 /* 
 * BOTON EDITAR ORDEN DE CORTE
@@ -354,10 +355,12 @@ $(".tablaOrdenCorte").on("click", ".btnEditarOC", function () {
 function quitarAgregarArticuloOC() {
 
 	//Capturamos todos los id de productos que fueron elegidos en la venta
-	var articuloOC = $(".quitarOC");
+    var articuloOC = $(".quitarOC");
+    console.log("articuloOC", articuloOC);
 
 	//Capturamos todos los botones de agregar que aparecen en la tabla
-	var botonesTablaOC = $(".tablaArticulosOrdenCorte tbody button.agregarArt");
+    var botonesTablaOC = $(".tablaArticulosOrdenCorte tbody button.agregarArt");
+    //console.log("botonesTablaOC", botonesTablaOC);
 
 	//Recorremos en un ciclo para obtener los diferentes articuloOC que fueron agregados a la venta
 	for (var i = 0; i < articuloOC.length; i++) {
@@ -385,7 +388,7 @@ function quitarAgregarArticuloOC() {
 */
 $(".tablaArticulosOrdenCorte").on("draw.dt", function() {
     quitarAgregarArticuloOC();
-  });
+});
   
 
 /*=============================================

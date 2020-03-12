@@ -26,7 +26,7 @@
       EL FORMULARIO
       ======================================-->
 
-      <div class="col-lg-5 col-xs-12">
+      <div class="col-lg-7 col-xs-12">
 
         <div class="box box-success">
 
@@ -106,7 +106,35 @@
                 TITULOS
                 ======================================-->
                 
-                <div class="col-lg-12">
+                <div class="box box-primary">
+
+                  <div class="row">
+
+                      <div class="col-xs-3">
+
+                          <label>OC</label>
+
+                      </div>
+
+                      <div class="col-xs-5">
+
+                          <label>Artículo</label>
+
+                      </div>
+
+                      <div class="col-xs-2">
+
+                          <label>Cantidad</label>
+
+                      </div>
+
+                      <div class="col-xs-2">
+
+                          <label>Saldo</label>
+
+                      </div>
+
+                  </div>
 
                 </div>
          
@@ -200,7 +228,7 @@
       LA TABLA DE ARTICULOS
       ======================================-->
 
-      <div class="col-lg-7 hidden-md hidden-sm hidden-xs">
+      <div class="col-lg-5 hidden-md hidden-sm hidden-xs">
 
         <div class="box box-warning">
 

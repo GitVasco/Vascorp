@@ -43,11 +43,13 @@ $(".tablaArticulosAlmacenCorte tbody").on("click", "button.agregarArtAC", functi
     var articuloAC = $(this).attr("articuloAC");
     var ordcorte = $(this).attr("ordcorte");
     var idCorte = $(this).attr("idCorte");
+    var saldo = $(this).attr("saldo");
     //console.log("ordcorte", ordcorte);
     //console.log("articuloAC", articuloAC);
     //console.log("idCorte", idCorte);
+    //console.log("saldo", saldo);
 
-    $(this).removeClass("btn-primary agregarArt");
+    $(this).removeClass("btn-primary agregarArtAC");
     $(this).addClass("btn-default");
 
     var datos = new FormData();
@@ -78,27 +80,43 @@ $(".tablaArticulosAlmacenCorte tbody").on("click", "button.agregarArtAC", functi
 
                 '<div class="row" style="padding:5px 15px">' +
 
-                    "<!-- Descripción del Articulo -->" +
+                    "<!-- Numero de OC y quitar -->" +
 
-                    '<div class="col-xs-9" style="padding-right:0px">' +
+                    '<div class="col-xs-3" style="padding-right:0px">' +
 
                         '<div class="input-group">' +
                         
                             '<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarAC" idCorte="' + idCorte + '"><i class="fa fa-times"></i></button></span>' +
 
-                            '<input type="text" class="form-control nuevaDescripcionProducto" articuloAC="' + articuloAC + '" ordcorte="' + ordcorte + '" name="agregarAC" value="' + packing + '" codigoAC="' + articulo + '" readonly required>' +
+                            '<input type="text" class="form-control nuevoAlmacenCorte"   name="nrooc" value="N° - ' + ordcorte + '" idCorte="' + idCorte + '" ordcorte="' + ordcorte + '" readonly required>' +
 
                         "</div>" +
 
                     "</div>" +
 
-                    "<!-- Cantidad del Corte -->" +
+                    "<!-- Descripción del Articulo -->" +
 
-                    '<div class="col-xs-3">' +
+                    '<div class="col-xs-5" style="padding-right:0px">' +                        
 
-                        '<input type="number" class="form-control nuevaCantidadArticuloAC" name="nuevaCantidadArticuloAC" min="1" value="1" alm_corte="' + alm_corte + '" nuevoOrdCorte="' + Number(alm_corte+1) + '" required>' +
+                            '<input type="text" class="form-control nuevaDescripcionProducto" articuloAC="' + articuloAC + '" name="agregarAC" value="' + packing + '" codigoAC="' + articulo + '" readonly required>' +                        
 
                     "</div>" +
+
+                    "<!-- Cantidad del Corte -->" +
+
+                    '<div class="col-xs-2">' +
+
+                        '<input type="number" class="form-control nuevaCantidadArticuloAC" name="nuevaCantidadArticuloAC" min="1" value="1" ordcorte="' + ordcorte + '" saldo="' + saldo + '" nuevoSaldo="' + (Number(saldo)-1) + '" alm_corte="' + alm_corte + '" nuevoAlmCorte="' + (Number(alm_corte)+1) + '" required>' +
+
+                    "</div>" +
+
+                    "<!-- Cantidad del SALDO -->" +
+
+                    '<div class="col-xs-2 ingresoSaldo">' +
+
+                        '<input type="number" class="form-control nuevaCantidadSaldo" name="nuevaCantidadSaldo" saldoReal="' + saldo + '" nuevoSaldoP="' + (Number(saldo)-1) + '" value="' +  (Number(saldo)-1) + '" readonly required>' +
+
+                    "</div>" +                    
                 
                 "</div>"
 
@@ -106,7 +124,7 @@ $(".tablaArticulosAlmacenCorte tbody").on("click", "button.agregarArtAC", functi
 
             // SUMAR TOTAL DE UNIDADES
 
-
+            sumarTotalAC();
 
             // AGREGAR IMPUESTO
 
@@ -114,7 +132,7 @@ $(".tablaArticulosAlmacenCorte tbody").on("click", "button.agregarArtAC", functi
 
             // AGRUPAR PRODUCTOS EN FORMATO JSON
 
-
+            listarArticulosAC();
 
             // PONER FORMATO AL PRECIO DE LOS PRODUCTOS
 
@@ -136,9 +154,9 @@ $(".tablaArticulosAlmacenCorte").on("draw.dt", function () {
         var listaIdArticuloAC = JSON.parse(localStorage.getItem("quitarAC"));
 
         for (var i = 0; i < listaIdArticuloAC.length; i++) {
-            $("button.recuperarBoton[articuloAC='" + listaIdArticuloAC[i]["articuloAC"] + "']").removeClass("btn-default");
+            $("button.recuperarBoton[articuloAC='" + listaIdArticuloAC[i]["idCorte"] + "']").removeClass("btn-default");
 
-            $("button.recuperarBoton[articuloAC='" + listaIdArticuloAC[i]["articuloAC"] + "']").addClass("btn-primary agregarArtAC");
+            $("button.recuperarBoton[articuloAC='" + listaIdArticuloAC[i]["idCorte"] + "']").addClass("btn-primary agregarArtAC");
         }
     }
 });
@@ -180,7 +198,7 @@ $(".formularioAlmacenCorte").on("click", "button.quitarAC", function () {
 
     $("button.recuperarBoton[idCorte='" + idCorte + "']").removeClass('btn-default');
 
-    $("button.recuperarBoton[idCorte='" + idCorte + "']").addClass('btn-primary agregarArt');
+    $("button.recuperarBoton[idCorte='" + idCorte + "']").addClass('btn-primary agregarArtAC');
 
 
     if ($(".nuevoArticuloAC").children().length == 0) {
@@ -193,7 +211,7 @@ $(".formularioAlmacenCorte").on("click", "button.quitarAC", function () {
 
             // SUMAR TOTAL DE UNIDADES
 
-
+            sumarTotalAC();
 
             // AGREGAR IMPUESTO
 
@@ -201,8 +219,7 @@ $(".formularioAlmacenCorte").on("click", "button.quitarAC", function () {
 
             // AGRUPAR PRODUCTOS EN FORMATO JSON
 
-
-
+            listarArticulosAC();
 
     }
 
@@ -213,44 +230,177 @@ $(".formularioAlmacenCorte").on("click", "button.quitarAC", function () {
 */
 $(".formularioAlmacenCorte").on("change", "input.nuevaCantidadArticuloAC", function() {
 
-    var nuevoStock = Number($(this).attr("stock")) - $(this).val();
+    var saldoA = $(this)
+    .parent()
+    .parent()
+    .children(".ingresoSaldo")
+    .children(".nuevaCantidadSaldo");
+    //console.log("saldoA", saldoA.val());
+
+    var saldoFinal = saldoA.attr("saldoReal") - $(this).val() ;
+    //console.log("saldoFinal", saldoFinal);
+
+    saldoA.val(saldoFinal);
+
+    var nuevoAlmCorte = Number($(this).attr("alm_corte")) + Number($(this).val());
+    var nuevoSaldo = Number($(this).attr("saldo")) - Number($(this).val());
+    var oc = $(this).attr("ordcorte");
+    //console.log("oc", oc);
   
-    $(this).attr("nuevoStock", nuevoStock);
+    $(this).attr("nuevoAlmCorte", Number(nuevoAlmCorte));
+    $(this).attr("nuevoSaldo", Number(nuevoSaldo));
+
+
+    if (Number($(this).val()) > Number($(this).attr("saldo"))) {
+
+        /*  
+        * mostrar mensaje si se pide mas que la cantidad de saldo
+        */
+    
+        $(this).val(1);
+
+        saldoA.val(Number($(this).attr("saldo"))-1);
+
+        sumarTotalAC();
+    
+        swal({
+          title: "La cantidad supera el Saldo de la Orden de Corte N° - " + oc +" ",
+          text: "¡Sólo hay " + $(this).attr("saldo") + " unidades!",
+          type: "error",
+          confirmButtonText: "¡Cerrar!"
+        });
+    
+        return;
+      }
   
-    if (Number($(this).val()) > Number($(this).attr("stock"))) {
-      /*=============================================
-      SI LA CANTIDAD ES SUPERIOR AL STOCK REGRESAR VALORES INICIALES
-      =============================================*/
   
-      $(this).val(1);
+    // SUMAR TOTAL DE UNIDADES
   
-      /* $(this).attr("nuevoStock", $(this).attr("stock")); */
-  
-      var precioFinal = $(this).val() * precio.attr("precioReal");
-  
-      precio.val(precioFinal);
-  
-      sumarTotalPrecios();
-  
-      swal({
-        title: "La cantidad supera el Stock",
-        text: "¡Sólo hay " + $(this).attr("stock") + " unidades!",
-        type: "error",
-        confirmButtonText: "¡Cerrar!"
-      });
-  
-      return;
-    }
-  
-    // SUMAR TOTAL DE PRECIOS
-  
-    sumarTotalPrecios();
-  
+        sumarTotalAC()
+    
     // AGREGAR IMPUESTO
   
-    agregarImpuesto();
+
   
     // AGRUPAR PRODUCTOS EN FORMATO JSON
   
-    listarProductos();
+        listarArticulosAC();
+
+
   });
+
+  /* 
+* SUMAR EL TOTAL DE LOS CORTES
+*/
+  
+function sumarTotalAC() {
+
+    var cantidadAc = $(".nuevaCantidadArticuloAC");  
+    //console.log("cantidadAc", cantidadAc);
+
+    var arraySumarCantidades = [];
+
+    for (var i = 0; i < cantidadAc.length; i++){
+
+        arraySumarCantidades.push(Number($(cantidadAc[i]).val()));
+
+    }
+        //console.log("arraySumarCantidades", arraySumarCantidades);
+  
+    function sumaArrayCantidades(total, numero) {
+
+        return total + numero;
+
+    }
+
+    var sumarTotal = arraySumarCantidades.reduce(sumaArrayCantidades);
+
+    //console.log("sumarTotal", sumarTotal);
+
+    $("#nuevoTotalAlmacenCorte").val(sumarTotal);
+    $("#totalAlmacenCorte").val(sumarTotal);
+    $("#nuevoTotalAlmacenCorte").attr("total", sumarTotal);
+
+}
+
+/* 
+*formato al total
+*/
+$("#nuevoTotalAlmacenCorte").number(true, 0);
+
+
+/* 
+* LISTAR TODOS LOS ARTICULOS
+*/
+function listarArticulosAC() {
+
+    var listaArticulos = [];
+  
+    var ordencorte = $(".nuevoAlmacenCorte");
+
+    var articulo = $(".nuevaDescripcionProducto");
+  
+    var cantidad = $(".nuevaCantidadArticuloAC");
+    
+    var saldo = $(".nuevaCantidadSaldo");
+    
+    for (var i = 0; i < ordencorte.length; i++) {
+
+      listaArticulos.push({
+
+        ordencorte: $(ordencorte[i]).attr("ordcorte"),
+        idocd: $(ordencorte[i]).attr("idCorte"),
+        articulo: $(articulo[i]).attr("codigoAC"),
+        cantidad: $(cantidad[i]).val(),
+        saldo: $(saldo[i]).val()
+
+      });
+    }
+  
+    //console.log("listaArticulos", JSON.stringify(listaArticulos));
+  
+    $("#listaArticulosAC").val(JSON.stringify(listaArticulos));
+    
+}
+
+/* 
+*FUNCIÓN PARA DESACTIVAR LOS BOTONES AGREGAR CUANDO EL ARTICULO YA HABÍA SIDO SELECCIONADO EN LA CARPETA
+*/
+function quitarAgregarArticuloAC() {
+
+	//Capturamos todos los id de productos que fueron elegidos en la venta
+    var articuloAC = $(".quitarAC");
+    console.log("articuloAC", articuloAC);
+
+	//Capturamos todos los botones de agregar que aparecen en la tabla
+    var botonesTablaAC = $(".tablaArticulosAlmacenCorte tbody button.agregarArtAC");
+    //console.log("botonesTablaAC", botonesTablaAC);
+
+	//Recorremos en un ciclo para obtener los diferentes articuloAC que fueron agregados a la venta
+	for (var i = 0; i < articuloAC.length; i++) {
+
+		//Capturamos los Id de los productos agregados a la venta
+		var boton = $(articuloAC[i]).attr("articuloAC");
+
+		//Hacemos un recorrido por la tabla que aparece para desactivar los botones de agregar
+		for (var j = 0; j < botonesTablaAC.length; j++) {
+
+			if ($(botonesTablaAC[j]).attr("articuloAC") == boton) {
+
+				$(botonesTablaAC[j]).removeClass("btn-primary agregarArtAC");
+				$(botonesTablaAC[j]).addClass("btn-default");
+
+			}
+		}
+
+	}
+
+}
+
+/* 
+* CADA VEZ QUE CARGUE LA TABLA CUANDO NAVEGAMOS EN ELLA EJECUTAR LA FUNCIÓN:
+*/
+$(".tablaArticulosAlmacenCorte").on("draw.dt", function() {
+    quitarAgregarArticuloAC();
+});
+  
