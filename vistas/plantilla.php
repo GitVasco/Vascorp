@@ -207,6 +207,12 @@ CUERPO DOCUMENTO
 
               include "modulos/facturacion/".$_GET["ruta"].".php";
 
+        }else if( $_GET["ruta"] == "detalleoperaciones" ||
+                  $_GET["ruta"] == "creardetalle" || 
+                  $_GET["ruta"] == "editardetalle") {
+
+          include "modulos/operaciones/".$_GET["ruta"].".php";
+
         }else if( $_GET["ruta"] == "salir" ||
                   $_GET["ruta"] == "reportes"){
 

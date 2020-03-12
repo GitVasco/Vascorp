@@ -398,10 +398,11 @@
                 }
 
                 echo '</ul>
-            
+                    
                         </li>
             
                         <!-- fin tarjetas -->';
+                        
             }
 
             ?>
@@ -413,7 +414,15 @@
                 $_SESSION["perfil"] == "Administrador"
             )
 
-                echo '  <li>
+                echo '  
+                        <li>
+                            <a href="detalleoperaciones">
+                                <i class="fa fa-bolt"></i>
+                                <span>Operaciones Modelos</span>
+                            </a>
+                        </li>
+            
+                        <li>
 
                             <a href="categorias">
 
