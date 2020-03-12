@@ -462,9 +462,7 @@ class controladorArticulos{
 	*/	
 	static public function ctrMostrarArticulosUrgencia(){
 
-		$tabla = "articulojf";
-
-		$respuesta = ModeloArticulos::mdlMostrarArticulosUrgencia($tabla);
+		$respuesta = ModeloArticulos::mdlMostrarArticulosUrgencia();
 
 		return $respuesta;
 		

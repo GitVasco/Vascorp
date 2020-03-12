@@ -75,7 +75,7 @@
 
                       if(!$ult_codigo){
 
-                        echo '<input type="text" class="form-control" id="nuevaOrdenCorte" name="nuevaOrdenCorte" value="1001" readonly>';
+                        echo '<input type="text" class="form-control" id="nuevaAlmacenCorte" name="nuevaAlmacenCorte" value="1001" readonly>';
 
 
                       }else{
@@ -90,7 +90,7 @@
 
                         /* var_dump("codigo", $codigo); */
 
-                        echo '<input type="text" class="form-control" id="nuevaOrdenCorte" name="nuevaOrdenCorte" value="'.$codigo.'" readonly>';
+                        echo '<input type="text" class="form-control" id="nuevaAlmacenCorte" name="nuevaAlmacenCorte" value="'.$codigo.'" readonly>';
 
 
                       }
@@ -114,12 +114,12 @@
                 ENTRADA PARA AGREGAR MATERIAPRIMA
                 ======================================-->
 
-                <div class="form-group row nuevoArticuloOC">
+                <div class="form-group row nuevoArticuloAC">
 
 
                 </div>
 
-                <input type="hidden" id="listaArticulosOC" name="listaArticulosOC">                
+                <input type="hidden" id="listaArticulosAC" name="listaArticulosAC">                
 
                 <div class="row">
 
@@ -149,10 +149,9 @@
 
                             <span class="input-group-addon"><i class="fa fa-scissors"></i></span>
 
-                            <input type="text" min="1" class="form-control input-lg" id="nuevoTotalOrdenCorte"
-                              name="nuevoTotalOrdenCorte" total="" placeholder="0" readonly required>
+                            <input type="text" min="1" class="form-control input-lg" id="nuevoTotalAlmacenCorte" name="nuevoTotalAlmacenCorte" total="" placeholder="0" readonly required>
 
-                            <input type="hidden" name="totalOrdenCorte" id="totalOrdenCorte">
+                            <input type="hidden" name="totalAlmacenCorte" id="totalAlmacenCorte">
 
 
                           </div>
@@ -183,19 +182,14 @@
 
             <div class="box-footer">
 
-              <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-floppy-o"></i>  Guardar Orden Corte</button>
+              <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-floppy-o"></i>  Guardar Corte</button>
               
-              <a href="ordencorte" id="cancel" name="cancel" class="btn btn-danger"><i class="fa fa-times-circle"></i> Cancelar</a>
+              <a href="almacencorte" id="cancel" name="cancel" class="btn btn-danger"><i class="fa fa-times-circle"></i> Cancelar</a>
             </div>
 
           </form>
 
-          <?php
-
-            $guardarOrdenCorte = new ControladorOrdenCorte();
-            $guardarOrdenCorte -> ctrCrearOrdenCorte();
-
-          ?>            
+        
           
 
         </div>
@@ -214,20 +208,18 @@
 
           <div class="box-body">
 
-            <table class="table table-bordered table-striped table-condensed tablaArticulosOrdenCorte">
+            <table class="table table-bordered table-striped table-condensed tablaArticulosAlmacenCorte">
 
               <thead>
 
                 <tr>
+                  <th>OC</th>
                   <th>Modelo</th>
                   <th>Color</th>
                   <th>Talla</th>
-                  <th>Stock</th>
-                  <th>Ped.</th>
-                  <th>En Taller</th>
+                  <th>Cantidad</th>
+                  <th>Saldo</th>
                   <th>Alm. Corte</th>
-                  <th>Ord. Corte</th>
-                  <th>Vtas 30d</th>
                   <th style="width:10px">Acciones</th>
                 </tr>
 
@@ -249,110 +241,4 @@
   </section>
 
 </div>
-
-<!--=====================================
-MODAL CONFIGURAR % DE URGENCIAS
-======================================-->
-
-<div id="modalConfigurarUrgencia" class="modal fade" role="dialog">
-  
-  <div class="modal-dialog">
-
-    <div class="modal-content">
-
-      <form role="form" method="post" enctype="multipart/form-data">
-
-        <!--=====================================
-        CABEZA DEL MODAL
-        ======================================-->
-
-        <div class="modal-header" style="background:#3c8dbc; color:white">
-
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-
-          <h4 class="modal-title">Configurar Porcentaje</h4>
-
-        </div>
-
-        <!--=====================================
-        CUERPO DEL MODAL
-        ======================================-->
-
-        <div class="modal-body">
-
-          <div class="box-body">
-
-
-            <!-- ENTRADA PARA PORCENTAJE -->
-
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-tag"></i></span> 
-
-                <select class="form-control input-lg" id="urgencia" name="urgencia" required>
-
-                  <option value="">Selecionar Porcentaje</option>
-
-                  <option value="100">100 %</option>
-
-                  <option value="90">90 %</option>
-
-                  <option value="80">80 %</option>
-
-                  <option value="70">70 %</option>
-
-                  <option value="60">60 %</option>
-
-                  <option value="50">50 %</option>
-
-                  <option value="40">40 %</option>
-
-                  <option value="30">30 %</option>
-
-                  <option value="20">20 %</option>
-
-                  <option value="10">10 %</option>
-
-                  <option value="0">0 %</option>
-                
-                </select>
-
-              </div>
-
-            </div>       
-
-          </div>
-
-        </div>
-
-        <!--=====================================
-        PIE DEL MODAL
-        ======================================-->
-
-        <div class="modal-footer">
-
-          <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
-
-          <button type="submit" class="btn btn-primary">Guardar artículo</button>
-
-        </div>
-
-      </form>
-
-      <?php
-
-        $configurarUrgencia = new controladorArticulos();
-        $configurarUrgencia -> ctrConfigurarUrgencia();
-
-      ?>  
-
-
-    </div>
-
-  </div>
-
-</div>
-
 

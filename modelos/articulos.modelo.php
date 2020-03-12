@@ -238,7 +238,7 @@ class ModeloArticulos
 	/* 
 	* MOSTRAR ARTICULOS PARA LA TABLA DE ORDENES DE CORTE
 	*/
-	static public function mdlMostrarArticulosUrgencia($tabla){
+	static public function mdlMostrarArticulosUrgencia(){
 
 		$stmt = Conexion::conectar()->prepare("CALL sp_1047_consulta_urgencia_articulos()");
 
@@ -360,8 +360,6 @@ class ModeloArticulos
 
 		$stmt=null;
 
-	}	
+	}
 	
-
-
 }

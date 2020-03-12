@@ -19,4 +19,17 @@ class ModeloAlmacenCorte{
 
 	}
 
+	static public function mdlMostarArticulosOrdCorte(){
+
+		$stmt = Conexion::conectar()->prepare("CALL sp_1055_articulos_ordcorte()");
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+	}	
+
+
 }
