@@ -3,7 +3,7 @@
 class ControladorOperaciones{
 
 	/*=============================================
-	CREAR COLORES
+	CREAR OPERACIONES
 	=============================================*/
 
 	static public function ctrCrearOperacion(){
@@ -64,9 +64,7 @@ class ControladorOperaciones{
 
 		}
 
-    }
-    
-
+	}
 	/*=============================================
 	MOSTRAR OPERACIONES
 	=============================================*/
@@ -78,7 +76,43 @@ class ControladorOperaciones{
 		return $respuesta;
 
     }
-    
+	
+	
+	/*=============================================
+	MOSTRAR CABECERA OPERACIONES
+	=============================================*/
+
+	static public function ctrMostrarCabeceraOperaciones($item,$valor){
+        $tabla="operacion_cabecerajf";
+		$respuesta = ModeloOperaciones::mdlMostrarCabeceraOperaciones($tabla,$item,$valor);
+
+		return $respuesta;
+
+	}
+
+	/*=============================================
+	MOSTRAR MODELOS
+	=============================================*/
+
+	static public function ctrMostrarModelos($item,$valor){
+        $tabla="articulojf";
+		$respuesta = ModeloOperaciones::mdlMostrarModelos($tabla,$item,$valor);
+
+		return $respuesta;
+
+	}
+	
+	/*=============================================
+	MOSTRAR DETALLE OPERACIONES
+	=============================================*/
+
+	static public function ctrMostrarDetalleOperaciones($item,$valor){
+        $tabla="operaciones_detallejf";
+		$respuesta = ModeloOperaciones::mdlMostrarDetalleOperaciones($tabla,$item,$valor);
+
+		return $respuesta;
+
+    }
 	/*=============================================
 	EDITAR OPERACIONES
 	=============================================*/
@@ -186,6 +220,232 @@ class ControladorOperaciones{
 
 	}    
 
+	
+	/*=============================================
+	CREAR OPERACIÓN POR MODELO
+	=============================================*/
+
+	static public function ctrCrearOperacionModelo(){
+
+		if(isset($_POST["seleccionarArticulo"])){
+
+			if($_POST["listaOperaciones"]==""){
+				# Mostramos una alerta suave
+				echo '<script>
+						swal({
+							type: "error",
+							title: "Error",
+							text: "¡No se seleccionó ninguna operacion. Por favor, intenteló de nuevo!",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar"
+						}).then((result)=>{
+							if(result.value){
+								window.location="creardetalle";}
+						});
+					</script>';
+			}else{
+				$tabla="operacion_cabecerajf";
+				$datos = array("articulo" => $_POST["seleccionarArticulo"],
+				   				 "vendedor_fk"=>$_POST["idVendedor"],
+					   		     "total_pd"=>$_POST["nuevoTotalDocena"],
+							     "total_ts"=>$_POST["nuevoTotalStandar"]
+							   );
+
+			   	$respuesta = ModeloOperaciones::mdlIngresarCabeceraOperacion($tabla,$datos);
+				
+
+				//DETALLE
+				
+				$operaciones=json_decode($_POST["listaOperaciones"],true);
+				foreach($operaciones as $key=>$value){
+					$tabla="operaciones_detallejf";
+					$datos2=array("modelo"=>$_POST["seleccionarArticulo"],
+								  "cod_operacion"=>$value["codigo"],
+								  "precio_doc"=>$value["precio"],
+								  "tiempo_stand"=>$value["tiempo"],);
+					$respuesta2= ModeloOperaciones::mdlIngresarDetalleOperacion($tabla,$datos2);
+					
+				}
+			   	if($respuesta == "ok"  && $respuesta2=="ok"){
+
+					echo'<script>
+
+					swal({
+						  type: "success",
+						  title: "La operación ha sido guardada correctamente",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+									if (result.value) {
+
+									window.location = "detalleoperaciones";
+
+									}
+								})
+
+					</script>';
+
+				}
+
+			else{
+
+				echo'<script>
+
+					swal({
+						  type: "error",
+						  title: "¡La operación no puede ir vacío o llevar caracteres especiales!",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+							if (result.value) {
+
+							window.location = "creardetalle";
+
+							}
+						})
+
+			  	</script>';
+
+
+
+			}
+		}
+
+		}
+
+    }
+    
+
+
+	/*=============================================
+	EDITAR DETALLE OPERACIONES
+	=============================================*/
+
+	static public function ctrEditarCabeceraOperacion(){
+
+		if(isset($_POST["seleccionarArticulo"])){
+
+			if($_POST["listaOperaciones"]==""){
+				# Mostramos una alerta suave
+				echo '<script>
+						swal({
+							type: "error",
+							title: "Error",
+							text: "¡No se seleccionó ninguna operacion. Por favor, intenteló de nuevo!",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar"
+						}).then((result)=>{
+							if(result.value){
+								window.location="creardetalle";}
+						});
+					</script>';
+			}else{
+				$tabla="operacion_cabecerajf";
+				$datos = array("articulo" => $_POST["seleccionarArticulo"],
+				   				 "vendedor_fk"=>$_POST["idVendedor"],
+					   		     "total_pd"=>$_POST["nuevoTotalDocena"],
+							     "total_ts"=>$_POST["nuevoTotalStandar"]
+							   );
+
+			   	$respuesta = ModeloOperaciones::mdlEditarCabeceraOperacion($tabla,$datos);
+				
+
+				//DETALLE
+				
+				$operaciones=json_decode($_POST["listaOperaciones"],true);
+				foreach($operaciones as $key=>$value){
+					$tabla="operaciones_detallejf";
+					$datos2=array("modelo"=>$_POST["seleccionarArticulo"],
+								  "cod_operacion"=>$value["codigo"],
+								  "precio_doc"=>$value["precio"],
+								  "tiempo_stand"=>$value["tiempo"],);
+					$respuesta2= ModeloOperaciones::mdlEditarDetalleOperacion($tabla,$datos2);
+					
+				}
+			   	if($respuesta == "ok"  && $respuesta2=="ok"){
+
+					echo'<script>
+
+					swal({
+						  type: "success",
+						  title: "La operación ha sido guardada correctamente",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+									if (result.value) {
+
+									window.location = "detalleoperaciones";
+
+									}
+								})
+
+					</script>';
+
+				}
+
+			else{
+
+				echo'<script>
+
+					swal({
+						  type: "error",
+						  title: "¡La operación no puede ir vacío o llevar caracteres especiales!",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+							if (result.value) {
+
+							window.location = "creardetalle";
+
+							}
+						})
+
+			  	</script>';
+
+
+
+			}
+		}
+
+		}
+
+	}
+	
+	//ELIMINAR CABECERA OPERACION
+	static public function ctrEliminarCabeceraOperacion(){
+
+		if(isset($_GET["idOperacion"])){
+
+			$tabla ="operacion_cabecerajf";
+			$datos = $_GET["idOperacion"];
+
+			$respuesta = ModeloOperaciones::mdlEliminarCabeceraOperacion($tabla,$datos);
+
+			if($respuesta == "ok"){
+
+				echo'<script>
+
+				swal({
+					  type: "success",
+					  title: "La operación ha sido borrado correctamente",
+					  showConfirmButton: true,
+					  confirmButtonText: "Cerrar",
+					  closeOnConfirm: false
+					  }).then(function(result){
+								if (result.value) {
+
+								window.location = "detalleoperaciones";
+
+								}
+							})
+
+				</script>';
+
+			}		
+
+		}
+
+	} 
 
 
 }

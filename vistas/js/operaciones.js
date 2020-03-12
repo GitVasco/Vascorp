@@ -74,3 +74,384 @@ $(".tablaOperaciones tbody").on("click","button.btnEliminarOperacion",function()
 	
 	
 });
+
+//TABLA DINAMICA DE CABECERA OPERACIONES
+
+$('.tablaDetalleOperaciones').DataTable( {
+    "ajax": "ajax/tabla-cabecera-operacion.ajax.php",
+    "deferRender": true,
+	"retrieve": true,
+	"processing": true,
+	 "language": {
+
+			"sProcessing":     "Procesando...",
+			"sLengthMenu":     "Mostrar _MENU_ registros",
+			"sZeroRecords":    "No se encontraron resultados",
+			"sEmptyTable":     "Ningún dato disponible en esta tabla",
+			"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+			"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0",
+			"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+			"sInfoPostFix":    "",
+			"sSearch":         "Buscar:",
+			"sUrl":            "",
+			"sInfoThousands":  ",",
+			"sLoadingRecords": "Cargando...",
+			"oPaginate": {
+			"sFirst":    "Primero",
+			"sLast":     "Último",
+			"sNext":     "Siguiente",
+			"sPrevious": "Anterior"
+			},
+			"oAria": {
+				"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+				"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+			}
+
+	}
+} );
+
+//TABLA DINAMICA DE DETALLE OPERACIONES
+
+$('.tablaArticuloOperaciones').DataTable( {
+    "ajax": "ajax/tabla-detalle-operacion.ajax.php",
+    "deferRender": true,
+	"retrieve": true,
+	"processing": true,
+	 "language": {
+
+			"sProcessing":     "Procesando...",
+			"sLengthMenu":     "Mostrar _MENU_ registros",
+			"sZeroRecords":    "No se encontraron resultados",
+			"sEmptyTable":     "Ningún dato disponible en esta tabla",
+			"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+			"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0",
+			"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+			"sInfoPostFix":    "",
+			"sSearch":         "Buscar:",
+			"sUrl":            "",
+			"sInfoThousands":  ",",
+			"sLoadingRecords": "Cargando...",
+			"oPaginate": {
+			"sFirst":    "Primero",
+			"sLast":     "Último",
+			"sNext":     "Siguiente",
+			"sPrevious": "Anterior"
+			},
+			"oAria": {
+				"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+				"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+			}
+
+	}
+} );
+
+/*=============================================
+AGREGANDO PRODUCTOS A LA VENTA DESDE LA TABLA
+=============================================*/
+
+$(".tablaArticuloOperaciones tbody").on("click", "button.agregarOperacion", function() {
+
+	var idOperacion = $(this).attr("idOperacion");
+  
+  
+	$(this).removeClass("btn-primary agregarOperacion");
+  
+	$(this).addClass("btn-default");
+  
+	var datos = new FormData();
+	datos.append("idOperacion", idOperacion);
+  
+	$.ajax({
+	  url: "ajax/operaciones.ajax.php",
+	  method: "POST",
+	  data: datos,
+	  cache: false,
+	  contentType: false,
+	  processData: false,
+	  dataType: "json",
+	  success: function(respuesta) {
+		var codigo = respuesta["codigo"];
+		var nombre = respuesta["nombre"];
+  
+  
+		$(".nuevaOperacion").append(
+  
+		  '<div class="row" style="padding:5px 15px">' +
+  
+			"<!-- Descripción del producto -->" +
+  
+			'<div class="col-xs-6" style="padding-right:0px">' +
+  
+			  '<div class="input-group">' +
+  
+				'<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarOperacion" idOperacion="' + idOperacion + '"><i class="fa fa-times"></i></button></span>' +
+  
+				'<input type="text" class="form-control nuevaDescripcionOperacion" idOperacion="' + idOperacion + '" name="agregarOperacion" value="' + nombre + '"  codigoOP= "'+codigo+'"readonly required>' +
+  
+			  "</div>" +
+  
+			"</div>" +
+  
+			"<!-- Precio Decena -->" +
+  
+			'<div class="col-xs-3">' +
+  
+			'<input type="number" class="form-control nuevoPrecioDocena" name="nuevoPrecioDocena" min="1" value="1" required>' +
+  
+			"</div>" +
+  
+			"<!-- Tiempo Standar -->" +
+  
+			'<div class="col-xs-3 ingresoPrecio" style="padding-left:0px">' +
+  
+			  '<div class="input-group">' +
+  
+			  '<span class="input-group-addon"><i class="fa fa-clock-o"></i></span>' +
+  
+			  '<input type="number" class="form-control nuevoTiempoStandar" name="nuevoTiempoStandar" value="1"  required>' +
+  
+			  "</div>" +
+  
+			"</div>" +
+  
+		  "</div>"
+		);
+		$(".nuevoPrecioDocena").number(true, 2);
+
+		sumarTotalPrecios();
+		sumarTotalTiempos();
+		listarOperaciones();
+    }
+  });
+});
+
+/*=============================================
+CUANDO CARGUE LA TABLA CADA VEZ QUE NAVEGUE EN ELLA
+=============================================*/
+
+$(".tablaArticuloOperaciones").on("draw.dt", function() {
+	//console.log("tabla");
+  
+	if (localStorage.getItem("quitarOperacion") != null) {
+	  var listaIdOperaciones = JSON.parse(localStorage.getItem("quitarOperacion"));
+
+	  for (var i = 0; i < listaIdOperaciones.length; i++) {
+		$(
+		  "button.recuperarBoton[idOperacion='" +
+			listaIdOperaciones[i]["idOperacion"] +
+			"']"
+		).removeClass("btn-default");
+		$(
+		  "button.recuperarBoton[idOperacion='" +
+			listaIdOperaciones[i]["idOperacion"] +
+			"']"
+		).addClass("btn-primary agregarOperacion");
+	  }
+	}
+  });
+  
+  /*=============================================
+  QUITAR OPERACIONES POR ARTICULO Y RECUPERAR BOTÓN
+  =============================================*/
+  
+  var idQuitarOperacion = [];
+  
+  localStorage.removeItem("quitarOperacion");
+  
+  $(".formularioOperacion").on("click", "button.quitarOperacion", function() {
+  
+	$(this)
+	  .parent()
+	  .parent()
+	  .parent()
+	  .parent()
+	  .remove();
+  
+	var idOperacion = $(this).attr("idOperacion");
+  
+	/*=============================================
+	ALMACENAR EN EL LOCALSTORAGE EL ID DE OPERACION A QUITAR
+	=============================================*/
+  
+	if (localStorage.getItem("quitarOperacion") == null) {
+	  idQuitarOperacion = [];
+	} else {
+	  idQuitarOperacion.concat(localStorage.getItem("quitarOperacion"));
+	}
+  
+	idQuitarOperacion.push({
+	  idOperacion: idOperacion
+	});
+  
+	localStorage.setItem("quitarOperacion", JSON.stringify(idQuitarOperacion));
+  
+	$("button.recuperarBoton[idOperacion='" + idOperacion + "']").removeClass(
+	  "btn-default"
+	);
+  
+	$("button.recuperarBoton[idOperacion='" + idOperacion + "']").addClass(
+	  "btn-primary agregarOperacion"
+	);
+  
+	if ($(".nuevaOperacion").children().length == 0) {
+		$("#nuevoTotalDocena").val(0);
+		$("#nuevoTotalStandar").val(0);
+	}else{
+		sumarTotalPrecios();
+		sumarTotalTiempos();
+		listarOperaciones();
+	}
+  });
+
+/*=============================================
+FUNCIÓN PARA DESACTIVAR LOS BOTONES AGREGAR CUANDO EL PRODUCTO YA HABÍA SIDO SELECCIONADO EN LA CARPETA
+=============================================*/
+
+function quitarAgregarOperaciones() {
+	//Capturamos todos los id de productos que fueron elegidos en la venta
+	var idOperaciones = $(".quitarOperacion");
+  
+	/* console.log("idProductos", idProductos); */
+  
+	//Capturamos todos los botones de agregar que aparecen en la tabla
+	var botonesTabla = $(".tablaArticuloOperaciones tbody button.agregarOperacion");
+  
+	/* console.log("botonesTabla", botonesTabla); */
+  
+	//Recorremos en un ciclo para obtener los diferentes idProductos que fueron agregados a la venta
+	for (var i = 0; i < idOperaciones.length; i++) {
+	  //Capturamos los Id de los productos agregados a la venta
+	  var boton = $(idOperaciones[i]).attr("idOperacion");
+  
+	  //Hacemos un recorrido por la tabla que aparece para desactivar los botones de agregar
+	  for (var j = 0; j < botonesTabla.length; j++) {
+		if ($(botonesTabla[j]).attr("idOperacion") == boton) {
+		  $(botonesTabla[j]).removeClass("btn-primary agregarOperacion");
+		  $(botonesTabla[j]).addClass("btn-default");
+		}
+	  }
+	}
+  }
+
+//FUNCION PAR SUMAR CADA VEZ QUE SE MODIFIQUE LAS OPERACIONES
+  $(".formularioOperaciones").on("change", "input.nuevoPrecioDocena", function() {
+
+	// SUMAR TOTAL DE PRECIOS
+  
+	sumarTotalPrecios();
+  
+	//sumar Tiempos
+	sumarTotalTiempos();
+  });
+  
+  /*=============================================
+  CADA VEZ QUE CARGUE LA TABLA CUANDO NAVEGAMOS EN ELLA EJECUTAR LA FUNCIÓN:
+  =============================================*/
+  
+  $(".tablaArticuloOperaciones").on("draw.dt", function() {
+	quitarAgregarOperaciones();
+  });
+  
+  function sumarTotalPrecios() {
+	var precioItem = $(".nuevoPrecioDocena");
+  
+   /*  console.log("precioitem", precioItem); */
+  
+	var arraySumaPrecio = [];
+  
+	for (var i = 0; i < precioItem.length; i++) {
+	  arraySumaPrecio.push(Number($(precioItem[i]).val()));
+	}
+  
+	/* console.log("arraySumaPrecio", arraySumaPrecio); */
+  
+	function sumaArrayPrecios(total, numero) {
+	  return total + numero;
+	}
+  
+	var sumaTotalPrecio = arraySumaPrecio.reduce(sumaArrayPrecios);
+  
+	/*     console.log("sumaTotalPrecio", sumaTotalPrecio); */
+  
+	$("#nuevoTotalDocena").val(sumaTotalPrecio);
+  }
+
+  function sumarTotalTiempos() {
+	var precioItem = $(".nuevoTiempoStandar");
+  
+   /*  console.log("precioitem", precioItem); */
+  
+	var arraySumaPrecio = [];
+  
+	for (var i = 0; i < precioItem.length; i++) {
+	  arraySumaPrecio.push(Number($(precioItem[i]).val()));
+	}
+  
+	/* console.log("arraySumaPrecio", arraySumaPrecio); */
+  
+	function sumaArrayPrecios(total, numero) {
+	  return total + numero;
+	}
+  
+	var sumaTotalPrecio = arraySumaPrecio.reduce(sumaArrayPrecios);
+  
+	/*     console.log("sumaTotalPrecio", sumaTotalPrecio); */
+  
+	$("#nuevoTotalStandar").val(sumaTotalPrecio);
+  }
+
+  /*=============================================
+LISTAR TODAS LAS OPERACIONES
+=============================================*/
+
+function listarOperaciones() {
+	var listaOperaciones = [];
+  
+	var descripcion = $(".nuevaDescripcionOperacion");
+  
+	var precio = $(".nuevoPrecioDocena");
+  
+	var tiempo = $(".nuevoTiempoStandar");
+  
+	for (var i = 0; i < descripcion.length; i++) {
+	  listaOperaciones.push({
+		id: $(descripcion[i]).attr("idOperacion"),
+		codigo: $(descripcion[i]).attr("codigoOP"),
+		descripcion: $(descripcion[i]).val(),
+		precio: $(precio[i]).val(),
+		tiempo: $(tiempo[i]).val()
+	  });
+	}
+	$("#listaOperaciones").val(JSON.stringify(listaOperaciones));
+	
+	
+}
+//EDITAR DETALLE OPERACION
+
+//EDITAR VENTA
+$(".tablaDetalleOperaciones").on("click", ".btnEditarOperacion",function(){
+	var idOperacion= $(this).attr("idOperacion");
+	window.location="index.php?ruta=editardetalle&idOperacion="+idOperacion;
+})
+
+// ELIMINAR CABECERA OPERACIÓN
+$(".tablaDetalleOperaciones tbody").on("click","button.btnEliminarOperacion",function(){
+	var idOperacion =$(this).attr("idOperacion");
+	//console.log("idOperacion", idOperacion);
+	swal({
+		title: "¿Está seguro de borrar la operación?",
+		text: "¡Si no lo está se puede cancelar la acción!",
+		type:"warning",
+		showCancelButton: true,
+		confirmButtonColor: "#3085d6",
+		cancelButtonColor: "#d33",
+		cancelButtonText: "Cancelar",
+		confirmButtonText: "Si, borrar operación!" 
+	}).then((result)=>{
+		if(result.value){
+			window.location = "index.php?ruta=detalleoperaciones&idOperacion="+idOperacion;
+		}
+	})
+	
+	
+});

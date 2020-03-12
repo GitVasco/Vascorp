@@ -1,0 +1,248 @@
+<div class="content-wrapper">
+
+  <section class="content-header">
+
+    <h1>
+
+        Editar operación para Modelo
+
+    </h1>
+
+    <ol class="breadcrumb">
+
+      <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
+
+      <li class="active">Editar Operación Modelo</li>
+
+    </ol>
+
+  </section>
+
+  <section class="content">
+
+    <div class="row">
+
+      <!--=====================================
+      EL FORMULARIO
+      ======================================-->
+
+      <div class="col-lg-5 col-xs-12">
+
+        <div class="box box-success">
+
+          <div class="box-header with-border"></div>
+
+          <form role="form" method="post" class="formularioOperacion">
+
+            <div class="box-body">
+
+              <div class="box">
+
+                <!--=====================================
+                ENTRADA DEL VENDEDOR
+                ======================================-->
+              <?php
+                $item="id";
+                $valor=$_GET["idOperacion"];
+                $cabecera=ControladorOperaciones::ctrMostrarCabeceraOperaciones($item,$valor);
+                
+                $itemUsuario="id";
+                $valorUsuario=$cabecera["vendedor_fk"];
+
+                $usuarios=ControladorUsuarios::ctrMostrarUsuarios($itemUsuario,$valorUsuario);
+
+                $item = "modelo";
+                $valor = $cabecera["articulo"];
+
+                $articulos = ControladorOperaciones::ctrMostrarModelos($item, $valor);
+
+                $itemDetalle= "modelo";
+                $valorDetalle=$cabecera["articulo"];
+                
+                $detalle=ControladorOperaciones::ctrMostrarDetalleOperaciones($itemDetalle,$valorDetalle);
+                var_dump($detalle);
+              ?>
+                <div class="form-group">
+
+                  <div class="input-group">
+
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+
+                    <input type="text" class="form-control" id="nuevoVendedor" name="nuevoVendedor"
+                      value="<?php echo $usuarios["nombre"]; ?>" readonly>
+
+                    <input type="hidden" name="idVendedor" value="<?php echo $_SESSION["id"]; ?>">
+
+                  </div>
+
+                </div>
+
+
+                <!--=====================================
+                ENTRADA DEL CLIENTE
+                ======================================-->
+
+                <div class="form-group">
+
+                  <div class="input-group">
+
+                    <span class="input-group-addon"><i class="fa fa-users"></i></span>
+
+                    <select class="form-control " id="seleccionarArticulo" name="seleccionarArticulo"  readonly required>
+
+                      <option value="<?php echo $articulos["modelo"];?>"><?php echo $articulos["modelo"]." - ".$articulos["nombre"]; ?></option>
+
+                    </select>
+
+                  </div>
+
+                </div>
+
+                <!--=====================================
+                ENTRADA PARA AGREGAR OPERACION
+                ======================================-->
+
+                <div class="form-group row nuevaOperacion">
+
+
+
+                </div>
+
+                <input type="hidden" id="listaOperaciones" name="listaOperaciones">
+
+                <!--=====================================
+                BOTÓN PARA AGREGAR OPERACION
+                ======================================-->
+
+                <button type="button" class="btn btn-default hidden-lg btnAgregarOperacion">Agregar operacion</button>
+
+                <hr>
+
+                <div class="row">
+
+                  <!--=====================================
+                  ENTRADA TOTAL y TIEMPO STANDAR
+                  ======================================-->
+
+                  <div class="col-xs-8 pull-right">
+
+                    <table class="table">
+
+                      <thead>
+
+                        <tr>
+                          <th style="width:50%">Total x Docena</th>
+                          <th style="width:50%">Total T. Standar</th>
+                        </tr>
+
+                      </thead>
+
+                      <tbody>
+
+                        <tr>
+
+
+                          <td style="width: 50%">
+
+                            <div class="input-group">
+
+                              <span class="input-group-addon"><i class="fa fa-money"></i></span>
+
+                              <input type="text" min="1" class="form-control input-lg" id="nuevoTotalDocena" name="nuevoTotalDocena" totalDecena="" placeholder="00000" readonly required>
+
+
+
+                            </div>
+
+                          </td>
+
+                          <td style="width: 50%">
+
+                            <div class="input-group">
+
+                              <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+
+                              <input type="text" min="1" class="form-control input-lg" id="nuevoTotalStandar" name="nuevoTotalStandar" totalStand="" placeholder="00000" readonly required>
+
+                            </div>
+
+                          </td>
+
+                        </tr>
+
+                      </tbody>
+
+                    </table>
+
+                  </div>
+
+                </div>
+
+                <hr>
+
+                <br>
+
+              </div>
+
+            </div>
+
+            <div class="box-footer">
+
+              <button type="submit" class="btn btn-primary pull-right">Guardar Operacion</button>
+
+            </div>
+
+          </form>
+
+          <?php
+
+            $editarOperacion = new ControladorOperaciones();
+            $editarOperacion -> ctrEditarCabeceraOperacion();
+
+          ?>          
+
+        </div>
+
+      </div>
+
+      <!--=====================================
+      LA TABLA DE OPERACIONES
+      ======================================-->
+
+      <div class="col-lg-7 hidden-md hidden-sm hidden-xs">
+
+        <div class="box box-warning">
+
+          <div class="box-header with-border"></div>
+
+          <div class="box-body">
+
+            <table class="table table-bordered table-striped dt-responsive tablaArticuloOperaciones">
+
+              <thead>
+
+                <tr>
+                  <th style="width: 10px">#</th>
+                  <th>Código</th>
+                  <th>Nombre</th>
+                  <th>Acciones</th>
+                </tr>
+
+              </thead>
+
+
+            </table>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+  </section>
+
+</div>
+

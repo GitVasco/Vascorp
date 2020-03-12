@@ -5,7 +5,7 @@ require_once "conexion.php";
 class ModeloOperaciones{
 
 	/*=============================================
-	CREAR COLOR
+	CREAR OPERACION
 	=============================================*/
 
 	static public function mdlIngresarOperacion($tabla,$datos){
@@ -31,9 +31,59 @@ class ModeloOperaciones{
 
 
 	}    
+	static public function mdlIngresarCabeceraOperacion($tabla,$datos){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(articulo,vendedor_fk,total_pd,total_ts) VALUES (:articulo,:vendedor_fk, :total_pd, :total_ts)");
+
+		$stmt->bindParam(":articulo", $datos["articulo"], PDO::PARAM_STR);
+		$stmt->bindParam(":vendedor_fk", $datos["vendedor_fk"], PDO::PARAM_STR);
+		$stmt->bindParam(":total_pd", $datos["total_pd"], PDO::PARAM_STR);
+		$stmt->bindParam(":total_ts", $datos["total_ts"], PDO::PARAM_STR);
+		
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+
+	}  
+	static public function mdlIngresarDetalleOperacion($tabla,$datos){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(modelo,cod_operacion,precio_doc,tiempo_stand) VALUES (:modelo,:cod_operacion, :precio_doc,:tiempo_stand)");
+
+		$stmt->bindParam(":modelo", $datos["modelo"], PDO::PARAM_STR);
+		$stmt->bindParam("cod_operacion", $datos["cod_operacion"], PDO::PARAM_STR);
+		$stmt->bindParam(":precio_doc", $datos["precio_doc"], PDO::PARAM_STR);
+		$stmt->bindParam(":tiempo_stand", $datos["tiempo_stand"], PDO::PARAM_STR);
+		
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+
+	}  
 
 	/*=============================================
-	MOSTRAR COLORES
+	MOSTRAR OPERACIONES
 	=============================================*/
 
 	static public function mdlMostrarOperaciones($tabla,$item,$valor){
@@ -62,10 +112,123 @@ class ModeloOperaciones{
 
 		$stmt = null;
 
+	}
+
+	/*=============================================
+	MOSTRAR MODELOS
+	=============================================*/
+	static public function mdlMostrarModelos($tabla,$item,$valor){
+
+		if($valor != null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();
+
+		}else{
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			a.modelo,
+			a.nombre,
+			CONCAT(a.modelo, ' - ', a.nombre) AS packing 
+		  FROM
+			$tabla a 
+		  GROUP BY a.modelo ;
+		  ");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+	
+	/*=============================================
+	MOSTRAR CABECERA OPERACIONES
+	=============================================*/
+
+	static public function mdlMostrarCabeceraOperaciones($tabla,$item,$valor){
+
+		if($valor != null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla  WHERE $item = :$item ORDER BY id DESC");
+
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();
+
+		}else{
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cabecera.id, 
+			cabecera.articulo,
+			cabecera.vendedor_fk,
+			cabecera.total_pd,
+			cabecera.total_ts,
+			usu.nombre
+		  FROM
+			$tabla  cabecera 
+			LEFT JOIN usuariosjf  usu 
+		  ON cabecera.vendedor_fk = usu.id ORDER BY id DESC");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }
+	
+	/*=============================================
+	MOSTRAR DETALLE OPERACIONES
+	=============================================*/
+
+	static public function mdlMostrarDetalleOperaciones($tabla,$item,$valor){
+
+		if($valor != null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();
+
+		}else{
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
     }
     
 	/*=============================================
-	EDITAR COLOR
+	EDITAR OPERACION
 	=============================================*/
 
 	static public function mdlEditarOperacion($tabla,$datos){
@@ -117,5 +280,84 @@ class ModeloOperaciones{
 		$stmt = null;
 
 	}    
+
+	/*=============================================
+	EDITAR CABECERA OPERACION
+	=============================================*/
+
+	static public function mdlEditarCabeceraOperacion($tabla,$datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET articulo = :articulo , vendedor_fk = :vendedor_fk, total_pd = :total_pd, total_ts = :total_ts WHERE id = :id");
+
+		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
+		$stmt->bindParam(":articulo", $datos["articulo"], PDO::PARAM_STR);
+		$stmt->bindParam(":vendedor_fk", $datos["vendedor_fk"], PDO::PARAM_STR);
+		$stmt->bindParam(":total_pd", $datos["total_pd"], PDO::PARAM_STR);
+		$stmt->bindParam(":total_ts", $datos["total_ts"], PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+
+	/*=============================================
+	EDITAR DETALLE OPERACION
+	=============================================*/
+
+	static public function mdlEditarDetalleOperacion($tabla,$datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET modelo = :modelo , cod_operacion = :cod_operacion, precio_doc = :precio_doc, tiempo_stand = :tiempo_stand WHERE id = :id");
+
+		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
+		$stmt->bindParam(":modelo", $datos["modelo"], PDO::PARAM_STR);
+		$stmt->bindParam(":cod_operacion", $datos["cod_operacion"], PDO::PARAM_STR);
+		$stmt->bindParam(":precio_doc", $datos["precio_doc"], PDO::PARAM_STR);
+		$stmt->bindParam(":tiempo_stand", $datos["tiempo_stand"], PDO::PARAM_STR);
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+    }
+
+	static public function mdlEliminarCabeceraOperacion($tabla,$datos){
+
+		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
+
+		$stmt -> bindParam(":id", $datos, PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	} 
 
 }
