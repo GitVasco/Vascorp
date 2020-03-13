@@ -51,7 +51,7 @@ $(".tablaTipoTrabajador tbody").on("click","button.btnEliminarTipoTrabajador",fu
 	
 	
 });
-// EDITAR OPERACIÓN
+// EDITAR TIPO TRABAJADOR
 $(".tablaTipoTrabajador tbody").on("click","button.btnEditarTipoTrabajador",function(){
 	var idTipoTrabajador =$(this).attr("idTipoTrabajador");
 	//console.log("idTipoTrabajador", idTipoTrabajador);

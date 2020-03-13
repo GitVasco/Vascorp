@@ -211,6 +211,16 @@
                                 </li> 
 
                                 <li>
+                                    <a href="trabajador">
+            
+                                        <i class="fa fa-circle-o"></i>
+                                        <span>Trabajador</span>
+            
+                                    </a>
+        
+                                </li> 
+
+                                <li>
                                     <a href="tipotrabajador">
             
                                         <i class="fa fa-circle-o"></i>

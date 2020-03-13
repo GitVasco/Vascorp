@@ -81,7 +81,40 @@ class ModeloTrabajador{
 
 	}
 
+    /*=============================================
+	EDITAR PRODUCTO
+	=============================================*/
+	static public function mdlEditarTrabajador($tabla, $datos){
 
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET  cod_doc = :cod_doc , nro_doc_tra = :nro_doc_tra, nom_tra = :nom_tra, ape_pat_tra = :ape_pat_tra, ape_mat_tra = :ape_mat_tra, cod_tip_tra = :cod_tip_tra, sueldo_total = :sueldo_total WHERE cod_tra = :cod_tra");
+
+
+		
+        $stmt->bindParam(":cod_doc", $datos["cod_doc"], PDO::PARAM_INT);
+        $stmt->bindParam(":nro_doc_tra", $datos["nro_doc_tra"], PDO::PARAM_INT);
+		$stmt->bindParam(":nom_tra", $datos["nom_tra"], PDO::PARAM_STR);
+		$stmt->bindParam(":ape_pat_tra", $datos["ape_pat_tra"], PDO::PARAM_STR);
+		$stmt->bindParam(":ape_mat_tra", $datos["ape_mat_tra"], PDO::PARAM_STR);
+		$stmt->bindParam(":cod_tip_tra", $datos["cod_tip_tra"], PDO::PARAM_INT);
+		$stmt->bindParam(":sueldo_total", $datos["sueldo_total"], PDO::PARAM_STR);
+		$stmt->bindParam(":cod_tra", $datos["cod_tra"], PDO::PARAM_INT);
+        
+       
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	}	
 
 
     /*=============================================
