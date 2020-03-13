@@ -4,7 +4,7 @@
 
     <h1>
 
-        Editar operación para Modelo
+      Crear Operacion para Modelo
 
     </h1>
 
@@ -12,7 +12,7 @@
 
       <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-      <li class="active">Editar Operación Modelo</li>
+      <li class="active">Crear Operación Modelo</li>
 
     </ol>
 
@@ -41,27 +41,7 @@
                 <!--=====================================
                 ENTRADA DEL VENDEDOR
                 ======================================-->
-              <?php
-                $item="id";
-                $valor=$_GET["idOperacion"];
-                $cabecera=ControladorOperaciones::ctrMostrarCabeceraOperaciones($item,$valor);
-                
-                $itemUsuario="id";
-                $valorUsuario=$cabecera["vendedor_fk"];
 
-                $usuarios=ControladorUsuarios::ctrMostrarUsuarios($itemUsuario,$valorUsuario);
-
-                $item = "modelo";
-                $valor = $cabecera["articulo"];
-
-                $articulos = ControladorOperaciones::ctrMostrarModelos($item, $valor);
-
-                $itemDetalle= "modelo";
-                $valorDetalle=$cabecera["articulo"];
-                
-                $detalle=ControladorOperaciones::ctrMostrarDetalleOperaciones($itemDetalle,$valorDetalle);
-                var_dump($detalle);
-              ?>
                 <div class="form-group">
 
                   <div class="input-group">
@@ -69,7 +49,7 @@
                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
 
                     <input type="text" class="form-control" id="nuevoVendedor" name="nuevoVendedor"
-                      value="<?php echo $usuarios["nombre"]; ?>" readonly>
+                      value="<?php echo $_SESSION["nombre"]; ?>" readonly>
 
                     <input type="hidden" name="idVendedor" value="<?php echo $_SESSION["id"]; ?>">
 
@@ -88,9 +68,24 @@
 
                     <span class="input-group-addon"><i class="fa fa-users"></i></span>
 
-                    <select class="form-control " id="seleccionarArticulo" name="seleccionarArticulo"  readonly required>
+                    <select class="form-control selectpicker" id="seleccionarArticulo" name="seleccionarArticulo" data-live-search="true" required>
 
-                      <option value="<?php echo $articulos["modelo"];?>"><?php echo $articulos["modelo"]." - ".$articulos["nombre"]; ?></option>
+                      <option value="">Seleccionar Articulo</option>
+
+                      <?php
+
+                      $item = null;
+                      $valor = null;
+
+                      $articulos = ControladorOperaciones::ctrMostrarModelos($item, $valor);
+                      
+                      foreach ($articulos as $key => $value) {
+                        if($value["operaciones"] == 0){
+                          echo '<option value="'.$value["modelo"].'">'.$value["packing"].'</option>';
+                        }    
+                      }
+
+                      ?>
 
                     </select>
 
@@ -196,8 +191,8 @@
 
           <?php
 
-            $editarOperacion = new ControladorOperaciones();
-            $editarOperacion -> ctrEditarCabeceraOperacion();
+            $guardarOperacion = new ControladorOperaciones();
+            $guardarOperacion -> ctrCrearOperacionModelo();
 
           ?>          
 

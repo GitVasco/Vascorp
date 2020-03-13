@@ -95,7 +95,7 @@ class ControladorOperaciones{
 	=============================================*/
 
 	static public function ctrMostrarModelos($item,$valor){
-        $tabla="articulojf";
+        $tabla="modelojf";
 		$respuesta = ModeloOperaciones::mdlMostrarModelos($tabla,$item,$valor);
 
 		return $respuesta;
@@ -252,18 +252,17 @@ class ControladorOperaciones{
 							   );
 
 			   	$respuesta = ModeloOperaciones::mdlIngresarCabeceraOperacion($tabla,$datos);
-				
-
+				ModeloOperaciones::mdlActualizarUnDato("modelojf","operaciones",1,$_POST["seleccionarArticulo"]);
 				//DETALLE
 				
 				$operaciones=json_decode($_POST["listaOperaciones"],true);
 				foreach($operaciones as $key=>$value){
-					$tabla="operaciones_detallejf";
+					$tabla2="operaciones_detallejf";
 					$datos2=array("modelo"=>$_POST["seleccionarArticulo"],
 								  "cod_operacion"=>$value["codigo"],
 								  "precio_doc"=>$value["precio"],
 								  "tiempo_stand"=>$value["tiempo"],);
-					$respuesta2= ModeloOperaciones::mdlIngresarDetalleOperacion($tabla,$datos2);
+					$respuesta2= ModeloOperaciones::mdlIngresarDetalleOperacion($tabla2,$datos2);
 					
 				}
 			   	if($respuesta == "ok"  && $respuesta2=="ok"){
@@ -336,12 +335,13 @@ class ControladorOperaciones{
 							confirmButtonText: "Cerrar"
 						}).then((result)=>{
 							if(result.value){
-								window.location="creardetalle";}
+								window.location="creardetalleoperaciones";}
 						});
 					</script>';
 			}else{
 				$tabla="operacion_cabecerajf";
-				$datos = array("articulo" => $_POST["seleccionarArticulo"],
+				$datos = array( "id"=>$_POST["editarDetalleOperacion"],
+								"articulo" => $_POST["seleccionarArticulo"],
 				   				 "vendedor_fk"=>$_POST["idVendedor"],
 					   		     "total_pd"=>$_POST["nuevoTotalDocena"],
 							     "total_ts"=>$_POST["nuevoTotalStandar"]
@@ -349,17 +349,21 @@ class ControladorOperaciones{
 
 			   	$respuesta = ModeloOperaciones::mdlEditarCabeceraOperacion($tabla,$datos);
 				
+				$tabla2="operaciones_detallejf";
+				$valor2=$_POST["seleccionarArticulo"];
+				
 
 				//DETALLE
 				
 				$operaciones=json_decode($_POST["listaOperaciones"],true);
+				$detalle = ModeloOperaciones::mdlEliminarDetalleOperacion($tabla2,$valor2);
 				foreach($operaciones as $key=>$value){
-					$tabla="operaciones_detallejf";
+					
 					$datos2=array("modelo"=>$_POST["seleccionarArticulo"],
 								  "cod_operacion"=>$value["codigo"],
 								  "precio_doc"=>$value["precio"],
 								  "tiempo_stand"=>$value["tiempo"],);
-					$respuesta2= ModeloOperaciones::mdlEditarDetalleOperacion($tabla,$datos2);
+					$respuesta2= ModeloOperaciones::mdlIngresarDetalleOperacion($tabla2,$datos2);
 					
 				}
 			   	if($respuesta == "ok"  && $respuesta2=="ok"){
@@ -395,7 +399,7 @@ class ControladorOperaciones{
 						  }).then(function(result){
 							if (result.value) {
 
-							window.location = "creardetalle";
+							window.location = "creardetalleoperaciones";
 
 							}
 						})
@@ -419,29 +423,28 @@ class ControladorOperaciones{
 			$tabla ="operacion_cabecerajf";
 			$datos = $_GET["idOperacion"];
 
+			
+
+			$respuesta = "ok";
+
+			//LLAMAMOS CABECERA
+			$item="id";
+			$cabecera=ModeloOperaciones::mdlMostrarCabeceraOperaciones($tabla,$item,$datos);
+
+			$tabla2="operaciones_detallejf";
+			$itemDetalle="modelo";
+			$valorDetalle=$cabecera["articulo"];
+			$detalle=ModeloOperaciones::mdlMostrarDetalleOperaciones($tabla2,$itemDetalle,$valorDetalle);
+
+			foreach ($detalle as $key => $value) {
+		
+				$respuesta2=ModeloOperaciones::mdlEliminarDetalleOperacion($tabla2,$value["modelo"]);
+
+			}
 			$respuesta = ModeloOperaciones::mdlEliminarCabeceraOperacion($tabla,$datos);
+			
 
-			if($respuesta == "ok"){
-
-				echo'<script>
-
-				swal({
-					  type: "success",
-					  title: "La operación ha sido borrado correctamente",
-					  showConfirmButton: true,
-					  confirmButtonText: "Cerrar",
-					  closeOnConfirm: false
-					  }).then(function(result){
-								if (result.value) {
-
-								window.location = "detalleoperaciones";
-
-								}
-							})
-
-				</script>';
-
-			}		
+	
 
 		}
 

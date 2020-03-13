@@ -4,7 +4,7 @@
 
     <h1>
 
-      Crear Operacion para Modelo
+        Editar operación para Modelo
 
     </h1>
 
@@ -12,7 +12,7 @@
 
       <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-      <li class="active">Crear Operación Modelo</li>
+      <li class="active">Editar Operación Modelo</li>
 
     </ol>
 
@@ -41,7 +41,24 @@
                 <!--=====================================
                 ENTRADA DEL VENDEDOR
                 ======================================-->
+              <?php
+                $item="id";
+                $valor=$_GET["idOperacion"];
+                $cabecera=ControladorOperaciones::ctrMostrarCabeceraOperaciones($item,$valor);
+                
+                $itemUsuario="id";
+                $valorUsuario=$cabecera["vendedor_fk"];
 
+                $usuarios=ControladorUsuarios::ctrMostrarUsuarios($itemUsuario,$valorUsuario);
+
+                $item = "modelo";
+                $valor = $cabecera["articulo"];
+
+                $articulos = ControladorOperaciones::ctrMostrarModelos($item, $valor);
+
+               
+                
+              ?>
                 <div class="form-group">
 
                   <div class="input-group">
@@ -49,9 +66,10 @@
                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
 
                     <input type="text" class="form-control" id="nuevoVendedor" name="nuevoVendedor"
-                      value="<?php echo $_SESSION["nombre"]; ?>" readonly>
+                      value="<?php echo $usuarios["nombre"]; ?>" readonly>
 
                     <input type="hidden" name="idVendedor" value="<?php echo $_SESSION["id"]; ?>">
+                    <input type="hidden" name="editarDetalleOperacion" id="editarDetalleOperacion" value="<?php echo $_GET["idOperacion"]?>">
 
                   </div>
 
@@ -68,24 +86,9 @@
 
                     <span class="input-group-addon"><i class="fa fa-users"></i></span>
 
-                    <select class="form-control selectpicker" id="seleccionarArticulo" name="seleccionarArticulo" data-live-search="true" required>
+                    <select class="form-control " id="seleccionarArticulo" name="seleccionarArticulo"  readonly required>
 
-                      <option value="">Seleccionar Articulo</option>
-
-                      <?php
-
-                      $item = null;
-                      $valor = null;
-
-                      $articulos = ControladorOperaciones::ctrMostrarModelos($item, $valor);
-
-                      foreach ($articulos as $key => $value) {
-
-                        echo '<option value="'.$value["modelo"].'">'.$value["packing"].'</option>';
-
-                      }
-
-                      ?>
+                      <option value="<?php echo $articulos["modelo"];?>"><?php echo $articulos["modelo"]." - ".$articulos["nombre"]; ?></option>
 
                     </select>
 
@@ -98,7 +101,51 @@
                 ======================================-->
 
                 <div class="form-group row nuevaOperacion">
-
+                  <?php
+                     $itemDetalle= "modelo";
+                     $valorDetalle=$cabecera["articulo"];
+                     
+                     $detalle=ControladorOperaciones::ctrMostrarDetalleOperaciones($itemDetalle,$valorDetalle);
+                     foreach ($detalle as $key => $value) {
+                       $itemOperacion = "codigo";
+                       $valorOperacion = $value["cod_operacion"];
+                      
+                       $infoOperacion=ControladorOperaciones::ctrMostrarOperaciones($itemOperacion,$valorOperacion);
+                       echo '<div class="row" style="padding:5px 15px">
+                   
+                       <div class="col-xs-6" style="padding-right:0px">
+                   
+                         <div class="input-group">
+                   
+                         <span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarOperacion" idOperacion="'.$infoOperacion["id"].'"><i class="fa fa-times"></i></button></span>
+                   
+                         <input type="text" class="form-control nuevaDescripcionOperacion" idOperacion="'.$infoOperacion["id"].'" name="agregarOperacion" value="'.$infoOperacion["nombre"].'" codigoOP="'.$infoOperacion["codigo"].'" readonly required>
+                   
+                         </div>
+                   
+                       </div>
+                   
+                       <div class="col-xs-3">
+                   
+                       <input type="number" class="form-control nuevoPrecioDocena" name="nuevoPrecioDocena" min="1" value="'.$value["precio_doc"].'" required>
+                   
+                       </div>
+                   
+                       <div class="col-xs-3 ingresoPrecio" style="padding-left:0px">
+                   
+                         <div class="input-group">
+                   
+                         <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                   
+                         <input type="number" class="form-control nuevoTiempoStandar" name="nuevoTiempoStandar" value="'.$value["tiempo_stand"].'"  required>
+                   
+                         </div>
+                   
+                       </div>
+                   
+                       </div>';
+                     }
+                  ?>
 
 
                 </div>
@@ -143,7 +190,7 @@
 
                               <span class="input-group-addon"><i class="fa fa-money"></i></span>
 
-                              <input type="text" min="1" class="form-control input-lg" id="nuevoTotalDocena" name="nuevoTotalDocena" totalDecena="" placeholder="00000" readonly required>
+                              <input type="text" min="1" class="form-control input-lg" id="nuevoTotalDocena" name="nuevoTotalDocena" totalDecena="" value="<?php echo $cabecera["total_pd"]?>" readonly required>
 
 
 
@@ -157,7 +204,7 @@
 
                               <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
 
-                              <input type="text" min="1" class="form-control input-lg" id="nuevoTotalStandar" name="nuevoTotalStandar" totalStand="" placeholder="00000" readonly required>
+                              <input type="text" min="1" class="form-control input-lg" id="nuevoTotalStandar" name="nuevoTotalStandar" totalStand="" value="<?php echo $cabecera["total_ts"]?>" readonly required>
 
                             </div>
 
@@ -183,7 +230,7 @@
 
             <div class="box-footer">
 
-              <button type="submit" class="btn btn-primary pull-right">Guardar Operacion</button>
+              <button type="submit" class="btn btn-primary pull-right">Guardar cambios</button>
 
             </div>
 
@@ -191,8 +238,8 @@
 
           <?php
 
-            $guardarOperacion = new ControladorOperaciones();
-            $guardarOperacion -> ctrCrearOperacionModelo();
+            $editarOperacion = new ControladorOperaciones();
+            $editarOperacion -> ctrEditarCabeceraOperacion();
 
           ?>          
 

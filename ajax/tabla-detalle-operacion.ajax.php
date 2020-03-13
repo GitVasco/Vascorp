@@ -25,7 +25,7 @@ class TablaOperaciones{
         TRAEMOS LAS ACCIONES
         =============================================*/         
         
-        $botones =  "<div class='btn-group'><button class='btn btn-primary recuperarBoton   agregarOperacion' idOperacion='".$operaciones[$i]["id"]."'>Agregar</button></div>"; 
+        $botones =  "<div class='btn-group'><button class='btn btn-primary btn-xs recuperarBoton   agregarOperacion' idOperacion='".$operaciones[$i]["id"]."'><i class='fa fa-plus-circle'></i> Agregar</button></div>"; 
 
             $datosJson .= '[
             "'.($i+1).'",
