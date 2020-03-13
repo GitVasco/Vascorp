@@ -270,8 +270,8 @@ MODAL AGREGAR TRABAJADOR
 
       <?php
 
-         $crearOperacion = new ControladorTrabajador();
-        $crearOperacion -> ctrCrearTrabajador();
+          $crearTrabajador = new ControladorTrabajador();
+          $crearTrabajador -> ctrCrearTrabajador();
 
       ?>
 
@@ -281,7 +281,218 @@ MODAL AGREGAR TRABAJADOR
   </div>
 
 </div>
+<!--=====================================
+MODAL EDITAR TRABAJADOR
+======================================-->
 
+<div id="modalEditarTrabajador" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form role="form" method="post" enctype="multipart/form-data">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Editar trabajador</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <!-- ENTRADA PARA EL CÓDIGO DE TRABAJADOR -->
+            
+              <div class="form-group">
+                
+                <div class="input-group">
+                
+                    <span class="input-group-addon"><i class="fa fa-code"></i></span> 
+
+                    <input type="text" class="form-control input-lg" id="editarCodigoTrabajador" name="editarCodigoTrabajador" readonly required>
+                    
+
+                </div>
+
+              </div>
+
+
+            <!-- ENTRADA PARA SELECCIONAR TIPO DOCUMENTO
+
+                <div class="form-group">
+                  
+                  <div class="input-group">
+                  
+                      <span class="input-group-addon"><i class="fa fa-id-card" aria-hidden="true"></i></span> 
+
+                      <select class="form-control input-lg"  name="editarTipoDocumento" readonly required>
+                        
+                        <option id="editarTipoDocumento"></option>
+
+                      </select>
+
+                  </div>
+
+                </div> -->
+
+            <!-- ENTRADA PARA EL CÓDIGO DE TRABAJADOR -->
+            
+              <div class="form-group">
+                
+                <div class="input-group">
+                
+                    <span class="input-group-addon"><i class="fa fa-code"></i></span> 
+
+                    <input type="text" class="form-control input-lg" id="editarTipoDocumento" name="editarTipoDocumento" readonly required>
+                    
+
+                </div>
+
+              </div>
+
+            <!-- ENTRADA PARA NRO DE DOCUMENTO -->
+
+              <div class="form-group">
+                
+                <div class="input-group">
+                
+                    <span class="input-group-addon"><i class="fa fa-check-square" aria-hidden="true"></i></span> 
+
+                    <input type="text" class="form-control input-lg" id="editarNroDocumento" name="editarNroDocumento" required>
+
+                </div>
+
+              </div>
+
+             <!-- ENTRADA PARA NOMBRE -->
+
+              <div class="form-group">
+                
+                <div class="input-group">
+                
+                    <span class="input-group-addon"><i class="fa fa-user-circle" aria-hidden="true"></i></span> 
+
+                    <input type="text" class="form-control input-lg" id="editarNombreTrabajador" name="editarNombreTrabajador"  required>
+
+                </div>
+
+              </div>
+             <!-- ENTRADA PARA APELLIDO PATERNO -->
+
+              <div class="form-group">
+                
+                <div class="input-group">
+                
+                    <span class="input-group-addon"><i class="fa fa-user-circle" aria-hidden="true"></i></span> 
+
+                    <input type="text" class="form-control input-lg" id="editarApellidoPaterno" name="editarApellidoPaterno"  required>
+
+                </div>
+
+              </div>
+              <!-- ENTRADA PARA APELLIDO MATERNO -->
+
+                <div class="form-group">
+              
+                  <div class="input-group">
+              
+                      <span class="input-group-addon"><i class="fa fa-user-circle" aria-hidden="true"></i></span> 
+
+                      <input type="text" class="form-control input-lg" id="editarApellidoMaterno" name="editarApellidoMaterno"  required>
+
+                  </div>
+
+                </div>
+
+            <!-- ENTRADA PARA SELECCIONAR TIPO TRABAJADOR -->
+
+            <!-- <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+
+                <select class="form-control input-lg"  name="editarTipoTrabajador" readonly required>
+                  
+                  <option id="editarTipoTrabajador"></option>
+
+                </select>
+
+              </div>
+
+            </div> -->
+            <!-- ENTRADA PARA EDITAR TIPO TRABAJADOR -->
+
+              <div class="form-group">
+                
+                <div class="input-group">
+            
+                    <span class="input-group-addon"><i class="fa fa-briefcase" aria-hidden="true"></i></span> 
+
+                    <input type="text" class="form-control input-lg" id="editarTipoTrabajador" name="editarTipoTrabajador" readonly  required>
+
+                </div>
+
+              </div>
+
+
+             <!-- ENTRADA PARA EDITAR SUELDO x MES -->
+
+              <div class="form-group">
+                    
+                  <div class="input-group">
+                    
+                      <span class="input-group-addon"><i class="fa fa-money" aria-hidden="true"></i></span> 
+
+                      <input type="text" class="form-control input-lg" id="editarSueldoMes" name="editarSueldoMes"  required>
+                      <input type="hidden" id="idTrabajador" name="idTrabajador">
+
+                  </div>
+
+              </div>
+
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Guardar cambios</button>
+
+        </div>
+
+      </form>
+
+        <!-- <?php
+
+          //  $editarTrabajador = new ControladorTrabajador();
+          //  $editarTrabajador -> ctrEditarTrabajador();
+
+        ?>      -->
+
+    </div>
+
+  </div>
+
+</div>
 
 <?php
 

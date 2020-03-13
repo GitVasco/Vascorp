@@ -128,13 +128,15 @@ class ControladorTipoTrabajador{
 			var_dump("editarTipoTrabajador", $_POST["editarTipoTrabajador"]);
 
 			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["editarTipoTrabajador"]) &&
-			   preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["editarSectorTrabajador"])){
+			   preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["editarSectorTrabajador"])
+			   ){
 
 			   	$datos = array("cod_tip_tra"=>$_POST["idTipoTrabajador"],
 							   "nom_tip_trabajador"=>$_POST["editarTipoTrabajador"],
 							   "detalle"=>$_POST["editarSectorTrabajador"]);
 
 				$tabla="tipo_trabajadorjf";
+				
 			   	$respuesta = ModeloTipoTrabajador::mdlEditarTipoTrabajador($tabla,$datos);
 
 			   	if($respuesta == "ok"){

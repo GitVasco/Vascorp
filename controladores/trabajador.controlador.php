@@ -35,46 +35,46 @@ class ControladorTrabajador{
 							   "sueldo_total"=>$_POST["sueldoMes"]);
 
 			   	$respuesta = ModeloTrabajador::mdlIngresarTrabajador($tabla,$datos);
-				var_dump($datos);
-			//    	if($respuesta == "ok"){
+				//var_dump($datos);
+			   	if($respuesta == "ok"){
 
-			// 		echo'<script>
+					echo'<script>
 
-			// 		swal({
-			// 			  type: "success",
-			// 			  title: "El trabajador ha sido guardada correctamente",
-			// 			  showConfirmButton: true,
-			// 			  confirmButtonText: "Cerrar"
-			// 			  }).then(function(result){
-			// 						if (result.value) {
+					swal({
+						  type: "success",
+						  title: "El trabajador ha sido guardada correctamente",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+									if (result.value) {
 
-			// 						window.location = "trabajador";
+									window.location = "trabajador";
 
-			// 						}
-			// 					})
+									}
+								})
 
-			// 		</script>';
+					</script>';
 
-			// 	}
+				}
 
-			// }else{
+			}else{
 
-			// 	echo'<script>
+				echo'<script>
 
-			// 		swal({
-			// 			  type: "error",
-			// 			  title: "¡El trabajador no puede ir vacío o llevar caracteres especiales!",
-			// 			  showConfirmButton: true,
-			// 			  confirmButtonText: "Cerrar"
-			// 			  }).then(function(result){
-			// 				if (result.value) {
+					swal({
+						  type: "error",
+						  title: "¡El trabajador no puede ir vacío o llevar caracteres especiales!",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+							if (result.value) {
 
-			// 				window.location = "trabajador";
+							window.location = "trabajador";
 
-			// 				}
-			// 			})
+							}
+						})
 
-			//   	</script>';
+			  	</script>';
 
 
 
@@ -126,7 +126,81 @@ class ControladorTrabajador{
 
 	}    
 
+	/*=============================================
+	EDITAR CATEGORIA
+	=============================================*/
 
+	static public function ctrEditarTrabajador(){
+
+		if(isset($_POST["editarNombreTrabajador"])){
+
+			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["editarNombreTrabajador"])&&
+			   preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["editarApellidoPaterno"])&&
+			   preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["editarApellidoMaterno"])
+			){
+
+				
+
+				$datos = array("cod_tra"=>$_POST["editarCodigoTrabajador"],
+							   "cod_doc"=>$_POST["editarTipoDocumento"],
+							   "nro_doc_tra"=>$_POST["editarNroDocumento"],
+							   "nom_tra"=>$_POST["editarNombreTrabajador"],
+							   "ape_pat_tra"=>$_POST["editarApellidoPaterno"],
+							   "ape_mat_tra"=>$_POST["editarApellidoMaterno"],
+							   "cod_tip_tra"=>$_POST["editarTipoTrabajador"],
+							   "sueldo_total"=>$_POST["editarSueldoMes"],
+							);
+
+				$tabla = "trabajadorjf";
+
+				$respuesta = ModeloTrabajador::mdlEditarTrabajador($tabla, $datos);
+
+				if($respuesta == "ok"){
+
+					echo'<script>
+
+					swal({
+						  type: "success",
+						  title: "El trabajador ha sido cambiado correctamente",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+									if (result.value) {
+
+									window.location = "trabajador";
+
+									}
+								})
+
+					</script>';
+
+				}
+
+
+			}else{
+
+				echo'<script>
+
+					swal({
+						  type: "error",
+						  title: "¡El trabajador no puede ir vacío o llevar caracteres especiales!",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+							if (result.value) {
+
+							window.location = "trabajador";
+
+							}
+						})
+
+			  	</script>';
+
+			}
+
+		}
+
+	}
 
 
 }
