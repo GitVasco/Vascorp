@@ -24,7 +24,7 @@
 
       <div class="box-header with-border">
   
-        <a class="btn btn-primary" href="creardetalle">
+        <a class="btn btn-primary" href="creardetalleoperaciones">
           
           Agregar operaciones
 

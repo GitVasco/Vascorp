@@ -217,6 +217,7 @@ $(".tablaArticuloOperaciones tbody").on("click", "button.agregarOperacion", func
 		  "</div>"
 		);
 		$(".nuevoPrecioDocena").number(true, 2);
+		$(".nuevoTiempoStandar").number(true, 2);
 
 		sumarTotalPrecios();
 		sumarTotalTiempos();
@@ -311,18 +312,17 @@ function quitarAgregarOperaciones() {
 	//Capturamos todos los id de productos que fueron elegidos en la venta
 	var idOperaciones = $(".quitarOperacion");
   
-	/* console.log("idProductos", idProductos); */
-  
 	//Capturamos todos los botones de agregar que aparecen en la tabla
 	var botonesTabla = $(".tablaArticuloOperaciones tbody button.agregarOperacion");
-  
-	/* console.log("botonesTabla", botonesTabla); */
+	
+	
   
 	//Recorremos en un ciclo para obtener los diferentes idProductos que fueron agregados a la venta
 	for (var i = 0; i < idOperaciones.length; i++) {
 	  //Capturamos los Id de los productos agregados a la venta
 	  var boton = $(idOperaciones[i]).attr("idOperacion");
-  
+	  console.log(boton);
+	
 	  //Hacemos un recorrido por la tabla que aparece para desactivar los botones de agregar
 	  for (var j = 0; j < botonesTabla.length; j++) {
 		if ($(botonesTabla[j]).attr("idOperacion") == boton) {
@@ -333,15 +333,21 @@ function quitarAgregarOperaciones() {
 	}
   }
 
-//FUNCION PAR SUMAR CADA VEZ QUE SE MODIFIQUE LAS OPERACIONES
-  $(".formularioOperaciones").on("change", "input.nuevoPrecioDocena", function() {
-
-	// SUMAR TOTAL DE PRECIOS
+//FUNCION PAR SUMAR CADA VEZ QUE SE MODIFIQUE LAS PRECIOS
+  $(".formularioOperacion").on("change", "input.nuevoPrecioDocena", function() {
   
 	sumarTotalPrecios();
+	listarOperaciones();
   
-	//sumar Tiempos
+  });
+  //FUNCION PAR SUMAR CADA VEZ QUE SE MODIFIQUE LOS TIEMPOS
+  $(".formularioOperacion").on("change", "input.nuevoTiempoStandar", function() {
+
+	// SUMAR TOTAL DE TIEMPOS
+  
 	sumarTotalTiempos();
+	listarOperaciones();
+  
   });
   
   /*=============================================
@@ -400,6 +406,9 @@ function quitarAgregarOperaciones() {
 	$("#nuevoTotalStandar").val(sumaTotalPrecio);
   }
 
+$("#nuevoTotalDocena").number(true, 2);
+$("#nuevoTotalStandar").number(true, 2);
+
   /*=============================================
 LISTAR TODAS LAS OPERACIONES
 =============================================*/
@@ -423,6 +432,8 @@ function listarOperaciones() {
 	  });
 	}
 	$("#listaOperaciones").val(JSON.stringify(listaOperaciones));
+	console.log(listaOperaciones);
+	
 	
 	
 }
@@ -431,7 +442,7 @@ function listarOperaciones() {
 //EDITAR VENTA
 $(".tablaDetalleOperaciones").on("click", ".btnEditarOperacion",function(){
 	var idOperacion= $(this).attr("idOperacion");
-	window.location="index.php?ruta=editardetalle&idOperacion="+idOperacion;
+	window.location="index.php?ruta=editardetalleoperaciones&idOperacion="+idOperacion;
 })
 
 // ELIMINAR CABECERA OPERACIÓN

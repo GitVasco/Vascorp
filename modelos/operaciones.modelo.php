@@ -136,7 +136,7 @@ class ModeloOperaciones{
 			a.nombre,
 			CONCAT(a.modelo, ' - ', a.nombre) AS packing 
 		  FROM
-			$tabla a 
+			$tabla a WHERE operaciones=0
 		  GROUP BY a.modelo ;
 		  ");
 
@@ -209,7 +209,7 @@ class ModeloOperaciones{
 
 			$stmt -> execute();
 
-			return $stmt -> fetch();
+			return $stmt -> fetchAll();
 
 		}else{
 
@@ -316,9 +316,8 @@ class ModeloOperaciones{
 
 	static public function mdlEditarDetalleOperacion($tabla,$datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET modelo = :modelo , cod_operacion = :cod_operacion, precio_doc = :precio_doc, tiempo_stand = :tiempo_stand WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET modelo = :modelo , cod_operacion = :cod_operacion, precio_doc = :precio_doc, tiempo_stand = :tiempo_stand WHERE modelo = :modelo");
 
-		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
 		$stmt->bindParam(":modelo", $datos["modelo"], PDO::PARAM_STR);
 		$stmt->bindParam(":cod_operacion", $datos["cod_operacion"], PDO::PARAM_STR);
 		$stmt->bindParam(":precio_doc", $datos["precio_doc"], PDO::PARAM_STR);
@@ -338,6 +337,23 @@ class ModeloOperaciones{
 
     }
 
+		// Método para actualizar un dato CON EL MODELO
+		static public function mdlActualizarUnDato($tabla,$item1,$valor1,$valor2){
+
+			$sql="UPDATE $tabla SET $item1=:$item1 WHERE modelo=:modelo";
+	
+			$stmt=Conexion::conectar()->prepare($sql);
+	
+			$stmt->bindParam(":".$item1,$valor1,PDO::PARAM_STR);
+			$stmt->bindParam(":modelo",$valor2,PDO::PARAM_STR);
+	
+			$stmt->execute();
+	
+			$stmt=null;
+	
+		}
+
+	//ELIMINAR CABECERA OPERACION
 	static public function mdlEliminarCabeceraOperacion($tabla,$datos){
 
 		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
@@ -359,5 +375,40 @@ class ModeloOperaciones{
 		$stmt = null;
 
 	} 
+
+	//ELIMINAR DETALLE OPERACION
+	static public function mdlEliminarDetalleOperacion($tabla,$datos){
+
+		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE modelo = :modelo");
+
+		$stmt -> bindParam(":modelo", $datos, PDO::PARAM_STR);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	} 
+
+	// Método para eliminar un detalle de venta
+	static public function mdlEliminarDato($tabla,$item,$valor){
+		$sql="DELETE FROM $tabla WHERE $item=:$item";
+		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":".$item,$valor,PDO::PARAM_STR);
+		if($stmt->execute()){
+			return "ok";}
+		else{
+			return "error";}
+		$stmt=null;
+	}
 
 }
