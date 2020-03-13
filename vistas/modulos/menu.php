@@ -143,6 +143,18 @@
                             </a>
             
                             <ul class="treeview-menu">
+
+                                <li>
+                                        
+                                    <a href="modelosjf">
+            
+                                        <i class="fa fa-circle-o"></i>
+                                        <span>Modelos</span>
+                                        
+            
+                                    </a>
+                        
+                                </li>
             
                                 <li>
             

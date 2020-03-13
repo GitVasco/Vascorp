@@ -133,6 +133,7 @@ $(".tablaArticulosAlmacenCorte tbody").on("click", "button.agregarArtAC", functi
             // AGRUPAR PRODUCTOS EN FORMATO JSON
 
             listarArticulosAC();
+            listArticulo();
 
             // PONER FORMATO AL PRECIO DE LOS PRODUCTOS
 
@@ -220,6 +221,7 @@ $(".formularioAlmacenCorte").on("click", "button.quitarAC", function () {
             // AGRUPAR PRODUCTOS EN FORMATO JSON
 
             listarArticulosAC();
+            listArticulo();
 
     }
 
@@ -285,6 +287,7 @@ $(".formularioAlmacenCorte").on("change", "input.nuevaCantidadArticuloAC", funct
     // AGRUPAR PRODUCTOS EN FORMATO JSON
   
         listarArticulosAC();
+        listArticulo();
 
 
   });
@@ -330,7 +333,7 @@ $("#nuevoTotalAlmacenCorte").number(true, 0);
 
 
 /* 
-* LISTAR TODOS LOS ARTICULOS
+* LISTAR TODOS LOS ARTICULOS DEL DETALLE
 */
 function listarArticulosAC() {
 
@@ -364,13 +367,43 @@ function listarArticulosAC() {
 }
 
 /* 
+* LISTAR TODOS LOS ARTICULOS
+*/
+function listArticulo() {
+
+    var listArticulo = [];
+
+    var articulo = $(".nuevaDescripcionProducto");
+    var cantidad = $(".nuevaCantidadArticuloAC");
+
+    
+    for (var i = 0; i < articulo.length; i++) {
+
+        listArticulo.push({
+
+        articulo: $(articulo[i]).attr("codigoAC"),
+        cantidad: $(cantidad[i]).attr("nuevoAlmCorte")
+
+      });
+    }
+  
+    //console.log("listArticulo", JSON.stringify(listArticulo));
+    //console.log("listArticulo", listArticulo);
+  
+    $("#listArticulo").val(JSON.stringify(listArticulo));
+    
+}
+
+
+
+/* 
 *FUNCIÓN PARA DESACTIVAR LOS BOTONES AGREGAR CUANDO EL ARTICULO YA HABÍA SIDO SELECCIONADO EN LA CARPETA
 */
 function quitarAgregarArticuloAC() {
 
 	//Capturamos todos los id de productos que fueron elegidos en la venta
     var articuloAC = $(".quitarAC");
-    console.log("articuloAC", articuloAC);
+    //console.log("articuloAC", articuloAC);
 
 	//Capturamos todos los botones de agregar que aparecen en la tabla
     var botonesTablaAC = $(".tablaArticulosAlmacenCorte tbody button.agregarArtAC");

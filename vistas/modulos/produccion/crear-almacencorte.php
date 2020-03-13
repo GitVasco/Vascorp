@@ -147,7 +147,9 @@
 
                 </div>
 
-                <input type="hidden" id="listaArticulosAC" name="listaArticulosAC">                
+                <input type="hidden" id="listaArticulosAC" name="listaArticulosAC">
+                <input type="hidden" id="listArticulo" name="listArticulo">
+                <input type="hidden" id="listCantidad" name="listCantidad">                
 
                 <div class="row">
 
@@ -217,7 +219,12 @@
 
           </form>
 
-        
+          <?php
+
+          $crearAlmacenCorte = new ControladorAlmacenCorte();
+          $crearAlmacenCorte -> ctrCrearAlmacenCorte();
+
+          ?> 
           
 
         </div>
