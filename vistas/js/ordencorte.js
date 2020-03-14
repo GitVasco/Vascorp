@@ -1,5 +1,5 @@
 /* 
-* CARGAR TABLA TARJETAS
+* CARGAR TABLA ORDEN DE CORTE
 */
 $('.tablaOrdenCorte').DataTable({
 	"ajax": "ajax/tabla-ordencorte.ajax.php?perfil=" + $("#perfilOculto").val(),

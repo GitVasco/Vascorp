@@ -77,8 +77,136 @@ class ModeloAlmacenCorte{
 
 	}
 
+	/* 
+	* Guardar cabecera de Almacen DE CORTE
+	*/
+	static public function mdlGuardarAlmacenCorte($datos){
+
+		$sql="CALL sp_1059_insert_almcorte_p(:codigo, :usuario, :total, :estado)";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":codigo",$datos["codigo"],PDO::PARAM_INT);
+		$stmt->bindParam(":usuario",$datos["usuario"],PDO::PARAM_INT);
+		$stmt->bindParam(":total",$datos["total"],PDO::PARAM_INT);
+		$stmt->bindParam(":estado",$datos["estado"],PDO::PARAM_STR);
 
 
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+
+		}
+
+		$stmt=null;
+	}
+	
+	/* 
+	* Guardar detalle de almacen de corte
+	*/
+	static public function mdlGuardarDetallesAlmacenCorte($datos){
+
+		$sql="CALL sp_1060_insert_almcorte_detalle_p(:almcorte, :ordcorte, :detordcorte, :art, :cant)";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":almcorte",$datos["almacencorte"],PDO::PARAM_INT);
+		$stmt->bindParam(":ordcorte",$datos["ordcorte"],PDO::PARAM_INT);
+		$stmt->bindParam(":detordcorte",$datos["idocd"],PDO::PARAM_INT);
+		$stmt->bindParam(":art",$datos["articulo"],PDO::PARAM_INT);
+		$stmt->bindParam(":cant",$datos["cantidad"],PDO::PARAM_INT);
+
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+
+		}
+
+		$stmt=null;
+
+	}
+	
+	/* 
+	* Método para DESCONTAR el total del corte por articulo -ORD CORTE
+	*/
+	static public function mdlActualizarOrdCorte($valor, $valor1){
+
+		$stmt = Conexion::conectar()->prepare("CALL sp_1061_update_articulos_ordcorte_p(:valor, :valor1)");
+
+		$stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
+		$stmt->bindParam(":valor1", $valor1, PDO::PARAM_STR);
+
+		$stmt->execute();
+
+		$stmt = null;
+
+	}
+
+	/* 
+	* Método para mostrar los datos de almacen de corte
+	*/
+	static public function mdlMostrarAlmacenCorte($valor){
+
+		if($valor != null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item ORDER BY id DESC");
+
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();
+
+		}else{
+
+			$stmt = Conexion::conectar()->prepare("CALL sp_1062_consulta_almacencorte()");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;		
+
+	}
+
+	/* 
+	* Método para actualizar lel estado de ordenes de corte a parcial
+	*/
+	static public function mdlActualizarOrdCorteEstadoParcial(){
+
+		$stmt = Conexion::conectar()->prepare("CALL sp_1063_update_ordencorte_parcial()");
+
+		$stmt->execute();
+
+		$stmt = null;
+
+	}
+
+	/* 
+	* Método para actualizar lel estado de ordenes de corte a cerrado
+	*/
+	static public function mdlActualizarOrdCorteEstadoCerrado(){
+
+		$stmt = Conexion::conectar()->prepare("CALL sp_1064_update_ordencorte_cerrado()");
+
+		$stmt->execute();
+
+		$stmt = null;
+
+	}
 
 
 }

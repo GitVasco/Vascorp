@@ -18,6 +18,44 @@ class TablaArticulosAlmacenCorte{
 
         for($i = 0; $i < count($articulos); $i++){
 
+        /* 
+        todo: CARNTIDAD DE LA ORDEN DE CORTE
+        */
+        if( $articulos[$i]["cantidad"] >0 ){
+
+            $cantidad = "<center><b><span class='text-default'>".$articulos[$i]["cantidad"]."</span></b></center>";
+
+        }else{
+
+            $cantidad = "<center>".$articulos[$i]["cantidad"]."</center>";
+            
+        }
+        
+        /* 
+        todo: SALDO
+        */
+        if($articulos[$i]["saldo"] < $articulos[$i]["cantidad"]){
+
+            $saldo = "<center><b><span class='text-danger'>".$articulos[$i]["saldo"]."</span></b></center>";
+
+        }else{
+
+            $saldo = "<center><b><span class='text-default'>".$articulos[$i]["saldo"]."</span></b></center>";
+
+        }
+        /* 
+        todo 
+        */
+        if($articulos[$i]["alm_corte"] > 0){
+
+            $alm_corte = "<center><b><span class='text-success'>".$articulos[$i]["alm_corte"]."</span></b></center>";
+
+        }else{
+
+            $alm_corte = "<center><b><span class='text-danger'>".$articulos[$i]["alm_corte"]."</span></b></center>";
+
+        }
+
     
         /* 
         todo: BOTONES
@@ -25,13 +63,13 @@ class TablaArticulosAlmacenCorte{
         $botones =  "<div class='btn-group'><button class='btn btn-primary btn-xs agregarArtAC recuperarBoton' idCorte='".$articulos[$i]["id"]."' ordcorte='".$articulos[$i]["ordencorte"]."'  saldo='".$articulos[$i]["saldo"]."' articuloAC='".$articulos[$i]["articulo"]."'><i class='fa fa-plus-circle'></i> Agregar</button></div>";
         
             $datosJson .= '[
-            "'.$articulos[$i]["ordencorte"].'",
+            "N° - '.$articulos[$i]["ordencorte"].'",
             "'.$articulos[$i]["modelo"].'",
             "'.$articulos[$i]["color"].'",
             "'.$articulos[$i]["talla"].'",
-            "'.$articulos[$i]["cantidad"].'",
-            "'.$articulos[$i]["saldo"].'",
-            "'.$articulos[$i]["alm_corte"].'",
+            "'.$cantidad.'",
+            "'.$saldo.'",
+            "'.$alm_corte.'",
             "'.$botones.'"
             ],';        
             }

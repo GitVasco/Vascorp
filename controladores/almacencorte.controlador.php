@@ -121,7 +121,7 @@ class ControladorAlmacenCorte{
                     #var_dump("resultado", $resultado);
 
                     /* 
-                    todo: GUARDAMOS LOS TOTALES DEL CORTE
+                    todo: GUARDAMOS LOS TOTALES DEL CORTE EN ARTICULO
                     */
                     foreach($resultado as $value){
 
@@ -132,6 +132,19 @@ class ControladorAlmacenCorte{
                         ModeloAlmacenCorte::mdlActualizarAlmCorte($valor, $valor1);
 
                     }
+
+                    /* 
+                    todo: DESCONTAMOS LOS TOTALES DEL CORTE EN ARTICULO - ORDEN DE CORTE
+                    */
+                    foreach($resultado as $value){
+
+                        $valor = $value["articulo"];
+
+                        $valor1 = $value["cantidad"];
+
+                        ModeloAlmacenCorte::mdlActualizarOrdCorte($valor, $valor1);
+
+                    }                    
 
                     /* 
                     todo: Actualizamos saldos de las Detalles de Ordenes de Corte
@@ -153,32 +166,96 @@ class ControladorAlmacenCorte{
                     }
 
                     /* 
-                    todo: Actualizamos saldos de las ordenes de corte
+                    todo: Actualizamos saldos de las ordenes de corte y estados
                     */
-                    ModeloAlmacenCorte::mdlActualizarSaldoOrdCorteGral();
+                        ModeloAlmacenCorte::mdlActualizarSaldoOrdCorteGral();
+
+                        ModeloAlmacenCorte::mdlActualizarOrdCorteEstadoParcial();
+
+                        ModeloAlmacenCorte::mdlActualizarOrdCorteEstadoCerrado();
 
                     /* 
                     todo: Guardar cabeera de ALMACEN DE CORTE
                     */
+                    $datos=array(   "codigo"=>$_POST["nuevaAlmacenCorte"],
+                                    "usuario"=>$_POST["idUsuario"],
+                                    "total"=>$_POST["totalAlmacenCorte"],
+                                    "estado"=>"1");
+                    #var_dump("datos", $datos);
 
+                    $respuesta = ModeloAlmacenCorte::mdlGuardarAlmacenCorte($datos);
+                    #var_dump("respuesta", $respuesta);
+                    #$respuesta = "no";
 
+                    if($respuesta =="ok"){
 
-                    
-                    
+                        /* 
+                        todo: Guardar detalle de almacen de corte
+                        */
+                        $ultimoId = ModeloAlmacenCorte::mdlUltimoCodigoAC();
+                        #var_dump("ultimoId", $ultimoId);
 
+                        foreach($listaArticulosAC as $key=>$value){
+
+                            $datosD = array("almacencorte"=>$ultimoId["ultimo_codigo"],
+                                            "ordcorte"=>$value["ordencorte"],
+                                            "idocd"=>$value["idocd"],
+                                            "articulo"=>$value["articulo"],
+                                            "cantidad"=>$value["cantidad"]);
+                            #var_dump("datosD", $datosD);
+
+                            ModeloAlmacenCorte::mdlGuardarDetallesAlmacenCorte($datosD);
+
+                        }
+                        
+                        # Mostramos una alerta suave
+                        echo '<script>
+                                swal({
+                                    type: "success",
+                                    title: "Felicitaciones",
+                                    text: "¡La información fue registrada con éxito!",
+                                    showConfirmButton: true,
+                                    confirmButtonText: "Cerrar"
+                                }).then((result)=>{
+                                    if(result.value){
+                                        window.location="almacencorte";}
+                                });
+                            </script>';                    
+
+                    }else{
+
+                        # Mostramos una alerta suave
+                        echo '<script>
+                                swal({
+                                    type: "error",
+                                    title: "Error",
+                                    text: "¡La información presento problemas y no se registro adecuadamente. Por favor, intenteló de nuevo!",
+                                    showConfirmButton: true,
+                                    confirmButtonText: "Cerrar"
+                                }).then((result)=>{
+                                    if(result.value){
+                                        window.location="crear-almacencorte";}
+                                });
+                            </script>';                       
+
+                    }
 
                 }
 
-
-
-
         }
 
+    }
+    
+    /* 
+    * MOSTRAR DATOS DE ALMACEN DE CORTE
+    */
+    static public function ctrMostrarAlmacenCorte($valor){
 
+        $respuesta = ModeloAlmacenCorte::mdlMostrarAlmacenCorte($valor);
 
+        return $respuesta;
 
     }
-
 
 
 

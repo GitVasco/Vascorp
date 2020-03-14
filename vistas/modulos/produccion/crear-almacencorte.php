@@ -86,7 +86,7 @@
 
                         /* var_dump("prueba", $value["ultimo_codigo"]); */
 
-                        $codigo = $value["ultimo_codigo"]+1;
+                        $codigo = $ult_codigo["ultimo_codigo"]+1;
 
                         /* var_dump("codigo", $codigo); */
 

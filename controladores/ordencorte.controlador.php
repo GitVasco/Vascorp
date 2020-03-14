@@ -359,11 +359,13 @@ class ControladorOrdenCorte{
         */
         foreach($detaOC as $key=>$value){
 
-            $itemA = "articulo";
             $valorA = $value["articulo"];
-    
-            $infoA = ModeloArticulos::mdlMostrarArticulos("articulojf", $itemA, $valorA);
+            #var_dump("valorA", $valorA);
+
+            $infoA = ModeloArticulos::mdlMostrarArticulos($valorA);
             #var_dump("infoA", $infoA);
+            #var_dump("infoA", $infoA["ord_corte"]);
+            #var_dump("cantidad", $value["cantidad"]);
 
             $ord_corte = $infoA["ord_corte"] - $value["cantidad"];
             #var_dump("ord_corte", $ord_corte);

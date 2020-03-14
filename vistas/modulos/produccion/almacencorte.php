@@ -40,7 +40,7 @@
 
         <input type="hidden" value="<?=$_SESSION["perfil"];?>" id="perfilOculto">
         
-       <table class="table table-bordered table-striped dt-responsive tablaOrdenCorte">
+       <table class="table table-bordered table-striped dt-responsive tablaAlmacenCorte">
          
         <thead>
          
@@ -49,7 +49,6 @@
            <th>Corte</th>
            <th>Responsable</th>
            <th><center>Cantidad Total</center></th>
-           <th>Saldo</th> 
            <th>Estado</th>
            <th>Fecha</th>
            <th>Acciones</th>
@@ -73,7 +72,7 @@
 MODAL VISUALIZAR INFORMACION
 ======================================-->
 
-<div id="modalVisualizarOC" class="modal fade" role="dialog">
+<div id="modalVisualizarAC" class="modal fade" role="dialog">
   
   <div class="modal-dialog" style="width: 70% !important;">
 
@@ -89,7 +88,7 @@ MODAL VISUALIZAR INFORMACION
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title">Detalle de la Orden de Corte</h4>
+          <h4 class="modal-title">Detalle del Corte</h4>
 
         </div>
 
@@ -103,9 +102,9 @@ MODAL VISUALIZAR INFORMACION
 
             <!-- ENTRADA PARA CODIGO DEL OC-->
             
-            <div class="form-group col-lg-3">
+            <div class="form-group col-lg-2">
               
-              <label>Orden de Corte</label>
+              <label>Corte</label>
 
               <div class="input-group">
 
@@ -120,7 +119,7 @@ MODAL VISUALIZAR INFORMACION
             
             <!-- ENTRADA PARA LA FECHA-->
             
-            <div class="form-group col-lg-3">
+            <div class="form-group col-lg-2">
 
               <label>Creación</label>
               
@@ -133,27 +132,10 @@ MODAL VISUALIZAR INFORMACION
               </div>
 
             </div>   
-
-            <!-- ENTRADA PARA LA CONFIGURACION-->
-            
-            <div class="form-group col-lg-3">
-
-              <label>Configuración</label>
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
-
-                <strong><input type="text" class="form-control input-sm" name="configuracion" id="configuracion" required readonly></strong>
-
-              </div>
-
-            </div>               
-
-
+ 
             <!-- ENTRADA PARA LA RESPONSABLE-->
             
-            <div class="form-group col-lg-3">
+            <div class="form-group col-lg-4">
 
               <label>Responsable</label>
               
@@ -170,9 +152,9 @@ MODAL VISUALIZAR INFORMACION
             
             <!-- ENTRADA PARA LA CANTIDAD-->
             
-            <div class="form-group col-lg-4">
+            <div class="form-group col-lg-2">
 
-              <label>Cantidad Inicial</label>
+              <label>Cantidad Total</label>
               
               <div class="input-group">
               
@@ -184,25 +166,9 @@ MODAL VISUALIZAR INFORMACION
 
             </div>
             
-            <!-- ENTRADA PARA EL SALDO-->
-            
-            <div class="form-group col-lg-4">
-
-              <label>Saldo Actual</label>
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
-
-                <strong><input type="text" class="form-control input-sm" name="saldo" id="saldo" required readonly></strong>
-
-              </div>
-
-            </div>     
-
             <!-- ENTRADA PARA EL ESTADO-->
             
-            <div class="form-group col-lg-4">
+            <div class="form-group col-lg-2">
 
               <label>Estado</label>
               
@@ -259,7 +225,7 @@ MODAL VISUALIZAR INFORMACION
                 </tr>
 
                 <tr>
-                  <th>Ord. Corte</th>
+                  <th>Corte</th>
                   <th>Modelo</th>
                   <th>Nombre</th>
                   <th>Color</th>
