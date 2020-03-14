@@ -132,10 +132,8 @@ $('.tablaArticuloOperaciones').DataTable( {
 			"sInfoThousands":  ",",
 			"sLoadingRecords": "Cargando...",
 			"oPaginate": {
-			"sFirst":    "Primero",
-			"sLast":     "Último",
-			"sNext":     "Siguiente",
-			"sPrevious": "Anterior"
+			"sNext":     ">>",
+			"sPrevious": "<<"
 			},
 			"oAria": {
 				"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
@@ -196,7 +194,7 @@ $(".tablaArticuloOperaciones tbody").on("click", "button.agregarOperacion", func
   
 			'<div class="col-xs-3">' +
   
-			'<input type="number" class="form-control nuevoPrecioDocena" name="nuevoPrecioDocena" min="1" value="1" required>' +
+			'<input type="number" class="form-control nuevoPrecioDocena" name="nuevoPrecioDocena" min="0" value="0" step="any" required>' +
   
 			"</div>" +
   
@@ -208,7 +206,7 @@ $(".tablaArticuloOperaciones tbody").on("click", "button.agregarOperacion", func
   
 			  '<span class="input-group-addon"><i class="fa fa-clock-o"></i></span>' +
   
-			  '<input type="number" class="form-control nuevoTiempoStandar" name="nuevoTiempoStandar" value="1"  required>' +
+			  '<input type="number" class="form-control nuevoTiempoStandar" name="nuevoTiempoStandar" value="1" step="any" required>' +
   
 			  "</div>" +
   

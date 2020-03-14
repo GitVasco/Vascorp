@@ -435,6 +435,7 @@ class ControladorOperaciones{
 			$itemDetalle="modelo";
 			$valorDetalle=$cabecera["articulo"];
 			$detalle=ModeloOperaciones::mdlMostrarDetalleOperaciones($tabla2,$itemDetalle,$valorDetalle);
+			$modelo=ModeloOperaciones::mdlActualizarUnDato("modelojf","operaciones",0,$valorDetalle);
 
 			foreach ($detalle as $key => $value) {
 		

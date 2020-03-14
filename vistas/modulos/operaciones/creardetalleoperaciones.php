@@ -26,7 +26,7 @@
       EL FORMULARIO
       ======================================-->
 
-      <div class="col-lg-5 col-xs-12">
+      <div class="col-lg-7 col-xs-12">
 
         <div class="box box-success">
 
@@ -96,6 +96,16 @@
                 <!--=====================================
                 ENTRADA PARA AGREGAR OPERACION
                 ======================================-->
+                <table>
+                  <thead>
+                  <tr>
+                      <th style="width:450px;margin-right:150px;">Operaciones</th>
+                      <th style="width:200px">Precio x Docena</th>
+                      <th style="width:200px">Tiempo Standart</th>
+                  </tr>
+                  </thead>
+
+                </table>
 
                 <div class="form-group row nuevaOperacion">
 
@@ -143,7 +153,7 @@
 
                               <span class="input-group-addon"><i class="fa fa-money"></i></span>
 
-                              <input type="text" min="1" class="form-control input-lg" id="nuevoTotalDocena" name="nuevoTotalDocena" totalDecena="" placeholder="00000" readonly required>
+                              <input type="text" min="0" class="form-control input-lg" id="nuevoTotalDocena" name="nuevoTotalDocena" totalDecena="" placeholder="00000" step="any" readonly required>
 
 
 
@@ -157,7 +167,7 @@
 
                               <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
 
-                              <input type="text" min="1" class="form-control input-lg" id="nuevoTotalStandar" name="nuevoTotalStandar" totalStand="" placeholder="00000" readonly required>
+                              <input type="text" min="0" class="form-control input-lg" id="nuevoTotalStandar" name="nuevoTotalStandar" totalStand="" placeholder="00000" step="any" readonly required>
 
                             </div>
 
@@ -204,7 +214,7 @@
       LA TABLA DE OPERACIONES
       ======================================-->
 
-      <div class="col-lg-7 hidden-md hidden-sm hidden-xs">
+      <div class="col-lg-5 hidden-md hidden-sm hidden-xs">
 
         <div class="box box-warning">
 
