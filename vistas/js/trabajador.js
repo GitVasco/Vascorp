@@ -30,116 +30,7 @@ $('.tablaTrabajador').DataTable( {
 
 	}
 } );
-/*=============================================
-CAPTURANDO LA ID PARA ASIGNAR CÓDIGO
-=============================================*/
-// $("#tipoDocumento").change(function(){
 
-// 	var idTrabajador = $(this).val();
-
-// 	var datos = new FormData();
-// 	  datos.append("idTrabajador", idTrabajador);
-
-// 	  $.ajax({
-
-// 	  url:"ajax/trabajador.ajax.php",
-// 	  method: "POST",
-// 	  data: datos,
-// 	  cache: false,
-// 	  contentType: false,
-// 	  processData: false,
-// 	  dataType:"json",
-// 	  success:function(respuesta){
-
-// 		  if(!respuesta){
-
-// 			  var codigoTrabajador = idTrabajador+"01";
-// 			  $("#codigoTrabajador").val(codigoTrabajador);
-
-// 		  }else{
-
-// 			  var codigoTrabajador = Number(respuesta["cod_doc"]) + 1;
-// 			  $("#codigoTrabajador").val(codigoTrabajador);
-
-// 		  }
-			   
-// 	  }
-
-// 	  })
-
-// })
-/*=============================================
-EDITAR TRABAJADOR
-=============================================*/
-
-// $(".tablaTrabajador tbody").on("click", "button.btnEditarTrabajador", function(){
-
-// 	var idTrabajador = $(this).attr("idTrabajador");
-
-
-// 	console.log("idTrabajador", idTrabajador);
-
-// 	var datos = new FormData();
-//     datos.append("idTrabajador", idTrabajador);
-
-//      $.ajax({
-
-//       url:"ajax/trabajador.ajax.php",
-//       method: "POST",
-//       data: datos,
-//       cache: false,
-//       contentType: false,
-//       processData: false,
-//       dataType:"json",
-//       success:function(respuesta){
-// 			console.log("respuesta", respuesta);
-// 	  }
-
-// 	})
-         // console.log(respuesta);
-		  
-		// var datosTrabajador = new FormData();
-		// datosTrabajador.append("idTrabajador",respuesta["id_Trabajador"]);
-
-		//  $.ajax({
-
-		// 	url:"ajax/trabajador.ajax.php",
-		// 	method: "POST",
-		// 	data: datosTrabajador,
-		// 	cache: false,
-		// 	contentType: false,
-		// 	processData: false,
-		// 	dataType:"json",
-		// 	success:function(respuesta){
-				
-		// 		console.log(respuesta);
-				
-
-
-
-		// 	}
-
-		// })
-
-	// 		$("#editarCodigoTrabajador").val(respuesta["cod_tra"]);
-
-	// 		$("#editarNroDocumento").val(respuesta["nro_doc_tra"]);
-
-	// 		$("#editarNombreTrabajador").val(respuesta["nom_tra"]);
-
-	// 		$("#editarApellidoPaterno").val(respuesta["ape_pat_tra"]);
-
-	// 		$("#editarApellidoMaterno").val(respuesta["ape_mat_tra"]);
-
-	// 		$("#editarSueldoMes").val(respuesta["sueldoMes"]);
-
-			
-     
-    //   }
-
-  //})
-
-//})
 
 
 // ELIMINAR OPERACIÓN
@@ -169,7 +60,7 @@ $(".tablaTrabajador tbody").on("click","button.btnEliminarTrabajador",function()
 // EDITAR TRABAJADOR
 $(".tablaTrabajador tbody").on("click","button.btnEditarTrabajador",function(){
 	var idTrabajador =$(this).attr("idTrabajador");
-	//console.log(idTrabajador);
+	// console.log("idTrabajador", idTrabajador);
 	var datos= new FormData();
 	datos.append("idTrabajador",idTrabajador);
 	$.ajax({
@@ -182,12 +73,67 @@ $(".tablaTrabajador tbody").on("click","button.btnEditarTrabajador",function(){
 		dataType: "json",
 		success:function(respuesta){
 
-	console.log("respuesta", respuesta);
+			var datosTipoDocumento = new FormData();
+			datosTipoDocumento.append("idTipoDocumento",respuesta["cod_doc"]);
+			$.ajax({
+				url:"ajax/tipoDocumento.ajax.php",
+				method:"POST",
+				data:datosTipoDocumento,
+				cache: false,
+				contentType:false,
+				processData:false,
+				dataType: "json",
+				success:function(respuesta){
+				console.log("respuesta", respuesta);
+				$("#editarTipoDocumento").val(respuesta["cod_doc"]);
+				$("#editarTipoDocumento").selectpicker('refresh');
 
-	// 		$("#editarTipoTrabajador").val(respuesta["nom_tip_trabajador"]);
-	// 		$("#editarSectorTrabajador").val(respuesta["detalle"]);
-	// 		$("#idTipoTrabajador").val(respuesta["cod_tip_tra"]);
-		}
-	});
+				}
 	
-});
+			})
+
+
+			var datosTipoTrabajador = new FormData();
+			datosTipoTrabajador.append("idTipoTrabajador",respuesta["cod_tip_tra"]);
+			$.ajax({
+				url:"ajax/tipoTrabajador.ajax.php",
+				method:"POST",
+				data:datosTipoTrabajador,
+				cache: false,
+				contentType:false,
+				processData:false,
+				dataType: "json",
+				success:function(respuesta){
+					console.log("respuesta", respuesta);
+				$("#editarTipoTrabajador").val(respuesta["cod_tip_tra"]);
+				$("#editarTipoTrabajador").selectpicker('refresh');
+					
+				}
+	
+			})
+
+
+	//console.log("respuesta", respuesta);
+				
+					
+	 		$("#editarCodigoTrabajador").val(respuesta["cod_tra"]);
+
+	// 		$("#editarTipoDocumento").val(respuesta["cod_doc"]);
+			
+	 		$("#editarNroDocumento").val(respuesta["nro_doc_tra"]);
+
+	 		$("#editarNombreTrabajador").val(respuesta["nom_tra"]);
+
+	 		$("#editarApellidoPaterno").val(respuesta["ape_pat_tra"]);
+
+	 		$("#editarApellidoMaterno").val(respuesta["ape_mat_tra"]);
+
+	// 		$("#editarTipoTrabajador").val(respuesta["cod_tip_tra"]);
+
+	 		$("#editarSueldoMes").val(respuesta["sueldo_total"]);
+				
+
+		}
+	})
+	
+})

@@ -24,7 +24,7 @@
 
       <div class="box-header with-border">
   
-        <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarTrabajador">
+        <button class="btn btn-primary AgregarCodigo"  idTrabajador=100 data-toggle="modal" data-target="#modalAgregarTrabajador">
           
           Agregar trabajadores
 
@@ -48,6 +48,7 @@
            <th>Apellido Paterno</th>
            <th>Apellido Materno</th>
            <th>Tipo Trabajador</th>
+           <th>Estado</th>
            <th>Sueldo x Mes</th>
            <th>Acciones</th>
 
@@ -99,19 +100,21 @@ MODAL AGREGAR TRABAJADOR
 
           <div class="box-body">
 
+
             <!-- ENTRADA PARA EL CODIGO DEL TRABAJADOR -->
             
-            <div class="form-group">
+            <!-- <div class="form-group">
               
               <div class="input-group">
               
                 <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
-                <input type="text" min="0" class="form-control input-lg" name="codigoTrabajador" placeholder=""Ingresar Codigo"" required>
+                <input type="text" min="0" class="form-control input-lg" name="codigoTrabajador" id="codigoTrabajador"  readonly required>
+                
 
               </div>
 
-            </div>         
+            </div>          -->
 
             <!-- ENTRADA PARA SELECCIONAR TIPO DE DOCUMENTO -->
 
@@ -119,7 +122,7 @@ MODAL AGREGAR TRABAJADOR
 
               <div class="input-group">
 
-                <span class="input-group-addon"><i class="fa fa-th"></i></span>
+                <span class="input-group-addon"><i class="fa fa-id-card-o" aria-hidden="true"></i></span>
 
                 <select class="form-control input-lg" id="tipoDocumento" name="tipoDocumento" required>
 
@@ -150,7 +153,7 @@ MODAL AGREGAR TRABAJADOR
               
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-check-square" aria-hidden="true"></i></span> 
 
                 <input type="text" class="form-control input-lg" name="nroDocumento" placeholder="Ingresar nro de documento" required>
 
@@ -164,7 +167,7 @@ MODAL AGREGAR TRABAJADOR
               
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span> 
 
                 <input type="text" class="form-control input-lg" name="nombreTrabajador" placeholder="Ingresar nombre del trabajador" required>
 
@@ -179,7 +182,7 @@ MODAL AGREGAR TRABAJADOR
               
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span> 
 
                 <input type="text" class="form-control input-lg" name="apellidoPaterno" placeholder="Ingresar apellido paterno" required>
 
@@ -194,44 +197,44 @@ MODAL AGREGAR TRABAJADOR
               
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span> 
 
                 <input type="text" class="form-control input-lg" name="apellidoMaterno" placeholder="Ingresar apellido materno" required>
 
               </div>
 
             </div>
-
             <!-- ENTRADA PARA SELECCIONAR TIPO DE TRABAJADOR -->
 
-            <div class="form-group">
+          <div class="form-group">
 
               <div class="input-group">
 
-                <span class="input-group-addon"><i class="fa fa-th"></i></span>
+                  <span class="input-group-addon"><i class="fa fa-briefcase" aria-hidden="true"></i></span>
 
-                <select class="form-control input-lg" id="tipoTrabajador" name="tipoTrabajador" required>
+                    <select class="form-control input-lg" id="tipoTrabajador" name="tipoTrabajador" required>
 
-                  <option value="">Seleccionar tipo de trabajador</option>
+                      <option value="">Seleccionar tipo de trabajador</option>
 
-                  <?php
+                        <?php
 
-                  $valor = null;
+                        $valor = null;
 
-                  $tipotrabajador = ControladorTipoTrabajador::ctrMostrarTipoTrabajador($valor);
+                        $tipotrabajador = ControladorTipoTrabajador::ctrMostrarTipoTrabajador($valor);
 
-                  foreach ($tipotrabajador as $key => $value) {
+                        foreach ($tipotrabajador as $key => $value) {
 
-                    echo '<option value="' . $value["cod_tip_tra"] . '">' . $value["nom_tip_trabajador"] . '</option>';
-                  }
+                          echo '<option value="' . $value["cod_tip_tra"] . '">' . $value["nom_tip_trabajador"] . '</option>';
+                        }
 
-                  ?>
+                        ?>
 
-                </select>
+                    </select>
 
               </div>
 
-            </div>
+            </div>      
+                        
 
             <!-- ENTRADA PARA EL SUELDO -->
 
@@ -239,7 +242,7 @@ MODAL AGREGAR TRABAJADOR
 
               <div class="input-group">
 
-                <span class="input-group-addon"><i class="fa fa-paper-plane"></i></span>
+                <span class="input-group-addon"><i class="fa fa-money" aria-hidden="true"></i></span>
 
                 <input type="text" class="form-control input-lg" id="sueldoMes" name="sueldoMes" placeholder="Ingresar sueldo" required>
 
@@ -329,38 +332,52 @@ MODAL EDITAR TRABAJADOR
               </div>
 
 
-            <!-- ENTRADA PARA SELECCIONAR TIPO DOCUMENTO
+            <!-- ENTRADA PARA SELECCIONAR TIPO DOCUMENTO -->
 
                 <div class="form-group">
                   
                   <div class="input-group">
                   
-                      <span class="input-group-addon"><i class="fa fa-id-card" aria-hidden="true"></i></span> 
+                    <span class="input-group-addon"><i class="fa fa-th"></i></span> 
 
-                      <select class="form-control input-lg"  name="editarTipoDocumento" readonly required>
-                        
-                        <option id="editarTipoDocumento"></option>
+                    <select class="form-control input-lg"  name="editarTipoDocumento" data-live-search ="true" readonly required>
+                      
+                      <!-- <option id="editarTipoDocumento"></option> -->
+                    <?php
+                    
+                    $tipodocumento = ControladorTipoDocumento::ctrMostrarTipoDocumento();
+                    //var_dump("marcas", $marcas);
 
-                      </select>
+                    foreach ($tipodocumento as $key => $value) {
+
+                      echo '<option value="' . $value["cod_doc"] . '">' . $value["tipo_doc"] . '</option>';
+
+                    }
+
+                    
+                    ?>
+
+
+                    </select>
 
                   </div>
 
-                </div> -->
+                </div>
 
-            <!-- ENTRADA PARA EL CÓDIGO DE TRABAJADOR -->
+            <!-- ENTRADA PARA EL TIPO DE TRABAJADOR -->
             
-              <div class="form-group">
+              <!-- <div class="form-group">
                 
                 <div class="input-group">
                 
-                    <span class="input-group-addon"><i class="fa fa-code"></i></span> 
+                    <span class="input-group-addon"><i class="fa fa-id-card-o" aria-hidden="true"></i></span> 
 
                     <input type="text" class="form-control input-lg" id="editarTipoDocumento" name="editarTipoDocumento" readonly required>
                     
 
                 </div>
 
-              </div>
+              </div> -->
 
             <!-- ENTRADA PARA NRO DE DOCUMENTO -->
 
@@ -418,24 +435,36 @@ MODAL EDITAR TRABAJADOR
 
             <!-- ENTRADA PARA SELECCIONAR TIPO TRABAJADOR -->
 
-            <!-- <div class="form-group">
+            <div class="form-group">
               
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-briefcase"></i></span> 
 
-                <select class="form-control input-lg"  name="editarTipoTrabajador" readonly required>
+                <select class="form-control input-lg"  name="editarTipoTrabajador" data-live-search="true" readonly required>
                   
-                  <option id="editarTipoTrabajador"></option>
+                  <!-- <option id="editarTipoTrabajador"></option> -->
+                  <?php
+                    
+                    $tipoTrabajador = ControladorTipoTrabajador::ctrMostrarTipoTrabajador();
+                    //var_dump("marcas", $marcas);
 
+                    foreach ($tipotrabajador as $key => $value) {
+
+                      echo '<option value="' . $value["cod_tip_tra"] . '">' . $value["nom_tip_trabajador"] . '</option>';
+
+                    }
+
+                    
+                    ?>
                 </select>
 
               </div>
 
-            </div> -->
+            </div>
             <!-- ENTRADA PARA EDITAR TIPO TRABAJADOR -->
 
-              <div class="form-group">
+              <!-- <div class="form-group">
                 
                 <div class="input-group">
             
@@ -445,7 +474,7 @@ MODAL EDITAR TRABAJADOR
 
                 </div>
 
-              </div>
+              </div> -->
 
 
              <!-- ENTRADA PARA EDITAR SUELDO x MES -->
@@ -481,12 +510,12 @@ MODAL EDITAR TRABAJADOR
 
       </form>
 
-        <!-- <?php
+        <?php
 
-          //  $editarTrabajador = new ControladorTrabajador();
-          //  $editarTrabajador -> ctrEditarTrabajador();
+           $editarTrabajador = new ControladorTrabajador();
+            $editarTrabajador -> ctrEditarTrabajador();
 
-        ?>      -->
+        ?>    
 
     </div>
 

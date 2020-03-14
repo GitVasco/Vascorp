@@ -234,6 +234,7 @@ $(".tablaProductos tbody").on("click", "button.btnEditarProducto", function(){
 			processData: false,
 			dataType:"json",
 			success:function(respuesta){
+				console.log("respuesta", respuesta);
 				
 				$("#editarCategoria").val(respuesta["id"]);
 				$("#editarCategoria").html(respuesta["categoria"]);
