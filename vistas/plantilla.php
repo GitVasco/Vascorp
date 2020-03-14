@@ -274,6 +274,7 @@ CUERPO DOCUMENTO
   <script src="vistas/js/almacencorte.js"></script>
   <script src="vistas/js/operaciones.js"></script>
   <script src="vistas/js/trabajador.js"></script>
+  <script src="vistas/js/modelos.js"></script>
 
 
 </body>

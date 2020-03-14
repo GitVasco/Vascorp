@@ -26,7 +26,7 @@
       EL FORMULARIO
       ======================================-->
 
-      <div class="col-lg-5 col-xs-12">
+      <div class="col-lg-7 col-xs-12">
 
         <div class="box box-success">
 
@@ -99,7 +99,16 @@
                 <!--=====================================
                 ENTRADA PARA AGREGAR OPERACION
                 ======================================-->
+                <table>
+                  <thead>
+                  <tr>
+                      <th style="width:450px;margin-right:150px;">Operaciones</th>
+                      <th style="width:200px">Precio x Docena</th>
+                      <th style="width:200px">Tiempo Standart</th>
+                  </tr>
+                  </thead>
 
+                </table>
                 <div class="form-group row nuevaOperacion">
                   <?php
                      $itemDetalle= "modelo";
@@ -127,7 +136,7 @@
                    
                        <div class="col-xs-3">
                    
-                       <input type="number" class="form-control nuevoPrecioDocena" name="nuevoPrecioDocena" min="1" value="'.$value["precio_doc"].'" required>
+                       <input type="number" class="form-control nuevoPrecioDocena" name="nuevoPrecioDocena" min="0" value="'.$value["precio_doc"].'" step ="any" required>
                    
                        </div>
                    
@@ -137,7 +146,7 @@
                    
                          <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                    
-                         <input type="number" class="form-control nuevoTiempoStandar" name="nuevoTiempoStandar" value="'.$value["tiempo_stand"].'"  required>
+                         <input type="number" class="form-control nuevoTiempoStandar" name="nuevoTiempoStandar" value="'.$value["tiempo_stand"].'" step="any" required>
                    
                          </div>
                    
@@ -190,7 +199,7 @@
 
                               <span class="input-group-addon"><i class="fa fa-money"></i></span>
 
-                              <input type="text" min="1" class="form-control input-lg" id="nuevoTotalDocena" name="nuevoTotalDocena" totalDecena="" value="<?php echo $cabecera["total_pd"]?>" readonly required>
+                              <input type="text" min="1" class="form-control input-lg" id="nuevoTotalDocena" name="nuevoTotalDocena" totalDecena="" value="<?php echo $cabecera["total_pd"]?>" step="any" readonly required>
 
 
 
@@ -204,7 +213,7 @@
 
                               <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
 
-                              <input type="text" min="1" class="form-control input-lg" id="nuevoTotalStandar" name="nuevoTotalStandar" totalStand="" value="<?php echo $cabecera["total_ts"]?>" readonly required>
+                              <input type="text" min="1" class="form-control input-lg" id="nuevoTotalStandar" name="nuevoTotalStandar" totalStand="" value="<?php echo $cabecera["total_ts"]?>" step="any" readonly required>
 
                             </div>
 
@@ -251,7 +260,7 @@
       LA TABLA DE OPERACIONES
       ======================================-->
 
-      <div class="col-lg-7 hidden-md hidden-sm hidden-xs">
+      <div class="col-lg-5 hidden-md hidden-sm hidden-xs">
 
         <div class="box box-warning">
 
