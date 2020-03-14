@@ -2,13 +2,19 @@
 require_once "../controladores/trabajador.controlador.php";
 require_once "../modelos/trabajador.modelo.php";
 
+// require_once "../controladores/tipodocumento.controlador.php";
+// require_once "../modelos/tipodocumento.modelo.php";
+
 class AjaxTrabajador{
-  /*=============================================
-  EDITAR TRABAJADOR
-  =============================================*/ 
+
+  // GENERAR EL CODIGO
 
   public $idTrabajador;
 
+  /*=============================================
+  EDITAR TRABAJADOR
+  =============================================*/ 
+ 
   public function ajaxEditarTrabajador(){
       
     $item="cod_tra";

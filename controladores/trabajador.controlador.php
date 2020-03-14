@@ -20,18 +20,20 @@ class ControladorTrabajador{
 		if(isset($_POST["apellidoPaterno"])){
 
 			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["apellidoPaterno"]) &&
-			   preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nombreTrabajador"])
+			   preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nombreTrabajador"])&&
+			   preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["apellidoMaterno"])&&
+			   preg_match('/^[0-9]+$/', $_POST["nroDocumento"])
 			   
 			   ){
 				$tabla="trabajadorjf";
 
 			   	$datos = array("cod_tra"=>$_POST["codigoTrabajador"],
-							   "cod_doc"=>$_POST["tipoDocumento"], //
+							   "cod_doc"=>$_POST["tipoDocumento"], 
 							   "nro_doc_tra"=>$_POST["nroDocumento"],
 							   "nom_tra"=>$_POST["nombreTrabajador"],
 							   "ape_pat_tra"=>$_POST["apellidoPaterno"],
 							   "ape_mat_tra"=>$_POST["apellidoMaterno"],
-							   "cod_tip_tra"=>$_POST["tipoTrabajador"], //
+							   "cod_tip_tra"=>$_POST["tipoTrabajador"], 
 							   "sueldo_total"=>$_POST["sueldoMes"]);
 
 			   	$respuesta = ModeloTrabajador::mdlIngresarTrabajador($tabla,$datos);

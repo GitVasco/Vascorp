@@ -29,7 +29,9 @@ class ModeloTrabajador{
                                                             ape_pat_tra,
                                                             ape_mat_tra,
                                                             tt.nom_tip_trabajador,
-                                                            sueldo_total 
+															estado,
+                                                            sueldo_total
+															
                                                         FROM
                                                             $tabla t,
                                                             tipo_documentojf d,
@@ -54,9 +56,9 @@ class ModeloTrabajador{
 	=============================================*/
 	static public function mdlIngresarTrabajador($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(cod_tra, cod_doc, nro_doc_tra, nom_tra, ape_pat_tra, ape_mat_tra, cod_tip_tra, sueldo_total) VALUES (:cod_tra, :cod_doc, :nro_doc_tra, :nom_tra, :ape_pat_tra, :ape_mat_tra, :cod_tip_tra, :sueldo_total)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla( cod_doc, nro_doc_tra, nom_tra, ape_pat_tra, ape_mat_tra, cod_tip_tra, sueldo_total) VALUES ( :cod_doc, :nro_doc_tra, :nom_tra, :ape_pat_tra, :ape_mat_tra, :cod_tip_tra, :sueldo_total)");
 
-		$stmt->bindParam(":cod_tra", $datos["cod_tra"], PDO::PARAM_INT);
+		//$stmt->bindParam(":cod_tra", $datos["cod_tra"], PDO::PARAM_INT);
 		$stmt->bindParam(":cod_doc", $datos["cod_doc"], PDO::PARAM_STR);
 		$stmt->bindParam(":nro_doc_tra", $datos["nro_doc_tra"], PDO::PARAM_STR);
 		$stmt->bindParam(":nom_tra", $datos["nom_tra"], PDO::PARAM_STR);

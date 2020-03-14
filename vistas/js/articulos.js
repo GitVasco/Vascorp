@@ -79,44 +79,44 @@ $(document).on("click",".btnActivar",function(){
 	// Capturamos el id del usuario y el estado
 	var idArticulo=$(this).attr("idArticulo");
 	var estadoArticulo=$(this).attr("estadoArticulo");
-/* 	console.log("idArticulo", idArticulo);
-	console.log("estadoArticulo", estadoArticulo); */
+	console.log("idArticulo", idArticulo);
+	console.log("estadoArticulo", estadoArticulo); 
 	// Realizamos la activación-desactivación por una petición AJAX
-	var datos=new FormData();
-	datos.append("activarId",idArticulo);
-	datos.append("activarEstado",estadoArticulo);
-	$.ajax({
-		url:"ajax/articulos.ajax.php",
-		type:"POST",
-		data:datos,
-		cache:false,
-		contentType:false,
-		processData:false,
-		success:function(respuesta){
-			if(window.matchMedia("(max-width:767px)").matches){
-				swal({
-					type: "success",
-					title: "¡Ok!",
-					text: "¡La información fue actualizada con éxito!",
-					showConfirmButton: true,
-					confirmButtonText: "Cerrar",
-					closeOnConfirm: false
-				}).then((result)=>{
-					if(result.value){
-						window.location="articulos";}
-				});}}
-	});
+	// var datos=new FormData();
+	// datos.append("activarId",idArticulo);
+	// datos.append("activarEstado",estadoArticulo);
+	// $.ajax({
+	// 	url:"ajax/articulos.ajax.php",
+	// 	type:"POST",
+	// 	data:datos,
+	// 	cache:false,
+	// 	contentType:false,
+	// 	processData:false,
+	// 	success:function(respuesta){
+	// 		if(window.matchMedia("(max-width:767px)").matches){
+	// 			swal({
+	// 				type: "success",
+	// 				title: "¡Ok!",
+	// 				text: "¡La información fue actualizada con éxito!",
+	// 				showConfirmButton: true,
+	// 				confirmButtonText: "Cerrar",
+	// 				closeOnConfirm: false
+	// 			}).then((result)=>{
+	// 				if(result.value){
+	// 					window.location="articulos";}
+	// 			});}}
+	// });
 	// Cambiamos el estado del botón físicamente
-	if(estadoArticulo=='Descontinuado'){
-		$(this).removeClass("btn-success");
-		$(this).addClass("btn-danger");
-		$(this).html("Inactivo");
-		$(this).attr("estadoArticulo","Activo");}
-	else{
-		$(this).addClass("btn-success");
-		$(this).removeClass("btn-danger");
-		$(this).html("Activo");
-		$(this).attr("estadoArticulo","Descontinuado");}
+	// if(estadoArticulo=='Descontinuado'){
+	// 	$(this).removeClass("btn-success");
+	// 	$(this).addClass("btn-danger");
+	// 	$(this).html("Inactivo");
+	// 	$(this).attr("estadoArticulo","Activo");}
+	// else{
+	// 	$(this).addClass("btn-success");
+	// 	$(this).removeClass("btn-danger");
+	// 	$(this).html("Activo");
+	// 	$(this).attr("estadoArticulo","Descontinuado");}
 });
 
 
