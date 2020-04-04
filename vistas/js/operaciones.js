@@ -464,3 +464,62 @@ $(".tablaDetalleOperaciones tbody").on("click","button.btnEliminarOperacion",fun
 	
 	
 });
+
+/* 
+* BOTON VISUALIZAR DETALLE OPERACION
+*/
+$(".tablaDetalleOperaciones").on("click", ".btnDetalleOperacion", function () {
+
+	var idOperacion = $(this).attr("idOperacion");
+
+	var datos = new FormData();
+	datos.append("idOperacion", idOperacion);
+
+	$.ajax({
+
+		url: "ajax/operaciones-detalle.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function (respuesta) {
+
+			console.log("respuesta", respuesta); 
+
+			$("#verModelo").val(respuesta["articulo"]);
+
+			$("#verVendedor").val(respuesta["vendedor_fk"]);
+
+			$("#verTotalDocena").val(respuesta["total_pd"]);
+
+			$("#verTiempoTotal").val(respuesta["total_ts"]);
+			
+			var modeloDetalle = respuesta["articulo"];
+			console.log(modeloDetalle);
+			
+			var datos2 = new FormData();
+			datos2.append("modeloDetalle", modeloDetalle);
+			$.ajax({
+
+				url: "ajax/operaciones-detalle.ajax.php",
+				method: "POST",
+				data: datos,
+				cache: false,
+				contentType: false,
+				processData: false,
+				dataType: "json",
+				success: function (respuesta) {
+					
+					
+			}
+
+		}
+
+	})
+
+	
+
+
+});
