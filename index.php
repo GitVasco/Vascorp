@@ -31,6 +31,7 @@ require_once "controladores/almacencorte.controlador.php";
 require_once "controladores/tipotrabajador.controlador.php";
 require_once "controladores/trabajador.controlador.php";
 
+require_once "controladores/cortes.controlador.php";
 
 
 require_once "modelos/usuarios.modelo.php";
@@ -65,6 +66,8 @@ require_once "modelos/trabajador.modelo.php";
 
 require_once "modelos/modelos.modelo.php";
 require_once "controladores/modelos.controlador.php";
+
+require_once "controladores/cortes.controlador.php";
 
 $plantilla = new ControladorPlantilla();
 $plantilla -> ctrPlantilla();
