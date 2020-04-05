@@ -219,7 +219,16 @@ class ControladorOperaciones{
 		}
 
 	}    
+	/* 
+	* VISUALIZAR DATOS DETALLE OPERAICON
+	*/
+	static public function ctrVisualizarOperacionDetalle($item,$valor){
+		$tabla="operaciones_detallejf";
+		$respuesta = ModeloOperaciones::mdlVisualizarOperacionDetalle($tabla,$item,$valor);
 
+		return $respuesta;
+
+	}
 	
 	/*=============================================
 	CREAR OPERACIÓN POR MODELO

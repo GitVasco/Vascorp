@@ -8,13 +8,13 @@ class AjaxDetalleOperaciones{
   EDITAR OPERACIONES
   =============================================*/ 
 
-  public $modeloDetalle;
+  public $idOperacion;
 
   public function ajaxVerOperacion(){
-    $item="modelo";
-    $valor = $this->modeloDetalle;
+    $item="id";
+    $valor = $this->idOperacion;
 
-    $respuesta = ControladorOperaciones::ctrVisualizarOperacionDetalle($item,$valor);
+    $respuesta = ControladorOperaciones::ctrMostrarCabeceraOperaciones($item,$valor);
 
     echo json_encode($respuesta);
 
@@ -25,10 +25,10 @@ class AjaxDetalleOperaciones{
 /*=============================================
 EDITAR OPERACION
 =============================================*/	
-if(isset($_POST["modeloDetalle"])){
+if(isset($_POST["idOperacion"])){
 
 	$detalleOperacion = new AjaxDetalleOperaciones();
-	$detalleOperacion -> modeloDetalle = $_POST["modeloDetalle"];
+	$detalleOperacion -> idOperacion = $_POST["idOperacion"];
 	$detalleOperacion -> ajaxVerOperacion();
 }
 
