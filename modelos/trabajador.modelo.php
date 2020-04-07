@@ -143,6 +143,43 @@ class ModeloTrabajador{
 
 		$stmt = null;
 
-	}    
-    
+	} 
+	
+	
+	/*
+	* MOSTRAR TRABAJADORES ACTIVOS
+	*/
+
+	static public function mdlMostrarTrabajadorActivo(){
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+		cod_tra,
+		d.tipo_doc,
+		nro_doc_tra,
+		nom_tra,
+		ape_pat_tra,
+		ape_mat_tra,
+		tt.nom_tip_trabajador,
+		estado,
+		sueldo_total
+	FROM
+		trabajadorjf t,
+		tipo_documentojf d,
+		tipo_trabajadorjf tt
+	WHERE
+		d.cod_doc = t.cod_doc
+			AND tt.cod_tip_tra = t.cod_tip_tra
+			AND t.estado = 'activo'");
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }
+
+
 }

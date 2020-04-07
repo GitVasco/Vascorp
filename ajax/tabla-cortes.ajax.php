@@ -10,7 +10,10 @@ class TablaCortes{
     */
     public function mostrarTablaCortes(){
 
-        $cortes = ControladorCortes::ctrMostrarCortes();
+        $valor1 = null;
+        $valor2 = null;
+
+        $cortes = ControladorCortes::ctrMostrarCortes($valor1, $valor2);
 
         #var_dump("almacencorte", $cortes);
 
@@ -38,7 +41,7 @@ class TablaCortes{
             /* 
             todo: BOTONES
             */                
-            $botones =  "<div class='btn-group'><button class='btn btn-primary btnMandarTaller' codigo='".$cortes[$i]["articulo"]."'><i class='fa fa-users'></i></button></div>"; 
+            $botones =  "<div class='btn-group'><button class='btn btn-primary btnMandarTaller' articulo='".$cortes[$i]["articulo"]."' operacion='".$cortes[$i]["cod_operacion"]."' data-toggle='modal' data-target='#modalMandarTaller'><i class='fa fa-users'></i></button></div>"; 
                    
                 $datosJson .= '[
                 "'.$cortes[$i]["articulo"].'",

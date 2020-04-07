@@ -1,7 +1,8 @@
 <?php
 
 class ControladorTrabajador{
-/*=============================================
+
+	/*=============================================
 	MOSTRAR TRABAJADORES
 	=============================================*/
 
@@ -12,6 +13,7 @@ class ControladorTrabajador{
 		return $respuesta;
 
 	}
+
 	/*=============================================
 	CREAR TRABAJADOR
 	=============================================*/
@@ -201,6 +203,18 @@ class ControladorTrabajador{
 			}
 
 		}
+
+	}
+
+	/*=============================================
+	MOSTRAR TRABAJADORES
+	=============================================*/
+
+	static public function ctrMostrarTrabajadorActivo(){
+
+		$respuesta = ModeloTrabajador::mdlMostrarTrabajadorActivo();
+
+		return $respuesta;
 
 	}
 

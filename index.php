@@ -67,7 +67,7 @@ require_once "modelos/trabajador.modelo.php";
 require_once "modelos/modelos.modelo.php";
 require_once "controladores/modelos.controlador.php";
 
-require_once "controladores/cortes.controlador.php";
+require_once "modelos/cortes.modelo.php";
 
 $plantilla = new ControladorPlantilla();
 $plantilla -> ctrPlantilla();

@@ -356,7 +356,7 @@ function quitarAgregarArticuloOC() {
 
 	//Capturamos todos los id de productos que fueron elegidos en la venta
     var articuloOC = $(".quitarOC");
-    console.log("articuloOC", articuloOC);
+    //console.log("articuloOC", articuloOC);
 
 	//Capturamos todos los botones de agregar que aparecen en la tabla
     var botonesTablaOC = $(".tablaArticulosOrdenCorte tbody button.agregarArt");
