@@ -11,10 +11,20 @@ class AjaxOperaciones{
   public $idOperacion;
   public $traerOperaciones;
   public $nombreOperacion;
+  public $codigoOperacion;
 
   public function ajaxEditarOperacion(){
     $item="id";
     $valor = $this->idOperacion;
+
+    $respuesta = ControladorOperaciones::ctrMostrarOperaciones($item,$valor);
+
+    echo json_encode($respuesta);
+
+  }
+  public function ajaxVerOperacion(){
+    $item="codigo";
+    $valor = $this->codigoOperacion;
 
     $respuesta = ControladorOperaciones::ctrMostrarOperaciones($item,$valor);
 
@@ -55,4 +65,14 @@ if(isset($_POST["nombreOperacion"])){
   $traerOperaciones -> nombreOperacion = $_POST["nombreOperacion"];
   $traerOperaciones -> ajaxEditarOperacion();
 
+}
+
+/*=============================================
+TRAER POR CODIGO
+=============================================*/ 
+if(isset($_POST["codigoOperacion"])){
+
+	$operacion = new AjaxOperaciones();
+	$operacion -> codigoOperacion = $_POST["codigoOperacion"];
+	$operacion -> ajaxVerOperacion();
 }

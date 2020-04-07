@@ -411,4 +411,30 @@ class ModeloOperaciones{
 		$stmt=null;
 	}
 
+	/* 
+	* Método para vizualizar detalle de la operacion
+	*/
+	static public function mdlVisualizarOperacionDetalle($tabla,$item,$valor){
+
+		$sql="SELECT 
+		dt.modelo,
+		dt.cod_operacion,
+		dt.precio_doc,
+		dt.tiempo_stand,
+		o.nombre
+	  FROM
+		$tabla dt 
+		LEFT JOIN operacionesjf o 
+		ON dt.cod_operacion = o.codigo
+	  WHERE dt.$item = :$item";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":".$item,$valor,PDO::PARAM_STR);
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt=null;
+
+	}
 }
