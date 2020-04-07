@@ -257,3 +257,128 @@ MODAL EDITAR OPERACION
   $eliminarCabeceraOperacion -> ctrEliminarCabeceraOperacion();
 
 ?>
+
+<!--=====================================
+MODAL DETALLE OPERACION
+======================================-->
+
+<div id="modalDetalleOperacion" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog" style="width: 70% !important;">
+
+    <div class="modal-content">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Detalle operación</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+          
+            <!-- ENTRADA PARA EL MODELO -->
+            
+            <div class="form-group col-lg-2">
+              <label for=""><strong>Modelo</strong></label>
+              <div class="input-group">
+                
+                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
+
+                <input type="text" min="0" class="form-control input-lg" name="verModelo" id="verModelo" readonly>
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA EL VENDEDOR -->
+            
+            <div class="form-group col-lg-4">
+              <label for=""><strong>Vendedor</strong></label>
+              <div class="input-group">
+                
+                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+
+                <input type="text" class="form-control input-lg" name="verVendedor" id="verVendedor" readonly>
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA EL TOTAL DE DECENA -->
+            <div class="form-group col-lg-3">
+              <label for=""><strong>Total Decena</strong></label>
+              <div class="input-group">
+                
+                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+
+                <input type="text" class="form-control input-lg" name="verTotalDocena" id="verTotalDocena" readonly>
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA EL TOTAL DE TIEMPO -->
+            <div class="form-group col-lg-3">
+              <label for=""><strong>Tiempo Total</strong></label> 
+              <div class="input-group">
+                
+                <span class="input-group-addon"><i class="fa fa-caret-up"></i></span> 
+
+                <input type="text" class="form-control input-lg" name="verTiempoTotal" id="verTiempoTotal" readonly>
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-3">
+              <label for=""><strong>Detalle</strong></label> 
+            </div>
+            <div class="box-body">
+                <table class="table table-bordered table-striped dt-responsive tablaDetalle">
+
+                    <tr>
+                      <th style="width:100px">CodOpe</th>
+                      <th>Operacion</th>
+                      <th >Precio x Docena</th>
+                      <th>Tiempo x Operación</th>
+                    </tr>
+
+                  </thead>
+
+                  <tbody>
+
+
+
+                  </tbody>
+
+                </table>
+            </div>
+          </div>
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+        </div>
+
+    </div>
+
+  </div>
+
+</div>
+
