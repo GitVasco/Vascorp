@@ -2,7 +2,7 @@
 
 class ControladorCortes{
 
-    /* 
+    /*
     * MOSTRAR DATOS DE ALMACEN DE CORTE
     */
     static public function ctrMostrarCortes($valor1, $valor2){
@@ -32,21 +32,51 @@ class ControladorCortes{
         if(isset($_POST["nuevoTaller"])){
 
             #var_dump("nuevoTaller", $_POST["nuevoTaller"]);
-            /* 
-            * ACTUALIZAR LA CANTIDAD
+            /*
+            * ACTUALIZAR LA CANTIDAD QUE QUEDA EN LA TABLA CORTE
             */
+            $articulo = $_POST["nuevoArticulo"];
+            $operacion = $_POST["nuevoCodOperacion"];
+            $cantidad = $_POST["nuevoCorte"];
 
+            ModeloCortes::mdlActualizarCorte($articulo, $operacion, $cantidad);
+
+            /*
+            * REGISTRAR LAS OPERACIONES MANDADAS A TALLER
+            */
             $datos = array( "usuario" => $_POST["usuario"],
                             "taller" => $_POST["nuevoTaller"],
                             "trabajador" => $_POST["nuevoTrabajador"],
                             "articulo" => $_POST["nuevoArticulo"],
                             "operacion" => $_POST["nuevoCodOperacion"],
                             "cantidad" => $_POST["nuevoAlmCorte"],
-                            "precio_total" => $_POST["precio_total"],
-                            "tiempo_total" => $_POST["tiempo_total"],
-                            "nuevoCorte" => $_POST["nuevoCorte"]);
+                            "total_precio" => $_POST["precio_total"],
+                            "total_tiempo" => $_POST["tiempo_total"]);
+            #var_dump("datos", $datos);
 
-            var_dump("datos", $datos);
+            $respuesta = ModeloCortes::mdlMandarTaller($datos);
+
+            if($respuesta == "ok"){
+
+                echo'<script>
+
+                    swal({
+                          type: "success",
+                          title: "Se mando a taller correctamente",
+                          showConfirmButton: true,
+                          confirmButtonText: "Cerrar"
+                          }).then(function(result){
+                                    if (result.value) {
+
+                                    window.location = "cortes";
+
+                                    }
+                                })
+
+                    </script>';
+
+            }
+
 
         }
 

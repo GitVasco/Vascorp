@@ -74,9 +74,9 @@ $(".tablaCortes tbody").on("click", "button.btnMandarTaller", function () {
 			$("#nuevaTalla").val(respuesta["talla"]);
 			$("#nuevoCodOperacion").val(respuesta["cod_operacion"]);
 			$("#nuevaOperacion").val(respuesta["operacion"]);
-			$("#almCorte").val(respuesta["alm_corte"]);
-			$("#nuevoAlmCorte").val(respuesta["alm_corte"]);
-			$("#nuevoAlmCorte").attr("max", respuesta["alm_corte"]);
+			$("#almCorte").val(respuesta["cantidad"]);
+			$("#nuevoAlmCorte").val(respuesta["cantidad"]);
+			$("#nuevoAlmCorte").attr("max", respuesta["cantidad"]);
 			$("#precio_doc").val(respuesta["precio_doc"]);
 			$("#tiempo_stand").val(respuesta["tiempo_stand"]);
 
