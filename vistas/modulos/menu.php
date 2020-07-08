@@ -314,23 +314,46 @@
                                                             <i class="fa fa-angle-left pull-right"></i>
                                                         </span>
                                                     </a>
-                            
+
                                                     <ul class="treeview-menu">
-                                           
+
                                                         <li>
                                                             <a href="almacencorte">
                                                                 <i class="fa fa-circle-o"></i> Alm. de Corte
                                                             </a>
                                                         </li>
-                            
+
                                                         <li>
                                                             <a href="crear-almacencorte">
                                                                 <i class="fa fa-circle-o"></i> Crear Corte
                                                             </a>
                                                         </li>
-                            
+
                                                     </ul>
-                                                </li>';                                                    
+                                                </li>';
+
+                    echo '<li>
+
+                                                    <a href="en-cortes">
+
+                                                        <i class="fa fa-scissors"></i>
+                                                        <span>En Cortes</span>
+
+                                                    </a>
+
+                                                </li>';
+
+                    echo '<li>
+
+                                                <a href="en-taller">
+
+                                                    <i class="fa fa-scissors"></i>
+                                                    <span>EN Talleres</span>
+
+                                                </a>
+
+                                            </li>';
+
                 }
 
                 echo '<li class="treeview">

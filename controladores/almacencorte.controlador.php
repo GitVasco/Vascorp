@@ -1,7 +1,7 @@
 <?php
 class ControladorAlmacenCorte{
 
-    /* 
+    /*
     * SACAR EL ULTIMO CODIGO
     */
     static public function ctrUltimoCodigoAC(){
@@ -12,23 +12,23 @@ class ControladorAlmacenCorte{
 
     }
 
-	/* 
+	/*
 	* MOSTRAR ARTICULOS EN ORDENES DE CORTE PARA EL ALMACEN CORTE
-	*/	
+	*/
 	static public function ctrMostarArticulosOrdCorte(){
 
 		$respuesta = ModeloAlmacenCorte::mdlMostarArticulosOrdCorte();
 
 		return $respuesta;
-		
-    }    
-    
-    /* 
+
+    }
+
+    /*
     * CREAR ALMACEN DE CORTE
     */
     static public function ctrCrearAlmacenCorte(){
 
-        /* 
+        /*
         todo: ver si trae datos
         */
         if( isset($_POST["nuevaAlmacenCorte"]) &&
@@ -41,7 +41,7 @@ class ControladorAlmacenCorte{
 
                 if($_POST["listaArticulosAC"] == ""){
 
-                    /* 
+                    /*
                     ? Mostramos una alerta suave si viene vacia
                     */
                     echo '<script>
@@ -61,13 +61,13 @@ class ControladorAlmacenCorte{
 
                     #var_dump("listaArticulosAC", $_POST["listaArticulosAC"]);
 
-                    /* 
+                    /*
                     ? Capturamos los articulos unicos y sumamos sus cantidades
                     */
                     $listArticulo = json_decode($_POST["listArticulo"], true);
                     #var_dump("listArticulo", $listArticulo);
 
-                    /* 
+                    /*
                     * array on los articulos unicos sin repetir
                     */
                     $articulos_array = [];
@@ -83,8 +83,8 @@ class ControladorAlmacenCorte{
 
                     }
                     #var_dump("articulos_array", $articulos_array);
-                    
-                    /* 
+
+                    /*
                     * crear un array con la lista unica
                     */
                     $resultado = [];
@@ -120,7 +120,7 @@ class ControladorAlmacenCorte{
                     }
                     #var_dump("resultado", $resultado);
 
-                    /* 
+                    /*
                     todo: GUARDAMOS LOS TOTALES DEL CORTE EN ARTICULO
                     */
                     foreach($resultado as $value){
@@ -133,7 +133,7 @@ class ControladorAlmacenCorte{
 
                     }
 
-                    /* 
+                    /*
                     todo: DESCONTAMOS LOS TOTALES DEL CORTE EN ARTICULO - ORDEN DE CORTE
                     */
                     foreach($resultado as $value){
@@ -144,9 +144,11 @@ class ControladorAlmacenCorte{
 
                         ModeloAlmacenCorte::mdlActualizarOrdCorte($valor, $valor1);
 
-                    }                    
+                        ModeloAlmacenCorte::mdlIngresarCantCorte($valor, $valor1);
 
-                    /* 
+                    }
+
+                    /*
                     todo: Actualizamos saldos de las Detalles de Ordenes de Corte
                     */
 
@@ -165,7 +167,7 @@ class ControladorAlmacenCorte{
 
                     }
 
-                    /* 
+                    /*
                     todo: Actualizamos saldos de las ordenes de corte y estados
                     */
                         ModeloAlmacenCorte::mdlActualizarSaldoOrdCorteGral();
@@ -174,7 +176,7 @@ class ControladorAlmacenCorte{
 
                         ModeloAlmacenCorte::mdlActualizarOrdCorteEstadoCerrado();
 
-                    /* 
+                    /*
                     todo: Guardar cabeera de ALMACEN DE CORTE
                     */
                     $datos=array(   "codigo"=>$_POST["nuevaAlmacenCorte"],
@@ -189,7 +191,7 @@ class ControladorAlmacenCorte{
 
                     if($respuesta =="ok"){
 
-                        /* 
+                        /*
                         todo: Guardar detalle de almacen de corte
                         */
                         $ultimoId = ModeloAlmacenCorte::mdlUltimoCodigoAC();
@@ -207,7 +209,7 @@ class ControladorAlmacenCorte{
                             ModeloAlmacenCorte::mdlGuardarDetallesAlmacenCorte($datosD);
 
                         }
-                        
+
                         # Mostramos una alerta suave
                         echo '<script>
                                 swal({
@@ -220,7 +222,7 @@ class ControladorAlmacenCorte{
                                     if(result.value){
                                         window.location="almacencorte";}
                                 });
-                            </script>';                    
+                            </script>';
 
                     }else{
 
@@ -236,7 +238,7 @@ class ControladorAlmacenCorte{
                                     if(result.value){
                                         window.location="crear-almacencorte";}
                                 });
-                            </script>';                       
+                            </script>';
 
                     }
 
@@ -245,8 +247,8 @@ class ControladorAlmacenCorte{
         }
 
     }
-    
-    /* 
+
+    /*
     * MOSTRAR DATOS DE ALMACEN DE CORTE
     */
     static public function ctrMostrarAlmacenCorte($valor){

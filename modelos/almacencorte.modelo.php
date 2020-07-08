@@ -3,9 +3,9 @@ require_once "conexion.php";
 
 class ModeloAlmacenCorte{
 
-  	/* 
+  	/*
 	* Método para sacar el ultimo codigo del almacen de corte
-	*/	
+	*/
 	static public function mdlUltimoCodigoAC(){
 
         $stmt = Conexion::conectar()->prepare("CALL sp_1054_almcorte_ultcod()");
@@ -30,8 +30,8 @@ class ModeloAlmacenCorte{
 		$stmt->close();
 		$stmt = null;
 	}
-	
-	/* 
+
+	/*
 	* Método para actualizar el total del corte por articulo
 	*/
 	static public function mdlActualizarAlmCorte($valor, $valor1){
@@ -47,7 +47,7 @@ class ModeloAlmacenCorte{
 
 	}
 
-	/* 
+	/*
 	* Método para actualizar los saldos de detalle de ordenes de corte
 	*/
 	static public function mdlActualizarSaldoOrdCorte($valor, $valor1, $valor2){
@@ -64,7 +64,7 @@ class ModeloAlmacenCorte{
 
 	}
 
-	/* 
+	/*
 	* Método para actualizar los saldos de ordenes de corte
 	*/
 	static public function mdlActualizarSaldoOrdCorteGral(){
@@ -77,7 +77,7 @@ class ModeloAlmacenCorte{
 
 	}
 
-	/* 
+	/*
 	* Guardar cabecera de Almacen DE CORTE
 	*/
 	static public function mdlGuardarAlmacenCorte($datos){
@@ -104,8 +104,8 @@ class ModeloAlmacenCorte{
 
 		$stmt=null;
 	}
-	
-	/* 
+
+	/*
 	* Guardar detalle de almacen de corte
 	*/
 	static public function mdlGuardarDetallesAlmacenCorte($datos){
@@ -134,8 +134,8 @@ class ModeloAlmacenCorte{
 		$stmt=null;
 
 	}
-	
-	/* 
+
+	/*
 	* Método para DESCONTAR el total del corte por articulo -ORD CORTE
 	*/
 	static public function mdlActualizarOrdCorte($valor, $valor1){
@@ -151,7 +151,7 @@ class ModeloAlmacenCorte{
 
 	}
 
-	/* 
+	/*
 	* Método para mostrar los datos de almacen de corte
 	*/
 	static public function mdlMostrarAlmacenCorte($valor){
@@ -178,11 +178,11 @@ class ModeloAlmacenCorte{
 
 		$stmt -> close();
 
-		$stmt = null;		
+		$stmt = null;
 
 	}
 
-	/* 
+	/*
 	* Método para actualizar lel estado de ordenes de corte a parcial
 	*/
 	static public function mdlActualizarOrdCorteEstadoParcial(){
@@ -195,7 +195,7 @@ class ModeloAlmacenCorte{
 
 	}
 
-	/* 
+	/*
 	* Método para actualizar lel estado de ordenes de corte a cerrado
 	*/
 	static public function mdlActualizarOrdCorteEstadoCerrado(){
@@ -248,6 +248,27 @@ class ModeloAlmacenCorte{
 	}	
 
 
+	/*
+	* Método para ingresar la cantidad de cortes por operacion
+	*/
+	static public function mdlIngresarCantCorte($valor, $valor1){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE encortejf
+													SET
+														cantidad = cantidad + :valor1,
+														total_precio = (precio_doc / 12) * cantidad,
+														total_tiempo = (tiempo_stand / 60) * cantidad
+													WHERE
+														articulo = :valor");
+
+		$stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
+		$stmt->bindParam(":valor1", $valor1, PDO::PARAM_STR);
+
+		$stmt->execute();
+
+		$stmt = null;
+
+	}
 
 
 }

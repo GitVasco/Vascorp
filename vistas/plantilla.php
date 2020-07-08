@@ -157,7 +157,7 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "bkplista" ||
                   $_GET["ruta"] == "movimientos"){
 
-              include "modulos/backend/".$_GET["ruta"].".php";                    
+              include "modulos/backend/".$_GET["ruta"].".php";
 
         }else if( $_GET["ruta"] == "articulos" ||
                   $_GET["ruta"] == "materiaprima" ||
@@ -169,7 +169,7 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "operaciones" ||
                   $_GET["ruta"] == "modelosjf"){
 
-              include "modulos/maestros/".$_GET["ruta"].".php"; 
+              include "modulos/maestros/".$_GET["ruta"].".php";
 
         }else if( $_GET["ruta"] == "ordencorte" ||
                   $_GET["ruta"] == "crear-ordencorte" ||
@@ -178,16 +178,18 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "crear-almacencorte" ||
                   $_GET["ruta"] == "editar-almacencorte" ||
                   $_GET["ruta"] == "urgencias" ||
-                  $_GET["ruta"] == "urgenciasamp"){
+                  $_GET["ruta"] == "urgenciasamp" ||
+                  $_GET["ruta"] == "en-cortes" ||
+                  $_GET["ruta"] == "en-taller"){
 
-              include "modulos/produccion/".$_GET["ruta"].".php"; 
+              include "modulos/produccion/".$_GET["ruta"].".php";
 
         }else if( $_GET["ruta"] == "tarjetas" ||
                   $_GET["ruta"] == "crear-tarjeta" ||
                   $_GET["ruta"] == "editar-tarjeta" ||
                   $_GET["ruta"] == "copiar-tarjeta"){
 
-              include "modulos/tarjetas/".$_GET["ruta"].".php"; 
+              include "modulos/tarjetas/".$_GET["ruta"].".php";
 
         }else if( $_GET["ruta"] == "categorias" ||
                   $_GET["ruta"] == "productos" ||
@@ -196,25 +198,24 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "crear-venta" ||
                   $_GET["ruta"] == "editar-venta"){
 
-              include "modulos/curso/".$_GET["ruta"].".php";                     
-
+              include "modulos/curso/".$_GET["ruta"].".php";
 
         }else if( $_GET["ruta"] == "contactos" ||
                   $_GET["ruta"] == "mailbox" ||
                   $_GET["ruta"] == "mensajes"){
 
-              include "modulos/ticket/".$_GET["ruta"].".php"; 
-                    
+              include "modulos/ticket/".$_GET["ruta"].".php";
+
         }else if( $_GET["ruta"] == "pedidoscv" ||
                   $_GET["ruta"] == "crear-pedidocv"){
 
               include "modulos/facturacion/".$_GET["ruta"].".php";
 
         }else if( $_GET["ruta"] == "detalleoperaciones" ||
-                  $_GET["ruta"] == "creardetalleoperaciones" || 
+                  $_GET["ruta"] == "creardetalleoperaciones" ||
                   $_GET["ruta"] == "editardetalleoperaciones") {
 
-          include "modulos/operaciones/".$_GET["ruta"].".php";
+              include "modulos/operaciones/".$_GET["ruta"].".php";
 
         }else if( $_GET["ruta"] == "salir" ||
                   $_GET["ruta"] == "reportes"){
@@ -275,6 +276,7 @@ CUERPO DOCUMENTO
   <script src="vistas/js/operaciones.js"></script>
   <script src="vistas/js/trabajador.js"></script>
   <script src="vistas/js/modelos.js"></script>
+  <script src="vistas/js/cortes.js"></script>
 
 
 </body>

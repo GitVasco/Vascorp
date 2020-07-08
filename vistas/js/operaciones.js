@@ -464,3 +464,90 @@ $(".tablaDetalleOperaciones tbody").on("click","button.btnEliminarOperacion",fun
 	
 	
 });
+
+/* 
+* BOTON VISUALIZAR DETALLE OPERACION
+*/
+
+$(".tablaDetalleOperaciones").on("click", ".btnDetalleOperacion", function () {
+
+	var idOperacion = $(this).attr("idOperacion");
+
+	var datos = new FormData();
+	datos.append("idOperacion", idOperacion);
+
+	$.ajax({
+
+		url: "ajax/operaciones-cabecera.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function (respuesta) {
+
+			$("#verModelo").val(respuesta["articulo"]);
+			
+			//vendedores
+			var idUsuario = respuesta["vendedor_fk"];
+			
+			var datos3 = new FormData();
+			datos3.append("idUsuario", idUsuario);
+			$.ajax({
+
+				url: "ajax/usuarios.ajax.php",
+				method: "POST",
+				data: datos3,
+				cache: false,
+				contentType: false,
+				processData: false,
+				dataType: "json",
+				success: function (respuesta) {
+					
+					$("#verVendedor").val(respuesta["nombre"]);
+				}
+				
+			})
+
+			$("#verTotalDocena").val(respuesta["total_pd"]);
+
+			$("#verTiempoTotal").val(respuesta["total_ts"]);
+			
+			var modeloDetalle = respuesta["articulo"];
+			
+			var datos2 = new FormData();
+			datos2.append("modeloDetalle", modeloDetalle);
+			$.ajax({
+
+				url: "ajax/operaciones-detalle.ajax.php",
+				method: "POST",
+				data: datos2,
+				cache: false,
+				contentType: false,
+				processData: false,
+				dataType: "json",
+				success: function (respuesta) {
+					
+					$(".detalle").remove();
+					for (var id of respuesta) {
+						
+						$('.tablaDetalle').append(
+
+							'<tr class="detalle">' +
+							'<td>' + id.cod_operacion + ' </td>' +
+							'<td>' + id.nombre + ' </td>' +
+							'<td>' + id.precio_doc + ' </td>' +
+							'<td>' + id.tiempo_stand + ' </td>' +
+							'</tr>'	
+						)
+					}
+					
+				}
+				
+			})
+
+		}
+
+    })
+});
