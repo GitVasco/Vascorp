@@ -79,8 +79,8 @@ $(document).on("click",".btnActivar",function(){
 	// Capturamos el id del usuario y el estado
 	var idArticulo=$(this).attr("idArticulo");
 	var estadoArticulo=$(this).attr("estadoArticulo");
-	console.log("idArticulo", idArticulo);
-	console.log("estadoArticulo", estadoArticulo); 
+	//console.log("idArticulo", idArticulo);
+	//console.log("estadoArticulo", estadoArticulo); 
 	// Realizamos la activación-desactivación por una petición AJAX
 	// var datos=new FormData();
 	// datos.append("activarId",idArticulo);

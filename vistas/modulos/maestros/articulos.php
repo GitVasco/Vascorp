@@ -400,8 +400,8 @@ MODAL EDITAR ARTICULO
                 <select class="form-control input-lg selectpicker" id="editarMarca" name="editarMarca" data-live-search="true" required readonly>
 
                 <?php
-                    
-                    $marcas = ControladorMarcas::ctrMostrarMarcas();
+                    $valor = null;
+                    $marcas = ControladorMarcas::ctrMostrarMarcas($valor);
                     //var_dump("marcas", $marcas);
 
                     foreach ($marcas as $key => $value) {
@@ -410,7 +410,6 @@ MODAL EDITAR ARTICULO
 
                     }
 
-                    
                     ?>
 
                 </select>
