@@ -110,7 +110,7 @@ MODAL VISUALIZAR INFORMACION
 
               <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
 
-                <strong><input type="text" class="form-control input-sm" name="ordencorte" id="ordencorte" required readonly></strong>
+                <strong><input type="text" class="form-control input-sm" name="almacencorte" id="almacencorte" required readonly></strong>
 
               </div>
 

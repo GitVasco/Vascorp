@@ -36,18 +36,18 @@ class TablaAlmacenCorte{
             */
             if($almacencorte[$i]["estado"] == "0"){
 
-                $estadoAC = "<span style='font-size:85%' class='label label-danger'>Sistemas</span>";
-
+                $estadoAC = "<button class='btn btn-warning btn-xs btnSistemas' codigo='".$almacencorte[$i]["codigo"]."' estadoAM='1'>Sistemas</button>";
+    
             }else{
-
-                $estadoAC = "<span style='font-size:85%' class='label label-primary'>Procesado</span>";
-                
-            }             
+    
+                $estadoAC = "<button class='btn btn-primary btn-xs btnSistemas' codigo='".$almacencorte[$i]["codigo"]."' estadoAM='0'>Procesado</button>";
+    
+            }           
 
             /* 
             todo: Traemos las acciones
             */
-            $botones =  "<div class='btn-group'><button class='btn btn-info btnVisualizarAC' title='Visualizar Corte' data-toggle='modal' data-target='#modalVisualizarAC' codigo='".$almacencorte[$i]["codigo"]."'><i class='fa fa-eye'></i></button><button class='btn btn-success  btnReporteOC' title='Reporte Orden de Corte' codigo='".$almacencorte[$i]["codigo"]."'><i class='fa fa-file-excel-o'></i></button></div>";
+            $botones =  "<div class='btn-group'><button class='btn btn-info btnVisualizarAC' title='Visualizar Corte' data-toggle='modal' data-target='#modalVisualizarAC' codigoAC='".$almacencorte[$i]["codigo"]."'><i class='fa fa-eye'></i></button><button class='btn btn-success  btnReporteOC' title='Reporte Orden de Corte' codigo='".$almacencorte[$i]["codigo"]."'><i class='fa fa-file-excel-o'></i></button></div>";
                    
                 $datosJson .= '[
                 "'.$codigo.'",

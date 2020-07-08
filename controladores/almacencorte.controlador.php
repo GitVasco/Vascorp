@@ -257,6 +257,18 @@ class ControladorAlmacenCorte{
 
     }
 
+	/* 
+	* VISUALIZAR DATOS DEL CORTE DETALLE
+	*/
+	static public function ctrVisualizarAlmacenCorteDetalle($valor){
+
+        $respuesta = ModeloAlmacenCorte::mdlVisualizarAlmacenCorteDetalle($valor);
+        
+		return $respuesta;
+
+	}    
+
+
 
 
 

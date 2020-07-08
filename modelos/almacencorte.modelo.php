@@ -158,9 +158,9 @@ class ModeloAlmacenCorte{
 
 		if($valor != null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item ORDER BY id DESC");
+			$stmt = Conexion::conectar()->prepare("CALL sp_1066_consulta_almacencorte_p(:valor)");
 
-			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
 
 			$stmt -> execute();
 
@@ -207,6 +207,47 @@ class ModeloAlmacenCorte{
 		$stmt = null;
 
 	}
+
+	/* 
+	* Método para vizualizar detalle de la orden de corte
+	*/
+	static public function mdlVisualizarAlmacenCorteDetalle($valor){
+
+		$stmt = Conexion::conectar()->prepare("CALL sp_1067_consulta_almacencorte_detalle_p(:valor)");
+
+		$stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt=null;
+
+	}
+	
+	/* 
+	* Método para activar y desactivar un usuario
+	*/
+	static public function mdlEstadoCorte($valor, $valor1){
+
+		$stmt = Conexion::conectar()->prepare("CALL sp_1068_update_alm_estado_p(:valor, :estado)");
+
+		$stmt -> bindParam(":estado", $valor1, PDO::PARAM_STR);
+		$stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+
+		} else {
+
+			return "error";
+		}
+
+		$stmt = null;
+	}	
+
+
 
 
 }

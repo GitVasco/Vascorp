@@ -191,11 +191,13 @@ $(".tablaArticulosAlmacenCorte").on("draw.dt", function () {
 
     if (localStorage.getItem("quitarAC") != null) {
         var listaIdArticuloAC = JSON.parse(localStorage.getItem("quitarAC"));
+        //console.log("listaIdArticuloAC", listaIdArticuloAC);
+        
 
         for (var i = 0; i < listaIdArticuloAC.length; i++) {
-            $("button.recuperarBoton[articuloAC='" + listaIdArticuloAC[i]["idCorte"] + "']").removeClass("btn-default");
+            $("button.recuperarBoton[idCorte='" + listaIdArticuloAC[i]["idCorte"] + "']").removeClass("btn-default");
 
-            $("button.recuperarBoton[articuloAC='" + listaIdArticuloAC[i]["idCorte"] + "']").addClass("btn-primary agregarArtAC");
+            $("button.recuperarBoton[idCorte='" + listaIdArticuloAC[i]["idCorte"] + "']").addClass("btn-primary agregarArtAC");
         }
     }
 });
@@ -479,17 +481,17 @@ $(".tablaArticulosAlmacenCorte").on("draw.dt", function() {
 /* 
 * VISUALIZAR DETALLE DEL CORTE
 */ 
-$(".tablaOrdenCorte").on("click", ".btnVisualizarOC", function () {
+$(".tablaAlmacenCorte").on("click", ".btnVisualizarAC", function () {
 
-	var codigoOC = $(this).attr("codigo");
-    //console.log("codigoOC", codigoOC);
+	var codigoAC = $(this).attr("codigoAC");
+    //console.log("codigoAC", codigoAC);
     
     var datos = new FormData();
-	datos.append("codigoOC", codigoOC);
+	datos.append("codigoAC", codigoAC);
 
 	$.ajax({
 
-		url:"ajax/ordencorte.ajax.php",
+		url:"ajax/almacencorte.ajax.php",
 		method: "POST",
 		data: datos,
 		cache: false,
@@ -500,30 +502,28 @@ $(".tablaOrdenCorte").on("click", ".btnVisualizarOC", function () {
 
 			//console.log("respuesta", respuesta);
 
-            $("#ordencorte").val(respuesta["codigo"]);
+            $("#almacencorte").val(respuesta["codigo"]);
             $("#fecha").val(respuesta["fecha"]);
-            $("#configuracion").val(respuesta["configuracion"]);
             $("#nombre").val(respuesta["nombre"]);
             $("#cantidad").val(respuesta["total"]);
-            $("#saldo").val(respuesta["saldo"]);
             $("#estado").val(respuesta["estado"]);
 
             $("#cantidad").number(true, 0);
-            $("#saldo").number(true, 0);
+
 			
 		}
 
     })
     
-    var codigoDOC = $(this).attr("codigo");	
-    //console.log("codigoDOC", codigoDOC);
+    var codigoDAC = $(this).attr("codigoAC");	
+    //console.log("codigoDAC", codigoDAC);
 
     var datosDOC = new FormData();
-    datosDOC.append("codigoDOC", codigoDOC);
+    datosDOC.append("codigoDAC", codigoDAC);
     
     $.ajax({
 
-		url:"ajax/ordencorte.ajax.php",
+		url:"ajax/almacencorte.ajax.php",
 		method: "POST",
 		data: datosDOC,
 		cache: false,
@@ -597,7 +597,7 @@ $(".tablaOrdenCorte").on("click", ".btnVisualizarOC", function () {
 				$('.tablaDetalleOC').append(
 
 					'<tr class="detalleMP">' +
-						'<td>' + id.ordencorte + ' </td>' +
+						'<td>' + id.almacencorte + ' </td>' +
 						'<td><b>' + id.modelo + ' </b></td>' +
 						'<td>' + id.nombre + ' </td>' +
 						'<td>' + id.color + ' </td>' +
@@ -619,4 +619,58 @@ $(".tablaOrdenCorte").on("click", ".btnVisualizarOC", function () {
 
 	})
   
+})
+
+/* 
+* PROCESADO O PEDIR A SISTEMAS QUE LO REVISE
+*/
+$(".tablaAlmacenCorte").on("click", ".btnSistemas", function () {
+
+	var codigo = $(this).attr("codigo");
+    var estadoAM = $(this).attr("estadoAM");
+    console.log("codigo", codigo);
+    console.log("estadoAM", estadoAM);
+
+	var datos = new FormData();
+	datos.append("activarId", codigo);
+	datos.append("activarAM", estadoAM);
+
+	$.ajax({
+
+		url: "ajax/almacencorte.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		success: function (respuesta) {
+            
+            if(window.matchMedia("(max-width:767px)").matches){
+                swal({
+                    type: "success",
+                    title: "¡Ok!",
+                    text: "¡La información fue actualizada con éxito!",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar",
+                    closeOnConfirm: false
+                }).then((result)=>{
+                    if(result.value){
+                        window.location="almacencorte";}
+                });}
+
+		}
+	})
+
+	if (estadoAM == "0") {
+		$(this).removeClass('btn-primary');
+		$(this).addClass('btn-warning');
+		$(this).html('Sistemas');
+		$(this).attr('estadoAM', "1");
+	} else {
+		$(this).addClass('btn-primary');
+		$(this).removeClass('btn-warning');
+		$(this).html('Procesado');
+		$(this).attr('estadoAM', "0");
+	}
+
 })
