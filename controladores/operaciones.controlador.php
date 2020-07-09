@@ -249,7 +249,7 @@ class ControladorOperaciones{
 							confirmButtonText: "Cerrar"
 						}).then((result)=>{
 							if(result.value){
-								window.location="creardetalle";}
+								window.location="detalleoperaciones";}
 						});
 					</script>';
 			}else{
@@ -307,7 +307,7 @@ class ControladorOperaciones{
 						  }).then(function(result){
 							if (result.value) {
 
-							window.location = "creardetalle";
+							window.location = "detalleoperaciones";
 
 							}
 						})
@@ -344,7 +344,7 @@ class ControladorOperaciones{
 							confirmButtonText: "Cerrar"
 						}).then((result)=>{
 							if(result.value){
-								window.location="creardetalleoperaciones";}
+								window.location="detalleoperaciones";}
 						});
 					</script>';
 			}else{
@@ -408,7 +408,7 @@ class ControladorOperaciones{
 						  }).then(function(result){
 							if (result.value) {
 
-							window.location = "creardetalleoperaciones";
+							window.location = "detalleoperaciones";
 
 							}
 						})

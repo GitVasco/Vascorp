@@ -169,3 +169,55 @@ $(".tablaModelos tbody").on("click", "button.btnEliminarModelo", function(){
 
 
 })
+
+/*=============================================
+VER MODELO
+=============================================*/
+
+$(".tablaModelos tbody").on("click", "button.btnVerModelo", function(){
+
+	var modelo2 = $(this).attr("modelo");
+
+	var datos = new FormData();
+	datos.append("modelo2", modelo2);
+	
+	$.ajax({
+
+		url:"ajax/modelos.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType:"json",
+		success:function(respuesta){
+
+			$(".detalleMO").remove();
+
+			for(var id of respuesta){
+
+				$('.tablaDetalleModelo').append(
+
+					'<tr class="detalleMO">' +
+						'<td class="text-center">' + id.modelo + ' </td>' +
+						'<td class="text-center">' + id.nombre + ' </td>' +
+						'<td class="text-center">' + id.color + ' </td>' +
+						'<td class="text-center">' + id.talla + ' </td>' +
+					'</tr>'
+
+
+				)
+
+			}
+
+			// if(respuesta["imagen"] != ""){
+
+			// 	$("#imagenActual").val(respuesta["imagen"]);
+
+			// 	$(".previsualizar").attr("src",  respuesta["imagen"]);
+
+			// }
+
+		}
+	})	
+})

@@ -325,5 +325,19 @@ class ControladorModelos{
 
 	}	
 
+	
+	/* 
+	* MOSTRAR MODELOS
+	*/
+	static public function ctrMostrarModeloArticulo($item,$valor){
+
+        $tabla = "modelojf";
+
+		$respuesta = ModeloModelos::mdlMostrarModeloArticulo($tabla, $item,$valor);
+
+		return $respuesta;
+
+    }
+
 }
 
