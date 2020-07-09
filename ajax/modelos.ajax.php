@@ -37,6 +37,17 @@ class AjaxModelos{
 	}
 
 
+	public function ajaxVerModelo(){
+
+        $item="modelo";
+		$valor = $this->modelo;
+
+		$respuesta = ControladorModelos::ctrMostrarModeloArticulo($item,$valor);
+
+		echo json_encode($respuesta);
+
+	}
+
 }
 
 
@@ -61,5 +72,17 @@ if(isset($_POST["modelo"])){
 	$editarModelo = new AjaxModelos();
 	$editarModelo -> modelo = $_POST["modelo"];
 	$editarModelo -> ajaxEditarModelo();
+  
+}
+
+/*=============================================
+VER MODELO
+=============================================*/ 
+
+if(isset($_POST["modelo2"])){
+
+	$verModelo = new AjaxModelos();
+	$verModelo -> modelo = $_POST["modelo2"];
+	$verModelo -> ajaxVerModelo();
   
 }

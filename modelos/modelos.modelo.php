@@ -22,7 +22,7 @@ class ModeloModelos
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT t.id_modelo,t.modelo,t.nombre,t.estado,t.tipo,t.linea,t.imagen,m.marca FROM $tabla t LEFT JOIN marcasjf m on t.id_marca=m.id ORDER BY id_modelo DESC");
+			$stmt = Conexion::conectar()->prepare("SELECT t.id_modelo,t.modelo,t.nombre,t.estado,t.tipo,t.linea,t.operaciones,t.imagen,m.marca FROM $tabla t LEFT JOIN marcasjf m on t.id_marca=m.id ORDER BY id_modelo DESC");
 
 			$stmt -> execute();
 
@@ -132,5 +132,18 @@ class ModeloModelos
 		$stmt = null;
 	}
 
+	/*=============================================
+	MOSTRAR MODELOS CON ARTICULOS
+	=============================================*/
+	static public function mdlMostrarModeloArticulo($tabla,$item,$valor){
 
+		$stmt = Conexion::conectar()->prepare("SELECT t.id_modelo,t.modelo,t.nombre,t.estado,t.tipo,t.linea,t.operaciones,t.imagen,a.color,a.talla FROM $tabla t LEFT JOIN articulojf a on t.modelo=a.modelo WHERE t.modelo = $valor");
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+		$stmt -> close();
+
+		$stmt = null;
+	}
 }

@@ -48,6 +48,7 @@
               <th>Estado</th>
               <th>Tipo</th>
               <th>linea</th>
+              <th>Operaciones</th>
               <th>Acciones</th>
 
             </tr>
@@ -69,7 +70,92 @@
 </div>
 
 <!--=====================================
-MODAL AGREGAR ARTICULO
+MODAL VER MODELO
+======================================-->
+
+<div id="modalVerModelo" class="modal fade" role="dialog">
+
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form role="form" method="post" enctype="multipart/form-data">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Visualizar modelo</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <!-- ENTRADA PARA VISUALIZAR FOTO -->
+
+            <div class="form-group">
+              <div class="panel text-center"><h3><b>MODELO</b></h3></div>
+              <div align="center" style="border:3px solid black">
+              <img src="vistas/img/articulos/default/anonymous.png" class="img-thumbnail previsualizar" width="300px">
+              </div>
+              
+
+            </div>
+            <table class="table tablaDetalleModelo">
+              <thead>
+              
+                <th class="text-center">Modelo</th>
+                <th class="text-center">Nombre</th>
+                <th class="text-center">Color</th>
+                <th class="text-center">Talla</th>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Guardar modelo</button>
+
+        </div>
+
+      </form>
+      
+      <?php
+
+      $crearModelo = new ControladorModelos();
+      $crearModelo->ctrCrearModelo();
+
+      ?>
+
+
+    </div>
+
+  </div>
+
+</div>
+
+<!--=====================================
+MODAL AGREGAR MODELO
 ======================================-->
 
 <div id="modalAgregarModelo" class="modal fade" role="dialog">
@@ -242,7 +328,7 @@ MODAL AGREGAR ARTICULO
 
 
 <!--=====================================
-MODAL EDITAR ARTICULO
+MODAL EDITAR MODELO
 ======================================-->
 
 <div id="modalEditarModelo" class="modal fade" role="dialog">
