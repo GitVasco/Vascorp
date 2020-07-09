@@ -214,8 +214,8 @@ $(".tablaArticuloOperaciones tbody").on("click", "button.agregarOperacion", func
   
 		  "</div>"
 		);
-		$(".nuevoPrecioDocena").number(true, 2);
-		$(".nuevoTiempoStandar").number(true, 2);
+		$(".nuevoPrecioDocena").number(true, 6);
+		$(".nuevoTiempoStandar").number(true, 4);
 
 		sumarTotalPrecios();
 		sumarTotalTiempos();
@@ -404,8 +404,8 @@ function quitarAgregarOperaciones() {
 	$("#nuevoTotalStandar").val(sumaTotalPrecio);
   }
 
-$("#nuevoTotalDocena").number(true, 2);
-$("#nuevoTotalStandar").number(true, 2);
+$("#nuevoTotalDocena").number(true, 6);
+$("#nuevoTotalStandar").number(true, 4);
 
   /*=============================================
 LISTAR TODAS LAS OPERACIONES

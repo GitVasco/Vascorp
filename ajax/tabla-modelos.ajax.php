@@ -32,7 +32,7 @@ class TablaModelos{
         ESTADO
         =============================================*/ 
 
-        if($modelos[$i]["estado"] == "Descontinuado"){
+        if($modelos[$i]["estado"] == "Descontinuado" || $modelos[$i]["estado"] == "DESCONTINUADO"){
 
             /* $estado = "<button class='btn btn-danger btn-xs btnActivar'>".$articulos[$i]["id"]."</button>"; */
             $estado = "<button class='btn btn-danger btn-xs btnActivar' idModelo='".$modelos[$i]["modelo"]."' estadoModelo='Activo'>Inactivo</button>";
@@ -53,15 +53,26 @@ class TablaModelos{
         if( $_GET["perfil"]=="Supervisor" ||
             $_GET["perfil"]=="Sistemas"){
 
-                $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarModelo' modelo='".$modelos[$i]["modelo"]."' data-toggle='modal' data-target='#modalEditarModelo'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarModelo' idModelo='".$modelos[$i]["id_modelo"]."' modelo='".$modelos[$i]["modelo"]."' imagen='".$modelos[$i]["imagen"]."'><i class='fa fa-times'></i></button></div>";
+                $botones =  "<div class='btn-group'><button class='btn btn-primary btnVerModelo' modelo='".$modelos[$i]["modelo"]."' data-toggle='modal' data-target='#modalVerModelo'><i class='fa fa-eye'></i></button><button class='btn btn-warning btnEditarModelo' modelo='".$modelos[$i]["modelo"]."' data-toggle='modal' data-target='#modalEditarModelo'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarModelo' idModelo='".$modelos[$i]["id_modelo"]."' modelo='".$modelos[$i]["modelo"]."' imagen='".$modelos[$i]["imagen"]."'><i class='fa fa-times'></i></button></div>";
 
         }else{
 
-                $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarModelo' modelo='".$modelos[$i]["modelo"]."' data-toggle='modal' data-target='#modalEditarModelo'><i class='fa fa-pencil'></i></button></div>"; 
+                $botones =  "<button class='btn btn-primary btnVerModelo' modelo='".$modelos[$i]["modelo"]."' data-toggle='modal' data-target='#modalVerModelo'><i class='fa fa-eye'></i></button><div class='btn-group'><button class='btn btn-warning btnEditarModelo' modelo='".$modelos[$i]["modelo"]."' data-toggle='modal' data-target='#modalEditarModelo'><i class='fa fa-pencil'></i></button></div>"; 
 
         }
-        
 
+        /*=============================================
+        TRAEMOS LOS MODELOS QUE TIENEN OPERACION
+        =============================================*/
+        if( $modelos[$i]["operaciones"] == 1){
+
+                $operaciones =  "<button class='btn btn-primary btn-xs'>Si tiene</button>";
+
+        }else{
+
+                $operaciones =  "<button class='btn btn-danger btn-xs'>Pendiente</button>";
+
+        }
 
             $datosJson .= '[
             "'.($i+1).'",
@@ -72,6 +83,7 @@ class TablaModelos{
             "'.$estado.'",
             "'.$modelos[$i]["tipo"].'",
             "'.$modelos[$i]["linea"].'",
+            "'.$operaciones.'",
             "'.$botones.'"
             ],';        
             }
