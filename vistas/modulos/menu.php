@@ -145,6 +145,60 @@
                             <ul class="treeview-menu">
 
                                 <li>
+                
+                                    <a href="articulos">
+            
+                                        <i class="fa fa-circle-o"></i>
+                                        <span>Artículos</span>
+            
+                                    </a>
+        
+                                </li>  
+                                
+                                <li>
+            
+                                    <a href="colores">
+            
+                                        <i class="fa fa-circle-o"></i>
+                                        <span>Colores</span>
+            
+                                    </a>
+            
+                                </li>   
+                                
+                                <li>
+                                    <a href="tipodocumentos">
+            
+                                        <i class="fa fa-circle-o"></i>
+                                        <span>Documentos</span>
+            
+                                    </a>
+        
+                                </li>
+                                
+                                <li>
+            
+                                    <a href="marcas">
+            
+                                        <i class="fa fa-circle-o"></i>
+                                        <span>Marcas</span>
+            
+                                    </a>
+            
+                                </li>    
+                                
+                                <li>
+            
+                                    <a href="materiaprima">
+            
+                                        <i class="fa fa-circle-o"></i>
+                                        <span> Materia Prima</span>
+            
+                                    </a>
+            
+                                </li>                                
+
+                                <li>
                                         
                                     <a href="modelosjf">
             
@@ -155,80 +209,6 @@
                                     </a>
                         
                                 </li>
-            
-                                <li>
-            
-                                    <a href="articulos">
-            
-                                        <i class="fa fa-circle-o"></i>
-                                        <span>Administrar Artículos</span>
-            
-                                    </a>
-            
-                                </li>
-            
-                                <li>
-            
-                                    <a href="materiaprima">
-            
-                                        <i class="fa fa-circle-o"></i>
-                                        <span>Administrar MP</span>
-            
-                                    </a>
-            
-                                </li>
-            
-                                <li>
-            
-                                    <a href="marcas">
-            
-                                        <i class="fa fa-circle-o"></i>
-                                        <span>Administrar Marcas</span>
-            
-                                    </a>
-            
-                                </li>
-            
-                                <li>
-            
-                                    <a href="colores">
-            
-                                        <i class="fa fa-circle-o"></i>
-                                        <span>Administrar Colores</span>
-            
-                                    </a>
-            
-                                </li>
-
-                                <li>
-                                    <a href="tipodocumentos">
-            
-                                        <i class="fa fa-circle-o"></i>
-                                        <span>Administrar Documentos</span>
-            
-                                    </a>
-        
-                                </li> 
-
-                                <li>
-                                    <a href="trabajador">
-            
-                                        <i class="fa fa-circle-o"></i>
-                                        <span>Trabajador</span>
-            
-                                    </a>
-        
-                                </li> 
-
-                                <li>
-                                    <a href="tipotrabajador">
-            
-                                        <i class="fa fa-circle-o"></i>
-                                        <span>Tipo Trabajador</span>
-            
-                                    </a>
-        
-                                </li> 
 
                                 <li>
                                      
@@ -241,9 +221,37 @@
                                     </a>
                                 
                                 </li>
+                                
+                                <li>
+                                    <a href="sectores">
             
-                               
+                                        <i class="fa fa-circle-o"></i>
+                                        <span>Sector</span>
             
+                                    </a>
+        
+                                </li>                                  
+
+                                <li>
+                                    <a href="tipotrabajador">
+            
+                                        <i class="fa fa-circle-o"></i>
+                                        <span>Tipo Trabajador</span>
+            
+                                    </a>
+        
+                                </li>                              
+
+                                <li>
+                                    <a href="trabajador">
+            
+                                        <i class="fa fa-circle-o"></i>
+                                        <span>Trabajador</span>
+            
+                                    </a>
+        
+                                </li> 
+                      
                             </ul>
             
                         </li>
