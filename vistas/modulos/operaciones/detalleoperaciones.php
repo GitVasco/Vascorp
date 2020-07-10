@@ -23,13 +23,16 @@
     <div class="box">
 
       <div class="box-header with-border">
-  
-        <a class="btn btn-primary" href="creardetalleoperaciones">
-          
-          Agregar operaciones
-
-        </a>
-
+        <div class="col-md-3">
+          <a class="btn btn-primary" href="creardetalleoperaciones">
+            <i class="fa fa-plus-square"></i> Agregar operaciones
+          </a>  
+        </div>
+        <div class="col-md-3 col-md-offset-6 ">
+          <button class="btn btn-success btnReporteOG">
+            <i class="fa fa-print "></i> Reporte Operaciones - General
+          </button>
+        </div>
       </div>
 
       <div class="box-body">
@@ -40,9 +43,9 @@
          
          <tr>
            
-           <th style="width:10px">#</th>
+           <th style="width:10px">N°</th>
            <th>Modelo</th>
-           <th>Vendedor</th>
+           <th>Responsable</th>
            <th>Total x Decena</th>
            <th>Tiempo standar total</th>
            <th>Acciones</th>

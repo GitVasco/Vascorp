@@ -251,3 +251,8 @@
 
 </div>
 
+<script type="text/javascript">
+$(window).on('beforeunload', function() {
+	event.returnValue = "Write something clever here..";
+});
+</script>

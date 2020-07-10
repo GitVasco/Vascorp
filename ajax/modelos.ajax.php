@@ -12,11 +12,11 @@ class AjaxModelos{
 	public function ajaxActivarDesactivarModelo(){
 
 		$tabla="modelojf";
+		$tabla2="articulojf";
 		$valor1=$this->activarEstado;
-
 		$valor2=$this->activarId;
 
-		$respuesta=ModeloModelos::mdlActualizarModelo($tabla,$valor1, $valor2);
+		$respuesta=ModeloModelos::mdlActualizarModelo($tabla,$tabla2,$valor1, $valor2);
 
 		echo $respuesta;
 	}

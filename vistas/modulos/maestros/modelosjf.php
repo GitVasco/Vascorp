@@ -25,8 +25,8 @@
       <div class="box-header with-border">
 
         <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarModelo">
-
-          Agregar modelo
+          <i class="fa fa-plus-square"></i>
+           Agregar modelo
 
         </button>
 
@@ -104,9 +104,9 @@ MODAL VER MODELO
             <!-- ENTRADA PARA VISUALIZAR FOTO -->
 
             <div class="form-group">
-              <div class="panel text-center"><h3><b>MODELO</b></h3></div>
+              <div class="panel text-center"><h3 class="titulo"></h3></div>
               <div align="center" style="border:3px solid black">
-              <img src="vistas/img/articulos/default/anonymous.png" class="img-thumbnail previsualizar" width="300px">
+              <img  class="img-thumbnail previsualizar" width="300px">
               </div>
               
 
