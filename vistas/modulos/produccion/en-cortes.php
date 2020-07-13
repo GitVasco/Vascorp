@@ -107,24 +107,24 @@ MODAL MANDAR A TALLER
 
             <div class="form-group col-lg-5">
 
-              <label>Taller</label>
+              <label>Sector</label>
 
               <div class="input-group">
 
                 <span class="input-group-addon"><i class="fa fa-industry"></i></span>
 
-                <select class="form-control input-sm selectpicker" id="nuevoTaller" name="nuevoTaller" data-live-search="true" required>
+                <select class="form-control input-sm selectpicker" id="nuevoSector" name="nuevoSector" data-live-search="true" required>
 
-                  <option value="">Taller</option>
+                  <option value="">Sector</option>
 
                   <?php
 
-                  $taller = ControladorCortes::ctrMostrarTaller();
-                  #var_dump("taller", $taller);
+                  $sector = ControladorSectores::ctrMostrarSectores(null);
+                  #var_dump("taller", $sector);
 
-                  foreach ($taller as $key => $value) {
+                  foreach ($sector as $key => $value) {
 
-                    echo '<option value="' . $value["codigo"] . '">' . $value["codigo"] . ' - ' . $value["taller"] . '</option>';
+                    echo '<option value="' . $value["cod_sector"] . '">' . $value["cod_sector"] . ' - ' . $value["nom_sector"] . '</option>';
                   }
 
 

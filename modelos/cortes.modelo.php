@@ -130,7 +130,7 @@ class ModeloCortes{
 	static public function mdlMandarTaller($datos){
 
 		$stmt = Conexion::conectar()->prepare("INSERT INTO entallerjf
-                                                (   taller,
+                                                (   sector,
                                                     articulo,
                                                     cod_operacion,
                                                     trabajador,
@@ -139,7 +139,7 @@ class ModeloCortes{
                                                     total_precio,
                                                     total_tiempo)
                                                     VALUES
-                                                (   :taller,
+                                                (   :sector,
                                                     :articulo,
                                                     :operacion,
                                                     :trabajador,
@@ -148,7 +148,7 @@ class ModeloCortes{
                                                     :total_precio,
                                                     :total_tiempo)");
 
-		$stmt->bindParam(":taller", $datos["taller"], PDO::PARAM_STR);
+		$stmt->bindParam(":sector", $datos["sector"], PDO::PARAM_STR);
 		$stmt->bindParam(":articulo", $datos["articulo"], PDO::PARAM_STR);
 		$stmt->bindParam(":operacion", $datos["operacion"], PDO::PARAM_STR);
 		$stmt->bindParam(":trabajador", $datos["trabajador"], PDO::PARAM_STR);

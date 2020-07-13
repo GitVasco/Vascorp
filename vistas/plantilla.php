@@ -278,6 +278,7 @@ CUERPO DOCUMENTO
   <script src="vistas/js/trabajador.js"></script>
   <script src="vistas/js/modelos.js"></script>
   <script src="vistas/js/cortes.js"></script>
+  <script src="vistas/js/sectores.js"></script>
 
 
 </body>

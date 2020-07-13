@@ -56,18 +56,18 @@
           $item = null;
           $valor = null;
 
-          $colores = ControladorColores::ctrMostrarColores($item, $valor);
+          $sectores = ControladorSectores::ctrMostrarSectores($item, $valor);
 
-          foreach ($colores as $key => $value) {
+          foreach ($sectores as $key => $value) {
             
 
             echo '<tr>
 
                     <td>'.($key+1).'</td>
 
-                    <td>'.$value["cod_color"].'</td>
+                    <td>'.$value["cod_sector"].'</td>
 
-                    <td>'.$value["nom_color"].'</td>';
+                    <td>'.$value["nom_sector"].'</td>';
 
                     if( $_SESSION["perfil"] == "Supervisores" ||
                         $_SESSION["perfil"] == "Sistemas"){
@@ -76,9 +76,9 @@
 
                                 <div class="btn-group">
                                     
-                                  <button class="btn btn-warning btnEditarColor" data-toggle="modal" data-target="#modalEditarColor" idColor="'.$value["cod_color"].'"><i class="fa fa-pencil"></i></button>
+                                  <button class="btn btn-warning btnEditarSector" data-toggle="modal" data-target="#modalEditarSector" idSector="'.$value["cod_sector"].'"><i class="fa fa-pencil"></i></button>
           
-                                  <button class="btn btn-danger btnEliminarColor" idColor="'.$value["cod_color"].'"><i class="fa fa-times"></i></button>
+                                  <button class="btn btn-danger btnEliminarSector" idSector="'.$value["cod_sector"].'"><i class="fa fa-times"></i></button>
           
                                 </div>  
           
@@ -90,7 +90,7 @@
 
                               <div class="btn-group">
                                   
-                                <button class="btn btn-warning btnEditarColor" data-toggle="modal" data-target="#modalEditarColor" idColor="'.$value["cod_color"].'"><i class="fa fa-pencil"></i></button>
+                                <button class="btn btn-warning btnEditarSector" data-toggle="modal" data-target="#modalEditarSector" idSector="'.$value["cod_sector"].'"><i class="fa fa-pencil"></i></button>
 
                               </div>  
 
@@ -122,7 +122,7 @@
 </div>
 
 <!--=====================================
-MODAL AGREGAR COLOR
+MODAL AGREGAR SECTOR
 ======================================-->
 
 <div id="modalAgregarSector" class="modal fade" role="dialog">
@@ -141,7 +141,7 @@ MODAL AGREGAR COLOR
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title">Agregar Color</h4>
+          <h4 class="modal-title">Agregar Sector</h4>
 
         </div>
 
@@ -161,7 +161,7 @@ MODAL AGREGAR COLOR
               
                 <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
-                <input type="text" min="0" class="form-control input-lg" name="nuevoCodigo" placeholder="Ingresar Codigo" required>
+                <input type="text" min="0" class="form-control input-lg" name="nuevoCodigo" placeholder="Ingresar codigo" required>
 
               </div>
 
@@ -175,7 +175,7 @@ MODAL AGREGAR COLOR
               
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="nuevoColor" placeholder="Ingresar color" required>
+                <input type="text" class="form-control input-lg" name="nuevoSector" placeholder="Ingresar sector" required>
 
               </div>
 
@@ -193,7 +193,7 @@ MODAL AGREGAR COLOR
 
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" class="btn btn-primary">Guardar color</button>
+          <button type="submit" class="btn btn-primary">Guardar sector</button>
 
         </div>
 
@@ -202,8 +202,8 @@ MODAL AGREGAR COLOR
 
       <?php
 
-        $crearColor = new ControladorColores();
-        $crearColor -> ctrCrearColor();
+        $crearSector = new ControladorSectores();
+        $crearSector -> ctrCrearSector();
 
       ?>
 
@@ -216,10 +216,10 @@ MODAL AGREGAR COLOR
 
 
 <!--=====================================
-MODAL EDITAR COLOR
+MODAL EDITAR SECTOR
 ======================================-->
 
-<div id="modalEditarColor" class="modal fade" role="dialog">
+<div id="modalEditarSector" class="modal fade" role="dialog">
   
   <div class="modal-dialog">
 
@@ -235,7 +235,7 @@ MODAL EDITAR COLOR
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title">Editar color</h4>
+          <h4 class="modal-title">Editar sector</h4>
 
         </div>
 
@@ -256,7 +256,7 @@ MODAL EDITAR COLOR
               
                 <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
-                <input type="number" min="0" class="form-control input-lg" name="editarCodigo" id="editarCodigo" required>
+                <input type="text" class="form-control input-lg" name="editarCodigo" id="editarCodigo" required>
 
               </div>
 
@@ -270,8 +270,8 @@ MODAL EDITAR COLOR
               
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="editarColor" id="editarColor" required>
-                <input type="hidden" id="idColor" name="idColor">
+                <input type="text" class="form-control input-lg" name="editarSector" id="editarSector" required>
+                <input type="hidden" id="idSector" name="idSector">
               </div>
 
             </div>
@@ -296,8 +296,8 @@ MODAL EDITAR COLOR
 
       <?php
 
-        $editarColor = new ControladorColores();
-        $editarColor -> ctrEditarColor();
+        $editarSector = new ControladorSectores();
+        $editarSector -> ctrEditarSector();
 
       ?>   
 
@@ -311,7 +311,7 @@ MODAL EDITAR COLOR
 
 <?php
 
-  $eliminarColor = new ControladorColores();
-  $eliminarColor -> ctrEliminarColor();
+  $eliminarSector = new ControladorSectores();
+  $eliminarSector -> ctrEliminarSector();
 
 ?>

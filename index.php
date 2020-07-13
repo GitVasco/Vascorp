@@ -73,5 +73,7 @@ require_once "modelos/cortes.modelo.php";
 
 require_once "modelos/sectores.modelo.php";
 
+require_once "extensiones/vendor/autoload.php";
+
 $plantilla = new ControladorPlantilla();
 $plantilla -> ctrPlantilla();

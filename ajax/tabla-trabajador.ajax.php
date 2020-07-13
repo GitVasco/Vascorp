@@ -36,6 +36,7 @@ class TablaTrabajador{
             "'.$trabajador[$i]["ape_pat_tra"].'",
             "'.$trabajador[$i]["ape_mat_tra"].'",
             "'.$trabajador[$i]["nom_tip_trabajador"].'",
+            "'.$trabajador[$i]["estado"].'",
             "'.$trabajador[$i]["sueldo_total"].'",
             "'.$botones.'"
             ],';        

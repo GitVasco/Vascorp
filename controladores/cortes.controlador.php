@@ -1,5 +1,11 @@
 <?php
 
+use Mike42\Escpos\Printer;
+use Mike42\Escpos\EscposImage;
+use Mike42\Escpos\PrintConnectors\FilePrintConnector;
+use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+
+
 class ControladorCortes{
 
     /*
@@ -29,9 +35,9 @@ class ControladorCortes{
     */
     static public function ctrMandarTaller(){
 
-        if(isset($_POST["nuevoTaller"])){
+        if(isset($_POST["nuevoSector"])){
 
-            #var_dump("nuevoTaller", $_POST["nuevoTaller"]);
+            #var_dump("nuevoSector", $_POST["nuevoSector"]);
             /*
             * ACTUALIZAR LA CANTIDAD QUE QUEDA EN LA TABLA CORTE
             */
@@ -45,7 +51,7 @@ class ControladorCortes{
             * REGISTRAR LAS OPERACIONES MANDADAS A TALLER
             */
             $datos = array( "usuario" => $_POST["usuario"],
-                            "taller" => $_POST["nuevoTaller"],
+                            "sector" => $_POST["nuevoSector"],
                             "trabajador" => $_POST["nuevoTrabajador"],
                             "articulo" => $_POST["nuevoArticulo"],
                             "operacion" => $_POST["nuevoCodOperacion"],
@@ -58,6 +64,18 @@ class ControladorCortes{
 
             if($respuesta == "ok"){
 
+				$impresora = "cannon_20";
+
+				$conector = new WindowsPrintConnector($impresora);
+
+				$imprimir = new Printer($conector);
+
+				$imprimir -> text("Hola Mundo"."\n");
+
+				$imprimir -> cut();
+
+				$imprimir -> close();
+
                 echo'<script>
 
                     swal({
@@ -68,7 +86,7 @@ class ControladorCortes{
                           }).then(function(result){
                                     if (result.value) {
 
-                                    window.location = "cortes";
+                                    window.location = "en-cortes";
 
                                     }
                                 })
