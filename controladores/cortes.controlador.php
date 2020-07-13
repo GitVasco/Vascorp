@@ -1,10 +1,5 @@
 <?php
 
-use Mike42\Escpos\Printer;
-use Mike42\Escpos\EscposImage;
-use Mike42\Escpos\PrintConnectors\FilePrintConnector;
-use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
-
 
 class ControladorCortes{
 
@@ -64,17 +59,23 @@ class ControladorCortes{
 
             if($respuesta == "ok"){
 
-				$impresora = "cannon_20";
+                $articulo = $_POST["nuevoArticulo"];
 
-				$conector = new WindowsPrintConnector($impresora);
+                $respuesta = ModeloArticulos::mdlMostrarArticulos($articulo);
+                //var_dump("respuesta",$respuesta["modelo"]);
+                $modelo = $respuesta["modelo"];
+                $nombre = $respuesta["nombre"];
+                $color = $respuesta["color"];
+                $talla = $respuesta["talla"];
+                $cant_taller= $_POST["nuevoAlmCorte"];
+                $sector = $_POST["nuevoSector"];
+                $trabajador = $_POST["nuevoTrabajador"];
 
-				$imprimir = new Printer($conector);
-
-				$imprimir -> text("Hola Mundo"."\n");
-
-				$imprimir -> cut();
-
-				$imprimir -> close();
+                echo'<script>
+                    
+                    window.open("vistas/reportes_ticket/produccion_ticket.php?articulo='.$articulo.'&modelo='.$modelo.'" ,"_blank");
+                            
+                    </script>';
 
                 echo'<script>
 

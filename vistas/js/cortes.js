@@ -128,3 +128,17 @@ $("#nuevoAlmCorte").change(function(){
 	cancularTotales();
 
 })
+
+/* 
+* BOTON REPORTE DE ORDEN DE CORTE
+*/
+$(".tablaCortes").on("click", ".btnEnCorteReporte", function () {
+
+    var codigo = $(this).attr("codigo");
+    //console.log("codigo", codigo);
+
+	window.open("vistas/reportes_ticket/exTicket.php?codigo=" + codigo,'_blank');
+	
+    
+  
+})
