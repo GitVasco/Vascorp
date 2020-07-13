@@ -52,7 +52,6 @@ class TablaOrdenCorte{
             /* 
             todo: url
             */ 
-
             $url='index.php?ruta=rpt_ordencorte?id=';
 
 
