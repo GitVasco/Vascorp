@@ -297,3 +297,10 @@
 
 </div>
 
+<script type="text/javascript">
+$(window).on('beforeunload', function() {
+  var dialogText="Probando ando";
+  event.returnValue = dialogText;
+  return dialogText;
+});
+</script>

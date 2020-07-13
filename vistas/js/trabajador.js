@@ -137,3 +137,49 @@ $(".tablaTrabajador tbody").on("click","button.btnEditarTrabajador",function(){
 	})
 	
 })
+
+// ACTIVANDO-DESACTIVANDO TRABAJADOR
+$(".tablaTrabajador").on("click",".btnActivarTrabajador",function(){
+	// Capturamos el id del usuario y el estado
+	var idTrabajador=$(this).attr("idTrabajador");
+	var estadoTrabajador=$(this).attr("estadoTrabajador");
+	console.log("idTrabajador", idTrabajador);
+	console.log("estadoTrabajador", estadoTrabajador); 
+	// Realizamos la activación-desactivación por una petición AJAX
+	var datos=new FormData();
+	datos.append("activarTrabajador",idTrabajador);
+	datos.append("activarEstadoTrabajador",estadoTrabajador);
+	$.ajax({
+		url:"ajax/trabajador.ajax.php",
+		type:"POST",
+		data:datos,
+		cache:false,
+		contentType:false,
+		processData:false,
+		success:function(respuesta){
+			console.log(respuesta);
+				swal({
+					type: "success",
+					title: "¡Ok!",
+					text: "¡La información fue actualizada con éxito!",
+					showConfirmButton: true,
+					confirmButtonText: "Cerrar",
+					closeOnConfirm: false
+				}).then((result)=>{
+					if(result.value){
+						window.location="trabajador";}
+				});}
+	});
+
+	// Cambiamos el estado del botón físicamente
+	if(estadoTrabajador=='Inactivo'){
+		$(this).removeClass("btn-success");
+		$(this).addClass("btn-danger");
+		$(this).html("Inactivo");
+		$(this).attr("estadoTrabajador","Activo");}
+	else{
+		$(this).addClass("btn-success");
+		$(this).removeClass("btn-danger");
+		$(this).html("Activo");
+		$(this).attr("estadoTrabajador","Inactivo");}
+});

@@ -181,5 +181,28 @@ class ModeloTrabajador{
 
     }
 
+		/* 
+	* Método para activar y desactivar un Trabajador
+	*/
+	static public function mdlActualizarTrabajador($tabla,$valor1, $valor2){
+
+		$sql = "UPDATE $tabla SET estado=:estado WHERE cod_tra=:valor";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":estado", $valor1, PDO::PARAM_STR);
+		$stmt->bindParam(":valor", $valor2, PDO::PARAM_INT);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt = null;
+	}
+	
 
 }

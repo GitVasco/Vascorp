@@ -53,7 +53,6 @@ $(document).on("click",".btnActivar",function(){
 		contentType:false,
 		processData:false,
 		success:function(respuesta){
-			if(window.matchMedia("(max-width:767px)").matches){
 				swal({
 					type: "success",
 					title: "¡Ok!",
@@ -64,7 +63,7 @@ $(document).on("click",".btnActivar",function(){
 				}).then((result)=>{
 					if(result.value){
 						window.location="modelosjf";}
-				});}}
+				});}
 	});
 	// Cambiamos el estado del botón físicamente
 	if(estadoModelo=='Descontinuado'){
