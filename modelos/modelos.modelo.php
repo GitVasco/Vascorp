@@ -22,7 +22,7 @@ class ModeloModelos
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT t.id_modelo,t.modelo,t.nombre,t.estado,t.tipo,t.linea,t.operaciones,t.imagen,m.marca FROM $tabla t LEFT JOIN marcasjf m on t.id_marca=m.id ORDER BY id_modelo DESC");
+			$stmt = Conexion::conectar()->prepare("SELECT t.id_modelo,t.modelo,t.nombre,t.estado,t.tipo,t.linea,t.operaciones,t.imagen,m.marca FROM $tabla t LEFT JOIN marcasjf m on t.id_marca=m.id ORDER BY id_modelo ASC");
 
 			$stmt -> execute();
 
@@ -88,11 +88,11 @@ class ModeloModelos
 		$stmt = null;
 	}
 		/* 
-	* Método para activar y desactivar un MODELO
+	* Método para activar y desactivar un MODELO con articulos
 	*/
-	static public function mdlActualizarModelo($tabla,$valor1, $valor2){
+	static public function mdlActualizarModelo($tabla,$tabla2,$valor1, $valor2){
 
-		$sql = "UPDATE $tabla SET estado = :estado WHERE modelo=:valor";
+		$sql = "UPDATE $tabla m INNER JOIN $tabla2 a ON m.modelo=a.modelo SET m.estado = :estado, a.estado = :estado WHERE m.modelo=:valor";
 
 		$stmt = Conexion::conectar()->prepare($sql);
 
@@ -109,6 +109,7 @@ class ModeloModelos
 
 		$stmt = null;
 	}
+	
 
 	/* 
 	* BORRAR MODELO

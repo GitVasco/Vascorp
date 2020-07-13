@@ -551,3 +551,13 @@ $(".tablaDetalleOperaciones").on("click", ".btnDetalleOperacion", function () {
 
     })
 });
+
+/* 
+* BOTON REPORTE DE OPERACIONES X MODELO
+*/
+$(".box").on("click", ".btnReporteOG", function () {
+
+    window.location = "vistas/reportes_excel/rpt_operacionesgeneral.php";
+  
+})
+
