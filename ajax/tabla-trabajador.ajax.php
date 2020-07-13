@@ -22,6 +22,24 @@ class TablaTrabajador{
         for($i = 0; $i < count($trabajador); $i++){  
 
         /*=============================================
+        ESTADO
+        =============================================*/ 
+
+        if($trabajador[$i]["estado"] == "Inactivo"){
+
+            /* $estado = "<button class='btn btn-danger btn-xs btnActivar'>".$articulos[$i]["id"]."</button>"; */
+            $estado = "<button class='btn btn-danger btn-xs btnActivarTrabajador' idTrabajador='".$trabajador[$i]["cod_tra"]."' estadoTrabajador='Activo'>Inactivo</button>";
+
+        }
+
+        else{
+
+            /* $estado = "<button class='btn btn-success btn-xs btnActivar'>".$articulos[$i]["id"]."</button>"; */
+            $estado = "<button class='btn btn-success btn-xs btnActivarTrabajador' idTrabajador='".$trabajador[$i]["cod_tra"]."' estadoTrabajador='Inactivo'>Activo</button>";
+
+        }
+
+        /*=============================================
         TRAEMOS LAS ACCIONES
         =============================================*/         
         
@@ -36,7 +54,7 @@ class TablaTrabajador{
             "'.$trabajador[$i]["ape_pat_tra"].'",
             "'.$trabajador[$i]["ape_mat_tra"].'",
             "'.$trabajador[$i]["nom_tip_trabajador"].'",
-            "'.$trabajador[$i]["estado"].'",
+            "'.$estado.'",
             "'.$trabajador[$i]["sueldo_total"].'",
             "'.$botones.'"
             ],';        
