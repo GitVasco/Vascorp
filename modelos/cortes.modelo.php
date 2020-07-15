@@ -137,7 +137,8 @@ class ModeloCortes{
                                                     cantidad,
                                                     usuario,
                                                     total_precio,
-                                                    total_tiempo)
+                                                    total_tiempo,
+                                                    codigo)
                                                     VALUES
                                                 (   :sector,
                                                     :articulo,
@@ -146,7 +147,8 @@ class ModeloCortes{
                                                     :cantidad,
                                                     :usuario,
                                                     :total_precio,
-                                                    :total_tiempo)");
+                                                    :total_tiempo,
+                                                    (:codigo+1))");
 
 		$stmt->bindParam(":sector", $datos["sector"], PDO::PARAM_STR);
 		$stmt->bindParam(":articulo", $datos["articulo"], PDO::PARAM_STR);
@@ -155,7 +157,8 @@ class ModeloCortes{
 		$stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_STR);
 		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
 		$stmt->bindParam(":total_precio", $datos["total_precio"], PDO::PARAM_STR);
-		$stmt->bindParam(":total_tiempo", $datos["total_tiempo"], PDO::PARAM_STR);
+        $stmt->bindParam(":total_tiempo", $datos["total_tiempo"], PDO::PARAM_STR);
+        $stmt->bindParam(":codigo", $datos["ult_codigo"], PDO::PARAM_STR);
 
 
 		if ($stmt->execute()) {
@@ -169,6 +172,24 @@ class ModeloCortes{
 		$stmt->close();
 		$stmt = null;
 	}
+	/*
+	* ULTIMO CODIGO
+	*/
+	static public function mdlUltCodigo(){
 
+		$stmt = Conexion::conectar()->prepare("SELECT 
+                                                    MAX(codigo) AS  ult_codigo
+                                                FROM
+                                                    entallerjf en");
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }
 
 }

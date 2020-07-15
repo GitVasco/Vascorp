@@ -351,16 +351,29 @@
 
                                                 </li>';
 
-                    echo '<li>
-
-                                                <a href="en-taller">
-
-                                                    <i class="fa fa-scissors"></i>
-                                                    <span>EN Talleres</span>
-
-                                                </a>
-
-                                            </li>';
+                    echo '<li class="treeview">
+                                                        <a href="#"><i class="fa fa-scissors"></i> En Talleres
+                                                            <span class="pull-right-container">
+                                                                <i class="fa fa-angle-left pull-right"></i>
+                                                            </span>
+                                                        </a>
+                                
+                                                        <ul class="treeview-menu">
+                                               
+                                                            <li>
+                                                                <a href="en-taller">
+                                                                    <i class="fa fa-circle-o"></i>Taller General
+                                                                </a>
+                                                            </li>
+                                
+                                                            <li>
+                                                                <a href="marcar-taller">
+                                                                    <i class="fa fa-circle-o"></i>Registar Tareas
+                                                                </a>
+                                                            </li>
+                                
+                                                        </ul>
+                                                    </li>';
 
                 }
 

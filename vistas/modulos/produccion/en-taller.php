@@ -4,7 +4,7 @@
 
     <h1>
 
-      Cortes
+      Talleres - General
 
     </h1>
 
@@ -12,7 +12,7 @@
 
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-      <li class="active">Cortes</li>
+      <li class="active">Talleres - General</li>
 
     </ol>
 
@@ -26,23 +26,23 @@
 
         <input type="hidden" value="<?= $_SESSION["perfil"]; ?>" id="perfilOculto">
 
-        <table class="table table-bordered table-striped dt-responsive tablaCortes">
+        <table class="table table-bordered table-striped dt-responsive tablaTalleresG">
 
           <thead>
 
             <tr>
 
-              <th>Artículo</th>
-              <th>Marca</th>
+              <th>Id</th>
+              <th>Cob. Barra</th>
+              <th>Sector</th>
               <th>Modelo</th>
-              <th>Nombre</th>
               <th>Color</th>
               <th>Talla</th>
-              <th>
-                <center>Alm. Corte</center>
-              </th>
-              <th>Cod. Op.</th>
               <th>Operación</th>
+              <th>Trabajador</th>
+              <th>Cantidad</th>
+              <th>Fecha</th>
+              <th>Estado</th>
               <th>Acciones</th>
 
             </tr>

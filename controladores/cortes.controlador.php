@@ -1,6 +1,5 @@
 <?php
 
-
 class ControladorCortes{
 
     /*
@@ -45,6 +44,13 @@ class ControladorCortes{
             /*
             * REGISTRAR LAS OPERACIONES MANDADAS A TALLER
             */
+
+                /* 
+                * ultimo codigo
+                */
+                $ult_codigo = ModeloCortes::mdlUltCodigo();
+                //var_dump($ult_codigo[ult_codigo]);
+
             $datos = array( "usuario" => $_POST["usuario"],
                             "sector" => $_POST["nuevoSector"],
                             "trabajador" => $_POST["nuevoTrabajador"],
@@ -52,29 +58,52 @@ class ControladorCortes{
                             "operacion" => $_POST["nuevoCodOperacion"],
                             "cantidad" => $_POST["nuevoAlmCorte"],
                             "total_precio" => $_POST["precio_total"],
-                            "total_tiempo" => $_POST["tiempo_total"]);
-            #var_dump("datos", $datos);
+                            "total_tiempo" => $_POST["tiempo_total"],
+                            "ult_codigo" => $ult_codigo["ult_codigo"]);
+            //var_dump("datos", $datos);
 
             $respuesta = ModeloCortes::mdlMandarTaller($datos);
 
             if($respuesta == "ok"){
 
                 $articulo = $_POST["nuevoArticulo"];
+                $rpt_articulo = ModeloArticulos::mdlMostrarArticulos($articulo);
+                //var_dump("rpt_articulo",$rpt_articulo["modelo"]);
 
-                $respuesta = ModeloArticulos::mdlMostrarArticulos($articulo);
-                //var_dump("respuesta",$respuesta["modelo"]);
-                $modelo = $respuesta["modelo"];
-                $nombre = $respuesta["nombre"];
-                $color = $respuesta["color"];
-                $talla = $respuesta["talla"];
-                $cant_taller= $_POST["nuevoAlmCorte"];
-                $sector = $_POST["nuevoSector"];
                 $trabajador = $_POST["nuevoTrabajador"];
+                $rpt_trabajador = ModeloTrabajador::mdlMostrarTrabajador(null,null,$trabajador);
+                //var_dump("nombre", $rpt_trabajador["nombre"]);
+
+                $sector = $_POST["nuevoSector"];
+                $rpt_sector = ModeloSectores::mdlMostrarSectores($sector);
+                //var_dump("sector", $rpt_sector["sector"]);
+
+                $operacion = ModeloOperaciones::mdlMostrarOperaciones('operacionesjf', 'codigo', $_POST["nuevoCodOperacion"]);
+                //var_dump($operacion["nombre "]);
+
+                $ult_codigo = ModeloCortes::mdlUltCodigo();
+                //var_dump($ult_codigo["ult_codigo"]);
+
+
+
+                $modelo = $rpt_articulo["modelo"];
+                $nombre = $rpt_articulo["nombre"];
+                $color = $rpt_articulo["color"];
+                $talla = $rpt_articulo["talla"];
+                $cant_taller= $_POST["nuevoAlmCorte"];
+                
+                $nom_trab = $rpt_trabajador["nombre"];
+                $nom_sector = $rpt_sector["sector"];
+
+                $cod_operacion = $_POST["nuevoCodOperacion"];
+                $nom_operacion = $operacion["nombre"];
+
+                $ultimo = $ult_codigo["ult_codigo"];
 
                 echo'<script>
                     
-                    window.open("vistas/reportes_ticket/produccion_ticket.php?articulo='.$articulo.'&modelo='.$modelo.'" ,"_blank");
-                            
+                    window.open("vistas/reportes_ticket/produccion_ticket.php?articulo='.$articulo.'&ultimo='.$ultimo.'&modelo='.$modelo.'&nombre='.$nombre.'&color='.$color.'&talla='.$talla.'&cant_taller='.$cant_taller.'&nom_trab='.$nom_trab.'&nom_sector='.$nom_sector.'&cod_operacion='.$cod_operacion.'&nom_operacion='.$nom_operacion.'" ,"_blank");
+                           
                     </script>';
 
                 echo'<script>
