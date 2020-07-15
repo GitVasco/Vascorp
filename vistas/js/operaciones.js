@@ -53,6 +53,7 @@ $(".tablaOperaciones tbody").on("click","button.btnEditarOperacion",function(){
 	
 });
 
+
 // ELIMINAR OPERACIÓN
 $(".tablaOperaciones tbody").on("click","button.btnEliminarOperacion",function(){
 	var idOperacion =$(this).attr("idOperacion");

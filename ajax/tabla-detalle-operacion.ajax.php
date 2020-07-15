@@ -28,7 +28,6 @@ class TablaOperaciones{
         $botones =  "<div class='btn-group'><button class='btn btn-primary btn-xs recuperarBoton   agregarOperacion' idOperacion='".$operaciones[$i]["id"]."'><i class='fa fa-plus-circle'></i> Agregar</button></div>"; 
 
             $datosJson .= '[
-            "'.($i+1).'",
             "'.$operaciones[$i]["codigo"].'",
             "'.$operaciones[$i]["nombre"].'",
             "'.$botones.'"
