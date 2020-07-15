@@ -136,7 +136,7 @@ class ModeloOperaciones{
 			a.nombre,
 			CONCAT(a.modelo, ' - ', a.nombre) AS packing 
 		  FROM
-			$tabla a WHERE operaciones=0 AND estado='ACTIVO'
+			$tabla a WHERE operaciones=0 AND estado='ACTIVO' AND estado='Activo'
 		  GROUP BY a.modelo ;
 		  ");
 

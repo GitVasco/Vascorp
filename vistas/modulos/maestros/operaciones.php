@@ -22,11 +22,20 @@
 
     <div class="box">
 
+    <?php 
+      $item=null;
+      $valor=null;
+      $ultimovalor="";
+      $operaciones=ControladorOperaciones::ctrMostrarOperaciones($item,$valor);
+      foreach($operaciones as $key => $value) {
+        $ultimovalor=$value["codigo"];
+      }
+    ?>
       <div class="box-header with-border">
   
-        <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarOperacion">
-          
-          Agregar operaciones
+        <button class="btn btn-primary btnOperacion" data-toggle="modal" data-target="#modalAgregarOperacion">
+          <i class="fa fa-plus-square"></i>
+           Agregar operaciones
 
         </button>
 
@@ -40,7 +49,6 @@
          
          <tr>
            
-           <th style="width:10px">#</th>
            <th>Codigo</th>
            <th>Nombre</th>
            <th>Acciones</th>
@@ -81,7 +89,7 @@ MODAL AGREGAR OPERACION
 
         <div class="modal-header" style="background:#3c8dbc; color:white">
 
-          <button type="button" class="close" data-dismiss="modal">&times;</butOperacion
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Agregar Operación</h4>
 
         </div>
@@ -102,7 +110,7 @@ MODAL AGREGAR OPERACION
               
                 <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
-                <input type="text" min="0" class="form-control input-lg" name="nuevoCodigo" placeholder="Ingresar Codigo" required>
+                <input type="text" min="0" class="form-control input-lg" name="nuevoCodigo" value="<?php echo $ultimovalor+1 ?>" readonly>
 
               </div>
 

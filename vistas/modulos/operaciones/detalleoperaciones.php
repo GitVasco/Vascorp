@@ -4,7 +4,7 @@
     
     <h1>
       
-      Administrar operaciones articulos
+      Administrar operaciones modelos
     
     </h1>
 
@@ -12,7 +12,7 @@
       
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
       
-      <li class="active">Administrar operaciones</li>
+      <li class="active">Administrar operaciones modelos</li>
     
     </ol>
 
@@ -309,7 +309,7 @@ MODAL DETALLE OPERACION
             <!-- ENTRADA PARA EL VENDEDOR -->
             
             <div class="form-group col-lg-4">
-              <label for=""><strong>Vendedor</strong></label>
+              <label for=""><strong>Responsable</strong></label>
               <div class="input-group">
                 
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 

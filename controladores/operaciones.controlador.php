@@ -10,8 +10,7 @@ class ControladorOperaciones{
 
 		if(isset($_POST["nuevaOperacion"])){
 
-			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevaOperacion"]) &&
-			   preg_match('/^[0-9]+$/', $_POST["nuevoCodigo"])){
+			
 				$tabla="operacionesjf";
 			   	$datos = array("codigo"=>$_POST["nuevoCodigo"],
 					           "nombre"=>$_POST["nuevaOperacion"]);
@@ -39,28 +38,45 @@ class ControladorOperaciones{
 
 				}
 
-			}else{
+		}
 
-				echo'<script>
+	}
+
+	/*=============================================
+	CREAR OPERACIONES DESDE OPERACIONES MODELO
+	=============================================*/
+
+	static public function ctrCrearOperacion2(){
+
+		if(isset($_POST["nuevaOperacion"])){
+
+			
+				$tabla="operacionesjf";
+			   	$datos = array("codigo"=>$_POST["nuevoCodigo"],
+					           "nombre"=>$_POST["nuevaOperacion"]);
+
+			   	$respuesta = ModeloOperaciones::mdlIngresarOperacion($tabla,$datos);
+				var_dump($respuesta);
+			   	if($respuesta == "ok"){
+
+					echo'<script>
 
 					swal({
-						  type: "error",
-						  title: "¡La operación no puede ir vacío o llevar caracteres especiales!",
+						  type: "success",
+						  title: "La operación ha sido guardada correctamente",
 						  showConfirmButton: true,
 						  confirmButtonText: "Cerrar"
 						  }).then(function(result){
-							if (result.value) {
+									if (result.value) {
 
-							window.location = "operaciones";
+									window.location = "creardetalleoperaciones";
 
-							}
-						})
+									}
+								})
 
-			  	</script>';
+					</script>';
 
-
-
-			}
+				}
 
 		}
 
@@ -123,8 +139,6 @@ class ControladorOperaciones{
 
 			var_dump("editarOperacion", $_POST["editarOperacion"]);
 
-			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["editarOperacion"]) &&
-			   preg_match('/^[0-9]+$/', $_POST["editarCodigo"])){
 
 			   	$datos = array("id"=>$_POST["idOperacion"],
 							   "codigo"=>$_POST["editarCodigo"],
@@ -153,29 +167,6 @@ class ControladorOperaciones{
 					</script>';
 
 				}
-
-			}else{
-
-				echo'<script>
-
-					swal({
-						  type: "error",
-						  title: "¡La operacion no puede ir vacío o llevar caracteres especiales!",
-						  showConfirmButton: true,
-						  confirmButtonText: "Cerrar"
-						  }).then(function(result){
-							if (result.value) {
-
-							window.location = "operaciones";
-
-							}
-						})
-
-			  	</script>';
-
-
-
-			}
 
 		}
 

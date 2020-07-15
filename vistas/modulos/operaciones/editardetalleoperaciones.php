@@ -273,7 +273,6 @@
               <thead>
 
                 <tr>
-                  <th style="width: 10px">#</th>
                   <th>Código</th>
                   <th>Nombre</th>
                   <th>Acciones</th>
@@ -297,10 +296,3 @@
 
 </div>
 
-<script type="text/javascript">
-$(window).on('beforeunload', function() {
-  var dialogText="Probando ando";
-  event.returnValue = dialogText;
-  return dialogText;
-});
-</script>

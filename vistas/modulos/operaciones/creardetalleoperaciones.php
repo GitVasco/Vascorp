@@ -30,7 +30,9 @@
 
         <div class="box box-success">
 
-          <div class="box-header with-border"></div>
+          <div class="box-header with-border">
+            
+          </div>
 
           <form role="form" method="post" class="formularioOperacion">
 
@@ -218,7 +220,20 @@
 
         <div class="box box-warning">
 
-          <div class="box-header with-border"></div>
+          <div class="box-header with-border">
+            <?php 
+              $item=null;
+              $valor=null;
+              $ultimovalor="";
+              $operaciones=ControladorOperaciones::ctrMostrarOperaciones($item,$valor);
+              foreach($operaciones as $key => $value) {
+                $ultimovalor=$value["codigo"];
+              }
+            ?>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarOperacion"><i class="fa fa-plus-square"></i>
+              Nueva operacion
+            </button>
+          </div>
 
           <div class="box-body">
 
@@ -227,7 +242,6 @@
               <thead>
 
                 <tr>
-                  <th style="width: 10px">#</th>
                   <th>Código</th>
                   <th>Nombre</th>
                   <th>Acciones</th>
@@ -251,8 +265,96 @@
 
 </div>
 
-<script type="text/javascript">
-$(window).on('beforeunload', function() {
-	event.returnValue = "Write something clever here..";
-});
-</script>
+
+<!--=====================================
+MODAL AGREGAR OPERACION
+======================================-->
+
+<div id="modalAgregarOperacion" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form role="form" method="post">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Agregar Operación</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <!-- ENTRADA PARA EL CODIGO -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
+
+                <input type="text" min="0" class="form-control input-lg" name="nuevoCodigo" value="<?php echo $ultimovalor+1 ?>" readonly>
+
+              </div>
+
+            </div>          
+
+            <!-- ENTRADA PARA EL NOMBRE -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+
+                <input type="text" class="form-control input-lg" name="nuevaOperacion" placeholder="Ingresar nombre" required>
+
+              </div>
+
+            </div>
+ 
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Guardar operación</button>
+
+        </div>
+
+      </form>
+
+
+      <?php
+
+        $crearOperacion = new ControladorOperaciones();
+        $crearOperacion -> ctrCrearOperacion2();
+
+      ?>
+
+
+    </div>
+
+  </div>
+
+</div>
+
