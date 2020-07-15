@@ -11,9 +11,18 @@ class ModeloTrabajador{
 
 		if($valor != null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
-
-			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt = Conexion::conectar()->prepare("SELECT 
+																*,
+																CONCAT(
+																t.nom_tra,
+																' ',
+																t.ape_pat_tra,
+																' ',
+																t.ape_mat_tra
+																) AS nombre 
+															FROM
+																trabajadorjf t 
+															WHERE t.cod_tra = $valor");
 
 			$stmt -> execute();
 

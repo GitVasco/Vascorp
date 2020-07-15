@@ -41,7 +41,8 @@ class ModeloSectores{
 		if($valor != null){
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
-                                                            * 
+                                                            *,
+															CONCAT(cod_sector, ' - ', nom_sector) AS sector  
                                                         FROM
                                                             sectorjf c
                                                         WHERE c.cod_sector = :valor");

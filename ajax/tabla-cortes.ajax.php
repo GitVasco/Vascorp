@@ -41,7 +41,7 @@ class TablaCortes{
             /*
             todo: BOTONES
             */
-            $botones =  "<div class='btn-group'><button class='btn btn-primary btnMandarTaller' articulo='".$cortes[$i]["articulo"]."' operacion='".$cortes[$i]["cod_operacion"]."' data-toggle='modal' data-target='#modalMandarTaller'><i class='fa fa-users'></i></button><button target='_blank' class='btn btn-success  btnEnCorteReporte' title='Reporte Orden de Corte' codigo='".$cortes[$i]["articulo"]."'><i class='fa fa-file-excel-o'></i></button></div>"; 
+            $botones =  "<div class='btn-group'><button class='btn btn-primary btnMandarTaller' articulo='".$cortes[$i]["articulo"]."' operacion='".$cortes[$i]["cod_operacion"]."' data-toggle='modal' data-target='#modalMandarTaller'><i class='fa fa-users'></i></button></div>"; 
 
                 $datosJson .= '[
                 "'.$cortes[$i]["articulo"].'",

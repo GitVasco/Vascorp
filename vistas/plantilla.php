@@ -111,7 +111,6 @@ session_start();
   <!-- ChartJS http://www.chartjs.org/-->
   <script src="vistas/bower_components/Chart.js/Chart.js"></script>
 
-
 </head>
 
 <!--=====================================
@@ -181,7 +180,8 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "urgencias" ||
                   $_GET["ruta"] == "urgenciasamp" ||
                   $_GET["ruta"] == "en-cortes" ||
-                  $_GET["ruta"] == "en-taller"){
+                  $_GET["ruta"] == "en-taller" ||
+                  $_GET["ruta"] == "marcar-taller"){
 
               include "modulos/produccion/".$_GET["ruta"].".php";
 
@@ -278,6 +278,7 @@ CUERPO DOCUMENTO
   <script src="vistas/js/trabajador.js"></script>
   <script src="vistas/js/modelos.js"></script>
   <script src="vistas/js/cortes.js"></script>
+  <script src="vistas/js/talleres.js"></script>
   <script src="vistas/js/sectores.js"></script>
 
 

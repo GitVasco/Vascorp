@@ -32,6 +32,7 @@ require_once "controladores/tipotrabajador.controlador.php";
 require_once "controladores/trabajador.controlador.php";
 
 require_once "controladores/cortes.controlador.php";
+require_once "controladores/talleres.controlador.php";
 
 require_once "controladores/sectores.controlador.php";
 
@@ -70,6 +71,7 @@ require_once "modelos/modelos.modelo.php";
 require_once "controladores/modelos.controlador.php";
 
 require_once "modelos/cortes.modelo.php";
+require_once "modelos/talleres.modelo.php";
 
 require_once "modelos/sectores.modelo.php";
 
