@@ -74,35 +74,24 @@
 
                     <span class="input-group-addon"><i class="fa fa-tag"></i></span>
 
-                    <input type="text" class="form-control" id="nuevoModelo" name="nuevoModelo" value='<?php echo $modelo["modelo"].' - '. $modelo["nombre"]?>' readonly>
+                    <input type="text" class="form-control" id="nuevoModelos" name="nuevoModelos" value='<?php echo $modelo["modelo"].' - '. $modelo["nombre"]?>' readonly>
                   </div>
-
+                  <input type="hidden" name="nuevaDescripcion" value='<?php echo $modelo["nombre"] ?>'>
+                  <input type="hidden" name="nuevoModelo" value='<?php echo $modelo["modelo"] ?>'>
                 </div>
 
                  <!--=====================================
-                ENTRADA DE TALLA
+                ENTRADA DE MRCA
                 ======================================-->
                 <div class="form-group">
 
                   <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-users"></i></span>
-                  <select name="nuevaMarca" id="nuevaMarca" class="form-control">
-                    <option value="">SELECCIONAR UNA MARCA</option>
-                    <?php
+                  <span class="input-group-addon"><i class="fa fa-th"></i></span>
 
-                      $valor = null;
-
-                      $marcas = ControladorMarcas::ctrMostrarMarcas($valor);
-
-                      foreach ($marcas as $key => $value) {
-
-                        echo '<option value="' . $value["id"] . '">' . $value["marca"] . '</option>';
-                      }
-
-                    ?>
-
-                  </select>
+                  <input type="text" class="form-control"  value='<?php echo $modelo["marca"]?>' readonly>
+                  <input type="hidden" id="nuevaMarca" name="nuevaMarca" value='<?php echo $modelo["id_marca"]?>'>
                   </div>
+                  
                 </div>
 
                  <!--=====================================
@@ -125,7 +114,6 @@
 
 
                 </div>
-
                 <!--=====================================
                 ENTRADA PARA AGREGAR TALLAS X COLORES
                 ======================================-->
@@ -170,7 +158,7 @@
           <?php
 
             $guardarArticulo = new ControladorArticulos();
-            $guardarArticulo -> ctrCrearArticulo();
+            $guardarArticulo -> ctrCrearArticuloModelo();
 
           ?>          
 

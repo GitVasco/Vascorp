@@ -49,12 +49,18 @@ class TablaModelos{
         /*=============================================
         TRAEMOS LAS ACCIONES
         =============================================*/
+        if($modelos[$i]["articulos"] == 0){
+            $botones2="<button class='btn btn-info btnGenerarArticulo' modelo='".$modelos[$i]["modelo"]."' title='Generar Articulo'><i class='fa fa-tag'></i></button>";
+        }else{
+            $botones2="";
+        }
+
         
         if( $_GET["perfil"]=="Supervisor" ||
             $_GET["perfil"]=="Sistemas"){
 
-                $botones =  "<div class='btn-group'><button class='btn btn-primary btnVerModelo' modelo='".$modelos[$i]["modelo"]."' data-toggle='modal' data-target='#modalVerModelo'><i class='fa fa-eye'></i></button><button class='btn btn-warning btnEditarModelo' modelo='".$modelos[$i]["modelo"]."' data-toggle='modal' data-target='#modalEditarModelo'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarModelo' idModelo='".$modelos[$i]["id_modelo"]."' modelo='".$modelos[$i]["modelo"]."' imagen='".$modelos[$i]["imagen"]."'><i class='fa fa-times'></i></button><button class='btn btn-success  btnReporteOM' title='Reporte Operaciones por modelo' codigo='".$modelos[$i]["modelo"]."'><i class='fa fa-print'></i></button><button class='btn btn-info btnGenerarArticulo' modelo='".$modelos[$i]["modelo"]."' title='Generar Articulo'><i class='fa fa-tag'></i></button></div>";
-
+                $botones =  "<div class='btn-group'><button class='btn btn-primary btnVerModelo' modelo='".$modelos[$i]["modelo"]."' data-toggle='modal' data-target='#modalVerModelo'><i class='fa fa-eye'></i></button><button class='btn btn-warning btnEditarModelo' modelo='".$modelos[$i]["modelo"]."' data-toggle='modal' data-target='#modalEditarModelo'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarModelo' idModelo='".$modelos[$i]["id_modelo"]."' modelo='".$modelos[$i]["modelo"]."' imagen='".$modelos[$i]["imagen"]."'><i class='fa fa-times'></i></button><button class='btn btn-success  btnReporteOM' title='Reporte Operaciones por modelo' codigo='".$modelos[$i]["modelo"]."'><i class='fa fa-print'></i></button>".$botones2."</div>";
+                
         }else{
 
                 $botones =  "<button class='btn btn-primary btnVerModelo' modelo='".$modelos[$i]["modelo"]."' data-toggle='modal' data-target='#modalVerModelo'><i class='fa fa-eye'></i></button><div class='btn-group'><button class='btn btn-warning btnEditarModelo' modelo='".$modelos[$i]["modelo"]."' data-toggle='modal' data-target='#modalEditarModelo'><i class='fa fa-pencil'></i></button><button class='btn btn-success  btnReporteOM' title='Reporte Operaciones por modelo' codigo='".$modelos[$i]["modelo"]."'><i class='fa fa-print'></i></button></div>"; 

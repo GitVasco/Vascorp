@@ -12,7 +12,7 @@ class ModeloModelos
 
 		if($item != null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+			$stmt = Conexion::conectar()->prepare("SELECT t.id_modelo,t.modelo,t.nombre,t.estado,t.tipo,t.linea,t.operaciones,t.imagen,t.id_marca,m.marca FROM $tabla t LEFT JOIN marcasjf m on t.id_marca=m.id WHERE $item = :$item");
 
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 
@@ -22,7 +22,7 @@ class ModeloModelos
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT t.id_modelo,t.modelo,t.nombre,t.estado,t.tipo,t.linea,t.operaciones,t.imagen,m.marca FROM $tabla t LEFT JOIN marcasjf m on t.id_marca=m.id ORDER BY id_modelo ASC");
+			$stmt = Conexion::conectar()->prepare("SELECT t.id_modelo,t.modelo,t.nombre,t.estado,t.tipo,t.linea,t.operaciones,t.imagen,t.articulos,m.marca FROM $tabla t LEFT JOIN marcasjf m on t.id_marca=m.id ORDER BY id_modelo ASC");
 
 			$stmt -> execute();
 
@@ -149,7 +149,7 @@ class ModeloModelos
 	}
 
 	/* 
-	* MOSTRAR MODELOS
+	* MOSTRAR TALLAS
 	*/
 	static public function mdlMostrarTallas($tabla,$item,$valor){
 
@@ -172,6 +172,24 @@ class ModeloModelos
 			return $stmt -> fetchAll();
 
 		}
+
+		$stmt -> close();
+
+		$stmt = null;
+	}
+	/* 
+	* MOSTRAR TALLA CON GRUPO
+	*/
+	static public function mdlMostrarTallaGrupo($tabla,$item,$valor,$valor2){
+
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item AND nombre_grupo= :valor");
+
+		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+		$stmt -> bindParam(":valor", $valor2, PDO::PARAM_STR);
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();
 
 		$stmt -> close();
 

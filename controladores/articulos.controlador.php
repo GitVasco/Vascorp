@@ -49,7 +49,6 @@ class controladorArticulos{
 		return $respuesta;
 
 	}	
-
 	/* 
 	* CREAR ARTICULO
 	*/
@@ -74,6 +73,88 @@ class controladorArticulos{
 
                 $respuesta = ModeloArticulos::mdlIngresarArticulo($tabla, $datos);
                 
+				if($respuesta == "ok"){
+
+					echo'<script>
+
+						swal({
+							  type: "success",
+							  title: "El articulo ha sido guardado correctamente",
+							  showConfirmButton: true,
+							  confirmButtonText: "Cerrar"
+							  }).then(function(result){
+										if (result.value) {
+
+										window.location = "articulos";
+
+										}
+									})
+
+						</script>';
+
+				}                
+
+
+			}else{
+
+				echo'<script>
+
+					swal({
+						  type: "error",
+						  title: "¡El articulo no puede ir con los campos vacíos o llevar caracteres especiales!",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+							if (result.value) {
+
+							window.location = "articulos";
+
+							}
+						})
+
+			  	</script>';
+			}
+		}
+
+
+	}
+
+	/* 
+	* CREAR ARTICULO x MODELO
+	*/
+	static public function ctrCrearArticuloModelo(){
+
+        if(isset($_POST["nuevoModelo"])){
+
+			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevoModelo"])){
+	
+				$colores=json_decode($_POST["listaColores"],true);
+				var_dump($colores);
+				$arregloCHK=$_POST["chk"];
+				$num=count($arregloCHK);
+				for($n=0;$n<$num;$n++){
+					$tabla2="tallajf";
+					$item="cod_talla";
+					$valor=$arregloCHK[$n];
+					$valor2=$_POST["nuevoGrupoTalla"];
+					$talla=ModeloModelos::mdlMostrarTallaGrupo($tabla2,$item,$valor,$valor2);
+					foreach($colores as $key=>$value){
+						$tabla = "articulojf";
+						$codigo=$_POST["nuevoModelo"].$value["codigo"].$talla["cod_talla"];
+						$datos = array("id_marca" => $_POST["nuevaMarca"],
+									"modelo" => $_POST["nuevoModelo"],
+									"descripcion" => $_POST["nuevaDescripcion"],
+									"cod_color" => $value["codigo"],
+									"cod_talla" => $talla["cod_talla"],
+									"articulo" => $codigo,
+									"color" => $value["descripcion"],
+									"talla" => $talla["talla"]);
+												
+						$respuesta = ModeloArticulos::mdlIngresarArticulo($tabla, $datos);
+					}
+					
+				}
+				
 				if($respuesta == "ok"){
 
 					echo'<script>

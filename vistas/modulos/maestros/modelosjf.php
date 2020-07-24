@@ -154,7 +154,7 @@ MODAL AGREGAR MODELO
 
     <div class="modal-content">
 
-      <form role="form" method="post" enctype="multipart/form-data">
+      <form role="form"  method="post" enctype="multipart/form-data">
 
         <!--=====================================
         CABEZA DEL MODAL
@@ -196,8 +196,9 @@ MODAL AGREGAR MODELO
                   $marcas = ControladorMarcas::ctrMostrarMarcas($valor);
 
                   foreach ($marcas as $key => $value) {
-
+                    if($value["venta"]== 1 && $value["marca"]!="MEDIAS"){
                     echo '<option value="' . $value["id"] . '">' . $value["marca"] . '</option>';
+                    }
                   }
 
                   ?>
@@ -246,9 +247,9 @@ MODAL AGREGAR MODELO
 
                 <select class="form-control input-lg" id="nuevoTipo" name="nuevoTipo">
 
-                  <option value="">Selecionar tipo</option>
+                  <option value="">Seleccionar tipo</option>
 
-                  <option value="BRASIER">BRASIER</option>
+                  <!-- <option value="BRASIER">BRASIER</option>
 
                   <option value="TRUSA">TRUSA</option>
 
@@ -264,7 +265,7 @@ MODAL AGREGAR MODELO
 
                   <option value="GUAPITAS">GUAPITAS</option>
 
-                  <option value="SK">SK</option>
+                  <option value="SK">SK</option> -->
 
                 </select>
 
@@ -363,8 +364,10 @@ MODAL EDITAR MODELO
                 <select class="form-control input-lg selectpicker" id="editarMarca" name="editarMarca" data-live-search="true" required readonly>
 
                 <?php
+                $item=null;
+                $valor=null;
                     
-                    $marcas = ControladorMarcas::ctrMostrarMarcas();
+                    $marcas = ControladorMarcas::ctrMostrarMarcas($item,$valor);
                     //var_dump("marcas", $marcas);
 
                     foreach ($marcas as $key => $value) {

@@ -258,7 +258,6 @@ $(".tablaModelos").on("click", ".btnReporteOM", function () {
 $(".tablaModelos tbody").on("click","button.btnGenerarArticulo",function(){
 
 	var modelo = $(this).attr("modelo");
-
 	window.location="index.php?ruta=crear-articulo&modelo="+modelo;
 })
 
@@ -299,7 +298,7 @@ $(".tablas tbody").on("click","button.agregarColor",function(){
   
 				'<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarColor" idColor="' + idColor + '"><i class="fa fa-times"></i></button></span>' +
   
-				'<input type="text" class="form-control nuevaDescripcionColor" idColor="' + idColor + '" name="agregarColor" value="' + codigos +" - " + nombres + '"  codigoCO= "'+codigos+'"readonly>' +
+				'<input type="text" class="form-control nuevaDescripcionColor" idColor="' + idColor + '" name="agregarColor" value="' + codigos +" - " + nombres + '"  codigoCO= "'+codigos+'" descripcion= "'+nombres+'" readonly>' +
   
 			  "</div>" +
   
@@ -307,9 +306,9 @@ $(".tablas tbody").on("click","button.agregarColor",function(){
   
 		  "</div>"
 		);
+		listarColores();
     }
   });
-  listarColores();
 })
 
 /*=============================================
@@ -432,10 +431,11 @@ function listarColores() {
 	  listaColores.push({
 		id: $(descripcion[i]).attr("idColor"),
 		codigo: $(descripcion[i]).attr("codigoCO"),
-		descripcion: $(descripcion[i]).val()
+		descripcion: $(descripcion[i]).attr("descripcion")
 	  });
 	}
 	$("#listaColores").val(JSON.stringify(listaColores));
+	console.log(listaColores);
 	
 }
 
@@ -456,11 +456,25 @@ $("#nuevoGrupoTalla").change(function(){
 		success:function(respuesta){
 			$(".detalle").remove();
 			for(var i = 0; i<respuesta.length; i+=1){
-				$(".nuevaTalla").append('<ul class="detalle" style="display:inline"><input type="checkbox" name = "chk[]" value="'+respuesta[i]["talla"]+'"><label  for="'+respuesta[i]["talla"]+'">'+respuesta[i]["talla"]+' </label> <span  style="padding:10px"></ul>');
+				$(".nuevaTalla").append('<ul class="detalle" style="display:inline"><input type="checkbox" name = "chk[]" tallas="'+respuesta[i]["talla"]+'" value="'+respuesta[i]["cod_talla"]+'"><label  for="'+respuesta[i]["talla"]+'">'+respuesta[i]["talla"]+' </label> <span  style="padding:10px"></ul>');
 			}
 		}
 	
 	});
-	
-
 })
+$("#nuevaMarca").change(function(){
+	var marca = $(this).val();
+	
+	if(marca=="1"){
+		$("#nuevoTipo").html("<option value=''>Seleccionar Tipo</option><option value='BRASIER'>BRASIER</option><option value='TRUSA'>TRUSA</option><option value='TOP'>TOP</option><option value='FAJA'>FAJA</option>");
+	}
+	else if(marca=="2"){
+		$("#nuevoTipo").html("<option value=''>Seleccionar Tipo</option><option value='TRUSA'>TRUSA</option><option value='BOXER V'>BOXER V</option><option value='MEDIAS'>MEDIAS</option>");
+	}
+	else if(marca=="3"){
+		$("#nuevoTipo").html("<option value=''>Seleccionar Tipo</option><option value='GUAPITAS'>GUAPITAS</option>");
+	}
+	else if(marca=="4"){
+		$("#nuevoTipo").html("<option value=''>Seleccionar Tipo</option><option value='SK'>SK</option>");
+	}
+});

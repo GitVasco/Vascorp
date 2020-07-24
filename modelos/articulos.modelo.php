@@ -87,7 +87,7 @@ class ModeloArticulos
 	*/
 	static public function mdlIngresarArticulo($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("CALL sp_1041_insert_articulos_p(:articulo, :id_marca, :modelo, :nombre, :cod_color, :color, :cod_talla, :talla, :tipo, :imagen)");
+		$stmt = Conexion::conectar()->prepare("CALL sp_1041_insert_articulos_p(:articulo, :id_marca, :modelo, :nombre, :cod_color, :color, :cod_talla, :talla)");
 
 		$stmt->bindParam(":articulo", $datos["articulo"], PDO::PARAM_STR);
 		$stmt->bindParam(":id_marca", $datos["id_marca"], PDO::PARAM_STR);
@@ -97,8 +97,6 @@ class ModeloArticulos
 		$stmt->bindParam(":color", $datos["color"], PDO::PARAM_STR);
 		$stmt->bindParam(":cod_talla", $datos["cod_talla"], PDO::PARAM_STR);
 		$stmt->bindParam(":talla", $datos["talla"], PDO::PARAM_STR);
-		$stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
-		$stmt->bindParam(":imagen", $datos["imagen"], PDO::PARAM_STR);
 
 		if ($stmt->execute()) {
 
