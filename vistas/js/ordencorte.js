@@ -45,7 +45,8 @@ $('.tablaArticulosOrdenCorte').DataTable( {
     "ajax": "ajax/tabla-articulosordencorte.ajax.php",
     "deferRender": true,
 	"retrieve": true,
-	"processing": true,
+    "processing": true,
+    "pageLength": 20,
 	 "language": {
 
 			"sProcessing":     "Procesando...",
@@ -81,6 +82,10 @@ $('.tablaArticulosOrdenCorte').DataTable( {
 $(".tablaArticulosOrdenCorte tbody").on("click", "button.agregarArt", function () {
 
     var articuloOC = $(this).attr("articuloOC");
+    var proyeccion = $(this).attr("proyeccion");
+    var sumprog = $(this).attr("sumprog");
+    var ventasG = $(this).attr("ventasG");
+    //console.log(stockG);
 
     /* console.log("articuloOC", articuloOC); */
 
@@ -105,8 +110,42 @@ $(".tablaArticulosOrdenCorte tbody").on("click", "button.agregarArt", function (
             /* console.log("respuesta", respuesta); */
 
             var articulo = respuesta["articulo"];
-            var packing = respuesta["packing"];
+            var packing = respuesta["packingB"];
             var ord_corte = respuesta["ord_corte"];
+            var stockG = respuesta["stockG"];
+            
+            var mes = (Number(stockG) + 50) / (Number(ventasG * 1.3)) ;
+            //console.log(mes.toFixed(2));
+
+
+            /* 
+            !PENDIENTE DE PRPYECCION 
+            */
+            if(Number(Number(proyeccion) - Number(sumprog)  - 50 ) > 0){
+
+                var pen = '<input style="color:#008000; background-color:white;" type="text" class="form-control nuevoPendienteProy input-sm" name="'+ articulo +'" id="'+ articulo +'"  value="' + Number(Number(proyeccion) - Number(sumprog)  - 50 ) + '" pendienteReal="' + Number(Number(proyeccion) - Number(sumprog)) + '" readonly></input>';
+
+
+            }else{
+
+                var pen = '<input style="color:#FF0000; background-color:pink;" type="text" class="form-control nuevoPendienteProy input-sm" name="'+ articulo +'" id="'+ articulo +'"  value="' + Number(Number(proyeccion) - Number(sumprog)  - 50 ) + '" pendienteReal="' + Number(Number(proyeccion) - Number(sumprog)) + '" readonly></input>';
+
+            }
+
+            /* 
+            ! DURACION DEL MES
+            */
+
+            if(mes.toFixed(2) < 2.1 ){
+
+                duracion = '<input style="color:#8B0000; background-color:pink;" type="text" class="form-control nuevoMes input-sm" name="'+ articulo +'" id="'+ articulo + 'M' +'" value="' + mes.toFixed(2) + '" mesReal="' + mes.toFixed(2) +'" stockG="' + stockG + '" ventasG="' + (Number(ventasG)) + '" readonly>';
+
+            }else{
+
+                duracion = '<input style="color:#8B0000; background-color:white;" type="text" class="form-control nuevoMes input-sm" name="'+ articulo +'" id="'+ articulo + 'M' +'" value="' + mes.toFixed(2) + '" mesReal="' + mes.toFixed(2) +'" stockG="' + stockG + '" ventasG="' + (Number(ventasG)) + '" readonly>';
+
+            }
+
 
             /* 
             todo: AGREGAR LOS CAMPOS
@@ -118,13 +157,13 @@ $(".tablaArticulosOrdenCorte tbody").on("click", "button.agregarArt", function (
 
                     "<!-- Descripción del Articulo -->" +
 
-                    '<div class="col-xs-9" style="padding-right:0px">' +
+                    '<div class="col-xs-6" style="padding-right:0px">' +
 
                         '<div class="input-group">' +
                         
                             '<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarOC" articuloOC="' + articuloOC + '"><i class="fa fa-times"></i></button></span>' +
 
-                            '<input type="text" class="form-control nuevaDescripcionProducto" articuloOC="' + articuloOC + '" name="agregarOC" value="' + packing + '" codigoAC="' + articulo + '" readonly required>' +
+                            '<input type="text" class="form-control nuevaDescripcionProducto input-sm" articuloOC="' + articuloOC + '" name="agregarOC" value="' + packing + '" codigoAC="' + articulo + '" readonly required>' +
 
                         "</div>" +
 
@@ -132,9 +171,25 @@ $(".tablaArticulosOrdenCorte tbody").on("click", "button.agregarArt", function (
 
                     "<!-- Cantidad de la Orden de Corte -->" +
 
-                    '<div class="col-xs-3">' +
+                    '<div class="col-xs-2">' +
 
-                        '<input type="number" class="form-control nuevaCantidadArticuloOC" name="nuevaCantidadArticuloOC" min="1" value="50" ord_corte="' + ord_corte + '" nuevoOrdCorte="' + Number(Number(ord_corte) + 50) + '" required>' +
+                        '<input type="number" class="form-control nuevaCantidadArticuloOC input-sm" name="nuevaCantidadArticuloOC" id="nuevaCantidadArticuloOC" min="1" value="50" ord_corte="' + ord_corte + '" articulo="'+ articulo +'" nuevoOrdCorte="' + Number(Number(ord_corte) + 50) + '" required>' +
+
+                    "</div>" +
+
+                    "<!-- Cantidad PENDIENTE DE PROYECCION -->" +
+
+                    '<div class="col-xs-2 pendiente">' +
+
+                         pen +
+
+                    "</div>" +
+
+                    "<!-- Cantidad de meses que va a durar -->" +
+
+                    '<div class="col-xs-2 mes">' +
+
+                        duracion +
 
                     "</div>" +
                 
@@ -252,11 +307,75 @@ $(".formularioOrdenCorte").on("click", "button.quitarOC", function () {
 $(".formularioOrdenCorte").on("change", "input.nuevaCantidadArticuloOC", function() {
 
     var nuevoOrdCorte = Number($(this).attr("ord_corte")) + Number($(this).val());
+    var articulo = $(this).attr("articulo");
+    var articuloM = articulo+'M';
+    //console.log(articuloM);
+
+    var pendiente = $(this)
+    .parent()
+    .parent()
+    .children(".pendiente")
+    .children(".nuevoPendienteProy");
+
+    var pendienteReal = pendiente.attr("pendienteReal");
+    //console.log(pendiente);
+    //console.log(pendienteReal);
+
+    var quedaPen = pendienteReal - Number($(this).val());
+    //console.log(quedaPen);
+
+    pendiente.val(quedaPen);
 
     $(this).attr("nuevoOrdCorte", Number(nuevoOrdCorte));
 
-    /* console.log("nuevoOrdCorte", nuevoOrdCorte); */
-  
+
+    if (quedaPen > 0){
+
+        inputPositivoPend(articulo);
+
+    }else{
+
+        inputNegativoPend(articulo);
+
+    }
+
+    var mes = $(this)
+    .parent()
+    .parent()
+    .children(".mes")
+    .children(".nuevoMes");
+    //console.log(mes);
+
+    var mesReal = mes.attr("mesReal");
+    //console.log(mesReal);
+
+    var stockG = mes.attr("stockG");
+    //console.log(Number(stockG) +50);
+    var stock = Number(stockG) + Number($(this).val());
+
+    var ventasG = mes.attr("ventasG");
+    //console.log(ventasG * 1.3);
+    var venta = ventasG * 1.3
+ 
+    var quedaMes = stock / venta;
+    //console.log(quedaMes);
+
+    mes.val(quedaMes.toFixed(2));
+
+    if(quedaMes < 2.1){
+
+        inputPositivoMes(articuloM);
+        //console.log("Hola mundo");
+
+    }else{
+
+        inputNegativoMes(articuloM);
+        //console.log("Hola no Mundo");
+
+    }
+
+
+
     // SUMAR TOTAL DE UNIDADES
 
     sumarTotalOC();
@@ -269,7 +388,54 @@ $(".formularioOrdenCorte").on("change", "input.nuevaCantidadArticuloOC", functio
     listarArticulosOC();
 
 
+
   });
+
+  function inputPositivoPend(articulo){
+
+    var input =   document.getElementById(articulo);
+    //console.log(input);
+
+        input.removeAttribute("style");
+        input.style.color = "#008000";
+        input.style.background = "white";
+
+  }
+
+  function inputNegativoPend(articulo){
+
+    var input =   document.getElementById(articulo);
+    //console.log(input);
+
+        input.removeAttribute("style");
+        input.style.color = "#FF0000";
+        input.style.background = "pink";
+
+  }  
+  
+  function inputPositivoMes(articuloM){
+
+    var input =   document.getElementById(articuloM);
+    //console.log(input);
+
+        input.removeAttribute("style");
+        input.style.color = "#8B0000";
+        input.style.background = "pink";
+
+  }
+
+  function inputNegativoMes(articuloM){
+
+    var input =   document.getElementById(articuloM);
+    //console.log(input);
+
+        input.removeAttribute("style");
+        input.style.color = "#8B0000";
+        input.style.background = "white";
+
+  }  
+  
+
   
 /* 
 * SUMAR EL TOTAL DE LAS ORDENES DE CORTE
@@ -598,7 +764,7 @@ $(".tablaOrdenCorte").on("click", ".btnVisualizarOC", function () {
 $(".tablaOrdenCorte").on("click", ".btnReporteOC", function () {
 
     var codigo = $(this).attr("codigo");
-    console.log("codigo", codigo);
+    //console.log("codigo", codigo);
 
     window.location = "vistas/reportes_excel/rpt_ordencorte.php?codigo=" + codigo;
   
