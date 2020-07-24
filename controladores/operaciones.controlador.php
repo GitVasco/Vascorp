@@ -16,7 +16,7 @@ class ControladorOperaciones{
 					           "nombre"=>$_POST["nuevaOperacion"]);
 
 			   	$respuesta = ModeloOperaciones::mdlIngresarOperacion($tabla,$datos);
-				var_dump($respuesta);
+				
 			   	if($respuesta == "ok"){
 
 					echo'<script>
@@ -56,7 +56,7 @@ class ControladorOperaciones{
 					           "nombre"=>$_POST["nuevaOperacion"]);
 
 			   	$respuesta = ModeloOperaciones::mdlIngresarOperacion($tabla,$datos);
-				var_dump($respuesta);
+				
 			   	if($respuesta == "ok"){
 
 					echo'<script>

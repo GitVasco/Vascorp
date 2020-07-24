@@ -55,90 +55,22 @@ class controladorArticulos{
 	*/
 	static public function ctrCrearArticulo(){
 
-        if(isset($_POST["nuevaDescripcion"])){
+        if(isset($_POST["nuevoModelo"])){
 
-			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevaDescripcion"]) &&
-			   preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevoModelo"])){
-
-		   		/*=============================================
-				VALIDAR IMAGEN
-				=============================================*/
-
-				$ruta = "vistas/img/articulos/default/anonymous.png";
-
-				if(isset($_FILES["nuevaImagen"]["tmp_name"])){
-
-				 list($ancho, $alto) = getimagesize($_FILES["nuevaImagen"]["tmp_name"]);
-
-				 $nuevoAncho = 500;
-				 $nuevoAlto = 500;
-
-				 /*=============================================
-				 CREAMOS EL DIRECTORIO DONDE VAMOS A GUARDAR LA FOTO DEL USUARIO
-				 =============================================*/
-
-				 $directorio = "vistas/img/articulos/".$_POST["nuevoCodigo"];
-
-				 mkdir($directorio, 0755);
-
-				 /*=============================================
-				 DE ACUERDO AL TIPO DE IMAGEN APLICAMOS LAS FUNCIONES POR DEFECTO DE PHP
-				 =============================================*/
-
-				 if($_FILES["nuevaImagen"]["type"] == "image/jpeg"){
-
-					 /*=============================================
-					 GUARDAMOS LA IMAGEN EN EL DIRECTORIO
-					 =============================================*/
-
-					 $aleatorio = mt_rand(100,999);
-
-					 $ruta = "vistas/img/articulos/".$_POST["nuevoCodigo"]."/".$aleatorio.".jpg";
-
-					 $origen = imagecreatefromjpeg($_FILES["nuevaImagen"]["tmp_name"]);						
-
-					 $destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
-
-					 imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
-
-					 imagejpeg($destino, $ruta);
-
-				 }
-
-				 if($_FILES["nuevaImagen"]["type"] == "image/png"){
-
-					 /*=============================================
-					 GUARDAMOS LA IMAGEN EN EL DIRECTORIO
-					 =============================================*/
-
-					 $aleatorio = mt_rand(100,999);
-
-					 $ruta = "vistas/img/articulos/".$_POST["nuevoCodigo"]."/".$aleatorio.".png";
-
-					 $origen = imagecreatefrompng($_FILES["nuevaImagen"]["tmp_name"]);						
-
-					 $destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
-
-					 imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
-
-					 imagepng($destino, $ruta);
-
-				 }
-
-			 }				
-
+			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevoModelo"])){
+	
                 $tabla = "articulojf";
-
+				$codigo="";
 				$datos = array("id_marca" => $_POST["nuevaMarca"],
 							   "modelo" => $_POST["nuevoModelo"],
 							   "descripcion" => $_POST["nuevaDescripcion"],
 							   "cod_color" => $_POST["nuevoColor"],
 							   "cod_talla" => $_POST["nuevaTalla"],
 							   "tipo" => $_POST["nuevoTipo"],
-							   "articulo" => $_POST["nuevoCodigo"],
+							   "articulo" => $codigo,
 							   "color" => $_POST["color"],
 							   "talla" => $_POST["talla"],
-							   "imagen" => $ruta);
+							   "imagen" => null);
 
                 $respuesta = ModeloArticulos::mdlIngresarArticulo($tabla, $datos);
                 

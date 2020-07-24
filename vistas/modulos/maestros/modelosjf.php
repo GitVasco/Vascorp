@@ -79,7 +79,6 @@ MODAL VER MODELO
 
     <div class="modal-content">
 
-      <form role="form" method="post" enctype="multipart/form-data">
 
         <!--=====================================
         CABEZA DEL MODAL
@@ -132,20 +131,11 @@ MODAL VER MODELO
 
         <div class="modal-footer">
 
-          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+          <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" class="btn btn-primary">Guardar modelo</button>
 
         </div>
 
-      </form>
-      
-      <?php
-
-      $crearModelo = new ControladorModelos();
-      $crearModelo->ctrCrearModelo();
-
-      ?>
 
 
     </div>
@@ -265,6 +255,8 @@ MODAL AGREGAR MODELO
                   <option value="TOP">TOP</option>
 
                   <option value="BODY">BODY</option>
+
+                  <option value="FAJA">FAJA</option>
 
                   <option value="BOXER V">BOXER V</option>
 
@@ -477,7 +469,7 @@ MODAL EDITAR MODELO
 
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
           
-                    <button type="submit" class="btn btn-primary">Guardar artículo</button>
+                    <button type="submit" class="btn btn-primary">Guardar modelo</button>
   
                   </div>';
         }

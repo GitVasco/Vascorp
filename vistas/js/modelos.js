@@ -253,3 +253,214 @@ $(".tablaModelos").on("click", ".btnReporteOM", function () {
     window.location = "vistas/reportes_excel/rpt_operacionesmodelo.php?codigo=" + codigo;
   
 })
+
+// ELIMINAR OPERACIÓN
+$(".tablaModelos tbody").on("click","button.btnGenerarArticulo",function(){
+
+	var modelo = $(this).attr("modelo");
+
+	window.location="index.php?ruta=crear-articulo&modelo="+modelo;
+})
+
+//AGREGAR COLOR X ARTICULO
+$(".tablas tbody").on("click","button.agregarColor",function(){
+	var idColor = $(this).attr("idColor");
+  
+  
+	$(this).removeClass("btn-primary agregarColor");
+  
+	$(this).addClass("btn-default");
+
+	var datos = new FormData();
+	datos.append("idColores", idColor);
+  
+	$.ajax({
+	  url: "ajax/colores.ajax.php",
+	  method: "POST",
+	  data: datos,
+	  cache: false,
+	  contentType: false,
+	  processData: false,
+	  dataType: "json",
+	  success: function(respuesta) {
+		var codigos = respuesta["cod_color"];
+		var nombres = respuesta["nom_color"];
+  
+  
+		$(".nuevoColor").append(
+  
+		  '<div class="row" style="padding:5px 15px">' +
+  
+			"<!-- Descripción del color -->" +
+  
+			'<div class="col-xs-12" style="padding-right:0px">' +
+  
+			  '<div class="input-group">' +
+  
+				'<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarColor" idColor="' + idColor + '"><i class="fa fa-times"></i></button></span>' +
+  
+				'<input type="text" class="form-control nuevaDescripcionColor" idColor="' + idColor + '" name="agregarColor" value="' + codigos +" - " + nombres + '"  codigoCO= "'+codigos+'"readonly>' +
+  
+			  "</div>" +
+  
+			"</div>" +
+  
+		  "</div>"
+		);
+    }
+  });
+  listarColores();
+})
+
+/*=============================================
+CUANDO CARGUE LA TABLA CADA VEZ QUE NAVEGUE EN ELLA
+=============================================*/
+
+$(".tablas").on("draw.dt", function() {
+	//console.log("tabla");
+  
+	if (localStorage.getItem("quitarColor") != null) {
+	  var listaidColores = JSON.parse(localStorage.getItem("quitarColor"));
+
+	  for (var i = 0; i < listaidColores.length; i++) {
+		$(
+		  "button.recuperarBoton[idColor='" +
+			listaidColores[i]["idColor"] +
+			"']"
+		).removeClass("btn-default");
+		$(
+		  "button.recuperarBoton[idColor='" +
+			listaidColores[i]["idColor"] +
+			"']"
+		).addClass("btn-primary agregarColor");
+	  }
+	}
+  });
+  
+  /*=============================================
+  QUITAR OPERACIONES POR ARTICULO Y RECUPERAR BOTÓN
+  =============================================*/
+  
+  var idQuitarColor = [];
+  
+  localStorage.removeItem("quitarColor");
+  
+  $(".formularioArticulo").on("click", "button.quitarColor", function() {
+  
+	$(this)
+	  .parent()
+	  .parent()
+	  .parent()
+	  .parent()
+	  .remove();
+  
+	var idColor = $(this).attr("idColor");
+  
+	/*=============================================
+	ALMACENAR EN EL LOCALSTORAGE EL ID DE OPERACION A QUITAR
+	=============================================*/
+  
+	if (localStorage.getItem("quitarColor") == null) {
+	  idQuitarColor = [];
+	} else {
+	  idQuitarColor.concat(localStorage.getItem("quitarColor"));
+	}
+  
+	idQuitarColor.push({
+	  idColor: idColor
+	});
+  
+	localStorage.setItem("quitarColor", JSON.stringify(idQuitarColor));
+  
+	$("button.recuperarBoton[idColor='" + idColor + "']").removeClass(
+	  "btn-default"
+	);
+  
+	$("button.recuperarBoton[idColor='" + idColor + "']").addClass(
+	  "btn-primary agregarColor"
+	);
+  
+	listarColores();
+	
+  });
+
+/*=============================================
+FUNCIÓN PARA DESACTIVAR LOS BOTONES AGREGAR CUANDO EL PRODUCTO YA HABÍA SIDO SELECCIONADO EN LA CARPETA
+=============================================*/
+
+function quitarAgregarColores() {
+	//Capturamos todos los id de productos que fueron elegidos en la venta
+	var idColores = $(".quitarColor");
+  
+	//Capturamos todos los botones de agregar que aparecen en la tabla
+	var botonesTabla = $(".tablas tbody button.agregarColor");
+	
+	
+  
+	//Recorremos en un ciclo para obtener los diferentes idProductos que fueron agregados a la venta
+	for (var i = 0; i < idColores.length; i++) {
+	  //Capturamos los Id de los productos agregados a la venta
+	  var boton = $(idColores[i]).attr("idColor");
+	//   console.log(boton);
+	
+	  //Hacemos un recorrido por la tabla que aparece para desactivar los botones de agregar
+	  for (var j = 0; j < botonesTabla.length; j++) {
+		if ($(botonesTabla[j]).attr("idColor") == boton) {
+		  $(botonesTabla[j]).removeClass("btn-primary agregarColor");
+		  $(botonesTabla[j]).addClass("btn-default");
+		}
+	  }
+	}
+  }
+
+  $(".tablas").on("draw.dt", function() {
+	quitarAgregarColores();
+  });
+
+/*=============================================
+LISTAR TODOS LOS COLORES
+=============================================*/
+
+
+function listarColores() {
+	var listaColores = [];
+  
+	var descripcion = $(".nuevaDescripcionColor");
+
+  
+	for (var i = 0; i < descripcion.length; i++) {
+	  listaColores.push({
+		id: $(descripcion[i]).attr("idColor"),
+		codigo: $(descripcion[i]).attr("codigoCO"),
+		descripcion: $(descripcion[i]).val()
+	  });
+	}
+	$("#listaColores").val(JSON.stringify(listaColores));
+	
+}
+
+$("#nuevoGrupoTalla").change(function(){
+	var grupo = $(this).val();
+	var datos = new FormData();
+	datos.append("grupo", grupo);
+	
+	$.ajax({
+
+		url:"ajax/tallas.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType:"json",
+		success:function(respuesta){
+			$(".detalle").remove();
+			for(var i = 0; i<respuesta.length; i+=1){
+				$(".nuevaTalla").append('<ul class="detalle" style="display:inline"><input type="checkbox" name = "chk[]" value="'+respuesta[i]["talla"]+'"><label  for="'+respuesta[i]["talla"]+'">'+respuesta[i]["talla"]+' </label> <span  style="padding:10px"></ul>');
+			}
+		}
+	
+	});
+	
+
+})
