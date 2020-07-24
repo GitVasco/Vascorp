@@ -26,7 +26,7 @@
       EL FORMULARIO
       ======================================-->
 
-      <div class="col-lg-5 col-xs-12">
+      <div class="col-lg-4 col-xs-12">
 
         <div class="box box-success">
 
@@ -138,7 +138,35 @@
                 TITULOS
                 ======================================-->
                 
-                <div class="col-lg-12">
+                <div class="box box-primary">
+
+                  <div class="row">
+
+                    <div class="col-xs-6">
+
+                      <label>Articulo</label>
+
+                    </div>
+
+                    <div class="col-xs-2">
+
+                      <label for="">Ord. Corte</label>
+
+                    </div>
+
+                    <div class="col-xs-2">
+
+                      <label for="">SinProg</label>
+
+                    </div>
+
+                    <div class="col-xs-2">
+
+                      <label for="">Mes</label>
+
+                    </div>
+
+                  </div>
 
                 </div>
          
@@ -238,7 +266,7 @@
       LA TABLA DE ARTICULOS
       ======================================-->
 
-      <div class="col-lg-7 hidden-md hidden-sm hidden-xs">
+      <div class="col-lg-8 hidden-md hidden-sm hidden-xs">
 
         <div class="box box-warning">
 
@@ -254,12 +282,16 @@
                   <th>Modelo</th>
                   <th>Color</th>
                   <th>Talla</th>
+                  <th>Proy</th>
+                  <th>Prod</th>
+                  <th>Avance</th>
                   <th>Stock</th>
                   <th>Ped.</th>
                   <th>En Taller</th>
                   <th>Alm. Corte</th>
                   <th>Ord. Corte</th>
                   <th>Vtas 30d</th>
+                  <th>Xprog</th>
                   <th style="width:10px">Acciones</th>
                 </tr>
 
