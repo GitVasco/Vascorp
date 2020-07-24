@@ -35,3 +35,11 @@ if(isset($_POST["idColor"])){
 	$color -> ajaxEditarColor();
 
 }
+
+if(isset($_POST["idColores"])){
+
+	$colores = new AjaxColores();
+	$colores -> idColor = $_POST["idColores"];
+	$colores -> ajaxEditarColor();
+
+}

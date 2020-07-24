@@ -320,7 +320,7 @@ function quitarAgregarOperaciones() {
 	for (var i = 0; i < idOperaciones.length; i++) {
 	  //Capturamos los Id de los productos agregados a la venta
 	  var boton = $(idOperaciones[i]).attr("idOperacion");
-	  console.log(boton);
+	//   console.log(boton);
 	
 	  //Hacemos un recorrido por la tabla que aparece para desactivar los botones de agregar
 	  for (var j = 0; j < botonesTabla.length; j++) {
@@ -431,7 +431,7 @@ function listarOperaciones() {
 	  });
 	}
 	$("#listaOperaciones").val(JSON.stringify(listaOperaciones));
-	console.log(listaOperaciones);
+
 	
 	
 	

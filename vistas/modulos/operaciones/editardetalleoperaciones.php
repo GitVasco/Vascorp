@@ -199,7 +199,7 @@
 
                               <span class="input-group-addon"><i class="fa fa-money"></i></span>
 
-                              <input type="text" min="1" class="form-control input-lg" id="nuevoTotalDocena" name="nuevoTotalDocena" totalDecena="" value="<?php echo $cabecera["total_pd"]?>" step="any" readonly required>
+                              <input type="number" min="1" class="form-control input-lg" id="nuevoTotalDocena" name="nuevoTotalDocena" totalDecena="" value="<?php echo $cabecera["total_pd"]?>" step="any" readonly required>
 
 
 
@@ -213,7 +213,7 @@
 
                               <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
 
-                              <input type="text" min="1" class="form-control input-lg" id="nuevoTotalStandar" name="nuevoTotalStandar" totalStand="" value="<?php echo $cabecera["total_ts"]?>" step="any" readonly required>
+                              <input type="number" min="1" class="form-control input-lg" id="nuevoTotalStandar" name="nuevoTotalStandar" totalStand="" value="<?php echo $cabecera["total_ts"]?>" step="any" readonly required>
 
                             </div>
 

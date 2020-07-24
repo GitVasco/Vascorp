@@ -327,7 +327,7 @@ class ControladorModelos{
 
 	
 	/* 
-	* MOSTRAR MODELOS
+	* MOSTRAR MODELOS x ARTICULO
 	*/
 	static public function ctrMostrarModeloArticulo($item,$valor){
 
@@ -339,5 +339,17 @@ class ControladorModelos{
 
     }
 
+	/* 
+	* MOSTRAR TALLAS
+	*/
+	static public function ctrMostrarTallas($item,$valor){
+
+        $tabla = "tallajf";
+
+		$respuesta = ModeloModelos::mdlMostrarTallas($tabla, $item,$valor);
+
+		return $respuesta;
+
+    }
 }
 

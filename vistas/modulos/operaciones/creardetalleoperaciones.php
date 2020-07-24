@@ -155,7 +155,7 @@
 
                               <span class="input-group-addon"><i class="fa fa-money"></i></span>
 
-                              <input type="text" min="0" class="form-control input-lg" id="nuevoTotalDocena" name="nuevoTotalDocena" totalDecena="" placeholder="00000" step="any" readonly required>
+                              <input type="number" min="0" class="form-control input-lg" id="nuevoTotalDocena" name="nuevoTotalDocena" totalDecena="" placeholder="00000" step="any" readonly required>
 
 
 
@@ -169,7 +169,7 @@
 
                               <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
 
-                              <input type="text" min="0" class="form-control input-lg" id="nuevoTotalStandar" name="nuevoTotalStandar" totalStand="" placeholder="00000" step="any" readonly required>
+                              <input type="number" min="0" class="form-control input-lg" id="nuevoTotalStandar" name="nuevoTotalStandar" totalStand="" placeholder="00000" step="any" readonly required>
 
                             </div>
 
