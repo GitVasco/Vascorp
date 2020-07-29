@@ -174,6 +174,7 @@ class ModeloOperaciones{
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cabecera.id, 
 			cabecera.articulo,
+			mo.nombre as descripcion,
 			cabecera.vendedor_fk,
 			cabecera.total_pd,
 			cabecera.total_ts,
@@ -181,7 +182,9 @@ class ModeloOperaciones{
 		  FROM
 			$tabla  cabecera 
 			LEFT JOIN usuariosjf  usu 
-		  ON cabecera.vendedor_fk = usu.id ORDER BY id DESC");
+		  ON cabecera.vendedor_fk = usu.id 
+		  LEFT JOIN modelojf mo 
+		  on cabecera.articulo=mo.modelo ORDER BY id ASC");
 
 			$stmt -> execute();
 

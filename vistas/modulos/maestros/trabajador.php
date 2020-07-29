@@ -40,7 +40,6 @@
          
          <tr>
            
-           <th style="width:10px">#</th>
            <th>Codigo Trabajador</th>
            <th>Tipo Documento</th>
            <th>Nro Documento</th>

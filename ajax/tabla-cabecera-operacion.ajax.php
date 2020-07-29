@@ -30,6 +30,7 @@ class TablaOperaciones{
             $datosJson .= '[
             "'.($i+1).'",
             "'.$operaciones[$i]["articulo"].'",
+            "'.$operaciones[$i]["descripcion"].'",
             "'.$operaciones[$i]["nombre"].'",
             "'.$operaciones[$i]["total_pd"].'",
             "'.$operaciones[$i]["total_ts"].'",

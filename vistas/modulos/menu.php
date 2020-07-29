@@ -250,6 +250,16 @@
             
                                     </a>
         
+                                </li>
+                                
+                                <li>
+                                    <a href="paras">
+            
+                                        <i class="fa fa-circle-o"></i>
+                                        <span>Paras</span>
+            
+                                    </a>
+        
                                 </li> 
                       
                             </ul>

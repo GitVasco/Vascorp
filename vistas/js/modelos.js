@@ -478,3 +478,47 @@ $("#nuevaMarca").change(function(){
 		$("#nuevoTipo").html("<option value=''>Seleccionar Tipo</option><option value='SK'>SK</option>");
 	}
 });
+
+//Ingresar readonly para precios 
+for (let index = 1; index <= 10; index++) {
+	$(".tablaDetallePrecio").on("click","a.editarPrecio"+index,function(){
+		
+		$("#precio"+index).attr("readonly",false);
+		document.getElementById("precio"+index).style.background="white";
+	})
+}
+
+$(".tablaModelos tbody").on("click","button.btnVerPrecio",function(){
+	var modelo=$(this).attr("modelo");
+	$("#modelo").val(modelo);
+	var datos = new FormData();
+	datos.append("modelo", modelo);
+
+	$.ajax({
+
+		url:"ajax/precios.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType:"json",
+		success:function(respuesta){
+			$(".detallePR").remove();
+
+			for(var i=1; i <=10 ; i++){
+			
+			$('.tablaDetallePrecio').append(
+
+				'<tr class="detallePR">' +
+					'<td class="text-center">' + i + ' </td>' +
+					'<td class="text-center"><input type="number" min="0" step ="any" class="form-control" name="precio'+i+'" id="precio'+i+'" value="'+ respuesta["precio"+i+""] +'" readonly style="background:gray"> </td><td class="text-center"><a type="button"class="btn btn-sm btn-primary editarPrecio'+i+'">Editar Precio</a></td>' +
+				'</tr>')
+
+			}
+			
+			
+		}
+	})	
+
+})

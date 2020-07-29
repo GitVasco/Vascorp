@@ -249,24 +249,6 @@ MODAL AGREGAR MODELO
 
                   <option value="">Seleccionar tipo</option>
 
-                  <!-- <option value="BRASIER">BRASIER</option>
-
-                  <option value="TRUSA">TRUSA</option>
-
-                  <option value="TOP">TOP</option>
-
-                  <option value="BODY">BODY</option>
-
-                  <option value="FAJA">FAJA</option>
-
-                  <option value="BOXER V">BOXER V</option>
-
-                  <option value="BVD NIÑOS">BVD NIÑOS</option>
-
-                  <option value="GUAPITAS">GUAPITAS</option>
-
-                  <option value="SK">SK</option> -->
-
                 </select>
 
               </div>
@@ -498,3 +480,82 @@ $eliminarModelo = new ControladorModelos();
 $eliminarModelo->ctrEliminarModelo();
 
 ?>
+
+<!--=====================================
+MODAL AGREGAR MODELO
+======================================-->
+
+<div id="modalVerPrecio" class="modal fade" role="dialog">
+
+  <div class="modal-dialog modal-sm" >
+
+    <div class="modal-content" >
+
+      <form role="form"  method="post" enctype="multipart/form-data">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Lista de Precios</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <input type="hidden" name="modelo" id="modelo">
+            <!-- ENTRADA PARA LISTAR PRECIOS -->
+              <table class="tablaDetallePrecio">
+                <thead>
+                <tr>
+                  <th></th>
+                  <th class="text-center">S/</th>
+                  <th style="width:150px"></th>
+                </tr>
+                </thead>
+                <tbody>
+             
+                </tbody>
+              </table>
+
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Guardar Precio</button>
+
+        </div>
+
+      </form>
+      
+      <?php
+      
+        $editarPrecio= new ControladorModelos();
+        $editarPrecio->ctrEditarPrecio();
+     
+      ?>
+
+
+    </div>
+
+  </div>
+
+</div>

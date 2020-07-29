@@ -66,6 +66,7 @@
                 <?php 
                  $item="modelo";
                  $valor=$_GET["modelo"];
+                 $_SESSION["modelos"]=$_GET["modelo"];
                 $modelo= ControladorModelos::ctrMostrarModelos($item,$valor);
                  ?>
                 <div class="form-group">
@@ -94,10 +95,51 @@
                   
                 </div>
 
+
+                 <!--=====================================
+                ENTRADA DE DESCUENTOS
+                ======================================-->
+                <div class="form-group col-md-7">
+                  <label for="">Se aplican descuentos según la cantidad de unidades</label>
+                  <label class="switch"> <input type="checkbox" name='descuentos' value="1"> <span class="slider round"></span></label>
+                  
+                </div>
+
+
+                <!--=====================================
+                ENTRADA DE PRECIOS
+                ======================================-->
+                <div class="form-group col-md-5">
+
+                  <label for="precios">Permitir precios digitados</label>  
+                  <label class="switch"> <input type="checkbox" name='precios'value="1"> <span class="slider round"></span></label>
+                  
+                </div>
+
+                <!--=====================================
+                ENTRADA DE EFECTOS A DESCUENTOS
+                ======================================-->
+                <div class="form-group col-md-7">
+
+                  <label for="efectos">Articulo afecto a descuentos</label>
+                  <label class="switch"> <input type="checkbox" name='efectosDesc' value="1"> <span class="slider round"></span></label>
+                  
+                </div>
+
+                <!--=====================================
+                ENTRADA DE EFECTOS A IGV
+                ======================================-->
+                <div class="form-group col-md-5">
+
+                  <label for="efectos">Articulo afecto a IGV</label>
+                  <label class="switch"> <input type="checkbox" name='efectosIGV' value="1"> <span class="slider round"></span></label>
+                  
+                </div>
+
                  <!--=====================================
                 ENTRADA DE GRUPOS DE TALLAS
                 ======================================-->
-                <div class="form-group">
+                <div class="form-group ">
 
                   <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-users"></i></span>

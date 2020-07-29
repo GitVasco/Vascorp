@@ -75,6 +75,9 @@ require_once "modelos/talleres.modelo.php";
 
 require_once "modelos/sectores.modelo.php";
 
+require_once "modelos/paras.modelo.php";
+require_once "controladores/paras.controlador.php";
+
 require_once "extensiones/vendor/autoload.php";
 
 $plantilla = new ControladorPlantilla();

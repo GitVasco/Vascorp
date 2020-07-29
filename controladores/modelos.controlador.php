@@ -91,7 +91,21 @@ class ControladorModelos{
 				 }
 
 			 }				
+				$tabla2="preciojf";
+				$datosPrecio = array("modelo"=>$_POST["nuevoModelo"],
+							   "precio1"=>0,
+							   "precio2"=>0,
+							   "precio3"=>0,
+							   "precio4"=>0,
+							   "precio5"=>0,
+							   "precio6"=>0,
+							   "precio7"=>0,
+							   "precio8"=>0,
+							   "precio9"=>0,
+							   "precio10"=>0
+							);
 
+				$precio = ModeloModelos::mdlIngresarPrecio($tabla2,$datosPrecio);
                 $tabla = "modelojf";
 
 				$datos = array("id_marca" => $_POST["nuevaMarca"],
@@ -350,6 +364,124 @@ class ControladorModelos{
 
 		return $respuesta;
 
-    }
+	}
+	
+	/*=============================================
+	CREAR PRECIO
+	=============================================*/
+
+	static public function ctrCrearPrecio(){
+
+		if(isset($_POST["modelo"])){
+				
+				$tabla="preciojf";
+			   	$datos = array("modelo"=>$_POST["modelo"],
+							   "precio1"=>$_POST["precio1"],
+							   "precio2"=>$_POST["precio2"],
+							   "precio3"=>$_POST["precio3"],
+							   "precio4"=>$_POST["precio4"],
+							   "precio5"=>$_POST["precio5"],
+							   "precio6"=>$_POST["precio6"],
+							   "precio7"=>$_POST["precio7"],
+							   "precio8"=>$_POST["precio8"],
+							   "precio9"=>$_POST["precio9"],
+							   "precio10"=>$_POST["precio10"]
+							);
+
+				   $respuesta = ModeloModelos::mdlIngresarPrecio($tabla,$datos);
+				   
+
+			   	if($respuesta == "ok"){
+
+					echo'<script>
+
+					swal({
+						  type: "success",
+						  title: "El precio del modelo ha sido guardado correctamente",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+									if (result.value) {
+
+									window.location = "modelosjf";
+
+									}
+								})
+
+					</script>';
+
+				}
+
+			
+
+		}
+
+	}
+
+	/*=============================================
+	EDITAR PRECIO
+	=============================================*/
+
+	static public function ctrEditarPrecio(){
+
+		if(isset($_POST["modelo"])){
+				
+				$tabla="preciojf";
+			   	$datos = array("modelo"=>$_POST["modelo"],
+							   "precio1"=>$_POST["precio1"],
+							   "precio2"=>$_POST["precio2"],
+							   "precio3"=>$_POST["precio3"],
+							   "precio4"=>$_POST["precio4"],
+							   "precio5"=>$_POST["precio5"],
+							   "precio6"=>$_POST["precio6"],
+							   "precio7"=>$_POST["precio7"],
+							   "precio8"=>$_POST["precio8"],
+							   "precio9"=>$_POST["precio9"],
+							   "precio10"=>$_POST["precio10"]
+							);
+
+				   $respuesta = ModeloModelos::mdlEditarPrecio($tabla,$datos);
+				   
+
+			   	if($respuesta == "ok"){
+
+					echo'<script>
+
+					swal({
+						  type: "success",
+						  title: "El precio del modelo ha sido guardado correctamente",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+									if (result.value) {
+
+									window.location = "modelosjf";
+
+									}
+								})
+
+					</script>';
+
+				}
+
+			
+
+		}
+
+	}
+	
+	/* 
+	* MOSTRAR PRECIOS
+	*/
+	static public function ctrMostrarPrecios($item,$valor){
+
+        $tabla = "preciojf";
+
+		$respuesta = ModeloModelos::mdlMostrarPrecios($tabla, $item,$valor);
+
+		return $respuesta;
+
+	}
+    
 }
 

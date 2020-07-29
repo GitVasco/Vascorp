@@ -195,4 +195,122 @@ class ModeloModelos
 
 		$stmt = null;
 	}
+
+	/* 
+	* ACTUALIZAR MODELO
+	*/
+	static public function mdlModeloPrecios($tabla, $datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET descuentos = :descuentos, precios = :precios, efectos_desc = :efectos_desc, efectos_igv=:efectos_igv, articulos=:articulos WHERE modelo = :modelo");
+		$stmt->bindParam(":modelo", $datos["modelo"], PDO::PARAM_STR);
+		$stmt->bindParam(":descuentos", $datos["descuentos"], PDO::PARAM_INT);
+		$stmt->bindParam(":precios", $datos["precios"], PDO::PARAM_INT);
+		$stmt->bindParam(":efectos_desc", $datos["efectos_desc"], PDO::PARAM_INT);
+		$stmt->bindParam(":efectos_igv", $datos["efectos_igv"], PDO::PARAM_INT);
+		$stmt->bindParam(":articulos", $datos["articulos"], PDO::PARAM_INT);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	/*
+	* REGISTRO DE PRECIOS
+	*/
+	static public function mdlIngresarPrecio($tabla, $datos){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(modelo,precio1,precio2,precio3,precio4,precio5,precio6,precio7,precio8,precio9,precio10) VALUES (:modelo,:precio1,:precio2,:precio3,:precio4,:precio5,:precio6,:precio7,:precio8,:precio9,:precio10)");
+
+		$stmt->bindParam(":modelo", $datos["modelo"], PDO::PARAM_STR);
+		$stmt->bindParam(":precio1", $datos["precio1"], PDO::PARAM_INT);
+		$stmt->bindParam(":precio2", $datos["precio2"], PDO::PARAM_INT);
+		$stmt->bindParam(":precio3", $datos["precio3"], PDO::PARAM_INT);
+		$stmt->bindParam(":precio4", $datos["precio4"], PDO::PARAM_INT);
+		$stmt->bindParam(":precio5", $datos["precio5"], PDO::PARAM_INT);
+		$stmt->bindParam(":precio6", $datos["precio6"], PDO::PARAM_INT);
+		$stmt->bindParam(":precio7", $datos["precio7"], PDO::PARAM_INT);
+		$stmt->bindParam(":precio8", $datos["precio8"], PDO::PARAM_INT);
+		$stmt->bindParam(":precio9", $datos["precio9"], PDO::PARAM_INT);
+		$stmt->bindParam(":precio10", $datos["precio10"], PDO::PARAM_INT);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	/*
+	* REGISTRO DE MODELO
+	*/
+	static public function mdlEditarPrecio($tabla, $datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET modelo=:modelo,precio1=:precio1,precio2=:precio2,precio3=:precio3,precio4=:precio4,precio5=:precio5,precio6=:precio6,precio7=:precio7,precio8=:precio8,precio9=:precio9,precio10=:precio10");
+
+		$stmt->bindParam(":modelo", $datos["modelo"], PDO::PARAM_STR);
+		$stmt->bindParam(":precio1", $datos["precio1"], PDO::PARAM_INT);
+		$stmt->bindParam(":precio2", $datos["precio2"], PDO::PARAM_INT);
+		$stmt->bindParam(":precio3", $datos["precio3"], PDO::PARAM_INT);
+		$stmt->bindParam(":precio4", $datos["precio4"], PDO::PARAM_INT);
+		$stmt->bindParam(":precio5", $datos["precio5"], PDO::PARAM_INT);
+		$stmt->bindParam(":precio6", $datos["precio6"], PDO::PARAM_INT);
+		$stmt->bindParam(":precio7", $datos["precio7"], PDO::PARAM_INT);
+		$stmt->bindParam(":precio8", $datos["precio8"], PDO::PARAM_INT);
+		$stmt->bindParam(":precio9", $datos["precio9"], PDO::PARAM_INT);
+		$stmt->bindParam(":precio10", $datos["precio10"], PDO::PARAM_INT);
+
+		if ($stmt->execute()) {
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	/* 
+	* MOSTRAR PRECIOS
+	*/
+	static public function mdlMostrarPrecios($tabla,$item,$valor){
+
+		if($item != null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla  WHERE modelo = :modelo");
+
+			$stmt -> bindParam(":modelo", $valor, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();
+
+		}else{
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+	}
+
+
 }

@@ -127,9 +127,38 @@ class controladorArticulos{
         if(isset($_POST["nuevoModelo"])){
 
 			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevoModelo"])){
-	
+				$tablaModelo="modelojf";
+				$valorModelo=$_SESSION["modelos"];
+				if(empty($_POST["descuentos"])){
+					$descuentos=0;
+				}else{
+					$descuentos=$_POST["descuentos"];
+				}
+				if(empty($_POST["precios"])){
+					$precios=0;
+				}else{
+					$precios=$_POST["precios"];
+				}
+				if(empty($_POST["efectosDesc"])){
+					$efectosDesc=0;
+				}else{
+					$efectosDesc=$_POST["efectosDesc"];
+				}
+				if(empty($_POST["efectosIGV"])){
+					$efectosIGV=0;
+				}else{
+					$efectosIGV=$_POST["efectosIGV"];
+				}
+				$datosModelo = array("modelo" => $valorModelo,
+							"descuentos" => $descuentos,
+							"precios" => $precios,
+							"efectos_desc" => $efectosDesc,
+							"efectos_igv" => $efectosIGV,
+							"articulos"=>1
+						);
+				$modelo=ModeloModelos::mdlModeloPrecios($tablaModelo,$datosModelo);
+
 				$colores=json_decode($_POST["listaColores"],true);
-				var_dump($colores);
 				$arregloCHK=$_POST["chk"];
 				$num=count($arregloCHK);
 				for($n=0;$n<$num;$n++){
