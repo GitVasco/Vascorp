@@ -9,9 +9,8 @@ class ajaxCortes{
 	public function ajaxMostrarCortes(){
 
 		$valor1 = $this->articulo;
-		$valor2 = $this->operacion;
 
-		$respuesta = ControladorCortes::ctrMostrarCortes($valor1, $valor2);
+		$respuesta = ControladorCortes::ctrMostrarCortes($valor1);
 
         echo json_encode($respuesta);
 
@@ -26,8 +25,7 @@ class ajaxCortes{
 if(isset($_POST["articulo"])){
 
 	$mostrar = new ajaxCortes();
-	$mostrar -> articulo=$_POST["articulo"];
-	$mostrar -> operacion=$_POST["operacion"];
+	$mostrar -> articulo = $_POST["articulo"];
     $mostrar -> ajaxMostrarCortes();
 
 }

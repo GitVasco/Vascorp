@@ -38,7 +38,6 @@ class TablaTalleresT{
 
             $datosJson .= '[
             "'.$talleres[$i]["codigo"].'",
-            "'.$talleres[$i]["sector"].'",
             "'.$talleres[$i]["trabajador"].'",
             "'.$talleres[$i]["operacion"].'",
             "'.$talleres[$i]["articulo"].'",

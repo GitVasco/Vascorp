@@ -41,8 +41,6 @@
               <th>
                 <center>Alm. Corte</center>
               </th>
-              <th>Cod. Op.</th>
-              <th>Operación</th>
               <th>Acciones</th>
 
             </tr>
@@ -102,72 +100,6 @@ MODAL MANDAR A TALLER
             <input type="hidden" name="tiempo_total" id="tiempo_total">
 
             <input type="hidden" name="nuevoCorte" id="nuevoCorte">
-
-            <!-- ENTRADA PARA SELECCIONAR TALLER -->
-
-            <div class="form-group col-lg-5">
-
-              <label>Sector</label>
-
-              <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-industry"></i></span>
-
-                <select class="form-control input-sm selectpicker" id="nuevoSector" name="nuevoSector" data-live-search="true" required>
-
-                  <option value="">Sector</option>
-
-                  <?php
-
-                  $sector = ControladorSectores::ctrMostrarSectores(null);
-                  #var_dump("taller", $sector);
-
-                  foreach ($sector as $key => $value) {
-
-                    echo '<option value="' . $value["cod_sector"] . '">' . $value["cod_sector"] . ' - ' . $value["nom_sector"] . '</option>';
-                  }
-
-
-                  ?>
-
-                </select>
-
-              </div>
-
-            </div>
-
-
-            <!-- ENTRADA PARA SELECCIONAR TRABAJADOR -->
-
-            <div class="form-group col-lg-7">
-
-              <label>Trabajador</label>
-
-              <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-user-o"></i></span>
-
-                <select class="form-control input-sm selectpicker" id="nuevoTrabajador" name="nuevoTrabajador" data-live-search="true" required>
-
-                  <option value="">Seleccionar Trabajador</option>
-
-                  <?php
-
-                  $trabajador = ControladorTrabajador::ctrMostrarTrabajadorActivo();
-                  #var_dump("trabajador", $trabajador);
-
-                  foreach ($trabajador as $key => $value) {
-
-                    echo '<option value="' . $value["cod_tra"] . '">' . $value["nom_tra"] . ', ' . $value["ape_pat_tra"] . ' ' . $value["ape_mat_tra"] . '</option>';
-                  }
-
-                  ?>
-
-                </select>
-
-              </div>
-
-            </div>
 
             <!-- ENTRADA PARA EL ARITCULO -->
 
@@ -244,38 +176,6 @@ MODAL MANDAR A TALLER
                 <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
 
                 <input type="text" class="form-control input-sm" id="nuevaTalla" name="nuevaTalla" required readonly>
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA CODIGO OPERACION -->
-
-            <div class="form-group col-lg-4">
-
-              <label>Cod. Operación</label>
-
-              <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
-
-                <input type="text" class="form-control input-sm" id="nuevoCodOperacion" name="nuevoCodOperacion" required readonly>
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA LA TALLA -->
-
-            <div class="form-group col-lg-8">
-
-              <label>Operación</label>
-
-              <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
-
-                <input type="text" class="form-control input-sm" id="nuevaOperacion" name="nuevaOperacion" required readonly>
 
               </div>
 

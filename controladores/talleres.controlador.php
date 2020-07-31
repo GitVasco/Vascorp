@@ -62,18 +62,7 @@ class ControladorTalleres{
 
                     echo'<script>
 
-                        swal({
-                            type: "success",
-                            title: "El articulo ha sido guardado correctamente",
-                            showConfirmButton: true,
-                            confirmButtonText: "Cerrar"
-                            }).then(function(result){
-                                        if (result.value) {
-
                                         window.location = "marcar-taller";
-
-                                        }
-                                    })
 
                         </script>';
 

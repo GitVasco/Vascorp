@@ -42,7 +42,6 @@
 
                                 <tr>
                                     <th style="width: 50px">Cod. Barra</th>
-                                    <th>Taller</th>
                                     <th>Trabajador</th>
                                     <th>Operación</th>
                                     <th>Artículo</th>
@@ -73,7 +72,6 @@
 
                                 <tr>
                                     <th style="width: 50px">Cod. Barra</th>
-                                    <th>Taller</th>
                                     <th>Trabajador</th>
                                     <th>Operación</th>
                                     <th>Artículo</th>
