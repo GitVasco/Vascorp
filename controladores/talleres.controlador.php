@@ -14,7 +14,18 @@ class ControladorTalleres{
     }
 
     /*
-    * MOSTRAR DATOS DE TALLERES PROCESO
+    * MOSTRAR DATOS DE TALLERES TERMINADO GENERAL
+    */
+    static public function ctrMostrarTalleresTerminado($valor){
+
+        $respuesta = ModeloTalleres::mdlMostrarTalleresTerminado($valor);
+
+        return $respuesta;
+
+    }
+
+    /*
+    * MOSTRAR DATOS DE TALLERES PROCESO 5 LINEAS
     */
     static public function ctrMostrarTalleresP(){
 
