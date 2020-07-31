@@ -135,7 +135,7 @@ MODAL EDITAR MATERIA PRIMA
 
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" class="btn btn-primary">Guardar artículo</button>
+          <button type="submit" class="btn btn-primary">Guardar materia prima</button>
 
         </div>
 
@@ -337,33 +337,34 @@ MODAL VISUALIZAR INFORMACION
             <label>TABLA DETALLES</label>
 
             <div class="box-body">
+              <div id="scroll2">
+                <table class="table table-bordered table-striped dt-responsive tablaDetalleArticulo">
 
-              <table class="table table-bordered table-striped dt-responsive tablaDetalleArticulo">
+                  <thead>
 
-                <thead>
+                    <tr>
 
-                  <tr>
+                      <th style="width:100px">Articulo</th>
+                      <th style="width:100px">Modelo</th>
+                      <th>Nombre</th>
+                      <th>Color</th>
+                      <th>Talla</th>
+                      <th>Estado</th>
+                      <th>Consumo</th>
+                      <th style="width:60px">TP</th>
 
-                    <th style="width:100px">Articulo</th>
-                    <th style="width:100px">Modelo</th>
-                    <th>Nombre</th>
-                    <th>Color</th>
-                    <th>Talla</th>
-                    <th>Estado</th>
-                    <th>Consumo</th>
-                    <th style="width:60px">TP</th>
+                    </tr>
 
-                  </tr>
+                  </thead>
 
-                </thead>
-
-                <tbody>
+                  <tbody>
 
 
 
-                </tbody>
+                  </tbody>
 
-              </table>
+                </table>
+              </div>
 
             </div>
 

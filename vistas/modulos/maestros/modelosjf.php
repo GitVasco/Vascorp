@@ -110,17 +110,19 @@ MODAL VER MODELO
               
 
             </div>
-            <table class="table tablaDetalleModelo">
-              <thead>
-              
-                <th class="text-center">Modelo</th>
-                <th class="text-center">Nombre</th>
-                <th class="text-center">Color</th>
-                <th class="text-center">Talla</th>
-              </thead>
-              <tbody>
-              </tbody>
-            </table>
+            <div id="scroll">
+              <table class="table tablaDetalleModelo">
+                <thead>
+                
+                  <th class="text-center">Modelo</th>
+                  <th class="text-center">Nombre</th>
+                  <th class="text-center">Color</th>
+                  <th class="text-center">Talla</th>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
           </div>
 
         </div>
@@ -454,7 +456,7 @@ MODAL EDITAR MODELO
 
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
           
-                    <button type="submit" class="btn btn-primary">Guardar modelo</button>
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
   
                   </div>';
         }
