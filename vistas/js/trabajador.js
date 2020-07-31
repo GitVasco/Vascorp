@@ -45,7 +45,7 @@ $(".tablaTrabajador tbody").on("click","button.btnEliminarTrabajador",function()
 		confirmButtonColor: "#3085d6",
 		cancelButtonColor: "#d33",
 		cancelButtonText: "Cancelar",
-		confirmButtonText: "Si, borrar operación!" 
+		confirmButtonText: "Si, borrar trabajador!" 
 	}).then((result)=>{
 		if(result.value){
 

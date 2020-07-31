@@ -42,7 +42,7 @@ $(".tablaTipoTrabajador tbody").on("click","button.btnEliminarTipoTrabajador",fu
 		confirmButtonColor: "#3085d6",
 		cancelButtonColor: "#d33",
 		cancelButtonText: "Cancelar",
-		confirmButtonText: "Si, borrar operación!" 
+		confirmButtonText: "Si, borrar tipo de trabajador!" 
 	}).then((result)=>{
 		if(result.value){
 			window.location = "index.php?ruta=tipotrabajador&idTipoTrabajador="+idTipoTrabajador;
