@@ -110,17 +110,19 @@ MODAL VER MODELO
               
 
             </div>
-            <table class="table tablaDetalleModelo">
-              <thead>
-              
-                <th class="text-center">Modelo</th>
-                <th class="text-center">Nombre</th>
-                <th class="text-center">Color</th>
-                <th class="text-center">Talla</th>
-              </thead>
-              <tbody>
-              </tbody>
-            </table>
+            <div id="scroll">
+              <table class="table tablaDetalleModelo">
+                <thead>
+                
+                  <th class="text-center">Modelo</th>
+                  <th class="text-center">Nombre</th>
+                  <th class="text-center">Color</th>
+                  <th class="text-center">Talla</th>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
           </div>
 
         </div>
@@ -154,7 +156,7 @@ MODAL AGREGAR MODELO
 
     <div class="modal-content">
 
-      <form role="form" method="post" enctype="multipart/form-data">
+      <form role="form"  method="post" enctype="multipart/form-data">
 
         <!--=====================================
         CABEZA DEL MODAL
@@ -196,8 +198,9 @@ MODAL AGREGAR MODELO
                   $marcas = ControladorMarcas::ctrMostrarMarcas($valor);
 
                   foreach ($marcas as $key => $value) {
-
+                    if($value["venta"]== 1 && $value["marca"]!="MEDIAS"){
                     echo '<option value="' . $value["id"] . '">' . $value["marca"] . '</option>';
+                    }
                   }
 
                   ?>
@@ -246,25 +249,7 @@ MODAL AGREGAR MODELO
 
                 <select class="form-control input-lg" id="nuevoTipo" name="nuevoTipo">
 
-                  <option value="">Selecionar tipo</option>
-
-                  <option value="BRASIER">BRASIER</option>
-
-                  <option value="TRUSA">TRUSA</option>
-
-                  <option value="TOP">TOP</option>
-
-                  <option value="BODY">BODY</option>
-
-                  <option value="FAJA">FAJA</option>
-
-                  <option value="BOXER V">BOXER V</option>
-
-                  <option value="BVD NIÑOS">BVD NIÑOS</option>
-
-                  <option value="GUAPITAS">GUAPITAS</option>
-
-                  <option value="SK">SK</option>
+                  <option value="">Seleccionar tipo</option>
 
                 </select>
 
@@ -363,8 +348,10 @@ MODAL EDITAR MODELO
                 <select class="form-control input-lg selectpicker" id="editarMarca" name="editarMarca" data-live-search="true" required readonly>
 
                 <?php
+                $item=null;
+                $valor=null;
                     
-                    $marcas = ControladorMarcas::ctrMostrarMarcas();
+                    $marcas = ControladorMarcas::ctrMostrarMarcas($item,$valor);
                     //var_dump("marcas", $marcas);
 
                     foreach ($marcas as $key => $value) {
@@ -469,7 +456,7 @@ MODAL EDITAR MODELO
 
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
           
-                    <button type="submit" class="btn btn-primary">Guardar modelo</button>
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
   
                   </div>';
         }
@@ -495,3 +482,82 @@ $eliminarModelo = new ControladorModelos();
 $eliminarModelo->ctrEliminarModelo();
 
 ?>
+
+<!--=====================================
+MODAL AGREGAR MODELO
+======================================-->
+
+<div id="modalVerPrecio" class="modal fade" role="dialog">
+
+  <div class="modal-dialog modal-sm" >
+
+    <div class="modal-content" >
+
+      <form role="form"  method="post" enctype="multipart/form-data">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Lista de Precios</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <input type="hidden" name="modelo" id="modelo">
+            <!-- ENTRADA PARA LISTAR PRECIOS -->
+              <table class="tablaDetallePrecio">
+                <thead>
+                <tr>
+                  <th></th>
+                  <th class="text-center">S/</th>
+                  <th style="width:150px"></th>
+                </tr>
+                </thead>
+                <tbody>
+             
+                </tbody>
+              </table>
+
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Guardar Precio</button>
+
+        </div>
+
+      </form>
+      
+      <?php
+      
+        $editarPrecio= new ControladorModelos();
+        $editarPrecio->ctrEditarPrecio();
+     
+      ?>
+
+
+    </div>
+
+  </div>
+
+</div>

@@ -68,15 +68,15 @@
 
                       if($value["venta"] == "1"){
 
-                        echo '<td><span style="font-size:85%" class="label label-success">Activo</span></td>';
-
-                      }else{
-
-                        echo '<td><span style="font-size:85%" class="label label-danger">Inactivo</span></td>';
+                        echo "<td><button class='btn btn-success btn-xs btnActivarMarca' idMarca='".$value["id"]."' estadoMarca='0'>Activo</button></td>";
 
                       }
+              
+                      else{
+              
+                          echo "<td><button class='btn btn-danger btn-xs btnActivarMarca' idMarca='".$value["id"]."' estadoMarca='1'>Inactivo</button></td>";
 
-                      
+                      }
 
                       if( $_SESSION["perfil"] == "Supervisores" ||
                           $_SESSION["perfil"] == "Sistemas"){

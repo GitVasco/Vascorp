@@ -24,12 +24,6 @@
 
       <div class="box-header with-border">
 
-        <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarArticulo">
-
-          Agregar artículos
-
-        </button>
-
       </div>
 
       <div class="box-body">
@@ -54,7 +48,6 @@
               <th>Estado</th>
               <th>Stock</th>
               <th>Tarjeta</th>
-              <th>Acciones</th>
 
             </tr>
 

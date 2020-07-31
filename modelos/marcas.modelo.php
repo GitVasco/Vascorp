@@ -111,6 +111,29 @@ class ModeloMarcas{
 
 	}
 
+		/* 
+	* Método para activar y desactivar una MArca
+	*/
+	static public function mdlActualizarMarca($tabla,$valor1,$valor2){
+
+		$sql = "UPDATE $tabla SET venta = :venta WHERE id=:valor";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":venta", $valor1, PDO::PARAM_STR);
+		$stmt->bindParam(":valor", $valor2, PDO::PARAM_INT);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt = null;
+	}
+	
 
 
 }

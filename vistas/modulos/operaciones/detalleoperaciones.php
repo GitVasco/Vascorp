@@ -45,6 +45,7 @@
            
            <th style="width:10px">N°</th>
            <th>Modelo</th>
+           <th>Nombre</th>
            <th>Responsable</th>
            <th>Total x Decena</th>
            <th>Tiempo standar total</th>

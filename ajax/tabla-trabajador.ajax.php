@@ -46,7 +46,6 @@ class TablaTrabajador{
         $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarTrabajador' idTrabajador='".$trabajador[$i]["cod_tra"]."' data-toggle='modal' data-target='#modalEditarTrabajador'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarTrabajador' idTrabajador='".$trabajador[$i]["cod_tra"]."'><i class='fa fa-times'></i></button></div>"; 
 
             $datosJson .= '[
-            "'.($i+1).'",
             "'.$trabajador[$i]["cod_tra"].'",
             "'.$trabajador[$i]["tipo_doc"].'",
             "'.$trabajador[$i]["nro_doc_tra"].'",

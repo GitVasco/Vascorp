@@ -87,18 +87,17 @@ class ModeloArticulos
 	*/
 	static public function mdlIngresarArticulo($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("CALL sp_1041_insert_articulos_p(:articulo, :id_marca, :modelo, :nombre, :cod_color, :color, :cod_talla, :talla, :tipo, :imagen)");
+		$stmt = Conexion::conectar()->prepare("CALL sp_1041_insert_articulos_p(:articulo, :id_marca,:marca, :modelo, :nombre, :cod_color, :color, :cod_talla, :talla)");
 
 		$stmt->bindParam(":articulo", $datos["articulo"], PDO::PARAM_STR);
 		$stmt->bindParam(":id_marca", $datos["id_marca"], PDO::PARAM_STR);
+		$stmt->bindParam(":marca", $datos["marca"], PDO::PARAM_STR);
 		$stmt->bindParam(":modelo", $datos["modelo"], PDO::PARAM_STR);
 		$stmt->bindParam(":nombre", $datos["descripcion"], PDO::PARAM_STR);
 		$stmt->bindParam(":cod_color", $datos["cod_color"], PDO::PARAM_STR);
 		$stmt->bindParam(":color", $datos["color"], PDO::PARAM_STR);
 		$stmt->bindParam(":cod_talla", $datos["cod_talla"], PDO::PARAM_STR);
 		$stmt->bindParam(":talla", $datos["talla"], PDO::PARAM_STR);
-		$stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
-		$stmt->bindParam(":imagen", $datos["imagen"], PDO::PARAM_STR);
 
 		if ($stmt->execute()) {
 

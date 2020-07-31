@@ -207,7 +207,7 @@ $(".tablaArticuloOperaciones tbody").on("click", "button.agregarOperacion", func
   
 			  '<span class="input-group-addon"><i class="fa fa-clock-o"></i></span>' +
   
-			  '<input type="number" class="form-control nuevoTiempoStandar" name="nuevoTiempoStandar" value="1" step="any" required>' +
+			  '<input type="number" class="form-control nuevoTiempoStandar" name="nuevoTiempoStandar" value="0" step="any" required>' +
   
 			  "</div>" +
   

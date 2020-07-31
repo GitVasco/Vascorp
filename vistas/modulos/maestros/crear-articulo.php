@@ -66,6 +66,7 @@
                 <?php 
                  $item="modelo";
                  $valor=$_GET["modelo"];
+                 $_SESSION["modelos"]=$_GET["modelo"];
                 $modelo= ControladorModelos::ctrMostrarModelos($item,$valor);
                  ?>
                 <div class="form-group">
@@ -74,41 +75,71 @@
 
                     <span class="input-group-addon"><i class="fa fa-tag"></i></span>
 
-                    <input type="text" class="form-control" id="nuevoModelo" name="nuevoModelo" value='<?php echo $modelo["modelo"].' - '. $modelo["nombre"]?>' readonly>
+                    <input type="text" class="form-control" id="nuevoModelos" name="nuevoModelos" value='<?php echo $modelo["modelo"].' - '. $modelo["nombre"]?>' readonly>
                   </div>
-
+                  <input type="hidden" name="nuevaDescripcion" value='<?php echo $modelo["nombre"] ?>'>
+                  <input type="hidden" name="nuevoModelo" value='<?php echo $modelo["modelo"] ?>'>
                 </div>
 
                  <!--=====================================
-                ENTRADA DE TALLA
+                ENTRADA DE MRCA
                 ======================================-->
                 <div class="form-group">
 
                   <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-users"></i></span>
-                  <select name="nuevaMarca" id="nuevaMarca" class="form-control">
-                    <option value="">SELECCIONAR UNA MARCA</option>
-                    <?php
+                  <span class="input-group-addon"><i class="fa fa-th"></i></span>
 
-                      $valor = null;
-
-                      $marcas = ControladorMarcas::ctrMostrarMarcas($valor);
-
-                      foreach ($marcas as $key => $value) {
-
-                        echo '<option value="' . $value["id"] . '">' . $value["marca"] . '</option>';
-                      }
-
-                    ?>
-
-                  </select>
+                  <input type="text" name="nuevaDescripcionMarca" class="form-control"  value='<?php echo $modelo["marca"]?>' readonly>
+                  <input type="hidden" id="nuevaMarca" name="nuevaMarca" value='<?php echo $modelo["id_marca"]?>'>
                   </div>
+                  
+                </div>
+
+
+                 <!--=====================================
+                ENTRADA DE DESCUENTOS
+                ======================================-->
+                <div class="form-group col-md-7">
+                  <label for="">Se aplican descuentos según la cantidad de unidades</label>
+                  <label class="switch"> <input type="checkbox" name='descuentos' value="1"> <span class="slider round"></span></label>
+                  
+                </div>
+
+
+                <!--=====================================
+                ENTRADA DE PRECIOS
+                ======================================-->
+                <div class="form-group col-md-5">
+
+                  <label for="precios">Permitir precios digitados</label>  
+                  <label class="switch"> <input type="checkbox" name='precios'value="1"> <span class="slider round"></span></label>
+                  
+                </div>
+
+                <!--=====================================
+                ENTRADA DE EFECTOS A DESCUENTOS
+                ======================================-->
+                <div class="form-group col-md-7">
+
+                  <label for="efectos">Articulo afecto a descuentos</label>
+                  <label class="switch"> <input type="checkbox" name='efectosDesc' value="1"> <span class="slider round"></span></label>
+                  
+                </div>
+
+                <!--=====================================
+                ENTRADA DE EFECTOS A IGV
+                ======================================-->
+                <div class="form-group col-md-5">
+
+                  <label for="efectos">Articulo afecto a IGV</label>
+                  <label class="switch"> <input type="checkbox" name='efectosIGV' value="1"> <span class="slider round"></span></label>
+                  
                 </div>
 
                  <!--=====================================
                 ENTRADA DE GRUPOS DE TALLAS
                 ======================================-->
-                <div class="form-group">
+                <div class="form-group ">
 
                   <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-users"></i></span>
@@ -125,7 +156,6 @@
 
 
                 </div>
-
                 <!--=====================================
                 ENTRADA PARA AGREGAR TALLAS X COLORES
                 ======================================-->
@@ -170,7 +200,7 @@
           <?php
 
             $guardarArticulo = new ControladorArticulos();
-            $guardarArticulo -> ctrCrearArticulo();
+            $guardarArticulo -> ctrCrearArticuloModelo();
 
           ?>          
 
