@@ -171,6 +171,7 @@ class controladorArticulos{
 						$tabla = "articulojf";
 						$codigo=$_POST["nuevoModelo"].$value["codigo"].$talla["cod_talla"];
 						$datos = array("id_marca" => $_POST["nuevaMarca"],
+									"marca"=>$_POST["nuevaDescripcionMarca"],
 									"modelo" => $_POST["nuevoModelo"],
 									"descripcion" => $_POST["nuevaDescripcion"],
 									"cod_color" => $value["codigo"],
@@ -178,22 +179,38 @@ class controladorArticulos{
 									"articulo" => $codigo,
 									"color" => $value["descripcion"],
 									"talla" => $talla["talla"]);
-												
-						$respuesta = ModeloArticulos::mdlIngresarArticulo($tabla, $datos);
-					}
-					
-				}
-				
-				if($respuesta == "ok"){
+						$existeArticulo=ModeloArticulos::mdlMostrarArticulos($codigo);
+						
+						if(empty($existeArticulo)){
+							$respuesta = ModeloArticulos::mdlIngresarArticulo($tabla, $datos);
+							if($respuesta == "ok"){
 
-					echo'<script>
-
-						swal({
-							  type: "success",
-							  title: "El articulo ha sido guardado correctamente",
-							  showConfirmButton: true,
-							  confirmButtonText: "Cerrar"
-							  }).then(function(result){
+								echo'<script>
+			
+									swal({
+										  type: "success",
+										  title: "El articulo ha sido guardado correctamente",
+										  showConfirmButton: true,
+										  confirmButtonText: "Cerrar"
+										  }).then(function(result){
+													if (result.value) {
+			
+													window.location = "articulos";
+			
+													}
+												})
+			
+									</script>';
+			
+							}      
+						}else{
+							echo'<script>
+								swal({
+									type: "error",
+									title: "¡El articulo ya esta creado!",
+									showConfirmButton: true,
+									confirmButtonText: "Cerrar"
+									}).then(function(result){
 										if (result.value) {
 
 										window.location = "articulos";
@@ -201,9 +218,14 @@ class controladorArticulos{
 										}
 									})
 
-						</script>';
+							</script>';
+						}
 
-				}                
+					}
+					
+				}
+				
+				          
 
 
 			}else{
@@ -212,7 +234,7 @@ class controladorArticulos{
 
 					swal({
 						  type: "error",
-						  title: "¡El articulo no puede ir con los campos vacíos o llevar caracteres especiales!",
+						  title: "¡El articulo ya esta creado!",
 						  showConfirmButton: true,
 						  confirmButtonText: "Cerrar"
 						  }).then(function(result){

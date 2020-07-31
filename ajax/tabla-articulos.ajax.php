@@ -83,20 +83,20 @@ class TablaArticulos{
         }        
 
 
-        /*=============================================
-        TRAEMOS LAS ACCIONES
-        =============================================*/
+        // /*=============================================
+        // TRAEMOS LAS ACCIONES
+        // =============================================*/
         
-        if( $_GET["perfil"]=="Supervisor" ||
-            $_GET["perfil"]=="Sistemas"){
+        // if( $_GET["perfil"]=="Supervisor" ||
+        //     $_GET["perfil"]=="Sistemas"){
 
-                $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarArticulo' articulo='".$articulos[$i]["articulo"]."' data-toggle='modal' data-target='#modalEditarArticulo'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarArticulo' idArticulo='".$articulos[$i]["articulo"]."' articulo='".$articulos[$i]["articulo"]."' imagen='".$articulos[$i]["imagen"]."'><i class='fa fa-times'></i></button></div>";
+        //         $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarArticulo' articulo='".$articulos[$i]["articulo"]."' data-toggle='modal' data-target='#modalEditarArticulo'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarArticulo' idArticulo='".$articulos[$i]["articulo"]."' articulo='".$articulos[$i]["articulo"]."' imagen='".$articulos[$i]["imagen"]."'><i class='fa fa-times'></i></button></div>";
 
-        }else{
+        // }else{
 
-                $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarArticulo' articulo='".$articulos[$i]["articulo"]."' data-toggle='modal' data-target='#modalEditarArticulo'><i class='fa fa-pencil'></i></button></div>"; 
+        //         $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarArticulo' articulo='".$articulos[$i]["articulo"]."' data-toggle='modal' data-target='#modalEditarArticulo'><i class='fa fa-pencil'></i></button></div>"; 
 
-        }
+        // }
         
 
 
@@ -112,8 +112,7 @@ class TablaArticulos{
             "'.$articulos[$i]["tipo"].'",
             "'.$estado.'",
             "'.$stock.'",
-            "'.$tarjeta.'",
-            "'.$botones.'"
+            "'.$tarjeta.'"
             ],';        
             }
 

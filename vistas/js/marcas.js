@@ -57,3 +57,43 @@ $(".tablas").on("click", ".btnEliminarMarca", function(){
     })
 
 })
+// ACTIVANDO-DESACTIVANDO ARTICULO
+$(document).on("click",".btnActivarMarca",function(){
+	// Capturamos el id del usuario y el estado
+    var idMarca=$(this).attr("idMarca");
+	var estadoMarca=$(this).attr("estadoMarca");
+	var datos=new FormData();
+	datos.append("activarId",idMarca);
+	datos.append("activarEstado",estadoMarca);
+	$.ajax({
+		url:"ajax/marcas.ajax.php",
+		type:"POST",
+		data:datos,
+		cache:false,
+		contentType:false,
+		processData:false,
+		success:function(respuesta){
+				swal({
+					type: "success",
+					title: "¡Ok!",
+					text: "¡La información fue actualizada con éxito!",
+					showConfirmButton: true,
+					confirmButtonText: "Cerrar",
+					closeOnConfirm: false
+				}).then((result)=>{
+					if(result.value){
+						window.location="marcas";}
+				});}
+	});
+	// Cambiamos el estado del botón físicamente
+	if(estadoMarca=0){
+		$(this).removeClass("btn-success");
+		$(this).addClass("btn-danger");
+		$(this).html("Inactivo");
+		$(this).attr("estadoMarca","1");}
+	else{
+		$(this).addClass("btn-success");
+		$(this).removeClass("btn-danger");
+		$(this).html("Activo");
+		$(this).attr("estadoMarca","0");}
+});

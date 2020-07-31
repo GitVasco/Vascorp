@@ -89,7 +89,7 @@
                   <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-th"></i></span>
 
-                  <input type="text" class="form-control"  value='<?php echo $modelo["marca"]?>' readonly>
+                  <input type="text" name="nuevaDescripcionMarca" class="form-control"  value='<?php echo $modelo["marca"]?>' readonly>
                   <input type="hidden" id="nuevaMarca" name="nuevaMarca" value='<?php echo $modelo["id_marca"]?>'>
                   </div>
                   
