@@ -4,7 +4,7 @@
 
     <h1>
 
-      Talleres - General
+      Cortes
 
     </h1>
 
@@ -12,7 +12,7 @@
 
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-      <li class="active">Talleres - General</li>
+      <li class="active">Cortes</li>
 
     </ol>
 
@@ -26,22 +26,21 @@
 
         <input type="hidden" value="<?= $_SESSION["perfil"]; ?>" id="perfilOculto">
 
-        <table class="table table-bordered table-striped dt-responsive tablaTalleresG">
+        <table class="table table-bordered table-striped dt-responsive tablaCortes">
 
           <thead>
 
             <tr>
 
-              <th>Id</th>
-              <th>Cob. Barra</th>
+              <th>Artículo</th>
+              <th>Marca</th>
               <th>Modelo</th>
+              <th>Nombre</th>
               <th>Color</th>
               <th>Talla</th>
-              <th>Operación</th>
-              <th>Trabajador</th>
-              <th>Cantidad</th>
-              <th>Fecha</th>
-              <th>Estado</th>
+              <th>
+                <center>Alm. Corte</center>
+              </th>
               <th>Acciones</th>
 
             </tr>
@@ -106,24 +105,24 @@ MODAL MANDAR A TALLER
 
             <div class="form-group col-lg-5">
 
-              <label>Taller</label>
+              <label>Sector</label>
 
               <div class="input-group">
 
                 <span class="input-group-addon"><i class="fa fa-industry"></i></span>
 
-                <select class="form-control input-sm selectpicker" id="nuevoTaller" name="nuevoTaller" data-live-search="true" required>
+                <select class="form-control input-sm selectpicker" id="nuevoSector" name="nuevoSector" data-live-search="true" required>
 
-                  <option value="">Taller</option>
+                  <option value="">Sector</option>
 
                   <?php
 
-                  $taller = ControladorCortes::ctrMostrarTaller();
-                  #var_dump("taller", $taller);
+                  $sector = ControladorSectores::ctrMostrarSectores(null);
+                  #var_dump("taller", $sector);
 
-                  foreach ($taller as $key => $value) {
+                  foreach ($sector as $key => $value) {
 
-                    echo '<option value="' . $value["codigo"] . '">' . $value["codigo"] . ' - ' . $value["taller"] . '</option>';
+                    echo '<option value="' . $value["cod_sector"] . '">' . $value["cod_sector"] . ' - ' . $value["nom_sector"] . '</option>';
                   }
 
 

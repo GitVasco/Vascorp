@@ -293,11 +293,9 @@ $(".formularioAlmacenCorte").on("change", "input.nuevaCantidadArticuloAC", funct
     $(this).attr("nuevoSaldo", Number(nuevoSaldo));
 
 
-    if (Number($(this).val()) > Number($(this).attr("saldo"))) {
+/*     if (Number($(this).val()) > Number($(this).attr("saldo"))) {
 
-        /*  
-        * mostrar mensaje si se pide mas que la cantidad de saldo
-        */
+
     
         $(this).val(1);
 
@@ -313,7 +311,7 @@ $(".formularioAlmacenCorte").on("change", "input.nuevaCantidadArticuloAC", funct
         });
     
         return;
-      }
+    } */
   
   
     // SUMAR TOTAL DE UNIDADES

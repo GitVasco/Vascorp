@@ -30,18 +30,13 @@ class TablaCortes{
             /*
             todo: Almacen de Corte
             */
-            $alm_corteI = number_format($cortes[$i]["cantidad"],0);
+            $alm_corteI = number_format($cortes[$i]["alm_corte"],0);
             $alm_corte = "<center><b><span style='font-size:100%' class='text-default'>".$alm_corteI."</span></b></center>";
-
-            /*
-            todo: Operaciones
-            */
-            $operacion = "<b><span style='font-size:100%' class='text-success'>".$cortes[$i]["operacion"]."</span></b>";
 
             /*
             todo: BOTONES
             */
-            $botones =  "<div class='btn-group'><button class='btn btn-primary btnMandarTaller' articulo='".$cortes[$i]["articulo"]."' operacion='".$cortes[$i]["cod_operacion"]."' data-toggle='modal' data-target='#modalMandarTaller'><i class='fa fa-users'></i></button></div>"; 
+            $botones =  "<div class='btn-group'><button class='btn btn-primary btnMandarTaller' articulo='".$cortes[$i]["articulo"]."' data-toggle='modal' data-target='#modalMandarTaller'><i class='fa fa-users'></i></button></div>"; 
 
                 $datosJson .= '[
                 "'.$cortes[$i]["articulo"].'",
@@ -51,8 +46,6 @@ class TablaCortes{
                 "'.$cortes[$i]["color"].'",
                 "'.$cortes[$i]["talla"].'",
                 "'.$alm_corte.'",
-                "'.$cortes[$i]["cod_operacion"].'",
-                "'.$operacion.'",
                 "'.$botones.'"
                 ],';
                 }

@@ -42,12 +42,20 @@ class TablaTalleresG{
             /*
             todo: BOTONES
             */
-            $botones =  "<div class='btn-group'><button class='btn btn-warning btnImprimirTicket' articulo='".$talleres[$i]["articulo"]."' modelo='".$talleres[$i]["modelo"]."' nombre='".$talleres[$i]["nombre"]."' color='".$talleres[$i]["color"]."' talla='".$talleres[$i]["talla"]."' cant_taller='".$talleres[$i]["cantidad"]."' nom_trab='".$talleres[$i]["trabajador"]."' nom_sector='".$talleres[$i]["nom_sector"]."' cod_operacion='".$talleres[$i]["cod_operacion"]."' nom_operacion='".$talleres[$i]["nom_operacion"]."' ultimo='".$talleres[$i]["codigo"]."'><i class='fa fa-print'></i></button></div>"; 
+            if($talleres[$i]["estado"] == "3"){
+
+                $botones =  "<div class='btn-group'><button class='btn btn-primary btnTrabajador' codigo='".$talleres[$i]["codigo"]."'><i class='fa fa-user'></i></button> <button class='btn btn-warning btnImprimirTicket' ultimo='".$talleres[$i]["codigo"]."'><i class='fa fa-print'></i></button></div>"; 
+
+            }else{
+
+                $botones =  "<div class='btn-group'><button class='btn btn-warning btnImprimirTicket' ultimo='".$talleres[$i]["codigo"]."'><i class='fa fa-print'></i></button></div>"; 
+
+            }
+
 
                 $datosJson .= '[
                 "'.$talleres[$i]["id"].'",
                 "'.$talleres[$i]["codigo"].'",
-                "'.$talleres[$i]["nom_sector"].'",
                 "'.$talleres[$i]["modelo"].'",
                 "'.$talleres[$i]["color"].'",
                 "'.$talleres[$i]["talla"].'",

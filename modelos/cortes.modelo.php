@@ -6,34 +6,21 @@ class ModeloCortes{
 	/*
 	* Método para mostrar los cortes
 	*/
-	static public function mdlMostrarCortes($valor1, $valor2){
+	static public function mdlMostrarCortes($valor1){
 
         if($valor1 == null){
 
-            $stmt = Conexion::conectar()->prepare("SELECT
-                    ec.articulo,
-                    m.marca,
+            $stmt = Conexion::conectar()->prepare("SELECT 
+                    a.articulo,
+                    a.marca,
                     a.modelo,
                     a.nombre,
-                    a.cod_color,
                     a.color,
-                    a.cod_talla,
                     a.talla,
-                    ec.cantidad,
-                    ec.cod_operacion,
-                    o.nombre as operacion,
-                    ec.precio_doc,
-                    ec.tiempo_stand
+                    a.alm_corte 
                 FROM
-                    encortejf ec
-                        LEFT JOIN
-                    articulojf a ON ec.articulo = a.articulo
-                        LEFT JOIN
-                    operacionesjf o ON ec.cod_operacion = codigo
-                        LEFT JOIN
-                    marcasjf m ON a.id_marca = m.id
-                WHERE
-                    ec.cantidad > 0");
+                    articulojf a 
+                WHERE a.alm_corte > 0");
 
 			$stmt -> execute();
 
@@ -41,36 +28,20 @@ class ModeloCortes{
 
         }else{
 
-            $stmt = Conexion::conectar()->prepare("SELECT
-                    ec.articulo,
-                    m.marca,
-                    a.modelo,
-                    a.nombre,
-                    a.cod_color,
-                    a.color,
-                    a.cod_talla,
-                    a.talla,
-                    ec.cantidad,
-                    ec.cod_operacion,
-                    o.nombre AS operacion,
-                    ec.precio_doc,
-                    ec.tiempo_stand
-                FROM
-                    encortejf ec
-                        LEFT JOIN
-                    articulojf a ON ec.articulo = a.articulo
-                        LEFT JOIN
-                    operacionesjf o ON ec.cod_operacion = codigo
-                        LEFT JOIN
-                    marcasjf m ON a.id_marca = m.id
-                WHERE
-                    ec.cantidad > 0
-                        AND ec.articulo = :valor1
-                        AND ec.cod_operacion = :valor2");
+            $stmt = Conexion::conectar()->prepare("SELECT 
+                        a.articulo,
+                        a.marca,
+                        a.modelo,
+                        a.nombre,
+                        a.color,
+                        a.talla,
+                        a.alm_corte 
+                    FROM
+                        articulojf a 
+                    WHERE  a.articulo = :valor1");
 
 			$stmt->bindParam(":valor1", $valor1, PDO::PARAM_STR);
-            $stmt->bindParam(":valor2", $valor2, PDO::PARAM_STR);
-
+            
 			$stmt->execute();
 
 			return $stmt->fetch();
@@ -129,36 +100,35 @@ class ModeloCortes{
 	*/
 	static public function mdlMandarTaller($datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO entallerjf
-                                                (   sector,
-                                                    articulo,
-                                                    cod_operacion,
-                                                    trabajador,
-                                                    cantidad,
-                                                    usuario,
-                                                    total_precio,
-                                                    total_tiempo,
-                                                    codigo)
-                                                    VALUES
-                                                (   :sector,
-                                                    :articulo,
-                                                    :operacion,
-                                                    :trabajador,
-                                                    :cantidad,
-                                                    :usuario,
-                                                    :total_precio,
-                                                    :total_tiempo,
-                                                    (:codigo+1))");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO entallerjf (
+                                                id_cabecera,
+                                                articulo,
+                                                cod_operacion,
+                                                cantidad,
+                                                usuario,
+                                                total_precio,
+                                                total_tiempo,
+                                                codigo
+                                            ) 
+                                            (SELECT 
+                                                :codigo,
+                                                a.articulo,
+                                                od.cod_operacion,
+                                                :cantidad,
+                                                :usuario,
+                                                ((od.precio_doc) / 12) * :cantidad,
+                                                ((od.tiempo_stand) / 60) * :cantidad,
+                                                CONCAT(:codigo,od.cod_operacion) 
+                                            FROM
+                                                articulojf a 
+                                                LEFT JOIN operaciones_detallejf od 
+                                                ON a.modelo = od.modelo 
+                                            WHERE articulo = :articulo)");
 
-		$stmt->bindParam(":sector", $datos["sector"], PDO::PARAM_STR);
 		$stmt->bindParam(":articulo", $datos["articulo"], PDO::PARAM_STR);
-		$stmt->bindParam(":operacion", $datos["operacion"], PDO::PARAM_STR);
-		$stmt->bindParam(":trabajador", $datos["trabajador"], PDO::PARAM_STR);
-		$stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_STR);
+		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_INT);
+		$stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_INT);
 		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
-		$stmt->bindParam(":total_precio", $datos["total_precio"], PDO::PARAM_STR);
-        $stmt->bindParam(":total_tiempo", $datos["total_tiempo"], PDO::PARAM_STR);
-        $stmt->bindParam(":codigo", $datos["ult_codigo"], PDO::PARAM_STR);
 
 
 		if ($stmt->execute()) {
@@ -171,16 +141,17 @@ class ModeloCortes{
 
 		$stmt->close();
 		$stmt = null;
-	}
+    }
+    
 	/*
 	* ULTIMO CODIGO
 	*/
 	static public function mdlUltCodigo(){
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
-                                                    MAX(codigo) AS  ult_codigo
-                                                FROM
-                                                    entallerjf en");
+                                                IFNULL(MAX(id), 1000000) AS ult_codigo 
+                                            FROM
+                                                entaller_cabjf en");
 
 		$stmt -> execute();
 
@@ -191,5 +162,68 @@ class ModeloCortes{
 		$stmt = null;
 
     }
+
+
+	/*
+	* REGISTRAR LO QUE SE MANDA A TALLER CABECERA
+	*/
+	static public function mdlMandarTallerCab($datos){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO entaller_cabjf (articulo, usuario, cantidad) 
+        VALUES
+          (:articulo, :usuario, :cantidad) ");
+
+		$stmt->bindParam(":articulo", $datos["articulo"], PDO::PARAM_STR);
+		$stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_INT);
+		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+
+
+		if ($stmt->execute()) {
+
+            return "ok";
+            
+		} else {
+
+            return "error";
+            
+		}
+
+		$stmt->close();
+		$stmt = null;
+    }
+    
+	/*
+	* MOSTRAR EN TALLERES
+	*/
+	static public function mdlMostrarEnTalleres($articulo){
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+                                a.modelo,
+                                a.nombre,
+                                a.color,
+                                a.talla,
+                                td.cantidad,
+                                td.cod_operacion,
+                                o.nombre AS operacion,
+                                td.codigo 
+                            FROM
+                                entallerjf td 
+                                LEFT JOIN operacionesjf o 
+                                ON td.cod_operacion = o.codigo 
+                                LEFT JOIN articulojf a 
+                                ON td.articulo = a.articulo 
+                            WHERE td.id_cabecera = :articulo");
+
+        $stmt->bindParam(":articulo", $articulo, PDO::PARAM_STR);
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }    
 
 }

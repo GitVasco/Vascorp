@@ -71,33 +71,33 @@ class ModeloTalleres{
 	static public function mdlMostrarTalleresP(){
 
             $stmt = Conexion::conectar()->prepare("SELECT 
-                                                            et.codigo,
-                                                            CONCAT(et.sector, '-', s.nom_sector) AS sector,
-                                                            CONCAT(
-                                                            t.nom_tra,
-                                                            ' ',
-                                                            t.ape_pat_tra,
-                                                            ' ',
-                                                            t.ape_mat_tra
-                                                            ) AS trabajador,
-                                                            CONCAT(et.cod_operacion, '-', o.nombre) AS operacion,
-                                                            CONCAT(a.modelo, '-', a.color, '-', a.talla) AS articulo,
-                                                            et.cantidad,
-                                                            et.estado,
-                                                            DATE_FORMAT(et.fecha_proceso, '%H:%i') AS hora_proceso
-                                                        FROM
-                                                            entallerjf et 
-                                                            LEFT JOIN trabajadorjf t 
-                                                            ON et.trabajador = t.cod_tra 
-                                                            LEFT JOIN articulojf a 
-                                                            ON et.articulo = a.articulo 
-                                                            LEFT JOIN operacionesjf o 
-                                                            ON et.cod_operacion = o.codigo 
-                                                            LEFT JOIN sectorjf s 
-                                                            ON et.sector = s.cod_sector 
-                                                        WHERE et.estado = 2 
-                                                        ORDER BY et.fecha_proceso DESC 
-                                                        LIMIT 5");
+            et.codigo,
+            CONCAT(et.sector, '-', s.nom_sector) AS sector,
+            CONCAT(
+              t.nom_tra,
+              ' ',
+              t.ape_pat_tra,
+              ' ',
+              t.ape_mat_tra
+            ) AS trabajador,
+            CONCAT(et.cod_operacion, ' - ', o.nombre) AS operacion,
+            CONCAT(a.modelo, ' - ', a.color, ' -T', a.talla) AS articulo,
+            et.cantidad,
+            et.estado,
+            DATE_FORMAT(et.fecha_proceso, '%H:%i') AS hora_proceso 
+          FROM
+            entallerjf et 
+            LEFT JOIN trabajadorjf t 
+              ON et.trabajador = t.cod_tra 
+            LEFT JOIN articulojf a 
+              ON et.articulo = a.articulo 
+            LEFT JOIN operacionesjf o 
+              ON et.cod_operacion = o.codigo 
+            LEFT JOIN sectorjf s 
+              ON et.sector = s.cod_sector 
+          WHERE et.estado = 2 
+          ORDER BY et.fecha_proceso DESC 
+          LIMIT 5");
 
 			$stmt -> execute();
 
@@ -125,8 +125,8 @@ class ModeloTalleres{
                                                         ' ',
                                                         t.ape_mat_tra
                                                         ) AS trabajador,
-                                                        CONCAT(et.cod_operacion, '-', o.nombre) AS operacion,
-                                                        CONCAT(a.modelo, '-', a.color, '-', a.talla) AS articulo,
+                                                        CONCAT(et.cod_operacion, ' - ', o.nombre) AS operacion,
+                                                        CONCAT(a.modelo, ' - ', a.color, ' -T', a.talla) AS articulo,
                                                         et.cantidad,
                                                         et.estado,
                                                         DATE_FORMAT(et.fecha_terminado, '%H:%i') AS hora_termino 

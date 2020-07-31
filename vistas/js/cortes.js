@@ -45,13 +45,11 @@ $('.tablaCortes').DataTable({
 $(".tablaCortes tbody").on("click", "button.btnMandarTaller", function () {
 
 	var articulo = $(this).attr("articulo");
-	var operacion = $(this).attr("operacion");
 	//console.log("articulo", articulo);
-	//console.log("operacion", operacion);
+	
 
 	var datos = new FormData();
 	datos.append("articulo", articulo);
-	datos.append("operacion", operacion);
 
 	$.ajax({
 
@@ -72,11 +70,9 @@ $(".tablaCortes tbody").on("click", "button.btnMandarTaller", function () {
 			$("#nuevoModelo").val(respuesta["modelo"]);
 			$("#nuevoColor").val(respuesta["color"]);
 			$("#nuevaTalla").val(respuesta["talla"]);
-			$("#nuevoCodOperacion").val(respuesta["cod_operacion"]);
-			$("#nuevaOperacion").val(respuesta["operacion"]);
-			$("#almCorte").val(respuesta["cantidad"]);
-			$("#nuevoAlmCorte").val(respuesta["cantidad"]);
-			$("#nuevoAlmCorte").attr("max", respuesta["cantidad"]);
+			$("#almCorte").val(respuesta["alm_corte"]);
+			$("#nuevoAlmCorte").val(respuesta["alm_corte"]);
+			$("#nuevoAlmCorte").attr("max", respuesta["alm_corte"]);
 			$("#precio_doc").val(respuesta["precio_doc"]);
 			$("#tiempo_stand").val(respuesta["tiempo_stand"]);
 
