@@ -60,4 +60,3 @@ $('[data-mask]').inputmask()
 $(document).ready(function(){
 	$('#seleccionarCliente').select2();
 }); */
-

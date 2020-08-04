@@ -72,7 +72,7 @@
 
                     <select class="form-control selectpicker" id="seleccionarArticulo" name="seleccionarArticulo" data-live-search="true" required>
 
-                      <option value="">Seleccionar Articulo</option>
+                      <option value="">Seleccionar Modelo</option>
 
                       <?php
 
@@ -195,7 +195,7 @@
 
             <div class="box-footer">
 
-              <button type="submit" class="btn btn-primary pull-right">Guardar Operacion</button>
+              <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-save"></i> Guardar operación modelo</button>
 
             </div>
 
