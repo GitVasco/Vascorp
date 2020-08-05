@@ -218,5 +218,53 @@ class ControladorTrabajador{
 
 	}
 
+	/* 
+	* Trabajador seleccionado
+	*/
+	static public function ctrMostrarTrabajadorConfigurado(){
 
+		$respuesta = ModeloTrabajador::mdlMostrarTrabajadorConfigurado();
+
+		return $respuesta;
+
+	}
+
+	/* 
+	* configurar trabajador para ingresos de taller
+	*/
+	static public function ctrConfigurarTrabajador(){
+
+		if(isset($_POST["trabajadorSelect"])){
+
+			$respuesta = ModeloTrabajador::mdlTrabajadorSet();
+			
+			if($respuesta == "ok"){
+
+				$cod_tra = $_POST["trabajadorSelect"];
+				ModeloTrabajador::ctrConfigurarTrabajador($cod_tra);
+
+				echo'<script>
+
+				swal({
+					  type: "success",
+					  title: "El trabajador ha sido configurado correctamente",
+					  showConfirmButton: true,
+					  confirmButtonText: "Cerrar"
+					  }).then(function(result){
+								if (result.value) {
+
+								window.location = "en-tallert";
+
+								}
+							})
+
+				</script>';
+
+			}
+
+
+
+		}
+
+	}
 }

@@ -250,6 +250,33 @@ class ModeloTalleres{
 
 		$stmt=null;
 
-	}      
+  }
+  
+    /* 
+    *ASIGNAR TRABAJADOR
+    */
+    static public function mdlAsignarTrabajador($codigo, $cod_tra){
+
+      $sql="UPDATE 
+                entallerjf 
+              SET
+                trabajador = $cod_tra 
+              WHERE codigo = $codigo";
+  
+      $stmt=Conexion::conectar()->prepare($sql);
+  
+          if($stmt->execute()){
+  
+        return "ok";
+      
+      }else{
+  
+        return "error";
+      
+      }
+  
+      $stmt=null;
+  
+    }  
 
 }

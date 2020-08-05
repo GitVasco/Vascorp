@@ -39,15 +39,6 @@ class TablaTalleresT{
     
             } 
 
-            /*
-            todo: BOTONES
-            */
-
-                $botones =  "<div class='btn-group'><button class='btn btn-primary btnAsignarTrabajador' codigo='".$talleres[$i]["codigo"]."' data-toggle='modal' data-target='#modalAsignarTrabajador'><i class='fa fa-user'></i></button></div>"; 
-
-
-
-
                 $datosJson .= '[
                 "'.$talleres[$i]["id"].'",
                 "'.$talleres[$i]["codigo"].'",
@@ -58,8 +49,7 @@ class TablaTalleresT{
                 "'.$talleres[$i]["trabajador"].'",
                 "'.$talleres[$i]["cantidad"].'",
                 "'.$talleres[$i]["fecha"].'",
-                "'.$estado.'",
-                "'.$botones.'"
+                "'.$estado.'"
                 ],';
                 }
 

@@ -95,35 +95,44 @@ class ControladorTalleres{
 
                     echo'<script>
 
-                        swal({
-                            type: "success",
-                            title: "El articulo ha sido guardado correctamente",
-                            showConfirmButton: true,
-                            confirmButtonText: "Cerrar"
-                            }).then(function(result){
-                                        if (result.value) {
-
                                         window.location = "marcar-taller";
-
-                                        }
-                                    })
 
                         </script>';
 
                 }
 
-
             }
-
-
-
 
         }
 
-
-
-
-
     }
+
+
+	/* 
+	* Asignar codigo de barra a trabajador
+	*/
+
+	static public function ctrAsignarTrabajador(){
+
+		if(isset($_POST["cod_tra"])){
+
+            $codigo = $_POST["codigoBarra"];
+            $cod_tra = $_POST["cod_tra"];
+
+            $respuesta = ModeloTalleres::mdlAsignarTrabajador($codigo, $cod_tra);
+
+            if($respuesta == "ok"){
+
+                echo'<script>
+
+                    window.location = "en-tallert";
+
+                </script>';
+
+            }
+
+		}
+
+	}    
 
 }

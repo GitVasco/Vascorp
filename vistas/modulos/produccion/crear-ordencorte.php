@@ -399,7 +399,7 @@ MODAL CONFIGURAR % DE URGENCIAS
 
           <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" class="btn btn-primary">Guardar artículo</button>
+          <button type="submit" class="btn btn-primary">Confirmar Porcentaje</button>
 
         </div>
 
