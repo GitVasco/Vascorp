@@ -10,7 +10,7 @@
 
     <ol class="breadcrumb">
 
-      <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
+      <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
       <li class="active">Talleres - TERMINADO</li>
 
@@ -20,66 +20,149 @@
 
   <section class="content">
 
-    <div class="box">
-    
-      <div class="box-header with-border">
+    <div class="row">
 
-        <button type="button" class="btn btn-default pull-right" id="daterange-btn">
+      <!--=====================================
+      LA TABLA DE PRODUCTOS
+      ======================================-->
 
-          <span>
-            <i class="fa fa-calendar"></i>
+      <div class="col-lg-8 hidden-md hidden-sm hidden-xs">
 
-            <?php
+        <div class="box box-warning">
 
-              if(isset($_GET["fechaInicial"])){
+          <div class="box-header with-border"></div>
 
-                echo $_GET["fechaInicial"]." - ".$_GET["fechaFinal"];
+          <div class="box-body">
 
-              }else{
-              
-                echo 'Rango de fecha';
+            <table class="table table-bordered table-striped dt-responsive tablaTalleresT">
 
-              }
+              <thead>
 
-            ?>
+                <tr>
 
-          </span>
+                  <th>Id</th>
+                  <th>Cob. Barra</th>
+                  <th>Modelo</th>
+                  <th>Color</th>
+                  <th>Talla</th>
+                  <th>Operación</th>
+                  <th>Trabajador</th>
+                  <th>Cantidad</th>
+                  <th>Fecha</th>
+                  <th>Estado</th>
 
-          <i class="fa fa-caret-down"></i>
+                </tr>
 
-        </button>
+              </thead>
 
-      </div>
+            </table>
 
-      <div class="box-body">
+          </div>
 
-        <input type="hidden" value="<?= $_SESSION["perfil"]; ?>" id="perfilOculto">
+        </div>
 
-        <table class="table table-bordered table-striped dt-responsive tablaTalleresT">
-
-          <thead>
-
-            <tr>
-
-              <th>Id</th>
-              <th>Cob. Barra</th>
-              <th>Modelo</th>
-              <th>Color</th>
-              <th>Talla</th>
-              <th>Operación</th>
-              <th>Trabajador</th>
-              <th>Cantidad</th>
-              <th>Fecha</th>
-              <th>Estado</th>
-              <th>Acciones</th>
-
-            </tr>
-
-          </thead>
-
-        </table>
 
       </div>
+
+      <!--=====================================
+      EL FORMULARIO
+      ======================================-->
+
+      <div class="col-lg-4 col-xs-12">
+
+        <div class="box box-success">
+
+          <div class="box-header with-border"></div>
+
+          <form role="form" method="post">
+
+            <div class="box-body">
+
+              <div class="box">
+
+                <!--=====================================
+                ENTRADA LOGO
+                ======================================-->              
+
+                <div class="form-group" align="center">
+
+                  <img src="vistas/img/plantilla/jackyform_paloma.png" width="400px" height="300px">
+
+                </div>
+
+
+                <?php
+
+                $trabajador = ControladorTrabajador::ctrMostrarTrabajadorConfigurado();
+                //var_dump($trabajador);
+                
+                
+                ?>
+                
+                <!--=====================================
+                ENTRADA DEL TRABAJADOR
+                ======================================-->
+
+                <div class="box-header with-border">
+
+                  <button type="button" class="btn btn-info" id="asddadad" name="asddadad" data-toggle="modal" data-target="#fsdfsfsd">Seleccionar Trabajador
+                  </button>
+                
+                </div>
+
+                <div class="form-group">
+
+                  <div class="input-group">
+
+                    <span class="input-group-addon"><i class="fa fa-users"></i></span>
+
+                    <input type="text" class="form-control" id="trabajador" name="trabajador" value="<?php echo $trabajador["trabajador"]; ?>"
+                        placeholder="Trabajador" required readonly>
+
+                    <input type="hidden" id="cod_tra" name="cod_tra" value="<?php echo $trabajador["cod_tra"]; ?>">
+
+                  </div>
+
+                </div>
+
+                <!--=====================================
+                ENTRADA CODIGO
+                ======================================-->        
+
+                <div class="form-group">
+
+                  <div class="input-group">
+
+                      <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
+
+                      <input type="text" class="form-control" id="codigoBarra" name="codigoBarra" placeholder="Ingresar Código" autofocus>
+
+                  </div>
+
+                </div>                
+
+              </div>
+
+            </div>
+
+            <div class="box-footer">
+
+              <button type="submit" class="btn btn-primary pull-right">Registrar</button>
+
+            </div>
+
+          </form>
+
+          <?php
+
+          $asignarTrabajador = new ControladorTalleres();
+          $asignarTrabajador -> ctrAsignarTrabajador();
+
+          ?>  
+
+        </div>
+
+      </div>      
 
     </div>
 
@@ -88,16 +171,16 @@
 </div>
 
 <!--=====================================
-MODAL ASIGNAR TRABAJADOR
+MODAL CONFIGURAR % DE URGENCIAS
 ======================================-->
 
-<div id="modalAsignarTrabajador" class="modal fade" role="dialog">
-
+<div id="fsdfsfsd" class="modal fade" role="dialog">
+  
   <div class="modal-dialog">
 
     <div class="modal-content">
 
-      <form role="form" method="post">
+      <form role="form" method="post" enctype="multipart/form-data">
 
         <!--=====================================
         CABEZA DEL MODAL
@@ -107,7 +190,7 @@ MODAL ASIGNAR TRABAJADOR
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title">Asignar Trabajador</h4>
+          <h4 class="modal-title">Configurar Trabajador</h4>
 
         </div>
 
@@ -119,168 +202,61 @@ MODAL ASIGNAR TRABAJADOR
 
           <div class="box-body">
 
-            <input type="hidden" name="usuario" value="<?php echo $_SESSION["id"]; ?>">
 
-            <!-- ENTRADA PARA SELECCIONAR TRABAJADOR -->
+            <!-- ENTRADA PARA PORCENTAJE -->
 
-            <div class="form-group col-lg-7">
-
-              <label>Trabajador</label>
-
+            <div class="form-group">
+              
               <div class="input-group">
 
                 <span class="input-group-addon"><i class="fa fa-user-o"></i></span>
 
-                <select class="form-control input-sm selectpicker" id="nuevoTrabajador" name="nuevoTrabajador" data-live-search="true" required>
+                  <select class="form-control input-sm selectpicker" id="trabajadorSelect" name="trabajadorSelect" data-live-search="true" required>
 
-                  <option value="">Seleccionar Trabajador</option>
+                    <option value="">Seleccionar Trabajador</option>
 
-                  <?php
+                    <?php
 
-                  $trabajador = ControladorTrabajador::ctrMostrarTrabajadorActivo();
-                  #var_dump("trabajador", $trabajador);
+                    $trabajador = ControladorTrabajador::ctrMostrarTrabajadorActivo();
+                    #var_dump("trabajador", $trabajador);
 
-                  foreach ($trabajador as $key => $value) {
+                    foreach ($trabajador as $key => $value) {
 
-                    echo '<option value="' . $value["cod_tra"] . '">' . $value["nom_tra"] . ', ' . $value["ape_pat_tra"] . ' ' . $value["ape_mat_tra"] . '</option>';
-                  }
+                      echo '<option value="' . $value["cod_tra"] . '">' . $value["cod_tra"] . ' - ' . $value["nom_tra"] . ', ' . $value["ape_pat_tra"] . ' ' . $value["ape_mat_tra"] . '</option>';
+                    }
 
-                  ?>
+                    ?>
 
-                </select>
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA EL ARITCULO -->
-
-            <div class="form-group col-lg-4">
-
-              <label>Articulo</label>
-
-              <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
-
-                <input type="text" class="form-control input-sm" id="nuevoArticulo" name="nuevoArticulo" required readonly>
+                  </select>
 
               </div>
 
-            </div>
-
-            <!-- ENTRADA PARA EL NOMBRE -->
-
-            <div class="form-group col-lg-8">
-
-              <label>Nombre</label>
-
-              <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
-
-                <input type="text" class="form-control input-sm" id="nuevoNombre" name="nuevoNombre" required readonly>
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA EL MODELO -->
-
-            <div class="form-group col-lg-4">
-
-              <label>Modelo</label>
-
-              <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
-
-                <input type="text" class="form-control input-sm" id="nuevoModelo" name="nuevoModelo" required readonly>
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA EL COLOR -->
-
-            <div class="form-group col-lg-4">
-
-              <label>Color</label>
-
-              <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
-
-                <input type="text" class="form-control input-sm" id="nuevoColor" name="nuevoColor" required readonly>
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA LA TALLA -->
-
-            <div class="form-group col-lg-4">
-
-              <label>Talla</label>
-
-              <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
-
-                <input type="text" class="form-control input-sm" id="nuevaTalla" name="nuevaTalla" required readonly>
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA CODIGO OPERACION -->
-
-            <div class="form-group col-lg-4">
-
-              <label>Cod. Operación</label>
-
-              <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
-
-                <input type="text" class="form-control input-sm" id="nuevoCodOperacion" name="nuevoCodOperacion" required readonly>
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA LA OPERACION -->
-
-            <div class="form-group col-lg-8">
-
-              <label>Operación</label>
-
-              <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
-
-                <input type="text" class="form-control input-sm" id="nuevaOperacion" name="nuevaOperacion" required readonly>
-
-              </div>
-
-            </div>
+            </div>       
 
           </div>
 
-          <!--=====================================
+        </div>
+
+        <!--=====================================
         PIE DEL MODAL
         ======================================-->
 
-          <div class="modal-footer">
+        <div class="modal-footer">
 
-            <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
+          <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
 
-            <button type="submit" class="btn btn-success">Mandar</button>
+          <button type="submit" class="btn btn-primary">Configurar Trabajador</button>
 
-          </div>
+        </div>
 
       </form>
 
+        <?php
+
+          $configurarTrabajador = new ControladorTrabajador();
+          $configurarTrabajador -> ctrConfigurarTrabajador();
+
+        ?>  
 
 
     </div>

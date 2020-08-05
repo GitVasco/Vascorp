@@ -12,7 +12,7 @@
 
             <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-            <li class="active">Crear venta</li>
+            <li class="active">Registro Talleres</li>
 
         </ol>
 
@@ -125,7 +125,7 @@
                                 <br>
 
                                 <!--=====================================
-                                ENTRADA DEL VENDEDOR
+                                ENTRADA DEL CODIGO
                                 ======================================-->
 
                                 <div class="form-group">

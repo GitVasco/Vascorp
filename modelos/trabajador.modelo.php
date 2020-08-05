@@ -178,7 +178,8 @@ class ModeloTrabajador{
 	WHERE
 		d.cod_doc = t.cod_doc
 			AND tt.cod_tip_tra = t.cod_tip_tra
-			AND t.estado = 'activo'");
+			AND t.estado = 'activo'
+			ORDER BY t.nom_tra");
 
 		$stmt -> execute();
 
@@ -190,7 +191,7 @@ class ModeloTrabajador{
 
     }
 
-		/* 
+	/* 
 	* Método para activar y desactivar un Trabajador
 	*/
 	static public function mdlActualizarTrabajador($tabla,$valor1, $valor2){
@@ -213,5 +214,76 @@ class ModeloTrabajador{
 		$stmt = null;
 	}
 	
+	/* 
+	* Método para poner a todos en CERO
+	*/
+	static public function mdlTrabajadorSet(){
+
+		$sql = "UPDATE 
+					trabajadorjf 
+				SET
+					configuracion = 0";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt = null;
+	}
+
+	/* 
+	* Método para configurar trabajador
+	*/
+	static public function ctrConfigurarTrabajador($cod_tra){
+
+		$sql = "UPDATE 
+					trabajadorjf 
+				SET
+					configuracion = 1 
+				WHERE cod_tra = :cod_tra";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":cod_tra", $cod_tra,PDO::PARAM_INT);
+
+		$stmt->execute();
+
+		$stmt = null;
+	}
+	
+	/*
+	* MOSTRAR TRABAJADOR CONFIGURADO
+	*/
+
+	static public function mdlMostrarTrabajadorConfigurado(){
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+									t.cod_tra,
+									CONCAT(
+									t.cod_tra,
+									' - ',
+									t.nom_tra,
+									' ',
+									t.ape_pat_tra,
+									' ',
+									t.ape_mat_tra
+									) AS trabajador 
+								FROM
+									trabajadorjf t 
+								WHERE t.configuracion = '1' ");
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+
+		$stmt = null;
+
+    }	
 
 }

@@ -4,7 +4,7 @@
 
     <h1>
 
-      Almacén de corte
+      Talleres - TERMINADO
 
     </h1>
 
@@ -12,7 +12,7 @@
 
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-      <li class="active">Almacén de corte</li>
+      <li class="active">Talleres - TERMINADO</li>
 
     </ol>
 
@@ -21,26 +21,28 @@
   <section class="content">
 
     <div class="box">
+    
 
       <div class="box-body">
 
         <input type="hidden" value="<?= $_SESSION["perfil"]; ?>" id="perfilOculto">
 
-        <table class="table table-bordered table-striped dt-responsive tablaCortes">
+        <table class="table table-bordered table-striped dt-responsive tablaTalleresT">
 
           <thead>
 
             <tr>
 
-              <th>Artículo</th>
-              <th>Marca</th>
+              <th>Id</th>
+              <th>Cob. Barra</th>
               <th>Modelo</th>
-              <th>Nombre</th>
               <th>Color</th>
               <th>Talla</th>
-              <th>
-                <center>Alm. Corte</center>
-              </th>
+              <th>Operación</th>
+              <th>Trabajador</th>
+              <th>Cantidad</th>
+              <th>Fecha</th>
+              <th>Estado</th>
               <th>Acciones</th>
 
             </tr>
@@ -58,10 +60,10 @@
 </div>
 
 <!--=====================================
-MODAL MANDAR A TALLER
+MODAL ASIGNAR TRABAJADOR
 ======================================-->
 
-<div id="modalMandarTaller" class="modal fade" role="dialog">
+<div id="modalAsignarTrabajador" class="modal fade" role="dialog">
 
   <div class="modal-dialog">
 
@@ -77,7 +79,7 @@ MODAL MANDAR A TALLER
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title">Mandar a Taller</h4>
+          <h4 class="modal-title">Asignar Trabajador</h4>
 
         </div>
 
@@ -91,15 +93,37 @@ MODAL MANDAR A TALLER
 
             <input type="hidden" name="usuario" value="<?php echo $_SESSION["id"]; ?>">
 
-            <input type="hidden" name="precio_doc" id="precio_doc">
+            <!-- ENTRADA PARA SELECCIONAR TRABAJADOR -->
 
-            <input type="hidden" name="tiempo_stand" id="tiempo_stand">
+            <div class="form-group col-lg-7">
 
-            <input type="hidden" name="precio_total" id="precio_total">
+              <label>Trabajador</label>
 
-            <input type="hidden" name="tiempo_total" id="tiempo_total">
+              <div class="input-group">
 
-            <input type="hidden" name="nuevoCorte" id="nuevoCorte">
+                <span class="input-group-addon"><i class="fa fa-user-o"></i></span>
+
+                <select class="form-control input-sm selectpicker" id="nuevoTrabajador" name="nuevoTrabajador" data-live-search="true" required>
+
+                  <option value="">Seleccionar Trabajador</option>
+
+                  <?php
+
+                  $trabajador = ControladorTrabajador::ctrMostrarTrabajadorActivo();
+                  #var_dump("trabajador", $trabajador);
+
+                  foreach ($trabajador as $key => $value) {
+
+                    echo '<option value="' . $value["cod_tra"] . '">' . $value["nom_tra"] . ', ' . $value["ape_pat_tra"] . ' ' . $value["ape_mat_tra"] . '</option>';
+                  }
+
+                  ?>
+
+                </select>
+
+              </div>
+
+            </div>
 
             <!-- ENTRADA PARA EL ARITCULO -->
 
@@ -181,38 +205,33 @@ MODAL MANDAR A TALLER
 
             </div>
 
-            <!-- ENTRADA PARA EL TOTAL DEL CORTE -->
+            <!-- ENTRADA PARA CODIGO OPERACION -->
 
-            <div class="form-group col-lg-12">
+            <div class="form-group col-lg-4">
 
-                  <div>
-                    <label >Enviar a talleres</label>
-                  </div>
-              <div class="col-xs-6">
+              <label>Cod. Operación</label>
 
-                <div class="input-group">
+              <div class="input-group">
 
-                  <span class="input-group-addon"><i class="fa fa-arrow-up"></i></span>
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <input type="number" class="form-control input-lg" id="almCorte" name="almCorte" min="0" placeholder="Por enviar" required readonly>
-
-                </div>
+                <input type="text" class="form-control input-sm" id="nuevoCodOperacion" name="nuevoCodOperacion" required readonly>
 
               </div>
 
-              <!-- ENTRADA PARA EL TOTAL DEL CORTE -->
+            </div>
 
-              <div class="col-xs-6">
+            <!-- ENTRADA PARA LA OPERACION -->
 
-                <div class="input-group">
+            <div class="form-group col-lg-8">
 
-                  <span class="input-group-addon"><i class="fa fa-arrow-down"></i></span>
+              <label>Operación</label>
 
-                  <input type="number" class="form-control input-lg" id="nuevoAlmCorte" name="nuevoAlmCorte" min="0" max="" placeholder="Mandar" required>
+              <div class="input-group">
 
-                </div>
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                <br>
+                <input type="text" class="form-control input-sm" id="nuevaOperacion" name="nuevaOperacion" required readonly>
 
               </div>
 
@@ -234,16 +253,10 @@ MODAL MANDAR A TALLER
 
       </form>
 
-      <?php
 
-      $mandarTaller = new ControladorCortes();
-      $mandarTaller->ctrMandarTaller();
-
-      ?>
 
     </div>
 
   </div>
 
-</div>
 </div>
