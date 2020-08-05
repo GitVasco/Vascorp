@@ -25,7 +25,7 @@
       <div class="box-header with-border">
         <div class="col-md-3">
           <a class="btn btn-primary" href="creardetalleoperaciones">
-            <i class="fa fa-plus-square"></i> Agregar operaciones
+            <i class="fa fa-plus-square"></i> Agregar operación modelo
           </a>  
         </div>
         <div class="col-md-3 col-md-offset-6 ">
@@ -347,14 +347,15 @@ MODAL DETALLE OPERACION
             <div class="form-group col-lg-3">
               <label for=""><strong>Detalle</strong></label> 
             </div>
-            <div class="box-body">
-                <table class="table table-bordered table-striped dt-responsive tablaDetalle">
-
+            <div class="box-body" > 
+              <div id="scroll3">
+                <table class="table table-bordered table-striped dt-responsive tablaOperacionModelo" >
+                  <thead>
                     <tr>
                       <th style="width:100px">CodOpe</th>
                       <th>Operacion</th>
-                      <th >Precio x Docena</th>
-                      <th>Tiempo x Operación</th>
+                      <th>Precio x Docena</th>
+                      <th>Tiempo Standard</th>
                     </tr>
 
                   </thead>
@@ -366,6 +367,7 @@ MODAL DETALLE OPERACION
                   </tbody>
 
                 </table>
+              </div>
             </div>
           </div>
         </div>

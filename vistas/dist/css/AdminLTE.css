@@ -6890,3 +6890,64 @@ input:checked + .slider:before {
 #scroll2 table{
   width:1150px;
 }
+#scroll3{
+  overflow:scroll;
+  overflow-x: hidden;
+  height:200px;
+  width:1000px;
+}
+#scroll3 table{
+  width:1000px;
+}
+
+@media screen and (max-width: 768px) {
+  #scroll{
+    overflow:scroll;
+    overflow-x: hidden;
+    height:200px;
+    width:670px;
+  }
+  #scroll table{
+    width:670px;
+  }
+  #scroll2{
+    overflow:scroll;
+    overflow-x: hidden;
+    height:200px;
+    width:550px;
+  }
+  #scroll2 table{
+    width:550px;
+  }
+  
+  #scroll3{
+    height:200px;
+    width:480px;
+  }
+  #scroll3 table{
+    width:480px;
+  }
+
+
+}
+  
+
+@media screen and (max-width: 1900px) {
+  #scroll{
+    overflow:scroll;
+    overflow-x: hidden;
+    height:200px;
+    width:550px;
+  }
+  #scroll table{
+    width:550px;
+  }
+
+  #scroll3{
+    height:200px;
+    width:1000px;
+  }
+  #scroll3 table{
+    width:1000px;
+  }
+}

@@ -327,7 +327,7 @@
 
 
                     echo '<li class="treeview">
-                                                    <a href="#"><i class="fa fa-scissors"></i> Almacen de Corte
+                                                    <a href="#"><i class="fa fa-scissors"></i> Corte
                                                         <span class="pull-right-container">
                                                             <i class="fa fa-angle-left pull-right"></i>
                                                         </span>
@@ -337,7 +337,7 @@
 
                                                         <li>
                                                             <a href="almacencorte">
-                                                                <i class="fa fa-circle-o"></i> Alm. de Corte
+                                                                <i class="fa fa-circle-o"></i> Corte
                                                             </a>
                                                         </li>
 
@@ -355,7 +355,7 @@
                                                     <a href="en-cortes">
 
                                                         <i class="fa fa-scissors"></i>
-                                                        <span>En Cortes</span>
+                                                        <span>Almacén de corte</span>
 
                                                     </a>
 

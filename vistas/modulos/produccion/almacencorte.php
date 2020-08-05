@@ -4,7 +4,7 @@
 
     <h1>
 
-      Almacén de Corte
+      Corte
 
     </h1>
 
@@ -12,7 +12,7 @@
 
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-      <li class="active">Almacén de corte</li>
+      <li class="active">Corte</li>
 
     </ol>
 

@@ -449,14 +449,14 @@ $(".tablaDetalleOperaciones tbody").on("click","button.btnEliminarOperacion",fun
 	var idOperacion =$(this).attr("idOperacion");
 	//console.log("idOperacion", idOperacion);
 	swal({
-		title: "¿Está seguro de borrar la operación?",
+		title: "¿Está seguro de borrar la operación modelo?",
 		text: "¡Si no lo está se puede cancelar la acción!",
 		type:"warning",
 		showCancelButton: true,
 		confirmButtonColor: "#3085d6",
 		cancelButtonColor: "#d33",
 		cancelButtonText: "Cancelar",
-		confirmButtonText: "Si, borrar operación!" 
+		confirmButtonText: "Si, borrar operación modelo!" 
 	}).then((result)=>{
 		if(result.value){
 			window.location = "index.php?ruta=detalleoperaciones&idOperacion="+idOperacion;
@@ -533,7 +533,7 @@ $(".tablaDetalleOperaciones").on("click", ".btnDetalleOperacion", function () {
 					$(".detalle").remove();
 					for (var id of respuesta) {
 						
-						$('.tablaDetalle').append(
+						$('.tablaOperacionModelo').append(
 
 							'<tr class="detalle">' +
 							'<td>' + id.cod_operacion + ' </td>' +
@@ -561,4 +561,6 @@ $(".box").on("click", ".btnReporteOG", function () {
     window.location = "vistas/reportes_excel/rpt_operacionesgeneral.php";
   
 })
-
+$(document).ready(function(){
+	
+})
