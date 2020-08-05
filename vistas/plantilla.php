@@ -167,7 +167,7 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "trabajador" ||
                   $_GET["ruta"] == "operaciones" ||
                   $_GET["ruta"] == "modelosjf" ||
-                  $_GET["ruta"]=="crear-articulo" ||
+                  $_GET["ruta"] == "crear-articulo" ||
                   $_GET["ruta"] == "sectores" ||
                   $_GET["ruta"] == "paras" ){
 
@@ -183,6 +183,7 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "urgenciasamp" ||
                   $_GET["ruta"] == "en-cortes" ||
                   $_GET["ruta"] == "en-taller" ||
+                  $_GET["ruta"] == "en-tallert" ||
                   $_GET["ruta"] == "marcar-taller"){
 
               include "modulos/produccion/".$_GET["ruta"].".php";

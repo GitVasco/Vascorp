@@ -18,7 +18,7 @@ include "../reportes_excel/Classes/PHPExcel.php";
 * LLAMAMOS A LA CONEXION
 */
 $conexion = mysql_connect("192.168.1.3", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
-mysql_select_db("new_vasco", $conexion);
+mysql_select_db("vasco", $conexion);
 
 /* 
 * CONFIGURAMOS LA FECHA ACTUAL
@@ -247,19 +247,12 @@ $borde9->applyFromArray(
 /* 
 * CONFIGURAMOS LA 1ERA HOJA
 */
-$sqlHoja = mysql_query("SELECT 
-                                CONCAT('OC - ',codigo,' - ARTICULOS') AS codigo
-                                FROM
-                                ordencortejf oc
-                                WHERE oc.codigo= $id") or die(mysql_error());
-
-$respHoja = mysql_fetch_array($sqlHoja);
 
 $objPHPExcel->createSheet(0);
 $objPHPExcel->setActiveSheetIndex(0);
 
 # Titulo de la hoja
-$objPHPExcel->getActiveSheet()->setTitle($respHoja["codigo"]);
+$objPHPExcel->getActiveSheet()->setTitle('ARTICULO');
 
 # Orientacion hoja
 $objPHPExcel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
@@ -302,7 +295,7 @@ $sqlCabecera = mysql_query("SELECT
                                     DATE(oc.fecha) AS fecha 
                                     FROM
                                     ordencortejf oc 
-                                    WHERE oc.codigo = $id ") or die(mysql_error());
+                                    WHERE oc.codigo = 6 ") or die(mysql_error());
 
 $respCabecera = mysql_fetch_array($sqlCabecera);
 
@@ -1117,19 +1110,11 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('M')->setWidth(14.29);
 /* 
 * CONFIGURAMOS LA 2DA HOJA
 */
-$sqlHoja = mysql_query("SELECT 
-                                CONCAT('OC - ',codigo,' - MP') AS codigo
-                                FROM
-                                ordencortejf oc
-                                WHERE oc.codigo= $id") or die(mysql_error());
-
-$respHoja = mysql_fetch_array($sqlHoja);
-
 $objPHPExcel->createSheet(1);
 $objPHPExcel->setActiveSheetIndex(1);
 
 # Titulo de la hoja
-$objPHPExcel->getActiveSheet()->setTitle($respHoja["codigo"]);
+$objPHPExcel->getActiveSheet()->setTitle("MATERIA PRIMA");
 
 # Orientacion hoja
 $objPHPExcel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_PORTRAIT);
@@ -1720,7 +1705,7 @@ $respArchivo = mysql_fetch_array($sqlArchivo);
 
 
 # Nombre del archivo
-header('Content-Disposition: attachment; filename="' . $respArchivo["codigo"] . '.xls"');
+header('Content-Disposition: attachment; filename="ORDEN DE CORTE.xls"');
 
 
 //forzar a descarga por el navegador

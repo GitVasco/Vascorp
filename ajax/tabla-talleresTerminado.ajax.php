@@ -5,18 +5,21 @@ require_once "../modelos/talleres.modelo.php";
 
 class TablaTalleresT{
 
-    /*=============================================
-    MOSTRAR LA TABLA DE PRODUCTOS
-    =============================================*/ 
-
+    /*
+    * MOSTRAR TABLA DE ORDENES DE CORTE
+    */
     public function mostrarTablaTalleresT(){
 
-        $talleres = ControladorTalleres::ctrMostrarTalleresT();	
+        $valor = null;
+
+        $talleres = ControladorTalleres::ctrMostrarTalleresTerminado($valor);
+
+        #var_dump("almacencorte", $talleres);
 
         $datosJson = '{
-        "data": [';
+            "data": [';
 
-        for($i = 0; $i < count($talleres); $i++){
+            for($i = 0; $i < count($talleres); $i++){
 
             /*
             todo: ESTADO
@@ -34,33 +37,47 @@ class TablaTalleresT{
     
                 $estado = "<span style='font-size:85%' class='label label-success'>Terminado</span>";
     
-            }             
+            } 
 
-            $datosJson .= '[
-            "'.$talleres[$i]["codigo"].'",
-            "'.$talleres[$i]["trabajador"].'",
-            "'.$talleres[$i]["operacion"].'",
-            "'.$talleres[$i]["articulo"].'",
-            "'.$talleres[$i]["cantidad"].'",
-            "'.$estado.'",
-            "'.$talleres[$i]["hora_termino"].'"
-            ],';        
-            }
+            /*
+            todo: BOTONES
+            */
 
-            $datosJson=substr($datosJson, 0, -1);
+                $botones =  "<div class='btn-group'><button class='btn btn-primary btnAsignarTrabajador' codigo='".$talleres[$i]["codigo"]."' data-toggle='modal' data-target='#modalAsignarTrabajador'><i class='fa fa-user'></i></button></div>"; 
 
-            $datosJson .= '] 
 
-            }';
 
-        echo $datosJson;
+
+                $datosJson .= '[
+                "'.$talleres[$i]["id"].'",
+                "'.$talleres[$i]["codigo"].'",
+                "'.$talleres[$i]["modelo"].'",
+                "'.$talleres[$i]["color"].'",
+                "'.$talleres[$i]["talla"].'",
+                "'.$talleres[$i]["nom_operacion"].'",
+                "'.$talleres[$i]["trabajador"].'",
+                "'.$talleres[$i]["cantidad"].'",
+                "'.$talleres[$i]["fecha"].'",
+                "'.$estado.'",
+                "'.$botones.'"
+                ],';
+                }
+
+                $datosJson=substr($datosJson, 0, -1);
+
+                $datosJson .= ']
+
+                }';
+
+            echo $datosJson;
+
 
     }
 
 }
 
 /*=============================================
-ACTIVAR TABLA DE PRODUCTOS
+ACTIVAR TABLA DE orden$ordencorte
 =============================================*/ 
 $activarTalleresT = new TablaTalleresT();
 $activarTalleresT -> mostrarTablaTalleresT();

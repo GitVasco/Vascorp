@@ -375,6 +375,12 @@
                                                                     <i class="fa fa-circle-o"></i>Taller General
                                                                 </a>
                                                             </li>
+
+                                                            <li>
+                                                                <a href="en-tallert">
+                                                                    <i class="fa fa-circle-o"></i>Taller Terminados
+                                                                </a>
+                                                            </li>
                                 
                                                             <li>
                                                                 <a href="marcar-taller">
