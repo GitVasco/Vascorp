@@ -377,14 +377,14 @@
                                                             </li>
 
                                                             <li>
-                                                                <a href="en-tallert">
-                                                                    <i class="fa fa-circle-o"></i>Taller Terminados
-                                                                </a>
-                                                            </li>
-                                
-                                                            <li>
                                                                 <a href="marcar-taller">
                                                                     <i class="fa fa-circle-o"></i>Registar Tareas
+                                                                </a>
+                                                            </li>                                                            
+
+                                                            <li>
+                                                                <a href="en-tallert">
+                                                                    <i class="fa fa-circle-o"></i>Taller Terminados
                                                                 </a>
                                                             </li>
                                 
