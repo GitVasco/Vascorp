@@ -377,7 +377,7 @@
                                                             </li>
 
                                                             <li>
-                                                                <a href="en-tallerG">
+                                                                <a href="en-tallert">
                                                                     <i class="fa fa-circle-o"></i>Taller Terminados
                                                                 </a>
                                                             </li>
