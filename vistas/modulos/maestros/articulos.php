@@ -48,7 +48,6 @@
               <th>Estado</th>
               <th>Stock</th>
               <th>Tarjeta</th>
-
             </tr>
 
           </thead>

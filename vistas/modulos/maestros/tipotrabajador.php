@@ -115,7 +115,18 @@ MODAL AGREGAR TIPO TRABAJADOR
               
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="nuevoSectorTrabajador" id="nuevoSectorTrabajador"  placeholder="Ingresar sector" required>
+                <select class="form-control input-lg" name="nuevoSectorTrabajador" id="nuevoSectorTrabajador"  placeholder="Ingresar sector" required>
+                  <option value="">Seleccionar sector</option>
+                  <?php
+                  $item = null;
+                  $valor=null;
+
+                  $sectores=ControladorSectores::ctrMostrarSectores($item,$valor);
+                  foreach ($sectores as $key => $value) {
+                    echo"<option value='".$value['nom_sector']."'>".$value["nom_sector"]."</option>";
+                  }
+                  ?>
+                </select>
 
               </div>
 
@@ -208,7 +219,16 @@ MODAL EDITAR TIPO DE TRABAJADOR
               
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="editarSectorTrabajador" id="editarSectorTrabajador" required>
+                <select type="text" class="form-control input-lg" name="editarSectorTrabajador" id="editarSectorTrabajador" required>
+                  <?php
+                  $item = null;
+                  $valor=null;
+                  $sectores=ControladorSectores::ctrMostrarSectores($item,$valor);
+                  foreach ($sectores as $key => $value) {
+                    echo"<option value='".$value['nom_sector']."'>".$value["nom_sector"]."</option>";
+                  }
+                  ?>
+                </select>
                 <input type="hidden" id="idTipoTrabajador" name="idTipoTrabajador">
               </div>
 

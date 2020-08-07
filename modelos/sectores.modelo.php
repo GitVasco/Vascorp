@@ -114,7 +114,7 @@ class ModeloSectores{
 		$stmt = Conexion::conectar()->prepare("  DELETE 
                                                         FROM
                                                         sectorjf 
-                                                        WHERE id = :valor");
+                                                        WHERE cod_sector = :valor");
 
 		$stmt -> bindParam(":valor", $datos, PDO::PARAM_INT);
 
