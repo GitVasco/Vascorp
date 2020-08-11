@@ -162,47 +162,60 @@ $(".tablaTallerT").DataTable({
 */
 $(".tablaTalleresG").on("click", ".btnImprimirTicket", function () {
 
-    var articulo = $(this).attr("articulo");
-	console.log("articulo", articulo);
-	
+	var ultimo = $(this).attr("ultimo");
+
 	var modelo = $(this).attr("modelo");
-	console.log("modelo", modelo);
 	
 	var nombre = $(this).attr("nombre");
-	console.log("nombre", nombre);
 	
 	var color = $(this).attr("color");
-	console.log("color", color);
 	
 	var talla = $(this).attr("talla");
-	console.log("talla", talla);
 	
 	var cant_taller = $(this).attr("cant_taller");
-	console.log("cant_taller", cant_taller);
-	
-	var nom_trab = $(this).attr("nom_trab");
-	console.log("nom_trab", nom_trab);
-	
-	var nom_sector = $(this).attr("nom_sector");
-	console.log("nom_sector", nom_sector);
 	
 	var cod_operacion = $(this).attr("cod_operacion");
-	console.log("cod_operacion", cod_operacion);
 	
 	var nom_operacion = $(this).attr("nom_operacion");
-	console.log("nom_operacion", nom_operacion);
 	
-	var articulo = $(this).attr("articulo");
-	console.log("articulo", articulo);
-	
-	var ultimo = $(this).attr("ultimo");
-	console.log("ultimo", ultimo);
-	
-
-	//window.open("vistas/reportes_ticket/exTicket.php?articulo=" + articulo,'_blank');
-
-	window.open("vistas/reportes_ticket/produccion_ticket.php?articulo="+ articulo + "&ultimo=" +ultimo + "&modelo=" + modelo + "&nombre=" + nombre + "&color=" + color + "&talla=" + talla + "&cant_taller=" + cant_taller + "&nom_trab=" + nom_trab + "&nom_sector=" + nom_sector + "&cod_operacion=" + cod_operacion + "&nom_operacion=" + nom_operacion,"_blank");
+	window.open("vistas/reportes_ticket/produccion_ticket_detalle.php?ultimo=" +ultimo + "&modelo=" + modelo + "&nombre=" + nombre + "&color=" + color + "&talla=" + talla + "&cant_taller=" + cant_taller + "&cod_operacion=" + cod_operacion + "&nom_operacion=" + nom_operacion,"_blank");
 	
     
   
+})
+
+/* 
+* BOTON  IMPRIMIR TICKET
+*/
+$(".tablaTalleresG").on("click", ".btnEditarTallerG", function () {
+
+	var idTaller = $(this).attr("idTaller");
+	var datos= new FormData();
+	datos.append("idTaller",idTaller);
+	$.ajax({
+		url:"ajax/talleres.ajax.php",
+		method:"POST",
+		data:datos,
+		cache: false,
+		contentType:false,
+		processData:false,
+		dataType: "json",
+		success:function(respuesta){
+			console.log(respuesta["color"]);
+			$("#editarCodigo").val(respuesta["id_cabecera"]);
+			$("#editarArticulo").val(respuesta["articulo"]);
+			$("#cantidad").val(respuesta["cantidad"]);
+			$("#editarCodOperacion").val(respuesta["cod_operacion"]);
+			$("#editarCantidad").val(respuesta["cantidad"]);
+			$("#editarTaller").val(respuesta["id"]);
+			$("#editarBarra").val(respuesta["codigo"]);
+			$("#editarTalla").val(respuesta["talla"]);
+			$("#editarMarca").val(respuesta["marca"]);
+			$("#editarColor").val(respuesta["color"]);
+			$("#editarNombre").val(respuesta["nombre"]);
+			$("#editarModelo").val(respuesta["modelo"]);
+		}
+	});
+	
+
 })

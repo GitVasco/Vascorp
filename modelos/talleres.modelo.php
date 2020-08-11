@@ -50,7 +50,17 @@ class ModeloTalleres{
 
         }else{
 
-            $stmt = Conexion::conectar()->prepare("SELECT * from entallerjf WHERE codigo=$valor");
+            $stmt = Conexion::conectar()->prepare("SELECT t.*,
+            a.marca,
+            a.modelo,
+            a.nombre,
+            a.color,
+            a.talla
+        FROM
+          entallerjf  t
+          LEFT JOIN articulojf a
+          ON a.articulo = t.articulo
+          WHERE codigo=$valor");
 
 			$stmt->execute();
 
@@ -278,5 +288,88 @@ class ModeloTalleres{
       $stmt=null;
   
     }  
+
+  
+	/*=============================================
+	ELIMINAR TALLER
+	=============================================*/
+
+	static public function mdlEliminarTaller($tabla,$datos){
+
+		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
+
+		$stmt -> bindParam(":id", $datos, PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+  }    
+  
+  
+	/*=============================================
+	CREAR TALLER
+	=============================================*/
+
+	static public function mdlIngresarTaller($datos){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO entallerjf (
+      id_cabecera,
+      articulo,
+      cod_operacion,
+      cantidad,
+      usuario,
+      total_precio,
+      total_tiempo,
+      codigo
+  ) 
+  (SELECT 
+      :codigo,
+      a.articulo,
+      od.cod_operacion,
+      :cantidad,
+      :usuario,
+      ((od.precio_doc) / 12) * :cantidad,
+      ((od.tiempo_stand) / 60) * :cantidad,
+      :editarBarra 
+  FROM
+      articulojf a 
+      LEFT JOIN operaciones_detallejf od 
+      ON a.modelo = od.modelo 
+  WHERE articulo = :articulo AND cod_operacion= :operacion)");
+
+    $stmt->bindParam(":articulo", $datos["articulo"], PDO::PARAM_STR);
+    $stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_INT);
+    $stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_INT);
+    $stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+    $stmt->bindParam(":editarBarra", $datos["editarBarra"], PDO::PARAM_STR);
+    $stmt->bindParam(":operacion", $datos["operacion"], PDO::PARAM_STR);
+		
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+
+	}   
 
 }
