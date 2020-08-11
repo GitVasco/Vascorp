@@ -122,20 +122,15 @@
                   
                   foreach($listaArticuloOC as $key=>$value){
 
-                    $infoArticulo = ControladorArticulos::ctrMostrarArticulos($value["articulo"]);
+                    $infoArticulo = controladorArticulos::ctrMostrarArticulos($value["articulo"]);
                     #var_dump("infoArticulo", $infoArticulo);
-                    $prodArticulo = ControladorArticulos::ctrMostrarProduccion($value["articulo"]);
-                    #var_dump($prodArticulo["prod"]);
 
                     $ocAntiguo = $infoArticulo["ord_corte"] - $value["cantidad"];
                     #var_dump("ocAntiguo", $ocAntiguo);
-
-                    $proySum = $infoArticulo["proyeccion"] - ($infoArticulo["ord_corte"] + $infoArticulo["alm_corte"] + $infoArticulo["taller"] + $prodArticulo["prod"] + 50);
-                    var_dump($proySum);
                                         
                     echo '<div class="row" style="padding:5px 15px">
 
-                            <div class="col-xs-6" style="padding-right:0px">
+                            <div class="col-xs-9" style="padding-right:0px">
                         
                               <div class="input-group">
                         
@@ -147,7 +142,7 @@
                         
                             </div>
                         
-                            <div class="col-xs-2">
+                            <div class="col-xs-3">
                         
                               <input type="number" class="form-control nuevaCantidadArticuloOC" name="nuevaCantidadArticuloOC" min="1" value="'.$value["cantidad"].'" ord_corte="'.$ocAntiguo.'" nuevoOrdCorte="'.$infoArticulo["ord_corte"].'" required>
                         
