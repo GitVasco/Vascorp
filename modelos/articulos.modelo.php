@@ -383,5 +383,30 @@ class ModeloArticulos
 		$stmt = null;
 	}
 
+	/* 
+	* MOSTRAR PRODUCCION
+	*/
+	static public function mdlMostrarProduccion($valor){
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+													m.articulo,
+													SUM(m.cantidad) AS prod 
+												FROM
+													movimientosjf m 
+												WHERE m.tipo IN ('E20') 
+													AND YEAR(m.fecha) = '2020' 
+													AND m.articulo = :valor 
+												GROUP BY m.articulo");
+
+		$stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
+
+		$stmt->execute();
+
+		return $stmt->fetch();
+
+		$stmt=null;
+
+	}	
+
 	
 }
