@@ -38,17 +38,21 @@ class TablaTalleresG{
                 $estado = "<span style='font-size:85%' class='label label-success'>Terminado</span>";
     
             } 
-
+            $dividir=substr($talleres[$i]["codigo"],-1);
             /*
             todo: BOTONES
             */
             if($talleres[$i]["estado"] == "3"){
 
-                $botones =  "<div class='btn-group'><button class='btn btn-primary btnTrabajador' codigo='".$talleres[$i]["codigo"]."'><i class='fa fa-user'></i></button> <button class='btn btn-warning btnImprimirTicket' ultimo='".$talleres[$i]["codigo"]."'><i class='fa fa-print'></i></button></div>"; 
+                $botones =  "<div class='btn-group'><button class='btn btn-success btnImprimirTicket' ultimo='".$talleres[$i]["codigo"]."'modelo='".$talleres[$i]["modelo"]."'nombre='".$talleres[$i]["nombre"]."'color='".$talleres[$i]["color"]."'talla='".$talleres[$i]["talla"]."'cant_taller='".$talleres[$i]["cantidad"]."'cod_operacion='".$talleres[$i]["cod_operacion"]."'nom_operacion='".$talleres[$i]["nom_operacion"]."'><i class='fa fa-print'></i></button></div>"; 
 
             }else{
-
-                $botones =  "<div class='btn-group'><button class='btn btn-warning btnImprimirTicket' ultimo='".$talleres[$i]["codigo"]."'><i class='fa fa-print'></i></button></div>"; 
+               if($dividir== "A" || $dividir=="B"){
+                $botones =  "<div class='btn-group'><button class='btn btn-success btnImprimirTicket' ultimo='".$talleres[$i]["codigo"]."'modelo='".$talleres[$i]["modelo"]."'nombre='".$talleres[$i]["nombre"]."'color='".$talleres[$i]["color"]."'talla='".$talleres[$i]["talla"]."'cant_taller='".$talleres[$i]["cantidad"]."'cod_operacion='".$talleres[$i]["cod_operacion"]."'nom_operacion='".$talleres[$i]["nom_operacion"]."'><i class='fa fa-print'></i></button></div>"; 
+               }else{
+                $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarTallerG' idTaller='".$talleres[$i]["codigo"]."' data-toggle='modal' data-target='#modalEditarCantidad'><i class='fa fa-edit'></i></button><button class='btn btn-success btnImprimirTicket' ultimo='".$talleres[$i]["codigo"]."'modelo='".$talleres[$i]["modelo"]."'nombre='".$talleres[$i]["nombre"]."'color='".$talleres[$i]["color"]."'talla='".$talleres[$i]["talla"]."'cant_taller='".$talleres[$i]["cantidad"]."'cod_operacion='".$talleres[$i]["cod_operacion"]."'nom_operacion='".$talleres[$i]["nom_operacion"]."'><i class='fa fa-print'></i></button></div>"; 
+               }
+                
 
             }
 

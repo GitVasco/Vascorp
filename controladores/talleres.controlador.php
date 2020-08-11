@@ -133,6 +133,82 @@ class ControladorTalleres{
 
 		}
 
-	}    
+    }    
+    
+    /*=============================================
+	EDITAR Cantidad
+	=============================================*/
+
+	static public function ctrEditarCantidad(){
+
+		if(isset($_POST["editarCantidad"])){
+
+                
+				$datos = array("codigo" => $_POST["editarCodigo"], 
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperacion"],
+                            "cantidad" => $_POST["editarCantidad"],
+                            "editarBarra" => $_POST["editarBarra"]."A");
+
+                $cantidad=$_POST["cantidad"]-$_POST["editarCantidad"];
+
+                $datos2 = array("codigo" => $_POST["editarCodigo"],
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperacion"],
+                            "cantidad" => $cantidad,
+                            "editarBarra" => $_POST["editarBarra"]."B");
+                $tabla="entallerjf";
+                $id=$_POST["editarTaller"];
+                $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                $respuesta = ModeloTalleres::mdlIngresarTaller($datos);
+                $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+                
+				if($respuesta == "ok" && $respuesta2=="ok"){
+                    $ultimo = $_POST["editarBarra"]."A";
+                    $valor=$_POST["editarArticulo"];
+                    $rpt_articulo=ModeloArticulos::mdlMostrarArticulos($valor);
+                    $modelo = $rpt_articulo["modelo"];
+                    $nombre = $rpt_articulo["nombre"];
+                    $color = $rpt_articulo["color"];
+                    $talla = $rpt_articulo["talla"];
+                    $cantidad = $_POST["editarCantidad"];
+                    $cod_ope = $_POST["editarCodOperacion"];
+                    $tablaop="operacionesjf";
+                    $itemop="codigo";
+                    $rpt_operacion=ModeloOperaciones::mdlMostrarOperaciones($tablaop,$itemop,$cod_ope);
+                    $nom_ope = $rpt_operacion["nombre"];
+
+                    $ultimo2 = $_POST["editarBarra"]."B";
+                    $cantidad2 = $_POST["cantidad"];
+
+                    echo'<script>
+                    
+                    window.open("vistas/reportes_ticket/produccion_ticket_dividir.php?ultimo='.$ultimo.'&modelo='.$modelo.'&nombre='.$nombre.'&color='.$color.'&talla='.$talla.'&cant_taller='.$cantidad.'&cod_operacion='.$cod_ope.'&nom_operacion='.$nom_ope.'&ultimo2='.$ultimo2.'&cant_taller2='.$cantidad2.'","_blank");
+                    </script>';
+					echo'<script>
+
+					swal({
+						  type: "success",
+						  title: "La cantidad ha sido cambiada correctamente",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+									if (result.value) {
+
+									window.location = "en-taller";
+
+									}
+								})
+
+					</script>';
+
+				}
+
+
+		}
+
+    }
 
 }

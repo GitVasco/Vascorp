@@ -67,10 +67,11 @@ $(".tablaTipoTrabajador tbody").on("click","button.btnEditarTipoTrabajador",func
 		dataType: "json",
 		success:function(respuesta){
 
-			//console.log("respuesta", respuesta);
+			console.log("respuesta", respuesta);
 
 			$("#editarTipoTrabajador").val(respuesta["nom_tip_trabajador"]);
 			$("#editarSectorTrabajador").val(respuesta["detalle"]);
+			$("#editarSectorTrabajador").selectpicker('refresh');
 			$("#idTipoTrabajador").val(respuesta["cod_tip_tra"]);
 		}
 	});

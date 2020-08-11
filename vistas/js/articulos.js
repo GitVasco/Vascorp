@@ -233,7 +233,6 @@ $(".tablaArticulos tbody").on("click", "button.btnEditarArticulo", function(){
 
             $("#editarMarca").val(respuesta["id_marca"]);
 			$("#editarMarca").selectpicker('refresh');
-			
 
 			/* para sacar el color */
 

@@ -59,10 +59,10 @@
 </div>
 
 <!--=====================================
-MODAL MANDAR A TALLER
+MODAL EDITAR CANTIDAD
 ======================================-->
 
-<div id="modalMandarTaller" class="modal fade" role="dialog">
+<div id="modalEditarCantidad" class="modal fade" role="dialog">
 
   <div class="modal-dialog">
 
@@ -78,7 +78,7 @@ MODAL MANDAR A TALLER
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title">Mandar a Taller</h4>
+          <h4 class="modal-title">Editar Cantidad</h4>
 
         </div>
 
@@ -90,87 +90,13 @@ MODAL MANDAR A TALLER
 
           <div class="box-body">
 
+            <input type="hidden" name="editarTaller" id="editarTaller">
             <input type="hidden" name="usuario" value="<?php echo $_SESSION["id"]; ?>">
-
-            <input type="hidden" name="precio_doc" id="precio_doc">
-
-            <input type="hidden" name="tiempo_stand" id="tiempo_stand">
-
-            <input type="hidden" name="precio_total" id="precio_total">
-
-            <input type="hidden" name="tiempo_total" id="tiempo_total">
-
-            <input type="hidden" name="nuevoCorte" id="nuevoCorte">
-
-            <!-- ENTRADA PARA SELECCIONAR TALLER -->
-
-            <div class="form-group col-lg-5">
-
-              <label>Taller</label>
-
-              <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-industry"></i></span>
-
-                <select class="form-control input-sm selectpicker" id="nuevoTaller" name="nuevoTaller" data-live-search="true" required>
-
-                  <option value="">Taller</option>
-
-                  <?php
-
-                  $taller = ControladorCortes::ctrMostrarTaller();
-                  #var_dump("taller", $taller);
-
-                  foreach ($taller as $key => $value) {
-
-                    echo '<option value="' . $value["codigo"] . '">' . $value["codigo"] . ' - ' . $value["taller"] . '</option>';
-                  }
-
-
-                  ?>
-
-                </select>
-
-              </div>
-
-            </div>
-
-
-            <!-- ENTRADA PARA SELECCIONAR TRABAJADOR -->
-
-            <div class="form-group col-lg-7">
-
-              <label>Trabajador</label>
-
-              <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-user-o"></i></span>
-
-                <select class="form-control input-sm selectpicker" id="nuevoTrabajador" name="nuevoTrabajador" data-live-search="true" required>
-
-                  <option value="">Seleccionar Trabajador</option>
-
-                  <?php
-
-                  $trabajador = ControladorTrabajador::ctrMostrarTrabajadorActivo();
-                  #var_dump("trabajador", $trabajador);
-
-                  foreach ($trabajador as $key => $value) {
-
-                    echo '<option value="' . $value["cod_tra"] . '">' . $value["nom_tra"] . ', ' . $value["ape_pat_tra"] . ' ' . $value["ape_mat_tra"] . '</option>';
-                  }
-
-                  ?>
-
-                </select>
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA EL ARITCULO -->
-
-            <div class="form-group col-lg-4">
+            <input type="hidden" name="editarCodigo" id="editarCodigo">
+            <input type="hidden" name="editarCodOperacion" id="editarCodOperacion">
+            <input type="hidden" name="editarBarra" id="editarBarra">
+            <!-- ENTRADA PARA EL NOMBRE -->
+            <div class="form-group col-lg-6">
 
               <label>Articulo</label>
 
@@ -178,15 +104,13 @@ MODAL MANDAR A TALLER
 
                 <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
 
-                <input type="text" class="form-control input-sm" id="nuevoArticulo" name="nuevoArticulo" required readonly>
+                <input type="text" class="form-control" id="editarArticulo" name="editarArticulo" required readonly>
 
               </div>
 
             </div>
 
-            <!-- ENTRADA PARA EL NOMBRE -->
-
-            <div class="form-group col-lg-8">
+            <div class="form-group col-lg-6">
 
               <label>Nombre</label>
 
@@ -194,13 +118,11 @@ MODAL MANDAR A TALLER
 
                 <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
 
-                <input type="text" class="form-control input-sm" id="nuevoNombre" name="nuevoNombre" required readonly>
+                <input type="text" class="form-control" id="editarNombre" name="editarNombre" required readonly>
 
               </div>
 
             </div>
-
-            <!-- ENTRADA PARA EL MODELO -->
 
             <div class="form-group col-lg-4">
 
@@ -210,13 +132,11 @@ MODAL MANDAR A TALLER
 
                 <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
 
-                <input type="text" class="form-control input-sm" id="nuevoModelo" name="nuevoModelo" required readonly>
+                <input type="text" class="form-control" id="editarModelo" name="editarModelo" required readonly>
 
               </div>
 
             </div>
-
-            <!-- ENTRADA PARA EL COLOR -->
 
             <div class="form-group col-lg-4">
 
@@ -226,13 +146,11 @@ MODAL MANDAR A TALLER
 
                 <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
 
-                <input type="text" class="form-control input-sm" id="nuevoColor" name="nuevoColor" required readonly>
+                <input type="text" class="form-control" id="editarColor" name="editarColor" required readonly>
 
               </div>
 
             </div>
-
-            <!-- ENTRADA PARA LA TALLA -->
 
             <div class="form-group col-lg-4">
 
@@ -242,82 +160,42 @@ MODAL MANDAR A TALLER
 
                 <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
 
-                <input type="text" class="form-control input-sm" id="nuevaTalla" name="nuevaTalla" required readonly>
+                <input type="text" class="form-control" id="editarTalla" name="editarTalla" required readonly>
 
               </div>
 
             </div>
+            <div class="form-group col-lg-6">
 
-            <!-- ENTRADA PARA CODIGO OPERACION -->
-
-            <div class="form-group col-lg-4">
-
-              <label>Cod. Operación</label>
+              <label>Cantidad</label>
 
               <div class="input-group">
 
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
+                <span class="input-group-addon"><i class="fa fa-arrow-up"></i></span>
 
-                <input type="text" class="form-control input-sm" id="nuevoCodOperacion" name="nuevoCodOperacion" required readonly>
+                <input type="number" class="form-control" id="cantidad" name="cantidad" required readonly>
 
               </div>
 
             </div>
 
-            <!-- ENTRADA PARA LA TALLA -->
+            <div class="form-group col-lg-6">
 
-            <div class="form-group col-lg-8">
-
-              <label>Operación</label>
+              <label>Dividir Cantidad</label>
 
               <div class="input-group">
 
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
+                <span class="input-group-addon"><i class="fa fa-arrow-down"></i></span>
 
-                <input type="text" class="form-control input-sm" id="nuevaOperacion" name="nuevaOperacion" required readonly>
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA EL TOTAL DEL CORTE -->
-
-            <div class="form-group col-lg-12">
-
-                  <div>
-                    <label >Enviar a talleres</label>
-                  </div>
-              <div class="col-xs-6">
-
-                <div class="input-group">
-
-                  <span class="input-group-addon"><i class="fa fa-arrow-up"></i></span>
-
-                  <input type="number" class="form-control input-lg" id="almCorte" name="almCorte" min="0" placeholder="Por enviar" required readonly>
-
-                </div>
-
-              </div>
-
-              <!-- ENTRADA PARA EL TOTAL DEL CORTE -->
-
-              <div class="col-xs-6">
-
-                <div class="input-group">
-
-                  <span class="input-group-addon"><i class="fa fa-arrow-down"></i></span>
-
-                  <input type="number" class="form-control input-lg" id="nuevoAlmCorte" name="nuevoAlmCorte" min="0" max="" placeholder="Mandar" required>
-
-                </div>
-
-                <br>
+                <input type="number" class="form-control" id="editarCantidad" name="editarCantidad" required >
 
               </div>
 
             </div>
 
           </div>
+
+        </div>
 
           <!--=====================================
         PIE DEL MODAL
@@ -327,7 +205,7 @@ MODAL MANDAR A TALLER
 
             <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
 
-            <button type="submit" class="btn btn-success">Mandar</button>
+            <button type="submit" class="btn btn-success">Editar Cantidad</button>
 
           </div>
 
@@ -335,8 +213,8 @@ MODAL MANDAR A TALLER
 
       <?php
 
-      $mandarTaller = new ControladorCortes();
-      $mandarTaller->ctrMandarTaller();
+      $editarCantidad = new ControladorTalleres();
+      $editarCantidad->ctrEditarCantidad();
 
       ?>
 
