@@ -392,7 +392,12 @@
                                                     </li>';
 
                 }
-
+                echo '<li >
+                    
+                                            <a href="asistencia">
+                                                    <i class="fa fa-calendar"></i>Asistencias
+                                            </a></li>';
+                    
                 echo '<li class="treeview">
                     
                                             <a href="#"><i class="fa fa-file-o"></i> Reportes

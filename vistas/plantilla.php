@@ -183,6 +183,7 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "urgenciasamp" ||
                   $_GET["ruta"] == "en-cortes" ||
                   $_GET["ruta"] == "en-taller" ||
+                  $_GET["ruta"] == "asistencia" ||
                   $_GET["ruta"] == "en-tallert" ||
                   $_GET["ruta"] == "marcar-taller"){
 
@@ -284,6 +285,7 @@ CUERPO DOCUMENTO
   <script src="vistas/js/talleres.js"></script>
   <script src="vistas/js/sectores.js"></script>
   <script src="vistas/js/paras.js"></script>
+  <script src="vistas/js/asistencias.js"></script>
 
 
 
