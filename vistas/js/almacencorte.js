@@ -683,7 +683,7 @@ $(".tablaAlmacenCorte").on("click", ".btnSistemas", function () {
 	}
 
 })
-
+moment.locale('es');
 /*=============================================
 RANGO DE FECHAS
 =============================================*/
@@ -691,6 +691,31 @@ RANGO DE FECHAS
 $("#daterange-btnCortes").daterangepicker(
     {
       cancelClass: "CancelarCortes",
+      locale:{
+		"daysOfWeek": [
+			"Dom",
+			"Lun",
+			"Mar",
+			"Mie",
+			"Jue",
+			"Vie",
+			"Sab"
+		],
+		"monthNames": [
+			"Enero",
+			"Febrero",
+			"Marzo",
+			"Abril",
+			"Mayo",
+			"Junio",
+			"Julio",
+			"Agosto",
+			"Septiembre",
+			"Octubre",
+			"Noviembre",
+			"Diciembre"
+		],
+	  },
       ranges: {
         Hoy: [moment(), moment()],
         Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],

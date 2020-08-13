@@ -235,10 +235,35 @@ $(".tablaTalleresG").on("click", ".btnEditarTallerG", function () {
 /*=============================================
 RANGO DE FECHAS
 =============================================*/
-
+moment.locale('es');
 $("#daterange-btnTaller").daterangepicker(
     {
-      cancelClass: "CancelarTaller",
+	  cancelClass: "CancelarTaller",
+	  locale:{
+		"daysOfWeek": [
+			"Dom",
+			"Lun",
+			"Mar",
+			"Mie",
+			"Jue",
+			"Vie",
+			"Sab"
+		],
+		"monthNames": [
+			"Enero",
+			"Febrero",
+			"Marzo",
+			"Abril",
+			"Mayo",
+			"Junio",
+			"Julio",
+			"Agosto",
+			"Septiembre",
+			"Octubre",
+			"Noviembre",
+			"Diciembre"
+		],
+	  },
       ranges: {
         Hoy: [moment(), moment()],
         Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
