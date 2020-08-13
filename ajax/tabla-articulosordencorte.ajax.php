@@ -12,6 +12,7 @@ class TablaArticulosOrdenCorte{
     public function mostrarArticuloOrdenCorte(){
 
         $articulos = controladorArticulos::ctrMostrarArticulosUrgencia();	
+        if(count($articulos)>0){
 
         $datosJson = '{
         "data": [';
@@ -314,7 +315,14 @@ class TablaArticulosOrdenCorte{
             }';
 
         echo $datosJson;
+        }else{
 
+            echo '{
+                "data":[]
+            }';
+            return;
+
+        }
     }
 
 }

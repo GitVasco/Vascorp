@@ -13,6 +13,7 @@ class TablaUrgencias{
 
         $valor = null;
         $articulos = controladorArticulos::ctrMostrarUrgencia($valor);	
+        if(count($articulos)>0){
 
         #var_dump("articulos", $articulos);
 
@@ -176,7 +177,14 @@ class TablaUrgencias{
             }';
 
         echo $datosJson;
+        }else{
 
+            echo '{
+                "data":[]
+            }';
+            return;
+
+        }
     }
 
 }

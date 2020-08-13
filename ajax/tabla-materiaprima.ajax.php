@@ -14,6 +14,7 @@ class TablaMateriaPrima{
         $valor = null;
 
         $materiaprima = ControladorMateriaPrima::ctrMostrarMateriaPrima($valor);	
+        if(count($materiaprima)>0){
 
         $datosJson = '{
             "data": [';
@@ -47,7 +48,14 @@ class TablaMateriaPrima{
                 }';
     
             echo $datosJson;
+            }else{
 
+                echo '{
+                    "data":[]
+                }';
+                return;
+
+            }
     }    
 }
 

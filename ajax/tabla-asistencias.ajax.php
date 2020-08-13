@@ -13,10 +13,10 @@ class TablaAsistencia{
         $item = null;     
         $valor = null;
 
-        $asistencia = ControladorAsistencias::ctrMostrarAsistencias($item, $valor);	
+        $asistencia = ControladorAsistencias::ctrRangoFechasAsistencias($_GET["fechaInicial"],$_GET["fechaFinal"]);	
 
         
-
+        if(count($asistencia)>0){
         $datosJson = '{
         "data": [';
 
@@ -61,7 +61,14 @@ class TablaAsistencia{
             }';
 
         echo $datosJson;
+        }else{
 
+            echo '{
+                "data":[]
+            }';
+            return;
+
+        }
     }
 
 }

@@ -10,9 +10,10 @@ class ModeloAsistencias{
 
 	static public function mdlIngresarAsistencia($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_trabajador) VALUES (:id_trabajador)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_trabajador,fecha) VALUES (:id_trabajador,:fecha)");
 
-		$stmt->bindParam(":id_trabajador", $datos, PDO::PARAM_STR);
+		$stmt->bindParam(":id_trabajador", $datos["id_trabajador"], PDO::PARAM_INT);
+		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
 
 		if($stmt->execute()){
 
@@ -165,7 +166,59 @@ class ModeloAsistencias{
 		$stmt = null;
 
 	}
+/*=============================================
+	RANGO FECHAS
+	=============================================*/	
 
+	static public function mdlRangoFechasAsistencias($tabla, $fechaInicial, $fechaFinal){
+
+		if($fechaInicial == null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT a.*, t.nom_tra,t.ape_pat_tra,t.ape_mat_tra,p.nombre FROM $tabla a LEFT JOIN trabajadorjf t ON a.id_trabajador=t.cod_tra LEFT JOIN parajf p ON a.id_para=p.id ORDER BY a.id ASC");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();	
+
+
+		}else if($fechaInicial == $fechaFinal){
+
+			$stmt = Conexion::conectar()->prepare("SELECT a.*, t.nom_tra,t.ape_pat_tra,t.ape_mat_tra,p.nombre FROM $tabla a LEFT JOIN trabajadorjf t ON a.id_trabajador=t.cod_tra LEFT JOIN parajf p ON a.id_para=p.id  WHERE a.fecha like '%$fechaFinal%'");
+
+			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}else{
+
+			$fechaActual = new DateTime();
+			$fechaActual ->add(new DateInterval("P1D"));
+			$fechaActualMasUno = $fechaActual->format("Y-m-d");
+
+			$fechaFinal2 = new DateTime($fechaFinal);
+			$fechaFinal2 ->add(new DateInterval("P1D"));
+			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+
+			if($fechaFinalMasUno == $fechaActualMasUno){
+
+				$stmt = Conexion::conectar()->prepare("SELECT a.*, t.nom_tra,t.ape_pat_tra,t.ape_mat_tra,p.nombre FROM $tabla a LEFT JOIN trabajadorjf t ON a.id_trabajador=t.cod_tra LEFT JOIN parajf p ON a.id_para=p.id WHERE a.fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'");
+
+			}else{
+
+
+				$stmt = Conexion::conectar()->prepare("SELECT a.*, t.nom_tra,t.ape_pat_tra,t.ape_mat_tra,p.nombre FROM $tabla a LEFT JOIN trabajadorjf t ON a.id_trabajador=t.cod_tra LEFT JOIN parajf p ON a.id_para=p.id WHERE a.fecha BETWEEN '$fechaInicial' AND '$fechaFinal'");
+
+			}
+		
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+	}	
     
 }
     

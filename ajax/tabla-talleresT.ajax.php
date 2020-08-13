@@ -12,6 +12,7 @@ class TablaTalleresT{
     public function mostrarTablaTalleresT(){
 
         $talleres = ControladorTalleres::ctrMostrarTalleresT();	
+        if(count($talleres)>0){
 
         $datosJson = '{
         "data": [';
@@ -54,7 +55,14 @@ class TablaTalleresT{
             }';
 
         echo $datosJson;
+        }else{
 
+            echo '{
+                "data":[]
+            }';
+            return;
+
+        }
     }
 
 }

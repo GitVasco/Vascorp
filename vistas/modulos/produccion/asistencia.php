@@ -45,6 +45,33 @@
     }
       ?>
 
+      <button type="button" class="btn btn-default pull-right" id="daterange-btnes">
+
+          <span>
+            <i class="fa fa-calendar"></i>
+
+            <?php
+
+              if(isset($_GET["fechaInicial"])){
+
+                echo $_GET["fechaInicial"]." - ".$_GET["fechaFinal"];
+
+              }else{
+              
+                echo 'Rango de fecha';
+
+              }
+
+            ?>
+
+          </span>
+
+          <i class="fa fa-caret-down"></i>
+
+        </button>
+
+      </div>
+
       <div class="box-body">
         
        <table class="table table-bordered table-striped dt-responsive tablaAsistencias">
@@ -67,7 +94,46 @@
         </thead>
 
         <tbody>
-         
+         <?php
+            // if(isset($_GET["fechaInicial"])){
+
+            //   $fechaInicial = $_GET["fechaInicial"];
+            //   $fechaFinal = $_GET["fechaFinal"];
+
+            // }else{
+
+            //   $fechaInicial = null;
+            //   $fechaFinal = null;
+
+            // }
+            // $respuesta = ControladorAsistencias::ctrRangoFechasAsistencias($fechaInicial, $fechaFinal);
+            // foreach ($respuesta as $key => $value) {
+
+            //   if($value["estado"] == "ASISTIO"){
+
+            //     $imagen = "<button class='btnAprobarAsistencia' idAsistencia='".$value["id"]."' estadoAsistencia='FALTA'><img id='estadoImagen' src='vistas/img/plantilla/asistio.png'  width='40px'></button>";
+                
+    
+            // }else{
+    
+            //     $imagen = "<button class='btnAprobarAsistencia' idAsistencia='".$value["id"]."' estadoAsistencia='ASISTIO'><img id='estadoImagen' src='vistas/img/plantilla/falto.png'  width='40px'></button>";
+                
+            // }
+
+            //   $botones =  "<div class='btn-group'><button class='btn btn-danger btnEditarAsistencia' idAsistencia='".$value["id"]."' data-toggle='modal' data-target='#modalEditarAsistencia' title='Editar para'><i class='fa fa-exclamation-triangle'></i></button><button class='btn btn-success btnEditarExtras' idAsistencia='".$value["id"]."' data-toggle='modal' data-target='#modalEditarExtras' title='Editar horas extras'><i class='fa fa-clock-o'></i></button></div>"; 
+
+            // echo '<tr>
+            //         <td>'.$value["id_trabajador"].'</td>
+            //         <td>'.$value["nom_tra"].$value["ape_pat_tra"].$value["ape_mat_tra"].'</td>
+            //         <td>'.$imagen.'</td>
+            //         <td>'.date("Y-m-d",strtotime($value["fecha"])).'</td>
+            //         <td>'.$value["minutos"].'</td>
+            //         <td>'.$value["nombre"].'</td>
+            //         <td>'.$value["tiempo_para"].'</td>
+            //         <td>'.$value["horas_extras"].'</td>
+            //         <td>'.$botones.'</td></tr>';
+            // }
+         ?> 
         </tbody>
 
        </table>

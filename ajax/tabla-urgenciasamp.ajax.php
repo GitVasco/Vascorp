@@ -12,6 +12,7 @@ class TablaUrgenciasAMP{
         $mp = ControladorMateriaPrima::ctrMostrarUrgenciaAMP($valor);	
 
         #var_dump("mp", $mp);
+        if(count($mp)>0){
 
         $datosJson = '{
         "data": [';
@@ -43,7 +44,14 @@ class TablaUrgenciasAMP{
             }';
 
         echo $datosJson;
+        }else{
 
+            echo '{
+                "data":[]
+            }';
+            return;
+
+        }
     }
 
 }

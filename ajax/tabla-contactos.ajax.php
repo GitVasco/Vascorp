@@ -20,6 +20,7 @@ class TablaContactos{
         $id = $_SESSION["id"];
 
         $contactos = ControladorUsuarios::ctrMostrarUsuarios($item, $valor);	
+        if(count($contactos)>0){
 
         $datosJson = '{
         "data": [';
@@ -88,7 +89,14 @@ class TablaContactos{
             }';
 
         echo $datosJson;
+        }else{
 
+            echo '{
+                "data":[]
+            }';
+            return;
+
+        }
     }
 
 }

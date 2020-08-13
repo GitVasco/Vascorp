@@ -16,6 +16,7 @@ class TablaOrdenCorte{
         $ordencorte = ControladorOrdenCorte::ctrMostrarOrdenCorte($item, $valor);
 
         #var_dump("ordencorte", $ordencorte);
+        if(count($ordencorte)>0){
 
         $datosJson = '{
             "data": [';
@@ -88,7 +89,14 @@ class TablaOrdenCorte{
                 }';
     
             echo $datosJson;        
+            }else{
 
+                echo '{
+                    "data":[]
+                }';
+                return;
+
+            }
 
     }
 

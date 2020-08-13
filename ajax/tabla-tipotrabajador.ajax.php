@@ -14,6 +14,7 @@ class TablaTipoTrabajador{
         $valor = null;
 
         $tipotrabajador = ControladorTipoTrabajador::ctrMostrarTipoTrabajador($item, $valor);	
+        if(count($tipotrabajador)>0){
 
         $datosJson = '{
         "data": [';
@@ -41,7 +42,14 @@ class TablaTipoTrabajador{
             }';
 
         echo $datosJson;
+        }else{
 
+            echo '{
+                "data":[]
+            }';
+            return;
+
+        }
     }
 
 }

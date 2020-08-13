@@ -15,7 +15,7 @@ class TablaAlmacenCorte{
         $almacencorte = ControladorAlmacenCorte::ctrMostrarAlmacenCorte($valor);
 
         #var_dump("almacencorte", $almacencorte);
-
+        if(count($almacencorte)>0){
         $datosJson = '{
             "data": [';
     
@@ -66,7 +66,14 @@ class TablaAlmacenCorte{
                 }';
     
             echo $datosJson;        
+            }else{
 
+                echo '{
+                    "data":[]
+                }';
+                return;
+
+            }
 
     }
 

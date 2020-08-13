@@ -12,7 +12,7 @@ class TablaArticulosAlmacenCorte{
     public function mostrarArticuloAlmacenCorte(){
 
         $articulos = controladorAlmacenCorte::ctrMostarArticulosOrdCorte();	
-
+        if(count($articulos)>0){
         $datosJson = '{
         "data": [';
 
@@ -81,7 +81,12 @@ class TablaArticulosAlmacenCorte{
             }';
 
         echo $datosJson;
-
+        }else{
+            echo '{
+                "data":[]
+            }';
+            return;
+        }
     }
 
 }

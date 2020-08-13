@@ -15,7 +15,10 @@ class ControladorAsistencias{
         foreach ($rpta_trabajador as $key => $value) {
 			if($value["estado"]=="Activo"){
 				$tabla2="asistenciasjf";
-           		$respuesta=ModeloAsistencias::mdlIngresarAsistencia($tabla2,$value["cod_tra"]);
+				$fecha=date("Y-m-d H:m:s");
+				$datos = array("fecha"=>$fecha,
+							"id_trabajador"=>$value["cod_tra"]);
+           		$respuesta=ModeloAsistencias::mdlIngresarAsistencia($tabla2,$datos);
 			}
            
         }
@@ -127,7 +130,6 @@ class ControladorAsistencias{
 							"id"=>$_POST["idAsistencia2"]);
 
 			$respuesta = ModeloAsistencias::mdlEditarExtra($tabla, $datos);
-			var_dump($datos);
 			if($respuesta == "ok"){
 
 				echo'<script>
@@ -152,7 +154,19 @@ class ControladorAsistencias{
 
 	}
 
+	/*=============================================
+	RANGO FECHAS
+	=============================================*/	
 
+	static public function ctrRangoFechasAsistencias($fechaInicial, $fechaFinal){
+
+		$tabla = "asistenciasjf";
+
+		$respuesta = ModeloAsistencias::mdlRangoFechasAsistencias($tabla, $fechaInicial, $fechaFinal);
+
+		return $respuesta;
+		
+	}
 }
 
 

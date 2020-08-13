@@ -17,6 +17,8 @@ class TablaModelos{
         $valor=null;
 
         $modelos = ControladorModelos::ctrMostrarModelos($item,$valor);	
+        if(count($modelos)>0){
+
         $datosJson = '{
         "data": [';
 
@@ -95,7 +97,14 @@ class TablaModelos{
             }';
 
         echo $datosJson;
+        }else{
 
+            echo '{
+                "data":[]
+            }';
+            return;
+
+        }
     }
 
 }
