@@ -12,8 +12,7 @@ class TablaTalleresG{
 
         $valor = null;
 
-        $talleres = ControladorTalleres::ctrMostrarTalleresG($valor);
-
+        $talleres = ControladorTalleres::ctrRangoFechasTalleres($_GET["fechaInicial"],$_GET["fechaFinal"]);
         #var_dump("almacencorte", $talleres);
         if(count($talleres)>0){
         $datosJson = '{

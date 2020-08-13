@@ -424,6 +424,20 @@ class ControladorOrdenCorte{
         
 		return $respuesta;
 
-	}    
+    }   
+    
+    /*=============================================
+	RANGO FECHAS
+	=============================================*/	
+
+	static public function ctrRangoFechasOrdenCortes($fechaInicial, $fechaFinal){
+
+		$tabla = "ordencortejf";
+
+		$respuesta = ModeloOrdenCorte::mdlRangoFechasOrdenCortes($tabla, $fechaInicial, $fechaFinal);
+
+		return $respuesta;
+		
+	}
 
 }

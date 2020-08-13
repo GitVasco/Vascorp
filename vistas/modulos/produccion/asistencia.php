@@ -21,12 +21,13 @@
   <section class="content">
 
     <div class="box">
+      <div class="box-header with-border">
     <?php
     $hoy= date("Y-m-d");
     $marcoAsistencia=ControladorAsistencias::ctrMostrarPresente();
     if($marcoAsistencia["fecha"] != $hoy){
       
-      echo '<div class="box-header with-border">
+      echo '
         <form role="form" method="post">
           <button type="submit" class="btn btn-primary " name="btnRegistrarAsistencia">
             <i class="fa fa-plus-square"></i>
@@ -40,7 +41,6 @@
           $crearAsistencia-> ctrCrearAsistencia();
         }
      
-      echo'</div>';
       
     }
       ?>
@@ -69,7 +69,6 @@
           <i class="fa fa-caret-down"></i>
 
         </button>
-
       </div>
 
       <div class="box-body">

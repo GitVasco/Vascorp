@@ -270,7 +270,19 @@ class ControladorAlmacenCorte{
 
 	}    
 
+/*=============================================
+	RANGO FECHAS
+	=============================================*/	
 
+	static public function ctrRangoFechasAlmacenCortes($fechaInicial, $fechaFinal){
+
+		$tabla = "almacencortejf";
+
+		$respuesta = ModeloAlmacenCorte::mdlRangoFechasAlmacenCortes($tabla, $fechaInicial, $fechaFinal);
+
+		return $respuesta;
+		
+	}
 
 
 

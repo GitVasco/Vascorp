@@ -1,8 +1,19 @@
 /* 
 * CARGAR TABLA ORDEN DE CORTE
 */
+// Validamos que venga la variable capturaRango en el localStorage
+if (localStorage.getItem("capturaRango3") != null) {
+	$("#daterange-btnCorte span").html(localStorage.getItem("capturaRango3"));
+	cargarTablaCortes(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
+} else {
+	$("#daterange-btnCorte span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
+	cargarTablaCortes(null, null);
+}
+
+
+function cargarTablaCortes(fechaInicial, fechaFinal){
 $('.tablaOrdenCorte').DataTable({
-	"ajax": "ajax/tabla-ordencorte.ajax.php?perfil=" + $("#perfilOculto").val(),
+	"ajax": "ajax/tabla-ordencorte.ajax.php?perfil=" + $("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
 	"deferRender": true,
 	"retrieve": true,
 	"processing": true,
@@ -35,7 +46,7 @@ $('.tablaOrdenCorte').DataTable({
 	}
 
 });
-
+}
 
 
 /* 
@@ -769,3 +780,93 @@ $(".tablaOrdenCorte").on("click", ".btnReporteOC", function () {
     window.location = "vistas/reportes_excel/rpt_ordencorte.php?codigo=" + codigo;
   
 })
+
+
+/*=============================================
+RANGO DE FECHAS
+=============================================*/
+
+$("#daterange-btnCorte").daterangepicker(
+    {
+      cancelClass: "CancelarCorte",
+      ranges: {
+        Hoy: [moment(), moment()],
+        Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+        "Últimos 7 días": [moment().subtract(6, "days"), moment()],
+        "Últimos 30 días": [moment().subtract(29, "days"), moment()],
+        "Este mes": [moment().startOf("month"), moment().endOf("month")],
+        "Último mes": [
+          moment()
+            .subtract(1, "month")
+            .startOf("month"),
+          moment()
+            .subtract(1, "month")
+            .endOf("month")
+        ]
+      },
+      
+      startDate: moment(),
+      endDate: moment()
+    },
+    function(start, end) {
+      $("#daterange-btnCorte span").html(
+        start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
+      );
+  
+      var fechaInicial = start.format("YYYY-MM-DD");
+  
+      var fechaFinal = end.format("YYYY-MM-DD");
+  
+      var capturarRango3 = $("#daterange-btnCorte span").html();
+  
+      localStorage.setItem("capturarRango3", capturarRango3);
+      localStorage.setItem("fechaInicial", fechaInicial);
+      localStorage.setItem("fechaFinal", fechaFinal);
+      // Recargamos la tabla con la información para ser mostrada en la tabla
+      $(".tablaOrdenCorte").DataTable().destroy();
+      cargarTablaCortes(fechaInicial, fechaFinal);
+    });
+  
+  /*=============================================
+  CANCELAR RANGO DE FECHAS
+  =============================================*/
+  
+  $(".daterangepicker.opensleft .range_inputs .CancelarCorte").on(
+    "click",
+    function() {
+      localStorage.removeItem("capturarRango3");
+      localStorage.removeItem("fechaInicial");
+    	localStorage.removeItem("fechaFinal");
+      localStorage.clear();
+      window.location = "ordencorte";
+    }
+  );
+  
+  /*=============================================
+  CAPTURAR HOY
+  =============================================*/
+  
+  $(".daterangepicker.opensleft .ranges li").on("click", function() {
+    var textoHoy = $(this).attr("data-range-key");
+  
+    if (textoHoy == "Hoy") {
+      var d = new Date();
+  
+      var dia = d.getDate();
+      var mes = d.getMonth() + 1;
+      var año = d.getFullYear();
+  
+      dia = ("0" + dia).slice(-2);
+      mes = ("0" + mes).slice(-2);
+  
+      var fechaInicial = año + "-" + mes + "-" + dia;
+      var fechaFinal = año + "-" + mes + "-" + dia;
+  
+      localStorage.setItem("capturarRango3", "Hoy");
+      localStorage.setItem("fechaInicial", fechaInicial);
+      localStorage.setItem("fechaFinal", fechaFinal);
+      // Recargamos la tabla con la información para ser mostrada en la tabla
+      $(".tablaOrdenCorte").DataTable().destroy();
+      cargarTablaCortes(fechaInicial, fechaFinal);
+    }
+  });

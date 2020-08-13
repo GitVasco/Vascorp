@@ -211,4 +211,19 @@ class ControladorTalleres{
 
     }
 
+    
+/*=============================================
+	RANGO FECHAS
+	=============================================*/	
+
+	static public function ctrRangoFechasTalleres($fechaInicial, $fechaFinal){
+
+		$tabla = "entallerjf";
+
+		$respuesta = ModeloTalleres::mdlRangoFechasTalleres($tabla, $fechaInicial, $fechaFinal);
+
+		return $respuesta;
+		
+	}
+
 }

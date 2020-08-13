@@ -13,7 +13,7 @@ class TablaOrdenCorte{
         $item = null;
         $valor = null;
 
-        $ordencorte = ControladorOrdenCorte::ctrMostrarOrdenCorte($item, $valor);
+        $ordencorte = ControladorOrdenCorte::ctrRangoFechasOrdenCortes($_GET["fechaInicial"],$_GET["fechaFinal"]);
 
         #var_dump("ordencorte", $ordencorte);
         if(count($ordencorte)>0){
