@@ -276,7 +276,7 @@ class ModeloAlmacenCorte{
 
 	static public function mdlRangoFechasAlmacenCortes($tabla, $fechaInicial, $fechaFinal){
 
-		if($fechaInicial == null){
+		if($fechaInicial == "null"){
 
 			$stmt = Conexion::conectar()->prepare("SELECT  
 			ac.id,

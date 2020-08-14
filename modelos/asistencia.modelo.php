@@ -172,7 +172,7 @@ class ModeloAsistencias{
 
 	static public function mdlRangoFechasAsistencias($tabla, $fechaInicial, $fechaFinal){
 
-		if($fechaInicial == null){
+		if($fechaInicial == "null"){
 
 			$stmt = Conexion::conectar()->prepare("SELECT a.*, t.nom_tra,t.ape_pat_tra,t.ape_mat_tra,p.nombre FROM $tabla a LEFT JOIN trabajadorjf t ON a.id_trabajador=t.cod_tra LEFT JOIN parajf p ON a.id_para=p.id ORDER BY a.id ASC");
 

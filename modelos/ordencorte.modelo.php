@@ -383,7 +383,7 @@ class ModeloOrdenCorte{
 
 	static public function mdlRangoFechasOrdenCortes($tabla, $fechaInicial, $fechaFinal){
 
-		if($fechaInicial == null){
+		if($fechaInicial == "null"){
 
 			$stmt = Conexion::conectar()->prepare("SELECT oc.codigo,
 			oc.usuario,

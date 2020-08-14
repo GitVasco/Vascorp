@@ -22,28 +22,28 @@
 
     <div class="box">
       <div class="box-header with-border">
-    <?php
-    $hoy= date("Y-m-d");
-    $marcoAsistencia=ControladorAsistencias::ctrMostrarPresente();
-    if($marcoAsistencia["fecha"] != $hoy){
-      
-      echo '
-        <form role="form" method="post">
-          <button type="submit" class="btn btn-primary " name="btnRegistrarAsistencia">
-            <i class="fa fa-plus-square"></i>
-            Registrar asistencias
+        <?php
+        $hoy= date("Y-m-d");
+        $marcoAsistencia=ControladorAsistencias::ctrMostrarPresente();
+        if($marcoAsistencia["fecha"] != $hoy){
+          
+          echo '
+            <form role="form" method="post">
+              <button type="submit" class="btn btn-primary col-md-2 " name="btnRegistrarAsistencia">
+                <i class="fa fa-plus-square"></i>
+                Registrar asistencias
 
-          </button>
-        </form>';
-    
-        if(isset($_POST["btnRegistrarAsistencia"])){
-          $crearAsistencia= new ControladorAsistencias();
-          $crearAsistencia-> ctrCrearAsistencia();
+              </button>
+            </form>';
+        
+            if(isset($_POST["btnRegistrarAsistencia"])){
+              $crearAsistencia= new ControladorAsistencias();
+              $crearAsistencia-> ctrCrearAsistencia();
+            }
+        
+          
         }
-     
-      
-    }
-      ?>
+          ?>
 
       <button type="button" class="btn btn-default pull-right" id="daterange-btnes">
 

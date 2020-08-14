@@ -378,7 +378,7 @@ class ModeloTalleres{
 
 	static public function mdlRangoFechasTalleres($tabla, $fechaInicial, $fechaFinal){
 
-		if($fechaInicial == null){
+		if($fechaInicial == "null"){
 
 			$stmt = Conexion::conectar()->prepare("SELECT et.id,
       et.sector,

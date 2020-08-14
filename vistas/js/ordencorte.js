@@ -4,10 +4,10 @@
 // Validamos que venga la variable capturaRango en el localStorage
 if (localStorage.getItem("capturaRango3") != null) {
 	$("#daterange-btnCorte span").html(localStorage.getItem("capturaRango3"));
-	cargarTablaCortes(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
+    cargarTablaCortes(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
 } else {
 	$("#daterange-btnCorte span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
-	cargarTablaCortes(null, null);
+    cargarTablaCortes(null,null);
 }
 
 
@@ -861,7 +861,7 @@ $("#daterange-btnCorte").daterangepicker(
     function() {
       localStorage.removeItem("capturarRango3");
       localStorage.removeItem("fechaInicial");
-    	localStorage.removeItem("fechaFinal");
+      localStorage.removeItem("fechaFinal");
       localStorage.clear();
       window.location = "ordencorte";
     }
