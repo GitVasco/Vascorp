@@ -109,6 +109,42 @@
                 </div>
 
                 <!--=====================================
+                TITULOS
+                ======================================-->
+                
+                <div class="box box-primary">
+
+                  <div class="row">
+
+                    <div class="col-xs-6">
+
+                      <label>Articulo</label>
+
+                    </div>
+
+                    <div class="col-xs-2">
+
+                      <label for="">Ord. Corte</label>
+
+                    </div>
+
+                    <div class="col-xs-2">
+
+                      <label for="">SinProg</label>
+
+                    </div>
+
+                    <div class="col-xs-2">
+
+                      <label for="">Mes</label>
+
+                    </div>
+
+                  </div>
+
+                </div>                
+
+                <!--=====================================
                 ENTRADA PARA AGREGAR ARTICULOS
                 ======================================-->
 
@@ -126,12 +162,25 @@
                     #var_dump("infoArticulo", $infoArticulo);
                     $prodArticulo = ControladorArticulos::ctrMostrarProduccion($value["articulo"]);
                     #var_dump($prodArticulo["prod"]);
+                    $vtaArticulo = ControladorArticulos::ctrMostrarVentas($value["articulo"]);
+                    #var_dump($prodArticulo["prod"]);
 
                     $ocAntiguo = $infoArticulo["ord_corte"] - $value["cantidad"];
                     #var_dump("ocAntiguo", $ocAntiguo);
 
-                    $proySum = $infoArticulo["proyeccion"] - ($infoArticulo["ord_corte"] + $infoArticulo["alm_corte"] + $infoArticulo["taller"] + $prodArticulo["prod"] + 50);
-                    var_dump($proySum);
+                    $proySum = $infoArticulo["proyeccion"] - ($infoArticulo["ord_corte"] + $infoArticulo["alm_corte"] + $infoArticulo["taller"] + $prodArticulo["prod"] +$value["cantidad"]);
+                    //var_dump($proySum);
+
+                    $pendienteReal = $proySum + $value["cantidad"];
+
+                    $stockG = $infoArticulo["stockG"];
+                    #var_dump($stockG);
+
+                    $ventasG = $vtaArticulo["vtas"] + $infoArticulo["pedidos"] ;
+
+                    $mes = ($stockG + $value["cantidad"]) / ( $ventasG * 1.3);
+                    #var_dump($mes);
+
                                         
                     echo '<div class="row" style="padding:5px 15px">
 
@@ -141,7 +190,7 @@
                         
                                 <span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarOC" articuloOC="'.$infoArticulo["articulo"].'"><i class="fa fa-times"></i></button></span>
                         
-                                <input type="text" class="form-control nuevaDescripcionProducto" articuloOC="'.$infoArticulo["articulo"].'" name="agregarOC" value="'.$infoArticulo["packing"].'" codigoAC="'.$infoArticulo["articulo"].'" readonly required>
+                                <input type="text" class="form-control nuevaDescripcionProducto input-sm" articuloOC="'.$infoArticulo["articulo"].'" name="agregarOC" value="'.$infoArticulo["packing"].'" codigoAC="'.$infoArticulo["articulo"].'" readonly required>
                         
                               </div>
                         
@@ -149,18 +198,57 @@
                         
                             <div class="col-xs-2">
                         
-                              <input type="number" class="form-control nuevaCantidadArticuloOC" name="nuevaCantidadArticuloOC" min="1" value="'.$value["cantidad"].'" ord_corte="'.$ocAntiguo.'" nuevoOrdCorte="'.$infoArticulo["ord_corte"].'" required>
+                              <input type="number" class="form-control nuevaCantidadArticuloOC input-sm" name="nuevaCantidadArticuloOC" id="nuevaCantidadArticuloOC" min="1" value="'.$value["cantidad"].'" ord_corte="'.$ocAntiguo.'" articulo="'.$infoArticulo["articulo"].'" nuevoOrdCorte="'.$infoArticulo["ord_corte"].'" required>
                         
-                            </div>
-                
-                      </div>';                  
+                            </div>';
+
+                    if($proySum > 0){
+
+                      echo '<div class="col-xs-2 pendiente">
+
+                              <input style="color:#008000; background-color:white;" type="text" class="form-control nuevoPendienteProy input-sm" name="'.$infoArticulo["articulo"].'" id="'.$infoArticulo["articulo"].'"  value="'.$proySum.'" pendienteReal="'.$pendienteReal.'" readonly></input>
+
+                            </div>';
+
+                    }else{
+
+                      echo '<div class="col-xs-2 pendiente">
+
+                              <input style="color:#FF0000; background-color:pink;" type="text" class="form-control nuevoPendienteProy input-sm" name="'.$infoArticulo["articulo"].'" id="'.$infoArticulo["articulo"].'"  value="'.$proySum.'" pendienteReal="'.$pendienteReal.'" readonly></input>
+
+                            </div>';                      
+
+
+                    }
+
+                    if(round($mes,2) < 2.1){
+
+                      echo '<div class="col-xs-2 mes">
+
+                              <input style="color:#8B0000; background-color:pink;" type="text" class="form-control nuevoMes input-sm" name="'.$infoArticulo["articulo"].'" id="'.$infoArticulo["articulo"].'M" value="'.round($mes,2).'" mesReal="'.round($mes,2).'" stockG="'.$stockG.'" ventasG="'.$ventasG.'" readonly>                
+
+                            </div>';                 
+
+                    }else{
+
+                      echo '<div class="col-xs-2 mes">
+
+                              <input style="color:#8B0000; background-color:white;" type="text" class="form-control nuevoMes input-sm" name="'.$infoArticulo["articulo"].'" id="'.$infoArticulo["articulo"].'M" value="'.round($mes,2).'" mesReal="'.round($mes,2).'" stockG="'.$stockG.'" ventasG="'.$ventasG.'" readonly>                
+
+                            </div>';                      
+
+                    }
+
+
+
+                    echo '</div>';                  
 
                   }
 
 
                 ?>                
 
-                </div>
+              </div>
 
                 <input type="hidden" id="listaArticulosOC" name="listaArticulosOC">                
 

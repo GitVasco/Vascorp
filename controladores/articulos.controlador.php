@@ -533,7 +533,7 @@ class controladorArticulos{
 	}
 
 	/* 
-	* MOSTRAR ARTICULOS PARA LA TABLA DE ORDENES DE CORTE
+	* MOSTRAR ARTICULOS PARA LA TABLA DE ORDENES DE CORTE - PRODUCCION
 	*/	
 	static public function ctrMostrarProduccion($valor){
 
@@ -542,6 +542,18 @@ class controladorArticulos{
 		return $respuesta;
 		
 	}	
+
+
+	/* 
+	* MOSTRAR ARTICULOS PARA LA TABLA DE ORDENES DE CORTE - VENTAS
+	*/	
+	static public function ctrMostrarVentas($valor){
+
+		$respuesta = ModeloArticulos::mdlMostrarVentas($valor);
+
+		return $respuesta;
+		
+	}		
 
 	/* 
 	* MOSTRAR ARTICULOS PARA LA TABLA URGENCIA

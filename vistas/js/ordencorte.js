@@ -308,6 +308,7 @@ $(".formularioOrdenCorte").on("change", "input.nuevaCantidadArticuloOC", functio
 
     var nuevoOrdCorte = Number($(this).attr("ord_corte")) + Number($(this).val());
     var articulo = $(this).attr("articulo");
+    console.log(articulo);
     var articuloM = articulo+'M';
     //console.log(articuloM);
 
@@ -316,6 +317,7 @@ $(".formularioOrdenCorte").on("change", "input.nuevaCantidadArticuloOC", functio
     .parent()
     .children(".pendiente")
     .children(".nuevoPendienteProy");
+    //console.log(pendiente);
 
     var pendienteReal = pendiente.attr("pendienteReal");
     //console.log(pendiente);
