@@ -14,6 +14,7 @@ $('.tablaAsistencias').DataTable({
     "deferRender": true,
     "retrieve": true,
     "processing": true,
+    "order": [[3, "desc"]],
     "language": {
 			"sProcessing":     "Procesando...",
 			"sLengthMenu":     "Mostrar _MENU_ registros",
@@ -59,33 +60,101 @@ $(".tablaAsistencias").on("click", ".btnEditarAsistencia", function () {
         processData: false,
         dataType: "json",
         success: function (respuesta) {
-
-            $("#editarCodigo").val(respuesta["id_trabajador"]);
-            $("#editarTrabajador").val(respuesta["nom_tra"]+" "+respuesta["ape_mat_tra"]+" "+respuesta["ape_pat_tra"]);
-            $("#editarMinutos").val(respuesta["minutos"]);
-            $("#editarPara").val(respuesta["para"]);
-            $("#editarTiempoPara").val(respuesta["tiempo_para"]);
-            $("#idAsistencia").val(respuesta["id"]);
-            $("#editarMinutos").attr("original",respuesta["minutos"]);
-            $("#editarMinutos").attr("original2",parseInt(respuesta["minutos"])+parseInt(respuesta["tiempo_para"]));
-
+          $(".para1").remove();
+          $(".para2").remove();
+          for (let i = 0; i < respuesta.length; i++) {
+              $(".paras").append('<div class="form-group col-lg-6 para1">'+
+              '<label ><strong>Para</strong></label>'+
+                '<div class="input-group">'+
+                '<span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>'+
+                  '<input type="text" name="editarParasNombre" id="editarParasNombre" class="form-control input-lg" value="'+respuesta[i]["nombre"]+'" readonly>'+
+                  '<input type="hidden" name="editarParas" id="editarParas" class="form-control input-lg" value="'+respuesta[i]["id"]+'">'+
+                  '<input type="hidden" name="idDetalle'+i+'" id="idDetalle'+i+'" class="form-control input-lg" value="'+respuesta[i]["idDetalle"]+'">'+
+                '</div>'+
+              '</div>'+
+            '<div class="form-group col-lg-6 para2">'+
+              '<label><strong>Tiempo de para(minutos)</strong></label>'+
+              '<div class="input-group">'+
+               '<span class="input-group-addon"><i class="fa fa-clock-o"></i></span>'+ 
+                '<input type="number" class="form-control input-lg" name="editarTiempoParas'+i+'" id="editarTiempoParas'+i+'" step="any" min="0" max="585" value="'+respuesta[i]["tiempo_para"]+'" required>'+
+              '</div>'+
+            '</div>');
+            $("#editarCodigo").val(respuesta[i]["id_trabajador"]);
+            $("#editarTrabajador").val(respuesta[i]["nom_tra"]+" "+respuesta[i]["ape_mat_tra"]+" "+respuesta[i]["ape_pat_tra"]);
+            $("#editarMinutos").val(respuesta[i]["minutos"]);
+            $("#editarPara").val(respuesta[i]["para"]);
+            $("#editarTiempoParas").val(respuesta[i]["tiempo_para"]);
+            $("#idAsistencia").val(respuesta[i]["id"]);
+            $("#cantidad").val(respuesta.length);
+            $("#editarMinutos").attr("original",respuesta[i]["minutos"]);
+            localStorage.setItem("cantidad", respuesta.length);
+            var suma = new Array(parseInt(respuesta[i]["tiempo_para"]));
+            console.log(suma);  
+          }
+          
+          
         }
 
     })
     
+    
 })
-
-$("#editarTiempoPara").change(function(){
-    if($("#editarMinutos").attr("original2")== "NaN"){
+$(document).ready(function(){
+  for (let index = 0; index < localStorage.getItem("cantidad"); index++) {
+    $(".paras").on("change","#editarTiempoParas"+index,function(){
         var nuevoValor=$("#editarMinutos").attr("original")-$(this).val();
         $("#editarMinutos").val(nuevoValor);
-    }else{
-        var nuevoValor2=$("#editarMinutos").attr("original2")-$(this).val();
-        $("#editarMinutos").val(nuevoValor2);
-    }
-    
-    
+      });
+    } 
+});
+
+
+/*=============================================
+EDITAR NUEVA PARA
+=============================================*/
+$(".tablaAsistencias").on("click", ".btnEditarPara", function () {
+
+  var idAsistencia = $(this).attr("idAsistencia");
+  var datos = new FormData();
+  datos.append("idAsistencia", idAsistencia);
+  
+  $.ajax({
+      url: "ajax/asistencias.ajax.php",
+      method: "POST",
+      data: datos,
+      cache: false,
+      contentType: false,
+      processData: false,
+      dataType: "json",
+      success: function (respuesta) {
+        for (let i = 0; i < respuesta.length; i++) {
+          $("#editarCodigo3").val(respuesta[i]["id_trabajador"]);
+          $("#editarTrabajador3").val(respuesta[i]["nom_tra"]+" "+respuesta[i]["ape_mat_tra"]+" "+respuesta[i]["ape_pat_tra"]);
+          $("#editarMinutos3").val(respuesta[i]["minutos"]);
+          $("#idAsistencia3").val(respuesta[i]["id"]);
+          $("#editarMinutos3").attr("original",respuesta[i]["minutos"]);
+          
+          $("#editarMinutos3").attr("original2",parseInt(respuesta[i]["minutos"])+parseInt(respuesta[i]["tiempo_para"]));
+        }
+      }
+
+  })
+  
 })
+
+
+$("#editarTiempoPara3").change(function(){
+  if($("#editarMinutos3").attr("original2")== "NaN"){
+      var nuevoValor=$("#editarMinutos3").attr("original")-$(this).val();
+      $("#editarMinutos3").val(nuevoValor);
+  }else{
+      var nuevoValor2=$("#editarMinutos3").attr("original")-$(this).val();
+      $("#editarMinutos3").val(nuevoValor2);
+  }
+  
+  
+})
+
 
 
 // ACTIVANDO-DESACTIVANDO ARTICULO
@@ -258,3 +327,59 @@ $("#daterange-btnes").daterangepicker(
     }
   });
   
+//   /* 
+// * AGREGANDO LOS ARTICULOS DE ORDEN DE CORTE A CORTE
+// */
+// $(".agregarPara").click( function () {
+
+//   $(this).removeClass("btn-primary agregarPara");
+//   $(this).addClass("btn-default");
+//   $(".paras").append('<div class="form-group col-lg-6">'+
+//   '<label ><strong>Para</strong></label>'+
+//     '<div class="input-group">'+
+//     '<span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>'+
+//       '<select name="editarParas" id="editarParas" class="form-control input-lg " data-live-search="true">'+
+//         '<option value="1">Seleccionar Para</option>'+
+//       '</select>'+
+//     '</div>'+
+//   '</div>'+
+// '<div class="form-group col-lg-4">'+
+//   '<label><strong>Tiempo de para</strong></label>'+
+//   '<div class="input-group">'+
+//    '<span class="input-group-addon"><i class="fa fa-clock-o"></i></span>'+ 
+//     '<input type="number" class="form-control input-lg" name="editarTiempoPara" id="editarTiempoPara" step="any" min="0" max="585" required>'+
+//   '</div>'+
+// '</div>'+
+// '<div class="form-group col-lg-2">'+
+//     '<div class="input-group" style="margin-top:30px">'+
+//       '<button type="button" class="btn btn-primary agregarPara"><i class="fa fa-plus" ></i></button>'+
+//     '</div>'+
+// '</div>');
+//   // var datos = new FormData();
+//   // datos.append("articuloAC", articuloAC);
+
+//   // $.ajax({
+
+//   //     url: "ajax/articulos.ajax.php",
+//   //     method: "POST",
+//   //     data: datos,
+//   //     cache: false,
+//   //     contentType: false,
+//   //     processData: false,
+//   //     dataType: "json",
+//   //     success: function (respuesta) {
+
+//   //         //console.log("respuesta", respuesta);
+
+//   //         var articulo = respuesta["articulo"];
+//   //         var packing = respuesta["packing"];
+//   //         var alm_corte = respuesta["alm_corte"];
+
+//   //         /* 
+//   //         todo: AGREGAR LOS CAMPOS
+//   //         */
+
+//   //         
+//   //     }
+//   //  })
+//   });

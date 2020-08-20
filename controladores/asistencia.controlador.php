@@ -10,19 +10,30 @@ class ControladorAsistencias{
 
         $tabla="trabajadorjf";
         $item=null;
-        $valor=null;
+		$valor=null;
+		$fecha=date("Y-m-d H:m:s");
+		$validar_fecha=date("l");	
 		$rpta_trabajador = ModeloTrabajador::mdlMostrarTrabajador($tabla,$item,$valor);
         foreach ($rpta_trabajador as $key => $value) {
 			if($value["estado"]=="Activo"){
+				
 				$tabla2="asistenciasjf";
-				$fecha=date("Y-m-d H:m:s");
-				$datos = array("fecha"=>$fecha,
+				if($validar_fecha=="Saturday"){
+					$datos = array("fecha"=>$fecha,
+							"minutos"=>255,
 							"id_trabajador"=>$value["cod_tra"]);
-           		$respuesta=ModeloAsistencias::mdlIngresarAsistencia($tabla2,$datos);
+				  	$respuesta=ModeloAsistencias::mdlIngresarAsistencia2($tabla2,$datos);
+				}else{
+				$datos = array("fecha"=>$fecha,
+						"id_trabajador"=>$value["cod_tra"]);
+				$respuesta=ModeloAsistencias::mdlIngresarAsistencia($tabla2,$datos);
+				}
+				   
 			}
-           
-        }
+		}
 
+		
+		
         if($respuesta == "ok"){
 
             echo'<script>
@@ -85,11 +96,63 @@ class ControladorAsistencias{
 			$tabla = "asistenciasjf";
 
 			$datos = array("minutos"=>$_POST["editarMinutos"],
-							"id_para"=>$_POST["editarPara"],
-							"tiempo_para"=>$_POST["editarTiempoPara"],
 							"id"=>$_POST["idAsistencia"]);
 
 			$respuesta = ModeloAsistencias::mdlEditarAsistencia($tabla, $datos);
+			$tabla2 = "asistencia_parajf";
+			$listaTiempos=$_POST["cantidad"];
+			for ($i=0; $i < $listaTiempos; $i++){ 
+				$datos2 = array("id"=>$_POST["idDetalle".$i],
+							"tiempo_para"=>$_POST["editarTiempoParas".$i],
+							"id_asistencia"=>$_POST["idAsistencia"]);
+				$respuesta2=ModeloAsistencias::mdlEditarAsistenciaPara($tabla2,$datos2);
+			}
+
+			
+			if($respuesta == "ok"){
+
+				echo'<script>
+
+				swal({
+						type: "success",
+						title: "La asistencia ha sido cambiada correctamente",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar"
+						}).then(function(result){
+								if (result.value) {
+
+								window.location = "asistencia";
+
+								}
+							})
+
+				</script>';
+
+			}
+		}
+
+	}
+
+	/*=============================================
+	EDITAR NUEVA PARA
+	=============================================*/
+
+	static public function ctrEditarPara(){
+
+		if(isset($_POST["editarMinutos3"])){
+			$tabla = "asistenciasjf";
+
+			$datos = array("minutos"=>$_POST["editarMinutos3"],
+							"id"=>$_POST["idAsistencia3"]);
+
+			$respuesta = ModeloAsistencias::mdlEditarAsistencia($tabla, $datos);
+			$tabla2 = "asistencia_parajf";
+
+			$datos2 = array("id_para"=>$_POST["editarPara3"],
+							"tiempo_para"=>$_POST["editarTiempoPara3"],
+							"id_asistencia"=>$_POST["idAsistencia3"]);
+
+			$respuesta2=ModeloAsistencias::mdlIngresarAsistenciaPara($tabla2,$datos2);
 
 			if($respuesta == "ok"){
 

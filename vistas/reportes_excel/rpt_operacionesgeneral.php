@@ -18,7 +18,9 @@ mysql_select_db("new_vasco", $conexion);
 /* 
 * CONFIGURAMOS LA FECHA ACTUAL
 */
+date_default_timezone_set('America/Lima');
 $fechaactual = getdate();
+
 $fecha = date("d-m-Y");
 
 /* 

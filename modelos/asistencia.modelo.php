@@ -10,11 +10,64 @@ class ModeloAsistencias{
 
 	static public function mdlIngresarAsistencia($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_trabajador,fecha) VALUES (:id_trabajador,:fecha)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_trabajador,fecha) VALUES (:id_trabajador,:fecha) ");
 
 		$stmt->bindParam(":id_trabajador", $datos["id_trabajador"], PDO::PARAM_INT);
 		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
 
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+
+	/*=============================================
+	CREAR Asistencia SABADO
+	=============================================*/
+
+	static public function mdlIngresarAsistencia2($tabla, $datos){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_trabajador,minutos,fecha) VALUES (:id_trabajador,:minutos,:fecha) ");
+
+		$stmt->bindParam(":id_trabajador", $datos["id_trabajador"], PDO::PARAM_INT);
+		$stmt->bindParam(":minutos", $datos["minutos"], PDO::PARAM_INT);
+		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+	/*=============================================
+	CREAR Asistencia
+	=============================================*/
+
+	static public function mdlIngresarAsistenciaPara($tabla, $datos){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_asistencia,id_para,tiempo_para) VALUES (:id_asistencia,:id_para,:tiempo_para)");
+
+		$stmt -> bindParam(":id_asistencia", $datos["id_asistencia"], PDO::PARAM_INT);
+		$stmt -> bindParam(":id_para", $datos["id_para"], PDO::PARAM_INT);
+		$stmt -> bindParam(":tiempo_para", $datos["tiempo_para"], PDO::PARAM_INT);
+	
 		if($stmt->execute()){
 
 			return "ok";
@@ -38,19 +91,18 @@ class ModeloAsistencias{
 
 		if($item != null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT a.*, t.nom_tra,t.ape_pat_tra,t.ape_mat_tra,p.nombre FROM $tabla a LEFT JOIN trabajadorjf t ON a.id_trabajador=t.cod_tra LEFT JOIN parajf p ON a.id_para=p.id WHERE a.id = :id");
+			$stmt = Conexion::conectar()->prepare("SELECT a.*,p.nombre,ap.id as idDetalle,ap.tiempo_para, t.nom_tra,t.ape_pat_tra,t.ape_mat_tra FROM $tabla a LEFT JOIN trabajadorjf t ON a.id_trabajador=t.cod_tra LEFT JOIN asistencia_parajf ap ON a.id=ap.id_asistencia LEFT JOIN parajf p ON ap.id_para=p.id  WHERE a.id = :id");
 
 			$stmt -> bindParam(":id", $valor, PDO::PARAM_INT);
 
 			$stmt -> execute();
 
-			return $stmt -> fetch();
+			return $stmt -> fetchAll();
 
 		}else{
 
 			$stmt = Conexion::conectar()->prepare(
-				"SELECT a.*, t.nom_tra,t.ape_pat_tra,t.ape_mat_tra,p.nombre FROM $tabla a LEFT JOIN trabajadorjf t ON a.id_trabajador=t.cod_tra
-				LEFT JOIN parajf p ON a.id_para=p.id");
+				"SELECT a.*,ap.id_asistencia, t.nom_tra,t.ape_pat_tra,t.ape_mat_tra FROM $tabla a LEFT JOIN trabajadorjf t ON a.id_trabajador=t.cod_tra  ");
 
 			$stmt -> execute();
 
@@ -70,12 +122,37 @@ class ModeloAsistencias{
 
 	static public function mdlEditarAsistencia($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET minutos = :minutos, id_para = :id_para, tiempo_para = :tiempo_para WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET minutos = :minutos , estado_para = 1 WHERE id = :id");
 
 		$stmt -> bindParam(":minutos", $datos["minutos"], PDO::PARAM_STR);
-		$stmt -> bindParam(":id_para", $datos["id_para"], PDO::PARAM_INT);
-		$stmt -> bindParam(":tiempo_para", $datos["tiempo_para"], PDO::PARAM_INT);
 		$stmt -> bindParam(":id", $datos["id"], PDO::PARAM_INT);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+
+		/*=============================================
+	EDITAR Asistencia y para
+	=============================================*/
+
+	static public function mdlEditarAsistenciaPara($tabla, $datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET tiempo_para = :tiempo_para WHERE id_asistencia = :id_asistencia AND id = :id");
+
+		$stmt -> bindParam(":id", $datos["id"], PDO::PARAM_INT);
+		$stmt -> bindParam(":tiempo_para", $datos["tiempo_para"], PDO::PARAM_INT);
+		$stmt -> bindParam(":id_asistencia", $datos["id_asistencia"], PDO::PARAM_INT);
 
 		if($stmt->execute()){
 
@@ -174,7 +251,7 @@ class ModeloAsistencias{
 
 		if($fechaInicial == "null"){
 
-			$stmt = Conexion::conectar()->prepare("SELECT a.*, t.nom_tra,t.ape_pat_tra,t.ape_mat_tra,p.nombre FROM $tabla a LEFT JOIN trabajadorjf t ON a.id_trabajador=t.cod_tra LEFT JOIN parajf p ON a.id_para=p.id ORDER BY a.id ASC");
+			$stmt = Conexion::conectar()->prepare("SELECT a.*, t.nom_tra,t.ape_pat_tra,t.ape_mat_tra FROM $tabla a LEFT JOIN trabajadorjf t ON a.id_trabajador=t.cod_tra ORDER BY id DESC");
 
 			$stmt -> execute();
 
@@ -183,7 +260,7 @@ class ModeloAsistencias{
 
 		}else if($fechaInicial == $fechaFinal){
 
-			$stmt = Conexion::conectar()->prepare("SELECT a.*, t.nom_tra,t.ape_pat_tra,t.ape_mat_tra,p.nombre FROM $tabla a LEFT JOIN trabajadorjf t ON a.id_trabajador=t.cod_tra LEFT JOIN parajf p ON a.id_para=p.id  WHERE a.fecha like '%$fechaFinal%'");
+			$stmt = Conexion::conectar()->prepare("SELECT a.*, t.nom_tra,t.ape_pat_tra,t.ape_mat_tra FROM $tabla a LEFT JOIN trabajadorjf t ON a.id_trabajador=t.cod_tra WHERE a.fecha like '%$fechaFinal%'");
 
 			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 
@@ -203,12 +280,12 @@ class ModeloAsistencias{
 
 			if($fechaFinalMasUno == $fechaActualMasUno){
 
-				$stmt = Conexion::conectar()->prepare("SELECT a.*, t.nom_tra,t.ape_pat_tra,t.ape_mat_tra,p.nombre FROM $tabla a LEFT JOIN trabajadorjf t ON a.id_trabajador=t.cod_tra LEFT JOIN parajf p ON a.id_para=p.id WHERE a.fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'");
+				$stmt = Conexion::conectar()->prepare("SELECT a.*, t.nom_tra,t.ape_pat_tra,t.ape_mat_tra FROM $tabla a LEFT JOIN trabajadorjf t ON a.id_trabajador=t.cod_tra WHERE a.fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'");
 
 			}else{
 
 
-				$stmt = Conexion::conectar()->prepare("SELECT a.*, t.nom_tra,t.ape_pat_tra,t.ape_mat_tra,p.nombre FROM $tabla a LEFT JOIN trabajadorjf t ON a.id_trabajador=t.cod_tra LEFT JOIN parajf p ON a.id_para=p.id WHERE a.fecha BETWEEN '$fechaInicial' AND '$fechaFinal'");
+				$stmt = Conexion::conectar()->prepare("SELECT a.*, t.nom_tra,t.ape_pat_tra,t.ape_mat_tra FROM $tabla a LEFT JOIN trabajadorjf t ON a.id_trabajador=t.cod_tra WHERE a.fecha BETWEEN '$fechaInicial' AND '$fechaFinal'");
 
 			}
 		

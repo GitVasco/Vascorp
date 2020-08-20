@@ -37,8 +37,13 @@ class TablaAsistencia{
         }
         /*=============================================
         TRAEMOS LAS ACCIONES
-        =============================================*/         
-        $botones =  "<div class='btn-group'><button class='btn btn-danger btnEditarAsistencia' idAsistencia='".$asistencia[$i]["id"]."' data-toggle='modal' data-target='#modalEditarAsistencia' title='Editar para'><i class='fa fa-exclamation-triangle'></i></button><button class='btn btn-success btnEditarExtras' idAsistencia='".$asistencia[$i]["id"]."' data-toggle='modal' data-target='#modalEditarExtras' title='Editar horas extras'><i class='fa fa-clock-o'></i></button></div>"; 
+        =============================================*/      
+        if($asistencia[$i]["estado_para"] == 1) {
+            $botones =  "<div class='btn-group'><button class='btn btn-danger btnEditarAsistencia' idAsistencia='".$asistencia[$i]["id"]."' data-toggle='modal' data-target='#modalEditarAsistencia' title='Editar para'><i class='fa fa-exclamation-triangle'></i></button><div class='btn-group'><button class='btn btn-primary btnEditarPara' idAsistencia='".$asistencia[$i]["id"]."' data-toggle='modal' data-target='#modalEditarPara' title='Editar nueva para'><i class='fa fa-plus'></i></button><button class='btn btn-success btnEditarExtras' idAsistencia='".$asistencia[$i]["id"]."' data-toggle='modal' data-target='#modalEditarExtras' title='Editar horas extras'><i class='fa fa-clock-o'></i></button></div>"; 
+        }else{
+            $botones =  "<button class='btn btn-primary btnEditarPara' idAsistencia='".$asistencia[$i]["id"]."' data-toggle='modal' data-target='#modalEditarPara' title='Editar nueva para'><i class='fa fa-plus'></i></button><button class='btn btn-success btnEditarExtras' idAsistencia='".$asistencia[$i]["id"]."' data-toggle='modal' data-target='#modalEditarExtras' title='Editar horas extras'><i class='fa fa-clock-o'></i></button></div>"; 
+        }
+        
         
 
             $datosJson .= '[
@@ -47,8 +52,6 @@ class TablaAsistencia{
             "'.$imagen.'",
             "'.date("Y-m-d", strtotime($asistencia[$i]["fecha"])).'",
             "'.$asistencia[$i]["minutos"].'",
-            "'.$asistencia[$i]["nombre"].'",
-            "'.$asistencia[$i]["tiempo_para"].'",
             "'.$asistencia[$i]["horas_extras"].'",
             "'.$botones.'"
             ],';        
