@@ -12,10 +12,10 @@ class TablaAlmacenCorte{
 
         $valor = null;
 
-        $almacencorte = ControladorAlmacenCorte::ctrMostrarAlmacenCorte($valor);
+        $almacencorte = ControladorAlmacenCorte::ctrRangoFechasAlmacenCortes($_GET["fechaInicial"],$_GET["fechaFinal"]);	
 
         #var_dump("almacencorte", $almacencorte);
-
+        if(count($almacencorte)>0){
         $datosJson = '{
             "data": [';
     
@@ -66,7 +66,14 @@ class TablaAlmacenCorte{
                 }';
     
             echo $datosJson;        
+            }else{
 
+                echo '{
+                    "data":[]
+                }';
+                return;
+
+            }
 
     }
 

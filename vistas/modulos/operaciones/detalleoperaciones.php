@@ -28,7 +28,7 @@
             <i class="fa fa-plus-square"></i> Agregar operación modelo
           </a>  
         </div>
-        <div class="col-md-3 col-md-offset-6 ">
+        <div class=" pull-right ">
           <button class="btn btn-success btnReporteOG">
             <i class="fa fa-print "></i> Reporte Operaciones - General
           </button>

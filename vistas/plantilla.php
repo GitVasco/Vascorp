@@ -110,6 +110,7 @@ session_start();
 
   <!-- ChartJS http://www.chartjs.org/-->
   <script src="vistas/bower_components/Chart.js/Chart.js"></script>
+  <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment-with-locales.min.js"></script>
 
 </head>
 
@@ -183,6 +184,7 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "urgenciasamp" ||
                   $_GET["ruta"] == "en-cortes" ||
                   $_GET["ruta"] == "en-taller" ||
+                  $_GET["ruta"] == "asistencia" ||
                   $_GET["ruta"] == "en-tallert" ||
                   $_GET["ruta"] == "marcar-taller"){
 
@@ -284,6 +286,7 @@ CUERPO DOCUMENTO
   <script src="vistas/js/talleres.js"></script>
   <script src="vistas/js/sectores.js"></script>
   <script src="vistas/js/paras.js"></script>
+  <script src="vistas/js/asistencias.js"></script>
 
 
 

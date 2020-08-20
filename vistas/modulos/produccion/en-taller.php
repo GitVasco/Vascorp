@@ -21,7 +21,31 @@
   <section class="content">
 
     <div class="box">
+      <div class="box-header with-border">
+        <button type="button" class="btn btn-default pull-right" id="daterange-btnTaller">
+          <span>
+            <i class="fa fa-calendar"></i>
 
+            <?php
+
+              if(isset($_GET["fechaInicial"])){
+
+                echo $_GET["fechaInicial"]." - ".$_GET["fechaFinal"];
+
+              }else{
+              
+                echo 'Rango de fecha';
+
+              }
+
+            ?>
+
+          </span>
+
+          <i class="fa fa-caret-down"></i>
+
+        </button>
+      </div>
       <div class="box-body">
 
         <input type="hidden" value="<?= $_SESSION["perfil"]; ?>" id="perfilOculto">

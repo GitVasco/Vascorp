@@ -13,6 +13,7 @@ class TablaTalleresT{
         $valor = null;
 
         $talleres = ControladorTalleres::ctrMostrarTalleresTerminado($valor);
+        if(count($talleres)>0){
 
         #var_dump("almacencorte", $talleres);
 
@@ -60,7 +61,14 @@ class TablaTalleresT{
                 }';
 
             echo $datosJson;
+            }else{
 
+                echo '{
+                    "data":[]
+                }';
+                return;
+
+            }
 
     }
 

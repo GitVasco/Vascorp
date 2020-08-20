@@ -43,8 +43,13 @@
                     </button>
           
                   </a>
-          
-                </div>';
+                  <div class=" pull-right ">
+                  <button class="btn btn-outline-success btnReporteTarjeta" style="border:green 1px solid">
+                    <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Tarjetas - General
+                  </button>
+                </div>
+                </div>
+                ';
       }
 
       ?>

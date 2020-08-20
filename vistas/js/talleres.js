@@ -1,8 +1,19 @@
 /*
 * CARGAR TABLA TALLERES EN GENERAL
 */
+// Validamos que venga la variable capturaRango en el localStorage
+if (localStorage.getItem("capturaRango5") != null) {
+	$("#daterange-btnTaller span").html(localStorage.getItem("capturaRango5"));
+	cargarTablaTalleres(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
+} else {
+	$("#daterange-btnTaller span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
+	cargarTablaTalleres(null, null);
+}
+
+
+function cargarTablaTalleres(fechaInicial, fechaFinal){
 $('.tablaTalleresG').DataTable({
-	"ajax": "ajax/tabla-talleresGeneral.ajax.php?perfil=" + $("#perfilOculto").val(),
+	"ajax": "ajax/tabla-talleresGeneral.ajax.php?perfil=" + $("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
 	"deferRender": true,
 	"retrieve": true,
 	"processing": true,
@@ -37,7 +48,7 @@ $('.tablaTalleresG').DataTable({
 	}
 
 });
-
+}
 /*
 * CARGAR TABLA TALLERES EN TERMINADO
 */
@@ -219,3 +230,118 @@ $(".tablaTalleresG").on("click", ".btnEditarTallerG", function () {
 	
 
 })
+
+
+/*=============================================
+RANGO DE FECHAS
+=============================================*/
+moment.locale('es');
+$("#daterange-btnTaller").daterangepicker(
+    {
+	  cancelClass: "CancelarTaller",
+	  locale:{
+		"daysOfWeek": [
+			"Dom",
+			"Lun",
+			"Mar",
+			"Mie",
+			"Jue",
+			"Vie",
+			"Sab"
+		],
+		"monthNames": [
+			"Enero",
+			"Febrero",
+			"Marzo",
+			"Abril",
+			"Mayo",
+			"Junio",
+			"Julio",
+			"Agosto",
+			"Septiembre",
+			"Octubre",
+			"Noviembre",
+			"Diciembre"
+		],
+	  },
+      ranges: {
+        Hoy: [moment(), moment()],
+        Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+        "Últimos 7 días": [moment().subtract(6, "days"), moment()],
+        "Últimos 30 días": [moment().subtract(29, "days"), moment()],
+        "Este mes": [moment().startOf("month"), moment().endOf("month")],
+        "Último mes": [
+          moment()
+            .subtract(1, "month")
+            .startOf("month"),
+          moment()
+            .subtract(1, "month")
+            .endOf("month")
+        ]
+      },
+      
+      startDate: moment(),
+      endDate: moment()
+    },
+    function(start, end) {
+      $("#daterange-btnTaller span").html(
+        start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
+      );
+  
+      var fechaInicial = start.format("YYYY-MM-DD");
+  
+      var fechaFinal = end.format("YYYY-MM-DD");
+  
+      var capturarRango5 = $("#daterange-btnTaller span").html();
+  
+      localStorage.setItem("capturarRango5", capturarRango5);
+      localStorage.setItem("fechaInicial", fechaInicial);
+      localStorage.setItem("fechaFinal", fechaFinal);
+      // Recargamos la tabla con la información para ser mostrada en la tabla
+      $(".tablaTalleresG").DataTable().destroy();
+      cargarTablaTalleres(fechaInicial, fechaFinal);
+    });
+  
+  /*=============================================
+  CANCELAR RANGO DE FECHAS
+  =============================================*/
+  
+  $(".daterangepicker.opensleft .range_inputs .CancelarTaller").on(
+    "click",
+    function() {
+      localStorage.removeItem("capturarRango5");
+      localStorage.removeItem("fechaInicial");
+    	localStorage.removeItem("fechaFinal");
+      localStorage.clear();
+      window.location = "en-taller";
+    }
+  );
+  
+  /*=============================================
+  CAPTURAR HOY
+  =============================================*/
+  
+  $(".daterangepicker.opensleft .ranges li").on("click", function() {
+    var textoHoy = $(this).attr("data-range-key");
+  
+    if (textoHoy == "Hoy") {
+      var d = new Date();
+  
+      var dia = d.getDate();
+      var mes = d.getMonth() + 1;
+      var año = d.getFullYear();
+  
+      dia = ("0" + dia).slice(-2);
+      mes = ("0" + mes).slice(-2);
+  
+      var fechaInicial = año + "-" + mes + "-" + dia;
+      var fechaFinal = año + "-" + mes + "-" + dia;
+  
+      localStorage.setItem("capturarRango5", "Hoy");
+      localStorage.setItem("fechaInicial", fechaInicial);
+      localStorage.setItem("fechaFinal", fechaFinal);
+      // Recargamos la tabla con la información para ser mostrada en la tabla
+      $(".tablaTalleresG").DataTable().destroy();
+      cargarTablaTalleres(fechaInicial, fechaFinal);
+    }
+  });

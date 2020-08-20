@@ -16,6 +16,7 @@ class TablaTarjetas{
         $valor = null;
 
         $tarjetas = ControladorTarjetas::ctrMostrarTarjetas($item, $valor);	
+        if(count($tarjetas)>0){
 
         $datosJson = '{
             "data": [';
@@ -107,7 +108,14 @@ class TablaTarjetas{
     
             echo $datosJson;        
 
+            }else{
 
+                echo '{
+                    "data":[]
+                }';
+                return;
+
+            }
 
     }
 

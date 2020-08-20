@@ -15,6 +15,7 @@ class TablaClientes{
         $valor = null;
 
         $clientes = ControladorClientes::ctrMostrarClientes($item, $valor);	
+        if(count($clientes)>0){
 
         $datosJson = '{
         "data": [';
@@ -85,7 +86,14 @@ class TablaClientes{
             }';
 
         echo $datosJson;
+        }else{
 
+            echo '{
+                "data":[]
+            }';
+            return;
+
+        }
     }
 
 }

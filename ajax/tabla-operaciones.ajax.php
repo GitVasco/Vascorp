@@ -15,6 +15,7 @@ class TablaOperaciones{
         $valor = null;
 
         $operaciones = ControladorOperaciones::ctrMostrarOperaciones($item, $valor);	
+        if(count($operaciones)>0){
 
         $datosJson = '{
         "data": [';
@@ -41,7 +42,14 @@ class TablaOperaciones{
             }';
 
         echo $datosJson;
+        }else{
 
+            echo '{
+                "data":[]
+            }';
+            return;
+
+        }
     }
 
     

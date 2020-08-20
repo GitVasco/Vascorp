@@ -13,6 +13,7 @@ class TablaMovimientos{
     public function mostrarTablaMovimientos(){
 
         $movimientos = ControladorMovimientos::ctrMostrarTotales();	
+        if(count($movimientos)>0){
 
         $datosJson = '{
         "data": [';
@@ -51,9 +52,15 @@ class TablaMovimientos{
                 }';
 
             echo $datosJson;
+            }else{
 
+                echo '{
+                    "data":[]
+                }';
+                return;
+
+            }
     }
-
 }
 
 /*=============================================

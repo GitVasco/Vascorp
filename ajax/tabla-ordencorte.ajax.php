@@ -12,10 +12,10 @@ class TablaOrdenCorte{
 
         $item = null;
         $valor = null;
-
-        $ordencorte = ControladorOrdenCorte::ctrMostrarOrdenCorte($item, $valor);
-
-        #var_dump("ordencorte", $ordencorte);
+        $ordencorte = ControladorOrdenCorte::ctrRangoFechasOrdenCortes($_GET["fechaInicial"],$_GET["fechaFinal"]);
+        // $ordencorte = ControladorOrdenCorte::ctrRangoFechasOrdenCortes($item,$valor);
+        
+        if(count($ordencorte)>0){
 
         $datosJson = '{
             "data": [';
@@ -88,7 +88,14 @@ class TablaOrdenCorte{
                 }';
     
             echo $datosJson;        
+            }else{
 
+                echo '{
+                    "data":[]
+                }';
+                return;
+
+            }
 
     }
 

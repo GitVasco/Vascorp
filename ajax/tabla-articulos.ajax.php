@@ -17,7 +17,7 @@ class TablaArticulos{
         $valor = null;
 
         $articulos = ControladorArticulos::ctrMostrarArticulos($valor);	
-
+        if(count($articulos)>0){
         $datosJson = '{
         "data": [';
 
@@ -123,7 +123,14 @@ class TablaArticulos{
             }';
 
         echo $datosJson;
+        }else{
 
+            echo '{
+                "data":[]
+            }';
+            return;
+
+        }
     }
 
 }

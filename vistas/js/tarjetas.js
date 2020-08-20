@@ -732,5 +732,13 @@ $(".tablaTarjetas").on("click", ".btnVisualizarTarjeta", function () {
 
 });
 
+/* 
+* BOTON REPORTE DE OPERACIONES X MODELO
+*/
+$(".box").on("click", ".btnReporteTarjeta", function () {
+
+    window.location = "vistas/reportes_excel/rpt_tarjeta_articulo.php";
+  
+})
 
 

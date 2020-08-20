@@ -14,6 +14,7 @@ class TablaCortes{
         $valor2 = null;
 
         $cortes = ControladorCortes::ctrMostrarCortes($valor1, $valor2);
+        if(count($cortes)>0){
 
         #var_dump("almacencorte", $cortes);
 
@@ -57,7 +58,14 @@ class TablaCortes{
                 }';
 
             echo $datosJson;
+            }else{
 
+                echo '{
+                    "data":[]
+                }';
+                return;
+    
+            }
 
     }
 
