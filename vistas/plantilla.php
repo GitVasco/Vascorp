@@ -228,6 +228,10 @@ CUERPO DOCUMENTO
 
               include "modulos/".$_GET["ruta"].".php";
 
+        }else if($_GET["ruta"] == "leer-stock" ||
+        $_GET["ruta"] == "cargas-automaticas"){
+          include "reportes_excel/".$_GET["ruta"].".php";
+
         }else{
 
           include "modulos/404.php";

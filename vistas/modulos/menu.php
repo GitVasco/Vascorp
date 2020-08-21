@@ -102,7 +102,18 @@
             
                                     </a>
             
-                                </li>                                 
+                                </li>  
+                                
+                                <li>
+            
+                                    <a href="cargas-automaticas">
+            
+                                        <i class="fa fa-circle-o"></i>
+                                        <span>Cargas automaticas</span>
+            
+                                    </a>
+            
+                                </li>  
 
                             </ul>
             
