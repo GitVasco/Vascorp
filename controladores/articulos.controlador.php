@@ -619,16 +619,14 @@ class controladorArticulos{
 			if(strncmp($nombre,$_FILES["archivoxls"]["name"],5) === 0){
 				
 				include "/../vistas/reportes_excel/Excel/reader.php";
-				$directorio="/../vistas/cargas";
-				$archivo=move_uploaded_file($_FILES["archivoxls"]['name'], $directorio);
-
+				$directorio="vistas/cargas/".$_FILES["archivoxls"]["name"];
+				$archivo=move_uploaded_file($_FILES["archivoxls"]['tmp_name'], $directorio);
 				$data = new Spreadsheet_Excel_Reader();
 				$data->setOutputEncoding('CP1251');
-				$data->read("/../vistas/cargas/".$_FILES["archivoxls"]["name"]);
+				$data->read("vistas/cargas/".$_FILES["archivoxls"]["name"]);
 				$conexion = mysql_connect("192.168.1.3", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
 				mysql_select_db("new_vasco", $conexion);
 				for ($i = 2; $i <= $data->sheets[0]['numRows']; $i++) {
-					echo("<tr>");
 					for ($j = 1; $j <= 1; $j++) {
 					if(strlen($data->sheets[0]['cells'][$i][1])==7){
 					$sqlDetalle = mysql_query("UPDATE articulojf SET stock=".$data->sheets[0]['cells'][$i][11].
@@ -679,6 +677,101 @@ class controladorArticulos{
 		}
 	}
 
+	static public function ctrCambiarMovimientos(){
+
+        if(isset($_POST["importmovimiento"])){
+			include "/../vistas/reportes_excel/Excel/reader.php";
+			$directorio="vistas/cargas/".$_FILES["archivoxlsmovimiento"]["name"];
+			$archivo=move_uploaded_file($_FILES["archivoxlsmovimiento"]['tmp_name'], $directorio);
+			$data = new Spreadsheet_Excel_Reader();
+			$data->setOutputEncoding('CP1251');
+			$data->read("vistas/cargas/".$_FILES["archivoxlsmovimiento"]["name"]);
+			$conexion = mysql_connect("192.168.1.3", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
+			mysql_select_db("new_vasco", $conexion);
+			$sqlEliminar = mysql_query("DELETE FROM movimientosjf WHERE fecha = DATE(NOW()) OR fecha = DATE(NOW()) - INTERVAL 1 DAY");
+			for ($i = 2; $i <= $data->sheets[0]['numRows']; $i++) {
+				for ($j = 1; $j <= 1; $j++) {
+					
+					$tipo=$data->sheets[0]['cells'][$i][1];
+					$documento=$data->sheets[0]['cells'][$i][2];
+					$mes=substr($data->sheets[0]['cells'][$i][3],3,3);
+					if($mes=="Jan"){
+						$num="01";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][3]);
+					}else if($mes=="Feb"){
+						$num="02";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][3]);
+					}else if($mes=="Mar"){
+						$num="03";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][3]);
+					}else if($mes=="Apr"){
+						$num="04";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][3]);
+					}else if($mes=="May"){
+						$num="05";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][3]);
+					}else if($mes=="Jun"){
+						$num="06";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][3]);
+					}else if($mes=="Jul"){
+						$num="07";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][3]);
+					}else if($mes=="Aug"){
+						$num="08";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][3]);
+					}else if($mes=="Sep"){
+						$num="09";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][3]);
+					}else if($mes=="Oct"){
+						$num="10";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][3]);
+					}else if($mes=="Nov"){
+						$num="11";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][3]);
+					}else if($mes=="Dec"){
+						$num="12";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][3]);
+					}
+					if(strlen($data->sheets[0]['cells'][$i][4])==7){
+						$codArt="1".$data->sheets[0]['cells'][$i][4];
+					}else{
+						$codArt="B".$data->sheets[0]['cells'][$i][4];
+					}
+					if($data->sheets[0]['cells'][$i][1] == "E20"){
+						$taller=substr($data->sheets[0]['cells'][$i][2],0,2);
+					}
+					else{
+						$taller=0;
+					}
+					$linea=$data->sheets[0]['cells'][$i][6];
+					$almacen=$data->sheets[0]['cells'][$i][7];
+					$cliente=$data->sheets[0]['cells'][$i][8];
+					$vendedor=$data->sheets[0]['cells'][$i][9];
+					$cantidad=$data->sheets[0]['cells'][$i][10];
+					$precio=$data->sheets[0]['cells'][$i][15];
+					$dscto1=$data->sheets[0]['cells'][$i][18];
+					$dscto2=$data->sheets[0]['cells'][$i][19];
+					$nombre=$data->sheets[0]['cells'][$i][28];
+					$total=($data->sheets[0]['cells'][$i][10]*$data->sheets[0]['cells'][$i][15]*((100-$data->sheets[0]['cells'][$i][18])/100))*((100-$data->sheets[0]['cells'][$i][19])/100);
+					$sqlInsertar = mysql_query("INSERT INTO movimientosjf (tipo,documento,taller,fecha,articulo,linea,cliente,vendedor,cantidad,precio,dscto1,dscto2,total,nombre_tipo,almacen)  values(".$tipo.",".$documento.",".$taller.",".$fecha.",".$codArt.",".$linea.",".$cliente.",".$vendedor.",".$cantidad.",".$precio.",".$dscto1.",".$dscto2.",".$total.",".$nombre.",".$almacen.")");
+				}
+			
+			}
+				
+			// 	// }else {
+			// 	//   $sqlDetalle = mysql_query("UPDATE articulojf SET stock=".$data->sheets[0]['cells'][$i][11].
+			// 	//   " WHERE articulo="."B".$data->sheets[0]['cells'][$i][1]) or die(mysql_error());
+				
+			// 	// }
+			// 	}
+			// 	echo("</tr>");
+
+			// }
+			// echo("</table>");
+
+		}
+
+	}
 
 }
 

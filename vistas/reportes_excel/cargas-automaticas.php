@@ -41,7 +41,7 @@
 
         ?>
         <div class="col-lg-2"></div>
-        <form role="form" method="POST" action="leer-stock" enctype="multipart/form-data">
+        <form role="form" method="POST" enctype="multipart/form-data">
           <div class="form-group col-lg-4">
             <label for=""><strong>LEER MOVIMIENTOS ACTUALES</strong></label>
             <input type="file" name="archivoxlsmovimiento" id="archivoxlsmovimiento" class="form-control" accept="application/vnd.ms-excel">
@@ -54,8 +54,8 @@
 
         <?php
 
-        // $actualizarMovimiento = new ControladorArticulos();
-        // $actualizarMovimiento->ctrCambiarStock();
+        $actualizarMovimiento = new ControladorArticulos();
+        $actualizarMovimiento->ctrCambiarMovimientos();
 
         ?>
 
