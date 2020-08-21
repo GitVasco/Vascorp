@@ -612,6 +612,72 @@ class controladorArticulos{
 		
 	}		
 	
+	static public function ctrCambiarStock(){
+
+        if(isset($_POST["import"])){
+			$nombre="STOCK";
+			if(strncmp($nombre,$_FILES["archivoxls"]["name"],5) === 0){
+				
+				include "/../vistas/reportes_excel/Excel/reader.php";
+				$directorio="/../vistas/cargas";
+				$archivo=move_uploaded_file($_FILES["archivoxls"]['name'], $directorio);
+
+				$data = new Spreadsheet_Excel_Reader();
+				$data->setOutputEncoding('CP1251');
+				$data->read("/../vistas/cargas/".$_FILES["archivoxls"]["name"]);
+				$conexion = mysql_connect("192.168.1.3", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
+				mysql_select_db("new_vasco", $conexion);
+				for ($i = 2; $i <= $data->sheets[0]['numRows']; $i++) {
+					echo("<tr>");
+					for ($j = 1; $j <= 1; $j++) {
+					if(strlen($data->sheets[0]['cells'][$i][1])==7){
+					$sqlDetalle = mysql_query("UPDATE articulojf SET stock=".$data->sheets[0]['cells'][$i][11].
+					" WHERE articulo="."1".$data->sheets[0]['cells'][$i][1]) or die(mysql_error());
+					
+					}else {
+					$sqlDetalle = mysql_query("UPDATE articulojf SET stock=".$data->sheets[0]['cells'][$i][11].
+					" WHERE articulo="."B".$data->sheets[0]['cells'][$i][1]) or die(mysql_error());
+					
+						}
+					}
+				}
+				echo'<script>
+
+				swal({
+					type: "success",
+					title: "El articulo ha sido editado correctamente",
+					showConfirmButton: true,
+					confirmButtonText: "Cerrar"
+					}).then(function(result){
+								if (result.value) {
+
+								window.location = "cargas-automaticas";
+
+								}
+							})
+
+				</script>';
+			}else{
+
+				echo'<script>
+
+					swal({
+						type: "error",
+						title: "¡El nombre de archivo no es correcto, debe ser STOCK.xls!",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar"
+						}).then(function(result){
+							if (result.value) {
+
+							window.location = "cargas-automaticas";
+
+							}
+						})
+
+				</script>';
+			}
+		}
+	}
 
 
 }
