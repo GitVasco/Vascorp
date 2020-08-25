@@ -35,6 +35,7 @@ class TablaMateriaPrima{
                 "'.$materiaprima[$i]["descripcion"].'",
                 "'.$materiaprima[$i]["color"].'",
                 "'.$materiaprima[$i]["stock"].'",
+                "'.$materiaprima[$i]["prom"].'",
                 "'.$materiaprima[$i]["unidad"].'",
                 "'.$materiaprima[$i]["cospro"].'",
                 "'.$botones.'"
