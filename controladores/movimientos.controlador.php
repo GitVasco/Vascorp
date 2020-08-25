@@ -129,7 +129,29 @@ class ControladorMovimientos{
 
         return $respuesta;
 
-    }         
+    }      
+    
+    /* 
+    * MOSTRAR LOS MOVIMIENTOS DE PRODUCCION POR MODELO
+    */
+    static public function ctrMovProdMod($modelo){
+
+        $respuesta = ModeloMovimientos::mdlMovProdMod($modelo);
+
+        return $respuesta;
+
+    }
+    
+    /* 
+    * MOSTRAR LOS MOVIMIENTOS DE VENTAS POR MODELO
+    */
+    static public function ctrMovVtaMod($modelo){
+
+        $respuesta = ModeloMovimientos::mdlMovVtaMod($modelo);
+
+        return $respuesta;
+
+    }    
     
 
 }

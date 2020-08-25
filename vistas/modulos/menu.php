@@ -135,7 +135,55 @@
                 $_SESSION["perfil"] == "Costos"
             ) {
 
-                echo '<!-- maestros Joel -->
+                echo '<!-- INICIO Movimientos -->
+
+                        <li class="treeview">
+            
+                            <a href="#">
+            
+                                <i class="fa fa-line-chart"></i>
+            
+                                <span>Movimientos</span>
+            
+                                <span class="pull-right-container">
+            
+                                    <i class="fa fa-angle-left pull-right"></i>
+            
+                                </span>
+            
+                            </a>
+            
+                            <ul class="treeview-menu">
+            
+                                <li>
+            
+                                    <a href="m-produccion">
+            
+                                        <i class="fa fa-circle-o"></i>
+                                        <span>Produccion</span>
+            
+                                    </a>
+            
+                                </li>
+
+                                <li>
+            
+                                    <a href="m-ventas">
+            
+                                        <i class="fa fa-circle-o"></i>
+                                        <span>Ventas</span>
+            
+                                    </a>
+            
+                                </li>                                
+
+                            </ul>
+                                    
+                        </li>
+            
+                        <!-- FIN Movimientos -->
+                
+                        <!-- maestros Joel -->
 
                         <li class="treeview">
             

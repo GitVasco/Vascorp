@@ -143,6 +143,10 @@ $(".tablaMateriaPrima").on("click", ".btnVisualizarArticulos", function () {
 
 			$("#color").val(respuesta["color"]);
 
+			$("#salidasT").val(respuesta["canvta"]);
+
+			$("#prom").val(respuesta["prom"]);
+
 			$("#stock").val(respuesta["stock"]);
 
 			$("#proveedor").val(respuesta["proveedor"]);

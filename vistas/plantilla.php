@@ -159,6 +159,11 @@ CUERPO DOCUMENTO
 
               include "modulos/backend/".$_GET["ruta"].".php";
 
+        }else if( $_GET["ruta"] == "m-produccion" ||
+                  $_GET["ruta"] == "m-ventas"){
+
+                include "modulos/movimientos/".$_GET["ruta"].".php";              
+
         }else if( $_GET["ruta"] == "articulos" ||
                   $_GET["ruta"] == "materiaprima" ||
                   $_GET["ruta"] == "marcas" ||

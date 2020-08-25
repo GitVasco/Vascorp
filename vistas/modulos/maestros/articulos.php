@@ -47,6 +47,7 @@
               <th>Tipo</th>
               <th>Estado</th>
               <th>Stock</th>
+              <th>Promedio</th>
               <th>Tarjeta</th>
             </tr>
 

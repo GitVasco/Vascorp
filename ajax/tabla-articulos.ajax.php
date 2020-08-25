@@ -42,6 +42,20 @@ class TablaArticulos{
             $stock = "<span style='font-size:85%' class='label label-primary'>".$articulos[$i]["stockB"]."</span>";
 
         }
+
+        /*=============================================
+        PROMEDIO
+        =============================================*/ 
+
+        if($articulos[$i]["prom"] >= $articulos[$i]["stock"] ){
+
+            $prom = "<span style='font-size:85%' class='label label-danger'>".$articulos[$i]["prom"]."</span>";
+
+        }else{
+
+            $prom = "<span style='font-size:85%' class='label label-warning'>".$articulos[$i]["prom"]."</span>";
+
+        }        
         
         /*=============================================
         ESTADO
@@ -82,24 +96,7 @@ class TablaArticulos{
 
         }        
 
-
-        // /*=============================================
-        // TRAEMOS LAS ACCIONES
-        // =============================================*/
-        
-        // if( $_GET["perfil"]=="Supervisor" ||
-        //     $_GET["perfil"]=="Sistemas"){
-
-        //         $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarArticulo' articulo='".$articulos[$i]["articulo"]."' data-toggle='modal' data-target='#modalEditarArticulo'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarArticulo' idArticulo='".$articulos[$i]["articulo"]."' articulo='".$articulos[$i]["articulo"]."' imagen='".$articulos[$i]["imagen"]."'><i class='fa fa-times'></i></button></div>";
-
-        // }else{
-
-        //         $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarArticulo' articulo='".$articulos[$i]["articulo"]."' data-toggle='modal' data-target='#modalEditarArticulo'><i class='fa fa-pencil'></i></button></div>"; 
-
-        // }
-        
-
-
+     
             $datosJson .= '[
             "'.($i+1).'",
             "'.$imagen.'",
@@ -112,6 +109,7 @@ class TablaArticulos{
             "'.$articulos[$i]["tipo"].'",
             "'.$estado.'",
             "'.$stock.'",
+            "'.$prom.'",
             "'.$tarjeta.'"
             ],';        
             }

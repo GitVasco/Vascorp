@@ -47,11 +47,7 @@ class TablaArticulosOrdenCorte{
             $amarillo = "#FFFF00";
             $melon = "#FA8072";
             $cobalto = "#008080";
-            $verde = "#008000";
-
-
-
-            
+            $verde = "#008000";            
 
             $neutro = "#000000";
 

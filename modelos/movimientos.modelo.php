@@ -275,5 +275,904 @@ class ModeloMovimientos{
       $stmt = null;
    } 
 
+	// Método para mostrar el Rango de Fechas de Ventas
+	static public function mdlMovProdMod($modelo){
+
+		if($modelo=="null"){
+
+         $sql="SELECT 
+                     a1.modelo AS modelo,
+                     a1.articulo AS articulo,
+                     a1.nombre AS nombre,
+                     a1.cod_color,
+                     a1.color,
+                     a1.talla,
+                     a1.estado AS estado,
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '1' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '1',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '2' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '2',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '3' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '3',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '4' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '4',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '5' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '5',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '6' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '6',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '7' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '7',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '8' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '8',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '9' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '9',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '10' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '10',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '11' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '11',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '12' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '12',
+                     ROUND(SUM(m.cantidad)) AS total 
+                  FROM
+                     movimientosjf m 
+                     LEFT JOIN articulojf a1 
+                     ON m.articulo = a1.articulo 
+                  WHERE YEAR(m.fecha) = YEAR(NOW()) 
+                     AND m.tipo = 'E20' 
+                  GROUP BY a1.modelo,
+                     a1.articulo,
+                     a1.nombre,
+                     a1.cod_color,
+                     a1.color,
+                     a1.talla,
+                     a1.estado 
+                  UNION
+                  SELECT 
+                     mo.modelo AS modelo,
+                     'TOTAL' AS articulo,
+                     mo.nombre AS nombre,
+                     '-',
+                     '-',
+                     '-',
+                     mo.estado AS estado,
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '1' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '1',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '2' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '2',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '3' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '3',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '4' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '4',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '5' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '5',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '6' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '6',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '7' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '7',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '8' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '8',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '9' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '9',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '10' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '10',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '11' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '11',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '12' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '12',
+                     ROUND(SUM(m.cantidad)) AS total 
+                  FROM
+                     movimientosjf m 
+                     LEFT JOIN articulojf a2 
+                     ON m.articulo = a2.articulo 
+                     LEFT JOIN modelojf mo 
+                     ON a2.modelo = mo.modelo 
+                  WHERE YEAR(m.fecha) = YEAR(NOW()) 
+                     AND m.tipo = 'E20' 
+                  GROUP BY mo.modelo,
+                     mo.nombre,
+                     mo.estado 
+                  ORDER BY modelo ASC,
+                     articulo ASC";
+         
+			$stmt=Conexion::conectar()->prepare($sql);
+         $stmt->execute();
+         
+			# Retornamos un fetchAll por ser más de una línea la que necesitamos devolver
+         return $stmt->fetchAll();
+
+      }else{
+
+			$sql="SELECT 
+                     a1.modelo AS modelo,
+                     a1.articulo AS articulo,
+                     a1.nombre AS nombre,
+                     a1.cod_color,
+                     a1.color,
+                     a1.talla,
+                     a1.estado AS estado,
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '1' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '1',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '2' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '2',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '3' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '3',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '4' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '4',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '5' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '5',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '6' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '6',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '7' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '7',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '8' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '8',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '9' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '9',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '10' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '10',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '11' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '11',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '12' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '12',
+                     ROUND(SUM(m.cantidad)) AS total 
+                  FROM
+                     movimientosjf m 
+                     LEFT JOIN articulojf a1 
+                     ON m.articulo = a1.articulo 
+                  WHERE YEAR(m.fecha) = YEAR(NOW()) 
+                     AND m.tipo = 'E20' 
+                     AND a1.modelo = $modelo 
+                  GROUP BY a1.modelo,
+                     a1.articulo,
+                     a1.nombre,
+                     a1.cod_color,
+                     a1.color,
+                     a1.talla,
+                     a1.estado 
+                  UNION
+                  SELECT 
+                     mo.modelo AS modelo,
+                     'TOTAL' AS articulo,
+                     mo.nombre AS nombre,
+                     '-',
+                     '-',
+                     '-',
+                     mo.estado AS estado,
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '1' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '1',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '2' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '2',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '3' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '3',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '4' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '4',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '5' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '5',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '6' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '6',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '7' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '7',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '8' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '8',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '9' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '9',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '10' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '10',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '11' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '11',
+                     SUM(
+                     CASE
+                        WHEN MONTH(m.fecha) = '12' 
+                        THEN ROUND(m.cantidad, 0) 
+                        ELSE 0 
+                     END
+                     ) AS '12',
+                     ROUND(SUM(m.cantidad)) AS total 
+                  FROM
+                     movimientosjf m 
+                     LEFT JOIN articulojf a2 
+                     ON m.articulo = a2.articulo 
+                     LEFT JOIN modelojf mo 
+                     ON a2.modelo = mo.modelo 
+                  WHERE YEAR(m.fecha) = YEAR(NOW()) 
+                     AND m.tipo = 'E20' 
+                     AND a2.modelo = $modelo 
+                  GROUP BY mo.modelo,
+                     mo.nombre,
+                     mo.estado 
+                  ORDER BY modelo ASC,
+                     articulo ASC";
+
+			$stmt=Conexion::conectar()->prepare($sql);
+			$stmt->execute();
+			# Retornamos un fetchAll por ser más de una línea la que necesitamos devolver
+         return $stmt->fetchAll();
+         
+      }
+      
+		$stmt=null;
+	}   
+
+   // Método para mostrar el Rango de Fechas de Ventas
+	static public function mdlMovVtaMod($modelo){
+
+		if($modelo=="null"){
+
+         $sql="SELECT 
+                  a1.modelo AS modelo,
+                  a1.articulo AS articulo,
+                  a1.nombre AS nombre,
+                  a1.cod_color,
+                  a1.color,
+                  a1.talla,
+                  a1.estado AS estado,
+                  SUM(
+                  CASE
+                     WHEN MONTH(m.fecha) = '1' 
+                     THEN ROUND(m.cantidad, 0) 
+                     ELSE 0 
+                  END
+                  ) AS '1',
+                  SUM(
+                  CASE
+                     WHEN MONTH(m.fecha) = '2' 
+                     THEN ROUND(m.cantidad, 0) 
+                     ELSE 0 
+                  END
+                  ) AS '2',
+                  SUM(
+                  CASE
+                     WHEN MONTH(m.fecha) = '3' 
+                     THEN ROUND(m.cantidad, 0) 
+                     ELSE 0 
+                  END
+                  ) AS '3',
+                  SUM(
+                  CASE
+                     WHEN MONTH(m.fecha) = '4' 
+                     THEN ROUND(m.cantidad, 0) 
+                     ELSE 0 
+                  END
+                  ) AS '4',
+                  SUM(
+                  CASE
+                     WHEN MONTH(m.fecha) = '5' 
+                     THEN ROUND(m.cantidad, 0) 
+                     ELSE 0 
+                  END
+                  ) AS '5',
+                  SUM(
+                  CASE
+                     WHEN MONTH(m.fecha) = '6' 
+                     THEN ROUND(m.cantidad, 0) 
+                     ELSE 0 
+                  END
+                  ) AS '6',
+                  SUM(
+                  CASE
+                     WHEN MONTH(m.fecha) = '7' 
+                     THEN ROUND(m.cantidad, 0) 
+                     ELSE 0 
+                  END
+                  ) AS '7',
+                  SUM(
+                  CASE
+                     WHEN MONTH(m.fecha) = '8' 
+                     THEN ROUND(m.cantidad, 0) 
+                     ELSE 0 
+                  END
+                  ) AS '8',
+                  SUM(
+                  CASE
+                     WHEN MONTH(m.fecha) = '9' 
+                     THEN ROUND(m.cantidad, 0) 
+                     ELSE 0 
+                  END
+                  ) AS '9',
+                  SUM(
+                  CASE
+                     WHEN MONTH(m.fecha) = '10' 
+                     THEN ROUND(m.cantidad, 0) 
+                     ELSE 0 
+                  END
+                  ) AS '10',
+                  SUM(
+                  CASE
+                     WHEN MONTH(m.fecha) = '11' 
+                     THEN ROUND(m.cantidad, 0) 
+                     ELSE 0 
+                  END
+                  ) AS '11',
+                  SUM(
+                  CASE
+                     WHEN MONTH(m.fecha) = '12' 
+                     THEN ROUND(m.cantidad, 0) 
+                     ELSE 0 
+                  END
+                  ) AS '12',
+                  ROUND(SUM(m.cantidad)) AS total 
+               FROM
+                  movimientosjf m 
+                  LEFT JOIN articulojf a1 
+                  ON m.articulo = a1.articulo 
+               WHERE YEAR(m.fecha) = YEAR(NOW()) 
+                  AND m.tipo IN ('S02', 'S03', 'S70', 'E05') 
+               GROUP BY a1.modelo,
+                  a1.articulo,
+                  a1.nombre,
+                  a1.cod_color,
+                  a1.color,
+                  a1.talla,
+                  a1.estado 
+               UNION
+               SELECT 
+                  a2.modelo AS modelo,
+                  'TOTAL' AS articulo,
+                  a2.nombre AS nombre,
+                  '-',
+                  '-',
+                  '-',
+                  a2.estado AS estado,
+                  SUM(
+                  CASE
+                     WHEN MONTH(m.fecha) = '1' 
+                     THEN ROUND(m.cantidad, 0) 
+                     ELSE 0 
+                  END
+                  ) AS '1',
+                  SUM(
+                  CASE
+                     WHEN MONTH(m.fecha) = '2' 
+                     THEN ROUND(m.cantidad, 0) 
+                     ELSE 0 
+                  END
+                  ) AS '2',
+                  SUM(
+                  CASE
+                     WHEN MONTH(m.fecha) = '3' 
+                     THEN ROUND(m.cantidad, 0) 
+                     ELSE 0 
+                  END
+                  ) AS '3',
+                  SUM(
+                  CASE
+                     WHEN MONTH(m.fecha) = '4' 
+                     THEN ROUND(m.cantidad, 0) 
+                     ELSE 0 
+                  END
+                  ) AS '4',
+                  SUM(
+                  CASE
+                     WHEN MONTH(m.fecha) = '5' 
+                     THEN ROUND(m.cantidad, 0) 
+                     ELSE 0 
+                  END
+                  ) AS '5',
+                  SUM(
+                  CASE
+                     WHEN MONTH(m.fecha) = '6' 
+                     THEN ROUND(m.cantidad, 0) 
+                     ELSE 0 
+                  END
+                  ) AS '6',
+                  SUM(
+                  CASE
+                     WHEN MONTH(m.fecha) = '7' 
+                     THEN ROUND(m.cantidad, 0) 
+                     ELSE 0 
+                  END
+                  ) AS '7',
+                  SUM(
+                  CASE
+                     WHEN MONTH(m.fecha) = '8' 
+                     THEN ROUND(m.cantidad, 0) 
+                     ELSE 0 
+                  END
+                  ) AS '8',
+                  SUM(
+                  CASE
+                     WHEN MONTH(m.fecha) = '9' 
+                     THEN ROUND(m.cantidad, 0) 
+                     ELSE 0 
+                  END
+                  ) AS '9',
+                  SUM(
+                  CASE
+                     WHEN MONTH(m.fecha) = '10' 
+                     THEN ROUND(m.cantidad, 0) 
+                     ELSE 0 
+                  END
+                  ) AS '10',
+                  SUM(
+                  CASE
+                     WHEN MONTH(m.fecha) = '11' 
+                     THEN ROUND(m.cantidad, 0) 
+                     ELSE 0 
+                  END
+                  ) AS '11',
+                  SUM(
+                  CASE
+                     WHEN MONTH(m.fecha) = '12' 
+                     THEN ROUND(m.cantidad, 0) 
+                     ELSE 0 
+                  END
+                  ) AS '12',
+                  ROUND(SUM(m.cantidad)) AS total 
+               FROM
+                  movimientosjf m 
+                  LEFT JOIN articulojf a2 
+                  ON m.articulo = a2.articulo 
+               WHERE YEAR(m.fecha) = YEAR(NOW()) 
+                  AND m.tipo IN ('S02', 'S03', 'S70', 'E05', 'E21') 
+               GROUP BY a2.modelo,
+                  a2.nombre 
+               ORDER BY modelo ASC,
+                  articulo ASC";
+         
+			$stmt=Conexion::conectar()->prepare($sql);
+         $stmt->execute();
+         
+			# Retornamos un fetchAll por ser más de una línea la que necesitamos devolver
+         return $stmt->fetchAll();
+
+      }else{
+
+			$sql="SELECT 
+               a1.modelo AS modelo,
+               a1.articulo AS articulo,
+               a1.nombre AS nombre,
+               a1.cod_color,
+               a1.color,
+               a1.talla,
+               a1.estado AS estado,
+               SUM(
+               CASE
+                  WHEN MONTH(m.fecha) = '1' 
+                  THEN ROUND(m.cantidad, 0) 
+                  ELSE 0 
+               END
+               ) AS '1',
+               SUM(
+               CASE
+                  WHEN MONTH(m.fecha) = '2' 
+                  THEN ROUND(m.cantidad, 0) 
+                  ELSE 0 
+               END
+               ) AS '2',
+               SUM(
+               CASE
+                  WHEN MONTH(m.fecha) = '3' 
+                  THEN ROUND(m.cantidad, 0) 
+                  ELSE 0 
+               END
+               ) AS '3',
+               SUM(
+               CASE
+                  WHEN MONTH(m.fecha) = '4' 
+                  THEN ROUND(m.cantidad, 0) 
+                  ELSE 0 
+               END
+               ) AS '4',
+               SUM(
+               CASE
+                  WHEN MONTH(m.fecha) = '5' 
+                  THEN ROUND(m.cantidad, 0) 
+                  ELSE 0 
+               END
+               ) AS '5',
+               SUM(
+               CASE
+                  WHEN MONTH(m.fecha) = '6' 
+                  THEN ROUND(m.cantidad, 0) 
+                  ELSE 0 
+               END
+               ) AS '6',
+               SUM(
+               CASE
+                  WHEN MONTH(m.fecha) = '7' 
+                  THEN ROUND(m.cantidad, 0) 
+                  ELSE 0 
+               END
+               ) AS '7',
+               SUM(
+               CASE
+                  WHEN MONTH(m.fecha) = '8' 
+                  THEN ROUND(m.cantidad, 0) 
+                  ELSE 0 
+               END
+               ) AS '8',
+               SUM(
+               CASE
+                  WHEN MONTH(m.fecha) = '9' 
+                  THEN ROUND(m.cantidad, 0) 
+                  ELSE 0 
+               END
+               ) AS '9',
+               SUM(
+               CASE
+                  WHEN MONTH(m.fecha) = '10' 
+                  THEN ROUND(m.cantidad, 0) 
+                  ELSE 0 
+               END
+               ) AS '10',
+               SUM(
+               CASE
+                  WHEN MONTH(m.fecha) = '11' 
+                  THEN ROUND(m.cantidad, 0) 
+                  ELSE 0 
+               END
+               ) AS '11',
+               SUM(
+               CASE
+                  WHEN MONTH(m.fecha) = '12' 
+                  THEN ROUND(m.cantidad, 0) 
+                  ELSE 0 
+               END
+               ) AS '12',
+               ROUND(SUM(m.cantidad)) AS total 
+            FROM
+               movimientosjf m 
+               LEFT JOIN articulojf a1 
+               ON m.articulo = a1.articulo 
+            WHERE YEAR(m.fecha) = YEAR(NOW()) 
+               AND m.tipo IN ('S02', 'S03', 'S70', 'E05') 
+               AND a1.modelo = $modelo 
+            GROUP BY a1.modelo,
+               a1.articulo,
+               a1.nombre,
+               a1.cod_color,
+               a1.color,
+               a1.talla,
+               a1.estado 
+            UNION
+            SELECT 
+               a2.modelo AS modelo,
+               'TOTAL' AS articulo,
+               a2.nombre AS nombre,
+               '-',
+               '-',
+               '-',
+               a2.estado AS estado,
+               SUM(
+               CASE
+                  WHEN MONTH(m.fecha) = '1' 
+                  THEN ROUND(m.cantidad, 0) 
+                  ELSE 0 
+               END
+               ) AS '1',
+               SUM(
+               CASE
+                  WHEN MONTH(m.fecha) = '2' 
+                  THEN ROUND(m.cantidad, 0) 
+                  ELSE 0 
+               END
+               ) AS '2',
+               SUM(
+               CASE
+                  WHEN MONTH(m.fecha) = '3' 
+                  THEN ROUND(m.cantidad, 0) 
+                  ELSE 0 
+               END
+               ) AS '3',
+               SUM(
+               CASE
+                  WHEN MONTH(m.fecha) = '4' 
+                  THEN ROUND(m.cantidad, 0) 
+                  ELSE 0 
+               END
+               ) AS '4',
+               SUM(
+               CASE
+                  WHEN MONTH(m.fecha) = '5' 
+                  THEN ROUND(m.cantidad, 0) 
+                  ELSE 0 
+               END
+               ) AS '5',
+               SUM(
+               CASE
+                  WHEN MONTH(m.fecha) = '6' 
+                  THEN ROUND(m.cantidad, 0) 
+                  ELSE 0 
+               END
+               ) AS '6',
+               SUM(
+               CASE
+                  WHEN MONTH(m.fecha) = '7' 
+                  THEN ROUND(m.cantidad, 0) 
+                  ELSE 0 
+               END
+               ) AS '7',
+               SUM(
+               CASE
+                  WHEN MONTH(m.fecha) = '8' 
+                  THEN ROUND(m.cantidad, 0) 
+                  ELSE 0 
+               END
+               ) AS '8',
+               SUM(
+               CASE
+                  WHEN MONTH(m.fecha) = '9' 
+                  THEN ROUND(m.cantidad, 0) 
+                  ELSE 0 
+               END
+               ) AS '9',
+               SUM(
+               CASE
+                  WHEN MONTH(m.fecha) = '10' 
+                  THEN ROUND(m.cantidad, 0) 
+                  ELSE 0 
+               END
+               ) AS '10',
+               SUM(
+               CASE
+                  WHEN MONTH(m.fecha) = '11' 
+                  THEN ROUND(m.cantidad, 0) 
+                  ELSE 0 
+               END
+               ) AS '11',
+               SUM(
+               CASE
+                  WHEN MONTH(m.fecha) = '12' 
+                  THEN ROUND(m.cantidad, 0) 
+                  ELSE 0 
+               END
+               ) AS '12',
+               ROUND(SUM(m.cantidad)) AS total 
+            FROM
+               movimientosjf m 
+               LEFT JOIN articulojf a2 
+               ON m.articulo = a2.articulo 
+            WHERE YEAR(m.fecha) = YEAR(NOW()) 
+               AND m.tipo IN ('S02', 'S03', 'S70', 'E05', 'E21') 
+               AND a2.modelo = $modelo
+            GROUP BY a2.modelo,
+               a2.nombre 
+            ORDER BY modelo ASC,
+               articulo ASC";
+
+			$stmt=Conexion::conectar()->prepare($sql);
+			$stmt->execute();
+			# Retornamos un fetchAll por ser más de una línea la que necesitamos devolver
+         return $stmt->fetchAll();
+         
+      }
+      
+		$stmt=null;
+	}      
 
 }

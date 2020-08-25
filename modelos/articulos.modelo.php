@@ -408,5 +408,30 @@ class ModeloArticulos
 
 	}	
 
+	/* 
+	* MOSTRAR VENTAS
+	*/
+	static public function mdlMostrarVentas($valor){
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+													m.articulo,
+													SUM(m.cantidad) AS vtas
+												FROM
+													movimientosjf m 
+												WHERE m.tipo IN ('S02', 'S03', 'S70') 
+													AND DATEDIFF(DATE(NOW()), m.fecha) <= 31 
+													AND m.articulo = :valor
+												GROUP BY m.articulo");
+
+		$stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
+
+		$stmt->execute();
+
+		return $stmt->fetch();
+
+		$stmt=null;
+
+	}	
+
 	
 }

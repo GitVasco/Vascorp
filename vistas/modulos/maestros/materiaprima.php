@@ -37,6 +37,7 @@
            <th>Descripcion</th>
            <th>Color</th>
            <th>Stock</th>
+           <th>Sal. Prom.</th>
            <th>Unidad</th>
            <th>Costo</th>
            <th style="width:100px">Acciones</th>
@@ -254,7 +255,7 @@ MODAL VISUALIZAR INFORMACION
             
             <!-- ENTRADA PARA LA DESCRIPCION-->
             
-            <div class="form-group col-lg-6">
+            <div class="form-group col-lg-3">
 
               <label>Descripcion</label>
               
@@ -300,6 +301,38 @@ MODAL VISUALIZAR INFORMACION
 
             </div>     
 
+            <!-- ENTRADA PARA LAS VENTAS-->
+            
+            <div class="form-group col-lg-3">
+
+              <label>Salidas Totales</label>
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+
+                <input type="text" class="form-control input-sm" name="salidasT" id="salidasT" required readonly>
+
+              </div>
+
+            </div> 
+
+            <!-- ENTRADA PARA EL PROMEDIO DE VENTAS POR MES-->
+            
+            <div class="form-group col-lg-3">
+
+              <label>Promedio de Salidas</label>
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+
+                <input type="text" class="form-control input-sm" name="prom" id="prom" required readonly>
+
+              </div>
+
+            </div> 
+
             <!-- ENTRADA PARA EL STOCK-->
             
             <div class="form-group col-lg-3">
@@ -314,11 +347,11 @@ MODAL VISUALIZAR INFORMACION
 
               </div>
 
-            </div> 
+            </div>             
             
             <!-- ENTRADA PARA EL PROVEEDOR-->
             
-            <div class="form-group col-lg-6">
+            <div class="form-group col-lg-3">
 
               <label>Proveedor Principal</label>
               
