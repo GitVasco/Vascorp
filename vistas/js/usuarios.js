@@ -69,7 +69,7 @@ $(".tablas").on("click", ".btnEditarUsuario", function(){
 		processData: false,
 		dataType: "json",
 		success: function(respuesta){
-
+			$("#idUsuario").val(respuesta["id"]);
             $("#editarNombre").val(respuesta["nombre"]);
 			$("#editarUsuario").val(respuesta["usuario"]);
 			$("#editarPerfil").html(respuesta["perfil"]);
@@ -88,6 +88,34 @@ $(".tablas").on("click", ".btnEditarUsuario", function(){
 
 			}
 
+		}
+
+	});
+	var datos2 = new FormData();
+	datos2.append("idUsuario2", idUsuario);
+	$.ajax({
+
+		url:"ajax/usuarios.ajax.php",
+		method: "POST",
+		data: datos2,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(respuesta2){
+			// console.log(respuesta2);
+			$("input[name='permisos[]']").prop('checked',false);
+			var cantidad= $("input[name='permisos[]']");
+			for (let index = 0; index < respuesta2.length; index++) {
+				
+				$("input[name='permisos[]']").each(function(indice,elemento){
+					if (cantidad[indice].value==respuesta2[index]["idpermiso"]){
+						$(cantidad[indice]).prop('checked',true);
+					}
+				})
+	
+			}
+			
 		}
 
 	});

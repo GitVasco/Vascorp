@@ -631,16 +631,14 @@ class controladorArticulos{
 			if(strncmp($nombre,$_FILES["archivoxls"]["name"],5) === 0){
 				
 				include "/../vistas/reportes_excel/Excel/reader.php";
-				$directorio="/../vistas/cargas";
-				$archivo=move_uploaded_file($_FILES["archivoxls"]['name'], $directorio);
-
+				$directorio="vistas/cargas/".$_FILES["archivoxls"]["name"];
+				$archivo=move_uploaded_file($_FILES["archivoxls"]['tmp_name'], $directorio);
 				$data = new Spreadsheet_Excel_Reader();
 				$data->setOutputEncoding('CP1251');
-				$data->read("/../vistas/cargas/".$_FILES["archivoxls"]["name"]);
+				$data->read("vistas/cargas/".$_FILES["archivoxls"]["name"]);
 				$conexion = mysql_connect("192.168.1.3", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
 				mysql_select_db("new_vasco", $conexion);
 				for ($i = 2; $i <= $data->sheets[0]['numRows']; $i++) {
-					echo("<tr>");
 					for ($j = 1; $j <= 1; $j++) {
 					if(strlen($data->sheets[0]['cells'][$i][1])==7){
 					$sqlDetalle = mysql_query("UPDATE articulojf SET stock=".$data->sheets[0]['cells'][$i][11].
@@ -691,6 +689,350 @@ class controladorArticulos{
 		}
 	}
 
+	static public function ctrCambiarMovimientos(){
+
+        if(isset($_POST["importmovimiento"])){
+
+			$nombre="MOV";
+			if(strncmp($nombre,$_FILES["archivoxlsmovimiento"]["name"],3) === 0){
+
+			include "/../vistas/reportes_excel/Excel/reader.php";
+			$directorio="vistas/cargas/".$_FILES["archivoxlsmovimiento"]["name"];
+			$archivo=move_uploaded_file($_FILES["archivoxlsmovimiento"]['tmp_name'], $directorio);
+			$data = new Spreadsheet_Excel_Reader();
+			$data->setOutputEncoding('CP1251');
+			$data->read("vistas/cargas/".$_FILES["archivoxlsmovimiento"]["name"]);
+			$conexion = mysql_connect("192.168.1.3", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
+			mysql_select_db("new_vasco", $conexion);
+			$sqlEliminar = mysql_query("DELETE FROM movimientosjf WHERE fecha = DATE(NOW()) OR fecha = DATE(NOW()) - INTERVAL 1 DAY");
+			for ($i = 2; $i <= $data->sheets[0]['numRows']; $i++) {
+				for ($j = 1; $j <= 1; $j++) {
+					
+					$tipo=$data->sheets[0]['cells'][$i][1];
+					$documento=$data->sheets[0]['cells'][$i][2];
+					$mes=substr($data->sheets[0]['cells'][$i][3],3,3);
+					if($mes=="Jan"){
+						$num="01";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][3]);
+					}else if($mes=="Feb"){
+						$num="02";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][3]);
+					}else if($mes=="Mar"){
+						$num="03";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][3]);
+					}else if($mes=="Apr"){
+						$num="04";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][3]);
+					}else if($mes=="May"){
+						$num="05";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][3]);
+					}else if($mes=="Jun"){
+						$num="06";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][3]);
+					}else if($mes=="Jul"){
+						$num="07";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][3]);
+					}else if($mes=="Aug"){
+						$num="08";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][3]);
+					}else if($mes=="Sep"){
+						$num="09";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][3]);
+					}else if($mes=="Oct"){
+						$num="10";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][3]);
+					}else if($mes=="Nov"){
+						$num="11";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][3]);
+					}else if($mes=="Dec"){
+						$num="12";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][3]);
+					}
+					if(strlen($data->sheets[0]['cells'][$i][4])==7){
+						$codArt="1".$data->sheets[0]['cells'][$i][4];
+					}else{
+						$codArt="B".$data->sheets[0]['cells'][$i][4];
+					}
+					if($data->sheets[0]['cells'][$i][1] == "E20"){
+						$taller=substr($data->sheets[0]['cells'][$i][2],0,2);
+					}
+					else{
+						$taller=0;
+					}
+					$linea=$data->sheets[0]['cells'][$i][6];
+					$almacen=$data->sheets[0]['cells'][$i][7];
+					$cliente=$data->sheets[0]['cells'][$i][8];
+					$vendedor=$data->sheets[0]['cells'][$i][9];
+					$cantidad=$data->sheets[0]['cells'][$i][10];
+					$precio=$data->sheets[0]['cells'][$i][15];
+					$dscto1=$data->sheets[0]['cells'][$i][18];
+					$dscto2=$data->sheets[0]['cells'][$i][19];
+					$nombre=$data->sheets[0]['cells'][$i][28];
+					$total=($data->sheets[0]['cells'][$i][10]*$data->sheets[0]['cells'][$i][15]*((100-$data->sheets[0]['cells'][$i][18])/100))*((100-$data->sheets[0]['cells'][$i][19])/100);
+					$sqlInsertar = mysql_query("INSERT INTO movimientosjf (tipo,documento,taller,fecha,articulo,linea,cliente,vendedor,cantidad,precio,dscto1,dscto2,total,nombre_tipo,almacen)  values('".$tipo."','".$documento."','".$taller."','".$fecha."','".$codArt."','".$linea."','".$cliente."','".$vendedor."',".$cantidad.",".$precio.",".$dscto1.",".$dscto2.",".$total.",'".$nombre."',".$almacen.")");
+				}
+			
+			}
+			echo'<script>
+
+				swal({
+					type: "success",
+					title: "Los movimientos ha sido editados correctamente",
+					showConfirmButton: true,
+					confirmButtonText: "Cerrar"
+					}).then(function(result){
+								if (result.value) {
+
+								window.location = "cargas-automaticas";
+
+								}
+							})
+
+				</script>';
+			}else{
+
+				echo'<script>
+
+					swal({
+						type: "error",
+						title: "¡El nombre de archivo no es correcto, debe ser MOV.xls!",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar"
+						}).then(function(result){
+							if (result.value) {
+
+							window.location = "cargas-automaticas";
+
+							}
+						})
+
+				</script>';
+			}
+		
+		}
+	}
+
+	static public function ctrCargarVentas(){
+
+        if(isset($_POST["importventa"])){
+
+			$nombre="VENTA";
+			if(strncmp($nombre,$_FILES["archivoxlsventa"]["name"],5) === 0){
+
+			include "/../vistas/reportes_excel/Excel/reader.php";
+			$directorio="vistas/cargas/".$_FILES["archivoxlsventa"]["name"];
+			$archivo=move_uploaded_file($_FILES["archivoxlsventa"]['tmp_name'], $directorio);
+			$data = new Spreadsheet_Excel_Reader();
+			$data->setOutputEncoding('CP1251');
+			$data->read("vistas/cargas/".$_FILES["archivoxlsventa"]["name"]);
+			$conexion = mysql_connect("192.168.1.3", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
+			mysql_select_db("new_vasco", $conexion);
+			$sqlEliminar = mysql_query("DELETE FROM ventajf WHERE YEAR(fecha) = YEAR(NOW()) AND MONTH(fecha) = MONTH (NOW()) ");
+			for ($i = 2; $i <= $data->sheets[0]['numRows']; $i++) {
+				for ($j = 1; $j <= 1; $j++) {
+					
+					$tipo=$data->sheets[0]['cells'][$i][1];
+					$documento=$data->sheets[0]['cells'][$i][3];
+					$neto=$data->sheets[0]['cells'][$i][6];
+					$igv=$data->sheets[0]['cells'][$i][7];
+					$dscto=$data->sheets[0]['cells'][$i][8];
+					$total=$data->sheets[0]['cells'][$i][14];
+					$cliente=$data->sheets[0]['cells'][$i][15];
+					$vendedor=$data->sheets[0]['cells'][$i][17];
+					$agencia=$data->sheets[0]['cells'][$i][18];
+					$mes=substr($data->sheets[0]['cells'][$i][19],3,3);
+					if($mes=="Jan"){
+						$num="01";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][19]);
+					}else if($mes=="Feb"){
+						$num="02";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][19]);
+					}else if($mes=="Mar"){
+						$num="03";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][19]);
+					}else if($mes=="Apr"){
+						$num="04";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][19]);
+					}else if($mes=="May"){
+						$num="05";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][19]);
+					}else if($mes=="Jun"){
+						$num="06";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][19]);
+					}else if($mes=="Jul"){
+						$num="07";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][19]);
+					}else if($mes=="Aug"){
+						$num="08";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][19]);
+					}else if($mes=="Sep"){
+						$num="09";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][19]);
+					}else if($mes=="Oct"){
+						$num="10";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][19]);
+					}else if($mes=="Nov"){
+						$num="11";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][19]);
+					}else if($mes=="Dec"){
+						$num="12";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][19]);
+					}
+					
+					$tipo_doc=$data->sheets[0]['cells'][$i][28];
+					
+					$sqlInsertar = mysql_query("INSERT INTO ventajf (tipo,documento,neto,igv,dscto,total,cliente,vendedor,agencia,fecha,tipo_documento)  values('".$tipo."','".$documento."',".$neto.",".$igv.",".$dscto.",".$total.",'".$cliente."','".$vendedor."','".$agencia."','".substr($fecha,6,2)."-".substr($fecha,3,2)."-".substr($fecha,0,2)."','".$tipo_doc."')");
+				}
+			
+			}
+			echo'<script>
+
+				swal({
+					type: "success",
+					title: "Las ventas han sido editadas correctamente",
+					showConfirmButton: true,
+					confirmButtonText: "Cerrar"
+					}).then(function(result){
+								if (result.value) {
+
+								window.location = "cargas-automaticas";
+
+								}
+							})
+
+				</script>';
+			}else{
+
+				echo'<script>
+
+					swal({
+						type: "error",
+						title: "¡El nombre de archivo no es correcto, debe ser VENTA.xls!",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar"
+						}).then(function(result){
+							if (result.value) {
+
+							window.location = "cargas-automaticas";
+
+							}
+						})
+
+				</script>';
+			}
+		
+		}
+	}
+
+	static public function ctrCargarPedidos(){
+
+        if(isset($_POST["importpedido"])){
+
+			$nombre="PEDIDOS";
+			if(strncmp($nombre,$_FILES["archivoxlspedido"]["name"],7) === 0){
+
+			include "/../vistas/reportes_excel/Excel/reader.php";
+			$directorio="vistas/cargas/".$_FILES["archivoxlspedido"]["name"];
+			$archivo=move_uploaded_file($_FILES["archivoxlspedido"]['tmp_name'], $directorio);
+			$data = new Spreadsheet_Excel_Reader();
+			$data->setOutputEncoding('CP1251');
+			$data->read("vistas/cargas/".$_FILES["archivoxlspedido"]["name"]);
+			$conexion = mysql_connect("192.168.1.3", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
+			mysql_select_db("new_vasco", $conexion);
+			$sqlEliminar = mysql_query("DELETE FROM pedidojf ");
+			for ($i = 2; $i <= $data->sheets[0]['numRows']; $i++) {
+				for ($j = 1; $j <= 1; $j++) {
+					
+					$tipo=$data->sheets[0]['cells'][$i][1];
+					$documento=$data->sheets[0]['cells'][$i][3];
+					$neto=$data->sheets[0]['cells'][$i][6];
+					$igv=$data->sheets[0]['cells'][$i][7];
+					$dscto=$data->sheets[0]['cells'][$i][8];
+					$total=$data->sheets[0]['cells'][$i][14];
+					$cliente=$data->sheets[0]['cells'][$i][15];
+					$vendedor=$data->sheets[0]['cells'][$i][16];
+					$mes=substr($data->sheets[0]['cells'][$i][17],3,3);
+					if($mes=="Jan"){
+						$num="01";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][17]);
+					}else if($mes=="Feb"){
+						$num="02";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][17]);
+					}else if($mes=="Mar"){
+						$num="03";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][17]);
+					}else if($mes=="Apr"){
+						$num="04";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][17]);
+					}else if($mes=="May"){
+						$num="05";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][17]);
+					}else if($mes=="Jun"){
+						$num="06";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][17]);
+					}else if($mes=="Jul"){
+						$num="07";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][17]);
+					}else if($mes=="Aug"){
+						$num="08";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][17]);
+					}else if($mes=="Sep"){
+						$num="09";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][17]);
+					}else if($mes=="Oct"){
+						$num="10";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][17]);
+					}else if($mes=="Nov"){
+						$num="11";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][17]);
+					}else if($mes=="Dec"){
+						$num="12";
+						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][17]);
+					}
+					$tipo_doc=$data->sheets[0]['cells'][$i][25];
+					$sqlInsertar = mysql_query("INSERT INTO pedidojf (tipo,documento,neto,igv,dscto,total,cliente,vendedor,fecha,tipo_documento,atraso)  VALUES('".$tipo."','".$documento."',".$neto.",".$igv.",".$dscto.",".$total.",'".$cliente."','".$vendedor."','".substr($fecha,6,2)."-".substr($fecha,3,2)."-".substr($fecha,0,2)."','".$tipo_doc."', DATEDIFF(DATE(NOW()),DATE('".substr($fecha,6,2)."-".substr($fecha,3,2)."-".substr($fecha,0,2)."')))");
+					
+				}
+			
+			}
+			echo'<script>
+
+				swal({
+					type: "success",
+					title: "Los pedidos han sido editados correctamente",
+					showConfirmButton: true,
+					confirmButtonText: "Cerrar"
+					}).then(function(result){
+								if (result.value) {
+
+								window.location = "cargas-automaticas";
+
+								}
+							})
+
+				</script>';
+			}else{
+
+				echo'<script>
+
+					swal({
+						type: "error",
+						title: "¡El nombre de archivo no es correcto, debe ser PEDIDO.xls!",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar"
+						}).then(function(result){
+							if (result.value) {
+
+							window.location = "cargas-automaticas";
+
+							}
+						})
+
+				</script>';
+			}
+		
+		}
+	}
 
 }
 

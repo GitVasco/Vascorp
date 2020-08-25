@@ -128,7 +128,7 @@ MODAL AGREGAR USUARIO
 
 <div id="modalAgregarUsuario" class="modal fade" role="dialog">
   
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
 
     <div class="modal-content">
 
@@ -156,7 +156,7 @@ MODAL AGREGAR USUARIO
 
             <!-- ENTRADA PARA EL NOMBRE -->
             
-            <div class="form-group">
+            <div class="form-group col-lg-6 col-md-6 col-sm-6">
               
               <div class="input-group">
               
@@ -170,7 +170,7 @@ MODAL AGREGAR USUARIO
 
             <!-- ENTRADA PARA EL USUARIO -->
 
-             <div class="form-group">
+             <div class="form-group col-lg-6 col-md-6 col-sm-6">
               
               <div class="input-group">
               
@@ -184,7 +184,7 @@ MODAL AGREGAR USUARIO
 
             <!-- ENTRADA PARA LA CONTRASEÑA -->
 
-             <div class="form-group">
+             <div class="form-group col-lg-6 col-md-6 col-sm-6">
               
               <div class="input-group">
               
@@ -198,7 +198,7 @@ MODAL AGREGAR USUARIO
 
             <!-- ENTRADA PARA SELECCIONAR SU PERFIL -->
 
-            <div class="form-group">
+            <div class="form-group col-lg-6 col-md-6 col-sm-6">
               
               <div class="input-group">
               
@@ -232,9 +232,24 @@ MODAL AGREGAR USUARIO
 
             </div>
 
+          <!-- ENTRADA PARA PERMISOS -->
+            <div class="form-group">
+              <label ><strong>PERMISOS</strong></label>
+              <ul id="permisos" style="list-style:none;columns:2">
+                <?php
+                $item=null;
+                $valor=null;
+                $permisos=ControladorUsuarios::ctrMostrarPermisos($item,$valor);
+                foreach ($permisos as $key => $value) {
+                  echo("<li><input type='checkbox' name='permiso[]' value='".$value["idpermiso"]."'> ".$value["nombre"]."</li>");
+                }
+                ?>
+              </ul>
+            </div>
+
             <!-- ENTRADA PARA SUBIR FOTO -->
 
-             <div class="form-group">
+            <div class="form-group">
               
               <div class="panel">SUBIR FOTO</div>
 
@@ -245,6 +260,7 @@ MODAL AGREGAR USUARIO
               <img src="vistas/img/usuarios/default/anonymous.png" class="img-thumbnail previsualizar" width="100px">
 
             </div>
+            
 
           </div>
 
@@ -283,7 +299,7 @@ MODAL EDITAR USUARIO
 
 <div id="modalEditarUsuario" class="modal fade" role="dialog">
   
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
 
     <div class="modal-content">
 
@@ -311,7 +327,7 @@ MODAL EDITAR USUARIO
 
             <!-- ENTRADA PARA EL NOMBRE -->
             
-            <div class="form-group">
+            <div class="form-group col-lg-6">
               
               <div class="input-group">
               
@@ -325,21 +341,21 @@ MODAL EDITAR USUARIO
 
             <!-- ENTRADA PARA EL USUARIO -->
 
-             <div class="form-group">
+             <div class="form-group col-lg-6">
               
               <div class="input-group">
               
                 <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
                 <input type="text" class="form-control input-lg" id="editarUsuario" name="editarUsuario" value="" readonly>
-
+                <input type="hidden" name="idUsuario" id="idUsuario">
               </div>
 
             </div>
 
             <!-- ENTRADA PARA LA CONTRASEÑA -->
 
-             <div class="form-group">
+             <div class="form-group col-lg-6">
               
               <div class="input-group">
               
@@ -355,7 +371,7 @@ MODAL EDITAR USUARIO
 
             <!-- ENTRADA PARA SELECCIONAR SU PERFIL -->
 
-            <div class="form-group">
+            <div class="form-group col-lg-6">
               
               <div class="input-group">
               
@@ -387,6 +403,21 @@ MODAL EDITAR USUARIO
 
               </div>
 
+            </div>
+
+            <!-- ENTRADA PARA PERMISOS -->
+            <div class="form-group">
+              <label ><strong>PERMISOS</strong></label>
+              <ul id="permisos" style="list-style:none;columns:2">
+                <?php
+                $item=null;
+                $valor=null;
+                $permisos=ControladorUsuarios::ctrMostrarPermisos($item,$valor);
+                foreach ($permisos as $key => $value) {
+                  echo("<li><input type='checkbox' name='permisos[]' id='permisos[]' value='".$value["idpermiso"]."'> ".$value["nombre"]."</li>");
+                }
+                ?>
+              </ul>
             </div>
 
             <!-- ENTRADA PARA SUBIR FOTO -->

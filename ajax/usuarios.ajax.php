@@ -23,6 +23,23 @@ class AjaxUsuarios{
 	}
 
 	/*=============================================
+	EDITAR USUARIO CON PERMISOS
+	=============================================*/	
+
+	public $idUsuario2;
+
+	public function ajaxEditarUsuarioPermiso(){
+
+		$item = "idusuario";
+		$valor = $this->idUsuario2;
+
+		$respuesta = ControladorUsuarios::ctrMostrarUsuariosPermisos($item, $valor);
+
+		echo json_encode($respuesta);
+
+	}
+
+	/*=============================================
 	ACTIVAR USUARIO
 	=============================================*/	
 
@@ -99,5 +116,16 @@ if(isset( $_POST["validarUsuario"])){
 	$valUsuario = new AjaxUsuarios();
 	$valUsuario -> validarUsuario = $_POST["validarUsuario"];
 	$valUsuario -> ajaxValidarUsuario();
+
+}
+
+/*=============================================
+EDITAR USUARIO CON PERMISOS
+=============================================*/
+if(isset($_POST["idUsuario2"])){
+
+	$editarPermiso = new AjaxUsuarios();
+	$editarPermiso -> idUsuario2 = $_POST["idUsuario2"];
+	$editarPermiso -> ajaxEditarUsuarioPermiso();
 
 }
