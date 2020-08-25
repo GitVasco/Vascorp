@@ -24,7 +24,7 @@
 
       <div class="box-body">
         <form role="form" method="POST" enctype="multipart/form-data">
-          <div class="form-group col-lg-3">
+          <div class="form-group col-lg-4">
             <label for=""><strong>LEER ARTICULO POR STOCK</strong></label>
             <input type="file" name="archivoxls" id="archivoxls" class="form-control" accept="application/vnd.ms-excel">
           </div>
@@ -40,7 +40,7 @@
         $actualizarStock->ctrCambiarStock();
 
         ?>
-        <div class="col-lg-2"></div>
+        <div class="col-lg-1"></div>
         <form role="form" method="POST" enctype="multipart/form-data">
           <div class="form-group col-lg-4">
             <label for=""><strong>LEER MOVIMIENTOS ACTUALES</strong></label>
@@ -56,6 +56,42 @@
 
         $actualizarMovimiento = new ControladorArticulos();
         $actualizarMovimiento->ctrCambiarMovimientos();
+
+        ?>
+
+        <form role="form"  method="POST" enctype="multipart/form-data">
+          <div class="form-group col-lg-4">
+            <label for=""><strong>LEER VENTAS ACTUALES</strong></label>
+            <input type="file" name="archivoxlsventa" id="archivoxlsventa" class="form-control" accept="application/vnd.ms-excel">
+          </div>
+          <div class="form-group col-lg-1">
+            <br>
+            <button type="submit"  class="btn btn-success" name="importventa" ><i class="fa fa-refresh"></i> Cargar ventas</a>
+          </div>
+        </form>
+
+        <?php
+
+        $actualizarVenta = new ControladorArticulos();
+        $actualizarVenta->ctrCargarVentas();
+
+        ?>
+        <div class="col-lg-1"></div>
+        <form role="form"  method="POST" enctype="multipart/form-data">
+          <div class="form-group col-lg-4">
+            <label for=""><strong>LEER PEDIDOS ACTUALES</strong></label>
+            <input type="file" name="archivoxlspedido" id="archivoxlspedido" class="form-control" accept="application/vnd.ms-excel">
+          </div>
+          <div class="form-group col-lg-1">
+            <br>
+            <button type="submit"  class="btn btn-success" name="importpedido" ><i class="fa fa-refresh"></i> Cargar pedidos</a>
+          </div>
+        </form>
+
+        <?php
+
+        $actualizarPedido = new ControladorArticulos();
+        $actualizarPedido->ctrCargarPedidos();
 
         ?>
 
