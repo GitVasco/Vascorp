@@ -180,7 +180,144 @@ class ModeloUsuarios{
 
 	}
 
+	/*=============================================
+	MOSTRAR PERMISOS
+	=============================================*/
+
+	static public function mdlMostrarPermisos($tabla, $item, $valor){
+
+		if($item != null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();
+
+		}else{
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+		
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+	/*=============================================
+	MOSTRAR PERMISOS
+	=============================================*/
+
+	static public function mdlMostrarUltimoID($tabla){
 
 
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ORDER BY id DESC LIMIT 1");
 
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+
+	
+		
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+	/*=============================================
+	REGISTRO DE PERMISO
+	=============================================*/
+
+	static public function mdlIngresarPermiso($tabla, $datos){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(idusuario, idpermiso) VALUES (:idusuario, :idpermiso)");
+
+		$stmt->bindParam(":idusuario", $datos["idusuario"], PDO::PARAM_STR);
+		$stmt->bindParam(":idpermiso", $datos["idpermiso"], PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";	
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		
+		$stmt = null;
+
+	}
+
+	/*=============================================
+	MOSTRAR PERMISOS
+	=============================================*/
+
+	static public function mdlMostrarUsuariosPermisos($tabla, $item, $valor){
+
+		if($item != null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}else{
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+		
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+	/*=============================================
+	BORRAR USUARIO
+	=============================================*/
+
+	static public function mdlBorrarUsuarioPermiso($tabla, $datos){
+
+		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE idusuario = :idusuario");
+
+		$stmt -> bindParam(":idusuario", $datos, PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+
+	}
 }

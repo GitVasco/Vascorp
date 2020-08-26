@@ -179,7 +179,17 @@ class ControladorUsuarios{
 					           "foto"=>$ruta);
 
 				$respuesta = ModeloUsuarios::mdlIngresarUsuario($tabla, $datos);
-			
+
+				$ultimoID=ModeloUsuarios::mdlMostrarUltimoID($tabla);
+				$permisosCHK=$_POST["permiso"];
+				
+				
+				for ($i=0; $i <count($permisosCHK) ; $i++) { 
+					$tabla2="usuario_permisojf";
+					$datos2=array("idusuario"=>$ultimoID["id"],
+								   "idpermiso"=>$permisosCHK[$i]);
+					$usuario_permiso=ModeloUsuarios::mdlIngresarPermiso($tabla2,$datos2);
+				}
 				if($respuesta == "ok"){
 
 					echo '<script>
@@ -249,6 +259,32 @@ class ControladorUsuarios{
 		$tabla = "usuariosjf";
 
 		$respuesta = ModeloUsuarios::MdlMostrarUsuarios($tabla, $item, $valor);
+
+		return $respuesta;
+	}
+
+	/*=============================================
+	MOSTRAR PERMISOS
+	=============================================*/
+
+	static public function ctrMostrarPermisos($item, $valor){
+
+		$tabla = "permisojf";
+
+		$respuesta = ModeloUsuarios::MdlMostrarPermisos($tabla, $item, $valor);
+
+		return $respuesta;
+	}
+
+	/*=============================================
+	MOSTRAR PERMISOS
+	=============================================*/
+
+	static public function ctrMostrarUsuariosPermisos($item, $valor){
+
+		$tabla = "usuario_permisojf";
+
+		$respuesta = ModeloUsuarios::MdlMostrarUsuariosPermisos($tabla, $item, $valor);
 
 		return $respuesta;
 	}
@@ -386,6 +422,18 @@ class ControladorUsuarios{
 							   "foto" => $ruta);
 
 				$respuesta = ModeloUsuarios::mdlEditarUsuario($tabla, $datos);
+
+				$permisosCHK=$_POST["permisos"];
+				$tabla2="usuario_permisojf";
+				$datosBorrar = $_POST["idUsuario"];
+				$borrado=ModeloUsuarios::mdlBorrarUsuarioPermiso($tabla2, $datosBorrar);
+				
+				for ($i=0; $i <count($permisosCHK) ; $i++) { 
+					
+					$datos2=array("idusuario"=>$_POST["idUsuario"],
+								   "idpermiso"=>$permisosCHK[$i]);
+					$usuario_permiso=ModeloUsuarios::mdlIngresarPermiso($tabla2,$datos2);
+				}
 
 				if($respuesta == "ok"){
 
