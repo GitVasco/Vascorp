@@ -12,7 +12,7 @@ include "/Excel/reader.php";
 $data = new Spreadsheet_Excel_Reader();
 $data->setOutputEncoding('CP1251');
 $data->read("vistas/cargas/PEDIDOS.xls");
-$conexion = mysql_connect("192.168.1.3", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
+$conexion = mysql_connect("192.168.1.2", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
 mysql_select_db("new_vasco", $conexion);
 
 echo("<table class='table table-bordered'>");
