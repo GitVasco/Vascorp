@@ -19,9 +19,27 @@
             $item="idusuario";
             $valor=$_SESSION["id"];
             $permisos=ControladorUsuarios::ctrMostrarUsuariosPermisos($item,$valor);
+            $valores= array();
+            foreach ($permisos as $key => $value) {
+                array_push($valores,$value["idpermiso"]);
+            }
+            in_array(1,$valores)?$_SESSION['escritorio']=1:$_SESSION['escritorio']=0;
+            in_array(2,$valores)?$_SESSION['analisis']=1:$_SESSION['analisis']=0;
+            in_array(3,$valores)?$_SESSION['usuarios']=1:$_SESSION['usuarios']=0;
+            in_array(4,$valores)?$_SESSION['backend']=1:$_SESSION['backend']=0;
+            in_array(5,$valores)?$_SESSION['movimientos']=1:$_SESSION['movimientos']=0;
+            in_array(6,$valores)?$_SESSION['maestros']=1:$_SESSION['maestros']=0;
+            in_array(7,$valores)?$_SESSION['produccion']=1:$_SESSION['produccion']=0;
+            in_array(8,$valores)?$_SESSION['tarjetas']=1:$_SESSION['tarjetas']=0;
+            in_array(9,$valores)?$_SESSION['operaciones']=1:$_SESSION['operaciones']=0;
+            in_array(10,$valores)?$_SESSION['clientes']=1:$_SESSION['clientes']=0;
+            in_array(11,$valores)?$_SESSION['ventas']=1:$_SESSION['ventas']=0;
+            in_array(12,$valores)?$_SESSION['facturacion']=1:$_SESSION['facturacion']=0;
+            
+
             if (
-                $_SESSION["perfil"] == "Supervisores" ||
-                $_SESSION["perfil"] == "Sistemas"
+                $_SESSION["perfil"] == "Supervisores"  && $_SESSION["analisis"] == 1 ||
+                $_SESSION["perfil"] == "Sistemas" && $_SESSION["analisis"] == 1
             ) {
 
                 echo '<li class="active">
@@ -41,7 +59,7 @@
             <?php
 
             if ($_SESSION["perfil"] == "Sistemas") {
-
+                if($_SESSION["usuarios"] == 1){
                 echo '<li>
 
                             <a href="usuarios">
@@ -51,8 +69,10 @@
             
                             </a>
     
-                        </li>
-                        
+                        </li>';
+                }
+                if($_SESSION["backend"] == 1){
+                       echo' 
                         <!-- BACKEND SISTEMAS -->
 
                         <li class="treeview">
@@ -122,6 +142,7 @@
                         </li>
             
                         <!-- fin backend -->   ';
+                }
             }
 
             ?>
@@ -136,7 +157,7 @@
                 $_SESSION["perfil"] == "Udp" ||
                 $_SESSION["perfil"] == "Costos"
             ) {
-
+                if($_SESSION["movimientos"] == 1){
                 echo '<!-- INICIO Movimientos -->
 
                         <li class="treeview">
@@ -181,8 +202,11 @@
 
                             </ul>
                                     
-                        </li>
+                        </li>';
             
+                }
+                if($_SESSION["maestros"] == 1){
+                        echo'
                         <!-- FIN Movimientos -->
                 
                         <!-- maestros Joel -->
@@ -328,6 +352,7 @@
                         </li>
             
                         <!-- fin maestros -->';
+                }
             }
 
             ?>
@@ -335,11 +360,11 @@
             <?php
 
             if (
-                $_SESSION["perfil"] == "Sistemas" ||
-                $_SESSION["perfil"] == "Supervisores" ||
-                $_SESSION["perfil"] == "Produccion" ||
-                $_SESSION["perfil"] == "Logistica" ||
-                $_SESSION["perfil"] == "Costos"
+                $_SESSION["perfil"] == "Sistemas" && $_SESSION["produccion"] == 1 ||
+                $_SESSION["perfil"] == "Supervisores"&& $_SESSION["produccion"] == 1 ||
+                $_SESSION["perfil"] == "Produccion" && $_SESSION["produccion"] == 1 ||
+                $_SESSION["perfil"] == "Logistica" && $_SESSION["produccion"] == 1 ||
+                $_SESSION["perfil"] == "Costos" && $_SESSION["produccion"] == 1
             ) {
 
                 echo '<li class="treeview">
@@ -496,12 +521,12 @@
             <?php
 
             if (
-                $_SESSION["perfil"] == "Sistemas" ||
-                $_SESSION["perfil"] == "Supervisores" ||
-                $_SESSION["perfil"] == "Produccion" ||
-                $_SESSION["perfil"] == "Logistica" ||
-                $_SESSION["perfil"] == "Udp" ||
-                $_SESSION["perfil"] == "Costos"
+                $_SESSION["perfil"] == "Sistemas" && $_SESSION["tarjetas"] == 1 ||
+                $_SESSION["perfil"] == "Supervisores"  && $_SESSION["tarjetas"] == 1 ||
+                $_SESSION["perfil"] == "Produccion" && $_SESSION["tarjetas"] == 1 ||
+                $_SESSION["perfil"] == "Logistica" && $_SESSION["tarjetas"] == 1 ||
+                $_SESSION["perfil"] == "Udp"  && $_SESSION["tarjetas"] == 1 ||
+                $_SESSION["perfil"] == "Costos" && $_SESSION["tarjetas"] == 1
             ) {
 
                 echo '<!-- inicio tarjetas -->
@@ -571,16 +596,16 @@
                 $_SESSION["perfil"] == "Sistemas" ||
                 $_SESSION["perfil"] == "Administrador"
             )
-
+                if($_SESSION["operaciones"] == 1){
                 echo '  
                         <li>
                             <a href="detalleoperaciones">
                                 <i class="fa fa-bolt"></i>
                                 <span>Operaciones Modelos</span>
                             </a>
-                        </li>
-            
-                        <li>
+                        </li>';
+                }
+                       echo ' <li>
 
                             <a href="categorias">
 
@@ -600,9 +625,9 @@
 
                             </a>
 
-                        </li>
-
-                        <li>
+                        </li>';
+                        if($_SESSION["clientes"] == 1){
+                        echo '<li>
 
                             <a href="clientes">
 
@@ -611,9 +636,10 @@
 
                             </a>
 
-                        </li>
-
-                        <li class="treeview">
+                        </li>';
+                        }
+                        if($_SESSION["ventas"] == 1){
+                        echo'<li class="treeview">
 
                             <a href="#">
 
@@ -667,11 +693,14 @@
                             </ul>
 
                         </li>';
+                        }
 
             ?>
 
             <!-- FACTURACION -->
-
+            <?php 
+            if($_SESSION["facturacion"] == 1){
+            ?>
             <li class="treeview">
 
                 <a href="#">
@@ -726,6 +755,9 @@
                 </ul>
 
             </li>
+            <?php 
+            }
+            ?>
 
             <!-- FIN FACTURACION -->
 
