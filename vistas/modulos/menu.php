@@ -16,7 +16,9 @@
             </li>
 
             <?php
-
+            $item="idusuario";
+            $valor=$_SESSION["id"];
+            $permisos=ControladorUsuarios::ctrMostrarUsuariosPermisos($item,$valor);
             if (
                 $_SESSION["perfil"] == "Supervisores" ||
                 $_SESSION["perfil"] == "Sistemas"
