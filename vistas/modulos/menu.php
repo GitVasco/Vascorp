@@ -177,7 +177,18 @@
             
                                     </a>
             
-                                </li>                                
+                                </li>    
+                                
+                                <li>
+            
+                                    <a href="mp-ingresos">
+            
+                                        <i class="fa fa-circle-o"></i>
+                                        <span>Ingresos MP</span>
+            
+                                    </a>
+            
+                                </li>                                  
 
                             </ul>
                                     
