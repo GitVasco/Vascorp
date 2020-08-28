@@ -340,9 +340,9 @@ MODAL AGREGAR FICHA TECNICA
             <!-- ENTRADA PARA EL NOMBRE -->
             
             <div class="form-group">
-              
+            <label for=""><strong>CODIGO DE TARJETA</strong></label>
               <div class="input-group">
-              
+                
                 <span class="input-group-addon"><i class="fa fa-th"></i></span> 
 
                 <input type="text" name="nuevaTarjeta" id="nuevaTarjeta" class="form-control input-lg" readonly>
@@ -352,13 +352,27 @@ MODAL AGREGAR FICHA TECNICA
 
             </div>
 
+            <!-- ENTRADA PARA EL MODELO -->
+            
+            <div class="form-group">
+              <label for=""><strong>MODELO</strong></label>
+              <div class="input-group">
+                
+                <span class="input-group-addon"><i class="fa fa-paper-plane"></i></span> 
+
+                <input type="text" class="form-control input-lg" name="nuevoModelo" id="nuevoModelo"   readonly>
+
+              </div>
+
+            </div>
+            
             <!-- ENTRADA PARA EL NOMBRE -->
             
             <div class="form-group">
-              
+            <label for=""><strong>FICHA TECNICA</strong></label>
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-file-pdf-o"></i></span> 
 
                 <input type="file" class="form-control input-lg" name="nuevoArchivo"  accept="application/pdf" required>
 

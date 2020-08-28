@@ -799,7 +799,8 @@ $(".tablaTarjetas").on("click", ".btnAgregarFicha", function () {
         success: function (respuesta) {
             console.log("respuesta", respuesta); 
 
-            $("#nuevaTarjeta").val(respuesta["codigo"]);
+			$("#nuevaTarjeta").val(respuesta["codigo"]);
+			$("#nuevoModelo").val(respuesta["modelo"]);
             $("#idTarjeta").val(respuesta["id"]);
 
         }

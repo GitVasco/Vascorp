@@ -586,15 +586,15 @@ class ControladorTarjetas{
 
 		if(isset($_POST["idTarjeta"])){
 
-			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevaPara"])){
 
-                $tabla = "fichas_tecnicasjf";
-				$directorio="vistas/fichas/".$_FILES["nuevoArchivo"]["name"];
+				$tabla = "fichas_tecnicasjf";
+				date_default_timezone_set('America/Lima');
+				$fecha=date("Y-m-d H:m:s");
+				$directorio="vistas/fichas/".$fecha."-".$_FILES["nuevoArchivo"]["name"];
 				$archivo=move_uploaded_file($_FILES["nuevoArchivo"]['tmp_name'], $directorio);
-				$datos = array("idTarjeta" => $_POST["idTarjeta"],
-								"archivo" => $_FILES["nuevoArchivo"],
+				$datos = array("idtarjeta" => $_POST["idTarjeta"],
+								"archivo" => $fecha."-".$_FILES["nuevoArchivo"]["name"],
 								"idusuario" => $_SESSION["id"]);
-				var_dump($datos);
 				$respuesta = ModeloTarjetas::mdlIngresarFichaTecnica($tabla, $datos);
 
 				if($respuesta == "ok"){
@@ -609,7 +609,7 @@ class ControladorTarjetas{
 						  }).then(function(result){
 									if (result.value) {
 
-									window.location = "tarjetas";
+									window.location = "ficha-tecnica";
 
 									}
 								})
@@ -619,27 +619,6 @@ class ControladorTarjetas{
 				}
 
 
-
-			}else{
-
-				echo'<script>
-
-					swal({
-						  type: "error",
-						  title: "¡La ficha tecnica no puede ir vacía o llevar caracteres especiales!",
-						  showConfirmButton: true,
-						  confirmButtonText: "Cerrar"
-						  }).then(function(result){
-							if (result.value) {
-
-							window.location = "tarjetas";
-
-							}
-						})
-
-			  	</script>';
-
-			}
 
 		}
 
