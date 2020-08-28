@@ -65,6 +65,17 @@ class AjaxTarjetas{
 		echo json_encode($respuestaDetalle);
 	}	
 
+	public $idTarjeta2;
+	public function ajaxVisualizarTarjetaFichas(){
+
+		$item = "id";
+		$valor = $this->idTarjeta2;
+
+		$respuestaDetalle = ControladorTarjetas::ctrMostrarTarjetas($item, $valor);
+
+		echo json_encode($respuestaDetalle);
+	}	
+
 
 }
 
@@ -100,13 +111,13 @@ if(isset($_POST["articuloTarjeta"])){
 }
 
 /*=============================================
-VISUALIZAR TARJETA DETALLE
+VISUALIZAR TARJETA fichas
 =============================================*/ 
 
-if(isset($_POST["articuloTarjetaDetalle"])){
+if(isset($_POST["idTarjeta2"])){
 
-	$visualizarTarjetaDetalle = new AjaxTarjetas();
-	$visualizarTarjetaDetalle -> articuloTarjetaDetalle = $_POST["articuloTarjetaDetalle"];
-	$visualizarTarjetaDetalle -> ajaxVisualizarTarjetaDetalle();
+	$visualizarTarjetaFichas = new AjaxTarjetas();
+	$visualizarTarjetaFichas->idTarjeta2 = $_POST["idTarjeta2"];
+	$visualizarTarjetaFichas->ajaxVisualizarTarjetaFichas();
   
   }

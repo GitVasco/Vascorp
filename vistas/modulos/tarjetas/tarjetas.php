@@ -69,13 +69,12 @@
               <th>Estado Tarjeta</th>
               <th style="width:50px">Fecha</th>
               <th>Total</th>
-              <th>Responsable</th>
               <th>Artículo</th>
               <th>Modelo</th>
               <th>Descripcion</th>
               <th>Color-Talla</th>
               <th>Estado Artículo</th>
-              <th style="width:150px">Acciones</th>
+              <th style="width:180px">Acciones</th>
 
             </tr>
 
@@ -304,3 +303,97 @@ MODAL VISUALIZAR INFORMACION
   </div>
 
 </div>
+
+
+<!--=====================================
+MODAL AGREGAR FICHA TECNICA
+======================================-->
+
+<div id="modalAgregarFichaTecnica" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form role="form" method="post" enctype="multipart/form-data">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Agregar Ficha tecnica</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <!-- ENTRADA PARA EL NOMBRE -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+
+                <input type="text" name="nuevaTarjeta" id="nuevaTarjeta" class="form-control input-lg" readonly>
+                <input type="hidden" name="idTarjeta" id="idTarjeta">
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA EL NOMBRE -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+
+                <input type="file" class="form-control input-lg" name="nuevoArchivo"  accept="application/pdf" required>
+
+              </div>
+
+            </div>
+  
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Guardar ficha tecnica</button>
+
+        </div>
+
+        <?php
+
+          $crearFicha = new ControladorTarjetas();
+          $crearFicha -> ctrCrearFichaTecnica();
+
+        ?>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+

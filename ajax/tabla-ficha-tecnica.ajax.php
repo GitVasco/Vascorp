@@ -30,6 +30,7 @@ class TablaFichaTecnica{
             $datosJson .= '[
             "'.($i+1).'",
             "'.$fichaTecnica[$i]["codigo"].'",
+            "'.$fichaTecnica[$i]["modelo"].'",
             "'.$fichaTecnica[$i]["archivo"].'",
             "'.$fichaTecnica[$i]["fecha_cambio"].'",
             "'.$botones.'"

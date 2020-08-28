@@ -42,6 +42,7 @@
            
            <th style="width:10px">#</th>
            <th>Tarjetas</th>
+           <th>Modelo</th>
            <th>Archivo</th>
            <th>Fecha de Cambio</th>
            <th>Acciones</th>
@@ -64,112 +65,6 @@
   </section>
 
 </div>
-
-<!--=====================================
-MODAL AGREGAR PARA
-======================================-->
-
-<div id="modalAgregarFichaTecnica" class="modal fade" role="dialog">
-  
-  <div class="modal-dialog">
-
-    <div class="modal-content">
-
-      <form role="form" method="post">
-
-        <!--=====================================
-        CABEZA DEL MODAL
-        ======================================-->
-
-        <div class="modal-header" style="background:#3c8dbc; color:white">
-
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-
-          <h4 class="modal-title">Agregar Ficha tecnica</h4>
-
-        </div>
-
-        <!--=====================================
-        CUERPO DEL MODAL
-        ======================================-->
-
-        <div class="modal-body">
-
-          <div class="box-body">
-
-            <!-- ENTRADA PARA EL NOMBRE -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-
-                <select name="nuevaTarjeta" id="nuevaTarjeta" class="form-control input-lg">
-                <option value="">Seleccionar ficha tecnica</option>
-
-                  <?php
-
-                  $valor = null;
-
-                  $tarjetas = ControladorTarjetas::ctrMostrarTarjetas($valor);
-
-                  foreach ($tarjetas as $key => $value) {
-                    echo '<option value="' . $value["id"] . '">' . $value["codigo"] . '</option>';
-                  }
-
-                  ?>
-                </select>
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA EL NOMBRE -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
-
-                <input type="file" class="form-control input-lg" name="nuevaPara" required>
-
-              </div>
-
-            </div>
-  
-          </div>
-
-        </div>
-
-        <!--=====================================
-        PIE DEL MODAL
-        ======================================-->
-
-        <div class="modal-footer">
-
-          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
-
-          <button type="submit" class="btn btn-primary">Guardar ficha tecnica</button>
-
-        </div>
-
-        <?php
-
-          $crearPara = new ControladorParas();
-          $crearPara -> ctrCrearPara();
-
-        ?>
-
-      </form>
-
-    </div>
-
-  </div>
-
-</div>
-
 
 <!--=====================================
 MODAL EDITAR PARA
@@ -211,8 +106,8 @@ MODAL EDITAR PARA
               
                 <span class="input-group-addon"><i class="fa fa-th"></i></span> 
 
-                <select name="editarTarjeta" id="editarTarjeta" class="form-control input-lg">
-                </select>
+                <input type="text" name="editarTarjeta" id="editarTarjeta" class="form-control" required>
+                
 
               </div>
 

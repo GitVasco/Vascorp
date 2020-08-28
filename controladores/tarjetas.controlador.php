@@ -577,5 +577,72 @@ class ControladorTarjetas{
 
 	}	
 
+
+/*=============================================
+	CREAR FICHA TECNICA
+	=============================================*/
+
+	static public function ctrCrearFichaTecnica(){
+
+		if(isset($_POST["idTarjeta"])){
+
+			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevaPara"])){
+
+                $tabla = "fichas_tecnicasjf";
+				$directorio="vistas/fichas/".$_FILES["nuevoArchivo"]["name"];
+				$archivo=move_uploaded_file($_FILES["nuevoArchivo"]['tmp_name'], $directorio);
+				$datos = array("idTarjeta" => $_POST["idTarjeta"],
+								"archivo" => $_FILES["nuevoArchivo"],
+								"idusuario" => $_SESSION["id"]);
+				var_dump($datos);
+				$respuesta = ModeloTarjetas::mdlIngresarFichaTecnica($tabla, $datos);
+
+				if($respuesta == "ok"){
+
+					echo'<script>
+
+					swal({
+						  type: "success",
+						  title: "La ficha tecnica ha sido guardada correctamente",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+									if (result.value) {
+
+									window.location = "tarjetas";
+
+									}
+								})
+
+					</script>';
+
+				}
+
+
+
+			}else{
+
+				echo'<script>
+
+					swal({
+						  type: "error",
+						  title: "¡La ficha tecnica no puede ir vacía o llevar caracteres especiales!",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+							if (result.value) {
+
+							window.location = "tarjetas";
+
+							}
+						})
+
+			  	</script>';
+
+			}
+
+		}
+
+    }
 }
 

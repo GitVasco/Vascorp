@@ -779,3 +779,31 @@ $('.tablaFichaTecnica').DataTable({
 	}
 
 });
+/*=============================================
+EDITAR FICHA TECNICA
+=============================================*/
+$(".tablaTarjetas").on("click", ".btnAgregarFicha", function () {
+
+	var idTarjeta2 = $(this).attr("idTarjeta");
+    var datos = new FormData();
+    datos.append("idTarjeta2", idTarjeta2);
+
+    $.ajax({
+        url: "ajax/tarjetas.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuesta) {
+            console.log("respuesta", respuesta); 
+
+            $("#nuevaTarjeta").val(respuesta["codigo"]);
+            $("#idTarjeta").val(respuesta["id"]);
+
+        }
+
+    })
+
+})
