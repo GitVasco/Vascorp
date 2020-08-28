@@ -161,7 +161,8 @@ CUERPO DOCUMENTO
 
         }else if( $_GET["ruta"] == "m-produccion" ||
                   $_GET["ruta"] == "m-ventas" ||
-                  $_GET["ruta"] == "mp-ingresos"){
+                  $_GET["ruta"] == "mp-ingresos" ||
+                  $_GET["ruta"] == "mp-salidas"){
 
                 include "modulos/movimientos/".$_GET["ruta"].".php";              
 

@@ -219,7 +219,18 @@
 
                         </a>
 
-                    </li>                                  
+                    </li>
+
+                    <li>
+
+                        <a href="mp-salidas">
+
+                            <i class="fa fa-circle-o"></i>
+                            <span>Salidas MP</span>
+
+                        </a>
+
+                    </li>                                                         
 
                 </ul>
                         
