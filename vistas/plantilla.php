@@ -200,7 +200,8 @@ CUERPO DOCUMENTO
         }else if( $_GET["ruta"] == "tarjetas" ||
                   $_GET["ruta"] == "crear-tarjeta" ||
                   $_GET["ruta"] == "editar-tarjeta" ||
-                  $_GET["ruta"] == "copiar-tarjeta"){
+                  $_GET["ruta"] == "copiar-tarjeta" ||
+                  $_GET["ruta"] == "ficha-tecnica"){
 
               include "modulos/tarjetas/".$_GET["ruta"].".php";
 
