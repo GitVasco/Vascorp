@@ -154,4 +154,37 @@ class ControladorMovimientos{
     }    
     
 
+    /* 
+    * MOSTRAR LOS MOVIMIENTOS DE VENTAS POR MODELO
+    */
+    static public function ctrLineaMP(){
+
+        $respuesta = ModeloMovimientos::mdlLineaMP();
+
+        return $respuesta;
+
+    }
+    
+    /* 
+    * MOSTRAR LOS INGRESOS POR MATERIA PRIMA
+    */
+    static public function ctrMovIngMp($inea){
+
+        $respuesta = ModeloMovimientos::mdlMovIngMp($inea);
+
+        return $respuesta;
+
+    }       
+
+    /* 
+    * MOSTRAR LAS SALIDAS POR MATERIA PRIMA
+    */
+    static public function ctrMovSalMp($inea){
+
+        $respuesta = ModeloMovimientos::mdlMovSalMp($inea);
+
+        return $respuesta;
+
+    }       
+
 }

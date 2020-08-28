@@ -2,12 +2,12 @@
     <!-- Header del Contenido -->
     <section class="content-header">
 
-        <h1>Ingresos de Materia Prima</h1>
+        <h1>Salidas de Materia Prima</h1>
 
         <ol class="breadcrumb">
 
             <li><a href="inicio"><i class="fa fa-home"></i> Inicio</a></li>
-            <li class="active">Ingresos de Materia Prima</li>
+            <li class="active">Salidas de Materia Prima</li>
 
         </ol>
 
@@ -21,7 +21,7 @@
             <div class="box-header with-border">
                 <div class="col-lg-4">
 
-                    <select class="form-control selectpicker input-lg" id="lineaMPIng" name="lineaMPIng" data-live-search="true">
+                    <select class="form-control selectpicker input-lg" id="lineaMPSal" name="lineaMPSal" data-live-search="true">
 
                     <option value="">Seleccione Modelo</option>
 
@@ -43,8 +43,8 @@
 
                 <div class="col-lg-6">
                 
-                    <button class="btn btn-primary btnCargarMpIng">CARGAR</button>
-                    <button class="btn btn-danger btnLimpiarMpIng">LIMPIAR</button>
+                    <button class="btn btn-primary btnCargarMpSal">CARGAR</button>
+                    <button class="btn btn-danger btnLimpiarMpSal">LIMPIAR</button>
 
                 </div>
 
@@ -52,7 +52,7 @@
 
             <div class="box-body">
 
-                <table class="table table-bordered table-condensed table-hover dt-responsive tablaMpIng" width="100%">
+                <table class="table table-bordered table-condensed table-hover dt-responsive tablaMpSal" width="100%">
 
                     <input type="hidden" value="<?=$_SESSION["perfil"];?>" id="perfilOculto">
 
