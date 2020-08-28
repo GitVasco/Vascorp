@@ -579,7 +579,18 @@
                     $_SESSION["perfil"] == "Costos"
                 ) {
 
-                    echo '<li>
+                    echo '
+                                             <li>
+            
+                                                <a href="ficha-tecnica">
+                        
+                                                    <i class="fa fa-circle-o"></i>
+                                                    <span>Fichas tecnicas</span>
+                        
+                                                </a>
+                        
+                                            </li>
+                                             <li>
             
                                                 <a href="crear-tarjeta">
                         

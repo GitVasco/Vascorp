@@ -413,6 +413,36 @@ class ModeloTarjetas{
 		$stmt=null;
 
 	}	
+	/*=============================================
+	MOSTRAR FICHAS TECNICA
+	=============================================*/
 
+	static public function mdlMostrarFichasTecnicas($tabla, $item, $valor){
+
+		if($item != null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();
+
+		}else{
+
+			$stmt = Conexion::conectar()->prepare("SELECT f.*,t.* FROM $tabla f LEFT JOIN tarjetasjf t ON f.idtarjeta = t.id");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
 
 }

@@ -18,6 +18,21 @@ class ControladorTarjetas{
 	}
 
 	/* 
+	* MOSTRAR DATOS DE LAS TARJETAS
+	*/
+	static public function ctrMostrarFichasTecnicas($item, $valor){
+
+		$tabla = "fichas_tecnicasjf";
+
+        $respuesta = ModeloTarjetas::mdlMostrarFichasTecnicas($tabla, $item, $valor);
+        
+        /* var_dump("respuesta", $respuesta); */
+
+		return $respuesta;
+
+	}
+
+	/* 
 	* MOSTRAR DATOS DEL DETALLE DE LAS TARJETAS
 	*/
 	static public function ctrMostrarDetallesTarjetas($item,$valor){
