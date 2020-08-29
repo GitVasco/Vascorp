@@ -432,7 +432,7 @@ class ModeloTarjetas{
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT f.*,t.codigo,a.modelo FROM $tabla f LEFT JOIN tarjetasjf t ON f.idtarjeta = t.id LEFT JOIN articulojf a ON t.articulo = a.articulo");
+			$stmt = Conexion::conectar()->prepare("SELECT f.*,t.codigo as codigotarjeta,a.modelo FROM $tabla f LEFT JOIN tarjetasjf t ON f.idtarjeta = t.id LEFT JOIN articulojf a ON t.articulo = a.articulo");
 
 			$stmt -> execute();
 
@@ -452,8 +452,9 @@ class ModeloTarjetas{
 
 	static public function mdlIngresarFichaTecnica($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(archivo,idtarjeta,idusuario) VALUES (:archivo,:idtarjeta,:idusuario)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(codigo,archivo,idtarjeta,idusuario) VALUES (:codigo,:archivo,:idtarjeta,:idusuario)");
 
+		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
 		$stmt->bindParam(":archivo", $datos["archivo"], PDO::PARAM_STR);
 		$stmt->bindParam(":idtarjeta", $datos["idtarjeta"], PDO::PARAM_STR);
 		$stmt->bindParam(":idusuario", $datos["idusuario"], PDO::PARAM_STR);

@@ -589,10 +589,17 @@ class ControladorTarjetas{
 
 				$tabla = "fichas_tecnicasjf";
 				date_default_timezone_set('America/Lima');
-				$fecha=date("Y-m-d H:m:s");
+				$fecha=date("Y-m-d H:i:s");
+				$año=date("Y");
+				$mes=date("m");
+				$dia=date("d");
+				$hora=date("H");
+				$min=date("i");
+				$seg=date("s");
 				$directorio="vistas/fichas/".$fecha."-".$_FILES["nuevoArchivo"]["name"];
 				$archivo=move_uploaded_file($_FILES["nuevoArchivo"]['tmp_name'], $directorio);
-				$datos = array("idtarjeta" => $_POST["idTarjeta"],
+				$datos = array("codigo" => "FT".$_POST["nuevoModelo"]."-".$año.$mes.$dia."-".$hora.$min,
+								"idtarjeta" => $_POST["idTarjeta"],
 								"archivo" => $fecha."-".$_FILES["nuevoArchivo"]["name"],
 								"idusuario" => $_SESSION["id"]);
 				$respuesta = ModeloTarjetas::mdlIngresarFichaTecnica($tabla, $datos);

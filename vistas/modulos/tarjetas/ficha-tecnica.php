@@ -42,6 +42,7 @@
            
            <th style="width:10px">#</th>
            <th>Tarjetas</th>
+           <th>Codigo</th>
            <th>Modelo</th>
            <th>Archivo</th>
            <th>Fecha de Cambio</th>
