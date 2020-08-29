@@ -1313,7 +1313,7 @@ class ModeloMovimientos{
                            Tabla_M_Detalle.Des_Larga AS Color,
                            Tb2.Des_Corta AS Unidad,
                            p.CosPro,
-                           SUBSTRING(p.CodFab, 1, 7) AS codsublinea,
+                           SUBSTRING(p.CodFab, 1, 6) AS codsublinea,
                            Tb1.Des_larga AS SubLinea 
                         FROM
                            producto p,
@@ -1444,7 +1444,7 @@ class ModeloMovimientos{
                            Tabla_M_Detalle.Des_Larga AS Color,
                            Tb2.Des_Corta AS Unidad,
                            p.CosPro,
-                           SUBSTRING(p.CodFab, 1, 7) AS codsublinea,
+                           SUBSTRING(p.CodFab, 1, 6) AS codsublinea,
                            Tb1.Des_larga AS SubLinea 
                         FROM
                            producto p,
@@ -1585,7 +1585,7 @@ class ModeloMovimientos{
                         Tabla_M_Detalle.Des_Larga AS Color,
                         Tb2.Des_Corta AS Unidad,
                         p.CosPro,
-                        SUBSTRING(p.CodFab, 1, 7) AS codsublinea,
+                        SUBSTRING(p.CodFab, 1, 6) AS codsublinea,
                         Tb1.Des_larga AS SubLinea 
                      FROM
                         producto p,
@@ -1717,7 +1717,7 @@ class ModeloMovimientos{
                         Tabla_M_Detalle.Des_Larga AS Color,
                         Tb2.Des_Corta AS Unidad,
                         p.CosPro,
-                        SUBSTRING(p.CodFab, 1, 7) AS codsublinea,
+                        SUBSTRING(p.CodFab, 1, 6) AS codsublinea,
                         Tb1.Des_larga AS SubLinea 
                      FROM
                         producto p,
@@ -1870,7 +1870,7 @@ class ModeloMovimientos{
                      Tabla_M_Detalle.Des_Larga AS Color,
                      Tb2.Des_Corta AS Unidad,
                      p.CosPro,
-                     SUBSTRING(p.CodFab, 1, 7) AS codsublinea,
+                     SUBSTRING(p.CodFab, 1, 6) AS codsublinea,
                      Tb1.Des_larga AS SubLinea 
                   FROM
                      producto p,
@@ -2001,7 +2001,7 @@ class ModeloMovimientos{
                      Tabla_M_Detalle.Des_Larga AS Color,
                      Tb2.Des_Corta AS Unidad,
                      p.CosPro,
-                     SUBSTRING(p.CodFab, 1, 7) AS codsublinea,
+                     SUBSTRING(p.CodFab, 1, 6) AS codsublinea,
                      Tb1.Des_larga AS SubLinea 
                   FROM
                      producto p,
@@ -2142,7 +2142,7 @@ class ModeloMovimientos{
                      Tabla_M_Detalle.Des_Larga AS Color,
                      Tb2.Des_Corta AS Unidad,
                      p.CosPro,
-                     SUBSTRING(p.CodFab, 1, 7) AS codsublinea,
+                     SUBSTRING(p.CodFab, 1, 6) AS codsublinea,
                      Tb1.Des_larga AS SubLinea 
                   FROM
                      producto p,
@@ -2274,7 +2274,7 @@ class ModeloMovimientos{
                      Tabla_M_Detalle.Des_Larga AS Color,
                      Tb2.Des_Corta AS Unidad,
                      p.CosPro,
-                     SUBSTRING(p.CodFab, 1, 7) AS codsublinea,
+                     SUBSTRING(p.CodFab, 1, 6) AS codsublinea,
                      Tb1.Des_larga AS SubLinea 
                   FROM
                      producto p,
