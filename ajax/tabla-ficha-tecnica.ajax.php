@@ -25,7 +25,7 @@ class TablaFichaTecnica{
         TRAEMOS LAS ACCIONES
         =============================================*/         
         
-        $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarFichaTecnica' idFichaTecnica='".$fichaTecnica[$i]["id"]."' data-toggle='modal' data-target='#modalEditarFichaTecnica'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarFichaTecnica' idFichaTecnica='".$fichaTecnica[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
+        $botones =  "<div class='btn-group'><a class='btn btn-success' href='vistas/fichas/".$fichaTecnica[$i]["archivo"]."' download title='Descargar ficha tecnica'><i class='fa fa-download'></i></a></div>"; 
 
             $datosJson .= '[
             "'.($i+1).'",
