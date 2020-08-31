@@ -179,9 +179,9 @@ class ControladorMovimientos{
     /* 
     * MOSTRAR LAS SALIDAS POR MATERIA PRIMA
     */
-    static public function ctrMovSalMp($inea){
+    static public function ctrMovSalMp($linea){
 
-        $respuesta = ModeloMovimientos::mdlMovSalMp($inea);
+        $respuesta = ModeloMovimientos::mdlMovSalMp($linea);
 
         return $respuesta;
 

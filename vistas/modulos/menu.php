@@ -551,6 +551,14 @@
 
                             </li>
 
+                            <li>
+
+                                <a href="proyeccion-mp">
+                                <i class="fa fa-circle-o"></i> Proyección AMP
+                                </a>
+
+                            </li>                            
+
                         </ul>
 
                     </li>                    
