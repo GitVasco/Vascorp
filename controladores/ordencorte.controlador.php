@@ -438,6 +438,17 @@ class ControladorOrdenCorte{
 
 		return $respuesta;
 		
-	}
+    }
+
+	/* 
+	* MOSTRAR ORDEN DE CORTE PENDIENTES Y ABIERTOS
+	*/
+	static public function ctrOCPend(){
+
+		$respuesta = ModeloOrdenCorte::mdlOCPend();
+
+		return $respuesta;
+
+    }    
 
 }

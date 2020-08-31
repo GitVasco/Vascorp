@@ -20,6 +20,20 @@ class TablaMateriaPrima{
             "data": [';
     
             for($i = 0; $i < count($materiaprima); $i++){
+
+
+            /*=============================================
+            PROMEDIO
+            =============================================*/ 
+            if($materiaprima[$i]["prom"] >= $materiaprima[$i]["stock"] ){
+
+                $prom = "<span style='font-size:85%' class='label label-danger'>".$materiaprima[$i]["prom"]."</span>";
+
+            }else{
+
+                $prom = "<span style='font-size:85%' class='label label-warning'>".$materiaprima[$i]["prom"]."</span>";
+
+            }  
        
             /*=============================================
             TRAEMOS LAS ACCIONES
@@ -35,7 +49,7 @@ class TablaMateriaPrima{
                 "'.$materiaprima[$i]["descripcion"].'",
                 "'.$materiaprima[$i]["color"].'",
                 "'.$materiaprima[$i]["stock"].'",
-                "'.$materiaprima[$i]["prom"].'",
+                "'.$prom.'",
                 "'.$materiaprima[$i]["unidad"].'",
                 "'.$materiaprima[$i]["cospro"].'",
                 "'.$botones.'"

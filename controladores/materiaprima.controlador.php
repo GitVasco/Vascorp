@@ -175,7 +175,16 @@ class ControladorMateriaPrima{
 		return $respuesta;
 		
 	}	
+
+    /* 
+    * MOSTRAR LAS SALIDAS POR MATERIA PRIMA
+    */
+    static public function ctrProyMp($mp){
+
+        $respuesta = ModeloMateriaPrima::mdlProyMp($mp);
+
+        return $respuesta;
+
+	}  
 	
-
-
 }
