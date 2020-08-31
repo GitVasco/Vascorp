@@ -17,7 +17,11 @@ include "../reportes_excel/Classes/PHPExcel.php";
 /* 
 * LLAMAMOS A LA CONEXION
 */
+<<<<<<< HEAD
 $conexion = mysql_connect("192.168.1.18", "admin", "joel123") or die("No se pudo conectar: " . mysql_error());
+=======
+$conexion = mysql_connect("192.168.1.18", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
+>>>>>>> joel
 mysql_select_db("vasco", $conexion);
 
 /* 

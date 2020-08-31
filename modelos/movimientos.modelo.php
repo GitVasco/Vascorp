@@ -601,7 +601,7 @@ class ModeloMovimientos{
                      ON m.articulo = a1.articulo 
                   WHERE YEAR(m.fecha) = YEAR(NOW()) 
                      AND m.tipo = 'E20' 
-                     AND a1.modelo = $modelo 
+                     AND a1.modelo = :modelo
                   GROUP BY a1.modelo,
                      a1.articulo,
                      a1.nombre,
@@ -711,14 +711,18 @@ class ModeloMovimientos{
                      ON a2.modelo = mo.modelo 
                   WHERE YEAR(m.fecha) = YEAR(NOW()) 
                      AND m.tipo = 'E20' 
-                     AND a2.modelo = $modelo 
+                     AND a2.modelo = :modelo 
                   GROUP BY mo.modelo,
                      mo.nombre,
                      mo.estado 
                   ORDER BY modelo ASC,
                      articulo ASC";
 
-			$stmt=Conexion::conectar()->prepare($sql);
+         $stmt=Conexion::conectar()->prepare($sql);
+         
+         $stmt->bindParam(":modelo", $modelo, PDO::PARAM_STR);
+
+
 			$stmt->execute();
 			# Retornamos un fetchAll por ser más de una línea la que necesitamos devolver
          return $stmt->fetchAll();
@@ -1051,7 +1055,7 @@ class ModeloMovimientos{
                ON m.articulo = a1.articulo 
             WHERE YEAR(m.fecha) = YEAR(NOW()) 
                AND m.tipo IN ('S02', 'S03', 'S70', 'E05') 
-               AND a1.modelo = $modelo 
+               AND a1.modelo = :modelo 
             GROUP BY a1.modelo,
                a1.articulo,
                a1.nombre,
@@ -1159,13 +1163,16 @@ class ModeloMovimientos{
                ON m.articulo = a2.articulo 
             WHERE YEAR(m.fecha) = YEAR(NOW()) 
                AND m.tipo IN ('S02', 'S03', 'S70', 'E05', 'E21') 
-               AND a2.modelo = $modelo
+               AND a2.modelo = :modelo
             GROUP BY a2.modelo,
                a2.nombre 
             ORDER BY modelo ASC,
                articulo ASC";
 
-			$stmt=Conexion::conectar()->prepare($sql);
+         $stmt=Conexion::conectar()->prepare($sql);
+         
+         $stmt->bindParam(":modelo", $modelo, PDO::PARAM_STR);
+
 			$stmt->execute();
 			# Retornamos un fetchAll por ser más de una línea la que necesitamos devolver
          return $stmt->fetchAll();
@@ -1173,6 +1180,1139 @@ class ModeloMovimientos{
       }
       
 		$stmt=null;
-	}      
+   }      
+   
+   /* 
+   * sacamos los totales de ventas por mes
+   */
+  static public function mdlLineaMP(){
+
+   $stmt = Conexion::conectar()->prepare("SELECT 
+                                          t.des_corta AS codlinea,
+                                          t.cod_tabla,
+                                          t.des_larga AS descripcion 
+                                       FROM
+                                          tabla_m_detalle t 
+                                       WHERE t.cod_tabla = 'TLIN'");
+
+   $stmt -> execute();
+
+   return $stmt -> fetchall();
+
+   }   
+
+   // Método para mostrar el Rango de Fechas de Ventas
+	static public function mdlMovIngMp($linea){
+
+		if($linea=="null"){
+
+         $sql="SELECT 
+                        mp.codsublinea,
+                        mp.codigofabrica,
+                        n.codpro,
+                        mp.codlinea,
+                        mp.linea,
+                        mp.descripcion,
+                        mp.color,
+                        mp.unidad,
+                        SUM(
+                        CASE
+                           WHEN MONTH(n.fecreg) = '1' 
+                           THEN n.CanSol 
+                           ELSE 0 
+                        END
+                        ) AS '1',
+                        SUM(
+                        CASE
+                           WHEN MONTH(n.fecreg) = '2' 
+                           THEN n.CanSol 
+                           ELSE 0 
+                        END
+                        ) AS '2',
+                        SUM(
+                        CASE
+                           WHEN MONTH(n.fecreg) = '3' 
+                           THEN n.CanSol 
+                           ELSE 0 
+                        END
+                        ) AS '3',
+                        SUM(
+                        CASE
+                           WHEN MONTH(n.fecreg) = '4' 
+                           THEN n.CanSol 
+                           ELSE 0 
+                        END
+                        ) AS '4',
+                        SUM(
+                        CASE
+                           WHEN MONTH(n.fecreg) = '5' 
+                           THEN n.CanSol 
+                           ELSE 0 
+                        END
+                        ) AS '5',
+                        SUM(
+                        CASE
+                           WHEN MONTH(n.fecreg) = '6' 
+                           THEN n.CanSol 
+                           ELSE 0 
+                        END
+                        ) AS '6',
+                        SUM(
+                        CASE
+                           WHEN MONTH(n.fecreg) = '7' 
+                           THEN n.CanSol 
+                           ELSE 0 
+                        END
+                        ) AS '7',
+                        SUM(
+                        CASE
+                           WHEN MONTH(n.fecreg) = '8' 
+                           THEN n.CanSol 
+                           ELSE 0 
+                        END
+                        ) AS '8',
+                        SUM(
+                        CASE
+                           WHEN MONTH(n.fecreg) = '9' 
+                           THEN n.CanSol 
+                           ELSE 0 
+                        END
+                        ) AS '9',
+                        SUM(
+                        CASE
+                           WHEN MONTH(n.fecreg) = '10' 
+                           THEN n.CanSol 
+                           ELSE 0 
+                        END
+                        ) AS '10',
+                        SUM(
+                        CASE
+                           WHEN MONTH(n.fecreg) = '11' 
+                           THEN n.CanSol 
+                           ELSE 0 
+                        END
+                        ) AS '11',
+                        SUM(
+                        CASE
+                           WHEN MONTH(n.fecreg) = '12' 
+                           THEN n.CanSol 
+                           ELSE 0 
+                        END
+                        ) AS '12',
+                        SUM(n.cansol) AS total 
+                     FROM
+                        neadet n 
+                        LEFT JOIN 
+                        (SELECT DISTINCT 
+                           p.Codpro AS Codigo,
+                           SUBSTRING(p.CodFab, 1, 3) AS codlinea,
+                           Tb4.Des_larga AS Linea,
+                           p.CodFab AS CodigoFabrica,
+                           p.DesPro AS Descripcion,
+                           p.CodAlm01 AS Stk_Actual,
+                           Tabla_M_Detalle.Des_Larga AS Color,
+                           Tb2.Des_Corta AS Unidad,
+                           p.CosPro,
+                           SUBSTRING(p.CodFab, 1, 6) AS codsublinea,
+                           Tb1.Des_larga AS SubLinea 
+                        FROM
+                           producto p,
+                           Tabla_M_Detalle,
+                           Tabla_M_Detalle AS Tb1,
+                           Tabla_M_Detalle AS Tb2,
+                           Tabla_M_Detalle AS Tb4 
+                        WHERE Tabla_M_Detalle.Cod_Tabla IN ('TCOL') 
+                           AND Tb2.Cod_Tabla IN ('TUND') 
+                           AND tB4.Cod_Tabla IN ('TLIN') 
+                           AND Tb1.Cod_Tabla IN ('TSUB') 
+                           AND Tabla_M_Detalle.Cod_Argumento = p.ColPro 
+                           AND Tb2.Cod_Argumento = p.UndPro 
+                           AND LEFT(p.CodFab, 3) = Tb4.Des_Corta 
+                           AND SUBSTRING(p.CodFab, 4, 3) = Tb1.Valor_3 
+                           AND Tb4.Des_Corta = Tb1.Des_Corta 
+                        ORDER BY p.CodPro ASC) AS mp 
+                        ON n.codpro = mp.codigo 
+                     WHERE n.EstReg = 'P' 
+                        AND n.CanSol > 0 
+                        AND YEAR(n.fecreg) = YEAR(NOW()) 
+                     GROUP BY n.codpro 
+                     UNION
+                     SELECT 
+                        mp.codsublinea,
+                        'TOTAL',
+                        '-',
+                        mp.codlinea,
+                        mp.linea,
+                        '-',
+                        '-',
+                        '-',
+                        SUM(
+                        CASE
+                           WHEN MONTH(n.fecreg) = '1' 
+                           THEN n.CanSol 
+                           ELSE 0 
+                        END
+                        ) AS '1',
+                        SUM(
+                        CASE
+                           WHEN MONTH(n.fecreg) = '2' 
+                           THEN n.CanSol 
+                           ELSE 0 
+                        END
+                        ) AS '2',
+                        SUM(
+                        CASE
+                           WHEN MONTH(n.fecreg) = '3' 
+                           THEN n.CanSol 
+                           ELSE 0 
+                        END
+                        ) AS '3',
+                        SUM(
+                        CASE
+                           WHEN MONTH(n.fecreg) = '4' 
+                           THEN n.CanSol 
+                           ELSE 0 
+                        END
+                        ) AS '4',
+                        SUM(
+                        CASE
+                           WHEN MONTH(n.fecreg) = '5' 
+                           THEN n.CanSol 
+                           ELSE 0 
+                        END
+                        ) AS '5',
+                        SUM(
+                        CASE
+                           WHEN MONTH(n.fecreg) = '6' 
+                           THEN n.CanSol 
+                           ELSE 0 
+                        END
+                        ) AS '6',
+                        SUM(
+                        CASE
+                           WHEN MONTH(n.fecreg) = '7' 
+                           THEN n.CanSol 
+                           ELSE 0 
+                        END
+                        ) AS '7',
+                        SUM(
+                        CASE
+                           WHEN MONTH(n.fecreg) = '8' 
+                           THEN n.CanSol 
+                           ELSE 0 
+                        END
+                        ) AS '8',
+                        SUM(
+                        CASE
+                           WHEN MONTH(n.fecreg) = '9' 
+                           THEN n.CanSol 
+                           ELSE 0 
+                        END
+                        ) AS '9',
+                        SUM(
+                        CASE
+                           WHEN MONTH(n.fecreg) = '10' 
+                           THEN n.CanSol 
+                           ELSE 0 
+                        END
+                        ) AS '10',
+                        SUM(
+                        CASE
+                           WHEN MONTH(n.fecreg) = '11' 
+                           THEN n.CanSol 
+                           ELSE 0 
+                        END
+                        ) AS '11',
+                        SUM(
+                        CASE
+                           WHEN MONTH(n.fecreg) = '12' 
+                           THEN n.CanSol 
+                           ELSE 0 
+                        END
+                        ) AS '12',
+                        SUM(n.cansol) AS total 
+                     FROM
+                        neadet n 
+                        LEFT JOIN 
+                        (SELECT DISTINCT 
+                           p.Codpro AS Codigo,
+                           SUBSTRING(p.CodFab, 1, 3) AS codlinea,
+                           Tb4.Des_larga AS Linea,
+                           p.CodFab AS CodigoFabrica,
+                           p.DesPro AS Descripcion,
+                           p.CodAlm01 AS Stk_Actual,
+                           Tabla_M_Detalle.Des_Larga AS Color,
+                           Tb2.Des_Corta AS Unidad,
+                           p.CosPro,
+                           SUBSTRING(p.CodFab, 1, 6) AS codsublinea,
+                           Tb1.Des_larga AS SubLinea 
+                        FROM
+                           producto p,
+                           Tabla_M_Detalle,
+                           Tabla_M_Detalle AS Tb1,
+                           Tabla_M_Detalle AS Tb2,
+                           Tabla_M_Detalle AS Tb4 
+                        WHERE Tabla_M_Detalle.Cod_Tabla IN ('TCOL') 
+                           AND Tb2.Cod_Tabla IN ('TUND') 
+                           AND tB4.Cod_Tabla IN ('TLIN') 
+                           AND Tb1.Cod_Tabla IN ('TSUB') 
+                           AND Tabla_M_Detalle.Cod_Argumento = p.ColPro 
+                           AND Tb2.Cod_Argumento = p.UndPro 
+                           AND LEFT(p.CodFab, 3) = Tb4.Des_Corta 
+                           AND SUBSTRING(p.CodFab, 4, 3) = Tb1.Valor_3 
+                           AND Tb4.Des_Corta = Tb1.Des_Corta 
+                        ORDER BY p.CodPro ASC) AS mp 
+                        ON n.codpro = mp.codigo 
+                     WHERE n.EstReg = 'P' 
+                        AND n.CanSol > 0 
+                        AND YEAR(n.fecreg) = YEAR(NOW()) 
+                     GROUP BY mp.codsublinea 
+                     ORDER BY codsublinea,
+                        codigofabrica";
+         
+			$stmt=Conexion::conectar()->prepare($sql);
+         $stmt->execute();
+         
+			# Retornamos un fetchAll por ser más de una línea la que necesitamos devolver
+         return $stmt->fetchAll();
+
+      }else{
+
+			$sql="SELECT 
+                     mp.codsublinea,
+                     mp.codigofabrica,
+                     n.codpro,
+                     mp.codlinea,
+                     mp.linea,
+                     mp.descripcion,
+                     mp.color,
+                     mp.unidad,
+                     SUM(
+                     CASE
+                        WHEN MONTH(n.fecreg) = '1' 
+                        THEN n.CanSol 
+                        ELSE 0 
+                     END
+                     ) AS '1',
+                     SUM(
+                     CASE
+                        WHEN MONTH(n.fecreg) = '2' 
+                        THEN n.CanSol 
+                        ELSE 0 
+                     END
+                     ) AS '2',
+                     SUM(
+                     CASE
+                        WHEN MONTH(n.fecreg) = '3' 
+                        THEN n.CanSol 
+                        ELSE 0 
+                     END
+                     ) AS '3',
+                     SUM(
+                     CASE
+                        WHEN MONTH(n.fecreg) = '4' 
+                        THEN n.CanSol 
+                        ELSE 0 
+                     END
+                     ) AS '4',
+                     SUM(
+                     CASE
+                        WHEN MONTH(n.fecreg) = '5' 
+                        THEN n.CanSol 
+                        ELSE 0 
+                     END
+                     ) AS '5',
+                     SUM(
+                     CASE
+                        WHEN MONTH(n.fecreg) = '6' 
+                        THEN n.CanSol 
+                        ELSE 0 
+                     END
+                     ) AS '6',
+                     SUM(
+                     CASE
+                        WHEN MONTH(n.fecreg) = '7' 
+                        THEN n.CanSol 
+                        ELSE 0 
+                     END
+                     ) AS '7',
+                     SUM(
+                     CASE
+                        WHEN MONTH(n.fecreg) = '8' 
+                        THEN n.CanSol 
+                        ELSE 0 
+                     END
+                     ) AS '8',
+                     SUM(
+                     CASE
+                        WHEN MONTH(n.fecreg) = '9' 
+                        THEN n.CanSol 
+                        ELSE 0 
+                     END
+                     ) AS '9',
+                     SUM(
+                     CASE
+                        WHEN MONTH(n.fecreg) = '10' 
+                        THEN n.CanSol 
+                        ELSE 0 
+                     END
+                     ) AS '10',
+                     SUM(
+                     CASE
+                        WHEN MONTH(n.fecreg) = '11' 
+                        THEN n.CanSol 
+                        ELSE 0 
+                     END
+                     ) AS '11',
+                     SUM(
+                     CASE
+                        WHEN MONTH(n.fecreg) = '12' 
+                        THEN n.CanSol 
+                        ELSE 0 
+                     END
+                     ) AS '12',
+                     SUM(n.cansol) AS total 
+                  FROM
+                     neadet n 
+                     LEFT JOIN 
+                     (SELECT DISTINCT 
+                        p.Codpro AS Codigo,
+                        SUBSTRING(p.CodFab, 1, 3) AS codlinea,
+                        Tb4.Des_larga AS Linea,
+                        p.CodFab AS CodigoFabrica,
+                        p.DesPro AS Descripcion,
+                        p.CodAlm01 AS Stk_Actual,
+                        Tabla_M_Detalle.Des_Larga AS Color,
+                        Tb2.Des_Corta AS Unidad,
+                        p.CosPro,
+                        SUBSTRING(p.CodFab, 1, 6) AS codsublinea,
+                        Tb1.Des_larga AS SubLinea 
+                     FROM
+                        producto p,
+                        Tabla_M_Detalle,
+                        Tabla_M_Detalle AS Tb1,
+                        Tabla_M_Detalle AS Tb2,
+                        Tabla_M_Detalle AS Tb4 
+                     WHERE Tabla_M_Detalle.Cod_Tabla IN ('TCOL') 
+                        AND Tb2.Cod_Tabla IN ('TUND') 
+                        AND tB4.Cod_Tabla IN ('TLIN') 
+                        AND Tb1.Cod_Tabla IN ('TSUB') 
+                        AND Tabla_M_Detalle.Cod_Argumento = p.ColPro 
+                        AND Tb2.Cod_Argumento = p.UndPro 
+                        AND LEFT(p.CodFab, 3) = Tb4.Des_Corta 
+                        AND SUBSTRING(p.CodFab, 4, 3) = Tb1.Valor_3 
+                        AND Tb4.Des_Corta = Tb1.Des_Corta 
+                     ORDER BY p.CodPro ASC) AS mp 
+                     ON n.codpro = mp.codigo 
+                  WHERE n.EstReg = 'P' 
+                     AND n.CanSol > 0 
+                     AND YEAR(n.fecreg) = YEAR(NOW()) 
+                     AND mp.codlinea = :linea    
+                  GROUP BY n.codpro 
+                  UNION
+                  SELECT 
+                     mp.codsublinea,
+                     'TOTAL',
+                     '-',
+                     mp.codlinea,
+                     mp.linea,
+                     '-',
+                     '-',
+                     '-',
+                     SUM(
+                     CASE
+                        WHEN MONTH(n.fecreg) = '1' 
+                        THEN n.CanSol 
+                        ELSE 0 
+                     END
+                     ) AS '1',
+                     SUM(
+                     CASE
+                        WHEN MONTH(n.fecreg) = '2' 
+                        THEN n.CanSol 
+                        ELSE 0 
+                     END
+                     ) AS '2',
+                     SUM(
+                     CASE
+                        WHEN MONTH(n.fecreg) = '3' 
+                        THEN n.CanSol 
+                        ELSE 0 
+                     END
+                     ) AS '3',
+                     SUM(
+                     CASE
+                        WHEN MONTH(n.fecreg) = '4' 
+                        THEN n.CanSol 
+                        ELSE 0 
+                     END
+                     ) AS '4',
+                     SUM(
+                     CASE
+                        WHEN MONTH(n.fecreg) = '5' 
+                        THEN n.CanSol 
+                        ELSE 0 
+                     END
+                     ) AS '5',
+                     SUM(
+                     CASE
+                        WHEN MONTH(n.fecreg) = '6' 
+                        THEN n.CanSol 
+                        ELSE 0 
+                     END
+                     ) AS '6',
+                     SUM(
+                     CASE
+                        WHEN MONTH(n.fecreg) = '7' 
+                        THEN n.CanSol 
+                        ELSE 0 
+                     END
+                     ) AS '7',
+                     SUM(
+                     CASE
+                        WHEN MONTH(n.fecreg) = '8' 
+                        THEN n.CanSol 
+                        ELSE 0 
+                     END
+                     ) AS '8',
+                     SUM(
+                     CASE
+                        WHEN MONTH(n.fecreg) = '9' 
+                        THEN n.CanSol 
+                        ELSE 0 
+                     END
+                     ) AS '9',
+                     SUM(
+                     CASE
+                        WHEN MONTH(n.fecreg) = '10' 
+                        THEN n.CanSol 
+                        ELSE 0 
+                     END
+                     ) AS '10',
+                     SUM(
+                     CASE
+                        WHEN MONTH(n.fecreg) = '11' 
+                        THEN n.CanSol 
+                        ELSE 0 
+                     END
+                     ) AS '11',
+                     SUM(
+                     CASE
+                        WHEN MONTH(n.fecreg) = '12' 
+                        THEN n.CanSol 
+                        ELSE 0 
+                     END
+                     ) AS '12',
+                     SUM(n.cansol) AS total 
+                  FROM
+                     neadet n 
+                     LEFT JOIN 
+                     (SELECT DISTINCT 
+                        p.Codpro AS Codigo,
+                        SUBSTRING(p.CodFab, 1, 3) AS codlinea,
+                        Tb4.Des_larga AS Linea,
+                        p.CodFab AS CodigoFabrica,
+                        p.DesPro AS Descripcion,
+                        p.CodAlm01 AS Stk_Actual,
+                        Tabla_M_Detalle.Des_Larga AS Color,
+                        Tb2.Des_Corta AS Unidad,
+                        p.CosPro,
+                        SUBSTRING(p.CodFab, 1, 6) AS codsublinea,
+                        Tb1.Des_larga AS SubLinea 
+                     FROM
+                        producto p,
+                        Tabla_M_Detalle,
+                        Tabla_M_Detalle AS Tb1,
+                        Tabla_M_Detalle AS Tb2,
+                        Tabla_M_Detalle AS Tb4 
+                     WHERE Tabla_M_Detalle.Cod_Tabla IN ('TCOL') 
+                        AND Tb2.Cod_Tabla IN ('TUND') 
+                        AND tB4.Cod_Tabla IN ('TLIN') 
+                        AND Tb1.Cod_Tabla IN ('TSUB') 
+                        AND Tabla_M_Detalle.Cod_Argumento = p.ColPro 
+                        AND Tb2.Cod_Argumento = p.UndPro 
+                        AND LEFT(p.CodFab, 3) = Tb4.Des_Corta 
+                        AND SUBSTRING(p.CodFab, 4, 3) = Tb1.Valor_3 
+                        AND Tb4.Des_Corta = Tb1.Des_Corta 
+                     ORDER BY p.CodPro ASC) AS mp 
+                     ON n.codpro = mp.codigo 
+                  WHERE n.EstReg = 'P' 
+                     AND n.CanSol > 0 
+                     AND YEAR(n.fecreg) = YEAR(NOW()) 
+                     AND mp.codlinea = :linea
+                  GROUP BY mp.codsublinea 
+                  ORDER BY codsublinea,
+                     codigofabrica";
+
+         
+         $stmt=Conexion::conectar()->prepare($sql);
+         
+         $stmt->bindParam(":linea", $linea, PDO::PARAM_STR);
+
+			$stmt->execute();
+			# Retornamos un fetchAll por ser más de una línea la que necesitamos devolver
+         return $stmt->fetchAll();
+         
+      }
+      
+		$stmt=null;
+   }   
+
+// Método para mostrar el Rango de Fechas de Ventas
+	static public function mdlMovSalMp($linea){
+
+		if($linea=="null"){
+
+         $sql="SELECT 
+                  mp.codsublinea,
+                  mp.codigofabrica,
+                  vd.codpro,
+                  mp.codlinea,
+                  mp.linea,
+                  mp.descripcion,
+                  mp.color,
+                  mp.unidad,
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '1' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '1',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '2' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '2',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '3' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '3',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '4' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '4',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '5' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '5',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '6' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '6',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '7' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '7',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '8' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '8',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '9' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '9',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '10' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '10',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '11' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '11',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '12' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '12',
+                  SUM(vd.canvta) AS total 
+               FROM
+                  venta_det vd 
+                  LEFT JOIN 
+                  (SELECT DISTINCT 
+                     p.Codpro AS Codigo,
+                     SUBSTRING(p.CodFab, 1, 3) AS codlinea,
+                     Tb4.Des_larga AS Linea,
+                     p.CodFab AS CodigoFabrica,
+                     p.DesPro AS Descripcion,
+                     p.CodAlm01 AS Stk_Actual,
+                     Tabla_M_Detalle.Des_Larga AS Color,
+                     Tb2.Des_Corta AS Unidad,
+                     p.CosPro,
+                     SUBSTRING(p.CodFab, 1, 6) AS codsublinea,
+                     Tb1.Des_larga AS SubLinea 
+                  FROM
+                     producto p,
+                     Tabla_M_Detalle,
+                     Tabla_M_Detalle AS Tb1,
+                     Tabla_M_Detalle AS Tb2,
+                     Tabla_M_Detalle AS Tb4 
+                  WHERE Tabla_M_Detalle.Cod_Tabla IN ('TCOL') 
+                     AND Tb2.Cod_Tabla IN ('TUND') 
+                     AND tB4.Cod_Tabla IN ('TLIN') 
+                     AND Tb1.Cod_Tabla IN ('TSUB') 
+                     AND Tabla_M_Detalle.Cod_Argumento = p.ColPro 
+                     AND Tb2.Cod_Argumento = p.UndPro 
+                     AND LEFT(p.CodFab, 3) = Tb4.Des_Corta 
+                     AND SUBSTRING(p.CodFab, 4, 3) = Tb1.Valor_3 
+                     AND Tb4.Des_Corta = Tb1.Des_Corta 
+                  ORDER BY p.CodPro ASC) AS mp 
+                  ON vd.codpro = mp.codigo 
+               WHERE vd.EstVta = 'P' 
+                  AND vd.canvta > 0 
+                  AND YEAR(vd.fecemi) = YEAR(NOW()) 
+               GROUP BY vd.codpro 
+               UNION
+               SELECT 
+                  mp.codsublinea,
+                  'TOTAL',
+                  '-',
+                  mp.codlinea,
+                  mp.linea,
+                  '-',
+                  '-',
+                  '-',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '1' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '1',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '2' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '2',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '3' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '3',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '4' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '4',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '5' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '5',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '6' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '6',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '7' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '7',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '8' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '8',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '9' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '9',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '10' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '10',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '11' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '11',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '12' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '12',
+                  SUM(vd.canvta) AS total 
+               FROM
+                  venta_det vd 
+                  LEFT JOIN 
+                  (SELECT DISTINCT 
+                     p.Codpro AS Codigo,
+                     SUBSTRING(p.CodFab, 1, 3) AS codlinea,
+                     Tb4.Des_larga AS Linea,
+                     p.CodFab AS CodigoFabrica,
+                     p.DesPro AS Descripcion,
+                     p.CodAlm01 AS Stk_Actual,
+                     Tabla_M_Detalle.Des_Larga AS Color,
+                     Tb2.Des_Corta AS Unidad,
+                     p.CosPro,
+                     SUBSTRING(p.CodFab, 1, 6) AS codsublinea,
+                     Tb1.Des_larga AS SubLinea 
+                  FROM
+                     producto p,
+                     Tabla_M_Detalle,
+                     Tabla_M_Detalle AS Tb1,
+                     Tabla_M_Detalle AS Tb2,
+                     Tabla_M_Detalle AS Tb4 
+                  WHERE Tabla_M_Detalle.Cod_Tabla IN ('TCOL') 
+                     AND Tb2.Cod_Tabla IN ('TUND') 
+                     AND tB4.Cod_Tabla IN ('TLIN') 
+                     AND Tb1.Cod_Tabla IN ('TSUB') 
+                     AND Tabla_M_Detalle.Cod_Argumento = p.ColPro 
+                     AND Tb2.Cod_Argumento = p.UndPro 
+                     AND LEFT(p.CodFab, 3) = Tb4.Des_Corta 
+                     AND SUBSTRING(p.CodFab, 4, 3) = Tb1.Valor_3 
+                     AND Tb4.Des_Corta = Tb1.Des_Corta 
+                  ORDER BY p.CodPro ASC) AS mp 
+                  ON vd.codpro = mp.codigo 
+               WHERE vd.EstVta = 'P' 
+                  AND vd.canvta > 0 
+                  AND YEAR(vd.fecemi) = YEAR(NOW()) 
+               GROUP BY mp.codsublinea 
+               ORDER BY codsublinea,
+                  codigofabrica";
+         
+			$stmt=Conexion::conectar()->prepare($sql);
+         $stmt->execute();
+         
+			# Retornamos un fetchAll por ser más de una línea la que necesitamos devolver
+         return $stmt->fetchAll();
+
+      }else{
+
+			$sql="SELECT 
+                  mp.codsublinea,
+                  mp.codigofabrica,
+                  vd.codpro,
+                  mp.codlinea,
+                  mp.linea,
+                  mp.descripcion,
+                  mp.color,
+                  mp.unidad,
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '1' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '1',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '2' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '2',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '3' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '3',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '4' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '4',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '5' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '5',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '6' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '6',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '7' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '7',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '8' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '8',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '9' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '9',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '10' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '10',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '11' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '11',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '12' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '12',
+                  SUM(vd.canvta) AS total 
+               FROM
+                  venta_det vd 
+                  LEFT JOIN 
+                  (SELECT DISTINCT 
+                     p.Codpro AS Codigo,
+                     SUBSTRING(p.CodFab, 1, 3) AS codlinea,
+                     Tb4.Des_larga AS Linea,
+                     p.CodFab AS CodigoFabrica,
+                     p.DesPro AS Descripcion,
+                     p.CodAlm01 AS Stk_Actual,
+                     Tabla_M_Detalle.Des_Larga AS Color,
+                     Tb2.Des_Corta AS Unidad,
+                     p.CosPro,
+                     SUBSTRING(p.CodFab, 1, 6) AS codsublinea,
+                     Tb1.Des_larga AS SubLinea 
+                  FROM
+                     producto p,
+                     Tabla_M_Detalle,
+                     Tabla_M_Detalle AS Tb1,
+                     Tabla_M_Detalle AS Tb2,
+                     Tabla_M_Detalle AS Tb4 
+                  WHERE Tabla_M_Detalle.Cod_Tabla IN ('TCOL') 
+                     AND Tb2.Cod_Tabla IN ('TUND') 
+                     AND tB4.Cod_Tabla IN ('TLIN') 
+                     AND Tb1.Cod_Tabla IN ('TSUB') 
+                     AND Tabla_M_Detalle.Cod_Argumento = p.ColPro 
+                     AND Tb2.Cod_Argumento = p.UndPro 
+                     AND LEFT(p.CodFab, 3) = Tb4.Des_Corta 
+                     AND SUBSTRING(p.CodFab, 4, 3) = Tb1.Valor_3 
+                     AND Tb4.Des_Corta = Tb1.Des_Corta 
+                  ORDER BY p.CodPro ASC) AS mp 
+                  ON vd.codpro = mp.codigo 
+               WHERE vd.EstVta = 'P' 
+                  AND vd.canvta > 0 
+                  AND YEAR(vd.fecemi) = YEAR(NOW()) 
+                  AND mp.codlinea = :linea 
+               GROUP BY vd.codpro 
+               UNION
+               SELECT 
+                  mp.codsublinea,
+                  'TOTAL',
+                  '-',
+                  mp.codlinea,
+                  mp.linea,
+                  '-',
+                  '-',
+                  '-',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '1' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '1',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '2' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '2',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '3' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '3',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '4' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '4',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '5' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '5',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '6' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '6',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '7' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '7',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '8' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '8',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '9' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '9',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '10' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '10',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '11' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '11',
+                  SUM(
+                  CASE
+                     WHEN MONTH(vd.fecemi) = '12' 
+                     THEN vd.canvta 
+                     ELSE 0 
+                  END
+                  ) AS '12',
+                  SUM(vd.canvta) AS total 
+               FROM
+                  venta_det vd 
+                  LEFT JOIN 
+                  (SELECT DISTINCT 
+                     p.Codpro AS Codigo,
+                     SUBSTRING(p.CodFab, 1, 3) AS codlinea,
+                     Tb4.Des_larga AS Linea,
+                     p.CodFab AS CodigoFabrica,
+                     p.DesPro AS Descripcion,
+                     p.CodAlm01 AS Stk_Actual,
+                     Tabla_M_Detalle.Des_Larga AS Color,
+                     Tb2.Des_Corta AS Unidad,
+                     p.CosPro,
+                     SUBSTRING(p.CodFab, 1, 6) AS codsublinea,
+                     Tb1.Des_larga AS SubLinea 
+                  FROM
+                     producto p,
+                     Tabla_M_Detalle,
+                     Tabla_M_Detalle AS Tb1,
+                     Tabla_M_Detalle AS Tb2,
+                     Tabla_M_Detalle AS Tb4 
+                  WHERE Tabla_M_Detalle.Cod_Tabla IN ('TCOL') 
+                     AND Tb2.Cod_Tabla IN ('TUND') 
+                     AND tB4.Cod_Tabla IN ('TLIN') 
+                     AND Tb1.Cod_Tabla IN ('TSUB') 
+                     AND Tabla_M_Detalle.Cod_Argumento = p.ColPro 
+                     AND Tb2.Cod_Argumento = p.UndPro 
+                     AND LEFT(p.CodFab, 3) = Tb4.Des_Corta 
+                     AND SUBSTRING(p.CodFab, 4, 3) = Tb1.Valor_3 
+                     AND Tb4.Des_Corta = Tb1.Des_Corta 
+                  ORDER BY p.CodPro ASC) AS mp 
+                  ON vd.codpro = mp.codigo 
+               WHERE vd.EstVta = 'P' 
+                  AND vd.canvta > 0 
+                  AND YEAR(vd.fecemi) = YEAR(NOW()) 
+                  AND mp.codlinea = :linea 
+               GROUP BY mp.codsublinea 
+               ORDER BY codsublinea,
+                  codigofabrica";
+
+         
+         $stmt=Conexion::conectar()->prepare($sql);
+         
+         $stmt->bindParam(":linea", $linea, PDO::PARAM_STR);
+
+			$stmt->execute();
+			# Retornamos un fetchAll por ser más de una línea la que necesitamos devolver
+         return $stmt->fetchAll();
+         
+      }
+      
+		$stmt=null;
+   }      
 
 }

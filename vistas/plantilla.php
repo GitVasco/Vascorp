@@ -160,7 +160,9 @@ CUERPO DOCUMENTO
               include "modulos/backend/".$_GET["ruta"].".php";
 
         }else if( $_GET["ruta"] == "m-produccion" ||
-                  $_GET["ruta"] == "m-ventas"){
+                  $_GET["ruta"] == "m-ventas" ||
+                  $_GET["ruta"] == "mp-ingresos" ||
+                  $_GET["ruta"] == "mp-salidas"){
 
                 include "modulos/movimientos/".$_GET["ruta"].".php";              
 
@@ -191,14 +193,16 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "en-taller" ||
                   $_GET["ruta"] == "asistencia" ||
                   $_GET["ruta"] == "en-tallert" ||
-                  $_GET["ruta"] == "marcar-taller"){
+                  $_GET["ruta"] == "marcar-taller" ||
+                  $_GET["ruta"] == "proyeccion-mp"){
 
               include "modulos/produccion/".$_GET["ruta"].".php";
 
         }else if( $_GET["ruta"] == "tarjetas" ||
                   $_GET["ruta"] == "crear-tarjeta" ||
                   $_GET["ruta"] == "editar-tarjeta" ||
-                  $_GET["ruta"] == "copiar-tarjeta"){
+                  $_GET["ruta"] == "copiar-tarjeta" ||
+                  $_GET["ruta"] == "ficha-tecnica"){
 
               include "modulos/tarjetas/".$_GET["ruta"].".php";
 

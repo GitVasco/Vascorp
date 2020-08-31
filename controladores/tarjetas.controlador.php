@@ -18,6 +18,21 @@ class ControladorTarjetas{
 	}
 
 	/* 
+	* MOSTRAR DATOS DE LAS TARJETAS
+	*/
+	static public function ctrMostrarFichasTecnicas($item, $valor){
+
+		$tabla = "fichas_tecnicasjf";
+
+        $respuesta = ModeloTarjetas::mdlMostrarFichasTecnicas($tabla, $item, $valor);
+        
+        /* var_dump("respuesta", $respuesta); */
+
+		return $respuesta;
+
+	}
+
+	/* 
 	* MOSTRAR DATOS DEL DETALLE DE LAS TARJETAS
 	*/
 	static public function ctrMostrarDetallesTarjetas($item,$valor){
@@ -562,5 +577,58 @@ class ControladorTarjetas{
 
 	}	
 
+
+/*=============================================
+	CREAR FICHA TECNICA
+	=============================================*/
+
+	static public function ctrCrearFichaTecnica(){
+
+		if(isset($_POST["idTarjeta"])){
+
+
+				$tabla = "fichas_tecnicasjf";
+				date_default_timezone_set('America/Lima');
+				$fecha=date("Y-m-d-H-i-s");
+				$año=date("Y");
+				$mes=date("m");
+				$dia=date("d");
+				$hora=date("H");
+				$min=date("i");
+				$seg=date("s");
+				$directorio="vistas/fichas/".$año."-".$mes."-".$dia."-".$hora."-".$min."-".$seg."-".$_FILES["nuevoArchivo"]["name"]; 
+				$archivo=move_uploaded_file($_FILES["nuevoArchivo"]['tmp_name'], $directorio);
+				$datos = array("codigo" => "FT".$_POST["nuevoModelo"]."-".$año.$mes.$dia."-".$hora.$min,
+								"idtarjeta" => $_POST["idTarjeta"],
+								"archivo" => $fecha."-".$_FILES["nuevoArchivo"]["name"],
+								"idusuario" => $_SESSION["id"]);
+				$respuesta = ModeloTarjetas::mdlIngresarFichaTecnica($tabla, $datos);
+
+				if($respuesta == "ok"){
+
+					echo'<script>
+
+					swal({
+						  type: "success",
+						  title: "La ficha tecnica ha sido guardada correctamente",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+									if (result.value) {
+
+									window.location = "ficha-tecnica";
+
+									}
+								})
+
+					</script>';
+
+				}
+
+
+
+		}
+
+    }
 }
 

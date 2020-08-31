@@ -11,7 +11,8 @@ class ModeloTarjetas{
 
 		if($item != null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item ORDER BY id DESC");
+			$stmt = Conexion::conectar()->prepare("SELECT t.*,a.modelo FROM $tabla t LEFT JOIN articulojf a 
+			ON t.articulo = a.articulo WHERE t.$item = :$item ORDER BY id DESC");
 
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 
@@ -413,6 +414,63 @@ class ModeloTarjetas{
 		$stmt=null;
 
 	}	
+	/*=============================================
+	MOSTRAR FICHAS TECNICA
+	=============================================*/
 
+	static public function mdlMostrarFichasTecnicas($tabla, $item, $valor){
 
+		if($item != null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();
+
+		}else{
+
+			$stmt = Conexion::conectar()->prepare("SELECT f.*,t.codigo as codigotarjeta,a.modelo FROM $tabla f LEFT JOIN tarjetasjf t ON f.idtarjeta = t.id LEFT JOIN articulojf a ON t.articulo = a.articulo");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+	/*=============================================
+	CREAR PARA
+	=============================================*/
+
+	static public function mdlIngresarFichaTecnica($tabla, $datos){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(codigo,archivo,idtarjeta,idusuario) VALUES (:codigo,:archivo,:idtarjeta,:idusuario)");
+
+		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
+		$stmt->bindParam(":archivo", $datos["archivo"], PDO::PARAM_STR);
+		$stmt->bindParam(":idtarjeta", $datos["idtarjeta"], PDO::PARAM_STR);
+		$stmt->bindParam(":idusuario", $datos["idusuario"], PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+    }
 }

@@ -473,6 +473,26 @@ class ModeloOrdenCorte{
 
 		}
 
+	}
+	
+   /* 
+   * MOSTRAR ORDEN DE CORTE PENDIENTES Y ABIERTOS
+   */
+  static public function mdlOCPend(){
+
+	$stmt = Conexion::conectar()->prepare("SELECT 
+										codigo,
+										CONCAT('OC - ', codigo, ' / ', DATE(fecha)) AS ordencorte,
+										DATE(fecha) AS fecha 
+									FROM
+										ordencortejf oc 
+									WHERE oc.estado NOT IN ('Cerrado')
+									ORDER BY fecha DESC");
+ 
+	$stmt -> execute();
+ 
+	return $stmt -> fetchall();
+ 
 	}	
 
 }
