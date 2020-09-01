@@ -990,7 +990,6 @@ class controladorArticulos{
 					}
 					$tipo_doc=$data->sheets[0]['cells'][$i][25];
 					$sqlInsertar = mysql_query("INSERT INTO pedidojf (tipo,documento,neto,igv,dscto,total,cliente,vendedor,fecha,tipo_documento,atraso)  VALUES('".$tipo."','".$documento."',".$neto.",".$igv.",".$dscto.",".$total.",'".$cliente."','".$vendedor."','".substr($fecha,6,2)."-".substr($fecha,3,2)."-".substr($fecha,0,2)."','".$tipo_doc."', DATEDIFF(DATE(NOW()),DATE('".substr($fecha,6,2)."-".substr($fecha,3,2)."-".substr($fecha,0,2)."')))");
-					
 				}
 			
 			}
@@ -1030,6 +1029,70 @@ class controladorArticulos{
 				</script>';
 			}
 		
+		}
+	}
+	static public function ctrCargarArticuloPedido(){
+
+        if(isset($_POST["importarticulopedido"])){
+			$nombre="ARTICULO";
+			if(strncmp($nombre,$_FILES["archivoxls"]["name"],8) === 0){
+				
+				include "/../vistas/reportes_excel/Excel/reader.php";
+				$directorio="vistas/cargas/".$_FILES["archivoxlsarticulopedido"]["name"];
+				$archivo=move_uploaded_file($_FILES["archivoxlsarticulopedido"]['tmp_name'], $directorio);
+				$data = new Spreadsheet_Excel_Reader();
+				$data->setOutputEncoding('CP1251');
+				$data->read("vistas/cargas/".$_FILES["archivoxlsarticulopedido"]["name"]);
+				$conexion = mysql_connect("192.168.0.3", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
+				mysql_select_db("new_vasco", $conexion);
+				for ($i = 2; $i <= $data->sheets[0]['numRows']; $i++) {
+					for ($j = 1; $j <= 1; $j++) {
+					if(substr($data->sheets[0]['cells'][$i][1],0,1)=='0'){
+					$sqlDetalle = mysql_query("UPDATE articulojf SET pedidos=".$data->sheets[0]['cells'][$i][5].
+					" WHERE articulo='"."1".$data->sheets[0]['cells'][$i][1]."'") or die(mysql_error());
+					
+					}else {
+					$sqlDetalle = mysql_query("UPDATE articulojf SET pedidos=".$data->sheets[0]['cells'][$i][5].
+					" WHERE articulo='".$data->sheets[0]['cells'][$i][1]."'") or die(mysql_error());
+					
+						}
+					}
+				}
+				echo'<script>
+
+				swal({
+					type: "success",
+					title: "El articulo ha sido editado correctamente",
+					showConfirmButton: true,
+					confirmButtonText: "Cerrar"
+					}).then(function(result){
+								if (result.value) {
+
+								window.location = "cargas-automaticas";
+
+								}
+							})
+
+				</script>';
+			}else{
+
+				echo'<script>
+
+					swal({
+						type: "error",
+						title: "¡El nombre de archivo no es correcto, debe ser STOCK.xls!",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar"
+						}).then(function(result){
+							if (result.value) {
+
+							window.location = "cargas-automaticas";
+
+							}
+						})
+
+				</script>';
+			}
 		}
 	}
 

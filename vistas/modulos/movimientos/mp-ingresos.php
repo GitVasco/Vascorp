@@ -47,7 +47,10 @@
                     <button class="btn btn-danger btnLimpiarMpIng">LIMPIAR</button>
 
                 </div>
-
+                <div class=" pull-right ">
+                  <button class="btn btn-outline-success btnReporteIngreso" style="border:green 1px solid">
+                    <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Ingresos
+                </div>
             </div>
 
             <div class="box-body">

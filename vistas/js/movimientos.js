@@ -96,7 +96,7 @@ $(".box").on("click", ".btnCargarModP", function () {
 	//console.log(modeloP);
 
 	localStorage.setItem("modeloP", modeloP);
-
+	$(".btnReporteProduccion").attr("modelo",modeloP);
 	cargarTablaMProd(localStorage.getItem("modeloP"));
 	
 })
@@ -183,7 +183,7 @@ $(".box").on("click", ".btnCargarModV", function () {
 	//console.log(modeloV);
 
 	localStorage.setItem("modeloV", modeloV);
-
+	
 	cargarTablaMVta(localStorage.getItem("modeloV"));
 	
 })
@@ -428,3 +428,30 @@ function cargarTablaMpSal(lineaMpSal) {
 		}
 	});
 }
+//Reporte de Produccion
+$(".box").on("click", ".btnReporteProduccion", function () {
+	var modelo = $(this).attr("modelo");
+    window.location = "vistas/reportes_excel/rpt_movimiento_produccion.php?modelo="+modelo;
+  
+})
+
+//Reporte de Ventas
+$(".box").on("click", ".btnReporteVenta", function () {
+
+    window.location = "vistas/reportes_excel/rpt_tarjeta_articulo.php";
+  
+})
+
+//Reporte de Ingresos
+$(".box").on("click", ".btnReporteIngreso", function () {
+
+    window.location = "vistas/reportes_excel/rpt_tarjeta_articulo.php";
+  
+})
+
+//Reporte de Salidas
+$(".box").on("click", ".btnReporteSalida", function () {
+
+    window.location = "vistas/reportes_excel/rpt_tarjeta_articulo.php";
+  
+})
