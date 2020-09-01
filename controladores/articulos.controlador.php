@@ -640,6 +640,7 @@ class controladorArticulos{
 				mysql_select_db("new_vasco", $conexion);
 				for ($i = 2; $i <= $data->sheets[0]['numRows']; $i++) {
 					for ($j = 1; $j <= 1; $j++) {
+						
 					if(strlen($data->sheets[0]['cells'][$i][1])==7){
 					$sqlDetalle = mysql_query("UPDATE articulojf SET stock=".$data->sheets[0]['cells'][$i][11].
 					" WHERE articulo="."1".$data->sheets[0]['cells'][$i][1]) or die(mysql_error());
