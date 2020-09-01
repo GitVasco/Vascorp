@@ -12,13 +12,8 @@ include "/Excel/reader.php";
 $data = new Spreadsheet_Excel_Reader();
 $data->setOutputEncoding('CP1251');
 $data->read("vistas/cargas/PEDIDOS.xls");
-<<<<<<< HEAD
 $conexion = mysql_connect("192.168.1.18", "admin", "joel123") or die("No se pudo conectar: " . mysql_error());
 mysql_select_db("vasco", $conexion);
-=======
-$conexion = mysql_connect("192.168.1.18", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
-mysql_select_db("vasco", $conexion);
->>>>>>> joel
 
 echo("<table class='table table-bordered'>");
 for ($i = 2; $i <= $data->sheets[0]['numRows']; $i++) {
