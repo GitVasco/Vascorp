@@ -640,13 +640,13 @@ class controladorArticulos{
 				mysql_select_db("new_vasco", $conexion);
 				for ($i = 2; $i <= $data->sheets[0]['numRows']; $i++) {
 					for ($j = 1; $j <= 1; $j++) {
-					if(strlen($data->sheets[0]['cells'][$i][1])==7){
+					if(substr($data->sheets[0]['cells'][$i][1],0,1)=='0'){
 					$sqlDetalle = mysql_query("UPDATE articulojf SET stock=".$data->sheets[0]['cells'][$i][11].
-					" WHERE articulo="."1".$data->sheets[0]['cells'][$i][1]) or die(mysql_error());
+					" WHERE articulo='"."1".$data->sheets[0]['cells'][$i][1]."'") or die(mysql_error());
 					
 					}else {
 					$sqlDetalle = mysql_query("UPDATE articulojf SET stock=".$data->sheets[0]['cells'][$i][11].
-					" WHERE articulo="."B".$data->sheets[0]['cells'][$i][1]) or die(mysql_error());
+					" WHERE articulo='".$data->sheets[0]['cells'][$i][1]."'") or die(mysql_error());
 					
 						}
 					}
@@ -748,10 +748,10 @@ class controladorArticulos{
 						$num="12";
 						$fecha=str_replace($mes,$num,$data->sheets[0]['cells'][$i][3]);
 					}
-					if(strlen($data->sheets[0]['cells'][$i][4])==7){
+					if(substr($data->sheets[0]['cells'][$i][4],0,1)=='0'){
 						$codArt="1".$data->sheets[0]['cells'][$i][4];
 					}else{
-						$codArt="B".$data->sheets[0]['cells'][$i][4];
+						$codArt=$data->sheets[0]['cells'][$i][4];
 					}
 					if($data->sheets[0]['cells'][$i][1] == "E20"){
 						$taller=substr($data->sheets[0]['cells'][$i][2],0,2);
