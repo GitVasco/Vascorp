@@ -50,7 +50,7 @@
 
                 </div>
                 <div class=" pull-right ">
-                  <button class="btn btn-outline-success btnReporteVentas" style="border:green 1px solid">
+                  <button class="btn btn-outline-success btnReporteVentas" modelo="" style="border:green 1px solid">
                     <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Ventas 
                 </div>
             </div>

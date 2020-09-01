@@ -768,7 +768,7 @@ class controladorArticulos{
 					$dscto2=$data->sheets[0]['cells'][$i][19];
 					$nombre=$data->sheets[0]['cells'][$i][28];
 					$total=($data->sheets[0]['cells'][$i][10]*$data->sheets[0]['cells'][$i][15]*((100-$data->sheets[0]['cells'][$i][18])/100))*((100-$data->sheets[0]['cells'][$i][19])/100);
-					$sqlInsertar = mysql_query("INSERT INTO movimientosjf (tipo,documento,taller,fecha,articulo,linea,cliente,vendedor,cantidad,precio,dscto1,dscto2,total,nombre_tipo,almacen)  values('".$tipo."','".$documento."','".$taller."','".$fecha."','".$codArt."','".$linea."','".$cliente."','".$vendedor."',".$cantidad.",".$precio.",".$dscto1.",".$dscto2.",".$total.",'".$nombre."',".$almacen.")");
+					$sqlInsertar = mysql_query("INSERT INTO movimientosjf (tipo,documento,taller,fecha,articulo,linea,cliente,vendedor,cantidad,precio,dscto1,dscto2,total,nombre_tipo,almacen)  values('".$tipo."','".$documento."','".$taller."','".substr($fecha,6,2)."-".substr($fecha,3,2)."-".substr($fecha,0,2)."','".$codArt."','".$linea."','".$cliente."','".$vendedor."',".$cantidad.",".$precio.",".$dscto1.",".$dscto2.",".$total.",'".$nombre."','".$almacen."')");
 				}
 			
 			}

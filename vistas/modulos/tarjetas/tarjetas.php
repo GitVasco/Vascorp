@@ -366,6 +366,7 @@ MODAL AGREGAR FICHA TECNICA
 
             </div>
             
+            
             <!-- ENTRADA PARA EL NOMBRE -->
             
             <div class="form-group">

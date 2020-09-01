@@ -48,7 +48,7 @@
 
                 </div>
                 <div class=" pull-right ">
-                  <button class="btn btn-outline-success btnReporteIngreso" style="border:green 1px solid">
+                  <button class="btn btn-outline-success btnReporteIngreso" linea="" style="border:green 1px solid">
                     <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Ingresos
                 </div>
             </div>

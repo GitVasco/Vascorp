@@ -108,6 +108,7 @@ $(".box").on("click", ".btnCargarModP", function () {
 $(".box").on("click", ".btnLimpiarModP", function () {
 
 	localStorage.removeItem("modeloP");
+	$(".btnReporteProduccion").attr("modelo","");
 	localStorage.clear();
 
 	window.location = "m-produccion";
@@ -183,7 +184,7 @@ $(".box").on("click", ".btnCargarModV", function () {
 	//console.log(modeloV);
 
 	localStorage.setItem("modeloV", modeloV);
-	
+	$(".btnReporteVentas").attr("modelo",modeloV);
 	cargarTablaMVta(localStorage.getItem("modeloV"));
 	
 })
@@ -195,6 +196,7 @@ $(".box").on("click", ".btnCargarModV", function () {
 $(".box").on("click", ".btnLimpiarModV", function () {
 
 	localStorage.removeItem("modeloV");
+	$(".btnReporteVentas").attr("modelo","");
 	localStorage.clear();
 
 	window.location = "m-ventas";
@@ -270,7 +272,7 @@ $(".box").on("click", ".btnCargarMpIng", function () {
 	//console.log(lineaMp);
 
 	localStorage.setItem("lineaMpIng", lineaMpIng);
-
+	$(".btnReporteIngreso").attr("linea",lineaMpIng);
 	cargarTablaMpIng(localStorage.getItem("lineaMpIng"));
 	
 })
@@ -282,6 +284,7 @@ $(".box").on("click", ".btnCargarMpIng", function () {
 $(".box").on("click", ".btnLimpiarMpIng", function () {
 
 	localStorage.removeItem("lineaMpIng");
+	$(".btnReporteIngreso").attr("linea","");
 	localStorage.clear();
 
 	window.location = "mp-ingresos";
@@ -355,7 +358,7 @@ $(".box").on("click", ".btnCargarMpSal", function () {
 
 	var lineaMpSal = document.getElementById("lineaMPSal").value;
 	//console.log(lineaMp);
-
+	$(".btnReporteSalida").attr("linea",lineaMpSal);
 	localStorage.setItem("lineaMpSal", lineaMpSal);
 
 	cargarTablaMpSal(localStorage.getItem("lineaMpSal"));
@@ -370,7 +373,7 @@ $(".box").on("click", ".btnLimpiarMpSal", function () {
 
 	localStorage.removeItem("lineaMpSal");
 	localStorage.clear();
-
+	$(".btnReporteSalida").attr("linea","");
 	window.location = "mp-Salresos";
 	
 })
@@ -436,22 +439,22 @@ $(".box").on("click", ".btnReporteProduccion", function () {
 })
 
 //Reporte de Ventas
-$(".box").on("click", ".btnReporteVenta", function () {
-
-    window.location = "vistas/reportes_excel/rpt_tarjeta_articulo.php";
+$(".box").on("click", ".btnReporteVentas", function () {
+	var modelo = $(this).attr("modelo");
+    window.location = "vistas/reportes_excel/rpt_movimiento_venta.php?modelo="+modelo;
   
 })
 
 //Reporte de Ingresos
 $(".box").on("click", ".btnReporteIngreso", function () {
-
-    window.location = "vistas/reportes_excel/rpt_tarjeta_articulo.php";
+	var linea = $(this).attr("linea");
+    window.location = "vistas/reportes_excel/rpt_movimiento_ingreso.php?linea="+linea;
   
 })
 
 //Reporte de Salidas
 $(".box").on("click", ".btnReporteSalida", function () {
-
-    window.location = "vistas/reportes_excel/rpt_tarjeta_articulo.php";
+	var linea = $(this).attr("linea");
+    window.location = "vistas/reportes_excel/rpt_movimiento_salida.php?linea="+linea;
   
 })

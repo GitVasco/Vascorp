@@ -629,6 +629,20 @@ class ControladorTarjetas{
 
 		}
 
-    }
+	}
+	
+	/*=============================================
+	RANGO FECHAS
+	=============================================*/	
+
+	static public function ctrRangoFechasFichas($fechaInicial, $fechaFinal){
+
+		$tabla = "fichas_tecnicasjf";
+
+		$respuesta = ModeloTarjetas::mdlRangoFechasFichas($tabla, $fechaInicial, $fechaFinal);
+
+		return $respuesta;
+		
+	}
 }
 

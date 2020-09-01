@@ -20,7 +20,7 @@ mysql_select_db("vasco", $conexion);
 */
 date_default_timezone_set('America/Lima');
 $fechaactual = getdate();
-$modelo=$_GET["modelo"];
+$linea=$_GET["linea"];
 $fecha = date("d-m-Y");
 
 /* 
@@ -261,7 +261,7 @@ $objPHPExcel->createSheet(0);
 $objPHPExcel->setActiveSheetIndex(0);
 
 # Titulo de la hoja
-$objPHPExcel->getActiveSheet()->setTitle("REPORTE PRODUCCION -".$fecha);
+$objPHPExcel->getActiveSheet()->setTitle("REPORTE INGRESOS -".$fecha);
 
 # Orientacion hoja
 $objPHPExcel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_PORTRAIT);
@@ -292,7 +292,7 @@ $objDrawing->setWorksheet($objPHPExcel->getActiveSheet());
 
 // TITULO
 $fila = 2;
-$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", 'TOTAL DE PRODUCCION POR MODELO');
+$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", 'TOTAL DE INGRESOS POR LINEA');
 $objPHPExcel->getActiveSheet()->mergeCells("G$fila:K$fila");
 $objPHPExcel->getActiveSheet()->setSharedStyle($texto3, "G$fila:K$fila");
 $objPHPExcel->getActiveSheet()->getStyle("G$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
@@ -312,32 +312,34 @@ $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", 'N°');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "A$fila");
 $objPHPExcel->getActiveSheet()->getStyle("A$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("B$fila", 'MODELO');
+
+$objPHPExcel->getActiveSheet()->SetCellValue("B$fila", 'COD. SUBLINEA');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "B$fila");
 $objPHPExcel->getActiveSheet()->getStyle("B$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("C$fila", 'ARTICULO');
+$objPHPExcel->getActiveSheet()->SetCellValue("C$fila", 'COD. FAB');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "C$fila");
 $objPHPExcel->getActiveSheet()->getStyle("C$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("D$fila", 'NOMBRE');
+$objPHPExcel->getActiveSheet()->SetCellValue("D$fila", 'COD. PRO');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "D$fila");
 $objPHPExcel->getActiveSheet()->getStyle("D$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 
-$objPHPExcel->getActiveSheet()->SetCellValue("E$fila", 'COLOR');
+$objPHPExcel->getActiveSheet()->SetCellValue("E$fila", 'DESCRIPCION');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "E$fila");
 $objPHPExcel->getActiveSheet()->getStyle("E$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 
-$objPHPExcel->getActiveSheet()->SetCellValue("F$fila", 'TALLA');
+$objPHPExcel->getActiveSheet()->SetCellValue("F$fila", 'COLOR');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "F$fila");
 $objPHPExcel->getActiveSheet()->getStyle("F$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 
-$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", 'ESTADO');
+$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", 'UNIDAD');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "G$fila");
 $objPHPExcel->getActiveSheet()->getStyle("G$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
 
 $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", 'ENERO');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "H$fila");
@@ -392,222 +394,272 @@ $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "T$fila");
 $objPHPExcel->getActiveSheet()->getStyle("T$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 
-if($modelo == null){
+if($linea == null){
   
 #query para sacar los datos deL detalle
 $sqlDetalle = mysql_query("SELECT 
-a1.modelo AS modelo,
-a1.articulo AS articulo,
-a1.nombre AS nombre,
-a1.cod_color,
-a1.color,
-a1.talla,
-a1.estado AS estado,
+mp.codsublinea,
+mp.codigofabrica,
+n.codpro,
+mp.codlinea,
+mp.linea,
+mp.descripcion,
+mp.color,
+mp.unidad,
 SUM(
 CASE
-   WHEN MONTH(m.fecha) = '1' 
-   THEN ROUND(m.cantidad, 0) 
+   WHEN MONTH(n.fecreg) = '1' 
+   THEN n.CanSol 
    ELSE 0 
 END
 ) AS '1',
 SUM(
 CASE
-   WHEN MONTH(m.fecha) = '2' 
-   THEN ROUND(m.cantidad, 0) 
+   WHEN MONTH(n.fecreg) = '2' 
+   THEN n.CanSol 
    ELSE 0 
 END
 ) AS '2',
 SUM(
 CASE
-   WHEN MONTH(m.fecha) = '3' 
-   THEN ROUND(m.cantidad, 0) 
+   WHEN MONTH(n.fecreg) = '3' 
+   THEN n.CanSol 
    ELSE 0 
 END
 ) AS '3',
 SUM(
 CASE
-   WHEN MONTH(m.fecha) = '4' 
-   THEN ROUND(m.cantidad, 0) 
+   WHEN MONTH(n.fecreg) = '4' 
+   THEN n.CanSol 
    ELSE 0 
 END
 ) AS '4',
 SUM(
 CASE
-   WHEN MONTH(m.fecha) = '5' 
-   THEN ROUND(m.cantidad, 0) 
+   WHEN MONTH(n.fecreg) = '5' 
+   THEN n.CanSol 
    ELSE 0 
 END
 ) AS '5',
 SUM(
 CASE
-   WHEN MONTH(m.fecha) = '6' 
-   THEN ROUND(m.cantidad, 0) 
+   WHEN MONTH(n.fecreg) = '6' 
+   THEN n.CanSol 
    ELSE 0 
 END
 ) AS '6',
 SUM(
 CASE
-   WHEN MONTH(m.fecha) = '7' 
-   THEN ROUND(m.cantidad, 0) 
+   WHEN MONTH(n.fecreg) = '7' 
+   THEN n.CanSol 
    ELSE 0 
 END
 ) AS '7',
 SUM(
 CASE
-   WHEN MONTH(m.fecha) = '8' 
-   THEN ROUND(m.cantidad, 0) 
+   WHEN MONTH(n.fecreg) = '8' 
+   THEN n.CanSol 
    ELSE 0 
 END
 ) AS '8',
 SUM(
 CASE
-   WHEN MONTH(m.fecha) = '9' 
-   THEN ROUND(m.cantidad, 0) 
+   WHEN MONTH(n.fecreg) = '9' 
+   THEN n.CanSol 
    ELSE 0 
 END
 ) AS '9',
 SUM(
 CASE
-   WHEN MONTH(m.fecha) = '10' 
-   THEN ROUND(m.cantidad, 0) 
+   WHEN MONTH(n.fecreg) = '10' 
+   THEN n.CanSol 
    ELSE 0 
 END
 ) AS '10',
 SUM(
 CASE
-   WHEN MONTH(m.fecha) = '11' 
-   THEN ROUND(m.cantidad, 0) 
+   WHEN MONTH(n.fecreg) = '11' 
+   THEN n.CanSol 
    ELSE 0 
 END
 ) AS '11',
 SUM(
 CASE
-   WHEN MONTH(m.fecha) = '12' 
-   THEN ROUND(m.cantidad, 0) 
+   WHEN MONTH(n.fecreg) = '12' 
+   THEN n.CanSol 
    ELSE 0 
 END
 ) AS '12',
-ROUND(SUM(m.cantidad)) AS total 
+SUM(n.cansol) AS total 
 FROM
-movimientosjf m 
-LEFT JOIN articulojf a1 
-ON m.articulo = a1.articulo 
-WHERE YEAR(m.fecha) = YEAR(NOW()) 
-AND m.tipo = 'E20' 
-GROUP BY a1.modelo,
-a1.articulo,
-a1.nombre,
-a1.cod_color,
-a1.color,
-a1.talla,
-a1.estado 
+neadet n 
+LEFT JOIN 
+(SELECT DISTINCT 
+   p.Codpro AS Codigo,
+   SUBSTRING(p.CodFab, 1, 3) AS codlinea,
+   Tb4.Des_larga AS Linea,
+   p.CodFab AS CodigoFabrica,
+   p.DesPro AS Descripcion,
+   p.CodAlm01 AS Stk_Actual,
+   Tabla_M_Detalle.Des_Larga AS Color,
+   Tb2.Des_Corta AS Unidad,
+   p.CosPro,
+   SUBSTRING(p.CodFab, 1, 6) AS codsublinea,
+   Tb1.Des_larga AS SubLinea 
+FROM
+   producto p,
+   Tabla_M_Detalle,
+   Tabla_M_Detalle AS Tb1,
+   Tabla_M_Detalle AS Tb2,
+   Tabla_M_Detalle AS Tb4 
+WHERE Tabla_M_Detalle.Cod_Tabla IN ('TCOL') 
+   AND Tb2.Cod_Tabla IN ('TUND') 
+   AND tB4.Cod_Tabla IN ('TLIN') 
+   AND Tb1.Cod_Tabla IN ('TSUB') 
+   AND Tabla_M_Detalle.Cod_Argumento = p.ColPro 
+   AND Tb2.Cod_Argumento = p.UndPro 
+   AND LEFT(p.CodFab, 3) = Tb4.Des_Corta 
+   AND SUBSTRING(p.CodFab, 4, 3) = Tb1.Valor_3 
+   AND Tb4.Des_Corta = Tb1.Des_Corta 
+ORDER BY p.CodPro ASC) AS mp 
+ON n.codpro = mp.codigo 
+WHERE n.EstReg = 'P' 
+AND n.CanSol > 0 
+AND YEAR(n.fecreg) = YEAR(NOW()) 
+GROUP BY n.codpro 
 UNION
 SELECT 
-mo.modelo AS modelo,
-'TOTAL' AS articulo,
-mo.nombre AS nombre,
+mp.codsublinea,
+'TOTAL',
+'-',
+mp.codlinea,
+mp.linea,
 '-',
 '-',
 '-',
-mo.estado AS estado,
 SUM(
 CASE
-   WHEN MONTH(m.fecha) = '1' 
-   THEN ROUND(m.cantidad, 0) 
+   WHEN MONTH(n.fecreg) = '1' 
+   THEN n.CanSol 
    ELSE 0 
 END
 ) AS '1',
 SUM(
 CASE
-   WHEN MONTH(m.fecha) = '2' 
-   THEN ROUND(m.cantidad, 0) 
+   WHEN MONTH(n.fecreg) = '2' 
+   THEN n.CanSol 
    ELSE 0 
 END
 ) AS '2',
 SUM(
 CASE
-   WHEN MONTH(m.fecha) = '3' 
-   THEN ROUND(m.cantidad, 0) 
+   WHEN MONTH(n.fecreg) = '3' 
+   THEN n.CanSol 
    ELSE 0 
 END
 ) AS '3',
 SUM(
 CASE
-   WHEN MONTH(m.fecha) = '4' 
-   THEN ROUND(m.cantidad, 0) 
+   WHEN MONTH(n.fecreg) = '4' 
+   THEN n.CanSol 
    ELSE 0 
 END
 ) AS '4',
 SUM(
 CASE
-   WHEN MONTH(m.fecha) = '5' 
-   THEN ROUND(m.cantidad, 0) 
+   WHEN MONTH(n.fecreg) = '5' 
+   THEN n.CanSol 
    ELSE 0 
 END
 ) AS '5',
 SUM(
 CASE
-   WHEN MONTH(m.fecha) = '6' 
-   THEN ROUND(m.cantidad, 0) 
+   WHEN MONTH(n.fecreg) = '6' 
+   THEN n.CanSol 
    ELSE 0 
 END
 ) AS '6',
 SUM(
 CASE
-   WHEN MONTH(m.fecha) = '7' 
-   THEN ROUND(m.cantidad, 0) 
+   WHEN MONTH(n.fecreg) = '7' 
+   THEN n.CanSol 
    ELSE 0 
 END
 ) AS '7',
 SUM(
 CASE
-   WHEN MONTH(m.fecha) = '8' 
-   THEN ROUND(m.cantidad, 0) 
+   WHEN MONTH(n.fecreg) = '8' 
+   THEN n.CanSol 
    ELSE 0 
 END
 ) AS '8',
 SUM(
 CASE
-   WHEN MONTH(m.fecha) = '9' 
-   THEN ROUND(m.cantidad, 0) 
+   WHEN MONTH(n.fecreg) = '9' 
+   THEN n.CanSol 
    ELSE 0 
 END
 ) AS '9',
 SUM(
 CASE
-   WHEN MONTH(m.fecha) = '10' 
-   THEN ROUND(m.cantidad, 0) 
+   WHEN MONTH(n.fecreg) = '10' 
+   THEN n.CanSol 
    ELSE 0 
 END
 ) AS '10',
 SUM(
 CASE
-   WHEN MONTH(m.fecha) = '11' 
-   THEN ROUND(m.cantidad, 0) 
+   WHEN MONTH(n.fecreg) = '11' 
+   THEN n.CanSol 
    ELSE 0 
 END
 ) AS '11',
 SUM(
 CASE
-   WHEN MONTH(m.fecha) = '12' 
-   THEN ROUND(m.cantidad, 0) 
+   WHEN MONTH(n.fecreg) = '12' 
+   THEN n.CanSol 
    ELSE 0 
 END
 ) AS '12',
-ROUND(SUM(m.cantidad)) AS total 
+SUM(n.cansol) AS total 
 FROM
-movimientosjf m 
-LEFT JOIN articulojf a2 
-ON m.articulo = a2.articulo 
-LEFT JOIN modelojf mo 
-ON a2.modelo = mo.modelo 
-WHERE YEAR(m.fecha) = YEAR(NOW()) 
-AND m.tipo = 'E20' 
-GROUP BY mo.modelo,
-mo.nombre,
-mo.estado 
-ORDER BY modelo ASC,
-articulo ASC") or die(mysql_error());
+neadet n 
+LEFT JOIN 
+(SELECT DISTINCT 
+   p.Codpro AS Codigo,
+   SUBSTRING(p.CodFab, 1, 3) AS codlinea,
+   Tb4.Des_larga AS Linea,
+   p.CodFab AS CodigoFabrica,
+   p.DesPro AS Descripcion,
+   p.CodAlm01 AS Stk_Actual,
+   Tabla_M_Detalle.Des_Larga AS Color,
+   Tb2.Des_Corta AS Unidad,
+   p.CosPro,
+   SUBSTRING(p.CodFab, 1, 6) AS codsublinea,
+   Tb1.Des_larga AS SubLinea 
+FROM
+   producto p,
+   Tabla_M_Detalle,
+   Tabla_M_Detalle AS Tb1,
+   Tabla_M_Detalle AS Tb2,
+   Tabla_M_Detalle AS Tb4 
+WHERE Tabla_M_Detalle.Cod_Tabla IN ('TCOL') 
+   AND Tb2.Cod_Tabla IN ('TUND') 
+   AND tB4.Cod_Tabla IN ('TLIN') 
+   AND Tb1.Cod_Tabla IN ('TSUB') 
+   AND Tabla_M_Detalle.Cod_Argumento = p.ColPro 
+   AND Tb2.Cod_Argumento = p.UndPro 
+   AND LEFT(p.CodFab, 3) = Tb4.Des_Corta 
+   AND SUBSTRING(p.CodFab, 4, 3) = Tb1.Valor_3 
+   AND Tb4.Des_Corta = Tb1.Des_Corta 
+ORDER BY p.CodPro ASC) AS mp 
+ON n.codpro = mp.codigo 
+WHERE n.EstReg = 'P' 
+AND n.CanSol > 0 
+AND YEAR(n.fecreg) = YEAR(NOW()) 
+GROUP BY mp.codsublinea 
+ORDER BY codsublinea,
+codigofabrica") or die(mysql_error());
 
 $cont = 0;
 while($respDetalle = mysql_fetch_array($sqlDetalle)){
@@ -617,17 +669,17 @@ while($respDetalle = mysql_fetch_array($sqlDetalle)){
     
     $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", $cont);
     
-    $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", utf8_encode($respDetalle["modelo"])); 
+    $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", utf8_encode($respDetalle["codsublinea"])); 
     
-    $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", utf8_encode($respDetalle["articulo"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", utf8_encode($respDetalle["codigofabrica"]));
     
-    $objPHPExcel->getActiveSheet()->SetCellValue("D$fila", utf8_encode($respDetalle["nombre"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("D$fila", utf8_encode($respDetalle["codpro"]));
     
-    $objPHPExcel->getActiveSheet()->SetCellValue("E$fila", utf8_encode($respDetalle["color"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("E$fila", utf8_encode($respDetalle["descripcion"]));
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("F$fila", utf8_encode($respDetalle["talla"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("F$fila", utf8_encode($respDetalle["color"]));
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("G$fila", utf8_encode($respDetalle["estado"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("G$fila", utf8_encode($respDetalle["unidad"]));
 
     $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", utf8_encode($respDetalle["1"]));
 
@@ -717,220 +769,270 @@ while($respDetalle = mysql_fetch_array($sqlDetalle)){
   }
 }else{
   $sqlDetalle2 = mysql_query("SELECT 
-  a1.modelo AS modelo,
-  a1.articulo AS articulo,
-  a1.nombre AS nombre,
-  a1.cod_color,
-  a1.color,
-  a1.talla,
-  a1.estado AS estado,
+  mp.codsublinea,
+  mp.codigofabrica,
+  n.codpro,
+  mp.codlinea,
+  mp.linea,
+  mp.descripcion,
+  mp.color,
+  mp.unidad,
   SUM(
   CASE
-     WHEN MONTH(m.fecha) = '1' 
-     THEN ROUND(m.cantidad, 0) 
+     WHEN MONTH(n.fecreg) = '1' 
+     THEN n.CanSol 
      ELSE 0 
   END
   ) AS '1',
   SUM(
   CASE
-     WHEN MONTH(m.fecha) = '2' 
-     THEN ROUND(m.cantidad, 0) 
+     WHEN MONTH(n.fecreg) = '2' 
+     THEN n.CanSol 
      ELSE 0 
   END
   ) AS '2',
   SUM(
   CASE
-     WHEN MONTH(m.fecha) = '3' 
-     THEN ROUND(m.cantidad, 0) 
+     WHEN MONTH(n.fecreg) = '3' 
+     THEN n.CanSol 
      ELSE 0 
   END
   ) AS '3',
   SUM(
   CASE
-     WHEN MONTH(m.fecha) = '4' 
-     THEN ROUND(m.cantidad, 0) 
+     WHEN MONTH(n.fecreg) = '4' 
+     THEN n.CanSol 
      ELSE 0 
   END
   ) AS '4',
   SUM(
   CASE
-     WHEN MONTH(m.fecha) = '5' 
-     THEN ROUND(m.cantidad, 0) 
+     WHEN MONTH(n.fecreg) = '5' 
+     THEN n.CanSol 
      ELSE 0 
   END
   ) AS '5',
   SUM(
   CASE
-     WHEN MONTH(m.fecha) = '6' 
-     THEN ROUND(m.cantidad, 0) 
+     WHEN MONTH(n.fecreg) = '6' 
+     THEN n.CanSol 
      ELSE 0 
   END
   ) AS '6',
   SUM(
   CASE
-     WHEN MONTH(m.fecha) = '7' 
-     THEN ROUND(m.cantidad, 0) 
+     WHEN MONTH(n.fecreg) = '7' 
+     THEN n.CanSol 
      ELSE 0 
   END
   ) AS '7',
   SUM(
   CASE
-     WHEN MONTH(m.fecha) = '8' 
-     THEN ROUND(m.cantidad, 0) 
+     WHEN MONTH(n.fecreg) = '8' 
+     THEN n.CanSol 
      ELSE 0 
   END
   ) AS '8',
   SUM(
   CASE
-     WHEN MONTH(m.fecha) = '9' 
-     THEN ROUND(m.cantidad, 0) 
+     WHEN MONTH(n.fecreg) = '9' 
+     THEN n.CanSol 
      ELSE 0 
   END
   ) AS '9',
   SUM(
   CASE
-     WHEN MONTH(m.fecha) = '10' 
-     THEN ROUND(m.cantidad, 0) 
+     WHEN MONTH(n.fecreg) = '10' 
+     THEN n.CanSol 
      ELSE 0 
   END
   ) AS '10',
   SUM(
   CASE
-     WHEN MONTH(m.fecha) = '11' 
-     THEN ROUND(m.cantidad, 0) 
+     WHEN MONTH(n.fecreg) = '11' 
+     THEN n.CanSol 
      ELSE 0 
   END
   ) AS '11',
   SUM(
   CASE
-     WHEN MONTH(m.fecha) = '12' 
-     THEN ROUND(m.cantidad, 0) 
+     WHEN MONTH(n.fecreg) = '12' 
+     THEN n.CanSol 
      ELSE 0 
   END
   ) AS '12',
-  ROUND(SUM(m.cantidad)) AS total 
+  SUM(n.cansol) AS total 
 FROM
-  movimientosjf m 
-  LEFT JOIN articulojf a1 
-  ON m.articulo = a1.articulo 
-WHERE YEAR(m.fecha) = YEAR(NOW()) 
-  AND m.tipo = 'E20' 
-  AND a1.modelo = '".$modelo."'
-GROUP BY a1.modelo,
-  a1.articulo,
-  a1.nombre,
-  a1.cod_color,
-  a1.color,
-  a1.talla,
-  a1.estado 
+  neadet n 
+  LEFT JOIN 
+  (SELECT DISTINCT 
+     p.Codpro AS Codigo,
+     SUBSTRING(p.CodFab, 1, 3) AS codlinea,
+     Tb4.Des_larga AS Linea,
+     p.CodFab AS CodigoFabrica,
+     p.DesPro AS Descripcion,
+     p.CodAlm01 AS Stk_Actual,
+     Tabla_M_Detalle.Des_Larga AS Color,
+     Tb2.Des_Corta AS Unidad,
+     p.CosPro,
+     SUBSTRING(p.CodFab, 1, 6) AS codsublinea,
+     Tb1.Des_larga AS SubLinea 
+  FROM
+     producto p,
+     Tabla_M_Detalle,
+     Tabla_M_Detalle AS Tb1,
+     Tabla_M_Detalle AS Tb2,
+     Tabla_M_Detalle AS Tb4 
+  WHERE Tabla_M_Detalle.Cod_Tabla IN ('TCOL') 
+     AND Tb2.Cod_Tabla IN ('TUND') 
+     AND tB4.Cod_Tabla IN ('TLIN') 
+     AND Tb1.Cod_Tabla IN ('TSUB') 
+     AND Tabla_M_Detalle.Cod_Argumento = p.ColPro 
+     AND Tb2.Cod_Argumento = p.UndPro 
+     AND LEFT(p.CodFab, 3) = Tb4.Des_Corta 
+     AND SUBSTRING(p.CodFab, 4, 3) = Tb1.Valor_3 
+     AND Tb4.Des_Corta = Tb1.Des_Corta 
+  ORDER BY p.CodPro ASC) AS mp 
+  ON n.codpro = mp.codigo 
+WHERE n.EstReg = 'P' 
+  AND n.CanSol > 0 
+  AND YEAR(n.fecreg) = YEAR(NOW()) 
+  AND mp.codlinea = '".$linea."'   
+GROUP BY n.codpro 
 UNION
 SELECT 
-  mo.modelo AS modelo,
-  'TOTAL' AS articulo,
-  mo.nombre AS nombre,
+  mp.codsublinea,
+  'TOTAL',
+  '-',
+  mp.codlinea,
+  mp.linea,
   '-',
   '-',
   '-',
-  mo.estado AS estado,
   SUM(
   CASE
-     WHEN MONTH(m.fecha) = '1' 
-     THEN ROUND(m.cantidad, 0) 
+     WHEN MONTH(n.fecreg) = '1' 
+     THEN n.CanSol 
      ELSE 0 
   END
   ) AS '1',
   SUM(
   CASE
-     WHEN MONTH(m.fecha) = '2' 
-     THEN ROUND(m.cantidad, 0) 
+     WHEN MONTH(n.fecreg) = '2' 
+     THEN n.CanSol 
      ELSE 0 
   END
   ) AS '2',
   SUM(
   CASE
-     WHEN MONTH(m.fecha) = '3' 
-     THEN ROUND(m.cantidad, 0) 
+     WHEN MONTH(n.fecreg) = '3' 
+     THEN n.CanSol 
      ELSE 0 
   END
   ) AS '3',
   SUM(
   CASE
-     WHEN MONTH(m.fecha) = '4' 
-     THEN ROUND(m.cantidad, 0) 
+     WHEN MONTH(n.fecreg) = '4' 
+     THEN n.CanSol 
      ELSE 0 
   END
   ) AS '4',
   SUM(
   CASE
-     WHEN MONTH(m.fecha) = '5' 
-     THEN ROUND(m.cantidad, 0) 
+     WHEN MONTH(n.fecreg) = '5' 
+     THEN n.CanSol 
      ELSE 0 
   END
   ) AS '5',
   SUM(
   CASE
-     WHEN MONTH(m.fecha) = '6' 
-     THEN ROUND(m.cantidad, 0) 
+     WHEN MONTH(n.fecreg) = '6' 
+     THEN n.CanSol 
      ELSE 0 
   END
   ) AS '6',
   SUM(
   CASE
-     WHEN MONTH(m.fecha) = '7' 
-     THEN ROUND(m.cantidad, 0) 
+     WHEN MONTH(n.fecreg) = '7' 
+     THEN n.CanSol 
      ELSE 0 
   END
   ) AS '7',
   SUM(
   CASE
-     WHEN MONTH(m.fecha) = '8' 
-     THEN ROUND(m.cantidad, 0) 
+     WHEN MONTH(n.fecreg) = '8' 
+     THEN n.CanSol 
      ELSE 0 
   END
   ) AS '8',
   SUM(
   CASE
-     WHEN MONTH(m.fecha) = '9' 
-     THEN ROUND(m.cantidad, 0) 
+     WHEN MONTH(n.fecreg) = '9' 
+     THEN n.CanSol 
      ELSE 0 
   END
   ) AS '9',
   SUM(
   CASE
-     WHEN MONTH(m.fecha) = '10' 
-     THEN ROUND(m.cantidad, 0) 
+     WHEN MONTH(n.fecreg) = '10' 
+     THEN n.CanSol 
      ELSE 0 
   END
   ) AS '10',
   SUM(
   CASE
-     WHEN MONTH(m.fecha) = '11' 
-     THEN ROUND(m.cantidad, 0) 
+     WHEN MONTH(n.fecreg) = '11' 
+     THEN n.CanSol 
      ELSE 0 
   END
   ) AS '11',
   SUM(
   CASE
-     WHEN MONTH(m.fecha) = '12' 
-     THEN ROUND(m.cantidad, 0) 
+     WHEN MONTH(n.fecreg) = '12' 
+     THEN n.CanSol 
      ELSE 0 
   END
   ) AS '12',
-  ROUND(SUM(m.cantidad)) AS total 
+  SUM(n.cansol) AS total 
 FROM
-  movimientosjf m 
-  LEFT JOIN articulojf a2 
-  ON m.articulo = a2.articulo 
-  LEFT JOIN modelojf mo 
-  ON a2.modelo = mo.modelo 
-WHERE YEAR(m.fecha) = YEAR(NOW()) 
-  AND m.tipo = 'E20' 
-  AND a2.modelo = '".$modelo."' 
-GROUP BY mo.modelo,
-  mo.nombre,
-  mo.estado 
-ORDER BY modelo ASC,
-  articulo ASC");
+  neadet n 
+  LEFT JOIN 
+  (SELECT DISTINCT 
+     p.Codpro AS Codigo,
+     SUBSTRING(p.CodFab, 1, 3) AS codlinea,
+     Tb4.Des_larga AS Linea,
+     p.CodFab AS CodigoFabrica,
+     p.DesPro AS Descripcion,
+     p.CodAlm01 AS Stk_Actual,
+     Tabla_M_Detalle.Des_Larga AS Color,
+     Tb2.Des_Corta AS Unidad,
+     p.CosPro,
+     SUBSTRING(p.CodFab, 1, 6) AS codsublinea,
+     Tb1.Des_larga AS SubLinea 
+  FROM
+     producto p,
+     Tabla_M_Detalle,
+     Tabla_M_Detalle AS Tb1,
+     Tabla_M_Detalle AS Tb2,
+     Tabla_M_Detalle AS Tb4 
+  WHERE Tabla_M_Detalle.Cod_Tabla IN ('TCOL') 
+     AND Tb2.Cod_Tabla IN ('TUND') 
+     AND tB4.Cod_Tabla IN ('TLIN') 
+     AND Tb1.Cod_Tabla IN ('TSUB') 
+     AND Tabla_M_Detalle.Cod_Argumento = p.ColPro 
+     AND Tb2.Cod_Argumento = p.UndPro 
+     AND LEFT(p.CodFab, 3) = Tb4.Des_Corta 
+     AND SUBSTRING(p.CodFab, 4, 3) = Tb1.Valor_3 
+     AND Tb4.Des_Corta = Tb1.Des_Corta 
+  ORDER BY p.CodPro ASC) AS mp 
+  ON n.codpro = mp.codigo 
+WHERE n.EstReg = 'P' 
+  AND n.CanSol > 0 
+  AND YEAR(n.fecreg) = YEAR(NOW()) 
+  AND mp.codlinea = '".$linea."'
+GROUP BY mp.codsublinea 
+ORDER BY codsublinea,
+  codigofabrica");
   $cont = 0;
 while($respDetalle = mysql_fetch_array($sqlDetalle2)){
     $cont+=1;
@@ -939,17 +1041,17 @@ while($respDetalle = mysql_fetch_array($sqlDetalle2)){
     
     $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", $cont);
     
-    $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", utf8_encode($respDetalle["modelo"])); 
+    $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", utf8_encode($respDetalle["codsublinea"])); 
     
-    $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", utf8_encode($respDetalle["articulo"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", utf8_encode($respDetalle["codigofabrica"]));
     
-    $objPHPExcel->getActiveSheet()->SetCellValue("D$fila", utf8_encode($respDetalle["nombre"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("D$fila", utf8_encode($respDetalle["codpro"]));
     
-    $objPHPExcel->getActiveSheet()->SetCellValue("E$fila", utf8_encode($respDetalle["color"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("E$fila", utf8_encode($respDetalle["descripcion"]));
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("F$fila", utf8_encode($respDetalle["talla"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("F$fila", utf8_encode($respDetalle["color"]));
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("G$fila", utf8_encode($respDetalle["estado"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("G$fila", utf8_encode($respDetalle["unidad"]));
 
     $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", utf8_encode($respDetalle["1"]));
 
@@ -1043,10 +1145,10 @@ while($respDetalle = mysql_fetch_array($sqlDetalle2)){
 
 # Ajustar el tamaño de las columnas
 $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(4.57);
-$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(15.29);
-$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(15.29);
-$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(15.29);
-$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(15.29);
+$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(25.29);
+$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(25.29);
+$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(20.29);
+$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(25.29);
 $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(15.29);
 $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(15.29);
 $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(15.29);
@@ -1079,7 +1181,7 @@ header("Content-Type: application/vnd.ms-excel");
 
 
 # Nombre del archivo
-header('Content-Disposition: attachment; filename=" TOTAL PRODUCCION - '.$fecha.'.xls"');
+header('Content-Disposition: attachment; filename=" TOTAL INGRESOS - '.$fecha.'.xls"');
 
 
 //forzar a descarga por el navegador

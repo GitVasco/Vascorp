@@ -261,7 +261,7 @@ $objPHPExcel->createSheet(0);
 $objPHPExcel->setActiveSheetIndex(0);
 
 # Titulo de la hoja
-$objPHPExcel->getActiveSheet()->setTitle("REPORTE PRODUCCION -".$fecha);
+$objPHPExcel->getActiveSheet()->setTitle("REPORTE VENTA -".$fecha);
 
 # Orientacion hoja
 $objPHPExcel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_PORTRAIT);
@@ -292,7 +292,7 @@ $objDrawing->setWorksheet($objPHPExcel->getActiveSheet());
 
 // TITULO
 $fila = 2;
-$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", 'TOTAL DE PRODUCCION POR MODELO');
+$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", 'TOTAL DE VENTAS POR MODELO');
 $objPHPExcel->getActiveSheet()->mergeCells("G$fila:K$fila");
 $objPHPExcel->getActiveSheet()->setSharedStyle($texto3, "G$fila:K$fila");
 $objPHPExcel->getActiveSheet()->getStyle("G$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
@@ -493,7 +493,7 @@ movimientosjf m
 LEFT JOIN articulojf a1 
 ON m.articulo = a1.articulo 
 WHERE YEAR(m.fecha) = YEAR(NOW()) 
-AND m.tipo = 'E20' 
+AND m.tipo IN ('S02', 'S03', 'S70', 'E05') 
 GROUP BY a1.modelo,
 a1.articulo,
 a1.nombre,
@@ -503,13 +503,13 @@ a1.talla,
 a1.estado 
 UNION
 SELECT 
-mo.modelo AS modelo,
+a2.modelo AS modelo,
 'TOTAL' AS articulo,
-mo.nombre AS nombre,
+a2.nombre AS nombre,
 '-',
 '-',
 '-',
-mo.estado AS estado,
+a2.estado AS estado,
 SUM(
 CASE
    WHEN MONTH(m.fecha) = '1' 
@@ -599,13 +599,10 @@ FROM
 movimientosjf m 
 LEFT JOIN articulojf a2 
 ON m.articulo = a2.articulo 
-LEFT JOIN modelojf mo 
-ON a2.modelo = mo.modelo 
 WHERE YEAR(m.fecha) = YEAR(NOW()) 
-AND m.tipo = 'E20' 
-GROUP BY mo.modelo,
-mo.nombre,
-mo.estado 
+AND m.tipo IN ('S02', 'S03', 'S70', 'E05', 'E21') 
+GROUP BY a2.modelo,
+a2.nombre 
 ORDER BY modelo ASC,
 articulo ASC") or die(mysql_error());
 
@@ -814,8 +811,8 @@ FROM
   LEFT JOIN articulojf a1 
   ON m.articulo = a1.articulo 
 WHERE YEAR(m.fecha) = YEAR(NOW()) 
-  AND m.tipo = 'E20' 
-  AND a1.modelo = '".$modelo."'
+  AND m.tipo IN ('S02', 'S03', 'S70', 'E05') 
+  AND a1.modelo = '".$modelo."' 
 GROUP BY a1.modelo,
   a1.articulo,
   a1.nombre,
@@ -825,13 +822,13 @@ GROUP BY a1.modelo,
   a1.estado 
 UNION
 SELECT 
-  mo.modelo AS modelo,
+  a2.modelo AS modelo,
   'TOTAL' AS articulo,
-  mo.nombre AS nombre,
+  a2.nombre AS nombre,
   '-',
   '-',
   '-',
-  mo.estado AS estado,
+  a2.estado AS estado,
   SUM(
   CASE
      WHEN MONTH(m.fecha) = '1' 
@@ -921,14 +918,11 @@ FROM
   movimientosjf m 
   LEFT JOIN articulojf a2 
   ON m.articulo = a2.articulo 
-  LEFT JOIN modelojf mo 
-  ON a2.modelo = mo.modelo 
 WHERE YEAR(m.fecha) = YEAR(NOW()) 
-  AND m.tipo = 'E20' 
-  AND a2.modelo = '".$modelo."' 
-GROUP BY mo.modelo,
-  mo.nombre,
-  mo.estado 
+  AND m.tipo IN ('S02', 'S03', 'S70', 'E05', 'E21') 
+  AND a2.modelo = '".$modelo."'
+GROUP BY a2.modelo,
+  a2.nombre 
 ORDER BY modelo ASC,
   articulo ASC");
   $cont = 0;
@@ -1079,7 +1073,7 @@ header("Content-Type: application/vnd.ms-excel");
 
 
 # Nombre del archivo
-header('Content-Disposition: attachment; filename=" TOTAL PRODUCCION - '.$fecha.'.xls"');
+header('Content-Disposition: attachment; filename=" TOTAL VENTAS - '.$fecha.'.xls"');
 
 
 //forzar a descarga por el navegador
