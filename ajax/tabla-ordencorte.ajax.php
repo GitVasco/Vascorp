@@ -61,11 +61,11 @@ class TablaOrdenCorte{
 
             if($ordencorte[$i]["saldo"] < $ordencorte[$i]["total"]){
 
-                $botones =  "<div class='btn-group'><button class='btn btn-info btnVisualizarOC' title='Visualizar Orden Corte' data-toggle='modal' data-target='#modalVisualizarOC' codigo='".$ordencorte[$i]["codigo"]."'><i class='fa fa-eye'></i></button><button class='btn btn-success  btnReporteOC' title='Reporte Orden de Corte' codigo='".$ordencorte[$i]["codigo"]."'><i class='fa fa-file-excel-o'></i></button></div>";
+                $botones =  "<div class='btn-group'><button class='btn btn-info btnVisualizarOC' title='Visualizar Orden Corte' data-toggle='modal' data-target='#modalVisualizarOC' codigo='".$ordencorte[$i]["codigo"]."'><i class='fa fa-eye'></i></button><button class='btn btn-outline-success  btnReporteOC' title='Reporte Orden de Corte' codigo='".$ordencorte[$i]["codigo"]."'style='border:green 1px solid'><img src='vistas/img/plantilla/excel.png' width='20px'></button></div>";
 
             }else{
                 
-                $botones =  "<div class='btn-group'><button class='btn btn-info btnVisualizarOC' title='Visualizar Orden Corte' data-toggle='modal' data-target='#modalVisualizarOC' codigo='".$ordencorte[$i]["codigo"]."'><i class='fa fa-eye'></i></button><button class='btn btn-warning  btnEditarOC' title='Editar Orden de Corte' codigo='".$ordencorte[$i]["codigo"]."'><i class='fa fa-pencil'></i></button><button class='btn btn-danger  btnEliminarOC' title='Eliminar Orden de Corte' codigo='".$ordencorte[$i]["codigo"]."'><i class='fa fa-times'></i><button class='btn btn-success  btnReporteOC' title='Reporte Orden de Corte' codigo='".$ordencorte[$i]["codigo"]."'><i class='fa fa-file-excel-o'></i></button></div>";
+                $botones =  "<div class='btn-group'><button class='btn btn-info btnVisualizarOC' title='Visualizar Orden Corte' data-toggle='modal' data-target='#modalVisualizarOC' codigo='".$ordencorte[$i]["codigo"]."'><i class='fa fa-eye'></i></button><button class='btn btn-warning  btnEditarOC' title='Editar Orden de Corte' codigo='".$ordencorte[$i]["codigo"]."'><i class='fa fa-pencil'></i></button><button class='btn btn-danger  btnEliminarOC' title='Eliminar Orden de Corte' codigo='".$ordencorte[$i]["codigo"]."'><i class='fa fa-times'></i><button class='btn btn-outline-success  btnReporteOC' title='Reporte Orden de Corte' codigo='".$ordencorte[$i]["codigo"]."' style='border:green 1px solid'><img src='vistas/img/plantilla/excel.png' width='20px'></button></div>";
 
             }
 
