@@ -159,7 +159,7 @@
                   foreach($listaArticuloOC as $key=>$value){
 
                     $infoArticulo = ControladorArticulos::ctrMostrarArticulos($value["articulo"]);
-                    #var_dump("infoArticulo", $infoArticulo);
+                    var_dump("infoArticulo", $infoArticulo);
                     $prodArticulo = ControladorArticulos::ctrMostrarProduccion($value["articulo"]);
                     #var_dump($prodArticulo["prod"]);
                     $vtaArticulo = ControladorArticulos::ctrMostrarVentas($value["articulo"]);
@@ -341,7 +341,7 @@
 
           <div class="box-body">
 
-            <table class="table table-bordered table-striped table-condensed tablaArticulosOrdenCorte">
+            <table class="table table-bordered table-striped table-condensed tablaArticulosOrdenCorte1">
 
               <thead>
 
