@@ -159,9 +159,9 @@
                   foreach($listaArticuloOC as $key=>$value){
 
                     $infoArticulo = ControladorArticulos::ctrMostrarArticulos($value["articulo"]);
-                    var_dump("infoArticulo", $infoArticulo);
+                    //var_dump("infoArticulo", $infoArticulo);
                     $prodArticulo = ControladorArticulos::ctrMostrarProduccion($value["articulo"]);
-                    #var_dump($prodArticulo["prod"]);
+                    //var_dump($prodArticulo["prod"]);
                     $vtaArticulo = ControladorArticulos::ctrMostrarVentas($value["articulo"]);
                     #var_dump($prodArticulo["prod"]);
 
@@ -171,7 +171,9 @@
                     $proySum = $infoArticulo["proyeccion"] - ($infoArticulo["ord_corte"] + $infoArticulo["alm_corte"] + $infoArticulo["taller"] + $prodArticulo["prod"] +$value["cantidad"]);
                     //var_dump($proySum);
 
-                    $pendienteReal = $proySum + $value["cantidad"];
+                    $pendienteReal = $infoArticulo["proyeccion"] - $prodArticulo["prod"] - $value["cantidad"];
+                    //var_dump($infoArticulo["proyeccion"],$prodArticulo["prod"]);
+                    $pendiente = $infoArticulo["proyeccion"] - $prodArticulo["prod"];
 
                     $stockG = $infoArticulo["stockG"];
                     #var_dump($stockG);
@@ -206,7 +208,7 @@
 
                       echo '<div class="col-xs-2 pendiente">
 
-                              <input style="color:#008000; background-color:white;" type="text" class="form-control nuevoPendienteProy input-sm" name="'.$infoArticulo["articulo"].'" id="'.$infoArticulo["articulo"].'"  value="'.$proySum.'" pendienteReal="'.$pendienteReal.'" readonly></input>
+                              <input style="color:#008000; background-color:white;" type="text" class="form-control nuevoPendienteProy input-sm" name="'.$infoArticulo["articulo"].'" id="'.$infoArticulo["articulo"].'"  value="'.$pendienteReal.'" pendienteReal="'.$pendiente.'" readonly></input>
 
                             </div>';
 
@@ -214,7 +216,7 @@
 
                       echo '<div class="col-xs-2 pendiente">
 
-                              <input style="color:#FF0000; background-color:pink;" type="text" class="form-control nuevoPendienteProy input-sm" name="'.$infoArticulo["articulo"].'" id="'.$infoArticulo["articulo"].'"  value="'.$proySum.'" pendienteReal="'.$pendienteReal.'" readonly></input>
+                              <input style="color:#FF0000; background-color:pink;" type="text" class="form-control nuevoPendienteProy input-sm" name="'.$infoArticulo["articulo"].'" id="'.$infoArticulo["articulo"].'"  value="'.$pendienteReal.'" pendienteReal="'.$pendiente.'" readonly></input>
 
                             </div>';                      
 
@@ -341,7 +343,7 @@
 
           <div class="box-body">
 
-            <table class="table table-bordered table-striped table-condensed tablaArticulosOrdenCorte1">
+            <table class="table table-bordered table-striped table-condensed tablaArticulosOrdenCorte">
 
               <thead>
 

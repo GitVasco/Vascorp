@@ -47,7 +47,7 @@ class TablaOrdenCorte{
             /* 
             todo: orden de corte
             */
-             $codigo = "<b>OC - ".$ordencorte[$i]["codigo"]."</b>";   
+             $codigo = "<b>".$ordencorte[$i]["codigo"]."</b>";   
 
             /* 
             todo: url
