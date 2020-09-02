@@ -668,7 +668,7 @@ $(".tablaTarjetas").on("click", ".btnVisualizarTarjeta", function () {
 
 				var simulacion = $(this).val();
 
-				console.log("simulacion", simulacion);
+				/* console.log("simulacion", simulacion); */
 
 				$(".btnCalcular").click(function () {
 

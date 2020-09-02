@@ -26,7 +26,7 @@
       EL FORMULARIO
       ======================================-->
 
-      <div class="col-lg-4 col-xs-12">
+      <div class="col-lg-5 col-xs-12">
 
         <div class="box box-success">
 
@@ -266,7 +266,7 @@
       LA TABLA DE ARTICULOS
       ======================================-->
 
-      <div class="col-lg-8 hidden-md hidden-sm hidden-xs">
+      <div class="col-lg-7 hidden-md hidden-sm hidden-xs">
 
         <div class="box box-warning">
 

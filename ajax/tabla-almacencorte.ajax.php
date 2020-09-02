@@ -47,7 +47,7 @@ class TablaAlmacenCorte{
             /* 
             todo: Traemos las acciones
             */
-            $botones =  "<div class='btn-group'><button class='btn btn-info btnVisualizarAC' title='Visualizar Corte' data-toggle='modal' data-target='#modalVisualizarAC' codigoAC='".$almacencorte[$i]["codigo"]."'><i class='fa fa-eye'></i></button><button class='btn btn-success  btnReporteOC' title='Reporte Orden de Corte' codigo='".$almacencorte[$i]["codigo"]."'><i class='fa fa-file-excel-o'></i></button></div>";
+            $botones =  "<div class='btn-group'><button class='btn btn-info btnVisualizarAC' title='Visualizar Corte' data-toggle='modal' data-target='#modalVisualizarAC' codigoAC='".$almacencorte[$i]["codigo"]."'><i class='fa fa-eye'></i></button><button class='btn btn-outline-success  btnReporteOC' title='Reporte Orden de Corte' codigo='".$almacencorte[$i]["codigo"]."'style='border:green 1px solid'><img src='vistas/img/plantilla/excel.png' width='20px'></button></div>";
                    
                 $datosJson .= '[
                 "'.$codigo.'",

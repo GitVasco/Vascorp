@@ -121,3 +121,16 @@ if(isset($_POST["idTarjeta2"])){
 	$visualizarTarjetaFichas->ajaxVisualizarTarjetaFichas();
   
   }
+
+
+ /*=============================================
+VISUALIZAR SIMULACION
+=============================================*/ 
+
+if(isset($_POST["articuloTarjetaDetalle"])){
+
+	$visualizarTarjetaFichas = new AjaxTarjetas();
+	$visualizarTarjetaFichas->articuloTarjetaDetalle = $_POST["articuloTarjetaDetalle"];
+	$visualizarTarjetaFichas->ajaxVisualizarTarjetaDetalle();
+  
+  }

@@ -19,7 +19,7 @@
         <div class="box">
 
             <div class="box-header with-border">
-                <div class="col-lg-4">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 
                     <select class="form-control selectpicker input-lg" id="lineaMPSal" name="lineaMPSal" data-live-search="true">
 
@@ -41,7 +41,7 @@
 
                 </div>
 
-                <div class="col-lg-6">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 
                     <button class="btn btn-primary btnCargarMpSal">CARGAR</button>
                     <button class="btn btn-danger btnLimpiarMpSal">LIMPIAR</button>
@@ -49,7 +49,7 @@
                 </div>
                 <div class=" pull-right ">
                   <button class="btn btn-outline-success btnReporteSalida" linea="" style="border:green 1px solid">
-                    <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Salidas
+                    <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Salidas</button>
                 </div>
             </div>
 

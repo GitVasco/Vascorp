@@ -1043,7 +1043,7 @@ class controladorArticulos{
 				$data = new Spreadsheet_Excel_Reader();
 				$data->setOutputEncoding('CP1251');
 				$data->read("vistas/cargas/".$_FILES["archivoxlsarticulopedido"]["name"]);
-				$conexion = mysql_connect("192.168.0.3", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
+				$conexion = mysql_connect("192.168.1.18", "admin", "joel123") or die("No se pudo conectar: " . mysql_error());
 				mysql_select_db("vasco", $conexion);
 				for ($i = 2; $i <= $data->sheets[0]['numRows']; $i++) {
 					for ($j = 1; $j <= 1; $j++) {
