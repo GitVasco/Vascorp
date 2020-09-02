@@ -259,7 +259,7 @@ $(".box").on("click", ".btnCargarProyMp", function () {
 
 	var proyMp = document.getElementById("proyMp").value;
 	//console.log(lineaMp);
-
+	$(".btnReporteProyeccion").attr("corte",proyMp);
 	localStorage.setItem("proyMp", proyMp);
 
 	cargarTablaProyMp(localStorage.getItem("proyMp"));
@@ -274,7 +274,7 @@ $(".box").on("click", ".btnLimpiarProyMp", function () {
 
 	localStorage.removeItem("proyMp");
 	localStorage.clear();
-
+	$(".btnReporteProyeccion").attr("corte","");
 	window.location = "proyeccion-mp";
 	
 })
@@ -332,3 +332,10 @@ function cargarTablaProyMp(proyMp) {
 		}
 	});
 }
+
+//Reporte de Salidas
+$(".box").on("click", ".btnReporteProyeccion", function () {
+	var corte = $(this).attr("corte");
+    window.location = "vistas/reportes_excel/rpt_proyeccion_mp.php?corte="+corte;
+  
+})
