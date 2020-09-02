@@ -6,7 +6,7 @@ $('.tablaTarjetas').DataTable({
 	"deferRender": true,
 	"retrieve": true,
 	"processing": true,
-	"order": [[5, "asc"]],
+	"order": [[4, "asc"]],
 	"pageLength": 20,
 	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
 	"language": {
@@ -743,8 +743,22 @@ $(".box").on("click", ".btnReporteTarjeta", function () {
   
 })
 
+/* 
+* CARGAR TABLA FICHA TECNICA
+*/
+// Validamos que venga la variable capturaRango en el localStorage
+if (localStorage.getItem("capturaRango6") != null) {
+	$("#daterange-btnFichas span").html(localStorage.getItem("capturaRango6"));
+	cargarTablaFichas(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
+} else {
+	$("#daterange-btnFichas span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
+	cargarTablaFichas(null, null);
+}
+
+
+function cargarTablaFichas(fechaInicial, fechaFinal){
 $('.tablaFichaTecnica').DataTable({
-	"ajax": "ajax/tabla-ficha-tecnica.ajax.php?perfil=" + $("#perfilOculto").val(),
+	"ajax": "ajax/tabla-ficha-tecnica.ajax.php?perfil=" + $("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
 	"deferRender": true,
 	"retrieve": true,
 	"processing": true,
@@ -778,7 +792,8 @@ $('.tablaFichaTecnica').DataTable({
 
 	}
 
-});
+  });
+}
 /*=============================================
 EDITAR FICHA TECNICA
 =============================================*/
@@ -808,3 +823,118 @@ $(".tablaTarjetas").on("click", ".btnAgregarFicha", function () {
     })
 
 })
+
+
+/*=============================================
+RANGO DE FECHAS
+=============================================*/
+moment.locale('es');
+$("#daterange-btnFichas").daterangepicker(
+    {
+	  cancelClass: "CancelarFicha",
+	  locale:{
+		"daysOfWeek": [
+			"Dom",
+			"Lun",
+			"Mar",
+			"Mie",
+			"Jue",
+			"Vie",
+			"Sab"
+		],
+		"monthNames": [
+			"Enero",
+			"Febrero",
+			"Marzo",
+			"Abril",
+			"Mayo",
+			"Junio",
+			"Julio",
+			"Agosto",
+			"Septiembre",
+			"Octubre",
+			"Noviembre",
+			"Diciembre"
+		],
+	  },
+      ranges: {
+        Hoy: [moment(), moment()],
+        Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+        "Últimos 7 días": [moment().subtract(6, "days"), moment()],
+        "Últimos 30 días": [moment().subtract(29, "days"), moment()],
+        "Este mes": [moment().startOf("month"), moment().endOf("month")],
+        "Último mes": [
+          moment()
+            .subtract(1, "month")
+            .startOf("month"),
+          moment()
+            .subtract(1, "month")
+            .endOf("month")
+        ]
+      },
+      
+      startDate: moment(),
+      endDate: moment()
+    },
+    function(start, end) {
+      $("#daterange-btnFichas span").html(
+        start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
+      );
+  
+      var fechaInicial = start.format("YYYY-MM-DD");
+  
+      var fechaFinal = end.format("YYYY-MM-DD");
+  
+      var capturarRango6 = $("#daterange-btnFichas span").html();
+  
+      localStorage.setItem("capturarRango6", capturarRango6);
+      localStorage.setItem("fechaInicial", fechaInicial);
+      localStorage.setItem("fechaFinal", fechaFinal);
+      // Recargamos la tabla con la información para ser mostrada en la tabla
+      $(".tablaFichaTecnica").DataTable().destroy();
+      cargarTablaFichas(fechaInicial, fechaFinal);
+    });
+  
+  /*=============================================
+  CANCELAR RANGO DE FECHAS
+  =============================================*/
+  
+  $(".daterangepicker.opensleft .range_inputs .CancelarFicha").on(
+    "click",
+    function() {
+      localStorage.removeItem("capturarRango6");
+      localStorage.removeItem("fechaInicial");
+    	localStorage.removeItem("fechaFinal");
+      localStorage.clear();
+      window.location = "ficha-tecnica";
+    }
+  );
+  
+  /*=============================================
+  CAPTURAR HOY
+  =============================================*/
+  
+  $(".daterangepicker.opensleft .ranges li").on("click", function() {
+    var textoHoy = $(this).attr("data-range-key");
+  
+    if (textoHoy == "Hoy") {
+      var d = new Date();
+  
+      var dia = d.getDate();
+      var mes = d.getMonth() + 1;
+      var año = d.getFullYear();
+  
+      dia = ("0" + dia).slice(-2);
+      mes = ("0" + mes).slice(-2);
+  
+      var fechaInicial = año + "-" + mes + "-" + dia;
+      var fechaFinal = año + "-" + mes + "-" + dia;
+  
+      localStorage.setItem("capturarRango6", "Hoy");
+      localStorage.setItem("fechaInicial", fechaInicial);
+      localStorage.setItem("fechaFinal", fechaFinal);
+      // Recargamos la tabla con la información para ser mostrada en la tabla
+      $(".tablaFichaTecnica").DataTable().destroy();
+      cargarTablaFichas(fechaInicial, fechaFinal);
+    }
+  });

@@ -636,14 +636,13 @@ class controladorArticulos{
 				$data = new Spreadsheet_Excel_Reader();
 				$data->setOutputEncoding('CP1251');
 				$data->read("vistas/cargas/".$_FILES["archivoxls"]["name"]);
-				$conexion = mysql_connect("192.168.0.3", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
-				mysql_select_db("new_vasco", $conexion);
+				$conexion = mysql_connect("192.168.1.18", "admin", "joel123") or die("No se pudo conectar: " . mysql_error());
+				mysql_select_db("vasco", $conexion);
 				for ($i = 2; $i <= $data->sheets[0]['numRows']; $i++) {
 					for ($j = 1; $j <= 1; $j++) {
 					if(substr($data->sheets[0]['cells'][$i][1],0,1)=='0'){
 					$sqlDetalle = mysql_query("UPDATE articulojf SET stock=".$data->sheets[0]['cells'][$i][11].
 					" WHERE articulo='"."1".$data->sheets[0]['cells'][$i][1]."'") or die(mysql_error());
-					
 					}else {
 					$sqlDetalle = mysql_query("UPDATE articulojf SET stock=".$data->sheets[0]['cells'][$i][11].
 					" WHERE articulo='".$data->sheets[0]['cells'][$i][1]."'") or die(mysql_error());
@@ -702,8 +701,8 @@ class controladorArticulos{
 			$data = new Spreadsheet_Excel_Reader();
 			$data->setOutputEncoding('CP1251');
 			$data->read("vistas/cargas/".$_FILES["archivoxlsmovimiento"]["name"]);
-			$conexion = mysql_connect("192.168.0.3", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
-			mysql_select_db("new_vasco", $conexion);
+			$conexion = mysql_connect("192.168.1.18", "admin", "joel123") or die("No se pudo conectar: " . mysql_error());
+			mysql_select_db("vasco", $conexion);
 			$sqlEliminar = mysql_query("DELETE FROM movimientosjf WHERE fecha = DATE(NOW()) OR fecha = DATE(NOW()) - INTERVAL 1 DAY");
 			for ($i = 2; $i <= $data->sheets[0]['numRows']; $i++) {
 				for ($j = 1; $j <= 1; $j++) {
@@ -769,7 +768,7 @@ class controladorArticulos{
 					$dscto2=$data->sheets[0]['cells'][$i][19];
 					$nombre=$data->sheets[0]['cells'][$i][28];
 					$total=($data->sheets[0]['cells'][$i][10]*$data->sheets[0]['cells'][$i][15]*((100-$data->sheets[0]['cells'][$i][18])/100))*((100-$data->sheets[0]['cells'][$i][19])/100);
-					$sqlInsertar = mysql_query("INSERT INTO movimientosjf (tipo,documento,taller,fecha,articulo,linea,cliente,vendedor,cantidad,precio,dscto1,dscto2,total,nombre_tipo,almacen)  values('".$tipo."','".$documento."','".$taller."','".$fecha."','".$codArt."','".$linea."','".$cliente."','".$vendedor."',".$cantidad.",".$precio.",".$dscto1.",".$dscto2.",".$total.",'".$nombre."',".$almacen.")");
+					$sqlInsertar = mysql_query("INSERT INTO movimientosjf (tipo,documento,taller,fecha,articulo,linea,cliente,vendedor,cantidad,precio,dscto1,dscto2,total,nombre_tipo,almacen)  values('".$tipo."','".$documento."','".$taller."','".substr($fecha,6,2)."-".substr($fecha,3,2)."-".substr($fecha,0,2)."','".$codArt."','".$linea."','".$cliente."','".$vendedor."',".$cantidad.",".$precio.",".$dscto1.",".$dscto2.",".$total.",'".$nombre."','".$almacen."')");
 				}
 			
 			}
@@ -825,8 +824,8 @@ class controladorArticulos{
 			$data = new Spreadsheet_Excel_Reader();
 			$data->setOutputEncoding('CP1251');
 			$data->read("vistas/cargas/".$_FILES["archivoxlsventa"]["name"]);
-			$conexion = mysql_connect("192.168.1.2", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
-			mysql_select_db("new_vasco", $conexion);
+			$conexion = mysql_connect("192.168.1.18", "admin", "joel123") or die("No se pudo conectar: " . mysql_error());
+			mysql_select_db("vasco", $conexion);
 			$sqlEliminar = mysql_query("DELETE FROM ventajf WHERE YEAR(fecha) = YEAR(NOW()) AND MONTH(fecha) = MONTH (NOW()) ");
 			for ($i = 2; $i <= $data->sheets[0]['numRows']; $i++) {
 				for ($j = 1; $j <= 1; $j++) {
@@ -937,8 +936,8 @@ class controladorArticulos{
 			$data = new Spreadsheet_Excel_Reader();
 			$data->setOutputEncoding('CP1251');
 			$data->read("vistas/cargas/".$_FILES["archivoxlspedido"]["name"]);
-			$conexion = mysql_connect("192.168.0.3", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
-			mysql_select_db("new_vasco", $conexion);
+			$conexion = mysql_connect("192.168.1.18", "admin", "joel123") or die("No se pudo conectar: " . mysql_error());
+			mysql_select_db("vasco", $conexion);
 			$sqlEliminar = mysql_query("DELETE FROM pedidojf ");
 			for ($i = 2; $i <= $data->sheets[0]['numRows']; $i++) {
 				for ($j = 1; $j <= 1; $j++) {
@@ -1045,7 +1044,7 @@ class controladorArticulos{
 				$data->setOutputEncoding('CP1251');
 				$data->read("vistas/cargas/".$_FILES["archivoxlsarticulopedido"]["name"]);
 				$conexion = mysql_connect("192.168.0.3", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
-				mysql_select_db("new_vasco", $conexion);
+				mysql_select_db("vasco", $conexion);
 				for ($i = 2; $i <= $data->sheets[0]['numRows']; $i++) {
 					for ($j = 1; $j <= 1; $j++) {
 					if(substr($data->sheets[0]['cells'][$i][1],0,1)=='0'){

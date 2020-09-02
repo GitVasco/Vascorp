@@ -13,7 +13,7 @@ class TablaFichaTecnica{
         $item = null;     
         $valor = null;
 
-        $fichaTecnica = ControladorTarjetas::ctrMostrarFichasTecnicas($item, $valor);	
+        $fichaTecnica = ControladorTarjetas::ctrRangoFechasFichas($_GET["fechaInicial"],$_GET["fechaFinal"]);	
         if(count($fichaTecnica)>0){
 
         $datosJson = '{

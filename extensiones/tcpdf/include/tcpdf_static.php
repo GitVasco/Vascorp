@@ -419,8 +419,8 @@ class TCPDF_STATIC {
 		'BE_DOUBLE_CARRE'        => array( 1757.480,  2607.874), // = (  620 x 920  ) mm  = ( 24.41 x 36.22 ) in
 		'BE_ELEPHANT'            => array( 1746.142,  2182.677), // = (  616 x 770  ) mm  = ( 24.25 x 30.31 ) in
 		'BE_PETIT_AIGLE'         => array( 1700.787,  2381.102), // = (  600 x 840  ) mm  = ( 23.62 x 33.07 ) in
-		'BE_GRAND_JESUS'         => array( 1559.055,  2069.291), // = (  550 x 730  ) mm  = ( 21.65 x 28.74 ) in
-		'BE_JESUS'               => array( 1530.709,  2069.291), // = (  540 x 730  ) mm  = ( 21.26 x 28.74 ) in
+		'BE_GRAND_admin'         => array( 1559.055,  2069.291), // = (  550 x 730  ) mm  = ( 21.65 x 28.74 ) in
+		'BE_admin'               => array( 1530.709,  2069.291), // = (  540 x 730  ) mm  = ( 21.26 x 28.74 ) in
 		'BE_RAISIN'              => array( 1417.323,  1842.520), // = (  500 x 650  ) mm  = ( 19.69 x 25.59 ) in
 		'BE_GRAND_MEDIAN'        => array( 1303.937,  1714.961), // = (  460 x 605  ) mm  = ( 18.11 x 23.82 ) in
 		'BE_DOUBLE_POSTE'        => array( 1233.071,  1601.575), // = (  435 x 565  ) mm  = ( 17.13 x 22.24 ) in
@@ -436,7 +436,7 @@ class TCPDF_STATIC {
 		'FR_DOUBLE_COLOMBIER'    => array( 2551.181,  3571.654), // = (  900 x 1260 ) mm  = ( 35.43 x 49.61 ) in
 		'FR_GRANDE_MONDE'        => array( 2551.181,  3571.654), // = (  900 x 1260 ) mm  = ( 35.43 x 49.61 ) in
 		'FR_DOUBLE_SOLEIL'       => array( 2267.717,  3401.575), // = (  800 x 1200 ) mm  = ( 31.50 x 47.24 ) in
-		'FR_DOUBLE_JESUS'        => array( 2154.331,  3174.803), // = (  760 x 1120 ) mm  = ( 29.92 x 44.09 ) in
+		'FR_DOUBLE_admin'        => array( 2154.331,  3174.803), // = (  760 x 1120 ) mm  = ( 29.92 x 44.09 ) in
 		'FR_GRAND_AIGLE'         => array( 2125.984,  3004.724), // = (  750 x 1060 ) mm  = ( 29.53 x 41.73 ) in
 		'FR_PETIT_AIGLE'         => array( 1984.252,  2664.567), // = (  700 x 940  ) mm  = ( 27.56 x 37.01 ) in
 		'FR_DOUBLE_RAISIN'       => array( 1842.520,  2834.646), // = (  650 x 1000 ) mm  = ( 25.59 x 39.37 ) in
@@ -447,7 +447,7 @@ class TCPDF_STATIC {
 		'FR_SOLEIL'              => array( 1700.787,  2267.717), // = (  600 x 800  ) mm  = ( 23.62 x 31.50 ) in
 		'FR_DOUBLE_CARRE'        => array( 1587.402,  2551.181), // = (  560 x 900  ) mm  = ( 22.05 x 35.43 ) in
 		'FR_DOUBLE_COQUILLE'     => array( 1587.402,  2494.488), // = (  560 x 880  ) mm  = ( 22.05 x 34.65 ) in
-		'FR_JESUS'               => array( 1587.402,  2154.331), // = (  560 x 760  ) mm  = ( 22.05 x 29.92 ) in
+		'FR_admin'               => array( 1587.402,  2154.331), // = (  560 x 760  ) mm  = ( 22.05 x 29.92 ) in
 		'FR_RAISIN'              => array( 1417.323,  1842.520), // = (  500 x 650  ) mm  = ( 19.69 x 25.59 ) in
 		'FR_CAVALIER'            => array( 1303.937,  1757.480), // = (  460 x 620  ) mm  = ( 18.11 x 24.41 ) in
 		'FR_DOUBLE_COURONNE'     => array( 1303.937,  2040.945), // = (  460 x 720  ) mm  = ( 18.11 x 28.35 ) in
