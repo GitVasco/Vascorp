@@ -173,7 +173,19 @@ class ControladorOrdenCorte{
 		return $respuesta;
 
     }
-    
+
+    /* 
+	* MOSTRAR DATOS DEL DETALLE DE LAS TARJETAS
+	*/
+	static public function ctrMostrarDetalleOrdenCorte($item,$valor){
+
+		$tabla = "detalles_ordencortejf";
+
+		$respuesta = ModeloOrdenCorte::mdlMostraDetalleOrdenCorte($tabla,$item,$valor);
+
+		return $respuesta;
+
+    }
     /* 
     * Editar Orden de Corte
     */
@@ -450,5 +462,119 @@ class ControladorOrdenCorte{
 		return $respuesta;
 
     }    
+    /* 
+    * CREAR ORDEN DE CORTE
+    */
+    static public function ctrCrearDetalleOrdenCorte(){
+        if(isset($_POST["nuevoCodigo"]) && isset($_POST["articulo"]) && isset($_POST["cantidad"])){
+        $codigo=$_GET["codigo"];
+        $datosD = array("ordencorte"=>$_POST["nuevoCodigo"],
+        "articulo"=>$_POST["articulo"],
+        "cantidad"=>$_POST["cantidad"],
+        "saldo"=>$_POST["cantidad"]);
 
+        $respuesta=ModeloOrdenCorte::mdlGuardarDetallesOrdenCorte("detalles_ordencortejf", $datosD);
+
+
+            if($respuesta=="ok"){
+                echo '<script>
+                                swal({
+                                    type: "success",
+                                    title: "Felicitaciones",
+                                    text: "¡La información fue Actualizada con éxito!",
+                                    showConfirmButton: true,
+                                    confirmButtonText: "Cerrar"
+                                }).then((result)=>{
+                                    if(result.value){
+                                        window.location="index.php?ruta=editar-detalle-ordencorte&codigo='.$codigo.'";}
+                                });
+                            </script>';
+            }else{
+
+            # Mostramos una alerta suave
+            echo '<script>
+                    swal({
+                        type: "error",
+                        title: "Error",
+                        text: "¡La información presento problemas y no se registro adecuadamente. Por favor, intenteló de nuevo!",
+                        showConfirmButton: true,
+                        confirmButtonText: "Cerrar"
+                    }).then((result)=>{
+                        if(result.value){
+                            window.location="index.php?ruta=editar-detalle-ordencorte&codigo='.$codigo.'";}
+                    });
+                </script>';
+
+            }
+        }
+    }
+
+    /* 
+    * CREAR ORDEN DE CORTE
+    */
+    static public function ctrEditarDetalleOrdenCorte(){
+        if(isset($_POST["idDetalle"]) && isset($_POST["editarArticulo"]) && isset($_POST["editarCantidad"])){
+        $codigo=$_GET["codigo"];
+        $datosD = array("id"=>$_POST["idDetalle"],
+        "cantidad"=>$_POST["editarCantidad"],
+        "saldo"=>$_POST["editarCantidad"]);
+
+        $respuesta=ModeloOrdenCorte::mdlEditarDetalleOrdenCorte("detalles_ordencortejf", $datosD);
+
+
+            if($respuesta=="ok"){
+                echo '<script>
+                                swal({
+                                    type: "success",
+                                    title: "Felicitaciones",
+                                    text: "¡La información fue Actualizada con éxito!",
+                                    showConfirmButton: true,
+                                    confirmButtonText: "Cerrar"
+                                }).then((result)=>{
+                                    if(result.value){
+                                        window.location="index.php?ruta=editar-detalle-ordencorte&codigo='.$codigo.'";}
+                                });
+                            </script>';
+            }else{
+
+            # Mostramos una alerta suave
+            echo '<script>
+                    swal({
+                        type: "error",
+                        title: "Error",
+                        text: "¡La información presento problemas y no se registro adecuadamente. Por favor, intenteló de nuevo!",
+                        showConfirmButton: true,
+                        confirmButtonText: "Cerrar"
+                    }).then((result)=>{
+                        if(result.value){
+                            window.location="index.php?ruta=editar-detalle-ordencorte&codigo='.$codigo.'";}
+                    });
+                </script>';
+
+            }
+        }
+    }
+    static public function ctrEliminarDetalleOrdenCorte(){
+        if(isset($_GET["idDetalle"])){
+        $item="id";
+        $valor = $_GET["idDetalle"];
+        $codigo =$_GET["codigo"];
+        $respuesta=ModeloOrdenCorte::mdlEliminarDato("detalles_ordencortejf",$item,$valor);
+        if($respuesta=="ok"){
+            echo '<script>
+                            swal({
+                                type: "success",
+                                title: "Felicitaciones",
+                                text: "¡La información fue eliminada con éxito!",
+                                showConfirmButton: true,
+                                confirmButtonText: "Cerrar"
+                            }).then((result)=>{
+                                if(result.value){
+                                    window.location="index.php?ruta=editar-detalle-ordencorte&codigo='.$codigo.'";}
+                            });
+                        </script>';
+            }
+
+        }
+    }
 }
