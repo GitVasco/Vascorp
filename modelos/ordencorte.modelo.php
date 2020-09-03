@@ -170,7 +170,7 @@ class ModeloOrdenCorte{
 	*/
 	static public function mdlMostraDetallesOrdenCorte($tabla,$item,$valor){
 
-		$sql="SELECT * FROM $tabla WHERE $item=:$item ORDER BY id ASC";
+		$sql="SELECT do.*,a.articulo,a.nombre,a.marca,a.talla,a.color FROM $tabla do LEFT JOIN articulojf a ON do.articulo=a.articulo WHERE $item=:$item  ORDER BY do.id ASC";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 
@@ -495,4 +495,47 @@ class ModeloOrdenCorte{
  
 	}	
 
+	/* 
+	* Método para editar las ventas
+	*/
+	static public function mdlEditarDetalleOrdenCorte($tabla,$datos){
+
+		$sql="UPDATE $tabla SET cantidad=:cantidad, saldo=:saldo WHERE id=:id";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":cantidad",$datos["cantidad"],PDO::PARAM_STR);
+		$stmt->bindParam(":saldo",$datos["saldo"],PDO::PARAM_STR);
+		$stmt->bindParam(":id",$datos["id"],PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		}
+
+		$stmt=null;
+		
+	}
+	/* 
+	* Método para Mostrar los detalles de orden de corte
+	*/
+	static public function mdlMostraDetalleOrdenCorte($tabla,$item,$valor){
+
+		$sql="SELECT * FROM $tabla WHERE $item=:$item  ORDER BY id ASC";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":".$item,$valor,PDO::PARAM_INT);
+
+		$stmt->execute();
+
+		return $stmt->fetch();
+
+		$stmt=null;
+
+	}
 }

@@ -49,7 +49,19 @@ class AjaxOrdenCorte{
         echo json_encode($respuestaDetalle);
 }	    
 
+    /* 
+	* VISUALIZAR DETALLE DE LA ORDEN DE CORTE
+    */
+    public $idDetalle;
+	public function ajaxMostrarOrdenCorteDetalle(){
 
+        $item = "id";
+        $valor = $this->idDetalle;
+
+        $respuesta = ControladorOrdenCorte::ctrMostrarDetalleOrdenCorte($item, $valor);
+
+        echo json_encode($respuesta);
+}	  
 }
 
 /* 
@@ -82,5 +94,16 @@ if(isset($_POST["codigoDOC"])){
     $visualizarOrdenCorteDetalle = new AjaxOrdenCorte();
     $visualizarOrdenCorteDetalle -> codigoDOC = $_POST["codigoDOC"];
     $visualizarOrdenCorteDetalle -> ajaxVisualizarOrdenCorteDetalle();
+
+}
+
+/* 
+ * VISUALIZAR DETALLE DE LA ORDEN DE CORTE
+*/
+if(isset($_POST["idDetalle"])){
+
+    $mostrarOrdenCorteDetalle = new AjaxOrdenCorte();
+    $mostrarOrdenCorteDetalle -> idDetalle = $_POST["idDetalle"];
+    $mostrarOrdenCorteDetalle -> ajaxMostrarOrdenCorteDetalle();
 
 }
