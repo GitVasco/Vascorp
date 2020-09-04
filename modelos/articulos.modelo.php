@@ -433,5 +433,26 @@ class ModeloArticulos
 
 	}	
 
+	/* 
+	* MOSTRAR ARTICULOS - SIMPLE
+	*/
+	static public function mdlMostrarArticulosSimple(){
+
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+															a.articulo,
+															CONCAT(a.articulo,' - ',a.nombre,' - ',a.color,' - ',a.talla) AS packing 
+														FROM
+															articulojf a");
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+
+		$stmt->close();
+
+		$stmt = null;
+	}	
+
 	
 }

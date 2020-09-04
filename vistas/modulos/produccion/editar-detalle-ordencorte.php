@@ -168,9 +168,9 @@ MODAL AGREGAR PARA
                 <select  class="form-control selectpicker input-lg" name="articulo"  data-live-search="true" required>
                     <option value="">Seleccionar Articulo</option>
                     <?php
-                        $articulo=ControladorArticulos::ctrMostrarArticulos(null);
+                        $articulo=ControladorArticulos::ctrMostrarArticulosSimple();
                         foreach ($articulo as $key => $value) {
-                            echo '<option value="'.$value["articulo"].'">' . $value["articulo"] ."-". $value["nombre"] ."-". $value["color"] ."-". $value["talla"] .'</option>';
+                            echo '<option value="'.$value["articulo"].'">' . $value["packing"] .'</option>';
                         }
                     ?>
                 </select>
