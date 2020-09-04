@@ -44,6 +44,9 @@
           
                   </a>
                   <div class=" pull-right ">
+                  <button class="btn btn-outline-success btnReporteMateriaP" style="border:green 1px solid">
+                    <img src="vistas/img/plantilla/excel.png" width="20px"> Detalle Tarjetas - General
+                  </button>
                   <button class="btn btn-outline-success btnReporteTarjeta" style="border:green 1px solid">
                     <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Tarjetas - General
                   </button>

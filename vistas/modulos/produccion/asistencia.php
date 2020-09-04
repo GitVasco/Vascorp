@@ -45,7 +45,8 @@
           
         }
           ?>
-
+      <button type="button" class="btn btn-success pull-left" data-toggle='modal' data-target='#modalAgregarTiempo'><i class="fa fa-plus-circle"></i> Aumentar tiempo</button>
+      <button type="button" class="btn btn-danger col-md-offset-1" data-toggle='modal' data-target='#modalQuitarTiempo'><i class="fa fa-minus-circle"></i> Restar tiempo</button>
       <button type="button" class="btn btn-default pull-right" id="daterange-btnes">
 
           <span>
@@ -554,6 +555,163 @@ MODAL EDITAR HORAS EXTRAS
 
         $editarExtra = new ControladorAsistencias();
         $editarExtra -> ctrEditarExtra();
+
+      ?>   
+
+
+    </div>
+
+  </div>
+
+</div>
+
+<!--=====================================
+MODAL AGREGAR TIEMPO
+======================================-->
+
+<div id="modalAgregarTiempo" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form role="form" method="post">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">AGREGAR TIEMPO</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+           
+            <div class="form-group col-lg-12 ">
+              <label ><strong>Minutos</strong></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span> 
+
+                <input type="number" class="form-control input-lg " name="agregarMinutos" id="agregarMinutos" step="any" min="0"  required>
+                
+                
+              </div>
+
+            </div>
+                      
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Agregar tiempo</button>
+
+        </div>
+
+      </form>
+
+      <?php
+
+        $agregarAsistencia = new ControladorAsistencias();
+        $agregarAsistencia -> ctrAgregarTiempo();
+
+      ?>   
+
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!--=====================================
+MODAL QUITAR TIEMPO
+======================================-->
+
+<div id="modalQuitarTiempo" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form role="form" method="post">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">RESTAR TIEMPO</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+           
+            <div class="form-group col-lg-12 ">
+              <label ><strong>Minutos</strong></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span> 
+
+                <input type="number" class="form-control input-lg " name="quitarMinutos" id="quitarMinutos" step="any" min="0"  required>
+                
+                
+              </div>
+
+            </div>
+                      
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Restar tiempo</button>
+
+        </div>
+
+      </form>
+
+      <?php
+
+        $restarAsistencia = new ControladorAsistencias();
+        $restarAsistencia -> ctrQuitarTiempo();
 
       ?>   
 

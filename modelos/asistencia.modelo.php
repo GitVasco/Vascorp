@@ -296,6 +296,58 @@ class ModeloAsistencias{
 		}
 
 	}	
+
+		/*=============================================
+	AGREGAR TIEMPO
+	=============================================*/
+
+	static public function mdlAgregarTiempo($tabla, $datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET minutos = minutos + :minutos WHERE DATE(fecha) = :fecha");
+
+		$stmt -> bindParam(":minutos", $datos["minutos"], PDO::PARAM_INT);
+		$stmt -> bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+
+			/*=============================================
+	QUITAR TIEMPO
+	=============================================*/
+
+	static public function mdlQuitarTiempo($tabla, $datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET minutos = minutos - :minutos WHERE DATE(fecha) = :fecha");
+
+		$stmt -> bindParam(":minutos", $datos["minutos"], PDO::PARAM_INT);
+		$stmt -> bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	}
     
 }
     
