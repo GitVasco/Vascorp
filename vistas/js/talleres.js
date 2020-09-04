@@ -345,3 +345,11 @@ $("#daterange-btnTaller").daterangepicker(
       cargarTablaTalleres(fechaInicial, fechaFinal);
     }
   });
+
+
+  
+//Reporte de tALLERES
+$(".box").on("click", ".btnReporteTalleres", function () {
+    window.location = "vistas/reportes_excel/rpt_talleres.php";
+  
+})
