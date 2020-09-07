@@ -319,7 +319,7 @@ $(".formularioOrdenCorte").on("change", "input.nuevaCantidadArticuloOC", functio
 
     var nuevoOrdCorte = Number($(this).attr("ord_corte")) + Number($(this).val());
     var articulo = $(this).attr("articulo");
-    console.log(articulo);
+    //console.log(articulo);
     var articuloM = articulo+'M';
     //console.log(articuloM);
 
@@ -912,11 +912,12 @@ $(".tablas tbody").on("click","button.btnEditarDetalleCorte",function(){
 		processData:false,
 		dataType: "json",
 		success:function(respuesta){
-            console.log(respuesta);
+            //console.log(respuesta);
             $("#idDetalle").val(respuesta["id"]);
             $("#editarCodigo").val(respuesta["ordencorte"]);
 			$("#editarArticulo").val(respuesta["articulo"]);
-			$("#editarCantidad").val(respuesta["cantidad"]);
+            $("#editarCantidad").val(respuesta["cantidad"]);
+            $("#cantOri").val(respuesta["cantidad"]);
 		}
 	});
 	
@@ -944,3 +945,21 @@ $(".tablas tbody").on("click","button.btnEliminarDetalleCorte",function(){
 	
 	
 });
+
+/* 
+* CAMBIOS DE CANTIDAD SI SUMA O RESTA
+*/
+$("#editarCantidad").change(function(){
+
+	var cantidad = document.getElementById("editarCantidad").value;
+    //console.log("cantidad", cantidad);
+
+    var cantOri = document.getElementById("cantOri").value;
+    //console.log("cantOri", cantOri);
+    
+    cambio = Number(cantidad) - Number(cantOri);
+    //console.log(cambio);    
+    
+    $("#cambio").val(cambio);
+
+})

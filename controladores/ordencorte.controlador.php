@@ -466,17 +466,28 @@ class ControladorOrdenCorte{
     * CREAR ORDEN DE CORTE
     */
     static public function ctrCrearDetalleOrdenCorte(){
-        if(isset($_POST["nuevoCodigo"]) && isset($_POST["articulo"]) && isset($_POST["cantidad"])){
+        if( isset($_POST["nuevoCodigo"]) && 
+            isset($_POST["articulo"]) && 
+            isset($_POST["cantidad"])){
+
         $codigo=$_GET["codigo"];
         $datosD = array("ordencorte"=>$_POST["nuevoCodigo"],
-        "articulo"=>$_POST["articulo"],
-        "cantidad"=>$_POST["cantidad"],
-        "saldo"=>$_POST["cantidad"]);
+                        "articulo"=>$_POST["articulo"],
+                        "cantidad"=>$_POST["cantidad"],
+                        "saldo"=>$_POST["cantidad"]);
 
         $respuesta=ModeloOrdenCorte::mdlGuardarDetallesOrdenCorte("detalles_ordencortejf", $datosD);
 
-
             if($respuesta=="ok"){
+
+                $datos = array("codigo"=>$_GET["codigo"],
+                                "usuario"=>$_POST["idUsuario"],                                
+                                "lastUpdate"=>$_POST["fechaActual"]);
+                var_dump($datos);
+                ModeloOrdenCorte::mdlAgregarCantidadOC($datos);
+
+                ModeloArticulos::mdlSumOc($_POST["articulo"],$_POST["cantidad"]);
+
                 echo '<script>
                                 swal({
                                     type: "success",
@@ -513,16 +524,33 @@ class ControladorOrdenCorte{
     * CREAR ORDEN DE CORTE
     */
     static public function ctrEditarDetalleOrdenCorte(){
-        if(isset($_POST["idDetalle"]) && isset($_POST["editarArticulo"]) && isset($_POST["editarCantidad"])){
-        $codigo=$_GET["codigo"];
-        $datosD = array("id"=>$_POST["idDetalle"],
-        "cantidad"=>$_POST["editarCantidad"],
-        "saldo"=>$_POST["editarCantidad"]);
 
-        $respuesta=ModeloOrdenCorte::mdlEditarDetalleOrdenCorte("detalles_ordencortejf", $datosD);
+        if( isset($_POST["idDetalle"]) && 
+            isset($_POST["editarArticulo"]) && 
+            isset($_POST["editarCantidad"]) &&
+            isset($_POST["cambio"])){
+
+            $codigo=$_GET["codigo"];
+
+            $datosD = array("id"=>$_POST["idDetalle"],
+                            "cantidad"=>$_POST["editarCantidad"],
+                            "saldo"=>$_POST["editarCantidad"]);
+
+            $respuesta=ModeloOrdenCorte::mdlEditarDetalleOrdenCorte("detalles_ordencortejf", $datosD);
 
 
             if($respuesta=="ok"){
+
+                $datos = array("codigo"=>$_GET["codigo"],
+                                "usuario"=>$_POST["idUsuario"],
+                                "cambio"=>$_POST["cambio"],
+                                "lastUpdate"=>$_POST["fechaActual"]);
+                //var_dump($datos);
+                ModeloOrdenCorte::mdlEditarCantidadOC($datos);
+
+                ModeloArticulos::mdlActualizarOrdenCorte($_POST["editarArticulo"],$_POST["cambio"]);
+
+
                 echo '<script>
                                 swal({
                                     type: "success",

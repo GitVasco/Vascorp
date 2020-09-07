@@ -162,15 +162,23 @@ MODAL AGREGAR PARA
             <div class="form-group">
               
               <div class="input-group">
+              <?php
               
+                date_default_timezone_set('America/Lima');
+                $ahora=date('Y/m/d h:i:s');
+              
+              ?>
+
+                <input type="hidden" name="fechaActual" value="<?php echo $ahora; ?>">
+                <input type="hidden" name="idUsuario" value="<?php echo $_SESSION["id"]; ?>">
                 <span class="input-group-addon"><i class="fa fa-th"></i></span> 
 
                 <select  class="form-control selectpicker input-lg" name="articulo"  data-live-search="true" required>
                     <option value="">Seleccionar Articulo</option>
                     <?php
-                        $articulo=ControladorArticulos::ctrMostrarArticulos(null);
+                        $articulo=ControladorArticulos::ctrMostrarArticulosSimple();
                         foreach ($articulo as $key => $value) {
-                            echo '<option value="'.$value["articulo"].'">' . $value["articulo"] ."-". $value["nombre"] ."-". $value["color"] ."-". $value["talla"] .'</option>';
+                            echo '<option value="'.$value["articulo"].'">' . $value["packing"] .'</option>';
                         }
                     ?>
                 </select>
@@ -269,8 +277,27 @@ MODAL EDITAR PARA
 
                 <input type="text" class="form-control  input-lg" name="editarArticulo" id="editarArticulo" readonly>
 
+                <?php
+                date_default_timezone_set('America/Lima');
+                $ahora=date('Y/m/d h:i:s');
+              
+                ?>
+                 <input type="hidden" name="fechaActual" value="<?php echo $ahora; ?>">
+                 <input type="hidden" name="idUsuario" value="<?php echo $_SESSION["id"]; ?>">
                  <input type="hidden"  name="idDetalle" id="idDetalle" required>
                  <input type="hidden" name="editarCodigo" id="editarCodigo" value="<?php echo $_GET["codigo"]?>">
+                 <?php
+                 
+                  $item = "codigo";
+                  $valor = $_GET["codigo"];
+
+                  $ordencorte = ControladorOrdenCorte::ctrMostrarOrdenCorte($item, $valor);
+                  //var_dump($ordencorte);
+
+                  echo '<input type="hidden" name="totalOc" id="totalOc" value="'.$ordencorte["total"].'">';
+
+                 
+                 ?>
 
               </div>
 
@@ -284,7 +311,11 @@ MODAL EDITAR PARA
               
                 <span class="input-group-addon"><i class="fa fa-th"></i></span> 
 
-                <input type="text" class="form-control  input-lg" name="editarCantidad" id="editarCantidad" required>
+                <input type="number" class="form-control  input-lg" name="editarCantidad" id="editarCantidad" required>
+
+                <input type="hidden" class="form-control  input-lg" name="cantOri" id="cantOri" required>
+
+                <input type="hidden" class="form-control  input-lg" name="cambio" id="cambio" required>
 
 
               </div>

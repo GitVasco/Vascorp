@@ -22,13 +22,8 @@ include "../reportes_excel/Classes/PHPExcel.php";
 /* 
 * LLAMAMOS A LA CONEXION
 */
-<<<<<<< HEAD
-$conexion = mysql_connect("192.168.1.18", "admin", "joel123") or die("No se pudo conectar: " . mysql_error());
-mysql_select_db("vasco", $conexion);
-=======
-$conexion = mysql_connect("192.168.1.18", "admin", "joel123") or die("No se pudo conectar: " . mysql_error());
-mysql_select_db("vasco", $conexion);
->>>>>>> joel
+$conexion = mysql_connect("192.168.1.2", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
+mysql_select_db("new_vasco", $conexion);
 
 /* 
 * CONFIGURAMOS LA FECHA ACTUAL
