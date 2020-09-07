@@ -564,3 +564,9 @@ $(".box").on("click", ".btnReporteOG", function () {
 $(document).ready(function(){
 	
 })
+
+//Reporte de Salidas
+$(".box").on("click", ".btnReporteTO", function () {
+    window.location = "vistas/reportes_excel/rpt_operacionesdetalle.php";
+  
+})
