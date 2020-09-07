@@ -584,11 +584,18 @@ class ControladorOrdenCorte{
     }
     static public function ctrEliminarDetalleOrdenCorte(){
         if(isset($_GET["idDetalle"])){
-        $item="id";
+
+        $item="articulo";
         $valor = $_GET["idDetalle"];
         $codigo =$_GET["codigo"];
+
         $respuesta=ModeloOrdenCorte::mdlEliminarDato("detalles_ordencortejf",$item,$valor);
+
         if($respuesta=="ok"){
+
+            ModeloArticulos::mdlSumOc($_GET["idDetalle"], $_GET["cantidad"]);
+            var_dump($_GET["idDetalle"], $_GET["cantidad"]);
+
             echo '<script>
                             swal({
                                 type: "success",

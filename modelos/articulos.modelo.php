@@ -436,7 +436,7 @@ class ModeloArticulos
 	/* 
 	* MOSTRAR ARTICULOS - SIMPLE
 	*/
-	static public function mdlMostrarArticulosSimple(){
+	static public function mdlMostrarArticulosSimple($orden){
 
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
@@ -452,10 +452,17 @@ class ModeloArticulos
 			) AS packing 
 		  FROM
 			articulojf a 
-			LEFT JOIN detalles_ordencortejf doc 
+			LEFT JOIN 
+			  (SELECT 
+				* 
+			  FROM
+				detalles_ordencortejf 
+			  WHERE ordencorte = :orden) AS doc 
 			  ON a.articulo = doc.articulo 
 		  WHERE doc.articulo IS NULL 
-			AND a.estado = 'activo'");
+		  ORDER BY a.articulo ");
+
+			$stmt->bindParam(":orden", $orden, PDO::PARAM_STR);
 
 			$stmt->execute();
 

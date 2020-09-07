@@ -85,7 +85,7 @@
                                     
                                   <button type="button" class="btn btn-warning btnEditarDetalleCorte" data-toggle="modal" data-target="#modalEditarDetalleCorte" idDetalle="'.$value["id"].'"><i class="fa fa-pencil"></i></button>
           
-                                  <button  type="button" class="btn btn-danger btnEliminarDetalleCorte" codigo= "'.$_GET["codigo"].'"idDetalle="'.$value["id"].'"><i class="fa fa-times"></i></button>
+                                  <button  type="button" class="btn btn-danger btnEliminarDetalleCorte" codigo= "'.$_GET["codigo"].'" idDetalle="'.$value["articulo"].'" cantidad="'.$value["cantidad"].'"><i class="fa fa-times"></i></button>
           
                                 </div>  
           
@@ -176,7 +176,8 @@ MODAL AGREGAR PARA
                 <select  class="form-control selectpicker input-lg" name="articulo"  data-live-search="true" required>
                     <option value="">Seleccionar Articulo</option>
                     <?php
-                        $articulo=ControladorArticulos::ctrMostrarArticulosSimple();
+                        $orden = $_GET["codigo"];
+                        $articulo=ControladorArticulos::ctrMostrarArticulosSimple($orden);
                         foreach ($articulo as $key => $value) {
                             echo '<option value="'.$value["articulo"].'">' . $value["packing"] .'</option>';
                         }
