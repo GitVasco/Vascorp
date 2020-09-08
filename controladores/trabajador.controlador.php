@@ -253,7 +253,7 @@ class ControladorTrabajador{
 					  }).then(function(result){
 								if (result.value) {
 
-								window.location = "en-tallert";
+								window.location = "marcar-taller";
 
 								}
 							})

@@ -219,9 +219,9 @@ class ModeloTalleres{
     /* 
     *ACTUALIZAR EN PROCESO
     */
-	static public function mdlProceso($fecha, $codigo){
+	static public function mdlProceso($fecha, $codigo, $trabajador){
 
-		$sql="UPDATE entallerjf SET fecha_proceso='$fecha', estado='2' WHERE codigo=$codigo";
+		$sql="UPDATE entallerjf SET fecha_proceso='$fecha', estado='2', trabajador= '$trabajador'  WHERE codigo=$codigo";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 
@@ -242,9 +242,9 @@ class ModeloTalleres{
     /* 
     *ACTUALIZAR TERMINADO
     */
-	static public function mdlTerminado($fecha, $codigo){
+	static public function mdlTerminado($fecha, $codigo, $trabajador){
 
-		$sql="UPDATE entallerjf SET fecha_terminado='$fecha', estado='3' WHERE codigo=$codigo";
+		$sql="UPDATE entallerjf SET fecha_terminado='$fecha', estado='3', trabajador= '$trabajador' WHERE codigo=$codigo";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 
