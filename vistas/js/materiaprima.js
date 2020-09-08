@@ -339,3 +339,10 @@ $(".box").on("click", ".btnReporteProyeccion", function () {
     window.location = "vistas/reportes_excel/rpt_proyeccion_mp.php?corte="+corte;
   
 })
+
+//Reporte de Marca
+$(".box").on("click", ".btnReporteMateria", function () {
+    window.location = "vistas/reportes_excel/rpt_materiaprima.php";
+  
+})
+

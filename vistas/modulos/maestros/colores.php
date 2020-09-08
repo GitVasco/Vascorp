@@ -30,8 +30,12 @@
 
         </button>
 
+        <div class="pull-right">
+          <button class="btn btn-outline-success btnReporteColor" style="border:green 1px solid">
+          <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Colores  </button>
+        </div>
       </div>
-
+        
       <div class="box-body">
         
        <table class="table table-bordered table-striped dt-responsive tablas">

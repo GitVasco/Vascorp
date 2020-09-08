@@ -25,7 +25,12 @@
       <div class="box-header with-border">
 
       </div>
-
+      <div class="box-header">
+        <div class="pull-right">
+          <button class="btn btn-outline-success btnReporteArt" style="border:green 1px solid">
+          <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Articulos  </button>
+        </div>
+      </div>
       <div class="box-body">
 
         <input type="hidden" value="<?= $_SESSION["perfil"]; ?>" id="perfilOculto">
