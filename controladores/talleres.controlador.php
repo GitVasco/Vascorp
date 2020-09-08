@@ -226,6 +226,20 @@ class ControladorTalleres{
 
 		return $respuesta;
 		
+    }
+    
+    /*=============================================
+	RANGO FECHAS TERMINADOS
+	=============================================*/	
+
+	static public function ctrRangoFechasTalleresTerminados($fechaInicial, $fechaFinal){
+
+		$tabla = "entallerjf";
+
+		$respuesta = ModeloTalleres::mdlRangoFechasTalleresTerminados($tabla, $fechaInicial, $fechaFinal);
+
+		return $respuesta;
+		
 	}
 
 }

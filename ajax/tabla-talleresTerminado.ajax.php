@@ -12,7 +12,7 @@ class TablaTalleresT{
 
         $valor = null;
 
-        $talleres = ControladorTalleres::ctrMostrarTalleresTerminado($valor);
+        $talleres = ControladorTalleres::ctrRangoFechasTalleresTerminados($_GET["fechaInicial"],$_GET["fechaFinal"]);
         if(count($talleres)>0){
 
         #var_dump("almacencorte", $talleres);
@@ -49,8 +49,10 @@ class TablaTalleresT{
                 "'.$talleres[$i]["nom_operacion"].'",
                 "'.$talleres[$i]["trabajador"].'",
                 "'.$talleres[$i]["cantidad"].'",
-                "'.$talleres[$i]["fecha"].'",
-                "'.$estado.'"
+                "'.$talleres[$i]["fecha_proceso"].'",
+                "'.$talleres[$i]["fecha_terminado"].'",
+                "'.$estado.'",
+                "'.$talleres[$i]["tiempo_real"]." min.".'"
                 ],';
                 }
 

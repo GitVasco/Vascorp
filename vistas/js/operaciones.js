@@ -570,3 +570,9 @@ $(".box").on("click", ".btnReporteTO", function () {
     window.location = "vistas/reportes_excel/rpt_operacionesdetalle.php";
   
 })
+
+//Reporte de Operaciones
+$(".box").on("click", ".btnReporteOPE", function () {
+    window.location = "vistas/reportes_excel/rpt_operaciones.php";
+  
+})

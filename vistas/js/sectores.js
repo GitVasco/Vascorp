@@ -58,3 +58,8 @@ $(".tablas").on("click", ".btnEliminarSector", function(){
   })
 
 })
+//Reporte de Sectores
+$(".box").on("click", ".btnReporteSector", function () {
+    window.location = "vistas/reportes_excel/rpt_sectores.php";
+  
+})

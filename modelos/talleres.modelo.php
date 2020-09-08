@@ -548,6 +548,220 @@ class ModeloTalleres{
 
 		}
 
+  }	
+  
+  /*=============================================
+	RANGO FECHAS TERMINADOS
+	=============================================*/	
+
+	static public function mdlRangoFechasTalleresTerminados($tabla, $fechaInicial, $fechaFinal){
+
+		if($fechaInicial == "null"){
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+      et.id,
+      et.sector,
+      CONCAT(et.sector, '-', s.nom_sector) AS nom_sector,
+      et.articulo,
+      a.modelo,
+      a.nombre,
+      a.color,
+      a.talla,
+      et.cod_operacion,
+      o.nombre AS nom_operacion,
+      et.trabajador AS cod_trabajador,
+      et.fecha_proceso,
+      et.fecha_terminado,
+      CONCAT(
+        t.nom_tra,
+        ' ',
+        t.ape_pat_tra,
+        ' ',
+        t.ape_mat_tra
+      ) AS trabajador,
+      et.cantidad,
+      DATE(et.fecha) AS fecha,
+      et.estado,
+      et.codigo,
+      TIMESTAMPDIFF(
+    MINUTE,
+    et.fecha_proceso,
+    et.fecha_terminado
+  )  AS tiempo_real 
+    FROM
+      entallerjf et 
+      LEFT JOIN trabajadorjf t 
+        ON et.trabajador = t.cod_tra 
+      LEFT JOIN articulojf a 
+        ON et.articulo = a.articulo 
+      LEFT JOIN operacionesjf o 
+        ON et.cod_operacion = o.codigo 
+      LEFT JOIN sectorjf s 
+        ON et.sector = s.cod_sector 
+    WHERE et.estado = '3' ORDER BY et.id ASC");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();	
+
+
+		}else if($fechaInicial == $fechaFinal){
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+      et.id,
+      et.sector,
+      CONCAT(et.sector, '-', s.nom_sector) AS nom_sector,
+      et.articulo,
+      a.modelo,
+      a.nombre,
+      a.color,
+      a.talla,
+      et.cod_operacion,
+      o.nombre AS nom_operacion,
+      et.trabajador AS cod_trabajador,
+      et.fecha_proceso,
+      et.fecha_terminado,
+      CONCAT(
+        t.nom_tra,
+        ' ',
+        t.ape_pat_tra,
+        ' ',
+        t.ape_mat_tra
+      ) AS trabajador,
+      et.cantidad,
+      DATE(et.fecha) AS fecha,
+      et.estado,
+      et.codigo,
+      TIMESTAMPDIFF(
+    MINUTE,
+    et.fecha_proceso,
+    et.fecha_terminado
+  ) AS tiempo_real 
+    FROM
+      entallerjf et 
+      LEFT JOIN trabajadorjf t 
+        ON et.trabajador = t.cod_tra 
+      LEFT JOIN articulojf a 
+        ON et.articulo = a.articulo 
+      LEFT JOIN operacionesjf o 
+        ON et.cod_operacion = o.codigo 
+      LEFT JOIN sectorjf s 
+        ON et.sector = s.cod_sector 
+    WHERE et.estado = '3' AND  DATE(et.fecha) like '%$fechaFinal%'");
+
+			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}else{
+
+			$fechaActual = new DateTime();
+			$fechaActual ->add(new DateInterval("P1D"));
+			$fechaActualMasUno = $fechaActual->format("Y-m-d");
+
+			$fechaFinal2 = new DateTime($fechaFinal);
+			$fechaFinal2 ->add(new DateInterval("P1D"));
+			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+
+			if($fechaFinalMasUno == $fechaActualMasUno){
+
+				$stmt = Conexion::conectar()->prepare("SELECT 
+        et.id,
+        et.sector,
+        CONCAT(et.sector, '-', s.nom_sector) AS nom_sector,
+        et.articulo,
+        a.modelo,
+        a.nombre,
+        a.color,
+        a.talla,
+        et.cod_operacion,
+        o.nombre AS nom_operacion,
+        et.trabajador AS cod_trabajador,
+        et.fecha_proceso,
+        et.fecha_terminado,
+        CONCAT(
+          t.nom_tra,
+          ' ',
+          t.ape_pat_tra,
+          ' ',
+          t.ape_mat_tra
+        ) AS trabajador,
+        et.cantidad,
+        DATE(et.fecha) AS fecha,
+        et.estado,
+        et.codigo,
+      TIMESTAMPDIFF(
+    MINUTE,
+    et.fecha_proceso,
+    et.fecha_terminado
+  )  AS tiempo_real 
+      FROM
+        entallerjf et 
+        LEFT JOIN trabajadorjf t 
+          ON et.trabajador = t.cod_tra 
+        LEFT JOIN articulojf a 
+          ON et.articulo = a.articulo 
+        LEFT JOIN operacionesjf o 
+          ON et.cod_operacion = o.codigo 
+        LEFT JOIN sectorjf s 
+          ON et.sector = s.cod_sector 
+      WHERE et.estado = '3' AND DATE(et.fecha) BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'");
+
+			}else{
+
+
+				$stmt = Conexion::conectar()->prepare("SELECT 
+        et.id,
+        et.sector,
+        CONCAT(et.sector, '-', s.nom_sector) AS nom_sector,
+        et.articulo,
+        a.modelo,
+        a.nombre,
+        a.color,
+        a.talla,
+        et.cod_operacion,
+        o.nombre AS nom_operacion,
+        et.trabajador AS cod_trabajador,
+        et.fecha_proceso,
+        et.fecha_terminado,
+        CONCAT(
+          t.nom_tra,
+          ' ',
+          t.ape_pat_tra,
+          ' ',
+          t.ape_mat_tra
+        ) AS trabajador,
+        et.cantidad,
+        DATE(et.fecha) AS fecha,
+        et.estado,
+        et.codigo,
+      TIMESTAMPDIFF(
+    MINUTE,
+    et.fecha_proceso,
+    et.fecha_terminado
+  )  AS tiempo_real 
+      FROM
+        entallerjf et 
+        LEFT JOIN trabajadorjf t 
+          ON et.trabajador = t.cod_tra 
+        LEFT JOIN articulojf a 
+          ON et.articulo = a.articulo 
+        LEFT JOIN operacionesjf o 
+          ON et.cod_operacion = o.codigo 
+        LEFT JOIN sectorjf s 
+          ON et.sector = s.cod_sector 
+      WHERE et.estado = '3' AND DATE(et.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'");
+
+			}
+		
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
 	}	
     
 }
