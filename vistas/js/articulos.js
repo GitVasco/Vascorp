@@ -328,3 +328,8 @@ $(".tablaArticulos tbody").on("click", "button.btnEliminarArticulo", function(){
 
 
 })
+//Reporte de Articulos
+$(".box").on("click", ".btnReporteArt", function () {
+    window.location = "vistas/reportes_excel/rpt_articulo.php";
+  
+})

@@ -97,3 +97,8 @@ $(document).on("click",".btnActivarMarca",function(){
 		$(this).html("Activo");
 		$(this).attr("estadoMarca","0");}
 });
+//Reporte de Marca
+$(".box").on("click", ".btnReporteMarca", function () {
+    window.location = "vistas/reportes_excel/rpt_marca.php";
+  
+})

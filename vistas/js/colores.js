@@ -58,3 +58,8 @@ $(".tablas").on("click", ".btnEliminarColor", function(){
   })
 
 })
+//Reporte de Colores
+$(".box").on("click", ".btnReporteColor", function () {
+    window.location = "vistas/reportes_excel/rpt_color.php";
+  
+})

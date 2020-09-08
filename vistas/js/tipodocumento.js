@@ -54,3 +54,9 @@ $(".tablas").on("click", ".btnEliminarTipoDocumento", function () {
     })
 
 })
+
+//Reporte de Documento
+$(".box").on("click", ".btnReporteDoc", function () {
+    window.location = "vistas/reportes_excel/rpt_documento.php";
+  
+})
