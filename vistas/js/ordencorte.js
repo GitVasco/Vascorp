@@ -928,6 +928,11 @@ $(".tablas tbody").on("click","button.btnEditarDetalleCorte",function(){
 $(".tablas tbody").on("click","button.btnEliminarDetalleCorte",function(){
     var idDetalle =$(this).attr("idDetalle");
     var codigo =$(this).attr("codigo");
+    var cantidad = $(this).attr("cantidad");
+
+    var ncant = Number(cantidad) *-1;
+    console.log(ncant);
+
 	swal({
 		title: "¿Está seguro de borrar la orden de corte?",
 		text: "¡Si no lo está se puede cancelar la acción!",
@@ -939,7 +944,7 @@ $(".tablas tbody").on("click","button.btnEliminarDetalleCorte",function(){
 		confirmButtonText: "Si, borrar orden de corte!" 
 	}).then((result)=>{
 		if(result.value){
-            window.location = "index.php?ruta=editar-detalle-ordencorte&codigo="+codigo+"&idDetalle="+idDetalle;
+            window.location = "index.php?ruta=editar-detalle-ordencorte&codigo="+codigo+"&idDetalle="+idDetalle+"&cantidad="+ncant;
 		}
 	})
 	

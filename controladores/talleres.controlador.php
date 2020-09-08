@@ -66,14 +66,15 @@ class ControladorTalleres{
                 //var_dump($fecha);
 
                 $codigo = $_POST["codigoBarra"];
+                $trabajador = $_POST["cod_tra"];
 
-                $respuesta = ModeloTalleres::mdlProceso($fecha,$codigo);
+                $respuesta = ModeloTalleres::mdlProceso($fecha,$codigo,$trabajador);
 
                 if($respuesta == "ok"){
 
                     echo'<script>
 
-                                        window.location = "marcar-taller";
+                            window.location = "marcar-taller";
 
                         </script>';
 
@@ -88,14 +89,15 @@ class ControladorTalleres{
                 //var_dump($fecha);
 
                 $codigo = $_POST["codigoBarra"];
+                $trabajador = $_POST["cod_tra"];
 
-                $respuesta = ModeloTalleres::mdlTerminado($fecha,$codigo);
+                $respuesta = ModeloTalleres::mdlTerminado($fecha,$codigo,$trabajador);
 
                 if($respuesta == "ok"){
 
                     echo'<script>
 
-                                        window.location = "marcar-taller";
+                            window.location = "marcar-taller";
 
                         </script>';
 

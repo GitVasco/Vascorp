@@ -171,7 +171,7 @@
 </div>
 
 <!--=====================================
-MODAL CONFIGURAR % DE URGENCIAS
+MODAL CONFIGURAR Trabajador
 ======================================-->
 
 <div id="fsdfsfsd" class="modal fade" role="dialog">

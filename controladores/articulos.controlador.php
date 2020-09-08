@@ -1099,9 +1099,9 @@ class controladorArticulos{
 	/* 
 	* MOSTRAR ARTICULOS - para el select de editar ORDEN DE CORTE
 	*/
-	static public function ctrMostrarArticulosSimple(){
+	static public function ctrMostrarArticulosSimple($orden){
 
-		$respuesta = ModeloArticulos::mdlMostrarArticulosSimple();
+		$respuesta = ModeloArticulos::mdlMostrarArticulosSimple($orden);
 
 		return $respuesta;
 
