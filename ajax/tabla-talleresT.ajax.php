@@ -35,7 +35,8 @@ class TablaTalleresT{
     
                 $estado = "<span style='font-size:85%' class='label label-success'>Terminado</span>";
     
-            }             
+            }       
+              
 
             $datosJson .= '[
             "'.$talleres[$i]["codigo"].'",

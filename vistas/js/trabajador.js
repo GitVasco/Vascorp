@@ -183,3 +183,8 @@ $(".tablaTrabajador").on("click",".btnActivarTrabajador",function(){
 		$(this).html("Activo");
 		$(this).attr("estadoTrabajador","Inactivo");}
 });
+//Reporte de Trabajador
+$(".box").on("click", ".btnReporteTra", function () {
+    window.location = "vistas/reportes_excel/rpt_trabajador.php";
+  
+})

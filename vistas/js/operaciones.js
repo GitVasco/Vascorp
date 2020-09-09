@@ -185,7 +185,8 @@ $(".tablaArticuloOperaciones tbody").on("click", "button.agregarOperacion", func
   
 				'<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarOperacion" idOperacion="' + idOperacion + '"><i class="fa fa-times"></i></button></span>' +
   
-				'<input type="text" class="form-control nuevaDescripcionOperacion" idOperacion="' + idOperacion + '" name="agregarOperacion" value="' + nombre + '"  codigoOP= "'+codigo+'"readonly required>' +
+				'<input type="text" class="form-control nuevaDescripcionOperacion2"  name="agregarOperacion" value="'+ codigo +"-"+ nombre + '"  readonly required>' +
+				'<input type="hidden" class="form-control nuevaDescripcionOperacion" value="'+nombre+'" idOperacion="' + idOperacion + '" codigoOP= "'+codigo+'">'+
   
 			  "</div>" +
   
@@ -568,5 +569,11 @@ $(document).ready(function(){
 //Reporte de Salidas
 $(".box").on("click", ".btnReporteTO", function () {
     window.location = "vistas/reportes_excel/rpt_operacionesdetalle.php";
+  
+})
+
+//Reporte de Operaciones
+$(".box").on("click", ".btnReporteOPE", function () {
+    window.location = "vistas/reportes_excel/rpt_operaciones.php";
   
 })

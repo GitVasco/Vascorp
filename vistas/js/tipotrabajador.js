@@ -77,3 +77,8 @@ $(".tablaTipoTrabajador tbody").on("click","button.btnEditarTipoTrabajador",func
 	});
 	
 });
+//Reporte de Tipo Trabajador
+$(".box").on("click", ".btnReporteTipoTra", function () {
+    window.location = "vistas/reportes_excel/rpt_tipo_trabajador.php";
+  
+})

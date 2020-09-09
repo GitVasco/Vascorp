@@ -33,6 +33,7 @@
                   <?php
 
                   $mes = ControladorTalleres::ctrMes();
+                  //var_dump($mes);
 
                   foreach ($mes as $key => $value) {
                   
