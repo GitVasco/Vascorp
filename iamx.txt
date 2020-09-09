@@ -1,1 +1,83 @@
 Hola soy Joel ya tengo la ultima version
+
+         <tr>
+
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>S</th>
+            <th>M</th>
+            <th>L</th>
+            <th>XL</th>
+            <th>XXL</th>
+            <th>XS</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+
+         </tr> 
+
+         <tr>
+
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>S</th>
+            <th>M</th>
+            <th>L</th>
+            <th>XL</th>
+            <th>XXL</th>
+            <th>XS</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            
+         </tr> 
+
+         <tr>
+
+            <th>Mes</th>
+            <th>Fecha</th>
+            <th>Cod. Trab.</th>
+            <th>Tipo Trab.</th>
+            <th>Trabajador</th>
+            <th>Cod. Ope.</th>
+            <th>Operación</th>
+            <th>Cod. Col.</th>
+            <th>Color</th>
+            <th>S</th>
+            <th>M</th>
+            <th>L</th>
+            <th>XL</th>
+            <th>XXL</th>
+            <th>XS</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            
+         </tr>  

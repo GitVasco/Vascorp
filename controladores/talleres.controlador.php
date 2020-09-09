@@ -226,6 +226,41 @@ class ControladorTalleres{
 
 		return $respuesta;
 		
-	}
+    }
+
+    /* 
+    * MOSTRAR LOS MOVIMIENTOS DE VENTAS POR MODELO
+    */
+    static public function ctrMes(){
+
+        $respuesta = ModeloTalleres::mdlMes();
+
+        return $respuesta;
+
+    }    
+    
+    /*
+    * MOSTRAR PRODUCCION DE TRUSAS
+    */
+    static public function ctrMostrarProduccionTrusas($mes){
+
+        $respuesta = ModeloTalleres::mdlMostrarProduccionTrusas($mes);
+
+        return $respuesta;
+
+    }
+
+    /*
+    * MOSTRAR PRODUCCION DE BRASIER
+    */
+    static public function ctrMostrarProduccionBrasier($mes){
+
+        $respuesta = ModeloTalleres::mdlMostrarProduccionBrasier($mes);
+
+        return $respuesta;
+
+    }    
+    
+
 
 }

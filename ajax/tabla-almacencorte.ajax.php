@@ -29,7 +29,7 @@ class TablaAlmacenCorte{
             /* 
             todo: orden de corte
             */
-             $codigo = "<b>Corte N° - ".$almacencorte[$i]["codigo"]."</b>"; 
+             $codigo = "<b>".$almacencorte[$i]["codigo"]."</b>"; 
 
             /* 
             todo: estado de orden de corte

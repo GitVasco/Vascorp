@@ -353,3 +353,156 @@ $(".box").on("click", ".btnReporteTalleres", function () {
     window.location = "vistas/reportes_excel/rpt_talleres.php";
   
 })
+
+/* 
+! PRODUCCION DE TRUSAS
+*/
+/* 
+* BOTON ACEPTAR
+*/
+$(".box").on("click", ".btnCargarTrusas", function () {
+
+	$(".tablaProduccionTrusas").DataTable().destroy();
+
+	var mesT = document.getElementById("mesT").value;
+	//console.log(mesT);
+	//$(".btnReporteSalida").attr("linea",mesT);
+	localStorage.setItem("mesT", mesT);
+
+	cargarTablaProduccionTrusas(localStorage.getItem("mesT"));
+	
+})
+
+/* 
+* VEMOS SI LOCAL STORAGE TRAE ALGO
+*/
+if (localStorage.getItem("mesT") != null) {
+
+	cargarTablaProduccionTrusas(localStorage.getItem("mesT"));
+	console.log("lleno");
+	
+}else{
+
+	cargarTablaProduccionTrusas(null);
+	console.log("vacio");
+
+}
+
+
+/* 
+* TABLA PARA PRODUCCION TRUSAS
+*/
+function cargarTablaProduccionTrusas(mesT) {
+	$('.tablaProduccionTrusas').DataTable( {
+		"ajax": "ajax/tabla-producciontrusas.ajax.php?perfil="+$("#perfilOculto").val() + "&mesT=" + mesT,
+		"deferRender": true,
+		"retrieve": true,
+		"processing": true,
+		"order": [[1, "desc"]],
+		"pageLength": 20,
+		"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+		"language": {
+
+				"sProcessing":     "Procesando...",
+				"sLengthMenu":     "Mostrar _MENU_ registros",
+				"sZeroRecords":    "No se encontraron resultados",
+				"sEmptyTable":     "Ningún dato disponible en esta tabla",
+				"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+				"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0",
+				"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+				"sInfoPostFix":    "",
+				"sSearch":         "Buscar:",
+				"sUrl":            "",
+				"sInfoThousands":  ",",
+				"sLoadingRecords": "Cargando...",
+				"oPaginate": {
+				"sFirst":    "Primero",
+				"sLast":     "Último",
+				"sNext":     "Siguiente",
+				"sPrevious": "Anterior"
+				},
+				"oAria": {
+					"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+				}
+
+		}    
+	} );
+}
+
+
+/* 
+! PRODUCCION DE BRASIER
+*/
+/* 
+* BOTON ACEPTAR
+*/
+$(".box").on("click", ".btnCargarBrasier", function () {
+
+	$(".tablaProduccionBrasier").DataTable().destroy();
+
+	var mesB = document.getElementById("mesB").value;
+	//console.log(mesB);
+	//$(".btnReporteSalida").attr("linea",mesB);
+	localStorage.setItem("mesB", mesB);
+
+	cargarTablaProduccionBrasier(localStorage.getItem("mesB"));
+	
+})
+
+/* 
+* VEMOS SI LOCAL STORAGE TRAE ALGO
+*/
+if (localStorage.getItem("mesB") != null) {
+
+	cargarTablaProduccionBrasier(localStorage.getItem("mesB"));
+	console.log("lleno");
+	
+}else{
+
+	cargarTablaProduccionBrasier(null);
+	console.log("vacio");
+
+}
+
+
+/* 
+* TABLA PARA PRODUCCION Brasier
+*/
+function cargarTablaProduccionBrasier(mesB) {
+	$('.tablaProduccionBrasier').DataTable( {
+		"ajax": "ajax/tabla-produccionbrasier.ajax.php?perfil="+$("#perfilOculto").val() + "&mesB=" + mesB,
+		"deferRender": true,
+		"retrieve": true,
+		"processing": true,
+		"order": [[1, "desc"]],
+		"pageLength": 20,
+		"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+		"language": {
+
+				"sProcessing":     "Procesando...",
+				"sLengthMenu":     "Mostrar _MENU_ registros",
+				"sZeroRecords":    "No se encontraron resultados",
+				"sEmptyTable":     "Ningún dato disponible en esta tabla",
+				"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+				"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0",
+				"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+				"sInfoPostFix":    "",
+				"sSearch":         "Buscar:",
+				"sUrl":            "",
+				"sInfoThousands":  ",",
+				"sLoadingRecords": "Cargando...",
+				"oPaginate": {
+				"sFirst":    "Primero",
+				"sLast":     "Último",
+				"sNext":     "Siguiente",
+				"sPrevious": "Anterior"
+				},
+				"oAria": {
+					"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+				}
+
+		}    
+	} );
+}

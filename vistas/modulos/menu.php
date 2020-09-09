@@ -537,6 +537,22 @@
 
                             <li>
 
+                                <a href="produccion-trusas">
+                                <i class="fa fa-circle-o"></i> Producción Trusas
+                                </a>
+
+                            </li> 
+
+                            <li>
+
+                                <a href="produccion-brasier">
+                                <i class="fa fa-circle-o"></i> Producción Brasier
+                                </a>
+
+                            </li>                                                    
+
+                            <li>
+
                                 <a href="urgencias">
                                 <i class="fa fa-circle-o"></i> Urgencias APT
                                 </a>
