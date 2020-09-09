@@ -54,3 +54,8 @@ $(".tablas").on("click", ".btnEliminarPara", function () {
     })
 
 })
+//Reporte de Para
+$(".box").on("click", ".btnReporteParas", function () {
+    window.location = "vistas/reportes_excel/rpt_paras.php";
+  
+})

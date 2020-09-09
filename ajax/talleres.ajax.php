@@ -19,6 +19,16 @@ class AjaxTalleres{
     echo json_encode($respuesta);
 
     }
+    public $idTallerT;
+    public function ajaxVerTallerT(){
+
+      $valor = $this->idTallerT;
+  
+      $respuesta = ModeloTalleres::mdlVerTalleresTerminado($valor);
+  
+      echo json_encode($respuesta);
+  
+      }
 
 }
 /*=============================================
@@ -29,4 +39,14 @@ if(isset($_POST["idTaller"])){
 	$taller = new AjaxTalleres();
 	$taller -> idTaller = $_POST["idTaller"];
 	$taller -> ajaxEditarCantidad();
+}
+
+/*=============================================
+VER TALLER T
+=============================================*/	
+if(isset($_POST["idTallerT"])){
+
+	$verTallerT = new AjaxTalleres();
+	$verTallerT -> idTallerT = $_POST["idTallerT"];
+	$verTallerT -> ajaxVerTallerT();
 }

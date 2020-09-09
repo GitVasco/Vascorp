@@ -12,7 +12,7 @@ class TablaTalleresT{
 
         $valor = null;
 
-        $talleres = ControladorTalleres::ctrMostrarTalleresTerminado($valor);
+        $talleres = ControladorTalleres::ctrRangoFechasTalleresTerminados($_GET["fechaInicial"],$_GET["fechaFinal"]);
         if(count($talleres)>0){
 
         #var_dump("almacencorte", $talleres);
@@ -39,6 +39,7 @@ class TablaTalleresT{
                 $estado = "<span style='font-size:85%' class='label label-success'>Terminado</span>";
     
             } 
+            $botones="<div class='btn-group'><button class='btn btn-warning btnEditarTallerTerminado' idTallerT='".$talleres[$i]["id"]."' data-toggle='modal' data-target='#editarTallerT' ><i class='fa fa-pencil'></i></button></div>";    
 
                 $datosJson .= '[
                 "'.$talleres[$i]["id"].'",
@@ -49,8 +50,11 @@ class TablaTalleresT{
                 "'.$talleres[$i]["nom_operacion"].'",
                 "'.$talleres[$i]["trabajador"].'",
                 "'.$talleres[$i]["cantidad"].'",
-                "'.$talleres[$i]["fecha"].'",
-                "'.$estado.'"
+                "'.$talleres[$i]["fecha_proceso"].'",
+                "'.$talleres[$i]["fecha_terminado"].'",
+                "'.$estado.'",
+                "'.$talleres[$i]["tiempo_real"]." min.".'",
+                "'.$botones.'"
                 ],';
                 }
 
