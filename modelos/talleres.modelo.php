@@ -763,5 +763,51 @@ class ModeloTalleres{
 		}
 
 	}	
-    
+  static public function mdlVerTalleresTerminado($valor){
+
+    $stmt = Conexion::conectar()->prepare("SELECT 
+                                                      et.id,
+                                                      et.sector,
+                                                      CONCAT(et.sector, '-', s.nom_sector) AS nom_sector,
+                                                      et.articulo,
+                                                      a.modelo,
+                                                      a.nombre,
+                                                      a.color,
+                                                      a.talla,
+                                                      et.cod_operacion,
+                                                      o.nombre AS nom_operacion,
+                                                      et.trabajador AS cod_trabajador,
+                                                      CONCAT(
+                                                        t.nom_tra,
+                                                        ' ',
+                                                        t.ape_pat_tra,
+                                                        ' ',
+                                                        t.ape_mat_tra
+                                                      ) AS trabajador,
+                                                      et.cantidad,
+                                                      DATE(et.fecha) AS fecha,
+                                                      et.estado,
+                                                      et.codigo 
+                                                    FROM
+                                                      entallerjf et 
+                                                      LEFT JOIN trabajadorjf t 
+                                                        ON et.trabajador = t.cod_tra 
+                                                      LEFT JOIN articulojf a 
+                                                        ON et.articulo = a.articulo 
+                                                      LEFT JOIN operacionesjf o 
+                                                        ON et.cod_operacion = o.codigo 
+                                                      LEFT JOIN sectorjf s 
+                                                        ON et.sector = s.cod_sector 
+                                                    WHERE et.estado = '3' AND et.id= $valor");
+
+    $stmt -> execute();
+
+    return $stmt -> fetch();
+
+    $stmt -> close();
+
+    $stmt = null;
+
+
+}
 }

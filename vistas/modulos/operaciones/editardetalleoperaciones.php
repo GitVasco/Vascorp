@@ -102,8 +102,8 @@
                 <table>
                   <thead>
                   <tr>
-                      <th style="width:450px;margin-right:150px;">Operaciones</th>
-                      <th style="width:200px">Precio x Docena</th>
+                      <th style="width:550px;margin-right:150px;">Codigo-Operaciones</th>
+                      <th style="width:250px">Precio x Docena</th>
                       <th style="width:200px">Tiempo Standart</th>
                   </tr>
                   </thead>

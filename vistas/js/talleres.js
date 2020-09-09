@@ -223,7 +223,6 @@ $(".tablaTalleresG").on("click", ".btnEditarTallerG", function () {
 		processData:false,
 		dataType: "json",
 		success:function(respuesta){
-			console.log(respuesta["color"]);
 			$("#editarCodigo").val(respuesta["id_cabecera"]);
 			$("#editarArticulo").val(respuesta["articulo"]);
 			$("#cantidad").val(respuesta["cantidad"]);
@@ -474,3 +473,36 @@ $("#daterange-btnTallerT").daterangepicker(
     }
   });
 
+/*=============================================
+EDITAR TALLER T
+=============================================*/
+$(".tablaTalleresT").on("click", ".btnEditarTallerTerminado", function () {
+
+	var idTallerT = $(this).attr("idTallerT");
+    var datos = new FormData();
+    datos.append("idTallerT", idTallerT);
+
+    $.ajax({
+        url: "ajax/talleres.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuesta) {
+             console.log( respuesta); 
+			$("#editarModelo").val(respuesta["modelo"]);
+			$("#editarColor").val(respuesta["color"]);
+			$("#editarTalla").val(respuesta["talla"]);
+			$("#editarCodOperacion").val(respuesta["cod_operacion"]);
+			$("#editarOperacion").val(respuesta["nom_operacion"]);
+			$("#editar_cod_tra").val(respuesta["cod_trabajador"]);
+			$("#editar_cod_tra").selectpicker('refresh');
+			$("#editar_codigoBarra").val(respuesta["codigo"]);
+
+        }
+
+    })
+
+})

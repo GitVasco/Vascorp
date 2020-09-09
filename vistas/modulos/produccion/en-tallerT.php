@@ -80,7 +80,7 @@
                   <th>Fecha Terminado</th>
                   <th>Estado</th>
                   <th>Tiempo real</th>
-
+                  <th>Acciones</th>
                 </tr>
 
               </thead>
@@ -173,6 +173,171 @@ MODAL CONFIGURAR Trabajador
                   <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
 
                   <input type="text" class="form-control" id="codigoBarra" name="codigoBarra" placeholder="Ingresar Código" autofocus>
+
+              </div>
+
+            </div>                
+
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Asignar Trabajador</button>
+
+        </div>
+
+      </form>
+
+        <?php
+
+          $asignarTrabajador = new ControladorTalleres();
+          $asignarTrabajador -> ctrAsignarTrabajador();
+
+        ?>  
+
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<div id="editarTallerT" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form role="form" method="post" enctype="multipart/form-data">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Asignar Trabajador</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <div class="form-group" align="center">
+
+              <img src="vistas/img/plantilla/jackyform_paloma.png" width="400px" height="300px">
+
+            </div>
+            <div class="form-group">
+
+              <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+
+                  <input type="text" class="form-control" id="editarModelo"  >
+
+              </div>
+
+            </div>  
+            <div class="form-group">
+
+              <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+
+                  <input type="text" class="form-control" id="editarColor" >
+
+              </div>
+
+            </div>  
+            <div class="form-group">
+
+              <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+
+                  <input type="text" class="form-control" id="editarTalla"  >
+
+              </div>
+
+            </div>
+
+            <div class="form-group">
+
+              <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+
+                  <input type="text" class="form-control" id="editarCodOperacion"  >
+
+              </div>
+
+            </div>
+
+            <div class="form-group">
+
+              <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+
+                  <input type="text" class="form-control" id="editarOperacion"  >
+
+              </div>
+
+            </div>  
+            <!-- ENTRADA PARA PORCENTAJE -->
+
+            <div class="form-group">
+              
+              <div class="input-group">
+
+                <span class="input-group-addon"><i class="fa fa-user-o"></i></span>
+
+                  <select class="form-control input-sm selectpicker" id="editar_cod_tra" name="cod_tra" data-live-search="true" required>
+
+                    <option value="">Seleccionar Trabajador</option>
+
+                    <?php
+
+                    $trabajador = ControladorTrabajador::ctrMostrarTrabajadorActivo();
+                    #var_dump("trabajador", $trabajador);
+
+                    foreach ($trabajador as $key => $value) {
+
+                      echo '<option value="' . $value["cod_tra"] . '">' . $value["cod_tra"] . ' - ' . $value["nom_tra"] . ', ' . $value["ape_pat_tra"] . ' ' . $value["ape_mat_tra"] . '</option>';
+                    }
+
+                    ?>
+
+                  </select>
+
+              </div>
+
+            </div>       
+
+            <div class="form-group">
+
+              <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
+
+                  <input type="text" class="form-control" id="editar_codigoBarra" name="codigoBarra" placeholder="Ingresar Código" autofocus>
 
               </div>
 

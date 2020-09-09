@@ -39,6 +39,7 @@ class TablaTalleresT{
                 $estado = "<span style='font-size:85%' class='label label-success'>Terminado</span>";
     
             } 
+            $botones="<div class='btn-group'><button class='btn btn-warning btnEditarTallerTerminado' idTallerT='".$talleres[$i]["id"]."' data-toggle='modal' data-target='#editarTallerT' ><i class='fa fa-pencil'></i></button></div>";    
 
                 $datosJson .= '[
                 "'.$talleres[$i]["id"].'",
@@ -52,7 +53,8 @@ class TablaTalleresT{
                 "'.$talleres[$i]["fecha_proceso"].'",
                 "'.$talleres[$i]["fecha_terminado"].'",
                 "'.$estado.'",
-                "'.$talleres[$i]["tiempo_real"]." min.".'"
+                "'.$talleres[$i]["tiempo_real"]." min.".'",
+                "'.$botones.'"
                 ],';
                 }
 
