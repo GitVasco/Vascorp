@@ -228,9 +228,8 @@ class ControladorTalleres{
 		
     }
 
-    /* 
-    * MOSTRAR LOS MOVIMIENTOS DE VENTAS POR MODELO
-    */
+    
+
     static public function ctrMes(){
 
         $respuesta = ModeloTalleres::mdlMes();
@@ -259,8 +258,19 @@ class ControladorTalleres{
 
         return $respuesta;
 
-    }    
-    
+    }
+    /*=============================================
+	RANGO FECHAS TERMINADOS
+	=============================================*/	
 
+	static public function ctrRangoFechasTalleresTerminados($fechaInicial, $fechaFinal){
+
+		$tabla = "entallerjf";
+
+		$respuesta = ModeloTalleres::mdlRangoFechasTalleresTerminados($tabla, $fechaInicial, $fechaFinal);
+
+		return $respuesta;
+		
+	}
 
 }
