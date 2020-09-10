@@ -227,11 +227,9 @@ class ControladorTalleres{
 		return $respuesta;
 		
     }
-<<<<<<< HEAD
 
-    /* 
-    * MOSTRAR LOS MOVIMIENTOS DE VENTAS POR MODELO
-    */
+    
+
     static public function ctrMes(){
 
         $respuesta = ModeloTalleres::mdlMes();
@@ -260,11 +258,7 @@ class ControladorTalleres{
 
         return $respuesta;
 
-    }    
-    
-
-=======
-    
+    }
     /*=============================================
 	RANGO FECHAS TERMINADOS
 	=============================================*/	
@@ -278,6 +272,5 @@ class ControladorTalleres{
 		return $respuesta;
 		
 	}
->>>>>>> brean
 
 }

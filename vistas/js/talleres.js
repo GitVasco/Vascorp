@@ -363,8 +363,6 @@ $(".box").on("click", ".btnReporteTalleres", function () {
     window.location = "vistas/reportes_excel/rpt_talleres.php";
   
 })
-<<<<<<< HEAD
-
 /* 
 ! PRODUCCION DE TRUSAS
 */
@@ -517,7 +515,6 @@ function cargarTablaProduccionBrasier(mesB) {
 		}    
 	} );
 }
-=======
 $("#daterange-btnTallerT").daterangepicker(
     {
 	  cancelClass: "CancelarTallerT",
@@ -661,4 +658,3 @@ $(".tablaTalleresT").on("click", ".btnEditarTallerTerminado", function () {
     })
 
 })
->>>>>>> brean
