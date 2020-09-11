@@ -1,5 +1,9 @@
 <?php
 
+/* 
+* CONTROLADORES
+*/
+
 require_once "controladores/plantilla.controlador.php";
 require_once "controladores/usuarios.controlador.php";
 require_once "controladores/categorias.controlador.php";
@@ -35,6 +39,12 @@ require_once "controladores/cortes.controlador.php";
 require_once "controladores/talleres.controlador.php";
 
 require_once "controladores/sectores.controlador.php";
+
+require_once "controladores/produccion.controlador.php";
+
+/* 
+* MODELOS
+*/
 
 
 require_once "modelos/usuarios.modelo.php";
@@ -83,6 +93,9 @@ require_once "controladores/asistencia.controlador.php";
 
 require_once "modelos/ingresos.modelo.php";
 require_once "controladores/ingresos.controlador.php";
+
+require_once "modelos/produccion.modelo.php";
+
 
 require_once "extensiones/vendor/autoload.php";
 

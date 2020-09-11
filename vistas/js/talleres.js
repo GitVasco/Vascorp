@@ -465,12 +465,12 @@ $(".box").on("click", ".btnCargarBrasier", function () {
 if (localStorage.getItem("mesB") != null) {
 
 	cargarTablaProduccionBrasier(localStorage.getItem("mesB"));
-	console.log("lleno");
+	//console.log("lleno");
 	
 }else{
 
 	cargarTablaProduccionBrasier(null);
-	console.log("vacio");
+	//console.log("vacio");
 
 }
 
