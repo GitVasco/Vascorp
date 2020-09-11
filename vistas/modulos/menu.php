@@ -516,7 +516,14 @@
                         </ul>
 
                     </li>
+                    <li>
 
+                        <a href="ingresos">
+                        <i class="fa fa-scissors"></i>
+                        <span>Ingresos</span>
+                        </a>
+
+                    </li>  
                     <li>
 
                         <a href="asistencia">
@@ -553,8 +560,8 @@
 
                             <li>
 
-                                <a href="eficiencia">
-                                <i class="fa fa-circle-o"></i> Eficiencia
+                                <a href="quincena">
+                                <i class="fa fa-circle-o"></i> Quincena
                                 </a>
 
                             </li>                                                                               

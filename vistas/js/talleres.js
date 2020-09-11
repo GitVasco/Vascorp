@@ -388,12 +388,12 @@ $(".box").on("click", ".btnCargarTrusas", function () {
 if (localStorage.getItem("mesT") != null) {
 
 	cargarTablaProduccionTrusas(localStorage.getItem("mesT"));
-	console.log("lleno");
+	// console.log("lleno");
 	
 }else{
 
 	cargarTablaProduccionTrusas(null);
-	console.log("vacio");
+	// console.log("vacio");
 
 }
 
@@ -465,12 +465,12 @@ $(".box").on("click", ".btnCargarBrasier", function () {
 if (localStorage.getItem("mesB") != null) {
 
 	cargarTablaProduccionBrasier(localStorage.getItem("mesB"));
-	console.log("lleno");
+	//console.log("lleno");
 	
 }else{
 
 	cargarTablaProduccionBrasier(null);
-	console.log("vacio");
+	//console.log("vacio");
 
 }
 
@@ -515,6 +515,42 @@ function cargarTablaProduccionBrasier(mesB) {
 		}    
 	} );
 }
+$("#nuevoTalleres").change(function(){
+	$("#nuevoCodigo").val($(this).val()+"1234");
+})
+$('.tablaArticulosTalleres').DataTable( {
+    "ajax": "ajax/tabla-articulostaller.ajax.php",
+    "deferRender": true,
+	"retrieve": true,
+    "processing": true,
+    "pageLength": 20,
+	 "language": {
+
+			"sProcessing":     "Procesando...",
+			"sLengthMenu":     "Mostrar _MENU_ registros",
+			"sZeroRecords":    "No se encontraron resultados",
+			"sEmptyTable":     "Ningún dato disponible en esta tabla",
+			"sInfo":           "Mostrando del _START_ al _END_ de un total de _TOTAL_",
+			"sInfoEmpty":      "Mostrando del 0 al 0 de un total de 0",
+			"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+			"sInfoPostFix":    "",
+			"sSearch":         "Buscar:",
+			"sUrl":            "",
+			"sInfoThousands":  ",",
+			"sLoadingRecords": "Cargando...",
+			"oPaginate": {
+			"sFirst":    "Primero",
+			"sLast":     "Último",
+			"sNext":     ">>>",
+			"sPrevious": "<<<"
+			},
+			"oAria": {
+				"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+				"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+			}
+		}
+})
+
 $("#daterange-btnTallerT").daterangepicker(
     {
 	  cancelClass: "CancelarTallerT",
@@ -625,17 +661,22 @@ $("#daterange-btnTallerT").daterangepicker(
     }
   });
 
-/*=============================================
-EDITAR TALLER T
-=============================================*/
-$(".tablaTalleresT").on("click", ".btnEditarTallerTerminado", function () {
 
-	var idTallerT = $(this).attr("idTallerT");
+$(".tablaArticulosTalleres tbody").on("click", "button.agregarArtiTaller", function () {
+
+	var articuloT = $(this).attr("articuloT");
+	
+    var talleres = $(this).attr("taller");
+    $(this).removeClass("btn-primary agregarArtiTaller");
+
+    $(this).addClass("btn-default");
+
     var datos = new FormData();
-    datos.append("idTallerT", idTallerT);
+    datos.append("articuloT", articuloT);
 
     $.ajax({
-        url: "ajax/talleres.ajax.php",
+
+        url: "ajax/articulos.ajax.php",
         method: "POST",
         data: datos,
         cache: false,
@@ -643,18 +684,309 @@ $(".tablaTalleresT").on("click", ".btnEditarTallerTerminado", function () {
         processData: false,
         dataType: "json",
         success: function (respuesta) {
-             console.log( respuesta); 
-			$("#editarModelo").val(respuesta["modelo"]);
-			$("#editarColor").val(respuesta["color"]);
-			$("#editarTalla").val(respuesta["talla"]);
-			$("#editarCodOperacion").val(respuesta["cod_operacion"]);
-			$("#editarOperacion").val(respuesta["nom_operacion"]);
-			$("#editar_cod_tra").val(respuesta["cod_trabajador"]);
-			$("#editar_cod_tra").selectpicker('refresh');
-			$("#editar_codigoBarra").val(respuesta["codigo"]);
 
+            // console.log("respuesta", respuesta); 
+
+            var articulo = respuesta["articulo"];
+            var packing = respuesta["packingB"];
+            var taller = respuesta["taller"];
+
+            /* 
+            todo: AGREGAR LOS CAMPOS
+            */
+
+            $(".nuevoArticuloIngreso").append(
+
+                '<div class="row" style="padding:5px 15px">' +
+
+                    "<!-- Descripción del Articulo -->" +
+
+                    '<div class="col-xs-6" style="padding-right:0px">' +
+
+                        '<div class="input-group">' +
+                        
+                            '<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarTaller" articuloIngreso="' + articuloT + '"><i class="fa fa-times"></i></button></span>' +
+
+                            '<input type="text" class="form-control nuevaDescripcionProducto input-sm" articuloIngreso="' + articuloT + '" name="agregarT" value="' + packing + '" codigoAC="' + articulo + '" readonly required>' +
+
+                        "</div>" +
+
+                    "</div>" +
+
+                    "<!-- Cantidad de la Orden de Corte -->" +
+
+                    '<div class="col-xs-6">' +
+
+                        '<input type="number" class="form-control nuevaCantidadArticuloIngreso input-sm" name="nuevaCantidadArticuloIngreso" id="nuevaCantidadArticuloIngreso" min="1" value="0" taller="' + taller + '" articulo="'+ articulo +'" nuevoTaller="' + Number(taller) + '" required>' +
+
+                    "</div>" +
+
+                "</div>"
+
+            );
+
+            // SUMAR TOTAL DE UNIDADES
+
+			sumarTotalIngreso();
+
+            // AGREGAR IMPUESTO
+
+            
+
+            // AGRUPAR PRODUCTOS EN FORMATO JSON
+
+            listarArticulosIngreso();
+
+            // PONER FORMATO AL PRECIO DE LOS PRODUCTOS
+
+                      
         }
 
     })
 
+
+});
+
+/* 
+* CUANDO CARGUE LA TABLA CADA VEZ QUE NAVEGUE EN ELLA
+*/
+$(".tablaArticulosTalleres").on("draw.dt", function () {
+
+    if (localStorage.getItem("quitarTaller") != null) {
+        var listaIdArticuloT = JSON.parse(localStorage.getItem("quitarTaller"));
+		
+        for (var i = 0; i < listaIdArticuloT.length; i++) {
+			
+            $("button.recuperarBoton[articuloIngreso='" + listaIdArticuloT[i]["articuloIngreso"] + "']").removeClass("btn-default");
+
+            $("button.recuperarBoton[articuloIngreso='" + listaIdArticuloT[i]["articuloIngreso"] + "']").addClass("btn-primary agregarArtiTaller");
+        }
+    }
+});
+
+/* 
+* QUITAR ARTICULO DE LA ORDEN DE CORTE Y RECUPERAR BOTÓN
+*/
+var idQuitarArticuloT= [];
+
+localStorage.removeItem("quitarTaller");
+
+$(".formularioIngreso").on("click", "button.quitarTaller", function () {
+
+    /* console.log("boton"); */
+
+    $(this).parent().parent().parent().parent().remove();
+    var articuloIngreso = $(this).attr("articuloIngreso");
+    /*=============================================
+    ALMACENAR EN EL LOCALSTORAGE EL ID DEL MATERIA PRIMA A QUITAR
+    =============================================*/
+
+    if (localStorage.getItem("quitarTaller") == null) {
+
+        idQuitarArticuloT = [];
+
+    } else {
+
+        idQuitarArticuloT.concat(localStorage.getItem("quitarTaller"))
+
+    }
+
+    idQuitarArticuloT.push({
+        "articuloIngreso": articuloIngreso
+    });
+
+	localStorage.setItem("quitarTaller", JSON.stringify(idQuitarArticuloT));
+	console.log(articuloIngreso);
+    $("button.recuperarBoton[articuloIngreso='" + articuloIngreso + "']").removeClass('btn-default');
+
+    $("button.recuperarBoton[articuloIngreso='" + articuloIngreso + "']").addClass('btn-primary agregarArtiTaller');
+
+
+    if ($(".nuevoArticuloIngreso").children().length == 0) {
+
+        $("#nuevoTotalTaller").val(0);
+        $("#totalTaller").val(0);
+        $("#nuevoTotalTaller").attr("total", 0);
+
+    } else {
+
+            // SUMAR TOTAL DE UNIDADES
+
+            sumarTotalIngreso();
+
+            // AGREGAR IMPUESTO
+
+            
+
+            // AGRUPAR PRODUCTOS EN FORMATO JSON
+
+            listarArticulosIngreso()
+
+
+    }
+
 })
+
+/* 
+* MODIFICAR LA CANTIDAD
+*/
+$(".formularioIngreso").on("change", "input.nuevaCantidadArticuloIngreso", function() {
+
+    var nuevoTaller = Number($(this).attr("taller")) + Number($(this).val());
+    var articulo = $(this).attr("articulo");
+    //console.log(articulo);
+
+    var pendiente = $(this)
+    .parent()
+    .parent()
+    .children(".pendiente")
+    .children(".nuevoPendienteProy");
+    //console.log(pendiente);
+
+    var pendienteReal = pendiente.attr("pendienteReal");
+    //console.log(pendiente);
+    //console.log(pendienteReal);
+
+    var quedaPen = pendienteReal - Number($(this).val());
+    //console.log(quedaPen);
+
+    pendiente.val(quedaPen);
+
+    $(this).attr("nuevoTaller", Number(nuevoTaller));
+
+
+    // SUMAR TOTAL DE UNIDADES
+
+    sumarTotalIngreso();
+  
+    // AGREGAR IMPUESTO
+  
+
+    // AGRUPAR PRODUCTOS EN FORMATO JSON
+  
+    listarArticulosIngreso();
+
+
+
+  });
+
+  
+/* 
+* SUMAR EL TOTAL DE LAS ORDENES DE CORTE
+*/
+  
+function sumarTotalIngreso() {
+
+    var cantidadOc = $(".nuevaCantidadArticuloIngreso");
+  
+    //console.log("cantidadOc", cantidadOc);
+  
+    var arraySumarCantidades = [];
+
+    for (var i = 0; i < cantidadOc.length; i++){
+
+        arraySumarCantidades.push(Number($(cantidadOc[i]).val()));
+
+    }
+        /* console.log("arraySumarCantidades", arraySumarCantidades); */
+
+    function sunaArrayCantidades(total, numero) {
+        return total + numero;
+    }
+
+    var sumarTotal = arraySumarCantidades.reduce(sunaArrayCantidades);
+
+    /* console.log("sumarTotal", sumarTotal); */
+
+    $("#nuevoTotalTaller").val(sumarTotal);
+    $("#totalTaller").val(sumarTotal);
+    $("#nuevoTotalTaller").attr("total", sumarTotal);
+
+}
+
+/* 
+* FORMATO DE MILES AL TOTAL
+*/
+$("#nuevoTotalTaller").number(true, 0);
+
+/* 
+* LISTAR TODOS LOS ARTICULOS
+*/
+function listarArticulosIngreso() {
+
+    var listaArticulos = [];
+  
+    var descripcion = $(".nuevaDescripcionProducto");
+  
+    var cantidad = $(".nuevaCantidadArticuloIngreso");
+    
+    for (var i = 0; i < descripcion.length; i++) {
+
+      listaArticulos.push({
+
+        id: $(descripcion[i]).attr("articuloIngreso"),
+        articulo: $(descripcion[i]).attr("codigoAC"),
+        cantidad: $(cantidad[i]).val(),
+        taller: $(cantidad[i]).attr("nuevoTaller")
+
+      });
+    }
+  
+    // console.log("listaArticulos", JSON.stringify(listaArticulos)); 
+  
+    $("#listaArticulosIngreso").val(JSON.stringify(listaArticulos));
+
+}
+
+/* 
+* BOTON EDITAR ORDEN DE CORTE
+*/
+$(".tablaOrdenCorte").on("click", ".btnEditarOC", function () {
+
+	var codigo = $(this).attr("codigo");
+
+  window.location = "index.php?ruta=editar-detalle-ordencorte&codigo=" + codigo;
+  
+})
+
+/* 
+*FUNCIÓN PARA DESACTIVAR LOS BOTONES AGREGAR CUANDO EL ARTICULO YA HABÍA SIDO SELECCIONADO EN LA CARPETA
+*/
+function quitarAgregarArticuloT() {
+
+	//Capturamos todos los id de productos que fueron elegidos en la venta
+    var articuloIngreso = $(".quitarTaller");
+    //console.log("articuloOC", articuloOC);
+
+	//Capturamos todos los botones de agregar que aparecen en la tabla
+    var botonesTablaIngreso = $(".tablaArticulosTalleres tbody button.agregarArtiTaller");
+    //console.log("botonesTablaOC", botonesTablaOC);
+
+	//Recorremos en un ciclo para obtener los diferentes articuloOC que fueron agregados a la venta
+	for (var i = 0; i < articuloIngreso.length; i++) {
+
+		//Capturamos los Id de los productos agregados a la venta
+		var boton = $(articuloIngreso[i]).attr("articuloIngreso");
+
+		//Hacemos un recorrido por la tabla que aparece para desactivar los botones de agregar
+		for (var j = 0; j < botonesTablaIngreso.length; j++) {
+
+			if ($(botonesTablaIngreso[j]).attr("articuloIngreso") == boton) {
+
+				$(botonesTablaIngreso[j]).removeClass("btn-primary agregarArtiTaller");
+				$(botonesTablaIngreso[j]).addClass("btn-default");
+
+			}
+		}
+
+	}
+
+}
+
+/* 
+* CADA VEZ QUE CARGUE LA TABLA CUANDO NAVEGAMOS EN ELLA EJECUTAR LA FUNCIÓN:
+*/
+$(".tablaArticulosTalleres").on("draw.dt", function() {
+    quitarAgregarArticuloT();
+});
+  
