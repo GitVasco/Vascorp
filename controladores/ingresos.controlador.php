@@ -10,13 +10,12 @@ class ControladorIngresos{
         /* 
         todo: Verificamos que traiga datos
         */
-        if( isset($_POST["nuevaOrdenCorte"]) &&
-            isset($_POST["idUsuario"]) &&
-            isset($_POST["configuracion"])){
+        if( isset($_POST["nuevoTalleres"]) &&
+            isset($_POST["idUsuario"])){
 
                 #var_dump("nuevaOrdenCorte", $_POST["nuevaOrdenCorte"]);
 
-                if($_POST["listaArticulosOC"] == ""){
+                if($_POST["listaArticulosIngreso"] == ""){
 
                     /* 
                     ? Mostramos una alerta suave si viene vacia
@@ -30,7 +29,7 @@ class ControladorIngresos{
                                 confirmButtonText: "Cerrar"
                             }).then((result)=>{
                                 if(result.value){
-                                    window.location="crear-ordencorte";}
+                                    window.location="crear-ingresos";}
                             });
                         </script>';
 
@@ -40,7 +39,7 @@ class ControladorIngresos{
                     ? Actualizamos la cantidad de la orden de corte
                     */
 
-                    $listaArticulos = json_decode($_POST["listaArticulosOC"], true);
+                    $listaArticulos = json_decode($_POST["listaArticulosIngreso"], true);
 
                     #var_dump("listaArticulos", $listaArticulos);
 
@@ -50,8 +49,8 @@ class ControladorIngresos{
 
                         $valor = $value["articulo"];
 
-                        $item1 = "ord_corte";
-                        $valor1 = $value["ord_corte"];
+                        $item1 = "taller";
+                        $valor1 = $value["taller"];
 
                         ModeloArticulos::mdlActualizarUnDato($tabla, $item1, $valor1, $valor);
 
@@ -60,13 +59,12 @@ class ControladorIngresos{
                     /* 
                     * GUARDAR LA ORDEN DE CORTE
                     */
-
+                    $fecha=new DateTime();
                     $datos = array( "usuario"=>$_POST["idUsuario"],
-                                    "taller"=>$_POST["nuevaOrdenCorte"],
-                                    "documento"=>$_POST["configuracion"],
-                                    "total"=>$_POST["totalOrdenCorte"],
-                                    "fecha"=>$_POST["totalOrdenCorte"],
-                                    "estado"=>"Pendiente");
+                                    "taller"=>$_POST["nuevoTalleres"],
+                                    "documento"=>$_POST["nuevoCodigo"],
+                                    "total"=>$_POST["totalTaller"],
+                                    "fecha"=>$fecha->format("Y-m-d"));
 
                     #var_dump("datos", $datos);
                     
@@ -74,23 +72,19 @@ class ControladorIngresos{
 
                     if($respuesta == "ok"){
 
-                        /* 
-                        * GUARDAR DETALLE DE ORDEN DE CORTE
-                        */
-
-                        $ultimoId = ModeloIngresos::mdlUltimoId();
-                        #var_dump("ultimoId", $ultimoId[0]["ult_codigo"]);
 
                         foreach($listaArticulos as $key=>$value){
 
-                            $datosD = array("ordencorte"=>$ultimoId[0]["ult_codigo"],
+                            $datosD = array("tipo"=>"E20",
+                                            "documento"=>$_POST["nuevoCodigo"],
+                                            "taller"=>$_POST["nuevoTalleres"],
+                                            "fecha"=>$fecha->format("Y-m-d"),
                                             "articulo"=>$value["articulo"],
-                                            "cantidad"=>$value["cantidad"],
-                                            "saldo"=>$value["cantidad"]);
+                                            "cantidad"=>$value["cantidad"]);
 
                             #var_dump("datosD", $datosD);
 
-                            ModeloOrdenCorte::mdlGuardarDetallesIngreso("movimientosjf", $datosD);
+                            ModeloIngresos::mdlGuardarDetalleIngreso("movimientosjf", $datosD);
 
                         }
 
@@ -242,7 +236,7 @@ class ControladorIngresos{
 
                             #var_dump("datosD", $datosD);
 
-                            ModeloOrdenCorte::mdlGuardarDetallesOrdenCorte("detalles_ordencortejf", $datosD);
+                            ModeloIngresos::mdlGuardarDetalleIngreso("movimientosjf", $datosD);
 
                         }
 
@@ -256,7 +250,7 @@ class ControladorIngresos{
                                     confirmButtonText: "Cerrar"
                                 }).then((result)=>{
                                     if(result.value){
-                                        window.location="ordencorte";}
+                                        window.location="ingresos";}
                                 });
                             </script>';                     
 
@@ -273,7 +267,7 @@ class ControladorIngresos{
 								confirmButtonText: "Cerrar"
 							}).then((result)=>{
 								if(result.value){
-									window.location="ordencorte";}
+									window.location="ingresos";}
 							});
 						</script>';
 
@@ -291,7 +285,7 @@ class ControladorIngresos{
 							confirmButtonText: "Cerrar"
 						}).then((result)=>{
 							if(result.value){
-								window.location="ordencorte";}
+								window.location="ingresos";}
 						});
 					</script>';
 
@@ -306,13 +300,13 @@ class ControladorIngresos{
     /* 
     *Método para eliminar las ordenes de corte
     */
-    static public function ctrEliminarOrdenCorte($codigo){
+    static public function ctrEliminarIngreso($codigo){
 
         $item = "codigo";
-        $infoOC = ModeloOrdenCorte::mdlMostraDetallesOrdenCorte("ordencortejf", $item, $codigo);
+        $infoOC = ModeloIngresos::mdlMostraDetallesIngreso("movimientosjf", $item, $codigo);
         #var_dump("infoOC", $infoOC);
 
-        $detaOC = ModeloOrdenCorte::mdlMostraDetallesOrdenCorte("detalles_ordencortejf", "ordencorte", $codigo);
+        $detaOC = ModeloIngresos::mdlMostraDetallesIngreso("movimientosjf", "ordencorte", $codigo);
         #var_dump("detaOC", $detaOC);
 
         /* 
@@ -362,7 +356,7 @@ class ControladorIngresos{
 
 		$tabla = "movimientos_cabecerajf";
 
-		$respuesta = ModeloOrdenCorte::mdlRangoFechasIngresos($tabla, $fechaInicial, $fechaFinal);
+		$respuesta = ModeloIngresos::mdlRangoFechasIngresos($tabla, $fechaInicial, $fechaFinal);
 
 		return $respuesta;
 		
