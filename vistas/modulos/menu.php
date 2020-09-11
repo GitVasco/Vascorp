@@ -516,7 +516,14 @@
                         </ul>
 
                     </li>
+                    <li>
 
+                        <a href="ingresos">
+                        <i class="fa fa-scissors"></i>
+                        <span>Ingresos</span>
+                        </a>
+
+                    </li>  
                     <li>
 
                         <a href="asistencia">

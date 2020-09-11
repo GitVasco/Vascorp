@@ -549,7 +549,22 @@ class ModeloTalleres{
 		}
 
   }	
-  
+
+  /* 
+	* MOSTRAR MESES
+	*/
+	static public function mdlMes(){
+
+    $stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+                                codigo,
+                                descripcion 
+                              FROM
+                                meses m ");
+
+    $stmt -> execute();
+
+    return $stmt -> fetchAll();
+  }
   /*=============================================
 	RANGO FECHAS TERMINADOS
 	=============================================*/	
@@ -1328,28 +1343,5 @@ class ModeloTalleres{
 
   }  
 
-  /* 
-  * VER MESES
-  */
-  static public function mdlMes(){
 
-    $stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
-            codigo,
-            descripcion 
-          FROM
-            meses m");
-
-    $stmt -> execute();
-
-    return $stmt -> fetchAll();
-
-    $stmt -> close();
-
-    $stmt = null;
-
- }
-
-
-
-    
 }

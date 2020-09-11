@@ -81,6 +81,9 @@ require_once "controladores/paras.controlador.php";
 require_once "modelos/asistencia.modelo.php";
 require_once "controladores/asistencia.controlador.php";
 
+require_once "modelos/ingresos.modelo.php";
+require_once "controladores/ingresos.controlador.php";
+
 require_once "extensiones/vendor/autoload.php";
 
 $plantilla = new ControladorPlantilla();
