@@ -52,7 +52,7 @@ $('.tablaTalleresG').DataTable({
 
 // Validamos que venga la variable capturaRango en el localStorage
 if (localStorage.getItem("capturaRango8") != null) {
-	$("#daterange-btnTallerT span").html(localStorage.getItem("capturaRango5"));
+	$("#daterange-btnTallerT span").html(localStorage.getItem("capturaRango8"));
 	cargarTablaTalleresTerminados(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
 } else {
 	$("#daterange-btnTallerT span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
@@ -990,3 +990,164 @@ $(".tablaArticulosTalleres").on("draw.dt", function() {
     quitarAgregarArticuloT();
 });
   
+
+// Validamos que venga la variable capturaRango en el localStorage
+if (localStorage.getItem("capturaRango9") != null) {
+	$("#daterange-btnIngresoM span").html(localStorage.getItem("capturaRango9"));
+	cargarTablaIngresosM(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
+} else {
+	$("#daterange-btnIngresoM span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
+	cargarTablaIngresosM(null, null);
+}
+
+/*
+* CARGAR TABLA TALLERES EN TERMINADO
+*/
+function cargarTablaIngresosM(fechaInicial, fechaFinal){
+$('.tablaIngresoM').DataTable({
+	"ajax": "ajax/tabla-ingresos.ajax.php?perfil=" + $("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
+	"deferRender": true,
+	"retrieve": true,
+	"processing": true,
+	"order": [[0, "desc"]],
+	"pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+	"language": {
+
+		"sProcessing": "Procesando...",
+		"sLengthMenu": "Mostrar _MENU_ registros",
+		"sZeroRecords": "No se encontraron resultados",
+		"sEmptyTable": "Ningún dato disponible en esta tabla",
+		"sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+		"sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0",
+		"sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+		"sInfoPostFix": "",
+		"sSearch": "Buscar:",
+		"sUrl": "",
+		"sInfoThousands": ",",
+		"sLoadingRecords": "Cargando...",
+		"oPaginate": {
+			"sFirst": "Primero",
+			"sLast": "Último",
+			"sNext": "Siguiente",
+			"sPrevious": "Anterior"
+		},
+		"oAria": {
+			"sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+			"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+		}
+
+	}
+
+});
+}
+
+$("#daterange-btnIngresoM").daterangepicker(
+    {
+	  cancelClass: "CancelarIngresoM",
+	  locale:{
+		"daysOfWeek": [
+			"Dom",
+			"Lun",
+			"Mar",
+			"Mie",
+			"Jue",
+			"Vie",
+			"Sab"
+		],
+		"monthNames": [
+			"Enero",
+			"Febrero",
+			"Marzo",
+			"Abril",
+			"Mayo",
+			"Junio",
+			"Julio",
+			"Agosto",
+			"Septiembre",
+			"Octubre",
+			"Noviembre",
+			"Diciembre"
+		],
+	  },
+      ranges: {
+        Hoy: [moment(), moment()],
+        Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+        "Últimos 7 días": [moment().subtract(6, "days"), moment()],
+        "Últimos 30 días": [moment().subtract(29, "days"), moment()],
+        "Este mes": [moment().startOf("month"), moment().endOf("month")],
+        "Último mes": [
+          moment()
+            .subtract(1, "month")
+            .startOf("month"),
+          moment()
+            .subtract(1, "month")
+            .endOf("month")
+        ]
+      },
+      
+      startDate: moment(),
+      endDate: moment()
+    },
+    function(start, end) {
+      $("#daterange-btnIngresoM span").html(
+        start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
+      );
+  
+      var fechaInicial = start.format("YYYY-MM-DD");
+  
+      var fechaFinal = end.format("YYYY-MM-DD");
+  
+      var capturarRango9 = $("#daterange-btnIngresoM span").html();
+  
+      localStorage.setItem("capturarRango9", capturarRango9);
+      localStorage.setItem("fechaInicial", fechaInicial);
+      localStorage.setItem("fechaFinal", fechaFinal);
+      // Recargamos la tabla con la información para ser mostrada en la tabla
+      $(".tablaIngresoM").DataTable().destroy();
+      cargarTablaIngresosM(fechaInicial, fechaFinal);
+    });
+  
+  /*=============================================
+  CANCELAR RANGO DE FECHAS
+  =============================================*/
+  
+  $(".daterangepicker.opensleft .range_inputs .CancelarIngresoM").on(
+    "click",
+    function() {
+      localStorage.removeItem("capturarRango9");
+      localStorage.removeItem("fechaInicial");
+    	localStorage.removeItem("fechaFinal");
+      localStorage.clear();
+      window.location = "ingresos";
+    }
+  );
+  
+  /*=============================================
+  CAPTURAR HOY
+  =============================================*/
+  
+  $(".daterangepicker.opensleft .ranges li").on("click", function() {
+    var textoHoy = $(this).attr("data-range-key");
+  
+    if (textoHoy == "Hoy") {
+      var d = new Date();
+  
+      var dia = d.getDate();
+      var mes = d.getMonth() + 1;
+      var año = d.getFullYear();
+  
+      dia = ("0" + dia).slice(-2);
+      mes = ("0" + mes).slice(-2);
+  
+      var fechaInicial = año + "-" + mes + "-" + dia;
+      var fechaFinal = año + "-" + mes + "-" + dia;
+  
+      localStorage.setItem("capturarRango9", "Hoy");
+      localStorage.setItem("fechaInicial", fechaInicial);
+      localStorage.setItem("fechaFinal", fechaFinal);
+      // Recargamos la tabla con la información para ser mostrada en la tabla
+      $(".tablaIngresoM").DataTable().destroy();
+      cargarTablaIngresosM(fechaInicial, fechaFinal);
+    }
+  });

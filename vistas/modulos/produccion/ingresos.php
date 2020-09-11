@@ -34,7 +34,7 @@
 
         </a>
 
-        <!-- <button type="button" class="btn btn-default pull-right" id="daterange-btnCorte">
+        <button type="button" class="btn btn-default pull-right" id="daterange-btnIngresoM">
           <span>
             <i class="fa fa-calendar"></i>
 
@@ -56,7 +56,7 @@
 
           <i class="fa fa-caret-down"></i>
 
-        </button> -->
+        </button>
       </div>
 
       

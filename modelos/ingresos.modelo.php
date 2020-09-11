@@ -46,6 +46,53 @@ class ModeloIngresos{
 
 		$stmt=null;
 	}
+
+	/* 
+	* Guardar cabecera de ORDENES DE CORTE
+	*/
+	static public function mdlGuardarDetalleIngreso($tabla,$datos){
+
+		$sql="INSERT INTO $tabla (
+											tipo,
+											documento,
+											taller,
+											fecha,
+											articulo,
+											cantidad
+										) 
+										VALUES
+											(
+											:tipo,
+											:documento,
+											:taller,
+											:fecha,
+											:articulo,
+											:cantidad
+											)";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+        $stmt->bindParam(":tipo",$datos["tipo"],PDO::PARAM_STR);
+		$stmt->bindParam(":documento",$datos["documento"],PDO::PARAM_STR);
+		$stmt->bindParam(":taller",$datos["taller"],PDO::PARAM_STR);
+        $stmt->bindParam(":fecha",$datos["fecha"],PDO::PARAM_STR);
+		$stmt->bindParam(":articulo",$datos["articulo"],PDO::PARAM_STR);
+		$stmt->bindParam(":cantidad",$datos["cantidad"],PDO::PARAM_INT);
+		
+
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+
+		}
+
+		$stmt=null;
+	}
 	
 	
 	/* 
@@ -111,7 +158,7 @@ class ModeloIngresos{
 
 		if($fechaInicial == "null"){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM movimientos_cabecerajf ORDER BY id ASC");
+			$stmt = Conexion::conectar()->prepare("SELECT mc.*,u.nombre FROM movimientos_cabecerajf mc LEFT JOIN usuariosjf u ON mc.usuario=u.id ORDER BY mc.id ASC");
 
 			$stmt -> execute();
 
@@ -120,7 +167,7 @@ class ModeloIngresos{
 
 		}else if($fechaInicial == $fechaFinal){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM movimientos_cabecerajf WHERE fecha like '%$fechaFinal%'");
+			$stmt = Conexion::conectar()->prepare("SELECT mc.*,u.nombre FROM movimientos_cabecerajf mc LEFT JOIN usuariosjf u ON mc.usuario=u.id WHERE mc.fecha like '%$fechaFinal%'");
 
 			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 
@@ -140,12 +187,12 @@ class ModeloIngresos{
 
 			if($fechaFinalMasUno == $fechaActualMasUno){
 
-				$stmt = Conexion::conectar()->prepare("SELECT * FROM movimientos_cabecerajf WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'");
+				$stmt = Conexion::conectar()->prepare("SELECT mc.*,u.nombre FROM movimientos_cabecerajf mc LEFT JOIN usuariosjf u ON mc.usuario=u.id WHERE mc.fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'");
 
 			}else{
 
 
-				$stmt = Conexion::conectar()->prepare("SELECT * FROM movimientos_cabecerajf WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal'");
+				$stmt = Conexion::conectar()->prepare("SELECT mc.*,u.nombre FROM movimientos_cabecerajf mc LEFT JOIN usuariosjf u ON mc.usuario=u.id WHERE mc.fecha BETWEEN '$fechaInicial' AND '$fechaFinal'");
 
 			}
 		

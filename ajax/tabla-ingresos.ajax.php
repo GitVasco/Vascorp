@@ -32,9 +32,9 @@ class TablaIngresos{
 
                 $datosJson .= '[
                 "'.($i+1).'",
-                "'.$ingreso[$i]["usuario"].'",
+                "'.$ingreso[$i]["nombre"].'",
+                "'.$ingreso[$i]["taller"].'",
                 "'.$ingreso[$i]["documento"].'",
-                "'.$ingreso[$i]["total"].'",
                 "'.$total.'",
                 "'.$ingreso[$i]["fecha"].'",
                 "'.$botones.'"
@@ -64,5 +64,5 @@ class TablaIngresos{
 /*=============================================
 ACTIVAR TABLA DE orden$ingreso
 =============================================*/ 
-$activarOrdenCorte = new TablaIngresos();
-$activarOrdenCorte -> mostrarTablaIngresos();
+$activarIngreso = new TablaIngresos();
+$activarIngreso -> mostrarTablaIngresos();
