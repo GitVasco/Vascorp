@@ -25,14 +25,16 @@ CREATE TABLE `quincenasjf` (
   `año` int(11) DEFAULT NULL,
   `mes` int(11) DEFAULT NULL,
   `quincena` int(11) DEFAULT NULL,
-  `inicio` datetime DEFAULT NULL,
-  `fin` datetime DEFAULT NULL,
+  `inicio` date DEFAULT NULL,
+  `fin` date DEFAULT NULL,
   `usuario` int(11) DEFAULT NULL,
-  `fecha_creacion` timestamp NULL DEFAULT NULL,
+  `fecha_creacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Data for the table `quincenasjf` */
+
+insert  into `quincenasjf`(`id`,`año`,`mes`,`quincena`,`inicio`,`fin`,`usuario`,`fecha_creacion`) values (1,2020,9,1,'2020-08-31','2020-09-14',6,'2020-09-11 10:42:00');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
