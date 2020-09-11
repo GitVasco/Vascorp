@@ -388,12 +388,12 @@ $(".box").on("click", ".btnCargarTrusas", function () {
 if (localStorage.getItem("mesT") != null) {
 
 	cargarTablaProduccionTrusas(localStorage.getItem("mesT"));
-	console.log("lleno");
+	// console.log("lleno");
 	
 }else{
 
 	cargarTablaProduccionTrusas(null);
-	console.log("vacio");
+	// console.log("vacio");
 
 }
 
@@ -662,15 +662,12 @@ $("#daterange-btnTallerT").daterangepicker(
   });
 
 
-$(".tablaArticulosTalleres tbody").on("click", "button.agregarArt", function () {
+$(".tablaArticulosTalleres tbody").on("click", "button.agregarArtiTaller", function () {
 
-    var articuloOC = $(this).attr("articuloT");
-    var taller = $(this).attr("taller");
-    //console.log(stockG);
-
-    /* console.log("articuloOC", articuloOC); */
-
-    $(this).removeClass("btn-primary agregarArt");
+	var articuloT = $(this).attr("articuloT");
+	
+    var talleres = $(this).attr("taller");
+    $(this).removeClass("btn-primary agregarArtiTaller");
 
     $(this).addClass("btn-default");
 
@@ -688,18 +685,17 @@ $(".tablaArticulosTalleres tbody").on("click", "button.agregarArt", function () 
         dataType: "json",
         success: function (respuesta) {
 
-            /* console.log("respuesta", respuesta); */
+            // console.log("respuesta", respuesta); 
 
             var articulo = respuesta["articulo"];
             var packing = respuesta["packingB"];
-            var ord_corte = respuesta["ord_corte"];
-            var stockG = respuesta["stockG"];
+            var taller = respuesta["taller"];
 
             /* 
             todo: AGREGAR LOS CAMPOS
             */
 
-            $(".nuevoArticuloOC").append(
+            $(".nuevoArticuloIngreso").append(
 
                 '<div class="row" style="padding:5px 15px">' +
 
@@ -709,9 +705,9 @@ $(".tablaArticulosTalleres tbody").on("click", "button.agregarArt", function () 
 
                         '<div class="input-group">' +
                         
-                            '<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarOC" articuloOC="' + articuloOC + '"><i class="fa fa-times"></i></button></span>' +
+                            '<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarTaller" articuloIngreso="' + articuloT + '"><i class="fa fa-times"></i></button></span>' +
 
-                            '<input type="text" class="form-control nuevaDescripcionProducto input-sm" articuloOC="' + articuloOC + '" name="agregarOC" value="' + packing + '" codigoAC="' + articulo + '" readonly required>' +
+                            '<input type="text" class="form-control nuevaDescripcionProducto input-sm" articuloIngreso="' + articuloT + '" name="agregarT" value="' + packing + '" codigoAC="' + articulo + '" readonly required>' +
 
                         "</div>" +
 
@@ -719,9 +715,9 @@ $(".tablaArticulosTalleres tbody").on("click", "button.agregarArt", function () 
 
                     "<!-- Cantidad de la Orden de Corte -->" +
 
-                    '<div class="col-xs-2">' +
+                    '<div class="col-xs-6">' +
 
-                        '<input type="number" class="form-control nuevaCantidadArticuloOC input-sm" name="nuevaCantidadArticuloOC" id="nuevaCantidadArticuloOC" min="1" value="50" ord_corte="' + ord_corte + '" articulo="'+ articulo +'" nuevoOrdCorte="' + Number(Number(ord_corte) + 50) + '" required>' +
+                        '<input type="number" class="form-control nuevaCantidadArticuloIngreso input-sm" name="nuevaCantidadArticuloIngreso" id="nuevaCantidadArticuloIngreso" min="1" value="0" taller="' + taller + '" articulo="'+ articulo +'" nuevoTaller="' + Number(taller) + '" required>' +
 
                     "</div>" +
 
@@ -731,7 +727,7 @@ $(".tablaArticulosTalleres tbody").on("click", "button.agregarArt", function () 
 
             // SUMAR TOTAL DE UNIDADES
 
-                sumarTotalOC();
+			sumarTotalIngreso();
 
             // AGREGAR IMPUESTO
 
@@ -739,7 +735,7 @@ $(".tablaArticulosTalleres tbody").on("click", "button.agregarArt", function () 
 
             // AGRUPAR PRODUCTOS EN FORMATO JSON
 
-            listarArticulosOC();
+            listarArticulosIngreso();
 
             // PONER FORMATO AL PRECIO DE LOS PRODUCTOS
 
@@ -754,16 +750,16 @@ $(".tablaArticulosTalleres tbody").on("click", "button.agregarArt", function () 
 /* 
 * CUANDO CARGUE LA TABLA CADA VEZ QUE NAVEGUE EN ELLA
 */
-$(".tablaArticulosOrdenCorte").on("draw.dt", function () {
-    /* console.log("tabla"); */
+$(".tablaArticulosTalleres").on("draw.dt", function () {
 
-    if (localStorage.getItem("quitarOC") != null) {
-        var listaIdArticuloOC = JSON.parse(localStorage.getItem("quitarOC"));
+    if (localStorage.getItem("quitarTaller") != null) {
+        var listaIdArticuloT = JSON.parse(localStorage.getItem("quitarTaller"));
+		
+        for (var i = 0; i < listaIdArticuloT.length; i++) {
+			
+            $("button.recuperarBoton[articuloIngreso='" + listaIdArticuloT[i]["articuloIngreso"] + "']").removeClass("btn-default");
 
-        for (var i = 0; i < listaIdArticuloOC.length; i++) {
-            $("button.recuperarBoton[articuloOC='" + listaIdArticuloOC[i]["articuloOC"] + "']").removeClass("btn-default");
-
-            $("button.recuperarBoton[articuloOC='" + listaIdArticuloOC[i]["articuloOC"] + "']").addClass("btn-primary agregarArt");
+            $("button.recuperarBoton[articuloIngreso='" + listaIdArticuloT[i]["articuloIngreso"] + "']").addClass("btn-primary agregarArtiTaller");
         }
     }
 });
@@ -771,54 +767,52 @@ $(".tablaArticulosOrdenCorte").on("draw.dt", function () {
 /* 
 * QUITAR ARTICULO DE LA ORDEN DE CORTE Y RECUPERAR BOTÓN
 */
-var idQuitarArticuloOC = [];
+var idQuitarArticuloT= [];
 
-localStorage.removeItem("quitarOC");
+localStorage.removeItem("quitarTaller");
 
-$(".formularioOrdenCorte").on("click", "button.quitarOC", function () {
+$(".formularioIngreso").on("click", "button.quitarTaller", function () {
 
     /* console.log("boton"); */
 
     $(this).parent().parent().parent().parent().remove();
-
-    var articuloOC = $(this).attr("articuloOC");
-
+    var articuloIngreso = $(this).attr("articuloIngreso");
     /*=============================================
     ALMACENAR EN EL LOCALSTORAGE EL ID DEL MATERIA PRIMA A QUITAR
     =============================================*/
 
-    if (localStorage.getItem("quitarOC") == null) {
+    if (localStorage.getItem("quitarTaller") == null) {
 
-        idQuitarArticuloOC = [];
+        idQuitarArticuloT = [];
 
     } else {
 
-        idQuitarArticuloOC.concat(localStorage.getItem("quitarOC"))
+        idQuitarArticuloT.concat(localStorage.getItem("quitarTaller"))
 
     }
 
-    idQuitarArticuloOC.push({
-        "articuloOC": articuloOC
+    idQuitarArticuloT.push({
+        "articuloIngreso": articuloIngreso
     });
 
-    localStorage.setItem("quitarOC", JSON.stringify(idQuitarArticuloOC));
+	localStorage.setItem("quitarTaller", JSON.stringify(idQuitarArticuloT));
+	console.log(articuloIngreso);
+    $("button.recuperarBoton[articuloIngreso='" + articuloIngreso + "']").removeClass('btn-default');
 
-    $("button.recuperarBoton[articuloOC='" + articuloOC + "']").removeClass('btn-default');
-
-    $("button.recuperarBoton[articuloOC='" + articuloOC + "']").addClass('btn-primary agregarArt');
+    $("button.recuperarBoton[articuloIngreso='" + articuloIngreso + "']").addClass('btn-primary agregarArtiTaller');
 
 
-    if ($(".nuevoArticuloOC").children().length == 0) {
+    if ($(".nuevoArticuloIngreso").children().length == 0) {
 
-        $("#nuevoTotalOrdenCorte").val(0);
-        $("#totalOrdenCorte").val(0);
-        $("#nuevoTotalOrdenCorte").attr("total", 0);
+        $("#nuevoTotalTaller").val(0);
+        $("#totalTaller").val(0);
+        $("#nuevoTotalTaller").attr("total", 0);
 
     } else {
 
             // SUMAR TOTAL DE UNIDADES
 
-            sumarTotalOC();
+            sumarTotalIngreso();
 
             // AGREGAR IMPUESTO
 
@@ -826,7 +820,7 @@ $(".formularioOrdenCorte").on("click", "button.quitarOC", function () {
 
             // AGRUPAR PRODUCTOS EN FORMATO JSON
 
-            listarArticulosOC()
+            listarArticulosIngreso()
 
 
     }
@@ -836,13 +830,11 @@ $(".formularioOrdenCorte").on("click", "button.quitarOC", function () {
 /* 
 * MODIFICAR LA CANTIDAD
 */
-$(".formularioOrdenCorte").on("change", "input.nuevaCantidadArticuloOC", function() {
+$(".formularioIngreso").on("change", "input.nuevaCantidadArticuloIngreso", function() {
 
-    var nuevoOrdCorte = Number($(this).attr("ord_corte")) + Number($(this).val());
+    var nuevoTaller = Number($(this).attr("taller")) + Number($(this).val());
     var articulo = $(this).attr("articulo");
     //console.log(articulo);
-    var articuloM = articulo+'M';
-    //console.log(articuloM);
 
     var pendiente = $(this)
     .parent()
@@ -860,66 +852,19 @@ $(".formularioOrdenCorte").on("change", "input.nuevaCantidadArticuloOC", functio
 
     pendiente.val(quedaPen);
 
-    $(this).attr("nuevoOrdCorte", Number(nuevoOrdCorte));
-
-
-    if (quedaPen > 0){
-
-        inputPositivoPend(articulo);
-
-    }else{
-
-        inputNegativoPend(articulo);
-
-    }
-
-    var mes = $(this)
-    .parent()
-    .parent()
-    .children(".mes")
-    .children(".nuevoMes");
-    //console.log(mes);
-
-    var mesReal = mes.attr("mesReal");
-    //console.log(mesReal);
-
-    var stockG = mes.attr("stockG");
-    //console.log(Number(stockG) +50);
-    var stock = Number(stockG) + Number($(this).val());
-
-    var ventasG = mes.attr("ventasG");
-    //console.log(ventasG * 1.3);
-    var venta = ventasG * 1.3
- 
-    var quedaMes = stock / venta;
-    //console.log(quedaMes);
-
-    mes.val(quedaMes.toFixed(2));
-
-    if(quedaMes < 2.1){
-
-        inputPositivoMes(articuloM);
-        //console.log("Hola mundo");
-
-    }else{
-
-        inputNegativoMes(articuloM);
-        //console.log("Hola no Mundo");
-
-    }
-
+    $(this).attr("nuevoTaller", Number(nuevoTaller));
 
 
     // SUMAR TOTAL DE UNIDADES
 
-    sumarTotalOC();
+    sumarTotalIngreso();
   
     // AGREGAR IMPUESTO
   
 
     // AGRUPAR PRODUCTOS EN FORMATO JSON
   
-    listarArticulosOC();
+    listarArticulosIngreso();
 
 
 
@@ -930,9 +875,9 @@ $(".formularioOrdenCorte").on("change", "input.nuevaCantidadArticuloOC", functio
 * SUMAR EL TOTAL DE LAS ORDENES DE CORTE
 */
   
-function sumarTotalOC() {
+function sumarTotalIngreso() {
 
-    var cantidadOc = $(".nuevaCantidadArticuloOC");
+    var cantidadOc = $(".nuevaCantidadArticuloIngreso");
   
     //console.log("cantidadOc", cantidadOc);
   
@@ -953,43 +898,43 @@ function sumarTotalOC() {
 
     /* console.log("sumarTotal", sumarTotal); */
 
-    $("#nuevoTotalOrdenCorte").val(sumarTotal);
-    $("#totalOrdenCorte").val(sumarTotal);
-    $("#nuevoTotalOrdenCorte").attr("total", sumarTotal);
+    $("#nuevoTotalTaller").val(sumarTotal);
+    $("#totalTaller").val(sumarTotal);
+    $("#nuevoTotalTaller").attr("total", sumarTotal);
 
 }
 
 /* 
 * FORMATO DE MILES AL TOTAL
 */
-$("#nuevoTotalOrdenCorte").number(true, 0);
+$("#nuevoTotalTaller").number(true, 0);
 
 /* 
 * LISTAR TODOS LOS ARTICULOS
 */
-function listarArticulosOC() {
+function listarArticulosIngreso() {
 
     var listaArticulos = [];
   
     var descripcion = $(".nuevaDescripcionProducto");
   
-    var cantidad = $(".nuevaCantidadArticuloOC");
+    var cantidad = $(".nuevaCantidadArticuloIngreso");
     
     for (var i = 0; i < descripcion.length; i++) {
 
       listaArticulos.push({
 
-        id: $(descripcion[i]).attr("articuloOC"),
+        id: $(descripcion[i]).attr("articuloIngreso"),
         articulo: $(descripcion[i]).attr("codigoAC"),
         cantidad: $(cantidad[i]).val(),
-        ord_corte: $(cantidad[i]).attr("nuevoOrdCorte")
+        taller: $(cantidad[i]).attr("nuevoTaller")
 
       });
     }
   
-    /* console.log("listaArticulos", JSON.stringify(listaArticulos)); */
+    // console.log("listaArticulos", JSON.stringify(listaArticulos)); 
   
-    $("#listaArticulosOC").val(JSON.stringify(listaArticulos));
+    $("#listaArticulosIngreso").val(JSON.stringify(listaArticulos));
 
 }
 
@@ -1007,29 +952,29 @@ $(".tablaOrdenCorte").on("click", ".btnEditarOC", function () {
 /* 
 *FUNCIÓN PARA DESACTIVAR LOS BOTONES AGREGAR CUANDO EL ARTICULO YA HABÍA SIDO SELECCIONADO EN LA CARPETA
 */
-function quitarAgregarArticuloOC() {
+function quitarAgregarArticuloT() {
 
 	//Capturamos todos los id de productos que fueron elegidos en la venta
-    var articuloOC = $(".quitarOC");
+    var articuloIngreso = $(".quitarTaller");
     //console.log("articuloOC", articuloOC);
 
 	//Capturamos todos los botones de agregar que aparecen en la tabla
-    var botonesTablaOC = $(".tablaArticulosOrdenCorte tbody button.agregarArt");
+    var botonesTablaIngreso = $(".tablaArticulosTalleres tbody button.agregarArtiTaller");
     //console.log("botonesTablaOC", botonesTablaOC);
 
 	//Recorremos en un ciclo para obtener los diferentes articuloOC que fueron agregados a la venta
-	for (var i = 0; i < articuloOC.length; i++) {
+	for (var i = 0; i < articuloIngreso.length; i++) {
 
 		//Capturamos los Id de los productos agregados a la venta
-		var boton = $(articuloOC[i]).attr("articuloOC");
+		var boton = $(articuloIngreso[i]).attr("articuloIngreso");
 
 		//Hacemos un recorrido por la tabla que aparece para desactivar los botones de agregar
-		for (var j = 0; j < botonesTablaOC.length; j++) {
+		for (var j = 0; j < botonesTablaIngreso.length; j++) {
 
-			if ($(botonesTablaOC[j]).attr("articuloOC") == boton) {
+			if ($(botonesTablaIngreso[j]).attr("articuloIngreso") == boton) {
 
-				$(botonesTablaOC[j]).removeClass("btn-primary agregarMP");
-				$(botonesTablaOC[j]).addClass("btn-default");
+				$(botonesTablaIngreso[j]).removeClass("btn-primary agregarArtiTaller");
+				$(botonesTablaIngreso[j]).addClass("btn-default");
 
 			}
 		}
@@ -1041,7 +986,7 @@ function quitarAgregarArticuloOC() {
 /* 
 * CADA VEZ QUE CARGUE LA TABLA CUANDO NAVEGAMOS EN ELLA EJECUTAR LA FUNCIÓN:
 */
-$(".tablaArticulosOrdenCorte").on("draw.dt", function() {
-    quitarAgregarArticuloOC();
+$(".tablaArticulosTalleres").on("draw.dt", function() {
+    quitarAgregarArticuloT();
 });
   

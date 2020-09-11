@@ -67,6 +67,17 @@ class AjaxArticulos{
 
 	}	
 
+	public $articuloT;
+	public function ajaxMostrarArticuloT(){
+
+		$valor = $this->articuloT;
+
+		$respuesta = controladorArticulos::ctrMostrarArticulos($valor);
+
+		echo json_encode($respuesta);
+
+	}	
+
 }
 
 //OBJETOS
@@ -112,5 +123,17 @@ if( isset($_POST["articuloAC"])){
 	$mostrarArticuloAC = new AjaxArticulos();
 	$mostrarArticuloAC -> articuloAC = $_POST["articuloAC"];
 	$mostrarArticuloAC -> ajaxMostrarArticuloAC();
+
+}
+
+
+/* 
+* MOSTRAR ARTICULOS PARA INGRESAR STOCK
+*/ 
+if( isset($_POST["articuloT"])){
+
+	$mostrarArticuloT = new AjaxArticulos();
+	$mostrarArticuloT -> articuloT = $_POST["articuloT"];
+	$mostrarArticuloT -> ajaxMostrarArticuloT();
 
 }

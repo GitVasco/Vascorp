@@ -203,7 +203,7 @@ class TablaArticulosOrdenCorte{
         /* 
         todo: BOTONES
         */                
-        $botones =  "<div class='btn-group'><button class='btn btn-primary btn-xs agregarArt recuperarBoton' articuloT='".$articulos[$i]["articulo"]."' taller='".$articulos[$i]["taller"]."'><i class='fa fa-plus-circle'></i></button></div>";
+        $botones =  "<div class='btn-group'><button class='btn btn-primary btn-xs agregarArtiTaller recuperarBoton' articuloT='".$articulos[$i]["articulo"]."' taller='".$articulos[$i]["taller"]."'><i class='fa fa-plus-circle'></i></button></div>";
         
         /* 
         todo: PEDIDOS

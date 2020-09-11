@@ -130,12 +130,12 @@
                 ENTRADA PARA AGREGAR MATERIAPRIMA
                 ======================================-->
 
-                <div class="form-group row nuevoArticuloOC">
+                <div class="form-group row nuevoArticuloIngreso">
 
 
                 </div>
 
-                <input type="hidden" id="listaArticulosOC" name="listaArticulosOC">                
+                <input type="hidden" id="listaArticulosIngreso" name="listaArticulosIngreso">                
 
                 <div class="row">
 
@@ -199,7 +199,7 @@
 
             <div class="box-footer">
 
-              <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-floppy-o"></i>  Guardar Orden Corte</button>
+              <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-floppy-o"></i>  Guardar Ingreso</button>
               
               <a href="ordencorte" id="cancel" name="cancel" class="btn btn-danger"><i class="fa fa-times-circle"></i> Cancelar</a>
             </div>
@@ -208,8 +208,8 @@
 
           <?php
 
-            $guardarOrdenCorte = new ControladorOrdenCorte();
-            $guardarOrdenCorte -> ctrCrearOrdenCorte();
+            $guardarIngreso = new ControladorIngresos();
+            $guardarIngreso -> ctrCrearIngreso();
 
           ?>            
           
