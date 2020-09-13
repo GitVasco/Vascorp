@@ -235,20 +235,14 @@
               <thead>
 
                 <tr>
-                  <th>Modelo</th>
-                  <th>Color</th>
-                  <th>Talla</th>
-                  <th>Proy</th>
-                  <th>Prod</th>
-                  <th>Avance</th>
-                  <th>Stock</th>
-                  <th>Ped.</th>
-                  <th>En Taller</th>
-                  <th>Alm. Corte</th>
-                  <th>Ord. Corte</th>
-                  <th>Vtas 30d</th>
-                  <th>Xprog</th>
-                  <th style="width:10px">Acciones</th>
+                  <th class="text-center">Modelo</th>
+                  <th class="text-center">Color</th>
+                  <th class="text-center">Talla</th>
+                  <th class="text-center">Stock</th>
+                  <th class="text-center">En Taller</th>
+                  <th class="text-center">Alm. Corte</th>
+                  <th class="text-center">Ord. Corte</th>
+                  <th class="text-center">Acciones</th>
                 </tr>
 
               </thead>

@@ -3,6 +3,31 @@
 class ControladorIngresos{
 
     /* 
+    * MOSTRAR DATOS DE LAS ORDENES DE CORTE
+    */
+    static public function ctrMostrarIngresos($item, $valor){
+
+        $tabla = "movimientos_cabecerajf";
+
+        $respuesta = ModeloIngresos::mdlMostarIngresos($tabla, $item, $valor);
+
+        return $respuesta;
+
+    }
+
+    /* 
+    * MOSTRAR DATOS DE LAS ORDENES DE CORTE
+    */
+    static public function ctrMostrarDetallesIngresos($item, $valor){
+
+        $tabla = "movimientosjf";
+
+        $respuesta = ModeloIngresos::mdlMostarDetallesIngresos($tabla, $item, $valor);
+
+        return $respuesta;
+
+    }
+    /* 
     * CREAR INGRESO
     */
     static public function ctrCrearIngreso(){
@@ -134,11 +159,11 @@ class ControladorIngresos{
     */
     static public function ctrEditarIngreso(){
 
-        if(isset($_POST["editarCodigo"]) && isset($_POST["idUsuario"]) && isset($_POST["listaArticulosOC"])){
+        if(isset($_POST["idUsuario"]) && isset($_POST["listaArticulosIngreso"])){
 
             #var_dump($_POST["editarCodigo"], $_POST["idUsuario"],$_POST["listaArticulosOC"]);
 
-            if($_POST["listaArticulosOC"] == ""){
+            if($_POST["listaArticulosIngreso"] == ""){
 
 				echo '<script>
 						swal({
@@ -149,7 +174,7 @@ class ControladorIngresos{
 							confirmButtonText: "Cerrar"
 						}).then((result)=>{
 							if(result.value){
-								window.location="index.php?ruta=editar-ordencorte&codigo='.$_POST["codigoE"].'";}
+								window.location="index.php?ruta=editar-ingreso";}
 						});
 					</script>';              
 
@@ -172,14 +197,14 @@ class ControladorIngresos{
 
                 }
 
-                if($_POST["listaArticulosOC"] == ""){
+                if($_POST["listaArticulosIngreso"] == ""){
 
                     $listaArticulosOC = $detaOC;
                     $validarCambio = false;
 
                 }else{
 
-                    $listaArticulosOC = json_decode($_POST["listaArticulosOC"], true);
+                    $listaArticulosOC = json_decode($_POST["listaArticulosIngreso"], true);
                     $validarCambio = true;
 
                 }
@@ -191,8 +216,8 @@ class ControladorIngresos{
                     */
                     foreach($listaArticulosOC as $key=>$value){
 
-                        $item1 = "ord_corte";
-                        $valor1 = $value["ord_corte"];
+                        $item1 = "taller";
+                        $valor1 = $value["taller"];
                         $valor2 = $value["articulo"];
 
                         ModeloArticulos::mdlActualizarUnDato("articulojf", $item1, $valor1, $valor2);
@@ -200,18 +225,18 @@ class ControladorIngresos{
                     }
 
                 }
-
+                $fecha=new DateTime();
                 /* 
                 todo: Editamos los cambios de la cabecera Orden de Corte
                 */
-                $datos = array( "codigo"=>$_POST["editarCodigo"],
+                $datos = array( "documento"=>$_POST["editarCodigo"],
+                                "taller"=>$_POST["nuevoTalleres"],
                                 "usuario"=>$_POST["idUsuario"],
-                                "total"=>$_POST["totalOrdenCorte"],
-                                "saldo"=>$_POST["totalOrdenCorte"],
-                                "lastUpdate"=>$_POST["fechaActual"]);
+                                "total"=>$_POST["totalTaller"],
+                                "fecha"=>$fecha->format("Y-m-d"));
                 #var_dump("datos", $datos);
 
-                $respuesta = ModeloOrdenCorte::mdlEditarOrdenCorte("ordencortejf", $datos);
+                $respuesta = ModeloIngresos::mdlEditarIngreso("movimientos_cabecerajf", $datos);
 
                 if($respuesta == "ok"){
 
@@ -219,7 +244,7 @@ class ControladorIngresos{
                     todo: Editamos los cambios del detalle Ordenes de Corte, primero eliminamos los detalles
                     */
 
-                    $eliminarDato = ModeloOrdenCorte::mdlEliminarDato("detalles_ordencortejf", "ordencorte", $_POST["editarCodigo"]);
+                    $eliminarDato = ModeloIngresos::mdlEliminarDato("movimientosjf", "documento", $_POST["editarCodigo"]);
 
                     $eliminarDato = "ok";
 
@@ -229,11 +254,12 @@ class ControladorIngresos{
 
                             #var_dump("listaArticulosOC", $listaArticulosOC);
 
-                            $datosD = array("ordencorte"=>$_POST["editarCodigo"],
+                            $datosD = array("tipo"=>"E20",
+                                            "documento"=>$_POST["nuevoCodigo"],
+                                            "taller"=>$_POST["nuevoTalleres"],
+                                            "fecha"=>$fecha->format("Y-m-d"),
                                             "articulo"=>$value["articulo"],
-                                            "cantidad"=>$value["cantidad"],
-                                            "saldo"=>$value["cantidad"]);
-
+                                            "cantidad"=>$value["cantidad"]);
                             #var_dump("datosD", $datosD);
 
                             ModeloIngresos::mdlGuardarDetalleIngreso("movimientosjf", $datosD);

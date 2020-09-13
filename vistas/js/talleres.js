@@ -664,7 +664,7 @@ $("#daterange-btnTallerT").daterangepicker(
 
 $(".tablaArticulosTalleres tbody").on("click", "button.agregarArtiTaller", function () {
 
-	var articuloT = $(this).attr("articuloT");
+	var articuloIngreso = $(this).attr("articuloIngreso");
 	
     var talleres = $(this).attr("taller");
     $(this).removeClass("btn-primary agregarArtiTaller");
@@ -672,7 +672,7 @@ $(".tablaArticulosTalleres tbody").on("click", "button.agregarArtiTaller", funct
     $(this).addClass("btn-default");
 
     var datos = new FormData();
-    datos.append("articuloT", articuloT);
+    datos.append("articuloT", articuloIngreso);
 
     $.ajax({
 
@@ -685,7 +685,7 @@ $(".tablaArticulosTalleres tbody").on("click", "button.agregarArtiTaller", funct
         dataType: "json",
         success: function (respuesta) {
 
-            // console.log("respuesta", respuesta); 
+            console.log("respuesta", respuesta); 
 
             var articulo = respuesta["articulo"];
             var packing = respuesta["packingB"];
@@ -705,9 +705,9 @@ $(".tablaArticulosTalleres tbody").on("click", "button.agregarArtiTaller", funct
 
                         '<div class="input-group">' +
                         
-                            '<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarTaller" articuloIngreso="' + articuloT + '"><i class="fa fa-times"></i></button></span>' +
+                            '<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarTaller" articuloIngreso="' + articuloIngreso + '"><i class="fa fa-times"></i></button></span>' +
 
-                            '<input type="text" class="form-control nuevaDescripcionProducto input-sm" articuloIngreso="' + articuloT + '" name="agregarT" value="' + packing + '" codigoAC="' + articulo + '" readonly required>' +
+                            '<input type="text" class="form-control nuevaDescripcionProducto input-sm" articuloIngreso="' + articuloIngreso + '" name="agregarT" value="' + packing + '" codigoAC="' + articulo + '" readonly required>' +
 
                         "</div>" +
 
@@ -941,11 +941,11 @@ function listarArticulosIngreso() {
 /* 
 * BOTON EDITAR ORDEN DE CORTE
 */
-$(".tablaOrdenCorte").on("click", ".btnEditarOC", function () {
+$(".tablaIngresoM").on("click", ".btnEditarIngStock", function () {
 
-	var codigo = $(this).attr("codigo");
+	var idIngreso = $(this).attr("idIngreso");
 
-  window.location = "index.php?ruta=editar-detalle-ordencorte&codigo=" + codigo;
+  window.location = "index.php?ruta=editar-ingreso&idIngreso=" + idIngreso;
   
 })
 

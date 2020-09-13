@@ -4,6 +4,69 @@
 
 class ModeloIngresos{
 
+	static public function mdlMostarIngresos($tabla, $item, $valor){
+
+		if($item != null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item ORDER BY id DESC");
+
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();
+
+		}else{
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+															mc.*,u.nombre
+														FROM
+															movimientos_cabecerajf mc 
+															LEFT JOIN usuariosjf u 
+																ON oc.usuario = u.id");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;		
+
+
+	}
+
+	static public function mdlMostarDetallesIngresos($tabla, $item, $valor){
+
+		if($item != null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item ORDER BY id DESC");
+
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}else{
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;		
+
+
+	}
+ 
 	/* 
 	* Guardar cabecera de ORDENES DE CORTE
 	*/
@@ -124,6 +187,29 @@ class ModeloIngresos{
 		
 	}
 
+/* 
+	* Método para eliminar los detalles de los ingresos
+	*/
+	static public function mdlEliminarDato($tabla,$item,$valor){
+
+		$sql="DELETE FROM $tabla WHERE $item=:$item";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":".$item,$valor,PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt=null;
+	}
 
 	/* 
 	* Método para eliminar la orden de corte
