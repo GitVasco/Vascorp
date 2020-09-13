@@ -516,6 +516,7 @@
                         </ul>
 
                     </li>
+
                     <li>
 
                         <a href="ingresos">
@@ -524,13 +525,44 @@
                         </a>
 
                     </li>  
+
                     <li>
 
                         <a href="asistencia">
                         <i class="fa fa-calendar"></i>Asistencias
                         </a>
                     
-                    </li>     
+                    </li>
+
+                    <li class="treeview">
+
+                        <a href="#"><i class="fa fa-scissors"></i> Producción
+                        <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                        </a>
+
+                        <ul class="treeview-menu">
+
+                            <li>
+
+                                <a href="quincena">
+                                <i class="fa fa-circle-o"></i>Quincenas
+                                </a>
+
+                            </li>
+
+                            <li>
+
+                                <a href="eficiencia">
+                                <i class="fa fa-circle-o"></i>Eficiencia
+                                </a>
+
+                            </li>                                                            
+
+                        </ul>
+
+                    </li>                         
 
                     <li class="treeview">
 
@@ -557,15 +589,7 @@
                                 </a>
 
                             </li>      
-
-                            <li>
-
-                                <a href="quincena">
-                                <i class="fa fa-circle-o"></i> Quincena
-                                </a>
-
-                            </li>                                                                               
-
+                                                                      
                             <li>
 
                                 <a href="urgencias">
