@@ -183,7 +183,7 @@ class ControladorIngresos{
                 /* 
                 todo: Traemos los datos del detalle de Orden de Corte
                 */
-                $detaOC = ModeloIngresos::mdlMostraDetallesIngreso("movimientosjf", "documento", $_POST["editarCodigo"]);
+                $detaOC = ModeloIngresos::mdlMostarDetallesIngresos("movimientosjf", "documento", $_POST["editarCodigo"]);
                 #var_dump("detaOC", $detaOC);
 
                 /* 
@@ -230,7 +230,7 @@ class ControladorIngresos{
                 todo: Editamos los cambios de la cabecera Orden de Corte
                 */
                 $datos = array( "documento"=>$_POST["editarCodigo"],
-                                "taller"=>$_POST["nuevoTalleres"],
+                                "taller"=>$_POST["editarTalleres"],
                                 "usuario"=>$_POST["idUsuario"],
                                 "total"=>$_POST["totalTaller"],
                                 "fecha"=>$fecha->format("Y-m-d"));
@@ -255,8 +255,8 @@ class ControladorIngresos{
                             #var_dump("listaArticulosOC", $listaArticulosOC);
 
                             $datosD = array("tipo"=>"E20",
-                                            "documento"=>$_POST["nuevoCodigo"],
-                                            "taller"=>$_POST["nuevoTalleres"],
+                                            "documento"=>$_POST["editarCodigo"],
+                                            "taller"=>$_POST["editarTalleres"],
                                             "fecha"=>$fecha->format("Y-m-d"),
                                             "articulo"=>$value["articulo"],
                                             "cantidad"=>$value["cantidad"]);
@@ -326,13 +326,12 @@ class ControladorIngresos{
     /* 
     *Método para eliminar las ordenes de corte
     */
-    static public function ctrEliminarIngreso($codigo){
+    static public function ctrEliminarIngreso(){
 
-        $item = "codigo";
-        $infoOC = ModeloIngresos::mdlMostraDetallesIngreso("movimientosjf", $item, $codigo);
-        #var_dump("infoOC", $infoOC);
+        $item = "documento";
+        $codigo=$_GET["documento"];
 
-        $detaOC = ModeloIngresos::mdlMostraDetallesIngreso("movimientosjf", "ordencorte", $codigo);
+        $detaOC = ModeloIngresos::mdlMostraDetallesIngreso("movimientosjf", "documento", $codigo);
         #var_dump("detaOC", $detaOC);
 
         /* 
@@ -357,9 +356,9 @@ class ControladorIngresos{
         */
         $tablaOC = "movimientos_cabecerajf";
         $itemOC = "id";
-        $valorOC = $codigo;
+        $valorOC = $_GET["idIngreso"];
 
-        $respuesta = ModeloOrdenCorte::mdlEliminarDato($tablaOC, $itemOC, $valorOC);
+        $respuesta = ModeloIngresos::mdlEliminarDato($tablaOC, $itemOC, $valorOC);
 
         if($respuesta == "ok"){
 

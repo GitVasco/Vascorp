@@ -26,7 +26,7 @@ class TablaIngresos{
             $total = number_format($ingreso[$i]["total"],0);
 
             
-            $botones =  "<div class='btn-group'><button class='btn btn-warning  btnEditarIngStock' title='Editar Ingreso stock' idIngreso='".$ingreso[$i]["id"]."'><i class='fa fa-pencil'></i></button><button class='btn btn-danger  btnEliminarIngStock' title='Eliminar Ingreso stock' idIngreso='".$ingreso[$i]["id"]."'><i class='fa fa-times'></i></div>";
+            $botones =  "<div class='btn-group'><button class='btn btn-warning  btnEditarIngStock' title='Editar Ingreso stock' idIngreso='".$ingreso[$i]["id"]."'><i class='fa fa-pencil'></i></button><button class='btn btn-danger  btnEliminarIngStock' title='Eliminar Ingreso stock' idIngreso='".$ingreso[$i]["id"]."' documento='".$ingreso[$i]["documento"]."'><i class='fa fa-times'></i></div>";
 
 
 
