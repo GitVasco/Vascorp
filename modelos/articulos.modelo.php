@@ -250,6 +250,32 @@ class ModeloArticulos
 	}
 
 	/* 
+	* MOSTRAR ARTICULOS PARA LA TABLA DE ORDENES DE CORTE
+	*/
+	static public function mdlMostrarArticulosTaller(){
+
+		$stmt = Conexion::conectar()->prepare("SELECT a.articulo,
+		a.modelo,
+		a.marca,
+		a.nombre,
+		a.color,
+	   	a.talla,
+		a.stock,
+		a.taller,
+		a.alm_corte,
+		a.ord_corte FROM
+		articulojf a 
+		WHERE a.taller > 0");
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	/* 
 	* MOSTRAR ARTICULOS PARA LA TABLA URGENCIA
 	*/
 	static public function mdlMostrarUrgencia($tabla, $valor){

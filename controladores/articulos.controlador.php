@@ -530,6 +530,17 @@ class controladorArticulos{
 		return $respuesta;
 		
 	}
+	/* 
+	* MOSTRAR ARTICULOS PARA LA TABLA DE ORDENES DE CORTE
+	*/	
+	static public function ctrMostrarArticulosTaller(){
+
+		$respuesta = ModeloArticulos::mdlMostrarArticulosTaller();
+
+		return $respuesta;
+		
+	}
+
 
 	/* 
 	* MOSTRAR ARTICULOS PARA LA TABLA DE ORDENES DE CORTE - PRODUCCION
