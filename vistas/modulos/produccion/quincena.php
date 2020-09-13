@@ -258,11 +258,13 @@ MODAL EDITAR QUINCENA
                   date_default_timezone_set('America/Lima');
                   $año= date("Y");
 
-                  echo '<input type="hidden" id="año" name="año" value="'.$año.'">';
+                  echo '<input type="hidden" id="editarAño" name="editarAño" value="'.$año.'">';
 
                 ?>
+
+                <input type="hidden" id="id" name="id">
               
-                <input type="hidden" id="usuario" name="usuario" value="<?php echo $_SESSION["id"]; ?>">
+                <input type="hidden" id="editarUsuario" name="editarUsuario" value="<?php echo $_SESSION["id"]; ?>">
               
                 <select class="form-control selectpicker input-lg" id="editarMes" name="editarMes" data-live-search="true">
 
@@ -293,7 +295,7 @@ MODAL EDITAR QUINCENA
 
                 <span class="input-group-addon"><i class="fa fa-tag"></i></span>
 
-                <select class="form-control input-lg" id="editarQuincena" name="editarQuincena" required>
+                <select class="form-control input-lg" id="editarQuincena" name="editarQuincena" required readonly>
 
                   <option value="">Selecionar Quincena</option>
 
@@ -315,7 +317,7 @@ MODAL EDITAR QUINCENA
               
                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
 
-                <input type="date" class="form-control input-lg" id="editarInicio" name="editarInicio" placeholder="Fecha de inicio" required>
+                <input type="date" class="form-control input-lg" id="editarInicio" name="editarInicio" required>
 
               </div>
 
@@ -355,8 +357,8 @@ MODAL EDITAR QUINCENA
 
       <?php
 
-      $crearQuincena = new ControladorProduccion();
-      //$crearQuincena->ctrCrearQuincenas();
+      $editarQuincena = new ControladorProduccion();
+      $editarQuincena->ctrEditarQuincenas();
 
       ?>
 
