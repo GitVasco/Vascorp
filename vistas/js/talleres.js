@@ -518,6 +518,9 @@ function cargarTablaProduccionBrasier(mesB) {
 $("#nuevoTalleres").change(function(){
 	$("#nuevoCodigo").val($(this).val()+"1234");
 })
+$("#editarTalleres").change(function(){
+	$("#editarCodigo").val($(this).val()+"1234");
+})
 $('.tablaArticulosTalleres').DataTable( {
     "ajax": "ajax/tabla-articulostaller.ajax.php",
     "deferRender": true,
@@ -717,7 +720,7 @@ $(".tablaArticulosTalleres tbody").on("click", "button.agregarArtiTaller", funct
 
                     '<div class="col-xs-6">' +
 
-                        '<input type="number" class="form-control nuevaCantidadArticuloIngreso input-sm" name="nuevaCantidadArticuloIngreso" id="nuevaCantidadArticuloIngreso" min="1" value="0" taller="' + taller + '" articulo="'+ articulo +'" nuevoTaller="' + Number(taller) + '" required>' +
+                        '<input type="number" class="form-control nuevaCantidadArticuloIngreso input-sm" name="nuevaCantidadArticuloIngreso" id="nuevaCantidadArticuloIngreso" min="1" value="0" taller="' + taller + '" articulo="'+ articulo +'" nuevoTaller="' + Number(Number(taller) - Number($("#nuevaCantidadArticuloIngreso").val())) + '" required>' +
 
                     "</div>" +
 
@@ -1151,3 +1154,32 @@ $("#daterange-btnIngresoM").daterangepicker(
       cargarTablaIngresosM(fechaInicial, fechaFinal);
     }
   });
+
+/*=============================================
+ELIMINAR INGRESOS
+=============================================*/
+$(".tablaIngresoM").on("click", ".btnEliminarIngStock", function () {
+
+	var idIngreso = $(this).attr("idIngreso");
+	var documento=$(this).attr("documento")
+
+    swal({
+        title: '¿Está seguro de borrar el ingreso de stock?',
+        text: "¡Si no lo está puede cancelar la acción!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si, borrar ingreso de stock!'
+    }).then(function (result) {
+
+        if (result.value) {
+
+            window.location = "index.php?ruta=ingresos&idIngreso=" + idIngreso + "&documento="+documento;
+
+        }
+
+    })
+
+})

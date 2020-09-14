@@ -4,7 +4,7 @@
 
     <h1>
 
-      Crear ingresos
+      Editar ingresos
 
     </h1>
 
@@ -73,7 +73,7 @@
                   <div class="input-group">
 
                     <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                    <input type="text" class="form-control" id="nuevoCodigo" name="nuevoCodigo" value="<?php echo $ingreso["documento"]; ?>" readonly>
+                    <input type="text" class="form-control" id="editarCodigo" name="editarCodigo" value="<?php echo $ingreso["documento"]; ?>" readonly>
                     <input type="hidden" id="pasarTaller" value="<?php echo $ingreso["taller"]; ?>" >  
 
                   </div>
@@ -89,7 +89,7 @@
                     <div class="input-group">
 
                         <span class="input-group-addon"><i class="fa fa-wrench"></i></span>
-                        <select class="form-control  input-sm selectpicker" name="nuevoTalleres" id="nuevoTalleres" data-live-search="true">
+                        <select class="form-control  input-sm selectpicker" name="editarTalleres" id="editarTalleres" data-live-search="true">
                         <option value="">Seleccionar un taller</option>
                         <?php
 
@@ -144,8 +144,6 @@
                   $listaArticuloIng = ControladorIngresos::ctrMostrarDetallesIngresos("documento",$ingreso["documento"]);
                   #var_dump("ordencorte", $ordencorte["codigo"]);
                   #var_dump("listaArticuloOC", $listaArticuloOC);
-                  var_dump($listaArticuloIng);
-
                   foreach($listaArticuloIng as $key=>$value){
 
                     $infoArticulo = ControladorArticulos::ctrMostrarArticulos($value["articulo"]);
@@ -167,7 +165,7 @@
                         
                             <div class="col-xs-6">
                         
-                              <input type="number" class="form-control nuevaCantidadArticuloIngreso input-sm" name="nuevaCantidadArticuloIngreso" id="nuevaCantidadArticuloIngreso" min="1" value="'.$value["cantidad"].'" taller="'.$tallerAntiguo.'" articulo="'.$infoArticulo["articulo"].'" nuevoOrdCorte="'.$infoArticulo["taller"].'" required>
+                              <input type="number" class="form-control nuevaCantidadArticuloIngreso input-sm" name="nuevaCantidadArticuloIngreso" id="nuevaCantidadArticuloIngreso" min="1" value="'.$value["cantidad"].'" taller="'.$tallerAntiguo.'" articulo="'.$infoArticulo["articulo"].'" nuevotaller="'.$infoArticulo["taller"].'" required>
                         
                             </div>';
                             echo '</div>';  
@@ -243,7 +241,7 @@
 
               <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-floppy-o"></i>  Guardar cambios</button>
               
-              <a href="ordencorte" id="cancel" name="cancel" class="btn btn-danger"><i class="fa fa-times-circle"></i> Cancelar</a>
+              <a href="ingresos" id="cancel" name="cancel" class="btn btn-danger"><i class="fa fa-times-circle"></i> Cancelar</a>
             </div>
 
           </form>
@@ -309,7 +307,7 @@
 <script>
 $(document).ready(function(){
   pasar=$("#pasarTaller").val();          
-  $("#nuevoTalleres").val(pasar);
-  $("#nuevoTalleres").selectpicker("refresh");
+  $("#editarTalleres").val(pasar);
+  $("#editarTalleres").selectpicker("refresh");
 })
 </script>
