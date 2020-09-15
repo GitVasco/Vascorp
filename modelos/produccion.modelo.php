@@ -171,7 +171,7 @@ class ModeloProduccion
     
           $sql="SELECT 
           et.trabajador,
-          t.nom_tra,
+          CONCAT(t.nom_tra,' ', t.ape_pat_tra) AS nom_tra,
           SUM(
             CASE
               WHEN DAY(fecha_terminado) = '1' 
@@ -353,7 +353,7 @@ class ModeloProduccion
     
           $sql="SELECT 
           et.trabajador,
-          t.nom_tra,
+          CONCAT(t.nom_tra,' ', t.ape_pat_tra) AS nom_tra,
           SUM(
             CASE
               WHEN DAY(fecha_terminado) = '1' 
