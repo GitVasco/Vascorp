@@ -33,7 +33,8 @@
           </button>
 
         </a>
-
+        <button class="btn btn-outline-success btnReporteIngresoM"  style="border:green 1px solid">
+                      <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Ingresos de stock  </button> 
         <button type="button" class="btn btn-default pull-right" id="daterange-btnIngresoM">
           <span>
             <i class="fa fa-calendar"></i>
@@ -57,6 +58,7 @@
           <i class="fa fa-caret-down"></i>
 
         </button>
+        
       </div>
 
       

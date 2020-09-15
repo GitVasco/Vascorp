@@ -383,3 +383,18 @@ $("#daterange-btnes").daterangepicker(
 //   //     }
 //   //  })
 //   });
+
+
+//Reporte de Salidas
+$(".box").on("click", ".btnReporteAsistencia", function () {
+    window.location = "vistas/reportes_excel/rpt_asistencia.php";
+  
+})
+
+// $(".btnAumentarMin").click(function(){
+//   $("#aumentarFecha").val();
+// })
+
+// $(".btnRestarMin").click(function(){
+//   $("#aumentarFecha").val();
+// })

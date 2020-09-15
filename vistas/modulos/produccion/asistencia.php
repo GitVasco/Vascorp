@@ -22,6 +22,7 @@
 
     <div class="box">
       <div class="box-header with-border">
+        <div class="pull-left" >
         <?php
         date_default_timezone_set('America/Lima');
         $hoy= date("Y-m-d");
@@ -30,7 +31,7 @@
           
           echo '
             <form role="form" method="post">
-              <button type="submit" class="btn btn-primary col-md-2 " name="btnRegistrarAsistencia">
+              <button type="submit" class="btn btn-primary  " name="btnRegistrarAsistencia">
                 <i class="fa fa-plus-square"></i>
                 Registrar asistencias
 
@@ -45,8 +46,13 @@
           
         }
           ?>
-      <button type="button" class="btn btn-success pull-left" data-toggle='modal' data-target='#modalAgregarTiempo'><i class="fa fa-plus-circle"></i> Aumentar tiempo</button>
-      <button type="button" class="btn btn-danger col-md-offset-1" data-toggle='modal' data-target='#modalQuitarTiempo'><i class="fa fa-minus-circle"></i> Restar tiempo</button>
+          <br>
+        <button type="button" class="btn btn-success btnAumentarMin" data-toggle='modal' data-target='#modalAgregarTiempo'><i class="fa fa-plus-circle"></i> Aumentar tiempo</button>
+        <button type="button" class="btn btn-danger btnRestarMin" data-toggle='modal' data-target='#modalQuitarTiempo'><i class="fa fa-minus-circle"></i> Restar tiempo</button>
+      </div>
+      <button class="btn btn-outline-success pull-right btnReporteAsistencia"  style="border:green 1px solid">
+                      <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Asistencias  </button>
+      <br><br><br>
       <button type="button" class="btn btn-default pull-right" id="daterange-btnes">
 
           <span>
@@ -597,6 +603,18 @@ MODAL AGREGAR TIEMPO
 
           <div class="box-body">
 
+            <div class="form-group col-lg-12 ">
+              <label ><strong>Fecha</strong></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span> 
+
+                <input type="text" class="form-control input-lg " name="aumentarFecha" id="aumentarFecha" step="any" min="0"  value = <?php $fecha =  new Datetime(); echo $fecha->format("Y-m-d"); ?> readonly>
+                
+                
+              </div>
+
+            </div>
            
             <div class="form-group col-lg-12 ">
               <label ><strong>Minutos</strong></label>
@@ -676,7 +694,19 @@ MODAL QUITAR TIEMPO
 
           <div class="box-body">
 
-           
+          <div class="form-group col-lg-12 ">
+              <label ><strong>Fecha</strong></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span> 
+
+                <input type="text" class="form-control input-lg " name="quitarFecha" id="quitarFecha" step="any" min="0" value = <?php $fecha =  new Datetime(); echo $fecha->format("Y-m-d"); ?>  readonly>
+                
+                
+              </div>
+
+            </div>
+
             <div class="form-group col-lg-12 ">
               <label ><strong>Minutos</strong></label>
               <div class="input-group">
