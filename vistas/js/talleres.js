@@ -1047,7 +1047,7 @@ $('.tablaIngresoM').DataTable({
 
 $("#daterange-btnIngresoM").daterangepicker(
     {
-	  cancelClass: "CancelarIngresoM",
+	  cancelClass: "CancelarIngresoStock",
 	  locale:{
 		"daysOfWeek": [
 			"Dom",
@@ -1115,7 +1115,7 @@ $("#daterange-btnIngresoM").daterangepicker(
   CANCELAR RANGO DE FECHAS
   =============================================*/
   
-  $(".daterangepicker.opensleft .range_inputs .CancelarIngresoM").on(
+  $(".daterangepicker.opensleft .range_inputs .CancelarIngresoStock").on(
     "click",
     function() {
       localStorage.removeItem("capturarRango9");
@@ -1182,4 +1182,22 @@ $(".tablaIngresoM").on("click", ".btnEliminarIngStock", function () {
 
     })
 
+})
+
+/* 
+* BOTON REPORTE DE ORDEN DE CORTE
+*/
+$(".tablaIngresoM").on("click", ".btnReporteIngresoStock", function () {
+
+    var documento = $(this).attr("documento");
+    //console.log("codigo", codigo);
+
+    window.location = "vistas/reportes_excel/rpt_ingreso_detalle.php?documento=" + documento;
+  
+})
+
+//Reporte de Salidas
+$(".box").on("click", ".btnReporteIngresoM", function () {
+    window.location = "vistas/reportes_excel/rpt_ingreso_stock.php";
+  
 })
