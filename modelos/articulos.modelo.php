@@ -250,6 +250,32 @@ class ModeloArticulos
 	}
 
 	/* 
+	* MOSTRAR ARTICULOS PARA LA TABLA DE ORDENES DE CORTE
+	*/
+	static public function mdlMostrarArticulosTaller(){
+
+		$stmt = Conexion::conectar()->prepare("SELECT a.articulo,
+		a.modelo,
+		a.marca,
+		a.nombre,
+		a.color,
+	   	a.talla,
+		a.stock,
+		a.taller,
+		a.alm_corte,
+		a.ord_corte FROM
+		articulojf a 
+		WHERE a.taller > 0");
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	/* 
 	* MOSTRAR ARTICULOS PARA LA TABLA URGENCIA
 	*/
 	static public function mdlMostrarUrgencia($tabla, $valor){
@@ -433,5 +459,88 @@ class ModeloArticulos
 
 	}	
 
+	/* 
+	* MOSTRAR ARTICULOS - SIMPLE
+	*/
+	static public function mdlMostrarArticulosSimple($orden){
+
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			a.articulo,
+			CONCAT(
+			  a.modelo,
+			  ' - ',
+			  a.nombre,
+			  ' - ',
+			  a.color,
+			  ' - ',
+			  a.talla
+			) AS packing 
+		  FROM
+			articulojf a 
+			LEFT JOIN 
+			  (SELECT 
+				* 
+			  FROM
+				detalles_ordencortejf 
+			  WHERE ordencorte = :orden) AS doc 
+			  ON a.articulo = doc.articulo 
+		  WHERE doc.articulo IS NULL 
+		  ORDER BY a.articulo ");
+
+			$stmt->bindParam(":orden", $orden, PDO::PARAM_STR);
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+
+		$stmt->close();
+
+		$stmt = null;
+	}
+	
+	/* 
+	* Método para actualizar la cantidad de orden de corte
+	*/
+	static public function mdlActualizarOrdenCorte($articulo, $cantidad){
+
+		$sql = "UPDATE 
+						articulojf 
+					SET
+						ord_corte = ord_corte + (:cantidad) 
+					WHERE articulo = :articulo ";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":articulo", $articulo, PDO::PARAM_STR);
+		$stmt->bindParam(":cantidad", $cantidad, PDO::PARAM_INT);
+
+		$stmt->execute();
+
+		$stmt = null;
+	}	
+
+	/* 
+	* Método para actualizar la cantidad de ord_corte
+	*/
+	static public function mdlSumOc($articulo, $cantidad){
+
+		$sql = "UPDATE 
+						articulojf 
+					SET
+						ord_corte = ord_corte + :cantidad 
+					WHERE articulo = :articulo ";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":articulo", $articulo, PDO::PARAM_STR);
+		$stmt->bindParam(":cantidad", $cantidad, PDO::PARAM_INT);
+
+		$stmt->execute();
+
+		$stmt = null;
+	}	
+
 	
 }
+

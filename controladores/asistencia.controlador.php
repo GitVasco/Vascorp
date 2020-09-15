@@ -230,6 +230,76 @@ class ControladorAsistencias{
 		return $respuesta;
 		
 	}
+
+	/*=============================================
+	AGREGAR TIEMPO 
+	=============================================*/
+
+	static public function ctrAgregarTiempo(){
+		if(isset($_POST["agregarMinutos"])){
+			$fecha=date("Y-m-d");
+			$datos=array("fecha" => $fecha,
+						"minutos" => $_POST["agregarMinutos"]);
+			$respuesta=ModeloAsistencias::mdlAgregarTiempo("asistenciasjf",$datos);
+
+			if($respuesta == "ok"){
+
+				echo'<script>
+
+				swal({
+						type: "success",
+						title: "El tiempo ha sido agregado correctamente",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar"
+						}).then(function(result){
+								if (result.value) {
+
+								window.location = "asistencia";
+
+								}
+							})
+
+				</script>';
+
+				}
+
+		}
+	}
+
+	/*=============================================
+	AGREGAR TIEMPO 
+	=============================================*/
+
+	static public function ctrQuitarTiempo(){
+		if(isset($_POST["quitarMinutos"])){
+			$fecha=date("Y-m-d");
+			$datos=array("fecha" => $fecha,
+						"minutos" => $_POST["quitarMinutos"]);
+			$respuesta=ModeloAsistencias::mdlQuitarTiempo("asistenciasjf",$datos);
+
+			if($respuesta == "ok"){
+
+				echo'<script>
+
+				swal({
+						type: "success",
+						title: "El tiempo ha sido restado correctamente",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar"
+						}).then(function(result){
+								if (result.value) {
+
+								window.location = "asistencia";
+
+								}
+							})
+
+				</script>';
+
+				}
+
+		}
+	}
 }
 
 

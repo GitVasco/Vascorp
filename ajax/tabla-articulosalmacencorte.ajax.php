@@ -63,7 +63,7 @@ class TablaArticulosAlmacenCorte{
         $botones =  "<div class='btn-group'><button class='btn btn-primary btn-xs agregarArtAC recuperarBoton' idCorte='".$articulos[$i]["id"]."' ordcorte='".$articulos[$i]["ordencorte"]."'  saldo='".$articulos[$i]["saldo"]."' articuloAC='".$articulos[$i]["articulo"]."'><i class='fa fa-plus-circle'></i> Agregar</button></div>";
         
             $datosJson .= '[
-            "N° - '.$articulos[$i]["ordencorte"].'",
+            "'.$articulos[$i]["ordencorte"].'",
             "'.$articulos[$i]["modelo"].'",
             "'.$articulos[$i]["color"].'",
             "'.$articulos[$i]["talla"].'",

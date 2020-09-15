@@ -21,7 +21,7 @@
   <section class="content">
 
     <div class="box">
-
+        
       <div class="box-header with-border">
   
         <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarSector">
@@ -29,7 +29,10 @@
           Agregar sector
 
         </button>
-
+        <div class="pull-right">
+          <button class="btn btn-outline-success btnReporteSector" style="border:green 1px solid">
+          <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Sectores  </button>
+        </div>
       </div>
 
       <div class="box-body">

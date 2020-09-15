@@ -66,14 +66,15 @@ class ControladorTalleres{
                 //var_dump($fecha);
 
                 $codigo = $_POST["codigoBarra"];
+                $trabajador = $_POST["cod_tra"];
 
-                $respuesta = ModeloTalleres::mdlProceso($fecha,$codigo);
+                $respuesta = ModeloTalleres::mdlProceso($fecha,$codigo,$trabajador);
 
                 if($respuesta == "ok"){
 
                     echo'<script>
 
-                                        window.location = "marcar-taller";
+                            window.location = "marcar-taller";
 
                         </script>';
 
@@ -88,14 +89,15 @@ class ControladorTalleres{
                 //var_dump($fecha);
 
                 $codigo = $_POST["codigoBarra"];
+                $trabajador = $_POST["cod_tra"];
 
-                $respuesta = ModeloTalleres::mdlTerminado($fecha,$codigo);
+                $respuesta = ModeloTalleres::mdlTerminado($fecha,$codigo,$trabajador);
 
                 if($respuesta == "ok"){
 
                     echo'<script>
 
-                                        window.location = "marcar-taller";
+                            window.location = "marcar-taller";
 
                         </script>';
 
@@ -221,6 +223,51 @@ class ControladorTalleres{
 		$tabla = "entallerjf";
 
 		$respuesta = ModeloTalleres::mdlRangoFechasTalleres($tabla, $fechaInicial, $fechaFinal);
+
+		return $respuesta;
+		
+    }
+
+    
+
+    static public function ctrMes(){
+
+        $respuesta = ModeloTalleres::mdlMes();
+
+        return $respuesta;
+
+    }    
+    
+    /*
+    * MOSTRAR PRODUCCION DE TRUSAS
+    */
+    static public function ctrMostrarProduccionTrusas($mes){
+
+        $respuesta = ModeloTalleres::mdlMostrarProduccionTrusas($mes);
+
+        return $respuesta;
+
+    }
+
+    /*
+    * MOSTRAR PRODUCCION DE BRASIER
+    */
+    static public function ctrMostrarProduccionBrasier($mes){
+
+        $respuesta = ModeloTalleres::mdlMostrarProduccionBrasier($mes);
+
+        return $respuesta;
+
+    }
+    /*=============================================
+	RANGO FECHAS TERMINADOS
+	=============================================*/	
+
+	static public function ctrRangoFechasTalleresTerminados($fechaInicial, $fechaFinal){
+
+		$tabla = "entallerjf";
+
+		$respuesta = ModeloTalleres::mdlRangoFechasTalleresTerminados($tabla, $fechaInicial, $fechaFinal);
 
 		return $respuesta;
 		

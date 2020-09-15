@@ -744,6 +744,15 @@ $(".box").on("click", ".btnReporteTarjeta", function () {
 })
 
 /* 
+* BOTON REPORTE DE TARJETA 
+*/
+$(".box").on("click", ".btnReporteMateriaP", function () {
+
+    window.location = "vistas/reportes_excel/rpt_tarjeta_mp.php";
+  
+})
+
+/* 
 * CARGAR TABLA FICHA TECNICA
 */
 // Validamos que venga la variable capturaRango en el localStorage

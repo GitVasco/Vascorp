@@ -522,3 +522,9 @@ $(".tablaModelos tbody").on("click","button.btnVerPrecio",function(){
 	})	
 
 })
+
+//Reporte de Modelos
+$(".box").on("click", ".btnReporteModelos", function () {
+    window.location = "vistas/reportes_excel/rpt_modelo.php";
+  
+})

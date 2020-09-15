@@ -319,7 +319,7 @@ $(".formularioOrdenCorte").on("change", "input.nuevaCantidadArticuloOC", functio
 
     var nuevoOrdCorte = Number($(this).attr("ord_corte")) + Number($(this).val());
     var articulo = $(this).attr("articulo");
-    console.log(articulo);
+    //console.log(articulo);
     var articuloM = articulo+'M';
     //console.log(articuloM);
 
@@ -524,7 +524,7 @@ $(".tablaOrdenCorte").on("click", ".btnEditarOC", function () {
 
 	var codigo = $(this).attr("codigo");
 
-  window.location = "index.php?ruta=editar-ordencorte&codigo=" + codigo;
+  window.location = "index.php?ruta=editar-detalle-ordencorte&codigo=" + codigo;
   
 })
 
@@ -897,3 +897,74 @@ $("#daterange-btnCorte").daterangepicker(
       cargarTablaCortes(fechaInicial, fechaFinal);
     }
   });
+
+  // EDITAR OPERACIÓN
+$(".tablas tbody").on("click","button.btnEditarDetalleCorte",function(){
+    var idDetalle =$(this).attr("idDetalle");
+	var datos= new FormData();
+	datos.append("idDetalle",idDetalle);
+	$.ajax({
+		url:"ajax/ordencorte.ajax.php",
+		method:"POST",
+		data:datos,
+		cache: false,
+		contentType:false,
+		processData:false,
+		dataType: "json",
+		success:function(respuesta){
+            //console.log(respuesta);
+            $("#idDetalle").val(respuesta["id"]);
+            $("#editarCodigo").val(respuesta["ordencorte"]);
+			$("#editarArticulo").val(respuesta["articulo"]);
+            $("#editarCantidad").val(respuesta["cantidad"]);
+            $("#cantOri").val(respuesta["cantidad"]);
+		}
+	});
+	
+});
+
+
+// ELIMINAR OPERACIÓN
+$(".tablas tbody").on("click","button.btnEliminarDetalleCorte",function(){
+    var idDetalle =$(this).attr("idDetalle");
+    var codigo =$(this).attr("codigo");
+    var cantidad = $(this).attr("cantidad");
+
+    var ncant = Number(cantidad) *-1;
+    console.log(ncant);
+
+	swal({
+		title: "¿Está seguro de borrar la orden de corte?",
+		text: "¡Si no lo está se puede cancelar la acción!",
+		type:"warning",
+		showCancelButton: true,
+		confirmButtonColor: "#3085d6",
+		cancelButtonColor: "#d33",
+		cancelButtonText: "Cancelar",
+		confirmButtonText: "Si, borrar orden de corte!" 
+	}).then((result)=>{
+		if(result.value){
+            window.location = "index.php?ruta=editar-detalle-ordencorte&codigo="+codigo+"&idDetalle="+idDetalle+"&cantidad="+ncant;
+		}
+	})
+	
+	
+});
+
+/* 
+* CAMBIOS DE CANTIDAD SI SUMA O RESTA
+*/
+$("#editarCantidad").change(function(){
+
+	var cantidad = document.getElementById("editarCantidad").value;
+    //console.log("cantidad", cantidad);
+
+    var cantOri = document.getElementById("cantOri").value;
+    //console.log("cantOri", cantOri);
+    
+    cambio = Number(cantidad) - Number(cantOri);
+    //console.log(cambio);    
+    
+    $("#cambio").val(cambio);
+
+})

@@ -184,6 +184,7 @@ CUERPO DOCUMENTO
         }else if( $_GET["ruta"] == "ordencorte" ||
                   $_GET["ruta"] == "crear-ordencorte" ||
                   $_GET["ruta"] == "editar-ordencorte" ||
+                  $_GET["ruta"] == "editar-detalle-ordencorte" ||
                   $_GET["ruta"] == "almacencorte" ||
                   $_GET["ruta"] == "crear-almacencorte" ||
                   $_GET["ruta"] == "editar-almacencorte" ||
@@ -192,9 +193,16 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "en-cortes" ||
                   $_GET["ruta"] == "en-taller" ||
                   $_GET["ruta"] == "asistencia" ||
+                  $_GET["ruta"] == "ingresos" ||
+                  $_GET["ruta"] == "crear-ingresos" ||
+                  $_GET["ruta"] == "editar-ingreso" ||
                   $_GET["ruta"] == "en-tallert" ||
                   $_GET["ruta"] == "marcar-taller" ||
-                  $_GET["ruta"] == "proyeccion-mp"){
+                  $_GET["ruta"] == "proyeccion-mp" ||
+                  $_GET["ruta"] == "produccion-trusas" ||
+                  $_GET["ruta"] == "produccion-brasier" ||
+                  $_GET["ruta"] == "quincena" ||
+                  $_GET["ruta"] == "eficiencia"){
 
               include "modulos/produccion/".$_GET["ruta"].".php";
 
@@ -300,7 +308,7 @@ CUERPO DOCUMENTO
   <script src="vistas/js/sectores.js"></script>
   <script src="vistas/js/paras.js"></script>
   <script src="vistas/js/asistencias.js"></script>
-
+  <script src="vistas/js/produccion.js"></script>
 
 
 </body>

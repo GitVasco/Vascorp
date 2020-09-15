@@ -519,11 +519,50 @@
 
                     <li>
 
+                        <a href="ingresos">
+                        <i class="fa fa-scissors"></i>
+                        <span>Ingresos</span>
+                        </a>
+
+                    </li>  
+
+                    <li>
+
                         <a href="asistencia">
                         <i class="fa fa-calendar"></i>Asistencias
                         </a>
                     
-                    </li>     
+                    </li>
+
+                    <li class="treeview">
+
+                        <a href="#"><i class="fa fa-scissors"></i> Producción
+                        <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                        </a>
+
+                        <ul class="treeview-menu">
+
+                            <li>
+
+                                <a href="quincena">
+                                <i class="fa fa-circle-o"></i>Quincenas
+                                </a>
+
+                            </li>
+
+                            <li>
+
+                                <a href="eficiencia">
+                                <i class="fa fa-circle-o"></i>Eficiencia
+                                </a>
+
+                            </li>                                                            
+
+                        </ul>
+
+                    </li>                         
 
                     <li class="treeview">
 
@@ -535,6 +574,22 @@
 
                         <ul class="treeview-menu">
 
+                            <li>
+
+                                <a href="produccion-trusas">
+                                <i class="fa fa-circle-o"></i> Producción Trusas
+                                </a>
+
+                            </li> 
+
+                            <li>
+
+                                <a href="produccion-brasier">
+                                <i class="fa fa-circle-o"></i> Producción Brasier
+                                </a>
+
+                            </li>      
+                                                                      
                             <li>
 
                                 <a href="urgencias">

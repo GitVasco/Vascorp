@@ -29,7 +29,10 @@
           Agregar tipo trabajador
 
         </button>
-
+        <div class="pull-right">
+          <button class="btn btn-outline-success btnReporteTipoTra" style="border:green 1px solid">
+          <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Tipo trabajador  </button>
+        </div>
       </div>
 
       <div class="box-body">

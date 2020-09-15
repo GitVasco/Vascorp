@@ -116,7 +116,6 @@ class controladorArticulos{
 			}
 		}
 
-
 	}
 
 	/* 
@@ -531,6 +530,17 @@ class controladorArticulos{
 		return $respuesta;
 		
 	}
+	/* 
+	* MOSTRAR ARTICULOS PARA LA TABLA DE ORDENES DE CORTE
+	*/	
+	static public function ctrMostrarArticulosTaller(){
+
+		$respuesta = ModeloArticulos::mdlMostrarArticulosTaller();
+
+		return $respuesta;
+		
+	}
+
 
 	/* 
 	* MOSTRAR ARTICULOS PARA LA TABLA DE ORDENES DE CORTE - PRODUCCION
@@ -636,8 +646,8 @@ class controladorArticulos{
 				$data = new Spreadsheet_Excel_Reader();
 				$data->setOutputEncoding('CP1251');
 				$data->read("vistas/cargas/".$_FILES["archivoxls"]["name"]);
-				$conexion = mysql_connect("192.168.1.18", "admin", "joel123") or die("No se pudo conectar: " . mysql_error());
-				mysql_select_db("vasco", $conexion);
+				$conexion = mysql_connect("192.168.1.3", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
+				mysql_select_db("new_vasco", $conexion);
 				for ($i = 2; $i <= $data->sheets[0]['numRows']; $i++) {
 					for ($j = 1; $j <= 1; $j++) {
 					if(substr($data->sheets[0]['cells'][$i][1],0,1)=='0'){
@@ -701,8 +711,8 @@ class controladorArticulos{
 			$data = new Spreadsheet_Excel_Reader();
 			$data->setOutputEncoding('CP1251');
 			$data->read("vistas/cargas/".$_FILES["archivoxlsmovimiento"]["name"]);
-			$conexion = mysql_connect("192.168.1.18", "admin", "joel123") or die("No se pudo conectar: " . mysql_error());
-			mysql_select_db("vasco", $conexion);
+			$conexion = mysql_connect("192.168.1.3", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
+			mysql_select_db("new_vasco", $conexion);
 			$sqlEliminar = mysql_query("DELETE FROM movimientosjf WHERE fecha = DATE(NOW()) OR fecha = DATE(NOW()) - INTERVAL 1 DAY");
 			for ($i = 2; $i <= $data->sheets[0]['numRows']; $i++) {
 				for ($j = 1; $j <= 1; $j++) {
@@ -824,8 +834,8 @@ class controladorArticulos{
 			$data = new Spreadsheet_Excel_Reader();
 			$data->setOutputEncoding('CP1251');
 			$data->read("vistas/cargas/".$_FILES["archivoxlsventa"]["name"]);
-			$conexion = mysql_connect("192.168.1.18", "admin", "joel123") or die("No se pudo conectar: " . mysql_error());
-			mysql_select_db("vasco", $conexion);
+			$conexion = mysql_connect("192.168.1.3", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
+			mysql_select_db("new_vasco", $conexion);
 			$sqlEliminar = mysql_query("DELETE FROM ventajf WHERE YEAR(fecha) = YEAR(NOW()) AND MONTH(fecha) = MONTH (NOW()) ");
 			for ($i = 2; $i <= $data->sheets[0]['numRows']; $i++) {
 				for ($j = 1; $j <= 1; $j++) {
@@ -936,8 +946,8 @@ class controladorArticulos{
 			$data = new Spreadsheet_Excel_Reader();
 			$data->setOutputEncoding('CP1251');
 			$data->read("vistas/cargas/".$_FILES["archivoxlspedido"]["name"]);
-			$conexion = mysql_connect("192.168.1.18", "admin", "joel123") or die("No se pudo conectar: " . mysql_error());
-			mysql_select_db("vasco", $conexion);
+			$conexion = mysql_connect("192.168.1.3", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
+			mysql_select_db("new_vasco", $conexion);
 			$sqlEliminar = mysql_query("DELETE FROM pedidojf ");
 			for ($i = 2; $i <= $data->sheets[0]['numRows']; $i++) {
 				for ($j = 1; $j <= 1; $j++) {
@@ -1043,8 +1053,8 @@ class controladorArticulos{
 				$data = new Spreadsheet_Excel_Reader();
 				$data->setOutputEncoding('CP1251');
 				$data->read("vistas/cargas/".$_FILES["archivoxlsarticulopedido"]["name"]);
-				$conexion = mysql_connect("192.168.1.18", "admin", "joel123") or die("No se pudo conectar: " . mysql_error());
-				mysql_select_db("vasco", $conexion);
+				$conexion = mysql_connect("192.168.1.3", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
+				mysql_select_db("new_vasco", $conexion);
 				for ($i = 2; $i <= $data->sheets[0]['numRows']; $i++) {
 					for ($j = 1; $j <= 1; $j++) {
 					if(substr($data->sheets[0]['cells'][$i][1],0,1)=='0'){
@@ -1095,6 +1105,17 @@ class controladorArticulos{
 			}
 		}
 	}
+
+	/* 
+	* MOSTRAR ARTICULOS - para el select de editar ORDEN DE CORTE
+	*/
+	static public function ctrMostrarArticulosSimple($orden){
+
+		$respuesta = ModeloArticulos::mdlMostrarArticulosSimple($orden);
+
+		return $respuesta;
+
+	}	
 
 }
 

@@ -170,7 +170,7 @@ class ModeloOrdenCorte{
 	*/
 	static public function mdlMostraDetallesOrdenCorte($tabla,$item,$valor){
 
-		$sql="SELECT * FROM $tabla WHERE $item=:$item ORDER BY id ASC";
+		$sql="SELECT do.*,a.articulo,a.nombre,a.marca,a.talla,a.color FROM $tabla do LEFT JOIN articulojf a ON do.articulo=a.articulo WHERE $item=:$item  ORDER BY do.id ASC";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 
@@ -494,5 +494,124 @@ class ModeloOrdenCorte{
 	return $stmt -> fetchall();
  
 	}	
+
+	/* 
+	* Método para editar las ventas
+	*/
+	static public function mdlEditarDetalleOrdenCorte($tabla,$datos){
+
+		$sql="UPDATE $tabla SET cantidad=:cantidad, saldo=:saldo WHERE id=:id";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":cantidad",$datos["cantidad"],PDO::PARAM_STR);
+		$stmt->bindParam(":saldo",$datos["saldo"],PDO::PARAM_STR);
+		$stmt->bindParam(":id",$datos["id"],PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		}
+
+		$stmt=null;
+		
+	}
+	/* 
+	* Método para Mostrar los detalles de orden de corte
+	*/
+	static public function mdlMostraDetalleOrdenCorte($tabla,$item,$valor){
+
+		$sql="SELECT * FROM $tabla WHERE $item=:$item  ORDER BY id ASC";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":".$item,$valor,PDO::PARAM_INT);
+
+		$stmt->execute();
+
+		return $stmt->fetch();
+
+		$stmt=null;
+
+	}
+
+	/* 
+	* Método para editar la cantidad total luego de editar
+	*/
+	static public function mdlEditarCantidadOC($datos){
+
+		$sql="UPDATE 
+						ordencortejf 
+					SET
+						usuario = :usuario,
+						total = total + (:cambio),
+						saldo = saldo + (:cambio),
+						lastUpdate = :fecha 
+					WHERE codigo = :codigo";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":usuario",$datos["usuario"],PDO::PARAM_STR);
+		$stmt->bindParam(":codigo",$datos["codigo"],PDO::PARAM_STR);
+		$stmt->bindParam(":cambio",$datos["cambio"],PDO::PARAM_STR);
+		$stmt->bindParam(":fecha",$datos["lastUpdate"],PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		}
+
+		$stmt=null;
+		
+	}
+	
+		/* 
+	* Método para editar la cantidad total luego de agregar
+	*/
+	static public function mdlAgregarCantidadOC($datos){
+
+		$sql="UPDATE 
+					ordencortejf o 
+					LEFT JOIN 
+					(SELECT 
+						ordencorte,
+						SUM(cantidad) AS cant,
+						SUM(saldo) 
+					FROM
+						detalles_ordencortejf doc 
+					WHERE ordencorte = :codigo 
+					GROUP BY ordencorte) AS doc 
+					ON o.codigo = doc.ordencorte SET usuario = :usuario,
+					total = doc.cant,
+					saldo = doc.cant,
+					lastUpdate = :fecha 
+				WHERE codigo = :codigo ";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":usuario",$datos["usuario"],PDO::PARAM_STR);
+		$stmt->bindParam(":codigo",$datos["codigo"],PDO::PARAM_STR);
+		$stmt->bindParam(":fecha",$datos["lastUpdate"],PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		}
+
+		$stmt=null;
+		
+	}
 
 }
