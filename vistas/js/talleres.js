@@ -1201,3 +1201,11 @@ $(".box").on("click", ".btnReporteIngresoM", function () {
     window.location = "vistas/reportes_excel/rpt_ingreso_stock.php";
   
 })
+
+//Reporte de Salidas
+$(".box").on("click", ".btnReporteTallerTerminado", function () {
+	fechaI=localStorage.getItem("fechaInicial");
+	fechaF=localStorage.getItem("fechaFinal");
+    window.location = "vistas/reportes_excel/rpt_taller_terminado.php?fechaInicial="+fechaI+"&fechaFinal="+fechaF;
+  
+})

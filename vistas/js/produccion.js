@@ -107,3 +107,9 @@ $('.tablaEficiencia').DataTable({
 	}
 
 });
+
+//Reporte de Salidas
+$(".box").on("click", ".btnReporteEficiencia", function () {
+    window.location = "vistas/reportes_excel/rpt_eficiencia.php";
+  
+})

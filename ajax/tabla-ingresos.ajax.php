@@ -32,6 +32,7 @@ class TablaIngresos{
 
                 $datosJson .= '[
                 "'.($i+1).'",
+                "'.$ingreso[$i]["tipo"].'",
                 "'.$ingreso[$i]["nombre"].'",
                 "'.$ingreso[$i]["taller"].'",
                 "'.$ingreso[$i]["documento"].'",

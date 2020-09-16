@@ -21,7 +21,10 @@
   <section class="content">
 
     <div class="box">
-    
+      <div class="box-header with-border">
+        <button class="btn btn-outline-success btnReporteEficiencia" modelo="" style="border:green 1px solid">
+                    <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Eficiencia  </button>
+      </div>
       <div class="box-body">
 
         <input type="hidden" value="<?=$_SESSION["perfil"];?>" id="perfilOculto">

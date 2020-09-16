@@ -75,6 +75,7 @@
          <tr>
            
            <th>N°</th>
+           <th>Tipo</th>
            <th>Responsable</th>
            <th>Taller</th>
            <th>Documento</th> 

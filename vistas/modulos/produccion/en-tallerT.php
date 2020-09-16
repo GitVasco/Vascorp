@@ -33,7 +33,8 @@
           <div class="box-header with-border">
             <button type="button" class="btn btn-info" id="asddadad" name="asddadad" data-toggle="modal" data-target="#fsdfsfsd">Asignar Trabajador
             </button>
-
+            <button type="button" class="btn btn-outline-success btnReporteTallerTerminado" linea="" style="border:green 1px solid">
+                    <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Taller </button>
             <button type="button" class="btn btn-default pull-right" id="daterange-btnTallerT">
 
           <span>

@@ -72,7 +72,7 @@ class ModeloIngresos{
 	*/
 	static public function mdlGuardarIngreso($tabla,$datos){
 
-		$sql="INSERT INTO $tabla (
+		$sql="INSERT INTO $tabla (			tipo,
 											usuario,
 											taller,
 											documento,
@@ -80,7 +80,7 @@ class ModeloIngresos{
 											fecha
 										) 
 										VALUES
-											(
+											(:tipo,
 											:usuario,
 											:taller,
 											:documento,
@@ -90,6 +90,7 @@ class ModeloIngresos{
 
 		$stmt=Conexion::conectar()->prepare($sql);
 
+		$stmt->bindParam(":tipo",$datos["tipo"],PDO::PARAM_STR);
         $stmt->bindParam(":usuario",$datos["usuario"],PDO::PARAM_INT);
         $stmt->bindParam(":taller",$datos["taller"],PDO::PARAM_STR);
         $stmt->bindParam(":documento",$datos["documento"],PDO::PARAM_STR);

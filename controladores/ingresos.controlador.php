@@ -85,7 +85,8 @@ class ControladorIngresos{
                     * GUARDAR LA ORDEN DE CORTE
                     */
                     $fecha=new DateTime();
-                    $datos = array( "usuario"=>$_POST["idUsuario"],
+                    $datos = array( "tipo"=>"E20",
+                                    "usuario"=>$_POST["idUsuario"],
                                     "taller"=>$_POST["nuevoTalleres"],
                                     "documento"=>$_POST["nuevoCodigo"],
                                     "total"=>$_POST["totalTaller"],
