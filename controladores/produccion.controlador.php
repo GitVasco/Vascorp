@@ -103,9 +103,9 @@ class ControladorProduccion{
     /* 
     *MOSTRAR EFICIENCIA MENSUAL
     */
-    static public function ctrMostrarEficiencia($valor){
+    static public function ctrMostrarEficiencia($inicio, $fin, $nquincena, $id ){
 
-		$respuesta = ModeloProduccion::mdlMostrarEficiencia($valor);
+		$respuesta = ModeloProduccion::mdlMostrarEficiencia($inicio, $fin, $nquincena, $id);
 
 		return $respuesta;
 

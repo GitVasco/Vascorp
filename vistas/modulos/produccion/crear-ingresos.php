@@ -82,7 +82,7 @@
                     <div class="input-group">
 
                         <span class="input-group-addon"><i class="fa fa-wrench"></i></span>
-                        <select class="form-control  input-sm selectpicker" name="nuevoTalleres" id="nuevoTalleres" data-live-search="true">
+                        <select class="form-control  input-sm selectpicker" name="nuevoTalleres" id="nuevoTalleres" data-live-search="true" required>
                         <option value="">Seleccionar un taller</option>
                         <?php
 
