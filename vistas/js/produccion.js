@@ -175,10 +175,15 @@ function cargarEficiencia(inicio,fin,nquincena,id){
 
 });
 
-//Reporte de Salidas
-$(".box").on("click", ".btnReporteEficiencia", function () {
-    window.location = "vistas/reportes_excel/rpt_eficiencia.php";
-  
-})
+
 	
 }); */
+//Reporte de Salidas
+$(".box").on("click", ".btnReporteEficiencia", function () {
+	inicio=$(this).attr("inicio");
+	fin=$(this).attr("fin");
+	quincena=$(this).attr("quincena");
+	id=$(this).attr("id");
+    window.location = "vistas/reportes_excel/rpt_eficiencia.php?inicio="+inicio+"&fin="+fin+"&quincena="+quincena+"&id="+id;
+  
+})
