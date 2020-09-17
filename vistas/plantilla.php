@@ -196,6 +196,8 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "ingresos" ||
                   $_GET["ruta"] == "crear-ingresos" ||
                   $_GET["ruta"] == "editar-ingreso" ||
+                  $_GET["ruta"] == "crear-segunda" ||
+                  $_GET["ruta"] == "editar-segunda" ||
                   $_GET["ruta"] == "en-tallert" ||
                   $_GET["ruta"] == "marcar-taller" ||
                   $_GET["ruta"] == "proyeccion-mp" ||

@@ -4,7 +4,7 @@
 
     <h1>
 
-      Editar ingresos
+      Crear Segunda
 
     </h1>
 
@@ -12,7 +12,7 @@
 
       <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-      <li class="active">Editar ingreso</li>
+      <li class="active">Crear segunda</li>
 
     </ol>
 
@@ -38,13 +38,6 @@
 
               <div class="box">
 
-              <?php
-              
-              $item = "id";
-              $valor = $_GET["idIngreso"];
-
-              $ingreso = ControladorIngresos::ctrMostrarIngresos($item, $valor);
-              ?>
                 <!--=====================================
                 ENTRADA DEL VENDEDOR
                 ======================================-->
@@ -73,8 +66,8 @@
                   <div class="input-group">
 
                     <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                    <input type="text" class="form-control" id="editarCodigo" name="editarCodigo" value="<?php echo $ingreso["documento"]; ?>" readonly>
-                    <input type="hidden" id="pasarTaller" value="<?php echo $ingreso["taller"]; ?>" >  
+                    <input type="text" class="form-control" id="nuevoCodigo" name="nuevoCodigo" readonly>
+                   
 
                   </div>
 
@@ -89,7 +82,7 @@
                     <div class="input-group">
 
                         <span class="input-group-addon"><i class="fa fa-wrench"></i></span>
-                        <select class="form-control  input-sm selectpicker" name="editarTalleres" id="editarTalleres" data-live-search="true">
+                        <select class="form-control  input-sm selectpicker" name="nuevoTalleres" id="nuevoTalleres" data-live-search="true" required>
                         <option value="">Seleccionar un taller</option>
                         <?php
 
@@ -108,7 +101,34 @@
                     </div>
 
                 </div>
+                <!--=====================================
+                ENTRADA DEL ARTICULO
+                ======================================-->
 
+                <div class="form-group">
+
+                    <div class="input-group">
+
+                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                        <select class="form-control  input-sm selectpicker" name="nuevoTrabajadores" id="nuevoTrabajadores" data-live-search="true" required>
+                        <option value="">Seleccionar un trabajador</option>
+                        <?php
+
+                            $sector=ControladorTrabajador::ctrMostrarTrabajador(null,null);
+                            foreach ($sector as $key => $value) {
+
+                                echo '<option value="' . $value["cod_tra"] . '">' . $value["nom_tra"]." ".$value["ape_pat_tra"]." ".$value["ape_mat_tra"].'</option>';
+          
+                              }
+
+                            
+
+                        ?>
+                        </select>
+
+                    </div>
+
+                </div>              
                 <!--=====================================
                 TITULOS
                 ======================================-->
@@ -138,40 +158,7 @@
                 ======================================-->
 
                 <div class="form-group row nuevoArticuloIngreso">
-                  
-                <?php
 
-                  $listaArticuloIng = ControladorIngresos::ctrMostrarDetallesIngresos("documento",$ingreso["documento"]);
-                  #var_dump("ordencorte", $ordencorte["codigo"]);
-                  #var_dump("listaArticuloOC", $listaArticuloOC);
-                  foreach($listaArticuloIng as $key=>$value){
-
-                    $infoArticulo = ControladorArticulos::ctrMostrarArticulos($value["articulo"]);
-                    $tallerAntiguo = $infoArticulo["taller"] - $value["cantidad"];
-                    $stockG = $infoArticulo["stockG"];
-                    echo '<div class="row" style="padding:5px 15px">
-
-                            <div class="col-xs-6" style="padding-right:0px">
-                        
-                              <div class="input-group">
-                        
-                                <span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarTaller" articuloIngreso="'.$infoArticulo["articulo"].'"><i class="fa fa-times"></i></button></span>
-                        
-                                <input type="text" class="form-control nuevaDescripcionProducto input-sm" articuloIngreso="'.$infoArticulo["articulo"].'" name="agregarT" value="'.$infoArticulo["packing"].'" codigoAC="'.$infoArticulo["articulo"].'" readonly required>
-                        
-                              </div>
-                        
-                            </div>
-                        
-                            <div class="col-xs-6">
-                        
-                              <input type="number" class="form-control nuevaCantidadArticuloIngreso input-sm" name="nuevaCantidadArticuloIngreso" id="nuevaCantidadArticuloIngreso" min="1" value="'.$value["cantidad"].'" taller="'.$tallerAntiguo.'" articulo="'.$infoArticulo["articulo"].'" nuevotaller="'.$infoArticulo["taller"].'" required>
-                        
-                            </div>';
-                            echo '</div>';  
-                  }
-                            ?>
-                  
 
                 </div>
 
@@ -206,9 +193,9 @@
                             <span class="input-group-addon"><i class="fa fa-scissors"></i></span>
 
                             <input type="text" min="1" class="form-control input-lg" id="nuevoTotalTaller"
-                              name="nuevoTotalTaller" total="" placeholder="0" total="<?php echo $ingreso["total"]; ?>" value=<?php echo $ingreso["total"]?> readonly required>
+                              name="nuevoTotalTaller" total="" placeholder="0" readonly required>
 
-                            <input type="hidden" name="totalTaller" id="totalTaller" value=<?php echo $ingreso["total"]?>>
+                            <input type="hidden" name="totalTaller" id="totalTaller">
 
 
                           </div>
@@ -239,17 +226,17 @@
 
             <div class="box-footer">
 
-              <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-floppy-o"></i>  Guardar cambios</button>
+              <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-floppy-o"></i>  Guardar Segunda</button>
               
-              <a href="ingresos" id="cancel" name="cancel" class="btn btn-danger"><i class="fa fa-times-circle"></i> Cancelar</a>
+              <a href="ordencorte" id="cancel" name="cancel" class="btn btn-danger"><i class="fa fa-times-circle"></i> Cancelar</a>
             </div>
 
           </form>
 
           <?php
 
-            $editarIngreso = new ControladorIngresos();
-            $editarIngreso -> ctrEditarIngreso();
+            $guardarSegunda = new ControladorIngresos();
+            $guardarSegunda -> ctrCrearSegunda();
 
           ?>            
           
@@ -304,10 +291,4 @@
 
 </div>
 
-<script>
-$(document).ready(function(){
-  pasar=$("#pasarTaller").val();          
-  $("#editarTalleres").val(pasar);
-  $("#editarTalleres").selectpicker("refresh");
-})
-</script>
+

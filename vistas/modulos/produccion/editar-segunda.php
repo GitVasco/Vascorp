@@ -4,7 +4,7 @@
 
     <h1>
 
-      Editar ingresos
+      Editar segunda
 
     </h1>
 
@@ -12,7 +12,7 @@
 
       <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-      <li class="active">Editar ingreso</li>
+      <li class="active">Editar segunda</li>
 
     </ol>
 
@@ -108,6 +108,30 @@
                     </div>
 
                 </div>
+
+                <div class="form-group">
+
+                    <div class="input-group">
+                        <input type="hidden" name="pasarTra" id="pasarTra" value=<?php echo $ingreso["trabajador"]?>>
+                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                        <select class="form-control  input-sm selectpicker" name="editarTrabajadores" id="editarTrabajadores" data-live-search="true"   required>
+                        
+                        <?php
+                            $sector=ControladorTrabajador::ctrMostrarTrabajador(null,null);
+                            foreach ($sector as $key => $value) {
+
+                                echo '<option value="' . $value["cod_tra"] . '">' . $value["nom_tra"]." ".$value["ape_pat_tra"]." ".$value["ape_mat_tra"].'</option>';
+          
+                              }
+
+                            
+
+                        ?>
+                        </select>
+
+                    </div>
+
+                </div>    
 
                 <!--=====================================
                 TITULOS
@@ -206,7 +230,7 @@
                             <span class="input-group-addon"><i class="fa fa-scissors"></i></span>
 
                             <input type="text" min="1" class="form-control input-lg" id="nuevoTotalTaller"
-                              name="nuevoTotalTaller" total="" placeholder="0" total="<?php echo $ingreso["total"]; ?>" value=<?php echo $ingreso["total"]?> readonly required>
+                              name="nuevoTotalTaller" total="" placeholder="0"  total="<?php echo $ingreso["total"]; ?>" value=<?php echo $ingreso["total"]?> readonly required>
 
                             <input type="hidden" name="totalTaller" id="totalTaller" value=<?php echo $ingreso["total"]?>>
 
@@ -248,9 +272,9 @@
 
           <?php
 
-            $editarIngreso = new ControladorIngresos();
-            $editarIngreso -> ctrEditarIngreso();
-
+            $editarSegunda = new ControladorIngresos();
+            $editarSegunda -> ctrEditarSegunda();
+                  
           ?>            
           
 
@@ -309,5 +333,8 @@ $(document).ready(function(){
   pasar=$("#pasarTaller").val();          
   $("#editarTalleres").val(pasar);
   $("#editarTalleres").selectpicker("refresh");
+  pasarTra=$("#pasarTra").val();    
+  $("#editarTrabajadores").val(pasarTra);
+  $("#editarTrabajadores").selectpicker("refresh");
 })
 </script>

@@ -24,10 +24,14 @@ class TablaIngresos{
             todo: formato de miles
             */
             $total = number_format($ingreso[$i]["total"],0);
+            if($ingreso[$i]["almacen"]=="01"){
+                $botones =  "<div class='btn-group'><button class='btn btn-warning  btnEditarIngStock' title='Editar Ingreso stock' idIngreso='".$ingreso[$i]["id"]."'><i class='fa fa-pencil'></i></button><button class='btn btn-danger  btnEliminarIngStock' title='Eliminar Ingreso stock' idIngreso='".$ingreso[$i]["id"]."' documento='".$ingreso[$i]["documento"]."'><i class='fa fa-times'></i></button><button class='btn btn-outline-success  btnReporteIngresoStock'  documento='".$ingreso[$i]["documento"]."' style='border:green 1px solid'><img src='vistas/img/plantilla/excel.png' width='20px'></button></div>";
 
+            }else{
+                $botones =  "<div class='btn-group'><button class='btn btn-warning  btnEditarSegunda' title='Editar Segunda' idIngreso='".$ingreso[$i]["id"]."'><i class='fa fa-pencil'></i></button><button class='btn btn-danger  btnEliminarIngStock' title='Eliminar Ingreso stock' idIngreso='".$ingreso[$i]["id"]."' documento='".$ingreso[$i]["documento"]."'><i class='fa fa-times'></i></button><button class='btn btn-outline-success  btnReporteIngresoStock'  documento='".$ingreso[$i]["documento"]."' style='border:green 1px solid'><img src='vistas/img/plantilla/excel.png' width='20px'></button></div>";
+            }
             
-            $botones =  "<div class='btn-group'><button class='btn btn-warning  btnEditarIngStock' title='Editar Ingreso stock' idIngreso='".$ingreso[$i]["id"]."'><i class='fa fa-pencil'></i></button><button class='btn btn-danger  btnEliminarIngStock' title='Eliminar Ingreso stock' idIngreso='".$ingreso[$i]["id"]."' documento='".$ingreso[$i]["documento"]."'><i class='fa fa-times'></i></button><button class='btn btn-outline-success  btnReporteIngresoStock'  documento='".$ingreso[$i]["documento"]."' style='border:green 1px solid'><img src='vistas/img/plantilla/excel.png' width='20px'></button></div>";
-
+            
 
 
                 $datosJson .= '[
