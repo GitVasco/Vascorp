@@ -277,3 +277,6 @@
 
 </div>
 
+<script>
+window.document.title = "Crear cortes"
+</script>

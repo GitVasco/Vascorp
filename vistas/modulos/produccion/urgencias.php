@@ -491,3 +491,7 @@ MODAL VISUALIZAR MP URGENCIA
   </div>
 
 </div>
+
+<script>
+window.document.title = "Urgencias APT"
+</script>

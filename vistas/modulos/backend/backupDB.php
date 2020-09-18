@@ -389,3 +389,6 @@
 
     </div>
 </section>
+<script>
+window.document.title = "Backup DB"
+</script>

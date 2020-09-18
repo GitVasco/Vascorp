@@ -81,3 +81,7 @@
   </section>
 
 </div>
+
+<script>
+window.document.title = "Fichas tecnicas"
+</script>

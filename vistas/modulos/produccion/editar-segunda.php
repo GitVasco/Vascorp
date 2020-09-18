@@ -338,3 +338,6 @@ $(document).ready(function(){
   $("#editarTrabajadores").selectpicker("refresh");
 })
 </script>
+<script>
+window.document.title = "Editar segunda"
+</script>

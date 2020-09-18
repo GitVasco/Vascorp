@@ -120,3 +120,6 @@
   </section>
 
 </div>
+<script>
+window.document.title = "Cargas Automaticas"
+</script>

@@ -882,3 +882,6 @@ MODAL EDITAR CLIENTE
 
 </div>
 
+<script>
+window.document.title = "Clientes"
+</script>

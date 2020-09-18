@@ -273,3 +273,7 @@ MODAL EDITAR TIPO DE TRABAJADOR
   $eliminarTipoTrabajador = new ControladorTipoTrabajador();
   $eliminarTipoTrabajador -> ctrEliminarTipoTrabajador();
 ?>
+
+<script>
+window.document.title = "Tipo de trabajador"
+</script>

@@ -386,3 +386,6 @@
 
 </div>
 
+<script>
+window.document.title = "Editar tarjetas"
+</script>

@@ -117,3 +117,7 @@
   </section>
 
 </div>
+
+<script>
+window.document.title = "Eficiencias"
+</script>

@@ -751,3 +751,7 @@ MODAL QUITAR TIEMPO
   </div>
 
 </div>
+
+<script>
+window.document.title = "Asistencias"
+</script>

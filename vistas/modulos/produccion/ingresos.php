@@ -110,3 +110,7 @@
   $eliminarIngreso = new ControladorIngresos();
   $eliminarIngreso -> ctrEliminarIngreso();
 ?>
+
+<script>
+window.document.title = "Ingresos"
+</script>

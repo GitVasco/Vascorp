@@ -472,3 +472,7 @@ MODAL EDITAR USUARIO
   $borrarUsuario -> ctrBorrarUsuario();
 
 ?> 
+
+<script>
+window.document.title = "Usuarios"
+</script>

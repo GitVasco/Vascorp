@@ -292,3 +292,6 @@
 </div>
 
 
+<script>
+window.document.title = "Crear segunda"
+</script>

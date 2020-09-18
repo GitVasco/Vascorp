@@ -420,3 +420,6 @@ MODAL CONFIGURAR % DE URGENCIAS
 </div>
 
 
+<script>
+window.document.title = "Crear orden de corte"
+</script>

@@ -265,3 +265,6 @@
 </div>
 
 
+<script>
+window.document.title = "Crear ingresos"
+</script>

@@ -311,3 +311,7 @@ $(document).ready(function(){
   $("#editarTalleres").selectpicker("refresh");
 })
 </script>
+
+<script>
+window.document.title = "Editar ingresos"
+</script>

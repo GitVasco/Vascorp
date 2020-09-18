@@ -325,3 +325,7 @@ MODAL VISUALIZAR INFORMACION
   </div>
 
 </div>
+
+<script>
+window.document.title = "Urgencias AMP"
+</script>

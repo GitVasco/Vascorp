@@ -602,3 +602,6 @@ MODAL AGREGAR ARTICULO
   </div>
 
 </div>
+<script>
+window.document.title = "Crear tarjetas"
+</script>

@@ -358,3 +358,6 @@ MODAL AGREGAR OPERACION
 
 </div>
 
+<script>
+window.document.title = "Crear operaciones modelo"
+</script>

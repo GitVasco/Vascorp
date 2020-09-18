@@ -294,3 +294,6 @@ MODAL EDITAR MARCA
   $borrarMarca -> ctrBorrarMarca();
 
 ?>
+<script>
+window.document.title = "Marcas"
+</script>

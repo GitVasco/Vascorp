@@ -335,3 +335,6 @@ MODAL VISUALIZAR INFORMACION
   </div>
 
 </div>
+<script>
+window.document.title = "Orden de corte"
+</script>
