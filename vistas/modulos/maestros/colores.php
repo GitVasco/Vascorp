@@ -319,3 +319,7 @@ MODAL EDITAR COLOR
   $eliminarColor -> ctrEliminarColor();
 
 ?>
+
+<script>
+window.document.title = "Colores"
+</script>

@@ -426,3 +426,6 @@
 
 </div>
 
+<script>
+window.document.title = "Copiar tarjetas"
+</script>

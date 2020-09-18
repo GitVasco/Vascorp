@@ -167,3 +167,6 @@
   </section>
 
 </div>
+<script>
+window.document.title = "Ventas"
+</script>

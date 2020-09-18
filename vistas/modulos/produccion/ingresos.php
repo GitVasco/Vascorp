@@ -33,6 +33,15 @@
           </button>
 
         </a>
+        <a href="crear-segunda">
+
+          <button class="btn btn-danger">
+
+            Crear segunda
+
+          </button>
+
+        </a>
         <button class="btn btn-outline-success btnReporteIngresoM"  style="border:green 1px solid">
                       <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Ingresos de stock  </button> 
         <button type="button" class="btn btn-default pull-right" id="daterange-btnIngresoM">
@@ -75,6 +84,7 @@
          <tr>
            
            <th>N°</th>
+           <th>Tipo</th>
            <th>Responsable</th>
            <th>Taller</th>
            <th>Documento</th> 
@@ -96,3 +106,11 @@
 
 </div>
 
+<?php 
+  $eliminarIngreso = new ControladorIngresos();
+  $eliminarIngreso -> ctrEliminarIngreso();
+?>
+
+<script>
+window.document.title = "Ingresos"
+</script>

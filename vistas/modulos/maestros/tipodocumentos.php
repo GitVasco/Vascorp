@@ -262,4 +262,6 @@ MODAL EDITAR TIPO DE DOCUMENTO
 
 
 
-
+<script>
+window.document.title = "Documentos"
+</script>

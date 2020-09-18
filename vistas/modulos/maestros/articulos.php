@@ -581,3 +581,7 @@ $eliminarArticulo = new ControladorArticulos();
 $eliminarArticulo->ctrEliminarArticulo();
 
 ?>
+
+<script>
+window.document.title = "Articulos"
+</script>

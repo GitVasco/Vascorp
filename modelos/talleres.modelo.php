@@ -372,6 +372,72 @@ class ModeloTalleres{
 
 	}   
 
+    
+	/*=============================================
+	CREAR TALLER
+	=============================================*/
+
+	static public function mdlIngresarTallerTerminado($datos){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO entallerjf (
+      id_cabecera,
+      articulo,
+      cod_operacion,
+      cantidad,
+      usuario,
+      total_precio,
+      total_tiempo,
+      codigo,
+      trabajador,
+      fecha_proceso,
+      fecha_terminado,
+      estado
+  ) 
+  (SELECT 
+      :codigo,
+      a.articulo,
+      od.cod_operacion,
+      :cantidad,
+      :usuario,
+      ((od.precio_doc) / 12) * :cantidad,
+      ((od.tiempo_stand) / 60) * :cantidad,
+      :editarBarra,
+      :trabajador,
+      :fecha_proceso,
+      :fecha_terminado,
+      3 
+  FROM
+      articulojf a 
+      LEFT JOIN operaciones_detallejf od 
+      ON a.modelo = od.modelo 
+  WHERE articulo = :articulo AND cod_operacion= :operacion)");
+
+    $stmt->bindParam(":articulo", $datos["articulo"], PDO::PARAM_STR);
+    $stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_INT);
+    $stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_INT);
+    $stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+    $stmt->bindParam(":editarBarra", $datos["editarBarra"], PDO::PARAM_STR);
+    $stmt->bindParam(":operacion", $datos["operacion"], PDO::PARAM_STR);
+    $stmt->bindParam(":trabajador", $datos["trabajador"], PDO::PARAM_STR);
+    $stmt->bindParam(":fecha_proceso", $datos["fecha_proceso"], PDO::PARAM_STR);
+    $stmt->bindParam(":fecha_terminado", $datos["fecha_terminado"], PDO::PARAM_STR);
+		
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+
+	}   
   /*=============================================
 	RANGO FECHAS
 	=============================================*/	

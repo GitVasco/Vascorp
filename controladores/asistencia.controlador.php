@@ -237,8 +237,8 @@ class ControladorAsistencias{
 
 	static public function ctrAgregarTiempo(){
 		if(isset($_POST["agregarMinutos"])){
-			$fecha=date("Y-m-d");
-			$datos=array("fecha" => $fecha,
+			
+			$datos=array("fecha" => $_POST["aumentarFecha"],
 						"minutos" => $_POST["agregarMinutos"]);
 			$respuesta=ModeloAsistencias::mdlAgregarTiempo("asistenciasjf",$datos);
 
@@ -272,8 +272,7 @@ class ControladorAsistencias{
 
 	static public function ctrQuitarTiempo(){
 		if(isset($_POST["quitarMinutos"])){
-			$fecha=date("Y-m-d");
-			$datos=array("fecha" => $fecha,
+			$datos=array("fecha" => $_POST["quitarFecha"],
 						"minutos" => $_POST["quitarMinutos"]);
 			$respuesta=ModeloAsistencias::mdlQuitarTiempo("asistenciasjf",$datos);
 

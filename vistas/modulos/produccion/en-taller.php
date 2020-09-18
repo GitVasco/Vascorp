@@ -250,3 +250,7 @@ MODAL EDITAR CANTIDAD
   </div>
 
 </div>
+
+<script>
+window.document.title = "Talleres General"
+</script>

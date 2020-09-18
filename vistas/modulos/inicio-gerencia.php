@@ -1,5 +1,6 @@
-<div class="content-wrapper">
 
+<div class="content-wrapper">
+<title>Analisis</title>
 <section class="content-header">
     <h1>
         Dashboard
@@ -74,6 +75,8 @@
 
 </div>
 
-
+<script>
+window.document.title = "Analisis"
+</script>
 
 

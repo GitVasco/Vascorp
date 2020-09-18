@@ -609,7 +609,7 @@ MODAL AGREGAR TIEMPO
               
                 <span class="input-group-addon"><i class="fa fa-clock-o"></i></span> 
 
-                <input type="text" class="form-control input-lg " name="aumentarFecha" id="aumentarFecha" step="any" min="0"  value = <?php $fecha =  new Datetime(); echo $fecha->format("Y-m-d"); ?> readonly>
+                <input type="date" class="form-control input-lg " name="aumentarFecha" id="aumentarFecha"   value = <?php $fecha =  new Datetime(); echo $fecha->format("Y-m-d"); ?>>
                 
                 
               </div>
@@ -700,7 +700,7 @@ MODAL QUITAR TIEMPO
               
                 <span class="input-group-addon"><i class="fa fa-clock-o"></i></span> 
 
-                <input type="text" class="form-control input-lg " name="quitarFecha" id="quitarFecha" step="any" min="0" value = <?php $fecha =  new Datetime(); echo $fecha->format("Y-m-d"); ?>  readonly>
+                <input type="date" class="form-control input-lg " name="quitarFecha" id="quitarFecha"  value = <?php $fecha =  new Datetime(); echo $fecha->format("Y-m-d"); ?> >
                 
                 
               </div>
@@ -751,3 +751,7 @@ MODAL QUITAR TIEMPO
   </div>
 
 </div>
+
+<script>
+window.document.title = "Asistencias"
+</script>

@@ -1201,3 +1201,94 @@ $(".box").on("click", ".btnReporteIngresoM", function () {
     window.location = "vistas/reportes_excel/rpt_ingreso_stock.php";
   
 })
+
+//Reporte de Salidas
+$(".box").on("click", ".btnReporteTallerTerminado", function () {
+	fechaI=localStorage.getItem("fechaInicial");
+	fechaF=localStorage.getItem("fechaFinal");
+    window.location = "vistas/reportes_excel/rpt_taller_terminado.php?fechaInicial="+fechaI+"&fechaFinal="+fechaF;
+  
+})
+
+/*=============================================
+EDITAR TALLER T
+=============================================*/
+$(".tablaTalleresT").on("click", ".btnEditarTallerTerminado", function () {
+
+	var idTallerT = $(this).attr("idTallerT");
+    var datos = new FormData();
+    datos.append("idTallerT", idTallerT);
+
+    $.ajax({
+        url: "ajax/talleres.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuesta) {
+			$("#editarModelo").val(respuesta["modelo"]);
+			$("#editarColor").val(respuesta["color"]);
+			$("#editarTalla").val(respuesta["talla"]);
+			$("#editarCodOperacion").val(respuesta["cod_operacion"]);
+			$("#editarOperacion").val(respuesta["nom_operacion"]);
+			$("#editar_cod_tra").val(respuesta["cod_trabajador"]);
+			$("#editar_cod_tra").selectpicker('refresh');
+			$("#editar_codigoBarra").val(respuesta["codigo"]);
+
+        }
+
+    })
+
+})
+
+/*=============================================
+EDITAR TALLER T
+=============================================*/
+$(".tablaTalleresT").on("click", ".btnDividirTallerTerminado", function () {
+
+	var idTaller = $(this).attr("idTaller");
+    var datos = new FormData();
+    datos.append("idTaller", idTaller);
+
+    $.ajax({
+        url: "ajax/talleres.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuesta) {
+			console.log(respuesta);
+			$("#editarCodigo").val(respuesta["id_cabecera"]);
+			 $("#editarArticulo").val(respuesta["articulo"]);
+			 $("#editarNombre").val(respuesta["nombre"]);
+			 $("#editarModelos").val(respuesta["modelo"]);
+			$("#editarColores").val(respuesta["color"]);
+			$("#editarTallas").val(respuesta["talla"]);
+			$("#cantidades").val(respuesta["cantidad"]);
+			$("#editarCodOperaciones").val(respuesta["cod_operacion"]);
+			$("#editarOperacion").val(respuesta["nom_operacion"]);
+			$("#editarBarra").val(respuesta["codigo"]);
+			$("#editarTaller").val(respuesta["id"]);
+			$("#trabajador").val(respuesta["trabajador"]);
+			$("#fecha_proceso").val(respuesta["fecha_proceso"]);
+
+        }
+
+    })
+
+})
+
+/* 
+* BOTON EDITAR SEGUNDA
+*/
+$(".tablaIngresoM").on("click", ".btnEditarSegunda", function () {
+
+	var idIngreso = $(this).attr("idIngreso");
+
+  window.location = "index.php?ruta=editar-segunda&idIngreso=" + idIngreso;
+  
+})

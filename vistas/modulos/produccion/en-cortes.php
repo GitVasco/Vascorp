@@ -247,3 +247,7 @@ MODAL MANDAR A TALLER
 
 </div>
 </div>
+
+<script>
+window.document.title = "Almacen de corte"
+</script>

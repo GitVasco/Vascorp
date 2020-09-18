@@ -564,3 +564,6 @@ MODAL AGREGAR MODELO
   </div>
 
 </div>
+<script>
+window.document.title = "Modelos"
+</script>

@@ -478,3 +478,6 @@ MODAL AGREGAR CLIENTE
   </div>
 
 </div>
+<script>
+window.document.title = "Crear venta"
+</script>

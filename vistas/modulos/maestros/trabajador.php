@@ -531,3 +531,7 @@ MODAL EDITAR TRABAJADOR
   $eliminarTrabajador -> ctrEliminarTrabajador();
 
 ?>
+
+<script>
+window.document.title = "Trabajador"
+</script>

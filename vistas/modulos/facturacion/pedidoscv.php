@@ -114,3 +114,7 @@
   </section>
 
 </div>
+
+<script>
+window.document.title = "Pedidos"
+</script>

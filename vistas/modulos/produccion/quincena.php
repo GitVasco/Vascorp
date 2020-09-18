@@ -367,3 +367,6 @@ MODAL EDITAR QUINCENA
   </div>
 
 </div>
+<script>
+window.document.title = "Quincenas"
+</script>

@@ -12,7 +12,7 @@ include "../reportes_excel/Classes/PHPExcel.php";
 /* 
 * LLAMAMOS A LA CONEXION
 */
-$conexion = mysql_connect("192.168.1.8", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
+$conexion = mysql_connect("192.168.0.3", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
 mysql_select_db("new_vasco", $conexion);
 
 /* 
@@ -23,6 +23,8 @@ $fechaactual = getdate();
 
 $fecha = date("d-m-Y");
 
+$fechaInicial=$_GET["fechaInicial"];
+$fechaFinal=$_GET["fechaFinal"];
 /* 
 * INSTANCIAMOS
 */
@@ -261,7 +263,7 @@ $objPHPExcel->createSheet(0);
 $objPHPExcel->setActiveSheetIndex(0);
 
 # Titulo de la hoja
-$objPHPExcel->getActiveSheet()->setTitle("OPERACIONES DETALLE POR MODELO -".$fecha);
+$objPHPExcel->getActiveSheet()->setTitle("TALLERES TERMINADOS -".$fecha);
 
 # Orientacion hoja
 $objPHPExcel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_PORTRAIT);
@@ -292,7 +294,7 @@ $objDrawing->setWorksheet($objPHPExcel->getActiveSheet());
 
 // TITULO
 $fila = 2;
-$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", 'OPERACIONES DETALLE POR MODELO');
+$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", 'TALLER TERMINADO');
 $objPHPExcel->getActiveSheet()->mergeCells("G$fila:K$fila");
 $objPHPExcel->getActiveSheet()->setSharedStyle($texto3, "G$fila:K$fila");
 $objPHPExcel->getActiveSheet()->getStyle("G$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
@@ -309,19 +311,19 @@ $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", 'N°');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "A$fila");
 $objPHPExcel->getActiveSheet()->getStyle("A$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("B$fila", 'MODELO');
+$objPHPExcel->getActiveSheet()->SetCellValue("B$fila", 'COD. BARRA');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "B$fila");
 $objPHPExcel->getActiveSheet()->getStyle("B$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("C$fila", 'NOMBRE');
+$objPHPExcel->getActiveSheet()->SetCellValue("C$fila", 'MODELO  ');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "C$fila");
 $objPHPExcel->getActiveSheet()->getStyle("C$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("D$fila", 'ESTADO');
+$objPHPExcel->getActiveSheet()->SetCellValue("D$fila", 'COLOR');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "D$fila");
 $objPHPExcel->getActiveSheet()->getStyle("D$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("E$fila", 'COD. OPE');
+$objPHPExcel->getActiveSheet()->SetCellValue("E$fila", 'TALLA');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "E$fila");
 $objPHPExcel->getActiveSheet()->getStyle("E$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
@@ -329,34 +331,159 @@ $objPHPExcel->getActiveSheet()->SetCellValue("F$fila", 'OPERACION');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "F$fila");
 $objPHPExcel->getActiveSheet()->getStyle("F$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", 'PRECIO DOC.');
+$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", 'TRABAJADOR');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "G$fila");
 $objPHPExcel->getActiveSheet()->getStyle("G$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("H$fila", 'TIEMPO ST.');
+$objPHPExcel->getActiveSheet()->SetCellValue("H$fila", 'CANTIDAD');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "H$fila");
 $objPHPExcel->getActiveSheet()->getStyle("H$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
+$objPHPExcel->getActiveSheet()->SetCellValue("I$fila", 'FECHA');
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "I$fila");
+$objPHPExcel->getActiveSheet()->getStyle("I$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+$objPHPExcel->getActiveSheet()->SetCellValue("J$fila", 'ESTADO');
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "J$fila");
+$objPHPExcel->getActiveSheet()->getStyle("J$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+$objPHPExcel->getActiveSheet()->SetCellValue("K$fila", 'TIEMPO REAL');
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "K$fila");
+$objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 
+if($fechaInicial == "null"){
 
 #query para sacar los datos deL detalle
 $sqlDetalle = mysql_query("SELECT 
-od.modelo,
-m.nombre,
-m.estado,
-od.cod_operacion,
-o.nombre AS operacion,
-od.precio_doc,
-od.tiempo_stand
+et.id,
+et.sector,
+CONCAT(et.sector, '-', s.nom_sector) AS nom_sector,
+et.articulo,
+a.modelo,
+a.nombre,
+a.color,
+a.talla,
+et.cod_operacion,
+o.nombre AS nom_operacion,
+et.trabajador AS cod_trabajador,
+et.fecha_proceso,
+et.fecha_terminado,
+CONCAT(
+  t.nom_tra,
+  ' ',
+  t.ape_pat_tra,
+  ' ',
+  t.ape_mat_tra
+) AS trabajador,
+et.cantidad,
+DATE(et.fecha) AS fecha,
+et.estado,
+et.codigo,
+TIMESTAMPDIFF(
+MINUTE,
+et.fecha_proceso,
+et.fecha_terminado
+)  AS tiempo_real 
 FROM
-  operaciones_detallejf od 
-  LEFT JOIN modelojf m 
-    ON od.modelo = m.modelo 
+entallerjf et 
+LEFT JOIN trabajadorjf t 
+  ON et.trabajador = t.cod_tra 
+LEFT JOIN articulojf a 
+  ON et.articulo = a.articulo 
+LEFT JOIN operacionesjf o 
+  ON et.cod_operacion = o.codigo 
+LEFT JOIN sectorjf s 
+  ON et.sector = s.cod_sector 
+WHERE et.estado = '3' ORDER BY et.id ASC") or die(mysql_error());
+}else  if($fechaInicial == $fechaFinal){
+  $sqlDetalle = mysql_query("SELECT 
+  et.id,
+  et.sector,
+  CONCAT(et.sector, '-', s.nom_sector) AS nom_sector,
+  et.articulo,
+  a.modelo,
+  a.nombre,
+  a.color,
+  a.talla,
+  et.cod_operacion,
+  o.nombre AS nom_operacion,
+  et.trabajador AS cod_trabajador,
+  et.fecha_proceso,
+  et.fecha_terminado,
+  CONCAT(
+    t.nom_tra,
+    ' ',
+    t.ape_pat_tra,
+    ' ',
+    t.ape_mat_tra
+  ) AS trabajador,
+  et.cantidad,
+  DATE(et.fecha) AS fecha,
+  et.estado,
+  et.codigo,
+  TIMESTAMPDIFF(
+MINUTE,
+et.fecha_proceso,
+et.fecha_terminado
+) AS tiempo_real 
+FROM
+  entallerjf et 
+  LEFT JOIN trabajadorjf t 
+    ON et.trabajador = t.cod_tra 
+  LEFT JOIN articulojf a 
+    ON et.articulo = a.articulo 
   LEFT JOIN operacionesjf o 
-    ON od.cod_operacion = o.codigo
-    ORDER BY od.modelo, od.cod_operacion") or die(mysql_error());
-
+    ON et.cod_operacion = o.codigo 
+  LEFT JOIN sectorjf s 
+    ON et.sector = s.cod_sector 
+WHERE et.estado = '3' AND  DATE(et.fecha) like '%$fechaFinal%'");
+}else {
+  $fechaFinal2=new DateTime($fechaFinal);
+  $fechaFinal2->add(new DateInterval("P1D"));
+  $fechaFinalmasUno=$fechaFinal2->format("Y-m-d");
+  $sqlDetalle = mysql_query("SELECT 
+  et.id,
+  et.sector,
+  CONCAT(et.sector, '-', s.nom_sector) AS nom_sector,
+  et.articulo,
+  a.modelo,
+  a.nombre,
+  a.color,
+  a.talla,
+  et.cod_operacion,
+  o.nombre AS nom_operacion,
+  et.trabajador AS cod_trabajador,
+  et.fecha_proceso,
+  et.fecha_terminado,
+  CONCAT(
+    t.nom_tra,
+    ' ',
+    t.ape_pat_tra,
+    ' ',
+    t.ape_mat_tra
+  ) AS trabajador,
+  et.cantidad,
+  DATE(et.fecha) AS fecha,
+  et.estado,
+  et.codigo,
+TIMESTAMPDIFF(
+MINUTE,
+et.fecha_proceso,
+et.fecha_terminado
+)  AS tiempo_real 
+FROM
+  entallerjf et 
+  LEFT JOIN trabajadorjf t 
+    ON et.trabajador = t.cod_tra 
+  LEFT JOIN articulojf a 
+    ON et.articulo = a.articulo 
+  LEFT JOIN operacionesjf o 
+    ON et.cod_operacion = o.codigo 
+  LEFT JOIN sectorjf s 
+    ON et.sector = s.cod_sector 
+WHERE et.estado = '3' AND DATE(et.fecha) BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'");
+}
 $cont = 0;
 while($respDetalle = mysql_fetch_array($sqlDetalle)){
     $cont+=1;
@@ -365,21 +492,31 @@ while($respDetalle = mysql_fetch_array($sqlDetalle)){
     
     $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", $cont);
     
-    $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", utf8_encode($respDetalle["modelo"])); 
+    $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", utf8_encode($respDetalle["codigo"])); 
     
-    $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", utf8_encode($respDetalle["nombre"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", utf8_encode($respDetalle["modelo"]));
     
-    $objPHPExcel->getActiveSheet()->SetCellValue("D$fila", utf8_encode($respDetalle["estado"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("D$fila", utf8_encode($respDetalle["color"]));
     
-    $objPHPExcel->getActiveSheet()->SetCellValueExplicit("E$fila", utf8_encode($respDetalle["cod_operacion"]), PHPExcel_Cell_DataType::TYPE_STRING);
+    $objPHPExcel->getActiveSheet()->SetCellValue("E$fila", utf8_encode($respDetalle["talla"]));
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("F$fila", utf8_encode($respDetalle["operacion"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("F$fila", utf8_encode($respDetalle["nom_operacion"]));
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("G$fila", utf8_encode($respDetalle["precio_doc"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("G$fila", utf8_encode($respDetalle["trabajador"]));
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", utf8_encode($respDetalle["tiempo_stand"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", utf8_encode($respDetalle["cantidad"]));
 
-    
+    $objPHPExcel->getActiveSheet()->SetCellValue("I$fila", utf8_encode($respDetalle["fecha"]));
+
+    if($respDetalle["estado"] == 1){
+    $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", utf8_encode("Generado"));
+    }else if($respDetalle["estado"] == 2){
+        $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", utf8_encode("En Proceso"));
+    }else{
+        $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", utf8_encode("Terminado"));
+    }
+                
+    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", utf8_encode($respDetalle["tiempo_real"]));
     
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "A$fila");
     $objPHPExcel->getActiveSheet()->getStyle("A$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
@@ -405,17 +542,29 @@ while($respDetalle = mysql_fetch_array($sqlDetalle)){
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "H$fila");
     $objPHPExcel->getActiveSheet()->getStyle("H$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "I$fila");
+    $objPHPExcel->getActiveSheet()->getStyle("I$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "J$fila");
+    $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "K$fila");
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
 }
 
 # Ajustar el tamaño de las columnas
 $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(4.57);
 $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(15.72);
-$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(18.72);
+$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(12.72);
 $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(12.72);
 $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(12.72);
 $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(30.72);
 $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(30.87);
 $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(12.57);
+$objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth(15.29);
+$objPHPExcel->getActiveSheet()->getColumnDimension('J')->setWidth(15.29);
+$objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(12.29);
 /* 
 * CREAR EL ARCHIVO
 */
@@ -433,7 +582,7 @@ header("Content-Type: application/vnd.ms-excel");
 
 
 # Nombre del archivo
-header('Content-Disposition: attachment; filename=" OPERACIONES DETALLE POR MODELO - '.$fecha.'.xls"');
+header('Content-Disposition: attachment; filename=" TALLERES TERMINADOS - '.$fecha.'.xls"');
 
 
 //forzar a descarga por el navegador

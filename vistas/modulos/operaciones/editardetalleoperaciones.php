@@ -128,8 +128,8 @@
                    
                          <span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarOperacion" idOperacion="'.$infoOperacion["id"].'"><i class="fa fa-times"></i></button></span>
                    
-                         <input type="text" class="form-control nuevaDescripcionOperacion" idOperacion="'.$infoOperacion["id"].'" name="agregarOperacion" value="'.$infoOperacion["nombre"].'" codigoOP="'.$infoOperacion["codigo"].'" readonly required>
-                   
+                         <input type="text" class="form-control nuevaDescripcionOperacion2" idOperacion="'.$infoOperacion["id"].'" name="agregarOperacion" value="'.$infoOperacion["codigo"]." - ".$infoOperacion["nombre"].'" codigoOP="'.$infoOperacion["codigo"].'" readonly required>
+                         <input type="hidden" class="form-control nuevaDescripcionOperacion" value="'.$infoOperacion["nombre"].'" idOperacion="'.$infoOperacion["id"].'" codigoOP= "'.$infoOperacion["codigo"].'">
                          </div>
                    
                        </div>
@@ -296,3 +296,6 @@
 
 </div>
 
+<script>
+window.document.title = "Editar operaciones modelo"
+</script>

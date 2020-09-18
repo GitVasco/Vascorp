@@ -33,7 +33,8 @@
           <div class="box-header with-border">
             <button type="button" class="btn btn-info" id="asddadad" name="asddadad" data-toggle="modal" data-target="#fsdfsfsd">Asignar Trabajador
             </button>
-
+            <button type="button" class="btn btn-outline-success btnReporteTallerTerminado" linea="" style="border:green 1px solid">
+                    <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Taller </button>
             <button type="button" class="btn btn-default pull-right" id="daterange-btnTallerT">
 
           <span>
@@ -374,3 +375,175 @@ MODAL CONFIGURAR Trabajador
   </div>
 
 </div>
+
+
+<!--=====================================
+MODAL EDITAR CANTIDAD
+======================================-->
+
+<div id="dividirTallerT" class="modal fade" role="dialog">
+
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form role="form" method="post">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Editar Cantidad</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <input type="hidden" name="editarTaller" id="editarTaller">
+            <input type="hidden" name="usuario" value="<?php echo $_SESSION["id"]; ?>">
+            <input type="hidden" name="editarCodigo" id="editarCodigo">
+            <input type="hidden" name="editarCodOperaciones" id="editarCodOperaciones">
+            <input type="hidden" name="editarBarra" id="editarBarra">
+            <input type="hidden" name="trabajador" id="trabajador">
+            <input type="hidden" name="fecha_proceso" id="fecha_proceso">
+            <!-- ENTRADA PARA EL NOMBRE -->
+            <div class="form-group col-lg-6">
+
+              <label>Articulo</label>
+
+              <div class="input-group">
+
+                <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+
+                <input type="text" class="form-control" id="editarArticulo" name="editarArticulo" required readonly>
+
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-6">
+
+              <label>Nombre</label>
+
+              <div class="input-group">
+
+                <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+
+                <input type="text" class="form-control" id="editarNombre" name="editarNombre" required readonly>
+
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-4">
+
+              <label>Modelo</label>
+
+              <div class="input-group">
+
+                <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+
+                <input type="text" class="form-control" id="editarModelos" name="editarModelos" required readonly>
+
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-4">
+
+              <label>Color</label>
+
+              <div class="input-group">
+
+                <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+
+                <input type="text" class="form-control" id="editarColores" name="editarColores" required readonly>
+
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-4">
+
+              <label>Talla</label>
+
+              <div class="input-group">
+
+                <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+
+                <input type="text" class="form-control" id="editarTallas" name="editarTallas" required readonly>
+
+              </div>
+
+            </div>
+            <div class="form-group col-lg-6">
+
+              <label>Cantidad</label>
+
+              <div class="input-group">
+
+                <span class="input-group-addon"><i class="fa fa-arrow-up"></i></span>
+
+                <input type="number" class="form-control" id="cantidades" name="cantidades" required readonly>
+
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-6">
+
+              <label>Dividir Cantidad</label>
+
+              <div class="input-group">
+
+                <span class="input-group-addon"><i class="fa fa-arrow-down"></i></span>
+
+                <input type="number" class="form-control" id="editarCantidades" name="editarCantidades" required >
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+          <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+          <div class="modal-footer">
+
+            <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
+
+            <button type="submit" class="btn btn-success">Editar Cantidad</button>
+
+          </div>
+
+      </form>
+
+      <?php
+
+      $editarCantidadTerminado = new ControladorTalleres();
+      $editarCantidadTerminado->ctrEditarCantidadTerminado();
+
+      ?>
+
+    </div>
+
+  </div>
+
+</div>
+<script>
+window.document.title = "Talleres terminados"
+</script>

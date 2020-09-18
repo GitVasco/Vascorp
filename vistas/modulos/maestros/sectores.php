@@ -318,3 +318,7 @@ MODAL EDITAR SECTOR
   $eliminarSector -> ctrEliminarSector();
 
 ?>
+
+<script>
+window.document.title = "Sectores"
+</script>
