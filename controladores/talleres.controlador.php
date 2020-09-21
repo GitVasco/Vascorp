@@ -291,7 +291,7 @@ class ControladorTalleres{
                             "editarBarra" => $_POST["editarBarra"],
                             "trabajador" => $_POST["trabajador"],
                             "fecha_proceso" => $_POST["fecha_proceso"],
-                            "fecha_terminado" => $fecha->format("Y-m-d H:i:s"));
+                            "fecha_terminado" => $_POST["fecha_terminado"]);
 
                 $cantidad=$_POST["cantidades"]-$_POST["editarCantidades"];
 
