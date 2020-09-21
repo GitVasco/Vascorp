@@ -99,7 +99,7 @@ function cargarEficiencia(inicio,fin,nquincena,id){
 		"deferRender": true,
 		"retrieve": true,
 		"processing": true,
-		"order": [[0, "desc"]],
+		"order": [[0, "asc"]],
 		"pageLength": 20,
 		"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
 		"language": {
@@ -172,7 +172,7 @@ function cargarEficiencia(inicio,fin,nquincena,id){
 		"deferRender": true,
 		"retrieve": true,
 		"processing": true,
-		"order": [[0, "desc"]],
+		"order": [[0, "asc"]],
 		"pageLength": 20,
 		"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
 		"language": {
@@ -205,6 +205,19 @@ function cargarEficiencia(inicio,fin,nquincena,id){
 	});
 
 }
+/*
+* BOTON REPORTE DE ORDEN DE CORTE
+*/
+$(".tablaQuincena").on("click", ".btnReportePagos", function () {
+
+	inicio = $(this).attr("inicio");
+	fin = $(this).attr("fin");
+	id = $(this).attr("id");
+	console.log(inicio, fin, id);
+
+    window.location = "vistas/reportes_excel/rpt_pagos.php?inicio=" + inicio + "&fin=" + fin + "&id=" + id;
+  
+})
 
 //Reporte de Eficiencias
 $(".box").on("click", ".btnReporteEficiencia", function () {

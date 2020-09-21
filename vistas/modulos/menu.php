@@ -552,14 +552,6 @@
 
                             </li>
 
-                            <li>
-
-                                <a href="eficiencia">
-                                <i class="fa fa-circle-o"></i>Eficiencia
-                                </a>
-
-                            </li>                                                            
-
                         </ul>
 
                     </li>                         
