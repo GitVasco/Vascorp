@@ -153,7 +153,14 @@ class ControladorSectores{
 		if(isset($_GET["idSector"])){
 
 			$datos = $_GET["idSector"];
-
+			$sector=ControladorSectores::ctrMostrarSectores($datos);
+			
+			$usuario= $_SESSION["nombre"];
+			$para      = 'notificacionesvascorp@gmail.com';
+			$asunto    = 'Se elimino un sector';
+			$descripcion   = 'El usuario '.$usuario.' elimino el sector '.$sector["cod_sector"].' - '.$sector["nom_sector"];
+			$de = 'From: notificacionesvascorp@gmail.com';
+			mail($para, $asunto, $descripcion, $de);
 			$respuesta = ModeloSectores::mdlEliminarSector($datos);
 
 			if($respuesta == "ok"){

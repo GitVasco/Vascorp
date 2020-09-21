@@ -153,7 +153,14 @@ class ControladorTipoDocumento{
 
 			$tabla ="tipo_documentojf";
 			$datos = $_GET["idTipoDocumento"];
-
+			$documento=ControladorTipoDocumento::ctrMostrarTipoDocumento("cod_doc",$datos);
+			
+			$usuario= $_SESSION["nombre"];
+			$para      = 'notificacionesvascorp@gmail.com';
+			$asunto    = 'Se elimino un tipo de documento';
+			$descripcion   = 'El usuario '.$usuario.' elimino el tipo de documento '.$documento["cod_doc"].' - '.$documento["tipo_doc"];
+			$de = 'From: notificacionesvascorp@gmail.com';
+			mail($para, $asunto, $descripcion, $de);
 			$respuesta = ModeloTipoDocumento::mdlBorrarTipoDocumento($tabla, $datos);
 
 			if($respuesta == "ok"){

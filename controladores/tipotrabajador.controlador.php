@@ -87,7 +87,14 @@ class ControladorTipoTrabajador{
 
 			$tabla ="tipo_trabajadorjf";
 			$datos = $_GET["idTipoTrabajador"];
-
+			$tipo=ControladorTipoTrabajador::ctrMostrarTipoTrabajador("cod_tip_tra",$datos);
+			
+			$usuario= $_SESSION["nombre"];
+			$para      = 'notificacionesvascorp@gmail.com';
+			$asunto    = 'Se elimino un tipo de trabajador';
+			$descripcion   = 'El usuario '.$usuario.' elimino el tipo de trabajador '.$tipo["nom_tip_trabajador"].' - '.$tipo["detalle"];
+			$de = 'From: notificacionesvascorp@gmail.com';
+			mail($para, $asunto, $descripcion, $de);
 			$respuesta = ModeloTipoTrabajador::mdlEliminarTipoTrabajador($tabla,$datos);
 
 			if($respuesta == "ok"){

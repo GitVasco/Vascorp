@@ -312,7 +312,14 @@ class ControladorModelos{
 
 			$datos = $_GET["idModelo"];
 			$tabla="modelojf";
-
+			$modelo=ControladorModelos::ctrMostrarModelos("id_modelo",$datos);
+			
+			$usuario= $_SESSION["nombre"];
+			$para      = 'notificacionesvascorp@gmail.com';
+			$asunto    = 'Se elimino un modelo';
+			$descripcion   = 'El usuario '.$usuario.' elimino el modelo '.$modelo["modelo"].' - '.$modelo["nombre"];
+			$de = 'From: notificacionesvascorp@gmail.com';
+			mail($para, $asunto, $descripcion, $de);
 			$respuesta = ModeloModelos::mdlEliminarModelo($tabla,$datos);
 			if($respuesta == "ok"){
 

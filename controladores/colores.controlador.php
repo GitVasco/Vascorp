@@ -156,10 +156,10 @@ class ControladorColores{
 			$color=ControladorColores::ctrMostrarColores($datos);
 			
 			$usuario= $_SESSION["nombre"];
-			$para      = 'bryanfm1998@gmail.com';
+			$para      = 'notificacionesvascorp@gmail.com';
 			$asunto    = 'Se elimino un color';
 			$descripcion   = 'El usuario '.$usuario.' elimino el color '.$color["cod_color"].' - '.$color["nom_color"];
-			$de = 'From: breanfm98@gmail.com';
+			$de = 'From: notificacionesvascorp@gmail.com';
 			$respuesta = ModeloColores::mdlEliminarColor($datos);
 			mail($para, $asunto, $descripcion, $de);
 			if($respuesta == "ok"){

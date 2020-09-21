@@ -149,7 +149,14 @@ class ControladorMarcas{
 		if(isset($_GET["idMarca"])){
 
 			$datos = $_GET["idMarca"];
-
+			$marca=ControladorMarcas::ctrMostrarMarcas($datos);
+			
+			$usuario= $_SESSION["nombre"];
+			$para      = 'notificacionesvascorp@gmail.com';
+			$asunto    = 'Se elimino una marca';
+			$descripcion   = 'El usuario '.$usuario.' elimino la marca '.$marca["marca"];
+			$de = 'From: notificacionesvascorp@gmail.com';
+			mail($para, $asunto, $descripcion, $de);
 			$respuesta = ModeloMarcas::mdlBorrarMarca($datos);
 
 			if($respuesta == "ok"){
