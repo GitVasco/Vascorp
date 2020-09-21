@@ -204,7 +204,8 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "produccion-trusas" ||
                   $_GET["ruta"] == "produccion-brasier" ||
                   $_GET["ruta"] == "quincena" ||
-                  $_GET["ruta"] == "eficiencia"){
+                  $_GET["ruta"] == "eficiencia" ||
+                  $_GET["ruta"] == "pagos"){
 
               include "modulos/produccion/".$_GET["ruta"].".php";
 

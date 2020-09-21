@@ -25,7 +25,7 @@ class TablaQuincena{
             /* 
             * BOTONES            
             */
-            $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarQuincena' title='Editar Fechas' id='".$quincena[$i]["id"]."' data-toggle='modal' data-target='#modalEditarQuincena'><i class='fa fa-pencil'></i></button><button class='btn btn-success btnEficiencia' title='Eficiencia' inicio='".$quincena[$i]["inicio"]."' fin='".$quincena[$i]["fin"]."' nquincena='".$quincena[$i]["nquincena"]."' id='".$quincena[$i]["id"]."'><i class='fa fa-percent'></i></button><button class='btn btn-danger btnEliminarQuincena' title='Eliminar' id='".$quincena[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
+            $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarQuincena' title='Editar Fechas' id='".$quincena[$i]["id"]."' data-toggle='modal' data-target='#modalEditarQuincena'><i class='fa fa-pencil'></i></button><button class='btn btn-success btnEficiencia' title='Eficiencia' inicio='".$quincena[$i]["inicio"]."' fin='".$quincena[$i]["fin"]."' nquincena='".$quincena[$i]["nquincena"]."' id='".$quincena[$i]["id"]."'><i class='fa fa-percent'></i></button><button class='btn btn-primary btnPagos' title='Pagos' inicio='".$quincena[$i]["inicio"]."' fin='".$quincena[$i]["fin"]."' nquincena='".$quincena[$i]["nquincena"]."' id='".$quincena[$i]["id"]."'><i class='fa fa-money'></i></button><button class='btn btn-danger btnEliminarQuincena' title='Eliminar' id='".$quincena[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
      
             $datosJson .= '[
             "'.($i+1).'",
