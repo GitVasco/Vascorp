@@ -101,7 +101,14 @@ class ControladorTrabajador{
 
 			$tabla ="trabajadorjf";
 			$datos = $_GET["idTrabajador"];
-
+			$trabajador=ControladorTrabajador::ctrMostrarTrabajador("cod_tra",$datos);
+			
+			$usuario= $_SESSION["nombre"];
+			$para      = 'notificacionesvascorp@gmail.com';
+			$asunto    = 'Se elimino un trabajador';
+			$descripcion   = 'El usuario '.$usuario.' elimino el trabajador '.$trabajador["cod_tra"].' - '.$trabajador["nombre"];
+			$de = 'From: notificacionesvascorp@gmail.com';
+			mail($para, $asunto, $descripcion, $de);
 			$respuesta = ModeloTrabajador::mdlEliminarTrabajador($tabla,$datos);
 
 			if($respuesta == "ok"){

@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 // Requerimos el controlador y el modelo
 require_once '../controladores/articulos.controlador.php';
 require_once '../modelos/articulos.modelo.php';
@@ -17,7 +17,22 @@ class AjaxArticulos{
 		$valor1=$this->activarEstado;
 
 		$valor2=$this->activarId;
-
+		$articulo=ControladorArticulos::ctrMostrarArticulos($valor2);
+		$usuario= $_SESSION["nombre"];
+		if($valor1 == "Activo"){
+			
+			$para      = 'notificacionesvascorp@gmail.com';
+			$asunto    = 'Se activo un articulo';
+			$descripcion   = 'El usuario '.$usuario.' activo el articulo '.$articulo["articulo"].' - '.$articulo["nombre"]." talla: ".$articulo["talla"]." color: ".$articulo["color"];
+			$de = 'From: notificacionesvascorp@gmail.com';
+			mail($para, $asunto, $descripcion, $de);	
+		}else{
+			$para      = 'notificacionesvascorp@gmail.com';
+			$asunto    = 'Se descontinuo un articulo';
+			$descripcion   = 'El usuario '.$usuario.' descontinuo el articulo '.$articulo["articulo"].' - '.$articulo["nombre"]." talla: ".$articulo["talla"]." color: ".$articulo["color"];
+			$de = 'From: notificacionesvascorp@gmail.com';
+			mail($para, $asunto, $descripcion, $de);
+		}
 		$respuesta=ModeloArticulos::mdlActualizarArticulo($valor1, $valor2);
 
 		echo $respuesta;

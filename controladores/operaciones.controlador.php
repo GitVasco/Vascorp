@@ -182,7 +182,14 @@ class ControladorOperaciones{
 
 			$tabla ="operacionesjf";
 			$datos = $_GET["idOperacion"];
-
+			$operacion=ControladorOperaciones::ctrMostrarOperaciones("id",$datos);
+			
+			$usuario= $_SESSION["nombre"];
+			$para      = 'notificacionesvascorp@gmail.com';
+			$asunto    = 'Se elimino una operacion';
+			$descripcion   = 'El usuario '.$usuario.' elimino la operacion '.$operacion["codigo"].' - '.$operacion["nombre"];
+			$de = 'From: notificacionesvascorp@gmail.com';
+			mail($para, $asunto, $descripcion, $de);
 			$respuesta = ModeloOperaciones::mdlEliminarOperacion($tabla,$datos);
 
 			if($respuesta == "ok"){
