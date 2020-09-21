@@ -552,7 +552,10 @@ class TablaEficiencia{
                     "data": [';
             
                     for($i = 0; $i < count($eficiencia); $i++){
-            
+
+                        $vino = "#8B0000";
+                        $azulino = "#0000FF";
+                        $verde = "#008000";            
 
                         /* 
                         * d1
