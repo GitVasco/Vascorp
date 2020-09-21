@@ -416,6 +416,7 @@ MODAL EDITAR CANTIDAD
             <input type="hidden" name="editarBarra" id="editarBarra">
             <input type="hidden" name="trabajador" id="trabajador">
             <input type="hidden" name="fecha_proceso" id="fecha_proceso">
+            <input type="hidden" name="fecha_terminado" id="fecha_terminado">
             <!-- ENTRADA PARA EL NOMBRE -->
             <div class="form-group col-lg-6">
 

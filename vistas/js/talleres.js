@@ -1261,7 +1261,6 @@ $(".tablaTalleresT").on("click", ".btnDividirTallerTerminado", function () {
         processData: false,
         dataType: "json",
         success: function (respuesta) {
-			console.log(respuesta);
 			$("#editarCodigo").val(respuesta["id_cabecera"]);
 			 $("#editarArticulo").val(respuesta["articulo"]);
 			 $("#editarNombre").val(respuesta["nombre"]);
@@ -1275,6 +1274,8 @@ $(".tablaTalleresT").on("click", ".btnDividirTallerTerminado", function () {
 			$("#editarTaller").val(respuesta["id"]);
 			$("#trabajador").val(respuesta["trabajador"]);
 			$("#fecha_proceso").val(respuesta["fecha_proceso"]);
+			$("#fecha_terminado").val(respuesta["fecha_terminado"]);
+			
 
         }
 
