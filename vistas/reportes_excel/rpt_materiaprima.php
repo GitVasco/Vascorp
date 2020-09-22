@@ -12,7 +12,7 @@ include "../reportes_excel/Classes/PHPExcel.php";
 /* 
 * LLAMAMOS A LA CONEXION
 */
-$conexion = mysql_connect("192.168.1.8", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
+$conexion = mysql_connect("192.168.0.3", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
 mysql_select_db("new_vasco", $conexion);
 
 /* 
@@ -400,7 +400,7 @@ while($respDetalle = mysql_fetch_array($sqlDetalle)){
     
     $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", $cont);
     
-    $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", utf8_encode($respDetalle["codigo"])); 
+    $objPHPExcel->getActiveSheet()->setCellValueExplicit("B$fila", utf8_encode($respDetalle["codigo"]),PHPExcel_Cell_DataType::TYPE_STRING); 
     
     $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", utf8_encode($respDetalle["codlinea"]));
     

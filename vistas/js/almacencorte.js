@@ -797,3 +797,9 @@ $("#daterange-btnCortes").daterangepicker(
       cargarTablaAlmacenCortes(fechaInicial, fechaFinal);
     }
   });
+
+  $(".box").on("click", ".btnReporteAlmacen", function () {
+
+    window.location = "vistas/reportes_excel/rpt_almacencorte.php";
+  
+})

@@ -230,7 +230,7 @@ $(".box").on("click", ".btnReporteEficiencia", function () {
 })
 
 //Reporte de Eficiencias
-$(".box").on("click", ".btnReportePagos", function () {
+$(".box").on("click", ".btnReportePago", function () {
 	inicio=$(this).attr("inicio");
 	fin=$(this).attr("fin");
 	quincena=$(this).attr("quincena");
