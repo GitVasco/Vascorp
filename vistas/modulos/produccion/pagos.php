@@ -69,7 +69,8 @@
                 <th>13</th>
                 <th>14</th>
                 <th>15</th>
-                <th>16</th>';
+                <th>16</th>
+                <th>Total</th>';
 
          }else{
 
@@ -94,7 +95,8 @@
                 <th>29</th>
                 <th>30</th>
                 <th>31</th>
-                <th>1</th>';
+                <th>1</th>
+                <th>Total</th>';
 
          }
          

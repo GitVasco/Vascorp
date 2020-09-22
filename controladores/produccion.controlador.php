@@ -101,7 +101,7 @@ class ControladorProduccion{
     }    
 
     /* 
-    *MOSTRAR EFICIENCIA MENSUAL
+    *MOSTRAR EFICIENCIA QUINCENAL
     */
     static public function ctrMostrarEficiencia($inicio, $fin, $nquincena, $id ){
 
@@ -109,6 +109,17 @@ class ControladorProduccion{
 
 		return $respuesta;
 
-	}    
+    } 
+    
+    /* 
+    *MOSTRAR PAGOS QUINCENAL
+    */
+    static public function ctrMostrarPagos($inicio, $fin, $nquincena, $id ){
+
+		$respuesta = ModeloProduccion::mdlMostrarPagos($inicio, $fin, $nquincena, $id);
+
+		return $respuesta;
+
+	}     
 
 }
