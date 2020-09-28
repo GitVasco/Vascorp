@@ -193,7 +193,7 @@ MODAL EDITAR Asistencia
               
                 <span class="input-group-addon"><i class="fa fa-clock-o"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="editarCodigo" id="editarCodigo" required>
+                <input type="text" class="form-control input-lg" name="editarCodigo" id="editarCodigo" readonly>
                 
               </div>
 
@@ -207,7 +207,7 @@ MODAL EDITAR Asistencia
               
                 <span class="input-group-addon"><i class="fa fa-clock-o"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="editarTrabajador" id="editarTrabajador" required>
+                <input type="text" class="form-control input-lg" name="editarTrabajador" id="editarTrabajador" readonly>
                 
               </div>
 
@@ -223,7 +223,7 @@ MODAL EDITAR Asistencia
                 <input type="number" class="form-control input-lg nuevoMinuto" name="editarMinutos" id="editarMinutos" step="any" min="0" original="" original2="" required readonly>
                 <input type="hidden" id="idAsistencia" name="idAsistencia">
                 <input type="hidden" id="cantidad" name="cantidad">
-                <input type="text" id="sumaPara" name="sumaPara">
+                <input type="hidden" id="sumaPara" name="sumaPara">
               </div>
 
             </div>
@@ -278,21 +278,13 @@ MODAL EDITAR Asistencia
 
         <div class="modal-footer">
 
-          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
-
-          <button type="submit" class="btn btn-primary">Guardar cambios</button>
+          <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
 
         </div>
 
       </form>
 
-      <?php
-
-        $editarAsistencia = new ControladorAsistencias();
-        $editarAsistencia -> ctrEditarAsistencia();
-
-      ?>   
-
+     
 
     </div>
 

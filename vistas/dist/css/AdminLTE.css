@@ -6871,7 +6871,7 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
-#scroll{
+/* #scroll{
   overflow:scroll;
   overflow-x: hidden;
   height:200px;
@@ -6950,4 +6950,4 @@ input:checked + .slider:before {
   #scroll3 table{
     width:1000px;
   }
-}
+} */
