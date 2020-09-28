@@ -915,5 +915,28 @@ class ModeloProduccion
       $stmt=null;
 
   }      
+
+	/* 
+	* BORRAR QUINCENA
+	*/
+	static public function mdlEliminarQuincena($id){
+
+		$stmt = Conexion::conectar()->prepare("DELETE FROM quincenasjf WHERE id = :id ");
+
+		$stmt->bindParam(":id", $id, PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+      return "ok";
+      
+		} else {
+
+			return "error";
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+	}  
     
 }
