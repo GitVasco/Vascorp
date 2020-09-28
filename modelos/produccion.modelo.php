@@ -537,7 +537,7 @@ class ModeloProduccion
     
       }
       
-/*
+  /*
 	* Método para los pagos por mes
 	*/
 	static public function mdlMostrarPagos($inicio, $fin, $nquincena, $id){
