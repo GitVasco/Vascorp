@@ -330,7 +330,7 @@ while($respDetalle = mysql_fetch_array($sqlDetalle)){
     
     $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", $cont);
     
-    $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", utf8_encode($respDetalle["cod_color"])); 
+    $objPHPExcel->getActiveSheet()->setCellValueExplicit("B$fila", utf8_encode($respDetalle["cod_color"]), PHPExcel_Cell_DataType::TYPE_STRING); 
     
     $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", utf8_encode($respDetalle["nom_color"]));
     
@@ -348,7 +348,7 @@ while($respDetalle = mysql_fetch_array($sqlDetalle)){
 
 # Ajustar el tamaño de las columnas
 $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(4.57);
-$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(4.72);
+$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(12.72);
 $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(18.72);
 /* 
 * CREAR EL ARCHIVO

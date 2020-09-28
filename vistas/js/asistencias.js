@@ -76,11 +76,11 @@ $(".tablaAsistencias").on("click", ".btnEditarAsistencia", function () {
               '<label><strong>Tiempo de para(minutos)</strong></label>'+
               '<div class="input-group">'+
                '<span class="input-group-addon"><i class="fa fa-clock-o"></i></span>'+ 
-                '<input type="number" class="form-control input-lg" name="editarTiempoParas'+i+'" id="editarTiempoParas'+i+'" step="any" min="0" max="585" value="'+respuesta[i]["tiempo_para"]+'" required>'+
+                '<input type="number" class="form-control input-lg" name="editarTiempoParas'+i+'" id="editarTiempoParas'+i+'" step="any" min="0" max="585" value="'+respuesta[i]["tiempo_para"]+'" readonly>'+
               '</div>'+
             '</div>');
             $("#editarCodigo").val(respuesta[i]["id_trabajador"]);
-            $("#editarTrabajador").val(respuesta[i]["nom_tra"]+" "+respuesta[i]["ape_mat_tra"]+" "+respuesta[i]["ape_pat_tra"]);
+            $("#editarTrabajador").val(respuesta[i]["nom_tra"]+" "+respuesta[i]["ape_pat_tra"]+" "+respuesta[i]["ape_mat_tra"]);
             $("#editarMinutos").val(respuesta[i]["minutos"]);
             $("#editarPara").val(respuesta[i]["para"]);
             $("#editarTiempoParas").val(respuesta[i]["tiempo_para"]);
@@ -89,7 +89,6 @@ $(".tablaAsistencias").on("click", ".btnEditarAsistencia", function () {
             $("#editarMinutos").attr("original",respuesta[i]["minutos"]);
             localStorage.setItem("cantidad", respuesta.length);
             var suma = new Array(parseInt(respuesta[i]["tiempo_para"]));
-            console.log(suma);  
           }
           
           
@@ -129,7 +128,7 @@ $(".tablaAsistencias").on("click", ".btnEditarPara", function () {
       success: function (respuesta) {
         for (let i = 0; i < respuesta.length; i++) {
           $("#editarCodigo3").val(respuesta[i]["id_trabajador"]);
-          $("#editarTrabajador3").val(respuesta[i]["nom_tra"]+" "+respuesta[i]["ape_mat_tra"]+" "+respuesta[i]["ape_pat_tra"]);
+          $("#editarTrabajador3").val(respuesta[i]["nom_tra"]+" "+respuesta[i]["ape_pat_tra"]+" "+respuesta[i]["ape_mat_tra"]);
           $("#editarMinutos3").val(respuesta[i]["minutos"]);
           $("#idAsistencia3").val(respuesta[i]["id"]);
           $("#editarMinutos3").attr("original",respuesta[i]["minutos"]);
@@ -210,14 +209,13 @@ $(".tablaAsistencias").on("click", ".btnEditarExtras", function () {
         processData: false,
         dataType: "json",
         success: function (respuesta) {
-			console.log(respuesta);
-            $("#editarCodigo2").val(respuesta["id_trabajador"]);
-            $("#editarTrabajador2").val(respuesta["nom_tra"]+" "+respuesta["ape_mat_tra"]+" "+respuesta["ape_pat_tra"]);
-            $("#editarMinutos2").val(respuesta["minutos"]);
-            $("#editarExtras").val(respuesta["horas_extras"]);
-            $("#idAsistencia2").val(respuesta["id"]);
-            $("#editarMinutos2").attr("originales",respuesta["minutos"]);
-            $("#editarMinutos2").attr("originales2",parseInt(respuesta["minutos"])-parseInt(respuesta["horas_extras"]));
+            $("#editarCodigo2").val(respuesta[0]["id_trabajador"]);
+            $("#editarTrabajador2").val(respuesta[0]["nom_tra"]+" "+respuesta[0]["ape_pat_tra"]+" "+respuesta[0]["ape_mat_tra"]);
+            $("#editarMinutos2").val(respuesta[0]["minutos"]);
+            $("#editarExtras").val(respuesta[0]["horas_extras"]);
+            $("#idAsistencia2").val(respuesta[0]["id"]);
+            $("#editarMinutos2").attr("originales",respuesta[0]["minutos"]);
+            $("#editarMinutos2").attr("originales2",parseInt(respuesta[0]["minutos"])-parseInt(respuesta[0]["horas_extras"]));
 
         }
 

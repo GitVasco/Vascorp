@@ -29,7 +29,7 @@
 
     <div class="box">
       <div class="box-header with-border">
-        <button class="btn btn-outline-success btnReportePagos" modelo="" style="border:green 1px solid"  inicio=<?php echo $_GET["inicio"]?> fin=<?php echo $_GET["fin"]?> quincena=<?php echo $_GET["nquincena"]?> id=<?php echo $_GET["id"]?>>
+        <button class="btn btn-outline-success btnReportePago" modelo="" style="border:green 1px solid"  inicio=<?php echo $_GET["inicio"]?> fin=<?php echo $_GET["fin"]?> quincena=<?php echo $_GET["nquincena"]?> id=<?php echo $_GET["id"]?>>
                     <img src="vistas/img/plantilla/excel.png" width="20px" > Reporte Pagos  </button>
       </div>
       <div class="box-body">

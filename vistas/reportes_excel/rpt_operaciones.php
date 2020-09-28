@@ -330,7 +330,7 @@ while($respDetalle = mysql_fetch_array($sqlDetalle)){
     
     $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", $cont);
     
-    $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", utf8_encode($respDetalle["codigo"])); 
+    $objPHPExcel->getActiveSheet()->setCellValueExplicit("B$fila", utf8_encode($respDetalle["codigo"]),PHPExcel_Cell_DataType::TYPE_STRING); 
     
     $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", utf8_encode($respDetalle["nombre"]));
     
