@@ -206,16 +206,30 @@ function cargarEficiencia(inicio,fin,nquincena,id){
 
 }
 /*
-* BOTON REPORTE DE ORDEN DE CORTE
+* BOTON REPORTE DE PAGOS DE TRUSAS
 */
-$(".tablaQuincena").on("click", ".btnReportePagos", function () {
+$(".tablaQuincena").on("click", ".btnReportePagosTrusas", function () {
 
 	inicio = $(this).attr("inicio");
 	fin = $(this).attr("fin");
 	id = $(this).attr("id");
 	console.log(inicio, fin, id);
 
-    window.location = "vistas/reportes_excel/rpt_pagos.php?inicio=" + inicio + "&fin=" + fin + "&id=" + id;
+    window.location = "vistas/reportes_excel/rpt_pagos_trusas.php?inicio=" + inicio + "&fin=" + fin + "&id=" + id;
+  
+})
+
+/*
+* BOTON REPORTE DE PAGOS DE BRASIERES
+*/
+$(".tablaQuincena").on("click", ".btnReportePagosBrasier", function () {
+
+	inicio = $(this).attr("inicio");
+	fin = $(this).attr("fin");
+	id = $(this).attr("id");
+	console.log(inicio, fin, id);
+
+    window.location = "vistas/reportes_excel/rpt_pagos_brasier.php?inicio=" + inicio + "&fin=" + fin + "&id=" + id;
   
 })
 
