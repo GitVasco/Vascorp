@@ -515,6 +515,84 @@ function cargarTablaProduccionBrasier(mesB) {
 		}    
 	} );
 }
+
+/* 
+! PRODUCCION DE VASCO
+*/
+/* 
+* BOTON ACEPTAR
+*/
+$(".box").on("click", ".btnCargarVasco", function () {
+
+	$(".tablaProduccionVasco").DataTable().destroy();
+
+	var mesV = document.getElementById("mesV").value;
+	//console.log(mesV);
+	//$(".btnReporteSalida").attr("linea",mesV);
+	localStorage.setItem("mesV", mesV);
+
+	cargarTablaProduccionVasco(localStorage.getItem("mesV"));
+	
+})
+
+/* 
+* VEMOS SI LOCAL STORAGE TRAE ALGO
+*/
+if (localStorage.getItem("mesV") != null) {
+
+	cargarTablaProduccionVasco(localStorage.getItem("mesV"));
+	//console.log("lleno");
+	
+}else{
+
+	cargarTablaProduccionVasco(null);
+	//console.log("vacio");
+
+}
+
+
+/* 
+* TABLA PARA PRODUCCION Vasco
+*/
+function cargarTablaProduccionVasco(mesV) {
+	$('.tablaProduccionVasco').DataTable( {
+		"ajax": "ajax/tabla-produccionvasco.ajax.php?perfil="+$("#perfilOculto").val() + "&mesV=" + mesV,
+		"deferRender": true,
+		"retrieve": true,
+		"processing": true,
+		"order": [[1, "desc"]],
+		"pageLength": 20,
+		"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+		"language": {
+
+				"sProcessing":     "Procesando...",
+				"sLengthMenu":     "Mostrar _MENU_ registros",
+				"sZeroRecords":    "No se encontraron resultados",
+				"sEmptyTable":     "Ningún dato disponible en esta tabla",
+				"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+				"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0",
+				"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+				"sInfoPostFix":    "",
+				"sSearch":         "Buscar:",
+				"sUrl":            "",
+				"sInfoThousands":  ",",
+				"sLoadingRecords": "Cargando...",
+				"oPaginate": {
+				"sFirst":    "Primero",
+				"sLast":     "Último",
+				"sNext":     "Siguiente",
+				"sPrevious": "Anterior"
+				},
+				"oAria": {
+					"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+				}
+
+		}    
+	} );
+}
+
+
 $("#nuevoTalleres").change(function(){
 	$("#nuevoCodigo").val($(this).val()+"1234");
 })

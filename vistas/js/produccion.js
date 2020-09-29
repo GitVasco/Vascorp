@@ -251,4 +251,35 @@ $(".box").on("click", ".btnReportePago", function () {
 	id=$(this).attr("id");
     window.location = "vistas/reportes_excel/rpt_pago.php?inicio="+inicio+"&fin="+fin+"&quincena="+quincena+"&id="+id;
   
+});
+
+/*=============================================
+ELIMINAR QUICENA
+=============================================*/
+
+$(".tablaQuincena tbody").on("click", "button.btnEliminarQuincena", function(){
+
+	var idQuincena = $(this).attr("id");
+	//console.log("idQuincena", idQuincena);
+
+	swal({
+
+		title: '¿Está seguro de borrar la quincena?',
+		text: "¡Si no lo está puede cancelar la accíón!",
+		type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si, borrar quincena!'
+        }).then(function(result) {
+        if (result.value) {
+
+        	window.location = "index.php?ruta=quincena&idQuincena="+ idQuincena ;
+
+        }
+
+
+	})
+
 })

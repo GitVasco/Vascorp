@@ -368,6 +368,13 @@ MODAL EDITAR QUINCENA
 
   </div>
 
+  <?php
+
+  $eliminarQuincena = new ControladorProduccion();
+  $eliminarQuincena -> ctrEliminarQuincena();
+
+?>
+
 </div>
 <script>
 window.document.title = "Quincenas"

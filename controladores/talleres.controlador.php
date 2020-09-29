@@ -259,6 +259,19 @@ class ControladorTalleres{
         return $respuesta;
 
     }
+
+    /*
+    * MOSTRAR PRODUCCION DE VASCO
+    */
+    static public function ctrMostrarProduccionVasco($mes){
+
+        $respuesta = ModeloTalleres::mdlMostrarProduccionVasco($mes);
+
+        return $respuesta;
+
+    }    
+
+
     /*=============================================
 	RANGO FECHAS TERMINADOS
 	=============================================*/	

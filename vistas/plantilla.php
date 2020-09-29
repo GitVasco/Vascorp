@@ -203,6 +203,7 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "proyeccion-mp" ||
                   $_GET["ruta"] == "produccion-trusas" ||
                   $_GET["ruta"] == "produccion-brasier" ||
+                  $_GET["ruta"] == "produccion-vasco" ||
                   $_GET["ruta"] == "quincena" ||
                   $_GET["ruta"] == "eficiencia" ||
                   $_GET["ruta"] == "pagos"){
