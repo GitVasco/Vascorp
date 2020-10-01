@@ -12,7 +12,7 @@ include "../reportes_excel/Classes/PHPExcel.php";
 /* 
 * LLAMAMOS A LA CONEXION
 */
-$conexion = mysql_connect("192.168.1.2", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
+$conexion = mysql_connect("192.168.0.3", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
 mysql_select_db("new_vasco", $conexion);
 
 /* 
@@ -292,16 +292,16 @@ $objDrawing->setWorksheet($objPHPExcel->getActiveSheet());
 
 // TITULO
 $fila = 2;
-$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", 'ASISTENCIAS');
-$objPHPExcel->getActiveSheet()->mergeCells("G$fila:K$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($texto3, "G$fila:K$fila");
-$objPHPExcel->getActiveSheet()->getStyle("G$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$objPHPExcel->getActiveSheet()->SetCellValue("D$fila", 'ASISTENCIAS');
+$objPHPExcel->getActiveSheet()->mergeCells("D$fila:E$fila");
+$objPHPExcel->getActiveSheet()->setSharedStyle($texto3, "D$fila:E$fila");
+$objPHPExcel->getActiveSheet()->getStyle("D$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("L$fila", 'fecha:');
-$objPHPExcel->getActiveSheet()->setSharedStyle($texto1, "L$fila");
+$objPHPExcel->getActiveSheet()->SetCellValue("F$fila", 'fecha:');
+$objPHPExcel->getActiveSheet()->setSharedStyle($texto1, "F$fila");
 
-$objPHPExcel->getActiveSheet()->SetCellValue("M$fila", $fecha);
-$objPHPExcel->getActiveSheet()->setSharedStyle($texto2, "M$fila");
+$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", $fecha);
+$objPHPExcel->getActiveSheet()->setSharedStyle($texto2, "G$fila");
 
 
 $fila = 7;

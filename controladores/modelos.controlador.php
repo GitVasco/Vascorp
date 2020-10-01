@@ -309,17 +309,25 @@ class ControladorModelos{
 	static public function ctrEliminarModelo(){
 
 		if(isset($_GET["idModelo"])){
-
+			date_default_timezone_set('America/Lima');
+			$fecha = new DateTime();
 			$datos = $_GET["idModelo"];
 			$tabla="modelojf";
 			$modelo=ControladorModelos::ctrMostrarModelos("id_modelo",$datos);
-			
 			$usuario= $_SESSION["nombre"];
 			$para      = 'notificacionesvascorp@gmail.com';
 			$asunto    = 'Se elimino un modelo';
 			$descripcion   = 'El usuario '.$usuario.' elimino el modelo '.$modelo["modelo"].' - '.$modelo["nombre"];
 			$de = 'From: notificacionesvascorp@gmail.com';
-			mail($para, $asunto, $descripcion, $de);
+			if($_SESSION["correo"] == 1){
+				mail($para, $asunto, $descripcion, $de);
+			}
+			if($_SESSION["datos"] == 1){
+				$datos2= array( "usuario" => $usuario,
+								"concepto" => $descripcion,
+								"fecha" => $fecha->format("Y-m-d H:i:s"));
+				$auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
+			}
 			$respuesta = ModeloModelos::mdlEliminarModelo($tabla,$datos);
 			if($respuesta == "ok"){
 

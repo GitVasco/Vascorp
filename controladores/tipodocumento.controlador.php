@@ -150,17 +150,25 @@ class ControladorTipoDocumento{
 	static public function ctrBorrarTipoDocumento(){
 
 		if(isset($_GET["idTipoDocumento"])){
-
+			date_default_timezone_set('America/Lima');
+			$fecha = new DateTime();
 			$tabla ="tipo_documentojf";
 			$datos = $_GET["idTipoDocumento"];
 			$documento=ControladorTipoDocumento::ctrMostrarTipoDocumento("cod_doc",$datos);
-			
 			$usuario= $_SESSION["nombre"];
 			$para      = 'notificacionesvascorp@gmail.com';
 			$asunto    = 'Se elimino un tipo de documento';
 			$descripcion   = 'El usuario '.$usuario.' elimino el tipo de documento '.$documento["cod_doc"].' - '.$documento["tipo_doc"];
 			$de = 'From: notificacionesvascorp@gmail.com';
-			mail($para, $asunto, $descripcion, $de);
+			if($_SESSION["correo"] == 1){
+				mail($para, $asunto, $descripcion, $de);
+			}
+			if($_SESSION["datos"] == 1){
+				$datos2= array( "usuario" => $usuario,
+								"concepto" => $descripcion,
+								"fecha" => $fecha->format("Y-m-d H:i:s"));
+				$auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
+			}
 			$respuesta = ModeloTipoDocumento::mdlBorrarTipoDocumento($tabla, $datos);
 
 			if($respuesta == "ok"){

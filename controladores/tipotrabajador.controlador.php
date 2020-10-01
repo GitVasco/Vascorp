@@ -84,17 +84,25 @@ class ControladorTipoTrabajador{
 	static public function ctrEliminarTipoTrabajador(){
 
 		if(isset($_GET["idTipoTrabajador"])){
-
+			date_default_timezone_set('America/Lima');
+			$fecha = new DateTime();
 			$tabla ="tipo_trabajadorjf";
 			$datos = $_GET["idTipoTrabajador"];
 			$tipo=ControladorTipoTrabajador::ctrMostrarTipoTrabajador("cod_tip_tra",$datos);
-			
 			$usuario= $_SESSION["nombre"];
 			$para      = 'notificacionesvascorp@gmail.com';
 			$asunto    = 'Se elimino un tipo de trabajador';
 			$descripcion   = 'El usuario '.$usuario.' elimino el tipo de trabajador '.$tipo["nom_tip_trabajador"].' - '.$tipo["detalle"];
 			$de = 'From: notificacionesvascorp@gmail.com';
-			mail($para, $asunto, $descripcion, $de);
+			if($_SESSION["correo"] == 1){
+				mail($para, $asunto, $descripcion, $de);
+			}
+			if($_SESSION["datos"] == 1){
+				$datos2= array( "usuario" => $usuario,
+								"concepto" => $descripcion,
+								"fecha" => $fecha->format("Y-m-d H:i:s"));
+				$auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
+			}
 			$respuesta = ModeloTipoTrabajador::mdlEliminarTipoTrabajador($tabla,$datos);
 
 			if($respuesta == "ok"){

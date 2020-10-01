@@ -59,7 +59,6 @@
 
           $item = null;
           $valor = null;
-
           $colores = ControladorColores::ctrMostrarColores($item, $valor);
 
           foreach ($colores as $key => $value) {

@@ -179,17 +179,25 @@ class ControladorOperaciones{
 	static public function ctrEliminarOperacion(){
 
 		if(isset($_GET["idOperacion"])){
-
+			date_default_timezone_set('America/Lima');
+			$fecha = new DateTime();
 			$tabla ="operacionesjf";
 			$datos = $_GET["idOperacion"];
 			$operacion=ControladorOperaciones::ctrMostrarOperaciones("id",$datos);
-			
 			$usuario= $_SESSION["nombre"];
 			$para      = 'notificacionesvascorp@gmail.com';
 			$asunto    = 'Se elimino una operacion';
 			$descripcion   = 'El usuario '.$usuario.' elimino la operacion '.$operacion["codigo"].' - '.$operacion["nombre"];
 			$de = 'From: notificacionesvascorp@gmail.com';
-			mail($para, $asunto, $descripcion, $de);
+			if($_SESSION["correo"] == 1){
+				mail($para, $asunto, $descripcion, $de);
+			}
+			if($_SESSION["datos"] == 1){
+				$datos2= array( "usuario" => $usuario,
+								"concepto" => $descripcion,
+								"fecha" => $fecha->format("Y-m-d H:i:s"));
+				$auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
+			}
 			$respuesta = ModeloOperaciones::mdlEliminarOperacion($tabla,$datos);
 
 			if($respuesta == "ok"){

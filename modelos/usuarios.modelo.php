@@ -154,6 +154,34 @@ class ModeloUsuarios{
 	}
 
 	/*=============================================
+	ACTUALIZAR ENVIO Y ALMACENAMIENTO DE CORREO
+	=============================================*/
+
+	static public function mdlActualizarCorreo($tabla, $item1, $valor1, $item2, $valor2, $item3, $valor3){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET datos = :datos ,  correo = :correo WHERE id = :id");
+
+		$stmt -> bindParam(":datos", $valor1, PDO::PARAM_STR);
+		$stmt -> bindParam(":correo", $valor2, PDO::PARAM_STR);
+		$stmt -> bindParam(":id", $valor3, PDO::PARAM_STR);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+	/*=============================================
 	BORRAR USUARIO
 	=============================================*/
 
@@ -320,4 +348,33 @@ class ModeloUsuarios{
 
 
 	}
+
+	/*=============================================
+	REGISTRO DE USUARIO
+	=============================================*/
+
+	static public function mdlIngresarAuditoria($tabla, $datos){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla( usuario, concepto, fecha) VALUES ( :usuario, :concepto, :fecha)");
+
+		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+		$stmt->bindParam(":concepto", $datos["concepto"], PDO::PARAM_STR);
+		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";	
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		
+		$stmt = null;
+
+	}
+
 }

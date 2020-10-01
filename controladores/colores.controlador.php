@@ -123,7 +123,7 @@ class ControladorColores{
 
 					swal({
 						  type: "error",
-						  title: "¡El cliente no puede ir vacío o llevar caracteres especiales!",
+						  title: "¡El color no puede ir vacío o llevar caracteres especiales!",
 						  showConfirmButton: true,
 						  confirmButtonText: "Cerrar"
 						  }).then(function(result){
@@ -153,15 +153,24 @@ class ControladorColores{
 		if(isset($_GET["idColor"])){
 
 			$datos = $_GET["idColor"];
+			date_default_timezone_set('America/Lima');
+			$fecha = new DateTime();
 			$color=ControladorColores::ctrMostrarColores($datos);
-			
 			$usuario= $_SESSION["nombre"];
 			$para      = 'notificacionesvascorp@gmail.com';
 			$asunto    = 'Se elimino un color';
 			$descripcion   = 'El usuario '.$usuario.' elimino el color '.$color["cod_color"].' - '.$color["nom_color"];
 			$de = 'From: notificacionesvascorp@gmail.com';
+			if($_SESSION["correo"] == 1){
+				mail($para, $asunto, $descripcion, $de);
+			}
+			if($_SESSION["datos"] == 1){
+				$datos2= array( "usuario" => $usuario,
+								"concepto" => $descripcion,
+								"fecha" => $fecha->format("Y-m-d H:i:s"));
+				$auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
+			}
 			$respuesta = ModeloColores::mdlEliminarColor($datos);
-			mail($para, $asunto, $descripcion, $de);
 			if($respuesta == "ok"){
 				
 				
@@ -169,7 +178,7 @@ class ControladorColores{
 
 				swal({
 					  type: "success",
-					  title: "El cliente ha sido borrado correctamente",
+					  title: "El color ha sido borrado correctamente",
 					  showConfirmButton: true,
 					  confirmButtonText: "Cerrar",
 					  closeOnConfirm: false

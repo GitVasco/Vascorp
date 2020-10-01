@@ -59,7 +59,7 @@
 
             $item = null;
             $valor = null;
-
+            
             $usuarios = ControladorUsuarios::ctrMostrarUsuarios($item, $valor);
 
             foreach ($usuarios as $key => $value){
@@ -99,6 +99,8 @@
                           <button class="btn btn-warning btnEditarUsuario" idUsuario="'.$value["id"].'" data-toggle="modal" data-target="#modalEditarUsuario"><i class="fa fa-pencil"></i></button>
 
                           <button class="btn btn-danger btnEliminarUsuario" idUsuario="'.$value["id"].'" fotoUsuario="'.$value["foto"].'" usuario="'.$value["usuario"].'"><i class="fa fa-times"></i></button>
+
+                          <button class="btn btn-primary btnEditarCorreo" idUsuario="'.$value["id"].'" data-toggle="modal" data-target="#modalEditarCorreo"><i class="fa fa-envelope"></i></button>
 
                         </div>  
 
@@ -466,6 +468,116 @@ MODAL EDITAR USUARIO
 
 </div>
 
+
+<!--=====================================
+MODAL EDITAR CORREO
+======================================-->
+
+<div id="modalEditarCorreo" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog modal-md">
+
+    <div class="modal-content">
+
+      <form role="form" method="post" enctype="multipart/form-data">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Editar permisos de correo</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <!-- ENTRADA PARA EL NOMBRE -->
+            <div class="form-group col-lg-6">
+              <label for=""><strong>Nombre</strong></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+
+                <input type="text" class="form-control input-lg" id="editarNombreCorreo" name="editarNombreCorreo" value="" readonly>
+
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-6">
+            <label for=""><strong>Usuario</strong></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+
+                <input type="text" class="form-control input-lg" id="editarUsuarioCorreo" name="editarUsuarioCorreo" value="" readonly>
+
+              </div>
+
+            </div>
+            <div class="form-group col-lg-6">
+              <label for="">Enviar correos</label>
+              <div class="input-group">
+              
+                <label class="switch">
+                  <input type="checkbox"  id="nuevoCorreo" name="nuevoCorreo" value="1" >
+                  <span class="slider round"></span>
+                </label>
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA EL USUARIO -->
+
+             <div class="form-group  col-lg-6">
+              <label for=""><strong>Guardar correos</strong></label>
+              <div class="input-group">
+                <label class="switch">
+                  <input type="checkbox"  id="nuevoDatos" name="nuevoDatos" value="1" >
+                  <span class="slider round"></span>
+                </label>
+                <input type="hidden" name="idUsuarioCorreo" id="idUsuarioCorreo">
+              </div>
+
+            </div>
+        </div>
+      </div>         
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Modificar correos</button>
+
+        </div>
+        <?php
+
+          $editarUsuario = new ControladorUsuarios();
+          $editarUsuario -> ctrActualizarCorreo();
+
+        ?> 
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
 <?php
 
   $borrarUsuario = new ControladorUsuarios();
