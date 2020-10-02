@@ -553,3 +553,7 @@ MODAL EDITAR COSTOS
   </div>
 
 </div>
+
+<script>
+window.document.title = "Materia Prima"
+</script>

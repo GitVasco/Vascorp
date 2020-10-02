@@ -10,8 +10,6 @@ class ControladorUsuarios{
 
 		if(isset($_POST["ingUsuario"])){
 
-			if(preg_match('/^[a-zA-Z0-9]+$/', $_POST["ingUsuario"]) &&
-			   preg_match('/^[a-zA-Z0-9]+$/', $_POST["ingPassword"])){
 
 				$encriptar = crypt($_POST["ingPassword"], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
 
@@ -32,7 +30,8 @@ class ControladorUsuarios{
 						$_SESSION["usuario"] = $respuesta["usuario"];
 						$_SESSION["foto"] = $respuesta["foto"];
 						$_SESSION["perfil"] = $respuesta["perfil"];
-
+						$_SESSION["correo"] = $respuesta["correo"];
+						$_SESSION["datos"] = $respuesta["datos"];
 						/*=============================================
 						REGISTRAR FECHA PARA SABER EL ÚLTIMO LOGIN
 						=============================================*/
@@ -83,7 +82,7 @@ class ControladorUsuarios{
 
 				}
 
-			}	
+			
 
 		}
 
@@ -97,9 +96,6 @@ class ControladorUsuarios{
 
 		if(isset($_POST["nuevoUsuario"])){
 
-			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevoNombre"]) &&
-			   preg_match('/^[a-zA-Z0-9]+$/', $_POST["nuevoUsuario"]) &&
-			   preg_match('/^[a-zA-Z0-9]+$/', $_POST["nuevoPassword"])){
 
 			   	/*=============================================
 				VALIDAR IMAGEN
@@ -218,31 +214,7 @@ class ControladorUsuarios{
 				}	
 
 
-			}else{
-
-				echo '<script>
-
-					swal({
-
-						type: "error",
-						title: "¡El usuario no puede ir vacío o llevar caracteres especiales!",
-						showConfirmButton: true,
-						confirmButtonText: "Cerrar"
-
-					}).then(function(result){
-
-						if(result.value){
-						
-							window.location = "usuarios";
-
-						}
-
-					});
-				
-
-				</script>';
-
-			}
+		
 
 
 		}
@@ -297,7 +269,6 @@ class ControladorUsuarios{
 
 		if(isset($_POST["editarUsuario"])){
 
-			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["editarNombre"])){
 
 				/*=============================================
 				VALIDAR IMAGEN
@@ -457,26 +428,7 @@ class ControladorUsuarios{
 				}
 
 
-			}else{
-
-				echo'<script>
-
-					swal({
-						  type: "error",
-						  title: "¡El nombre no puede ir vacío o llevar caracteres especiales!",
-						  showConfirmButton: true,
-						  confirmButtonText: "Cerrar"
-						  }).then(function(result) {
-							if (result.value) {
-
-							window.location = "usuarios";
-
-							}
-						})
-
-			  	</script>';
-
-			}
+			
 
 		}
 
@@ -528,7 +480,59 @@ class ControladorUsuarios{
 		}
 
 	}
+	
 
+	/*=============================================
+	ACTUALIZAR CORREO DE  USUARIO
+	=============================================*/
+
+	static public function ctrActualizarCorreo(){
+
+		if(isset($_POST["idUsuarioCorreo"]) ){
+
+			$tabla ="usuariosjf";
+			$item3 = "id";
+			$valor3 = $_POST["idUsuarioCorreo"];
+			$item2 = "correo";
+			$item1 = "datos";
+			if(empty($_POST["nuevoCorreo"])){
+				$valor2="0";
+			}else{
+				$valor2=$_POST["nuevoCorreo"];
+			}
+			if(empty($_POST["nuevoDatos"])){
+				$valor1="0";
+			}else{
+				$valor1=$_POST["nuevoDatos"];
+			}
+			var_dump($valor3);
+			$respuesta = ModeloUsuarios::mdlActualizarCorreo($tabla, $item1, $valor1, $item2, $valor2, $item3, $valor3);
+
+			if($respuesta == "ok"){
+
+				echo'<script>
+
+				swal({
+					  type: "success",
+					  title: "El usuario ha sido actualizado correctamente",
+					  showConfirmButton: true,
+					  confirmButtonText: "Cerrar",
+					  closeOnConfirm: false
+					  }).then(function(result) {
+								if (result.value) {
+
+								window.location = "usuarios";
+
+								}
+							})
+
+				</script>';
+
+			}		
+
+		}
+
+	}
 
 }
 	

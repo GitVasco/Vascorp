@@ -358,3 +358,7 @@ MODAL EDITAR PARA
     $eliminarDetalle = new ControladorOrdenCorte();
     $eliminarDetalle -> ctrEliminarDetalleOrdenCorte();
 ?>
+
+<script>
+window.document.title = "Editar orden de corte"
+</script>

@@ -98,10 +98,25 @@ class ControladorTrabajador{
 	static public function ctrEliminarTrabajador(){
 
 		if(isset($_GET["idTrabajador"])){
-
+			date_default_timezone_set('America/Lima');
+			$fecha = new DateTime();
 			$tabla ="trabajadorjf";
 			$datos = $_GET["idTrabajador"];
-
+			$trabajador=ControladorTrabajador::ctrMostrarTrabajador("cod_tra",$datos);
+			$usuario= $_SESSION["nombre"];
+			$para      = 'notificacionesvascorp@gmail.com';
+			$asunto    = 'Se elimino un trabajador';
+			$descripcion   = 'El usuario '.$usuario.' elimino el trabajador '.$trabajador["cod_tra"].' - '.$trabajador["nombre"];
+			$de = 'From: notificacionesvascorp@gmail.com';
+			if($_SESSION["correo"] == 1){
+				mail($para, $asunto, $descripcion, $de);
+			}
+			if($_SESSION["datos"] == 1){
+				$datos2= array( "usuario" => $usuario,
+								"concepto" => $descripcion,
+								"fecha" => $fecha->format("Y-m-d H:i:s"));
+				$auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
+			}
 			$respuesta = ModeloTrabajador::mdlEliminarTrabajador($tabla,$datos);
 
 			if($respuesta == "ok"){

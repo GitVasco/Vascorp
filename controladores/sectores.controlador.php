@@ -151,9 +151,24 @@ class ControladorSectores{
 	static public function ctrEliminarSector(){
 
 		if(isset($_GET["idSector"])){
-
+			date_default_timezone_set('America/Lima');
+			$fecha = new DateTime();
 			$datos = $_GET["idSector"];
-
+			$sector=ControladorSectores::ctrMostrarSectores($datos);
+			$usuario= $_SESSION["nombre"];
+			$para      = 'notificacionesvascorp@gmail.com';
+			$asunto    = 'Se elimino un sector';
+			$descripcion   = 'El usuario '.$usuario.' elimino el sector '.$sector["cod_sector"].' - '.$sector["nom_sector"];
+			$de = 'From: notificacionesvascorp@gmail.com';
+			if($_SESSION["correo"] == 1){
+				mail($para, $asunto, $descripcion, $de);
+			}
+			if($_SESSION["datos"] == 1){
+				$datos2= array( "usuario" => $usuario,
+								"concepto" => $descripcion,
+								"fecha" => $fecha->format("Y-m-d H:i:s"));
+				$auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
+			}
 			$respuesta = ModeloSectores::mdlEliminarSector($datos);
 
 			if($respuesta == "ok"){

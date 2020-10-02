@@ -505,3 +505,6 @@ MODAL AGREGAR CLIENTE
   </div>
 
 </div>
+<script>
+window.document.title = "Editar venta"
+</script>

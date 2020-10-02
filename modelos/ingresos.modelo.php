@@ -72,30 +72,78 @@ class ModeloIngresos{
 	*/
 	static public function mdlGuardarIngreso($tabla,$datos){
 
-		$sql="INSERT INTO $tabla (
+		$sql="INSERT INTO $tabla (			tipo,
 											usuario,
 											taller,
 											documento,
 											total,
-											fecha
+											fecha,
+											almacen
 										) 
 										VALUES
-											(
+											(:tipo,
 											:usuario,
 											:taller,
 											:documento,
 											:total,
-											:fecha
+											:fecha,
+											:almacen
 											)";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 
+		$stmt->bindParam(":tipo",$datos["tipo"],PDO::PARAM_STR);
         $stmt->bindParam(":usuario",$datos["usuario"],PDO::PARAM_INT);
         $stmt->bindParam(":taller",$datos["taller"],PDO::PARAM_STR);
         $stmt->bindParam(":documento",$datos["documento"],PDO::PARAM_STR);
 		$stmt->bindParam(":total",$datos["total"],PDO::PARAM_INT);
 		$stmt->bindParam(":fecha",$datos["fecha"],PDO::PARAM_STR);
+		$stmt->bindParam(":almacen",$datos["almacen"],PDO::PARAM_STR);
 
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+
+		}
+
+		$stmt=null;
+	}
+	static public function mdlGuardarSegunda($tabla,$datos){
+
+		$sql="INSERT INTO $tabla (			tipo,
+											usuario,
+											taller,
+											documento,
+											total,
+											fecha,
+											almacen,
+											trabajador
+										) 
+										VALUES
+											(:tipo,
+											:usuario,
+											:taller,
+											:documento,
+											:total,
+											:fecha,
+											:almacen,
+											:trabajador
+											)";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":tipo",$datos["tipo"],PDO::PARAM_STR);
+        $stmt->bindParam(":usuario",$datos["usuario"],PDO::PARAM_INT);
+        $stmt->bindParam(":taller",$datos["taller"],PDO::PARAM_STR);
+        $stmt->bindParam(":documento",$datos["documento"],PDO::PARAM_STR);
+		$stmt->bindParam(":total",$datos["total"],PDO::PARAM_INT);
+		$stmt->bindParam(":fecha",$datos["fecha"],PDO::PARAM_STR);
+		$stmt->bindParam(":almacen",$datos["almacen"],PDO::PARAM_STR);
+		$stmt->bindParam(":trabajador",$datos["trabajador"],PDO::PARAM_INT);
 
 		if($stmt->execute()){
 
@@ -121,7 +169,8 @@ class ModeloIngresos{
 											taller,
 											fecha,
 											articulo,
-											cantidad
+											cantidad,
+											almacen
 										) 
 										VALUES
 											(
@@ -130,7 +179,8 @@ class ModeloIngresos{
 											:taller,
 											:fecha,
 											:articulo,
-											:cantidad
+											:cantidad,
+											:almacen
 											)";
 
 		$stmt=Conexion::conectar()->prepare($sql);
@@ -141,7 +191,7 @@ class ModeloIngresos{
         $stmt->bindParam(":fecha",$datos["fecha"],PDO::PARAM_STR);
 		$stmt->bindParam(":articulo",$datos["articulo"],PDO::PARAM_STR);
 		$stmt->bindParam(":cantidad",$datos["cantidad"],PDO::PARAM_INT);
-		
+		$stmt->bindParam(":almacen",$datos["almacen"],PDO::PARAM_STR);
 
 
 		if($stmt->execute()){
@@ -157,6 +207,54 @@ class ModeloIngresos{
 		$stmt=null;
 	}
 	
+	static public function mdlGuardarDetalleSegunda($tabla,$datos){
+
+		$sql="INSERT INTO $tabla (
+											tipo,
+											documento,
+											taller,
+											fecha,
+											articulo,
+											cliente,
+											cantidad,
+											almacen
+										) 
+										VALUES
+											(
+											:tipo,
+											:documento,
+											:taller,
+											:fecha,
+											:articulo,
+											:cliente,
+											:cantidad,
+											:almacen
+											)";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+        $stmt->bindParam(":tipo",$datos["tipo"],PDO::PARAM_STR);
+		$stmt->bindParam(":documento",$datos["documento"],PDO::PARAM_STR);
+		$stmt->bindParam(":taller",$datos["taller"],PDO::PARAM_STR);
+        $stmt->bindParam(":fecha",$datos["fecha"],PDO::PARAM_STR);
+		$stmt->bindParam(":articulo",$datos["articulo"],PDO::PARAM_STR);
+		$stmt->bindParam(":cliente",$datos["cliente"],PDO::PARAM_STR);
+		$stmt->bindParam(":cantidad",$datos["cantidad"],PDO::PARAM_INT);
+		$stmt->bindParam(":almacen",$datos["almacen"],PDO::PARAM_STR);
+
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+
+		}
+
+		$stmt=null;
+	}
 	
 	/* 
 	* Método para editar las ventas
@@ -187,6 +285,32 @@ class ModeloIngresos{
 		
 	}
 
+	static public function mdlEditarSegunda($tabla,$datos){
+
+		$sql="UPDATE $tabla SET usuario=:usuario, taller=:taller, documento=:documento, total=:total, fecha=:fecha,trabajador=:trabajador WHERE id=:id";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":usuario",$datos["usuario"],PDO::PARAM_INT);
+        $stmt->bindParam(":taller",$datos["taller"],PDO::PARAM_STR);
+		$stmt->bindParam(":documento",$datos["documento"],PDO::PARAM_STR);
+		$stmt->bindParam(":trabajador",$datos["trabajador"],PDO::PARAM_INT);
+		$stmt->bindParam(":total",$datos["total"],PDO::PARAM_INT);
+        $stmt->bindParam(":fecha",$datos["fecha"],PDO::PARAM_STR);
+        $stmt->bindParam(":id",$datos["id"],PDO::PARAM_INT);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		}
+
+		$stmt=null;
+		
+	}
 /* 
 	* Método para eliminar los detalles de los ingresos
 	*/

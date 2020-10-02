@@ -59,7 +59,6 @@
 
           $item = null;
           $valor = null;
-
           $colores = ControladorColores::ctrMostrarColores($item, $valor);
 
           foreach ($colores as $key => $value) {
@@ -319,3 +318,7 @@ MODAL EDITAR COLOR
   $eliminarColor -> ctrEliminarColor();
 
 ?>
+
+<script>
+window.document.title = "Colores"
+</script>

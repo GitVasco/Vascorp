@@ -147,9 +147,24 @@ class ControladorMarcas{
 	static public function ctrBorrarMarca(){
 
 		if(isset($_GET["idMarca"])){
-
+			date_default_timezone_set('America/Lima');
+			$fecha = new DateTime();
 			$datos = $_GET["idMarca"];
-
+			$marca=ControladorMarcas::ctrMostrarMarcas($datos);
+			$usuario= $_SESSION["nombre"];
+			$para      = 'notificacionesvascorp@gmail.com';
+			$asunto    = 'Se elimino una marca';
+			$descripcion   = 'El usuario '.$usuario.' elimino la marca '.$marca["marca"];
+			$de = 'From: notificacionesvascorp@gmail.com';
+			if($_SESSION["correo"] == 1){
+				mail($para, $asunto, $descripcion, $de);
+			}
+			if($_SESSION["datos"] == 1){
+				$datos2= array( "usuario" => $usuario,
+								"concepto" => $descripcion,
+								"fecha" => $fecha->format("Y-m-d H:i:s"));
+				$auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
+			}
 			$respuesta = ModeloMarcas::mdlBorrarMarca($datos);
 
 			if($respuesta == "ok"){

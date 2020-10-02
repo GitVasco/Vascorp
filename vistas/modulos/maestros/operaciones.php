@@ -267,3 +267,6 @@ MODAL EDITAR OPERACION
   $eliminarOperacion -> ctrEliminarOperacion();
 
 ?>
+<script>
+window.document.title = "Operaciones"
+</script>

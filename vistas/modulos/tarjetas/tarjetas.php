@@ -415,3 +415,6 @@ MODAL AGREGAR FICHA TECNICA
 
 </div>
 
+<script>
+window.document.title = "Tarjetas"
+</script>

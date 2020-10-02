@@ -391,3 +391,6 @@ MODAL DETALLE OPERACION
 
 </div>
 
+<script>
+window.document.title = "Operaciones Modelo"
+</script>

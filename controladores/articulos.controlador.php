@@ -409,7 +409,7 @@ class controladorArticulos{
 			$respuesta = ModeloArticulos::mdlEliminarArticulo($datos);
 
 			if($respuesta == "ok"){
-
+				
 				echo'<script>
 
 				swal({

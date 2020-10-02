@@ -968,3 +968,8 @@ $("#editarCantidad").change(function(){
     $("#cambio").val(cambio);
 
 })
+//Reporte de Salidas
+$(".box").on("click", ".btnReporteOrdenC", function () {
+    window.location = "vistas/reportes_excel/rpt_ordencorte_general.php";
+  
+})

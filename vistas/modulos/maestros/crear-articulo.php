@@ -291,3 +291,6 @@
 </div>
 
 
+<script>
+window.document.title = "Crear articulos"
+</script>

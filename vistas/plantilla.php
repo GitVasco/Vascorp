@@ -17,7 +17,7 @@ session_start();
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-  <link rel="icon" href="vistas/img/plantilla/icono-negro.png">
+  <link rel="icon" href="vistas/img/plantilla/vascorp.png">
 
   <!--=====================================
   PLUGINS DE CSS
@@ -196,13 +196,17 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "ingresos" ||
                   $_GET["ruta"] == "crear-ingresos" ||
                   $_GET["ruta"] == "editar-ingreso" ||
+                  $_GET["ruta"] == "crear-segunda" ||
+                  $_GET["ruta"] == "editar-segunda" ||
                   $_GET["ruta"] == "en-tallert" ||
                   $_GET["ruta"] == "marcar-taller" ||
                   $_GET["ruta"] == "proyeccion-mp" ||
                   $_GET["ruta"] == "produccion-trusas" ||
                   $_GET["ruta"] == "produccion-brasier" ||
+                  $_GET["ruta"] == "produccion-vasco" ||
                   $_GET["ruta"] == "quincena" ||
-                  $_GET["ruta"] == "eficiencia"){
+                  $_GET["ruta"] == "eficiencia" ||
+                  $_GET["ruta"] == "pagos"){
 
               include "modulos/produccion/".$_GET["ruta"].".php";
 

@@ -263,3 +263,7 @@ MODAL EDITAR PARA
   $borrarPara -> ctrBorrarPara();
 
 ?>
+
+<script>
+window.document.title = "Paras"
+</script>

@@ -45,9 +45,9 @@
 
         echo ' %</button>
 
-                  <a href="vistas/reportes_excel/rpt_urgencias.php" class="btn btn-info">
+                  <a href="vistas/reportes_excel/rpt_urgencias.php" class="btn btn-default pull-right" style="border:green 1px solid">
 
-                    <i class="fa fa-file-excel-o"></i> URGENCIAS
+                    <img src="vistas/img/plantilla/excel.png" width="20px"> URGENCIAS
                   
                   </a>
 
@@ -57,9 +57,9 @@
 
         echo '<div class="box-header with-border">
 
-                <a href="vistas/reportes_excel/rpt_urgencias.php" class="btn btn-info">
+                <a href="vistas/reportes_excel/rpt_urgencias.php" class="btn btn-default pull-right" style="border:green 1px solid">
 
-                  <i class="fa fa-file-excel-o"></i> URGENCIAS
+                  <img src="vistas/img/plantilla/excel.png" width="20px"> URGENCIAS
                 
                 </a>
   
@@ -491,3 +491,7 @@ MODAL VISUALIZAR MP URGENCIA
   </div>
 
 </div>
+
+<script>
+window.document.title = "Urgencias APT"
+</script>

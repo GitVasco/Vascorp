@@ -25,7 +25,18 @@ class TablaQuincena{
             /* 
             * BOTONES            
             */
-            $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarQuincena' title='Editar Fechas' id='".$quincena[$i]["id"]."' data-toggle='modal' data-target='#modalEditarQuincena'><i class='fa fa-pencil'></i></button><button class='btn btn-success btnEficiencia' title='Eficiencia' inicio='".$quincena[$i]["inicio"]."' fin='".$quincena[$i]["fin"]."' nquincena='".$quincena[$i]["nquincena"]."' id='".$quincena[$i]["id"]."'><i class='fa fa-percent'></i></button><button class='btn btn-danger btnEliminarQuincena' title='Eliminar' id='".$quincena[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
+            $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarQuincena' title='Editar Fechas' id='".$quincena[$i]["id"]."' data-toggle='modal' data-target='#modalEditarQuincena'><i class='fa fa-pencil'></i></button><button class='btn btn-success btnEficiencia' title='Eficiencia' inicio='".$quincena[$i]["inicio"]."' fin='".$quincena[$i]["fin"]."' nquincena='".$quincena[$i]["nquincena"]."' id='".$quincena[$i]["id"]."'><i class='fa fa-percent'></i></button><button class='btn btn-primary btnPagos' title='Pagos' inicio='".$quincena[$i]["inicio"]."' fin='".$quincena[$i]["fin"]."' nquincena='".$quincena[$i]["nquincena"]."' id='".$quincena[$i]["id"]."'><i class='fa fa-money'></i></button><button class='btn btn-danger btnEliminarQuincena' title='Eliminar' id='".$quincena[$i]["id"]."'><i class='fa fa-times'></i></button></div>";
+            
+            /* 
+            *trusas
+            */
+
+            $trusas = "<button class='btn btn-outline-success  btnReportePagosTrusas' title='Reporte de Pagos Trusas' id='".$quincena[$i]["id"]."' inicio='".$quincena[$i]["inicio"]."' fin='".$quincena[$i]["fin"]."' style='border:green 1px solid'><img src='vistas/img/plantilla/excel.png' width='20px'></button>";
+
+            /* 
+            *brasier
+            */
+            $brasier = "<button class='btn btn-outline-success  btnReportePagosBrasier' title='Reporte de Pagos Brasier' id='".$quincena[$i]["id"]."' inicio='".$quincena[$i]["inicio"]."' fin='".$quincena[$i]["fin"]."' style='border:green 1px solid'><img src='vistas/img/plantilla/excel.png' width='20px'></button>";
      
             $datosJson .= '[
             "'.($i+1).'",
@@ -36,7 +47,9 @@ class TablaQuincena{
             "'.$quincena[$i]["fin"].'",
             "'.$quincena[$i]["nombre"].'",
             "'.$quincena[$i]["fecha_creacion"].'",
-            "'.$botones.'"
+            "'.$botones.'",
+            "<center>'.$trusas.'</center>",
+            "<center>'.$brasier.'</center>"
             ],';        
             }
 

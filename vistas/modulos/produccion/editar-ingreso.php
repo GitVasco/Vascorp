@@ -206,7 +206,7 @@
                             <span class="input-group-addon"><i class="fa fa-scissors"></i></span>
 
                             <input type="text" min="1" class="form-control input-lg" id="nuevoTotalTaller"
-                              name="nuevoTotalTaller" total="" placeholder="0" value=<?php echo $ingreso["total"]?> readonly required>
+                              name="nuevoTotalTaller" total="" placeholder="0" total="<?php echo $ingreso["total"]; ?>" value=<?php echo $ingreso["total"]?> readonly required>
 
                             <input type="hidden" name="totalTaller" id="totalTaller" value=<?php echo $ingreso["total"]?>>
 
@@ -310,4 +310,8 @@ $(document).ready(function(){
   $("#editarTalleres").val(pasar);
   $("#editarTalleres").selectpicker("refresh");
 })
+</script>
+
+<script>
+window.document.title = "Editar ingresos"
 </script>

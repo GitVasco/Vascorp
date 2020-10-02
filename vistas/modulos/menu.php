@@ -554,11 +554,27 @@
 
                             <li>
 
-                                <a href="eficiencia">
-                                <i class="fa fa-circle-o"></i>Eficiencia
+                                <a href="produccion-trusas">
+                                <i class="fa fa-circle-o"></i> Producción Trusas
                                 </a>
 
-                            </li>                                                            
+                            </li> 
+
+                            <li>
+
+                                <a href="produccion-brasier">
+                                <i class="fa fa-circle-o"></i> Producción Brasier
+                                </a>
+
+                            </li>                
+
+                            <li>
+
+                                <a href="produccion-vasco">
+                                <i class="fa fa-circle-o"></i> Producción Vasco
+                                </a>
+
+                            </li>                                              
 
                         </ul>
 
@@ -573,23 +589,7 @@
                         </a>
 
                         <ul class="treeview-menu">
-
-                            <li>
-
-                                <a href="produccion-trusas">
-                                <i class="fa fa-circle-o"></i> Producción Trusas
-                                </a>
-
-                            </li> 
-
-                            <li>
-
-                                <a href="produccion-brasier">
-                                <i class="fa fa-circle-o"></i> Producción Brasier
-                                </a>
-
-                            </li>      
-                                                                      
+                                                                         
                             <li>
 
                                 <a href="urgencias">

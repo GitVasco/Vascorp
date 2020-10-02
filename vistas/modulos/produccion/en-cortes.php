@@ -21,7 +21,10 @@
   <section class="content">
 
     <div class="box">
-
+      <div class="box-header with-border">
+        <button class="btn btn-outline-success pull-right btnReporteAlmacen"  style="border:green 1px solid">
+                      <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Almacén de corte  </button>
+      </div>
       <div class="box-body">
 
         <input type="hidden" value="<?= $_SESSION["perfil"]; ?>" id="perfilOculto">
@@ -247,3 +250,7 @@ MODAL MANDAR A TALLER
 
 </div>
 </div>
+
+<script>
+window.document.title = "Almacen de corte"
+</script>

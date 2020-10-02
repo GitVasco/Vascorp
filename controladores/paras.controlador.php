@@ -155,7 +155,14 @@ class ControladorParas{
 
 			$tabla ="parajf";
 			$datos = $_GET["idPara"];
-
+			$paras=ControladorParas::ctrMostrarParas("id",$datos);
+			
+			$usuario= $_SESSION["nombre"];
+			$para      = 'notificacionesvascorp@gmail.com';
+			$asunto    = 'Se elimino una para';
+			$descripcion   = 'El usuario '.$usuario.' elimino la para '.$paras["nombre"];
+			$de = 'From: notificacionesvascorp@gmail.com';
+			mail($para, $asunto, $descripcion, $de);	
 			$respuesta = ModeloParas::mdlBorrarPara($tabla, $datos);
 
 			if($respuesta == "ok"){

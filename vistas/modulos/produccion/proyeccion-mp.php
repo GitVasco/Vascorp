@@ -89,3 +89,8 @@
     </section>
 
 </div>
+
+
+<script>
+window.document.title = "Proyeccion MP "
+</script>

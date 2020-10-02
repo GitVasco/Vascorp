@@ -101,7 +101,7 @@ class ControladorProduccion{
     }    
 
     /* 
-    *MOSTRAR EFICIENCIA MENSUAL
+    *MOSTRAR EFICIENCIA QUINCENAL
     */
     static public function ctrMostrarEficiencia($inicio, $fin, $nquincena, $id ){
 
@@ -109,6 +109,57 @@ class ControladorProduccion{
 
 		return $respuesta;
 
-	}    
+    } 
+    
+    /* 
+    *MOSTRAR PAGOS QUINCENAL
+    */
+    static public function ctrMostrarPagos($inicio, $fin, $nquincena, $id ){
+
+		$respuesta = ModeloProduccion::mdlMostrarPagos($inicio, $fin, $nquincena, $id);
+
+		return $respuesta;
+
+  }     
+  
+	/* 
+	* BORRAR ARTICULO
+	*/
+	static public function ctrEliminarQuincena(){
+
+		if(isset($_GET["idQuincena"])){
+
+      //var_dump($_GET["idQuincena"]);
+
+			$id = $_GET["idQuincena"];
+
+			$respuesta = ModeloProduccion::mdlEliminarQuincena($id);
+
+			if($respuesta == "ok"){
+
+        //var_dump($respuesta);
+				
+				echo'<script>
+
+				swal({
+					  type: "success",
+					  title: "La quincena ha sido borrada correctamente",
+					  showConfirmButton: true,
+					  confirmButtonText: "Cerrar"
+					  }).then(function(result){
+								if (result.value) {
+
+								window.location = "quincena";
+
+								}
+							})
+
+				</script>';
+
+			}		
+		}
+
+
+	}	  
 
 }

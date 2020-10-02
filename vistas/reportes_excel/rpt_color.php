@@ -292,16 +292,16 @@ $objDrawing->setWorksheet($objPHPExcel->getActiveSheet());
 
 // TITULO
 $fila = 2;
-$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", 'COLORES');
-$objPHPExcel->getActiveSheet()->mergeCells("G$fila:K$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($texto3, "G$fila:K$fila");
-$objPHPExcel->getActiveSheet()->getStyle("G$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$objPHPExcel->getActiveSheet()->SetCellValue("D$fila", 'COLORES');
+$objPHPExcel->getActiveSheet()->mergeCells("D$fila:E$fila");
+$objPHPExcel->getActiveSheet()->setSharedStyle($texto3, "D$fila:E$fila");
+$objPHPExcel->getActiveSheet()->getStyle("D$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("L$fila", 'fecha:');
-$objPHPExcel->getActiveSheet()->setSharedStyle($texto1, "L$fila");
+$objPHPExcel->getActiveSheet()->SetCellValue("F$fila", 'fecha:');
+$objPHPExcel->getActiveSheet()->setSharedStyle($texto1, "F$fila");
 
-$objPHPExcel->getActiveSheet()->SetCellValue("M$fila", $fecha);
-$objPHPExcel->getActiveSheet()->setSharedStyle($texto2, "M$fila");
+$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", $fecha);
+$objPHPExcel->getActiveSheet()->setSharedStyle($texto2, "G$fila");
 
 
 $fila = 7;
@@ -330,7 +330,7 @@ while($respDetalle = mysql_fetch_array($sqlDetalle)){
     
     $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", $cont);
     
-    $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", utf8_encode($respDetalle["cod_color"])); 
+    $objPHPExcel->getActiveSheet()->setCellValueExplicit("B$fila", utf8_encode($respDetalle["cod_color"]), PHPExcel_Cell_DataType::TYPE_STRING); 
     
     $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", utf8_encode($respDetalle["nom_color"]));
     
@@ -348,7 +348,7 @@ while($respDetalle = mysql_fetch_array($sqlDetalle)){
 
 # Ajustar el tamaño de las columnas
 $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(4.57);
-$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(4.72);
+$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(12.72);
 $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(18.72);
 /* 
 * CREAR EL ARCHIVO

@@ -298,3 +298,6 @@ MODAL CONFIGURAR Trabajador
   </div>
 
 </div>
+<script>
+window.document.title = "Registrar tareas"
+</script>

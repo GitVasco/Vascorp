@@ -250,3 +250,36 @@ $(".tablas").on("click", ".btnEliminarUsuario", function(){
 	})
   
   })
+
+$(".tablas").on("click", ".btnEditarCorreo", function(){
+	var idUsuario = $(this).attr("idUsuario");
+	$("#idUsuarioCorreo").val(idUsuario);
+	var datos = new FormData();
+	datos.append("idUsuario", idUsuario);
+
+	$.ajax({
+
+		url:"ajax/usuarios.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(respuesta){
+            $("#editarNombreCorreo").val(respuesta["nombre"]);
+			$("#editarUsuarioCorreo").val(respuesta["usuario"]);
+			if(respuesta["correo"] == 1){
+				$("#nuevoCorreo").prop('checked',true);
+			}else{
+				$("#nuevoCorreo").prop('checked',false);
+			}
+			
+			if(respuesta["datos"] == 1){
+				$("#nuevoDatos").prop('checked',true);
+			}else{
+				$("#nuevoDatos").prop('checked',false);
+			}
+			}
+		})
+});

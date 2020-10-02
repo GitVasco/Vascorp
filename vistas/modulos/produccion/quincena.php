@@ -49,6 +49,8 @@
               <th>Usuario</th>
               <th>Fecha Creacion</th>
               <th>Acciones</th>
+              <th>Pagos Trusas</th>
+              <th>Pagos Brasier</th>
 
             </tr>
 
@@ -366,4 +368,14 @@ MODAL EDITAR QUINCENA
 
   </div>
 
+  <?php
+
+  $eliminarQuincena = new ControladorProduccion();
+  $eliminarQuincena -> ctrEliminarQuincena();
+
+?>
+
 </div>
+<script>
+window.document.title = "Quincenas"
+</script>

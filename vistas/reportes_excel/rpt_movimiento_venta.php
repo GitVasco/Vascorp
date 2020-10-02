@@ -292,16 +292,16 @@ $objDrawing->setWorksheet($objPHPExcel->getActiveSheet());
 
 // TITULO
 $fila = 2;
-$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", 'TOTAL DE VENTAS POR MODELO');
-$objPHPExcel->getActiveSheet()->mergeCells("G$fila:K$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($texto3, "G$fila:K$fila");
-$objPHPExcel->getActiveSheet()->getStyle("G$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$objPHPExcel->getActiveSheet()->SetCellValue("D$fila", 'TOTAL DE VENTAS POR MODELO');
+$objPHPExcel->getActiveSheet()->mergeCells("D$fila:E$fila");
+$objPHPExcel->getActiveSheet()->setSharedStyle($texto3, "D$fila:E$fila");
+$objPHPExcel->getActiveSheet()->getStyle("D$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("L$fila", 'fecha:');
-$objPHPExcel->getActiveSheet()->setSharedStyle($texto1, "L$fila");
+$objPHPExcel->getActiveSheet()->SetCellValue("F$fila", 'fecha:');
+$objPHPExcel->getActiveSheet()->setSharedStyle($texto1, "F$fila");
 
-$objPHPExcel->getActiveSheet()->SetCellValue("M$fila", $fecha);
-$objPHPExcel->getActiveSheet()->setSharedStyle($texto2, "M$fila");
+$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", $fecha);
+$objPHPExcel->getActiveSheet()->setSharedStyle($texto2, "G$fila");
 
 /* 
 todo: INICIO DE DETALLE

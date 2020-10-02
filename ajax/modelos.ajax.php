@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 // Requerimos el controlador y el modelo
 require_once '../controladores/modelos.controlador.php';
 require_once '../modelos/modelos.modelo.php';
@@ -15,7 +15,22 @@ class AjaxModelos{
 		$tabla2="articulojf";
 		$valor1=$this->activarEstado;
 		$valor2=$this->activarId;
-
+		$modelo=ControladorModelos::ctrMostrarModelos("modelo",$valor2);
+		$usuario= $_SESSION["nombre"];
+		if($valor1 == "Activo"){
+			
+			$para      = 'notificacionesvascorp@gmail.com';
+			$asunto    = 'Se activo un modelo';
+			$descripcion   = 'El usuario '.$usuario.' activo el modelo '.$modelo["modelo"].' - '.$modelo["nombre"];
+			$de = 'From: notificacionesvascorp@gmail.com';
+			mail($para, $asunto, $descripcion, $de);	
+		}else{
+			$para      = 'notificacionesvascorp@gmail.com';
+			$asunto    = 'Se descontinuo un modelo';
+			$descripcion   = 'El usuario '.$usuario.' descontinuo el modelo '.$modelo["modelo"].' - '.$modelo["nombre"];
+			$de = 'From: notificacionesvascorp@gmail.com';
+			mail($para, $asunto, $descripcion, $de);
+		}
 		$respuesta=ModeloModelos::mdlActualizarModelo($tabla,$tabla2,$valor1, $valor2);
 
 		echo $respuesta;

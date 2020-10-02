@@ -710,3 +710,7 @@ MODAL AGREGAR ARTICULOS
     </div>
 
 </div>
+
+<script>
+window.document.title = "Crear pedido"
+</script>
