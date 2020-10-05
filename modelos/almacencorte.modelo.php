@@ -383,4 +383,46 @@ class ModeloAlmacenCorte{
 		}
 
 	}	
+
+		/*
+	* Método para mostrar las telas de almacen de corte
+	*/
+	static public function mdlMostrarTelasAlmacenCorte($valor){
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+		ac.almacencorte,
+		dt.mat_pri,
+		mp.descripcion,
+		SUM(ac.cantidad * dt.consumo) AS cons_total 
+		FROM
+		almacencorte_detallejf ac 
+		LEFT JOIN detalles_tarjetajf dt 
+		ON ac.articulo = dt.articulo 
+		LEFT JOIN 
+		(SELECT DISTINCT 
+			p.codpro,
+			CONCAT(p.DesPro, ' - ', tb.Des_Larga) AS descripcion 
+		FROM
+			producto AS p,
+			Tabla_M_Detalle AS tb 
+		WHERE tb.Cod_Tabla IN ('TCOL') 
+			AND tb.Cod_Argumento = p.ColPro 
+			AND p.estpro = '1' 
+		ORDER BY SUBSTRING(CodFab, 1, 6) ASC) AS mp 
+		ON dt.mat_pri = mp.codpro 
+		WHERE ac.almacencorte = :codigo
+		AND dt.tej_princ = 'si' 
+		GROUP BY dt.mat_pri");
+
+		$stmt -> bindParam(":codigo", $valor, PDO::PARAM_STR);
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
 }

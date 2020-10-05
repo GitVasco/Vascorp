@@ -297,6 +297,145 @@ MODAL VISUALIZAR INFORMACION
 
 </div>
 
+
+<!--=====================================
+MODAL VISUALIZAR INFORMACION
+======================================-->
+
+<div id="modalEditarAC" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog" >
+
+    <div class="modal-content">
+
+      <form role="form" method="post">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Editar Corte</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <!-- ENTRADA PARA CODIGO DEL OC-->
+            
+            <div class="form-group col-lg-6">
+              
+              <label>Corte</label>
+
+              <div class="input-group">
+
+              <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+
+                <strong><input type="text" class="form-control input-sm" name="almacencorte" id="almacencorte"  readonly></strong>
+
+              </div>
+
+            </div>
+
+            
+            <!-- ENTRADA PARA LA FECHA-->
+            
+            <div class="form-group col-lg-6">
+
+              <label>Creación</label>
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+
+                <strong><input type="text" class="form-control input-sm" name="fecha" id="fecha"  readonly></strong>
+
+              </div>
+
+            </div>   
+ 
+            <!-- ENTRADA PARA LA RESPONSABLE-->
+            
+            <div class="form-group col-lg-6">
+
+              <label>Responsable</label>
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+
+                <strong><input type="text" class="form-control input-sm" name="nombre" id="nombre"  readonly></strong>
+
+              </div>
+
+            </div>            
+   
+            
+            <!-- ENTRADA PARA LA CANTIDAD-->
+            
+            <div class="form-group col-lg-6">
+
+              <label>Cantidad Total</label>
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+
+                <strong><input type="text" class="form-control input-sm" name="cantidad" id="cantidad"  readonly></strong>
+
+              </div>
+
+            </div>
+            
+            <!-- ENTRADA PARA EL ESTADO-->
+            
+            <div class="form-group col-lg-6">
+
+              <label>Estado</label>
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+
+                <strong><input type="text" class="form-control input-sm" name="estado" id="estado"  readonly></strong>
+
+              </div>
+
+            </div>
+            
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
+
+        </div>
+
+
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+
 <script>
 window.document.title = "Cortes"
 </script>
