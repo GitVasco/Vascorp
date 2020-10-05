@@ -136,6 +136,34 @@ class ModeloAlmacenCorte{
 	}
 
 	/*
+	* Guardar detalle de almacen de corte
+	*/
+	static public function mdlGuardarDetallesAlmacenCorteMP($id){
+
+		$sql="INSERT INTO almacencorte_detalle_mpjf (almacencorte, mat_pri, cons_total) 
+		(SELECT 
+		  ac.almacencorte,
+		  dt.mat_pri,
+		  SUM(ac.cantidad * dt.consumo) 
+		FROM
+		  almacencorte_detallejf ac 
+		  LEFT JOIN detalles_tarjetajf dt 
+			ON ac.articulo = dt.articulo 
+		WHERE ac.almacencorte = :id 
+		  AND dt.tej_princ = 'si' 
+		GROUP BY dt.mat_pri)";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":id",$id,PDO::PARAM_INT);
+
+		$stmt->execute();
+
+		$stmt=null;
+
+	}	
+
+	/*
 	* Método para DESCONTAR el total del corte por articulo -ORD CORTE
 	*/
 	static public function mdlActualizarOrdCorte($valor, $valor1){

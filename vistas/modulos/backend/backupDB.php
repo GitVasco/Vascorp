@@ -4,7 +4,7 @@
 
     <h1>
 
-      BACKUP BASE DE DATOS "VASCO"
+      BACKUP BASE DE DATOS "new_vasco"
 
     </h1>
 
@@ -19,7 +19,7 @@
     define("DB_USER", 'admin');
     define("DB_PASSWORD", 'joel123');
     define("DB_NAME", 'vasco');
-    define("DB_HOST", '192.168.1.3');
+    define("DB_HOST", '192.168.1.2');
     define("BACKUP_DIR", 'E:/backup'); // Comment this line to use same script's directory ('.')
     define("TABLES", '*'); // Full backup
     //define("TABLES", 'table1, table2, table3'); // Partial backup
