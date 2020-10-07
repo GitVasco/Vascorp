@@ -304,7 +304,7 @@ MODAL VISUALIZAR INFORMACION
 
 <div id="modalEditarAC" class="modal fade" role="dialog">
   
-  <div class="modal-dialog" >
+  <div class="modal-dialog" style="width: 70% !important;" > 
 
     <div class="modal-content">
 
@@ -332,7 +332,7 @@ MODAL VISUALIZAR INFORMACION
 
             <!-- ENTRADA PARA CODIGO DEL OC-->
             
-            <div class="form-group col-lg-6">
+            <div class="form-group col-lg-12">
               
               <label>Corte</label>
 
@@ -340,77 +340,14 @@ MODAL VISUALIZAR INFORMACION
 
               <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
 
-                <strong><input type="text" class="form-control input-sm" name="almacencorte" id="almacencorte"  readonly></strong>
+                <strong><input type="text" class="form-control input-sm" name="almacencorteMP" id="almacencorteMP"  readonly></strong>
 
               </div>
 
             </div>
-
-            
-            <!-- ENTRADA PARA LA FECHA-->
-            
-            <div class="form-group col-lg-6">
-
-              <label>Creación</label>
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
-
-                <strong><input type="text" class="form-control input-sm" name="fecha" id="fecha"  readonly></strong>
-
-              </div>
-
-            </div>   
- 
-            <!-- ENTRADA PARA LA RESPONSABLE-->
-            
-            <div class="form-group col-lg-6">
-
-              <label>Responsable</label>
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
-
-                <strong><input type="text" class="form-control input-sm" name="nombre" id="nombre"  readonly></strong>
-
-              </div>
-
-            </div>            
-   
-            
-            <!-- ENTRADA PARA LA CANTIDAD-->
-            
-            <div class="form-group col-lg-6">
-
-              <label>Cantidad Total</label>
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
-
-                <strong><input type="text" class="form-control input-sm" name="cantidad" id="cantidad"  readonly></strong>
-
-              </div>
-
+            <div id="telas" >
             </div>
-            
-            <!-- ENTRADA PARA EL ESTADO-->
-            
-            <div class="form-group col-lg-6">
 
-              <label>Estado</label>
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
-
-                <strong><input type="text" class="form-control input-sm" name="estado" id="estado"  readonly></strong>
-
-              </div>
-
-            </div>
             
           </div>
 
@@ -421,15 +358,17 @@ MODAL VISUALIZAR INFORMACION
         ======================================-->
 
         <div class="modal-footer">
-
+             
           <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
-
+          <button type="submit" class="btn btn-primary pull-right" >Guardar cambios</button>  
         </div>
-
-
 
       </form>
 
+      <?php
+        $editarTelaCorte = new ControladorAlmacenCorte();
+        $editarTelaCorte -> ctrEditarTelaCorte();
+      ?>
     </div>
 
   </div>

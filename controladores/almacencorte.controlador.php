@@ -286,6 +286,62 @@ class ControladorAlmacenCorte{
 		
 	}
 
+    /*
+    * MOSTRAR DATOS DE ALMACEN DE CORTE
+    */
+    static public function ctrMostrarTelasAlmacenCorte($valor){
+
+        $respuesta = ModeloAlmacenCorte::mdlMostrarTelasAlmacenCorte($valor);
+
+        return $respuesta;
+
+    }
+
+    
+	/*=============================================
+	EDITAR SECTORES
+	=============================================*/
+
+	static public function ctrEditarTelaCorte(){
+
+		if(isset($_POST["almacencorteMP"])){
+            $telasInput=$_POST["telas"];
+            for ($i=0; $i <count($telasInput) ; $i++) { 
+					
+                $datos = array("codigo"=>$_POST["almacencorteMP"],
+                "cantidad"=>$_POST["cantidadMP".$i],
+                "diferencia"=>$_POST["diferenciaMP".$i],
+                "entrega"=>$_POST["entregaMP".$i],
+                "merma"=>$_POST["mermaMP".$i],
+                "materia" => $_POST["materia".$i]);
+                
+                $respuesta = ModeloAlmacenCorte::mdlIngresarTelaCorte($datos);
+                var_dump($respuesta);
+            }
+			   	
+			   	if($respuesta == "ok"){
+
+					echo'<script>
+
+					swal({
+						  type: "success",
+						  title: "La tela del corte ha sido cambiado correctamente",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+									if (result.value) {
+
+									window.location = "almacencorte";
+
+									}
+								})
+
+					</script>';
+
+				}
 
 
+		}
+
+    }
 }

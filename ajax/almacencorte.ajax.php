@@ -47,6 +47,18 @@ class AjaxAlmacenCorte{
 		echo $respuesta;
 	}    
 
+	 /* 
+	* VISUALIZAR LA CABECERA DEL CORTE
+	*/
+    public function ajaxEditarAlmacen(){
+
+        $valor = $this->codigo;
+
+        $respuesta = ControladorAlmacenCorte::ctrMostrarTelasAlmacenCorte($valor);
+
+        echo json_encode($respuesta);
+
+    }
 
 }
 
@@ -83,4 +95,15 @@ if(isset($_POST["activarId"])){
 	$activar -> activarAM=  $_POST["activarAM"];
     $activar -> ajaxEstadoCorte();
     
+}
+
+/* 
+ * VISUALIZAR LA CABECERA DEL CORTE
+*/
+if(isset($_POST["codigo"])){
+
+	$editarAlmacenCorte = new AjaxAlmacenCorte();
+	$editarAlmacenCorte -> codigo = $_POST["codigo"];
+	$editarAlmacenCorte -> ajaxEditarAlmacen();
+  
 }
