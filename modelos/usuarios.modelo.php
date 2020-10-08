@@ -240,6 +240,7 @@ class ModeloUsuarios{
 		$stmt = null;
 
 	}
+
 	/*=============================================
 	MOSTRAR PERMISOS
 	=============================================*/
@@ -377,4 +378,122 @@ class ModeloUsuarios{
 
 	}
 
+	/*=============================================
+	MOSTRAR CONEXIONES
+	=============================================*/
+
+	static public function mdlMostrarConexiones($tabla, $item, $valor){
+
+		if($item != null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();
+
+		}else{
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+		
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+	/*=============================================
+	REGISTRO DE CONEXION
+	=============================================*/
+
+	static public function mdlIngresarConexion($tabla, $datos){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(ip, db, user, pwd) VALUES (:ip, :db, :user, :pwd)");
+
+		$stmt->bindParam(":ip", $datos["ip"], PDO::PARAM_STR);
+		$stmt->bindParam(":db", $datos["db"], PDO::PARAM_STR);
+		$stmt->bindParam(":user", $datos["user"], PDO::PARAM_STR);
+		$stmt->bindParam(":pwd", $datos["pwd"], PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";	
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		
+		$stmt = null;
+
+	}
+
+
+	/*=============================================
+	EDITAR CONEXION
+	=============================================*/
+
+	static public function mdlEditarConexion($tabla, $datos){
+	
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET ip = :ip, db = :db, user=:user, pwd=:pwd WHERE id = :id");
+		$stmt -> bindParam(":id", $datos["id"], PDO::PARAM_INT);
+		$stmt -> bindParam(":ip", $datos["ip"], PDO::PARAM_STR);
+		$stmt -> bindParam(":db", $datos["db"], PDO::PARAM_STR);
+		$stmt -> bindParam(":user", $datos["user"], PDO::PARAM_STR);
+		$stmt -> bindParam(":pwd", $datos["pwd"], PDO::PARAM_STR);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
+
+	/*=============================================
+	BORRAR CONEXION
+	=============================================*/
+
+	static public function mdlBorrarConexion($tabla, $datos){
+
+		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
+
+		$stmt -> bindParam(":id", $datos, PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+
+	}
 }

@@ -157,6 +157,17 @@
 
                     </li>  
 
+                    <li>
+
+                        <a href="conexionjf">
+
+                            <i class="fa fa-circle-o"></i>
+                            <span>Conexiones</span>
+
+                        </a>
+
+                    </li>
+
                 </ul>
 
             </li>

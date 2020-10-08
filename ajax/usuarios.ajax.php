@@ -78,7 +78,22 @@ class AjaxUsuarios{
 
 	}	
 
+	/*=============================================
+	EDITAR CONEXION
+	=============================================*/	
 
+	public $idConexion;
+
+	public function ajaxEditarConexion(){
+
+		$item = "id";
+		$valor = $this->idConexion;
+
+		$respuesta = ControladorUsuarios::ctrMostrarConexiones($item, $valor);
+
+		echo json_encode($respuesta);
+
+	}
 
 
 }
@@ -127,5 +142,16 @@ if(isset($_POST["idUsuario2"])){
 	$editarPermiso = new AjaxUsuarios();
 	$editarPermiso -> idUsuario2 = $_POST["idUsuario2"];
 	$editarPermiso -> ajaxEditarUsuarioPermiso();
+
+}
+
+/*=============================================
+EDITAR CONEXION
+=============================================*/
+if(isset($_POST["idConexion"])){
+
+	$editarConexion = new AjaxUsuarios();
+	$editarConexion -> idConexion = $_POST["idConexion"];
+	$editarConexion -> ajaxEditarConexion();
 
 }
