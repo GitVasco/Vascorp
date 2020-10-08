@@ -155,7 +155,8 @@ CUERPO DOCUMENTO
 
         }else if( $_GET["ruta"] == "backupDB" ||
                   $_GET["ruta"] == "bkplista" ||
-                  $_GET["ruta"] == "movimientos"){
+                  $_GET["ruta"] == "movimientos" ||
+                  $_GET["ruta"] == "conexionjf"){
 
               include "modulos/backend/".$_GET["ruta"].".php";
 
