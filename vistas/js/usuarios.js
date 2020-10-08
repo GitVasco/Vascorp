@@ -283,3 +283,63 @@ $(".tablas").on("click", ".btnEditarCorreo", function(){
 			}
 		})
 });
+
+/*=============================================
+EDITAR USUARIO
+=============================================*/
+$(".tablas").on("click", ".btnEditarConexion", function(){
+
+    var idConexion = $(this).attr("idConexion");
+	
+	var datos = new FormData();
+	datos.append("idConexion", idConexion);
+
+	$.ajax({
+
+		url:"ajax/usuarios.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(respuesta){
+			console.log(respuesta);
+			$("#idConexion").val(respuesta["id"]);
+            $("#editarIP").val(respuesta["ip"]);
+			$("#editarBD").val(respuesta["db"]);
+			$("#editarUser").val(respuesta["user"]);
+            $("#editarPwd").val(respuesta["pwd"]);
+
+		}
+
+	});
+})
+
+/*=============================================
+ELIMINAR USUARIO
+=============================================*/
+$(".tablas").on("click", ".btnEliminarConexion", function(){
+
+	var idConexion = $(this).attr("idConexion");
+  
+	swal({
+	  title: '¿Está seguro de borrar esta conexión?',
+	  text: "¡Si no lo está puede cancelar la accíón!",
+	  type: 'warning',
+	  showCancelButton: true,
+	  confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		cancelButtonText: 'Cancelar',
+		confirmButtonText: 'Si, borrar conexion!'
+	}).then(function(result){
+  
+	  if(result.value){
+  
+		window.location = "index.php?ruta=conexionjf&idConexion="+idConexion;
+  
+	  }
+  
+	})
+  
+  })

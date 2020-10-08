@@ -534,5 +534,138 @@ class ControladorUsuarios{
 
 	}
 
+	/*=============================================
+	MOSTRAR CONEXIONES
+	=============================================*/
+
+	static public function ctrMostrarConexiones($item, $valor){
+
+		$tabla = "conexionjf";
+
+		$respuesta = ModeloUsuarios::MdlMostrarConexiones($tabla, $item, $valor);
+
+		return $respuesta;
+	}
+
+	/*=============================================
+	CREAR CONEXIONES
+	=============================================*/
+
+	static public function ctrCrearConexion(){
+
+		if(isset($_POST["nuevaIP"]) && isset($_POST["nuevaBD"]) && isset($_POST["nuevaUser"]) && isset($_POST["nuevaPwd"])  ){
+			$tabla="conexionjf";
+			$datos = array("ip"=>$_POST["nuevaIP"],
+							"db"=>$_POST["nuevaBD"],
+							"user"=>$_POST["nuevaUser"],
+							"pwd"=>$_POST["nuevaPwd"]);
+
+			$respuesta = ModeloUsuarios::mdlIngresarConexion($tabla,$datos);
+
+			if($respuesta == "ok"){
+
+				echo'<script>
+
+				swal({
+						type: "success",
+						title: "La conexión ha sido guardado correctamente",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar"
+						}).then(function(result){
+								if (result.value) {
+
+								window.location = "conexionjf";
+
+								}
+							})
+
+				</script>';
+
+			}
+		}
+
+    }
+	
+	/*=============================================
+	EDITAR CONEXIONES
+	=============================================*/
+
+	static public function ctrEditarConexion(){
+
+		if(isset($_POST["idConexion"]) && isset($_POST["editarIP"]) && isset($_POST["editarBD"]) && isset($_POST["editarUser"]) && isset($_POST["editarPwd"])){
+			$tabla="conexionjf";
+			$datos = array("id"=>$_POST["idConexion"],
+							"ip"=>$_POST["editarIP"],
+							"db"=>$_POST["editarBD"],
+							"user"=>$_POST["editarUser"],
+							"pwd"=>$_POST["editarPwd"]);
+
+			$respuesta = ModeloUsuarios::mdlEditarConexion($tabla,$datos);
+
+			if($respuesta == "ok"){
+
+				echo'<script>
+
+				swal({
+						type: "success",
+						title: "La conexión ha sido cambiado correctamente",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar"
+						}).then(function(result){
+								if (result.value) {
+
+								window.location = "conexionjf";
+
+								}
+							})
+
+				</script>';
+
+			}
+
+		}
+
+	}
+	
+	
+	/*=============================================
+	BORRAR USUARIO
+	=============================================*/
+
+	static public function ctrEliminarConexion(){
+
+		if(isset($_GET["idConexion"])){
+
+			$tabla ="conexionjf";
+			$datos = $_GET["idConexion"];
+
+			$respuesta = ModeloUsuarios::mdlBorrarConexion($tabla, $datos);
+
+			if($respuesta == "ok"){
+
+				echo'<script>
+
+				swal({
+					  type: "success",
+					  title: "La conexión ha sido borrada correctamente",
+					  showConfirmButton: true,
+					  confirmButtonText: "Cerrar",
+					  closeOnConfirm: false
+					  }).then(function(result) {
+								if (result.value) {
+
+								window.location = "conexionjf";
+
+								}
+							})
+
+				</script>';
+
+			}		
+
+		}
+
+	}
+	
 }
 	

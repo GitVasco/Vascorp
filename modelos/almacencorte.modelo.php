@@ -136,6 +136,34 @@ class ModeloAlmacenCorte{
 	}
 
 	/*
+	* Guardar detalle de almacen de corte
+	*/
+	static public function mdlGuardarDetallesAlmacenCorteMP($id){
+
+		$sql="INSERT INTO almacencorte_detalle_mpjf (almacencorte, mat_pri, cons_total) 
+		(SELECT 
+		  ac.almacencorte,
+		  dt.mat_pri,
+		  SUM(ac.cantidad * dt.consumo) 
+		FROM
+		  almacencorte_detallejf ac 
+		  LEFT JOIN detalles_tarjetajf dt 
+			ON ac.articulo = dt.articulo 
+		WHERE ac.almacencorte = :id 
+		  AND dt.tej_princ = 'si' 
+		GROUP BY dt.mat_pri)";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":id",$id,PDO::PARAM_INT);
+
+		$stmt->execute();
+
+		$stmt=null;
+
+	}	
+
+	/*
 	* Método para DESCONTAR el total del corte por articulo -ORD CORTE
 	*/
 	static public function mdlActualizarOrdCorte($valor, $valor1){
@@ -383,4 +411,83 @@ class ModeloAlmacenCorte{
 		}
 
 	}	
+
+		/*
+	* Método para mostrar las telas de almacen de corte
+	*/
+	static public function mdlMostrarTelasAlmacenCorte($valor){
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+		adm.id,
+		adm.almacencorte,
+		adm.mat_pri,
+		mp.descripcion,
+		adm.cons_total,
+		adm.diferencia,
+  		adm.cons_real,
+		adm.can_entregada,
+		adm.merma  
+	  FROM
+		almacencorte_detalle_mpjf adm 
+		LEFT JOIN 
+		  (SELECT DISTINCT 
+			p.codpro,
+			CONCAT(p.DesPro, ' - ', tb.Des_Larga) AS descripcion 
+		  FROM
+			producto AS p,
+			Tabla_M_Detalle AS tb 
+		  WHERE tb.Cod_Tabla IN ('TCOL') 
+			AND tb.Cod_Argumento = p.ColPro 
+			AND p.estpro = '1' 
+		  ORDER BY SUBSTRING(CodFab, 1, 6) ASC) AS mp 
+		  ON adm.mat_pri = mp.codpro 
+	  WHERE adm.almacencorte = :codigo");
+
+		$stmt -> bindParam(":codigo", $valor, PDO::PARAM_STR);
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+	// Método para ingresar la cantidad de cortes por operacion
+	
+	static public function mdlIngresarTelaCorte($datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE almacencorte_detalle_mpjf
+													SET
+														cons_real= :cantidad,
+														diferencia= :diferencia,
+														can_entregada = :entrega,
+														merma = :merma
+													WHERE
+														almacencorte = :codigo AND mat_pri= :materia");
+
+		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
+		$stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_INT);
+		$stmt->bindParam(":diferencia", $datos["diferencia"], PDO::PARAM_INT);
+		$stmt->bindParam(":entrega", $datos["entrega"], PDO::PARAM_INT);
+		$stmt->bindParam(":merma", $datos["merma"], PDO::PARAM_INT);
+		$stmt->bindParam(":materia", $datos["materia"], PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+
+	}
 }
