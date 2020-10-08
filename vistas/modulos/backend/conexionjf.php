@@ -22,7 +22,7 @@
 
     <div class="box">
 
-      <div class="box-header with-border">
+<!--       <div class="box-header with-border">
   
         <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarConexion">
           
@@ -30,7 +30,7 @@
 
         </button>
 
-      </div>
+      </div> -->
         
       <div class="box-body">
         
@@ -83,7 +83,7 @@
                                     
                                   <button class="btn btn-warning btnEditarConexion" data-toggle="modal" data-target="#modalEditarConexion" idConexion="'.$value["id"].'"><i class="fa fa-pencil"></i></button>
           
-                                  <button class="btn btn-danger btnEliminarConexion" idConexion="'.$value["id"].'"><i class="fa fa-times"></i></button>
+                                 
           
                                 </div>  
           
