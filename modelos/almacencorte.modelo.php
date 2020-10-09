@@ -426,7 +426,9 @@ class ModeloAlmacenCorte{
 		adm.diferencia,
   		adm.cons_real,
 		adm.can_entregada,
-		adm.merma  
+		adm.merma,
+		adm.mp_sinuso,
+		adm.notificacion  
 	  FROM
 		almacencorte_detalle_mpjf adm 
 		LEFT JOIN 
@@ -455,7 +457,7 @@ class ModeloAlmacenCorte{
 
 	}
 
-	// Método para ingresar la cantidad de cortes por operacion
+	// Método para ingresar la telas de corte
 	
 	static public function mdlIngresarTelaCorte($datos){
 
@@ -464,7 +466,8 @@ class ModeloAlmacenCorte{
 														cons_real= :cantidad,
 														diferencia= :diferencia,
 														can_entregada = :entrega,
-														merma = :merma
+														merma = :merma,
+														mp_sinuso = :mp_sinuso
 													WHERE
 														almacencorte = :codigo AND mat_pri= :materia");
 
@@ -473,6 +476,37 @@ class ModeloAlmacenCorte{
 		$stmt->bindParam(":diferencia", $datos["diferencia"], PDO::PARAM_INT);
 		$stmt->bindParam(":entrega", $datos["entrega"], PDO::PARAM_INT);
 		$stmt->bindParam(":merma", $datos["merma"], PDO::PARAM_INT);
+		$stmt->bindParam(":mp_sinuso", $datos["mp_sinuso"], PDO::PARAM_INT);
+		$stmt->bindParam(":materia", $datos["materia"], PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+
+	}
+
+	// Método para ingresar la notificaciones de telas
+	
+	static public function mdlIngresarNotificacionCorte($datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE almacencorte_detalle_mpjf
+													SET
+														notificacion= :notificacion
+													WHERE
+														almacencorte = :codigo AND mat_pri= :materia");
+
+		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
+		$stmt->bindParam(":notificacion", $datos["notificacion"], PDO::PARAM_STR);
 		$stmt->bindParam(":materia", $datos["materia"], PDO::PARAM_STR);
 
 		if($stmt->execute()){

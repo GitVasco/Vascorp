@@ -313,10 +313,53 @@ class ControladorAlmacenCorte{
                 "diferencia"=>$_POST["diferenciaMP".$i],
                 "entrega"=>$_POST["entregaMP".$i],
                 "merma"=>$_POST["mermaMP".$i],
+                "mp_sinuso"=>$_POST["sinusoMP".$i],
                 "materia" => $_POST["materia".$i]);
                 
                 $respuesta = ModeloAlmacenCorte::mdlIngresarTelaCorte($datos);
-                var_dump($respuesta);
+            }
+			   	
+			   	if($respuesta == "ok"){
+
+					echo'<script>
+
+					swal({
+						  type: "success",
+						  title: "La tela del corte ha sido cambiado correctamente",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+									if (result.value) {
+
+									window.location = "almacencorte";
+
+									}
+								})
+
+					</script>';
+
+				}
+
+
+		}
+
+    }
+
+    /*=============================================
+	EDITAR SECTORES
+	=============================================*/
+
+	static public function ctrEditarNotificacionCorte(){
+
+		if(isset($_POST["almacencorteNot"])){
+            $telasInput=$_POST["telasNot"];
+            for ($i=0; $i <count($telasInput) ; $i++) { 
+					
+                $datos = array("codigo"=>$_POST["almacencorteNot"],
+                "notificacion"=>$_POST["notificacionMP".$i],
+                "materia" => $_POST["materiaNot".$i]);
+                
+                $respuesta = ModeloAlmacenCorte::mdlIngresarNotificacionCorte($datos);
             }
 			   	
 			   	if($respuesta == "ok"){
