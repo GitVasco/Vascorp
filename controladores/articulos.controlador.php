@@ -626,9 +626,9 @@ class controladorArticulos{
 	/* 
 	* MOSTRAR  ARTICULOS
 	*/	
-	static public function ctrVerPrecios($valor){
+	static public function ctrVerPrecios($modelo, $lista){
 
-		$respuesta = ModeloArticulos::mdlVerPrecios($valor);
+		$respuesta = ModeloArticulos::mdlVerPrecios($modelo, $lista);
 
 		return $respuesta;
 		
