@@ -39,6 +39,8 @@ $(".tablaArticulosPedidos").on("click", ".agregarArtPed", function () {
 
     var cliente = document.getElementById("seleccionarCliente").value;
     var vendedor = document.getElementById("seleccionarVendedor").value;
+    var modLista = document.getElementById("lista").value;
+    //console.log(lista);
 
     //console.log(cliente);
     $("#cliente").val(cliente);
@@ -52,6 +54,7 @@ $(".tablaArticulosPedidos").on("click", ".agregarArtPed", function () {
 
     var datos = new FormData();
     datos.append("mod", mod);
+    datos.append("modLista", modLista);
     
     $.ajax({
 
@@ -62,11 +65,11 @@ $(".tablaArticulosPedidos").on("click", ".agregarArtPed", function () {
 		contentType: false,
 		processData: false,
 		dataType:"json",
-		success:function(respuestaDet){
+		success:function(respuestaLista){
 
-            //console.log(respuestaDet);
+            //console.log("respuesta",respuestaLista["precio"]);
 
-            $("#precio").val(respuestaDet["precio_venta"]);
+            $("#precio").val(respuestaLista["precio"]);
 
 		}
 
@@ -258,9 +261,33 @@ $(".btnCalCant").click(function () {
     //console.log(totalSoles);
     //console.log(totalCantidad);
     
-
 })
 
+$("#seleccionarCliente").change(function(){
 
+    var cliList = document.getElementById("seleccionarCliente").value;
+    //console.log(cliList);
 
+    var datos = new FormData();
+    datos.append("cliList", cliList);
+    
+    $.ajax({
 
+		url:"ajax/pedidos.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType:"json",
+		success:function(respuestaDet){
+
+            //console.log(respuestaDet);
+
+            $("#lista").val(respuestaDet["lista_precios"]);
+
+		}
+
+	})    
+
+})

@@ -373,11 +373,14 @@ class ModeloArticulos
 	/* 
 	* MOSTRAR PRECIOS
 	*/
-	static public function mdlVerPrecios($valor){
+	static public function mdlVerPrecios($modelo, $lista){
 
-		$stmt = Conexion::conectar()->prepare("CALL sp_1053_mod_precio_p(:valor)");
-
-		$stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
+		$stmt = Conexion::conectar()->prepare("SELECT 
+											id,
+											modelo,
+											$lista as precio
+										FROM
+											preciojf where modelo=$modelo ");
 
 		$stmt->execute();
 

@@ -60,6 +60,8 @@
                                         <input type="hidden" name="idUsuario" value="<?php echo $_SESSION["id"]; ?>">
 
                                         <input type="hidden" name="fechaActual" value="<?php echo $ahora; ?>">
+                                        
+                                        <input type="hidden" name="lista" id="lista">
 
                                     </div>
 
@@ -123,7 +125,7 @@
                                             $item = null;
                                             $valor = null;
 
-                                            $categorias = ControladorClientes::ctrMostrarClientes($item, $valor);
+                                            $categorias = ControladorClientes::ctrMostrarClientesP($item, $valor);
 
                                             foreach ($categorias as $key => $value) {
 

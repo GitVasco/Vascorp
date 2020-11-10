@@ -101,6 +101,32 @@ class ControladorClientes{
 	}
 
 	/*=============================================
+	MOSTRAR CLIENTES P
+	=============================================*/
+
+	static public function ctrMostrarClientesP($item, $valor){
+
+		$tabla = "clientesjf";
+
+		$respuesta = ModeloClientes::mdlMostrarClientesP($tabla, $item, $valor);
+
+		return $respuesta;
+
+	}	
+
+	/*=============================================
+	SACAR LISTA
+	=============================================*/
+
+	static public function ctrVerLista($valor){
+
+		$respuesta = ModeloClientes::mdlVerLista($valor);
+
+		return $respuesta;
+
+	}		
+
+	/*=============================================
 	EDITAR CLIENTE
 	=============================================*/
 
