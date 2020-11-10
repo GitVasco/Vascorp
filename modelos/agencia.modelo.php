@@ -5,7 +5,7 @@ require_once "conexion.php";
 class ModeloAgencias{
 
 	/*=============================================
-	CREAR COLOR
+	CREAR AGENCIA
 	=============================================*/
 
 	static public function mdlIngresarAgencia($tabla,$datos){
@@ -34,16 +34,16 @@ class ModeloAgencias{
 	}    
 
 	/*=============================================
-	MOSTRAR COLORES
+	MOSTRAR AGENCIAS
 	=============================================*/
 
-	static public function mdlMostrarAgencias($tabla,$valor){
+	static public function mdlMostrarAgencias($tabla,$item,$valor){
 
-		if($valor != null){
+		if($item != null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla where $valor =:valor)");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
 
-			$stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 
 			$stmt -> execute();
 
@@ -66,16 +66,18 @@ class ModeloAgencias{
     }
     
 	/*=============================================
-	EDITAR COLOR
+	EDITAR AGENCIA
 	=============================================*/
 
 	static public function mdlEditarAgencia($tabla,$datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET (:codigo, :color, :valor)");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre, ruc = :ruc, direccion = :direccion, ubigeo = :ubigeo WHERE id = :id");
 
-		$stmt->bindParam(":valor", $datos["id"], PDO::PARAM_INT);
-		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
-		$stmt->bindParam(":color", $datos["color"], PDO::PARAM_STR);
+		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
+		$stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
+		$stmt->bindParam(":ruc", $datos["ruc"], PDO::PARAM_STR);
+		$stmt->bindParam(":direccion", $datos["direccion"], PDO::PARAM_STR);
+		$stmt->bindParam(":ubigeo", $datos["ubigeo"], PDO::PARAM_STR);
 
 		if($stmt->execute()){
 
@@ -94,14 +96,14 @@ class ModeloAgencias{
 	
 	
 	/*=============================================
-	ELIMINAR COLOR
+	ELIMINAR AGENCIA
 	=============================================*/
 
-	static public function mdlEliminarColor($datos){
+	static public function mdlEliminarAgencia($datos){
 
-		$stmt = Conexion::conectar()->prepare("CALL sp_1022_delete_colores_p(:valor)");
+		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
 
-		$stmt -> bindParam(":valor", $datos, PDO::PARAM_INT);
+		$stmt -> bindParam(":id", $datos, PDO::PARAM_INT);
 
 		if($stmt -> execute()){
 

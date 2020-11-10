@@ -390,6 +390,16 @@
                         </a>
 
                     </li> 
+
+                    <li>
+                        <a href="agencias">
+
+                            <i class="fa fa-circle-o"></i>
+                            <span>Agencias</span>
+
+                        </a>
+
+                    </li> 
         
                 </ul>
 

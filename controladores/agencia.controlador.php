@@ -1,22 +1,22 @@
 <?php
 
-class ControladorColores{
+class ControladorAgencias{
 
 	/*=============================================
 	CREAR COLORES
 	=============================================*/
 
-	static public function ctrCrearColor(){
+	static public function ctrCrearAgencia(){
 
-		if(isset($_POST["nuevoColor"])){
+		if(isset($_POST["nuevaDescripcion"])){
 
-			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevoColor"]) &&
-			   preg_match('/^[0-9]+$/', $_POST["nuevoCodigo"])){
+				$tabla="agenciasjf";
+			   	$datos = array("ruc"=>$_POST["nuevoRUC"],
+							   "nombre"=>$_POST["nuevaDescripcion"],
+							   "direccion"=>$_POST["nuevaDireccion"],
+							   "ubigeo"=>$_POST["nuevoUbigeo"],);
 
-			   	$datos = array("color"=>$_POST["nuevoColor"],
-					           "codigo"=>$_POST["nuevoCodigo"]);
-
-			   	$respuesta = ModeloColores::mdlIngresarColor($datos);
+			   	$respuesta = ModeloAgencias::mdlIngresarAgencia($tabla,$datos);
 
 			   	if($respuesta == "ok"){
 
@@ -24,13 +24,13 @@ class ControladorColores{
 
 					swal({
 						  type: "success",
-						  title: "El color ha sido guardado correctamente",
+						  title: "La agencia ha sido guardado correctamente",
 						  showConfirmButton: true,
 						  confirmButtonText: "Cerrar"
 						  }).then(function(result){
 									if (result.value) {
 
-									window.location = "colores";
+									window.location = "agencias";
 
 									}
 								})
@@ -39,28 +39,7 @@ class ControladorColores{
 
 				}
 
-			}else{
-
-				echo'<script>
-
-					swal({
-						  type: "error",
-						  title: "¡El color no puede ir vacío o llevar caracteres especiales!",
-						  showConfirmButton: true,
-						  confirmButtonText: "Cerrar"
-						  }).then(function(result){
-							if (result.value) {
-
-							window.location = "colores";
-
-							}
-						})
-
-			  	</script>';
-
-
-
-			}
+			
 
 		}
 
@@ -68,22 +47,22 @@ class ControladorColores{
     
 
 	/*=============================================
-	MOSTRAR COLORES
+	MOSTRAR AGENCIAS
 	=============================================*/
 
-	static public function ctrMostrarColores($valor){
-
-		$respuesta = ModeloColores::mdlMostrarColores($valor);
+	static public function ctrMostrarAgencias($item,$valor){
+		$tabla="agenciasjf";
+		$respuesta = ModeloAgencias::mdlMostrarAgencias($tabla,$item,$valor);
 
 		return $respuesta;
 
     }
     
 	/*=============================================
-	EDITAR COLOR
+	EDITAR AGENCIA
 	=============================================*/
 
-	static public function ctrEditarColor(){
+	static public function ctrEditarAgencia(){
 
 		if(isset($_POST["editarColor"])){
 
@@ -129,7 +108,7 @@ class ControladorColores{
 						  }).then(function(result){
 							if (result.value) {
 
-							window.location = "colores";
+							window.location = "agencias";
 
 							}
 						})
@@ -145,21 +124,21 @@ class ControladorColores{
     }
     
 	/*=============================================
-	ELIMINAR COLOR
+	ELIMINAR AGENCIA
 	=============================================*/
 
-	static public function ctrEliminarColor(){
+	static public function ctrEliminarAgencia(){
 
-		if(isset($_GET["idColor"])){
+		if(isset($_GET["idAgencia"])){
 
-			$datos = $_GET["idColor"];
+			$datos = $_GET["idAgencia"];
 			date_default_timezone_set('America/Lima');
 			$fecha = new DateTime();
-			$color=ControladorColores::ctrMostrarColores($datos);
+			$agencia=ControladorAgencias::ctrMostrarAgencias($datos);
 			$usuario= $_SESSION["nombre"];
 			$para      = 'notificacionesvascorp@gmail.com';
-			$asunto    = 'Se elimino un color';
-			$descripcion   = 'El usuario '.$usuario.' elimino el color '.$color["cod_color"].' - '.$color["nom_color"];
+			$asunto    = 'Se elimino una agencia';
+			$descripcion   = 'El usuario '.$usuario.' elimino la agencia '.$agencia["cod_color"].' - '.$agencia["nom_color"];
 			$de = 'From: notificacionesvascorp@gmail.com';
 			if($_SESSION["correo"] == 1){
 				mail($para, $asunto, $descripcion, $de);
@@ -170,7 +149,7 @@ class ControladorColores{
 								"fecha" => $fecha->format("Y-m-d H:i:s"));
 				$auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
 			}
-			$respuesta = ModeloColores::mdlEliminarColor($datos);
+			$respuesta = ModeloAgencias::mdlEliminarAgencia($datos);
 			if($respuesta == "ok"){
 				
 				
@@ -178,14 +157,14 @@ class ControladorColores{
 
 				swal({
 					  type: "success",
-					  title: "El color ha sido borrado correctamente",
+					  title: "La agencia ha sido borrada correctamente",
 					  showConfirmButton: true,
 					  confirmButtonText: "Cerrar",
 					  closeOnConfirm: false
 					  }).then(function(result){
 								if (result.value) {
 
-								window.location = "colores";
+								window.location = "agencias";
 
 								}
 							})

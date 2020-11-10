@@ -192,7 +192,7 @@ MODAL AGREGAR COLOR
 
 
 <!--=====================================
-MODAL EDITAR COLOR
+MODAL EDITAR AGENCIA
 ======================================-->
 
 <div id="modalEditarAgencia" class="modal fade" role="dialog">
@@ -246,7 +246,7 @@ MODAL EDITAR COLOR
               
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="editarNombre" id="editarNombre" required>
+                <input type="text" class="form-control input-lg" name="editarDescripcion" id="editarDescripcion" required>
                 <input type="hidden" id="idAgencia" name="idAgencia">
               </div>
 

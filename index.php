@@ -94,6 +94,9 @@ require_once "controladores/asistencia.controlador.php";
 require_once "modelos/ingresos.modelo.php";
 require_once "controladores/ingresos.controlador.php";
 
+require_once "modelos/agencia.modelo.php";
+require_once "controladores/agencia.controlador.php";
+
 require_once "modelos/produccion.modelo.php";
 
 
