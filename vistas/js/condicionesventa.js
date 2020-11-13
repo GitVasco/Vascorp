@@ -1,5 +1,5 @@
-$('.tablaAgencias').DataTable({
-    "ajax": "ajax/tabla-agencias.ajax.php?perfil="+$("#perfilOculto").val(),
+$('.tablaCondicionesVenta').DataTable({
+    "ajax": "ajax/tabla-condicionesventa.ajax.php?perfil="+$("#perfilOculto").val(),
     "deferRender": true,
     "retrieve": true,
     "processing": true,
@@ -32,16 +32,16 @@ $('.tablaAgencias').DataTable({
 /*=============================================
 EDITAR AGENCIA
 =============================================*/
-$(".tablaAgencias").on("click", ".btnEditarAgencia", function () {
+$(".tablaCondicionesVenta").on("click", ".btnEditarCondicionVenta", function () {
 
-    var idAgencia = $(this).attr("idAgencia");
+    var idCondicionVenta = $(this).attr("idCondicionVenta");
 
     var datos = new FormData();
-    datos.append("idAgencia", idAgencia);
+    datos.append("idCondicionVenta", idCondicionVenta);
 
     $.ajax({
 
-        url: "ajax/agencias.ajax.php",
+        url: "ajax/condicionesventa.ajax.php",
         method: "POST",
         data: datos,
         cache: false,
@@ -50,10 +50,10 @@ $(".tablaAgencias").on("click", ".btnEditarAgencia", function () {
         dataType: "json",
         success: function (respuesta) {
 
-            $("#idAgencia").val(respuesta["id"]);
-            $("#editarRUC").val(respuesta["ruc"]);
-            $("#editarDescripcion").val(respuesta["nombre"]);
-            $("#editarDireccion").val(respuesta["direccion"]);
+            $("#idCondicionVenta").val(respuesta["id"]);
+            $("#editarCodigo").val(respuesta["codigo"]);
+            $("#editarDescripcion").val(respuesta["descripcion"]);
+            $("#editarCtaCte").val(respuesta["cta_cte"]);
             $("#editarUbigeo").val(respuesta["ubigeo"]);
         }
 
@@ -65,7 +65,7 @@ $(".tablaAgencias").on("click", ".btnEditarAgencia", function () {
 /*=============================================
 ELIMINAR AGENCIA
 =============================================*/
-$(".tablaAgencias").on("click", ".btnEliminarAgencia", function(){
+$(".tablaCondicionesVenta").on("click", ".btnEliminarAgencia", function(){
 
 	var idAgencia = $(this).attr("idAgencia");
 	

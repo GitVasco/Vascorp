@@ -2,20 +2,18 @@
 
 require_once "conexion.php";
 
-class ModeloAgencias{
+class ModeloUnidadMedidas{
 
 	/*=============================================
-	CREAR AGENCIA
+	CREAR UNIDAD MEDIDA
 	=============================================*/
 
-	static public function mdlIngresarAgencia($tabla,$datos){
+	static public function mdlIngresarUnidadMedida($tabla,$datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(nombre,ruc,direccion,ubigeo) VALUES (:nombre,:ruc,:direccion,:ubigeo)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(codigo,descripcion) VALUES (:codigo,:descripcion)");
 
-		$stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
-		$stmt->bindParam(":ruc", $datos["ruc"], PDO::PARAM_STR);
-		$stmt->bindParam(":direccion", $datos["direccion"], PDO::PARAM_STR);
-		$stmt->bindParam(":ubigeo", $datos["ubigeo"], PDO::PARAM_STR);
+		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
+		$stmt->bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
 
 
 		if($stmt->execute()){
@@ -34,10 +32,10 @@ class ModeloAgencias{
 	}    
 
 	/*=============================================
-	MOSTRAR AGENCIAS
+	MOSTRAR UNIDADES DE MEDIDA
 	=============================================*/
 
-	static public function mdlMostrarAgencias($tabla,$item,$valor){
+	static public function mdlMostrarUnidadMedidas($tabla,$item,$valor){
 
 		if($item != null){
 
@@ -66,18 +64,16 @@ class ModeloAgencias{
     }
     
 	/*=============================================
-	EDITAR AGENCIA
+	EDITAR UNIDAD MEDIDA
 	=============================================*/
 
-	static public function mdlEditarAgencia($tabla,$datos){
+	static public function mdlEditarUnidadMedida($tabla,$datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre, ruc = :ruc, direccion = :direccion, ubigeo = :ubigeo WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET codigo = :codigo, descripcion = :descripcion WHERE id = :id");
 
 		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
-		$stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
-		$stmt->bindParam(":ruc", $datos["ruc"], PDO::PARAM_STR);
-		$stmt->bindParam(":direccion", $datos["direccion"], PDO::PARAM_STR);
-		$stmt->bindParam(":ubigeo", $datos["ubigeo"], PDO::PARAM_STR);
+		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
+		$stmt->bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
 
 		if($stmt->execute()){
 
@@ -96,10 +92,10 @@ class ModeloAgencias{
 	
 	
 	/*=============================================
-	ELIMINAR AGENCIA
+	ELIMINAR UNIDAD MEDIDA
 	=============================================*/
 
-	static public function mdlEliminarAgencia($tabla,$datos){
+	static public function mdlEliminarUnidadMedida($tabla,$datos){
 
 		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
 

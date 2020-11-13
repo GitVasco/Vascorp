@@ -1,22 +1,20 @@
 <?php
 
-class ControladorAgencias{
+class ControladorTipoMovimientos{
 
 	/*=============================================
 	CREAR AGENCIA
 	=============================================*/
 
-	static public function ctrCrearAgencia(){
+	static public function ctrCrearUnidadMedida(){
 
 		if(isset($_POST["nuevaDescripcion"])){
 
-				$tabla="agenciasjf";
-			   	$datos = array("ruc"=>$_POST["nuevoRUC"],
-							   "nombre"=>$_POST["nuevaDescripcion"],
-							   "direccion"=>$_POST["nuevaDireccion"],
-							   "ubigeo"=>$_POST["nuevoUbigeo"]);
+				$tabla="unidades_medidajf";
+			   	$datos = array("codigo"=>$_POST["nuevoCodigo"],
+							   "descripcion"=>$_POST["nuevaDescripcion"]);
 
-			   	$respuesta = ModeloAgencias::mdlIngresarAgencia($tabla,$datos);
+			   	$respuesta = ModeloUnidadMedidas::mdlIngresarUnidadMedida($tabla,$datos);
 
 			   	if($respuesta == "ok"){
 
@@ -24,13 +22,13 @@ class ControladorAgencias{
 
 					swal({
 						  type: "success",
-						  title: "La agencia ha sido guardado correctamente",
+						  title: "La unidad de medida ha sido guardada correctamente",
 						  showConfirmButton: true,
 						  confirmButtonText: "Cerrar"
 						  }).then(function(result){
 									if (result.value) {
 
-									window.location = "agencias";
+									window.location = "unidadesmedida";
 
 									}
 								})
@@ -47,33 +45,30 @@ class ControladorAgencias{
     
 
 	/*=============================================
-	MOSTRAR AGENCIAS
+	MOSTRAR UNIDADES DE MEDIDA
 	=============================================*/
 
-	static public function ctrMostrarAgencias($item,$valor){
-		$tabla="agenciasjf";
-		$respuesta = ModeloAgencias::mdlMostrarAgencias($tabla,$item,$valor);
+	static public function ctrMostrarUnidadMedidas($item,$valor){
+		$tabla="unidades_medidajf";
+		$respuesta = ModeloUnidadMedidas::mdlMostrarUnidadMedidas($tabla,$item,$valor);
 
 		return $respuesta;
 
     }
     
 	/*=============================================
-	EDITAR AGENCIA
+	EDITAR UNIDAD DE MEDIDA
 	=============================================*/
 
-	static public function ctrEditarAgencia(){
+	static public function ctrEditarUnidadMedida(){
 
 		if(isset($_POST["editarDescripcion"])){
 
-				$tabla="agenciasjf";
-			   	$datos = array("id"=>$_POST["idAgencia"],
-                               "nombre"=>$_POST["editarDescripcion"],
-							   "ruc"=>$_POST["editarRUC"],
-							   "direccion"=>$_POST["editarDireccion"],
-							   "ubigeo"=>$_POST["editarUbigeo"]);
+				$tabla="unidades_medidajf";
+			   	$datos = array("id"=>$_POST["idUnidadMedida"],
+                               "descripcion"=>$_POST["editarDescripcion"]);
 
-			   	$respuesta = ModeloAgencias::mdlEditarAgencia($tabla,$datos);
+			   	$respuesta = ModeloUnidadMedidas::mdlEditarUnidadMedida($tabla,$datos);
 
 			   	if($respuesta == "ok"){
 
@@ -81,13 +76,13 @@ class ControladorAgencias{
 
 					swal({
 						  type: "success",
-						  title: "La agencia ha sido cambiado correctamente",
+						  title: "La unidad de medida ha sido cambiada correctamente",
 						  showConfirmButton: true,
 						  confirmButtonText: "Cerrar"
 						  }).then(function(result){
 									if (result.value) {
 
-									window.location = "agencias";
+									window.location = "unidadesmedida";
 
 									}
 								})
@@ -104,18 +99,18 @@ class ControladorAgencias{
 	ELIMINAR AGENCIA
 	=============================================*/
 
-	static public function ctrEliminarAgencia(){
+	static public function ctrEliminarUnidadMedida(){
 
-		if(isset($_GET["idAgencia"])){
+		if(isset($_GET["idUnidadMedida"])){
 
-			$datos = $_GET["idAgencia"];
+			$datos = $_GET["idUnidadMedida"];
 			date_default_timezone_set('America/Lima');
 			$fecha = new DateTime();
-			$agencia=ControladorAgencias::ctrMostrarAgencias($datos);
+			$unidad=ControladorUnidadMedida::ctrMostrarUnidadMedidas($datos);
 			$usuario= $_SESSION["nombre"];
 			$para      = 'notificacionesvascorp@gmail.com';
-			$asunto    = 'Se elimino una agencia';
-			$descripcion   = 'El usuario '.$usuario.' elimino la agencia '.$agencia["ruc"].' - '.$agencia["nombre"];
+			$asunto    = 'Se elimino una unidad de medida';
+			$descripcion   = 'El usuario '.$usuario.' elimino la unidad de medida '.$unidad["codigo"].' - '.$unidad["descripcion"];
 			$de = 'From: notificacionesvascorp@gmail.com';
 			if($_SESSION["correo"] == 1){
 				mail($para, $asunto, $descripcion, $de);
@@ -126,8 +121,8 @@ class ControladorAgencias{
 								"fecha" => $fecha->format("Y-m-d H:i:s"));
 				$auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
 			}
-			$tabla="agenciasjf";
-			$respuesta = ModeloAgencias::mdlEliminarAgencia($tabla,$datos);
+			$tabla="unidades_medidajf";
+			$respuesta = ModeloUnidadMedidas::mdlEliminarUnidadMedida($tabla,$datos);
 			if($respuesta == "ok"){
 				
 				
@@ -135,14 +130,14 @@ class ControladorAgencias{
 
 				swal({
 					  type: "success",
-					  title: "La agencia ha sido borrada correctamente",
+					  title: "La unidad de medida ha sido borrada correctamente",
 					  showConfirmButton: true,
 					  confirmButtonText: "Cerrar",
 					  closeOnConfirm: false
 					  }).then(function(result){
 								if (result.value) {
 
-								window.location = "agencias";
+								window.location = "unidadesmedida";
 
 								}
 							})

@@ -1,5 +1,5 @@
-$('.tablaAgencias').DataTable({
-    "ajax": "ajax/tabla-agencias.ajax.php?perfil="+$("#perfilOculto").val(),
+$('.tablaTipoPagos').DataTable({
+    "ajax": "ajax/tabla-tipopagos.ajax.php?perfil="+$("#perfilOculto").val(),
     "deferRender": true,
     "retrieve": true,
     "processing": true,
@@ -32,16 +32,16 @@ $('.tablaAgencias').DataTable({
 /*=============================================
 EDITAR AGENCIA
 =============================================*/
-$(".tablaAgencias").on("click", ".btnEditarAgencia", function () {
+$(".tablaTipoPagos").on("click", ".btnEditarTipoPago", function () {
 
-    var idAgencia = $(this).attr("idAgencia");
+    var idTipoPago = $(this).attr("idTipoPago");
 
     var datos = new FormData();
-    datos.append("idAgencia", idAgencia);
+    datos.append("idTipoPago", idTipoPago);
 
     $.ajax({
 
-        url: "ajax/agencias.ajax.php",
+        url: "ajax/tipopagos.ajax.php",
         method: "POST",
         data: datos,
         cache: false,
@@ -50,11 +50,9 @@ $(".tablaAgencias").on("click", ".btnEditarAgencia", function () {
         dataType: "json",
         success: function (respuesta) {
 
-            $("#idAgencia").val(respuesta["id"]);
-            $("#editarRUC").val(respuesta["ruc"]);
-            $("#editarDescripcion").val(respuesta["nombre"]);
-            $("#editarDireccion").val(respuesta["direccion"]);
-            $("#editarUbigeo").val(respuesta["ubigeo"]);
+            $("#idTipoPago").val(respuesta["id"]);
+            $("#editarCodigo").val(respuesta["codigo"]);
+            $("#editarDescripcion").val(respuesta["descripcion"]);
         }
 
     })
@@ -65,23 +63,23 @@ $(".tablaAgencias").on("click", ".btnEditarAgencia", function () {
 /*=============================================
 ELIMINAR AGENCIA
 =============================================*/
-$(".tablaAgencias").on("click", ".btnEliminarAgencia", function(){
+$(".tablaTipoPagos").on("click", ".btnEliminarTipoPago", function(){
 
-	var idAgencia = $(this).attr("idAgencia");
+	var idTipoPago = $(this).attr("idTipoPago");
 	
 	swal({
-        title: '¿Está seguro de borrar la agencia?',
+        title: '¿Está seguro de borrar el tipo de pago?',
         text: "¡Si no lo está puede cancelar la acción!",
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         cancelButtonText: 'Cancelar',
-        confirmButtonText: 'Si, borrar agencia!'
+        confirmButtonText: 'Si, borrar tipo de pago!'
       }).then(function(result){
         if (result.value) {
           
-            window.location = "index.php?ruta=agencias&idAgencia="+idAgencia;
+            window.location = "index.php?ruta=tipopagos&idTipoPago="+idTipoPago;
         }
 
   })

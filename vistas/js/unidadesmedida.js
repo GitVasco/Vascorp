@@ -1,5 +1,5 @@
-$('.tablaAgencias').DataTable({
-    "ajax": "ajax/tabla-agencias.ajax.php?perfil="+$("#perfilOculto").val(),
+$('.tablaUnidadesMedida').DataTable({
+    "ajax": "ajax/tabla-unidadesmedida.ajax.php?perfil="+$("#perfilOculto").val(),
     "deferRender": true,
     "retrieve": true,
     "processing": true,
@@ -30,18 +30,18 @@ $('.tablaAgencias').DataTable({
     }    
   });
 /*=============================================
-EDITAR AGENCIA
+EDITAR UNIDAD MEDIDA
 =============================================*/
-$(".tablaAgencias").on("click", ".btnEditarAgencia", function () {
+$(".tablaUnidadesMedida").on("click", ".btnEditarUnidadMedida", function () {
 
-    var idAgencia = $(this).attr("idAgencia");
+    var idUnidadMedida = $(this).attr("idUnidadMedida");
 
     var datos = new FormData();
-    datos.append("idAgencia", idAgencia);
+    datos.append("idUnidadMedida", idUnidadMedida);
 
     $.ajax({
 
-        url: "ajax/agencias.ajax.php",
+        url: "ajax/unidadesmedida.ajax.php",
         method: "POST",
         data: datos,
         cache: false,
@@ -50,11 +50,9 @@ $(".tablaAgencias").on("click", ".btnEditarAgencia", function () {
         dataType: "json",
         success: function (respuesta) {
 
-            $("#idAgencia").val(respuesta["id"]);
-            $("#editarRUC").val(respuesta["ruc"]);
-            $("#editarDescripcion").val(respuesta["nombre"]);
-            $("#editarDireccion").val(respuesta["direccion"]);
-            $("#editarUbigeo").val(respuesta["ubigeo"]);
+            $("#idUnidadMedida").val(respuesta["id"]);
+            $("#editarCodigo").val(respuesta["codigo"]);
+            $("#editarDescripcion").val(respuesta["descripcion"]);
         }
 
     })
@@ -63,25 +61,25 @@ $(".tablaAgencias").on("click", ".btnEditarAgencia", function () {
 
 
 /*=============================================
-ELIMINAR AGENCIA
+ELIMINAR UNIDAD MEDIDA
 =============================================*/
-$(".tablaAgencias").on("click", ".btnEliminarAgencia", function(){
+$(".tablaUnidadesMedida").on("click", ".btnEliminarUnidadMedida", function(){
 
-	var idAgencia = $(this).attr("idAgencia");
+	var idUnidadMedida = $(this).attr("idUnidadMedida");
 	
 	swal({
-        title: '¿Está seguro de borrar la agencia?',
+        title: '¿Está seguro de borrar la unidad de medida?',
         text: "¡Si no lo está puede cancelar la acción!",
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         cancelButtonText: 'Cancelar',
-        confirmButtonText: 'Si, borrar agencia!'
+        confirmButtonText: 'Si, borrar unidad de medida!'
       }).then(function(result){
         if (result.value) {
           
-            window.location = "index.php?ruta=agencias&idAgencia="+idAgencia;
+            window.location = "index.php?ruta=unidadesmedida&idUnidadMedida="+idUnidadMedida;
         }
 
   })

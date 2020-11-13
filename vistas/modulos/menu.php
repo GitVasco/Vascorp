@@ -400,6 +400,47 @@
                         </a>
 
                     </li> 
+
+                    <li>
+                        <a href="tipomovimientos">
+
+                            <i class="fa fa-circle-o"></i>
+                            <span>Tipo Movimientos</span>
+
+                        </a>
+
+                    </li> 
+
+                    <li>
+                        <a href="tipopagos">
+
+                            <i class="fa fa-circle-o"></i>
+                            <span>Tipo Pagos</span>
+
+                        </a>
+
+                    </li> 
+
+                    <li>
+                        <a href="condicionesventa">
+
+                            <i class="fa fa-circle-o"></i>
+                            <span>Condiciones Venta</span>
+
+                        </a>
+
+                    </li> 
+
+                    <li>
+                        <a href="unidadesmedida">
+
+                            <i class="fa fa-circle-o"></i>
+                            <span>Unidades Medida</span>
+
+                        </a>
+
+                    </li> 
+
         
                 </ul>
 

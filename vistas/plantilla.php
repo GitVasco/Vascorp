@@ -179,7 +179,11 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "crear-articulo" ||
                   $_GET["ruta"] == "sectores" ||
                   $_GET["ruta"] == "paras" ||
-                  $_GET["ruta"] == "agencias"){
+                  $_GET["ruta"] == "agencias" ||
+                  $_GET["ruta"] == "tipomovimientos" ||
+                  $_GET["ruta"] == "tipopagos" ||
+                  $_GET["ruta"] == "condicionesventa" ||
+                  $_GET["ruta"] == "unidadesmedida" ){
 
               include "modulos/maestros/".$_GET["ruta"].".php";
 
@@ -316,6 +320,10 @@ CUERPO DOCUMENTO
   <script src="vistas/js/asistencias.js"></script>
   <script src="vistas/js/produccion.js"></script>
   <script src="vistas/js/agencias.js"></script>
+  <script src="vistas/js/tipomovimientos.js"></script>
+  <script src="vistas/js/tipopagos.js"></script>
+  <script src="vistas/js/condicionesventa.js"></script>
+  <script src="vistas/js/unidadesmedida.js"></script>
 
 </body>
 

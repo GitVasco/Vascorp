@@ -1,5 +1,5 @@
-$('.tablaAgencias').DataTable({
-    "ajax": "ajax/tabla-agencias.ajax.php?perfil="+$("#perfilOculto").val(),
+$('.tablaTipoMovimientos').DataTable({
+    "ajax": "ajax/tabla-tipomovimientos.ajax.php?perfil="+$("#perfilOculto").val(),
     "deferRender": true,
     "retrieve": true,
     "processing": true,
@@ -30,18 +30,18 @@ $('.tablaAgencias').DataTable({
     }    
   });
 /*=============================================
-EDITAR AGENCIA
+EDITAR TIPO MOVIMIENTOS
 =============================================*/
-$(".tablaAgencias").on("click", ".btnEditarAgencia", function () {
+$(".tablaTipoMovimientos").on("click", ".btnEditarTipoMovimiento", function () {
 
-    var idAgencia = $(this).attr("idAgencia");
+    var idTipoMovimiento = $(this).attr("idTipoMovimiento");
 
     var datos = new FormData();
-    datos.append("idAgencia", idAgencia);
+    datos.append("idTipoMovimiento", idTipoMovimiento);
 
     $.ajax({
 
-        url: "ajax/agencias.ajax.php",
+        url: "ajax/tipomovimientos.ajax.php",
         method: "POST",
         data: datos,
         cache: false,
@@ -50,11 +50,9 @@ $(".tablaAgencias").on("click", ".btnEditarAgencia", function () {
         dataType: "json",
         success: function (respuesta) {
 
-            $("#idAgencia").val(respuesta["id"]);
-            $("#editarRUC").val(respuesta["ruc"]);
-            $("#editarDescripcion").val(respuesta["nombre"]);
-            $("#editarDireccion").val(respuesta["direccion"]);
-            $("#editarUbigeo").val(respuesta["ubigeo"]);
+            $("#idTipoMovimiento").val(respuesta["id"]);
+            $("#editarCodigo").val(respuesta["codigo"]);
+            $("#editarDescripcion").val(respuesta["descripcion"]);
         }
 
     })
@@ -65,23 +63,23 @@ $(".tablaAgencias").on("click", ".btnEditarAgencia", function () {
 /*=============================================
 ELIMINAR AGENCIA
 =============================================*/
-$(".tablaAgencias").on("click", ".btnEliminarAgencia", function(){
+$(".tablaTipoMovimientos").on("click", ".btnEliminarTipoMovimiento", function(){
 
-	var idAgencia = $(this).attr("idAgencia");
+	var idTipoMovimiento = $(this).attr("idTipoMovimiento");
 	
 	swal({
-        title: '¿Está seguro de borrar la agencia?',
+        title: '¿Está seguro de borrar el tipo de movimiento?',
         text: "¡Si no lo está puede cancelar la acción!",
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         cancelButtonText: 'Cancelar',
-        confirmButtonText: 'Si, borrar agencia!'
+        confirmButtonText: 'Si, borrar tipo de movimiento!'
       }).then(function(result){
         if (result.value) {
           
-            window.location = "index.php?ruta=agencias&idAgencia="+idAgencia;
+            window.location = "index.php?ruta=tipomovimientos&idTipoMovimiento="+idTipoMovimiento;
         }
 
   })
