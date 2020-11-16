@@ -30,7 +30,7 @@ $('.tablaTipoPagos').DataTable({
     }    
   });
 /*=============================================
-EDITAR AGENCIA
+EDITAR TIPO DE PAGO
 =============================================*/
 $(".tablaTipoPagos").on("click", ".btnEditarTipoPago", function () {
 
@@ -61,7 +61,7 @@ $(".tablaTipoPagos").on("click", ".btnEditarTipoPago", function () {
 
 
 /*=============================================
-ELIMINAR AGENCIA
+ELIMINAR TIPO DE PAGO
 =============================================*/
 $(".tablaTipoPagos").on("click", ".btnEliminarTipoPago", function(){
 

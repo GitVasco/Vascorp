@@ -3,18 +3,18 @@
 class ControladorTipoMovimientos{
 
 	/*=============================================
-	CREAR AGENCIA
+	CREAR TIPO DE MOVIMIENTO
 	=============================================*/
 
-	static public function ctrCrearUnidadMedida(){
+	static public function ctrCrearTipoMovimiento(){
 
 		if(isset($_POST["nuevaDescripcion"])){
 
-				$tabla="unidades_medidajf";
+				$tabla="tipo_movimientosjf";
 			   	$datos = array("codigo"=>$_POST["nuevoCodigo"],
 							   "descripcion"=>$_POST["nuevaDescripcion"]);
 
-			   	$respuesta = ModeloUnidadMedidas::mdlIngresarUnidadMedida($tabla,$datos);
+			   	$respuesta = ModeloTipoMovimientos::mdlIngresarTipoMovimiento($tabla,$datos);
 
 			   	if($respuesta == "ok"){
 
@@ -22,13 +22,13 @@ class ControladorTipoMovimientos{
 
 					swal({
 						  type: "success",
-						  title: "La unidad de medida ha sido guardada correctamente",
+						  title: "El tipo de movimiento ha sido guardado correctamente",
 						  showConfirmButton: true,
 						  confirmButtonText: "Cerrar"
 						  }).then(function(result){
 									if (result.value) {
 
-									window.location = "unidadesmedida";
+									window.location = "tipomovimientos";
 
 									}
 								})
@@ -45,30 +45,31 @@ class ControladorTipoMovimientos{
     
 
 	/*=============================================
-	MOSTRAR UNIDADES DE MEDIDA
+	MOSTRAR TIPO DE MOVIMIENTOS
 	=============================================*/
 
-	static public function ctrMostrarUnidadMedidas($item,$valor){
-		$tabla="unidades_medidajf";
-		$respuesta = ModeloUnidadMedidas::mdlMostrarUnidadMedidas($tabla,$item,$valor);
+	static public function ctrMostrarTipoMovimientos($item,$valor){
+		$tabla="tipo_movimientosjf";
+		$respuesta = ModeloTipoMovimientos::mdlMostrarTipoMovimientos($tabla,$item,$valor);
 
 		return $respuesta;
 
     }
     
 	/*=============================================
-	EDITAR UNIDAD DE MEDIDA
+	EDITAR TIPO DE MOVIMIENTO
 	=============================================*/
 
-	static public function ctrEditarUnidadMedida(){
+	static public function ctrEditarTipoMovimiento(){
 
 		if(isset($_POST["editarDescripcion"])){
 
-				$tabla="unidades_medidajf";
-			   	$datos = array("id"=>$_POST["idUnidadMedida"],
+				$tabla="tipo_movimientosjf";
+				   $datos = array("id"=>$_POST["idTipoMovimiento"],
+								"codigo"=> $_POST["editarCodigo"],
                                "descripcion"=>$_POST["editarDescripcion"]);
 
-			   	$respuesta = ModeloUnidadMedidas::mdlEditarUnidadMedida($tabla,$datos);
+			   	$respuesta = ModeloTipoMovimientos::mdlEditarTipoMovimiento($tabla,$datos);
 
 			   	if($respuesta == "ok"){
 
@@ -76,13 +77,13 @@ class ControladorTipoMovimientos{
 
 					swal({
 						  type: "success",
-						  title: "La unidad de medida ha sido cambiada correctamente",
+						  title: "El tipo de movimiento ha sido cambiado correctamente",
 						  showConfirmButton: true,
 						  confirmButtonText: "Cerrar"
 						  }).then(function(result){
 									if (result.value) {
 
-									window.location = "unidadesmedida";
+									window.location = "tipomovimientos";
 
 									}
 								})
@@ -96,21 +97,21 @@ class ControladorTipoMovimientos{
     }
     
 	/*=============================================
-	ELIMINAR AGENCIA
+	ELIMINAR TIPO DE MOVIMIENTO
 	=============================================*/
 
-	static public function ctrEliminarUnidadMedida(){
+	static public function ctrEliminarTipoMovimiento(){
 
-		if(isset($_GET["idUnidadMedida"])){
+		if(isset($_GET["idTipoMovimiento"])){
 
-			$datos = $_GET["idUnidadMedida"];
+			$datos = $_GET["idTipoMovimiento"];
 			date_default_timezone_set('America/Lima');
 			$fecha = new DateTime();
-			$unidad=ControladorUnidadMedida::ctrMostrarUnidadMedidas($datos);
+			$tipomovimientos=ControladorTipoMovimientos::ctrMostrarTipoMovimientos("id",$datos);
 			$usuario= $_SESSION["nombre"];
 			$para      = 'notificacionesvascorp@gmail.com';
-			$asunto    = 'Se elimino una unidad de medida';
-			$descripcion   = 'El usuario '.$usuario.' elimino la unidad de medida '.$unidad["codigo"].' - '.$unidad["descripcion"];
+			$asunto    = 'Se elimino un tipo de movimiento';
+			$descripcion   = 'El usuario '.$usuario.' elimino el tipo de movimiento '.$tipomovimientos["codigo"].' - '.$tipomovimientos["descripcion"];
 			$de = 'From: notificacionesvascorp@gmail.com';
 			if($_SESSION["correo"] == 1){
 				mail($para, $asunto, $descripcion, $de);
@@ -121,8 +122,8 @@ class ControladorTipoMovimientos{
 								"fecha" => $fecha->format("Y-m-d H:i:s"));
 				$auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
 			}
-			$tabla="unidades_medidajf";
-			$respuesta = ModeloUnidadMedidas::mdlEliminarUnidadMedida($tabla,$datos);
+			$tabla="tipo_movimientosjf";
+			$respuesta = ModeloTipoMovimientos::mdlEliminarTipoMovimiento($tabla,$datos);
 			if($respuesta == "ok"){
 				
 				
@@ -130,14 +131,14 @@ class ControladorTipoMovimientos{
 
 				swal({
 					  type: "success",
-					  title: "La unidad de medida ha sido borrada correctamente",
+					  title: "El tipo de movimiento ha sido borrado correctamente",
 					  showConfirmButton: true,
 					  confirmButtonText: "Cerrar",
 					  closeOnConfirm: false
 					  }).then(function(result){
 								if (result.value) {
 
-								window.location = "unidadesmedida";
+								window.location = "tipomovimientos";
 
 								}
 							})

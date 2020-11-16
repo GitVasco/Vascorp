@@ -49,7 +49,6 @@ $(".tablaTipoMovimientos").on("click", ".btnEditarTipoMovimiento", function () {
         processData: false,
         dataType: "json",
         success: function (respuesta) {
-
             $("#idTipoMovimiento").val(respuesta["id"]);
             $("#editarCodigo").val(respuesta["codigo"]);
             $("#editarDescripcion").val(respuesta["descripcion"]);

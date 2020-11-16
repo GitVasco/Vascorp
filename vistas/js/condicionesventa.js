@@ -54,7 +54,12 @@ $(".tablaCondicionesVenta").on("click", ".btnEditarCondicionVenta", function () 
             $("#editarCodigo").val(respuesta["codigo"]);
             $("#editarDescripcion").val(respuesta["descripcion"]);
             $("#editarCtaCte").val(respuesta["cta_cte"]);
-            $("#editarUbigeo").val(respuesta["ubigeo"]);
+            $("#editarCtaCte").selectpicker('refresh');
+            $("#editarDia").val(respuesta["dias"]);
+            $("#editarLetra").val(respuesta["letras"]);
+            $("#editarLetra").selectpicker('refresh');
+            $("#editarDscto").val(respuesta["dscto"]);
+            $("#editarDscto").selectpicker('refresh');
         }
 
     })
@@ -65,23 +70,23 @@ $(".tablaCondicionesVenta").on("click", ".btnEditarCondicionVenta", function () 
 /*=============================================
 ELIMINAR AGENCIA
 =============================================*/
-$(".tablaCondicionesVenta").on("click", ".btnEliminarAgencia", function(){
+$(".tablaCondicionesVenta").on("click", ".btnEliminarCondicionVenta", function(){
 
-	var idAgencia = $(this).attr("idAgencia");
+	var idCondicionVenta = $(this).attr("idCondicionVenta");
 	
 	swal({
-        title: '¿Está seguro de borrar la agencia?',
+        title: '¿Está seguro de borrar la condicion de venta?',
         text: "¡Si no lo está puede cancelar la acción!",
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         cancelButtonText: 'Cancelar',
-        confirmButtonText: 'Si, borrar agencia!'
+        confirmButtonText: 'Si, borrar condicion de venta!'
       }).then(function(result){
         if (result.value) {
           
-            window.location = "index.php?ruta=agencias&idAgencia="+idAgencia;
+            window.location = "index.php?ruta=condicionesventa&idCondicionVenta="+idCondicionVenta;
         }
 
   })

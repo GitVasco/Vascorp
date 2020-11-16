@@ -137,10 +137,13 @@ MODAL AGREGAR CONDICIONES VENTA
               
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="nuevaCtaCte" placeholder="Ingresar cuenta corriente" required>
-
+                <select class="form-control input-lg" name="nuevaCtaCte"  required>
+                  <option value="">SELECCIONAR LETRA</option>
+                  <option value="Si">Si</option>
+                  <option value="No">No</option>
+                </select>
               </div>
 
             </div>
@@ -151,9 +154,9 @@ MODAL AGREGAR CONDICIONES VENTA
               
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="nuevoDia" placeholder="Ingresar días" >
+                <input type="number" min="0" class="form-control input-lg" name="nuevoDia" placeholder="Ingresar días" >
 
               </div>
 
@@ -165,9 +168,13 @@ MODAL AGREGAR CONDICIONES VENTA
               
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-usd"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="nuevaLetra" placeholder="Ingresar letras" required>
+                <select class="form-control input-lg" name="nuevaLetra"  required>
+                  <option value="">SELECCIONAR LETRA</option>
+                  <option value="Si">Si</option>
+                  <option value="No">No</option>
+                </select>
 
               </div>
 
@@ -179,10 +186,13 @@ MODAL AGREGAR CONDICIONES VENTA
               
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-usd"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="nuevoDescuento" placeholder="Ingresar descuento" >
-
+                <select class="form-control input-lg" name="nuevoDscto"  required>
+                  <option value="">SELECCIONAR DESCUENTO</option>
+                  <option value="Si">Si</option>
+                  <option value="No">No</option>
+                </select>
               </div>
 
             </div>
@@ -262,7 +272,7 @@ MODAL EDITAR CONDICION VENTA
               
                 <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
-                <input type="number" min="0" class="form-control input-lg" name="editarCodigo" id="editarCodigo" required>
+                <input type="text" class="form-control input-lg" name="editarCodigo" id="editarCodigo" required>
 
               </div>
 
@@ -290,7 +300,10 @@ MODAL EDITAR CONDICION VENTA
               
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="editarCtaCte" id="editarCtaCte" required>
+                <select class="form-control input-lg selectpicker" id="editarCtaCte" name="editarCtaCte"  required>
+                  <option value="Si">Si</option>
+                  <option value="No">No</option>
+                </select>
               </div>
 
             </div>
@@ -316,7 +329,10 @@ MODAL EDITAR CONDICION VENTA
               
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="editarLetra" id="editarLetra" required>
+                <select class="form-control input-lg selectpicker" id="editarLetra" name="editarLetra"  required>
+                  <option value="Si">Si</option>
+                  <option value="No">No</option>
+                </select>
               </div>
 
             </div>
@@ -329,7 +345,10 @@ MODAL EDITAR CONDICION VENTA
               
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="editarDescuento" id="editarDescuento" required>
+                <select class="form-control input-lg selectpicker" id="editarDscto" name="editarDscto"  required>
+                  <option value="Si">Si</option>
+                  <option value="No">No</option>
+                </select>
               </div>
 
             </div>

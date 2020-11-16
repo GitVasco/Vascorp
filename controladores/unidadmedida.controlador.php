@@ -65,7 +65,8 @@ class ControladorUnidadMedidas{
 		if(isset($_POST["editarDescripcion"])){
 
 				$tabla="unidades_medidajf";
-			   	$datos = array("id"=>$_POST["idUnidadMedida"],
+				   $datos = array("id"=>$_POST["idUnidadMedida"],
+				   				"codigo"=> $_POST["editarCodigo"],
                                "descripcion"=>$_POST["editarDescripcion"]);
 
 			   	$respuesta = ModeloUnidadMedidas::mdlEditarUnidadMedida($tabla,$datos);
@@ -106,7 +107,7 @@ class ControladorUnidadMedidas{
 			$datos = $_GET["idUnidadMedida"];
 			date_default_timezone_set('America/Lima');
 			$fecha = new DateTime();
-			$unidad=ControladorUnidadMedida::ctrMostrarUnidadMedidas($datos);
+			$unidad=ControladorUnidadMedidas::ctrMostrarUnidadMedidas("id",$datos);
 			$usuario= $_SESSION["nombre"];
 			$para      = 'notificacionesvascorp@gmail.com';
 			$asunto    = 'Se elimino una unidad de medida';

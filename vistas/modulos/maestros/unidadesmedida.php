@@ -202,7 +202,7 @@ MODAL EDITAR UNIDAD MEDIDA
               
                 <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
-                <input type="number" min="0" class="form-control input-lg" name="editarCodigo" id="editarCodigo" required>
+                <input type="text" class="form-control input-lg" name="editarCodigo" id="editarCodigo" required>
 
               </div>
 

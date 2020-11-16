@@ -3,18 +3,18 @@
 class ControladorTipoPagos{
 
 	/*=============================================
-	CREAR AGENCIA
+	CREAR TIPO DE PAGO
 	=============================================*/
 
-	static public function ctrCrearUnidadMedida(){
+	static public function ctrCrearTipoPago(){
 
 		if(isset($_POST["nuevaDescripcion"])){
 
-				$tabla="unidades_medidajf";
+				$tabla="tipo_pagosjf";
 			   	$datos = array("codigo"=>$_POST["nuevoCodigo"],
 							   "descripcion"=>$_POST["nuevaDescripcion"]);
 
-			   	$respuesta = ModeloUnidadMedidas::mdlIngresarUnidadMedida($tabla,$datos);
+			   	$respuesta = ModeloTipoPagos::mdlIngresarTipoPago($tabla,$datos);
 
 			   	if($respuesta == "ok"){
 
@@ -22,13 +22,13 @@ class ControladorTipoPagos{
 
 					swal({
 						  type: "success",
-						  title: "La unidad de medida ha sido guardada correctamente",
+						  title: "El tipo de pago ha sido guardado correctamente",
 						  showConfirmButton: true,
 						  confirmButtonText: "Cerrar"
 						  }).then(function(result){
 									if (result.value) {
 
-									window.location = "unidadesmedida";
+									window.location = "tipopagos";
 
 									}
 								})
@@ -45,30 +45,31 @@ class ControladorTipoPagos{
     
 
 	/*=============================================
-	MOSTRAR UNIDADES DE MEDIDA
+	MOSTRAR TIPO DE PAGO
 	=============================================*/
 
-	static public function ctrMostrarUnidadMedidas($item,$valor){
-		$tabla="unidades_medidajf";
-		$respuesta = ModeloUnidadMedidas::mdlMostrarUnidadMedidas($tabla,$item,$valor);
+	static public function ctrMostrarTipoPagos($item,$valor){
+		$tabla="tipo_pagosjf";
+		$respuesta = ModeloTipoPagos::mdlMostrarTipoPagos($tabla,$item,$valor);
 
 		return $respuesta;
 
     }
     
 	/*=============================================
-	EDITAR UNIDAD DE MEDIDA
+	EDITAR TIPO DE PAGO
 	=============================================*/
 
-	static public function ctrEditarUnidadMedida(){
+	static public function ctrEditarTipoPago(){
 
 		if(isset($_POST["editarDescripcion"])){
 
-				$tabla="unidades_medidajf";
-			   	$datos = array("id"=>$_POST["idUnidadMedida"],
+				$tabla="tipo_pagosjf";
+				   $datos = array("id"=>$_POST["idTipoPago"],
+				   				"codigo"=> $_POST["editarCodigo"],
                                "descripcion"=>$_POST["editarDescripcion"]);
 
-			   	$respuesta = ModeloUnidadMedidas::mdlEditarUnidadMedida($tabla,$datos);
+			   	$respuesta = ModeloTipoPagos::mdlEditarTipoPago($tabla,$datos);
 
 			   	if($respuesta == "ok"){
 
@@ -76,13 +77,13 @@ class ControladorTipoPagos{
 
 					swal({
 						  type: "success",
-						  title: "La unidad de medida ha sido cambiada correctamente",
+						  title: "El tipo de pago ha sido cambiado correctamente",
 						  showConfirmButton: true,
 						  confirmButtonText: "Cerrar"
 						  }).then(function(result){
 									if (result.value) {
 
-									window.location = "unidadesmedida";
+									window.location = "tipopagos";
 
 									}
 								})
@@ -96,21 +97,22 @@ class ControladorTipoPagos{
     }
     
 	/*=============================================
-	ELIMINAR AGENCIA
+	ELIMINAR TIPO DE PAGO
 	=============================================*/
 
-	static public function ctrEliminarUnidadMedida(){
+	static public function ctrEliminarTipoPago(){
 
-		if(isset($_GET["idUnidadMedida"])){
+		if(isset($_GET["idTipoPago"])){
 
-			$datos = $_GET["idUnidadMedida"];
+			$datos = $_GET["idTipoPago"];
+			$tabla="tipo_pagosjf";
 			date_default_timezone_set('America/Lima');
 			$fecha = new DateTime();
-			$unidad=ControladorUnidadMedida::ctrMostrarUnidadMedidas($datos);
+			$tipopagos=ControladorTipoPagos::ctrMostrarTipoPagos("id",$datos);
 			$usuario= $_SESSION["nombre"];
 			$para      = 'notificacionesvascorp@gmail.com';
-			$asunto    = 'Se elimino una unidad de medida';
-			$descripcion   = 'El usuario '.$usuario.' elimino la unidad de medida '.$unidad["codigo"].' - '.$unidad["descripcion"];
+			$asunto    = 'Se elimino un tipo de pago';
+			$descripcion   = 'El usuario '.$usuario.' elimino el tipo de pago '.$tipopagos["codigo"].' - '.$tipopagos["descripcion"];
 			$de = 'From: notificacionesvascorp@gmail.com';
 			if($_SESSION["correo"] == 1){
 				mail($para, $asunto, $descripcion, $de);
@@ -121,8 +123,8 @@ class ControladorTipoPagos{
 								"fecha" => $fecha->format("Y-m-d H:i:s"));
 				$auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
 			}
-			$tabla="unidades_medidajf";
-			$respuesta = ModeloUnidadMedidas::mdlEliminarUnidadMedida($tabla,$datos);
+			
+			$respuesta = ModeloTipoPagos::mdlEliminarTipoPago($tabla,$datos);
 			if($respuesta == "ok"){
 				
 				
@@ -130,14 +132,14 @@ class ControladorTipoPagos{
 
 				swal({
 					  type: "success",
-					  title: "La unidad de medida ha sido borrada correctamente",
+					  title: "El tipo de pago ha sido borrado correctamente",
 					  showConfirmButton: true,
 					  confirmButtonText: "Cerrar",
 					  closeOnConfirm: false
 					  }).then(function(result){
 								if (result.value) {
 
-								window.location = "unidadesmedida";
+								window.location = "tipopagos";
 
 								}
 							})
