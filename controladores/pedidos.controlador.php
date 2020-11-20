@@ -106,7 +106,8 @@ class ControladorPedidos{
                 */
                 $datos = array( "codigo" => $talonario,
                                 "cliente" => $_POST["cliente"],
-                                "vendedor" => $_POST["vendedor"]);
+                                "vendedor" => $_POST["vendedor"],
+                                "lista" => $_POST["nLista"]);
 
                 ModeloPedidos::mdlGuardarTemporal($tabla, $datos);
 

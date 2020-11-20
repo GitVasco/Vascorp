@@ -78,8 +78,10 @@ $(".tablaClientes").on("click", ".btnEditarCliente", function () {
             $("#editarEmail").val(respuesta["email"]);
             $("#editarContacto").val(respuesta["contacto"]);
             $("#editarVendedor").val(respuesta["vendedor"]);
-            $("#editarGrupo").val(respuesta["grupo"]);
-            $("#editarLista_precios").val(respuesta["lista_precios"]);
+			$("#editarGrupo").val(respuesta["grupo"]);
+			
+			$("#editarLista_precios").val(respuesta["lista_precios"]);
+			$("#editarLista_precios").selectpicker('refresh');
 
 
 

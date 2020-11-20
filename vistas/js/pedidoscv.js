@@ -33,18 +33,36 @@ $(".tablaArticulosPedidos").DataTable({
 });
 
 /* 
-* VISUALIZAR DETALLE DE ARTICULOS QUE LLEVAN ESA MATERIA PRIMA
+* VISUALIZAR DETALLEs QUE SE JALAN DEL PEDIDO
 */
 $(".tablaArticulosPedidos").on("click", ".agregarArtPed", function () {
 
     var cliente = document.getElementById("seleccionarCliente").value;
     var vendedor = document.getElementById("seleccionarVendedor").value;
     var modLista = document.getElementById("lista").value;
-    //console.log(lista);
+
+    console.log(modLista);
+
+    if(modLista == ''){
+
+        var modLista1 = document.getElementById("seleccionarLista").value;
+        $("#nLista").val(modLista1);
+        var datos = new FormData();
+        datos.append("modLista", modLista1);
+        //console.log(modLista1);
+
+    }else{
+
+        $("#nLista").val(modLista);
+        var datos = new FormData();
+        datos.append("modLista", modLista);
+
+    }
 
     //console.log(cliente);
     $("#cliente").val(cliente);
     $("#vendedor").val(vendedor);
+    
 
     /* 
     *datos para la cabecera
@@ -52,9 +70,9 @@ $(".tablaArticulosPedidos").on("click", ".agregarArtPed", function () {
     var mod = $(this).attr("modelo");
     //console.log(mod);
 
-    var datos = new FormData();
+    //var datos = new FormData();
     datos.append("mod", mod);
-    datos.append("modLista", modLista);
+    //datos.append("modLista", modLista);
     
     $.ajax({
 
@@ -217,11 +235,9 @@ $(".tablaArticulosPedidos").on("click", ".agregarArtPed", function () {
 
 			}
 
-
 		}
 
-    })
-    
+    })    
   
 })
 
@@ -291,3 +307,23 @@ $("#seleccionarCliente").change(function(){
 	})    
 
 })
+
+/* 
+quitar productos con el boton
+*/
+
+$(".formularioPedidoCV").on("click", "button.quitarArtPed", function() {
+
+    console.log("boton");
+
+    $(this)
+    .parent()
+    .parent()
+    .parent()
+    .parent()
+    .remove();
+
+
+});
+
+

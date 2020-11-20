@@ -32,7 +32,7 @@
 
                     <div class="box-header with-border"></div>
 
-                    <form role="form" metohd="post">
+                    <form role="form" metohd="post" class="formularioPedidoCV">
 
                         <div class="box-body">
 
@@ -191,6 +191,38 @@
                                 </div>
 
                                 <!--=====================================
+                                ENTRADA LA LISTA DE PRECIOS
+                                ======================================-->
+
+                                    <?php
+
+                                    $valor = $_GET["pedido"];
+
+                                    $pedido = ControladorPedidos::ctrMostrarTemporal($valor);
+                                    #var_dump("pedido", $pedido);
+
+                                    if ($pedido["codigo"] != "") {
+
+                                        echo '<input type="hidden" class="form-control input-sm" id="seleccionarLista" name="seleccionarLista" value="' . $pedido["lista"] . '" readonly>';
+                                    } else {
+
+                                        echo '<input type="hidden" class="form-control input-sm" id="seleccionarLista" name="seleccionarLista" value="' . $pedido["lista"] . '" readonly>';
+                                    }
+
+                                    ?>
+
+                                <!--=====================================
+                                ENTRADA PARA AGREGAR PRODUCTO
+                                ======================================-->
+
+                                <div class="form-group row nuevoProductoPedido">
+
+                                <p class="buscador">
+                                    <label>Buscar:</label>
+                                    <input type="text" class="form-control input-sm" id="buscador" name="buscador">
+                                </p>   
+
+                                <!--=====================================
                                         TITULOS
                                 ======================================-->
 
@@ -218,15 +250,7 @@
 
                                     </div>
 
-                                </div>
-
-
-
-                                <!--=====================================
-                                ENTRADA PARA AGREGAR PRODUCTO
-                                ======================================-->
-
-                                <div class="form-group row nuevoProductoPedido">
+                                </div>                                                             
 
                                     <?php
 
@@ -241,7 +265,7 @@
                                         $total_detalle = $value["cantidad"] * $value["precio"];
                                         #var_dump("infoArtPed", $infoArtPed);
 
-                                        echo '  <div class="row" style="padding:5px 15px">
+                                        echo '  <div class="row mundito" style="padding:5px 15px">
 
                                                 <div class="col-xs-7" style="padding-right:0px">
 
@@ -249,7 +273,7 @@
                                 
                                                         <span class="input-group-addon">
 
-                                                            <button type="button" class="btn btn-danger btn-xs quitarProducto" articulo="' . $infoArtPed["articulo"] . '"><i class="fa fa-times"></i></button>
+                                                            <button type="button" class="btn btn-danger btn-xs quitarArtPed" articulo="' . $infoArtPed["articulo"] . '"><i class="fa fa-times"></i></button>
 
                                                         </span>
                                     
@@ -275,15 +299,10 @@
                                 
                                                     </div>
                             
-                                              </div>
+                                                </div>
 
-                            
-                                            
-                                    
                                             </div>';
                                     }
-
-
 
                                     ?>
 
@@ -376,9 +395,11 @@
 
                                             <select class="form-control" id="nuevoMetodoPago" name="nuevoMetodoPago" required>
                                                 <option value="">Seleccione método de pago</option>
+
                                                 <option value="Contra Entrega">Contra Entrega</option>
                                                 <option value="Factura a 30 días">Factura a 30 días</option>
                                                 <option value="3 - Letras">3 - Letras</option>
+                                                
                                             </select>
 
                                         </div>
@@ -548,6 +569,7 @@ MODAL AGREGAR ARTICULOS
                                     <span class="input-group-addon"><i class="fa fa-key"></i></span>
 
                                     <input type="text" class="form-control input-sm" id="vendedor" name="vendedor" placeholder="Tiene que escoger el Vendedor" required>
+                                    <input type="hidden" class="form-control input-sm" id="nLista" name="nLista" readonly>
 
                                 </div>
 
@@ -715,4 +737,41 @@ MODAL AGREGAR ARTICULOS
 
 <script>
 window.document.title = "Crear pedido"
+</script>
+
+<script>
+$('.nuevoProductoPedido').ready(function(){
+    $('#buscador').keyup(function(){
+
+    //console.log("hola mundo")
+
+    var nombres = $('.nuevaDescripcionArticulo');
+    //console.log(nombres.val())
+    //console.log(nombres.length())
+
+    var buscando = $(this).val();
+    //console.log(buscando.length);
+
+    var item='';
+
+       for( var i = 0; i < nombres.length; i++ ){
+
+        item = $(nombres[i]).val().toLowerCase();
+        console.log(item);
+
+            for(var x = 0; x < item.length; x++ ){
+
+                if( buscando.length == 0 || item.indexOf( buscando ) > -1 ){
+
+                    $(nombres[i]).parents('.mundito').show(); 
+
+                }else{
+
+                    $(nombres[i]).parents('.mundito').hide();
+
+                }
+            }
+       }
+    });
+  });
 </script>
