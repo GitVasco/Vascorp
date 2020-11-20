@@ -94,6 +94,21 @@ require_once "controladores/asistencia.controlador.php";
 require_once "modelos/ingresos.modelo.php";
 require_once "controladores/ingresos.controlador.php";
 
+require_once "modelos/agencia.modelo.php";
+require_once "controladores/agencia.controlador.php";
+
+require_once "modelos/tipomovimiento.modelo.php";
+require_once "controladores/tipomovimiento.controlador.php";
+
+require_once "modelos/tipopago.modelo.php";
+require_once "controladores/tipopago.controlador.php";
+
+require_once "modelos/unidadmedida.modelo.php";
+require_once "controladores/unidadmedida.controlador.php";
+
+require_once "modelos/condicionventa.modelo.php";
+require_once "controladores/condicionventa.controlador.php";
+
 require_once "modelos/produccion.modelo.php";
 
 
