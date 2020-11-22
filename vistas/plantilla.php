@@ -212,7 +212,10 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "produccion-vasco" ||
                   $_GET["ruta"] == "quincena" ||
                   $_GET["ruta"] == "eficiencia" ||
-                  $_GET["ruta"] == "pagos"){
+                  $_GET["ruta"] == "pagos" ||
+                  $_GET["ruta"] == "servicios" ||
+                  $_GET["ruta"] == "crear-servicio" ||
+                  $_GET["ruta"] == "editar-servicio"){
 
               include "modulos/produccion/".$_GET["ruta"].".php";
 
@@ -324,6 +327,7 @@ CUERPO DOCUMENTO
   <script src="vistas/js/tipopagos.js"></script>
   <script src="vistas/js/condicionesventa.js"></script>
   <script src="vistas/js/unidadesmedida.js"></script>
+  <script src="vistas/js/servicios.js"></script>
 
 </body>
 

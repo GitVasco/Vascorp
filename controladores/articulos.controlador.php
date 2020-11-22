@@ -49,6 +49,18 @@ class controladorArticulos{
 		return $respuesta;
 
 	}	
+
+	/* 
+	* MOSTRAR ARTICULOS
+	*/
+	static public function ctrMostrarArticulosServicio(){
+
+
+		$respuesta = ModeloArticulos::mdlMostrarArticulosServicio();
+
+		return $respuesta;
+
+	}
 	/* 
 	* CREAR ARTICULO
 	*/
