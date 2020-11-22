@@ -2,7 +2,7 @@
 
 class ControladorPedidos{
 
-    /* 
+    /*
     * MOSTRAR CABECERA DE TEMPORAL
     */
 	static public function ctrMostrarTemporal($valor){
@@ -13,9 +13,20 @@ class ControladorPedidos{
 
 		return $respuesta;
 
-    }    
-    
-    /* 
+    }
+
+    /*
+    * MOSTRAR CABECERA DE TEMPORAL TOTAL
+    */
+	static public function ctrMostrarTemporalTotal($valor){
+
+		$respuesta = ModeloPedidos::mdlMostrarTemporalTotal($valor);
+
+		return $respuesta;
+
+    }
+
+    /*
     *MOSTRAR DETALLE DE TAMPOERAL
     */
 	static public function ctrMostrarDetallesTemporal($valor){
@@ -26,13 +37,17 @@ class ControladorPedidos{
 
 		return $respuesta;
 
-	}    
+    }
+    
+    /* 
+    * CREAR ARTICULOS EN EL PEDIDO
+    */
 
     static public function ctrCrearPedido(){
 
         if(isset($_POST["pedido"])){
 
-            /* 
+            /*
             todo: VARIABLES GLOBALES DEL TALONARIO
             */
             $tabla = "temporaljf";
@@ -43,7 +58,7 @@ class ControladorPedidos{
 
             if($pedido["codigo"] != ""){ #si ya existe
 
-                /* 
+                /*
                 todo: GUARDAR EL DETALLE TEMPORAL - CUANDO YA EXISTE EL TEMPORAL
                 */
                 $valor = $_POST["modeloModal"];
@@ -53,7 +68,7 @@ class ControladorPedidos{
 
                     $articulo = $value["articulo"];
                     #var_dump("articulo", $value["articulo"]);
-                    $tabla = "detalle_temporal";                
+                    $tabla = "detalle_temporal";
                     $val1 = $articulo;
                     $val2 = $_POST[$articulo];
                     $val3 = $_POST["pedido"];
@@ -64,7 +79,7 @@ class ControladorPedidos{
                         #1ero eliminar si ya se registro
                         $eliminar = array(  "codigo" => $val3,
                                             "articulo" => $val1);
-                        
+
                         $limpiar = ModeloPedidos::mdlEliminarDetalleTemporal($tabla, $eliminar);
                         #var_dump("eliminar", $eliminar);
                         #var_dump("limpiar", $limpiar);
@@ -81,11 +96,11 @@ class ControladorPedidos{
                         if($respuesta = "ok"){
 
                             echo '  <script>
-                            
-                                     window.location="index.php?ruta=crear-pedidocv&pedido='.$_POST["pedido"].'";
-                            
+
+                                        window.location="index.php?ruta=crear-pedidocv&pedido='.$_POST["pedido"].'";
+
                                     </script>';
-                            
+
                         }
 
                     }
@@ -101,7 +116,7 @@ class ControladorPedidos{
                 $talonario = $numero["pedido"] + 1;
                 ModeloPedidos::mdlActualizarTalonario();
 
-                /* 
+                /*
                 todo: GUARDAR CABECERA
                 */
                 $datos = array( "codigo" => $talonario,
@@ -111,17 +126,17 @@ class ControladorPedidos{
 
                 ModeloPedidos::mdlGuardarTemporal($tabla, $datos);
 
-                /* 
+                /*
                 todo: GUARDAR EL DETALLE TEMPORAL
                 */
                 $valor = $_POST["modeloModal"];
                 $respuesta = controladorArticulos::ctrVerArticulos($valor);
 
                 foreach($respuesta as $value){
-                    
+
                     $articulo = $value["articulo"];
                     #var_dump("articulo", $value["articulo"]);
-                    $tabla = "detalle_temporal";                
+                    $tabla = "detalle_temporal";
                     $val1 = $articulo;
                     $val2 = $_POST[$articulo];
                     $val3 = $talonario;
@@ -141,14 +156,12 @@ class ControladorPedidos{
                         if($respuesta = "ok"){
 
                             echo '  <script>
-                            
-                                     window.location="index.php?ruta=crear-pedidocv&pedido='.$talonario.'";
-                            
+
+                                        window.location="index.php?ruta=crear-pedidocv&pedido='.$talonario.'";
+
                                     </script>';
-                            
+
                         }
-
-
 
                     }
 
@@ -157,6 +170,27 @@ class ControladorPedidos{
             }
 
         }
+
+    }
+
+
+    /* 
+    *CREAR CONDICIONES DE VENTA Y TOTALES
+    */
+    static public function ctrCrearPedidoTotales(){
+
+        if(isset($_POST["nuevoCodigo"])){
+
+            var_dump("OK");
+
+            echo '  <script>
+
+                         window.location="index.php?ruta=crear-pedidocv&pedido='.$_POST["nuevoCodigo"].'";
+
+                    </script>';
+
+        }
+
 
     }
 

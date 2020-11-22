@@ -82,9 +82,7 @@
                   }else{
 
                     foreach ($ventas as $key => $value) {
-                      
-                      
-                    
+
                     }
 
                     $codigo = $value["codigo"] + 1;
