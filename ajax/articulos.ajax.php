@@ -82,6 +82,20 @@ class AjaxArticulos{
 
 	}	
 
+	/* 
+	* MOSTRAR ARTICULO PARA ALMACEN DE CORTE
+	*/
+	public $articuloServicio;
+	public function ajaxMostrarArticuloServicio(){
+
+		$valor = $this->articuloServicio;
+
+		$respuesta = controladorArticulos::ctrMostrarArticulos($valor);
+
+		echo json_encode($respuesta);
+
+	}	
+
 	public $articuloT;
 	public function ajaxMostrarArticuloT(){
 
@@ -138,6 +152,17 @@ if( isset($_POST["articuloAC"])){
 	$mostrarArticuloAC = new AjaxArticulos();
 	$mostrarArticuloAC -> articuloAC = $_POST["articuloAC"];
 	$mostrarArticuloAC -> ajaxMostrarArticuloAC();
+
+}
+
+/* 
+* MOSTRAR ARTICULOS PARA ALMACEN DE CORTE
+*/ 
+if( isset($_POST["articuloServicio"])){
+
+	$mostrarArticuloServicio = new AjaxArticulos();
+	$mostrarArticuloServicio -> articuloServicio = $_POST["articuloServicio"];
+	$mostrarArticuloServicio -> ajaxMostrarArticuloServicio();
 
 }
 

@@ -250,6 +250,21 @@ class ModeloArticulos
 	}
 
 	/* 
+	* MOSTRAR ARTICULOS PARA LA TABLA DE SERVICIOS O VENTAS
+	*/
+	static public function mdlMostrarArticulosServicio(){
+
+		$stmt = Conexion::conectar()->prepare("CALL sp_1069_consulta_servicio_articulos()");
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	/* 
 	* MOSTRAR ARTICULOS PARA LA TABLA DE ORDENES DE CORTE
 	*/
 	static public function mdlMostrarArticulosTaller(){

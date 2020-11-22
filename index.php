@@ -109,6 +109,9 @@ require_once "controladores/unidadmedida.controlador.php";
 require_once "modelos/condicionventa.modelo.php";
 require_once "controladores/condicionventa.controlador.php";
 
+require_once "modelos/servicio.modelo.php";
+require_once "controladores/servicio.controlador.php";
+
 require_once "modelos/produccion.modelo.php";
 
 
