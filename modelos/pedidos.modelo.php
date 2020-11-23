@@ -3,7 +3,7 @@ require_once "conexion.php";
 
 class ModeloPedidos{
 
-    /* 
+    /*
     * MOSTRAR TEMPORAL CABECERA
     */
     static public function mdlMostrarTemporal($tabla, $valor){
@@ -13,14 +13,35 @@ class ModeloPedidos{
         $stmt -> execute();
 
         return $stmt -> fetch();
-		
+
 		$stmt -> close();
 
 		$stmt = null;
 
-    }    
-    
-    /* 
+	}
+    /*
+    * MOSTRAR TEMPORAL CABECERA
+    */
+    static public function mdlMostrarTemporalTotal($valor){
+
+        $stmt = Conexion::conectar()->prepare("SELECT
+												dt.codigo,
+												SUM(total) AS totalArt
+											FROM
+												detalle_temporal dt
+											WHERE dt.codigo = $valor");
+
+        $stmt -> execute();
+
+        return $stmt -> fetch();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }
+
+    /*
     * MOSTRAR DETALLE DE TEMPORAL
     */
 	static public function mdlMostraDetallesTemporal($tabla, $valor){
@@ -35,7 +56,7 @@ class ModeloPedidos{
 
 		$stmt=null;
 
-	}    
+	}
 
     /*
 	* GUARDAR DETALLE DE TEMPORAL
@@ -43,11 +64,12 @@ class ModeloPedidos{
 	static public function mdlGuardarTemporal($tabla, $datos){
 
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (codigo, cliente, vendedor) VALUES (:codigo, :cliente, :vendedor)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (codigo, cliente, vendedor, lista) VALUES (:codigo, :cliente, :vendedor, :lista)");
 
 		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
 		$stmt->bindParam(":cliente", $datos["cliente"], PDO::PARAM_STR);
 		$stmt->bindParam(":vendedor", $datos["vendedor"], PDO::PARAM_STR);
+		$stmt->bindParam(":lista", $datos["lista"], PDO::PARAM_STR);
 
 		if ($stmt->execute()) {
 
@@ -67,7 +89,7 @@ class ModeloPedidos{
 	static public function mdlGuardarTemporalDetalle($tabla, $datos){
 
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (codigo, articulo, cantidad, precio) VALUES (:codigo, :articulo, :cantidad, :precio)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (codigo, articulo, cantidad, precio, total) VALUES (:codigo, :articulo, :cantidad, :precio, (:cantidad * :precio) )");
 
 		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
 		$stmt->bindParam(":articulo", $datos["articulo"], PDO::PARAM_STR);
@@ -85,9 +107,9 @@ class ModeloPedidos{
 
 		$stmt->close();
 		$stmt = null;
-    }
-    
-    /*  
+	}
+
+    /*
     * ELIMINAR ARTICULO REPETIDO
     */
 	static public function mdlEliminarDetalleTemporal($tabla, $eliminar){
@@ -100,10 +122,10 @@ class ModeloPedidos{
 		if($stmt -> execute()){
 
 			return "ok";
-		
+
 		}else{
 
-			return "error";	
+			return "error";
 
 		}
 
@@ -112,8 +134,8 @@ class ModeloPedidos{
 		$stmt = null;
 
     }
-    
-    /* 
+
+    /*
     * ACTUALIZAR TALONARIO +1
     */
 	static public function mdlActualizarTalonario(){
@@ -126,7 +148,7 @@ class ModeloPedidos{
 
 		$stmt=null;
 
-	}    
+	}
 
 
 }

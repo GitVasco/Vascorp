@@ -229,7 +229,6 @@ CUERPO DOCUMENTO
 
         }else if( $_GET["ruta"] == "categorias" ||
                   $_GET["ruta"] == "productos" ||
-                  $_GET["ruta"] == "clientes" ||
                   $_GET["ruta"] == "ventas" ||
                   $_GET["ruta"] == "crear-venta" ||
                   $_GET["ruta"] == "editar-venta"){
@@ -243,6 +242,7 @@ CUERPO DOCUMENTO
               include "modulos/ticket/".$_GET["ruta"].".php";
 
         }else if( $_GET["ruta"] == "pedidoscv" ||
+                  $_GET["ruta"] == "clientes" ||
                   $_GET["ruta"] == "crear-pedidocv"){
 
               include "modulos/facturacion/".$_GET["ruta"].".php";
