@@ -4,7 +4,7 @@
 
     <h1>
 
-      Crear venta
+      Crear servicio
 
     </h1>
 
@@ -12,7 +12,7 @@
 
       <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-      <li class="active">Crear venta</li>
+      <li class="active">Crear servicio</li>
 
     </ol>
 
@@ -241,7 +241,7 @@
                   <th>Nombre</th>
                   <th>Color</th>
                   <th>Talla</th>
-                  <th>Taller</th>
+                  <th>Servicio</th>
                   <th>Acciones</th>
                 </tr>
 
@@ -266,9 +266,8 @@
 <!--=====================================
 MODAL AGREGAR CLIENTE
 ======================================-->
-
-<div id="modalAgregarCliente" class="modal fade" role="dialog">
-
+<div id="modalAgregarSector" class="modal fade" role="dialog">
+  
   <div class="modal-dialog">
 
     <div class="modal-content">
@@ -283,7 +282,7 @@ MODAL AGREGAR CLIENTE
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title">Agregar cliente</h4>
+          <h4 class="modal-title">Agregar Sector</h4>
 
         </div>
 
@@ -295,96 +294,34 @@ MODAL AGREGAR CLIENTE
 
           <div class="box-body">
 
+            <!-- ENTRADA PARA EL CODIGO -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
+
+                <input type="text" min="0" class="form-control input-lg" name="nuevoCodigo" placeholder="Ingresar codigo" required>
+
+              </div>
+
+            </div>          
+
             <!-- ENTRADA PARA EL NOMBRE -->
-
+            
             <div class="form-group">
-
+              
               <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <span class="input-group-addon"><i class="fa fa-user"></i></span>
-
-                <input type="text" class="form-control input-lg" name="nuevoCliente" placeholder="Ingresar nombre"
-                  required>
+                <input type="text" class="form-control input-lg" name="nuevoSector" placeholder="Ingresar sector" required>
 
               </div>
 
             </div>
-
-            <!-- ENTRADA PARA EL DOCUMENTO ID -->
-
-            <div class="form-group">
-
-              <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-key"></i></span>
-
-                <input type="number" min="0" class="form-control input-lg" name="nuevoDocumentoId"
-                  placeholder="Ingresar documento" required>
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA EL EMAIL -->
-
-            <div class="form-group">
-
-              <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-
-                <input type="email" class="form-control input-lg" name="nuevoEmail" placeholder="Ingresar email"
-                  required>
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA EL TELÉFONO -->
-
-            <div class="form-group">
-
-              <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-
-                <input type="text" class="form-control input-lg" name="nuevoTelefono" placeholder="Ingresar teléfono"
-                  data-inputmask="'mask':'(999) 999-999'" data-mask required>
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA LA DIRECCIÓN -->
-
-            <div class="form-group">
-
-              <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
-
-                <input type="text" class="form-control input-lg" name="nuevaDireccion" placeholder="Ingresar dirección"
-                  required>
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA LA FECHA DE NACIMIENTO -->
-
-            <div class="form-group">
-
-              <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-
-                <input type="text" class="form-control input-lg" name="nuevaFechaNacimiento"
-                  placeholder="Ingresar fecha nacimiento" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask required>
-
-              </div>
-
-            </div>
-
+ 
           </div>
 
         </div>
@@ -397,7 +334,7 @@ MODAL AGREGAR CLIENTE
 
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" class="btn btn-primary">Guardar cliente</button>
+          <button type="submit" class="btn btn-primary">Guardar sector</button>
 
         </div>
 
@@ -406,8 +343,8 @@ MODAL AGREGAR CLIENTE
 
       <?php
 
-        $crearCliente = new ControladorClientes();
-        $crearCliente -> ctrCrearCliente();
+        $crearSector = new ControladorSectores();
+        $crearSector -> ctrCrearSector();
 
       ?>
 
@@ -418,5 +355,5 @@ MODAL AGREGAR CLIENTE
 
 </div>
 <script>
-window.document.title = "Crear venta"
+window.document.title = "Crear servicio"
 </script>

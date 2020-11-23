@@ -76,8 +76,8 @@ class ControladorServicios{
 					$tabla="articulojf";
 					$valor=$value["articulo"];
 					$respuestaProducto=ModeloArticulos::mdlMostrarArticulos($valor);
-					$item1 = "taller";
-					$valor1 = $respuestaProducto["taller"]-$value["cantidad"];
+					$item1 = "servicio";
+					$valor1 = $respuestaProducto["servicio"]-$value["cantidad"];
 					ModeloArticulos::mdlActualizarUnDato($tabla, $item1, $valor1, $valor);
 					
 
@@ -194,8 +194,8 @@ class ControladorServicios{
 
 
 					# Actualizamos las ventas en la tabla productos
-					$item1="taller";
-					$valor1=$respuestaProducto["taller"]-$value["cantidad"];
+					$item1="servicio";
+					$valor1=$value["taller"]-$value["cantidad"];
 
 					ModeloArticulos::mdlActualizarUnDato("articulojf", $item1, $valor1, $valor);
 				}

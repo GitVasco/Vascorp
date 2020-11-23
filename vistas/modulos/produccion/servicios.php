@@ -4,7 +4,7 @@
 
     <h1>
 
-        Ventas
+    Servicios
 
     </h1>
 
@@ -12,7 +12,7 @@
 
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-      <li class="active">Ventas</li>
+      <li class="active">Servicios</li>
 
     </ol>
 
@@ -24,11 +24,11 @@
       <div class="box-header with-border">
         <a href="crear-servicio">
           <button class="btn btn-primary" name="RegistrarServicio" >
-            Registrar Venta
+            Registrar Servicio
           </button>
         </a>
         <button class="btn btn-outline-success pull-right btnReporteAlmacen"  style="border:green 1px solid">
-                      <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Ventas  </button>
+                      <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Servicios  </button>
       </div>
       <div class="box-body">
 
@@ -65,5 +65,5 @@
 
 
 <script>
-window.document.title = "Ventas"
+window.document.title = "Servicios"
 </script>
