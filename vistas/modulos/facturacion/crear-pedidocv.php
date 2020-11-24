@@ -57,10 +57,10 @@
 
                                         <input type="text" class="form-control input-sm" id="nuevoResponsable" name="nuevoResponsable" value="<?php echo $_SESSION["nombre"]; ?>" readonly>
 
-                                        <input type="hidden" name="idUsuario" value="<?php echo $_SESSION["id"]; ?>">
+                                        <input type="hidden" name="idUsuario" id="idUsuario" value="<?php echo $_SESSION["id"]; ?>">
 
                                         <input type="hidden" name="fechaActual" value="<?php echo $ahora; ?>">
-                                        
+
                                         <input type="hidden" name="lista" id="lista">
 
                                     </div>
@@ -712,7 +712,10 @@ MODAL AGREGAR ARTICULOS
                                     <span class="input-group-addon"><i class="fa fa-key"></i></span>
 
                                     <input type="text" class="form-control input-sm" id="vendedor" name="vendedor" placeholder="Tiene que escoger el Vendedor" required>
+
                                     <input type="hidden" class="form-control input-sm" id="nLista" name="nLista" readonly>
+
+                                    <input type="hidden" class="form-control input-sm" id="usuario" name="usuario" value="<?php echo $_SESSION["id"]; ?>">
 
                                 </div>
 
@@ -1055,6 +1058,16 @@ MODAL PARA GENERAR EL PEDIDO
 
                 </div>
 
+                <div class="form-group col-lg-7 pull-right">
+
+                    <div class="input-group">
+
+                    <input type="hidden" class="form-control input-sm" name="usuarioM" id="usuarioM">
+
+                    </div>
+
+                </div>
+
                 </div>
 
             </div>
@@ -1074,8 +1087,8 @@ MODAL PARA GENERAR EL PEDIDO
 
       <?php
 
-        /* $crearCliente = new ControladorClientes();
-        $crearCliente -> ctrCrearCliente(); */
+        $totalesPedido = new ControladorPedidos();
+        $totalesPedido -> ctrCrearPedidoTotales();
 
       ?>
 

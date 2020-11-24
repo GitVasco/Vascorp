@@ -150,5 +150,48 @@ class ModeloPedidos{
 
 	}
 
+    /*
+    *ACTUALIZAR TOTALES DEL PEDIDO
+    */
+	static public function mdlActualizarTotalesPedido($datos){
+
+		$sql="UPDATE
+					temporaljf
+				SET
+					op_gravada = :op_gravada,
+					descuento_total = :descuento_total,
+					sub_total = :sub_total,
+					igv = :impuesto,
+					total = :total,
+					condicion_venta = :condicion_venta,
+					estado = 'GENERADO',
+					usuario = :usuario
+				WHERE codigo = :codigo";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
+		$stmt->bindParam(":op_gravada", $datos["op_gravada"], PDO::PARAM_STR);
+		$stmt->bindParam(":descuento_total", $datos["descuento_total"], PDO::PARAM_STR);
+		$stmt->bindParam(":sub_total", $datos["sub_total"], PDO::PARAM_STR);
+		$stmt->bindParam(":impuesto", $datos["impuesto"], PDO::PARAM_STR);
+		$stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
+		$stmt->bindParam(":condicion_venta", $datos["condicion_venta"], PDO::PARAM_STR);
+		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+
+        if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+
+		}
+
+		$stmt=null;
+
+    }
+
 
 }

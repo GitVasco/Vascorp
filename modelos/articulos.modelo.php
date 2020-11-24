@@ -557,8 +557,28 @@ class ModeloArticulos
 		$stmt->execute();
 
 		$stmt = null;
-	}	
+	}
 
-	
+	/*
+	* ACTUALIZAR LA CANTIDAD DE PEDIDOS DEL ARTICULO
+	*/
+	static public function mdlActualizarCantPedidos($articulo, $pedidos){
+
+		$sql="UPDATE
+						articulojf
+					SET
+						pedidos = :pedidos
+					WHERE articulo = :articulo";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":articulo", $articulo, PDO::PARAM_STR);
+		$stmt->bindParam(":pedidos", $pedidos, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+		$stmt=null;
+
+	}
 }
 

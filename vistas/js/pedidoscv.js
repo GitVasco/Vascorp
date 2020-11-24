@@ -39,9 +39,10 @@ $(".tablaArticulosPedidos").on("click", ".agregarArtPed", function () {
 
     var cliente = document.getElementById("seleccionarCliente").value;
     var vendedor = document.getElementById("seleccionarVendedor").value;
+    //var usuario = document.getElementById("idUsuario").value;
     var modLista = document.getElementById("lista").value;
 
-    console.log(modLista);
+    //console.log(usuario);
 
     if(modLista == ''){
 
@@ -62,6 +63,7 @@ $(".tablaArticulosPedidos").on("click", ".agregarArtPed", function () {
     //console.log(cliente);
     $("#cliente").val(cliente);
     $("#vendedor").val(vendedor);
+    //$("#usuario").val(usuario);
 
     /*
     *datos para la cabecera
@@ -504,7 +506,10 @@ $(".crearPedido").click(function () {
     var condicionVenta = document.getElementById("condicionVenta").value;
     $("#condicionVentaM").val(condicionVenta);
 
-    //console.log(condicionVenta);
+    var usuario = document.getElementById("idUsuario").value;
+    $("#usuarioM").val(usuario);
+
+    //console.log(usuario);
 
 
 

@@ -116,13 +116,18 @@ class ControladorPedidos{
                 $talonario = $numero["pedido"] + 1;
                 ModeloPedidos::mdlActualizarTalonario();
 
+                $usuario = $_POST["usuario"];
+                $talonarioN = $usuario.$talonario;
+
                 /*
                 todo: GUARDAR CABECERA
                 */
-                $datos = array( "codigo" => $talonario,
+                $datos = array( "codigo" => $talonarioN,
                                 "cliente" => $_POST["cliente"],
                                 "vendedor" => $_POST["vendedor"],
-                                "lista" => $_POST["nLista"]);
+                                "lista" => $_POST["nLista"],
+                                "usuario" => $_POST["usuario"]);
+                                var_dump($datos);
 
                 ModeloPedidos::mdlGuardarTemporal($tabla, $datos);
 
@@ -139,7 +144,7 @@ class ControladorPedidos{
                     $tabla = "detalle_temporal";
                     $val1 = $articulo;
                     $val2 = $_POST[$articulo];
-                    $val3 = $talonario;
+                    $val3 = $talonarioN;
                     $val4 = $_POST["precio"];
 
                     if($val2 > 0){
@@ -157,7 +162,7 @@ class ControladorPedidos{
 
                             echo '  <script>
 
-                                        window.location="index.php?ruta=crear-pedidocv&pedido='.$talonario.'";
+                                        window.location="index.php?ruta=crear-pedidocv&pedido='.$talonarioN.'";
 
                                     </script>';
 
@@ -179,15 +184,69 @@ class ControladorPedidos{
     */
     static public function ctrCrearPedidoTotales(){
 
-        if(isset($_POST["nuevoCodigo"])){
+        if(isset($_POST["codigoM"])){
 
-            var_dump("OK");
+            /*
+            * ACTUALIZAMOS LOS TOTALES DEL PEDIDO
+            */
+            $datos = array( "codigo" => $_POST["codigoM"],
+                            "op_gravada" => $_POST["opGravadaM"],
+                            "descuento_total" => $_POST["descuentoM"],
+                            "sub_total" => $_POST["subTotalM"],
+                            "impuesto" => $_POST["igvM"],
+                            "total" => $_POST["totalM"],
+                            "usuario" => $_POST["usuarioM"],
+                            "condicion_venta" => $_POST["condicionVentaM"]);
 
-            echo '  <script>
+            //var_dump($datos);
 
-                         window.location="index.php?ruta=crear-pedidocv&pedido='.$_POST["nuevoCodigo"].'";
+            $respuesta = ModeloPedidos::mdlActualizarTotalesPedido($datos);
+            //var_dump($respuesta);
+            if($respuesta == "ok"){
 
-                    </script>';
+                $articulosM=json_decode($_POST["articulosM"],true);
+                //var_dump($articulosM);
+
+                /* 
+                *ACTUALIZAMOS LAS CANTIDADES EN PEDIDOS
+                */
+                foreach($articulosM as $key => $value){
+
+                    $articulo = $value["articulo"];
+
+                    $verArticulos = ModeloArticulos::mdlMostrarArticulos($articulo);
+                    //var_dump($verArticulos["pedidos"]);
+
+                    $cantidad = $value["cantidad"];
+                    //var_dump($cantidad);
+
+                    $pedidos = $verArticulos["pedidos"] + $cantidad;
+                    //var_dump($pedidos);
+
+                    ModeloArticulos::mdlActualizarCantPedidos($articulo, $pedidos);
+
+                }
+
+					# Mostramos una alerta suave
+					echo '<script>
+							swal({
+								type: "success",
+								title: "Felicitaciones",
+								text: "¡La información fue registrada con éxito!",
+								showConfirmButton: true,
+								confirmButtonText: "Cerrar"
+							}).then((result)=>{
+								if(result.value){
+									window.location="pedidoscv";}
+							});
+						</script>';
+
+            }else{
+
+                var_dump("no llego aqui");
+
+            }
+
 
         }
 

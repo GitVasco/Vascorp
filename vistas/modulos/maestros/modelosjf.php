@@ -26,7 +26,7 @@
 
         <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarModelo">
           <i class="fa fa-plus-square"></i>
-           Agregar modelo
+            Agregar modelo
 
         </button>
         <div class="pull-right">
