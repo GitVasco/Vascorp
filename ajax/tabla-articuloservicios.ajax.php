@@ -44,7 +44,7 @@ class TablaProductosServicios{
             "'.$articulos[$i]["nombre"].'",
             "'.$articulos[$i]["color"].'",
             "'.$articulos[$i]["talla"].'",
-            "'.$articulos[$i]["taller"].'",
+            "'.$articulos[$i]["servicio"].'",
             "'.$botones.'"
             ],';        
             }

@@ -682,7 +682,7 @@
 
                     <li class="treeview">
 
-                        <a href="#"><i class="fa fa-list-ul"></i> Ventas
+                        <a href="#"><i class="fa fa-list-ul"></i> Servicios
 
                             <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
@@ -695,7 +695,7 @@
                             <li>
 
                                 <a href="servicios">
-                                <i class="fa fa-circle-o"></i> Ventas
+                                <i class="fa fa-circle-o"></i> Servicios
                                 </a>
 
                             </li>
@@ -703,7 +703,7 @@
                             <li>
 
                                 <a href="crear-servicio">
-                                <i class="fa fa-circle-o"></i> Crear venta
+                                <i class="fa fa-circle-o"></i> Crear servicio
                                 </a>
 
                             </li>

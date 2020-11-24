@@ -102,14 +102,14 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
       dataType: "json",
       success: function(respuesta) {
         var packing = respuesta["packing"];
-        var taller = respuesta["taller"];
+        var servicio = respuesta["servicio"];
         /*=============================================
         EVITAR AGREGAR PRODUTO CUANDO EL STOCK ESTÁ EN CERO
         =============================================*/
   
-        if (taller == 0) {
+        if (servicio == 0) {
           swal({
-            title: "No hay en taller disponible",
+            title: "No hay en servicio disponible",
             type: "error",
             confirmButtonText: "¡Cerrar!"
           });
@@ -143,7 +143,7 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
   
             '<div class="col-xs-3">' +
   
-            '<input type="number" class="form-control nuevaCantidadProducto" name="nuevaCantidadProducto" min="1" value="0" taller="' + taller + '" nuevoTaller="' + taller + '" required>' +
+            '<input type="number" class="form-control nuevaCantidadProducto" name="nuevaCantidadProducto" min="1" value="0" taller="' + servicio + '" nuevoTaller="' + servicio + '" required>' +
   
             "</div>" +
   
@@ -269,7 +269,7 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
 
   
       swal({
-        title: "La cantidad supera la cantidad de taller",
+        title: "La cantidad supera la cantidad de servicio",
         text: "¡Sólo hay " + $(this).attr("taller") + " unidades!",
         type: "error",
         confirmButtonText: "¡Cerrar!"
@@ -311,10 +311,11 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
         id: $(descripcion[i]).attr("articuloServicio"),
         articulo: $(descripcion[i]).attr("articuloServicio"),
         cantidad: $(cantidad[i]).val(),
+        taller:$(cantidad[i]).attr("taller")
       });
     }
   
-    // console.log("listaProductos", JSON.stringify(listaProductos)); 
+     console.log("listaProductos", JSON.stringify(listaProductos)); 
   
     $("#listaProductos").val(JSON.stringify(listaProductos));
     // console.log(JSON.stringify(listaProductos));
@@ -416,7 +417,7 @@ function sumarTotalServicio() {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "¡Si, eliminar Venta!",
+      confirmButtonText: "¡Si, eliminar servicio!",
       cancelButtonText: "Cancelar"
     }).then(function(result) {
       if (result.value) {
