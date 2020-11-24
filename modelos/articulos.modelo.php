@@ -250,6 +250,21 @@ class ModeloArticulos
 	}
 
 	/* 
+	* MOSTRAR ARTICULOS PARA LA TABLA DE SERVICIOS O VENTAS
+	*/
+	static public function mdlMostrarArticulosServicio(){
+
+		$stmt = Conexion::conectar()->prepare("CALL sp_1069_consulta_servicio_articulos()");
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	/* 
 	* MOSTRAR ARTICULOS PARA LA TABLA DE ORDENES DE CORTE
 	*/
 	static public function mdlMostrarArticulosTaller(){
@@ -373,11 +388,14 @@ class ModeloArticulos
 	/* 
 	* MOSTRAR PRECIOS
 	*/
-	static public function mdlVerPrecios($valor){
+	static public function mdlVerPrecios($modelo, $lista){
 
-		$stmt = Conexion::conectar()->prepare("CALL sp_1053_mod_precio_p(:valor)");
-
-		$stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
+		$stmt = Conexion::conectar()->prepare("SELECT 
+											id,
+											modelo,
+											$lista as precio
+										FROM
+											preciojf where modelo=$modelo ");
 
 		$stmt->execute();
 
@@ -539,8 +557,28 @@ class ModeloArticulos
 		$stmt->execute();
 
 		$stmt = null;
-	}	
+	}
 
-	
+	/*
+	* ACTUALIZAR LA CANTIDAD DE PEDIDOS DEL ARTICULO
+	*/
+	static public function mdlActualizarCantPedidos($articulo, $pedidos){
+
+		$sql="UPDATE
+						articulojf
+					SET
+						pedidos = :pedidos
+					WHERE articulo = :articulo";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":articulo", $articulo, PDO::PARAM_STR);
+		$stmt->bindParam(":pedidos", $pedidos, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+		$stmt=null;
+
+	}
 }
 

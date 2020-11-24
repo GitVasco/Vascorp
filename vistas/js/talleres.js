@@ -202,8 +202,6 @@ $(".tablaTalleresG").on("click", ".btnImprimirTicket", function () {
 	
 	window.open("vistas/reportes_ticket/produccion_ticket_detalle.php?ultimo=" +ultimo + "&modelo=" + modelo + "&nombre=" + nombre + "&color=" + color + "&talla=" + talla + "&cant_taller=" + cant_taller + "&cod_operacion=" + cod_operacion + "&nom_operacion=" + nom_operacion,"_blank");
 	
-    
-  
 })
 
 /* 

@@ -178,7 +178,12 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "modelosjf" ||
                   $_GET["ruta"] == "crear-articulo" ||
                   $_GET["ruta"] == "sectores" ||
-                  $_GET["ruta"] == "paras" ){
+                  $_GET["ruta"] == "paras" ||
+                  $_GET["ruta"] == "agencias" ||
+                  $_GET["ruta"] == "tipomovimientos" ||
+                  $_GET["ruta"] == "tipopagos" ||
+                  $_GET["ruta"] == "condicionesventa" ||
+                  $_GET["ruta"] == "unidadesmedida" ){
 
               include "modulos/maestros/".$_GET["ruta"].".php";
 
@@ -207,7 +212,10 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "produccion-vasco" ||
                   $_GET["ruta"] == "quincena" ||
                   $_GET["ruta"] == "eficiencia" ||
-                  $_GET["ruta"] == "pagos"){
+                  $_GET["ruta"] == "pagos" ||
+                  $_GET["ruta"] == "servicios" ||
+                  $_GET["ruta"] == "crear-servicio" ||
+                  $_GET["ruta"] == "editar-servicio"){
 
               include "modulos/produccion/".$_GET["ruta"].".php";
 
@@ -221,7 +229,6 @@ CUERPO DOCUMENTO
 
         }else if( $_GET["ruta"] == "categorias" ||
                   $_GET["ruta"] == "productos" ||
-                  $_GET["ruta"] == "clientes" ||
                   $_GET["ruta"] == "ventas" ||
                   $_GET["ruta"] == "crear-venta" ||
                   $_GET["ruta"] == "editar-venta"){
@@ -235,6 +242,7 @@ CUERPO DOCUMENTO
               include "modulos/ticket/".$_GET["ruta"].".php";
 
         }else if( $_GET["ruta"] == "pedidoscv" ||
+                  $_GET["ruta"] == "clientes" ||
                   $_GET["ruta"] == "crear-pedidocv"){
 
               include "modulos/facturacion/".$_GET["ruta"].".php";
@@ -314,7 +322,12 @@ CUERPO DOCUMENTO
   <script src="vistas/js/paras.js"></script>
   <script src="vistas/js/asistencias.js"></script>
   <script src="vistas/js/produccion.js"></script>
-
+  <script src="vistas/js/agencias.js"></script>
+  <script src="vistas/js/tipomovimientos.js"></script>
+  <script src="vistas/js/tipopagos.js"></script>
+  <script src="vistas/js/condicionesventa.js"></script>
+  <script src="vistas/js/unidadesmedida.js"></script>
+  <script src="vistas/js/servicios.js"></script>
 
 </body>
 

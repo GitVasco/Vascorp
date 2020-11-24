@@ -2,6 +2,8 @@
 
 require_once '../controladores/articulos.controlador.php';
 require_once '../modelos/articulos.modelo.php';
+require_once '../controladores/clientes.controlador.php';
+require_once '../modelos/clientes.modelo.php';
 
 class AjaxPedidos{
 
@@ -22,12 +24,25 @@ class AjaxPedidos{
 	*/
 	public function ajaxVerDatos(){
 
-        $valor = $this->mod;
+        $modelo = $this->mod;
+        $lista = $this->modLista;
 
-        $respuestaDet = controladorArticulos::ctrVerPrecios($valor);
+        $respuestaLista = controladorArticulos::ctrVerPrecios($modelo, $lista);
+       
+        echo json_encode($respuestaLista);
+    }    
+
+    /* 
+	* SACAR LA LISTA DE PRECIOS ASIGNADA
+	*/
+	public function ajaxVeLista(){
+
+        $valor = $this->cliList;
+
+        $respuestaDet = controladorClientes::ctrVerLista($valor);
        
         echo json_encode($respuestaDet);
-    }    
+    }      
 
 
 }
@@ -48,8 +63,20 @@ if(isset($_POST["modelo"])){
 */
 if(isset($_POST["mod"])){
 
-    $visualizarMateriaPrimaDetalle = new AjaxPedidos();
-    $visualizarMateriaPrimaDetalle -> mod = $_POST["mod"];
-    $visualizarMateriaPrimaDetalle -> ajaxVerDatos();
+    $visualizarPrecios = new AjaxPedidos();
+    $visualizarPrecios -> mod = $_POST["mod"];
+    $visualizarPrecios -> modLista = $_POST["modLista"];
+    $visualizarPrecios -> ajaxVerDatos();
+
+}
+
+/* 
+ * SACAR LA LISTA DE PRECIOS ASIGNADA
+*/
+if(isset($_POST["cliList"])){
+
+    $visualizarListaPrecios = new AjaxPedidos();
+    $visualizarListaPrecios -> cliList = $_POST["cliList"];
+    $visualizarListaPrecios -> ajaxVeLista();
 
 }

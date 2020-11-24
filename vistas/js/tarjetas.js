@@ -448,6 +448,7 @@ function quitarAgregarProductoT() {
 
 	//Capturamos todos los botones de agregar que aparecen en la tabla
 	var botonesTablaT = $(".tablaMateriaPrimaTarjetas tbody button.agregarMP");
+	console.log(botonesTablaT.length);
 
 	//Recorremos en un ciclo para obtener los diferentes idMateriaPrima que fueron agregados a la venta
 	for (var i = 0; i < idMateriaPrima.length; i++) {

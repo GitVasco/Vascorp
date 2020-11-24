@@ -98,7 +98,12 @@ class ModeloClientes{
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha IS NOT NULL ORDER BY id DESC");
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			*
+		  FROM
+			clientesjf c 
+		  WHERE c.fecha IS NOT NULL 
+		  ORDER BY id DESC ");
 
 			$stmt -> execute();
 
@@ -111,6 +116,56 @@ class ModeloClientes{
 		$stmt = null;
 
 	}
+
+	/*=============================================
+	MOSTRAR CLIENTES
+	=============================================*/
+
+	static public function mdlMostrarClientesP($tabla, $item, $valor){
+
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+			c.id,
+			c.codigo,
+			c.nombre 
+		  FROM
+			clientesjf c 
+		  WHERE c.fecha IS NOT NULL 
+		  ORDER BY id DESC ");
+
+			$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
+
+	/*=============================================
+	SACAR LISTA
+	=============================================*/
+
+	static public function mdlVerLista($valor){
+
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+										c.id,
+										c.lista_precios 
+									FROM
+										clientesjf c 
+									WHERE c.id = $valor ");
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}		
 	
 	/*=============================================
 	EDITAR CLIENTE

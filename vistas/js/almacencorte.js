@@ -823,14 +823,48 @@ $(".tablaAlmacenCorte").on("click", ".btnEditarAC", function () {
             $(".telaMP").remove();
 			for (let i = 0; i < respuesta.length; i++) {
                 $("#almacencorteMP").val(respuesta[0]["almacencorte"]);
-                $("#telas").append("<div class='telaMP col-lg-12' style='padding:0px'><div class='col-lg-5 col-md-offset-1'><label><b><br>Tela "+(i+1)+"</b></label><input type='text' class='form-control' name='telas[]' value='"+respuesta[i]["descripcion"]+"' readonly></div><div class='col-lg-1'><label><b>Cantidad <br>real "+(i+1)+"</b></label><input type='number' class='form-control input-sm' name='cantidadMP"+i+"' id='cantidadMP"+i+"' value='"+respuesta[i]["cons_real"]+"' required></div><div class='col-lg-1'><label><b>Cantidad estimada "+(i+1)+"</b></label><input type='hidden'  value='"+respuesta[i]["mat_pri"]+"' name='materia"+i+"' ><input type='number' class='form-control' value='"+respuesta[i]["cons_total"]+"' name='resta"+i+"' id='resta"+i+"' readonly></div><div class='col-lg-1'><label><b><br>Diferencia "+(i+1)+"</b></label><input type='number' class='form-control input-sm' name='diferenciaMP"+i+"' id='diferenciaMP"+i+"' value='"+respuesta[i]["diferencia"]+"' readonly></div><div class='col-lg-1'><label><b>Cantidad <br>recibida "+(i+1)+"</b></label><input type='number' class='form-control input-sm' name='entregaMP"+i+"' id='entregaMP"+i+"' value='"+respuesta[i]["can_entregada"]+"' required></div><div class='col-lg-1 '><label><b><br>Merma "+(i+1)+"</b></label><input type='number' class='form-control input-sm' name='mermaMP"+i+"' id='mermaMP"+i+"' value='"+respuesta[i]["merma"]+"' readonly></div><div class='col-lg-1'></div></div>");
+                $("#telas").append("<div class='telaMP col-lg-12' style='padding:0px'><div class='col-lg-5 col-md-5'><label><b><br>Tela "+(i+1)+"</b></label><input type='text' class='form-control' name='telas[]' value='"+respuesta[i]["descripcion"]+"' readonly></div><div class='col-lg-1 col-md-1 col-lg-offset-1'><label><b>Cantidad <br>usada "+(i+1)+"</b></label><input type='number' min='0' step='any' class='form-control input-sm' name='cantidadMP"+i+"' id='cantidadMP"+i+"' value='"+respuesta[i]["cons_real"]+"' required></div><div class='col-lg-1 col-md-1'><label><b>Cantidad estimada "+(i+1)+"</b></label><input type='hidden' step='any' value='"+respuesta[i]["mat_pri"]+"' name='materia"+i+"' ><input type='number' class='form-control' value='"+respuesta[i]["cons_total"]+"' name='resta"+i+"' id='resta"+i+"' readonly></div><div class='col-lg-1'><label><b><br>Diferencia "+(i+1)+"</b></label><input type='number'  step='any'class='form-control input-sm' step='any' name='diferenciaMP"+i+"' id='diferenciaMP"+i+"' value='"+respuesta[i]["diferencia"]+"' readonly></div><div class='col-lg-1 col-md-1'><label><b>Cantidad <br>recibida "+(i+1)+"</b></label><input type='number'step='any' class='form-control input-sm' name='entregaMP"+i+"' min='0' id='entregaMP"+i+"' value='"+respuesta[i]["can_entregada"]+"' required></div><div class='col-lg-1 col-md-1'><label><b><br>Merma "+(i+1)+"</b></label><input type='number' class='form-control input-sm' step='any' min='0' name='mermaMP"+i+"' id='mermaMP"+i+"' value='"+respuesta[i]["merma"]+"' required></div><div class='col-lg-1 col-md-1'><label><b>MP<br>sin uso "+(i+1)+"</b></label><input type='number'step='any' class='form-control input-sm' name='sinusoMP"+i+"' id='sinusoMP"+i+"' value='"+respuesta[i]["mp_sinuso"]+"' readonly></div></div>");
                
                 $("#cantidadMP"+i+"").change(function(){
-                    $("#diferenciaMP"+i+"").val(Number($("#cantidadMP"+i+"").val())-Number($("#resta"+i+"").val()))
+                    $("#diferenciaMP"+i+"").val(Number($("#cantidadMP"+i+"").val())-Number($("#resta"+i+"").val()));
+                    $("#sinusoMP"+i+"").val(Number($("#entregaMP"+i+"").val())-Number($("#cantidadMP"+i+"").val())-Number($("#mermaMP"+i+"").val()));
                 })
                 $("#entregaMP"+i+"").change(function(){
-                    $("#mermaMP"+i+"").val(Number($("#entregaMP"+i+"").val())-Number($("#cantidadMP"+i+"").val()))
+                    $("#sinusoMP"+i+"").val(Number($("#entregaMP"+i+"").val())-Number($("#cantidadMP"+i+"").val())-Number($("#mermaMP"+i+"").val()));
                 })
+                $("#mermaMP"+i+"").change(function(){
+                    $("#sinusoMP"+i+"").val(Number($("#entregaMP"+i+"").val())-Number($("#cantidadMP"+i+"").val())-Number($("#mermaMP"+i+"").val()));  
+                })
+            }
+            
+			
+		}
+
+    })
+})
+
+
+$(".tablaAlmacenCorte").on("click", ".btnEditarNotificacion", function () {
+    var cod= $(this).attr("codigoAC");
+   
+    var datos = new FormData();
+	datos.append("codigo", cod);
+
+	$.ajax({
+
+		url:"ajax/almacencorte.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType:"json",
+		success:function(respuesta){
+            $(".telaMP").remove();
+			for (let i = 0; i < respuesta.length; i++) {
+                $("#almacencorteNot").val(respuesta[0]["almacencorte"]);
+                $("#notificaciones").append("<div class='telaMP col-lg-12' style='padding:0px'><div class='col-lg-5 col-md-5'><label><b><br>Tela "+(i+1)+"</b></label><input type='text' class='form-control' name='telasNot[]' value='"+respuesta[i]["descripcion"]+"' readonly></div><div class='col-lg-1 col-md-1'><label><b>Cantidad <br>usada "+(i+1)+"</b></label><input type='number' '  class='form-control input-sm' value='"+respuesta[i]["cons_real"]+"' readonly></div><input type='hidden' step='any' value='"+respuesta[i]["mat_pri"]+"' name='materiaNot"+i+"' ><div class='col-lg-1 col-md-1'><label><b>Cantidad <br>recibida "+(i+1)+"</b></label><input type='number'step='any' class='form-control input-sm'    value='"+respuesta[i]["can_entregada"]+"' readonly></div><div class='col-lg-1 col-md-1'><label><b><br>Merma "+(i+1)+"</b></label><input type='number' class='form-control input-sm' step='any' min='0' name='mermaMP"+i+"' id='mermaMP"+i+"' value='"+respuesta[i]["merma"]+"' readonly></div><div class='col-lg-4 col-md-4'><label><b>Notificación "+(i+1)+"</b></label><textarea class='form-control input-sm' row='1' name='notificacionMP"+i+"' id='notificacionMP"+i+"'>"+respuesta[i]["notificacion"]+"</textarea></div></div>");
+               
             }
             
 			

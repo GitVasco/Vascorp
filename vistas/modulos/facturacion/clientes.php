@@ -429,8 +429,17 @@ MODAL AGREGAR CLIENTE
                   <select class="form-control input-sm" id="lista_precios" name="lista_precios" required>
 
                     <option value="">Lista de Precios</option>
-                    <option value="06">06 - Mayoristas</option>
-                    <option value="07">07 - Distribuidores</option>
+                    <option value="precio1">Lista - 01</option>
+                    <option value="precio2">Lista - 02</option>
+                    <option value="precio3">Lista - 03</option>
+                    <option value="precio4">Lista - 04</option>
+                    <option value="precio5">Lista - 05</option>
+                    <option value="precio6">Lista - 06</option>
+                    <option value="precio7">Lista - 07</option>
+                    <option value="precio8">Lista - 08</option>
+                    <option value="precio9">Lista - 09</option>
+                    <option value="precio10">Lista - 10</option>
+
 
                   </select>
 
@@ -788,7 +797,7 @@ MODAL EDITAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <select class="form-control input-sm" id="editarVendedor" name="editarVendedor" required>
+                  <select class="form-control input-sm" id="editarVendedor" name="editarVendedor"  data-live-search="true" required>
 
                     <option value="">Vendedor</option>
                     <option value="00">00   - Oficina</option>
@@ -831,11 +840,20 @@ MODAL EDITAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <select class="form-control input-sm" id="editarLista_precios" name="editarLista_precios" required>
+                  <select class="form-control input-sm selectpicker" id="editarLista_precios" name="editarLista_precios" required>
 
                     <option value="">Lista de Precios</option>
-                    <option value="06">06 - Mayoristas</option>
-                    <option value="07">07 - Distribuidores</option>
+                    <option value="precio1">Lista - 01</option>
+                    <option value="precio2">Lista - 02</option>
+                    <option value="precio3">Lista - 03</option>
+                    <option value="precio4">Lista - 04</option>
+                    <option value="precio5">Lista - 05</option>
+                    <option value="precio6">Lista - 06</option>
+                    <option value="precio7">Lista - 07</option>
+                    <option value="precio8">Lista - 08</option>
+                    <option value="precio9">Lista - 09</option>
+                    <option value="precio10">Lista - 10</option>
+
 
                   </select>
 

@@ -299,7 +299,7 @@ MODAL VISUALIZAR INFORMACION
 
 
 <!--=====================================
-MODAL VISUALIZAR INFORMACION
+MODAL EDITAR TELA
 ======================================-->
 
 <div id="modalEditarAC" class="modal fade" role="dialog">
@@ -368,6 +368,84 @@ MODAL VISUALIZAR INFORMACION
       <?php
         $editarTelaCorte = new ControladorAlmacenCorte();
         $editarTelaCorte -> ctrEditarTelaCorte();
+      ?>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!--=====================================
+MODAL EDITAR NOTIFICACION
+======================================-->
+
+<div id="modalEditarNotificacion" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog" style="width: 70% !important;" > 
+
+    <div class="modal-content">
+
+      <form role="form" method="post">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Editar notificaciones corte</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <!-- ENTRADA PARA CODIGO DEL OC-->
+            
+            <div class="form-group col-lg-12">
+              
+              <label>Corte</label>
+
+              <div class="input-group">
+
+              <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+
+                <strong><input type="text" class="form-control input-sm" name="almacencorteNot" id="almacencorteNot"  readonly></strong>
+
+              </div>
+
+            </div>
+            <div id="notificaciones" >
+            </div>
+
+            
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+             
+          <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
+          <button type="submit" class="btn btn-primary pull-right" >Guardar cambios</button>  
+        </div>
+
+      </form>
+
+      <?php
+        $editarNotificacionCorte = new ControladorAlmacenCorte();
+        $editarNotificacionCorte -> ctrEditarNotificacionCorte();
       ?>
     </div>
 

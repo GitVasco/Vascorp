@@ -237,7 +237,7 @@ class ModeloTalleres{
 
 		$stmt=null;
 
-    }   
+    }
     
     /* 
     *ACTUALIZAR TERMINADO
