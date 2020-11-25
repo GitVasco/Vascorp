@@ -1292,7 +1292,7 @@ $objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "E$fila");
 todo: FIN DE DETALLE
 */
 
-$fila = 10;
+/* $fila = 10;
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "A$fila");
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "B$fila");
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
@@ -1493,7 +1493,7 @@ $objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "A$fila");
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "B$fila");
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "D$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "E$fila");
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "E$fila"); */
 
 
 /* 
@@ -1516,7 +1516,7 @@ $sqlTotal = mysql_query("SELECT
 
 $respTotal = mysql_fetch_array($sqlTotal);
 
-$fila = 39;
+$fila += 1;
 $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", 'TOTAL');
 $objPHPExcel->getActiveSheet()->mergeCells("A$fila:C$fila");
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde7, "A$fila:C$fila");
@@ -1538,13 +1538,13 @@ todo: FIN TOTAL
 todo: INICIO DEL RESUMEN
 */
 
-$fila = 41;
+$fila += 1;
 $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", 'RESUMEN: Consumo de Telas');
 $objPHPExcel->getActiveSheet()->mergeCells("B$fila:D$fila");
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde7, "B$fila:D$fila");
 $objPHPExcel->getActiveSheet()->getStyle("D$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 
-$fila = 42;
+$fila += 1;
 $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", 'FECHA');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde9, "B$fila");
 
@@ -1603,7 +1603,7 @@ todo: FIN DEL RESUMEN
 todo: INICIO DEL RELLENO
 */
 
-$fila = 43;
+/* $fila = 43;
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "B$fila");
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "D$fila");
@@ -1651,7 +1651,7 @@ $objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "D$fila");
 $fila = 52;
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "B$fila");
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "D$fila");
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "D$fila"); */
 
 /* 
 todo: FIN RELLENO
@@ -1677,7 +1677,7 @@ $sqlTotalResumen = mysql_query("SELECT
 
 $respTotalResumen = mysql_fetch_array($sqlTotalResumen);
 
-$fila = 53;
+$fila += 1;
 $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", 'TOTAL');
 $objPHPExcel->getActiveSheet()->mergeCells("B$fila:C$fila");
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde7, "B$fila:C$fila");
