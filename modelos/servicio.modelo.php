@@ -263,6 +263,20 @@ class ModeloServicios{
 		$stmt = null;
 
 	}
-	
+
+	static public function mdlUltimoServicio($tabla){
+
+		$sql="SELECT COUNT(codigo) + 1 AS ultimo_codigo FROM $tabla";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->execute();
+
+		return $stmt->fetch();
+
+		$stmt=null;
+
+
+	}
     
 }

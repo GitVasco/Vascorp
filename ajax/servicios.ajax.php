@@ -18,6 +18,13 @@ class AjaxServicios{
         echo $respuesta;
         
 	}
+	public $servicio;
+	public function ajaxUltimoServicio(){
+        $servicio=$this->servicio;
+		$respuesta=ControladorServicios::ctrMostrarUltimoServicio();
+        echo json_encode($respuesta);
+        
+	}
 }
 
 // OBJETOS
@@ -26,5 +33,13 @@ if(isset($_POST["idServicio"])){
 	$eliminarServicio=new AjaxServicios();
 	$eliminarServicio->idServicio=$_POST["idServicio"];
     $eliminarServicio->ajaxEliminarServicio();
+    
+}
+
+if(isset($_POST["servicio"])){
+
+	$ultimoServicio = new AjaxServicios();
+	$ultimoServicio -> servicio =$_POST["servicio"];
+    $ultimoServicio -> ajaxUltimoServicio();
     
 }

@@ -66,7 +66,7 @@
                   <div class="input-group">
 
                     <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                    <input type="text" class="form-control" id="nuevoServicio" name="nuevoServicio"  >
+                    <input type="text" class="form-control" id="nuevoServicio" name="nuevoServicio"  readonly>
 
                   </div>
 
@@ -242,6 +242,7 @@
                   <th>Color</th>
                   <th>Talla</th>
                   <th>Servicio</th>
+                  <th>Taller</th>
                   <th>Acciones</th>
                 </tr>
 

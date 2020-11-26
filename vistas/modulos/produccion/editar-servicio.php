@@ -153,7 +153,8 @@
                   /* var_dump("infoproducto", $infoProducto); */
                   
                   # Hallamos el stock anterior
-                  $tallerAntiguo = $infoProducto["servicio"] + $value["cantidad"];  
+                  $tallerAntiguo = $infoProducto["taller"] + $value["cantidad"];  
+                  $servicioAntiguo= $infoProducto["servicio"]-$value["cantidad"];
 
                   /* var_dump("stockAntiguo", $stockAntiguo); */
                   
@@ -173,7 +174,7 @@
 
                   <div class="col-xs-3">
 
-                    <input type="number" class="form-control nuevaCantidadProducto" name="nuevaCantidadProducto" min="0" value="'.$value["cantidad"].'" taller="'.$tallerAntiguo.'" nuevoTaller="'.$infoProducto["taller"].'" required>
+                    <input type="number" class="form-control nuevaCantidadProducto" name="nuevaCantidadProducto" min="0" value="'.$value["cantidad"].'" taller="'.$tallerAntiguo.'" nuevoTaller="'.$infoProducto["taller"].'" servicio= "'.$servicioAntiguo. '" required>
 
                   </div>
 
@@ -292,6 +293,7 @@
                   <th>Color</th>
                   <th>Talla</th>
                   <th>Servicio</th>
+                  <th>Taller</th>
                   <th>Acciones</th>
                 </tr>
 

@@ -76,9 +76,12 @@ class ControladorServicios{
 					$tabla="articulojf";
 					$valor=$value["articulo"];
 					$respuestaProducto=ModeloArticulos::mdlMostrarArticulos($valor);
-					$item1 = "servicio";
-					$valor1 = $respuestaProducto["servicio"]-$value["cantidad"];
+					$item1 = "taller";
+					$valor1 = $respuestaProducto["taller"]-$value["cantidad"];
 					ModeloArticulos::mdlActualizarUnDato($tabla, $item1, $valor1, $valor);
+					$item2 = "servicio";
+					$valor2 = $respuestaProducto["servicio"]+$value["cantidad"];
+					ModeloArticulos::mdlActualizarUnDato($tabla, $item2, $valor2, $valor);
 					
 
 				}
@@ -194,10 +197,13 @@ class ControladorServicios{
 
 
 					# Actualizamos las ventas en la tabla productos
-					$item1="servicio";
+					$item1="taller";
 					$valor1=$value["taller"]-$value["cantidad"];
 
 					ModeloArticulos::mdlActualizarUnDato("articulojf", $item1, $valor1, $valor);
+					$item2="servicio";
+					$valor2 = $value["servicio"]+$value["cantidad"];
+					ModeloArticulos::mdlActualizarUnDato("articulojf", $item2, $valor2, $valor);
 				}
 
 
@@ -320,7 +326,12 @@ class ControladorServicios{
             $taller = $infoA["taller"] + $value["cantidad"];
             #var_dump("ord_corte", $ord_corte);
 
-            ModeloArticulos::mdlActualizarUnDato("articulojf", "taller", $taller, $value["articulo"]);
+			ModeloArticulos::mdlActualizarUnDato("articulojf", "taller", $taller, $value["articulo"]);
+
+			$servicio = $infoA["servicio"]-$value["cantidad"];
+			ModeloArticulos::mdlActualizarUnDato("articulojf", "servicio", $servicio, $value["articulo"]);
+			
+			
 
         }
 
@@ -365,5 +376,17 @@ class ControladorServicios{
 
 	}
 
+	/*=============================================
+	MOSTRAR ULTIMO SERVICIOS
+	=============================================*/
 
+	static public function ctrMostrarUltimoServicio(){
+
+		$tabla = "serviciosjf";
+
+		$respuesta = ModeloServicios::mdlUltimoServicio($tabla);
+
+		return $respuesta;
+
+	}
 }
