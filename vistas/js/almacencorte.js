@@ -846,6 +846,7 @@ $(".tablaAlmacenCorte").on("click", ".btnEditarAC", function () {
 
 $(".tablaAlmacenCorte").on("click", ".btnEditarNotificacion", function () {
     var cod= $(this).attr("codigoAC");
+    //console.log(cod);
    
     var datos = new FormData();
 	datos.append("codigo", cod);

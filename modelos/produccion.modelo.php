@@ -48,31 +48,48 @@ class ModeloProduccion
 		} else {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
-                                                q.id,
-                                                q.ano,
-                                                m.mes,
-                                                q.mes AS nmes,
-                                                q.quincena AS nquincena,
-                                                CASE
-                                                WHEN q.quincena = '1' 
-                                                THEN '1ra Quincena' 
-                                                ELSE '2da Quincena' 
-                                                END AS quincena,
-                                                q.inicio,
-                                                q.fin,
-                                                u.nombre,
-                                                q.fecha_creacion
-                                                FROM
-                                                    quincenasjf q 
-                                                    LEFT JOIN usuariosjf u 
-                                                    ON q.usuario = u.id 
-                                                    LEFT JOIN 
-                                                    (SELECT DISTINCT 
-                                                        codigo,
-                                                        descripcion AS mes 
-                                                    FROM
-                                                        meses) AS m 
-                                                    ON q.mes = m.codigo");
+                                            q.id,
+                                            q.ano,
+                                            CASE
+                                              WHEN q.mes = '1' 
+                                              THEN 'Enero' 
+                                              WHEN q.mes = '2' 
+                                              THEN 'Febrero' 
+                                              WHEN q.mes = '3' 
+                                              THEN 'Marzo' 
+                                              WHEN q.mes = '4' 
+                                              THEN 'Abril' 
+                                              WHEN q.mes = '5' 
+                                              THEN 'Mayo' 
+                                              WHEN q.mes = '6' 
+                                              THEN 'Junio' 
+                                              WHEN q.mes = '7' 
+                                              THEN 'Julio' 
+                                              WHEN q.mes = '8' 
+                                              THEN 'Agosto' 
+                                              WHEN q.mes = '9' 
+                                              THEN 'Septiembre' 
+                                              WHEN q.mes = '10' 
+                                              THEN 'Octubre' 
+                                              WHEN q.mes = '11' 
+                                              THEN 'Noviembre' 
+                                              ELSE 'Diciembre' 
+                                            END AS mes,
+                                            q.mes AS nmes,
+                                            q.quincena AS nquincena,
+                                            CASE
+                                              WHEN q.quincena = '1' 
+                                              THEN '1ra Quincena' 
+                                              ELSE '2da Quincena' 
+                                            END AS quincena,
+                                            q.inicio,
+                                            q.fin,
+                                            u.nombre,
+                                            q.fecha_creacion 
+                                          FROM
+                                            quincenasjf q 
+                                            LEFT JOIN usuariosjf u 
+                                              ON q.usuario = u.id");
 
 			$stmt->execute();
 

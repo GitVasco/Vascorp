@@ -23,20 +23,15 @@ DROP TABLE IF EXISTS `movimientos_cabecerajf`;
 
 CREATE TABLE `movimientos_cabecerajf` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `tipo` varchar(10) DEFAULT NULL,
   `usuario` int(11) DEFAULT NULL,
   `taller` varchar(10) DEFAULT NULL,
   `documento` varchar(20) DEFAULT NULL,
   `total` int(11) DEFAULT NULL,
   `fecha` date DEFAULT NULL,
-  `almacen` varchar(10) DEFAULT NULL,
-  `trabajador` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `movimientos_cabecerajf` */
-
-insert  into `movimientos_cabecerajf`(`id`,`tipo`,`usuario`,`taller`,`documento`,`total`,`fecha`,`almacen`,`trabajador`) values (18,'E20',19,'T2','T21234',10,'2020-09-18','01',NULL),(19,'E20',19,'T1','T11234',24,'2020-09-18','02',5);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
