@@ -198,21 +198,30 @@ class ModeloCortes{
 	static public function mdlMostrarEnTalleres($articulo){
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
-                                a.modelo,
-                                a.nombre,
-                                a.color,
-                                a.talla,
-                                td.cantidad,
-                                td.cod_operacion,
-                                o.nombre AS operacion,
-                                td.codigo 
-                            FROM
-                                entallerjf td 
-                                LEFT JOIN operacionesjf o 
-                                ON td.cod_operacion = o.codigo 
-                                LEFT JOIN articulojf a 
-                                ON td.articulo = a.articulo 
-                            WHERE td.id_cabecera = :articulo");
+                                            a.modelo,
+                                            a.nombre,
+                                            a.color,
+                                            a.talla,
+                                            td.cantidad,
+                                            td.cod_operacion,
+                                            o.nombre AS operacion,
+                                            td.codigo 
+                                        FROM
+                                            entallerjf td 
+                                            LEFT JOIN operacionesjf o 
+                                            ON td.cod_operacion = o.codigo 
+                                            LEFT JOIN articulojf a 
+                                            ON td.articulo = a.articulo 
+                                            LEFT JOIN operaciones_detallejf od 
+                                            ON od.modelo = a.modelo 
+                                            AND td.cod_operacion = od.cod_operacion 
+                                        WHERE td.id_cabecera = :articulo 
+                                            AND (
+                                            o.nombre NOT LIKE '%HABI%' 
+                                            AND o.nombre NOT LIKE '%Limpi%' 
+                                            AND o.nombre NOT LIKE '%inspe%'
+                                            ) 
+                                            AND od.precio_doc > 0");
 
         $stmt->bindParam(":articulo", $articulo, PDO::PARAM_STR);
 

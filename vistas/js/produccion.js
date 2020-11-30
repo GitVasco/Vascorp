@@ -77,7 +77,7 @@ $(".tablaQuincena").on("click", ".btnEficiencia", function () {
 	var fin = $(this).attr("fin");
 	var nquincena = $(this).attr("nquincena");
 	var id = $(this).attr("id");
-	//console.log(inicio, fin, nquincena, id);
+	console.log(inicio, fin, nquincena, id);
 
 	localStorage.setItem("inicio", inicio);
 	localStorage.setItem("fin", fin);
@@ -163,9 +163,9 @@ $(".tablaQuincena").on("click", ".btnPagos", function () {
   
 })
 
-cargarEficiencia(localStorage.getItem("inicio"), localStorage.getItem("fin"), localStorage.getItem("nquincena"), localStorage.getItem("id"));
+cargarPagos(localStorage.getItem("inicio"), localStorage.getItem("fin"), localStorage.getItem("nquincena"), localStorage.getItem("id"));
 
-function cargarEficiencia(inicio,fin,nquincena,id){
+function cargarPagos(inicio,fin,nquincena,id){
 
 	$('.tablaPagos').DataTable({
 		"ajax": "ajax/tabla-pagos.ajax.php?perfil=" + $("#perfilOculto").val() + "&inicio=" + inicio + "&fin=" + fin + "&nquincena=" + nquincena + "&id=" + id,
