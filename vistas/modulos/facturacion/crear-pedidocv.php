@@ -1042,7 +1042,7 @@ MODAL PARA GENERAR EL PEDIDO
 
                     <div class="input-group">
 
-                        <input type="hidden" class="form-control input-lg" style="text-align:right;" name="articulosM" id="articulosM" required readonly>
+                        <input type="text" class="form-control input-lg" style="text-align:right;" name="articulosM" id="articulosM" required readonly>
 
                     </div>
 

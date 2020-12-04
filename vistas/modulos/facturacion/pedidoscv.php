@@ -54,7 +54,7 @@
           <thead>
 
             <tr>
-
+              <th>Id</th>
               <th>Código</th>
               <th>Cod. Cliente</th>
               <th>Cliente</th>
@@ -64,7 +64,7 @@
               <th>Estado</th>
               <th>Usuario</th>
               <th>Fecha</th>
-
+              <th>Acciones</th>
             </tr>
 
           </thead>

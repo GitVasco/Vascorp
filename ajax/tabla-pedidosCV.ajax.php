@@ -1,7 +1,7 @@
 <?php
 
-require_once "../controladores/articulos.controlador.php";
-require_once "../modelos/articulos.modelo.php";
+require_once "../controladores/pedidos.controlador.php";
+require_once "../modelos/pedidos.modelo.php";
 
 class TablaPedidosCV{
 
@@ -11,7 +11,7 @@ class TablaPedidosCV{
 
     public function mostrarTablaPedidosCV(){
 
-        $pedidos = controladorArticulos::ctrListaArticulosPedidos();
+        $pedidos = controladorPedidos::ctrMostraPedidosCabecera();
 
         if(count($pedidos)>0){
 
@@ -24,14 +24,19 @@ class TablaPedidosCV{
         TRAEMOS LAS ACCIONES
         =============================================*/
 
-        $botones =  "<div class='btn-group'><button class='btn btn-primary agregarArtPed recuperarBoton' data-toggle='modal' data-target='#modalAgregarClienteP' modelo='".$pedidos[$i]["modelo"]."' color='".$pedidos[$i]["cant_color"]."' talla='".$pedidos[$i]["cant_talla"]."'>Agregar</button></div>";
+        $botones =  "<div class='btn-group'><button class='btn btn-primary btnEditarPedidoCV' codigo='".$pedidos[$i]["codigo"]."'><i class='fa fa-eye'></i></button><button class='btn btn-success btnImprimirPedido' codigo='".$pedidos[$i]["codigo"]."'><i class='fa fa-print'></i></button></div>";
 
             $datosJson .= '[
             "'.($i+1).'",
-            "'.$pedidos[$i]["modelo"].'",
-            "'.$pedidos[$i]["nombre"].'",
-            "'.$pedidos[$i]["cant_color"].'",
-            "'.$pedidos[$i]["cant_talla"].'",
+            "<b>'.$pedidos[$i]["codigo"].'</b>",
+            "'.$pedidos[$i]["cod_cli"].'",
+            "<b>'.$pedidos[$i]["nombre"].'</b>",
+            "'.$pedidos[$i]["vendedor"].'",
+            "<b>S/ '.$pedidos[$i]["total"].'</b>",
+            "'.$pedidos[$i]["descripcion"].'",
+            "'.$pedidos[$i]["estado"].'",
+            "'.$pedidos[$i]["nom_usu"].'",
+            "'.$pedidos[$i]["fecha"].'",
             "'.$botones.'"
             ],';
             }

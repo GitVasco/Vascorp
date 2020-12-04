@@ -227,19 +227,48 @@ class ControladorPedidos{
 
                 }
 
-					# Mostramos una alerta suave
-					echo '<script>
-							swal({
-								type: "success",
-								title: "Felicitaciones",
-								text: "¡La información fue registrada con éxito!",
-								showConfirmButton: true,
-								confirmButtonText: "Cerrar"
-							}).then((result)=>{
-								if(result.value){
-									window.location="pedidoscv";}
-							});
-						</script>';
+                $respuesta = ModeloPedidos::mdlEliminarDetalleTemporalTotal($datos);
+
+                //var_dump($respuesta);
+
+                foreach($articulosM as $key=>$value){
+
+                    $datos=array(   "codigo"=>$_POST["codigoM"],
+                                    "articulo"=>$value["articulo"],
+                                    "cantidad"=>$value["cantidad"],
+                                    "precio"=>$value["precio"],
+                                    "total"=>$value["total"]);
+
+                    //var_dump($datos);
+
+                    $resp = ModeloPedidos::mdlGuardarTemporalDetalle("detalle_temporal", $datos);
+
+                    if($resp == "ok"){
+
+                        # Mostramos una alerta suave
+                        echo '<script>
+                        swal({
+                            type: "success",
+                            title: "Felicitaciones",
+                            text: "¡La información fue registrada con éxito!",
+                            showConfirmButton: true,
+                            confirmButtonText: "Cerrar"
+                        }).then((result)=>{
+                            if(result.value){
+                                window.location="pedidoscv";}
+                        });
+                    </script>';
+
+                    }else{
+
+                        var_dump("no llego aqui");
+
+                    }
+
+
+                }
+
+
 
             }else{
 
@@ -247,9 +276,18 @@ class ControladorPedidos{
 
             }
 
-
         }
 
+    }
+
+    /*
+    * MOSTRAR CABECERA DE TEMPORAL
+    */
+	static public function ctrMostraPedidosCabecera(){
+
+		$respuesta = ModeloPedidos::mdlMostraPedidosCabecera();
+
+		return $respuesta;
 
     }
 

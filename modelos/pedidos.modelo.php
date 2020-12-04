@@ -19,6 +19,7 @@ class ModeloPedidos{
 		$stmt = null;
 
 	}
+
     /*
     * MOSTRAR TEMPORAL CABECERA
     */
@@ -133,6 +134,34 @@ class ModeloPedidos{
 
 		$stmt = null;
 
+	}
+
+    /*
+    * ELIMINAR DETALLES DEL PEDIDO PARA PONER LOS REALES
+    */
+	static public function mdlEliminarDetalleTemporalTotal($datos){
+
+		$stmt = Conexion::conectar()->prepare("DELETE
+												FROM
+												detalle_temporal
+												WHERE codigo = :codigo");
+
+        $stmt -> bindParam(":codigo", $datos["codigo"], PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
     }
 
     /*
@@ -191,7 +220,45 @@ class ModeloPedidos{
 
 		$stmt=null;
 
-    }
+	}
 
+    /*
+    * MOSTRAR DETALLE DE TEMPORAL
+    */
+	static public function mdlMostraPedidosCabecera(){
+
+		$sql="SELECT
+						t.id,
+						t.codigo,
+						c.codigo AS cod_cli,
+						c.nombre,
+						t.vendedor,
+						t.total,
+						t.condicion_venta,
+						cv.descripcion,
+						t.estado,
+						t.usuario,
+						u.nombre AS nom_usu,
+						DATE(t.fecha) AS fecha
+					FROM
+						temporaljf t
+						LEFT JOIN clientesjf c
+						ON t.cliente = c.id
+						LEFT JOIN condiciones_ventajf cv
+						ON t.condicion_venta = cv.id
+						LEFT JOIN usuariosjf u
+						ON t.usuario = u.id
+					WHERE t.estado = 'generado'
+					ORDER BY fecha DESC";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt=null;
+
+	}
 
 }
