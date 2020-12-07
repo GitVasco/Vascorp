@@ -237,7 +237,7 @@ class ModeloTalleres{
 
 		$stmt=null;
 
-    }   
+    }
     
     /* 
     *ACTUALIZAR TERMINADO
@@ -625,7 +625,7 @@ class ModeloTalleres{
                                 codigo,
                                 descripcion 
                               FROM
-                                meses m ");
+                                meses m WHERE ano='2020'");
 
     $stmt -> execute();
 
@@ -1001,13 +1001,14 @@ class ModeloTalleres{
                     codigo,
                     descripcion 
                   FROM
-                    meses m) m 
+                    meses m WHERE ano='2020') m 
                   ON MONTH(et.fecha_terminado) = m.codigo 
               WHERE et.estado = '3' 
                 AND m.tipo NOT IN ('brasier') 
                 AND MONTH(et.fecha_terminado) = MONTH(NOW()) 
                 AND a.marca <> 'vasco' 
-              GROUP BY et.cod_operacion,
+              GROUP BY et.trabajador,,
+                  et.cod_operacion,
                 a.modelo,
                 a.color 
               ORDER BY DATE(et.fecha_terminado) DESC,
@@ -1125,13 +1126,14 @@ class ModeloTalleres{
                     codigo,
                     descripcion 
                   FROM
-                    meses m) m 
+                    meses m WHERE ano='2020') m 
                   ON MONTH(et.fecha_terminado) = m.codigo 
               WHERE et.estado = '3' 
                 AND m.tipo NOT IN ('brasier') 
                 AND MONTH(et.fecha_terminado) = :mes
                 AND a.marca <> 'vasco' 
-              GROUP BY et.cod_operacion,
+              GROUP BY et.trabajador,
+                      et.cod_operacion,
                 a.modelo,
                 a.color 
               ORDER BY DATE(et.fecha_terminado) DESC,
@@ -1262,12 +1264,13 @@ class ModeloTalleres{
                     codigo,
                     descripcion 
                   FROM
-                    meses m) m 
+                    meses m WHERE ano='2020') m 
                   ON MONTH(et.fecha_terminado) = m.codigo 
               WHERE et.estado = '3' 
                 AND m.tipo = 'brasier'
                 AND MONTH(et.fecha_terminado) = MONTH(NOW()) 
-              GROUP BY et.cod_operacion,
+              GROUP BY et.trabajador,
+                et.cod_operacion,
                 a.modelo,
                 a.color 
               ORDER BY DATE(et.fecha_terminado) DESC,
@@ -1385,12 +1388,13 @@ class ModeloTalleres{
                     codigo,
                     descripcion 
                   FROM
-                    meses m) m 
+                    meses m WHERE ano='2020') m 
                   ON MONTH(et.fecha_terminado) = m.codigo 
               WHERE et.estado = '3' 
                 AND m.tipo = 'brasier'
                 AND MONTH(et.fecha_terminado) = :mes
-              GROUP BY et.cod_operacion,
+              GROUP BY et.trabajador,
+                et.cod_operacion,
                 a.modelo,
                 a.color 
               ORDER BY DATE(et.fecha_terminado) DESC,
@@ -1521,12 +1525,13 @@ class ModeloTalleres{
                     codigo,
                     descripcion 
                   FROM
-                    meses m) m 
+                    meses m WHERE ano='2020') m 
                   ON MONTH(et.fecha_terminado) = m.codigo 
               WHERE et.estado = '3' 
                 AND MONTH(et.fecha_terminado) = MONTH(NOW())
                 AND a.marca = 'vasco'  
-              GROUP BY et.cod_operacion,
+              GROUP BY et.trabajador,
+                et.cod_operacion,
                 a.modelo,
                 a.color 
               ORDER BY DATE(et.fecha_terminado) DESC,
@@ -1644,12 +1649,13 @@ class ModeloTalleres{
                     codigo,
                     descripcion 
                   FROM
-                    meses m) m 
+                    meses m WHERE ano='2020') m 
                   ON MONTH(et.fecha_terminado) = m.codigo 
               WHERE et.estado = '3' 
                 AND MONTH(et.fecha_terminado) = :mes
                 AND a.marca = 'vasco'  
-              GROUP BY et.cod_operacion,
+              GROUP BY et.trabajador,
+                et.cod_operacion,
                 a.modelo,
                 a.color 
               ORDER BY DATE(et.fecha_terminado) DESC,

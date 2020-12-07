@@ -591,7 +591,7 @@ $sqlDetalle = mysql_query("SELECT
                               DATE(a.fecha) BETWEEN '$inicio' 
                               AND '$fin'
                             ) 
-                            AND tt.cod_tip_tra = '1' 
+                            /* AND tt.cod_tip_tra = '1'  */
                             AND et.produccion > 0 
                             GROUP BY a.id_trabajador") or die(mysql_error());
 
