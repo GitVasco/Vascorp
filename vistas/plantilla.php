@@ -183,7 +183,9 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "tipomovimientos" ||
                   $_GET["ruta"] == "tipopagos" ||
                   $_GET["ruta"] == "condicionesventa" ||
-                  $_GET["ruta"] == "unidadesmedida" ){
+                  $_GET["ruta"] == "unidadesmedida" ||
+                  $_GET["ruta"] == "bancos" ||
+                  $_GET["ruta"] == "vendedor" ){
 
               include "modulos/maestros/".$_GET["ruta"].".php";
 
@@ -243,7 +245,8 @@ CUERPO DOCUMENTO
 
         }else if( $_GET["ruta"] == "pedidoscv" ||
                   $_GET["ruta"] == "clientes" ||
-                  $_GET["ruta"] == "crear-pedidocv"){
+                  $_GET["ruta"] == "crear-pedidocv" ||
+                  $_GET["ruta"] == "cuentas" ){
 
               include "modulos/facturacion/".$_GET["ruta"].".php";
 
@@ -328,6 +331,9 @@ CUERPO DOCUMENTO
   <script src="vistas/js/condicionesventa.js"></script>
   <script src="vistas/js/unidadesmedida.js"></script>
   <script src="vistas/js/servicios.js"></script>
+  <script src="vistas/js/bancos.js"></script>
+  <script src="vistas/js/cuentas.js"></script>
+  <script src="vistas/js/vendedor.js"></script>
 
 </body>
 
