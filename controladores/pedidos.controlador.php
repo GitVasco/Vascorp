@@ -291,4 +291,48 @@ class ControladorPedidos{
 
     }
 
+    /*
+    * MOSTRAR PEDIDO CON FORMATO DE IMRPESION
+    */
+	static public function ctrPedidoImpresion($codigo, $modelo){
+
+		$respuesta = ModeloPedidos::mdlPedidoImpresion($codigo, $modelo);
+
+		return $respuesta;
+
+    }
+
+    /*
+    * MOSTRAR PEDIDO CON FORMATO DE IMRPESION - MODELOS
+    */
+	static public function ctrPedidoImpresionMod($valor){
+
+		$respuesta = ModeloPedidos::mdlPedidoImpresionMod($valor);
+
+		return $respuesta;
+
+    }
+
+    /*
+    * MOSTRAR PEDIDO CON FORMATO DE IMRPESION - CABECERA
+    */
+	static public function ctrPedidoImpresionCab($valor){
+
+		$respuesta = ModeloPedidos::mdlPedidoImpresionCab($valor);
+
+		return $respuesta;
+
+    }
+
+    /*
+    * MOSTRAR PEDIDO CON FORMATO DE IMRPESION - TOTALES GENERALES
+    */
+	static public function ctrPedidoImpresionTotales($valor){
+
+		$respuesta = ModeloPedidos::mdlPedidoImpresionTotales($valor);
+
+		return $respuesta;
+
+    }
+
 }

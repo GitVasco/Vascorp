@@ -28,7 +28,11 @@
             
             ?>        
 
-
+      <!-- search form -->
+      <div class="input-group sidebar-form">
+        <input type="text" name="q" class="form-control search-menu-box" placeholder="Search...">
+      </div>
+      
             <!-- Escritorio -->
             <?php 
             if($_SESSION["escritorio"] == 1){
@@ -995,3 +999,16 @@
     </section>
 
 </aside>
+
+<script>
+$(".search-menu-box").on('input', function() {
+    var filter = $(this).val();
+    $(".sidebar-menu > li").each(function(){
+        if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+            $(this).hide();
+        } else {
+            $(this).show();
+        }
+    });
+});
+</script>

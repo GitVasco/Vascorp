@@ -261,4 +261,235 @@ class ModeloPedidos{
 
 	}
 
+    /*
+    * MOSTRAR LOS DATOS PARA LA IMPRESION
+    */
+	static public function mdlPedidoImpresion($codigo, $modelo){
+
+		$sql="SELECT 
+						m.id_modelo,
+						m.modelo,
+						a.cod_color,
+						a.color,
+						SUM(
+						CASE
+							WHEN a.cod_talla = '1'
+							THEN dt.cantidad
+							ELSE 0
+						END
+						) AS t1,
+						SUM(
+						CASE
+							WHEN a.cod_talla = '2'
+							THEN dt.cantidad
+							ELSE 0
+						END
+						) AS t2,
+						SUM(
+						CASE
+							WHEN a.cod_talla = '3'
+							THEN dt.cantidad
+							ELSE 0
+						END
+						) AS t3,
+						SUM(
+						CASE
+							WHEN a.cod_talla = '4'
+							THEN dt.cantidad
+							ELSE 0
+						END
+						) AS t4,
+						SUM(
+						CASE
+							WHEN a.cod_talla = '5'
+							THEN dt.cantidad
+							ELSE 0
+						END
+						) AS t5,
+						SUM(
+						CASE
+							WHEN a.cod_talla = '6'
+							THEN dt.cantidad
+							ELSE 0
+						END
+						) AS t6,
+						SUM(
+						CASE
+							WHEN a.cod_talla = '7'
+							THEN dt.cantidad
+							ELSE 0
+						END
+						) AS t7,
+						SUM(
+						CASE
+							WHEN a.cod_talla = '8'
+							THEN dt.cantidad
+							ELSE 0
+						END
+						) AS t8,
+						SUM(dt.cantidad) AS total
+					FROM
+						detalle_temporal dt
+						LEFT JOIN articulojf a
+						ON dt.articulo = a.articulo
+						LEFT JOIN modelojf m
+						ON a.modelo = m.modelo
+					WHERE dt.codigo = $codigo
+						AND m.modelo = $modelo
+					GROUP BY m.modelo,
+						a.cod_color,
+						a.color";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt=null;
+
+	}	
+
+	/*
+    * MOSTRAR LOS DATOS PARA LA IMPRESION
+    */
+	static public function mdlPedidoImpresionMod($valor){
+
+		$sql="SELECT
+			m.id_modelo,
+			m.modelo
+		FROM
+			detalle_temporal dt
+			LEFT JOIN articulojf a
+			ON dt.articulo = a.articulo
+			LEFT JOIN modelojf m
+			ON a.modelo = m.modelo
+		WHERE dt.codigo = $valor
+		GROUP BY m.id_modelo";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt=null;
+
+	}
+
+	/*
+    * MOSTRAR LOS DATOS PARA LA IMPRESION CABECERA
+    */
+	static public function mdlPedidoImpresionCab($valor){
+
+		$sql="SELECT
+					t.codigo AS pedido,
+					DATE(t.fecha) AS fecha,
+					c.codigo,
+					c.nombre,
+					c.direccion,
+					c.ubigeo,
+					u.nom_ubi,
+					t.vendedor,
+					c.tipo_documento,
+					c.documento
+				FROM
+					temporaljf t
+					LEFT JOIN clientesjf c
+					ON t.cliente = c.id
+					LEFT JOIN ubigeojf u
+					ON c.ubigeo = u.cod_ubi
+				WHERE t.codigo = $valor";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->execute();
+
+		return $stmt->fetch();
+
+		$stmt=null;
+
+	}
+
+	/*
+    * MOSTRAR PEDIDO CON FORMATO DE IMRPESION - TOTALES GENERALES
+    */
+	static public function mdlPedidoImpresionTotales($valor){
+
+		$sql="SELECT
+					'TOTAL',
+					'PEDIDO',
+					SUM(
+					CASE
+						WHEN a.cod_talla = '1'
+						THEN dt.cantidad
+						ELSE 0
+					END
+					) AS t1,
+					SUM(
+					CASE
+						WHEN a.cod_talla = '2'
+						THEN dt.cantidad
+						ELSE 0
+					END
+					) AS t2,
+					SUM(
+					CASE
+						WHEN a.cod_talla = '3'
+						THEN dt.cantidad
+						ELSE 0
+					END
+					) AS t3,
+					SUM(
+					CASE
+						WHEN a.cod_talla = '4'
+						THEN dt.cantidad
+						ELSE 0
+					END
+					) AS t4,
+					SUM(
+					CASE
+						WHEN a.cod_talla = '5'
+						THEN dt.cantidad
+						ELSE 0
+					END
+					) AS t5,
+					SUM(
+					CASE
+						WHEN a.cod_talla = '6'
+						THEN dt.cantidad
+						ELSE 0
+					END
+					) AS t6,
+					SUM(
+					CASE
+						WHEN a.cod_talla = '7'
+						THEN dt.cantidad
+						ELSE 0
+					END
+					) AS t7,
+					SUM(
+					CASE
+						WHEN a.cod_talla = '8'
+						THEN dt.cantidad
+						ELSE 0
+					END
+					) AS t8,
+					SUM(dt.cantidad) AS total 
+				FROM
+					detalle_temporal dt
+					LEFT JOIN articulojf a
+					ON dt.articulo = a.articulo
+				WHERE dt.codigo = $valor";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->execute();
+
+		return $stmt->fetch();
+
+		$stmt=null;
+
+	}
+
 }

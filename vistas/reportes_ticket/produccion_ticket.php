@@ -32,7 +32,6 @@
 
         foreach ($respuesta as $key => $value) {
 
-                
         echo '<table border="0" align="center" width="300px">
 
                 <br>
