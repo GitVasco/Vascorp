@@ -172,7 +172,53 @@ class ControladorCuentas{
 		}
 
     }
-    
+	
+	/*=============================================
+	CANCELAR CUENTAS
+	=============================================*/
+
+	static public function ctrCancelarCuenta(){
+
+		if(isset($_POST["cancelarDocumento"])){
+
+			$tabla="cuenta_ctejf";
+			   $datos = array("id" => $_POST["idCuenta2"],
+						   "num_cta"=>$_POST["cancelarDocumento"],
+						   "vendedor"=>$_POST["cancelarVendedor"],
+						   "monto"=>$_POST["cancelarMonto"],
+						   "notas"=>$_POST["cancelarNota"],
+						   "usuario"=>$_POST["cancelarUsuario"],
+						   "ult_pago"=>$_POST["cancelarFechaUltima"]);
+
+				$cuenta=ControladorCuentas::ctrMostrarCuentas("id",$_POST["idCuenta2"]);
+				$saldoNuevo=$cuenta["saldo"]-$_POST["cancelarMonto"];
+				$actualizado=ModeloCuentas::mdlActualizarUnDato($tabla,"saldo",$saldoNuevo,$_POST["idCuenta2"]);
+			   	$respuesta = ModeloCuentas::mdlIngresarCuenta($tabla,$datos);
+			   	if($respuesta == "ok"){
+
+					echo'<script>
+
+					swal({
+						  type: "success",
+						  title: "La cuenta ha sido cancelada correctamente",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+									if (result.value) {
+
+									window.location = "cuentas";
+
+									}
+								})
+
+					</script>';
+
+
+			}
+		}
+
+	}
+	
 	/*=============================================
 	ELIMINAR CUENTAS
 	=============================================*/

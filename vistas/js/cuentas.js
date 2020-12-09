@@ -110,6 +110,51 @@ $(".tablaCuentas").on("click", ".btnEditarCuenta", function () {
 
 })
 
+$(".tablaCuentas").on("click", ".btnCancelarCuenta", function () {
+
+  var idCuenta = $(this).attr("idCuenta");
+
+  var datos = new FormData();
+  datos.append("idCuenta", idCuenta);
+
+  $.ajax({
+
+      url: "ajax/cuentas.ajax.php",
+      method: "POST",
+      data: datos,
+      cache: false,
+      contentType: false,
+      processData: false,
+      dataType: "json",
+      success: function (respuesta) {
+
+          $("#idCuenta2").val(respuesta["id"]);
+          $("#cancelarDocumento").val(respuesta["num_cta"]);
+          $("#cancelarNota").val(respuesta["notas"]);
+          $("#cancelarVendedor").val(respuesta["vendedor"]);
+          $("#cancelarVendedor").selectpicker('refresh');
+          $("#cancelarFechaUltima").val(respuesta["ult_pago"]);
+          $("#cancelarSaldo").val(respuesta["saldo"]);
+      }
+
+  })
+
+})
+$("#cancelarMonto").change(function(){
+  var saldo = $(this).val();
+  var saldoAntiguo = $("#cancelarSaldo").val();
+  if(saldo>saldoAntiguo){
+    swal({
+      title: "La cantidad supera el Saldo de la cuenta ",
+      text: "¡Sólo hay S/. " + saldoAntiguo + " de saldo!",
+      type: "error",
+      confirmButtonText: "¡Cerrar!"
+    });
+
+    return;
+  }
+});
+
 $("#editarMonto").change(function(){
   var saldo = $(this).val();
   $("#editarSaldo").val(saldo);

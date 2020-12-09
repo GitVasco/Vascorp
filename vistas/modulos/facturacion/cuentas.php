@@ -208,13 +208,13 @@ MODAL AGREGAR TIPO PAGO
                   <option value="">Seleccionar vendedor</option>
 
                     <?php
-
+                    $item=null;
                     $valor = null;
 
-                    $vendedor = ControladorVendedores::ctrMostrarVendedores($valor);
+                    $vendedor = ControladorVendedores::ctrMostrarVendedores($item,$valor);
 
                     foreach ($vendedor as $key => $value) {
-                      echo '<option value="' . $value["codigo"] . '">' . $value["nombre"] . '</option>';
+                      echo '<option value="' . $value["codigo"] . '">' . $value["codigo"] ." - ". $value["descripcion"] . '</option>';
                     }
 
                     ?>   
@@ -653,13 +653,13 @@ MODAL EDITAR TIPO PAGO
                   <option value="">Seleccionar vendedor</option>
 
                     <?php
-
+                    $item = null;
                     $valor = null;
 
-                    $vendedor = ControladorVendedores::ctrMostrarVendedores($valor);
+                    $vendedor = ControladorVendedores::ctrMostrarVendedores($item,$valor);
 
                     foreach ($vendedor as $key => $value) {
-                      echo '<option value="' . $value["codigo"] . '">' . $value["nombre"] . '</option>';
+                      echo '<option value="' . $value["codigo"] . '">'  . $value["codigo"] ." - ". $value["descripcion"] . '</option>';
                     }
 
                     ?>   
@@ -981,7 +981,7 @@ MODAL EDITAR TIPO PAGO
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title">Editar cuenta</h4>
+          <h4 class="modal-title">Cancelar cuenta</h4>
 
         </div>
 
@@ -998,19 +998,19 @@ MODAL EDITAR TIPO PAGO
             
             <div class="form-group col-lg-2">
             <label for=""><b>Documento por cancelar</b></label>
-            <label for=""><b>Tipo de documento</b></label>
+            <label for=""><b>Tipo de vendedor</b></label>
               <div class="input-group">
               
                 <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
-                <select type="text" class="form-control input-lg selectpicker" name="cancelarCodigo" id="cancelarCodigo" data-live-search="true"  required>
-                  <option value="">Seleccionar tipo de documento</option>
+                <select type="text" class="form-control input-lg selectpicker" name="cancelarVendedor" id="cancelarVendedor" data-live-search="true"  required>
+                  <option value="">Seleccionar vendedor</option>
 
                     <?php
-                      $item="tipo_dato";
-                      $valor = "TVEND";
+                      $item= null;
+                      $valor = null;
 
-                    $documentos = ControladorCuentas::ctrMostrarPagos($item,$valor);
+                    $documentos = ControladorVendedores::ctrMostrarVendedores($item,$valor);
 
                     foreach ($documentos as $key => $value) {
                       echo '<option value="' . $value["codigo"] . '">' .$value["codigo"]. " - " . $value["descripcion"] . '</option>';
@@ -1042,12 +1042,12 @@ MODAL EDITAR TIPO PAGO
            <!-- ENTRADA PARA LA FECHA  --> 
             <div class="form-group col-lg-2">
             <div style="margin-top:23px"></div>
-              <label for="">Fecha</label>
+              <label for="">Fecha último pago</label>
               <div class="input-group">
               
                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
 
-                <input type="date" class="form-control input-lg" name="cancelarFecha" id="cancelarFecha"  required>
+                <input type="date" class="form-control input-lg" name="cancelarFechaUltima" id="cancelarFechaUltima"  required>
 
               </div>
 
@@ -1071,12 +1071,13 @@ MODAL EDITAR TIPO PAGO
             
             <div class="form-group col-lg-3">
             <div style="margin-top:23px"></div>
-            <label for="">Saldo</label>
+            <label for="">Monto </label>
               <div class="input-group">
               
                 <span class="input-group-addon"><i class="fa fa-usd"></i></span> 
 
-                <input type="number" min="0" step="any" class="form-control input-lg" name="cancelarSaldo" id="cancelarSaldo" >
+                <input type="number" min="0" step="any" class="form-control input-lg" name="cancelarMonto" id="cancelarMonto" value="0">
+                <input type="hidden"  id="cancelarSaldo" >
 
               </div>
 
@@ -1102,8 +1103,8 @@ MODAL EDITAR TIPO PAGO
 
       <?php
 
-        $editarCuenta = new ControladorCuentas();
-        $editarCuenta -> ctrEditarCuenta();
+        $cancelarCuenta = new ControladorCuentas();
+        $cancelarCuenta -> ctrCancelarCuenta();
 
       ?>   
 
