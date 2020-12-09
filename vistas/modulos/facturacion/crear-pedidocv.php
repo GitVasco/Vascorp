@@ -221,7 +221,7 @@
 
                                 <div class="form-group row nuevoProductoPedido" style="height:500px; overflow: scroll;">
 
-                                <p class="buscador">
+                                <p class="buscador" id="elid">
                                     <label>Buscar:</label>
                                     <input type="text" class="form-control input-sm" id="buscador" name="buscador">
                                 </p>   
@@ -361,7 +361,7 @@
 
                                                     echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="nuevoSubTotalA" name="nuevoSubTotalA" value="'.number_format($totalArt["totalArt"],2).'" readonly required>';
 
-                                                    echo '                                                <input type="hidden" id="nuevoSubTotal" name="nuevoSubTotal" value="'.$totalArt["totalArt"].'">';
+                                                    echo '<input type="hidden" id="nuevoSubTotal" name="nuevoSubTotal" value="'.$totalArt["totalArt"].'">';
 
                                                 ?>
 
@@ -391,7 +391,42 @@
 
                                             <div class="col-xs-2">
 
-                                                <input type="number" step="any" class="form-control" min="0" id="descPer" name="descPer" value="0">
+                                                <?php
+
+                                                $valor = $_GET["pedido"];
+
+                                                $descuento = ControladorPedidos::ctrMostrarTemporal($valor);
+                                                //var_dump($descuento["descuento_total"]);
+
+                                                if($descuento == false){
+
+                                                    //var_dump("hola 0");
+
+                                                    echo '<input type="number" step="any" class="form-control" min="0" id="descPer" name="descPer" value="0">';
+
+                                                }else if($descuento["descuento_total"] == "0"){
+
+                                                    //var_dump("hola 1");
+
+                                                    echo '<input type="number" step="any" class="form-control" min="0" id="descPer" name="descPer" value="0">';
+
+                                                }else{
+
+                                                    //var_dump("hola 2");
+
+                                                    $subD= $descuento["op_gravada"];
+                                                    $descD= $descuento["descuento_total"];
+
+                                                    $descN = $descD / $subD * 100;
+
+                                                    //var_dump(round($descN,2));
+
+                                                    echo '<input type="number" step="any" class="form-control" min="0" id="descPer" name="descPer" value="'.round($descN,2).'">';
+
+                                                }
+
+                                                ?>
+
 
                                             </div>
 
@@ -399,7 +434,35 @@
 
                                                 <div class="input-group">
 
-                                                <input type="text" style="text-align:right;" min="0" class="form-control" id="descTotal" name="descTotal" placeholder="0.00" readonly >
+                                                <?php
+
+                                                $valor = $_GET["pedido"];
+
+                                                $descuento = ControladorPedidos::ctrMostrarTemporal($valor);
+                                                //var_dump($descuento["descuento_total"]);
+
+                                                if($descuento == false){
+
+                                                    //var_dump("hola 0");
+
+                                                    echo '<input type="text" style="text-align:right;" min="0" class="form-control" id="descTotal" name="descTotal" placeholder="0.00" readonly>';
+
+                                                }else if($descuento["descuento_total"] == "0"){
+
+                                                    //var_dump("hola 1");
+
+                                                    echo '<input type="text" style="text-align:right;" min="0" class="form-control" id="descTotal" name="descTotal" placeholder="0.00" readonly>';
+
+                                                }else{
+
+                                                    $decuentoR = round($descuento["descuento_total"],2);
+
+                                                    echo '<input type="text" style="text-align:right;" min="0" class="form-control" id="descTotal" name="descTotal" placeholder="0.00" value="'.$decuentoR.'" readonly>';
+
+                                                }
+
+                                                ?>
+
 
                                                 </div>
 
@@ -434,10 +497,29 @@
                                                 <div class="input-group">
 
                                                 <?php
-                                                //var_dump($totalArt["totalArt"]);
-                                                $subTotal = $totalArt["totalArt"];
 
-                                                echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="subTotal" name="subTotal" value="'.number_format($subTotal,2).'" readonly>';
+                                                $valor = $_GET["pedido"];
+
+                                                $subTotalA = ControladorPedidos::ctrMostrarTemporal($valor);
+                                                //var_dump($subTotalA["sub_total"]);
+
+                                                if($subTotalA == false){
+
+                                                    //var_dump("hola 0");
+
+                                                    echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="subTotal" name="subTotal" value="0" readonly>';
+
+                                                }else if($subTotalA["descuento_total"] == "0"){
+
+                                                    //var_dump("hola 1");
+
+                                                    echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="subTotal" name="subTotal" value="0" readonly>';
+
+                                                }else{
+
+                                                    echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="subTotal" name="subTotal" value="'.$subTotalA["sub_total"].'" readonly>';
+
+                                                }
 
                                                 ?>
 
@@ -472,14 +554,37 @@
                                             <div class="col-xs-3">
 
                                                 <div class="input-group">
-                                                <?php
-                                                //var_dump($totalArt["totalArt"]);
-                                                $neto = $totalArt["totalArt"] * 0.18;
 
-                                                echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="impTotal" name="impTotal" value="'.number_format($neto,2).'" readonly>';
+                                                <?php
+
+                                                $valor = $_GET["pedido"];
+
+                                                $igvA = ControladorPedidos::ctrMostrarTemporal($valor);
+                                                //var_dump($igvA["sub_total"]);
+
+                                                if($igvA == false){
+
+                                                    //var_dump("hola 0");
+
+                                                    echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="impTotal" name="impTotal" value="0" readonly>';
+
+                                                }else if($igvA["descuento_total"] == "0"){
+
+                                                    //var_dump("hola 1");
+
+                                                    $neto = $totalArt["totalArt"] * 0.18;
+
+                                                    echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="impTotal" name="impTotal" value="'.round($neto,2).'" readonly>';
+
+                                                }else{
+
+                                                    //var_dump("hola 2");
+
+                                                    echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="impTotal" name="impTotal" value="'.$igvA["igv"].'" readonly>';
+
+                                                }
 
                                                 ?>
-
 
                                                 </div>
 
@@ -514,10 +619,33 @@
                                                 <div class="input-group">
 
                                                 <?php
-                                                //var_dump($totalArt["totalArt"]);
-                                                $neto = $totalArt["totalArt"] * 1.18;
 
-                                                echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="nuevoTotal" name="nuevoTotal" value="'.number_format($neto,2).'" readonly>';
+                                                $valor = $_GET["pedido"];
+
+                                                $totalA = ControladorPedidos::ctrMostrarTemporal($valor);
+                                                //var_dump($totalA["descuento_total"]);
+
+                                                if($totalA == false){
+
+                                                    //var_dump("hola 0");
+
+                                                    echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="nuevoTotal" name="nuevoTotal" value="0" readonly>';
+
+                                                }else if($totalA["descuento_total"] == "0"){
+
+                                                    //var_dump("hola 1");
+
+                                                    $neto = $totalArt["totalArt"] * 1.18;
+
+                                                    echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="nuevoTotal" name="nuevoTotal" value="'.round($neto,2).'" readonly>';
+
+                                                }else{
+
+                                                    //var_dump("hola 2");
+
+                                                    echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="nuevoTotal" name="nuevoTotal" value="'.$totalA["total"].'" readonly>';
+
+                                                }
 
                                                 ?>
 
@@ -540,25 +668,59 @@
 
                                     <div class="col-xs-12" style="padding-right:0px">
 
+                                        <label >Condición de Venta</label>
+
                                         <div class="input-group">
 
-                                            <select class="form-control" id="condicionVenta" name="condicionVenta" required>
-                                                <option value="">Seleccione método de pago</option>
+                                            <select class="form-control selectpicker" id="condicionVenta" name="condicionVenta" data-live-search="true"  required>
 
                                                 <?php
+                                                    $valor = $_GET["pedido"];
 
-                                                    $item = null;
-                                                    $valor = null;
+                                                    $pedido = ControladorPedidos::ctrMostrarTemporal($valor);
+                                                    //var_dump("pedido", $pedido["condicion_venta"]);
 
-                                                    $condiciones = ControladorCondicionVentas::ctrMostrarCondicionVentas($item, $valor);
+                                                    if($pedido["condicion_venta"] >= 0){
 
-                                                    //var_dump($condiciones);
+                                                        $item = "id";
+                                                        $valor = $pedido["condicion_venta"];
 
-                                                    foreach ($condiciones as $key => $value) {
+                                                        $condiciones = ControladorCondicionVentas::ctrMostrarCondicionVentas($item, $valor);
 
-                                                    echo '<option value="'.$value["id"].'">'.$value["codigo"].' - '.$value["descripcion"].'</option>';
+                                                        //var_dump($condiciones["descripcion"]);
+
+                                                        echo '<option value="'.$condiciones["id"].'">'.$condiciones["codigo"].' - '.$condiciones["descripcion"].'</option>';
+
+                                                        $cond2 = ControladorCondicionVentas::ctrMostrarCondicionVentas(null, null);
+
+                                                        //var_dump($cond2);
+
+                                                        foreach ($cond2 as $key => $value) {
+
+                                                        echo '<option value="'.$value["id"].'">'.$value["codigo"].' - '.$value["descripcion"].'</option>';
+
+                                                        }
+
+
+                                                    }else {
+
+                                                        $item = null;
+                                                        $valor = null;
+
+                                                        $condiciones = ControladorCondicionVentas::ctrMostrarCondicionVentas($item, $valor);
+
+                                                        echo '<option value="">Seleccione método de pago</option>';
+                                                        //var_dump($condiciones);
+
+                                                        foreach ($condiciones as $key => $value) {
+
+                                                            echo '<option value="'.$value["id"].'">'.$value["codigo"].' - '.$value["descripcion"].'</option>';
+
+                                                        }
 
                                                     }
+
+
 
                                                 ?>
 
@@ -578,8 +740,34 @@
 
                         <div class="box-header with-border">
 
-                            <button type="button" class="btn btn-default pull-right crearPedido" id="modalito" name="modalito" data-toggle="modal" data-target="#modalGenerarPedido" disabled>Crear Pedido
+                            <button onclick="location.href='pedidoscv'" type="button" class="btn btn-danger pull-left">Cancelar
                             </button>
+
+                        <?php
+
+                            $valor = $_GET["pedido"];
+
+                            $pedido = ControladorPedidos::ctrMostrarTemporal($valor);
+                            //var_dump("pedido", $pedido["estado"]);
+
+                            if($pedido["estado"] == "GENERADO"){
+
+                                //var_dump("hola 1");
+
+                                echo '<button type="button" class="btn btn-primary pull-right crearPedido" id="modalito" name="modalito" data-toggle="modal" data-target="#modalGenerarPedido">Crear Pedido
+                                </button>';
+
+                            }else{
+
+                                //var_dump("hola 2");
+
+                                echo '<button type="button" class="btn btn-default pull-right crearPedido" id="modalito" name="modalito" data-toggle="modal" data-target="#modalGenerarPedido" disabled>Crear Pedido
+                                </button>';
+
+                            }
+
+                        ?>
+
 
                         </div>
 
@@ -623,10 +811,6 @@
                 </div>
 
 
-            </div>
-
-            <div>
-                <a href="#footer"><b>Ir al Final</b></a>
             </div>
 
         </div>
@@ -1042,7 +1226,7 @@ MODAL PARA GENERAR EL PEDIDO
 
                     <div class="input-group">
 
-                        <input type="text" class="form-control input-lg" style="text-align:right;" name="articulosM" id="articulosM" required readonly>
+                        <input type="hidden" class="form-control input-lg" style="text-align:right;" name="articulosM" id="articulosM" required readonly>
 
                     </div>
 
@@ -1138,4 +1322,5 @@ $('.nuevoProductoPedido').ready(function(){
        }
     });
   });
+
 </script>

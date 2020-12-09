@@ -24,7 +24,7 @@ class TablaPedidosCV{
         TRAEMOS LAS ACCIONES
         =============================================*/
 
-        $botones =  "<div class='btn-group'><button class='btn btn-primary btnEditarPedidoCV' codigo='".$pedidos[$i]["codigo"]."'><i class='fa fa-eye'></i></button><button class='btn btn-success btnImprimirPedido' codigo='".$pedidos[$i]["codigo"]."'><i class='fa fa-print'></i></button></div>";
+        $botones =  "<div class='btn-group'><button title='Editar Pedido' class='btn btn-warning btnEditarPedidoCV' codigo='".$pedidos[$i]["codigo"]."'><i class='fa fa-pencil-square-o'></i></button><button title='Imprimir Pedido' class='btn btn-success btnImprimirPedido' codigo='".$pedidos[$i]["codigo"]."'><i class='fa fa-print'></i></button><button title='Facturar Pedido' class='btn btn-primary btnFacturar' codigo='".$pedidos[$i]["codigo"]."'><i class='fa fa-paper-plane'></i></button></div>";
 
             $datosJson .= '[
             "'.($i+1).'",

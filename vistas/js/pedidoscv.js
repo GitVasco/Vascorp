@@ -459,6 +459,8 @@ function listarArticulos() {
 
 $("#condicionVenta").change(function(){
 
+    console.log("si llego")
+
     sumarTotalesPreciosA();
     cambioDescuento();
     listarArticulos();
@@ -470,6 +472,10 @@ $("#condicionVenta").change(function(){
 })
 
 $(".crearPedido").click(function () {
+
+    sumarTotalesPreciosA();
+    cambioDescuento();
+    listarArticulos();
 
     var codigo = document.getElementById("nuevoCodigo").value;
     $("#codigoM").val(codigo);
