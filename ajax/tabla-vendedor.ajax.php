@@ -30,7 +30,7 @@ class TablaVendedores{
 
             $datosJson .= '[
             "'.$vendedor[$i]["codigo"].'",
-            "'.$vendedor[$i]["nombre"].'",
+            "'.$vendedor[$i]["descripcion"].'",
             "'.$botones.'"
             ],';        
             }

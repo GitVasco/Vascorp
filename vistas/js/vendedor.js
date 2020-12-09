@@ -52,7 +52,7 @@ $(".tablaVendedores").on("click", ".btnEditarVendedor", function () {
 
             $("#idVendedor").val(respuesta["id"]);
             $("#editarCodigo").val(respuesta["codigo"]);
-            $("#editarDescripcion").val(respuesta["nombre"]);
+            $("#editarDescripcion").val(respuesta["descripcion"]);
         }
 
     })

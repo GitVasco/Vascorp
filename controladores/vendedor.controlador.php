@@ -10,9 +10,10 @@ class ControladorVendedores{
 
 		if(isset($_POST["nuevaDescripcion"])){
 
-				$tabla="vendedorjf";
+				$tabla="maestrajf";
 			   	$datos = array("codigo"=>$_POST["nuevoCodigo"],
-							   "nombre"=>$_POST["nuevaDescripcion"]);
+							   "descripcion"=>$_POST["nuevaDescripcion"],
+								"tipo_dato"=>"TVEND");
 
 			   	$respuesta = ModeloVendedores::mdlIngresarVendedor($tabla,$datos);
 
@@ -49,7 +50,7 @@ class ControladorVendedores{
 	=============================================*/
 
 	static public function ctrMostrarVendedores($item,$valor){
-		$tabla="vendedorjf";
+		$tabla="maestrajf";
 		$respuesta = ModeloVendedores::mdlMostrarVendedores($tabla,$item,$valor);
 
 		return $respuesta;
@@ -64,10 +65,10 @@ class ControladorVendedores{
 
 		if(isset($_POST["editarDescripcion"])){
 
-				$tabla="vendedorjf";
+				$tabla="maestrajf";
 				   $datos = array("id"=>$_POST["idVendedor"],
 				   				"codigo"=> $_POST["editarCodigo"],
-                               "nombre"=>$_POST["editarDescripcion"]);
+                               "descripcion"=>$_POST["editarDescripcion"]);
 
 			   	$respuesta = ModeloVendedores::mdlEditarVendedor($tabla,$datos);
 
@@ -105,7 +106,7 @@ class ControladorVendedores{
 		if(isset($_GET["idVendedor"])){
 
 			$datos = $_GET["idVendedor"];
-			$tabla="vendedorjf";
+			$tabla="maestrajf";
 			date_default_timezone_set('America/Lima');
 			$fecha = new DateTime();
 			$vendedor=ControladorVendedores::ctrMostrarVendedores("id",$datos);
