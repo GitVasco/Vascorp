@@ -189,4 +189,22 @@ class ModeloCuentas{
 
 	}    
 
+	/* 
+	* Método para actualizar un dato CON EL articulo
+	*/
+	static public function mdlActualizarUnDato($tabla, $item1, $valor1, $valor2){
+
+		$sql = "UPDATE $tabla SET $item1=:$item1 WHERE id=:id";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":" . $item1, $valor1, PDO::PARAM_STR);
+		$stmt->bindParam(":id", $valor2, PDO::PARAM_INT);
+
+		$stmt->execute();
+
+		$stmt = null;
+	}
+
+
 }
