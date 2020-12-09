@@ -43,7 +43,7 @@ class TablaServicios{
         TRAEMOS LAS ACCIONES
         =============================================*/         
         
-        $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarServicio' idServicio='".$servicios[$i]["codigo"]."' data-toggle='modal' data-target='#modalEditarServicio'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarServicio' idServicio='".$servicios[$i]["codigo"]."'><i class='fa fa-times'></i></button></div>"; 
+        $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarServicio' idServicio='".$servicios[$i]["codigo"]."' data-toggle='modal' data-target='#modalEditarServicio'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarServicio' idServicio='".$servicios[$i]["codigo"]."'><i class='fa fa-times'></i></button><button class='btn btn-outline-success pull-right btnDetalleServicio' idServicio='".$servicios[$i]["codigo"]."' style='border:green 1px solid'><img src='vistas/img/plantilla/excel.png' width='18px'></button></div>"; 
 
             $datosJson .= '[
             "'.($i+1).'",

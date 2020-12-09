@@ -102,14 +102,15 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
       dataType: "json",
       success: function(respuesta) {
         var packing = respuesta["packing"];
+        var taller = respuesta["taller"];
         var servicio = respuesta["servicio"];
         /*=============================================
         EVITAR AGREGAR PRODUTO CUANDO EL STOCK ESTÁ EN CERO
         =============================================*/
   
-        if (servicio == 0) {
+        if (taller == 0) {
           swal({
-            title: "No hay en servicio disponible",
+            title: "No hay en taller disponible",
             type: "error",
             confirmButtonText: "¡Cerrar!"
           });
@@ -143,7 +144,7 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
   
             '<div class="col-xs-3">' +
   
-            '<input type="number" class="form-control nuevaCantidadProducto" name="nuevaCantidadProducto" min="1" value="0" taller="' + servicio + '" nuevoTaller="' + servicio + '" required>' +
+            '<input type="number" class="form-control nuevaCantidadProducto" name="nuevaCantidadProducto" min="1" value="0" taller="' + taller + '" nuevoTaller="' + taller + '"  servicio= "'+servicio+'"required>' +
   
             "</div>" +
   
@@ -311,7 +312,8 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
         id: $(descripcion[i]).attr("articuloServicio"),
         articulo: $(descripcion[i]).attr("articuloServicio"),
         cantidad: $(cantidad[i]).val(),
-        taller:$(cantidad[i]).attr("taller")
+        taller:$(cantidad[i]).attr("taller"),
+        servicio:$(cantidad[i]).attr("servicio"),
       });
     }
   
@@ -408,7 +410,6 @@ function sumarTotalServicio() {
   =============================================*/
   $(".tablaServicios").on("click", ".btnEliminarServicio", function() {
     var idServicio = $(this).attr("idServicio");
-    
     swal({
       type: "warning",
       title: "Advertencia",
@@ -431,7 +432,7 @@ function sumarTotalServicio() {
           contentType: false,
           processData: false,
           success: function(respuesta) {
-            console.log(respuesta);
+           
             if (respuesta == "ok") {
               swal({
                 type: "success",
@@ -451,3 +452,29 @@ function sumarTotalServicio() {
     });
   });
   
+   /*=============================================
+  BOTON REPORTE SERVICIO CON MATERIA PRIMA
+  =============================================*/
+  $(".tablaServicios").on("click", ".btnDetalleServicio", function() {
+    var idServicio = $(this).attr("idServicio");
+  
+    window.location = "vistas/reportes_excel/rpt_detalle_servicio.php?idServicio=" + idServicio;
+  });
+  
+  $("#seleccionarSector").change(function(){
+    var servicio = $(this).val();
+    var datos2 = new FormData();
+    datos2.append("servicio", servicio);
+    $.ajax({
+      url: "ajax/servicios.ajax.php",
+      method: "POST",
+      data: datos2,
+      cache: false,
+      contentType: false,
+      processData: false,
+      dataType: "json",
+      success: function(respuesta) {
+        $("#nuevoServicio").val(servicio+"000"+respuesta["ultimo_codigo"]);
+      }
+    })
+  });

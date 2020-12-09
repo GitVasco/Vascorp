@@ -112,6 +112,15 @@ require_once "controladores/condicionventa.controlador.php";
 require_once "modelos/servicio.modelo.php";
 require_once "controladores/servicio.controlador.php";
 
+require_once "modelos/bancos.modelo.php";
+require_once "controladores/bancos.controlador.php";
+
+require_once "modelos/cuentas.modelo.php";
+require_once "controladores/cuentas.controlador.php";
+
+require_once "modelos/vendedor.modelo.php";
+require_once "controladores/vendedor.controlador.php";
+
 require_once "modelos/produccion.modelo.php";
 
 

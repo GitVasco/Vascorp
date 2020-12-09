@@ -445,7 +445,25 @@
 
                     </li> 
 
-        
+                    <li>
+                        <a href="bancos">
+
+                            <i class="fa fa-circle-o"></i>
+                            <span>Bancos</span>
+
+                        </a>
+
+                    </li> 
+
+                    <li>
+                        <a href="vendedor">
+
+                            <i class="fa fa-circle-o"></i>
+                            <span>Vendedor</span>
+
+                        </a>
+
+                    </li> 
                 </ul>
 
             </li>            
@@ -930,6 +948,17 @@
 
                             <i class="fa fa-circle-o"></i>
                             <span>Reporte de ventas</span>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="cuentas">
+
+                            <i class="fa fa-circle-o"></i>
+                            <span>Cuentas</span>
 
                         </a>
 
