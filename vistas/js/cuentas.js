@@ -34,7 +34,20 @@ $('.tablaCuentas').DataTable({
   $("#nuevoMonto").change(function(){
     var saldo = $(this).val();
     $("#nuevoSaldo").val(saldo);
+    estadoSaldo2();
   });
+  function estadoSaldo2(){
+    var saldo = $("#nuevoSaldo").val();
+    if(saldo== "0"){
+      $("#nuevoEstado1").val("CANCELADO");
+      $("#nuevoEstado1").css("background-color", "green");
+      $("#nuevoEstado1").css("color", "white");
+    }else{
+      $("#nuevoEstado1").val("PENDIENTE");
+      $("#nuevoEstado1").css("background-color", "red");
+      $("#nuevoEstado1").css("color", "white");
+    }
+  }
 /*=============================================
 EDITAR TIPO DE PAGO
 =============================================*/
@@ -58,6 +71,7 @@ $(".tablaCuentas").on("click", ".btnEditarCuenta", function () {
 
             $("#idCuenta").val(respuesta["id"]);
             $("#editarCodigo").val(respuesta["tipo_doc"]);
+            $("#editarCodigo").selectpicker('refresh');
             $("#editarDocumento").val(respuesta["num_cta"]);
             $("#editarNota").val(respuesta["notas"]);
             $("#editarCliente").val(respuesta["cliente"]);
@@ -99,6 +113,7 @@ $(".tablaCuentas").on("click", ".btnEditarCuenta", function () {
 $("#editarMonto").change(function(){
   var saldo = $(this).val();
   $("#editarSaldo").val(saldo);
+  estadoSaldo();
 });
 function estadoSaldo(){
   var saldo = $("#editarSaldo").val();
@@ -108,7 +123,8 @@ function estadoSaldo(){
     $("#editarEstado1").val("PENDIENTE");
   }
 }
-$("#editarSaldo").change(estadoSaldo);
+
+
 
 /*=============================================
 ELIMINAR TIPO DE PAGO

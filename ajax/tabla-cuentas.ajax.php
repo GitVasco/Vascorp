@@ -54,7 +54,7 @@ class TablaCuentas{
         }
    
         
-        $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarCuenta' idCuenta='".$cuenta[$i]["id"]."' data-toggle='modal' data-target='#modalEditarCuenta'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarCuenta' idCuenta='".$cuenta[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
+        $botones =  "<div class='btn-group'><button class='btn btn-primary btnCancelarCuenta' idCuenta='".$cuenta[$i]["id"]."' data-toggle='modal' data-target='#modalCancelarCuenta' title='Cancelar cuenta'><i class='fa fa-money'></i></button><button class='btn btn-warning btnEditarCuenta' idCuenta='".$cuenta[$i]["id"]."' data-toggle='modal' data-target='#modalEditarCuenta' title='Editar cuenta'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarCuenta' idCuenta='".$cuenta[$i]["id"]."' title='Eliminar cuenta'><i class='fa fa-times'></i></button></div>"; 
 
             $datosJson .= '[
             "'.$cuenta[$i]["tipo_doc"].'",

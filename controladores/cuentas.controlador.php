@@ -79,7 +79,7 @@ class ControladorCuentas{
     
 
 	/*=============================================
-	MOSTRAR TIPO DE PAGO
+	MOSTRAR CUENTAS
 	=============================================*/
 
 	static public function ctrMostrarCuentas($item,$valor){
@@ -88,10 +88,21 @@ class ControladorCuentas{
 
 		return $respuesta;
 
+	}
+	
+    /*=============================================
+	MOSTRAR  DOCUMENTOS DE PAGOS
+	=============================================*/
+
+	static public function ctrMostrarPagos($item,$valor){
+		$tabla="maestrajf";
+		$respuesta = ModeloCuentas::mdlMostrarPagos($tabla,$item,$valor);
+
+		return $respuesta;
+
     }
-    
 	/*=============================================
-	EDITAR TIPO DE PAGO
+	EDITAR CUENTAS
 	=============================================*/
 
 	static public function ctrEditarCuenta(){
@@ -163,7 +174,7 @@ class ControladorCuentas{
     }
     
 	/*=============================================
-	ELIMINAR TIPO DE PAGO
+	ELIMINAR CUENTAS
 	=============================================*/
 
 	static public function ctrEliminarCuenta(){
