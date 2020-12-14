@@ -193,6 +193,7 @@ class ModeloPedidos{
 					igv = :impuesto,
 					total = :total,
 					condicion_venta = :condicion_venta,
+					agencia = :agencia,
 					estado = 'GENERADO',
 					usuario = :usuario
 				WHERE codigo = :codigo";
@@ -206,6 +207,7 @@ class ModeloPedidos{
 		$stmt->bindParam(":impuesto", $datos["impuesto"], PDO::PARAM_STR);
 		$stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
 		$stmt->bindParam(":condicion_venta", $datos["condicion_venta"], PDO::PARAM_STR);
+		$stmt->bindParam(":agencia", $datos["agencia"], PDO::PARAM_STR);
 		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
 
         if($stmt->execute()){
@@ -225,37 +227,100 @@ class ModeloPedidos{
     /*
     * MOSTRAR DETALLE DE TEMPORAL
     */
-	static public function mdlMostraPedidosCabecera(){
+	static public function mdlMostraPedidosCabecera($valor){
 
-		$sql="SELECT
-						t.id,
-						t.codigo,
-						c.codigo AS cod_cli,
-						c.nombre,
-						t.vendedor,
-						t.total,
-						t.condicion_venta,
-						cv.descripcion,
-						t.estado,
-						t.usuario,
-						u.nombre AS nom_usu,
-						DATE(t.fecha) AS fecha
-					FROM
-						temporaljf t
-						LEFT JOIN clientesjf c
-						ON t.cliente = c.id
-						LEFT JOIN condiciones_ventajf cv
-						ON t.condicion_venta = cv.id
-						LEFT JOIN usuariosjf u
-						ON t.usuario = u.id
-					WHERE t.estado = 'generado'
-					ORDER BY fecha DESC";
+		if($valor == null){
+
+			$sql="SELECT
+				t.id,
+				t.codigo,
+				c.codigo AS cod_cli,
+				c.nombre,
+				c.tipo_documento,
+				c.documento,
+				t.lista,
+				t.vendedor,
+				t.op_gravada,
+				t.descuento_total,
+				t.sub_total,
+				t.igv,
+				t.total,
+				ROUND(
+				t.descuento_total / t.op_gravada * 100,
+				2
+				) AS dscto,
+				t.condicion_venta,
+				cv.descripcion,
+				t.estado,
+				t.usuario,
+				t.agencia,
+				u.nombre AS nom_usu,
+				DATE(t.fecha) AS fecha,
+				cv.dias,
+				DATE_ADD(DATE(t.fecha), INTERVAL cv.dias DAY) AS fecha_ven
+			FROM
+				temporaljf t
+				LEFT JOIN clientesjf c
+				ON t.cliente = c.id
+				LEFT JOIN condiciones_ventajf cv
+				ON t.condicion_venta = cv.id
+				LEFT JOIN usuariosjf u
+				ON t.usuario = u.id
+			WHERE t.estado = 'generado'
+			ORDER BY fecha DESC";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 
 		$stmt->execute();
 
 		return $stmt->fetchAll();
+
+		}else{
+
+			$sql="SELECT
+					t.id,
+					t.codigo,
+					c.codigo AS cod_cli,
+					c.nombre,
+					c.tipo_documento,
+					c.documento,
+					t.lista,
+					t.vendedor,
+					t.op_gravada,
+					t.descuento_total,
+					t.sub_total,
+					t.igv,
+					t.total,
+					ROUND(
+					t.descuento_total / t.op_gravada * 100,
+					2
+					) AS dscto,
+					t.condicion_venta,
+					cv.descripcion,
+					t.estado,
+					t.usuario,
+					t.agencia,
+					u.nombre AS nom_usu,
+					DATE(t.fecha) AS fecha,
+					cv.dias,
+					DATE_ADD(DATE(t.fecha), INTERVAL cv.dias DAY) AS fecha_ven
+				FROM
+					temporaljf t
+					LEFT JOIN clientesjf c
+					ON t.cliente = c.id
+					LEFT JOIN condiciones_ventajf cv
+					ON t.condicion_venta = cv.id
+					LEFT JOIN usuariosjf u
+					ON t.usuario = u.id
+				WHERE t.codigo = $valor";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->execute();
+
+		return $stmt->fetch();
+
+		}
 
 		$stmt=null;
 

@@ -580,5 +580,34 @@ class ModeloArticulos
 		$stmt=null;
 
 	}
+
+	/*
+	* ACTUALIZAR LA CANTIDAD DE STOCK DEL ARTICULO
+	*/
+	static public function mdlActualizarStock($datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE
+													articulojf
+												SET
+													stock = stock - :cantidad
+												WHERE articulo = :articulo");
+
+		$stmt->bindParam(":articulo", $datos["articulo"], PDO::PARAM_STR);
+		$stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+
+	}
+
 }
 

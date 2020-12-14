@@ -247,7 +247,8 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "clientes" ||
                   $_GET["ruta"] == "crear-pedidocv" ||
                   $_GET["ruta"] == "cuentas" ||
-                  $_GET["ruta"] == "ver-cuentas" ){
+                  $_GET["ruta"] == "ver-cuentas" ||
+                  $_GET["ruta"] == "guias-remision" ){
 
               include "modulos/facturacion/".$_GET["ruta"].".php";
 
@@ -335,6 +336,7 @@ CUERPO DOCUMENTO
   <script src="vistas/js/bancos.js"></script>
   <script src="vistas/js/cuentas.js"></script>
   <script src="vistas/js/vendedor.js"></script>
+  <script src="vistas/js/facturacion.js"></script>
 
 </body>
 

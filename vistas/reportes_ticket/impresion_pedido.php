@@ -330,27 +330,43 @@
 
       <tr>
 
-        <td style="width:10%;text-align:left;">TOTAL S/</td>
-        <th style="width:20%;text-align:left;">1358.12</th>
-        <th style="width:6%"></th>
-        <th style="width:6%"></th>
-        <th style="width:6%"></th>
-        <th style="width:6%"></th>
-        <th style="width:6%"></th>
-        <th style="width:6%"></th>
-        <th style="width:6%"></th>
-        <th style="width:6%"></th>
-        <th style="width:6%"></th>
+      <?php
+
+        $pedidos = controladorPedidos::ctrMostraPedidosCabecera($codigo);
+
+        //var_dump($pedidos);
+
+        echo '<td style="width:10%;text-align:left;">TOTAL S/</td>
+              <th style="width:20%;text-align:left;">'.$pedidos["total"].'</th>
+              <th style="width:6%"></th>
+              <th style="width:6%"></th>
+              <th style="width:6%"></th>
+              <th style="width:6%"></th>
+              <th style="width:6%"></th>
+              <th style="width:6%"></th>
+              <th style="width:6%"></th>
+              <th style="width:6%"></th>
+              <th style="width:6%"></th>';
+
+      ?>
 
       </tr>
 
       <tr>
 
-        <td style="width:10%;text-align:left;">Forma de Pago</td>
-        <th colspan="7" style="width:20%;text-align:left;">CONTRA ENTREGA</th>
-        <th style="width:6%"></th>
-        <th style="width:6%"></th>
-        <th style="width:6%"></th>
+      <?php
+
+        $pedidos = controladorPedidos::ctrMostraPedidosCabecera($codigo);
+
+        //var_dump($pedidos);
+
+        echo '<td style="width:10%;text-align:left;">Forma de Pago</td>
+              <th colspan="7" style="width:20%;text-align:left;">'.$pedidos["descripcion"].'</th>
+              <th style="width:6%"></th>
+              <th style="width:6%"></th>
+              <th style="width:6%"></th>';
+
+      ?>
 
       </tr>
 
