@@ -100,6 +100,18 @@ class ControladorCuentas{
 
 		return $respuesta;
 
+	}
+	
+	/*=============================================
+	MOSTRAR CANCELACIONES
+	=============================================*/
+
+	static public function ctrMostrarCancelaciones($item,$valor){
+		$tabla="cuenta_ctejf";
+		$respuesta = ModeloCuentas::mdlMostrarCancelaciones($tabla,$item,$valor);
+
+		return $respuesta;
+
     }
 	/*=============================================
 	EDITAR CUENTAS
@@ -256,6 +268,107 @@ class ControladorCuentas{
 				swal({
 					  type: "success",
 					  title: "La cuenta ha sido borrada correctamente",
+					  showConfirmButton: true,
+					  confirmButtonText: "Cerrar",
+					  closeOnConfirm: false
+					  }).then(function(result){
+								if (result.value) {
+
+								window.location = "cuentas";
+
+								}
+							})
+
+				</script>';
+
+			}		
+
+		}
+
+	}    
+
+	/*=============================================
+	EDITAR CANCELACION
+	=============================================*/
+
+	static public function ctrEditarCancelacion(){
+
+		if(isset($_POST["editarCodigo"])){
+
+			$tabla="cuenta_ctejf";
+			
+			$datos = array("id" => $_POST["idCuenta2"],
+						   "num_cta"=>$_POST["editarDocumento"],
+						   "vendedor"=>$_POST["editarVendedor"],
+						   "monto"=>$_POST["editarMonto"],
+						   "notas"=>$_POST["editarNota"],
+						   "usuario"=>$_POST["editarUsuario"],
+						   "ult_pago"=>$_POST["editarFechaUltima"]);
+						   
+
+			   	$respuesta = ModeloCuentas::mdlEditarCuenta($tabla,$datos);
+			   	if($respuesta == "ok"){
+
+					echo'<script>
+
+					swal({
+						  type: "success",
+						  title: "La cancelación ha sido cambiada correctamente",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+									if (result.value) {
+
+									window.location = "index.php?ruta=ver-cuentas&idCuenta='.$_POST["idCuenta"].'";
+
+									}
+								})
+
+					</script>';
+
+
+			}
+		}
+
+	}
+	
+	/*=============================================
+	ELIMINAR CANCELACION
+	=============================================*/
+
+	static public function ctrEliminarCancelacion(){
+
+		if(isset($_GET["idCancelacion"])){
+
+			$datos = $_GET["idCancelacion"];
+			$tabla="cuenta_ctejf";
+			date_default_timezone_set('America/Lima');
+			$fecha = new DateTime();
+			$cuentas=ControladorCuentas::ctrMostrarCuentas("id",$datos);
+			$usuario= $_SESSION["nombre"];
+			$para      = 'notificacionesvascorp@gmail.com';
+			$asunto    = 'Se elimino una cuenta';
+			$descripcion   = 'El usuario '.$usuario.' elimino una cancelacion de la cuenta de '.$cuentas["codigo"].' - '.$cuentas["num_cta"];
+			$de = 'From: notificacionesvascorp@gmail.com';
+			if($_SESSION["correo"] == 1){
+				mail($para, $asunto, $descripcion, $de);
+			}
+			if($_SESSION["datos"] == 1){
+				$datos2= array( "usuario" => $usuario,
+								"concepto" => $descripcion,
+								"fecha" => $fecha->format("Y-m-d H:i:s"));
+				$auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
+			}
+			
+			$respuesta = ModeloCuentas::mdlEliminarCuenta($tabla,$datos);
+			if($respuesta == "ok"){
+				
+				
+				echo'<script>
+
+				swal({
+					  type: "success",
+					  title: "La cancelación ha sido borrada correctamente",
 					  showConfirmButton: true,
 					  confirmButtonText: "Cerrar",
 					  closeOnConfirm: false
