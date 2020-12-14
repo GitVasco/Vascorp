@@ -53,8 +53,6 @@
            <th>Saldo</th>
            <th>Estado doc.</th>
            <th>Nro. unico</th>
-           <th>Renovacion</th>
-           <th>Protestado</th>
            <th>Doc. origen</th>
            <th>Acciones</th>
 
@@ -161,7 +159,7 @@ MODAL AGREGAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-text-width"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="nuevaNota" placeholder="Ingresar nota" required>
+                <input type="text" class="form-control input-lg" name="nuevaNota" placeholder="Ingresar nota" >
 
               </div>
 
@@ -186,7 +184,7 @@ MODAL AGREGAR TIPO PAGO
                   $marcas = ControladorClientes::ctrMostrarClientes($valor);
 
                   foreach ($marcas as $key => $value) {
-                    echo '<option value="' . $value["codigo"] . '">' . $value["nombre"] . '</option>';
+                    echo '<option value="' . $value["codigo"] . '">' . $value["codigo"] ." - ". $value["nombre"] . '</option>';
                   }
 
                   ?>
@@ -462,7 +460,7 @@ MODAL AGREGAR TIPO PAGO
                 <span class="input-group-addon"><i class="fa fa-usd"></i></span> 
 
                 <input type="number" min="0" step="any" class="form-control input-lg" name="nuevoTipoCambio" placeholder="Ingresar tipo de cambio" required>
-                <input type="hidden" name="nuevoUsuario" value="<?php echo $_SESSION["nombre"];?>">
+                <input type="hidden" name="nuevoUsuario" value="<?php echo $_SESSION["id"];?>">
               </div>
 
             </div>
@@ -477,8 +475,8 @@ MODAL AGREGAR TIPO PAGO
 
                 <select type="text" class="form-control input-lg selectpicker" name="nuevoEstado" data-live-search="true"  required>
                   <option value="">Seleccionar estado de documento</option>
-                  <option value="Soles">GENERADO</option>
-                  <option value="Dólares">ENVIADO</option>   
+                  <option value="GENERADO">GENERADO</option>
+                  <option value="ENVIADO">ENVIADO</option>   
                  </select>    
               </div>
 
@@ -575,7 +573,7 @@ MODAL EDITAR TIPO PAGO
 
                     ?>   
                  </select>    
-                <input type="hidden" id="editarUsuario" name="editarUsuario" value="<?php echo $_SESSION["nombre"]?>">
+                <input type="hidden" id="editarUsuario" name="editarUsuario" value="<?php echo $_SESSION["id"]?>">
                 <input type="hidden" id="idCuenta" name="idCuenta" >
               </div>
 
@@ -606,7 +604,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-text-width"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="editarNota" id="editarNota" required>
+                <input type="text" class="form-control input-lg" name="editarNota" id="editarNota" >
 
               </div>
 
@@ -631,7 +629,7 @@ MODAL EDITAR TIPO PAGO
                   $marcas = ControladorClientes::ctrMostrarClientes($valor);
 
                   foreach ($marcas as $key => $value) {
-                    echo '<option value="' . $value["codigo"] . '">' . $value["nombre"] . '</option>';
+                    echo '<option value="' . $value["codigo"] . '">' . $value["codigo"] ." - ". $value["nombre"] . '</option>';
                   }
 
                   ?>
@@ -921,8 +919,8 @@ MODAL EDITAR TIPO PAGO
 
                 <select type="text" class="form-control input-lg selectpicker" name="editarEstado" id="editarEstado" data-live-search="true"  required>
                   <option value="">Seleccionar estado de documento</option>
-                  <option value="Soles">GENERADO</option>
-                  <option value="Dólares">ENVIADO</option>   
+                  <option value="GENERADO">GENERADO</option>
+                  <option value="ENVIADO">ENVIADO</option>   
                  </select>    
               </div>
 
@@ -1018,7 +1016,7 @@ MODAL EDITAR TIPO PAGO
 
                     ?>   
                  </select>    
-                <input type="hidden" id="cancelarUsuario" name="cancelarUsuario" value="<?php echo $_SESSION["nombre"]?>">
+                <input type="hidden" id="cancelarUsuario" name="cancelarUsuario" value="<?php echo $_SESSION["id"]?>">
                 <input type="hidden" id="idCuenta2" name="idCuenta2" >
               </div>
 

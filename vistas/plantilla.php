@@ -246,7 +246,8 @@ CUERPO DOCUMENTO
         }else if( $_GET["ruta"] == "pedidoscv" ||
                   $_GET["ruta"] == "clientes" ||
                   $_GET["ruta"] == "crear-pedidocv" ||
-                  $_GET["ruta"] == "cuentas" ){
+                  $_GET["ruta"] == "cuentas" ||
+                  $_GET["ruta"] == "ver-cuentas" ){
 
               include "modulos/facturacion/".$_GET["ruta"].".php";
 
