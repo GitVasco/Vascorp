@@ -287,6 +287,7 @@ class TablaArticulosOrdenCorte{
 
 
             $datosJson .= '[
+            "'.$botones.'",
             "'.$articulos[$i]["modelo"].'",
             "'.$colores.'",
             "'.$articulos[$i]["talla"].'",
@@ -299,8 +300,7 @@ class TablaArticulosOrdenCorte{
             "'.$alm_corte.'",
             "'.$ord_corte.'",
             "<center>'.$articulos[$i]["ventas"].'</center>",
-            "'.$xprog.'",
-            "'.$botones.'"
+            "'.$xprog.'"            
             ],';        
             }
 

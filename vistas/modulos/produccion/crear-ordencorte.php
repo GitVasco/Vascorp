@@ -279,6 +279,8 @@
               <thead>
 
                 <tr>
+
+                  <th style="width:10px">Add</th>
                   <th>Modelo</th>
                   <th>Color</th>
                   <th>Talla</th>
@@ -292,7 +294,7 @@
                   <th>Ord. Corte</th>
                   <th>Vtas 30d</th>
                   <th>Xprog</th>
-                  <th style="width:10px">Acciones</th>
+                  
                 </tr>
 
               </thead>
