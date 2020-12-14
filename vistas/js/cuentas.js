@@ -201,3 +201,68 @@ $(".tablaCuentas").on("click", ".btnEliminarCuenta", function(){
 //     window.location = "vistas/reportes_excel/rpt_color.php";
   
 // })
+$(".tablaCuentas").on("click", ".btnVisualizarCuenta", function () {
+  var idCuenta = $(this).attr("idCuenta");
+  window.location = "index.php?ruta=ver-cuentas&idCuenta=" + idCuenta ;
+
+})
+
+
+/*=============================================
+ELIMINAR TIPO DE PAGO
+=============================================*/
+$(".tablas").on("click", ".btnEliminarCancelacion", function(){
+
+	var idCancelacion = $(this).attr("idCancelacion");
+	
+	swal({
+        title: '¿Está seguro de borrar la cancelación?',
+        text: "¡Si no lo está puede cancelar la acción!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si, borrar cancelación!'
+      }).then(function(result){
+        if (result.value) {
+          
+            window.location = "index.php?ruta=ver-cuentas&idCuenta="+idCancelacion;
+        }
+
+  })
+
+})
+
+$(".tablas").on("click", ".btnEditarCancelacion", function () {
+
+  var idCancelacion = $(this).attr("idCancelacion");
+
+  var datos = new FormData();
+  datos.append("idCuenta", idCancelacion);
+
+  $.ajax({
+
+      url: "ajax/cuentas.ajax.php",
+      method: "POST",
+      data: datos,
+      cache: false,
+      contentType: false,
+      processData: false,
+      dataType: "json",
+      success: function (respuesta) {
+
+          $("#idCuenta2").val(respuesta["id"]);
+          $("#cancelarDocumento").val(respuesta["num_cta"]);
+          $("#cancelarNota").val(respuesta["notas"]);
+          $("#cancelarVendedor").val(respuesta["vendedor"]);
+          $("#cancelarVendedor").selectpicker('refresh');
+          $("#cancelarFechaUltima").val(respuesta["ult_pago"]);
+          $("#cancelarMonto").val(respuesta["monto"]);
+          $("#cancelarSaldo").val(respuesta["saldo"]);
+          $("#cancelarSaldoAntiguo").val(Number(respuesta["saldo"])+Number(respuesta["monto"]));
+      }
+
+  })
+
+})
