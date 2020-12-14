@@ -664,13 +664,13 @@
                                 ENTRADA MÉTODO DE PAGO
                                 ======================================-->
 
-                                <div class="form-group row">
-
-                                    <div class="col-xs-12" style="padding-right:0px">
+                                <div class="form-group">
 
                                         <label >Condición de Venta</label>
 
                                         <div class="input-group">
+
+                                            <span class="input-group-addon"><i class="fa fa-money"></i></span>
 
                                             <select class="form-control selectpicker" id="condicionVenta" name="condicionVenta" data-live-search="true"  required>
 
@@ -680,7 +680,7 @@
                                                     $pedido = ControladorPedidos::ctrMostrarTemporal($valor);
                                                     //var_dump("pedido", $pedido["condicion_venta"]);
 
-                                                    if($pedido["condicion_venta"] >= 0){
+                                                    if($pedido["condicion_venta"] > 0){
 
                                                         $item = "id";
                                                         $valor = $pedido["condicion_venta"];
@@ -720,17 +720,83 @@
 
                                                     }
 
-
-
                                                 ?>
 
                                             </select>
 
                                         </div>
 
+                                </div>
+
+                                <!--=====================================
+                                ENTRADA LA AGENCIA
+                                ======================================-->
+
+                                <div class="form-group">
+
+                                    <label >AGENCIA DE TRANSPORTES</label>
+
+                                    <div class="input-group">
+
+                                        <span class="input-group-addon"><i class="fa fa-plane"></i></span>
+
+                                        <select class="form-control selectpicker" id="agencia" name="agencia" data-live-search="true" required>
+
+                                        <?php
+
+                                            $valor = $_GET["pedido"];
+
+                                            $pedido = ControladorPedidos::ctrMostrarTemporal($valor);
+                                            //var_dump("pedido", $pedido["agencia"]);
+
+                                            if($pedido["agencia"] > 0){
+
+                                                $item = "id";
+                                                $valor = $pedido["agencia"];
+
+                                                $agencias = ControladorAgencias::ctrMostrarAgencias($item, $valor);
+
+                                                //var_dump($agencias["nombre"]);
+
+                                                echo '<option value="'.$agencias["id"].'">'.$agencias["id"].' - '.$agencias["nombre"].'</option>';
+
+                                                $cond2 = ControladorAgencias::ctrMostrarAgencias(null, null);
+
+                                                //var_dump($cond2);
+
+                                                foreach ($cond2 as $key => $value) {
+
+                                                echo '<option value="'.$value["id"].'">'.$value["id"].' - '.$value["nombre"].'</option>';
+
+                                                }
+
+
+                                            }else{
+
+                                                $item = null;
+                                                $valor = null;
+
+                                                $agencias = ControladorAgencias::ctrMostrarAgencias($item, $valor);
+
+                                                //var_dump($agencias);
+
+                                                echo '<option value="">Seleccionar Agencia</option>';
+
+                                                foreach ($agencias as $key => $value) {
+
+                                                    echo '<option value="'.$value["id"].'">'.$value["id"].' - '.$value["nombre"].'</option>';
+
+                                                }
+
+                                            }
+
+                                                ?>
+
+                                        </select>
+
                                     </div>
 
-                                </div>
+                                </div
 
                                 <br>
 
@@ -1237,6 +1303,8 @@ MODAL PARA GENERAR EL PEDIDO
                     <div class="input-group">
 
                         <input type="hidden" class="form-control input-lg" style="text-align:right;" name="condicionVentaM" id="condicionVentaM" required readonly>
+
+                        <input type="hidden" class="form-control input-lg" style="text-align:right;" name="agenciaM" id="agenciaM" required readonly>
 
                     </div>
 

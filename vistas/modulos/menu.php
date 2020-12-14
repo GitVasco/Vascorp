@@ -25,16 +25,16 @@
             in_array(11,$valores)?$_SESSION['ventas']=1:$_SESSION['ventas']=0;
             in_array(12,$valores)?$_SESSION['facturacion']=1:$_SESSION['facturacion']=0;
             in_array(13,$valores)?$_SESSION['ticket']=1:$_SESSION['ticket']=0;
-            
-            ?>        
 
-      <!-- search form -->
-      <div class="input-group sidebar-form">
+            ?>
+
+        <!-- search form -->
+        <div class="input-group sidebar-form">
         <input type="text" name="q" class="form-control search-menu-box" placeholder="Search...">
-      </div>
-      
+        </div>
+
             <!-- Escritorio -->
-            <?php 
+            <?php
             if($_SESSION["escritorio"] == 1){
             ?>
 
@@ -54,7 +54,7 @@
             ?>
 
             <!--  Analisis-->
-            <?php 
+            <?php
             if($_SESSION["analisis"] == 1){
             ?>
 
@@ -75,7 +75,7 @@
 
 
             <!--  Usuarios-->
-            <?php 
+            <?php
             if($_SESSION["usuarios"] == 1){
             ?>
 
@@ -88,14 +88,14 @@
 
                 </a>
 
-            </li> 
+            </li>
 
             <?php
             }
             ?>
 
             <!--  Backend-->
-            <?php 
+            <?php
             if($_SESSION["backend"] == 1){
             ?>
 
@@ -148,8 +148,8 @@
 
                         </a>
 
-                    </li>  
-                    
+                    </li>
+
                     <li>
 
                         <a href="cargas-automaticas">
@@ -159,7 +159,7 @@
 
                         </a>
 
-                    </li>  
+                    </li>
 
                     <li>
 
@@ -175,15 +175,15 @@
                 </ul>
 
             </li>
-       
+
             <?php
             }
             ?>
 
             <!--  Movimientos-->
-            <?php 
+            <?php
             if($_SESSION["movimientos"] == 1){
-            ?>  
+            ?>
 
             <li class="treeview">
 
@@ -223,8 +223,8 @@
 
                         </a>
 
-                    </li>    
-                    
+                    </li>
+
                     <li>
 
                         <a href="mp-ingresos">
@@ -245,22 +245,22 @@
 
                         </a>
 
-                    </li>                                                         
+                    </li>
 
                 </ul>
-                        
-            </li> 
+
+            </li>
 
             <?php
             }
-            ?>                      
+            ?>
 
-            <?php 
+            <?php
             if($_SESSION["maestros"] == 1){
             ?>
 
             <li class="treeview">
-                        
+
                 <a href="#">
 
                     <i class="fa fa-database text-red"></i>
@@ -286,8 +286,8 @@
 
                         </a>
 
-                    </li>  
-                    
+                    </li>
+
                     <li>
 
                         <a href="colores">
@@ -297,8 +297,8 @@
 
                         </a>
 
-                    </li>   
-                    
+                    </li>
+
                     <li>
                         <a href="tipodocumentos">
 
@@ -308,7 +308,7 @@
                         </a>
 
                     </li>
-                    
+
                     <li>
 
                         <a href="marcas">
@@ -318,8 +318,8 @@
 
                         </a>
 
-                    </li>    
-                    
+                    </li>
+
                     <li>
 
                         <a href="materiaprima">
@@ -329,32 +329,30 @@
 
                         </a>
 
-                    </li>                                
+                    </li>
 
                     <li>
-                            
+
                         <a href="modelosjf">
 
                             <i class="fa fa-circle-o"></i>
                             <span>Modelos</span>
-                            
 
                         </a>
-            
+
                     </li>
 
                     <li>
-                        
+
                         <a href="operaciones">
 
                             <i class="fa fa-circle-o"></i>
                             <span>Operaciones</span>
-                            
 
                         </a>
-                    
+
                     </li>
-                    
+
                     <li>
                         <a href="sectores">
 
@@ -363,7 +361,7 @@
 
                         </a>
 
-                    </li>                                  
+                    </li>
 
                     <li>
                         <a href="tipotrabajador">
@@ -373,7 +371,7 @@
 
                         </a>
 
-                    </li>                              
+                    </li>
 
                     <li>
                         <a href="trabajador">
@@ -384,7 +382,7 @@
                         </a>
 
                     </li>
-                    
+
                     <li>
                         <a href="paras">
 
@@ -393,7 +391,7 @@
 
                         </a>
 
-                    </li> 
+                    </li>
 
                     <li>
                         <a href="agencias">
@@ -403,7 +401,7 @@
 
                         </a>
 
-                    </li> 
+                    </li>
 
                     <li>
                         <a href="tipomovimientos">
@@ -413,7 +411,7 @@
 
                         </a>
 
-                    </li> 
+                    </li>
 
                     <li>
                         <a href="tipopagos">
@@ -423,7 +421,7 @@
 
                         </a>
 
-                    </li> 
+                    </li>
 
                     <li>
                         <a href="condicionesventa">
@@ -433,7 +431,7 @@
 
                         </a>
 
-                    </li> 
+                    </li>
 
                     <li>
                         <a href="unidadesmedida">
@@ -443,7 +441,7 @@
 
                         </a>
 
-                    </li> 
+                    </li>
 
                     <li>
                         <a href="bancos">
@@ -453,7 +451,7 @@
 
                         </a>
 
-                    </li> 
+                    </li>
 
                     <li>
                         <a href="vendedor">
@@ -463,17 +461,17 @@
 
                         </a>
 
-                    </li> 
+                    </li>
                 </ul>
 
-            </li>            
+            </li>
 
             <?php
             }
-            ?>            
-            
+            ?>
+
             <!-- Produccion -->
-            <?php 
+            <?php
             if($_SESSION["produccion"] == 1){
             ?>
 
@@ -488,7 +486,7 @@
 
                 </a>
 
-                <ul class="treeview-menu">          
+                <ul class="treeview-menu">
 
                     <li class="treeview">
 
@@ -520,7 +518,7 @@
 
                         </ul>
 
-                    </li>                      
+                    </li>
 
                     <li class="treeview">
 
@@ -561,7 +559,7 @@
                         <span>Almacén de corte</span>
                         </a>
 
-                    </li>         
+                    </li>
 
                     <li class="treeview">
 
@@ -587,14 +585,14 @@
                                 <i class="fa fa-circle-o"></i>Registar Tareas
                                 </a>
 
-                            </li>                                                            
+                            </li>
 
                             <li>
 
                                 <a href="en-tallert">
                                 <i class="fa fa-circle-o"></i>Taller Terminados
                                 </a>
-                                
+
                             </li>
 
                         </ul>
@@ -608,14 +606,14 @@
                         <span>Ingresos</span>
                         </a>
 
-                    </li>  
+                    </li>
 
                     <li>
 
                         <a href="asistencia">
                         <i class="fa fa-calendar"></i>Asistencias
                         </a>
-                    
+
                     </li>
 
                     <li class="treeview">
@@ -642,7 +640,7 @@
                                 <i class="fa fa-circle-o"></i> Producción Trusas
                                 </a>
 
-                            </li> 
+                            </li>
 
                             <li>
 
@@ -650,7 +648,7 @@
                                 <i class="fa fa-circle-o"></i> Producción Brasier
                                 </a>
 
-                            </li>                
+                            </li>
 
                             <li>
 
@@ -658,11 +656,11 @@
                                 <i class="fa fa-circle-o"></i> Producción Vasco
                                 </a>
 
-                            </li>                                              
+                            </li>
 
                         </ul>
 
-                    </li>                         
+                    </li>
 
                     <li class="treeview">
 
@@ -673,14 +671,14 @@
                         </a>
 
                         <ul class="treeview-menu">
-                                                                         
+
                             <li>
 
                                 <a href="urgencias">
                                 <i class="fa fa-circle-o"></i> Urgencias APT
                                 </a>
 
-                            </li>                        
+                            </li>
 
                             <li>
 
@@ -696,11 +694,11 @@
                                 <i class="fa fa-circle-o"></i> Proyección AMP
                                 </a>
 
-                            </li>                            
+                            </li>
 
                         </ul>
 
-                    </li>     
+                    </li>
 
                     <li class="treeview">
 
@@ -732,7 +730,7 @@
 
                         </ul>
 
-                    </li>                 
+                    </li>
 
                 </ul>
 
@@ -742,8 +740,8 @@
             }
             ?>
 
-            <!-- Tarjetas-->        
-            <?php 
+            <!-- Tarjetas-->
+            <?php
             if($_SESSION["tarjetas"] == 1){
             ?>
 
@@ -774,9 +772,9 @@
 
                         </a>
 
-                    </li>                                                                           
+                    </li>
                     <li>
-                    
+
                         <a href="ficha-tecnica">
 
                             <i class="fa fa-circle-o"></i>
@@ -797,16 +795,16 @@
                     </li>
 
                 </ul>
-        
+
             </li>
 
 
             <?php
             }
-            ?>    
+            ?>
 
             <!-- Operaciones -->
-            <?php 
+            <?php
             if($_SESSION["operaciones"] == 1){
             ?>
 
@@ -817,14 +815,14 @@
                 <span>Operaciones Modelos</span>
                 </a>
 
-            </li> 
+            </li>
 
             <?php
             }
-            ?>         
-            
+            ?>
+
             <!-- Clientes-->
-            <?php 
+            <?php
             if($_SESSION["clientes"] == 1){
             ?>
 
@@ -837,14 +835,14 @@
 
                 </a>
 
-            </li>    
+            </li>
 
             <?php
             }
             ?>
 
-            <!--  Vetntas-->            
-            <?php 
+            <!--  Vetntas-->
+            <?php
             if($_SESSION["ventas"] == 1){
             ?>
 
@@ -899,7 +897,7 @@
             ?>
 
             <!--  Facturacion-->
-            <?php 
+            <?php
             if($_SESSION["facturacion"] == 1){
             ?>
             <li class="treeview">
@@ -933,21 +931,10 @@
 
                     <li>
 
-                        <a href="crear-pedidocv">
+                        <a href="guias-remision">
 
                             <i class="fa fa-circle-o"></i>
-                            <span>Crear Pedidos</span>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="reportes">
-
-                            <i class="fa fa-circle-o"></i>
-                            <span>Reporte de ventas</span>
+                            <span>Guias Remisión</span>
 
                         </a>
 
@@ -967,12 +954,12 @@
                 </ul>
 
             </li>
-            <?php 
+            <?php
             }
             ?>
 
             <!--  Ticket-->
-            <?php 
+            <?php
             if($_SESSION["ticket"] == 1){
             ?>
             <li class="treeview">
@@ -1021,7 +1008,7 @@
 
             <?php
             }
-            ?>            
+            ?>
 
         </ul>
 

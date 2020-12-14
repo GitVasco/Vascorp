@@ -42,6 +42,10 @@ require_once "controladores/sectores.controlador.php";
 
 require_once "controladores/produccion.controlador.php";
 
+require_once "controladores/talonarios.controlador.php";
+
+require_once "controladores/facturacion.controlador.php";
+
 /* 
 * MODELOS
 */
@@ -123,6 +127,9 @@ require_once "controladores/vendedor.controlador.php";
 
 require_once "modelos/produccion.modelo.php";
 
+require_once "modelos/talonarios.modelo.php";
+
+require_once "modelos/facturacion.modelo.php";
 
 require_once "extensiones/vendor/autoload.php";
 

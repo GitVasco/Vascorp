@@ -196,7 +196,8 @@ class ControladorPedidos{
                             "impuesto" => $_POST["igvM"],
                             "total" => $_POST["totalM"],
                             "usuario" => $_POST["usuarioM"],
-                            "condicion_venta" => $_POST["condicionVentaM"]);
+                            "condicion_venta" => $_POST["condicionVentaM"],
+                            "agencia" => $_POST["agenciaM"]);
 
             //var_dump($datos);
 
@@ -283,9 +284,9 @@ class ControladorPedidos{
     /*
     * MOSTRAR CABECERA DE TEMPORAL
     */
-	static public function ctrMostraPedidosCabecera(){
+	static public function ctrMostraPedidosCabecera($valor){
 
-		$respuesta = ModeloPedidos::mdlMostraPedidosCabecera();
+		$respuesta = ModeloPedidos::mdlMostraPedidosCabecera($valor);
 
 		return $respuesta;
 

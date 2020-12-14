@@ -42,6 +42,8 @@ $(".tablaArticulosPedidos").on("click", ".agregarArtPed", function () {
     //var usuario = document.getElementById("idUsuario").value;
     var modLista = document.getElementById("lista").value;
 
+    //var agencia = document.getElementById("seleccionarAgencia").value;
+
     //console.log(usuario);
 
     if(modLista == ''){
@@ -63,6 +65,7 @@ $(".tablaArticulosPedidos").on("click", ".agregarArtPed", function () {
     //console.log(cliente);
     $("#cliente").val(cliente);
     $("#vendedor").val(vendedor);
+    //$("#agencia").val(agencia);
     //$("#usuario").val(usuario);
 
     /*
@@ -512,6 +515,9 @@ $(".crearPedido").click(function () {
     var condicionVenta = document.getElementById("condicionVenta").value;
     $("#condicionVentaM").val(condicionVenta);
 
+    var agencia = document.getElementById("agencia").value;
+    $("#agenciaM").val(agencia);
+
     var usuario = document.getElementById("idUsuario").value;
     $("#usuarioM").val(usuario);
 
@@ -520,7 +526,7 @@ $(".crearPedido").click(function () {
 })
 
 /*
-* cargamos la tabla para articulos en pedidos
+* cargamos la tabla de pedidos
 */
 $(".tablaPedidosCV").DataTable({
     ajax: "ajax/tabla-pedidosCV.ajax.php",
@@ -576,5 +582,210 @@ $(".tablaPedidosCV").on("click", ".btnImprimirPedido", function () {
 
 
 	window.open("vistas/reportes_ticket/impresion_pedido.php?codigo=" +codigo,"_blank");
+
+})
+
+/* 
+* AL CAMBIAR EL SELECT DE DOCUMENTO
+*/
+$("#tdoc").change(function(){
+
+	var documento = document.getElementById("tdoc").value;
+    //console.log(documento);
+
+    document.getElementById("chkFactura").checked = false;
+    document.getElementById("chkBoleta").checked = false;
+
+    if(documento == "00"){
+
+        document.getElementById("chkFactura").disabled = false;
+        document.getElementById("chkBoleta").disabled = false;
+
+    }else{
+
+        document.getElementById("chkFactura").disabled = true;
+        document.getElementById("chkBoleta").disabled = true;
+
+        document.getElementById("chkFactura").checked = false;
+        document.getElementById("chkBoleta").checked = false;
+
+    }
+
+    var serie = $("#serie");
+    //console.log(serie);
+
+    var datos = new FormData();
+    datos.append("documento", documento);
+
+    $.ajax({
+
+        url:"ajax/talonarios.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType:"json",
+        success:function(respuesta){
+
+            //console.log(respuesta);
+
+            // Limpiamos el select
+            serie.find('option').remove();
+
+            serie.append('<option value="">Seleccionar Serie</option>');
+
+            for(var id of respuesta){
+                serie.append('<option value="' + id.numero + '">' + id.numero + '</option>');
+                //console.log(serie);
+            }
+
+        }
+
+    })
+
+})
+
+/*
+* validar el checkbox
+*/
+$(".chkFactura").change(function(){
+
+    var chkBox = document.getElementById('chkFactura');
+
+    var documento = "01";
+    //console.log(documento);
+
+    var serieSeparado = $("#serieSeparado");
+    //console.log(serieSeparado);
+
+
+    if(chkBox.checked == true){
+
+        document.getElementById("chkBoleta").disabled = true;
+        document.getElementById("chkBoleta").checked = false;
+
+        document.getElementById("serieSeparado").disabled = false;
+
+    }else{
+
+        document.getElementById("chkBoleta").disabled = false;
+        document.getElementById("serieSeparado").disabled = true;
+
+    }
+
+    var datos = new FormData();
+    datos.append("documento", documento);
+
+    $.ajax({
+
+        url:"ajax/talonarios.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType:"json",
+        success:function(respuesta){
+
+            //console.log(respuesta);
+
+            // Limpiamos el select
+            serieSeparado.find('option').remove();
+
+            serieSeparado.append('<option value="">Seleccionar Serie</option>');
+
+            for(var id of respuesta){
+                serieSeparado.append('<option value="' + id.numero + '">' + id.numero + '</option>');
+                //console.log(serieSeparado);
+            }
+
+        }
+
+    })
+
+})
+
+$(".chkBoleta").change(function(){
+
+    var chkBox = document.getElementById('chkBoleta');
+    //console.log(chkBox.checked);
+
+    var serieSeparado = $("#serieSeparado");
+    serieSeparado.find('option').remove();
+    //console.log(serieSeparado);
+
+
+    var documento = "03";
+
+    if(chkBox.checked == true){
+
+        document.getElementById("chkFactura").disabled = true;
+        document.getElementById("chkFactura").checked = false;
+
+        document.getElementById("serieSeparado").disabled = false;
+
+    }else{
+
+        document.getElementById("chkFactura").disabled = false;
+        document.getElementById("serieSeparado").disabled = true;
+
+    }
+
+    var datos = new FormData();
+    datos.append("documento", documento);
+
+    $.ajax({
+
+        url:"ajax/talonarios.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType:"json",
+        success:function(respuesta){
+
+            //console.log(respuesta);
+
+            // Limpiamos el select
+            serieSeparado.find('option').remove();
+
+            serieSeparado.append('<option value="">Seleccionar Serie</option>');
+
+            for(var id of respuesta){
+                serieSeparado.append('<option value="' + id.numero + '">' + id.numero + '</option>');
+                //console.log(serieSeparado);
+            }
+
+        }
+
+    })
+
+})
+
+
+/*
+* ACTIVAR MODAL
+*/
+
+$(".tablaPedidosCV tbody").on("click", "button.btnFacturar", function(){
+
+    var codigo = $(this).attr("codigo");
+    var cod_cli = $(this).attr("cod_cli");
+    var nom_cli = $(this).attr("nom_cli");
+    var tip_doc = $(this).attr("tip_doc");
+    var nro_doc = $(this).attr("nro_doc");
+    var dscto = $(this).attr("dscto");
+    var cod_ven = $(this).attr("cod_ven");
+    //console.log(nro_doc);
+
+    $("#codPedido").val(codigo);
+    $("#codCli").val(cod_cli);
+    $("#nomCli").val(nom_cli);
+    $("#tipDoc").val(tip_doc);
+    $("#nroDoc").val(nro_doc);
+    $("#dscto").val(dscto);
+    $("#codVen").val(cod_ven);
 
 })
