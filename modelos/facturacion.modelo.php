@@ -8,7 +8,7 @@ class ModeloFacturacion{
 	*/
 	static public function mdlRegistrarMovimientos($datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO movimientosjf (
+		$stmt = Conexion::conectar()->prepare("INSERT INTO movimientosjf_2021 (
                                                     tipo,
                                                     documento,
                                                     fecha,
@@ -421,6 +421,66 @@ class ModeloFacturacion{
 
 		$stmt=null;
 
-	}
+    }
+    
+	/*
+	* REGISTAR DOCUMENTO 
+	*/
+	static public function mdlFacturarGuiaM($datos){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO movimientosjf_2021 (
+                                                            tipo,
+                                                            documento,
+                                                            fecha,
+                                                            articulo,
+                                                            cliente,
+                                                            vendedor,
+                                                            cantidad,
+                                                            precio,
+                                                            dscto2,
+                                                            total,
+                                                            nombre_tipo
+                                                        )
+                                                        (SELECT
+                                                            :tipo,
+                                                            :documento,
+                                                            :fecha,
+                                                            m.articulo,
+                                                            m.cliente,
+                                                            m.vendedor,
+                                                            m.cantidad,
+                                                            m.precio,
+                                                            m.dscto2,
+                                                            m.total,
+                                                            :nombre_tipo
+                                                        FROM
+                                                            movimientosjf_2021 m
+                                                        WHERE m.documento = :codigo
+                                                            AND m.tipo = :tipo_documento)");
+
+        $stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
+        $stmt->bindParam(":tipo_documento", $datos["tipo_documento"], PDO::PARAM_STR);
+        $stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
+        $stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+        $stmt->bindParam(":nombre_tipo", $datos["nombre_tipo"], PDO::PARAM_STR);
+
+
+
+
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+
+    }
 
 }

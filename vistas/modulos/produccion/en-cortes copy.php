@@ -4,7 +4,7 @@
 
     <h1>
 
-      Cortes
+      Almacén de corte
 
     </h1>
 
@@ -12,7 +12,7 @@
 
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-      <li class="active">Cortes</li>
+      <li class="active">Almacén de corte</li>
 
     </ol>
 
@@ -21,7 +21,10 @@
   <section class="content">
 
     <div class="box">
-
+      <div class="box-header with-border">
+        <button class="btn btn-outline-success pull-right btnReporteAlmacen"  style="border:green 1px solid">
+                      <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Almacén de corte  </button>
+      </div>
       <div class="box-body">
 
         <input type="hidden" value="<?= $_SESSION["perfil"]; ?>" id="perfilOculto">
@@ -100,72 +103,6 @@ MODAL MANDAR A TALLER
             <input type="hidden" name="tiempo_total" id="tiempo_total">
 
             <input type="hidden" name="nuevoCorte" id="nuevoCorte">
-
-            <!-- ENTRADA PARA SELECCIONAR TALLER -->
-
-            <div class="form-group col-lg-5">
-
-              <label>Sector</label>
-
-              <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-industry"></i></span>
-
-                <select class="form-control input-sm selectpicker" id="nuevoSector" name="nuevoSector" data-live-search="true" required>
-
-                  <option value="">Sector</option>
-
-                  <?php
-
-                  $sector = ControladorSectores::ctrMostrarSectores(null);
-                  #var_dump("taller", $sector);
-
-                  foreach ($sector as $key => $value) {
-
-                    echo '<option value="' . $value["cod_sector"] . '">' . $value["cod_sector"] . ' - ' . $value["nom_sector"] . '</option>';
-                  }
-
-
-                  ?>
-
-                </select>
-
-              </div>
-
-            </div>
-
-
-            <!-- ENTRADA PARA SELECCIONAR TRABAJADOR -->
-
-            <div class="form-group col-lg-7">
-
-              <label>Trabajador</label>
-
-              <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-user-o"></i></span>
-
-                <select class="form-control input-sm selectpicker" id="nuevoTrabajador" name="nuevoTrabajador" data-live-search="true" required>
-
-                  <option value="">Seleccionar Trabajador</option>
-
-                  <?php
-
-                  $trabajador = ControladorTrabajador::ctrMostrarTrabajadorActivo();
-                  #var_dump("trabajador", $trabajador);
-
-                  foreach ($trabajador as $key => $value) {
-
-                    echo '<option value="' . $value["cod_tra"] . '">' . $value["nom_tra"] . ', ' . $value["ape_pat_tra"] . ' ' . $value["ape_mat_tra"] . '</option>';
-                  }
-
-                  ?>
-
-                </select>
-
-              </div>
-
-            </div>
 
             <!-- ENTRADA PARA EL ARITCULO -->
 
@@ -247,38 +184,6 @@ MODAL MANDAR A TALLER
 
             </div>
 
-            <!-- ENTRADA PARA CODIGO OPERACION -->
-
-            <div class="form-group col-lg-4">
-
-              <label>Cod. Operación</label>
-
-              <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
-
-                <input type="text" class="form-control input-sm" id="nuevoCodOperacion" name="nuevoCodOperacion" required readonly>
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA LA TALLA -->
-
-            <div class="form-group col-lg-8">
-
-              <label>Operación</label>
-
-              <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
-
-                <input type="text" class="form-control input-sm" id="nuevaOperacion" name="nuevaOperacion" required readonly>
-
-              </div>
-
-            </div>
-
             <!-- ENTRADA PARA EL TOTAL DEL CORTE -->
 
             <div class="form-group col-lg-12">
@@ -344,3 +249,8 @@ MODAL MANDAR A TALLER
   </div>
 
 </div>
+</div>
+
+<script>
+window.document.title = "Almacen de corte"
+</script>
