@@ -14,6 +14,17 @@ class ControladorCortes{
     }
 
     /*
+    * MOSTRAR DATOS DE ALMACEN DE CORTE -VERSION 2
+    */
+    static public function ctrMostrarCortesV(){
+
+        $respuesta = ModeloCortes::mdlMostrarCortesV();
+
+        return $respuesta;
+
+    }
+
+    /*
     * MOSTRAR TALLERES DISPONIBLES
     */
 	static public function ctrMostrarTaller(){

@@ -10,10 +10,8 @@ class TablaCortes{
     */
     public function mostrarTablaCortes(){
 
-        $valor1 = null;
-        $valor2 = null;
+        $cortes = ControladorCortes::ctrMostrarCortesV();
 
-        $cortes = ControladorCortes::ctrMostrarCortes($valor1, $valor2);
         if(count($cortes)>0){
 
         #var_dump("almacencorte", $cortes);
@@ -23,31 +21,103 @@ class TablaCortes{
 
             for($i = 0; $i < count($cortes); $i++){
 
-            /*
-            todo: Modelo
-            */
-            $modelo = "<b><span style='font-size:100%' class='text-primary'>".$cortes[$i]["modelo"]."</span></b>";
+                /*
+                todo: BOTONES
+                */
 
-            /*
-            todo: Almacen de Corte
-            */
-            $alm_corteI = number_format($cortes[$i]["alm_corte"],0);
-            $alm_corte = "<center><b><span style='font-size:100%' class='text-default'>".$alm_corteI."</span></b></center>";
+                if($cortes[$i]["1"] > 0){
 
-            /*
-            todo: BOTONES
-            */
-            $botones =  "<div class='btn-group'><button class='btn btn-primary btnMandarTaller' articulo='".$cortes[$i]["articulo"]."' data-toggle='modal' data-target='#modalMandarTaller'><i class='fa fa-users'></i></button></div>"; 
+                    $t1 = "<button class='btn btn-link btn-md btnMandarTaller' articulo='".$cortes[$i]["modelo"].$cortes[$i]["cod_color"].'1'."' data-toggle='modal' data-target='#modalMandarTaller'>".$cortes[$i]["1"]."</button>";
+
+                }else{
+
+                    $t1 = "<button class='btn btn-link btn-md btnMandarTaller' articulo='".$cortes[$i]["modelo"].$cortes[$i]["cod_color"].'1'."' data-toggle='modal' data-target='#modalMandarTaller' disabled>".$cortes[$i]["1"]."</button>";
+
+                }
+
+                if($cortes[$i]["2"] > 0){
+
+                    $t2 = "<button class='btn btn-link btn-md btnMandarTaller' articulo='".$cortes[$i]["modelo"].$cortes[$i]["cod_color"].'2'."' data-toggle='modal' data-target='#modalMandarTaller'>".$cortes[$i]["2"]."</button>";
+
+                }else{
+
+                    $t2 = "<button class='btn btn-link btn-md btnMandarTaller' articulo='".$cortes[$i]["modelo"].$cortes[$i]["cod_color"].'2'."' data-toggle='modal' data-target='#modalMandarTaller' disabled>".$cortes[$i]["2"]."</button>";
+
+                }
+
+                if($cortes[$i]["3"] > 0){
+
+                    $t3 = "<button class='btn btn-link btn-md btnMandarTaller' articulo='".$cortes[$i]["modelo"].$cortes[$i]["cod_color"].'3'."' data-toggle='modal' data-target='#modalMandarTaller'>".$cortes[$i]["3"]."</button>";
+
+                }else{
+
+                    $t3 = "<button class='btn btn-link btn-md btnMandarTaller' articulo='".$cortes[$i]["modelo"].$cortes[$i]["cod_color"].'3'."' data-toggle='modal' data-target='#modalMandarTaller' disabled>".$cortes[$i]["3"]."</button>";
+
+                }
+
+                if($cortes[$i]["4"] > 0){
+
+                    $t4 = "<button class='btn btn-link btn-md btnMandarTaller' articulo='".$cortes[$i]["modelo"].$cortes[$i]["cod_color"].'4'."' data-toggle='modal' data-target='#modalMandarTaller'>".$cortes[$i]["4"]."</button>";
+
+                }else{
+
+                    $t4 = "<button class='btn btn-link btn-md btnMandarTaller' articulo='".$cortes[$i]["modelo"].$cortes[$i]["cod_color"].'4'."' data-toggle='modal' data-target='#modalMandarTaller' disabled>".$cortes[$i]["4"]."</button>";
+
+                }
+
+                if($cortes[$i]["5"] > 0){
+
+                    $t5 = "<button class='btn btn-link btn-md btnMandarTaller' articulo='".$cortes[$i]["modelo"].$cortes[$i]["cod_color"].'5'."' data-toggle='modal' data-target='#modalMandarTaller'>".$cortes[$i]["5"]."</button>";
+
+                }else{
+
+                    $t5 = "<button class='btn btn-link btn-md btnMandarTaller' articulo='".$cortes[$i]["modelo"].$cortes[$i]["cod_color"].'5'."' data-toggle='modal' data-target='#modalMandarTaller' disabled>".$cortes[$i]["5"]."</button>";
+
+                }
+
+                if($cortes[$i]["6"] > 0){
+
+                    $t6 = "<button class='btn btn-link btn-md btnMandarTaller' articulo='".$cortes[$i]["modelo"].$cortes[$i]["cod_color"].'6'."' data-toggle='modal' data-target='#modalMandarTaller'>".$cortes[$i]["6"]."</button>";
+
+                }else{
+
+                    $t6 = "<button class='btn btn-link btn-md btnMandarTaller' articulo='".$cortes[$i]["modelo"].$cortes[$i]["cod_color"].'6'."' data-toggle='modal' data-target='#modalMandarTaller' disabled>".$cortes[$i]["6"]."</button>";
+
+                }
+
+                if($cortes[$i]["7"] > 0){
+
+                    $t7 = "<button class='btn btn-link btn-md btnMandarTaller' articulo='".$cortes[$i]["modelo"].$cortes[$i]["cod_color"].'7'."' data-toggle='modal' data-target='#modalMandarTaller'>".$cortes[$i]["7"]."</button>";
+
+                }else{
+
+                    $t7 = "<button class='btn btn-link btn-md btnMandarTaller' articulo='".$cortes[$i]["modelo"].$cortes[$i]["cod_color"].'7'."' data-toggle='modal' data-target='#modalMandarTaller' disabled>".$cortes[$i]["7"]."</button>";
+
+                }
+
+                if($cortes[$i]["8"] > 0){
+
+                    $t8 = "<button class='btn btn-link btn-md btnMandarTaller' articulo='".$cortes[$i]["modelo"].$cortes[$i]["cod_color"].'8'."' data-toggle='modal' data-target='#modalMandarTaller'>".$cortes[$i]["8"]."</button>";
+
+                }else{
+
+                    $t8 = "<button class='btn btn-link btn-md btnMandarTaller' articulo='".$cortes[$i]["modelo"].$cortes[$i]["cod_color"].'8'."' data-toggle='modal' data-target='#modalMandarTaller' disabled>".$cortes[$i]["8"]."</button>";
+
+                }
 
                 $datosJson .= '[
-                "'.$cortes[$i]["articulo"].'",
-                "'.$cortes[$i]["marca"].'",
-                "'.$modelo.'",
+                "<b><center>'.$cortes[$i]["modelo"].'</center></b>",
                 "'.$cortes[$i]["nombre"].'",
                 "'.$cortes[$i]["color"].'",
-                "'.$cortes[$i]["talla"].'",
-                "'.$alm_corte.'",
-                "'.$botones.'"
+                "<center>'.$t1.'</center>",
+                "<center>'.$t2.'</center>",
+                "<center>'.$t3.'</center>",
+                "<center>'.$t4.'</center>",
+                "<center>'.$t5.'</center>",
+                "<center>'.$t6.'</center>",
+                "<center>'.$t7.'</center>",
+                "<center>'.$t8.'</center>",
+                "<center><b>'.$cortes[$i]["total"].'</b></center>"
                 ],';
                 }
 
@@ -64,7 +134,7 @@ class TablaCortes{
                     "data":[]
                 }';
                 return;
-    
+
             }
 
     }
