@@ -843,16 +843,55 @@ class ControladorFacturacion{
         if(isset($_POST["codPedido"])){
 
             $codigo = $_POST["codPedido"];
-            var_dump($codigo);
+            //var_dump($codigo);
 
             $serie = $_POST["serieDest"];
-            var_dump($serie);
+            //var_dump($serie);
 
             $documento = $_POST["docDest"];
-            var_dump($documento);
+            //var_dump($serie.$documento);
+
+            $docDestino = $serie.$documento;
 
             $tip_dest = substr($serie, 0, 1);
-            var_dump($tip_dest);
+            //var_dump($tip_dest);
+
+            date_default_timezone_set("America/Lima");
+            $fecha = date("Y-m-d");
+            //var_dump($fecha);
+
+            $tipo_origen = "S01";
+            //var_dump($tipo_origen);
+
+            if($tip_dest == "F"){
+
+                $tipo = "S03";
+                //var_dump($tipo);
+
+                $nombre_tipo="FACTURA";
+                //var_dump($nombre_tipo);
+
+            }else{
+
+                $tipo = "S02";
+                //var_dump($tipo);
+
+                $nombre_tipo="BOLETA";
+                //var_dump($nombre_tipo);
+
+            }
+
+            $datos = array( "tipo" => $tipo,
+                            "documento" => $docDestino,
+                            "fecha" => $fecha,
+                            "nombre_tipo" => $nombre_tipo,
+                            "codigo" => $codigo,
+                            "tipo_documento" => $tipo_origen);
+            var_dump($datos);
+
+            $facturar = ModeloFacturacion::mdlFacturarGuiaM($datos);
+
+            var_dump($facturar);
 
         }
 

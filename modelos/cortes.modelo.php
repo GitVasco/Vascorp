@@ -55,6 +55,90 @@ class ModeloCortes{
     }
 
 	/*
+	* MOSTRAR TALLERES - VERSION 2
+	*/
+	static public function mdlMostrarCortesV(){
+
+		$stmt = Conexion::conectar()->prepare("SELECT
+                                                    a.modelo,
+                                                    a.nombre,
+                                                    a.cod_color,
+                                                    a.color,
+                                                    SUM(
+                                                    CASE
+                                                        WHEN a.cod_talla = 1
+                                                        THEN a.alm_corte
+                                                        ELSE 0
+                                                    END
+                                                    ) AS '1',
+                                                    SUM(
+                                                    CASE
+                                                        WHEN a.cod_talla = 2
+                                                        THEN a.alm_corte
+                                                        ELSE 0
+                                                    END
+                                                    ) AS '2',
+                                                    SUM(
+                                                    CASE
+                                                        WHEN a.cod_talla = 3
+                                                        THEN a.alm_corte
+                                                        ELSE 0
+                                                    END
+                                                    ) AS '3',
+                                                    SUM(
+                                                    CASE
+                                                        WHEN a.cod_talla = 4
+                                                        THEN a.alm_corte
+                                                        ELSE 0
+                                                    END
+                                                    ) AS '4',
+                                                    SUM(
+                                                    CASE
+                                                        WHEN a.cod_talla = 5
+                                                        THEN a.alm_corte
+                                                        ELSE 0
+                                                    END
+                                                    ) AS '5',
+                                                    SUM(
+                                                    CASE
+                                                        WHEN a.cod_talla = 6
+                                                        THEN a.alm_corte
+                                                        ELSE 0
+                                                    END
+                                                    ) AS '6',
+                                                    SUM(
+                                                    CASE
+                                                        WHEN a.cod_talla = 7
+                                                        THEN a.alm_corte
+                                                        ELSE 0
+                                                    END
+                                                    ) AS '7',
+                                                    SUM(
+                                                    CASE
+                                                        WHEN a.cod_talla = 8
+                                                        THEN a.alm_corte
+                                                        ELSE 0
+                                                    END
+                                                    ) AS '8',
+                                                    SUM(a.alm_corte) AS total
+                                                FROM
+                                                    articulojf a
+                                                WHERE a.alm_corte > 0
+                                                GROUP BY a.modelo,
+                                                    a.cod_color,
+                                                    a.color");
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }
+
+	/*
 	* MOSTRAR TALLERES
 	*/
 	static public function mdlMostrarTallerA(){

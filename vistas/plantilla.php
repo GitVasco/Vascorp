@@ -248,7 +248,8 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "crear-pedidocv" ||
                   $_GET["ruta"] == "cuentas" ||
                   $_GET["ruta"] == "guias-remision" ||
-                  $_GET["ruta"] == "ver-cuentas" ){
+                  $_GET["ruta"] == "ver-cuentas" ||
+                  $_GET["ruta"] == "guias-remision" ){
 
               include "modulos/facturacion/".$_GET["ruta"].".php";
 
