@@ -789,3 +789,15 @@ $(".tablaPedidosCV tbody").on("click", "button.btnFacturar", function(){
     $("#codVen").val(cod_ven);
 
 })
+
+/*
+* BOTON REVISAR FACTURA
+*/
+$(".box").on("click", ".btnEditarFacturaCV", function () {
+
+    var pedido = $(this).attr("codigo");
+    console.log("factura", pedido);
+
+    window.location = "index.php?ruta=crear-facturascv&pedido=" + pedido;
+
+})

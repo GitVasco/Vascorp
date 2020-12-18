@@ -351,7 +351,7 @@ class ControladorFacturacion{
                                             "saldo" => $saldo);
                             //var_dump($datos);
 
-                            $ctacte = ModeloFacturacion::mdlGenrarCtaCte($datos);
+                            $ctacte = ModeloFacturacion::mdlGenerarCtaCte($datos);
                             //var_dump($ctacte);
 
                             if($ctacte == "ok"){
@@ -567,7 +567,7 @@ class ControladorFacturacion{
                                             "saldo" => $saldo);
                             //var_dump($datos);
 
-                            $ctacte = ModeloFacturacion::mdlGenrarCtaCte($datos);
+                            $ctacte = ModeloFacturacion::mdlGenerarCtaCte($datos);
                             //var_dump($ctacte);
 
                             if($ctacte == "ok"){
@@ -783,7 +783,7 @@ class ControladorFacturacion{
                                             "saldo" => $saldo);
                             //var_dump($datos);
 
-                            $ctacte = ModeloFacturacion::mdlGenrarCtaCte($datos);
+                            $ctacte = ModeloFacturacion::mdlGenerarCtaCte($datos);
                             //var_dump($ctacte);
 
                             if($ctacte == "ok"){
@@ -844,42 +844,51 @@ class ControladorFacturacion{
 
             $codigo = $_POST["codPedido"];
             //var_dump($codigo);
-
             $serie = $_POST["serieDest"];
             //var_dump($serie);
-
             $documento = $_POST["docDest"];
             //var_dump($serie.$documento);
-
             $docDestino = $serie.$documento;
+            //var_dump($docDestino);
 
             $tip_dest = substr($serie, 0, 1);
             //var_dump($tip_dest);
-
             date_default_timezone_set("America/Lima");
             $fecha = date("Y-m-d");
             //var_dump($fecha);
-
             $tipo_origen = "S01";
             //var_dump($tipo_origen);
+            $usuario = $_POST["idUsuario"];
 
             if($tip_dest == "F"){
 
                 $tipo = "S03";
                 //var_dump($tipo);
-
+                $tipoCta = '01';
+                //var_dump($tipoCta);
                 $nombre_tipo="FACTURA";
                 //var_dump($nombre_tipo);
+
+                $talonario = ModeloFacturacion::mdlActualizarTalonarioFactura($serie);
+                //var_dump("factura", $talonario);
 
             }else{
 
                 $tipo = "S02";
                 //var_dump($tipo);
-
+                $tipoCta = '03';
+                //var_dump($tipoCta);
                 $nombre_tipo="BOLETA";
                 //var_dump($nombre_tipo);
 
+                $talonario = ModeloFacturacion::mdlActualizarTalonarioBoleta($serie);
+                //var_dump("boleta", $talonario);
+
             }
+
+            /*
+            todo GENERAMOS EN MOVIMIENTOS
+            */
 
             $datos = array( "tipo" => $tipo,
                             "documento" => $docDestino,
@@ -887,11 +896,271 @@ class ControladorFacturacion{
                             "nombre_tipo" => $nombre_tipo,
                             "codigo" => $codigo,
                             "tipo_documento" => $tipo_origen);
-            var_dump($datos);
+            //var_dump($datos);
 
             $facturar = ModeloFacturacion::mdlFacturarGuiaM($datos);
+            //var_dump($facturar);
 
-            var_dump($facturar);
+            /*
+            todo REGISTRAMOS EN VENTAJF
+            */
+            if($facturar == "ok"){
+
+                //var_dump($tipo);
+                //var_dump($docDestino);
+                //var_dump($nombre_tipo);
+                //var_dump($codigo);
+                //var_dump($usuario);
+
+                $datosV = array(    "tipo_ori" => "S01",
+                                    "tipo" => $tipo,
+                                    "documento" => $docDestino,
+                                    "tipo_documento" => $nombre_tipo,
+                                    "doc_origen" => $codigo,
+                                    "usuario" => $usuario);
+                //var_dump($datosV);
+
+                $facturarV = ModeloFacturacion::mdlFacturarGuiaV($datosV);
+                //$facturarV = "ok";
+                //var_dump($facturar);
+
+                if($facturarV == "ok"){
+
+                    $estado = ModeloFacturacion::mdlActualizarGuiaF($codigo);
+                    //var_dump($estado);
+
+                    if($estado == "ok"){
+
+                        $codCta = $docDestino;
+                        //var_dump($codCta);
+                        $tipoDoc = $tipo;
+
+                        $respuestaDoc = ModeloFacturacion::mdlMostraVentaDocumento($codCta, $tipoDoc);
+                        //var_dump($respuestaDoc);
+
+                        $cliente = $respuestaDoc["cliente"];
+                        //var_dump($cliente);
+                        $vendedor = $respuestaDoc["vendedor"];
+                        //var_dump($vendedor);
+
+                        date_default_timezone_set("America/Lima");
+                        $fecha = date("Y-m-d");
+                        //var_dump($fecha);
+                        $dias = $respuestaDoc["dias"];
+                        //var_dump($dias);
+                        $fecha_ven = date("Y-m-d",strtotime($fecha."+ ".$dias." day"));
+                        //var_dump($fecha_ven);
+
+                        $monto = $respuestaDoc["total"];
+                        //var_dump($monto);
+                        $saldo = $respuestaDoc["total"];
+                        //var_dump($saldo);
+
+                        $cod_pago = $tipoCta;
+                        //var_dump($cod_pago);
+
+                        $datosCta = array(  "tipo_doc" => $tipoCta,
+                                            "num_cta" => $docDestino,
+                                            "cliente" => $cliente,
+                                            "vendedor" => $vendedor,
+                                            "fecha_ven" => $fecha_ven,
+                                            "monto" => $monto,
+                                            "cod_pago" => $cod_pago,
+                                            "usuario" => $usuario,
+                                            "saldo" => $saldo);
+                        //var_dump($datosCta);
+
+                        $ctacte = ModeloFacturacion::mdlGenerarCtaCte($datosCta);
+                        //var_dump($ctacte);
+
+                        if($ctacte == "ok"){
+
+                            echo'<script>
+
+                            swal({
+                                    type: "success",
+                                    title: "Se Genero la '.$nombre_tipo.' N° '.$docDestino.'",
+                                    showConfirmButton: true,
+                                    confirmButtonText: "Cerrar"
+                            }).then(function(result){
+                                            if (result.value) {
+
+                                            window.location = "guias-remision";
+
+                                            }
+                                        })
+
+                            </script>';
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+    /* 
+    * FACTURAR DESDE GUIA
+    */
+    static public function ctrFacturarB(){
+
+        if(isset($_POST["codPedidoB"])){
+
+            $codigo = $_POST["codPedidoB"];
+            //var_dump($codigo);
+            $doc = $_POST["serieSeparadoB"];
+            $docDestino = str_replace ( '-', '', $doc);
+            //var_dump($docDestino);
+            $tip_dest = substr($docDestino, 0, 1);
+            //var_dump($tip_dest);
+            date_default_timezone_set("America/Lima");
+            $fecha = date("Y-m-d");
+            //var_dump($fecha);
+            $tipo_origen = "S01";
+            //var_dump($tipo_origen);
+            $usuario = $_POST["idUsuarioB"];
+            //var_dump($usuario);
+
+            $serie = substr($docDestino, 0, 4);;
+            //var_dump($serie);
+
+            if($tip_dest == "F"){
+
+                $tipo = "S03";
+                //var_dump($tipo);
+                $tipoCta = '01';
+                //var_dump($tipoCta);
+                $nombre_tipo="FACTURA";
+                //var_dump($nombre_tipo);
+
+                $talonario = ModeloFacturacion::mdlActualizarTalonarioFactura($serie);
+                //var_dump("factura", $talonario);
+
+            }else{
+
+                $tipo = "S02";
+                //var_dump($tipo);
+                $tipoCta = '03';
+                //var_dump($tipoCta);
+                $nombre_tipo="BOLETA";
+                //var_dump($nombre_tipo);
+
+                $talonario = ModeloFacturacion::mdlActualizarTalonarioBoleta($serie);
+                //var_dump("boleta", $talonario);
+
+            }
+
+                /*
+                todo GENERAMOS EN MOVIMIENTOS
+                */
+                $datos = array( "tipo" => $tipo,
+                                "documento" => $docDestino,
+                                "fecha" => $fecha,
+                                "nombre_tipo" => $nombre_tipo,
+                                "codigo" => $codigo,
+                                "tipo_documento" => $tipo_origen);
+                //var_dump($datos);
+
+                $facturar = ModeloFacturacion::mdlFacturarGuiaM($datos);
+                //var_dump($facturar);
+
+                /*
+                todo REGISTRAMOS EN VENTAJF
+                */
+                if($facturar == "ok"){
+
+                    $datosV = array(    "tipo_ori" => "S01",
+                                        "tipo" => $tipo,
+                                        "documento" => $docDestino,
+                                        "tipo_documento" => $nombre_tipo,
+                                        "doc_origen" => $codigo,
+                                        "usuario" => $usuario);
+                    //var_dump($datosV);
+
+                    $facturarV = ModeloFacturacion::mdlFacturarGuiaV($datosV);
+                    //var_dump($facturarV);
+
+                    if($facturarV == "ok"){
+
+                        $estado = ModeloFacturacion::mdlActualizarGuiaF($codigo);
+                        //var_dump($estado);
+
+                        if($estado == "ok"){
+
+                            $codCta = $docDestino;
+                            //var_dump($codCta);
+                            $tipoDoc = $tipo;
+
+                            $respuestaDoc = ModeloFacturacion::mdlMostraVentaDocumento($codCta, $tipoDoc);
+                            //var_dump($respuestaDoc);
+
+                            $cliente = $respuestaDoc["cliente"];
+                            //var_dump($cliente);
+                            $vendedor = $respuestaDoc["vendedor"];
+                            //var_dump($vendedor);
+
+                            date_default_timezone_set("America/Lima");
+                            $fecha = date("Y-m-d");
+                            //var_dump($fecha);
+                            $dias = $respuestaDoc["dias"];
+                            //var_dump($dias);
+                            $fecha_ven = date("Y-m-d",strtotime($fecha."+ ".$dias." day"));
+                            //var_dump($fecha_ven);
+
+                            $monto = $respuestaDoc["total"];
+                            //var_dump($monto);
+                            $saldo = $respuestaDoc["total"];
+                            //var_dump($saldo);
+
+                            $cod_pago = $tipoCta;
+                            //var_dump($cod_pago);
+
+                            $datosCta = array(  "tipo_doc" => $tipoCta,
+                                                "num_cta" => $docDestino,
+                                                "cliente" => $cliente,
+                                                "vendedor" => $vendedor,
+                                                "fecha_ven" => $fecha_ven,
+                                                "monto" => $monto,
+                                                "cod_pago" => $cod_pago,
+                                                "usuario" => $usuario,
+                                                "saldo" => $saldo);
+                            //var_dump($datosCta);
+
+                            $ctacte = ModeloFacturacion::mdlGenerarCtaCte($datosCta);
+                            //var_dump($ctacte);
+
+                            if($ctacte == "ok"){
+
+                                echo'<script>
+
+                                swal({
+                                        type: "success",
+                                        title: "Se Genero la '.$nombre_tipo.' N° '.$docDestino.'",
+                                        showConfirmButton: true,
+                                        confirmButtonText: "Cerrar"
+                                }).then(function(result){
+                                                if (result.value) {
+
+                                                window.location = "guias-remision";
+
+                                                }
+                                            })
+
+                                </script>';
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
 
         }
 

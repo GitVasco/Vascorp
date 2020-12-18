@@ -165,7 +165,7 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "mp-ingresos" ||
                   $_GET["ruta"] == "mp-salidas"){
 
-                include "modulos/movimientos/".$_GET["ruta"].".php";              
+                include "modulos/movimientos/".$_GET["ruta"].".php";
 
         }else if( $_GET["ruta"] == "articulos" ||
                   $_GET["ruta"] == "materiaprima" ||
@@ -246,9 +246,12 @@ CUERPO DOCUMENTO
         }else if( $_GET["ruta"] == "pedidoscv" ||
                   $_GET["ruta"] == "clientes" ||
                   $_GET["ruta"] == "crear-pedidocv" ||
+                  $_GET["ruta"] == "crear-facturascv" ||
                   $_GET["ruta"] == "cuentas" ||
                   $_GET["ruta"] == "ver-cuentas" ||
-                  $_GET["ruta"] == "guias-remision" ){
+                  $_GET["ruta"] == "guias-remision" ||
+                  $_GET["ruta"] == "facturas" ||
+                  $_GET["ruta"] == "boletas"){
 
               include "modulos/facturacion/".$_GET["ruta"].".php";
 
