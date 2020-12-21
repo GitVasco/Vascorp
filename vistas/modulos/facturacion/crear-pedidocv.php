@@ -102,50 +102,55 @@
 
                                         <span class="input-group-addon"><i class="fa fa-users"></i></span>
 
+                                        <select class="form-control selectpicker" style="font-family: 'Homer Simpson UI';" id="cliente" name="cliente" data-live-search="true"  required>
+
                                         <?php
 
                                         $valor = $_GET["pedido"];
 
                                         $pedido = ControladorPedidos::ctrMostrarTemporal($valor);
-                                        #var_dump("pedido", $pedido);
+                                        //var_dump("pedido", $pedido);
 
                                         if ($pedido["codigo"] != "") {
 
-                                            $cliente = ControladorClientes::ctrMostrarClientes("id", $pedido["cliente"]);
+                                            $item = "id";
+                                            $valor = $pedido["cliente"];
 
-                                            echo '<input type="hidden" class="form-control input-sm" id="codCliente" name="codCliente" value="' . $cliente["id"] . '" readonly>';
+                                            $clientes = ControladorClientes::ctrMostrarClientesP($item, $valor);
+                                            var_dump($clientes["nombreB"]);
 
-                                            echo '<input type="text" class="form-control input-sm" id="seleccionarCliente" name="seleccionarCliente" value="' . $cliente["nombre"] . '" readonly>';
-                                            #var_dump("nombre", $cliente["nombre"]);
+                                            echo '<option value="'.$clientes["id"].'">'.$clientes["nombreB"].'</option>';
 
+                                            $client2 = ControladorClientes::ctrMostrarClientesP(null, null);
 
+                                            //var_dump($client2);
+
+                                            foreach ($client2 as $key => $value) {
+
+                                            echo '<option value="'.$value["id"].'">'.$value["codigo"].' - '.$value["nombreB"].'</option>';
+
+                                            }
 
                                         } else {
 
-                                            echo '<select class="form-control selectpicker" id="seleccionarCliente" name="seleccionarCliente" data-live-search="true" required>
+                                            $clientes = ControladorClientes::ctrMostrarClientesP(null, null);
+                                            var_dump($clientes);
 
-                                                <option value="">Seleccionar cliente</option>';
+                                            echo '<option value="">Seleccione Cliente</option>';
+                                            //var_dump($clientes);
 
-                                            $item = null;
-                                            $valor = null;
+                                            foreach ($clientes as $key => $value) {
 
-                                            $categorias = ControladorClientes::ctrMostrarClientesP($item, $valor);
+                                                echo '<option value="'.$value["id"].'">'.$value["nombreB"].'</option>';
 
-                                            foreach ($categorias as $key => $value) {
-
-                                                echo '<option value="' . $value["id"] . '">' . $value["codigo"] . ' - ' . $value["nombre"] . '</option>';
                                             }
 
-                                            echo '</select>
-
-                                            <span class="input-group-addon"><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modalAgregarClienteP" data-dismiss="modal">Agregar
-                                                    cliente</button></span>';
                                         }
 
 
                                         ?>
 
-
+                                        </select>
 
                                     </div>
 
@@ -161,34 +166,50 @@
 
                                         <span class="input-group-addon"><i class="fa fa-shopping-cart"></i></span>
 
+                                        <select class="form-control" id="seleccionarVendedor" name="seleccionarVendedor" required>
+
                                         <?php
 
                                         $valor = $_GET["pedido"];
 
                                         $pedido = ControladorPedidos::ctrMostrarTemporal($valor);
-                                        #var_dump("pedido", $pedido);
+                                        //var_dump("pedido", $pedido["vendedor"]);
 
-                                        if ($pedido["codigo"] != "") {
+                                        if ($pedido["vendedor"] != "") {
 
-                                            echo '<input type="text" class="form-control input-sm" id="seleccionarVendedor" name="seleccionarVendedor" value="' . $pedido["vendedor"] . '" readonly>';
+                                            $vendedor = ControladorVendedores::ctrMostrarVendedores("codigo", $pedido["vendedor"]);
+                                            //var_dump($vendedor);
+
+                                            echo '<option value="'.$vendedor["codigo"].'">'.$vendedor["codigo"].' - '.$vendedor["descripcion"].'</option>';
+
+                                            $vend2 = ControladorVendedores::ctrMostrarVendedores(null, null);
+
+                                            //var_dump($vend2);
+
+                                            foreach ($vend2 as $key => $value) {
+
+                                            echo '<option value="'.$value["id"].'">'.$value["codigo"].' - '.$value["descripcion"].'</option>';
+
+                                            }
+
                                         } else {
 
-                                            echo '<select class="form-control" id="seleccionarVendedor" name="seleccionarVendedor" required>
+                                            $vendedor = ControladorVendedores::ctrMostrarVendedores(null, null);
 
-                                                    <option value="">Vendedor</option>
-                                                    <option value="00">00 - Oficina</option>
-                                                    <option value="02">02 - Manuel Vasquez</option>
-                                                    <option value="07">07 - Antonio Diaz</option>
-                                                    <option value="18A">18A - Oscar Ponce</option>
-                                                    <option value="19">19 - Juan Carlos Diaz</option>
-                                                    <option value="20">20 - Amelia Portal</option>
+                                            echo '<option value="">Seleccione Vendedor</option>';
+                                            //var_dump($vendedor);
 
-                                                </select>';
+                                            foreach ($vendedor as $key => $value) {
+
+                                                echo '<option value="'.$value["id"].'">'.$value["codigo"].' - '.$value["descripcion"].'</option>';
+
+                                            }
+
                                         }
 
                                         ?>
 
-
+                                        </select>
 
                                     </div>
 
@@ -686,7 +707,6 @@
                                                         $valor = $pedido["condicion_venta"];
 
                                                         $condiciones = ControladorCondicionVentas::ctrMostrarCondicionVentas($item, $valor);
-
                                                         //var_dump($condiciones["descripcion"]);
 
                                                         echo '<option value="'.$condiciones["id"].'">'.$condiciones["codigo"].' - '.$condiciones["descripcion"].'</option>';

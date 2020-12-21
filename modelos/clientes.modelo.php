@@ -123,25 +123,58 @@ class ModeloClientes{
 
 	static public function mdlMostrarClientesP($tabla, $item, $valor){
 
+		if($item != null){
 
-		$stmt = Conexion::conectar()->prepare("SELECT 
-			c.id,
-			c.codigo,
-			c.nombre 
-		  FROM
-			clientesjf c 
-		  WHERE c.fecha IS NOT NULL 
-		  ORDER BY id DESC ");
+			$stmt = Conexion::conectar()->prepare("SELECT 
+												c.id,
+												CONCAT(
+												c.codigo,
+												REPEAT(' ', 12- LENGTH(c.codigo)),
+												' - ',
+												c.nombre
+												) AS nombreB,
+												c.codigo,
+												c.nombre
+											FROM
+												clientesjf c
+											WHERE c.fecha IS NOT NULL
+												AND $item = :$item
+											ORDER BY c.nombre ASC");
+
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 
 			$stmt -> execute();
 
-		return $stmt -> fetchAll();
+			return $stmt -> fetch();
+
+		}else{
+
+			$stmt = Conexion::conectar()->prepare("SELECT
+												c.id,
+												CONCAT(
+												c.codigo,
+												REPEAT(' ', 12- LENGTH(c.codigo)),
+												' - ',
+												c.nombre
+												) AS nombreB,
+												c.codigo,
+												c.nombre
+											FROM
+												clientesjf c
+											WHERE c.fecha IS NOT NULL
+											ORDER BY c.nombre ASC");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
 
 		$stmt -> close();
 
 		$stmt = null;
 
-	}	
+	}
 
 	/*=============================================
 	SACAR LISTA
