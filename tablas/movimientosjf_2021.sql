@@ -16,29 +16,27 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`new_vasco` /*!40100 DEFAULT CHARACTER S
 
 USE `new_vasco`;
 
-/*Table structure for table `temporaljf` */
+/*Table structure for table `movimientosjf_2021` */
 
-DROP TABLE IF EXISTS `temporaljf`;
+DROP TABLE IF EXISTS `movimientosjf_2021`;
 
-CREATE TABLE `temporaljf` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `codigo` int(11) DEFAULT NULL,
+CREATE TABLE `movimientosjf_2021` (
+  `tipo` varchar(5) DEFAULT NULL,
+  `documento` varchar(20) DEFAULT NULL,
+  `taller` varchar(5) DEFAULT NULL,
+  `fecha` date DEFAULT NULL,
+  `articulo` varchar(20) DEFAULT NULL,
+  `linea` varchar(5) DEFAULT NULL,
   `cliente` varchar(20) DEFAULT NULL,
   `vendedor` varchar(5) DEFAULT NULL,
-  `lista` varchar(10) DEFAULT NULL,
-  `op_gravada` decimal(11,2) DEFAULT '0.00',
-  `descuento_total` decimal(11,4) DEFAULT '0.0000',
-  `sub_total` decimal(11,2) DEFAULT '0.00',
-  `igv` decimal(11,2) DEFAULT '0.00',
-  `total` decimal(11,2) DEFAULT '0.00',
-  `condicion_venta` int(11) DEFAULT '0',
-  `estado` varchar(20) DEFAULT NULL,
-  `fecha` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `usuario` int(11) DEFAULT NULL,
-  `agencia` int(11) DEFAULT '0',
-  `totalA` decimal(11,2) DEFAULT '0.00',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=latin1;
+  `cantidad` decimal(12,6) DEFAULT '0.000000',
+  `precio` decimal(20,2) DEFAULT '0.00',
+  `dscto1` decimal(20,2) DEFAULT '0.00',
+  `dscto2` decimal(20,2) DEFAULT '0.00',
+  `total` decimal(20,2) DEFAULT '0.00',
+  `nombre_tipo` varchar(20) DEFAULT NULL,
+  `almacen` varchar(5) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
