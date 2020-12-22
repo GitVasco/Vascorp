@@ -52,7 +52,7 @@ $(".tablaArticulosPedidos").on("click", ".agregarArtPed", function () {
         $("#nLista").val(modLista1);
         var datos = new FormData();
         datos.append("modLista", modLista1);
-        //console.log(modLista1);
+        //console.log('lista',modLista1);
 
     }else{
 
@@ -474,6 +474,50 @@ $("#condicionVenta").change(function(){
 
 })
 
+$("#seleccionarCliente").change(function(){
+
+    console.log("si llego al cliente")
+
+    //sumarTotalesPreciosA();
+    //cambioDescuento();
+    //listarArticulos();
+
+    var cliente = document.getElementById("seleccionarCliente").value;
+    //console.log(cliente);
+    $("#codClienteM").val(cliente);
+
+    var datos = new FormData();
+    datos.append("codigo", cliente);
+
+    $.ajax({
+
+		url:"ajax/clientes.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType:"json",
+		success:function(respuestaDet){
+
+            //console.log(respuestaDet);
+
+            $("#nomClienteM").val(respuestaDet["nombre"]);
+
+		}
+
+	})
+
+    /* var nomCliente = document.getElementById("nomCliente").value;
+    console.log(nomCliente);
+    $("#nomClienteM").val(nomCliente); */
+
+    var vendedor = document.getElementById("seleccionarVendedor").value;
+    //console.log(vendedor)
+    $("#vendedorM").val(vendedor);
+
+})
+
 $(".crearPedido").click(function () {
 
     sumarTotalesPreciosA();
@@ -483,11 +527,31 @@ $(".crearPedido").click(function () {
     var codigo = document.getElementById("nuevoCodigo").value;
     $("#codigoM").val(codigo);
 
-    var cliente = document.getElementById("codCliente").value;
+    var cliente = document.getElementById("seleccionarCliente").value;
+    console.log(cliente);
     $("#codClienteM").val(cliente);
 
-    var nomCliente = document.getElementById("seleccionarCliente").value;
-    $("#nomClienteM").val(nomCliente);
+    var datos = new FormData();
+    datos.append("codigo", cliente);
+
+    $.ajax({
+
+		url:"ajax/clientes.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType:"json",
+		success:function(respuestaDet){
+
+            console.log(respuestaDet);
+
+            $("#nomClienteM").val(respuestaDet["nombre"]);
+
+		}
+
+	})
 
     var vendedor = document.getElementById("seleccionarVendedor").value;
     $("#vendedorM").val(vendedor);
@@ -513,6 +577,7 @@ $(".crearPedido").click(function () {
     $("#articulosM").val(articulos);
 
     var condicionVenta = document.getElementById("condicionVenta").value;
+    //console.log(condicionVenta);
     $("#condicionVentaM").val(condicionVenta);
 
     var agencia = document.getElementById("agencia").value;
@@ -533,6 +598,8 @@ $(".tablaPedidosCV").DataTable({
     deferRender: true,
     retrieve: true,
     processing: true,
+    "pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
     language: {
         sProcessing: "Procesando...",
         sLengthMenu: "Mostrar _MENU_ registros",
@@ -796,7 +863,7 @@ $(".tablaPedidosCV tbody").on("click", "button.btnFacturar", function(){
 $(".box").on("click", ".btnEditarFacturaCV", function () {
 
     var pedido = $(this).attr("codigo");
-    console.log("factura", pedido);
+    //console.log("factura", pedido);
 
     window.location = "index.php?ruta=crear-facturascv&pedido=" + pedido;
 

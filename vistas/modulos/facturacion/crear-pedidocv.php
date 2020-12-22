@@ -102,7 +102,7 @@
 
                                         <span class="input-group-addon"><i class="fa fa-users"></i></span>
 
-                                        <select class="form-control selectpicker" style="font-family: 'Homer Simpson UI';" id="cliente" name="cliente" data-live-search="true"  required>
+                                        <select class="form-control selectpicker" id="seleccionarCliente" name="seleccionarCliente" data-live-search="true"  required>
 
                                         <?php
 
@@ -113,13 +113,13 @@
 
                                         if ($pedido["codigo"] != "") {
 
-                                            $item = "id";
+                                            $item = "codigo";
                                             $valor = $pedido["cliente"];
 
                                             $clientes = ControladorClientes::ctrMostrarClientesP($item, $valor);
-                                            var_dump($clientes["nombreB"]);
+                                            //var_dump($clientes["nombreB"]);
 
-                                            echo '<option value="'.$clientes["id"].'">'.$clientes["nombreB"].'</option>';
+                                            echo '<option value="'.$clientes["codigo"].'">'.$clientes["nombreB"].'</option>';
 
                                             $client2 = ControladorClientes::ctrMostrarClientesP(null, null);
 
@@ -127,7 +127,7 @@
 
                                             foreach ($client2 as $key => $value) {
 
-                                            echo '<option value="'.$value["id"].'">'.$value["codigo"].' - '.$value["nombreB"].'</option>';
+                                            echo '<option value="'.$value["codigo"].'">'.$value["nombreB"].'</option>';
 
                                             }
 
@@ -141,7 +141,7 @@
 
                                             foreach ($clientes as $key => $value) {
 
-                                                echo '<option value="'.$value["id"].'">'.$value["nombreB"].'</option>';
+                                                echo '<option value="'.$value["codigo"].'">'.$value["nombreB"].'</option>';
 
                                             }
 
@@ -151,6 +151,27 @@
                                         ?>
 
                                         </select>
+
+                                        <?php
+
+                                            $valor = $_GET["pedido"];
+
+                                            $pedido = ControladorPedidos::ctrMostrarTemporal($valor);
+                                            //var_dump("pedido", $pedido);
+
+                                            if ($pedido["codigo"] != "") {
+
+                                                $item = "codigo";
+                                                $valor = $pedido["cliente"];
+
+                                                $clientes = ControladorClientes::ctrMostrarClientesP($item, $valor);
+
+                                                echo '<input type="hidden" class="form-control input-sm" id="codCliente" name="codCliente" value="' . $clientes["codigo"] . '" readonly>';
+
+                                                echo '<input type="text" class="form-control input-sm" id="nomCliente" name="nomCliente" value="' . $clientes["nombre"] . '" readonly>';
+                                            }
+
+                                        ?>
 
                                     </div>
 
@@ -201,7 +222,7 @@
 
                                             foreach ($vendedor as $key => $value) {
 
-                                                echo '<option value="'.$value["id"].'">'.$value["codigo"].' - '.$value["descripcion"].'</option>';
+                                                echo '<option value="'.$value["codigo"].'">'.$value["codigo"].' - '.$value["descripcion"].'</option>';
 
                                             }
 

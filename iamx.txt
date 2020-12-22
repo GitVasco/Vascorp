@@ -20,3 +20,15 @@ Hola soy Joel ya tengo la ultima version
                             </script>';
 
                         }
+
+
+
+GENERAL         BASIC
+
+APROBADO        WARNING
+
+APT             DEFAULT
+
+CONFIRMADO      INFO
+
+FACTURADO       SUCCESS

@@ -4,7 +4,7 @@
 
     <h1>
 
-      Administrar Pedidos - Generados
+      Pedidos General
 
     </h1>
 
@@ -12,7 +12,7 @@
 
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-      <li class="active">Administrar Pedidos - Generados</li>
+      <li class="active">Pedidos General</li>
 
     </ol>
 
@@ -24,7 +24,7 @@
 
       <div class="box-header with-border">
 
-        <div class="btn-group">
+        <div class="btn-group pull-left">
 
         <?php
 
@@ -42,6 +42,56 @@
 
 
         ?>
+
+        </div>
+
+        <div class="btn-group pull-right" style="margin: 13px;">
+
+          <button class="btn btn-success  btnFacturados"  title="Ver Pedidos FACTURADOS">
+
+            FACTURADOS
+
+          </button>
+
+        </div>
+
+        <div class="btn-group pull-right" style="margin: 13px;">
+
+          <button class="btn btn-info  btnConfirmados"  title="Ver Pedidos CONFIRMADOS">
+
+            CONFIRMADOS
+
+          </button>
+
+        </div>
+
+        <div class="btn-group pull-right" style="margin: 13px;">
+
+          <button class="btn btn-default  btnAPT"  title="Ver Pedidos EN APT">
+
+            EN APT
+
+          </button>
+
+        </div>
+
+        <div class="btn-group pull-right" style="margin: 13px;">
+
+          <button class="btn btn-warning  btnAprobados" title="Ver Pedidos APROBADOS">
+
+            APROBADOS
+
+          </button>
+
+        </div>
+
+        <div class="btn-group pull-right" style="margin: 13px;">
+
+          <button class="btn btn-basic  btnGeneral" title="Ver Pedidos Generados">
+
+            GENERADOS
+
+          </button>
 
         </div>
 

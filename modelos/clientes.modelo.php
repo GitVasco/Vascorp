@@ -188,7 +188,7 @@ class ModeloClientes{
 										c.lista_precios 
 									FROM
 										clientesjf c 
-									WHERE c.id = $valor ");
+									WHERE c.codigo = $valor ");
 
 		$stmt -> execute();
 
