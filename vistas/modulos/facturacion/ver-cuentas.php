@@ -4,7 +4,8 @@
     
     <h1>
     <?php
-                $cuentas=ControladorCuentas::ctrMostrarCuentas("id",$_GET["idCuenta"]);
+
+                $cuentas=ControladorCuentas::ctrMostrarCuentas("num_cta",$_GET["numCta"]);
 
      ?>
       Administrar cancelaciones de N° de cuenta <?php echo $cuentas["num_cta"]?>
@@ -24,7 +25,66 @@
   <section class="content">
 
     <div class="box">
+      <div class="box-header width-border">
+        <div class="col-md-1">
+          <label for="">Tipo Documento</label>
+          <input type="text" class="form-control" value="<?php echo $cuentas["tipo_doc"]; ?>" readonly>
+        </div>
 
+        <div class="col-md-1">
+          <label for="">Nro Documento</label>
+          <input type="text" class="form-control" value="<?php echo $cuentas["num_cta"]; ?>" readonly>
+        </div>
+
+        <div class="col-md-2">
+          <label for="">Fecha</label>
+          <input type="text" class="form-control" value="<?php echo $cuentas["fecha"]; ?>" readonly>
+        </div>
+
+        <div class="col-md-2">
+          <label for="">Fecha Vencimiento</label>
+          <input type="text" class="form-control" value="<?php echo $cuentas["fecha_ven"]; ?>" readonly>
+        </div>
+
+        <div class="col-md-6"></div>
+        <div class="col-md-12"></div>
+
+        <div class="col-md-2">
+          <label for="">Clientes</label>
+          <input type="text" class="form-control" value="<?php echo $cuentas["cliente"]; ?>" readonly>
+        </div>
+
+        <div class="col-md-3">
+          <div style="margin-top:25px"></div>
+          <input type="text" class="form-control" value="<?php echo $cuentas["num_cta"]; ?>" readonly>
+        </div>
+
+        <div class="col-md-1">
+          <label for="">Vendedor</label>
+          <input type="text" class="form-control" value="<?php echo $cuentas["vendedor"]; ?>" readonly>
+        </div>
+
+        <div class="col-md-1">
+          <label for="">Total</label>
+          <input type="text" class="form-control" value="<?php echo "S/.".$cuentas["monto"]; ?>" readonly>
+        </div>
+        <div class="col-md-8"></div>
+        <div class="col-md-12"></div>
+        <div class="col-md-3">
+          <label for="">Estado</label>
+          <input type="text" class="form-control" value="<?php echo $cuentas["estado"]; ?>" readonly>
+        </div>
+
+        <div class="col-md-3">
+          <label for="">Banco</label>
+          <input type="text" class="form-control" value="<?php echo $cuentas["banco"]; ?>" readonly>
+        </div>
+
+        <div class="col-md-3">
+          <label for="">Nro unico</label>
+          <input type="text" class="form-control" value="<?php echo $cuentas["num_unico"]; ?>" readonly>
+        </div>
+      </div>
         
       <div class="box-body">
         
@@ -45,7 +105,7 @@
 
         <tbody>
             <?php
-                $cancelaciones=ControladorCuentas::ctrMostrarCancelaciones("id",$_GET["idCuenta"]);
+                $cancelaciones=ControladorCuentas::ctrMostrarCancelaciones("num_cta",$_GET["numCta"]);
                 foreach ($cancelaciones as $key => $value) {
            
                     echo    ' <tr>
@@ -121,19 +181,19 @@ MODAL EDITAR TIPO PAGO
             
             <div class="form-group col-lg-2">
             <label for=""><b>Documento por cancelar</b></label>
-            <label for=""><b>Tipo de vendedor</b></label>
+            <label for=""><b>Tipo de cancelacion</b></label>
               <div class="input-group">
               
                 <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
-                <select type="text" class="form-control input-lg selectpicker" name="cancelarVendedor" id="cancelarVendedor" data-live-search="true"  required>
-                  <option value="">Seleccionar vendedor</option>
+                <select type="text" class="form-control input-lg selectpicker" name="cancelarCodigo" id="cancelarCodigo" data-live-search="true"  required>
+                  <option value="">Seleccionar cancelacion</option>
 
                     <?php
-                      $item= null;
-                      $valor = null;
+                      $item= "tipo_dato";
+                      $valor = "TCAN";
 
-                    $documentos = ControladorVendedores::ctrMostrarVendedores($item,$valor);
+                    $documentos = ControladorCuentas::ctrMostrarPagos($item,$valor);
 
                     foreach ($documentos as $key => $value) {
                       echo '<option value="' . $value["codigo"] . '">' .$value["codigo"]. " - " . $value["descripcion"] . '</option>';
@@ -199,9 +259,11 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-usd"></i></span> 
 
-                <input type="number" min="0" step="any" class="form-control input-lg" name="cancelarMonto" id="cancelarMonto" >
-                <input type="hidden"  id="cancelarSaldo" name="cancelarSaldo">
-                <input type="text"  id="cancelarSaldoAntiguo" name="cancelarSaldoAntiguo">
+                <input type="number" min="0" step="any" class="form-control input-lg" name="cancelarMonto2" id="cancelarMonto2" >
+                <input type="hidden"  id="cancelarMontoAntiguo" name="cancelarMontoAntiguo">
+                <input type="hidden"  id="cancelarSaldoAntiguo" name="cancelarSaldoAntiguo" value="<?php echo $cuentas["saldo"];?>">
+                <input type="hidden"  id="cancelarVendedor" name="cancelarVendedor" >
+                <input type="hidden"  id="cancelarCliente" name="cancelarCliente" >
 
               </div>
 
