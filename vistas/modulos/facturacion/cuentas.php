@@ -1219,22 +1219,11 @@ MODAL EDITAR TIPO PAGO
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
                 <input type="text" class="form-control input-lg" name="letraVendedor" id="letraVendedor" readonly>    
+                <input type="hidden" class="form-control input-lg" name="letraMoneda" id="letraMoneda" >
               </div>
 
             </div>
-            
-            <!-- ENTRADA PARA EL VENDEDOR -->
-            
-            <div class="form-group col-lg-4">
-              <label for="">Tipo de moneda</label>
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-usd"></i></span> 
-                <input type="text" class="form-control input-lg" name="letraMoneda" id="letraMoneda" readonly>
-                 
-              </div>
-
-            </div>
+            <div class="col-lg-12"></div>
 
 
             <!-- ENTRADA PARA EL NOMBRE -->
@@ -1262,7 +1251,7 @@ MODAL EDITAR TIPO PAGO
               </div>
 
             </div>
-            <div class="col-lg-4"></div>
+            <div class="col-lg-8"></div>
             <div class="col-lg-12"></div>
 
             <div class="col-lg-3">

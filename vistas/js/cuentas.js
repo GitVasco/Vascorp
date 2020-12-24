@@ -329,19 +329,19 @@ $(".btnGenerarLetra").click(function(){
   var dia =fecha.getDate();
   if(mes.toString().length == 1){
     if(dia.toString().length == 1){
-      var resultado= "0"+fecha.getDate() + '/0' +
-      (fecha.getMonth() + 1) + '/' + fecha.getFullYear();
+      var resultado= fecha.getFullYear() + '-0' +
+      (fecha.getMonth() + 1) + '-' + "0"+fecha.getDate();
     }else{
-      var resultado= fecha.getDate() + '/0' +
-      (fecha.getMonth() + 1) + '/' + fecha.getFullYear();
+      var resultado= fecha.getFullYear() + '-0' +
+      (fecha.getMonth() + 1) + '-' + fecha.getDate();
     }
   }else{
     if(dia.toString().length == 1){
-      var resultado= "0"+fecha.getDate() + '/' +
-      (fecha.getMonth() + 1) + '/' + fecha.getFullYear();
+      var resultado= fecha.getFullYear() + '-' +
+      (fecha.getMonth() + 1) + '-' + "0"+fecha.getDate();
     }else{
-      var resultado= fecha.getDate() + '/' +
-      (fecha.getMonth() + 1) + '/' + fecha.getFullYear();
+      var resultado= fecha.getFullYear() + '-' +
+      (fecha.getMonth() + 1) + '-' + fecha.getDate();
     }
   }
   
@@ -352,13 +352,13 @@ $(".btnGenerarLetra").click(function(){
       $(".listaLetras").append(
         '<div class="letraCuenta col-lg-12" style="padding:0px">'+
           '<div class="col-lg-3" style="padding-top:10px">' +
-              '<input type="text" class="form-control "   name="fechaVenc[]" value="'+ resultado +'" readonly required>' +
+              '<input type="date" class="form-control "   name="fechaVenc[]" value="'+ resultado +'"  required>' +
           '</div>'+
           '<div class="col-lg-6" style="padding-top:10px">' +
-              '<input type="text" class="form-control "   name="obs'+index+'" value="Letra '+(index+1)+'"  readonly>' +
+              '<input type="text" class="form-control "   name="obs'+index+'" value="Letra '+(index+1)+'"  >' +
           '</div>'+
           '<div class="col-lg-2" style="padding-top:10px">' +
-              '<input type="text" class="form-control "   name="monto'+index+'" value="' + montoLetra + '" readonly required>' +
+              '<input type="text" class="form-control "   name="monto'+index+'" value="' + montoLetra.toFixed(2) + '" readonly required>' +
           '</div>'+
           '<div class="col-lg-12"></div><br>'+
         '</div>' );
@@ -367,34 +367,33 @@ $(".btnGenerarLetra").click(function(){
     fecha.setDate(fecha.getDate() + intervalo);
     var mes2=(fecha.getMonth() + 1);
     var dia2 =fecha.getDate();
-    console.log(fecha);
     if(mes2.toString().length == 1){
       if(dia2.toString().length == 1){
-        var resultado2= "0"+fecha.getDate() + '/0' +
-        (fecha.getMonth() + 1) + '/' + fecha.getFullYear();
+        var resultado2= fecha.getFullYear() + '-0' +
+        (fecha.getMonth() + 1) + '-' + "0"+fecha.getDate();
       }else{
-        var resultado2= fecha.getDate() + '/0' +
-        (fecha.getMonth() + 1) + '/' + fecha.getFullYear();
+        var resultado2= fecha.getFullYear() + '-0' +
+        (fecha.getMonth() + 1) + '-' + fecha.getDate();
       }
     }else{
       if(dia2.toString().length == 1){
-        var resultado2= "0"+fecha.getDate() + '/' +
-        (fecha.getMonth() + 1) + '/' + fecha.getFullYear();
+        var resultado2= fecha.getFullYear() + '-' +
+        (fecha.getMonth() + 1) + '-' + "0"+fecha.getDate();
       }else{
-        var resultado2= fecha.getDate() + '/' +
-        (fecha.getMonth() + 1) + '/' + fecha.getFullYear();
+        var resultado2= fecha.getFullYear() + '-' +
+        (fecha.getMonth() + 1) + '-' + fecha.getDate();
       }
     }
       $(".listaLetras").append(
         '<div class="letraCuenta col-lg-12" style="padding:0px">'+
           '<div class="col-lg-3" style="padding-top:10px">' +
-              '<input type="text" class="form-control "   name="fechaVenc[]" value="'+resultado2+'" readonly required>' +
+              '<input type="date" class="form-control "   name="fechaVenc[]" value="'+resultado2+'"  required>' +
           '</div>'+
           '<div class="col-lg-6" style="padding-top:10px">' +
-              '<input type="text" class="form-control "   name="obs'+index+'"  value="Letra '+(index+1)+'"  readonly>' +
+              '<input type="text" class="form-control "   name="obs'+index+'"  value="Letra '+(index+1)+'"  >' +
           '</div>'+
           '<div class="col-lg-2" style="padding-top:10px">' +
-              '<input type="text" class="form-control "   name="monto'+index+'" value="' + montoLetra + '" readonly required>' +
+              '<input type="text" class="form-control "   name="monto'+index+'" value="' + montoLetra.toFixed(2) + '" readonly required>' +
           '</div>'+
           '<div class="col-lg-12"></div><br>'+
         '</div>' );

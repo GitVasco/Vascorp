@@ -412,17 +412,23 @@ class ControladorCuentas{
 
 			$tabla="cuenta_ctejf";
 			$fechasInput=$_POST["fechaVenc"];
+			$doc1=substr($_POST["letraDocumento"],0,4);
+			$doc2=substr($_POST["letraDocumento"],-5);
+			$documento=$doc1.$doc2."-";
             for ($i=0; $i <count($fechasInput) ; $i++) { 
 
 				$datos = array("tipo_doc"=>$_POST["letraCodigo"],
-							"num_cta"=>$_POST["letraDocumento"],
+							"num_cta"=>$documento.($i+1),
 							"cliente"=>$_POST["letraCli"],
-							"vendedor"=>$_POST["letraVendedor"],
+							"vendedor"=>$_POST["letraVendedor"],	
 							"tip_mon"=>$_POST["letraMoneda"],
 							"monto"=>$_POST["monto".$i],
 							"notas"=>$_POST["obs".$i],
 							"usuario"=>$_POST["letraUsuario"],
-							"fecha"=>$fechasInput[$i]);
+							"fecha"=>$_POST["letraFecha"],
+							"fecha_ven"=>$fechasInput[$i],
+							"cod_pago"=>$_POST["letraCodigo"],
+							"doc_origen"=>$documento.($i+1));
 
 					
 					$respuesta = ModeloCuentas::mdlIngresarCuenta($tabla,$datos);
