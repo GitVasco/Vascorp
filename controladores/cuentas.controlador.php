@@ -412,17 +412,23 @@ class ControladorCuentas{
 
 			$tabla="cuenta_ctejf";
 			$fechasInput=$_POST["fechaVenc"];
+			$doc1=substr($_POST["letraDocumento"],0,4);
+			$doc2=substr($_POST["letraDocumento"],-5);
+			$documento=$doc1.$doc2."-";
             for ($i=0; $i <count($fechasInput) ; $i++) { 
 
 				$datos = array("tipo_doc"=>$_POST["letraCodigo"],
-							"num_cta"=>$_POST["letraDocumento"],
+							"num_cta"=>$documento.($i+1),
 							"cliente"=>$_POST["letraCli"],
-							"vendedor"=>$_POST["letraVendedor"],
+							"vendedor"=>$_POST["letraVendedor"],	
 							"tip_mon"=>$_POST["letraMoneda"],
 							"monto"=>$_POST["monto".$i],
 							"notas"=>$_POST["obs".$i],
 							"usuario"=>$_POST["letraUsuario"],
-							"fecha"=>$fechasInput[$i]);
+							"fecha"=>$_POST["letraFecha"],
+							"fecha_ven"=>$fechasInput[$i],
+							"cod_pago"=>$_POST["letraCodigo"],
+							"doc_origen"=>$documento.($i+1));
 
 					
 					$respuesta = ModeloCuentas::mdlIngresarCuenta($tabla,$datos);
@@ -451,6 +457,62 @@ class ControladorCuentas{
 			}
 		}
 
+	}
+
+	static public function ctrImportarCuenta(){
+
+        if(isset($_POST["importBanco"])){
+				
+				include "/../vistas/reportes_excel/Excel/reader.php";
+				$directorio="vistas/cuentas/".$_FILES["nuevaImportacion"]["name"];
+				$archivo=move_uploaded_file($_FILES["nuevaImportacion"]['tmp_name'], $directorio);
+				$data = new Spreadsheet_Excel_Reader();
+				$data->setOutputEncoding('CP1251');
+				$data->read("vistas/cuentas/".$_FILES["nuevaImportacion"]["name"]);
+				$conexion = mysql_connect("192.168.0.3", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
+				mysql_select_db("new_vasco", $conexion);
+				for ($i = 6; $i <= $data->sheets[0]['numRows']; $i++) {
+					for ($j = 1; $j <= 1; $j++) {
+						$tipo="00";
+						$documento=$data->sheets[0]['cells'][$i][1];
+						$unico=$data->sheets[0]['cells'][$i][2];
+						$fecha_ven=$data->sheets[0]['cells'][$i][5];
+						$monto=substr($data->sheets[0]['cells'][$i][6],4);
+						$montoConv=str_replace(",","",$monto);
+						$estado=$data->sheets[0]['cells'][$i][8];
+						$fecha=$data->sheets[0]['cells'][$i][9];
+						$fecha_cep=$data->sheets[0]['cells'][$i][10];
+						$tipo_mon="Soles";
+						$usuario=$_SESSION["id"];
+						$saldo=0;
+						$existe=ControladorCuentas::ctrMostrarCuentas("num_unico",$unico);
+						$sqlInsertar = mysql_query("INSERT INTO cuenta_ctejf (tipo_doc,num_cta,cliente,vendedor,fecha,fecha_ven,tip_mon,monto,estado,cod_pago,doc_origen,usuario,saldo,num_unico,fecha_abono)  values('".$tipo."','".$documento."','".$existe["cliente"]."','".$existe["vendedor"]."','".substr($fecha,6,4)."-".substr($fecha,3,2)."-".substr($fecha,0,2)."','".substr($fecha_ven,6,4)."-".substr($fecha_ven,3,2)."-".substr($fecha_ven,0,2)."','".$tipo_mon."',".$montoConv.",'".$estado."','".$tipo."','".$documento."','".$usuario."',".$saldo.",'".$unico."','".substr($fecha_cep,6,4)."-".substr($fecha_cep,3,2)."-".substr($fecha_cep,0,2)."')");
+						
+						
+						if($existe){
+							$saldoImportar=$existe["saldo"]-$montoConv;
+							ModeloCuentas::mdlActualizarUnDato("cuenta_ctejf","saldo",$saldoImportar,$existe["id"]);
+						}
+					}
+				}
+				echo'<script>
+
+				swal({
+					type: "success",
+					title: "Las cuentas han sido canceladas correctamente",
+					showConfirmButton: true,
+					confirmButtonText: "Cerrar"
+					}).then(function(result){
+								if (result.value) {
+
+								window.location = "cuentas";
+
+								}
+							})
+
+				</script>';
+				
+		}
 	}
 
 }

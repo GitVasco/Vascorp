@@ -30,6 +30,12 @@
 
         </button>
 
+        <button class="btn btn-danger" data-toggle="modal" data-target="#modalImportarBanco">
+          <i class="fa fa-university"></i>
+          Importar cuentas
+
+        </button>
+
         <div class="pull-right">
           <button class="btn btn-outline-success btnReporteColor" style="border:green 1px solid">
           <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte cuentas  </button>
@@ -1219,22 +1225,11 @@ MODAL EDITAR TIPO PAGO
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
                 <input type="text" class="form-control input-lg" name="letraVendedor" id="letraVendedor" readonly>    
+                <input type="hidden" class="form-control input-lg" name="letraMoneda" id="letraMoneda" >
               </div>
 
             </div>
-            
-            <!-- ENTRADA PARA EL VENDEDOR -->
-            
-            <div class="form-group col-lg-4">
-              <label for="">Tipo de moneda</label>
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-usd"></i></span> 
-                <input type="text" class="form-control input-lg" name="letraMoneda" id="letraMoneda" readonly>
-                 
-              </div>
-
-            </div>
+            <div class="col-lg-12"></div>
 
 
             <!-- ENTRADA PARA EL NOMBRE -->
@@ -1262,7 +1257,7 @@ MODAL EDITAR TIPO PAGO
               </div>
 
             </div>
-            <div class="col-lg-4"></div>
+            <div class="col-lg-8"></div>
             <div class="col-lg-12"></div>
 
             <div class="col-lg-3">
@@ -1353,6 +1348,87 @@ MODAL EDITAR TIPO PAGO
   </div>
 
 </div>
+
+
+<!--=====================================
+MODAL IMPORTAR CUENTAS DE BANCO
+======================================-->
+
+<div id="modalImportarBanco" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form role="form" method="post" enctype="multipart/form-data">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Importar cuentas de banco</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <!-- ENTRADA PARA EL CODIGO -->
+            
+            <div class="form-group">
+            <label for=""><h3>Archivo de banco</h3></label>
+              <div class="input-group">
+                
+                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
+
+                <input type="file" min="0" class="form-control input-lg" name="nuevaImportacion" id="nuevaImportacion"  required>
+
+              </div>
+
+            </div>        
+
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary" name="importBanco">Importar cunetas</button>
+
+        </div>
+
+      </form>
+
+
+      <?php
+
+        $importarBanco = new ControladorCuentas();
+        $importarBanco -> ctrImportarCuenta();
+
+      ?>
+
+
+    </div>
+
+  </div>
+
+</div>
+
 
 <?php
 
