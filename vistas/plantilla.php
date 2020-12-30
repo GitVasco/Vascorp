@@ -244,6 +244,11 @@ CUERPO DOCUMENTO
               include "modulos/ticket/".$_GET["ruta"].".php";
 
         }else if( $_GET["ruta"] == "pedidoscv" ||
+                  $_GET["ruta"] == "pedidos-generados" ||
+                  $_GET["ruta"] == "pedidos-aprobados" ||
+                  $_GET["ruta"] == "pedidos-apt" ||
+                  $_GET["ruta"] == "pedidos-confirmados" ||
+                  $_GET["ruta"] == "pedidos-facturados" ||
                   $_GET["ruta"] == "clientes" ||
                   $_GET["ruta"] == "crear-pedidocv" ||
                   $_GET["ruta"] == "crear-facturascv" ||

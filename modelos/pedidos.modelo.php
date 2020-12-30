@@ -660,4 +660,105 @@ class ModeloPedidos{
 
 	}
 
+    /*
+    * MOSTRAR DETALLE DE TEMPORAL
+    */
+	static public function mdlMostraPedidosTablas($valor){
+
+		if($valor == null){
+
+			$sql="SELECT
+						t.id,
+						t.codigo,
+						c.codigo AS cod_cli,
+						c.nombre,
+						c.tipo_documento,
+						c.documento,
+						t.lista,
+						t.vendedor,
+						t.op_gravada,
+						t.descuento_total,
+						t.sub_total,
+						t.igv,
+						t.total,
+						ROUND(
+						t.descuento_total / t.op_gravada * 100,
+						2
+						) AS dscto,
+						t.condicion_venta,
+						cv.descripcion,
+						t.estado,
+						t.usuario,
+						t.agencia,
+						u.nombre AS nom_usu,
+						DATE(t.fecha) AS fecha,
+						cv.dias,
+						DATE_ADD(DATE(t.fecha), INTERVAL cv.dias DAY) AS fecha_ven
+					FROM
+						temporaljf t
+						LEFT JOIN clientesjf c
+						ON t.cliente = c.codigo
+						LEFT JOIN condiciones_ventajf cv
+						ON t.condicion_venta = cv.id
+						LEFT JOIN usuariosjf u
+						ON t.usuario = u.id
+					ORDER BY fecha DESC";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		}else{
+
+			$sql="SELECT
+					t.id,
+					t.codigo,
+					c.codigo AS cod_cli,
+					c.nombre,
+					c.tipo_documento,
+					c.documento,
+					t.lista,
+					t.vendedor,
+					t.op_gravada,
+					t.descuento_total,
+					t.sub_total,
+					t.igv,
+					t.total,
+					ROUND(
+					t.descuento_total / t.op_gravada * 100,
+					2
+					) AS dscto,
+					t.condicion_venta,
+					cv.descripcion,
+					t.estado,
+					t.usuario,
+					t.agencia,
+					u.nombre AS nom_usu,
+					DATE(t.fecha) AS fecha,
+					cv.dias,
+					DATE_ADD(DATE(t.fecha), INTERVAL cv.dias DAY) AS fecha_ven
+				FROM
+					temporaljf t
+					LEFT JOIN clientesjf c
+					ON t.cliente = c.codigo
+					LEFT JOIN condiciones_ventajf cv
+					ON t.condicion_venta = cv.id
+					LEFT JOIN usuariosjf u
+					ON t.usuario = u.id
+				WHERE t.codigo = $valor";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->execute();
+
+		return $stmt->fetch();
+
+		}
+
+		$stmt=null;
+
+	}
+
 }
