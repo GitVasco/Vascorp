@@ -296,9 +296,20 @@ class ControladorPedidos{
     /*
     * MOSTRAR CABECERA DE TEMPORAL - GENERAL
     */
-	static public function CTRMostraPedidosGeneral($valor){
+	static public function ctrMostraPedidosGeneral($valor){
 
 		$respuesta = ModeloPedidos::mdlMostraPedidosGeneral($valor);
+
+		return $respuesta;
+
+    }
+
+    /*
+    * MOSTRAR TABLAS
+    */
+	static public function ctrMostraPedidosTablas($valor){
+
+		$respuesta = ModeloPedidos::mdlMostraPedidosTablas($valor);
 
 		return $respuesta;
 

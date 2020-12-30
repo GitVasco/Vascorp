@@ -340,7 +340,6 @@ $("#descPer").change(function(){
     cambioDescuento();
     listarArticulos();
 
-
 })
 
 function cambioDescuento(){
@@ -868,3 +867,93 @@ $(".box").on("click", ".btnEditarFacturaCV", function () {
     window.location = "index.php?ruta=crear-facturascv&pedido=" + pedido;
 
 })
+
+/*
+* BOTON IR A PEDIDOS GENERADOS
+*/
+$(".btnGenerados").click(function(){
+
+    window.location = "pedidos-generados";
+
+})
+
+/*
+* BOTON IR A PEDIDOS APROBADOS
+*/
+$(".btnAprobados").click(function(){
+
+    window.location = "pedidos-aprobados";
+
+})
+
+/*
+* BOTON IR A PEDIDOS EN APT
+*/
+$(".btnAPT").click(function(){
+
+    window.location = "pedidos-apt";
+
+})
+
+/*
+* BOTON IR A PEDIDOS CONFIRMADOS
+*/
+$(".btnConfirmados").click(function(){
+
+    window.location = "pedidos-confirmados";
+
+})
+
+/*
+* BOTON IR A PEDIDOS FACTURADOS
+*/
+$(".btnFacturados").click(function(){
+
+    window.location = "pedidos-facturados";
+
+})
+
+/*
+* BOTON IR A PEDIDOS INICIO
+*/
+$(".btnInicioPed").click(function(){
+
+    window.location = "pedidoscv";
+
+})
+
+/*
+* CARGADOS TABLA GENERADOS
+*/
+$(".tablaPedidosGenerados").DataTable({
+    ajax: "ajax/tabla-pedidos-generados.ajax.php",
+    deferRender: true,
+    retrieve: true,
+    processing: true,
+    "pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+    language: {
+        sProcessing: "Procesando...",
+        sLengthMenu: "Mostrar _MENU_ registros",
+        sZeroRecords: "No se encontraron resultados",
+        sEmptyTable: "Ningún dato disponible en esta tabla",
+        sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+        sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
+        sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+        sInfoPostFix: "",
+        sSearch: "Buscar:",
+        sUrl: "",
+        sInfoThousands: ",",
+        sLoadingRecords: "Cargando...",
+        oPaginate: {
+            sFirst: "Primero",
+            sLast: "Último",
+            sNext: "Siguiente",
+            sPrevious: "Anterior"
+        },
+        oAria: {
+            sSortAscending: ": Activar para ordenar la columna de manera ascendente",
+            sSortDescending: ": Activar para ordenar la columna de manera descendente"
+        }
+    }
+});
