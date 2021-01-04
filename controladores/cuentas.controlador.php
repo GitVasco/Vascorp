@@ -469,8 +469,9 @@ class ControladorCuentas{
 				$data = new Spreadsheet_Excel_Reader();
 				$data->setOutputEncoding('CP1251');
 				$data->read("vistas/cuentas/".$_FILES["nuevaImportacion"]["name"]);
-				$conexion = mysql_connect("192.168.0.3", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
-				mysql_select_db("new_vasco", $conexion);
+				$con=ControladorUsuarios::ctrMostrarConexiones("id",1);
+				$conexion = mysql_connect($con["ip"], $con["user"], $con["pwd"]) or die("No se pudo conectar: " . mysql_error());
+				mysql_select_db($con["db"], $conexion);
 				for ($i = 6; $i <= $data->sheets[0]['numRows']; $i++) {
 					for ($j = 1; $j <= 1; $j++) {
 						$tipo="00";
@@ -492,6 +493,51 @@ class ControladorCuentas{
 						if($existe){
 							$saldoImportar=$existe["saldo"]-$montoConv;
 							ModeloCuentas::mdlActualizarUnDato("cuenta_ctejf","saldo",$saldoImportar,$existe["id"]);
+						}
+					}
+				}
+				echo'<script>
+
+				swal({
+					type: "success",
+					title: "Las cuentas han sido canceladas correctamente",
+					showConfirmButton: true,
+					confirmButtonText: "Cerrar"
+					}).then(function(result){
+								if (result.value) {
+
+								window.location = "cuentas";
+
+								}
+							})
+
+				</script>';
+				
+		}
+	}
+
+	static public function ctrImportarLetra(){
+
+        if(isset($_POST["importLetra"])){
+				
+				include "/../vistas/reportes_excel/Excel/reader.php";
+				$directorio="vistas/cuentas/".$_FILES["nuevaUnico"]["name"];
+				$archivo=move_uploaded_file($_FILES["nuevaUnico"]['tmp_name'], $directorio);
+				$data = new Spreadsheet_Excel_Reader();
+				$data->setOutputEncoding('CP1251');
+				$data->read("vistas/cuentas/".$_FILES["nuevaUnico"]["name"]);
+				$con=ControladorUsuarios::ctrMostrarConexiones("id",1);
+				$conexion = mysql_connect($con["ip"], $con["user"], $con["pwd"]) or die("No se pudo conectar: " . mysql_error());
+				mysql_select_db($con["db"], $conexion);
+				for ($i = 6; $i <= $data->sheets[0]['numRows']; $i++) {
+					for ($j = 1; $j <= 1; $j++) {
+						$documento=$data->sheets[0]['cells'][$i][1];
+						$unico=$data->sheets[0]['cells'][$i][2];
+						$existe=ControladorCuentas::ctrMostrarCuentas("num_cta",$documento);
+						
+						if($existe){
+							$sqlInsertar = mysql_query("UPDATE cuenta_ctejf SET num_unico = '".$unico."' WHERE num_cta = '".$documento."'") or die(mysql_error());
+							
 						}
 					}
 				}
