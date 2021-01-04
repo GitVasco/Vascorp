@@ -36,6 +36,11 @@
 
         </button>
 
+        <button class="btn btn-warning" data-toggle="modal" data-target="#modalActualizarUnico">
+          <i class="fa fa-university"></i>
+          Actualizar numero unico
+
+        </button>
         <div class="pull-right">
           <button class="btn btn-outline-success btnReporteColor" style="border:green 1px solid">
           <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte cuentas  </button>
@@ -1408,7 +1413,7 @@ MODAL IMPORTAR CUENTAS DE BANCO
 
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" class="btn btn-primary" name="importBanco">Importar cunetas</button>
+          <button type="submit" class="btn btn-primary" name="importBanco">Importar cuentas</button>
 
         </div>
 
@@ -1429,6 +1434,84 @@ MODAL IMPORTAR CUENTAS DE BANCO
 
 </div>
 
+<!--=====================================
+MODAL IMPORTAR CUENTAS DE BANCO
+======================================-->
+
+<div id="modalActualizarUnico" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form role="form" method="post" enctype="multipart/form-data">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Importar letras</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <!-- ENTRADA PARA EL CODIGO -->
+            
+            <div class="form-group">
+            <label for=""><h3>Archivo de banco para letras</h3></label>
+              <div class="input-group">
+                
+                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
+
+                <input type="file" min="0" class="form-control input-lg" name="nuevaUnico" id="nuevaUnico"  required>
+
+              </div>
+
+            </div>        
+
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary" name="importLetra">Importar letras</button>
+
+        </div>
+
+      </form>
+
+
+      <?php
+
+        $importarLetra = new ControladorCuentas();
+        $importarLetra -> ctrImportarLetra();
+
+      ?>
+
+
+    </div>
+
+  </div>
+
+</div>
 
 <?php
 
