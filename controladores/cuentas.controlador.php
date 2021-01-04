@@ -469,7 +469,7 @@ class ControladorCuentas{
 				$data = new Spreadsheet_Excel_Reader();
 				$data->setOutputEncoding('CP1251');
 				$data->read("vistas/cuentas/".$_FILES["nuevaImportacion"]["name"]);
-				$conexion = mysql_connect("192.168.0.3", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
+				$conexion = mysql_connect("192.168.1.4", "jesus", "admin123") or die("No se pudo conectar: " . mysql_error());
 				mysql_select_db("new_vasco", $conexion);
 				for ($i = 6; $i <= $data->sheets[0]['numRows']; $i++) {
 					for ($j = 1; $j <= 1; $j++) {
