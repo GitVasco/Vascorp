@@ -174,7 +174,7 @@ MODAL AGREGAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <input type="text" class="form-control input-sm" name="documento" placeholder="Nro. Documento" required>
+                  <input type="text" class="form-control input-sm" name="documento" id="documentoCliente" placeholder="Nro. Documento" required>
 
                 </div>
 

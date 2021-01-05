@@ -10,9 +10,10 @@ class ControladorTipoPagos{
 
 		if(isset($_POST["nuevaDescripcion"])){
 
-				$tabla="tipo_pagosjf";
+				$tabla="maestrajf";
 			   	$datos = array("codigo"=>$_POST["nuevoCodigo"],
-							   "descripcion"=>$_POST["nuevaDescripcion"]);
+							   "descripcion"=>$_POST["nuevaDescripcion"],
+							   "tipo_dato"=>'TCAN');
 
 			   	$respuesta = ModeloTipoPagos::mdlIngresarTipoPago($tabla,$datos);
 
@@ -49,8 +50,20 @@ class ControladorTipoPagos{
 	=============================================*/
 
 	static public function ctrMostrarTipoPagos($item,$valor){
-		$tabla="tipo_pagosjf";
+		$tabla="maestrajf";
 		$respuesta = ModeloTipoPagos::mdlMostrarTipoPagos($tabla,$item,$valor);
+
+		return $respuesta;
+
+	}
+	
+	/*=============================================
+	MOSTRAR varios DE PAGO
+	=============================================*/
+
+	static public function ctrMostrarVariosPagos($item,$valor){
+		$tabla="maestrajf";
+		$respuesta = ModeloTipoPagos::mdlMostrarVariosPagos($tabla,$item,$valor);
 
 		return $respuesta;
 
@@ -64,7 +77,7 @@ class ControladorTipoPagos{
 
 		if(isset($_POST["editarDescripcion"])){
 
-				$tabla="tipo_pagosjf";
+				$tabla="maestrajf";
 				   $datos = array("id"=>$_POST["idTipoPago"],
 				   				"codigo"=> $_POST["editarCodigo"],
                                "descripcion"=>$_POST["editarDescripcion"]);
@@ -105,7 +118,7 @@ class ControladorTipoPagos{
 		if(isset($_GET["idTipoPago"])){
 
 			$datos = $_GET["idTipoPago"];
-			$tabla="tipo_pagosjf";
+			$tabla="maestrajf";
 			date_default_timezone_set('America/Lima');
 			$fecha = new DateTime();
 			$tipopagos=ControladorTipoPagos::ctrMostrarTipoPagos("id",$datos);

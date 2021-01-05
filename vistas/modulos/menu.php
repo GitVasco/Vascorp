@@ -918,12 +918,24 @@
 
                 <ul class="treeview-menu">
 
+                    <li class="treeview">
+
+                        <a href="#"><i class="fa fa-clipboard"></i> Documentos
+
+                            <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+
+                        </a>
+
+                        <ul class="treeview-menu">
+
                     <li>
 
                         <a href="pedidoscv">
 
-                            <i class="fa fa-circle-o"></i>
-                            <span>Administrar pedidos</span>
+                            <i class="fa fa-circle-o text-red"></i>
+                            <span>Pedidos</span>
 
                         </a>
 
@@ -933,10 +945,36 @@
 
                         <a href="guias-remision">
 
-                            <i class="fa fa-circle-o"></i>
+                            <i class="fa fa-circle-o text-blue"></i>
                             <span>Guias Remisión</span>
 
                         </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="facturas">
+
+                            <i class="fa fa-circle-o text-green"></i>
+                            <span>Facturas</span>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="boletas">
+
+                            <i class="fa fa-circle-o text-yellow"></i>
+                            <span>Boletas</span>
+
+                        </a>
+
+                    </li>
+
+                        </ul>
 
                     </li>
 

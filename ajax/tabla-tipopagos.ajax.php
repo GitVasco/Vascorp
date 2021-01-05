@@ -14,7 +14,7 @@ class TablaTipoPagos{
         $item = null;     
         $valor = null;
 
-        $tipopago = ControladorTipoPagos::ctrMostrarTipoPagos($item, $valor);	
+        $tipopago = ControladorTipoPagos::ctrMostrarVariosPagos($item, $valor);	
         if(count($tipopago)>0){
 
         $datosJson = '{

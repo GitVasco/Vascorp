@@ -187,6 +187,7 @@ class ModeloPedidos{
 		$sql="UPDATE
 					temporaljf
 				SET
+					cliente = :cliente,
 					op_gravada = :op_gravada,
 					descuento_total = :descuento_total,
 					sub_total = :sub_total,
@@ -200,6 +201,7 @@ class ModeloPedidos{
 
 		$stmt=Conexion::conectar()->prepare($sql);
 
+		$stmt->bindParam(":cliente", $datos["cliente"], PDO::PARAM_STR);
 		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
 		$stmt->bindParam(":op_gravada", $datos["op_gravada"], PDO::PARAM_STR);
 		$stmt->bindParam(":descuento_total", $datos["descuento_total"], PDO::PARAM_STR);
@@ -552,6 +554,208 @@ class ModeloPedidos{
 		$stmt->execute();
 
 		return $stmt->fetch();
+
+		$stmt=null;
+
+	}
+
+    /*
+    * MOSTRAR DETALLE DE TEMPORAL
+    */
+	static public function mdlMostraPedidosGeneral($valor){
+
+		if($valor == null){
+
+			$sql="SELECT
+						t.id,
+						t.codigo,
+						c.codigo AS cod_cli,
+						c.nombre,
+						c.tipo_documento,
+						c.documento,
+						t.lista,
+						t.vendedor,
+						t.op_gravada,
+						t.descuento_total,
+						t.sub_total,
+						t.igv,
+						t.total,
+						ROUND(
+						t.descuento_total / t.op_gravada * 100,
+						2
+						) AS dscto,
+						t.condicion_venta,
+						cv.descripcion,
+						t.estado,
+						t.usuario,
+						t.agencia,
+						u.nombre AS nom_usu,
+						DATE(t.fecha) AS fecha,
+						cv.dias,
+						DATE_ADD(DATE(t.fecha), INTERVAL cv.dias DAY) AS fecha_ven
+					FROM
+						temporaljf t
+						LEFT JOIN clientesjf c
+						ON t.cliente = c.codigo
+						LEFT JOIN condiciones_ventajf cv
+						ON t.condicion_venta = cv.id
+						LEFT JOIN usuariosjf u
+						ON t.usuario = u.id
+					ORDER BY fecha DESC";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		}else{
+
+			$sql="SELECT
+					t.id,
+					t.codigo,
+					c.codigo AS cod_cli,
+					c.nombre,
+					c.tipo_documento,
+					c.documento,
+					t.lista,
+					t.vendedor,
+					t.op_gravada,
+					t.descuento_total,
+					t.sub_total,
+					t.igv,
+					t.total,
+					ROUND(
+					t.descuento_total / t.op_gravada * 100,
+					2
+					) AS dscto,
+					t.condicion_venta,
+					cv.descripcion,
+					t.estado,
+					t.usuario,
+					t.agencia,
+					u.nombre AS nom_usu,
+					DATE(t.fecha) AS fecha,
+					cv.dias,
+					DATE_ADD(DATE(t.fecha), INTERVAL cv.dias DAY) AS fecha_ven
+				FROM
+					temporaljf t
+					LEFT JOIN clientesjf c
+					ON t.cliente = c.codigo
+					LEFT JOIN condiciones_ventajf cv
+					ON t.condicion_venta = cv.id
+					LEFT JOIN usuariosjf u
+					ON t.usuario = u.id
+				WHERE t.codigo = $valor";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->execute();
+
+		return $stmt->fetch();
+
+		}
+
+		$stmt=null;
+
+	}
+
+    /*
+    * MOSTRAR DETALLE DE TEMPORAL
+    */
+	static public function mdlMostraPedidosTablas($valor){
+
+		if($valor == null){
+
+			$sql="SELECT
+						t.id,
+						t.codigo,
+						c.codigo AS cod_cli,
+						c.nombre,
+						c.tipo_documento,
+						c.documento,
+						t.lista,
+						t.vendedor,
+						t.op_gravada,
+						t.descuento_total,
+						t.sub_total,
+						t.igv,
+						t.total,
+						ROUND(
+						t.descuento_total / t.op_gravada * 100,
+						2
+						) AS dscto,
+						t.condicion_venta,
+						cv.descripcion,
+						t.estado,
+						t.usuario,
+						t.agencia,
+						u.nombre AS nom_usu,
+						DATE(t.fecha) AS fecha,
+						cv.dias,
+						DATE_ADD(DATE(t.fecha), INTERVAL cv.dias DAY) AS fecha_ven
+					FROM
+						temporaljf t
+						LEFT JOIN clientesjf c
+						ON t.cliente = c.codigo
+						LEFT JOIN condiciones_ventajf cv
+						ON t.condicion_venta = cv.id
+						LEFT JOIN usuariosjf u
+						ON t.usuario = u.id
+					ORDER BY fecha DESC";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		}else{
+
+			$sql="SELECT
+					t.id,
+					t.codigo,
+					c.codigo AS cod_cli,
+					c.nombre,
+					c.tipo_documento,
+					c.documento,
+					t.lista,
+					t.vendedor,
+					t.op_gravada,
+					t.descuento_total,
+					t.sub_total,
+					t.igv,
+					t.total,
+					ROUND(
+					t.descuento_total / t.op_gravada * 100,
+					2
+					) AS dscto,
+					t.condicion_venta,
+					cv.descripcion,
+					t.estado,
+					t.usuario,
+					t.agencia,
+					u.nombre AS nom_usu,
+					DATE(t.fecha) AS fecha,
+					cv.dias,
+					DATE_ADD(DATE(t.fecha), INTERVAL cv.dias DAY) AS fecha_ven
+				FROM
+					temporaljf t
+					LEFT JOIN clientesjf c
+					ON t.cliente = c.codigo
+					LEFT JOIN condiciones_ventajf cv
+					ON t.condicion_venta = cv.id
+					LEFT JOIN usuariosjf u
+					ON t.usuario = u.id
+				WHERE t.codigo = $valor";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->execute();
+
+		return $stmt->fetch();
+
+		}
 
 		$stmt=null;
 

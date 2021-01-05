@@ -61,7 +61,7 @@ class ModeloCuentas{
 
 		if($item != null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item and tipo_doc IN ('01','03','07','08','09','85')");
 
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 
@@ -71,7 +71,7 @@ class ModeloCuentas{
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE tipo_doc IN ('01','03','07','08','09','85')");
 
 			$stmt -> execute();
 
@@ -117,7 +117,7 @@ class ModeloCuentas{
 
 		if($item != null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item and tipo_doc NOT IN ('01','03','07','08','09','85')");
 
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 
@@ -127,7 +127,7 @@ class ModeloCuentas{
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE tipo_doc NOT IN ('01','03','07','08','09','85')");
 
 			$stmt -> execute();
 
@@ -140,7 +140,24 @@ class ModeloCuentas{
 		$stmt = null;
 
     }
-    
+	
+	
+	static public function mdlMostrarCancelacion($tabla,$item,$valor){
+
+
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item and saldo IS NULL");
+
+		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }
 	/*=============================================
 	EDITAR TIPO DE PAGO
 	=============================================*/

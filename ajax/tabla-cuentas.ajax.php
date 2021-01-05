@@ -22,19 +22,28 @@ class TablaCuentas{
         "data": [';
 
         for($i = 0; $i < count($cuenta); $i++){  
-
-        if(isset($cuenta[$i]["saldo"])) {
+        $clientes=ControladorClientes::ctrMostrarClientes("codigo",$cuenta[$i]["cliente"]);
         /*=============================================
         TRAEMOS LAS ACCIONES
         =============================================*/      
-        
-            if($cuenta[$i]["saldo"]==0){
-                $botones =  "<div class='btn-group'><button class='btn btn-primary btnVisualizarCuenta' idCuenta='".$cuenta[$i]["id"]."' data-toggle='modal' data-target='#modalVisualizarrCuenta' title='Visualizar cuenta'><i class='fa fa-eye'></i></button><button class='btn btn-warning btnEditarCuenta' idCuenta='".$cuenta[$i]["id"]."' data-toggle='modal' data-target='#modalEditarCuenta' title='Editar cuenta'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarCuenta' idCuenta='".$cuenta[$i]["id"]."' title='Eliminar cuenta'><i class='fa fa-times'></i></button></div>";
+            if($cuenta[$i]["estado"]=='PENDIENTE'){
+                $estado =  "<button class='btn btn-danger btn-xs'>PENDIENTE</button>";
             }else{
-                $botones =  "<div class='btn-group'><button class='btn btn-primary btnVisualizarCuenta' idCuenta='".$cuenta[$i]["id"]."' data-toggle='modal' data-target='#modalVisualizarrCuenta' title='Visualizar cuenta'><i class='fa fa-eye'></i></button><button class='btn btn-success btnCancelarCuenta' idCuenta='".$cuenta[$i]["id"]."' data-toggle='modal' data-target='#modalCancelarCuenta' title='Cancelar cuenta'><i class='fa fa-money'></i></button><button class='btn btn-warning btnEditarCuenta' idCuenta='".$cuenta[$i]["id"]."' data-toggle='modal' data-target='#modalEditarCuenta' title='Editar cuenta'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarCuenta' idCuenta='".$cuenta[$i]["id"]."' title='Eliminar cuenta'><i class='fa fa-times'></i></button></div>"; 
+                $estado =  "<button class='btn btn-success btn-xs'>CANCELADO</button>";
+            }
+            if($cuenta[$i]["saldo"]==0){
+                
+                $botones =  "<div class='btn-group'><button class='btn btn-primary btnVisualizarCuenta' numCta='".$cuenta[$i]["num_cta"]."'  title='Visualizar cuenta'><i class='fa fa-eye'></i></button><button class='btn btn-warning btnEditarCuenta' idCuenta='".$cuenta[$i]["id"]."' data-toggle='modal' data-target='#modalEditarCuenta' title='Editar cuenta'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarCuenta' idCuenta='".$cuenta[$i]["id"]."' title='Eliminar cuenta'><i class='fa fa-times'></i></button></div>";
+                
+            }else{
+                if($cuenta[$i]["tipo_doc"]=="01" || $cuenta[$i]["tipo_doc"]=="03" ){
+                    $botones =  "<div class='btn-group'><button class='btn btn-primary btnVisualizarCuenta' numCta='".$cuenta[$i]["num_cta"]."'  title='Visualizar cuenta'><i class='fa fa-eye'></i></button><button class='btn btnAgregarLetra' style='background-color:black' idCuenta='".$cuenta[$i]["id"]."' cliente='".$clientes["nombre"]."' data-toggle='modal' data-target='#modalAgregarLetras' title='Agregar letra'><i style='color:white'  class='fa fa-usd'></i></button><button class='btn btn-success btnCancelarCuenta' idCuenta='".$cuenta[$i]["id"]."' data-toggle='modal' data-target='#modalCancelarCuenta' title='Cancelar cuenta'><i class='fa fa-money'></i></button><button class='btn btn-warning btnEditarCuenta' idCuenta='".$cuenta[$i]["id"]."' data-toggle='modal' data-target='#modalEditarCuenta' title='Editar cuenta'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarCuenta' idCuenta='".$cuenta[$i]["id"]."' title='Eliminar cuenta'><i class='fa fa-times'></i></button></div>"; 
+                }else{
+                    $botones =  "<div class='btn-group'><button class='btn btn-primary btnVisualizarCuenta' numCta='".$cuenta[$i]["num_cta"]."'  title='Visualizar cuenta'><i class='fa fa-eye'></i></button><button class='btn btn-success btnCancelarCuenta' idCuenta='".$cuenta[$i]["id"]."' data-toggle='modal' data-target='#modalCancelarCuenta' title='Cancelar cuenta'><i class='fa fa-money'></i></button><button class='btn btn-warning btnEditarCuenta' idCuenta='".$cuenta[$i]["id"]."' data-toggle='modal' data-target='#modalEditarCuenta' title='Editar cuenta'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarCuenta' idCuenta='".$cuenta[$i]["id"]."' title='Eliminar cuenta'><i class='fa fa-times'></i></button></div>"; 
+                }
             }
             
-        $clientes=ControladorClientes::ctrMostrarClientes("codigo",$cuenta[$i]["cliente"]);
+        
       
 
         
@@ -48,12 +57,11 @@ class TablaCuentas{
             "'.$cuenta[$i]["fecha_ven"].'",
             "'.$cuenta[$i]["monto"].'",
             "'.$cuenta[$i]["saldo"].'",
-            "'.$cuenta[$i]["estado_doc"].'",
+            "'.$estado.'",
             "'.$cuenta[$i]["num_unico"].'",
             "'.$cuenta[$i]["doc_origen"].'",
             "'.$botones.'"
             ],'; 
-                }       
             }
 
             $datosJson=substr($datosJson, 0, -1);

@@ -10,10 +10,11 @@ class ModeloTipoPagos{
 
 	static public function mdlIngresarTipoPago($tabla,$datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(codigo,descripcion) VALUES (:codigo,:descripcion)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(codigo,descripcion,tipo_dato) VALUES (:codigo,:descripcion,:tipo_dato)");
 
 		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
 		$stmt->bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
+		$stmt->bindParam(":tipo_dato", $datos["tipo_dato"], PDO::PARAM_STR);
 
 
 		if($stmt->execute()){
@@ -56,6 +57,23 @@ class ModeloTipoPagos{
 			return $stmt -> fetchAll();
 
 		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+	static public function mdlMostrarVariosPagos($tabla,$item,$valor){
+
+
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE tipo_dato IN ('TCAN','tdoc') order by codigo asc");
+
+		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
 
 		$stmt -> close();
 

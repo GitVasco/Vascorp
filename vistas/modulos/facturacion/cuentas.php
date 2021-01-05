@@ -30,6 +30,17 @@
 
         </button>
 
+        <button class="btn btn-danger" data-toggle="modal" data-target="#modalImportarBanco">
+          <i class="fa fa-university"></i>
+          Importar cuentas
+
+        </button>
+
+        <button class="btn btn-warning" data-toggle="modal" data-target="#modalActualizarUnico">
+          <i class="fa fa-university"></i>
+          Actualizar numero unico
+
+        </button>
         <div class="pull-right">
           <button class="btn btn-outline-success btnReporteColor" style="border:green 1px solid">
           <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte cuentas  </button>
@@ -994,21 +1005,21 @@ MODAL EDITAR TIPO PAGO
           
             <!-- ENTRADA PARA EL CODIGO -->
             
-            <div class="form-group col-lg-2">
-            <label for=""><b>Documento por cancelar</b></label>
-            <label for=""><b>Tipo de vendedor</b></label>
+            <div class="form-group col-lg-4">
+            <label for=""><b>Documento por cancelar</b></label><br>
+            <label for=""><b>Tipo de cancelacion</b></label>
               <div class="input-group">
               
                 <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
-                <select type="text" class="form-control input-lg selectpicker" name="cancelarVendedor" id="cancelarVendedor" data-live-search="true"  required>
-                  <option value="">Seleccionar vendedor</option>
+                <select type="text" class="form-control input-lg selectpicker" name="cancelarCodigo" id="cancelarCodigo" data-live-search="true"  required>
+                  <option value="">Seleccionar tipo de cancelacion</option>
 
                     <?php
-                      $item= null;
-                      $valor = null;
+                      $item= "tipo_dato";
+                      $valor = "TCAN";
 
-                    $documentos = ControladorVendedores::ctrMostrarVendedores($item,$valor);
+                    $documentos = ControladorCuentas::ctrMostrarPagos($item,$valor);
 
                     foreach ($documentos as $key => $value) {
                       echo '<option value="' . $value["codigo"] . '">' .$value["codigo"]. " - " . $value["descripcion"] . '</option>';
@@ -1040,7 +1051,7 @@ MODAL EDITAR TIPO PAGO
            <!-- ENTRADA PARA LA FECHA  --> 
             <div class="form-group col-lg-2">
             <div style="margin-top:23px"></div>
-              <label for="">Fecha último pago</label>
+              <label for="">Fecha </label>
               <div class="input-group">
               
                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
@@ -1067,7 +1078,7 @@ MODAL EDITAR TIPO PAGO
             </div>
             
             
-            <div class="form-group col-lg-3">
+            <div class="form-group col-lg-1">
             <div style="margin-top:23px"></div>
             <label for="">Monto </label>
               <div class="input-group">
@@ -1076,6 +1087,8 @@ MODAL EDITAR TIPO PAGO
 
                 <input type="number" min="0" step="any" class="form-control input-lg" name="cancelarMonto" id="cancelarMonto" value="0">
                 <input type="hidden"  id="cancelarSaldo" >
+                <input type="hidden"  id="cancelarVendedor" name="cancelarVendedor" >
+                <input type="hidden"  id="cancelarCliente" name="cancelarCliente" >
 
               </div>
 
@@ -1113,6 +1126,393 @@ MODAL EDITAR TIPO PAGO
 
 </div>
 
+
+<div id="modalAgregarLetras" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog" style="width: 55% !important;">
+
+    <div class="modal-content">
+
+      <form role="form" method="post">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Agregar Letras</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+          
+            <!-- ENTRADA PARA EL CODIGO -->
+            
+            <div class="form-group col-lg-2">
+            <label for=""><b>Tipo de documento</b></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
+                <input type="text" class="form-control input-lg" name="letraCodigo" id="letraCodigo" readonly>
+                   
+                <input type="hidden" id="letraUsuario" name="letraUsuario" value="<?php echo $_SESSION["id"]?>">
+                <input type="hidden" id="idCuenta3" name="idCuenta3" >
+              </div>
+
+            </div>          
+
+            <!-- ENTRADA PARA EL NOMBRE -->
+            
+            <div class="form-group col-lg-4">
+              <label for=""><b>Nro de documento</b></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
+
+                <input type="text" class="form-control input-lg" name="letraDocumento" id="letraDocumento" readonly>
+
+              </div>
+
+            </div>
+            
+
+            <!-- ENTRADA PARA EL NOMBRE -->
+            
+            <div class="form-group col-lg-3">
+            <label for=""><b>Fecha</b></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-text-width"></i></span> 
+
+                <input type="date" class="form-control input-lg" name="letraFecha" id="letraFecha" readonly>
+
+              </div>
+
+            </div>
+            <div class="col-lg-12"></div>
+            <!-- ENTRADA PARA EL CLIENTE -->
+            
+            <div class="form-group col-lg-2">
+
+            <label for=""><b>Cliente</b></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+
+                <input type="text" class="form-control input-lg" name="letraCli" id="letraCli" readonly>    
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-6">
+            <label for="">Nombres</label>
+              <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+              <input type="text" class="form-control input-lg" name="letraCliente" id="letraCliente" readonly>    
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA EL VENDEDOR -->
+            
+            <div class="form-group col-lg-2">
+            <label for=""><b>Vendedor</b></label>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+                <input type="text" class="form-control input-lg" name="letraVendedor" id="letraVendedor" readonly>    
+                <input type="hidden" class="form-control input-lg" name="letraMoneda" id="letraMoneda" >
+              </div>
+
+            </div>
+            <div class="col-lg-12"></div>
+
+
+            <!-- ENTRADA PARA EL NOMBRE -->
+            
+            <div class="form-group col-lg-2">
+              <label for="">Monto</label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-usd"></i></span> 
+
+                <input type="number" min="0" step="any" class="form-control input-lg" name="letraMonto"  id="letraMonto" readonly>
+
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-2">
+              <label for="">Saldo</label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-usd"></i></span> 
+
+                <input type="number" min="0" step="any" class="form-control input-lg" name="letraSaldo"  id="letraSaldo" readonly>
+
+              </div>
+
+            </div>
+            <div class="col-lg-8"></div>
+            <div class="col-lg-12"></div>
+
+            <div class="col-lg-3">
+              <div class="input-group">
+                <span  class="input-group-addon"><b>N° letras</b></span>
+
+                <input type="number" min="0"  class="form-control input-lg" name="nroLetra"  id="nroLetra" required>
+
+              </div>
+
+            </div>
+
+            <div class="col-lg-3">
+              <div class="input-group">
+                <span  class="input-group-addon"><b>Vencen cada</b></span>
+
+                <input type="number" min="0"  class="form-control input-lg" name="sumaFecha"  id="sumaFecha" required>
+
+              </div>
+
+            </div>
+
+            <div class="col-lg-2">
+                <input type="number" min="0"  class="form-control input-lg" name="sumaIntervalo"  id="sumaIntervalo" required>
+            </div>
+
+            <div class="col-lg-4">
+                <div style="margin-top:5px"></div>
+                <button type="button" class="btn btn-primary btnGenerarLetra" ><i class="fa fa-refresh"></i> Generar</button>
+                <button type="button" class="btn btn-danger btnLimpiarLetra" ><i class="fa fa-trash"></i> Limpiar</button>
+            </div>
+          
+            <div class="col-lg-12">
+            <!--=====================================
+                    TITULOS
+            ======================================-->
+            <br>
+            <div class="box box-primary">
+
+              <div class="col-lg-3">
+
+                  <label>Vencimiento</label>
+
+              </div>
+
+              <div class="col-lg-6">
+
+                  <label for="">Observaciones</label>
+
+              </div>
+
+              <div class="col-lg-2">
+
+                  <label for="">Monto</label>
+
+              </div>
+
+            </div>
+            </div>
+            <div class="listaLetras"></div>
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Guardar letras</button>
+
+        </div>
+
+      </form>
+
+      <?php
+
+        $agregarLetra = new ControladorCuentas();
+        $agregarLetra -> ctrAgregarLetra();
+
+      ?>   
+
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!--=====================================
+MODAL IMPORTAR CUENTAS DE BANCO
+======================================-->
+
+<div id="modalImportarBanco" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form role="form" method="post" enctype="multipart/form-data">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Importar cuentas de banco</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <!-- ENTRADA PARA EL CODIGO -->
+            
+            <div class="form-group">
+            <label for=""><h3>Archivo de banco</h3></label>
+              <div class="input-group">
+                
+                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
+
+                <input type="file" min="0" class="form-control input-lg" name="nuevaImportacion" id="nuevaImportacion"  required>
+
+              </div>
+
+            </div>        
+
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary" name="importBanco">Importar cuentas</button>
+
+        </div>
+
+      </form>
+
+
+      <?php
+
+        $importarBanco = new ControladorCuentas();
+        $importarBanco -> ctrImportarCuenta();
+
+      ?>
+
+
+    </div>
+
+  </div>
+
+</div>
+
+<!--=====================================
+MODAL IMPORTAR CUENTAS DE BANCO
+======================================-->
+
+<div id="modalActualizarUnico" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form role="form" method="post" enctype="multipart/form-data">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Importar letras</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <!-- ENTRADA PARA EL CODIGO -->
+            
+            <div class="form-group">
+            <label for=""><h3>Archivo de banco para letras</h3></label>
+              <div class="input-group">
+                
+                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
+
+                <input type="file" min="0" class="form-control input-lg" name="nuevaUnico" id="nuevaUnico"  required>
+
+              </div>
+
+            </div>        
+
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary" name="importLetra">Importar letras</button>
+
+        </div>
+
+      </form>
+
+
+      <?php
+
+        $importarLetra = new ControladorCuentas();
+        $importarLetra -> ctrImportarLetra();
+
+      ?>
+
+
+    </div>
+
+  </div>
+
+</div>
 
 <?php
 

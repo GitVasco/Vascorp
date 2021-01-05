@@ -20,6 +20,18 @@ class AjaxCuentas{
         echo json_encode($respuesta);
     
       }
+
+      public $idCancelacion;
+    
+      public function ajaxEditarCancelacion(){
+        $item="id";
+        $valor = $this->idCancelacion;
+    
+        $respuesta = ModeloCuentas::mdlMostrarCancelacion("cuenta_ctejf",$item,$valor);
+    
+        echo json_encode($respuesta);
+    
+      }
     
     }
     
@@ -33,4 +45,12 @@ class AjaxCuentas{
         $tipoPago -> idCuenta = $_POST["idCuenta"];
         $tipoPago -> ajaxEditarCuenta();
     }
+    /*=============================================
+    EDITAR CANCELACION
+    =============================================*/	
+    if(isset($_POST["idCancelacion"])){
     
+      $tipoCancelacion = new AjaxCuentas();
+      $tipoCancelacion -> idCancelacion = $_POST["idCancelacion"];
+      $tipoCancelacion -> ajaxEditarCancelacion();
+  }

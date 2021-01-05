@@ -189,7 +189,8 @@ class ControladorPedidos{
             /*
             * ACTUALIZAMOS LOS TOTALES DEL PEDIDO
             */
-            $datos = array( "codigo" => $_POST["codigoM"],
+            $datos = array( "cliente" => $_POST["codClienteM"],
+                            "codigo" => $_POST["codigoM"],
                             "op_gravada" => $_POST["opGravadaM"],
                             "descuento_total" => $_POST["descuentoM"],
                             "sub_total" => $_POST["subTotalM"],
@@ -224,7 +225,7 @@ class ControladorPedidos{
                     $pedidos = $verArticulos["pedidos"] + $cantidad;
                     //var_dump($pedidos);
 
-                    ModeloArticulos::mdlActualizarCantPedidos($articulo, $pedidos);
+                    //ModeloArticulos::mdlActualizarCantPedidos($articulo, $pedidos);
 
                 }
 
@@ -248,17 +249,17 @@ class ControladorPedidos{
 
                         # Mostramos una alerta suave
                         echo '<script>
-                        swal({
-                            type: "success",
-                            title: "Felicitaciones",
-                            text: "¡La información fue registrada con éxito!",
-                            showConfirmButton: true,
-                            confirmButtonText: "Cerrar"
-                        }).then((result)=>{
-                            if(result.value){
-                                window.location="pedidoscv";}
-                        });
-                    </script>';
+                                swal({
+                                    type: "success",
+                                    title: "Felicitaciones",
+                                    text: "¡La información fue registrada con éxito!",
+                                    showConfirmButton: true,
+                                    confirmButtonText: "Cerrar"
+                                }).then((result)=>{
+                                    if(result.value){
+                                        window.location="pedidoscv";}
+                                });
+                            </script>';
 
                     }else{
 
@@ -287,6 +288,28 @@ class ControladorPedidos{
 	static public function ctrMostraPedidosCabecera($valor){
 
 		$respuesta = ModeloPedidos::mdlMostraPedidosCabecera($valor);
+
+		return $respuesta;
+
+    }
+
+    /*
+    * MOSTRAR CABECERA DE TEMPORAL - GENERAL
+    */
+	static public function ctrMostraPedidosGeneral($valor){
+
+		$respuesta = ModeloPedidos::mdlMostraPedidosGeneral($valor);
+
+		return $respuesta;
+
+    }
+
+    /*
+    * MOSTRAR TABLAS
+    */
+	static public function ctrMostraPedidosTablas($valor){
+
+		$respuesta = ModeloPedidos::mdlMostraPedidosTablas($valor);
 
 		return $respuesta;
 
