@@ -41,7 +41,7 @@ todo: traemmos los meses en letras
 
   $produccion_mes = ControladorMovimientos::ctrTotalMesProd();
 
-  /* var_dump("produccion_mes", $produccion_mes); */
+  // var_dump("produccion_mes", count($produccion_mes)); 
 
   $arrayProduccion = array();
 
@@ -53,7 +53,7 @@ todo: traemmos los meses en letras
 
   }  
 
-
+  if(count($produccion_mes) != 0){
 
 ?>
 
@@ -75,8 +75,7 @@ todo: traemmos los meses en letras
   </div>
 
 </div>
-
-
+<?php }?>
 <script>
 
     // Get context with jQuery - using jQuery's .get() method.

@@ -30,7 +30,7 @@ class TablaBancos{
 
             $datosJson .= '[
             "'.$banco[$i]["codigo"].'",
-            "'.$banco[$i]["nombre"].'",
+            "'.$banco[$i]["descripcion"].'",
             "'.$botones.'"
             ],';        
             }

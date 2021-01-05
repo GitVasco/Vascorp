@@ -36,7 +36,7 @@ $('.tablaClientes').DataTable({
 
 });
 
-// VALIDACIÓN DE UN DOCUMENTO EXISTENTE EN LA BD
+// VALIDACIÓN DE UN DOCUMENTO EXISTENTE EN LA BD AL REGISTRAR
 $("#documentoCliente").change(function () {
 	var documento = $(this).val();
 	var datos = new FormData();
@@ -54,11 +54,41 @@ $("#documentoCliente").change(function () {
 				if ($(".msgError").length == 0) {
 					$("#documentoCliente").parent().after('<div class="alert alert-danger alert-dismissable msgError" id="mensajeError">' +
 						'<a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>' +
-						'<strong>Error!</strong> El documento ya esta existe en la Base de Datos, por favor verifique.' +
+						'<strong>Error!</strong> El documento ya existe en la Base de Datos, por favor verifique.' +
 						'</div>');
 				}
 				$("#documentoCliente").val("");
 				$("#documentoCliente").focus();
+			} else {
+				$(".msgError").remove();
+			}
+		}
+	});
+});
+
+// VALIDACIÓN DE UN DOCUMENTO EXISTENTE EN LA BD AL EDITAR
+$("#editarDocumento").change(function () {
+	var documento = $(this).val();
+	var datos = new FormData();
+	datos.append("documento", documento);
+	$.ajax({
+		url: "ajax/clientes.ajax.php",
+		type: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function (respuesta) {
+			if (respuesta) {
+				if ($(".msgError").length == 0) {
+					$("#editarDocumento").parent().after('<div class="alert alert-danger alert-dismissable msgError" id="mensajeError">' +
+						'<a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>' +
+						'<strong>Error!</strong> El documento ya existe en la Base de Datos, por favor verifique.' +
+						'</div>');
+				}
+				$("#editarDocumento").val("");
+				$("#editarDocumento").focus();
 			} else {
 				$(".msgError").remove();
 			}

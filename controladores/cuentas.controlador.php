@@ -89,6 +89,19 @@ class ControladorCuentas{
 		return $respuesta;
 
 	}
+
+	/*=============================================
+	MOSTRAR CUENTAS PENDIENTES
+	=============================================*/
+
+	static public function ctrMostrarCuentasPendientes($mayor,$menor){
+		$tabla="cuenta_ctejf";
+		$respuesta = ModeloCuentas::mdlMostrarCuentasPendientes($tabla,$mayor,$menor);
+
+		return $respuesta;
+
+	}
+	
 	
     /*=============================================
 	MOSTRAR  DOCUMENTOS DE PAGOS
@@ -478,7 +491,7 @@ class ControladorCuentas{
 						$documento=$data->sheets[0]['cells'][$i][1];
 						$unico=$data->sheets[0]['cells'][$i][2];
 						$fecha_ven=$data->sheets[0]['cells'][$i][5];
-						$monto=substr($data->sheets[0]['cells'][$i][6],4);
+						$monto=$data->sheets[0]['cells'][$i][6];
 						$montoConv=str_replace(",","",$monto);
 						$estado=$data->sheets[0]['cells'][$i][8];
 						$fecha=$data->sheets[0]['cells'][$i][9];

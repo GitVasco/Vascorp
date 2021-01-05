@@ -250,6 +250,27 @@ class ModeloCuentas{
 
 		$stmt = null;
 	}
+	/*=============================================
+	ELIMINAR TIPO DE PAGO
+	=============================================*/
 
+	static public function mdlMostrarCuentasPendientes($tabla,$mayor,$menor){
 
+		if($mayor != "null" ){
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE saldo > $menor AND saldo < $mayor AND tipo_doc IN ('01','03','07','08','09','85')");
+	
+			$stmt -> execute();
+	
+			return $stmt -> fetchAll();
+		}else{
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE saldo > 0 and tipo_doc IN ('01','03','07','08','09','85')");
+
+			$stmt -> execute();
+	
+			return $stmt -> fetchAll();
+		}
+		$stmt -> close();
+
+		$stmt = null;
+	}
 }

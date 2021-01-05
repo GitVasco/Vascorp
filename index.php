@@ -125,6 +125,9 @@ require_once "controladores/cuentas.controlador.php";
 require_once "modelos/vendedor.modelo.php";
 require_once "controladores/vendedor.controlador.php";
 
+require_once "modelos/abonos.modelo.php";
+require_once "controladores/abonos.controlador.php";
+
 require_once "modelos/produccion.modelo.php";
 
 require_once "modelos/talonarios.modelo.php";

@@ -978,6 +978,31 @@
 
                     </li>
 
+                    
+                </ul>
+
+            </li>
+            
+            <?php
+            }
+            ?>
+            <li class="treeview">
+
+                <a href="#">
+
+                    <i class="fa fa-money text-green"></i>
+
+                    <span>Cuentas corrientes</span>
+
+                    <span class="pull-right-container">
+
+                        <i class="fa fa-angle-left pull-right"></i>
+
+                    </span>
+
+                </a>
+
+                <ul class="treeview-menu">
                     <li>
 
                         <a href="cuentas">
@@ -989,13 +1014,27 @@
 
                     </li>
 
+                    <li>
+
+                        <a href="abonos">
+
+                            <i class="fa fa-circle-o"></i>
+                            <span>Abonos</span>
+
+                        </a>
+
+                    </li>
+
+                    <li >
+                        <a href="cancelar-abonos">
+
+                            <i class="fa fa-circle-o"></i>
+                            <span>Cancelar abonos</span>
+
+                        </a>
+                    </li>
                 </ul>
-
             </li>
-            <?php
-            }
-            ?>
-
             <!--  Ticket-->
             <?php
             if($_SESSION["ticket"] == 1){

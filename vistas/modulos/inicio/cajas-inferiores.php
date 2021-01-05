@@ -9,18 +9,19 @@ $valor = 1;
 $ventasA = ControladorMovimientos::ctrTotUndVen($valor);
 
 /* var_dump("ventasA", $ventasA["total_venta"]); */
-
+if($ventasA["total_venta"] != 0){
 $produccionA = ControladorMovimientos::ctrTotUndProd($valor);
 
 /* var_dump("produccionA", $produccionA["total_produccion"]); */
 
 $dias = ControladorMovimientos::ctrTotDiasProd($valor);
 
-/* var_dump("dias", $dias["dias_produccion"]); */
 
 $promedio = number_format( $produccionA["total_produccion"] / $dias["dias_produccion"] ,0);
 
 /* var_dump("promedio", $promedio); */
+
+
 
 ?>
 
@@ -109,3 +110,4 @@ $promedio = number_format( $produccionA["total_produccion"] / $dias["dias_produc
   </div>
 
 </div>
+<?php }?>

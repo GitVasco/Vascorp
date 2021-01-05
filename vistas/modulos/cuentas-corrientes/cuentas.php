@@ -31,13 +31,13 @@
         </button>
 
         <button class="btn btn-danger" data-toggle="modal" data-target="#modalImportarBanco">
-          <i class="fa fa-university"></i>
+          <i class="fa fa-upload"></i>
           Importar cuentas
 
         </button>
 
         <button class="btn btn-warning" data-toggle="modal" data-target="#modalActualizarUnico">
-          <i class="fa fa-university"></i>
+          <i class="fa fa-upload"></i>
           Actualizar numero unico
 
         </button>
