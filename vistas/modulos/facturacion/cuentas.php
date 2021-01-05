@@ -1291,7 +1291,8 @@ MODAL EDITAR TIPO PAGO
 
             <div class="col-lg-4">
                 <div style="margin-top:5px"></div>
-                <button type="button" class="btn btn-primary btnGenerarLetra" >Generar</button>
+                <button type="button" class="btn btn-primary btnGenerarLetra" ><i class="fa fa-refresh"></i> Generar</button>
+                <button type="button" class="btn btn-danger btnLimpiarLetra" ><i class="fa fa-trash"></i> Limpiar</button>
             </div>
           
             <div class="col-lg-12">

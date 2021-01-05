@@ -6,6 +6,7 @@
     <?php
 
                 $cuentas=ControladorCuentas::ctrMostrarCuentas("num_cta",$_GET["numCta"]);
+                $cliente=ControladorClientes::ctrMostrarClientes("codigo",$cuentas["cliente"]);
 
      ?>
       Administrar cancelaciones de N° de cuenta <?php echo $cuentas["num_cta"]?>
@@ -36,27 +37,27 @@
           <input type="text" class="form-control" value="<?php echo $cuentas["num_cta"]; ?>" readonly>
         </div>
 
-        <div class="col-md-2">
+        <div class="col-md-1">
           <label for="">Fecha</label>
           <input type="text" class="form-control" value="<?php echo $cuentas["fecha"]; ?>" readonly>
         </div>
 
-        <div class="col-md-2">
+        <div class="col-md-1">
           <label for="">Fecha Vencimiento</label>
           <input type="text" class="form-control" value="<?php echo $cuentas["fecha_ven"]; ?>" readonly>
         </div>
 
-        <div class="col-md-6"></div>
+        <div class="col-md-7"></div>
         <div class="col-md-12"></div>
 
-        <div class="col-md-2">
+        <div class="col-md-1">
           <label for="">Clientes</label>
           <input type="text" class="form-control" value="<?php echo $cuentas["cliente"]; ?>" readonly>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-2">
           <div style="margin-top:25px"></div>
-          <input type="text" class="form-control" value="<?php echo $cuentas["num_cta"]; ?>" readonly>
+          <input type="text" class="form-control" value="<?php echo $cliente["nombre"]; ?>" readonly>
         </div>
 
         <div class="col-md-1">
@@ -64,25 +65,26 @@
           <input type="text" class="form-control" value="<?php echo $cuentas["vendedor"]; ?>" readonly>
         </div>
 
-        <div class="col-md-1">
-          <label for="">Total</label>
-          <input type="text" class="form-control" value="<?php echo "S/.".$cuentas["monto"]; ?>" readonly>
-        </div>
         <div class="col-md-8"></div>
         <div class="col-md-12"></div>
-        <div class="col-md-3">
+        <div class="col-md-1">
           <label for="">Estado</label>
           <input type="text" class="form-control" value="<?php echo $cuentas["estado"]; ?>" readonly>
         </div>
 
-        <div class="col-md-3">
-          <label for="">Banco</label>
-          <input type="text" class="form-control" value="<?php echo $cuentas["banco"]; ?>" readonly>
+        <div class="col-md-1">
+          <label for="">Saldo</label>
+          <input type="text" class="form-control" value="<?php echo $cuentas["saldo"]; ?>" readonly>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-1">
           <label for="">Nro unico</label>
           <input type="text" class="form-control" value="<?php echo $cuentas["num_unico"]; ?>" readonly>
+        </div>
+
+        <div class="col-md-1">
+          <label for="">Total</label>
+          <input type="text" class="form-control" value="<?php echo "S/.".$cuentas["monto"]; ?>" readonly>
         </div>
       </div>
         

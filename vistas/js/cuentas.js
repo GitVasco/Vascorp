@@ -402,3 +402,6 @@ $(".btnGenerarLetra").click(function(){
   }
    
 });
+$(".btnLimpiarLetra").click(function(){
+  $(".letraCuenta").remove();
+});
