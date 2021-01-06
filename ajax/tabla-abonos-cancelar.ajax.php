@@ -26,7 +26,7 @@ class TablaCancelarAbonos{
         TRAEMOS LAS ACCIONES
         =============================================*/         
         
-        $botones =  "<input class='chkAbono' type='checkbox' id='chkAbono' name='chkAbono' monto='".$abono[$i]["monto"]."'>Buscar"; 
+        $botones =  "<input class='chkAbono' type='checkbox' id='chkAbono' name='chkAbono' saldo='".$abono[$i]["monto"]."' idAbono='".$abono[$i]["id"]."'> Buscar"; 
 
             $datosJson .= '[
             "'.$abono[$i]["fecha"].'",

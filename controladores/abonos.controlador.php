@@ -183,8 +183,9 @@ class ControladorAbonos{
 						$montoConv=str_replace(",","",$monto);
                         $agencia=$data->sheets[0]['cells'][$i][6];
                         $operacion=$data->sheets[0]['cells'][$i][7];
-						
-						$sqlInsertar = mysql_query("INSERT INTO abonosjf (fecha,descripcion,monto,agencia,num_ope)  values('".substr($fecha,6,4)."-".substr($fecha,3,2)."-".substr($fecha,0,2)."','".$descripcion."',".$montoConv.",'".$agencia."','".$operacion."')");
+						if(substr($descripcion,0,3) != "LET"){
+							$sqlInsertar = mysql_query("INSERT INTO abonosjf (fecha,descripcion,monto,agencia,num_ope)  values('".substr($fecha,6,4)."-".substr($fecha,3,2)."-".substr($fecha,0,2)."','".$descripcion."',".$montoConv.",'".$agencia."','".$operacion."')");
+						}
 					}
 				}
 				echo'<script>
@@ -207,4 +208,62 @@ class ControladorAbonos{
 		}
 	}
 
+	/*=============================================
+	CANCELAR ABONOS DE BANCO
+    =============================================*/
+    
+    static public function ctrCancelarAbono(){
+		if(isset($_POST["editarCuenta"])){
+
+			$tabla="cuenta_ctejf";
+			$tabla2="abonosjf";
+			$datos = array("id" => $_POST["idCuenta4"],
+			   			   "tipo_doc"=>"05",
+						   "num_cta"=>$_POST["editarCuenta"],
+						   "cliente"=>$_POST["editarCliente"],
+						   "vendedor"=>$_POST["editarVendedor"],
+						   "monto"=>$_POST["editarMonto"],
+						   "usuario"=>$_POST["editarUsuario"],
+						   "fecha"=>$_POST["editarFecha"]);
+
+			$respuesta=ModeloCuentas::mdlIngresarCuenta($tabla,$datos);
+			$saldoNuevo=$_POST["editarSaldo"]-$_POST["editarAbono"];
+			if($saldoNuevo<0){
+				$vuelto=$saldoNuevo * -1;
+				$abono=ModeloCuentas::mdlActualizarUnDato($tabla2,"monto",$vuelto,$_POST["idAbono"]);
+				$cuenta=ModeloCuentas::mdlActualizarUnDato($tabla,"saldo",0,$_POST["idCuenta4"]);
+				$cuenta=ModeloCuentas::mdlActualizarUnDato($tabla,"estado","CANCELADO",$_POST["idCuenta4"]);
+			}else if($saldoNuevo == 0){
+				$cuenta=ModeloCuentas::mdlActualizarUnDato($tabla,"saldo",0,$_POST["idCuenta4"]);
+				$cuenta=ModeloCuentas::mdlActualizarUnDato($tabla,"estado","CANCELADO",$_POST["idCuenta4"]);
+				$abono=ModeloAbonos::mdlEliminarAbono($tabla2,$_POST["idAbono"]);
+			}else{
+				$cuenta=ModeloCuentas::mdlActualizarUnDato($tabla,"saldo",$saldoNuevo,$_POST["idCuenta4"]);
+				$cuenta=ModeloCuentas::mdlActualizarUnDato($tabla,"estado","PENDIENTE",$_POST["idCuenta4"]);
+				$abono=ModeloAbonos::mdlEliminarAbono($tabla2,$_POST["idAbono"]);
+			}
+
+			if($respuesta == "ok"){
+
+			echo'<script>
+
+			swal({
+					type: "success",
+					title: "El abono ha sido cancelado correctamente",
+					showConfirmButton: true,
+					confirmButtonText: "Cerrar"
+					}).then(function(result){
+							if (result.value) {
+
+							window.location = "cancelar-abonos";
+
+							}
+						})
+
+			</script>';
+
+
+			}
+		}
+	}
 }

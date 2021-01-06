@@ -91,12 +91,24 @@ class ControladorCuentas{
 	}
 
 	/*=============================================
+	MOSTRAR CUENTAS
+	=============================================*/
+
+	static public function ctrMostrarTipoCuentas($tipo){
+		$tabla="cuenta_ctejf";
+		$respuesta = ModeloCuentas::mdlMostrarTipoCuentas($tabla,$tipo);
+
+		return $respuesta;
+
+	}
+
+	/*=============================================
 	MOSTRAR CUENTAS PENDIENTES
 	=============================================*/
 
-	static public function ctrMostrarCuentasPendientes($mayor,$menor){
+	static public function ctrMostrarCuentasPendientes($saldo){
 		$tabla="cuenta_ctejf";
-		$respuesta = ModeloCuentas::mdlMostrarCuentasPendientes($tabla,$mayor,$menor);
+		$respuesta = ModeloCuentas::mdlMostrarCuentasPendientes($tabla,$saldo);
 
 		return $respuesta;
 

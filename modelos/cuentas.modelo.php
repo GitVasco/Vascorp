@@ -54,7 +54,7 @@ class ModeloCuentas{
 	}    
 
 	/*=============================================
-	MOSTRAR TIPO DE PAGO
+	MOSTRAR CUENTAS
 	=============================================*/
 
 	static public function mdlMostrarCuentas($tabla,$item,$valor){
@@ -254,16 +254,30 @@ class ModeloCuentas{
 	ELIMINAR TIPO DE PAGO
 	=============================================*/
 
-	static public function mdlMostrarCuentasPendientes($tabla,$mayor,$menor){
+	static public function mdlMostrarCuentasPendientes($tabla,$saldo){
 
-		if($mayor != "null" ){
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE saldo > $menor AND saldo < $mayor AND tipo_doc IN ('01','03','07','08','09','85')");
+		if($saldo != "null" ){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+													* 
+												FROM
+													$tabla 
+												WHERE saldo > 0 
+													AND tipo_doc IN ('01', '03', '07', '08', '09', '85') 
+												ORDER BY saldo BETWEEN ($saldo - 10) 
+													AND ($saldo + 10) DESC,
+													saldo ASC ");
 	
 			$stmt -> execute();
 	
 			return $stmt -> fetchAll();
 		}else{
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE saldo > 0 and tipo_doc IN ('01','03','07','08','09','85')");
+			$stmt = Conexion::conectar()->prepare("SELECT 
+														* 
+													FROM
+														$tabla 
+													WHERE saldo > 0 
+														AND tipo_doc IN ('01', '03', '07', '08', '09', '85') 
+													ORDER BY saldo ASC ");
 
 			$stmt -> execute();
 	
@@ -273,4 +287,5 @@ class ModeloCuentas{
 
 		$stmt = null;
 	}
+
 }

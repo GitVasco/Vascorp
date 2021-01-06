@@ -93,38 +93,38 @@ $(".tablaAbonos").on("click", ".btnEliminarAbono", function(){
   
 // })
 /*
+* Remover localstorage con btn Actualizar
+*/
+$("#btnRecargar").click(function(){
+  localStorage.removeItem("saldo");
+  localStorage.clear();
+  $(".chkAbono").prop("checked",false);
+});
+/*
 * validar el checkbox
 */
-$('.tablaAbonosCancelar').on("change",'.chkAbono',function(){
-  var chkBox = document.getElementById('chkAbono');
-
-  if(chkBox.checked == true){
-    var monto = $(this).attr("monto");
-    var mayor = Number(monto)+5;
-    var menor = Number(monto)-5;
-    localStorage.setItem("montoMayor", mayor);
-    localStorage.setItem("montoMenor", menor);
-	  cargarTablaCuentasCancelar(localStorage.getItem("montoMayor"),localStorage.getItem("montoMenor"));
-  }else{
-    localStorage.removeItem("montoMayor");
-    localStorage.removeItem("montoMenor");
-    localStorage.clear();
-  }
+$('.tablaAbonosCancelar').on("click",'.chkAbono',function(){
+    $(".tablaCuentasCancelar").DataTable().destroy();
+    var saldo = $(this).attr("saldo");
+    var idAbono = $(this).attr("idAbono");
+    $(".btnCancelarAbono").attr("idAbono",idAbono);
+    localStorage.setItem("saldo", saldo);
+	  cargarTablaCuentasCancelar(localStorage.getItem("saldo"));
 
 });
 
 /* 
 * VEMOS SI LOCAL STORAGE TRAE ALGO
 */
-if (localStorage.getItem("montoMayor") != null) {
+if (localStorage.getItem("saldo") != null) {
 
-	cargarTablaCuentasCancelar(localStorage.getItem("montoMayor"),localStorage.getItem("montoMenor"));
-	//console.log("lleno");
+	cargarTablaCuentasCancelar(localStorage.getItem("saldo"));
+	// console.log("lleno");
 	
 }else{
 
-	cargarTablaCuentasCancelar(null,null);
-	//console.log("vacio");
+	cargarTablaCuentasCancelar(null);
+	// console.log("vacio");
 
 }
 
@@ -134,6 +134,8 @@ if (localStorage.getItem("montoMayor") != null) {
     "retrieve": true,
     "processing": true,
     "order": [[0, "asc"]],
+    "pageLength": 20,
+	  "lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
     "language": {
       "sProcessing":     "Procesando...",
       "sLengthMenu":     "Mostrar _MENU_ registros",
@@ -160,13 +162,15 @@ if (localStorage.getItem("montoMayor") != null) {
     }    
   });
 
-function cargarTablaCuentasCancelar(mayor,menor) {
+function cargarTablaCuentasCancelar(saldo) {
   $('.tablaCuentasCancelar').DataTable({
-    "ajax": "ajax/tabla-cuentas-cancelar.ajax.php?perfil="+$("#perfilOculto").val()+ "&mayor=" + mayor + "&menor=" + menor,
+    "ajax": "ajax/tabla-cuentas-cancelar.ajax.php?perfil="+$("#perfilOculto").val()+ "&saldo=" + saldo,
     "deferRender": true,
     "retrieve": true,
     "processing": true,
     "order": [[0, "asc"]],
+    "pageLength": 20,
+	  "lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
     "language": {
       "sProcessing":     "Procesando...",
       "sLengthMenu":     "Mostrar _MENU_ registros",
@@ -193,3 +197,45 @@ function cargarTablaCuentasCancelar(mayor,menor) {
     }    
   });
 }
+/*
+* validar el checkbox
+*/
+$('.tablaCuentasCancelar').on("click",'.chkCancelar',function(){
+  var idCuenta = $(this).attr("idCuenta");
+  $(".btnCancelarAbono").attr("idCuenta",idCuenta);
+
+});
+
+/*
+* CONFIRMAR CANCELACIÓN DE ABONO
+*/
+$(".btnCancelarAbono").click(function(){
+  var idCuenta = $(this).attr("idCuenta");
+  var idAbono = $(this).attr("idAbono");
+  var datos = new FormData();
+  datos.append("idCuenta", idCuenta);
+
+  $.ajax({
+
+      url: "ajax/cuentas.ajax.php",
+      method: "POST",
+      data: datos,
+      cache: false,
+      contentType: false,
+      processData: false,
+      dataType: "json",
+      success: function (respuesta) {
+
+          $("#idCuenta4").val(respuesta["id"]);
+          $("#editarTipo").val(respuesta["tipo_doc"]);
+          $("#editarCuenta").val(respuesta["num_cta"]);
+          $("#editarVendedor").val(respuesta["vendedor"]);
+          $("#editarCliente").val(respuesta["cliente"]);
+          $("#editarSaldo").val(respuesta["saldo"]);
+          $("#editarMonto").val(respuesta["monto"]);
+          $("#editarAbono").val(localStorage.getItem("saldo"));
+          $("#idAbono").val(idAbono);
+      }
+
+  })
+});
