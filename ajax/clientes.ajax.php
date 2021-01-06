@@ -22,6 +22,17 @@ class AjaxClientes{
 
 
 	}
+	/*=============================================
+	VALIDAR DOCUMENTO CLIENTE
+	=============================================*/	
+	public $documento;
+	public function ajaxValidarDocumento(){
+		$item="documento";
+		$valor=$this->documento;
+		$respuesta=ControladorClientes::ctrMostrarClientes($item,$valor);
+		echo json_encode($respuesta);
+	}
+
 
 }
 
@@ -35,4 +46,10 @@ if(isset($_POST["codigo"])){
 	$cliente -> codigo = $_POST["codigo"];
 	$cliente -> ajaxEditarCliente();
 
+}
+
+if(isset($_POST["documento"])){
+	$validarDocumento=new AjaxClientes();
+	$validarDocumento->documento=$_POST["documento"];
+	$validarDocumento->ajaxValidarDocumento();
 }

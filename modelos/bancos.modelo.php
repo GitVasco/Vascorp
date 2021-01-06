@@ -10,10 +10,11 @@ class ModeloBancos{
 
 	static public function mdlIngresarBanco($tabla,$datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(codigo,nombre) VALUES (:codigo,:nombre)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(codigo,descripcion,tipo_dato) VALUES (:codigo,:descripcion,:tipo_dato)");
 
 		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
-		$stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
+		$stmt->bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
+		$stmt->bindParam(":tipo_dato", $datos["tipo_dato"], PDO::PARAM_STR);
 
 
 		if($stmt->execute()){
@@ -39,7 +40,7 @@ class ModeloBancos{
 
 		if($item != null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE tipo_dato = 'TBAN' AND $item = :$item");
 
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 
@@ -49,7 +50,7 @@ class ModeloBancos{
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE tipo_dato = 'TBAN'");
 
 			$stmt -> execute();
 
@@ -69,11 +70,11 @@ class ModeloBancos{
 
 	static public function mdlEditarBanco($tabla,$datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET codigo = :codigo, nombre = :nombre WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET codigo = :codigo, descripcion = :descripcion WHERE id = :id");
 
 		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
 		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
-		$stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
+		$stmt->bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
 
 		if($stmt->execute()){
 

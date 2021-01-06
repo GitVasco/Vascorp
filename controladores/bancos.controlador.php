@@ -10,9 +10,10 @@ class ControladorBancos{
 
 		if(isset($_POST["nuevaDescripcion"])){
 
-				$tabla="bancojf";
+				$tabla="maestrajf";
 			   	$datos = array("codigo"=>$_POST["nuevoCodigo"],
-							   "nombre"=>$_POST["nuevaDescripcion"]);
+							   "descripcion"=>$_POST["nuevaDescripcion"],
+							   "tipo_dato"=>"TBAN",);
 
 			   	$respuesta = ModeloBancos::mdlIngresarBanco($tabla,$datos);
 
@@ -45,11 +46,11 @@ class ControladorBancos{
     
 
 	/*=============================================
-	MOSTRAR TIPO DE PAGO
+	MOSTRAR BANCO
 	=============================================*/
 
 	static public function ctrMostrarBancos($item,$valor){
-		$tabla="bancojf";
+		$tabla="maestrajf";
 		$respuesta = ModeloBancos::mdlMostrarBancos($tabla,$item,$valor);
 
 		return $respuesta;
@@ -64,10 +65,10 @@ class ControladorBancos{
 
 		if(isset($_POST["editarDescripcion"])){
 
-				$tabla="bancojf";
+				$tabla="maestrajf";
 				   $datos = array("id"=>$_POST["idBanco"],
 				   				"codigo"=> $_POST["editarCodigo"],
-                               "nombre"=>$_POST["editarDescripcion"]);
+                               "descripcion"=>$_POST["editarDescripcion"]);
 
 			   	$respuesta = ModeloBancos::mdlEditarBanco($tabla,$datos);
 
@@ -105,7 +106,7 @@ class ControladorBancos{
 		if(isset($_GET["idBanco"])){
 
 			$datos = $_GET["idBanco"];
-			$tabla="bancojf";
+			$tabla="maestrajf";
 			date_default_timezone_set('America/Lima');
 			$fecha = new DateTime();
 			$bancos=ControladorBancos::ctrMostrarBancos("id",$datos);

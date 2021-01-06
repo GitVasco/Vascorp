@@ -31,16 +31,24 @@
         </button>
 
         <button class="btn btn-danger" data-toggle="modal" data-target="#modalImportarBanco">
-          <i class="fa fa-university"></i>
-          Importar cuentas
+          <i class="fa fa-upload"></i>
+          Cancelar Letras
 
         </button>
-
+        
         <button class="btn btn-warning" data-toggle="modal" data-target="#modalActualizarUnico">
-          <i class="fa fa-university"></i>
+          <i class="fa fa-upload"></i>
           Actualizar numero unico
 
         </button>
+        <div class="col-lg-2">
+          <select name="tipoCuenta" id="tipoCuenta" class="form-control input-lg">
+            <option value="">------TIPO DE CUENTA------</option>
+            <option value="PENDIENTE">PENDIENTES</option>
+            <option value="CANCELADO">CANCELADOS</option>
+            <option value="TODOS">TODOS</option>
+          </select>
+        </div>
         <div class="pull-right">
           <button class="btn btn-outline-success btnReporteColor" style="border:green 1px solid">
           <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte cuentas  </button>
@@ -1005,7 +1013,7 @@ MODAL EDITAR TIPO PAGO
           
             <!-- ENTRADA PARA EL CODIGO -->
             
-            <div class="form-group col-lg-4">
+            <div class="form-group col-lg-3">
             <label for=""><b>Documento por cancelar</b></label><br>
             <label for=""><b>Tipo de cancelacion</b></label>
               <div class="input-group">
@@ -1042,12 +1050,16 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="cancelarDocumento" id="cancelarDocumento" required>
+                <input type="text" class="form-control input-lg" name="cancelarDocumento" id="cancelarDocumento"  readonly required>
 
               </div>
 
             </div>
-
+            
+            <?php 
+            date_default_timezone_set("America/Lima");
+            $fecha = new DateTime();
+            ?>
            <!-- ENTRADA PARA LA FECHA  --> 
             <div class="form-group col-lg-2">
             <div style="margin-top:23px"></div>
@@ -1056,7 +1068,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
 
-                <input type="date" class="form-control input-lg" name="cancelarFechaUltima" id="cancelarFechaUltima"  required>
+                <input type="date" class="form-control input-lg" name="cancelarFechaUltima" id="cancelarFechaUltima" value="<?php echo $fecha->format("Y-m-d")?>"  required>
 
               </div>
 
@@ -1078,7 +1090,7 @@ MODAL EDITAR TIPO PAGO
             </div>
             
             
-            <div class="form-group col-lg-1">
+            <div class="form-group col-lg-2">
             <div style="margin-top:23px"></div>
             <label for="">Monto </label>
               <div class="input-group">
@@ -1291,7 +1303,8 @@ MODAL EDITAR TIPO PAGO
 
             <div class="col-lg-4">
                 <div style="margin-top:5px"></div>
-                <button type="button" class="btn btn-primary btnGenerarLetra" >Generar</button>
+                <button type="button" class="btn btn-primary btnGenerarLetra" ><i class="fa fa-refresh"></i> Generar</button>
+                <button type="button" class="btn btn-danger btnLimpiarLetra" ><i class="fa fa-trash"></i> Limpiar</button>
             </div>
           
             <div class="col-lg-12">
