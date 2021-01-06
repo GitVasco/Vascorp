@@ -461,7 +461,7 @@ function listarArticulos() {
 
 $("#condicionVenta").change(function(){
 
-    console.log("si llego")
+    //console.log("si llego")
 
     sumarTotalesPreciosA();
     cambioDescuento();
@@ -475,7 +475,7 @@ $("#condicionVenta").change(function(){
 
 $("#seleccionarCliente").change(function(){
 
-    console.log("si llego al cliente")
+    //console.log("si llego al cliente")
 
     //sumarTotalesPreciosA();
     //cambioDescuento();
@@ -527,7 +527,7 @@ $(".crearPedido").click(function () {
     $("#codigoM").val(codigo);
 
     var cliente = document.getElementById("seleccionarCliente").value;
-    console.log(cliente);
+    //console.log(cliente);
     $("#codClienteM").val(cliente);
 
     var datos = new FormData();
@@ -544,7 +544,7 @@ $(".crearPedido").click(function () {
 		dataType:"json",
 		success:function(respuestaDet){
 
-            console.log(respuestaDet);
+            //console.log(respuestaDet);
 
             $("#nomClienteM").val(respuestaDet["nombre"]);
 
@@ -927,6 +927,150 @@ $(".btnInicioPed").click(function(){
 */
 $(".tablaPedidosGenerados").DataTable({
     ajax: "ajax/tabla-pedidos-generados.ajax.php",
+    deferRender: true,
+    retrieve: true,
+    processing: true,
+    "pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+    language: {
+        sProcessing: "Procesando...",
+        sLengthMenu: "Mostrar _MENU_ registros",
+        sZeroRecords: "No se encontraron resultados",
+        sEmptyTable: "Ningún dato disponible en esta tabla",
+        sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+        sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
+        sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+        sInfoPostFix: "",
+        sSearch: "Buscar:",
+        sUrl: "",
+        sInfoThousands: ",",
+        sLoadingRecords: "Cargando...",
+        oPaginate: {
+            sFirst: "Primero",
+            sLast: "Último",
+            sNext: "Siguiente",
+            sPrevious: "Anterior"
+        },
+        oAria: {
+            sSortAscending: ": Activar para ordenar la columna de manera ascendente",
+            sSortDescending: ": Activar para ordenar la columna de manera descendente"
+        }
+    }
+});
+
+/*
+* CARGADOS TABLA APROBADOS
+*/
+$(".tablaPedidosAprobados").DataTable({
+    ajax: "ajax/tabla-pedidos-aprobados.ajax.php",
+    deferRender: true,
+    retrieve: true,
+    processing: true,
+    "pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+    language: {
+        sProcessing: "Procesando...",
+        sLengthMenu: "Mostrar _MENU_ registros",
+        sZeroRecords: "No se encontraron resultados",
+        sEmptyTable: "Ningún dato disponible en esta tabla",
+        sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+        sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
+        sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+        sInfoPostFix: "",
+        sSearch: "Buscar:",
+        sUrl: "",
+        sInfoThousands: ",",
+        sLoadingRecords: "Cargando...",
+        oPaginate: {
+            sFirst: "Primero",
+            sLast: "Último",
+            sNext: "Siguiente",
+            sPrevious: "Anterior"
+        },
+        oAria: {
+            sSortAscending: ": Activar para ordenar la columna de manera ascendente",
+            sSortDescending: ": Activar para ordenar la columna de manera descendente"
+        }
+    }
+});
+
+/*
+* CARGADOS TABLA APT
+*/
+$(".tablaPedidosAPT").DataTable({
+    ajax: "ajax/tabla-pedidos-apt.ajax.php",
+    deferRender: true,
+    retrieve: true,
+    processing: true,
+    "pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+    language: {
+        sProcessing: "Procesando...",
+        sLengthMenu: "Mostrar _MENU_ registros",
+        sZeroRecords: "No se encontraron resultados",
+        sEmptyTable: "Ningún dato disponible en esta tabla",
+        sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+        sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
+        sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+        sInfoPostFix: "",
+        sSearch: "Buscar:",
+        sUrl: "",
+        sInfoThousands: ",",
+        sLoadingRecords: "Cargando...",
+        oPaginate: {
+            sFirst: "Primero",
+            sLast: "Último",
+            sNext: "Siguiente",
+            sPrevious: "Anterior"
+        },
+        oAria: {
+            sSortAscending: ": Activar para ordenar la columna de manera ascendente",
+            sSortDescending: ": Activar para ordenar la columna de manera descendente"
+        }
+    }
+});
+
+/*
+* CARGADOS TABLA CONFIRMADOS
+*/
+$(".tablaPedidosConfirmados").DataTable({
+    ajax: "ajax/tabla-pedidos-confirmados.ajax.php",
+    deferRender: true,
+    retrieve: true,
+    processing: true,
+    "pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+    language: {
+        sProcessing: "Procesando...",
+        sLengthMenu: "Mostrar _MENU_ registros",
+        sZeroRecords: "No se encontraron resultados",
+        sEmptyTable: "Ningún dato disponible en esta tabla",
+        sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+        sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
+        sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+        sInfoPostFix: "",
+        sSearch: "Buscar:",
+        sUrl: "",
+        sInfoThousands: ",",
+        sLoadingRecords: "Cargando...",
+        oPaginate: {
+            sFirst: "Primero",
+            sLast: "Último",
+            sNext: "Siguiente",
+            sPrevious: "Anterior"
+        },
+        oAria: {
+            sSortAscending: ": Activar para ordenar la columna de manera ascendente",
+            sSortDescending: ": Activar para ordenar la columna de manera descendente"
+        }
+    }
+});
+
+/*
+* CARGADOS TABLA FACTURADOS
+*/
+$(".tablaPedidosFacturados").DataTable({
+    ajax: "ajax/tabla-pedidos-facturados.ajax.php",
     deferRender: true,
     retrieve: true,
     processing: true,

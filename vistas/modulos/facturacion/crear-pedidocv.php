@@ -847,7 +847,7 @@
 
                         <div class="box-header with-border">
 
-                            <button onclick="location.href='pedidoscv'" type="button" class="btn btn-danger pull-left">Cancelar
+                            <button onclick="history.back()" type="button" class="btn btn-danger pull-left">Cancelar
                             </button>
 
                         <?php

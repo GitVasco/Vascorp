@@ -665,7 +665,7 @@ class ModeloPedidos{
     */
 	static public function mdlMostraPedidosTablas($valor){
 
-		if($valor == null){
+		if($valor != null){
 
 			$sql="SELECT
 						t.id,
@@ -702,6 +702,7 @@ class ModeloPedidos{
 						ON t.condicion_venta = cv.id
 						LEFT JOIN usuariosjf u
 						ON t.usuario = u.id
+					WHERE t.estado = '$valor'
 					ORDER BY fecha DESC";
 
 		$stmt=Conexion::conectar()->prepare($sql);
