@@ -11,7 +11,7 @@ class TablaPedidosCV{
 
     public function mostrarTablaPedidosCV(){
 
-        $valor = 'generado';
+        $valor = 'aprobado';
 
         $pedidos = ControladorPedidos::ctrMostraPedidosTablas($valor);
 
