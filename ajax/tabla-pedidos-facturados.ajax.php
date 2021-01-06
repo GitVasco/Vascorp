@@ -11,9 +11,9 @@ class TablaPedidosCV{
 
     public function mostrarTablaPedidosCV(){
 
-        $valor = null;
+        $valor = 'facturados';
 
-        $pedidos = ControladorPedidos::ctrMostraPedidosGeneral($valor);
+        $pedidos = ControladorPedidos::ctrMostraPedidosTablas($valor);
 
         if(count($pedidos)>0){
 

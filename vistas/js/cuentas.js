@@ -132,7 +132,7 @@ $(".tablaCuentas").on("click", ".btnCancelarCuenta", function () {
           $("#cancelarDocumento").val(respuesta["num_cta"]);
           $("#cancelarNota").val(respuesta["notas"]);
           $("#cancelarVendedor").val(respuesta["vendedor"]);
-          $("#cancelarVendedor").selectpicker('refresh');
+          $("#cancelarCliente").val(respuesta["cliente"]);
           $("#cancelarFechaUltima").val(respuesta["ult_pago"]);
           $("#cancelarSaldo").val(respuesta["saldo"]);
       }
@@ -202,8 +202,8 @@ $(".tablaCuentas").on("click", ".btnEliminarCuenta", function(){
   
 // })
 $(".tablaCuentas").on("click", ".btnVisualizarCuenta", function () {
-  var idCuenta = $(this).attr("idCuenta");
-  window.location = "index.php?ruta=ver-cuentas&idCuenta=" + idCuenta ;
+  var numCuenta = $(this).attr("numCta");
+  window.location = "index.php?ruta=ver-cuentas&numCta=" + numCuenta ;
 
 })
 
@@ -227,7 +227,7 @@ $(".tablas").on("click", ".btnEliminarCancelacion", function(){
       }).then(function(result){
         if (result.value) {
           
-            window.location = "index.php?ruta=ver-cuentas&idCuenta="+idCancelacion;
+            window.location = "index.php?ruta=ver-cuentas&idCancelacion="+idCancelacion;
         }
 
   })
@@ -237,9 +237,8 @@ $(".tablas").on("click", ".btnEliminarCancelacion", function(){
 $(".tablas").on("click", ".btnEditarCancelacion", function () {
 
   var idCancelacion = $(this).attr("idCancelacion");
-
   var datos = new FormData();
-  datos.append("idCuenta", idCancelacion);
+  datos.append("idCancelacion", idCancelacion);
 
   $.ajax({
 
@@ -251,18 +250,155 @@ $(".tablas").on("click", ".btnEditarCancelacion", function () {
       processData: false,
       dataType: "json",
       success: function (respuesta) {
-
+          console.log(respuesta);
           $("#idCuenta2").val(respuesta["id"]);
           $("#cancelarDocumento").val(respuesta["num_cta"]);
           $("#cancelarNota").val(respuesta["notas"]);
+          $("#cancelarCodigo").val(respuesta["tipo_doc"]);
+          $("#cancelarCodigo").selectpicker('refresh');
           $("#cancelarVendedor").val(respuesta["vendedor"]);
-          $("#cancelarVendedor").selectpicker('refresh');
-          $("#cancelarFechaUltima").val(respuesta["ult_pago"]);
-          $("#cancelarMonto").val(respuesta["monto"]);
-          $("#cancelarSaldo").val(respuesta["saldo"]);
-          $("#cancelarSaldoAntiguo").val(Number(respuesta["saldo"])+Number(respuesta["monto"]));
+          $("#cancelarCliente").val(respuesta["cliente"]);
+          $("#cancelarFechaUltima").val(respuesta["fecha"]);
+          $("#cancelarMonto2").val(respuesta["monto"]);
+          $("#cancelarMontoAntiguo").val(respuesta["monto"]);
       }
 
   })
 
 })
+$("#cancelarMonto2").change(function(){
+  var saldo = $(this).val();
+  var saldoAntiguo = $("#cancelarMontoAntiguo").val();
+  if(saldo>saldoAntiguo){
+    swal({
+      title: "La cantidad supera el Saldo de la cuenta ",
+      text: "¡Sólo hay S/. " + saldoAntiguo + " de saldo!",
+      type: "error",
+      confirmButtonText: "¡Cerrar!"
+    });
+
+    return;
+  }
+});
+
+
+$(".tablaCuentas").on("click", ".btnAgregarLetra", function () {
+
+  var idCuenta = $(this).attr("idCuenta");
+  var cliente = $(this).attr("cliente");
+  var datos = new FormData();
+  datos.append("idCuenta", idCuenta);
+
+  $.ajax({
+
+      url: "ajax/cuentas.ajax.php",
+      method: "POST",
+      data: datos,
+      cache: false,
+      contentType: false,
+      processData: false,
+      dataType: "json",
+      success: function (respuesta) {
+          $("#idCuenta3").val(respuesta["id"]);
+          $("#letraCodigo").val(respuesta["tipo_doc"]);
+          $("#letraDocumento").val(respuesta["num_cta"]);
+          $("#letraUsuario").val(respuesta["usuario"]);
+          $("#letraVendedor").val(respuesta["vendedor"]);
+          $("#letraCli").val(respuesta["cliente"]);
+          $("#letraFecha").val(respuesta["fecha"]);
+          $("#letraMonto").val(respuesta["monto"]);
+          $("#letraSaldo").val(respuesta["saldo"]);
+          $("#letraMoneda").val(respuesta["tip_mon"]);
+          $("#letraCliente").val(cliente);
+          $(".letraCuenta").remove();
+      }
+
+  })
+
+})
+
+$(".btnGenerarLetra").click(function(){
+  var nroLetra = $("#nroLetra").val();  
+  var saldo=$("#letraSaldo").val();
+  var montoLetra=Number(saldo)/Number(nroLetra);
+  var fecha= new Date($("#letraFecha").val());
+  var sumaDias = Number($("#sumaFecha").val())+1;
+  var intervalo=Number($("#sumaIntervalo").val());
+  fecha.setDate(fecha.getDate() + sumaDias);
+  var mes=(fecha.getMonth() + 1);
+  var dia =fecha.getDate();
+  if(mes.toString().length == 1){
+    if(dia.toString().length == 1){
+      var resultado= fecha.getFullYear() + '-0' +
+      (fecha.getMonth() + 1) + '-' + "0"+fecha.getDate();
+    }else{
+      var resultado= fecha.getFullYear() + '-0' +
+      (fecha.getMonth() + 1) + '-' + fecha.getDate();
+    }
+  }else{
+    if(dia.toString().length == 1){
+      var resultado= fecha.getFullYear() + '-' +
+      (fecha.getMonth() + 1) + '-' + "0"+fecha.getDate();
+    }else{
+      var resultado= fecha.getFullYear() + '-' +
+      (fecha.getMonth() + 1) + '-' + fecha.getDate();
+    }
+  }
+  
+  
+  for (let index = 0; index < nroLetra; index++) {
+    
+    if(index==0){
+      $(".listaLetras").append(
+        '<div class="letraCuenta col-lg-12" style="padding:0px">'+
+          '<div class="col-lg-3" style="padding-top:10px">' +
+              '<input type="date" class="form-control "   name="fechaVenc[]" value="'+ resultado +'"  required>' +
+          '</div>'+
+          '<div class="col-lg-6" style="padding-top:10px">' +
+              '<input type="text" class="form-control "   name="obs'+index+'" value="Letra '+(index+1)+'"  >' +
+          '</div>'+
+          '<div class="col-lg-2" style="padding-top:10px">' +
+              '<input type="text" class="form-control "   name="monto'+index+'" value="' + montoLetra.toFixed(2) + '" readonly required>' +
+          '</div>'+
+          '<div class="col-lg-12"></div><br>'+
+        '</div>' );
+    }
+    else{
+    fecha.setDate(fecha.getDate() + intervalo);
+    var mes2=(fecha.getMonth() + 1);
+    var dia2 =fecha.getDate();
+    if(mes2.toString().length == 1){
+      if(dia2.toString().length == 1){
+        var resultado2= fecha.getFullYear() + '-0' +
+        (fecha.getMonth() + 1) + '-' + "0"+fecha.getDate();
+      }else{
+        var resultado2= fecha.getFullYear() + '-0' +
+        (fecha.getMonth() + 1) + '-' + fecha.getDate();
+      }
+    }else{
+      if(dia2.toString().length == 1){
+        var resultado2= fecha.getFullYear() + '-' +
+        (fecha.getMonth() + 1) + '-' + "0"+fecha.getDate();
+      }else{
+        var resultado2= fecha.getFullYear() + '-' +
+        (fecha.getMonth() + 1) + '-' + fecha.getDate();
+      }
+    }
+      $(".listaLetras").append(
+        '<div class="letraCuenta col-lg-12" style="padding:0px">'+
+          '<div class="col-lg-3" style="padding-top:10px">' +
+              '<input type="date" class="form-control "   name="fechaVenc[]" value="'+resultado2+'"  required>' +
+          '</div>'+
+          '<div class="col-lg-6" style="padding-top:10px">' +
+              '<input type="text" class="form-control "   name="obs'+index+'"  value="Letra '+(index+1)+'"  >' +
+          '</div>'+
+          '<div class="col-lg-2" style="padding-top:10px">' +
+              '<input type="text" class="form-control "   name="monto'+index+'" value="' + montoLetra.toFixed(2) + '" readonly required>' +
+          '</div>'+
+          '<div class="col-lg-12"></div><br>'+
+        '</div>' );
+    }
+    
+  }
+   
+});

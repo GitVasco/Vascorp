@@ -11,7 +11,7 @@ class TablaGuiasRemision{
 
     public function mostrarTablaGuiasRemision(){
 
-        $tipo = "S01";
+        $tipo = "S02";
         $estado = "GENERADO";
         $valor = null;
 

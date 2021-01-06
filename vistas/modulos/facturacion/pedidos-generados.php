@@ -4,7 +4,7 @@
 
     <h1>
 
-      Pedidos General
+      Pedidos Generados
 
     </h1>
 
@@ -12,7 +12,7 @@
 
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-      <li class="active">Pedidos General</li>
+      <li class="active">Pedidos Generados</li>
 
     </ol>
 
@@ -107,7 +107,7 @@
 
       <div class="box-body">
 
-        <table class="table table-bordered table-striped dt-responsive tablaPedidosCV">
+        <table class="table table-bordered table-striped dt-responsive tablaPedidosGenerados">
 
           <thead>
 

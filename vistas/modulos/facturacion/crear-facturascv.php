@@ -80,7 +80,7 @@
                                         <?php
 
                                         $pedido = $_GET["pedido"];
-                                        #var_dump("pedido", $pedido);
+                                        //var_dump("pedido", $pedido);
 
                                         echo '<input type="text" class="form-control input-sm" id="nuevoCodigo" name="nuevoCodigo" value="' . $pedido . '" readonly>';
 
@@ -102,76 +102,50 @@
 
                                         <span class="input-group-addon"><i class="fa fa-users"></i></span>
 
-                                        <select class="form-control selectpicker" id="seleccionarCliente" name="seleccionarCliente" data-live-search="true"  required>
-
                                         <?php
 
                                         $valor = $_GET["pedido"];
 
                                         $pedido = ControladorPedidos::ctrMostrarTemporal($valor);
-                                        //var_dump("pedido", $pedido);
+                                        var_dump("pedido", $pedido);
 
                                         if ($pedido["codigo"] != "") {
 
-                                            $item = "codigo";
-                                            $valor = $pedido["cliente"];
+                                            $cliente = ControladorClientes::ctrMostrarClientes("id", $pedido["cliente"]);
 
-                                            $clientes = ControladorClientes::ctrMostrarClientesP($item, $valor);
-                                            //var_dump($clientes["nombreB"]);
+                                            echo '<input type="hidden" class="form-control input-sm" id="codCliente" name="codCliente" value="' . $cliente["id"] . '" readonly>';
 
-                                            echo '<option value="'.$clientes["codigo"].'">'.$clientes["nombreB"].'</option>';
+                                            echo '<input type="text" class="form-control input-sm" id="seleccionarCliente" name="seleccionarCliente" value="' . $cliente["nombre"] . '" readonly>';
+                                            #var_dump("nombre", $cliente["nombre"]);
 
-                                            $client2 = ControladorClientes::ctrMostrarClientesP(null, null);
 
-                                            //var_dump($client2);
-
-                                            foreach ($client2 as $key => $value) {
-
-                                            echo '<option value="'.$value["codigo"].'">'.$value["nombreB"].'</option>';
-
-                                            }
 
                                         } else {
 
-                                            $clientes = ControladorClientes::ctrMostrarClientesP(null, null);
-                                            var_dump($clientes);
+                                            echo '<select class="form-control selectpicker" id="seleccionarCliente" name="seleccionarCliente" data-live-search="true" required>
 
-                                            echo '<option value="">Seleccione Cliente</option>';
-                                            //var_dump($clientes);
+                                                <option value="">Seleccionar cliente</option>';
 
-                                            foreach ($clientes as $key => $value) {
+                                            $item = null;
+                                            $valor = null;
 
-                                                echo '<option value="'.$value["codigo"].'">'.$value["nombreB"].'</option>';
+                                            $categorias = ControladorClientes::ctrMostrarClientesP($item, $valor);
 
+                                            foreach ($categorias as $key => $value) {
+
+                                                echo '<option value="' . $value["id"] . '">' . $value["codigo"] . ' - ' . $value["nombre"] . '</option>';
                                             }
 
+                                            echo '</select>
+
+                                            <span class="input-group-addon"><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modalAgregarClienteP" data-dismiss="modal">Agregar
+                                                    cliente</button></span>';
                                         }
 
 
                                         ?>
 
-                                        </select>
 
-                                        <?php
-
-                                            $valor = $_GET["pedido"];
-
-                                            $pedido = ControladorPedidos::ctrMostrarTemporal($valor);
-                                            //var_dump("pedido", $pedido);
-
-                                            if ($pedido["codigo"] != "") {
-
-                                                $item = "codigo";
-                                                $valor = $pedido["cliente"];
-
-                                                $clientes = ControladorClientes::ctrMostrarClientesP($item, $valor);
-
-                                                echo '<input type="hidden" class="form-control input-sm" id="codCliente" name="codCliente" value="' . $clientes["codigo"] . '" readonly>';
-
-                                                echo '<input type="text" class="form-control input-sm" id="nomCliente" name="nomCliente" value="' . $clientes["nombre"] . '" readonly>';
-                                            }
-
-                                        ?>
 
                                     </div>
 
@@ -187,50 +161,34 @@
 
                                         <span class="input-group-addon"><i class="fa fa-shopping-cart"></i></span>
 
-                                        <select class="form-control" id="seleccionarVendedor" name="seleccionarVendedor" required>
-
                                         <?php
 
                                         $valor = $_GET["pedido"];
 
                                         $pedido = ControladorPedidos::ctrMostrarTemporal($valor);
-                                        //var_dump("pedido", $pedido["vendedor"]);
+                                        #var_dump("pedido", $pedido);
 
-                                        if ($pedido["vendedor"] != "") {
+                                        if ($pedido["codigo"] != "") {
 
-                                            $vendedor = ControladorVendedores::ctrMostrarVendedores("codigo", $pedido["vendedor"]);
-                                            //var_dump($vendedor);
-
-                                            echo '<option value="'.$vendedor["codigo"].'">'.$vendedor["codigo"].' - '.$vendedor["descripcion"].'</option>';
-
-                                            $vend2 = ControladorVendedores::ctrMostrarVendedores(null, null);
-
-                                            //var_dump($vend2);
-
-                                            foreach ($vend2 as $key => $value) {
-
-                                            echo '<option value="'.$value["id"].'">'.$value["codigo"].' - '.$value["descripcion"].'</option>';
-
-                                            }
-
+                                            echo '<input type="text" class="form-control input-sm" id="seleccionarVendedor" name="seleccionarVendedor" value="' . $pedido["vendedor"] . '" readonly>';
                                         } else {
 
-                                            $vendedor = ControladorVendedores::ctrMostrarVendedores(null, null);
+                                            echo '<select class="form-control" id="seleccionarVendedor" name="seleccionarVendedor" required>
 
-                                            echo '<option value="">Seleccione Vendedor</option>';
-                                            //var_dump($vendedor);
+                                                    <option value="">Vendedor</option>
+                                                    <option value="00">00 - Oficina</option>
+                                                    <option value="02">02 - Manuel Vasquez</option>
+                                                    <option value="07">07 - Antonio Diaz</option>
+                                                    <option value="18A">18A - Oscar Ponce</option>
+                                                    <option value="19">19 - Juan Carlos Diaz</option>
+                                                    <option value="20">20 - Amelia Portal</option>
 
-                                            foreach ($vendedor as $key => $value) {
-
-                                                echo '<option value="'.$value["codigo"].'">'.$value["codigo"].' - '.$value["descripcion"].'</option>';
-
-                                            }
-
+                                                </select>';
                                         }
 
                                         ?>
 
-                                        </select>
+
 
                                     </div>
 
@@ -728,6 +686,7 @@
                                                         $valor = $pedido["condicion_venta"];
 
                                                         $condiciones = ControladorCondicionVentas::ctrMostrarCondicionVentas($item, $valor);
+
                                                         //var_dump($condiciones["descripcion"]);
 
                                                         echo '<option value="'.$condiciones["id"].'">'.$condiciones["codigo"].' - '.$condiciones["descripcion"].'</option>';
@@ -847,7 +806,7 @@
 
                         <div class="box-header with-border">
 
-                            <button onclick="history.back()" type="button" class="btn btn-danger pull-left">Cancelar
+                            <button onclick="location.href='pedidoscv'" type="button" class="btn btn-danger pull-left">Cancelar
                             </button>
 
                         <?php
@@ -1393,7 +1352,7 @@ MODAL PARA GENERAR EL PEDIDO
 </div>
 
 <script>
-window.document.title = "Crear pedido"
+window.document.title = "Crear Factura"
 </script>
 
 <script>
