@@ -49,7 +49,7 @@
             <option value="TODOS">TODOS</option>
           </select>
         </div>
-        <button type="button" class="btn btn-default pull-right" id="daterange-btnCuentas" style="margin-left:10px">
+        <button type="button" class="btn btn-default pull-right" id="daterange-btnCuentasAprobadas" style="margin-left:10px">
           <span>
             <i class="fa fa-calendar"></i>
 
@@ -80,7 +80,7 @@
         
       <div class="box-body">
         
-       <table class="table table-bordered table-striped dt-responsive tablaCuentas">
+       <table class="table table-bordered table-striped dt-responsive tablaCuentasAprobadas">
          
         <thead>
          
@@ -281,7 +281,7 @@ MODAL AGREGAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
 
-                <input type="date" class="form-control input-lg" name="nuevaFecha"  >
+                <input type="date" class="form-control input-lg" name="nuevaFecha"  required>
 
               </div>
 
@@ -295,7 +295,7 @@ MODAL AGREGAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <select type="text" class="form-control input-lg selectpicker" name="nuevoBanco" data-live-search="true"  >
+                <select type="text" class="form-control input-lg selectpicker" name="nuevoBanco" data-live-search="true"  required>
                   <option value="">Seleccionar banco</option>
 
                     <?php
@@ -363,7 +363,7 @@ MODAL AGREGAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-sort-numeric-asc"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="nuevoUnico" placeholder="Ingresar nro. unico" >
+                <input type="text" class="form-control input-lg" name="nuevoUnico" placeholder="Ingresar nro. unico" required>
 
               </div>
 
@@ -392,7 +392,7 @@ MODAL AGREGAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
 
-                <input type="date" class="form-control input-lg" name="nuevaFechaAcep"  >
+                <input type="date" class="form-control input-lg" name="nuevaFechaAcep"  required>
 
               </div>
 
@@ -406,7 +406,7 @@ MODAL AGREGAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
 
-                <input type="date" class="form-control input-lg" name="nuevaFechaEnvio"  >
+                <input type="date" class="form-control input-lg" name="nuevaFechaEnvio"  required>
 
               </div>
 
@@ -501,7 +501,7 @@ MODAL AGREGAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-usd"></i></span> 
 
-                <input type="number" min="0" step="any" class="form-control input-lg" name="nuevoTipoCambio" placeholder="Ingresar tipo de cambio" >
+                <input type="number" min="0" step="any" class="form-control input-lg" name="nuevoTipoCambio" placeholder="Ingresar tipo de cambio" required>
                 <input type="hidden" name="nuevoUsuario" value="<?php echo $_SESSION["id"];?>">
               </div>
 
@@ -515,7 +515,7 @@ MODAL AGREGAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-usd"></i></span> 
 
-                <select type="text" class="form-control input-lg selectpicker" name="nuevoEstado" data-live-search="true"  >
+                <select type="text" class="form-control input-lg selectpicker" name="nuevoEstado" data-live-search="true"  required>
                   <option value="">Seleccionar estado de documento</option>
                   <option value="GENERADO">GENERADO</option>
                   <option value="ENVIADO">ENVIADO</option>   
@@ -726,7 +726,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
 
-                <input type="date" class="form-control input-lg" name="editarFecha" id="editarFecha" >
+                <input type="date" class="form-control input-lg" name="editarFecha" id="editarFecha"  required>
 
               </div>
 
@@ -740,7 +740,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <select type="text" class="form-control input-lg selectpicker" name="editarBanco" id="editarBanco" data-live-search="true"  >
+                <select type="text" class="form-control input-lg selectpicker" name="editarBanco" id="editarBanco" data-live-search="true"  required>
                   <option value="">Seleccionar banco</option>
 
                     <?php
@@ -793,7 +793,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
 
-                <input type="date" class="form-control input-lg" name="editarFechaVenc" id="editarFechaVenc" >
+                <input type="date" class="form-control input-lg" name="editarFechaVenc" id="editarFechaVenc" required>
 
               </div>
 
@@ -807,7 +807,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-sort-numeric-asc"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="editarUnico" id="editarUnico"  >
+                <input type="text" class="form-control input-lg" name="editarUnico" id="editarUnico"  required>
 
               </div>
 
@@ -836,7 +836,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
 
-                <input type="date" class="form-control input-lg" name="editarFechaAcep" id="editarFechaAcep" >
+                <input type="date" class="form-control input-lg" name="editarFechaAcep" id="editarFechaAcep" required>
 
               </div>
 
@@ -850,7 +850,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
 
-                <input type="date" class="form-control input-lg" name="editarFechaEnvio" id="editarFechaEnvio"  >
+                <input type="date" class="form-control input-lg" name="editarFechaEnvio" id="editarFechaEnvio"  required>
 
               </div>
 
@@ -945,7 +945,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-usd"></i></span> 
 
-                <input type="number" min="0" step="any" class="form-control input-lg" name="editarTipoCambio" id="editarTipoCambio" >
+                <input type="number" min="0" step="any" class="form-control input-lg" name="editarTipoCambio" id="editarTipoCambio" required>
 
               </div>
 
@@ -959,7 +959,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-usd"></i></span> 
 
-                <select type="text" class="form-control input-lg selectpicker" name="editarEstado" id="editarEstado" data-live-search="true"  >
+                <select type="text" class="form-control input-lg selectpicker" name="editarEstado" id="editarEstado" data-live-search="true"  required>
                   <option value="">Seleccionar estado de documento</option>
                   <option value="GENERADO">GENERADO</option>
                   <option value="ENVIADO">ENVIADO</option>   
@@ -1106,7 +1106,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-text-width"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="cancelarNota" id="cancelarNota" >
+                <input type="text" class="form-control input-lg" name="cancelarNota" id="cancelarNota" required>
 
               </div>
 
@@ -1120,7 +1120,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-usd"></i></span> 
 
-                <input type="number" min="0" step="any" class="form-control input-lg" name="cancelarMonto" id="cancelarMonto" value="0" required>
+                <input type="number" min="0" step="any" class="form-control input-lg" name="cancelarMonto" id="cancelarMonto" value="0">
                 <input type="hidden"  id="cancelarSaldo" >
                 <input type="hidden"  id="cancelarVendedor" name="cancelarVendedor" >
                 <input type="hidden"  id="cancelarCliente" name="cancelarCliente" >

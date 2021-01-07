@@ -262,7 +262,10 @@ CUERPO DOCUMENTO
         }else if( $_GET["ruta"] == "cuentas" ||
                   $_GET["ruta"] == "ver-cuentas" ||
                   $_GET["ruta"] == "abonos" ||
-                  $_GET["ruta"] == "cancelar-abonos") {
+                  $_GET["ruta"] == "cancelar-abonos"||
+                  $_GET["ruta"] == "cuentas-pendientes"||
+                  $_GET["ruta"] == "cuentas-aprobadas" ||
+                  $_GET["ruta"] == "consultar-cuentas" ) {
 
             include "modulos/cuentas-corrientes/".$_GET["ruta"].".php";
 
@@ -278,7 +281,7 @@ CUERPO DOCUMENTO
               include "modulos/".$_GET["ruta"].".php";
 
         }else if($_GET["ruta"] == "leer-stock" ||
-        $_GET["ruta"] == "cargas-automaticas"){
+                 $_GET["ruta"] == "cargas-automaticas"){
           include "reportes_excel/".$_GET["ruta"].".php";
 
         }else{

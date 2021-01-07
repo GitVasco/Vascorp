@@ -32,6 +32,18 @@ class AjaxCuentas{
         echo json_encode($respuesta);
     
       }
+
+      public $numCta;
+    
+      public function ajaxCancelarCuenta(){
+        $item="num_cta";
+        $valor = $this->numCta;
+    
+        $respuesta = ControladorCuentas::ctrMostrarCuentas($item,$valor);
+    
+        echo json_encode($respuesta);
+    
+      }
     
     }
     
@@ -53,4 +65,14 @@ class AjaxCuentas{
       $tipoCancelacion = new AjaxCuentas();
       $tipoCancelacion -> idCancelacion = $_POST["idCancelacion"];
       $tipoCancelacion -> ajaxEditarCancelacion();
+  }
+
+  /*=============================================
+    CANCELAR CUENTA
+    =============================================*/	
+    if(isset($_POST["numCta"])){
+    
+      $cancelaCuenta = new AjaxCuentas();
+      $cancelaCuenta -> numCta = $_POST["numCta"];
+      $cancelaCuenta -> ajaxCancelarCuenta();
   }

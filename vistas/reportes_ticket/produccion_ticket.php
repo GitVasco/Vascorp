@@ -102,7 +102,7 @@
                 
                 <tr>
                   <td>'.$value["cod_operacion"].'</td>
-                  <td>'.$value["operacion"].'</td>
+                  <td>'.$value["operacion"]." 0".($key+1)'</td>
                 </tr>
         
             </table>

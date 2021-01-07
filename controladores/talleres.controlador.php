@@ -46,6 +46,19 @@ class ControladorTalleres{
 
     }
     
+    /*
+    * MOSTRAR DATOS DE TALLERES GENERAL
+    */
+    static public function ctrMostrarTallerCabecera($item,$valor){
+
+        $tabla="entaller_cabjf";
+        $respuesta = ModeloTalleres::mdlMostrarTallerCabecera($tabla,$item,$valor);
+
+        return $respuesta;
+
+    }
+
+
     /* 
     * ACTUALIZAR A EN PROCESO
     */
@@ -362,6 +375,42 @@ class ControladorTalleres{
 				}
 
 
+		}
+
+    }
+
+    /*=============================================
+	EXPORTAR TICKET POR CODIGO UNICO TALLER CABECERA
+	=============================================*/
+
+	static public function ctrExportarArticulo(){
+
+		if(isset($_POST["nuevoCodigo"])){
+
+            $cod = $_POST["nuevoCodigo"];
+
+            echo'<script>
+            
+            window.open("vistas/reportes_ticket/produccion_ticket.php?codigo='.$cod.'" ,"_blank");
+                   
+            </script>';
+
+            echo'<script>
+
+            swal({
+                  type: "success",
+                  title: "Se exporto ticket de articulo a taller correctamente",
+                  showConfirmButton: true,
+                  confirmButtonText: "Cerrar"
+                  }).then(function(result){
+                            if (result.value) {
+
+                            window.location = "en-taller";
+
+                            }
+                        })
+
+            </script>';
 		}
 
     }

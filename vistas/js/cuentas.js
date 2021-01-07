@@ -3,18 +3,31 @@ $("#tipoCuenta").change(function(){
   if(tipo=='PENDIENTE'){
     window.location="cuentas-pendientes";
   }else if(tipo=='CANCELADO'){
-    window.location="cuentas-canceladas";
+    window.location="cuentas-aprobadas";
   }else{
     window.location="cuentas";
   }
  });
 
-$('.tablaCuentas').DataTable({
-    "ajax": "ajax/tabla-cuentas.ajax.php?perfil="+$("#perfilOculto").val(),
+ // Validamos que venga la variable capturaRango en el localStorage
+if (localStorage.getItem("capturaRango10") != null) {
+	$("#daterange-btnCuentas span").html(localStorage.getItem("capturaRango10"));
+	cargarTablaCuentas(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
+} else {
+	$("#daterange-btnCuentas span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
+	cargarTablaCuentas(null, null);
+}
+
+ //CUENTAS 
+function cargarTablaCuentas(fechaInicial, fechaFinal){
+  $('.tablaCuentas').DataTable({
+    "ajax": "ajax/tabla-cuentas.ajax.php?perfil="+$("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
     "deferRender": true,
     "retrieve": true,
     "processing": true,
     "order": [[0, "asc"]],
+    "pageLength": 20,
+	  "lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
     "language": {
       "sProcessing":     "Procesando...",
       "sLengthMenu":     "Mostrar _MENU_ registros",
@@ -40,6 +53,98 @@ $('.tablaCuentas').DataTable({
       }
     }    
   });
+}
+// Validamos que venga la variable capturaRango en el localStorage
+if (localStorage.getItem("capturaRango11") != null) {
+	$("#daterange-btnCuentasPendientes span").html(localStorage.getItem("capturaRango11"));
+	cargarTablaCuentasPendientes(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
+} else {
+	$("#daterange-btnCuentasPendientes span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
+	cargarTablaCuentasPendientes(null, null);
+}
+
+ //CUENTAS PENDIENTES
+function cargarTablaCuentasPendientes(fechaInicial, fechaFinal){
+  $('.tablaCuentasPendientes').DataTable({
+    "ajax": "ajax/tabla-cuentas-pendientes.ajax.php?perfil="+$("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
+    "deferRender": true,
+    "retrieve": true,
+    "processing": true,
+    "order": [[0, "asc"]],
+    "pageLength": 20,
+	  "lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+    "language": {
+      "sProcessing":     "Procesando...",
+      "sLengthMenu":     "Mostrar _MENU_ registros",
+      "sZeroRecords":    "No se encontraron resultados",
+      "sEmptyTable":     "Ningún dato disponible en esta tabla",
+      "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+      "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0",
+      "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+      "sInfoPostFix":    "",
+      "sSearch":         "Buscar:",
+      "sUrl":            "",
+      "sInfoThousands":  ",",
+      "sLoadingRecords": "Cargando...",
+      "oPaginate": {
+      "sFirst":    "Primero",
+      "sLast":     "Último",
+      "sNext":     "Siguiente",
+      "sPrevious": "Anterior"
+      },
+      "oAria": {
+        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+      }
+    }    
+  });
+}
+
+// Validamos que venga la variable capturaRango en el localStorage
+if (localStorage.getItem("capturaRango12") != null) {
+	$("#daterange-btnCuentasAprobadas span").html(localStorage.getItem("capturaRango12"));
+	cargarTablaCuentasAprobadas(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
+} else {
+	$("#daterange-btnCuentasAprobadas span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
+	cargarTablaCuentasAprobadas(null, null);
+}
+
+ //CUENTAS 
+function cargarTablaCuentasAprobadas(fechaInicial, fechaFinal){
+  $('.tablaCuentasAprobadas').DataTable({
+    "ajax": "ajax/tabla-cuentas-aprobadas.ajax.php?perfil="+$("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
+    "deferRender": true,
+    "retrieve": true,
+    "processing": true,
+    "order": [[0, "asc"]],
+    "pageLength": 20,
+	  "lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+    "language": {
+      "sProcessing":     "Procesando...",
+      "sLengthMenu":     "Mostrar _MENU_ registros",
+      "sZeroRecords":    "No se encontraron resultados",
+      "sEmptyTable":     "Ningún dato disponible en esta tabla",
+      "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+      "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0",
+      "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+      "sInfoPostFix":    "",
+      "sSearch":         "Buscar:",
+      "sUrl":            "",
+      "sInfoThousands":  ",",
+      "sLoadingRecords": "Cargando...",
+      "oPaginate": {
+      "sFirst":    "Primero",
+      "sLast":     "Último",
+      "sNext":     "Siguiente",
+      "sPrevious": "Anterior"
+      },
+      "oAria": {
+        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+      }
+    }    
+  });
+}
 
   $("#nuevoMonto").change(function(){
     var saldo = $(this).val();
@@ -140,7 +245,6 @@ $(".tablaCuentas").on("click", ".btnCancelarCuenta", function () {
 
           $("#idCuenta2").val(respuesta["id"]);
           $("#cancelarDocumento").val(respuesta["num_cta"]);
-          $("#cancelarNota").val(respuesta["notas"]);
           $("#cancelarVendedor").val(respuesta["vendedor"]);
           $("#cancelarCliente").val(respuesta["cliente"]);
           $("#cancelarSaldo").val(respuesta["saldo"]);
@@ -152,7 +256,7 @@ $(".tablaCuentas").on("click", ".btnCancelarCuenta", function () {
 $("#cancelarMonto").change(function(){
   var saldo = $(this).val();
   var saldoAntiguo = $("#cancelarSaldo").val();
-  if(saldo>saldoAntiguo){
+  if(Number(saldo)>Number(saldoAntiguo)){
     swal({
       title: "La cantidad supera el Saldo de la cuenta ",
       text: "¡Sólo hay S/. " + saldoAntiguo + " de saldo!",
@@ -278,7 +382,7 @@ $(".tablas").on("click", ".btnEditarCancelacion", function () {
 $("#cancelarMonto2").change(function(){
   var saldo = $(this).val();
   var saldoAntiguo = $("#cancelarMontoAntiguo").val();
-  if(saldo>saldoAntiguo){
+  if(Number(saldo)>Number(saldoAntiguo)){
     swal({
       title: "La cantidad supera el Saldo de la cuenta ",
       text: "¡Sólo hay S/. " + saldoAntiguo + " de saldo!",
@@ -421,3 +525,425 @@ $(".btnLimpiarLetra").click(function(){
   $(".letraCuenta").remove();
 });
 
+
+$("#daterange-btnCuentas").daterangepicker(
+  {
+  cancelClass: "CancelarFechaCuenta",
+  locale:{
+  "daysOfWeek": [
+    "Dom",
+    "Lun",
+    "Mar",
+    "Mie",
+    "Jue",
+    "Vie",
+    "Sab"
+  ],
+  "monthNames": [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre"
+  ],
+  },
+    ranges: {
+      Hoy: [moment(), moment()],
+      Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+      "Últimos 7 días": [moment().subtract(6, "days"), moment()],
+      "Últimos 30 días": [moment().subtract(29, "days"), moment()],
+      "Este mes": [moment().startOf("month"), moment().endOf("month")],
+      "Último mes": [
+        moment()
+          .subtract(1, "month")
+          .startOf("month"),
+        moment()
+          .subtract(1, "month")
+          .endOf("month")
+      ]
+    },
+    
+    startDate: moment(),
+    endDate: moment()
+  },
+  function(start, end) {
+    $("#daterange-btnCuentas span").html(
+      start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
+    );
+
+    var fechaInicial = start.format("YYYY-MM-DD");
+
+    var fechaFinal = end.format("YYYY-MM-DD");
+
+    var capturarRango10 = $("#daterange-btnCuentas span").html();
+
+    localStorage.setItem("capturarRango10", capturarRango10);
+    localStorage.setItem("fechaInicial", fechaInicial);
+    localStorage.setItem("fechaFinal", fechaFinal);
+    // Recargamos la tabla con la información para ser mostrada en la tabla
+    $(".tablaCuentas").DataTable().destroy();
+    cargarTablaCuentas(fechaInicial, fechaFinal);
+  });
+
+/*=============================================
+CANCELAR RANGO DE FECHAS
+=============================================*/
+
+$(".daterangepicker.opensleft .range_inputs .CancelarFechaCuenta").on(
+  "click",
+  function() {
+    localStorage.removeItem("capturarRango10");
+    localStorage.removeItem("fechaInicial");
+    localStorage.removeItem("fechaFinal");
+    localStorage.clear();
+    window.location = "cuentas";
+  }
+);
+
+/*=============================================
+CAPTURAR HOY
+=============================================*/
+
+$(".daterangepicker.opensleft .ranges li").on("click", function() {
+  var textoHoy = $(this).attr("data-range-key");
+
+  if (textoHoy == "Hoy") {
+    var d = new Date();
+
+    var dia = d.getDate();
+    var mes = d.getMonth() + 1;
+    var año = d.getFullYear();
+
+    dia = ("0" + dia).slice(-2);
+    mes = ("0" + mes).slice(-2);
+
+    var fechaInicial = año + "-" + mes + "-" + dia;
+    var fechaFinal = año + "-" + mes + "-" + dia;
+
+    localStorage.setItem("capturarRango10", "Hoy");
+    localStorage.setItem("fechaInicial", fechaInicial);
+    localStorage.setItem("fechaFinal", fechaFinal);
+    // Recargamos la tabla con la información para ser mostrada en la tabla
+    $(".tablaCuentas").DataTable().destroy();
+    cargarTablaCuentas(fechaInicial, fechaFinal);
+  }
+});
+
+$("#daterange-btnCuentasPendientes").daterangepicker(
+  {
+  cancelClass: "CancelarFechaCuentaPendiente",
+  locale:{
+  "daysOfWeek": [
+    "Dom",
+    "Lun",
+    "Mar",
+    "Mie",
+    "Jue",
+    "Vie",
+    "Sab"
+  ],
+  "monthNames": [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre"
+  ],
+  },
+    ranges: {
+      Hoy: [moment(), moment()],
+      Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+      "Últimos 7 días": [moment().subtract(6, "days"), moment()],
+      "Últimos 30 días": [moment().subtract(29, "days"), moment()],
+      "Este mes": [moment().startOf("month"), moment().endOf("month")],
+      "Último mes": [
+        moment()
+          .subtract(1, "month")
+          .startOf("month"),
+        moment()
+          .subtract(1, "month")
+          .endOf("month")
+      ]
+    },
+    
+    startDate: moment(),
+    endDate: moment()
+  },
+  function(start, end) {
+    $("#daterange-btnCuentasPendientes span").html(
+      start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
+    );
+
+    var fechaInicial = start.format("YYYY-MM-DD");
+
+    var fechaFinal = end.format("YYYY-MM-DD");
+
+    var capturarRango11 = $("#daterange-btnCuentasPendientes span").html();
+
+    localStorage.setItem("capturarRango11", capturarRango11);
+    localStorage.setItem("fechaInicial", fechaInicial);
+    localStorage.setItem("fechaFinal", fechaFinal);
+    // Recargamos la tabla con la información para ser mostrada en la tabla
+    $(".tablaCuentasPendientes").DataTable().destroy();
+    cargarTablaCuentasPendientes(fechaInicial, fechaFinal);
+  });
+
+/*=============================================
+CANCELAR RANGO DE FECHAS
+=============================================*/
+
+$(".daterangepicker.opensleft .range_inputs .CancelarFechaCuentaPendiente").on(
+  "click",
+  function() {
+    localStorage.removeItem("capturarRango11");
+    localStorage.removeItem("fechaInicial");
+    localStorage.removeItem("fechaFinal");
+    localStorage.clear();
+    window.location = "cuentas-pendientes";
+  }
+);
+
+/*=============================================
+CAPTURAR HOY
+=============================================*/
+
+$(".daterangepicker.opensleft .ranges li").on("click", function() {
+  var textoHoy = $(this).attr("data-range-key");
+
+  if (textoHoy == "Hoy") {
+    var d = new Date();
+
+    var dia = d.getDate();
+    var mes = d.getMonth() + 1;
+    var año = d.getFullYear();
+
+    dia = ("0" + dia).slice(-2);
+    mes = ("0" + mes).slice(-2);
+
+    var fechaInicial = año + "-" + mes + "-" + dia;
+    var fechaFinal = año + "-" + mes + "-" + dia;
+
+    localStorage.setItem("capturarRango11", "Hoy");
+    localStorage.setItem("fechaInicial", fechaInicial);
+    localStorage.setItem("fechaFinal", fechaFinal);
+    // Recargamos la tabla con la información para ser mostrada en la tabla
+    $(".tablaCuentasPendientes").DataTable().destroy();
+    cargarTablaCuentasPendientes(fechaInicial, fechaFinal);
+  }
+});
+
+
+$("#daterange-btnCuentasAprobadas").daterangepicker(
+  {
+  cancelClass: "CancelarFechaCuentaAprobada",
+  locale:{
+  "daysOfWeek": [
+    "Dom",
+    "Lun",
+    "Mar",
+    "Mie",
+    "Jue",
+    "Vie",
+    "Sab"
+  ],
+  "monthNames": [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre"
+  ],
+  },
+    ranges: {
+      Hoy: [moment(), moment()],
+      Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+      "Últimos 7 días": [moment().subtract(6, "days"), moment()],
+      "Últimos 30 días": [moment().subtract(29, "days"), moment()],
+      "Este mes": [moment().startOf("month"), moment().endOf("month")],
+      "Último mes": [
+        moment()
+          .subtract(1, "month")
+          .startOf("month"),
+        moment()
+          .subtract(1, "month")
+          .endOf("month")
+      ]
+    },
+    
+    startDate: moment(),
+    endDate: moment()
+  },
+  function(start, end) {
+    $("#daterange-btnCuentasAprobadas span").html(
+      start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
+    );
+
+    var fechaInicial = start.format("YYYY-MM-DD");
+
+    var fechaFinal = end.format("YYYY-MM-DD");
+
+    var capturarRango12 = $("#daterange-btnCuentasAprobadas span").html();
+
+    localStorage.setItem("capturarRango12", capturarRango12);
+    localStorage.setItem("fechaInicial", fechaInicial);
+    localStorage.setItem("fechaFinal", fechaFinal);
+    // Recargamos la tabla con la información para ser mostrada en la tabla
+    $(".tablaCuentasAprobadas").DataTable().destroy();
+    cargarTablaCuentasAprobadas(fechaInicial, fechaFinal);
+  });
+
+/*=============================================
+CANCELAR RANGO DE FECHAS
+=============================================*/
+
+$(".daterangepicker.opensleft .range_inputs .CancelarFechaCuentaAprobada").on(
+  "click",
+  function() {
+    localStorage.removeItem("capturarRango12");
+    localStorage.removeItem("fechaInicial");
+    localStorage.removeItem("fechaFinal");
+    localStorage.clear();
+    window.location = "cuentas-aprobadas";
+  }
+);
+
+/*=============================================
+CAPTURAR HOY
+=============================================*/
+
+$(".daterangepicker.opensleft .ranges li").on("click", function() {
+  var textoHoy = $(this).attr("data-range-key");
+
+  if (textoHoy == "Hoy") {
+    var d = new Date();
+
+    var dia = d.getDate();
+    var mes = d.getMonth() + 1;
+    var año = d.getFullYear();
+
+    dia = ("0" + dia).slice(-2);
+    mes = ("0" + mes).slice(-2);
+
+    var fechaInicial = año + "-" + mes + "-" + dia;
+    var fechaFinal = año + "-" + mes + "-" + dia;
+
+    localStorage.setItem("capturarRango12", "Hoy");
+    localStorage.setItem("fechaInicial", fechaInicial);
+    localStorage.setItem("fechaFinal", fechaFinal);
+    // Recargamos la tabla con la información para ser mostrada en la tabla
+    $(".tablaCuentasAprobadas").DataTable().destroy();
+    cargarTablaCuentasAprobadas(fechaInicial, fechaFinal);
+  }
+});
+$(".btnCancelarCuenta2").click(function(){
+  var numCta = $(this).attr("numCta");
+  var datos = new FormData();
+  datos.append("numCta", numCta);
+
+  $.ajax({
+
+      url: "ajax/cuentas.ajax.php",
+      method: "POST",
+      data: datos,
+      cache: false,
+      contentType: false,
+      processData: false,
+      dataType: "json",
+      success: function (respuesta) {
+          $("#idCuenta3").val(respuesta["id"]);
+          $("#cancelarDocumento2").val(respuesta["num_cta"]);
+          $("#cancelarVendedor2").val(respuesta["vendedor"]);
+          $("#cancelarCliente2").val(respuesta["cliente"]);
+          $("#cancelarSaldo2").val(respuesta["saldo"]);
+      }
+
+  })
+});
+$("#cancelarMonto3").change(function(){
+  var saldo = $(this).val();
+  var saldoAntiguo = $("#cancelarSaldo2").val();
+  if(Number(saldo)>Number(saldoAntiguo)){
+    swal({
+      title: "La cantidad supera el Saldo de la cuenta ",
+      text: "¡Sólo hay S/. " + saldoAntiguo + " de saldo!",
+      type: "error",
+      confirmButtonText: "¡Cerrar!"
+    });
+
+    return;
+  }
+});
+$("#tipoCliente").change(function(){
+  var cliente = $(this).val();
+  $(".tablaCuentasConsultar").DataTable().destroy();
+  localStorage.setItem("cliente",cliente);
+  cargarTablaCuentasConsultar(cliente);
+ });
+
+  // Validamos que venga la variable capturaRango en el localStorage
+if (localStorage.getItem("cliente") != null) {
+	cargarTablaCuentasConsultar(localStorage.getItem("cliente"));
+} else {
+	cargarTablaCuentasConsultar(null);
+}
+
+//CUENTAS consultar
+function cargarTablaCuentasConsultar(cliente){
+$('.tablaCuentasConsultar').DataTable({
+  "ajax": "ajax/tabla-cuentas-consultar.ajax.php?perfil="+$("#perfilOculto").val()+"&cliente=" + cliente ,
+  "deferRender": true,
+  "retrieve": true,
+  "processing": true,
+  "order": [[0, "asc"]],
+  "pageLength": 20,
+  "lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+  "language": {
+    "sProcessing":     "Procesando...",
+    "sLengthMenu":     "Mostrar _MENU_ registros",
+    "sZeroRecords":    "No se encontraron resultados",
+    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0",
+    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+    "sInfoPostFix":    "",
+    "sSearch":         "Buscar:",
+    "sUrl":            "",
+    "sInfoThousands":  ",",
+    "sLoadingRecords": "Cargando...",
+    "oPaginate": {
+    "sFirst":    "Primero",
+    "sLast":     "Último",
+    "sNext":     "Siguiente",
+    "sPrevious": "Anterior"
+    },
+    "oAria": {
+      "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+      "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+    }
+  }    
+});
+}
+window.addEventListener("beforeunload", function (e) {
+  localStorage.removeItem("cliente");
+});

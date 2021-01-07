@@ -4,7 +4,7 @@
     
     <h1>
       
-      Administrar cuentas
+      Consultar cuentas
     
     </h1>
 
@@ -12,7 +12,7 @@
       
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
       
-      <li class="active">Administrar cuentas</li>
+      <li class="active">Consultar cuentas</li>
     
     </ol>
 
@@ -24,63 +24,25 @@
 
       <div class="box-header with-border">
   
-        <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarCuenta">
-          
-          Agregar cuentas
-
-        </button>
-
-        <button class="btn btn-danger" data-toggle="modal" data-target="#modalImportarBanco">
-          <i class="fa fa-upload"></i>
-          Cancelar Letras
-
-        </button>
-        
-        <button class="btn btn-warning" data-toggle="modal" data-target="#modalActualizarUnico">
-          <i class="fa fa-upload"></i>
-          Actualizar numero unico
-
-        </button>
         <div class="col-lg-2">
-          <select name="tipoCuenta" id="tipoCuenta" class="form-control input-lg">
-            <option value="">------TIPO DE CUENTA------</option>
-            <option value="PENDIENTE">PENDIENTES</option>
-            <option value="CANCELADO">CANCELADOS</option>
-            <option value="TODOS">TODOS</option>
-          </select>
-        </div>
-        <button type="button" class="btn btn-default pull-right" id="daterange-btnCuentas" style="margin-left:10px">
-          <span>
-            <i class="fa fa-calendar"></i>
-
-            <?php
-
-              if(isset($_GET["fechaInicial"])){
-
-                echo $_GET["fechaInicial"]." - ".$_GET["fechaFinal"];
-
-              }else{
-              
-                echo 'Rango de fecha';
-
-              }
-
+          <select name="tipoCliente" id="tipoCliente" class="form-control input-lg selectpicker" data-live-search="true">
+            <option value="">--------Seleccionar cliente------</option>
+            <?php 
+                $item =null;
+                $valor=null;
+                $tipoCliente = ControladorClientes::ctrMostrarClientes($item,$valor);
+                foreach ($tipoCliente as $key => $value) {
+                    echo '<option value="' . $value["codigo"] . '">' . $value["codigo"] ." - ". $value["nombre"] . '</option>';
+                }
+                
             ?>
-
-          </span>
-
-          <i class="fa fa-caret-down"></i>
-
-        </button>
-        <div class="pull-right">
-          <button class="btn btn-outline-success btnReporteColor" style="border:green 1px solid">
-          <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte cuentas  </button>
+          </select>
         </div>
       </div>
         
       <div class="box-body">
         
-       <table class="table table-bordered table-striped dt-responsive tablaCuentas">
+       <table class="table table-bordered table-striped dt-responsive tablaCuentasConsultar">
          
         <thead>
          

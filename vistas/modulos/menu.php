@@ -1025,11 +1025,20 @@
 
                     </li>
 
-                    <li >
+                    <li>
                         <a href="cancelar-abonos">
 
                             <i class="fa fa-circle-o"></i>
                             <span>Cancelar abonos</span>
+
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="consultar-cuentas">
+
+                            <i class="fa fa-circle-o"></i>
+                            <span>Consultar cuentas</span>
 
                         </a>
                     </li>
