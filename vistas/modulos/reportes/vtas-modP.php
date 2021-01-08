@@ -12,6 +12,7 @@ $sumaUnd = ControladorMovimientos::ctrSumaUnd($valor);
 
 /* var_dump("sumaUnd", $sumaUnd["sumaUnd"]); */
 
+if(count($modelos)!=0){
 
 ?>
 
@@ -97,7 +98,7 @@ MODELOS MÁS VENDIDOS
     </div>
 
 </div>
-
+<?php }?>
 <script>
 	
 

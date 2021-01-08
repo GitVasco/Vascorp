@@ -252,14 +252,19 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "clientes" ||
                   $_GET["ruta"] == "crear-pedidocv" ||
                   $_GET["ruta"] == "crear-facturascv" ||
-                  $_GET["ruta"] == "cuentas" ||
                   $_GET["ruta"] == "guias-remision" ||
-                  $_GET["ruta"] == "ver-cuentas" ||
                   $_GET["ruta"] == "guias-remision" ||
                   $_GET["ruta"] == "facturas" ||
-                  $_GET["ruta"] == "boletas"){
+                  $_GET["ruta"] == "boletas" ){
 
               include "modulos/facturacion/".$_GET["ruta"].".php";
+
+        }else if( $_GET["ruta"] == "cuentas" ||
+                  $_GET["ruta"] == "ver-cuentas" ||
+                  $_GET["ruta"] == "abonos" ||
+                  $_GET["ruta"] == "cancelar-abonos") {
+
+            include "modulos/cuentas-corrientes/".$_GET["ruta"].".php";
 
         }else if( $_GET["ruta"] == "detalleoperaciones" ||
                   $_GET["ruta"] == "creardetalleoperaciones" ||
@@ -346,7 +351,7 @@ CUERPO DOCUMENTO
   <script src="vistas/js/cuentas.js"></script>
   <script src="vistas/js/vendedor.js"></script>
   <script src="vistas/js/facturacion.js"></script>
-
+  <script src="vistas/js/abonos.js"></script>
 </body>
 
 </html>

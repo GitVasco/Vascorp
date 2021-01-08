@@ -1,3 +1,14 @@
+$("#tipoCuenta").change(function(){
+  var tipo = $(this).val();
+  if(tipo=='PENDIENTE'){
+    window.location="cuentas-pendientes";
+  }else if(tipo=='CANCELADO'){
+    window.location="cuentas-canceladas";
+  }else{
+    window.location="cuentas";
+  }
+ });
+
 $('.tablaCuentas').DataTable({
     "ajax": "ajax/tabla-cuentas.ajax.php?perfil="+$("#perfilOculto").val(),
     "deferRender": true,
@@ -5,31 +16,30 @@ $('.tablaCuentas').DataTable({
     "processing": true,
     "order": [[0, "asc"]],
     "language": {
-			"sProcessing":     "Procesando...",
-			"sLengthMenu":     "Mostrar _MENU_ registros",
-			"sZeroRecords":    "No se encontraron resultados",
-			"sEmptyTable":     "Ningún dato disponible en esta tabla",
-			"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
-			"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0",
-			"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-			"sInfoPostFix":    "",
-			"sSearch":         "Buscar:",
-			"sUrl":            "",
-			"sInfoThousands":  ",",
-			"sLoadingRecords": "Cargando...",
-			"oPaginate": {
-			"sFirst":    "Primero",
-			"sLast":     "Último",
-			"sNext":     "Siguiente",
-			"sPrevious": "Anterior"
-			},
-			"oAria": {
-				"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-				"sSortDescending": ": Activar para ordenar la columna de manera descendente"
-			}
+      "sProcessing":     "Procesando...",
+      "sLengthMenu":     "Mostrar _MENU_ registros",
+      "sZeroRecords":    "No se encontraron resultados",
+      "sEmptyTable":     "Ningún dato disponible en esta tabla",
+      "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+      "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0",
+      "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+      "sInfoPostFix":    "",
+      "sSearch":         "Buscar:",
+      "sUrl":            "",
+      "sInfoThousands":  ",",
+      "sLoadingRecords": "Cargando...",
+      "oPaginate": {
+      "sFirst":    "Primero",
+      "sLast":     "Último",
+      "sNext":     "Siguiente",
+      "sPrevious": "Anterior"
+      },
+      "oAria": {
+        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+      }
     }    
   });
-
 
   $("#nuevoMonto").change(function(){
     var saldo = $(this).val();
@@ -133,7 +143,6 @@ $(".tablaCuentas").on("click", ".btnCancelarCuenta", function () {
           $("#cancelarNota").val(respuesta["notas"]);
           $("#cancelarVendedor").val(respuesta["vendedor"]);
           $("#cancelarCliente").val(respuesta["cliente"]);
-          $("#cancelarFechaUltima").val(respuesta["ult_pago"]);
           $("#cancelarSaldo").val(respuesta["saldo"]);
       }
 
@@ -318,6 +327,9 @@ $(".tablaCuentas").on("click", ".btnAgregarLetra", function () {
 })
 
 $(".btnGenerarLetra").click(function(){
+  $(this).attr("disabled", true);
+  $(this).removeClass("btn-primary");
+  $(this).addClass("btn-default");
   var nroLetra = $("#nroLetra").val();  
   var saldo=$("#letraSaldo").val();
   var montoLetra=Number(saldo)/Number(nroLetra);
@@ -402,3 +414,10 @@ $(".btnGenerarLetra").click(function(){
   }
    
 });
+$(".btnLimpiarLetra").click(function(){
+  $(".btnGenerarLetra").removeAttr('disabled');
+  $(".btnGenerarLetra").removeClass("btn-default");
+  $(".btnGenerarLetra").addClass("btn-primary");
+  $(".letraCuenta").remove();
+});
+

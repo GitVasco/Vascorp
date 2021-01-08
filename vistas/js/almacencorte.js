@@ -54,7 +54,8 @@ $('.tablaArticulosAlmacenCorte').DataTable( {
     "ajax": "ajax/tabla-articulosalmacencorte.ajax.php",
     "deferRender": true,
 	"retrieve": true,
-	"processing": true,
+    "processing": true,
+    "pageLength": 20,
 	 "language": {
 
 			"sProcessing":     "Procesando...",

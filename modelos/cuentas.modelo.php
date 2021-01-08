@@ -54,7 +54,7 @@ class ModeloCuentas{
 	}    
 
 	/*=============================================
-	MOSTRAR TIPO DE PAGO
+	MOSTRAR CUENTAS
 	=============================================*/
 
 	static public function mdlMostrarCuentas($tabla,$item,$valor){
@@ -250,6 +250,42 @@ class ModeloCuentas{
 
 		$stmt = null;
 	}
+	/*=============================================
+	ELIMINAR TIPO DE PAGO
+	=============================================*/
 
+	static public function mdlMostrarCuentasPendientes($tabla,$saldo){
+
+		if($saldo != "null" ){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+													* 
+												FROM
+													$tabla 
+												WHERE saldo > 0 
+													AND tipo_doc IN ('01', '03', '07', '08', '09', '85') 
+												ORDER BY saldo BETWEEN ($saldo - 10) 
+													AND ($saldo + 10) DESC,
+													saldo ASC ");
+	
+			$stmt -> execute();
+	
+			return $stmt -> fetchAll();
+		}else{
+			$stmt = Conexion::conectar()->prepare("SELECT 
+														* 
+													FROM
+														$tabla 
+													WHERE saldo > 0 
+														AND tipo_doc IN ('01', '03', '07', '08', '09', '85') 
+													ORDER BY saldo ASC ");
+
+			$stmt -> execute();
+	
+			return $stmt -> fetchAll();
+		}
+		$stmt -> close();
+
+		$stmt = null;
+	}
 
 }
