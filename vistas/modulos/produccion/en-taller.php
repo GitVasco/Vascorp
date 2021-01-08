@@ -23,7 +23,10 @@
     <div class="box">
       <div class="box-header with-border">
         <button class="btn btn-info" data-toggle="modal" data-target="#modalExportarArticulo"> 
-        <i class="fa fa-upload"></i> Exportar árticulo
+        <i class="fa fa-upload"></i> Imprimir ticket
+        </button>
+        <button class="btn btn-danger" data-toggle="modal" data-target="#modalEliminarArticulo"> 
+        <i class="fa fa-trash"></i> Eliminar bloque
         </button>
         <button type="button" class="btn btn-default btnReporteTalleres" style="border:green 1px solid">
           <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Talleres  </button>
@@ -255,7 +258,7 @@ MODAL EDITAR CANTIDAD
 </div>
 
 <!--=====================================
-MODAL AGREGAR TIPO PAGO
+MODAL EXPORTAR ARTICULO
 ======================================-->
 
 <div id="modalExportarArticulo" class="modal fade" role="dialog">
@@ -286,6 +289,16 @@ MODAL AGREGAR TIPO PAGO
 
           <div class="box-body">
 
+            <!-- ENTRADA PARA LA FECHA -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
+                <input type="date" class="form-control input-lg" name="fechaCabecera" id="fechaCabecera">
+              </div>
+
+            </div>
             <!-- ENTRADA PARA EL CODIGO UNICO DE ARTICULO TALLER -->
             
             <div class="form-group">
@@ -294,19 +307,8 @@ MODAL AGREGAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
-                <select type="text" class="form-control input-lg selectpicker" name="nuevoCodigo" data-live-search="true"  required>
+                <select type="text" class="form-control input-lg selectpicker" name="nuevoCodigo" id="nuevoCodigo" data-live-search="true"  required>
                   <option value="">Seleccionar articulo</option>
-
-                    <?php
-                    $item=null;
-                    $valor = null;
-
-                    $taller = ControladorTalleres::ctrMostrarTallerCabecera($item,$valor);
-                    foreach ($taller as $key => $value) {
-                      echo '<option value="' . $value["id"] . '">' .$value["id"]. " - " . $value["articulo"] . " - " . substr($value["fecha"],0,10) .'</option>';
-                    }
-
-                    ?>   
                  </select>  
                 
 
@@ -338,6 +340,101 @@ MODAL AGREGAR TIPO PAGO
 
         $exportarArticulo = new ControladorTalleres();
         $exportarArticulo -> ctrExportarArticulo();
+
+      ?>
+
+
+    </div>
+
+  </div>
+
+</div>
+
+<!--=====================================
+MODAL ELIMINAR ARTICULO
+======================================-->
+
+<div id="modalEliminarArticulo" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form role="form" method="post">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Eliminar árticulo</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <!-- ENTRADA PARA LA FECHA -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
+                <input type="date" class="form-control input-lg" name="fechaCabecera2" id="fechaCabecera2">
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA EL CODIGO UNICO DE ARTICULO TALLER -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
+
+                <select type="text" class="form-control input-lg selectpicker" name="nuevoCodigo2" id="nuevoCodigo2" data-live-search="true"  required>
+                  <option value="">Seleccionar articulo</option>
+
+                 </select>  
+                
+
+              </div>
+
+            </div>          
+
+
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-danger">Confirmar Eliminado</button>
+
+        </div>
+
+      </form>
+
+
+      <?php
+
+        $eliminarTaller = new ControladorTalleres();
+        $eliminarTaller -> ctrEliminarArticulo();
 
       ?>
 

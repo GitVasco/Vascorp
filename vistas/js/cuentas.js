@@ -944,6 +944,3 @@ $('.tablaCuentasConsultar').DataTable({
   }    
 });
 }
-window.addEventListener("beforeunload", function (e) {
-  localStorage.removeItem("cliente");
-});

@@ -2,13 +2,13 @@
 
 require_once "conexion.php";
 
-class ModeloServicios{
+class ModeloCierres{
 
 	/*=============================================
 	MOSTRAR VENTAS
 	=============================================*/
 
-	static public function mdlMostrarServicios($tabla, $item, $valor){
+	static public function mdlMostrarCierres($tabla, $item, $valor){
 
 		if($item != null){
 
@@ -22,7 +22,7 @@ class ModeloServicios{
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla  ORDER BY id ASC");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ORDER BY id ASC");
 
 			$stmt -> execute();
 
@@ -37,7 +37,7 @@ class ModeloServicios{
 	}
 
 	// Método para Mostrar los detalles de servicios
-	static public function mdlMostraDetallesServicios($tabla,$item,$valor){
+	static public function mdlMostraDetallesCierres($tabla,$item,$valor){
 
 		$sql="SELECT * FROM $tabla WHERE $item=:$item ORDER BY id ASC";
 
@@ -55,7 +55,7 @@ class ModeloServicios{
 
 	
 	// Método para guardar los servicios
-	static public function mdlGuardarServicios($tabla,$datos){
+	static public function mdlGuardarCierres($tabla,$datos){
 
 		$sql="INSERT INTO $tabla(codigo,usuario,taller,total,fecha,estado) VALUES (:codigo,:usuario,:taller,:total,:fecha,:estado)";
 
@@ -82,7 +82,7 @@ class ModeloServicios{
 	}	
 	
 	// Método para guardar las ventas
-	static public function mdlGuardarDetallesServicios($tabla,$datos){
+	static public function mdlGuardarDetallesCierres($tabla,$datos){
 
 		$sql="INSERT INTO $tabla(codigo,articulo,cantidad) VALUES (:codigo,:articulo,:cantidad)";
 
@@ -97,7 +97,7 @@ class ModeloServicios{
 	}
 
 	// Método para editar las ventas
-	static public function mdlEditarServicios($tabla,$datos){
+	static public function mdlEditarCierres($tabla,$datos){
 
 		$sql="UPDATE $tabla SET codigo=:codigo,usuario=:usuario,taller=:taller,total=:total,fecha=:fecha WHERE codigo=:codigo";
 
@@ -121,7 +121,7 @@ class ModeloServicios{
 		$stmt=null;
 	}
 	// Método para editar los detalles de ventas - NO ES NECESARIO
-	static public function mdlEditarDetallesServicios($tabla,$datos){
+	static public function mdlEditarDetallesCierres($tabla,$datos){
 
 		$sql="UPDATE $tabla SET impuesto=:impuesto,neto=:neto,total=:total,metodo_pago=:metodo_pago WHERE codigo=:codigo";
 
@@ -149,7 +149,7 @@ class ModeloServicios{
 	ELIMINAR SERVICIO
 	=============================================*/
 
-	static public function mdlEliminarServicio($tabla, $datos){
+	static public function mdlEliminarCierre($tabla, $datos){
 
 		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
 
@@ -250,7 +250,7 @@ class ModeloServicios{
 	SUMAR EL TOTAL DE VENTAS
 	=============================================*/
 
-	static public function mdlSumaTotalServicios($tabla){	
+	static public function mdlSumaTotalCierres($tabla){	
 
 		$stmt = Conexion::conectar()->prepare("SELECT SUM(neto) as total FROM $tabla");
 
@@ -264,7 +264,7 @@ class ModeloServicios{
 
 	}
 
-	static public function mdlUltimoServicio($tabla){
+	static public function mdlUltimoCierre($tabla){
 
 		$sql="SELECT COUNT(codigo) + 1 AS ultimo_codigo FROM $tabla";
 
@@ -278,5 +278,19 @@ class ModeloServicios{
 
 
 	}
-    
+	
+	/* 
+	* MOSTRAR ARTICULOS PARA LA TABLA DE SERVICIOS O VENTAS
+	*/
+	static public function mdlMostrarArticulosCiere(){
+
+		$stmt = Conexion::conectar()->prepare("CALL sp_1070_consulta_cierre_articulos()");
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+	}
 }

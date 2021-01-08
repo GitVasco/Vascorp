@@ -4,7 +4,7 @@
 
     <h1>
 
-      Crear servicio
+      Crear cierre
 
     </h1>
 
@@ -12,7 +12,7 @@
 
       <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-      <li class="active">Crear servicio</li>
+      <li class="active">Crear cierre</li>
 
     </ol>
 
@@ -32,7 +32,7 @@
 
           <div class="box-header with-border"></div>
 
-          <form role="form" method="post" class="formularioServicio">
+          <form role="form" method="post" class="formularioCierre">
 
             <div class="box-body">
 
@@ -66,7 +66,7 @@
                   <div class="input-group">
 
                     <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                    <input type="text" class="form-control" id="nuevoServicio" name="nuevoServicio"  readonly>
+                    <input type="text" class="form-control" id="nuevoCierre" name="nuevoCierre"  readonly>
 
                   </div>
 
@@ -133,7 +133,7 @@
                 ENTRADA PARA AGREGAR PRODUCTO
                 ======================================-->
 
-                <div class="form-group row nuevoProducto">
+                <div class="form-group row nuevoCierres">
 
 
 
@@ -202,18 +202,17 @@
 
             <div class="box-footer">
 
-              <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-save"></i> Guardar servicio</button>
+              <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-save"></i> Guardar cierre</button>
 
-              <a href="servicios"  class="btn btn-danger"><i class="fa fa-times-circle"></i> Cancelar</a>
-
+              <a href="cierres"  class="btn btn-danger"><i class="fa fa-times-circle"></i> Cancelar</a>
             </div>
 
           </form>
 
           <?php
 
-            $guardarServicio = new ControladorServicios();
-            $guardarServicio -> ctrCrearServicio();
+            $guardarCierre = new ControladorCierres();
+            $guardarCierre -> ctrCrearCierre();
 
           ?>          
 
@@ -233,7 +232,7 @@
 
           <div class="box-body">
 
-            <table class="table table-bordered table-striped dt-responsive tablaArticuloServicio">
+            <table class="table table-bordered table-striped dt-responsive tablaArticuloCierre">
 
               <thead>
 
@@ -244,7 +243,6 @@
                   <th>Color</th>
                   <th>Talla</th>
                   <th>Servicio</th>
-                  <th>Taller</th>
                   <th>Acciones</th>
                 </tr>
 
@@ -358,5 +356,5 @@ MODAL AGREGAR CLIENTE
 
 </div>
 <script>
-window.document.title = "Crear servicio"
+window.document.title = "Crear cierre"
 </script>

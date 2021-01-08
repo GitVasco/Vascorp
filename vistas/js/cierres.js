@@ -1,20 +1,10 @@
 /*=============================================
-CARGAR LA TABLA DINÁMICA DE VENTAS
+CARGAR LA TABLA DINÁMICA DE CIERRES
 =============================================*/
 
-/*  $.ajax({
 
- 	url: "ajax/tabla-ventas.ajax.php",
- 	success:function(respuesta){
-		
- 		console.log("respuesta", respuesta);
-
- 	}
-
- })  */
-
- $(".tablaServicios").DataTable({
-    ajax: "ajax/tabla-servicios.ajax.php",
+ $(".tablaCierres").DataTable({
+    ajax: "ajax/tabla-cierres.ajax.php",
     deferRender: true,
     retrieve: true,
     processing: true,
@@ -44,8 +34,8 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
     }
   });
   
- $(".tablaArticuloServicio").DataTable({
-  ajax: "ajax/tabla-articuloservicios.ajax.php",
+ $(".tablaArticuloCierre").DataTable({
+  ajax: "ajax/tabla-articulocierres.ajax.php",
   deferRender: true,
   retrieve: true,
   processing: true,
@@ -79,10 +69,9 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
   AGREGANDO PRODUCTOS A LA VENTA DESDE LA TABLA
   =============================================*/
   
-  $(".tablaArticuloServicio tbody").on("click", "button.agregarProducto", function() {
+  $(".tablaArticuloCierre tbody").on("click", "button.agregarProducto", function() {
   
-    var articuloServicio = $(this).attr("articuloServicio");
-  
+    var articuloCierre = $(this).attr("articuloCierre");
     /* console.log("idProducto", idProducto); */
   
     $(this).removeClass("btn-primary agregarProducto");
@@ -90,7 +79,7 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
     $(this).addClass("btn-default");
   
     var datos = new FormData();
-    datos.append("articuloServicio", articuloServicio);
+    datos.append("articuloServicio", articuloCierre);
   
     $.ajax({
       url: "ajax/articulos.ajax.php",
@@ -102,27 +91,26 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
       dataType: "json",
       success: function(respuesta) {
         var packing = respuesta["packing"];
-        var taller = respuesta["taller"];
         var servicio = respuesta["servicio"];
         /*=============================================
         EVITAR AGREGAR PRODUTO CUANDO EL STOCK ESTÁ EN CERO
         =============================================*/
   
-        if (taller == 0) {
+        if (servicio == 0) {
           swal({
-            title: "No hay en taller disponible",
+            title: "No hay en servicio disponible",
             type: "error",
             confirmButtonText: "¡Cerrar!"
           });
   
-          $("button[articuloServicio='" + articuloServicio + "']").addClass(
+          $("button[articuloCierre='" + articuloCierre + "']").addClass(
             "btn-primary agregarProducto"
           );
   
           return;
         }
   
-        $(".nuevoProducto").append(
+        $(".nuevoCierres").append(
   
           '<div class="row" style="padding:5px 15px">' +
   
@@ -132,9 +120,9 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
   
               '<div class="input-group">' +
   
-                '<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarProducto" articuloServicio="' + articuloServicio + '"><i class="fa fa-times"></i></button></span>' +
+                '<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarProducto" articuloCierre="' + articuloCierre + '"><i class="fa fa-times"></i></button></span>' +
   
-                '<input type="text" class="form-control nuevaDescripcionProducto" name="agregarProducto" value="' + packing +'" articuloServicio="' + articuloServicio + '" readonly required>' +
+                '<input type="text" class="form-control nuevaDescripcionProducto" name="agregarProducto" value="' + packing +'" articuloCierre="' + articuloCierre + '" readonly required>' +
   
               "</div>" +
   
@@ -144,7 +132,7 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
   
             '<div class="col-xs-3">' +
   
-            '<input type="number" class="form-control nuevaCantidadProducto" name="nuevaCantidadProducto" min="1" value="0" taller="' + taller + '" nuevoTaller="' + taller + '"  servicio= "'+servicio+'"required>' +
+            '<input type="number" class="form-control nuevaCantidadProducto" name="nuevaCantidadProducto" min="1" value="0" servicio="' + servicio + '" nuevoServicio="' + servicio + '"  required>' +
   
             "</div>" +
   
@@ -152,13 +140,13 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
         );
   
         // SUMAR TOTAL DE CANTIDADES
-        sumarTotalServicio();
+        sumarTotalCierre();
 
   
   
         // AGRUPAR PRODUCTOS EN FORMATO JSON
   
-        listarServicios();
+        listarCierres();
   
   
   
@@ -170,7 +158,7 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
   CUANDO CARGUE LA TABLA CADA VEZ QUE NAVEGUE EN ELLA
   =============================================*/
   
-  $(".tablaArticuloServicio").on("draw.dt", function() {
+  $(".tablaArticuloCierre").on("draw.dt", function() {
     /* console.log("tabla"); */
   
     if (localStorage.getItem("quitarProducto") != null) {
@@ -178,13 +166,13 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
   
       for (var i = 0; i < listaIdProductos.length; i++) {
         $(
-          "button.recuperarBoton[articuloServicio='" +
-            listaIdProductos[i]["articuloServicio"] +
+          "button.recuperarBoton[articuloCierre='" +
+            listaIdProductos[i]["articuloCierre"] +
             "']"
         ).removeClass("btn-default");
         $(
-          "button.recuperarBoton[articuloServicio='" +
-            listaIdProductos[i]["articuloServicio"] +
+          "button.recuperarBoton[articuloCierre='" +
+            listaIdProductos[i]["articuloCierre"] +
             "']"
         ).addClass("btn-primary agregarProducto");
       }
@@ -199,7 +187,7 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
   
   localStorage.removeItem("quitarProducto");
   
-  $(".formularioServicio").on("click", "button.quitarProducto", function() {
+  $(".formularioCierre").on("click", "button.quitarProducto", function() {
     /* console.log("boton"); */
   
     $(this)
@@ -209,7 +197,7 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
       .parent()
       .remove();
   
-    var articuloServicio = $(this).attr("articuloServicio");
+    var articuloCierre = $(this).attr("articuloCierre");
   
     /*=============================================
     ALMACENAR EN EL LOCALSTORAGE EL ID DEL PRODUCTO A QUITAR
@@ -222,20 +210,20 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
     }
   
     idQuitarProducto.push({
-      articuloServicio: articuloServicio
+      articuloCierre: articuloCierre
     });
   
     localStorage.setItem("quitarProducto", JSON.stringify(idQuitarProducto));
   
-    $("button.recuperarBoton[articuloServicio='" + articuloServicio + "']").removeClass(
+    $("button.recuperarBoton[articuloCierre='" + articuloCierre + "']").removeClass(
       "btn-default"
     );
   
-    $("button.recuperarBoton[articuloServicio='" + articuloServicio + "']").addClass(
+    $("button.recuperarBoton[articuloCierre='" + articuloCierre + "']").addClass(
       "btn-primary agregarProducto"
     );
   
-    if ($(".nuevoProducto").children().length == 0) {
+    if ($(".nuevoCierres").children().length == 0) {
       $("#nuevoTotalVenta").val(0);
       $("#totalVenta").val(0);
       $("#nuevoTotalVenta").attr("total", 0);
@@ -243,9 +231,9 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
       // SUMAR TOTAL DE PRECIOS
   
       // AGRUPAR PRODUCTOS EN FORMATO JSON
-      sumarTotalServicio();
+      sumarTotalCierre();
 
-      listarServicios();
+      listarCierres();
     }
   });
   
@@ -253,16 +241,16 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
   MODIFICAR LA CANTIDAD
   =============================================*/
   
-  $(".formularioServicio").on("change", "input.nuevaCantidadProducto", function() {
+  $(".formularioCierre").on("change", "input.nuevaCantidadProducto", function() {
     
   
-    var nuevoTaller = Number($(this).attr("taller")) - $(this).val();
+    var nuevoServicio = Number($(this).attr("servicio")) - $(this).val();
   
-    $(this).attr("nuevoTaller", nuevoTaller);
+    $(this).attr("nuevoServicio", nuevoServicio);
   
-    if (Number($(this).val()) > Number($(this).attr("taller"))) {
+    if (Number($(this).val()) > Number($(this).attr("servicio"))) {
       /*=============================================
-      SI LA CANTIDAD ES SUPERIOR AL TALLER REGRESAR VALORES INICIALES
+      SI LA CANTIDAD ES SUPERIOR AL SERVICIO REGRESAR VALORES INICIALES
       =============================================*/
   
       $(this).val(0);
@@ -270,8 +258,8 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
 
   
       swal({
-        title: "La cantidad supera la cantidad de taller",
-        text: "¡Sólo hay " + $(this).attr("taller") + " unidades!",
+        title: "La cantidad supera la cantidad de servicio",
+        text: "¡Sólo hay " + $(this).attr("servicio") + " unidades!",
         type: "error",
         confirmButtonText: "¡Cerrar!"
       });
@@ -279,12 +267,12 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
       return;
     }
 
-    sumarTotalServicio();
+    sumarTotalCierre();
 
   
     // AGRUPAR PRODUCTOS EN FORMATO JSON
   
-    listarServicios();
+    listarCierres();
 
   });
   
@@ -299,7 +287,7 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
   LISTAR TODOS LOS PRODUCTOS
   =============================================*/
   
-  function listarServicios() {
+  function listarCierres() {
     var listaProductos = [];
   
     var descripcion = $(".nuevaDescripcionProducto");
@@ -309,25 +297,23 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
   
     for (var i = 0; i < descripcion.length; i++) {
       listaProductos.push({
-        id: $(descripcion[i]).attr("articuloServicio"),
-        articulo: $(descripcion[i]).attr("articuloServicio"),
+        id: $(descripcion[i]).attr("articuloCierre"),
+        articulo: $(descripcion[i]).attr("articuloCierre"),
         cantidad: $(cantidad[i]).val(),
-        taller:$(cantidad[i]).attr("taller"),
         servicio:$(cantidad[i]).attr("servicio"),
       });
     }
-  
-     console.log("listaProductos", JSON.stringify(listaProductos)); 
+   
   
     $("#listaProductos").val(JSON.stringify(listaProductos));
-    // console.log(JSON.stringify(listaProductos));
+     console.log(JSON.stringify(listaProductos));
   }
   
   /* 
 * SUMAR EL TOTAL DE LAS VENTAS
 */
   
-function sumarTotalServicio() {
+function sumarTotalCierre() {
 
   var cantidadSer = $(".nuevaCantidadProducto");
 
@@ -359,10 +345,10 @@ function sumarTotalServicio() {
   /*=============================================
   BOTON EDITAR SERVICIO
   =============================================*/
-  $(".tablaServicios").on("click", ".btnEditarServicio", function() {
-    var idServicio = $(this).attr("idServicio");
+  $(".tablaCierres").on("click", ".btnEditarCierre", function() {
+    var idCierre = $(this).attr("idCierre");
   
-    window.location = "index.php?ruta=editar-servicio&idServicio=" + idServicio;
+    window.location = "index.php?ruta=editar-cierre&idCierre=" + idCierre;
   });
   
   // Formato para los números en las cajas
@@ -378,18 +364,18 @@ function sumarTotalServicio() {
     //console.log("idProductos", idProductos);
   
     //Capturamos todos los botones de agregar que aparecen en la tabla
-    var botonesTabla = $(".tablaArticuloServicio tbody button.agregarProducto");
+    var botonesTabla = $(".tablaArticuloCierre tbody button.agregarProducto");
   
     /* console.log("botonesTabla", botonesTabla); */
   
     //Recorremos en un ciclo para obtener los diferentes idProductos que fueron agregados a la venta
     for (var i = 0; i < idProductos.length; i++) {
       //Capturamos los Id de los productos agregados a la venta
-      var boton = $(idProductos[i]).attr("articuloServicio");
+      var boton = $(idProductos[i]).attr("articuloCierre");
   
       //Hacemos un recorrido por la tabla que aparece para desactivar los botones de agregar
       for (var j = 0; j < botonesTabla.length; j++) {
-        if ($(botonesTabla[j]).attr("articuloServicio") == boton) {
+        if ($(botonesTabla[j]).attr("articuloCierre") == boton) {
           $(botonesTabla[j]).removeClass("btn-primary agregarProducto");
           $(botonesTabla[j]).addClass("btn-default");
         }
@@ -401,31 +387,31 @@ function sumarTotalServicio() {
   CADA VEZ QUE CARGUE LA TABLA CUANDO NAVEGAMOS EN ELLA EJECUTAR LA FUNCIÓN:
   =============================================*/
   
-  $(".tablaArticuloServicio").on("draw.dt", function() {
+  $(".tablaArticuloCierre").on("draw.dt", function() {
     quitarAgregarProducto();
   });
   
   /*=============================================
   BORRAR VENTA
   =============================================*/
-  $(".tablaServicios").on("click", ".btnEliminarServicio", function() {
-    var idServicio = $(this).attr("idServicio");
+  $(".tablaCierres").on("click", ".btnEliminarCierre", function() {
+    var idCierre = $(this).attr("idCierre");
     swal({
       type: "warning",
       title: "Advertencia",
       text:
-        "¿Está seguro de eliminar el servicio? ¡Si no está seguro, puede cancelar la acción!",
+        "¿Está seguro de eliminar el cierre? ¡Si no está seguro, puede cancelar la acción!",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "¡Si, eliminar servicio!",
+      confirmButtonText: "¡Si, eliminar cierre!",
       cancelButtonText: "Cancelar"
     }).then(function(result) {
       if (result.value) {
         var datos = new FormData();
-        datos.append("idServicio", idServicio);
+        datos.append("idCierre", idCierre);
         $.ajax({
-          url: "ajax/servicios.ajax.php",
+          url: "ajax/cierres.ajax.php",
           type: "POST",
           data: datos,
           cache: false,
@@ -442,7 +428,7 @@ function sumarTotalServicio() {
                 confirmButtonText: "Cerrar"
               }).then(result => {
                 if (result.value) {
-                  window.location = "servicios";
+                  window.location = "cierres";
                 }
               });
             }
@@ -455,18 +441,18 @@ function sumarTotalServicio() {
    /*=============================================
   BOTON REPORTE SERVICIO CON MATERIA PRIMA
   =============================================*/
-  $(".tablaServicios").on("click", ".btnDetalleServicio", function() {
-    var idServicio = $(this).attr("idServicio");
+  $(".tablaCierres").on("click", ".btnDetalleCierre", function() {
+    var idCierre = $(this).attr("idCierre");
   
-    window.location = "vistas/reportes_excel/rpt_detalle_servicio.php?idServicio=" + idServicio;
+    window.location = "vistas/reportes_excel/rpt_detalle_cierre.php?idCierre=" + idCierre;
   });
   
   $("#seleccionarSector").change(function(){
-    var servicio = $(this).val();
+    var cierre = $(this).val();
     var datos2 = new FormData();
-    datos2.append("servicio", servicio);
+    datos2.append("cierre", cierre);
     $.ajax({
-      url: "ajax/servicios.ajax.php",
+      url: "ajax/cierres.ajax.php",
       method: "POST",
       data: datos2,
       cache: false,
@@ -474,7 +460,7 @@ function sumarTotalServicio() {
       processData: false,
       dataType: "json",
       success: function(respuesta) {
-        $("#nuevoServicio").val(servicio+("000"+respuesta["ultimo_codigo"]).slice(-4));
+        $("#nuevoCierre").val(cierre+"R"+("000"+respuesta["ultimo_codigo"]).slice(-4));
       }
     })
   });

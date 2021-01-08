@@ -414,4 +414,50 @@ class ControladorTalleres{
 		}
 
     }
+
+    /*=============================================
+	ELIMINAR TALLER POR CODIGO UNICO TALLER CABECERA
+	=============================================*/
+
+	static public function ctrEliminarArticulo(){
+
+		if(isset($_POST["nuevoCodigo2"])){
+            $tabla="entallerjf";
+            $cod = $_POST["nuevoCodigo2"];
+
+            $respuesta1=ModeloTalleres::mdlEliminarTallerDetalle($tabla,$cod);
+            $tabla2="entaller_cabjf";
+            //Traemos la cabecera taller
+            $cabeceraTaller=ControladorTalleres::ctrMostrarTallerCabecera("id",$cod);
+
+            /* 
+            * Actualizamos la cantidad que quedo en taller y regresa al corte en el codigo unico eliminado
+            */
+            $articulo  = $cabeceraTaller["articulo"];
+            $cantidad =  $cabeceraTaller["cantidad"];
+
+            $respuesta=ModeloArticulos::mdlActualizarTallerEliminado($articulo,$cantidad);
+
+
+            $respuesta2=ModeloTalleres::mdlEliminarTaller($tabla2,$cod);
+            if($respuesta2 == "ok"){
+                echo'<script>
+
+                swal({
+                    type: "success",
+                    title: "Se elimino el ticket de taller correctamente",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+                    }).then(function(result){
+                                if (result.value) {
+
+                                window.location = "en-taller";
+
+                                }
+                            })
+                </script>';
+            }
+		}
+
+    }
 }

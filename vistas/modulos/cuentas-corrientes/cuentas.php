@@ -299,13 +299,13 @@ MODAL AGREGAR TIPO PAGO
                   <option value="">Seleccionar banco</option>
 
                     <?php
-
+                    $item= null;
                     $valor = null;
 
-                    $bancos = ControladorBancos::ctrMostrarBancos($valor);
+                    $bancos = ControladorBancos::ctrMostrarBancos($item,$valor);
 
                     foreach ($bancos as $key => $value) {
-                      echo '<option value="' . $value["codigo"] . '">' . $value["nombre"] . '</option>';
+                      echo '<option value="' . $value["codigo"] . '">' . $value["codigo"] ." - ". $value["descripcion"] . '</option>';
                     }
 
                     ?>   
@@ -743,14 +743,14 @@ MODAL EDITAR TIPO PAGO
                 <select type="text" class="form-control input-lg selectpicker" name="editarBanco" id="editarBanco" data-live-search="true"  >
                   <option value="">Seleccionar banco</option>
 
-                    <?php
-
+                  <?php
+                    $item= null;
                     $valor = null;
 
-                    $bancos = ControladorBancos::ctrMostrarBancos($valor);
+                    $bancos = ControladorBancos::ctrMostrarBancos($item,$valor);
 
                     foreach ($bancos as $key => $value) {
-                      echo '<option value="' . $value["codigo"] . '">' . $value["nombre"] . '</option>';
+                      echo '<option value="' . $value["codigo"] . '">' . $value["codigo"] ." - ". $value["descripcion"] . '</option>';
                     }
 
                     ?>   

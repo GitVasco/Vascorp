@@ -316,6 +316,31 @@ class ModeloTalleres{
 
   }    
   
+  	/*=============================================
+	ELIMINAR TALLER DETALLE
+	=============================================*/
+
+	static public function mdlEliminarTallerDetalle($tabla,$datos){
+
+		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id_cabecera = :id");
+
+		$stmt -> bindParam(":id", $datos, PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+  }    
   
 	/*=============================================
 	CREAR TALLER
@@ -1694,7 +1719,7 @@ class ModeloTalleres{
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+			$stmt = Conexion::conectar()->prepare("SELECT t.*,a.color,a.talla FROM $tabla  t LEFT JOIN articulojf a ON a.articulo = t.articulo");
 
 			$stmt -> execute();
 
@@ -1706,6 +1731,34 @@ class ModeloTalleres{
 
 		$stmt = null;
 
+    }
+
+  /*=============================================
+	MOSTRAR TALLER CABECERA
+	=============================================*/
+
+	static public function mdlMostrarSelectTaller($valor){
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+                                              t.*,
+                                              a.color,
+                                              a.talla 
+                                            FROM
+                                              entaller_cabjf t 
+                                              LEFT JOIN articulojf a 
+                                                ON a.articulo = t.articulo 
+                                            WHERE SUBSTRING(t.fecha,1,10) = '$valor'");
+
+
+			$stmt -> execute();
+
+      return $stmt -> fetchAll();
+
+      $stmt -> close();
+
+		  $stmt = null;
+
+      
     }
     
 }
