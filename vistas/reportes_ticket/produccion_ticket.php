@@ -53,22 +53,46 @@ $documento = "20513613939";
               </tr>  
 
               <tr>
-                <!-- Mostramos los datos del cliente en el documento HTML -->
-                <td><strong>Trabajador:  </strong></td>
+                <td><b><u>Modelo</u></b></td>
+                <td><b><u>Nombre</u></b></td>      
               </tr>
 
               <tr>
-              <td colspan="3">================================</td>
+                <td style="font-size: x-large;"><strong>'.$value["modelo"].'</strong></td>
+                <td style="font-size: x-large;"><strong>'.$value["nombre"].'</strong></td>
               </tr>
+    
+            </table>
+        
+            <table border="0" align="center" width="300px">
 
-          </table>
+                    <tr>
+                      <td><b><u>Color</u></b></td>
+                      <td><b><u>Talla</u></b></td>      
+                      <td><b><u>Cantidad</u></b></td>
+                    </tr>
+                    
+                    <tr>
+                       <td style="font-size: x-large;"><strong>'.$value["color"].'</strong></td>
+                       <td style="font-size: x-large;"><strong>'.$value["talla"].'</strong></td>
+                       <td style="font-size: x-large;"><strong>'.$value["cantidad"].'</strong></td>
+                    </tr>
 
-          <table border="0" align="center" width="300px">
+                </table>
+                
+            <table border="0" align="center" width="300px">
 
-            <tr>
-              <td><strong>Modelo</strong></td>
-              <td><strong>Nombre</strong></td>      
-            </tr>
+                <tr>
+                  <td><b><u>Cod. Op.</u></b></td>
+                  <td><b><u>Operación</u></b></td>      
+                </tr>
+                
+                <tr>
+                  <td><strong>'.$value["cod_operacion"].'</strong></td>
+                  <td style="font-size: x-large;"><strong>'.$value["operacion"].'</strong></td>
+                </tr>
+        
+            </table>
             
             <tr>
               <td>'.$value["modelo"].'</td>

@@ -196,7 +196,7 @@ $(".chkFacturaB").change(function(){
         dataType:"json",
         success:function(respuesta){
 
-            console.log(respuesta);
+            //console.log(respuesta);
 
             // Limpiamos el select
             serieSeparadoB.find('option').remove();
