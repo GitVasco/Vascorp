@@ -253,8 +253,9 @@
 
             <div class="box-footer">
 
-              <button type="submit" class="btn btn-primary pull-right">Guardar Cambios</button>
-
+              <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-save"></i> Guardar Cambios</button>
+              
+              <a href="servicios"  class="btn btn-danger"><i class="fa fa-times-circle"></i> Cancelar</a>
             </div>
 
           </form>

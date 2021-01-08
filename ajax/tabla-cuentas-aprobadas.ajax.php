@@ -4,18 +4,16 @@ require_once "../controladores/cuentas.controlador.php";
 require_once "../modelos/cuentas.modelo.php";
 require_once "../controladores/clientes.controlador.php";
 require_once "../modelos/clientes.modelo.php";
-class TablaCuentas{
+class TablaCuentasAprobadas{
 
     /*=============================================
     MOSTRAR LA TABLA DE UNIDADES DE MEDIDA
     =============================================*/ 
 
-    public function mostrarTablaCuentas(){
+    public function mostrarTablaCuentasAprobadas(){
 
-        $item = null;     
-        $valor = null;
 
-        $cuenta = ControladorCuentas::ctrRangoFechasCuentas($_GET["fechaInicial"], $_GET["fechaFinal"]);	
+        $cuenta = ControladorCuentas::ctrRangoFechasCuentasAprobadas($_GET["fechaInicial"], $_GET["fechaFinal"]);
         if(count($cuenta)>0){
 
         $datosJson = '{
@@ -90,6 +88,6 @@ class TablaCuentas{
 /*=============================================
 ACTIVAR TABLA DE TIPO DE PAGO
 =============================================*/ 
-$activarCuentas = new TablaCuentas();
-$activarCuentas -> mostrarTablaCuentas();
+$activarCuentasAprobadas = new TablaCuentasAprobadas();
+$activarCuentasAprobadas -> mostrarTablaCuentasAprobadas();
 

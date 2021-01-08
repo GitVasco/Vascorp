@@ -30,6 +30,17 @@ class AjaxTalleres{
   
       }
 
+    public $fecha;
+    public function ajaxSelectTaller(){
+
+      $valor = $this->fecha;
+  
+      $respuesta = ModeloTalleres::mdlMostrarSelectTaller($valor);
+  
+      echo json_encode($respuesta);
+  
+    }
+
 }
 /*=============================================
 EDITAR CANTIDAD DE TALLER
@@ -49,4 +60,14 @@ if(isset($_POST["idTallerT"])){
 	$verTallerT = new AjaxTalleres();
 	$verTallerT -> idTallerT = $_POST["idTallerT"];
 	$verTallerT -> ajaxVerTallerT();
+}
+
+/*=============================================
+SELECT TALLER
+=============================================*/	
+if(isset($_POST["fecha"])){
+
+	$selectTaller = new AjaxTalleres();
+	$selectTaller -> fecha = $_POST["fecha"];
+	$selectTaller -> ajaxSelectTaller();
 }

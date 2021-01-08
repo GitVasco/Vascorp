@@ -1,18 +1,18 @@
 <?php
 
-require_once "../controladores/articulos.controlador.php";
-require_once "../modelos/articulos.modelo.php";
+require_once "../controladores/cierres.controlador.php";
+require_once "../modelos/cierres.modelo.php";
 
-class TablaProductosServicios{
+class TablaProductosCierres{
 
     /*=============================================
-    MOSTRAR LA TABLA DE PRODUCTOS
+    MOSTRAR LA TABLA DE PRODUCTOS CIERRES
     =============================================*/ 
 
-    public function mostrarTablaProductosServicios(){
+    public function mostrarTablaProductosCierres(){
     
 
-        $articulos = controladorArticulos::ctrMostrarArticulosServicio();	
+        $articulos = ControladorCierres::ctrMostrarArticulosCierre();	
         if(count($articulos)>0){
 
         $datosJson = '{
@@ -36,7 +36,7 @@ class TablaProductosServicios{
         TRAEMOS LAS ACCIONES
         =============================================*/         
         
-        $botones =  "<div class='btn-group'><button class='btn btn-primary agregarProducto recuperarBoton' articuloServicio='".$articulos[$i]["articulo"]."'><i class='fa fa-plus-circle'></i> Agregar</button></div>"; 
+        $botones =  "<div class='btn-group'><button class='btn btn-primary agregarProducto recuperarBoton' articuloCierre='".$articulos[$i]["articulo"]."'><i class='fa fa-plus-circle'></i> Agregar</button></div>"; 
 
             $datosJson .= '[
             "'.$articulos[$i]["articulo"].'",
@@ -45,7 +45,6 @@ class TablaProductosServicios{
             "'.$articulos[$i]["color"].'",
             "'.$articulos[$i]["talla"].'",
             "'.$articulos[$i]["servicio"].'",
-            "'.$articulos[$i]["taller"].'",
             "'.$botones.'"
             ],';        
             }
@@ -72,5 +71,5 @@ class TablaProductosServicios{
 /*=============================================
 ACTIVAR TABLA DE PRODUCTOS
 =============================================*/ 
-$activarProductosServicios = new TablaProductosServicios();
-$activarProductosServicios -> mostrarTablaProductosServicios();
+$activarProductosCierres = new TablaProductosCierres();
+$activarProductosCierres -> mostrarTablaProductosCierres();

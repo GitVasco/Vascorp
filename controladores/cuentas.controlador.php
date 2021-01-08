@@ -94,9 +94,9 @@ class ControladorCuentas{
 	MOSTRAR CUENTAS
 	=============================================*/
 
-	static public function ctrMostrarTipoCuentas($tipo){
+	static public function ctrMostrarTipoCuentas($item,$valor){
 		$tabla="cuenta_ctejf";
-		$respuesta = ModeloCuentas::mdlMostrarTipoCuentas($tabla,$tipo);
+		$respuesta = ModeloCuentas::mdlMostrarTipoCuentas($tabla,$item,$valor);
 
 		return $respuesta;
 
@@ -341,6 +341,9 @@ class ControladorCuentas{
 				$origen=ControladorCuentas::ctrMostrarCuentas("num_cta",$_POST["cancelarDocumento"]);
 				$idOrigen=$origen["id"];
 				$saldoNuevo=$_POST["cancelarMontoAntiguo"]-$_POST["cancelarMonto2"];
+				if($saldoNuevo>0){
+					$estado=ModeloCuentas::mdlActualizarUnDato($tabla,"estado","PENDIENTE",$idOrigen);
+				}
 				$actualizacion=ModeloCuentas::mdlActualizarUnDato($tabla,"saldo",$saldoNuevo,$idOrigen);
 			   	$respuesta = ModeloCuentas::mdlEditarCuenta($tabla,$datos);
 			   	if($respuesta == "ok"){
@@ -398,6 +401,9 @@ class ControladorCuentas{
 			$origen=ControladorCuentas::ctrMostrarCuentas("num_cta",$cancelacion["num_cta"]);
 			$idOrigen=$origen["id"];
 			$saldoNuevo=$cancelacion["monto"]+$origen["saldo"];
+			if($saldoNuevo>0){
+				$estado=ModeloCuentas::mdlActualizarUnDato($tabla,"estado","PENDIENTE",$idOrigen);
+			}
 			$actualizacion=ModeloCuentas::mdlActualizarUnDato($tabla,"saldo",$saldoNuevo,$idOrigen);
 			$respuesta = ModeloCuentas::mdlEliminarCuenta($tabla,$datos);
 			if($respuesta == "ok"){
@@ -414,7 +420,7 @@ class ControladorCuentas{
 					  }).then(function(result){
 								if (result.value) {
 
-								window.location = "cuentas";
+								window.location = "index.php?ruta=ver-cuentas&numCta='.$origen["num_cta"].'";
 
 								}
 							})
@@ -586,4 +592,98 @@ class ControladorCuentas{
 		}
 	}
 
+	/*=============================================
+	RANGO FECHAS CUENTAS
+	=============================================*/	
+
+	static public function ctrRangoFechasCuentas($fechaInicial, $fechaFinal){
+
+		$tabla = "cuenta_ctejf";
+
+		$respuesta = ModeloCuentas::mdlRangoFechasCuentas($tabla, $fechaInicial, $fechaFinal);
+
+		return $respuesta;
+		
+	}
+	
+	/*=============================================
+	RANGO FECHAS CUENTAS
+	=============================================*/	
+
+	static public function ctrRangoFechasCuentasPendientes($fechaInicial, $fechaFinal){
+
+		$tabla = "cuenta_ctejf";
+
+		$respuesta = ModeloCuentas::mdlRangoFechasCuentasPendientes($tabla, $fechaInicial, $fechaFinal);
+
+		return $respuesta;
+		
+	}
+	
+	/*=============================================
+	RANGO FECHAS CUENTAS
+	=============================================*/	
+
+	static public function ctrRangoFechasCuentasAprobadas($fechaInicial, $fechaFinal){
+
+		$tabla = "cuenta_ctejf";
+
+		$respuesta = ModeloCuentas::mdlRangoFechasCuentasAprobadas($tabla, $fechaInicial, $fechaFinal);
+
+		return $respuesta;
+		
+	}
+	
+	/*=============================================
+	CANCELAR CUENTAS
+	=============================================*/
+
+	static public function ctrCancelarCuenta2(){
+
+		if(isset($_POST["cancelarDocumento2"])){
+
+			$tabla="cuenta_ctejf";
+			   $datos = array("id" => $_POST["idCuenta3"],
+			   			   "tipo_doc"=>$_POST["cancelarCodigo2"],
+						   "num_cta"=>$_POST["cancelarDocumento2"],
+						   "cliente"=>$_POST["cancelarCliente2"],
+						   "vendedor"=>$_POST["cancelarVendedor2"],
+						   "monto"=>$_POST["cancelarMonto3"],
+						   "notas"=>$_POST["cancelarNota2"],
+						   "usuario"=>$_POST["cancelarUsuario2"],
+						   "fecha"=>$_POST["cancelarFechaUltima2"]);
+
+				$cuenta=ControladorCuentas::ctrMostrarCuentas("id",$_POST["idCuenta3"]);
+				$saldoNuevo=$cuenta["saldo"]-$_POST["cancelarMonto3"];
+				if($saldoNuevo >= -0.5 && $saldoNuevo<= 0.5){
+					$estado=ModeloCuentas::mdlActualizarUnDato($tabla,"estado","CANCELADO",$_POST["idCuenta3"]);
+				}
+				$ultimo_pago=ModeloCuentas::mdlActualizarUnDato($tabla,"ult_pago",$_POST["cancelarFechaUltima2"],$_POST["idCuenta3"]);
+				$actualizado=ModeloCuentas::mdlActualizarUnDato($tabla,"saldo",$saldoNuevo,$_POST["idCuenta3"]);
+			   	$respuesta = ModeloCuentas::mdlIngresarCuenta($tabla,$datos);
+			   	if($respuesta == "ok"){
+
+					echo'<script>	
+
+					swal({
+						  type: "success",
+						  title: "La cuenta ha sido cancelada correctamente",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+									if (result.value) {
+
+									window.location = "index.php?ruta=ver-cuentas&numCta='.$cuenta["num_cta"].'";
+
+									}
+								})
+
+					</script>';
+
+
+			}
+		}
+
+	}
+   
 }
