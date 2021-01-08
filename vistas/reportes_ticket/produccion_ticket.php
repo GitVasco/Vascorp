@@ -66,13 +66,13 @@
             <table border="0" align="center" width="300px">
 
               <tr>
-                <td><strong>Modelo</strong></td>
-                <td><strong>Nombre</strong></td>      
+                <td><b><u>Modelo</u></b></td>
+                <td><b><u>Nombre</u></b></td>      
               </tr>
               
               <tr>
-                <td>'.$value["modelo"].'</td>
-                <td>'.$value["nombre"].'</td>
+                <td style="font-size: x-large;"><strong>'.$value["modelo"].'</strong></td>
+                <td style="font-size: x-large;"><strong>'.$value["nombre"].'</strong></td>
               </tr>
     
             </table>
@@ -80,15 +80,15 @@
             <table border="0" align="center" width="300px">
 
                     <tr>
-                      <td><strong>Color</strong></td>
-                      <td><strong>Talla</strong></td>      
-                      <td><strong>Cantidad</strong></td>
+                      <td><b><u>Color</u></b></td>
+                      <td><b><u>Talla</u></b></td>      
+                      <td><b><u>Cantidad</u></b></td>
                     </tr>
                     
                     <tr>
-                      <td>'.$value["color"].'</td>
-                      <td>'.$value["talla"].'</td>
-                      <td>'.$value["cantidad"].'</td>
+                       <td style="font-size: x-large;"><strong>'.$value["color"].'</strong></td>
+                       <td style="font-size: x-large;"><strong>'.$value["talla"].'</strong></td>
+                       <td style="font-size: x-large;"><strong>'.$value["cantidad"].'</strong></td>
                     </tr>
 
                 </table>
@@ -96,13 +96,13 @@
             <table border="0" align="center" width="300px">
 
                 <tr>
-                  <td><strong>Cod. Operación</strong></td>
-                  <td><strong>Operación</strong></td>      
+                  <td><b><u>Cod. Op.</u></b></td>
+                  <td><b><u>Operación</u></b></td>      
                 </tr>
                 
                 <tr>
-                  <td>'.$value["cod_operacion"].'</td>
-                  <td>'.$value["operacion"].'</td>
+                  <td><strong>'.$value["cod_operacion"].'</strong></td>
+                  <td style="font-size: x-large;"><strong>'.$value["operacion"].'</strong></td>
                 </tr>
         
             </table>

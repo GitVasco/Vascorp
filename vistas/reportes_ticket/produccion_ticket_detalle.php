@@ -65,13 +65,13 @@ $documento = "20513613939";
     <table border="0" align="center" width="300px">
 
       <tr>
-        <td><strong>Modelo</strong></td>
-        <td><strong>Nombre</strong></td>      
+        <td><b><u>Modelo</u></b></td>
+        <td><b><u>Nombre</u></b></td>      
       </tr>
       
       <tr>
-        <td><?php echo $modelo?></td>
-        <td><?php echo $nombre?></td>
+        <td style="font-size: x-large;"><strong><?php echo $modelo?></strong></td>
+        <td style="font-size: x-large;"><strong><?php echo $nombre?></strong></td>
       </tr>
 
     </table>
@@ -81,15 +81,15 @@ $documento = "20513613939";
     <table border="0" align="center" width="300px">
 
       <tr>
-        <td><strong>Color</strong></td>
-        <td><strong>Talla</strong></td>      
-        <td><strong>Cantidad</strong></td>
+        <td><b><u>Color</u></b></td>
+        <td><b><u>Talla</u></b></td>      
+        <td><b><u>Cantidad</u></b></td>
       </tr>
       
       <tr>
-        <td><?php echo $color?></td>
-        <td><?php echo $talla?></td>
-        <td><?php echo $cantidad?></td>
+        <td style="font-size: x-large;"><strong><?php echo $color?></strong></td>
+        <td style="font-size: x-large;"><strong><?php echo $talla?></strong></td>
+        <td style="font-size: x-large;"><strong><?php echo $cantidad?></strong></td>
       </tr>
 
     </table>
@@ -99,13 +99,13 @@ $documento = "20513613939";
     <table border="0" align="center" width="300px">
 
       <tr>
-        <td><strong>Cod. Operación</strong></td>
-        <td><strong>Operación</strong></td>      
+        <td><b><u>Cod. Op.</u></b></td>
+        <td><b><u>Operación</u></b></td>      
       </tr>
       
       <tr>
-        <td><?php echo $cod_operacion?></td>
-        <td><?php echo $nom_operacion?></td>
+        <td><strong><?php echo $cod_operacion?></strong></td>
+        <td style="font-size: x-large;"><strong><?php echo $nom_operacion?></strong></td>
       </tr>
 
     </table>
