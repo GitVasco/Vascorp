@@ -22,6 +22,24 @@
 
     <div class="box">
       <div class="box-header with-border">
+        <div class="col-lg-2">
+          <select name="selectModeloCorte" id="selectModeloCorte" class="form-control input-lg selectpicker" data-live-search="true">
+          <option value="">--------Seleccionar modelo-------</option>
+          <?php 
+            $item=null;
+            $valor=null;
+
+            $modelo =ControladorModelos::ctrMostrarModelos($item,$valor);
+            foreach ($modelo as $key => $value) {
+              echo '<option value="'.$value["modelo"].'">'.$value["modelo"]." - ". $value["nombre"].'</option>';
+            }
+          ?>
+          </select>
+        </div>
+        <div class="col-lg-2">
+        <button class="btn btn-primary btnLimpiarModeloCorte"  name="btnLimpiarModeloCorte"><i class="fa fa-refresh"></i> Limpiar</button>
+        </div>
+        
         <button class="btn btn-outline-success pull-right btnReporteAlmacen"  style="border:green 1px solid">
                       <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Almacén de corte  </button>
       </div>

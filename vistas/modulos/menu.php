@@ -25,6 +25,7 @@
             in_array(11,$valores)?$_SESSION['ventas']=1:$_SESSION['ventas']=0;
             in_array(12,$valores)?$_SESSION['facturacion']=1:$_SESSION['facturacion']=0;
             in_array(13,$valores)?$_SESSION['ticket']=1:$_SESSION['ticket']=0;
+            in_array(14,$valores)?$_SESSION['cuenta']=1:$_SESSION['cuenta']=0;
 
             ?>
 
@@ -728,22 +729,6 @@
 
                             </li>
 
-                        </ul>
-
-                    </li>
-
-                    <li class="treeview">
-
-                        <a href="#"><i class="fa fa-shopping-bag"></i> Cierres
-
-                            <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-
-                        </a>
-
-                        <ul class="treeview-menu">
-
                             <li>
 
                                 <a href="cierres">
@@ -1017,6 +1002,7 @@
             
             <?php
             }
+            if($_SESSION["cuenta"] == 1){
             ?>
             <li class="treeview">
 
@@ -1078,6 +1064,7 @@
             </li>
             <!--  Ticket-->
             <?php
+            }
             if($_SESSION["ticket"] == 1){
             ?>
             <li class="treeview">

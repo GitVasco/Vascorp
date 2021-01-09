@@ -124,7 +124,7 @@ $documento = "20513613939";
 
           <input type="hidden" name="codigo" id="codigo" value=<?php echo $codigo?>>
           <div>
-            <svg id="barcode"></svg>
+            <svg id="barcode" style="width: 350px; height:200px;"></svg>
           </div> 
 
         </td>
@@ -221,7 +221,7 @@ $documento = "20513613939";
 
           <input type="hidden" name="codigo2" id="codigo2" value=<?php echo $codigo2?>>
           <div>
-            <svg id="barcode2"></svg>
+            <svg id="barcode2" style="width: 350px; height:200px;"></svg>
           </div> 
 
         </td>

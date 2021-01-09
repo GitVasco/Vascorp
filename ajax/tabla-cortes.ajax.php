@@ -10,7 +10,8 @@ class TablaCortes{
     */
     public function mostrarTablaCortes(){
 
-        $cortes = ControladorCortes::ctrMostrarCortesV();
+        $modeloCorte = $_GET["modeloCorte"];
+        $cortes = ControladorCortes::ctrMostrarCortesV($modeloCorte);
 
         if(count($cortes)>0){
 
