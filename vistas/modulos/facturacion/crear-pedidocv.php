@@ -266,7 +266,7 @@
                                 <p class="buscador" id="elid">
                                     <label>Buscar:</label>
                                     <input type="text" class="form-control input-sm" id="buscador" name="buscador">
-                                </p>   
+                                </p>
 
                                 <!--=====================================
                                         TITULOS

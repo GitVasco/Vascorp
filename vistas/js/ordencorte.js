@@ -164,7 +164,7 @@ $(".tablaArticulosOrdenCorte tbody").on("click", "button.agregarArt", function (
 
             $(".nuevoArticuloOC").append(
 
-                '<div class="row" style="padding:5px 15px">' +
+                '<div class="row munditoOC" style="padding:5px 15px">' +
 
                     "<!-- Descripción del Articulo -->" +
 
