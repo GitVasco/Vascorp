@@ -171,8 +171,7 @@ $(".tablaArticuloOperaciones tbody").on("click", "button.agregarOperacion", func
 	  success: function(respuesta) {
 		var codigo = respuesta["codigo"];
 		var nombre = respuesta["nombre"];
-  
-  
+		
 		$(".nuevaOperacion").append(
   
 		  '<div class="row" style="padding:5px 15px">' +
@@ -194,9 +193,9 @@ $(".tablaArticuloOperaciones tbody").on("click", "button.agregarOperacion", func
   
 			"<!-- Precio Decena -->" +
   
-			'<div class="col-xs-3">' +
+			'<div class="col-xs-3 ingresoDocena">' +
   
-			'<input type="number" class="form-control nuevoPrecioDocena" name="nuevoPrecioDocena" min="0" value="0" step="any" required>' +
+			'<input type="number" class="form-control nuevoPrecioDocena" name="nuevoPrecioDocena" min="0" value="0" step="any" required readonly>' +
   
 			"</div>" +
   
@@ -208,7 +207,7 @@ $(".tablaArticuloOperaciones tbody").on("click", "button.agregarOperacion", func
   
 			  '<span class="input-group-addon"><i class="fa fa-clock-o"></i></span>' +
   
-			  '<input type="number" class="form-control nuevoTiempoStandar" name="nuevoTiempoStandar" value="0" step="any" required>' +
+			  '<input type="number" class="form-control nuevoTiempoStandar" name="nuevoTiempoStandar" id="nuevoTiempoStandar"  value="0" step="any" required>' +
   
 			  "</div>" +
   
@@ -577,3 +576,16 @@ $(".box").on("click", ".btnReporteOPE", function () {
     window.location = "vistas/reportes_excel/rpt_operaciones.php";
   
 })
+
+$(".formularioOperacion").on("keyup", "input.nuevoTiempoStandar", function() {
+	var inputPrecio = $(this)
+	.parent()
+	.parent()
+	.parent()
+    .children(".ingresoDocena")
+    .children(".nuevoPrecioDocena");
+	var tiempo = $(this).val();
+	var precio = (tiempo/60)*0.1*12;
+	inputPrecio.val(precio.toFixed(2));
+	sumarTotalPrecios();
+});

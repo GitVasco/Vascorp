@@ -25,6 +25,22 @@ class AjaxServicios{
         echo json_encode($respuesta);
         
 	}
+
+	/*=============================================
+      EDITAR PRECIO SERVICIO
+      =============================================*/ 
+    
+      public $idPrecioServicio;
+    
+      public function ajaxEditarPrecioServicio(){
+        $item="id";
+        $valor = $this->idPrecioServicio;
+    
+        $respuesta = ControladorServicios::ctrMostrarPrecioServicios($item,$valor);
+    
+        echo json_encode($respuesta);
+    
+      }
 }
 
 // OBJETOS
@@ -41,5 +57,13 @@ if(isset($_POST["servicio"])){
 	$ultimoServicio = new AjaxServicios();
 	$ultimoServicio -> servicio =$_POST["servicio"];
     $ultimoServicio -> ajaxUltimoServicio();
+    
+}
+
+if(isset($_POST["idPrecioServicio"])){
+
+	$editarPrecioServicio=new AjaxServicios();
+	$editarPrecioServicio->idServicio=$_POST["idPrecioServicio"];
+    $editarPrecioServicio->ajaxEditarPrecioServicio();
     
 }

@@ -88,48 +88,14 @@ $documento = "20513613939";
                 </tr>
                 
                 <tr>
-                  <td><strong>'.$value["cod_operacion"].'</strong></td>
+                  <td><strong>'.$value["cod_operacion"]. "-".str_pad(($key+1),2,"0",STR_PAD_LEFT). '</strong></td>
                   <td style="font-size: x-large;"><strong>'.$value["operacion"].'</strong></td>
                 </tr>
         
             </table>
             
-            <tr>
-              <td>'.$value["modelo"].'</td>
-              <td>'.$value["nombre"].'</td>
-            </tr>
-  
           </table>
       
-          <table border="0" align="center" width="300px">
-
-                  <tr>
-                    <td><strong>Color</strong></td>
-                    <td><strong>Talla</strong></td>      
-                    <td><strong>Cantidad</strong></td>
-                  </tr>
-                  
-                  <tr>
-                    <td>'.$value["color"].'</td>
-                    <td>'.$value["talla"].'</td>
-                    <td>'.$value["cantidad"].'</td>
-                  </tr>
-
-              </table>
-              
-          <table border="0" align="center" width="300px">
-
-              <tr>
-                <td><strong>Cod. Operación</strong></td>
-                <td><strong>Operación</strong></td>      
-              </tr>
-              
-              <tr>
-                <td>'.$value["cod_operacion"].'</td>
-                <td>'.$value["operacion"].'</td>
-              </tr>
-      
-          </table>
           
           <table border="0" align="center" width="300px">
 

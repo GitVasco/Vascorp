@@ -2,15 +2,15 @@
 * CARGAR TABLA TALLERES EN GENERAL
 */
 // Validamos que venga la variable capturaRango en el localStorage
-if (localStorage.getItem("capturaRango5") != null) {
-	$("#daterange-btnTaller span").html(localStorage.getItem("capturaRango5"));
+if (localStorage.getItem("capturarRango5") != null) {
+	$("#daterange-btnTaller span").html(localStorage.getItem("capturarRango5"));
 	cargarTablaTalleres(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
 } else {
 	$("#daterange-btnTaller span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
 	cargarTablaTalleres(null, null);
 }
 
-
+	
 function cargarTablaTalleres(fechaInicial, fechaFinal){
 $('.tablaTalleresG').DataTable({
 	"ajax": "ajax/tabla-talleresGeneral.ajax.php?perfil=" + $("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
@@ -319,9 +319,9 @@ $("#daterange-btnTaller").daterangepicker(
     function() {
       localStorage.removeItem("capturarRango5");
       localStorage.removeItem("fechaInicial");
-    	localStorage.removeItem("fechaFinal");
-      localStorage.clear();
-      window.location = "en-taller";
+      localStorage.removeItem("fechaFinal");
+	  localStorage.clear();
+	  window.location="en-taller";
     }
   );
   

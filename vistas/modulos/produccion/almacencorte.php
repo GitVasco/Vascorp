@@ -304,7 +304,7 @@ MODAL EDITAR TELA
 
 <div id="modalEditarAC" class="modal fade" role="dialog">
   
-  <div class="modal-dialog" style="width: 70% !important;" > 
+  <div class="modal-dialog" style="width: 90% !important;" > 
 
     <div class="modal-content">
 
@@ -332,7 +332,7 @@ MODAL EDITAR TELA
 
             <!-- ENTRADA PARA CODIGO DEL OC-->
             
-            <div class="form-group col-lg-12">
+            <div class="form-group col-lg-1">
               
               <label>Corte</label>
 
@@ -345,6 +345,7 @@ MODAL EDITAR TELA
               </div>
 
             </div>
+            <div class="col-lg-12"></div>
             <div id="telas" >
             </div>
 
@@ -382,7 +383,7 @@ MODAL EDITAR NOTIFICACION
 
 <div id="modalEditarNotificacion" class="modal fade" role="dialog">
   
-  <div class="modal-dialog" style="width: 70% !important;" > 
+  <div class="modal-dialog" style="width: 90% !important;" > 
 
     <div class="modal-content">
 
@@ -410,7 +411,7 @@ MODAL EDITAR NOTIFICACION
 
             <!-- ENTRADA PARA CODIGO DEL OC-->
             
-            <div class="form-group col-lg-12">
+            <div class="form-group col-lg-1">
               
               <label>Corte</label>
 
@@ -423,6 +424,7 @@ MODAL EDITAR NOTIFICACION
               </div>
 
             </div>
+            <div class="col-lg-12"></div>
             <div id="notificaciones" >
             </div>
 

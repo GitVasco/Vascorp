@@ -278,5 +278,120 @@ class ModeloServicios{
 
 
 	}
+
+	/*=============================================
+	CREAR PRECIO SERVICIO
+	=============================================*/
+
+	static public function mdlIngresarPrecioServicio($tabla,$datos){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(taller,modelo,precio_doc) VALUES (:taller,:modelo,:precio_doc)");
+
+		$stmt->bindParam(":taller", $datos["taller"], PDO::PARAM_STR);
+		$stmt->bindParam(":modelo", $datos["modelo"], PDO::PARAM_STR);
+		$stmt->bindParam(":precio_doc", $datos["precio_doc"], PDO::PARAM_STR);
+
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	}    
+
+	/*=============================================
+	MOSTRAR PRECIO SERVICIO
+	=============================================*/
+
+	static public function mdlMostrarPrecioServicios($tabla,$item,$valor){
+
+		if($item != null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT pd.*,m.nombre FROM $tabla pd LEFT JOIN modelojf  m ON pd.modelo = m.modelo WHERE pd.$item = :$item");
+
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();
+
+		}else{
+
+			$stmt = Conexion::conectar()->prepare("SELECT pd.*,m.nombre FROM $tabla pd LEFT JOIN modelojf  m ON pd.modelo = m.modelo");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }
+    
+	/*=============================================
+	EDITAR PRECIO SERVICIO
+	=============================================*/
+
+	static public function mdlEditarPrecioServicio($tabla,$datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET taller = :taller, modelo = :modelo, precio_doc=:precio_doc WHERE id = :id");
+
+		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
+		$stmt->bindParam(":taller", $datos["taller"], PDO::PARAM_STR);
+		$stmt->bindParam(":modelo", $datos["modelo"], PDO::PARAM_STR);
+		$stmt->bindParam(":precio_doc", $datos["precio_doc"], PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+    }
+	
+	
+	/*=============================================
+	ELIMINAR PRECIO SERVICIO
+	=============================================*/
+
+	static public function mdlEliminarPrecioServicio($tabla,$datos){
+
+		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
+
+		$stmt -> bindParam(":id", $datos, PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}    
     
 }
