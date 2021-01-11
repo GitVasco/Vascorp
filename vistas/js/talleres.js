@@ -1369,3 +1369,50 @@ $(".tablaIngresoM").on("click", ".btnEditarSegunda", function () {
   window.location = "index.php?ruta=editar-segunda&idIngreso=" + idIngreso;
   
 })
+
+$("#fechaCabecera").change(function(){
+	var fecha= $(this).val();
+	var datos= new FormData();
+	datos.append("fecha",fecha);
+	$.ajax({
+		url:"ajax/talleres.ajax.php",
+		method:"POST",
+		data:datos,
+		cache: false,
+		contentType:false,
+		processData:false,
+		dataType: "json",
+		success:function(respuesta){
+			$("#nuevoCodigo").find('option').remove();
+			$("#nuevoCodigo").append('<option value="">Seleccionar articulo</option>')
+			for (let i = 0; i < respuesta.length; i++) {
+				$("#nuevoCodigo").append("<option value='"+respuesta[i]["id"]+"'>"+respuesta[i]["id"]+" - "+respuesta[i]["articulo"]+" - "+respuesta[i]["color"]+" - "+respuesta[i]["talla"]+"</option>");
+				
+			}
+			$('#nuevoCodigo').selectpicker('refresh');
+		}
+	});
+});
+$("#fechaCabecera2").change(function(){
+	var fecha= $(this).val();
+	var datos= new FormData();
+	datos.append("fecha",fecha);
+	$.ajax({
+		url:"ajax/talleres.ajax.php",
+		method:"POST",
+		data:datos,
+		cache: false,
+		contentType:false,
+		processData:false,
+		dataType: "json",
+		success:function(respuesta){
+			$("#nuevoCodigo2").find('option').remove();
+			$("#nuevoCodigo2").append('<option value="">Seleccionar articulo</option>')
+			for (let i = 0; i < respuesta.length; i++) {
+				$("#nuevoCodigo2").append("<option value='"+respuesta[i]["id"]+"'>"+respuesta[i]["id"]+" - "+respuesta[i]["articulo"]+" - "+respuesta[i]["color"]+" - "+respuesta[i]["talla"]+"</option>");
+				
+			}
+			$('#nuevoCodigo2').selectpicker('refresh');
+		}
+	});
+});

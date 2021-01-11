@@ -134,48 +134,57 @@
 
                 </div>
 
-                <!--=====================================
-                TITULOS
-                ======================================-->
-                
-                <div class="box box-primary">
-
-                  <div class="row">
-
-                    <div class="col-xs-6">
-
-                      <label>Articulo</label>
-
-                    </div>
-
-                    <div class="col-xs-2">
-
-                      <label for="">Ord. Corte</label>
-
-                    </div>
-
-                    <div class="col-xs-2">
-
-                      <label for="">SinProg</label>
-
-                    </div>
-
-                    <div class="col-xs-2">
-
-                      <label for="">Mes</label>
-
-                    </div>
-
-                  </div>
-
-                </div>
-         
+        
                 <!--=====================================
                 ENTRADA PARA AGREGAR MATERIAPRIMA
                 ======================================-->
 
-                <div class="form-group row nuevoArticuloOC">
+                <div class="form-group row nuevoArticuloOC" style="height:500px; overflow: scroll;">
 
+                  <!--=====================================
+                  ENTRADA BUSCADOR
+                  ======================================-->
+
+                  <p class="buscadorOc" id="elidOc">
+                      <label>Buscar:</label>
+                      <input type="text" class="form-control input-sm" id="buscadorOc" name="buscadorOc">
+                  </p>
+
+                  <!--=====================================
+                  TITULOS
+                  ======================================-->
+
+                  <div class="box box-primary">
+
+                    <div class="row">
+
+                      <div class="col-xs-6">
+
+                        <label>Articulo</label>
+
+                      </div>
+
+                      <div class="col-xs-2">
+
+                        <label for="">Ord. Corte</label>
+
+                      </div>
+
+                      <div class="col-xs-2">
+
+                        <label for="">SinProg</label>
+
+                      </div>
+
+                      <div class="col-xs-2">
+
+                        <label for="">Mes</label>
+
+                      </div>
+
+                    </div>
+
+                  </div>
 
                 </div>
 
@@ -424,4 +433,42 @@ MODAL CONFIGURAR % DE URGENCIAS
 
 <script>
 window.document.title = "Crear orden de corte"
+</script>
+
+<script>
+$('.nuevoArticuloOC').ready(function(){
+    $('#buscadorOC').keyup(function(){
+
+    //console.log("hola mundo")
+
+    var nombres = $('.nuevaDescripcionProducto');
+    //console.log(nombres.val())
+    //console.log(nombres.length())
+
+    var buscando = $(this).val();
+    //console.log(buscando.length);
+
+    var item='';
+
+       for( var i = 0; i < nombres.length; i++ ){
+
+        item = $(nombres[i]).val().toLowerCase();
+        console.log(item);
+
+            for(var x = 0; x < item.length; x++ ){
+
+                if( buscando.length == 0 || item.indexOf( buscando ) > -1 ){
+
+                    $(nombres[i]).parents('.munditoOC').show(); 
+
+                }else{
+
+                    $(nombres[i]).parents('.munditoOC').hide();
+
+                }
+            }
+       }
+    });
+  });
+
 </script>

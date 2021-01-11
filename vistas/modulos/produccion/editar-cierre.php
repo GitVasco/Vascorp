@@ -4,7 +4,7 @@
 
     <h1>
 
-      Crear servicio
+      Editar cierre
 
     </h1>
 
@@ -12,7 +12,7 @@
 
       <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-      <li class="active">Crear servicio</li>
+      <li class="active">Editar cierre</li>
 
     </ol>
 
@@ -32,44 +32,69 @@
 
           <div class="box-header with-border"></div>
 
-          <form role="form" method="post" class="formularioServicio">
+          <form role="form" method="post" class="formularioCierre">
 
             <div class="box-body">
 
               <div class="box">
+
+              <?php
+
+                    $item = "codigo";
+                    $valor = $_GET["idCierre"];
+
+                    $venta = ControladorCierres::ctrMostrarCierres($item, $valor);
+                   
+
+                    $itemUsuario = "id";
+                    $valorUsuario = $venta["usuario"];
+
+                    $vendedor = ControladorUsuarios::ctrMostrarUsuarios($itemUsuario, $valorUsuario);
+
+                    $valorSector = $venta["taller"];
+
+                    $sector = ControladorSectores::ctrMostrarSectores($valorSector);
+                    $nombreSector=$sector["cod_sector"]." - ".$sector["nom_sector"];    
+                                   
+                    date_default_timezone_set('America/Lima');
+                    $ahora=date('Y/m/d h:i:s');
+                    
+                ?>              
 
                 <!--=====================================
                 ENTRADA DEL VENDEDOR
                 ======================================-->
 
                 <div class="form-group">
-
+                
                   <div class="input-group">
+                    
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                    <input type="text" class="form-control" id="nuevoVendedor" value="<?php echo $vendedor["nombre"]; ?>" readonly>
 
-                    <input type="text" class="form-control" id="nuevoVendedor" name="nuevoVendedor"
-                      value="<?php echo $_SESSION["nombre"]; ?>" readonly>
+                    <input type="hidden" name="idVendedor" value="<?php echo $vendedor["id"]; ?>">
 
-                    <input type="hidden" name="idVendedor" value="<?php echo $_SESSION["id"]; ?>">
+                    <input type="hidden" name="fechaActual" value="<?php echo $ahora; ?>">
 
                   </div>
 
-                </div>
+                </div> 
 
                 <!--=====================================
                 ENTRADA DEL CODIGO
                 ======================================-->
 
                 <div class="form-group">
-
+                  
                   <div class="input-group">
-
+                    
                     <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                    <input type="text" class="form-control" id="nuevoServicio" name="nuevoServicio"  readonly>
 
+                   <input type="text" class="form-control" id="nuevaVenta" name="editarCierre" value="<?php echo $venta["codigo"]; ?>" readonly>
+               
                   </div>
-
+                
                 </div>
 
                 <!--=====================================
@@ -80,32 +105,10 @@
 
                   <div class="input-group">
 
-                    <span class="input-group-addon"><i class="fa fa-users"></i></span>
-
-                    <select class="form-control selectpicker" id="seleccionarSector" name="seleccionarSector" data-live-search="true" required>
-
-                      <option value="">Seleccionar sector</option>
-
-                      <?php
-
-                      $item = null;
-                      $valor = null;
-
-                      $categorias = ControladorSectores::ctrMostrarSectores($item, $valor);
-
-                      foreach ($categorias as $key => $value) {
-
-                        echo '<option value="'.$value["cod_sector"].'">'.$value["cod_sector"]." - ".$value["nom_sector"].'</option>';
-
-                      }
-
-                      ?>
-
-                    </select>
-
-                    <span class="input-group-addon"><button type="button" class="btn btn-default btn-xs"
-                        data-toggle="modal" data-target="#modalAgregarSector" data-dismiss="modal">Agregar
-                        sector</button></span>
+                    <span class="input-group-addon" id="spanAddon"><i class="fa fa-users"></i></span>
+                    <input type="text" class="form-control" id="editarSectorVenta" value="<?=$nombreSector;?>"
+                      readonly>
+                    <input type="hidden" name="idSectorVenta" value="<?=$venta["taller"];?>">
 
                   </div>
 
@@ -135,6 +138,52 @@
 
                 <div class="form-group row nuevoProducto">
 
+                <?php
+
+                # Traemos los detalles de la venta que se desea editar
+                $listaProductos=ControladorCierres::ctrMostrarDetallesCierres("codigo",$_GET["idCierre"]);
+
+                /* var_dump("listaProductos", $listaProductos); */
+                
+                foreach($listaProductos as $key=>$value){
+
+                  # Traemos el dato de cada producto
+                  $infoProducto=controladorArticulos::ctrMostrarArticulos($value["articulo"]);
+
+                  /* var_dump("infoproducto", $infoProducto); */
+                  
+                  # Hallamos el stock anterior
+                  $servicioAntiguo = $infoProducto["servicio"] + $value["cantidad"];  
+
+                  /* var_dump("stockAntiguo", $stockAntiguo); */
+                  
+                  echo '<div class="row" style="padding:5px 15px">
+
+                  <div class="col-xs-6" style="padding-right:0px">
+
+                    <div class="input-group">
+
+                      <span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarProducto" articuloCierre="'.$infoProducto["articulo"].'"><i class="fa fa-times"></i></button></span>
+
+                      <input type="text" class="form-control nuevaDescripcionProducto" articuloCierre="'.$infoProducto["articulo"].'" name="agregarProducto" value="'.$infoProducto["packing"].'" codigoP="'.$infoProducto["articulo"].'" readonly required>
+
+                    </div>
+
+                  </div>
+
+                  <div class="col-xs-3">
+
+                    <input type="number" class="form-control nuevaCantidadProducto" name="nuevaCantidadProducto" min="0" value="'.$value["cantidad"].'" servicio="'.$servicioAntiguo.'" nuevoServicio="'.$infoProducto["servicio"].'" required>
+
+                  </div>
+
+                </div>';                  
+
+
+                }
+
+
+                ?>
 
 
                 </div>
@@ -145,7 +194,7 @@
                 BOTÓN PARA AGREGAR PRODUCTO
                 ======================================-->
 
-                <button type="button" class="btn btn-default hidden-lg btnAgregarProducto">Agregar producto</button>
+                <button type="button" class="btn btn-default hidden-lg btnAgregarProducto">Agregar articulo</button>
 
                 <hr>
 
@@ -171,18 +220,19 @@
 
                         <tr>
 
+
                           <td style="width: 50%">
 
-                            <div class="input-group">
+                          <div class="input-group">
+                           
+                           <span class="input-group-addon"><i class="fa fa-money"></i></span>
 
-                              <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                           <input type="text" class="form-control input-lg" id="nuevoTotalVenta" name="nuevoTotalVenta" value="<?php echo $venta["total"]; ?>" readonly required>
 
-                              <input type="text" min="1" class="form-control input-lg" id="nuevoTotalVenta" name="nuevoTotalVenta" total="" placeholder="00000" readonly required>
-
-                              <input type="hidden" name="totalVenta" id="totalVenta">
-
-
-                            </div>
+                           <input type="hidden" name="totalVenta" value="<?php echo $venta["total"]; ?>" id="totalVenta">
+                           
+                     
+                         </div>
 
                           </td>
 
@@ -202,27 +252,26 @@
 
             <div class="box-footer">
 
-              <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-save"></i> Guardar servicio</button>
-
-              <a href="servicios"  class="btn btn-danger"><i class="fa fa-times-circle"></i> Cancelar</a>
-
+              <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-save"></i> Guardar Cambios</button>
+              
+              <a href="cierres"  class="btn btn-danger"><i class="fa fa-times-circle"></i> Cancelar</a>
             </div>
 
           </form>
 
           <?php
 
-            $guardarServicio = new ControladorServicios();
-            $guardarServicio -> ctrCrearServicio();
+            $editarCierre = new ControladorCierres();
+            $editarCierre -> ctrEditarCierres();
 
-          ?>          
+          ?>        
 
         </div>
 
       </div>
 
       <!--=====================================
-      LA TABLA DE PRODUCTOS
+      LA TABLA DE ARTICULOS
       ======================================-->
 
       <div class="col-lg-7 hidden-md hidden-sm hidden-xs">
@@ -233,7 +282,7 @@
 
           <div class="box-body">
 
-            <table class="table table-bordered table-striped dt-responsive tablaArticuloServicio">
+            <table class="table table-bordered table-striped dt-responsive tablaArticuloCierre">
 
               <thead>
 
@@ -244,7 +293,6 @@
                   <th>Color</th>
                   <th>Talla</th>
                   <th>Servicio</th>
-                  <th>Taller</th>
                   <th>Acciones</th>
                 </tr>
 
@@ -358,5 +406,5 @@ MODAL AGREGAR CLIENTE
 
 </div>
 <script>
-window.document.title = "Crear servicio"
+window.document.title = "Editar cierre"
 </script>

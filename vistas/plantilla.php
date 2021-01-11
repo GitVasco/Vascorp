@@ -217,7 +217,10 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "pagos" ||
                   $_GET["ruta"] == "servicios" ||
                   $_GET["ruta"] == "crear-servicio" ||
-                  $_GET["ruta"] == "editar-servicio"){
+                  $_GET["ruta"] == "editar-servicio" ||
+                  $_GET["ruta"] == "cierres" ||
+                  $_GET["ruta"] == "crear-cierre" ||
+                  $_GET["ruta"] == "editar-cierre"){
 
               include "modulos/produccion/".$_GET["ruta"].".php";
 
@@ -262,7 +265,10 @@ CUERPO DOCUMENTO
         }else if( $_GET["ruta"] == "cuentas" ||
                   $_GET["ruta"] == "ver-cuentas" ||
                   $_GET["ruta"] == "abonos" ||
-                  $_GET["ruta"] == "cancelar-abonos") {
+                  $_GET["ruta"] == "cancelar-abonos"||
+                  $_GET["ruta"] == "cuentas-pendientes"||
+                  $_GET["ruta"] == "cuentas-aprobadas" ||
+                  $_GET["ruta"] == "consultar-cuentas" ) {
 
             include "modulos/cuentas-corrientes/".$_GET["ruta"].".php";
 
@@ -278,7 +284,7 @@ CUERPO DOCUMENTO
               include "modulos/".$_GET["ruta"].".php";
 
         }else if($_GET["ruta"] == "leer-stock" ||
-        $_GET["ruta"] == "cargas-automaticas"){
+                 $_GET["ruta"] == "cargas-automaticas"){
           include "reportes_excel/".$_GET["ruta"].".php";
 
         }else{
@@ -352,6 +358,7 @@ CUERPO DOCUMENTO
   <script src="vistas/js/vendedor.js"></script>
   <script src="vistas/js/facturacion.js"></script>
   <script src="vistas/js/abonos.js"></script>
+  <script src="vistas/js/cierres.js"></script>
 </body>
 
 </html>

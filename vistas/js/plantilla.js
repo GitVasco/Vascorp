@@ -60,3 +60,20 @@ $('[data-mask]').inputmask()
 $(document).ready(function(){
 	$('#seleccionarCliente').select2();
 }); */
+window.addEventListener("beforeunload", function (e) {
+	localStorage.removeItem("capturarRango");
+	localStorage.removeItem("capturarRango2");
+	localStorage.removeItem("capturarRango3");
+	localStorage.removeItem("capturarRango4");
+	localStorage.removeItem("capturarRango5");
+	localStorage.removeItem("capturarRango6");
+	localStorage.removeItem("capturarRango7");
+	localStorage.removeItem("capturarRango8");
+	localStorage.removeItem("capturarRango9");
+	localStorage.removeItem("capturarRango10");
+	localStorage.removeItem("capturarRango11");
+	localStorage.removeItem("capturarRango12");
+	localStorage.removeItem("fechaInicial");
+	localStorage.removeItem("fechaFinal");
+	localStorage.clear();
+});
