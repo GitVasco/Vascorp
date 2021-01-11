@@ -145,10 +145,12 @@
                   ENTRADA BUSCADOR
                   ======================================-->
 
-                  <p class="buscadorOc" id="elidOc">
+                  <span class="buscadorOc" id="elidOc">
                       <label>Buscar:</label>
+                      <i class="fa fa-search"></i>
                       <input type="text" class="form-control input-sm" id="buscadorOc" name="buscadorOc">
-                  </p>
+                      
+                  </span>
 
                   <!--=====================================
                   TITULOS
@@ -437,9 +439,9 @@ window.document.title = "Crear orden de corte"
 
 <script>
 $('.nuevoArticuloOC').ready(function(){
-    $('#buscadorOC').keyup(function(){
+    $('#buscadorOc').keyup(function(){
 
-    //console.log("hola mundo")
+    console.log("hola mundo");
 
     var nombres = $('.nuevaDescripcionProducto');
     //console.log(nombres.val())
