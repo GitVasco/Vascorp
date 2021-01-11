@@ -76,7 +76,7 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
 });
 
 $(".tablaPrecioServicios").DataTable({
-  ajax: "ajax/tabla-precio-servicios.ajax.php",
+  ajax: "ajax/tabla-precio-servicio.ajax.php",
   deferRender: true,
   retrieve: true,
   processing: true,
