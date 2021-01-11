@@ -220,7 +220,8 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "editar-servicio" ||
                   $_GET["ruta"] == "cierres" ||
                   $_GET["ruta"] == "crear-cierre" ||
-                  $_GET["ruta"] == "editar-cierre"){
+                  $_GET["ruta"] == "editar-cierre" ||
+                  $_GET["ruta"] == "precio-servicio"){
 
               include "modulos/produccion/".$_GET["ruta"].".php";
 

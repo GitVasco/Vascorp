@@ -745,6 +745,14 @@
 
                             </li>
 
+                            <li>
+
+                                <a href="precio-servicio">
+                                <i class="fa fa-circle-o"></i> Precio servicio
+                                </a>
+
+                            </li>
+
                         </ul>
 
                     </li>

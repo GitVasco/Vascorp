@@ -389,4 +389,161 @@ class ControladorServicios{
 		return $respuesta;
 
 	}
+
+
+	/*=============================================
+	CREAR PRECIO SERVICIO
+	=============================================*/
+
+	static public function ctrCrearPrecioServicio(){
+
+		if(isset($_POST["nuevoPrecioDocena"])){
+
+				$tabla="precio_serviciojf";
+			   	$datos = array("taller"=>$_POST["nuevoTaller"],
+							   "modelo"=>$_POST["nuevoModelo"],
+							   "precio_doc"=>$_POST["nuevoPrecioDocena"]);
+
+			   	$respuesta = ModeloServicios::mdlIngresarPrecioServicio($tabla,$datos);
+
+			   	if($respuesta == "ok"){
+
+					echo'<script>
+
+					swal({
+						  type: "success",
+						  title: "El precio servicio ha sido guardado correctamente",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+									if (result.value) {
+
+									window.location = "precio-servicio";
+
+									}
+								})
+
+					</script>';
+
+				}
+
+			
+
+		}
+
+    }
+    
+
+	/*=============================================
+	MOSTRAR PRECIO DE SERVICIOS
+	=============================================*/
+
+	static public function ctrMostrarPrecioServicios($item,$valor){
+		$tabla="precio_serviciojf";
+		$respuesta = ModeloServicios::mdlMostrarPrecioServicios($tabla,$item,$valor);
+
+		return $respuesta;
+
+    }
+    
+	/*=============================================
+	EDITAR PRECIO SERVICIO
+	=============================================*/
+
+	static public function ctrEditarPrecioServicio(){
+
+		if(isset($_POST["editarPrecioDocena"])){
+
+				$tabla="precio_serviciojf";
+
+				$datos = array("id"=>$_POST["idPrecioServicio"],
+				   				"codigo"=> $_POST["editarTaller"],
+							   "descripcion"=>$_POST["editarModelo"],
+							   "precio_doc"=> $_POST["editarPrecioDocena"]);
+
+			   	$respuesta = ModeloServicios::mdlEditarPrecioServicio($tabla,$datos);
+
+			   	if($respuesta == "ok"){
+
+					echo'<script>
+
+					swal({
+						  type: "success",
+						  title: "El precio servicio ha sido cambiado correctamente",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+									if (result.value) {
+
+									window.location = "precio-servicio";
+
+									}
+								})
+
+					</script>';
+
+
+			}
+		}
+
+    }
+    
+	/*=============================================
+	ELIMINAR PRECIO SERVICIO
+	=============================================*/
+
+	static public function ctrEliminarPrecioServicio(){
+
+		if(isset($_GET["idPrecioServicio"])){
+
+			$datos = $_GET["idPrecioServicio"];
+			$tabla="precio_serviciojf";
+			date_default_timezone_set('America/Lima');
+			$fecha = new DateTime();
+			$precios=ControladorServicios::ctrMostrarPrecioServicios("id",$datos);
+			$usuario= $_SESSION["nombre"];
+			$para      = 'notificacionesvascorp@gmail.com';
+			$asunto    = 'Se elimino un precio servicio';
+			$descripcion   = 'El usuario '.$usuario.' elimino el precio servicio '.$precios["taller"].' - '.$precios["modelo"];
+			$de = 'From: notificacionesvascorp@gmail.com';
+			if($_SESSION["correo"] == 1){
+				mail($para, $asunto, $descripcion, $de);
+			}
+			if($_SESSION["datos"] == 1){
+				$datos2= array( "usuario" => $usuario,
+								"concepto" => $descripcion,
+								"fecha" => $fecha->format("Y-m-d H:i:s"));
+				$auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
+			}
+			
+			$respuesta = ModeloServicios::mdlEliminarPrecioServicio($tabla,$datos);
+			if($respuesta == "ok"){
+				
+				
+				echo'<script>
+
+				swal({
+					  type: "success",
+					  title: "El precio servicio ha sido borrado correctamente",
+					  showConfirmButton: true,
+					  confirmButtonText: "Cerrar",
+					  closeOnConfirm: false
+					  }).then(function(result){
+								if (result.value) {
+
+								window.location = "precio-servicio";
+
+								}
+							})
+
+				</script>';
+
+			}		
+
+		}
+
+	}    
+
+
+
 }
