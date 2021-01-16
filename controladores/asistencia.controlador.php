@@ -299,6 +299,62 @@ class ControladorAsistencias{
 
 		}
 	}
+
+	/*=============================================
+	CREAR Asistencias con Fecha
+	=============================================*/
+
+	static public function ctrCrearAsistenciaFecha(){
+
+        $tabla="trabajadorjf";
+        $item=null;
+		$valor=null;
+		$fecha=$_POST["fechaAsistencia"];
+		$validar_fecha=date("l");	
+		$rpta_trabajador = ModeloTrabajador::mdlMostrarTrabajador($tabla,$item,$valor);
+        foreach ($rpta_trabajador as $key => $value) {
+			if($value["estado"]=="Activo"){
+				
+				$tabla2="asistenciasjf";
+				if($validar_fecha=="Saturday"){
+					$datos = array("fecha"=>$fecha,
+							"minutos"=>255,
+							"id_trabajador"=>$value["cod_tra"]);
+				  	$respuesta=ModeloAsistencias::mdlIngresarAsistencia2($tabla2,$datos);
+				}else{
+				$datos = array("fecha"=>$fecha,
+						"id_trabajador"=>$value["cod_tra"]);
+				$respuesta=ModeloAsistencias::mdlIngresarAsistencia($tabla2,$datos);
+				}
+				   
+			}
+		}
+
+		
+		
+        if($respuesta == "ok"){
+
+            echo'<script>
+
+            swal({
+                    type: "success",
+                    title: "La asistencia ha sido registrada correctamente",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+                    }).then(function(result){
+                            if (result.value) {
+
+                            window.location = "asistencia";
+
+                            }
+                        })
+
+            </script>';
+
+        }
+
+    }
+
 }
 
 

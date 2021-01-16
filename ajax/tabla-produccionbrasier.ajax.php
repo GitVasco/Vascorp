@@ -11,7 +11,7 @@ class TablaProduccionBrasier{
 
     public function mostrarTablaProduccionBrasier(){
    
-        $brasier = ControladorTalleres::ctrMostrarProduccionBrasier($_GET["mesB"]);	
+        $brasier = ControladorTalleres::ctrMostrarProduccionBrasier($_GET["fechaInicial"],$_GET["fechaFinal"]);	
 
         if(count($brasier)>0){
 

@@ -24,36 +24,35 @@
 
       <div class="box-header with-border">
 
-          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+        
+            <button class="btn btn-outline-success btnReporteProduccionTrusas" fechaInicial="" fechaFinal="" style="border:green 1px solid">
+              <img src="vistas/img/plantilla/excel.png" width="20px"> Producción Trusas  
+            </button>
 
-              <select class="form-control selectpicker input-lg" id="mesT" name="mesT" data-live-search="true">
+            <button type="button" class="btn btn-default pull-right" id="daterange-btnTrusas">
+              <span>
+                <i class="fa fa-calendar"></i>
 
-              <option value="">Seleccione Mes</option>
+                <?php
 
-                  <?php
+                  if(isset($_GET["fechaInicial"])){
 
-                  $mes = ControladorTalleres::ctrMes();
+                    echo $_GET["fechaInicial"]." - ".$_GET["fechaFinal"];
 
-                  foreach ($mes as $key => $value) {
+                  }else{
                   
-                  echo '<option value="'.$value["codigo"].'">'.$value["codigo"].' - '.$value["descripcion"].'</option>';
+                    echo 'Rango de fecha';
+
                   }
 
-                  ?>
+                ?>
 
-              </select>
+              </span>
 
-          </div>
+              <i class="fa fa-caret-down"></i>
 
-          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-          
-              <button class="btn btn-primary btnCargarTrusas">CARGAR MES</button>
-              
-          </div>
-          <div class=" pull-right ">
-            <button class="btn btn-outline-success " modelo="" style="border:green 1px solid">
-              <img src="vistas/img/plantilla/excel.png" width="20px"> Producción Trusas  </button>
-          </div>
+            </button>
+         
 
         </div>
     
@@ -149,7 +148,30 @@
             </tr>
 
         </thead>
-
+        <tfoot>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tfoot>
        </table>
 
       </div>

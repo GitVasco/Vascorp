@@ -60,7 +60,7 @@ class ModeloTalleres{
           entallerjf  t
           LEFT JOIN articulojf a
           ON a.articulo = t.articulo
-          WHERE codigo=$valor");
+          WHERE codigo='$valor'");
 
 			$stmt->execute();
 
@@ -221,7 +221,7 @@ class ModeloTalleres{
     */
 	static public function mdlProceso($fecha, $codigo, $trabajador){
 
-		$sql="UPDATE entallerjf SET fecha_proceso='$fecha', estado='2', trabajador= '$trabajador'  WHERE codigo=$codigo";
+		$sql="UPDATE entallerjf SET fecha_proceso='$fecha', estado='2', trabajador= '$trabajador'  WHERE codigo='$codigo'";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 
@@ -244,7 +244,7 @@ class ModeloTalleres{
     */
 	static public function mdlTerminado($fecha, $codigo, $trabajador){
 
-		$sql="UPDATE entallerjf SET fecha_terminado='$fecha', estado='3', trabajador= '$trabajador' WHERE codigo=$codigo";
+		$sql="UPDATE entallerjf SET fecha_terminado='$fecha', estado='3', trabajador= '$trabajador' WHERE codigo='$codigo'";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 
@@ -265,17 +265,22 @@ class ModeloTalleres{
     /* 
     *ASIGNAR TRABAJADOR
     */
-    static public function mdlAsignarTrabajador($codigo, $cod_tra){
+    static public function mdlAsignarTrabajador( $datos){
 
       $sql="UPDATE 
                 entallerjf 
               SET
-                trabajador = $cod_tra 
-              WHERE codigo = $codigo";
+                trabajador= :trabajador,
+                fecha_proceso = :fecha_proceso,
+                fecha_terminado = :fecha_terminado
+              WHERE codigo = :codigo";
   
       $stmt=Conexion::conectar()->prepare($sql);
-  
-          if($stmt->execute()){
+      $stmt -> bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
+      $stmt -> bindParam(":trabajador", $datos["trabajador"], PDO::PARAM_STR);
+      $stmt -> bindParam(":fecha_proceso", $datos["fecha_proceso"], PDO::PARAM_STR);
+      $stmt -> bindParam(":fecha_terminado", $datos["fecha_terminado"], PDO::PARAM_STR);
+      if($stmt->execute()){
   
         return "ok";
       
@@ -753,7 +758,7 @@ class ModeloTalleres{
         ON et.cod_operacion = o.codigo 
       LEFT JOIN sectorjf s 
         ON et.sector = s.cod_sector 
-    WHERE et.estado = '3' AND  DATE(et.fecha) like '%$fechaFinal%'");
+    WHERE et.estado = '3' AND  DATE(et.fecha_terminado) like '%$fechaFinal%'");
 
 			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 
@@ -813,7 +818,7 @@ class ModeloTalleres{
           ON et.cod_operacion = o.codigo 
         LEFT JOIN sectorjf s 
           ON et.sector = s.cod_sector 
-      WHERE et.estado = '3' AND DATE(et.fecha) BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'");
+      WHERE et.estado = '3' AND DATE(et.fecha_terminado) BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'");
 
 			}else{
 
@@ -858,7 +863,7 @@ class ModeloTalleres{
           ON et.cod_operacion = o.codigo 
         LEFT JOIN sectorjf s 
           ON et.sector = s.cod_sector 
-      WHERE et.estado = '3' AND DATE(et.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'");
+      WHERE et.estado = '3' AND DATE(et.fecha_terminado) BETWEEN '$fechaInicial' AND '$fechaFinal'");
 
 			}
 		
@@ -874,6 +879,8 @@ class ModeloTalleres{
     $stmt = Conexion::conectar()->prepare("SELECT 
                                                       et.id,
                                                       et.sector,
+                                                      et.fecha_proceso,
+                                                      et.fecha_terminado,
                                                       CONCAT(et.sector, '-', s.nom_sector) AS nom_sector,
                                                       et.articulo,
                                                       a.modelo,
@@ -919,11 +926,12 @@ class ModeloTalleres{
   /*
 	* Método para mostrar produccion de trusas
 	*/
-	static public function mdlMostrarProduccionTrusas($mes){
+	static public function mdlMostrarProduccionTrusas($fechaInicial,$fechaFinal){
 
-    if($mes=="null"){
+    if($fechaInicial=="null"){
 
       $sql="SELECT 
+                et.fecha_terminado,
                 m.descripcion AS mes,
                 MONTH(et.fecha_terminado) AS terminado,
                 DAY(et.fecha_terminado) AS fecha,
@@ -935,6 +943,7 @@ class ModeloTalleres{
                 a.modelo,
                 a.cod_color,
                 a.color,
+                a.nombre AS des_modelo,
                 SUM(
                   CASE
                     WHEN a.cod_talla = '1' 
@@ -1031,9 +1040,10 @@ class ModeloTalleres{
               WHERE et.estado = '3' 
                 AND m.tipo NOT IN ('brasier') 
                 AND MONTH(et.fecha_terminado) = MONTH(NOW()) 
-                AND a.marca <> 'vasco' 
-              GROUP BY et.trabajador,,
-                  et.cod_operacion,
+              GROUP BY MONTH(et.fecha_terminado),
+                DAY(et.fecha_terminado),
+                et.trabajador,
+                et.cod_operacion,
                 a.modelo,
                 a.color 
               ORDER BY DATE(et.fecha_terminado) DESC,
@@ -1046,9 +1056,10 @@ class ModeloTalleres{
 
       return $stmt->fetchAll();
 
-    }else{
+    }else if($fechaInicial == $fechaFinal){
 
       $sql="SELECT 
+                et.fecha_terminado,
                 m.descripcion AS mes,
                 MONTH(et.fecha_terminado) AS terminado,
                 DAY(et.fecha_terminado) AS fecha,
@@ -1060,6 +1071,7 @@ class ModeloTalleres{
                 a.modelo,
                 a.cod_color,
                 a.color,
+                a.nombre AS des_modelo,
                 SUM(
                   CASE
                     WHEN a.cod_talla = '1' 
@@ -1155,9 +1167,10 @@ class ModeloTalleres{
                   ON MONTH(et.fecha_terminado) = m.codigo 
               WHERE et.estado = '3' 
                 AND m.tipo NOT IN ('brasier') 
-                AND MONTH(et.fecha_terminado) = :mes
-                AND a.marca <> 'vasco' 
-              GROUP BY et.trabajador,
+                AND DATE(et.fecha_terminado) like '%$fechaFinal%'
+                GROUP BY MONTH(et.fecha_terminado),
+                DAY(et.fecha_terminado),
+              et.trabajador,
                       et.cod_operacion,
                 a.modelo,
                 a.color 
@@ -1173,6 +1186,275 @@ class ModeloTalleres{
       
       return $stmt->fetchAll();
 
+    }else{
+      $fechaActual = new DateTime();
+			$fechaActual ->add(new DateInterval("P1D"));
+			$fechaActualMasUno = $fechaActual->format("Y-m-d");
+
+			$fechaFinal2 = new DateTime($fechaFinal);
+			$fechaFinal2 ->add(new DateInterval("P1D"));
+			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+
+			if($fechaFinalMasUno == $fechaActualMasUno){
+        $sql="SELECT 
+        et.fecha_terminado,
+        m.descripcion AS mes,
+        MONTH(et.fecha_terminado) AS terminado,
+        DAY(et.fecha_terminado) AS fecha,
+        et.trabajador AS cod_trab,
+        tt.nom_tip_trabajador,
+        CONCAT(t.nom_tra) AS trabajador,
+        et.cod_operacion,
+        o.nombre,
+        a.modelo,
+        a.cod_color,
+        a.color,
+        a.nombre AS des_modelo,
+        SUM(
+          CASE
+            WHEN a.cod_talla = '1' 
+            THEN et.cantidad 
+            ELSE 0 
+          END
+        ) AS t1,
+        SUM(
+          CASE
+            WHEN a.cod_talla = '2' 
+            THEN et.cantidad 
+            ELSE 0 
+          END
+        ) AS t2,
+        SUM(
+          CASE
+            WHEN a.cod_talla = '3' 
+            THEN et.cantidad 
+            ELSE 0 
+          END
+        ) AS t3,
+        SUM(
+          CASE
+            WHEN a.cod_talla = '4' 
+            THEN et.cantidad 
+            ELSE 0 
+          END
+        ) AS t4,
+        SUM(
+          CASE
+            WHEN a.cod_talla = '5' 
+            THEN et.cantidad 
+            ELSE 0 
+          END
+        ) AS t5,
+        SUM(
+          CASE
+            WHEN a.cod_talla = '6' 
+            THEN et.cantidad 
+            ELSE 0 
+          END
+        ) AS t6,
+        SUM(
+          CASE
+            WHEN a.cod_talla = '7' 
+            THEN et.cantidad 
+            ELSE 0 
+          END
+        ) AS t7,
+        SUM(
+          CASE
+            WHEN a.cod_talla = '8' 
+            THEN et.cantidad 
+            ELSE 0 
+          END
+        ) AS t8,
+        SUM(cantidad) AS total,
+        SUM(total_precio) AS total_precio,
+        SUM(total_tiempo) AS total_tiempo,
+        asi.minutos,
+        (SUM(total_tiempo) / asi.minutos) * 100 AS eficiencia 
+      FROM
+        entallerjf et 
+        LEFT JOIN articulojf a 
+          ON et.articulo = a.articulo 
+        LEFT JOIN operacionesjf o 
+          ON et.cod_operacion = o.codigo 
+        LEFT JOIN trabajadorjf t 
+          ON et.trabajador = t.cod_tra 
+        LEFT JOIN 
+          (SELECT DISTINCT 
+            et.trabajador,
+            DATE(a.fecha) AS fecha,
+            a.minutos 
+          FROM
+            asistenciasjf a 
+            LEFT JOIN entallerjf et 
+              ON a.id_trabajador = et.trabajador 
+              AND DATE(a.fecha) = DATE(et.fecha_terminado) 
+          WHERE et.trabajador IS NOT NULL) AS asi 
+          ON et.trabajador = asi.trabajador 
+          AND DATE(fecha_terminado) = asi.fecha 
+        LEFT JOIN tipo_trabajadorjf tt 
+          ON t.cod_tip_tra = tt.cod_tip_tra 
+        LEFT JOIN modelojf m 
+          ON a.modelo = m.modelo 
+        LEFT JOIN 
+          (SELECT DISTINCT 
+            codigo,
+            descripcion 
+          FROM
+            meses m WHERE ano='2020') m 
+          ON MONTH(et.fecha_terminado) = m.codigo 
+          WHERE et.estado = '3' 
+            AND m.tipo NOT IN ('brasier') 
+            AND DATE(et.fecha_terminado) BETWEEN '$fechaInicial' AND '$fechaFinal'
+            GROUP BY MONTH(et.fecha_terminado),
+                DAY(et.fecha_terminado),
+           et.trabajador,
+                  et.cod_operacion,
+            a.modelo,
+            a.color 
+          ORDER BY DATE(et.fecha_terminado) DESC,
+            et.trabajador,
+            cod_color";
+
+      $stmt=Conexion::conectar()->prepare($sql);
+
+      $stmt->bindParam(":mes", $mes, PDO::PARAM_STR);
+
+      $stmt->execute();
+
+      return $stmt->fetchAll();
+
+      }else{
+
+        $sql="SELECT 
+        et.fecha_terminado,
+        m.descripcion AS mes,
+        MONTH(et.fecha_terminado) AS terminado,
+        DAY(et.fecha_terminado) AS fecha,
+        et.trabajador AS cod_trab,
+        tt.nom_tip_trabajador,
+        CONCAT(t.nom_tra) AS trabajador,
+        et.cod_operacion,
+        o.nombre,
+        a.modelo,
+        a.cod_color,
+        a.color,
+        a.nombre AS des_modelo,
+        SUM(
+          CASE
+            WHEN a.cod_talla = '1' 
+            THEN et.cantidad 
+            ELSE 0 
+          END
+        ) AS t1,
+        SUM(
+          CASE
+            WHEN a.cod_talla = '2' 
+            THEN et.cantidad 
+            ELSE 0 
+          END
+        ) AS t2,
+        SUM(
+          CASE
+            WHEN a.cod_talla = '3' 
+            THEN et.cantidad 
+            ELSE 0 
+          END
+        ) AS t3,
+        SUM(
+          CASE
+            WHEN a.cod_talla = '4' 
+            THEN et.cantidad 
+            ELSE 0 
+          END
+        ) AS t4,
+        SUM(
+          CASE
+            WHEN a.cod_talla = '5' 
+            THEN et.cantidad 
+            ELSE 0 
+          END
+        ) AS t5,
+        SUM(
+          CASE
+            WHEN a.cod_talla = '6' 
+            THEN et.cantidad 
+            ELSE 0 
+          END
+        ) AS t6,
+        SUM(
+          CASE
+            WHEN a.cod_talla = '7' 
+            THEN et.cantidad 
+            ELSE 0 
+          END
+        ) AS t7,
+        SUM(
+          CASE
+            WHEN a.cod_talla = '8' 
+            THEN et.cantidad 
+            ELSE 0 
+          END
+        ) AS t8,
+        SUM(cantidad) AS total,
+        SUM(total_precio) AS total_precio,
+        SUM(total_tiempo) AS total_tiempo,
+        asi.minutos,
+        (SUM(total_tiempo) / asi.minutos) * 100 AS eficiencia 
+      FROM
+        entallerjf et 
+        LEFT JOIN articulojf a 
+          ON et.articulo = a.articulo 
+        LEFT JOIN operacionesjf o 
+          ON et.cod_operacion = o.codigo 
+        LEFT JOIN trabajadorjf t 
+          ON et.trabajador = t.cod_tra 
+        LEFT JOIN 
+          (SELECT DISTINCT 
+            et.trabajador,
+            DATE(a.fecha) AS fecha,
+            a.minutos 
+          FROM
+            asistenciasjf a 
+            LEFT JOIN entallerjf et 
+              ON a.id_trabajador = et.trabajador 
+              AND DATE(a.fecha) = DATE(et.fecha_terminado) 
+          WHERE et.trabajador IS NOT NULL) AS asi 
+          ON et.trabajador = asi.trabajador 
+          AND DATE(fecha_terminado) = asi.fecha 
+        LEFT JOIN tipo_trabajadorjf tt 
+          ON t.cod_tip_tra = tt.cod_tip_tra 
+        LEFT JOIN modelojf m 
+          ON a.modelo = m.modelo 
+        LEFT JOIN 
+          (SELECT DISTINCT 
+            codigo,
+            descripcion 
+          FROM
+            meses m WHERE ano='2020') m 
+          ON MONTH(et.fecha_terminado) = m.codigo 
+          WHERE et.estado = '3' 
+            AND m.tipo NOT IN ('brasier') 
+            AND DATE(et.fecha_terminado) BETWEEN '$fechaInicial' AND '$fechaFinal'
+            GROUP BY MONTH(et.fecha_terminado),
+                DAY(et.fecha_terminado),
+          et.trabajador,
+                  et.cod_operacion,
+            a.modelo,
+            a.color 
+          ORDER BY DATE(et.fecha_terminado) DESC,
+            et.trabajador,
+            cod_color";
+
+        $stmt=Conexion::conectar()->prepare($sql);
+
+        $stmt->bindParam(":mes", $mes, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+      }
+
     }
 
       $stmt=null;
@@ -1182,11 +1464,12 @@ class ModeloTalleres{
   /*
 	* Método para mostrar produccion de brasier
 	*/
-	static public function mdlMostrarProduccionBrasier($mes){
+	static public function mdlMostrarProduccionBrasier($fechaInicial,$fechaFinal){
 
-    if($mes=="null"){
+    if($fechaInicial=="null"){
 
       $sql="SELECT 
+                et.fecha_terminado,
                 m.descripcion AS mes,
                 MONTH(et.fecha_terminado) AS terminado,
                 DAY(et.fecha_terminado) AS fecha,
@@ -1198,6 +1481,7 @@ class ModeloTalleres{
                 a.modelo,
                 a.cod_color,
                 a.color,
+                a.nombre AS des_modelo,
                 SUM(
                   CASE
                     WHEN a.cod_talla = '1' 
@@ -1308,9 +1592,10 @@ class ModeloTalleres{
 
       return $stmt->fetchAll();
 
-    }else{
+    }else if($fechaInicial == $fechaFinal){
 
       $sql="SELECT 
+                et.fecha_terminado,
                 m.descripcion AS mes,
                 MONTH(et.fecha_terminado) AS terminado,
                 DAY(et.fecha_terminado) AS fecha,
@@ -1322,6 +1607,7 @@ class ModeloTalleres{
                 a.modelo,
                 a.cod_color,
                 a.color,
+                a.nombre AS des_modelo,
                 SUM(
                   CASE
                     WHEN a.cod_talla = '1' 
@@ -1417,7 +1703,7 @@ class ModeloTalleres{
                   ON MONTH(et.fecha_terminado) = m.codigo 
               WHERE et.estado = '3' 
                 AND m.tipo = 'brasier'
-                AND MONTH(et.fecha_terminado) = :mes
+                DATE(et.fecha_terminado) like '%$fechaFinal%'
               GROUP BY et.trabajador,
                 et.cod_operacion,
                 a.modelo,
@@ -1433,7 +1719,271 @@ class ModeloTalleres{
       $stmt->execute();
       
       return $stmt->fetchAll();
+                
+    }else{
+       $fechaActual = new DateTime();
+      	$fechaActual ->add(new DateInterval("P1D"));
+      	$fechaActualMasUno = $fechaActual->format("Y-m-d");
 
+      	$fechaFinal2 = new DateTime($fechaFinal);
+      	$fechaFinal2 ->add(new DateInterval("P1D"));
+      	$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+
+        	if($fechaFinalMasUno == $fechaActualMasUno){
+          $sql="SELECT 
+          et.fecha_terminado,
+          m.descripcion AS mes,
+          MONTH(et.fecha_terminado) AS terminado,
+          DAY(et.fecha_terminado) AS fecha,
+          et.trabajador AS cod_trab,
+          tt.nom_tip_trabajador,
+          CONCAT(t.nom_tra) AS trabajador,
+          et.cod_operacion,
+          o.nombre,
+          a.modelo,
+          a.cod_color,
+          a.color,
+          a.nombre AS des_modelo,
+          SUM(
+            CASE
+              WHEN a.cod_talla = '1' 
+              THEN et.cantidad 
+              ELSE 0 
+            END
+          ) AS t1,
+          SUM(
+            CASE
+              WHEN a.cod_talla = '2' 
+              THEN et.cantidad 
+              ELSE 0 
+            END
+          ) AS t2,
+          SUM(
+            CASE
+              WHEN a.cod_talla = '3' 
+              THEN et.cantidad 
+              ELSE 0 
+            END
+          ) AS t3,
+          SUM(
+            CASE
+              WHEN a.cod_talla = '4' 
+              THEN et.cantidad 
+              ELSE 0 
+            END
+          ) AS t4,
+          SUM(
+            CASE
+              WHEN a.cod_talla = '5' 
+              THEN et.cantidad 
+              ELSE 0 
+            END
+          ) AS t5,
+          SUM(
+            CASE
+              WHEN a.cod_talla = '6' 
+              THEN et.cantidad 
+              ELSE 0 
+            END
+          ) AS t6,
+          SUM(
+            CASE
+              WHEN a.cod_talla = '7' 
+              THEN et.cantidad 
+              ELSE 0 
+            END
+          ) AS t7,
+          SUM(
+            CASE
+              WHEN a.cod_talla = '8' 
+              THEN et.cantidad 
+              ELSE 0 
+            END
+          ) AS t8,
+          SUM(cantidad) AS total,
+          SUM(total_precio) AS total_precio,
+          SUM(total_tiempo) AS total_tiempo,
+          asi.minutos,
+          (SUM(total_tiempo) / asi.minutos) * 100 AS eficiencia 
+        FROM
+          entallerjf et 
+          LEFT JOIN articulojf a 
+            ON et.articulo = a.articulo 
+          LEFT JOIN operacionesjf o 
+            ON et.cod_operacion = o.codigo 
+          LEFT JOIN trabajadorjf t 
+            ON et.trabajador = t.cod_tra 
+          LEFT JOIN 
+            (SELECT DISTINCT 
+              et.trabajador,
+              DATE(a.fecha) AS fecha,
+              a.minutos 
+            FROM
+              asistenciasjf a 
+              LEFT JOIN entallerjf et 
+                ON a.id_trabajador = et.trabajador 
+                AND DATE(a.fecha) = DATE(et.fecha_terminado) 
+            WHERE et.trabajador IS NOT NULL) AS asi 
+            ON et.trabajador = asi.trabajador 
+            AND DATE(fecha_terminado) = asi.fecha 
+          LEFT JOIN tipo_trabajadorjf tt 
+            ON t.cod_tip_tra = tt.cod_tip_tra 
+          LEFT JOIN modelojf m 
+            ON a.modelo = m.modelo 
+          LEFT JOIN 
+            (SELECT DISTINCT 
+              codigo,
+              descripcion 
+            FROM
+              meses m WHERE ano='2020') m 
+            ON MONTH(et.fecha_terminado) = m.codigo 
+        WHERE et.estado = '3' 
+          AND m.tipo = 'brasier'
+          DATE(et.fecha_terminado) BETWEEN '$fechaInicial' AND '$fechaFinal'
+        GROUP BY et.trabajador,
+          et.cod_operacion,
+          a.modelo,
+          a.color 
+        ORDER BY DATE(et.fecha_terminado) DESC,
+          et.trabajador,
+          cod_color";
+
+    $stmt=Conexion::conectar()->prepare($sql);
+
+    $stmt->bindParam(":mes", $mes, PDO::PARAM_STR);
+
+    $stmt->execute();
+
+    return $stmt->fetchAll();
+      }else{
+      $sql="SELECT 
+            et.fecha_terminado,
+            m.descripcion AS mes,
+            MONTH(et.fecha_terminado) AS terminado,
+            DAY(et.fecha_terminado) AS fecha,
+            et.trabajador AS cod_trab,
+            tt.nom_tip_trabajador,
+            CONCAT(t.nom_tra) AS trabajador,
+            et.cod_operacion,
+            o.nombre,
+            a.modelo,
+            a.cod_color,
+            a.color,
+            a.nombre AS des_modelo,
+            SUM(
+              CASE
+                WHEN a.cod_talla = '1' 
+                THEN et.cantidad 
+                ELSE 0 
+              END
+            ) AS t1,
+            SUM(
+              CASE
+                WHEN a.cod_talla = '2' 
+                THEN et.cantidad 
+                ELSE 0 
+              END
+            ) AS t2,
+            SUM(
+              CASE
+                WHEN a.cod_talla = '3' 
+                THEN et.cantidad 
+                ELSE 0 
+              END
+            ) AS t3,
+            SUM(
+              CASE
+                WHEN a.cod_talla = '4' 
+                THEN et.cantidad 
+                ELSE 0 
+              END
+            ) AS t4,
+            SUM(
+              CASE
+                WHEN a.cod_talla = '5' 
+                THEN et.cantidad 
+                ELSE 0 
+              END
+            ) AS t5,
+            SUM(
+              CASE
+                WHEN a.cod_talla = '6' 
+                THEN et.cantidad 
+                ELSE 0 
+              END
+            ) AS t6,
+            SUM(
+              CASE
+                WHEN a.cod_talla = '7' 
+                THEN et.cantidad 
+                ELSE 0 
+              END
+            ) AS t7,
+            SUM(
+              CASE
+                WHEN a.cod_talla = '8' 
+                THEN et.cantidad 
+                ELSE 0 
+              END
+            ) AS t8,
+            SUM(cantidad) AS total,
+            SUM(total_precio) AS total_precio,
+            SUM(total_tiempo) AS total_tiempo,
+            asi.minutos,
+            (SUM(total_tiempo) / asi.minutos) * 100 AS eficiencia 
+          FROM
+            entallerjf et 
+            LEFT JOIN articulojf a 
+              ON et.articulo = a.articulo 
+            LEFT JOIN operacionesjf o 
+              ON et.cod_operacion = o.codigo 
+            LEFT JOIN trabajadorjf t 
+              ON et.trabajador = t.cod_tra 
+            LEFT JOIN 
+              (SELECT DISTINCT 
+                et.trabajador,
+                DATE(a.fecha) AS fecha,
+                a.minutos 
+              FROM
+                asistenciasjf a 
+                LEFT JOIN entallerjf et 
+                  ON a.id_trabajador = et.trabajador 
+                  AND DATE(a.fecha) = DATE(et.fecha_terminado) 
+              WHERE et.trabajador IS NOT NULL) AS asi 
+              ON et.trabajador = asi.trabajador 
+              AND DATE(fecha_terminado) = asi.fecha 
+            LEFT JOIN tipo_trabajadorjf tt 
+              ON t.cod_tip_tra = tt.cod_tip_tra 
+            LEFT JOIN modelojf m 
+              ON a.modelo = m.modelo 
+            LEFT JOIN 
+              (SELECT DISTINCT 
+                codigo,
+                descripcion 
+              FROM
+                meses m WHERE ano='2020') m 
+              ON MONTH(et.fecha_terminado) = m.codigo 
+          WHERE et.estado = '3' 
+            AND m.tipo = 'brasier'
+            DATE(et.fecha_terminado) BETWEEN '$fechaInicial' AND '$fechaFinal'
+          GROUP BY et.trabajador,
+            et.cod_operacion,
+            a.modelo,
+            a.color 
+          ORDER BY DATE(et.fecha_terminado) DESC,
+            et.trabajador,
+            cod_color";
+  
+      $stmt=Conexion::conectar()->prepare($sql);
+  
+      $stmt->bindParam(":mes", $mes, PDO::PARAM_STR);
+  
+      $stmt->execute();
+  
+      return $stmt->fetchAll();
+      }
+
+    
     }
 
       $stmt=null;
@@ -1459,6 +2009,7 @@ class ModeloTalleres{
                 a.modelo,
                 a.cod_color,
                 a.color,
+                a.nombre AS des_modelo,
                 SUM(
                   CASE
                     WHEN a.cod_talla = '1' 
@@ -1569,7 +2120,7 @@ class ModeloTalleres{
 
       return $stmt->fetchAll();
 
-    }else{
+    }else if($fechaInicial == $fechaFinal){
 
       $sql="SELECT 
                 m.descripcion AS mes,
@@ -1583,6 +2134,7 @@ class ModeloTalleres{
                 a.modelo,
                 a.cod_color,
                 a.color,
+                a.nombre AS des_modelo,
                 SUM(
                   CASE
                     WHEN a.cod_talla = '1' 
@@ -1760,5 +2312,190 @@ class ModeloTalleres{
 
       
     }
+
+    static public function mdlMostrarTalleresGenerados($articuloTaller){
+
+      if($articuloTaller != "null"){
+          $stmt = Conexion::conectar()->prepare("SELECT 
+                                                          et.id,
+                                                          et.fecha,
+                                                          et.sector,
+                                                          CONCAT(et.sector, '-', s.nom_sector) AS nom_sector,
+                                                          et.articulo,
+                                                          a.modelo,
+                                                          a.nombre,
+                                                          a.color,
+                                                          a.talla,
+                                                          et.cod_operacion,
+                                                          o.nombre AS nom_operacion,
+                                                          et.trabajador AS cod_trabajador,
+                                                          CONCAT(
+                                                            t.nom_tra,
+                                                            ' ',
+                                                            t.ape_pat_tra,
+                                                            ' ',
+                                                            t.ape_mat_tra
+                                                          ) AS trabajador,
+                                                          et.cantidad,
+                                                          DATE(et.fecha) AS fecha,
+                                                          et.estado,
+                                                          et.codigo 
+                                                        FROM
+                                                          entallerjf et 
+                                                          LEFT JOIN trabajadorjf t 
+                                                            ON et.trabajador = t.cod_tra 
+                                                          LEFT JOIN articulojf a 
+                                                            ON et.articulo = a.articulo 
+                                                          LEFT JOIN operacionesjf o 
+                                                            ON et.cod_operacion = o.codigo 
+                                                          LEFT JOIN sectorjf s 
+                                                            ON et.sector = s.cod_sector 
+                                                        WHERE et.estado = '1' AND
+                                                        et.articulo = '".$articuloTaller."'");
+    
+        $stmt -> execute();
+    
+        return $stmt -> fetchAll();
+      }else{
+
+        $stmt = Conexion::conectar()->prepare("SELECT 
+                                                          et.id,
+                                                          et.fecha,
+                                                          et.sector,
+                                                          CONCAT(et.sector, '-', s.nom_sector) AS nom_sector,
+                                                          et.articulo,
+                                                          a.modelo,
+                                                          a.nombre,
+                                                          a.color,
+                                                          a.talla,
+                                                          et.cod_operacion,
+                                                          o.nombre AS nom_operacion,
+                                                          et.trabajador AS cod_trabajador,
+                                                          CONCAT(
+                                                            t.nom_tra,
+                                                            ' ',
+                                                            t.ape_pat_tra,
+                                                            ' ',
+                                                            t.ape_mat_tra
+                                                          ) AS trabajador,
+                                                          et.cantidad,
+                                                          DATE(et.fecha) AS fecha,
+                                                          et.estado,
+                                                          et.codigo 
+                                                        FROM
+                                                          entallerjf et 
+                                                          LEFT JOIN trabajadorjf t 
+                                                            ON et.trabajador = t.cod_tra 
+                                                          LEFT JOIN articulojf a 
+                                                            ON et.articulo = a.articulo 
+                                                          LEFT JOIN operacionesjf o 
+                                                            ON et.cod_operacion = o.codigo 
+                                                          LEFT JOIN sectorjf s 
+                                                            ON et.sector = s.cod_sector 
+                                                        WHERE et.estado = '1'");
+    
+        $stmt -> execute();
+    
+        return $stmt -> fetchAll();
+      }
+  
+      $stmt -> close();
+  
+      $stmt = null;
+  
+  
+  }
+
+  /*=============================================
+	RANGO FECHAS
+	=============================================*/	
+
+	static public function mdlRangoFechasTalleresOperaciones($modelo){
+
+		if($modelo != "null"){
+      $stmt = Conexion::conectar()->prepare("SELECT 
+      et.id,
+      et.sector,
+      et.articulo,
+      a.modelo,
+      a.nombre,
+      a.color,
+      a.talla,
+      et.cod_operacion,
+      o.nombre AS nom_operacion,
+      et.cantidad,
+      DATE(et.fecha) AS fecha,
+      et.estado,
+      et.codigo 
+    FROM
+      entallerjf et 
+      LEFT JOIN articulojf a 
+        ON et.articulo = a.articulo 
+      LEFT JOIN operacionesjf o 
+        ON et.cod_operacion = o.codigo 
+    WHERE et.estado = 1 
+      AND (
+        o.nombre LIKE '%atraque x%' 
+        OR o.nombre LIKE '%unir el%' 
+        OR o.nombre LIKE '%pegar et%' 
+        OR o.nombre LIKE '%pegar elastico a c%' 
+        OR o.nombre LIKE '%PEGAR TIRANTE ESPALDA x4%' 
+        OR o.nombre LIKE '%PEGAR TIRANTE DELANTERO X2%' 
+        OR o.nombre LIKE '%ATRAQUE TIRANTE X2%'
+      ) AND a.modelo = '".$modelo."'
+      ORDER BY et.articulo ASC");
+			
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();	
+
+
+
+			}else{
+
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        et.id,
+        et.sector,
+        et.articulo,
+        a.modelo,
+        a.nombre,
+        a.color,
+        a.talla,
+        et.cod_operacion,
+        o.nombre AS nom_operacion,
+        et.cantidad,
+        DATE(et.fecha) AS fecha,
+        et.estado,
+        et.codigo 
+      FROM
+        entallerjf et 
+        LEFT JOIN articulojf a 
+          ON et.articulo = a.articulo 
+        LEFT JOIN operacionesjf o 
+          ON et.cod_operacion = o.codigo 
+      WHERE et.estado = 1 
+        AND (
+          o.nombre LIKE '%atraque x%' 
+          OR o.nombre LIKE '%unir el%' 
+          OR o.nombre LIKE '%pegar et%' 
+          OR o.nombre LIKE '%pegar elastico a c%' 
+          OR o.nombre LIKE '%PEGAR TIRANTE ESPALDA x4%' 
+          OR o.nombre LIKE '%PEGAR TIRANTE DELANTERO X2%' 
+          OR o.nombre LIKE '%ATRAQUE TIRANTE X2%'
+         ) 
+        ORDER BY et.articulo ASC");
+				
+        $stmt -> execute();
+
+        return $stmt -> fetchAll();
+			}
+		
+      $stmt -> close();
+  
+      $stmt = null;
+
+		}
+
     
 }

@@ -45,10 +45,12 @@
          <tr>
            
            <th style="width:10px">#</th>
+           <th>Codigo</th>
            <th>Nombre</th>
            <th>RUC</th>
            <th>Dirección</th>
            <th>Ubigeo</th>
+           <th>Telefono</th>
            <th>Acciones</th>
 
          </tr> 
@@ -101,7 +103,8 @@ MODAL AGREGAR COLOR
 
           <div class="box-body">
 
-            <!-- ENTRADA PARA EL RUC -->
+            
+          <!-- ENTRADA PARA EL CODIGO -->
             
             <div class="form-group">
               
@@ -109,11 +112,11 @@ MODAL AGREGAR COLOR
               
                 <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
-                <input type="text" min="0" class="form-control input-lg" name="nuevoRUC" placeholder="Ingresar RUC" required>
+                <input type="text" class="form-control input-lg" name="nuevoCodAgencia" placeholder="Ingresar codigo de agencia" required>
 
               </div>
 
-            </div>          
+            </div>
 
             <!-- ENTRADA PARA EL NOMBRE -->
             
@@ -135,9 +138,9 @@ MODAL AGREGAR COLOR
               
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="nuevaDireccion" placeholder="Ingresar Dirección" required>
+                <input type="text" class="form-control input-lg" name="nuevaDireccion" placeholder="Ingresar Dirección" >
 
               </div>
 
@@ -149,13 +152,58 @@ MODAL AGREGAR COLOR
               
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-map"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="nuevoUbigeo" placeholder="Ingresar ubigeo" required>
+                <select  class="form-control input-lg selectpicker" data-live-search="true" name="nuevoUbigeo"  >
+                  <option value="">Ubigeo</option>
+
+                    <?php
+                    
+                    $ubigeo = ControladorClientes::ctrMostrarUbigeos();
+                    #var_dump("ubigeo", $ubigeo);
+                    foreach ($ubigeo as $key => $value) {
+
+                      echo '<option value="' . $value["codigo"] . '">' . $value["codigo"] . ' - ' . $value["ubigeo"] . '</option>';
+
+                    }
+
+                    
+                    ?>
+                </select>
 
               </div>
 
             </div>
+
+            <!-- ENTRADA PARA EL RUC -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-id-card-o"></i></span> 
+
+                <input type="text" min="0" class="form-control input-lg" name="nuevoRUC" placeholder="Ingresar RUC" required>
+
+              </div>
+
+            </div>          
+
+
+            <!-- ENTRADA PARA EL TELEFONO -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-phone"></i></span> 
+
+                <input type="text" min="0" class="form-control input-lg" name="nuevoTelefono" placeholder="Ingresar telefono" >
+
+              </div>
+
+            </div>          
+
  
           </div>
 
@@ -224,7 +272,7 @@ MODAL EDITAR AGENCIA
           <div class="box-body">
 
           
-            <!-- ENTRADA PARA EL DOCUMENTO RUC -->
+            <!-- ENTRADA PARA EL CODIGO -->
             
             <div class="form-group">
               
@@ -232,7 +280,7 @@ MODAL EDITAR AGENCIA
               
                 <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
-                <input type="number" min="0" class="form-control input-lg" name="editarRUC" id="editarRUC" required>
+                <input type="text" class="form-control input-lg" name="editarCodAgencia" id="editarCodAgencia" required>
 
               </div>
 
@@ -258,9 +306,9 @@ MODAL EDITAR AGENCIA
               
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="editarDireccion" id="editarDireccion" required>
+                <input type="text" class="form-control input-lg" name="editarDireccion" id="editarDireccion" >
               </div>
 
             </div>
@@ -271,9 +319,52 @@ MODAL EDITAR AGENCIA
               
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-map"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="editarUbigeo" id="editarUbigeo" required>
+                <select  class="form-control input-lg selectpicker" data-live-search="true" name="editarUbigeo" id="editarUbigeo" >
+                  <option value="">Ubigeo</option>
+
+                    <?php
+                    
+                    $ubigeo = ControladorClientes::ctrMostrarUbigeos();
+                    #var_dump("ubigeo", $ubigeo);
+                    foreach ($ubigeo as $key => $value) {
+
+                      echo '<option value="' . $value["codigo"] . '">' . $value["codigo"] . ' - ' . $value["ubigeo"] . '</option>';
+
+                    }
+
+                    
+                    ?>
+                </select>
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA EL RUC -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-id-card-o"></i></span> 
+
+                <input type="number" min="0" class="form-control input-lg" name="editarRUC" id="editarRUC" required>
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA EL TELEFONO  -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-phone"></i></span> 
+
+                <input type="text" min="0" class="form-control input-lg" name="editarTelefono" id="editarTelefono" >
+
               </div>
 
             </div>

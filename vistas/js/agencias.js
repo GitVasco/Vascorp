@@ -51,10 +51,13 @@ $(".tablaAgencias").on("click", ".btnEditarAgencia", function () {
         success: function (respuesta) {
 
             $("#idAgencia").val(respuesta["id"]);
-            $("#editarRUC").val(respuesta["ruc"]);
+            $("#editarCodAgencia").val(respuesta["codigo"]);
             $("#editarDescripcion").val(respuesta["nombre"]);
             $("#editarDireccion").val(respuesta["direccion"]);
             $("#editarUbigeo").val(respuesta["ubigeo"]);
+            $("#editarUbigeo").selectpicker("refresh");
+            $("#editarRUC").val(respuesta["ruc"]);
+            $("#editarTelefono").val(respuesta["telefono"]);
         }
 
     })

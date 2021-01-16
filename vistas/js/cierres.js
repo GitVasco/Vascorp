@@ -69,12 +69,16 @@ CARGAR LA TABLA DINÁMICA DE CIERRES
   AGREGANDO PRODUCTOS A LA VENTA DESDE LA TABLA
   =============================================*/
   
-  $(".tablaArticuloCierre tbody").on("click", "button.agregarProducto", function() {
+  $(".tablaArticuloCierre tbody").on("click", "button.agregarServicio", function() {
   
     var articuloCierre = $(this).attr("articuloCierre");
+    var codServicio = $(this).attr("codServicio");
+    var saldoServicio = $(this).attr("saldoServicio");
+    var codDetalle = $(this).attr("codDetalle");
+    // console.log(codServicio);
     /* console.log("idProducto", idProducto); */
   
-    $(this).removeClass("btn-primary agregarProducto");
+    $(this).removeClass("btn-primary agregarServicio");
   
     $(this).addClass("btn-default");
   
@@ -96,15 +100,15 @@ CARGAR LA TABLA DINÁMICA DE CIERRES
         EVITAR AGREGAR PRODUTO CUANDO EL STOCK ESTÁ EN CERO
         =============================================*/
   
-        if (servicio == 0) {
+        if (saldoServicio == 0) {
           swal({
-            title: "No hay en servicio disponible",
+            title: "No hay en saldo disponible",
             type: "error",
             confirmButtonText: "¡Cerrar!"
           });
   
-          $("button[articuloCierre='" + articuloCierre + "']").addClass(
-            "btn-primary agregarProducto"
+          $("button[codigoServicio='" + codServicio + "']").addClass(
+            "btn-primary agregarServicio"
           );
   
           return;
@@ -116,18 +120,27 @@ CARGAR LA TABLA DINÁMICA DE CIERRES
   
             "<!-- Descripción del producto -->" +
   
-            '<div class="col-xs-6" style="padding-right:0px">' +
+            '<div class="col-xs-3" style="padding-right:0px">' +
   
               '<div class="input-group">' +
   
-                '<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarProducto" articuloCierre="' + articuloCierre + '"><i class="fa fa-times"></i></button></span>' +
+                '<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarServicio" codigoServicio ="'+ codServicio+'"><i class="fa fa-times"></i></button></span>' +
   
-                '<input type="text" class="form-control nuevaDescripcionProducto" name="agregarProducto" value="' + packing +'" articuloCierre="' + articuloCierre + '" readonly required>' +
+                '<input type="text" class="form-control nuevoCodServicio2" name="agregarProducto" value="' + codDetalle +'"  readonly required>' +
+                '<input type="hidden" class="form-control nuevoCodServicio" value="' + codServicio +'"   >' +
   
               "</div>" +
   
             "</div>" +
+
+            "<!-- Descripcion del producto -->" +
   
+            '<div class="col-xs-6">' +
+  
+            '<input type="text" class="form-control nuevaDescripcionProducto" name="agregarProducto" value="' + packing +'" articuloCierre="' + articuloCierre + '" saldo = "'+Number(saldoServicio)+'" readonly required>' +
+  
+            "</div>" +
+
             "<!-- Cantidad del producto -->" +
   
             '<div class="col-xs-3">' +
@@ -159,22 +172,15 @@ CARGAR LA TABLA DINÁMICA DE CIERRES
   =============================================*/
   
   $(".tablaArticuloCierre").on("draw.dt", function() {
-    /* console.log("tabla"); */
+    // console.log("tabla"); 
   
-    if (localStorage.getItem("quitarProducto") != null) {
-      var listaIdProductos = JSON.parse(localStorage.getItem("quitarProducto"));
+    if (localStorage.getItem("quitarServicio") != null) {
+      var listaIdServicios = JSON.parse(localStorage.getItem("quitarServicio"));
+      // console.log(listaIdProductos);
   
-      for (var i = 0; i < listaIdProductos.length; i++) {
-        $(
-          "button.recuperarBoton[articuloCierre='" +
-            listaIdProductos[i]["articuloCierre"] +
-            "']"
-        ).removeClass("btn-default");
-        $(
-          "button.recuperarBoton[articuloCierre='" +
-            listaIdProductos[i]["articuloCierre"] +
-            "']"
-        ).addClass("btn-primary agregarProducto");
+      for (var i = 0; i < listaIdServicios.length; i++) {
+        $("button.recuperarBoton[codServicio='" + listaIdServicios[i]["codigoServicio"] +"']").removeClass("btn-default");
+        $("button.recuperarBoton[codServicio='" + listaIdServicios[i]["codigoServicio"] +"']").addClass("btn-primary agregarServicio");
       }
     }
   });
@@ -185,9 +191,9 @@ CARGAR LA TABLA DINÁMICA DE CIERRES
   
   var idQuitarProducto = [];
   
-  localStorage.removeItem("quitarProducto");
+  localStorage.removeItem("quitarServicio");
   
-  $(".formularioCierre").on("click", "button.quitarProducto", function() {
+  $(".formularioCierre").on("click", "button.quitarServicio", function() {
     /* console.log("boton"); */
   
     $(this)
@@ -197,30 +203,29 @@ CARGAR LA TABLA DINÁMICA DE CIERRES
       .parent()
       .remove();
   
-    var articuloCierre = $(this).attr("articuloCierre");
-  
+    var codigoServicio = $(this).attr("codigoServicio");
+    // console.log(codigoServicio);
     /*=============================================
     ALMACENAR EN EL LOCALSTORAGE EL ID DEL PRODUCTO A QUITAR
     =============================================*/
   
-    if (localStorage.getItem("quitarProducto") == null) {
+    if (localStorage.getItem("quitarServicio") == null) {
       idQuitarProducto = [];
     } else {
-      idQuitarProducto.concat(localStorage.getItem("quitarProducto"));
+      idQuitarProducto.concat(localStorage.getItem("quitarServicio"));
     }
   
     idQuitarProducto.push({
-      articuloCierre: articuloCierre
+      "codigoServicio": codigoServicio
     });
+    localStorage.setItem("quitarServicio", JSON.stringify(idQuitarProducto));
   
-    localStorage.setItem("quitarProducto", JSON.stringify(idQuitarProducto));
-  
-    $("button.recuperarBoton[articuloCierre='" + articuloCierre + "']").removeClass(
+    $("button.recuperarBoton[codServicio='" + codigoServicio + "']").removeClass(
       "btn-default"
     );
   
-    $("button.recuperarBoton[articuloCierre='" + articuloCierre + "']").addClass(
-      "btn-primary agregarProducto"
+    $("button.recuperarBoton[codServicio='" + codigoServicio + "']").addClass(
+      "btn-primary agregarServicio"
     );
   
     if ($(".nuevoCierres").children().length == 0) {
@@ -293,20 +298,24 @@ CARGAR LA TABLA DINÁMICA DE CIERRES
     var descripcion = $(".nuevaDescripcionProducto");
   
     var cantidad = $(".nuevaCantidadProducto");
+    
+    var codigoSer= $(".nuevoCodServicio");
   
   
     for (var i = 0; i < descripcion.length; i++) {
       listaProductos.push({
         id: $(descripcion[i]).attr("articuloCierre"),
         articulo: $(descripcion[i]).attr("articuloCierre"),
-        cantidad: $(cantidad[i]).val(),
-        servicio:$(cantidad[i]).attr("servicio"),
+        cantidad: Number($(cantidad[i]).val()),
+        servicio:Number($(cantidad[i]).attr("servicio")),
+        codServicio: $(codigoSer[i]).val(),
+        saldo: Number($(descripcion[i]).attr("saldo")),
       });
     }
    
   
     $("#listaProductos").val(JSON.stringify(listaProductos));
-     console.log(JSON.stringify(listaProductos));
+   console.log(JSON.stringify(listaProductos));
   }
   
   /* 
@@ -360,23 +369,23 @@ function sumarTotalCierre() {
   
   function quitarAgregarProducto() {
     //Capturamos todos los id de productos que fueron elegidos en la venta
-    var idProductos = $(".quitarProducto");
+    var idProductos = $(".quitarServicio");
     //console.log("idProductos", idProductos);
   
     //Capturamos todos los botones de agregar que aparecen en la tabla
-    var botonesTabla = $(".tablaArticuloCierre tbody button.agregarProducto");
+    var botonesTabla = $(".tablaArticuloCierre tbody button.agregarServicio");
   
-    /* console.log("botonesTabla", botonesTabla); */
+    //console.log("botonesTabla", botonesTabla); 
   
     //Recorremos en un ciclo para obtener los diferentes idProductos que fueron agregados a la venta
     for (var i = 0; i < idProductos.length; i++) {
       //Capturamos los Id de los productos agregados a la venta
-      var boton = $(idProductos[i]).attr("articuloCierre");
+      var boton = $(idProductos[i]).attr("codigoServicio");
   
       //Hacemos un recorrido por la tabla que aparece para desactivar los botones de agregar
       for (var j = 0; j < botonesTabla.length; j++) {
-        if ($(botonesTabla[j]).attr("articuloCierre") == boton) {
-          $(botonesTabla[j]).removeClass("btn-primary agregarProducto");
+        if ($(botonesTabla[j]).attr("codigoServicio") == boton) {
+          $(botonesTabla[j]).removeClass("btn-primary agregarServicio");
           $(botonesTabla[j]).addClass("btn-default");
         }
       }
@@ -464,3 +473,146 @@ function sumarTotalCierre() {
       }
     })
   });
+
+/* 
+* VISUALIZAR DETALLE DEL CORTE
+*/ 
+$(".tablaCierres").on("click", ".btnVisualizarCierre", function () {
+
+	var codigoCierre = $(this).attr("codigoCierre");
+    //console.log("codigoAC", codigoAC);
+    
+  var datos = new FormData();
+	datos.append("codigoCierre", codigoCierre);
+
+	$.ajax({
+
+		url:"ajax/cierres.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType:"json",
+		success:function(respuesta){
+
+			console.log("respuesta", respuesta);
+
+      $("#cierre").val(respuesta["codigo"]);
+      $("#fecha").val(respuesta["fecha"]);
+      $("#nombre").val(respuesta["taller"]+" - "+respuesta["nom_sector"]);
+      $("#cantidad").val(respuesta["total"]);
+      $("#estado").val(respuesta["estado"]);
+
+      $("#cantidad").number(true, 0);
+
+			
+		}
+
+    })
+    
+    var codigoDCierre = $(this).attr("codigoCierre");	
+    //console.log("codigoDAC", codigoDAC);
+
+    var datosDOC = new FormData();
+    datosDOC.append("codigoDCierre", codigoDCierre);
+    
+    $.ajax({
+
+		url:"ajax/cierres.ajax.php",
+		method: "POST",
+		data: datosDOC,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType:"json",
+		success:function(respuestaDetalle){
+
+			console.log("respuestaDetalle", respuestaDetalle);
+
+      $(".detalleMP").remove();
+            
+			for(var id of respuestaDetalle){
+
+                if(id.t1 > 0){
+
+                    var t1 = id.t1;
+                }else
+
+                    var t1 = "";
+
+                if(id.t2 > 0){
+
+                    var t2 = id.t2;
+                }else
+
+                    var t2 = "";
+                    
+                if(id.t3 > 0){
+
+                    var t3 = id.t3;
+                }else
+
+                    var t3 = "";
+                    
+                if(id.t4 > 0){
+
+                    var t4 = id.t4;
+                }else
+
+                    var t4 = "";    
+                    
+                if(id.t5 > 0){
+
+                    var t5 = id.t5;
+                }else
+
+                    var t5 = "";
+                    
+                if(id.t6 > 0){
+
+                    var t6 = id.t6;
+                }else
+
+                    var t6 = "";
+                    
+                if(id.t7 > 0){
+
+                    var t7 = id.t7;
+                }else
+
+                    var t7 = "";
+                    
+                if(id.t8 > 0){
+
+                    var t8 = id.t8;
+                }else
+
+                    var t8 = "";                    
+
+				$('.tablaDetalleOC').append(
+
+					'<tr class="detalleMP">' +
+						'<td>' + id.codigo + ' </td>' +
+						'<td><b>' + id.modelo + ' </b></td>' +
+						'<td>' + id.nombre + ' </td>' +
+						'<td>' + id.color + ' </td>' +
+						'<td><b>' + t1 + ' </b></td>' +
+						'<td><b>' + t2 + ' </b></td>' +
+						'<td><b>' + t3 + ' </b></td>' +
+            '<td><b>' + t4 + ' </b></td>' +
+            '<td><b>' + t5 + ' </b></td>' +
+            '<td><b>' + t6 + ' </b></td>' +
+            '<td><b>' + t7 + ' </b></td>' +
+            '<td><b>' + t8 + ' </b></td>' +
+					'</tr>'
+
+				)
+
+			}            
+
+		}
+
+	})
+  
+});

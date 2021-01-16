@@ -31,7 +31,7 @@ class TablaPrecioServicios{
             $datosJson .= '[
             "'.$precio[$i]["taller"].'",
             "'.$precio[$i]["modelo"].'",
-            "'.$precio[$i]["descripcion"].'",
+            "'.$precio[$i]["nombre"].'",
             "'.$precio[$i]["precio_doc"].'",
             "'.$botones.'"
             ],';        

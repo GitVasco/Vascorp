@@ -2,8 +2,8 @@
 * CARGAR TABLA ALMACEN DE CORTE
 */
 // Validamos que venga la variable capturaRango en el localStorage
-if (localStorage.getItem("capturaRango4") != null) {
-	$("#daterange-btnCortes span").html(localStorage.getItem("capturaRango4"));
+if (localStorage.getItem("capturarRango4") != null) {
+	$("#daterange-btnCortes span").html(localStorage.getItem("capturarRango4"));
 	cargarTablaAlmacenCortes(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
 } else {
 	$("#daterange-btnCortes span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');

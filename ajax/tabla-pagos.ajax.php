@@ -292,11 +292,11 @@ class TablaPagos{
                         */
                         if($pagos[$i]["total"] < $pagos[$i]["sueldo_total"]){
 
-                            $total = "<b><span style='color:".$vino.";'>S/ ".number_format($pagos[$i]["total"],2)."</span></b>";
+                            $total = "<b class='guinda'>".number_format($pagos[$i]["total"],2)."</b>";
 
                         }else{
 
-                            $total = "<b><span style='color:".$azulino.";'>S/ ".number_format($pagos[$i]["total"],2)."</span></b>";
+                            $total = "<b class='azul'>".number_format($pagos[$i]["total"],2)."</b>";
 
                         }
             
@@ -613,11 +613,11 @@ class TablaPagos{
                         */
                         if($pagos[$i]["total"] < $pagos[$i]["sueldo_total"]){
 
-                            $total = "<b><span style='color:".$vino.";'>S/ ".number_format($pagos[$i]["total"],2)."</span></b>";
+                            $total = "<b class='guinda'>".number_format($pagos[$i]["total"],2)."</b>";
 
                         }else{
 
-                            $total = "<b><span style='color:".$azulino.";'>S/ ".number_format($pagos[$i]["total"],2)."</span></b>";
+                            $total = "<b class='azul'>".number_format($pagos[$i]["total"],2)."</b>";
 
                         }
 

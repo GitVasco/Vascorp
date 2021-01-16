@@ -10,8 +10,8 @@ $("#tipoCuenta").change(function(){
  });
 
  // Validamos que venga la variable capturaRango en el localStorage
-if (localStorage.getItem("capturaRango10") != null) {
-	$("#daterange-btnCuentas span").html(localStorage.getItem("capturaRango10"));
+if (localStorage.getItem("capturarRango10") != null) {
+	$("#daterange-btnCuentas span").html(localStorage.getItem("capturarRango10"));
 	cargarTablaCuentas(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
 } else {
 	$("#daterange-btnCuentas span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
@@ -55,8 +55,8 @@ function cargarTablaCuentas(fechaInicial, fechaFinal){
   });
 }
 // Validamos que venga la variable capturaRango en el localStorage
-if (localStorage.getItem("capturaRango11") != null) {
-	$("#daterange-btnCuentasPendientes span").html(localStorage.getItem("capturaRango11"));
+if (localStorage.getItem("capturarRango11") != null) {
+	$("#daterange-btnCuentasPendientes span").html(localStorage.getItem("capturarRango11"));
 	cargarTablaCuentasPendientes(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
 } else {
 	$("#daterange-btnCuentasPendientes span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
@@ -101,8 +101,8 @@ function cargarTablaCuentasPendientes(fechaInicial, fechaFinal){
 }
 
 // Validamos que venga la variable capturaRango en el localStorage
-if (localStorage.getItem("capturaRango12") != null) {
-	$("#daterange-btnCuentasAprobadas span").html(localStorage.getItem("capturaRango12"));
+if (localStorage.getItem("capturarRango12") != null) {
+	$("#daterange-btnCuentasAprobadas span").html(localStorage.getItem("capturarRango12"));
 	cargarTablaCuentasAprobadas(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
 } else {
 	$("#daterange-btnCuentasAprobadas span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');

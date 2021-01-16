@@ -483,7 +483,7 @@ $sqlDetalle = mysql_query("SELECT
                               ' ',
                               t.ape_mat_tra
                             ) AS nombre,
-                            COUNT(a.fecha) AS dias,
+                            COUNT(a.fecha) - 1 AS dias,
                             ROUND(et.produccion, 2) AS produccion,
                             ROUND(et.sueldo_quincena, 2) AS sueldo_quincena,
                             et.categoria,
@@ -593,7 +593,14 @@ $sqlDetalle = mysql_query("SELECT
                             ) 
                             AND tt.cod_tip_tra = '1' 
                             AND et.produccion > 0 
-                            GROUP BY a.id_trabajador") or die(mysql_error());
+                            AND a.estado = 'asistio'
+                            GROUP BY a.id_trabajador
+                            ORDER BY
+                            CASE
+                              WHEN et.produccion > et.sueldo_quincena 
+                              THEN ROUND(et.produccion + et.incentivo, 2) 
+                              ELSE ROUND(et.sueldo_quincena, 2) 
+                            END DESC") or die(mysql_error());
 
 $produccion = 0;                            
 $sueldo_quincena = 0; 

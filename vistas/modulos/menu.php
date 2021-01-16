@@ -596,6 +596,14 @@
 
                             </li>
 
+                            <li>
+
+                                <a href="en-tallerp">
+                                <i class="fa fa-circle-o"></i>Taller Generados
+                                </a>
+
+                            </li>
+
                         </ul>
 
                     </li>

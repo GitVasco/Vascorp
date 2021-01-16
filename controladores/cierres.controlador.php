@@ -79,6 +79,11 @@ class ControladorCierres{
 					$item1 = "servicio";
 					$valor1 = $respuestaProducto["servicio"]-$value["cantidad"];
 					ModeloArticulos::mdlActualizarUnDato($tabla, $item1, $valor1, $valor);
+					$tabla2="servicios_detallejf";
+					$item2 = "saldo";
+					$valor2 = $value["saldo"] - $value["cantidad"];
+					$idServicio=$value["codServicio"];
+					$saldoServicio=ModeloCierres::mdlActualizarUnDato($tabla2, $item2, $valor2, $idServicio);
 					
 
 				}
@@ -109,7 +114,8 @@ class ControladorCierres{
 
 						$datos=array("articulo"=>$value["articulo"],
 									 "cantidad"=>$value["cantidad"],
-									 "codigo"=>$_POST["nuevoCierre"]);
+									 "codigo"=>$_POST["nuevoCierre"],
+									 "cod_servicio"=>$value["codServicio"]);
 
 									 ModeloCierres::mdlGuardarDetallesCierres("cierres_detallejf",$datos);
 					
@@ -198,6 +204,10 @@ class ControladorCierres{
 					$valor1=$value["servicio"]-$value["cantidad"];
 
 					ModeloArticulos::mdlActualizarUnDato("articulojf", $item1, $valor1, $valor);
+					$tabla2="servicios_detallejf";
+					$item2 = "saldo";
+					$idServicio=$value["codServicio"];
+					$saldoServicio=ModeloCierres::mdlActualizarUnDato($tabla2, $item2, $valor1, $idServicio);
 				}
 
 
@@ -234,7 +244,8 @@ class ControladorCierres{
 
 						$datos=array("codigo"=>$_POST["editarCierre"],
 									 "articulo"=>$value["articulo"],
-									 "cantidad"=>$value["cantidad"]);
+									 "cantidad"=>$value["cantidad"],
+									 "cod_servicio"=>$value["codServicio"]);
 
 									 ModeloCierres::mdlGuardarDetallesCierres("cierres_detallejf",$datos);
 					
@@ -322,6 +333,10 @@ class ControladorCierres{
 
 			ModeloArticulos::mdlActualizarUnDato("articulojf", "servicio", $servicio, $value["articulo"]);
 
+			$tabla2="servicios_detallejf";
+			$item2 = "saldo";
+			$saldoServicio=ModeloArticulos::mdlActualizarUnDato($tabla2, $item2, $servicio, $value["articulo"]);
+
 		
         }
 
@@ -392,4 +407,12 @@ class ControladorCierres{
 		return $respuesta;
 
 	}
+	// VISUALIZAR CIERRE DETALLE
+	static public function ctrVisualizarCierrreDetalle($valor){
+
+        $respuesta = ModeloCierres::mdlVisualizarCierreDetalle($valor);
+        
+		return $respuesta;
+
+	} 
 }

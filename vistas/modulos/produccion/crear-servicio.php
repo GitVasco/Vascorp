@@ -120,11 +120,18 @@
 
                     </div>
 
-                    <div class="col-xs-4">
+                    <div class="col-xs-3">
 
                       <label for="">Cantidad</label>
 
                     </div>
+
+                    <div class="col-xs-3">
+
+                      <label for="">Taller</label>
+
+                    </div>
+
 
                   </div>
 

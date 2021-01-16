@@ -11,7 +11,7 @@ class TablaProduccionTrusas{
 
     public function mostrarTablaProduccionTrusas(){
    
-        $trusas = ControladorTalleres::ctrMostrarProduccionTrusas($_GET["mesT"]);	
+        $trusas = ControladorTalleres::ctrMostrarProduccionTrusas($_GET["fechaInicial"],$_GET["fechaFinal"]);	
 
         if(count($trusas)>0){
 

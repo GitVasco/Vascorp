@@ -111,7 +111,19 @@ session_start();
   <!-- ChartJS http://www.chartjs.org/-->
   <script src="vistas/bower_components/Chart.js/Chart.js"></script>
   <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment-with-locales.min.js"></script>
-
+  <script src ="http://cdn.datatables.net/plug-ins/1.10.16/api/sum().js"></script>
+  <style>
+    .table thead, .table tfoot{
+      background-color:#3c8dbc;
+      color:white;
+    }
+    .azul {
+      color:#0000FF;
+    }
+    .guinda{
+      color:#8B0000;
+    }
+  </style>
 </head>
 
 <!--=====================================
@@ -200,6 +212,7 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "urgenciasamp" ||
                   $_GET["ruta"] == "en-cortes" ||
                   $_GET["ruta"] == "en-taller" ||
+                  $_GET["ruta"] == "operacion-taller" ||
                   $_GET["ruta"] == "asistencia" ||
                   $_GET["ruta"] == "ingresos" ||
                   $_GET["ruta"] == "crear-ingresos" ||
@@ -207,6 +220,7 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "crear-segunda" ||
                   $_GET["ruta"] == "editar-segunda" ||
                   $_GET["ruta"] == "en-tallert" ||
+                  $_GET["ruta"] == "en-tallerp" ||
                   $_GET["ruta"] == "marcar-taller" ||
                   $_GET["ruta"] == "proyeccion-mp" ||
                   $_GET["ruta"] == "produccion-trusas" ||

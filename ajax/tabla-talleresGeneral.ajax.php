@@ -32,11 +32,15 @@ class TablaTalleresG{
     
                 $estado = "<span style='font-size:85%' class='label label-primary'>En Proceso</span>";
     
-            }else{
+            }elseif($talleres[$i]["estado"] == "3"){
     
                 $estado = "<span style='font-size:85%' class='label label-success'>Terminado</span>";
     
-            } 
+            }else{
+
+                $estado = "<span style='font-size:85%' class='label label-danger'>Cerrado</span>";
+
+            }
             $dividir=substr($talleres[$i]["codigo"],-1);
             /*
             todo: BOTONES
@@ -46,7 +50,7 @@ class TablaTalleresG{
                 $botones =  "<div class='btn-group'><button class='btn btn-success btnImprimirTicket' ultimo='".$talleres[$i]["codigo"]."'modelo='".$talleres[$i]["modelo"]."'nombre='".$talleres[$i]["nombre"]."'color='".$talleres[$i]["color"]."'talla='".$talleres[$i]["talla"]."'cant_taller='".$talleres[$i]["cantidad"]."'cod_operacion='".$talleres[$i]["cod_operacion"]."'nom_operacion='".$talleres[$i]["nom_operacion"]."'><i class='fa fa-print'></i></button></div>"; 
 
             }else{
-               if($dividir== "A" || $dividir=="B"){
+               if($dividir== "E" ){
                 $botones =  "<div class='btn-group'><button class='btn btn-success btnImprimirTicket' ultimo='".$talleres[$i]["codigo"]."'modelo='".$talleres[$i]["modelo"]."'nombre='".$talleres[$i]["nombre"]."'color='".$talleres[$i]["color"]."'talla='".$talleres[$i]["talla"]."'cant_taller='".$talleres[$i]["cantidad"]."'cod_operacion='".$talleres[$i]["cod_operacion"]."'nom_operacion='".$talleres[$i]["nom_operacion"]."'><i class='fa fa-print'></i></button></div>"; 
                }else{
                 $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarTallerG' idTaller='".$talleres[$i]["codigo"]."' data-toggle='modal' data-target='#modalEditarCantidad'><i class='fa fa-edit'></i></button><button class='btn btn-success btnImprimirTicket' ultimo='".$talleres[$i]["codigo"]."'modelo='".$talleres[$i]["modelo"]."'nombre='".$talleres[$i]["nombre"]."'color='".$talleres[$i]["color"]."'talla='".$talleres[$i]["talla"]."'cant_taller='".$talleres[$i]["cantidad"]."'cod_operacion='".$talleres[$i]["cod_operacion"]."'nom_operacion='".$talleres[$i]["nom_operacion"]."'><i class='fa fa-print'></i></button></div>"; 

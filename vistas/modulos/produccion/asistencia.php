@@ -47,6 +47,7 @@
         }
           ?>
           <br>
+        <button type="button" class="btn btn-info " data-toggle='modal' data-target='#modalAsistenciaFecha'><i class="fa fa-calendar"></i> Asistencia x fecha</button>
         <button type="button" class="btn btn-success btnAumentarMin" data-toggle='modal' data-target='#modalAgregarTiempo'><i class="fa fa-plus-circle"></i> Aumentar tiempo</button>
         <button type="button" class="btn btn-danger btnRestarMin" data-toggle='modal' data-target='#modalQuitarTiempo'><i class="fa fa-minus-circle"></i> Restar tiempo</button>
       </div>
@@ -734,6 +735,83 @@ MODAL QUITAR TIEMPO
 
         $restarAsistencia = new ControladorAsistencias();
         $restarAsistencia -> ctrQuitarTiempo();
+
+      ?>   
+
+
+    </div>
+
+  </div>
+
+</div>
+
+<!--=====================================
+MODAL AGREGAR TIEMPO
+======================================-->
+
+<div id="modalAsistenciaFecha" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form role="form" method="post">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">ASISTENCIA X FECHA</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <div class="form-group col-lg-12 ">
+              <label ><strong>Fecha</strong></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span> 
+
+                <input type="date" class="form-control input-lg " name="fechaAsitencia" id="fechaAsitencia"   required>
+                
+                
+              </div>
+
+            </div>
+                      
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Guardar Asistencia</button>
+
+        </div>
+
+      </form>
+
+      <?php
+
+        $registrarAsistenciaFecha = new ControladorAsistencias();
+        $registrarAsistenciaFecha -> ctrCrearAsistenciaFecha();
 
       ?>   
 

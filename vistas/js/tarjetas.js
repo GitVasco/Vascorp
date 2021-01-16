@@ -757,8 +757,8 @@ $(".box").on("click", ".btnReporteMateriaP", function () {
 * CARGAR TABLA FICHA TECNICA
 */
 // Validamos que venga la variable capturaRango en el localStorage
-if (localStorage.getItem("capturaRango6") != null) {
-	$("#daterange-btnFichas span").html(localStorage.getItem("capturaRango6"));
+if (localStorage.getItem("capturarRango6") != null) {
+	$("#daterange-btnFichas span").html(localStorage.getItem("capturarRango6"));
 	cargarTablaFichas(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
 } else {
 	$("#daterange-btnFichas span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');

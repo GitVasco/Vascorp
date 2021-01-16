@@ -36,7 +36,7 @@
 
         <input type="hidden" value="<?=$_SESSION["perfil"];?>" id="perfilOculto">
         
-       <table class="table table-bordered table-striped dt-responsive tablaPagos">
+       <table class="table table-bordered table-striped dt-responsive tablaPagos" id="totalPagos">
          
         <thead>
          
@@ -70,7 +70,7 @@
                 <th>14</th>
                 <th>15</th>
                 <th>16</th>
-                <th>Total</th>';
+                <th>Total S/</th>';
 
          }else{
 
@@ -96,7 +96,7 @@
                 <th>30</th>
                 <th>31</th>
                 <th>1</th>
-                <th>Total</th>';
+                <th>Total S/</th>';
 
          }
          
@@ -109,9 +109,34 @@
         <tbody> 
  
         </tbody>
-
+        <tfoot>
+        <tr>
+         <th></th>
+         <th>TOTAL: </th>
+         <th></th>
+         <th></th>
+         <th></th>
+         <th></th>
+         <th></th>
+         <th></th>
+         <th></th>
+         <th></th>
+         <th></th>
+         <th></th>
+         <th></th>
+         <th></th>
+         <th></th>
+         <th></th>
+         <th></th>
+         <th></th>
+         <th></th>
+         <th></th>
+         <th></th>
+         <th></th>
+         <th></th>
+         </tr>
+        </tfoot>
        </table>
-
       </div>
 
     </div>

@@ -11,10 +11,12 @@ class ControladorAgencias{
 		if(isset($_POST["nuevaDescripcion"])){
 
 				$tabla="agenciasjf";
-			   	$datos = array("ruc"=>$_POST["nuevoRUC"],
-							   "nombre"=>$_POST["nuevaDescripcion"],
-							   "direccion"=>$_POST["nuevaDireccion"],
-							   "ubigeo"=>$_POST["nuevoUbigeo"]);
+				   $datos = array("codigo"=>$_POST["nuevoCodAgencia"],
+							   	  "nombre"=>$_POST["nuevaDescripcion"],
+							      "direccion"=>$_POST["nuevaDireccion"],
+								  "ubigeo"=>$_POST["nuevoUbigeo"],
+								  "ruc"=>$_POST["nuevoRUC"],
+								  "telefono"=>$_POST["nuevoTelefono"]);
 
 			   	$respuesta = ModeloAgencias::mdlIngresarAgencia($tabla,$datos);
 
@@ -24,7 +26,7 @@ class ControladorAgencias{
 
 					swal({
 						  type: "success",
-						  title: "La agencia ha sido guardado correctamente",
+						  title: "La agencia ha sido guardada correctamente",
 						  showConfirmButton: true,
 						  confirmButtonText: "Cerrar"
 						  }).then(function(result){
@@ -68,10 +70,12 @@ class ControladorAgencias{
 
 				$tabla="agenciasjf";
 			   	$datos = array("id"=>$_POST["idAgencia"],
-                               "nombre"=>$_POST["editarDescripcion"],
+							   "codigo"=>$_POST["editarCodAgencia"],		   
+							   "nombre"=>$_POST["editarDescripcion"],
 							   "ruc"=>$_POST["editarRUC"],
 							   "direccion"=>$_POST["editarDireccion"],
-							   "ubigeo"=>$_POST["editarUbigeo"]);
+							   "ubigeo"=>$_POST["editarUbigeo"],
+							   "telefono"=>$_POST["editarTelefono"]);
 
 			   	$respuesta = ModeloAgencias::mdlEditarAgencia($tabla,$datos);
 
@@ -115,7 +119,7 @@ class ControladorAgencias{
 			$usuario= $_SESSION["nombre"];
 			$para      = 'notificacionesvascorp@gmail.com';
 			$asunto    = 'Se elimino una agencia';
-			$descripcion   = 'El usuario '.$usuario.' elimino la agencia '.$agencia["ruc"].' - '.$agencia["nombre"];
+			$descripcion   = 'El usuario '.$usuario.' elimino la agencia '.$agencia["codigo"].' - '.$agencia["nombre"];
 			$de = 'From: notificacionesvascorp@gmail.com';
 			if($_SESSION["correo"] == 1){
 				mail($para, $asunto, $descripcion, $de);

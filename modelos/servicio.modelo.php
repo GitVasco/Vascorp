@@ -12,7 +12,7 @@ class ModeloServicios{
 
 		if($item != null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item ORDER BY id ASC");
+			$stmt = Conexion::conectar()->prepare("SELECT se.*, s.nom_sector FROM  $tabla se LEFT JOIN sectorjf s on se.taller = s.cod_sector WHERE se.$item = :$item ");
 
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 
@@ -22,7 +22,7 @@ class ModeloServicios{
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla  ORDER BY id ASC");
+			$stmt = Conexion::conectar()->prepare("SELECT se.*, s.nom_sector FROM  $tabla se LEFT JOIN sectorjf s on se.taller = s.cod_sector  ORDER BY se.id ASC");
 
 			$stmt -> execute();
 
@@ -52,6 +52,23 @@ class ModeloServicios{
 		$stmt=null;
 
 	}
+
+	static public function mdlMostraDetallesServicioUnico($tabla,$item,$valor){
+
+		$sql="SELECT * FROM $tabla WHERE $item=:$item ORDER BY id ASC";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":".$item,$valor,PDO::PARAM_STR);
+
+		$stmt->execute();
+
+		return $stmt->fetch();
+
+		$stmt=null;
+
+	}
+
 
 	
 	// Método para guardar los servicios
@@ -84,12 +101,13 @@ class ModeloServicios{
 	// Método para guardar las ventas
 	static public function mdlGuardarDetallesServicios($tabla,$datos){
 
-		$sql="INSERT INTO $tabla(codigo,articulo,cantidad) VALUES (:codigo,:articulo,:cantidad)";
+		$sql="INSERT INTO $tabla(codigo,articulo,cantidad,saldo) VALUES (:codigo,:articulo,:cantidad,:saldo)";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":codigo",$datos["codigo"],PDO::PARAM_STR);
 		$stmt->bindParam(":articulo",$datos["articulo"],PDO::PARAM_STR);
 		$stmt->bindParam(":cantidad",$datos["cantidad"],PDO::PARAM_INT);
+		$stmt->bindParam(":saldo",$datos["saldo"],PDO::PARAM_INT);
 		
 		$stmt->execute();
 
@@ -325,7 +343,7 @@ class ModeloServicios{
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT pd.*,m.nombre FROM $tabla pd LEFT JOIN modelojf  m ON pd.modelo = m.modelo");
+			$stmt = Conexion::conectar()->prepare("SELECT pd.*,m.nombre FROM $tabla pd LEFT JOIN modelojf  m ON pd.modelo = m.modelo ORDER BY pd.id DESC");
 
 			$stmt -> execute();
 
@@ -393,5 +411,92 @@ class ModeloServicios{
 		$stmt = null;
 
 	}    
+
+	//VISUALIZAR DETALLE SERVICIO
+	static public function mdlVisualizarServicioDetalle($valor){
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+		sd.codigo,
+		a.modelo,
+		a.nombre,
+		a.cod_color,
+		a.color,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '1' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t1,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '2' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t2,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '3' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t3,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '4' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t4,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '5' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t5,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '6' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t6,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '7' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t7,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '8' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t8,
+		SUM(sd.cantidad) AS total 
+	  FROM
+		servicios_detallejf sd 
+		LEFT JOIN articulojf a 
+		  ON sd.articulo = a.articulo 
+	  WHERE codigo = :valor
+	  GROUP BY sd.codigo,
+		a.modelo,
+		a.nombre,
+		a.cod_color,
+		a.color");
+
+		$stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt=null;
+
+	}
     
 }

@@ -28,6 +28,9 @@
         <button class="btn btn-danger" data-toggle="modal" data-target="#modalEliminarArticulo"> 
         <i class="fa fa-trash"></i> Eliminar bloque
         </button>
+        <button class="btn btn-success btnCrearTicket" data-toggle="modal" data-target="#modalCrearTicket" idTaller="2021493731"> 
+        <i class="fa fa-plus-square"></i> Crear ticket
+        </button>
         <button type="button" class="btn btn-default btnReporteTalleres" style="border:green 1px solid">
           <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Talleres  </button>
 
@@ -220,7 +223,7 @@ MODAL EDITAR CANTIDAD
 
                 <span class="input-group-addon"><i class="fa fa-arrow-down"></i></span>
 
-                <input type="number" class="form-control" id="editarCantidad" name="editarCantidad" required >
+                <input type="number" class="form-control" id="editarCantidad2" name="editarCantidad2" required >
 
               </div>
 
@@ -437,6 +440,137 @@ MODAL ELIMINAR ARTICULO
         $eliminarTaller -> ctrEliminarArticulo();
 
       ?>
+
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<div id="modalCrearTicket" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form role="form" method="post" enctype="multipart/form-data">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Crear Ticket</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <div class="form-group col-lg-6">
+              <label for="">Modelo</label>
+              <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+                  <input type="text" class="form-control input-lg" id="verMod" name="verMod" readonly>
+                  
+              </div>
+            </div>  
+
+            <div class="form-group col-lg-6">
+              <label for="">Color</label>
+              <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+                  <input type="text" class="form-control input-lg" id="verCol" name="verCol" readonly>
+                  
+              </div>
+            </div>  
+
+            <div class="form-group col-lg-6">
+              <label for="">Talla</label>
+              <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+                  <input type="text" class="form-control input-lg" id="verTal" name="verTal" value="SURTIDO"readonly>
+                  <input type="hidden" id="verArti" name="verArti">
+                  <input type="hidden" id="verCab" name="verCab">
+                  <input type="hidden" id="verPrec" name="verPrec">
+                  <input type="hidden" id="verTmp" name="verTmp">
+                  <input type="hidden" id="verBar" name="verBar">
+                  <input type="hidden"  name="verUser" value="<?php echo $_SESSION["id"]?>">
+                  
+              </div>
+            </div>  
+
+
+            <div class="form-group col-lg-6">
+            <label for="">Cod. Operacion</label>
+              <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+
+                  <input type="text" class="form-control input-lg" id="verCodOP" name="verCodOP" readonly>
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-6">
+            <label for="">Operacion</label>
+              <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+
+                  <input type="text" class="form-control input-lg" id="verOP" name="verOP" readonly>
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-6">
+            <label for="">Cantidad</label>
+              <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+
+                  <input type="text" class="form-control input-lg" name="verCantidad" id="verCantidad" required>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Crear Ticket</button>
+
+        </div>
+
+      </form>
+
+        <?php
+
+          $crearTicket = new ControladorTalleres();
+          $crearTicket -> ctrCrearTicket();
+
+        ?>  
 
 
     </div>
