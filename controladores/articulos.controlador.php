@@ -1134,5 +1134,18 @@ class controladorArticulos{
 
 	}	
 
+	//mdlMostrarArticulosTallerP
+
+	/* 
+	* MOSTRAR ARTICULOS DE TALLER GENERADO
+	*/
+	static public function ctrMostrarArticulosTallerP(){
+
+		$respuesta = ModeloArticulos::mdlMostrarArticulosTallerP();
+
+		return $respuesta;
+
+	}
+
 }
 

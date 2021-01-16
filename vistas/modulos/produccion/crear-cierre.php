@@ -113,16 +113,20 @@
                 <div class="box box-primary">
 
                   <div class="row">
+                    <div class="col-xs-3">
 
+                      <label for="">Codigo</label>
+
+                    </div>
                     <div class="col-xs-6">
 
-                      <label>Articulo</label>
+                      <label >Articulo</label>
 
                     </div>
 
-                    <div class="col-xs-4">
+                    <div class="col-xs-3">
 
-                      <label for="">Cantidad</label>
+                      <label for="" >Cantidad</label>
 
                     </div>
 
@@ -237,12 +241,13 @@
               <thead>
 
                 <tr>
+                  <th>Codigo</th>
                   <th>Articulo</th>
                   <th>Modelo</th>
                   <th>Nombre</th>
                   <th>Color</th>
                   <th>Talla</th>
-                  <th>Servicio</th>
+                  <th>Saldo</th>
                   <th>Acciones</th>
                 </tr>
 

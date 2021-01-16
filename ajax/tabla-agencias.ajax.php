@@ -30,10 +30,12 @@ class TablaAgencias{
 
             $datosJson .= '[
             "'.($i+1).'",
+            "'.$agencias[$i]["codigo"].'",
             "'.$agencias[$i]["nombre"].'",
             "'.$agencias[$i]["ruc"].'",
             "'.$agencias[$i]["direccion"].'",
             "'.$agencias[$i]["ubigeo"].'",
+            "'.$agencias[$i]["telefono"].'",
             "'.$botones.'"
             ],';        
             }

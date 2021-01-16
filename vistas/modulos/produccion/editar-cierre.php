@@ -117,13 +117,19 @@
 
                   <div class="row">
 
+                    <div class="col-xs-3">
+
+                      <label for="">Codigo</label>
+
+                    </div>
+
                     <div class="col-xs-6">
 
                       <label>Articulo</label>
 
                     </div>
 
-                    <div class="col-xs-4">
+                    <div class="col-xs-3">
 
                       <label for="">Cantidad</label>
 
@@ -136,12 +142,13 @@
                 ENTRADA PARA AGREGAR PRODUCTO
                 ======================================-->
 
-                <div class="form-group row nuevoProducto">
+                <div class="form-group row nuevoCierres">
 
                 <?php
 
                 # Traemos los detalles de la venta que se desea editar
                 $listaProductos=ControladorCierres::ctrMostrarDetallesCierres("codigo",$_GET["idCierre"]);
+                
 
                 /* var_dump("listaProductos", $listaProductos); */
                 
@@ -149,7 +156,7 @@
 
                   # Traemos el dato de cada producto
                   $infoProducto=controladorArticulos::ctrMostrarArticulos($value["articulo"]);
-
+                  $detaServicios= ControladorServicios::ctrMostrarDetallesServicioUnico("id",$value["cod_servicio"]);
                   /* var_dump("infoproducto", $infoProducto); */
                   
                   # Hallamos el stock anterior
@@ -158,16 +165,18 @@
                   /* var_dump("stockAntiguo", $stockAntiguo); */
                   
                   echo '<div class="row" style="padding:5px 15px">
+                  <div class="col-xs-3">
+                    <div class="input-group">
+
+                      <span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarProducto" articuloCierre="'.$infoProducto["articulo"].'" codigoServicio ="'.$value["cod_servicio"].'"><i class="fa fa-times"></i></button></span>
+                      <input type="text" class="form-control nuevoCodServicio2" name="agregarProducto"  value="'.$detaServicios["codigo"].'"  readonly required>
+                      <input type="hidden" class="form-control nuevoCodServicio" name="agregarProducto" value="' .$value["cod_servicio"].'">
+                    </div>
+                  </div>
 
                   <div class="col-xs-6" style="padding-right:0px">
 
-                    <div class="input-group">
-
-                      <span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarProducto" articuloCierre="'.$infoProducto["articulo"].'"><i class="fa fa-times"></i></button></span>
-
-                      <input type="text" class="form-control nuevaDescripcionProducto" articuloCierre="'.$infoProducto["articulo"].'" name="agregarProducto" value="'.$infoProducto["packing"].'" codigoP="'.$infoProducto["articulo"].'" readonly required>
-
-                    </div>
+                      <input type="text" class="form-control nuevaDescripcionProducto" articuloCierre="'.$infoProducto["articulo"].'" name="agregarProducto" value="'.$infoProducto["packing"].'" codigoP="'.$infoProducto["articulo"].'" saldo ="'.$detaServicios["saldo"].'" readonly required>
 
                   </div>
 
@@ -287,12 +296,13 @@
               <thead>
 
                 <tr>
+                  <th>Codigo</th>
                   <th>Articulo</th>
                   <th>Modelo</th>
                   <th>Nombre</th>
                   <th>Color</th>
                   <th>Talla</th>
-                  <th>Servicio</th>
+                  <th>Saldo</th>
                   <th>Acciones</th>
                 </tr>
 

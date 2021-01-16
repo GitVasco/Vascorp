@@ -24,37 +24,35 @@
 
       <div class="box-header with-border">
 
-          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 
-              <select class="form-control selectpicker input-lg" id="mesB" name="mesB" data-live-search="true">
+          <button type="button" class="btn btn-default pull-right " id="daterange-btnBrasieres">
+          <span>
+            <i class="fa fa-calendar"></i>
 
-              <option value="">Seleccione Mes</option>
+            <?php
 
-                  <?php
+              if(isset($_GET["fechaInicial"])){
 
-                  $mes = ControladorTalleres::ctrMes();
-                  //var_dump($mes);
+                echo $_GET["fechaInicial"]." - ".$_GET["fechaFinal"];
 
-                  foreach ($mes as $key => $value) {
-                  
-                  echo '<option value="'.$value["codigo"].'">'.$value["codigo"].' - '.$value["descripcion"].'</option>';
-                  }
-
-                  ?>
-
-              </select>
-
-          </div>
-
-          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-          
-              <button class="btn btn-primary btnCargarBrasier">CARGAR MES</button>
+              }else{
               
-          </div>
-          <div class=" pull-right ">
-            <button class="btn btn-outline-success " modelo="" style="border:green 1px solid">
-              <img src="vistas/img/plantilla/excel.png" width="20px"> Producción Brasier  </button>
-          </div>
+                echo 'Rango de fecha';
+
+              }
+
+            ?>
+
+          </span>
+
+          <i class="fa fa-caret-down"></i>
+
+        </button>
+
+        <button class="btn btn-outline-success btnReporteProduccionBrasier" fechaInicial="" fechaFinal="" style="border:green 1px solid">
+          <img src="vistas/img/plantilla/excel.png" width="20px"> Producción Brasier  
+        </button>
+         
 
         </div>
     

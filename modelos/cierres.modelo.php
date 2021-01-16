@@ -12,7 +12,7 @@ class ModeloCierres{
 
 		if($item != null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item ORDER BY id ASC");
+			$stmt = Conexion::conectar()->prepare("SELECT se.*, s.nom_sector FROM  $tabla se LEFT JOIN sectorjf s on se.taller = s.cod_sector WHERE $item = :$item ");
 
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 
@@ -22,7 +22,7 @@ class ModeloCierres{
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ORDER BY id ASC");
+			$stmt = Conexion::conectar()->prepare("SELECT se.*, s.nom_sector FROM  $tabla se LEFT JOIN sectorjf s on se.taller = s.cod_sector  ORDER BY se.id ASC");
 
 			$stmt -> execute();
 
@@ -84,12 +84,13 @@ class ModeloCierres{
 	// Método para guardar las ventas
 	static public function mdlGuardarDetallesCierres($tabla,$datos){
 
-		$sql="INSERT INTO $tabla(codigo,articulo,cantidad) VALUES (:codigo,:articulo,:cantidad)";
+		$sql="INSERT INTO $tabla(codigo,articulo,cantidad,cod_servicio) VALUES (:codigo,:articulo,:cantidad,:cod_servicio)";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":codigo",$datos["codigo"],PDO::PARAM_STR);
 		$stmt->bindParam(":articulo",$datos["articulo"],PDO::PARAM_STR);
 		$stmt->bindParam(":cantidad",$datos["cantidad"],PDO::PARAM_INT);
+		$stmt->bindParam(":cod_servicio",$datos["cod_servicio"],PDO::PARAM_STR);
 		
 		$stmt->execute();
 
@@ -123,7 +124,7 @@ class ModeloCierres{
 	// Método para editar los detalles de ventas - NO ES NECESARIO
 	static public function mdlEditarDetallesCierres($tabla,$datos){
 
-		$sql="UPDATE $tabla SET impuesto=:impuesto,neto=:neto,total=:total,metodo_pago=:metodo_pago WHERE codigo=:codigo";
+		$sql="UPDATE $tabla SET impuesto=:impuesto,neto=:neto,total=:total,metodo_pago=:metodo_pago,cod_servicio=:cod_servicio WHERE codigo=:codigo";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 
@@ -132,6 +133,8 @@ class ModeloCierres{
 		$stmt->bindParam(":neto",$datos["neto"],PDO::PARAM_STR);
 		$stmt->bindParam(":total",$datos["total"],PDO::PARAM_STR);
 		$stmt->bindParam(":metodo_pago",$datos["metodo_pago"],PDO::PARAM_STR);
+		$stmt->bindParam(":cod_servicio",$datos["cod_servicio"],PDO::PARAM_STR);
+		
 
 		if($stmt->execute()){
 
@@ -174,12 +177,12 @@ class ModeloCierres{
 	// Método para actualizar un dato CON EL ID
 	static public function mdlActualizarUnDato($tabla,$item1,$valor1,$valor2){
 
-		$sql="UPDATE $tabla SET $item1=:$item1 WHERE articulo=:articulo";
+		$sql="UPDATE $tabla SET $item1=:$item1 WHERE id=:id";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 
 		$stmt->bindParam(":".$item1,$valor1,PDO::PARAM_STR);
-		$stmt->bindParam(":articulo",$valor2,PDO::PARAM_STR);
+		$stmt->bindParam(":id",$valor2,PDO::PARAM_STR);
 
 		$stmt->execute();
 
@@ -292,5 +295,92 @@ class ModeloCierres{
 
 		$stmt->close();
 		$stmt = null;
+	}
+
+	//VISUALIZAR DETALLE CIERRE
+	static public function mdlVisualizarCierreDetalle($valor){
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+		sd.codigo,
+		a.modelo,
+		a.nombre,
+		a.cod_color,
+		a.color,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '1' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t1,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '2' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t2,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '3' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t3,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '4' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t4,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '5' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t5,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '6' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t6,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '7' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t7,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '8' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t8,
+		SUM(sd.cantidad) AS total 
+	  FROM
+		cierres_detallejf sd 
+		LEFT JOIN articulojf a 
+		  ON sd.articulo = a.articulo 
+	  WHERE codigo = :valor 
+	  GROUP BY sd.codigo,
+		a.modelo,
+		a.nombre,
+		a.cod_color,
+		a.color");
+
+		$stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt=null;
+
 	}
 }

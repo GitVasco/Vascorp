@@ -58,7 +58,7 @@ $documento = "20513613939";
               </tr>
 
               <tr>
-                <td style="font-size: x-large;"><strong>'.$value["modelo"].'</strong></td>
+                <td style="font-size: x-large;"><strong>'.$value["modelo"]." - ".str_pad(($key+1),2,"0",STR_PAD_LEFT).'</strong></td>
                 <td style="font-size: x-large;"><strong>'.$value["nombre"].'</strong></td>
               </tr>
     
@@ -78,7 +78,7 @@ $documento = "20513613939";
                        <td style="font-size: x-large;"><strong>'.$value["cantidad"].'</strong></td>
                     </tr>
 
-                </table>
+            </table>
                 
             <table border="0" align="center" width="300px">
 
@@ -94,7 +94,6 @@ $documento = "20513613939";
         
             </table>
             
-          </table>
       
           
           <table border="0" align="center" width="300px">
@@ -105,7 +104,7 @@ $documento = "20513613939";
     
                 <input type="hidden" name="codigo" id="'.$value["codigo"].'" value="'.$value["codigo"].'">
                 <span>
-                  <svg id="barcode'.$value["codigo"].'" style="width: 350px; height:200px;"></svg>
+                  <svg id="barcode'.$value["codigo"].'" style="width: 420px; height:250px;"></svg>
                 </span> 
     
               </td>

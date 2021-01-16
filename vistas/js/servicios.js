@@ -178,6 +178,14 @@ $(".tablaPrecioServicios").DataTable({
             '<input type="number" class="form-control nuevaCantidadProducto" name="nuevaCantidadProducto" min="1" value="0" taller="' + taller + '" nuevoTaller="' + taller + '"  servicio= "'+servicio+'"required>' +
   
             "</div>" +
+
+            "<!-- Taller del producto -->" +
+  
+            '<div class="col-xs-3 ingresoTaller">' +
+  
+            '<input type="number" class="form-control nuevoTallerProducto" name="nuevoTallerProducto" id="nuevoTallerProducto" value="'+taller+'" readonly>' +
+  
+            "</div>" +
   
           "</div>"
         );
@@ -206,7 +214,7 @@ $(".tablaPrecioServicios").DataTable({
   
     if (localStorage.getItem("quitarProducto") != null) {
       var listaIdProductos = JSON.parse(localStorage.getItem("quitarProducto"));
-  
+      // console.log(listaIdProductos);
       for (var i = 0; i < listaIdProductos.length; i++) {
         $(
           "button.recuperarBoton[articuloServicio='" +
@@ -288,6 +296,12 @@ $(".tablaPrecioServicios").DataTable({
     
   
     var nuevoTaller = Number($(this).attr("taller")) - $(this).val();
+    var inputTaller = $(this)
+    .parent()
+    .parent()
+    .children(".ingresoTaller")
+    .children(".nuevoTallerProducto");
+    inputTaller.val(nuevoTaller);
   
     $(this).attr("nuevoTaller", nuevoTaller);
   
@@ -530,11 +544,13 @@ $(".tablaPrecioServicios").on("click", ".btnEditarPrecioServicio", function () {
       processData: false,
       dataType: "json",
       success: function (respuesta) {
-
           $("#idPrecioServicio").val(respuesta["id"]);
-          $("#editarTaller").val(respuesta["taller"]);
-          $("#editarModelo").val(respuesta["modelo"]);
-          $("#editarPrecioDocena").val(respuesta["precio_doc"]);
+          $("#editarTallerPrecio").val(respuesta["taller"]);
+          $("#editarTallerPrecio").selectpicker('refresh');
+
+          $("#editarModeloPrecio").val(respuesta["modelo"]);
+          $("#editarModeloPrecio").selectpicker('refresh');
+          $("#editarPrecioDocenaServicio").val(respuesta["precio_doc"]);
       }
 
   })
@@ -547,7 +563,7 @@ ELIMINAR PRECIO DE SERVICIO
 =============================================*/
 $(".tablaPrecioServicios").on("click", ".btnEliminarPrecioServicio", function(){
 
-var idBanco = $(this).attr("idBanco");
+var idPrecioServicio = $(this).attr("idPrecioServicio");
 
 swal({
       title: '¿Está seguro de borrar el precio servicio?',
@@ -567,3 +583,147 @@ swal({
 })
 
 })
+
+/* 
+* VISUALIZAR DETALLE DEL CORTE
+*/ 
+$(".tablaServicios").on("click", ".btnVisualizarServicio", function () {
+
+	var codigoServicio = $(this).attr("codigoServicio");
+    //console.log("codigoAC", codigoAC);
+    
+    var datos = new FormData();
+	datos.append("codigoServicio", codigoServicio);
+ 
+
+	$.ajax({
+
+		url:"ajax/servicios.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType:"json",
+		success:function(respuesta){
+
+			console.log("respuesta", respuesta);
+
+      $("#servicio").val(respuesta["codigo"]);
+      $("#fecha").val(respuesta["fecha"]);
+      $("#nombre").val(respuesta["taller"]+" - "+respuesta["nom_sector"]);
+      $("#cantidad").val(respuesta["total"]);
+      $("#estado").val(respuesta["estado"]);
+
+      $("#cantidad").number(true, 0);
+
+			
+		}
+
+    })
+    
+    var codigoDServicio = $(this).attr("codigoServicio");	
+    //console.log("codigoDAC", codigoDAC);
+
+    var datosDOC = new FormData();
+    datosDOC.append("codigoDServicio", codigoDServicio);
+    
+    $.ajax({
+
+		url:"ajax/servicios.ajax.php",
+		method: "POST",
+		data: datosDOC,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType:"json",
+		success:function(respuestaDetalle){
+
+			console.log("respuestaDetalle", respuestaDetalle);
+
+      $(".detalleMP").remove();
+            
+			for(var id of respuestaDetalle){
+
+                if(id.t1 > 0){
+
+                    var t1 = id.t1;
+                }else
+
+                    var t1 = "";
+
+                if(id.t2 > 0){
+
+                    var t2 = id.t2;
+                }else
+
+                    var t2 = "";
+                    
+                if(id.t3 > 0){
+
+                    var t3 = id.t3;
+                }else
+
+                    var t3 = "";
+                    
+                if(id.t4 > 0){
+
+                    var t4 = id.t4;
+                }else
+
+                    var t4 = "";    
+                    
+                if(id.t5 > 0){
+
+                    var t5 = id.t5;
+                }else
+
+                    var t5 = "";
+                    
+                if(id.t6 > 0){
+
+                    var t6 = id.t6;
+                }else
+
+                    var t6 = "";
+                    
+                if(id.t7 > 0){
+
+                    var t7 = id.t7;
+                }else
+
+                    var t7 = "";
+                    
+                if(id.t8 > 0){
+
+                    var t8 = id.t8;
+                }else
+
+                    var t8 = "";                    
+
+				$('.tablaDetalleOC').append(
+
+					'<tr class="detalleMP">' +
+						'<td>' + id.codigo + ' </td>' +
+						'<td><b>' + id.modelo + ' </b></td>' +
+						'<td>' + id.nombre + ' </td>' +
+						'<td>' + id.color + ' </td>' +
+						'<td><b>' + t1 + ' </b></td>' +
+						'<td><b>' + t2 + ' </b></td>' +
+						'<td><b>' + t3 + ' </b></td>' +
+            '<td><b>' + t4 + ' </b></td>' +
+            '<td><b>' + t5 + ' </b></td>' +
+            '<td><b>' + t6 + ' </b></td>' +
+            '<td><b>' + t7 + ' </b></td>' +
+            '<td><b>' + t8 + ' </b></td>' +
+					'</tr>'
+
+				)
+
+			}            
+
+		}
+
+	})
+  
+});

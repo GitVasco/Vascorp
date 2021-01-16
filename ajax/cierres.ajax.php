@@ -25,6 +25,21 @@ class AjaxCierres{
         echo json_encode($respuesta);
         
 	}
+	public $codigoCierre;
+	public function ajaxVisualizarCierre(){
+        $codigoCierre=$this->codigoCierre;
+		$respuesta=ControladorCierres::ctrMostrarCierres("codigo",$codigoCierre);
+        echo json_encode($respuesta);
+        
+	}
+
+	public $codigoDCierre;
+	public function ajaxVisualizarDetalleCierre(){
+        $codigoDCierre=$this->codigoDCierre;
+		$respuesta=ControladorCierres::ctrVisualizarCierrreDetalle($codigoDCierre);
+        echo json_encode($respuesta);
+        
+	}
 }
 
 // OBJETOS
@@ -41,5 +56,21 @@ if(isset($_POST["cierre"])){
 	$ultimoCierre = new AjaxCierres();
 	$ultimoCierre -> cierre =$_POST["cierre"];
     $ultimoCierre -> ajaxUltimoCierre();
+    
+}
+
+if(isset($_POST["codigoCierre"])){
+
+	$verCierre=new AjaxCierres();
+	$verCierre->codigoCierre=$_POST["codigoCierre"];
+    $verCierre->ajaxVisualizarCierre();
+    
+}
+
+if(isset($_POST["codigoDCierre"])){
+
+	$detalleCierre=new AjaxCierres();
+	$detalleCierre->codigoDCierre=$_POST["codigoDCierre"];
+    $detalleCierre->ajaxVisualizarDetalleCierre();
     
 }

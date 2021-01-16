@@ -36,6 +36,20 @@ class ControladorServicios{
 	}
 
 	/*=============================================
+	MOSTRAR SERVICIOS
+	=============================================*/
+
+	static public function ctrMostrarDetallesServicioUnico($item, $valor){
+
+		$tabla = "servicios_detallejf";
+
+		$respuesta = ModeloServicios::mdlMostraDetallesServicioUnico($tabla, $item, $valor);
+
+		return $respuesta;
+
+	}
+
+	/*=============================================
 	CREAR SERVICIO
 	=============================================*/
 
@@ -112,7 +126,8 @@ class ControladorServicios{
 
 						$datos=array("articulo"=>$value["articulo"],
 									 "cantidad"=>$value["cantidad"],
-									 "codigo"=>$_POST["nuevoServicio"]);
+									 "codigo"=>$_POST["nuevoServicio"],
+									 "saldo"=>$value["cantidad"]);
 
 									 ModeloServicios::mdlGuardarDetallesServicios("servicios_detallejf",$datos);
 					
@@ -240,7 +255,8 @@ class ControladorServicios{
 
 						$datos=array("codigo"=>$_POST["editarServicio"],
 									 "articulo"=>$value["articulo"],
-									 "cantidad"=>$value["cantidad"]);
+									 "cantidad"=>$value["cantidad"],
+									 "saldo"=>$value["cantidad"]);
 
 									 ModeloServicios::mdlGuardarDetallesServicios("servicios_detallejf",$datos);
 					
@@ -397,12 +413,12 @@ class ControladorServicios{
 
 	static public function ctrCrearPrecioServicio(){
 
-		if(isset($_POST["nuevoPrecioDocena"])){
+		if(isset($_POST["nuevoPrecioDocenaServicio"])){
 
 				$tabla="precio_serviciojf";
-			   	$datos = array("taller"=>$_POST["nuevoTaller"],
-							   "modelo"=>$_POST["nuevoModelo"],
-							   "precio_doc"=>$_POST["nuevoPrecioDocena"]);
+			   	$datos = array("taller"=>$_POST["nuevoTallerPrecio"],
+							   "modelo"=>$_POST["nuevoModeloPrecio"],
+							   "precio_doc"=>$_POST["nuevoPrecioDocenaServicio"]);
 
 			   	$respuesta = ModeloServicios::mdlIngresarPrecioServicio($tabla,$datos);
 
@@ -452,14 +468,14 @@ class ControladorServicios{
 
 	static public function ctrEditarPrecioServicio(){
 
-		if(isset($_POST["editarPrecioDocena"])){
+		if(isset($_POST["editarPrecioDocenaServicio"])){
 
 				$tabla="precio_serviciojf";
 
 				$datos = array("id"=>$_POST["idPrecioServicio"],
-				   				"codigo"=> $_POST["editarTaller"],
-							   "descripcion"=>$_POST["editarModelo"],
-							   "precio_doc"=> $_POST["editarPrecioDocena"]);
+				   				"taller"=> $_POST["editarTallerPrecio"],
+							   "modelo"=>$_POST["editarModeloPrecio"],
+							   "precio_doc"=> $_POST["editarPrecioDocenaServicio"]);
 
 			   	$respuesta = ModeloServicios::mdlEditarPrecioServicio($tabla,$datos);
 
@@ -545,5 +561,13 @@ class ControladorServicios{
 	}    
 
 
+	// VISUALIZAR CIERRE DETALLE
+	static public function ctrVisualizarServicioDetalle($valor){
+
+        $respuesta = ModeloServicios::mdlVisualizarServicioDetalle($valor);
+        
+		return $respuesta;
+
+	} 
 
 }

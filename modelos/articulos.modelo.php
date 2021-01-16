@@ -631,5 +631,37 @@ class ModeloArticulos
 
 	}
 
+	
+	/* 
+	* MOSTRAR ARTICULOS
+	*/
+	static public function mdlMostrarArticulosTallerP(){
+
+		
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+												et.articulo,
+												a.modelo,
+												a.cod_color,
+												a.color,
+												a.cod_talla,
+												a.talla 
+											FROM
+												entallerjf et 
+												LEFT JOIN articulojf a 
+												ON et.articulo = a.articulo 
+											WHERE et.estado = 1 
+											GROUP BY et.articulo");
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+		
+
+		$stmt->close();
+
+		$stmt = null;
+	}
+
 }
 

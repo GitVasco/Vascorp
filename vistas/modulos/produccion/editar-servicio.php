@@ -123,9 +123,15 @@
 
                     </div>
 
-                    <div class="col-xs-4">
+                    <div class="col-xs-3">
 
                       <label for="">Cantidad</label>
+
+                    </div>
+
+                    <div class="col-xs-3">
+
+                      <label for="">Taller</label>
 
                     </div>
 
@@ -175,6 +181,12 @@
                   <div class="col-xs-3">
 
                     <input type="number" class="form-control nuevaCantidadProducto" name="nuevaCantidadProducto" min="0" value="'.$value["cantidad"].'" taller="'.$tallerAntiguo.'" nuevoTaller="'.$infoProducto["taller"].'" servicio= "'.$servicioAntiguo. '" required>
+
+                  </div>
+
+                  <div class="col-xs-3 ingresoTaller">
+
+                    <input type="number" class="form-control nuevoTallerProducto" name="nuevoTallerProducto"value="'.$infoProducto["taller"].'"  readonly>
 
                   </div>
 

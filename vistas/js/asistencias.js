@@ -1,6 +1,6 @@
 // Validamos que venga la variable capturaRango en el localStorage
-if (localStorage.getItem("capturaRango2") != null) {
-	$("#daterange-btnes span").html(localStorage.getItem("capturaRango2"));
+if (localStorage.getItem("capturarRango2") != null) {
+	$("#daterange-btnes span").html(localStorage.getItem("capturarRango2"));
 	cargarTablaAsistencias(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
 } else {
 	$("#daterange-btnes span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');

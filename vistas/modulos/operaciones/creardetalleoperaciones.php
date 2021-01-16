@@ -196,7 +196,8 @@
             <div class="box-footer">
 
               <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-save"></i> Guardar operación modelo</button>
-
+              
+              <a href="detalleoperaciones"  class="btn btn-danger"><i class="fa fa-times-circle"></i> Cancelar</a>
             </div>
 
           </form>

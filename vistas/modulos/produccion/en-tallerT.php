@@ -34,7 +34,7 @@
             <button type="button" class="btn btn-info" id="asddadad" name="asddadad" data-toggle="modal" data-target="#fsdfsfsd">Asignar Trabajador
             </button>
             <button type="button" class="btn btn-outline-success btnReporteTallerTerminado" linea="" style="border:green 1px solid">
-                    <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Taller </button>
+                    <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Taller Terminados</button>
             <button type="button" class="btn btn-default pull-right" id="daterange-btnTallerT">
 
           <span>
@@ -241,76 +241,77 @@ MODAL CONFIGURAR Trabajador
           <div class="box-body">
 
             <div class="form-group" align="center">
+            
 
               <img src="vistas/img/plantilla/jackyform_paloma.png" width="400px" height="300px">
 
             </div>
-            <div class="form-group">
-
+            <div class="form-group col-lg-4">
+            <label for="">Modelo</label>
               <div class="input-group">
 
                   <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
 
-                  <input type="text" class="form-control" id="editarModelo"  >
+                  <input type="text" class="form-control" id="editarModelo" readonly>
 
               </div>
 
             </div>  
-            <div class="form-group">
-
+            <div class="form-group col-lg-4">
+            <label for="">Color</label>
               <div class="input-group">
 
                   <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
 
-                  <input type="text" class="form-control" id="editarColor" >
+                  <input type="text" class="form-control" id="editarColor" readonly>
 
               </div>
 
             </div>  
-            <div class="form-group">
-
+            <div class="form-group col-lg-4">
+            <label for="">Talla</label>
               <div class="input-group">
 
                   <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
 
-                  <input type="text" class="form-control" id="editarTalla"  >
+                  <input type="text" class="form-control" id="editarTalla"  readonly>
 
               </div>
 
             </div>
 
-            <div class="form-group">
-
+            <div class="form-group col-lg-4">
+            <label for="">Operacion</label>
               <div class="input-group">
 
                   <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
 
-                  <input type="text" class="form-control" id="editarCodOperacion"  >
+                  <input type="text" class="form-control" id="editarCodOperacion"  readonly>
 
               </div>
 
             </div>
 
-            <div class="form-group">
-
+            <div class="form-group col-lg-8">
+              <div style="margin-bottom:25px"></div>
               <div class="input-group">
 
                   <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
 
-                  <input type="text" class="form-control" id="editarOperacion"  >
+                  <input type="text" class="form-control" id="editarOperacion"  readonly>
 
               </div>
 
             </div>  
             <!-- ENTRADA PARA PORCENTAJE -->
 
-            <div class="form-group">
-              
+            <div class="form-group col-lg-12">
+              <label for="">Trabajador</label>
               <div class="input-group">
 
                 <span class="input-group-addon"><i class="fa fa-user-o"></i></span>
 
-                  <select class="form-control input-sm selectpicker" id="editar_cod_tra" name="cod_tra" data-live-search="true" required>
+                  <select class="form-control input-sm selectpicker" id="editar_cod_tra" name="cod_tra" data-live-search="true" required readonly>
 
                     <option value="">Seleccionar Trabajador</option>
 
@@ -332,17 +333,39 @@ MODAL CONFIGURAR Trabajador
 
             </div>       
 
-            <div class="form-group">
-
+            <div class="form-group col-lg-12">
+              <label for="">Codigo de barra</label>
               <div class="input-group">
 
                   <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
 
-                  <input type="text" class="form-control" id="editar_codigoBarra" name="codigoBarra" placeholder="Ingresar Código" autofocus>
+                  <input type="text" class="form-control" id="editar_codigoBarra" name="codigoBarra"  readonly>
 
               </div>
 
-            </div>                
+            </div>         
+            <div class="form-group col-lg-12">
+            <label for="">Fecha Proceso</label>                    
+              <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+
+                  <input type="datetime" class="form-control" id="editarFechaProceso" name="editarFechaProceso" data-inputmask="'mask':'9999-99-99 99:99:99'" data-mask  required>
+
+              </div>
+
+            </div>       
+            <div class="form-group col-lg-12">
+            <label for="">Fecha Terminado</label>                    
+              <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+
+                  <input type="datetime" class="form-control" id="editarFechaTerminado" name="editarFechaTerminado" data-inputmask="'mask':'9999-99-99 99:99:99'" data-mask required>
+
+              </div>
+
+            </div>     
 
           </div>
 

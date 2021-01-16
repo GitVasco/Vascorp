@@ -67,7 +67,6 @@ window.addEventListener("beforeunload", function (e) {
 	localStorage.removeItem("capturarRango4");
 	localStorage.removeItem("capturarRango6");
 	localStorage.removeItem("capturarRango7");
-	localStorage.removeItem("capturarRango8");
 	localStorage.removeItem("capturarRango9");
 	localStorage.removeItem("capturarRango10");
 	localStorage.removeItem("capturarRango11");

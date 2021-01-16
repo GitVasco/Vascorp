@@ -134,9 +134,9 @@
                    
                        </div>
                    
-                       <div class="col-xs-3">
+                       <div class="col-xs-3 ingresoDocena">
                    
-                       <input type="number" class="form-control nuevoPrecioDocena" name="nuevoPrecioDocena" min="0" value="'.$value["precio_doc"].'" step ="any" required>
+                       <input type="number" class="form-control nuevoPrecioDocena" name="nuevoPrecioDocena" min="0" value="'.$value["precio_doc"].'" step ="any" required readonly>
                    
                        </div>
                    
@@ -146,7 +146,7 @@
                    
                          <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                    
-                         <input type="number" class="form-control nuevoTiempoStandar" name="nuevoTiempoStandar" value="'.$value["tiempo_stand"].'" step="any" required>
+                         <input type="number" class="form-control nuevoTiempoStandar" name="nuevoTiempoStandar" min="0" value="'.$value["tiempo_stand"].'" step="any" required>
                    
                          </div>
                    
@@ -240,7 +240,7 @@
             <div class="box-footer">
 
               <button type="submit" class="btn btn-primary pull-right">Guardar cambios</button>
-
+              <a href="detalleoperaciones"  class="btn btn-danger"><i class="fa fa-times-circle"></i> Cancelar</a>
             </div>
 
           </form>

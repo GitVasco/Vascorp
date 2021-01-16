@@ -100,19 +100,60 @@ MODAL AGREGAR TIPO PAGO
 
           <div class="box-body">
 
-            <!-- ENTRADA PARA EL CODIGO -->
+            <!-- ENTRADA PARA EL TALLER -->
             
             <div class="form-group">
               
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-text-height"></i></span> 
 
-                <input type="text" min="0" class="form-control input-lg" name="nuevoCodigo" placeholder="Ingresar codigo" required>
+                <select class="form-control input-lg selectpicker"name="nuevoTallerPrecio" id="nuevoTallerPrecio" data-live-search="true" required>
+                  <option value="">Seleccionar taller</option>
+                  <?php 
+                    $item=null;
+                    $valor=null;
+                    $talleres = ControladorSectores::ctrMostrarSectores($item,$valor);
+
+                    foreach ($talleres as $key => $value) {
+                      echo '<option value="'.$value["cod_sector"].'">'.$value["cod_sector"]."-".$value["nom_sector"].'</option>';
+                    }
+                    
+                  ?>
+                </select>
 
               </div>
 
             </div>          
+
+            <!-- ENTRADA PARA EL MODELO -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span> 
+
+                <select class="form-control input-lg selectpicker"name="nuevoModeloPrecio" id="nuevoModeloPrecio" data-live-search="true" required>
+                  <option value="">Seleccionar modelo</option>
+                  <?php 
+                    $item=null;
+                    $valor=null;
+                    $modelos = ControladorModelos::ctrMostrarModelos($item,$valor);
+                    
+                    foreach ($modelos as $key => $value) {
+                      if($value["estado"] == 'Activo' ){
+                        echo '<option value="'.$value["modelo"].'">'.$value["modelo"]."-".$value["nombre"].'</option>';
+                      }
+                    }
+                    
+                    
+                  ?>
+                </select>
+
+              </div>
+
+            </div>  
 
             <!-- ENTRADA PARA EL NOMBRE -->
             
@@ -120,9 +161,9 @@ MODAL AGREGAR TIPO PAGO
               
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-usd"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="nuevaDescripcion" placeholder="Ingresar banco" required>
+                <input type="number" step ="any" min="0" class="form-control input-lg" name="nuevoPrecioDocenaServicio" placeholder="Ingresar precio docena" required>
 
               </div>
 
@@ -195,19 +236,58 @@ MODAL EDITAR TIPO PAGO
           <div class="box-body">
 
           
-            <!-- ENTRADA PARA EL CODIGO  -->
+            
+            <!-- ENTRADA PARA EL TALLER -->
             
             <div class="form-group">
               
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-text-height"></i></span> 
 
-                <input type="text"  class="form-control input-lg" name="editarCodigo" id="editarCodigo" required>
+                <select class="form-control input-lg selectpicker" name="editarTallerPrecio" id="editarTallerPrecio" data-live-search="true" required>
+                  <?php 
+                    $item=null;
+                    $valor=null;
+                    $talleres = ControladorSectores::ctrMostrarSectores($item,$valor);
+
+                    foreach ($talleres as $key => $value) {
+                      echo '<option value="'.$value["cod_sector"].'">'.$value["cod_sector"]."-".$value["nom_sector"].'</option>';
+                    }
+                    
+                  ?>
+                </select>
 
               </div>
 
-            </div>
+            </div>          
+
+            <!-- ENTRADA PARA EL MODELO -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span> 
+
+                <select class="form-control input-lg selectpicker" id="editarModeloPrecio" name="editarModeloPrecio"  data-live-search="true" required > 
+                  <?php 
+                    $item=null;
+                    $valor=null;
+                    $modelos = ControladorModelos::ctrMostrarModelos($item,$valor);
+
+                    foreach ($modelos as $key => $value) {
+                      if($value["estado"] == 'Activo' ){
+                        echo '<option value="'.$value["modelo"].'">'.$value["modelo"]." - " . $value["nombre"]. '</option>';
+                      }
+                    }
+                    
+                  ?>
+                </select>
+
+              </div>
+
+            </div>  
 
             <!-- ENTRADA PARA EL NOMBRE -->
             
@@ -215,10 +295,11 @@ MODAL EDITAR TIPO PAGO
               
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-usd"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="editarDescripcion" id="editarDescripcion" required>
-                <input type="hidden" id="idServicio" name="idServicio">
+                <input type="number"  step ="any" min="0" class="form-control input-lg" name="editarPrecioDocenaServicio" id="editarPrecioDocenaServicio" required>
+                <input type="hidden" id="idPrecioServicio" name="idPrecioServicio">
+
               </div>
 
             </div>
