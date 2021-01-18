@@ -602,12 +602,13 @@ $sqlDetalle = mysql_query("SELECT
                               ELSE ROUND(et.sueldo_quincena, 2) 
                             END DESC") or die(mysql_error());
 
-$produccion = 0;                            
-$sueldo_quincena = 0; 
-$diferencia = 0;      
-$incentivo = 0;                                                                             
-$total = 0;                            
+$produccion = 0;
+$sueldo_quincena = 0;
+$diferencia = 0;
+$incentivo = 0;
+$total = 0;
 $conta=1;
+
 while($respDetalle = mysql_fetch_array($sqlDetalle)){
 
 $fila+= 1;
@@ -621,7 +622,9 @@ $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", utf8_encode($respDetalle[
 $objPHPExcel->getActiveSheet()->SetCellValue("I$fila", utf8_encode($respDetalle["diferencia"]));
 $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", utf8_encode($respDetalle["incentivo"]));
 $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", utf8_encode($respDetalle["total"]));
+
 $conta ++;
+
 if(utf8_encode($respDetalle["produccion"]) < utf8_encode($respDetalle["sueldo_quincena"]) ){
 
   $objPHPExcel->getActiveSheet()->setSharedStyle($borde_1, "F$fila");
@@ -679,22 +682,21 @@ $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getAlignment()->setHorizonta
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde_3, "K$fila");
 $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$produccion = $produccion + $respDetalle["produccion"];                            
-$sueldo_quincena = $sueldo_quincena + $respDetalle["sueldo_quincena"]; 
-$diferencia = $diferencia + $respDetalle["diferencia"];      
+$produccion = $produccion + $respDetalle["produccion"];
+$sueldo_quincena = $sueldo_quincena + $respDetalle["sueldo_quincena"];
+$diferencia = $diferencia + $respDetalle["diferencia"];
 $incentivo = $incentivo +$respDetalle["incentivo"];
 $total = $total +$respDetalle["total"];
 }
 
-/* 
+/*
 todo: FIN DE DETALLE
 */
-$fila +=1;
-$objPHPExcel->getActiveSheet()->SetCellValue("F$fila", $produccion);
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde_3, "F$fila");
-$objPHPExcel->getActiveSheet()->getStyle("F$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-$objPHPExcel->getActiveSheet()->getStyle("F$fila")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-$objPHPExcel->getActiveSheet()->getStyle("F$fila")->getAlignment()->setWrapText(true);
+$fila +=2;
+$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", "Dif. Sueldo");
+$objPHPExcel->getActiveSheet()->mergeCells("G$fila:H$fila");
+$objPHPExcel->getActiveSheet()->setSharedStyle($texto_5, "G$fila:H$fila");
+$objPHPExcel->getActiveSheet()->getStyle("G$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 
 $objPHPExcel->getActiveSheet()->SetCellValue("I$fila", $diferencia);
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde_3, "I$fila");
@@ -702,11 +704,34 @@ $objPHPExcel->getActiveSheet()->getStyle("I$fila")->getAlignment()->setHorizonta
 $objPHPExcel->getActiveSheet()->getStyle("I$fila")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 $objPHPExcel->getActiveSheet()->getStyle("I$fila")->getAlignment()->setWrapText(true);
 
+$fila +=1;
+$objPHPExcel->getActiveSheet()->SetCellValue("D$fila", "Total Producción");
+$objPHPExcel->getActiveSheet()->mergeCells("D$fila:E$fila");
+$objPHPExcel->getActiveSheet()->setSharedStyle($texto_5, "D$fila:E$fila");
+$objPHPExcel->getActiveSheet()->getStyle("D$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+$objPHPExcel->getActiveSheet()->SetCellValue("F$fila", $produccion);
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde_3, "F$fila");
+$objPHPExcel->getActiveSheet()->getStyle("F$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$objPHPExcel->getActiveSheet()->getStyle("F$fila")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+$objPHPExcel->getActiveSheet()->getStyle("F$fila")->getAlignment()->setWrapText(true);
+
+$objPHPExcel->getActiveSheet()->SetCellValue("H$fila", "Total Producción");
+$objPHPExcel->getActiveSheet()->mergeCells("H$fila:I$fila");
+$objPHPExcel->getActiveSheet()->setSharedStyle($texto_5, "H$fila:I$fila");
+$objPHPExcel->getActiveSheet()->getStyle("H$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
 $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", $incentivo);
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde_3, "J$fila");
 $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getAlignment()->setWrapText(true);
+
+$fila +=1;
+$objPHPExcel->getActiveSheet()->SetCellValue("I$fila", "TOTAL A PAGAR");
+$objPHPExcel->getActiveSheet()->mergeCells("I$fila:J$fila");
+$objPHPExcel->getActiveSheet()->setSharedStyle($texto_5, "I$fila:J$fila");
+$objPHPExcel->getActiveSheet()->getStyle("I$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 
 $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", $total);
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde_3, "K$fila");
