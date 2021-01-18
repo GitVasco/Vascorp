@@ -607,12 +607,12 @@ $sueldo_quincena = 0;
 $diferencia = 0;      
 $incentivo = 0;                                                                             
 $total = 0;                            
-
+$conta=1;
 while($respDetalle = mysql_fetch_array($sqlDetalle)){
 
 $fila+= 1;
 $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", utf8_encode($respDetalle["id_trabajador"]));
-$objPHPExcel->getActiveSheet()->SetCellValue("C$fila", utf8_encode($respDetalle["contador"]));
+$objPHPExcel->getActiveSheet()->SetCellValue("C$fila", utf8_encode($conta));
 $objPHPExcel->getActiveSheet()->SetCellValue("D$fila", utf8_encode($respDetalle["nombre"]));
 $objPHPExcel->getActiveSheet()->SetCellValue("E$fila", utf8_encode($respDetalle["dias"]));
 $objPHPExcel->getActiveSheet()->SetCellValue("F$fila", utf8_encode($respDetalle["produccion"]));
@@ -621,7 +621,7 @@ $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", utf8_encode($respDetalle[
 $objPHPExcel->getActiveSheet()->SetCellValue("I$fila", utf8_encode($respDetalle["diferencia"]));
 $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", utf8_encode($respDetalle["incentivo"]));
 $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", utf8_encode($respDetalle["total"]));
-
+$conta ++;
 if(utf8_encode($respDetalle["produccion"]) < utf8_encode($respDetalle["sueldo_quincena"]) ){
 
   $objPHPExcel->getActiveSheet()->setSharedStyle($borde_1, "F$fila");
