@@ -90,12 +90,17 @@ $(".tablaQuincena").on("click", ".btnEficiencia", function () {
   
 })
 
-cargarEficiencia(localStorage.getItem("inicio"), localStorage.getItem("fin"), localStorage.getItem("nquincena"), localStorage.getItem("id"));
+// Validamos que venga la variable capturaRango en el localStorage
+if (localStorage.getItem("sectorEfi") != null) {
+	cargarEficiencia(localStorage.getItem("inicio"), localStorage.getItem("fin"), localStorage.getItem("nquincena"), localStorage.getItem("id"),localStorage.getItem("sectorEfi"));
+} else {
+	cargarEficiencia(localStorage.getItem("inicio"), localStorage.getItem("fin"), localStorage.getItem("nquincena"), localStorage.getItem("id"),null);
+}
 
-function cargarEficiencia(inicio,fin,nquincena,id){
+function cargarEficiencia(inicio,fin,nquincena,id,sectorEfi){
 
 	$('.tablaEficiencia').DataTable({
-		"ajax": "ajax/tabla-eficiencia.ajax.php?perfil=" + $("#perfilOculto").val() + "&inicio=" + inicio + "&fin=" + fin + "&nquincena=" + nquincena + "&id=" + id,
+		"ajax": "ajax/tabla-eficiencia.ajax.php?perfil=" + $("#perfilOculto").val() + "&inicio=" + inicio + "&fin=" + fin + "&nquincena=" + nquincena + "&id=" + id + "&sectorEfi="+sectorEfi,
 		"deferRender": true,
 		"retrieve": true,
 		"processing": true,
@@ -162,13 +167,19 @@ $(".tablaQuincena").on("click", ".btnPagos", function () {
 	window.location = "index.php?ruta=pagos&inicio=" + inicio + "&fin=" + fin + "&nquincena=" + nquincena + "&id=" + id;	
   
 })
+// Validamos que venga la variable capturaRango en el localStorage
+if (localStorage.getItem("sectorTra") != null) {
+	cargarPagos(localStorage.getItem("inicio"), localStorage.getItem("fin"), localStorage.getItem("nquincena"), localStorage.getItem("id"),localStorage.getItem("sectorTra"));
+} else {
+	cargarPagos(localStorage.getItem("inicio"), localStorage.getItem("fin"), localStorage.getItem("nquincena"), localStorage.getItem("id"),null);
+}
 
-cargarPagos(localStorage.getItem("inicio"), localStorage.getItem("fin"), localStorage.getItem("nquincena"), localStorage.getItem("id"));
 
-function cargarPagos(inicio,fin,nquincena,id){
+
+function cargarPagos(inicio,fin,nquincena,id,sectorTra){
 
 	$('.tablaPagos').DataTable({
-		"ajax": "ajax/tabla-pagos.ajax.php?perfil=" + $("#perfilOculto").val() + "&inicio=" + inicio + "&fin=" + fin + "&nquincena=" + nquincena + "&id=" + id,
+		"ajax": "ajax/tabla-pagos.ajax.php?perfil=" + $("#perfilOculto").val() + "&inicio=" + inicio + "&fin=" + fin + "&nquincena=" + nquincena + "&id=" + id + "&sectorTra=" + sectorTra,
 		"deferRender": true,
 		"retrieve": true,
 		"processing": true,
@@ -204,67 +215,67 @@ function cargarPagos(inicio,fin,nquincena,id){
 		"drawCallback":function(){
 			var api=this.api();
 			$(api.column(2).footer()).html(
-				api.column(2).data().sum().toFixed(2)
+				api.column(2,{page:'current'}).data().sum().toFixed(2)
 			)
 			$(api.column(3).footer()).html(
-				api.column(3).data().sum().toFixed(2)
+				api.column(3,{page:'current'}).data().sum().toFixed(2)
 			)
 			$(api.column(4).footer()).html(
-				api.column(4).data().sum().toFixed(2)
+				api.column(4,{page:'current'}).data().sum().toFixed(2)
 			)
 			$(api.column(5).footer()).html(
-				api.column(5).data().sum().toFixed(2)
+				api.column(5,{page:'current'}).data().sum().toFixed(2)
 			)
 			$(api.column(6).footer()).html(
-				api.column(6).data().sum().toFixed(2)
+				api.column(6,{page:'current'}).data().sum().toFixed(2)
 			)
 			$(api.column(7).footer()).html(
-				api.column(7).data().sum().toFixed(2)
+				api.column(7,{page:'current'}).data().sum().toFixed(2)
 			)
 			$(api.column(8).footer()).html(
-				api.column(8).data().sum().toFixed(2)
+				api.column(8,{page:'current'}).data().sum().toFixed(2)
 			)
 			$(api.column(9).footer()).html(
-				api.column(9).data().sum().toFixed(2)
+				api.column(9,{page:'current'}).data().sum().toFixed(2)
 			)
 			$(api.column(10).footer()).html(
-				api.column(10).data().sum().toFixed(2)
+				api.column(10,{page:'current'}).data().sum().toFixed(2)
 			)
 			$(api.column(11).footer()).html(
-				api.column(11).data().sum().toFixed(2)
+				api.column(11,{page:'current'}).data().sum().toFixed(2)
 			)
 			$(api.column(12).footer()).html(
-				api.column(12).data().sum().toFixed(2)
+				api.column(12,{page:'current'}).data().sum().toFixed(2)
 			)
 			$(api.column(13).footer()).html(
-				api.column(13).data().sum().toFixed(2)
+				api.column(13,{page:'current'}).data().sum().toFixed(2)
 			)
 			$(api.column(14).footer()).html(
-				api.column(14).data().sum().toFixed(2)
+				api.column(14,{page:'current'}).data().sum().toFixed(2)
 			)
 			$(api.column(15).footer()).html(
-				api.column(15).data().sum().toFixed(2)
+				api.column(15,{page:'current'}).data().sum().toFixed(2)
 			)
 			$(api.column(16).footer()).html(
-				api.column(16).data().sum().toFixed(2)
+				api.column(16,{page:'current'}).data().sum().toFixed(2)
 			)
 			$(api.column(17).footer()).html(
-				api.column(17).data().sum().toFixed(2)
+				api.column(17,{page:'current'}).data().sum().toFixed(2)
 			)
 			$(api.column(18).footer()).html(
-				api.column(18).data().sum().toFixed(2)
+				api.column(18,{page:'current'}).data().sum().toFixed(2)
 			)
 			$(api.column(19).footer()).html(
-				api.column(19).data().sum().toFixed(2)
+				api.column(19,{page:'current'}).data().sum().toFixed(2)
 			)
 			$(api.column(20).footer()).html(
-				api.column(20).data().sum().toFixed(2)
+				api.column(20,{page:'current'}).data().sum().toFixed(2)
 			)
 			$(api.column(21).footer()).html(
-				api.column(21).data().sum().toFixed(2)
+				api.column(21,{page:'current'}).data().sum().toFixed(2)
 			)
 			$(api.column(22).footer()).html(
-				api.column(22).data().sum().toFixed(2)
+				api.column(22,{page:'current'}).data().sum().toFixed(2)
 			)
 		}
 		
@@ -348,4 +359,44 @@ $(".tablaQuincena tbody").on("click", "button.btnEliminarQuincena", function(){
 
 	})
 
+})
+
+$("#selectSectorTra").change(function(){
+	$(".tablaPagos").DataTable().destroy();
+	var sectorTra=$(this).val();
+	localStorage.setItem("sectorTra", sectorTra);
+	cargarPagos(localStorage.getItem("inicio"), localStorage.getItem("fin"), localStorage.getItem("nquincena"), localStorage.getItem("id"),localStorage.getItem("sectorTra"));
+	
+});
+/* 
+* BOTON LIMPIAR SECTOR TRABAJADOR 
+*/
+$(".box").on("click", ".btnLimpiarSectorTra", function () {
+	var inicio = $(this).attr("inicio");
+	var fin = $(this).attr("fin");
+	var quincena = $(this).attr("quincena");
+	var id = $(this).attr("id");
+	localStorage.removeItem("sectorTra");
+	window.location = "index.php?ruta=pagos&inicio="+inicio+"&fin="+fin+"&quincena="+quincena+"&id="+id;
+	
+})
+
+$("#selectSectorEfi").change(function(){
+	$(".tablaEficiencia").DataTable().destroy();
+	var sectorEfi=$(this).val();
+	localStorage.setItem("sectorEfi", sectorEfi);
+	cargarEficiencia(localStorage.getItem("inicio"), localStorage.getItem("fin"), localStorage.getItem("nquincena"), localStorage.getItem("id"),localStorage.getItem("sectorEfi"));
+	
+});
+/* 
+* BOTON LIMPIAR SECTOR TRABAJADOR 
+*/
+$(".box").on("click", ".btnLimpiarSectorEfi", function () {
+	var inicio = $(this).attr("inicio");
+	var fin = $(this).attr("fin");
+	var nquincena = $(this).attr("nquincena");
+	var id = $(this).attr("id");
+	localStorage.removeItem("sectorEfi");
+	window.location = "index.php?ruta=eficiencia&inicio="+inicio+"&fin="+fin+"&nquincena="+nquincena+"&id="+id;
+	
 })

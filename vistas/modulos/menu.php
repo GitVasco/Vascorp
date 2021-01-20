@@ -290,11 +290,42 @@
                     </li>
 
                     <li>
+                        <a href="agencias">
+
+                            <i class="fa fa-circle-o"></i>
+                            <span>Agencias</span>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+                        <a href="bancos">
+
+                            <i class="fa fa-circle-o"></i>
+                            <span>Bancos</span>
+
+                        </a>
+
+                    </li>
+
+                    <li>
 
                         <a href="colores">
 
                             <i class="fa fa-circle-o"></i>
                             <span>Colores</span>
+
+                        </a>
+
+                    </li>
+
+                    
+                    <li>
+                        <a href="condicionesventa">
+
+                            <i class="fa fa-circle-o"></i>
+                            <span>Condiciones Venta</span>
 
                         </a>
 
@@ -355,36 +386,6 @@
                     </li>
 
                     <li>
-                        <a href="sectores">
-
-                            <i class="fa fa-circle-o"></i>
-                            <span>Sector</span>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-                        <a href="tipotrabajador">
-
-                            <i class="fa fa-circle-o"></i>
-                            <span>Tipo Trabajador</span>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-                        <a href="trabajador">
-
-                            <i class="fa fa-circle-o"></i>
-                            <span>Trabajador</span>
-
-                        </a>
-
-                    </li>
-
-                    <li>
                         <a href="paras">
 
                             <i class="fa fa-circle-o"></i>
@@ -395,10 +396,10 @@
                     </li>
 
                     <li>
-                        <a href="agencias">
+                        <a href="sectores">
 
                             <i class="fa fa-circle-o"></i>
-                            <span>Agencias</span>
+                            <span>Sector</span>
 
                         </a>
 
@@ -425,10 +426,20 @@
                     </li>
 
                     <li>
-                        <a href="condicionesventa">
+                        <a href="tipotrabajador">
 
                             <i class="fa fa-circle-o"></i>
-                            <span>Condiciones Venta</span>
+                            <span>Tipo Trabajador</span>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+                        <a href="trabajador">
+
+                            <i class="fa fa-circle-o"></i>
+                            <span>Trabajador</span>
 
                         </a>
 
@@ -444,15 +455,7 @@
 
                     </li>
 
-                    <li>
-                        <a href="bancos">
-
-                            <i class="fa fa-circle-o"></i>
-                            <span>Bancos</span>
-
-                        </a>
-
-                    </li>
+                    
 
                     <li>
                         <a href="vendedor">

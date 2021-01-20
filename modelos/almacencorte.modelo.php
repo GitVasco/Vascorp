@@ -241,13 +241,26 @@ class ModeloAlmacenCorte{
 	*/
 	static public function mdlVisualizarAlmacenCorteDetalle($valor){
 
-		$stmt = Conexion::conectar()->prepare("CALL sp_1067_consulta_almacencorte_detalle_p(:valor)");
+		if($valor != null){
+			$stmt = Conexion::conectar()->prepare("CALL sp_1067_consulta_almacencorte_detalle_p(:valor)");
 
-		$stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
+			$stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
+	
+			$stmt->execute();
+	
+			return $stmt->fetchAll();
+		}else{
+			$stmt = Conexion::conectar()->prepare("CALL sp_1071_consulta_almacencorte_detalle()");
 
-		$stmt->execute();
+			$stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
+	
+			$stmt->execute();
+	
+			return $stmt->fetchAll();
 
-		return $stmt->fetchAll();
+		}
+
+		
 
 		$stmt=null;
 

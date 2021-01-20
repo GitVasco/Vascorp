@@ -12,6 +12,7 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
  	}
 
  })  */
+ 
 
  $(".tablaServicios").DataTable({
     ajax: "ajax/tabla-servicios.ajax.php",
@@ -607,7 +608,7 @@ $(".tablaServicios").on("click", ".btnVisualizarServicio", function () {
 		dataType:"json",
 		success:function(respuesta){
 
-			console.log("respuesta", respuesta);
+			// console.log("respuesta", respuesta);
 
       $("#servicio").val(respuesta["codigo"]);
       $("#fecha").val(respuesta["fecha"]);
@@ -639,7 +640,7 @@ $(".tablaServicios").on("click", ".btnVisualizarServicio", function () {
 		dataType:"json",
 		success:function(respuestaDetalle){
 
-			console.log("respuestaDetalle", respuestaDetalle);
+			// console.log("respuestaDetalle", respuestaDetalle);
 
       $(".detalleMP").remove();
             
@@ -703,7 +704,8 @@ $(".tablaServicios").on("click", ".btnVisualizarServicio", function () {
 
 				$('.tablaDetalleOC').append(
 
-					'<tr class="detalleMP">' +
+          '<tr class="detalleMP">' +
+            '<td>' + id.cod_sector+" - "+id.nom_sector + ' </td>'+
 						'<td>' + id.codigo + ' </td>' +
 						'<td><b>' + id.modelo + ' </b></td>' +
 						'<td>' + id.nombre + ' </td>' +
@@ -716,6 +718,7 @@ $(".tablaServicios").on("click", ".btnVisualizarServicio", function () {
             '<td><b>' + t6 + ' </b></td>' +
             '<td><b>' + t7 + ' </b></td>' +
             '<td><b>' + t8 + ' </b></td>' +
+            '<td><b>' + id.total + ' </b></td>' +
 					'</tr>'
 
 				)
@@ -727,3 +730,188 @@ $(".tablaServicios").on("click", ".btnVisualizarServicio", function () {
 	})
   
 });
+
+
+/* 
+* VISUALIZAR DETALLE DEL CORTE
+*/ 
+$(".box").on("click", ".btnServicioDeta", function () {
+
+  //   var codigoDServicio = $(this).attr("codigoServicio");	
+  //   //console.log("codigoDAC", codigoDAC);
+
+  //   var datosDOC = new FormData();
+  //   datosDOC.append("codigoDServicio", codigoDServicio);
+    
+  //   $.ajax({
+
+	// 	url:"ajax/servicios.ajax.php",
+	// 	method: "POST",
+	// 	data: datosDOC,
+	// 	cache: false,
+	// 	contentType: false,
+	// 	processData: false,
+	// 	dataType:"json",
+	// 	success:function(respuestaDetalle){
+
+	// 		// console.log("respuestaDetalle", respuestaDetalle);
+
+  //     $(".detalleSerTotal").remove();
+            
+	// 		for(var id of respuestaDetalle){
+
+  //               if(id.t1 > 0){
+
+  //                   var t1 = id.t1;
+  //               }else
+
+  //                   var t1 = "";
+
+  //               if(id.t2 > 0){
+
+  //                   var t2 = id.t2;
+  //               }else
+
+  //                   var t2 = "";
+                    
+  //               if(id.t3 > 0){
+
+  //                   var t3 = id.t3;
+  //               }else
+
+  //                   var t3 = "";
+                    
+  //               if(id.t4 > 0){
+
+  //                   var t4 = id.t4;
+  //               }else
+
+  //                   var t4 = "";    
+                    
+  //               if(id.t5 > 0){
+
+  //                   var t5 = id.t5;
+  //               }else
+
+  //                   var t5 = "";
+                    
+  //               if(id.t6 > 0){
+
+  //                   var t6 = id.t6;
+  //               }else
+
+  //                   var t6 = "";
+                    
+  //               if(id.t7 > 0){
+
+  //                   var t7 = id.t7;
+  //               }else
+
+  //                   var t7 = "";
+                    
+  //               if(id.t8 > 0){
+
+  //                   var t8 = id.t8;
+  //               }else
+
+  //                   var t8 = "";   
+          
+          
+
+	// 			$('.tablaDetalleSerTotal').append(
+
+	// 				'<tr class="detalleSerTotal">' +
+  //           '<td>' + id.cod_sector+" - "+id.nom_sector + ' </td>' +
+  //           '<td>' + id.codigo + ' </td>' +
+	// 					'<td><b>' + id.modelo + ' </b></td>' +
+	// 					'<td>' + id.nombre + ' </td>' +
+	// 					'<td>' + id.color + ' </td>' +
+	// 					'<td><b>' + t1 + ' </b></td>' +
+	// 					'<td><b>' + t2 + ' </b></td>' +
+	// 					'<td><b>' + t3 + ' </b></td>' +
+  //           '<td><b>' + t4 + ' </b></td>' +
+  //           '<td><b>' + t5 + ' </b></td>' +
+  //           '<td><b>' + t6 + ' </b></td>' +
+  //           '<td><b>' + t7 + ' </b></td>' +
+  //           '<td><b>' + t8 + ' </b></td>' +
+	// 				'</tr>'
+
+	// 			)
+
+	// 		}            
+
+	// 	}
+
+	// })
+  
+  $(".tablaDetalleSerTotal").DataTable({
+    ajax:"ajax/tabla-ver-servicios.ajax.php",
+    deferRender: true,
+    retrieve: true,
+    processing: true,
+    language: {
+      sProcessing: "Procesando...",
+      sLengthMenu: "Mostrar _MENU_ registros",
+      sZeroRecords: "No se encontraron resultados",
+      sEmptyTable: "Ningún dato disponible en esta tabla",
+      sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+      sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
+      sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+      sInfoPostFix: "",
+      sSearch: "Buscar:",
+      sUrl: "",
+      sInfoThousands: ",",
+      sLoadingRecords: "Cargando...",
+      oPaginate: {
+        sFirst: "Primero",
+        sLast: "Último",
+        sNext: "Siguiente",
+        sPrevious: "Anterior"
+      },
+      oAria: {
+        sSortAscending: ": Activar para ordenar la columna de manera ascendente",
+        sSortDescending: ": Activar para ordenar la columna de manera descendente"
+      }
+    },
+    "createdRow":function(row,data,index){
+      if(data[0] == "T4 - ADELA"){
+        $('td',row).css({
+          'background-color':'#D6C4D5',
+          'color':'black'
+        })
+      }else if (data[0] == "T6 - PABLO"){
+        $('td',row).css({
+          'background-color':'#C7C1D8',
+          'color':'black'
+        })
+      }else if(data[0] == "T9 - FRANCISCO"){
+        $('td',row).css({
+          'background-color':'#DADEBE',
+          'color':'black'
+        })
+      }else if(data[0] == "TA - ELVIRA"){
+        $('td',row).css({
+          'background-color':'#F7E4E9',
+          'color':'black'
+        })
+      }else if(data[0] == "T10 - GUSTAVO"){
+        $('td',row).css({
+          'background-color':'#D4F8F7',
+          'color':'black'
+        })
+      }else if(data[0] == "T6 - PABLO"){
+        $('td',row).css({
+          'background-color':'#D4F8E2',
+          'color':'black'
+        })
+      }else if(data[0] == "T8 - MIGUEL"){
+        $('td',row).css({
+          'background-color':'#F4F8D4',
+          'color':'black'
+        })
+      }
+    }
+  
+  });
+});
+

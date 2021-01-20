@@ -43,7 +43,7 @@
          
          <tr>
            
-           <th>Codigo Trabajador</th>
+           <th>Codigo</th>
            <th>Tipo Documento</th>
            <th>Nro Documento</th>
            <th>Nombre</th>
@@ -51,7 +51,8 @@
            <th>Apellido Materno</th>
            <th>Tipo Trabajador</th>
            <th>Estado</th>
-           <th>Sueldo x Mes</th>
+           <th>Sueldo</th>
+           <th>Sector</th>
            <th>Acciones</th>
 
          </tr> 
@@ -126,7 +127,7 @@ MODAL AGREGAR TRABAJADOR
 
                 <span class="input-group-addon"><i class="fa fa-id-card-o" aria-hidden="true"></i></span>
 
-                <select class="form-control input-lg" id="tipoDocumento" name="tipoDocumento" required>
+                <select class="form-control input-lg selectpicker" id="tipoDocumento" name="tipoDocumento" data-live-search="true" required>
 
                   <option value="">Seleccionar tipo de documento</option>
 
@@ -214,7 +215,7 @@ MODAL AGREGAR TRABAJADOR
 
                   <span class="input-group-addon"><i class="fa fa-briefcase" aria-hidden="true"></i></span>
 
-                    <select class="form-control input-lg" id="tipoTrabajador" name="tipoTrabajador" required>
+                    <select class="form-control input-lg selectpicker" id="tipoTrabajador" name="tipoTrabajador" data-live-search="true" required>
 
                       <option value="">Seleccionar tipo de trabajador</option>
 
@@ -252,7 +253,30 @@ MODAL AGREGAR TRABAJADOR
 
             </div>
 
+            <!-- ENTRADA PARA EL SECTOR -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
+                <select class="form-control input-lg selectpicker" name="nuevoSectorTrabajador" id="nuevoSectorTrabajador" data-live-search="true"  placeholder="Ingresar sector" >
+                  <option value="">Seleccionar sector</option>
+                  <?php
+                  $item = null;
+                  $valor=null;
+
+                  $sectores=ControladorSectores::ctrMostrarSectores($item,$valor);
+                  foreach ($sectores as $key => $value) {
+                    echo"<option value='".$value['cod_sector']."'>".$value["cod_sector"]." - ".$value["nom_sector"]."</option>";
+                  }
+                  ?>
+                </select>
+
+              </div>
+
+            </div>            
  
           </div>
 
@@ -342,7 +366,7 @@ MODAL EDITAR TRABAJADOR
                   
                     <span class="input-group-addon"><i class="fa fa-th"></i></span> 
 
-                    <select class="form-control input-lg"  name="editarTipoDocumento" data-live-search ="true" readonly required>
+                    <select class="form-control input-lg selectpicker"  name="editarTipoDocumento" data-live-search ="true" readonly required>
                       
                       <!-- <option id="editarTipoDocumento"></option> -->
                     <?php
@@ -443,7 +467,7 @@ MODAL EDITAR TRABAJADOR
               
                 <span class="input-group-addon"><i class="fa fa-briefcase"></i></span> 
 
-                <select class="form-control input-lg"  name="editarTipoTrabajador" data-live-search="true" readonly required>
+                <select class="form-control input-lg selectpicker"  name="editarTipoTrabajador" data-live-search="true"  required>
                   
                   <!-- <option id="editarTipoTrabajador"></option> -->
                   <?php
@@ -493,6 +517,30 @@ MODAL EDITAR TRABAJADOR
                   </div>
 
               </div>
+
+              <!-- ENTRADA PARA EL SECTOR -->
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+
+                <select type="text" class="form-control input-lg selectpicker" name="editarSectorTrabajador" id="editarSectorTrabajador" data-live-search="true">
+                  <option value="">Seleccionar sector</option>
+                  <?php
+                  $item = null;
+                  $valor=null;
+                  $sectores=ControladorSectores::ctrMostrarSectores($item,$valor);
+                  foreach ($sectores as $key => $value) {
+                    echo"<option value='".$value['cod_sector']."'>".$value["cod_sector"]." - ".$value["nom_sector"]."</option>";
+                  }
+                  ?>
+                </select>
+                <input type="hidden" id="idTipoTrabajador" name="idTipoTrabajador">
+              </div>
+
+            </div>
 
           </div>
 

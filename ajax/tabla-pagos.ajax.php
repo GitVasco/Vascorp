@@ -12,7 +12,7 @@ class TablaPagos{
 
     public function mostrarTablaPagos(){
 
-        $pagos = ControladorProduccion::ctrMostrarPagos($_GET["inicio"], $_GET["fin"], $_GET["nquincena"], $_GET["id"]);	
+        $pagos = ControladorProduccion::ctrMostrarPagos($_GET["inicio"], $_GET["fin"], $_GET["nquincena"], $_GET["id"],$_GET["sectorTra"]);	
 
         if(count($pagos)>0){
 

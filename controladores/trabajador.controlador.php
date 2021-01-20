@@ -36,7 +36,8 @@ class ControladorTrabajador{
 							   "ape_pat_tra"=>$_POST["apellidoPaterno"],
 							   "ape_mat_tra"=>$_POST["apellidoMaterno"],
 							   "cod_tip_tra"=>$_POST["tipoTrabajador"], 
-							   "sueldo_total"=>$_POST["sueldoMes"]);
+							   "sueldo_total"=>$_POST["sueldoMes"],
+								"sector"=>$_POST["nuevoSectorTrabajador"]);
 
 			   	$respuesta = ModeloTrabajador::mdlIngresarTrabajador($tabla,$datos);
 				//var_dump($datos);
@@ -168,6 +169,7 @@ class ControladorTrabajador{
 							   "ape_mat_tra"=>$_POST["editarApellidoMaterno"],
 							   "cod_tip_tra"=>$_POST["editarTipoTrabajador"],
 							   "sueldo_total"=>$_POST["editarSueldoMes"],
+							   "sector"=>$_POST["editarSectorTrabajador"]
 							);
 
 				$tabla = "trabajadorjf";

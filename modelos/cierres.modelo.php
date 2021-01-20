@@ -299,13 +299,16 @@ class ModeloCierres{
 
 	//VISUALIZAR DETALLE CIERRE
 	static public function mdlVisualizarCierreDetalle($valor){
-
+	
+	if($valor!=null){
 		$stmt = Conexion::conectar()->prepare("SELECT 
 		sd.codigo,
 		a.modelo,
 		a.nombre,
 		a.cod_color,
 		a.color,
+		se.cod_sector,
+		se.nom_sector,
 		SUM(
 		  CASE
 			WHEN a.cod_talla = '1' 
@@ -367,7 +370,11 @@ class ModeloCierres{
 		cierres_detallejf sd 
 		LEFT JOIN articulojf a 
 		  ON sd.articulo = a.articulo 
-	  WHERE codigo = :valor 
+		LEFT JOIN cierresjf s 
+		  ON sd.codigo = s.codigo 
+		LEFT JOIN sectorjf se 
+		  ON s.taller = se.cod_sector 
+	  WHERE sd.codigo = :valor 
 	  GROUP BY sd.codigo,
 		a.modelo,
 		a.nombre,
@@ -380,6 +387,95 @@ class ModeloCierres{
 
 		return $stmt->fetchAll();
 
+	}else{
+		$stmt = Conexion::conectar()->prepare("SELECT 
+		sd.codigo,
+		a.modelo,
+		a.nombre,
+		a.cod_color,
+		a.color,
+		se.cod_sector,
+		se.nom_sector,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '1' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t1,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '2' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t2,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '3' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t3,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '4' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t4,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '5' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t5,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '6' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t6,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '7' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t7,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '8' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t8,
+		SUM(sd.cantidad) AS total 
+	  FROM
+		cierres_detallejf sd 
+		LEFT JOIN articulojf a 
+		  ON sd.articulo = a.articulo 
+		LEFT JOIN cierresjf s 
+		  ON sd.codigo = s.codigo 
+		LEFT JOIN sectorjf se 
+		  ON s.taller = se.cod_sector 
+	  GROUP BY sd.codigo,
+		a.modelo,
+		a.nombre,
+		a.cod_color,
+		a.color");
+
+		$stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+	}
+
+		
 		$stmt=null;
 
 	}

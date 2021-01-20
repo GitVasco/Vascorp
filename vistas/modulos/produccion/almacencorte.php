@@ -96,7 +96,7 @@ MODAL VISUALIZAR INFORMACION
 
 <div id="modalVisualizarAC" class="modal fade" role="dialog">
   
-  <div class="modal-dialog" style="width: 70% !important;">
+  <div class="modal-dialog" style="width: 55% !important;">
 
     <div class="modal-content">
 
@@ -212,14 +212,14 @@ MODAL VISUALIZAR INFORMACION
 
             <div class="box-body">
 
-              <table class="table table-bordered table-striped dt-responsive tablaDetalleOC">
+              <table class="table table-bordered table-striped dt-responsive tablaVerACDetalle">
 
               <thead>
 
                 <tr>
                   <th></th>
                   <th></th>
-                  <th></th>
+                  <th style="width:250px"></th>
                   <th></th>
                   <th>S</th>
                   <th>M</th>
@@ -229,12 +229,13 @@ MODAL VISUALIZAR INFORMACION
                   <th>XS</th>
                   <th></th>
                   <th></th>
+                  <th></th>
                 </tr>
 
                 <tr>
                   <th></th>
                   <th></th>
-                  <th></th>
+                  <th style="width:250px"></th>
                   <th></th>
                   <th>28</th>
                   <th>30</th>
@@ -244,12 +245,13 @@ MODAL VISUALIZAR INFORMACION
                   <th>38</th>
                   <th>40</th>
                   <th>42</th>
+                  <th></th>
                 </tr>
 
                 <tr>
                   <th>Corte</th>
                   <th>Modelo</th>
-                  <th>Nombre</th>
+                  <th style="width:250px">Nombre</th>
                   <th>Color</th>
                   <th>3</th>
                   <th>4</th>
@@ -259,6 +261,7 @@ MODAL VISUALIZAR INFORMACION
                   <th>12</th>
                   <th>14</th>
                   <th>16</th>
+                  <th>Total</th>
                 </tr>
 
                 </thead>

@@ -56,6 +56,7 @@ class TablaTrabajador{
             "'.$trabajador[$i]["nom_tip_trabajador"].'",
             "'.$estado.'",
             "'.$trabajador[$i]["sueldo_total"].'",
+            "'.$trabajador[$i]["sector"]." - ".$trabajador[$i]["nom_sector"].'",
             "'.$botones.'"
             ],';        
             }

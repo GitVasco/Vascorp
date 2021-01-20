@@ -19,7 +19,8 @@ class ModeloTrabajador{
 																t.ape_pat_tra,
 																' ',
 																t.ape_mat_tra
-																) AS nombre 
+																) AS nombre ,
+																t.sector
 															FROM
 																trabajadorjf t 
 															WHERE t.cod_tra = $valor");
@@ -31,22 +32,26 @@ class ModeloTrabajador{
 		}else{
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
-                                                            cod_tra,
+                                                            t.cod_tra,
                                                             d.tipo_doc,
-                                                            nro_doc_tra,
-                                                            nom_tra,
-                                                            ape_pat_tra,
-                                                            ape_mat_tra,
+                                                            t.nro_doc_tra,
+                                                            t.nom_tra,
+                                                            t.ape_pat_tra,
+                                                            t.ape_mat_tra,
                                                             tt.nom_tip_trabajador,
-															estado,
-                                                            sueldo_total
+															t.estado,
+                                                            t.sueldo_total,
+															t.sector,
+															s.nom_sector
 															
                                                         FROM
-                                                            $tabla t,
-                                                            tipo_documentojf d,
-                                                            tipo_trabajadorjf tt 
-                                                        WHERE d.cod_doc = t.cod_doc 
-                                                            AND tt.cod_tip_tra = t.cod_tip_tra");
+                                                            $tabla t
+															LEFT JOIN tipo_documentojf d
+															ON d.cod_doc = t.cod_doc
+															LEFT JOIN tipo_trabajadorjf tt
+															ON tt.cod_tip_tra = t.cod_tip_tra
+															LEFT JOIN sectorjf s
+															ON s.cod_sector = t.sector");
 
 			$stmt -> execute();
 
@@ -65,7 +70,7 @@ class ModeloTrabajador{
 	=============================================*/
 	static public function mdlIngresarTrabajador($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla( cod_doc, nro_doc_tra, nom_tra, ape_pat_tra, ape_mat_tra, cod_tip_tra, sueldo_total) VALUES ( :cod_doc, :nro_doc_tra, :nom_tra, :ape_pat_tra, :ape_mat_tra, :cod_tip_tra, :sueldo_total)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla( cod_doc, nro_doc_tra, nom_tra, ape_pat_tra, ape_mat_tra, cod_tip_tra, sueldo_total,sector) VALUES ( :cod_doc, :nro_doc_tra, :nom_tra, :ape_pat_tra, :ape_mat_tra, :cod_tip_tra, :sueldo_total,:sector)");
 
 		//$stmt->bindParam(":cod_tra", $datos["cod_tra"], PDO::PARAM_INT);
 		$stmt->bindParam(":cod_doc", $datos["cod_doc"], PDO::PARAM_STR);
@@ -74,8 +79,8 @@ class ModeloTrabajador{
 		$stmt->bindParam(":ape_pat_tra", $datos["ape_pat_tra"], PDO::PARAM_STR);
         $stmt->bindParam(":ape_mat_tra", $datos["ape_mat_tra"], PDO::PARAM_STR);
         $stmt->bindParam(":cod_tip_tra", $datos["cod_tip_tra"], PDO::PARAM_STR);
-
 		$stmt->bindParam(":sueldo_total", $datos["sueldo_total"], PDO::PARAM_STR);
+		$stmt->bindParam(":sector", $datos["sector"], PDO::PARAM_STR);
 
 		if($stmt->execute()){
 
@@ -97,7 +102,7 @@ class ModeloTrabajador{
 	=============================================*/
 	static public function mdlEditarTrabajador($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET  cod_doc = :cod_doc , nro_doc_tra = :nro_doc_tra, nom_tra = :nom_tra, ape_pat_tra = :ape_pat_tra, ape_mat_tra = :ape_mat_tra, cod_tip_tra = :cod_tip_tra, sueldo_total = :sueldo_total WHERE cod_tra = :cod_tra");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET  cod_doc = :cod_doc , nro_doc_tra = :nro_doc_tra, nom_tra = :nom_tra, ape_pat_tra = :ape_pat_tra, ape_mat_tra = :ape_mat_tra, cod_tip_tra = :cod_tip_tra, sueldo_total = :sueldo_total , sector = :sector WHERE cod_tra = :cod_tra");
 
 
 		
@@ -109,7 +114,7 @@ class ModeloTrabajador{
 		$stmt->bindParam(":cod_tip_tra", $datos["cod_tip_tra"], PDO::PARAM_INT);
 		$stmt->bindParam(":sueldo_total", $datos["sueldo_total"], PDO::PARAM_STR);
 		$stmt->bindParam(":cod_tra", $datos["cod_tra"], PDO::PARAM_INT);
-        
+        $stmt->bindParam(":sector", $datos["sector"], PDO::PARAM_STR);
        
 
 		if($stmt->execute()){

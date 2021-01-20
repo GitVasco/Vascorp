@@ -496,7 +496,7 @@ $(".tablaCierres").on("click", ".btnVisualizarCierre", function () {
 		dataType:"json",
 		success:function(respuesta){
 
-			console.log("respuesta", respuesta);
+			// console.log("respuesta", respuesta);
 
       $("#cierre").val(respuesta["codigo"]);
       $("#fecha").val(respuesta["fecha"]);
@@ -593,7 +593,8 @@ $(".tablaCierres").on("click", ".btnVisualizarCierre", function () {
 				$('.tablaDetalleOC').append(
 
 					'<tr class="detalleMP">' +
-						'<td>' + id.codigo + ' </td>' +
+            '<td>' + id.cod_sector+" - "+id.nom_sector + ' </td>' +  
+            '<td>' + id.codigo + ' </td>' +
 						'<td><b>' + id.modelo + ' </b></td>' +
 						'<td>' + id.nombre + ' </td>' +
 						'<td>' + id.color + ' </td>' +
@@ -605,6 +606,7 @@ $(".tablaCierres").on("click", ".btnVisualizarCierre", function () {
             '<td><b>' + t6 + ' </b></td>' +
             '<td><b>' + t7 + ' </b></td>' +
             '<td><b>' + t8 + ' </b></td>' +
+            '<td><b>' + id.total + ' </b></td>' +
 					'</tr>'
 
 				)
@@ -615,4 +617,76 @@ $(".tablaCierres").on("click", ".btnVisualizarCierre", function () {
 
 	})
   
+});
+
+$(".box").on("click", ".btnCierreDeta", function () {
+  $(".tablaDetalleCierrreTotal").DataTable({
+    ajax:"ajax/tabla-ver-cierres.ajax.php",
+    deferRender: true,
+    retrieve: true,
+    processing: true,
+    language: {
+      sProcessing: "Procesando...",
+      sLengthMenu: "Mostrar _MENU_ registros",
+      sZeroRecords: "No se encontraron resultados",
+      sEmptyTable: "Ningún dato disponible en esta tabla",
+      sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+      sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
+      sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+      sInfoPostFix: "",
+      sSearch: "Buscar:",
+      sUrl: "",
+      sInfoThousands: ",",
+      sLoadingRecords: "Cargando...",
+      oPaginate: {
+        sFirst: "Primero",
+        sLast: "Último",
+        sNext: "Siguiente",
+        sPrevious: "Anterior"
+      },
+      oAria: {
+        sSortAscending: ": Activar para ordenar la columna de manera ascendente",
+        sSortDescending: ": Activar para ordenar la columna de manera descendente"
+      }
+    },
+    "createdRow":function(row,data,index){
+      if(data[0] == "T4 - ADELA"){
+        $('td',row).css({
+          'background-color':'#D6C4D5',
+          'color':'black'
+        })
+      }else if (data[0] == "T6 - PABLO"){
+        $('td',row).css({
+          'background-color':'#C7C1D8',
+          'color':'black'
+        })
+      }else if(data[0] == "T9 - FRANCISCO"){
+        $('td',row).css({
+          'background-color':'#DADEBE',
+          'color':'black'
+        })
+      }else if(data[0] == "TA - ELVIRA"){
+        $('td',row).css({
+          'background-color':'#F7E4E9',
+          'color':'black'
+        })
+      }else if(data[0] == "T10 - GUSTAVO"){
+        $('td',row).css({
+          'background-color':'#D4F8F7',
+          'color':'black'
+        })
+      }else if(data[0] == "T6 - PABLO"){
+        $('td',row).css({
+          'background-color':'#D4F8E2',
+          'color':'black'
+        })
+      }else if(data[0] == "T8 - MIGUEL"){
+        $('td',row).css({
+          'background-color':'#F4F8D4',
+          'color':'black'
+        })
+      }
+    }
+  
+  });
 });

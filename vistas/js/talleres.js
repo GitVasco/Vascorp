@@ -45,6 +45,24 @@ $('.tablaTalleresG').DataTable({
 			"sSortDescending": ": Activar para ordenar la columna de manera descendente"
 		}
 
+	},
+	"createdRow":function(row,data,index){
+		if(data[10] == "<span style='font-size:85%' class='label label-info'>Generado</span>"){
+			$('td',row).css({
+				'background-color':'#E4F7F7',
+				'color':'black'
+			})
+		}else if (data[10] == "<span style='font-size:85%' class='label label-success'>Terminado</span>"){
+			$('td',row).css({
+				'background-color':'#E4F7E5',
+				'color':'black'
+			})
+		}else{
+			$('td',row).css({
+				'background-color':'#F7E4E9',
+				'color':'black'
+			})
+		}
 	}
 
 });
@@ -633,7 +651,16 @@ function cargarTablaProduccionBrasier(fechaInicial,fechaFinal) {
 					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
 				}
 
-		}    
+		},
+		"drawCallback":function(){
+			var api=this.api();
+			$(api.column(18).footer()).html(
+				api.column(18,{page:'current'}).data().sum().toFixed(2)
+			)
+			$(api.column(19).footer()).html(
+				api.column(19,{page:'current'}).data().sum().toFixed(2)
+			)
+		}     
 	} );
 }
 
@@ -1723,6 +1750,14 @@ function cargarTablaTalleresGenerados(articuloTallerP) {
 				"sSortDescending": ": Activar para ordenar la columna de manera descendente"
 			}
 
+		},
+		"createdRow":function(row,data,index){
+			if(data[1].substr(-1) == 'A' || data[1].substr(-1) == 'B' || data[1].substr(-1) == 'C' || data[1].substr(-1) == 'D' || data[1].substr(-1) == 'E' ){
+				$('td',row).css({
+					'background-color':'#FDEC8A',
+					'color':'black'
+				})
+			}
 		}
 
 	});

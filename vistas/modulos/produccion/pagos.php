@@ -29,6 +29,25 @@
 
     <div class="box">
       <div class="box-header with-border">
+          <div class="col-lg-2">
+            
+            <select type="text" class="form-control input-lg " name="selectSectorTra" id="selectSectorTra" >
+                <option value="">Seleccionar sector</option>
+                <?php
+                $item = null;
+                $valor=null;
+                $sectores=ControladorSectores::ctrMostrarSectores($item,$valor);
+                foreach ($sectores as $key => $value) {
+                  if($value["cod_sector"] == 'T1' || $value["cod_sector"] == 'T3'){
+                    echo"<option value='".$value['cod_sector']."'>".$value["cod_sector"]." - ".$value["nom_sector"]."</option>";
+                  }
+                }
+                ?>
+            </select>
+          </div>
+          <div class="col-lg-2">
+            <button class="btn btn-primary btnLimpiarSectorTra"  name="btnLimpiarSectorTra" inicio="<?php echo $_GET["inicio"]?>" fin="<?php echo $_GET["fin"]?>" quincena="<?php echo $_GET["quincena"]?>" id="<?php echo $_GET["id"]?>"><i class="fa fa-refresh"></i> Limpiar</button>
+          </div> 
         <button class="btn btn-outline-success btnReportePago" modelo="" style="border:green 1px solid"  inicio=<?php echo $_GET["inicio"]?> fin=<?php echo $_GET["fin"]?> quincena=<?php echo $_GET["nquincena"]?> id=<?php echo $_GET["id"]?>>
                     <img src="vistas/img/plantilla/excel.png" width="20px" > Reporte Pagos  </button>
       </div>

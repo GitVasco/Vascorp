@@ -251,53 +251,56 @@ MODAL VISUALIZAR INFORMACION
 
             <div class="box-body">
 
-              <table class="table table-bordered table-striped dt-responsive tablaDetalleOC">
+              <table class="table table-bordered table-striped dt-responsive tablaVerOrdenCorte">
 
               <thead>
 
                 <tr>
                   <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th>S</th>
-                  <th>M</th>
-                  <th>L</th>
-                  <th>XL</th>
-                  <th>XXL</th>
-                  <th>XS</th>
-                  <th></th>
-                  <th></th>
+                  <th style="width:100px"></th>
+                  <th style="width:280px"></th>
+                  <th style="width:150px"></th>
+                  <th style="width:100px">S</th>
+                  <th style="width:100px">M</th>
+                  <th style="width:100px">L</th>
+                  <th style="width:100px">XL</th>
+                  <th style="width:100px">XXL</th>
+                  <th style="width:100px">XS</th>
+                  <th style="width:100px"></th>
+                  <th style="width:100px"></th>
+                  <th style="width:100px"></th>
                 </tr>
 
                 <tr>
                   <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th>28</th>
-                  <th>30</th>
-                  <th>32</th>
-                  <th>34</th>
-                  <th>36</th>
-                  <th>38</th>
-                  <th>40</th>
-                  <th>42</th>
+                  <th style="width:100px"></th>
+                  <th style="width:280px"></th>
+                  <th style="width:150px"></th>
+                  <th style="width:100px">28</th>
+                  <th style="width:100px">30</th>
+                  <th style="width:100px">32</th>
+                  <th style="width:100px">34</th>
+                  <th style="width:100px">36</th>
+                  <th style="width:100px">38</th>
+                  <th style="width:100px">40</th>
+                  <th style="width:100px">42</th>
+                  <th style="width:100px"></th>
                 </tr>
 
                 <tr>
                   <th>Ord. Corte</th>
-                  <th>Modelo</th>
-                  <th>Nombre</th>
-                  <th>Color</th>
-                  <th>3</th>
-                  <th>4</th>
-                  <th>6</th>
-                  <th>8</th>
-                  <th>10</th>
-                  <th>12</th>
-                  <th>14</th>
-                  <th>16</th>
+                  <th style="width:100px">Modelo</th>
+                  <th style="width:280px">Nombre</th>
+                  <th style="width:150px">Color</th>
+                  <th style="width:100px">3</th>
+                  <th style="width:100px">4</th>
+                  <th style="width:100px">6</th>
+                  <th style="width:100px">8</th>
+                  <th style="width:100px">10</th>
+                  <th style="width:100px">12</th>
+                  <th style="width:100px">14</th>
+                  <th style="width:100px">16</th>
+                  <th style="width:100px">Total</th>
                 </tr>
 
                 </thead>

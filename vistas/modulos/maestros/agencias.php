@@ -183,7 +183,7 @@ MODAL AGREGAR COLOR
               
                 <span class="input-group-addon"><i class="fa fa-id-card-o"></i></span> 
 
-                <input type="text" min="0" class="form-control input-lg" name="nuevoRUC" placeholder="Ingresar RUC" required>
+                <input type="text" min="0" class="form-control input-lg" name="nuevoRUC" placeholder="Ingresar RUC" >
 
               </div>
 
@@ -349,7 +349,7 @@ MODAL EDITAR AGENCIA
               
                 <span class="input-group-addon"><i class="fa fa-id-card-o"></i></span> 
 
-                <input type="number" min="0" class="form-control input-lg" name="editarRUC" id="editarRUC" required>
+                <input type="number" min="0" class="form-control input-lg" name="editarRUC" id="editarRUC" >
 
               </div>
 

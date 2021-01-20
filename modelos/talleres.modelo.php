@@ -484,6 +484,7 @@ class ModeloTalleres{
       a.nombre,
       a.color,
       a.talla,
+      et.fecha_terminado,
       et.cod_operacion,
       o.nombre AS nom_operacion,
       et.trabajador AS cod_trabajador,
@@ -524,6 +525,7 @@ class ModeloTalleres{
       a.nombre,
       a.color,
       a.talla,
+      et.fecha_terminado,
       et.cod_operacion,
       o.nombre AS nom_operacion,
       et.trabajador AS cod_trabajador,
@@ -576,6 +578,7 @@ class ModeloTalleres{
         a.color,
         a.talla,
         et.cod_operacion,
+        et.fecha_terminado,
         o.nombre AS nom_operacion,
         et.trabajador AS cod_trabajador,
         CONCAT(
@@ -611,6 +614,7 @@ class ModeloTalleres{
         a.nombre,
         a.color,
         a.talla,
+        et.fecha_terminado,
         et.cod_operacion,
         o.nombre AS nom_operacion,
         et.trabajador AS cod_trabajador,
@@ -1577,9 +1581,12 @@ class ModeloTalleres{
                     meses m WHERE ano='2020') m 
                   ON MONTH(et.fecha_terminado) = m.codigo 
               WHERE et.estado = '3' 
-                AND m.tipo = 'brasier'
+                AND (m.tipo = 'brasier'
+                  OR a.modelo IN ('10013'))
                 AND MONTH(et.fecha_terminado) = MONTH(NOW()) 
-              GROUP BY et.trabajador,
+              GROUP BY MONTH(et.fecha_terminado),
+                DAY(et.fecha_terminado),
+                et.trabajador,
                 et.cod_operacion,
                 a.modelo,
                 a.color 
@@ -1703,9 +1710,12 @@ class ModeloTalleres{
                     meses m WHERE ano='2020') m 
                   ON MONTH(et.fecha_terminado) = m.codigo 
               WHERE et.estado = '3' 
-                AND m.tipo = 'brasier'
-                DATE(et.fecha_terminado) like '%$fechaFinal%'
-              GROUP BY et.trabajador,
+                AND (m.tipo = 'brasier'
+                  OR a.modelo IN ('10013'))
+                AND DATE(et.fecha_terminado) like '%$fechaFinal%'
+                GROUP BY MONTH(et.fecha_terminado),
+                DAY(et.fecha_terminado),              
+                et.trabajador,
                 et.cod_operacion,
                 a.modelo,
                 a.color 
@@ -1839,9 +1849,12 @@ class ModeloTalleres{
               meses m WHERE ano='2020') m 
             ON MONTH(et.fecha_terminado) = m.codigo 
         WHERE et.estado = '3' 
-          AND m.tipo = 'brasier'
+              AND (m.tipo = 'brasier'
+                  OR a.modelo IN ('10013'))
           DATE(et.fecha_terminado) BETWEEN '$fechaInicial' AND '$fechaFinal'
-        GROUP BY et.trabajador,
+          GROUP BY MONTH(et.fecha_terminado),
+                DAY(et.fecha_terminado),   
+        et.trabajador,
           et.cod_operacion,
           a.modelo,
           a.color 
@@ -1965,9 +1978,12 @@ class ModeloTalleres{
                 meses m WHERE ano='2020') m 
               ON MONTH(et.fecha_terminado) = m.codigo 
           WHERE et.estado = '3' 
-            AND m.tipo = 'brasier'
+                  AND (m.tipo = 'brasier'
+                  OR a.modelo IN ('10013'))
             DATE(et.fecha_terminado) BETWEEN '$fechaInicial' AND '$fechaFinal'
-          GROUP BY et.trabajador,
+            GROUP BY MONTH(et.fecha_terminado),
+                DAY(et.fecha_terminado),   
+          et.trabajador,
             et.cod_operacion,
             a.modelo,
             a.color 

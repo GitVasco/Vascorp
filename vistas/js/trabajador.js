@@ -130,7 +130,10 @@ $(".tablaTrabajador tbody").on("click","button.btnEditarTrabajador",function(){
 
 	// 		$("#editarTipoTrabajador").val(respuesta["cod_tip_tra"]);
 
-	 		$("#editarSueldoMes").val(respuesta["sueldo_total"]);
+			 $("#editarSueldoMes").val(respuesta["sueldo_total"]);
+			 
+			 $("#editarSectorTrabajador").val(respuesta["sector"]);
+			 $("#editarSectorTrabajador").selectpicker('refresh');
 				
 
 		}

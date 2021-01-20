@@ -77,6 +77,7 @@
               <th>Trabajador</th>
               <th>Cantidad</th>
               <th>Fecha</th>
+              <th>F. termino</th>
               <th>Estado</th>
               <th>Acciones</th>
 

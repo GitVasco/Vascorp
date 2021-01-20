@@ -12,7 +12,7 @@ class TablaEficiencia{
 
     public function mostrarTablaEficiencia(){
 
-        $eficiencia = ControladorProduccion::ctrMostrarEficiencia($_GET["inicio"], $_GET["fin"], $_GET["nquincena"], $_GET["id"]);	
+        $eficiencia = ControladorProduccion::ctrMostrarEficiencia($_GET["inicio"], $_GET["fin"], $_GET["nquincena"], $_GET["id"], $_GET["sectorEfi"]);	
 
         if(count($eficiencia)>0){
 
@@ -507,8 +507,12 @@ class TablaEficiencia{
                             $d31= '';
 
                         }
-
-
+                        if($_GET["nquincena"] == 1){
+                            $dTotal=$d1+$d2;
+                        }else{
+                            $dTotal=$d1+$d2;
+                        }
+                        
             
                         $datosJson .= '[
                         "'.$eficiencia[$i]["trabajador"].'",

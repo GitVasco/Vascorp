@@ -103,9 +103,9 @@ class ControladorProduccion{
     /* 
     *MOSTRAR EFICIENCIA QUINCENAL
     */
-    static public function ctrMostrarEficiencia($inicio, $fin, $nquincena, $id ){
+    static public function ctrMostrarEficiencia($inicio, $fin, $nquincena, $id ,$sector ){
 
-		$respuesta = ModeloProduccion::mdlMostrarEficiencia($inicio, $fin, $nquincena, $id);
+		$respuesta = ModeloProduccion::mdlMostrarEficiencia($inicio, $fin, $nquincena, $id,$sector);
 
 		return $respuesta;
 
@@ -114,9 +114,9 @@ class ControladorProduccion{
     /* 
     *MOSTRAR PAGOS QUINCENAL
     */
-    static public function ctrMostrarPagos($inicio, $fin, $nquincena, $id ){
+    static public function ctrMostrarPagos($inicio, $fin, $nquincena, $id,$sector ){
 
-		$respuesta = ModeloProduccion::mdlMostrarPagos($inicio, $fin, $nquincena, $id);
+		$respuesta = ModeloProduccion::mdlMostrarPagos($inicio, $fin, $nquincena,$id, $sector);
 
 		return $respuesta;
 

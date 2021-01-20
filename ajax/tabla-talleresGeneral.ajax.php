@@ -70,6 +70,7 @@ class TablaTalleresG{
                 "'.$talleres[$i]["trabajador"].'",
                 "'.$talleres[$i]["cantidad"].'",
                 "'.$talleres[$i]["fecha"].'",
+                "'.$talleres[$i]["fecha_terminado"].'",
                 "'.$estado.'",
                 "'.$botones.'"
                 ],';
