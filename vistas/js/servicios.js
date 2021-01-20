@@ -15,7 +15,7 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
  
 
  $(".tablaServicios").DataTable({
-    ajax: "ajax/tabla-servicios.ajax.php",
+    ajax: "ajax/produccion/tabla-servicios.ajax.php",
     deferRender: true,
     retrieve: true,
     processing: true,
@@ -46,7 +46,7 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
   });
   
  $(".tablaArticuloServicio").DataTable({
-  ajax: "ajax/tabla-articuloservicios.ajax.php",
+  ajax: "ajax/produccion/tabla-articuloservicios.ajax.php",
   deferRender: true,
   retrieve: true,
   processing: true,
@@ -77,7 +77,7 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
 });
 
 $(".tablaPrecioServicios").DataTable({
-  ajax: "ajax/tabla-precio-servicio.ajax.php",
+  ajax: "ajax/produccion/tabla-precio-servicio.ajax.php",
   deferRender: true,
   retrieve: true,
   processing: true,
@@ -845,7 +845,7 @@ $(".box").on("click", ".btnServicioDeta", function () {
 	// })
   
   $(".tablaDetalleSerTotal").DataTable({
-    ajax:"ajax/tabla-ver-servicios.ajax.php",
+    ajax:"ajax/produccion/tabla-ver-servicios.ajax.php",
     deferRender: true,
     retrieve: true,
     processing: true,

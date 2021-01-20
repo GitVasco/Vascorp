@@ -13,7 +13,7 @@ if (localStorage.getItem("capturarRango5") != null) {
 	
 function cargarTablaTalleres(fechaInicial, fechaFinal){
 $('.tablaTalleresG').DataTable({
-	"ajax": "ajax/tabla-talleresGeneral.ajax.php?perfil=" + $("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
+	"ajax": "ajax/produccion/tabla-talleresGeneral.ajax.php?perfil=" + $("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
 	"deferRender": true,
 	"retrieve": true,
 	"processing": true,
@@ -82,7 +82,7 @@ if (localStorage.getItem("capturarRango8") != null) {
 */
 function cargarTablaTalleresTerminados(fechaInicial, fechaFinal){
 $('.tablaTalleresT').DataTable({
-	"ajax": "ajax/tabla-talleresTerminado.ajax.php?perfil=" + $("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
+	"ajax": "ajax/produccion/tabla-talleresTerminado.ajax.php?perfil=" + $("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
 	"deferRender": true,
 	"retrieve": true,
 	"processing": true,
@@ -124,7 +124,7 @@ $('.tablaTalleresT').DataTable({
 ! TABLA PARA LOS PRODUCTOS EN PROCESO
 */
 $(".tablaTallerP").DataTable({
-	ajax: "ajax/tabla-talleresP.ajax.php",
+	ajax: "ajax/produccion/tabla-talleresP.ajax.php",
 	deferRender: true,
 	retrieve: true,
 	processing: true,
@@ -162,7 +162,7 @@ $(".tablaTallerP").DataTable({
 ! TABLA PARA LOS PRODUCTOS EN TERMINADO
 */
 $(".tablaTallerT").DataTable({
-	ajax: "ajax/tabla-talleresT.ajax.php",
+	ajax: "ajax/produccion/tabla-talleresT.ajax.php",
 	deferRender: true,
 	retrieve: true,
 	processing: true,
@@ -425,7 +425,7 @@ if (localStorage.getItem("capturarRango13") != null) {
 */
 function cargarTablaProduccionTrusas(fechaInicial,fechaFinal) {
 	$('.tablaProduccionTrusas').DataTable( {
-		"ajax": "ajax/tabla-producciontrusas.ajax.php?perfil="+$("#perfilOculto").val() +"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
+		"ajax": "ajax/produccion/tabla-producciontrusas.ajax.php?perfil="+$("#perfilOculto").val() +"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
 		"deferRender": true,
 		"retrieve": true,
 		"processing": true,
@@ -619,7 +619,7 @@ if (localStorage.getItem("capturarRango14") != null) {
 */
 function cargarTablaProduccionBrasier(fechaInicial,fechaFinal) {
 	$('.tablaProduccionBrasier').DataTable( {
-		"ajax": "ajax/tabla-produccionbrasier.ajax.php?perfil="+$("#perfilOculto").val() + "&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
+		"ajax": "ajax/produccion/tabla-produccionbrasier.ajax.php?perfil="+$("#perfilOculto").val() + "&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
 		"deferRender": true,
 		"retrieve": true,
 		"processing": true,
@@ -823,7 +823,7 @@ if (localStorage.getItem("mesV") != null) {
 */
 function cargarTablaProduccionVasco(mesV) {
 	$('.tablaProduccionVasco').DataTable( {
-		"ajax": "ajax/tabla-produccionvasco.ajax.php?perfil="+$("#perfilOculto").val() + "&mesV=" + mesV,
+		"ajax": "ajax/produccion/tabla-produccionvasco.ajax.php?perfil="+$("#perfilOculto").val() + "&mesV=" + mesV,
 		"deferRender": true,
 		"retrieve": true,
 		"processing": true,
@@ -867,7 +867,7 @@ $("#editarTalleres").change(function(){
 	$("#editarCodigo").val($(this).val()+"1234");
 })
 $('.tablaArticulosTalleres').DataTable( {
-    "ajax": "ajax/tabla-articulostaller.ajax.php",
+    "ajax": "ajax/produccion/tabla-articulostaller.ajax.php",
     "deferRender": true,
 	"retrieve": true,
     "processing": true,
@@ -1353,7 +1353,7 @@ if (localStorage.getItem("capturarRango9") != null) {
 */
 function cargarTablaIngresosM(fechaInicial, fechaFinal){
 $('.tablaIngresoM').DataTable({
-	"ajax": "ajax/tabla-ingresos.ajax.php?perfil=" + $("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
+	"ajax": "ajax/produccion/tabla-ingresos.ajax.php?perfil=" + $("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
 	"deferRender": true,
 	"retrieve": true,
 	"processing": true,
@@ -1718,7 +1718,7 @@ if (localStorage.getItem("articuloTallerP") != null ) {
 
 function cargarTablaTalleresGenerados(articuloTallerP) {
 	$('.tablaTalleresGenerado').DataTable({
-		"ajax": "ajax/tabla-talleresGenerado.ajax.php?perfil=" + $("#perfilOculto").val()+"&articuloTallerP=" + articuloTallerP,
+		"ajax": "ajax/produccion/tabla-talleresGenerado.ajax.php?perfil=" + $("#perfilOculto").val()+"&articuloTallerP=" + articuloTallerP,
 		"deferRender": true,
 		"retrieve": true,
 		"processing": true,
@@ -1849,7 +1849,7 @@ if (localStorage.getItem("modeloTallerOp") != null) {
 	
 function cargarTablaTalleresOperaciones(modeloTallerOp){
 $('.tablaTalleresOperaciones').DataTable({
-	"ajax": "ajax/tabla-talleresOperaciones.ajax.php?perfil=" + $("#perfilOculto").val()+"&modeloTallerOp=" + modeloTallerOp,
+	"ajax": "ajax/produccion/tabla-talleresOperaciones.ajax.php?perfil=" + $("#perfilOculto").val()+"&modeloTallerOp=" + modeloTallerOp,
 	"deferRender": true,
 	"retrieve": true,
 	"processing": true,

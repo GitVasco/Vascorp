@@ -14,7 +14,7 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
  })  */
 
 $(".tablaVentas").DataTable({
-  ajax: "ajax/tabla-ventas.ajax.php",
+  ajax: "ajax/curso/tabla-ventas.ajax.php",
   deferRender: true,
   retrieve: true,
   processing: true,

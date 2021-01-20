@@ -13,7 +13,7 @@ if (localStorage.getItem("capturarRango3") != null) {
 
 function cargarTablaCortes(fechaInicial, fechaFinal){
 $('.tablaOrdenCorte').DataTable({
-	"ajax": "ajax/tabla-ordencorte.ajax.php?perfil=" + $("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
+	"ajax": "ajax/produccion/tabla-ordencorte.ajax.php?perfil=" + $("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
 	"deferRender": true,
 	"retrieve": true,
 	"processing": true,
@@ -53,7 +53,7 @@ $('.tablaOrdenCorte').DataTable({
 * tabla de articulos con urgencia para orden de corte
 */
 $('.tablaArticulosOrdenCorte').DataTable( {
-    "ajax": "ajax/tabla-articulosordencorte.ajax.php",
+    "ajax": "ajax/produccion/tabla-articulosordencorte.ajax.php",
     "deferRender": true,
 	"retrieve": true,
     "processing": true,
@@ -668,7 +668,7 @@ $(".tablaOrdenCorte").on("click", ".btnVisualizarOC", function () {
 
     $(".tablaVerOrdenCorte").DataTable().destroy();
     $('.tablaVerOrdenCorte').DataTable({
-        "ajax": "ajax/tabla-ver-ordencorte.ajax.php?perfil=" + $("#perfilOculto").val()+"&codigo="+ codigoDOC,
+        "ajax": "ajax/produccion/tabla-ver-ordencorte.ajax.php?perfil=" + $("#perfilOculto").val()+"&codigo="+ codigoDOC,
         "deferRender": true,
         "retrieve": true,
         "processing": true,
@@ -909,3 +909,37 @@ $(".box").on("click", ".btnReporteOrdenC", function () {
 })
 
 
+
+$(".box").on("click", ".btnOrdenCorteDeta", function () {
+    $(".tablaDetalleOrdenCorteTotal").DataTable({
+      ajax:"ajax/produccion/tabla-ver-ordencorte-general.ajax.php",
+      deferRender: true,
+      retrieve: true,
+      processing: true,
+      language: {
+        sProcessing: "Procesando...",
+        sLengthMenu: "Mostrar _MENU_ registros",
+        sZeroRecords: "No se encontraron resultados",
+        sEmptyTable: "Ningún dato disponible en esta tabla",
+        sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+        sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
+        sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+        sInfoPostFix: "",
+        sSearch: "Buscar:",
+        sUrl: "",
+        sInfoThousands: ",",
+        sLoadingRecords: "Cargando...",
+        oPaginate: {
+          sFirst: "Primero",
+          sLast: "Último",
+          sNext: "Siguiente",
+          sPrevious: "Anterior"
+        },
+        oAria: {
+          sSortAscending: ": Activar para ordenar la columna de manera ascendente",
+          sSortDescending: ": Activar para ordenar la columna de manera descendente"
+        }
+      }
+    
+    });
+  });

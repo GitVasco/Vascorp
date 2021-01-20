@@ -1,5 +1,5 @@
 $('.tablaTrabajador').DataTable( {
-    "ajax": "ajax/tabla-trabajador.ajax.php",
+    "ajax": "ajax/maestros/tabla-trabajador.ajax.php",
     "deferRender": true,
 	"retrieve": true,
 	"processing": true,

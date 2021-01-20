@@ -2,7 +2,7 @@
 * CARGAR TABLA TARJETAS
 */
 $('.tablaTarjetas').DataTable({
-	"ajax": "ajax/tabla-tarjetas.ajax.php?perfil=" + $("#perfilOculto").val(),
+	"ajax": "ajax/tarjetas/tabla-tarjetas.ajax.php?perfil=" + $("#perfilOculto").val(),
 	"deferRender": true,
 	"retrieve": true,
 	"processing": true,
@@ -42,7 +42,7 @@ $('.tablaTarjetas').DataTable({
 *CARGAR LA TABLA DE MATERIA PRIMA EN CREAR TARJETA
 */
 $('.tablaMateriaPrimaTarjetas').DataTable( {
-    "ajax": "ajax/tabla-materiaprimaTarjetas.ajax.php",
+    "ajax": "ajax/tarjetas/tabla-materiaprimaTarjetas.ajax.php",
     "deferRender": true,
 	"retrieve": true,
 	"processing": true,
@@ -768,7 +768,7 @@ if (localStorage.getItem("capturarRango6") != null) {
 
 function cargarTablaFichas(fechaInicial, fechaFinal){
 $('.tablaFichaTecnica').DataTable({
-	"ajax": "ajax/tabla-ficha-tecnica.ajax.php?perfil=" + $("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
+	"ajax": "ajax/tarjetas/tabla-ficha-tecnica.ajax.php?perfil=" + $("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
 	"deferRender": true,
 	"retrieve": true,
 	"processing": true,

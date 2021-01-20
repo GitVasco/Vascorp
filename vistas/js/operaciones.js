@@ -1,5 +1,5 @@
 $('.tablaOperaciones').DataTable( {
-    "ajax": "ajax/tabla-operaciones.ajax.php",
+    "ajax": "ajax/maestros/tabla-operaciones.ajax.php",
     "deferRender": true,
 	"retrieve": true,
 	"processing": true,
@@ -79,7 +79,7 @@ $(".tablaOperaciones tbody").on("click","button.btnEliminarOperacion",function()
 //TABLA DINAMICA DE CABECERA OPERACIONES
 
 $('.tablaDetalleOperaciones').DataTable( {
-    "ajax": "ajax/tabla-cabecera-operacion.ajax.php",
+    "ajax": "ajax/operaciones/tabla-cabecera-operacion.ajax.php",
     "deferRender": true,
 	"retrieve": true,
 	"processing": true,
@@ -114,7 +114,7 @@ $('.tablaDetalleOperaciones').DataTable( {
 //TABLA DINAMICA DE DETALLE OPERACIONES
 
 $('.tablaArticuloOperaciones').DataTable( {
-    "ajax": "ajax/tabla-detalle-operacion.ajax.php",
+    "ajax": "ajax/operaciones/tabla-detalle-operacion.ajax.php",
     "deferRender": true,
 	"retrieve": true,
 	"processing": true,

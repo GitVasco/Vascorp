@@ -4,7 +4,7 @@ CARGAR LA TABLA DINÁMICA DE CIERRES
 
 
  $(".tablaCierres").DataTable({
-    ajax: "ajax/tabla-cierres.ajax.php",
+    ajax: "ajax/produccion/tabla-cierres.ajax.php",
     deferRender: true,
     retrieve: true,
     processing: true,
@@ -35,7 +35,7 @@ CARGAR LA TABLA DINÁMICA DE CIERRES
   });
   
  $(".tablaArticuloCierre").DataTable({
-  ajax: "ajax/tabla-articulocierres.ajax.php",
+  ajax: "ajax/produccion/tabla-articulocierres.ajax.php",
   deferRender: true,
   retrieve: true,
   processing: true,
@@ -135,7 +135,7 @@ CARGAR LA TABLA DINÁMICA DE CIERRES
 
             "<!-- Descripcion del producto -->" +
   
-            '<div class="col-xs-6">' +
+            '<div class="col-xs-5">' +
   
             '<input type="text" class="form-control nuevaDescripcionProducto" name="agregarProducto" value="' + packing +'" articuloCierre="' + articuloCierre + '" saldo = "'+Number(saldoServicio)+'" readonly required>' +
   
@@ -143,9 +143,17 @@ CARGAR LA TABLA DINÁMICA DE CIERRES
 
             "<!-- Cantidad del producto -->" +
   
-            '<div class="col-xs-3">' +
+            '<div class="col-xs-2">' +
   
             '<input type="number" class="form-control nuevaCantidadProducto" name="nuevaCantidadProducto" min="1" value="0" servicio="' + servicio + '" nuevoServicio="' + servicio + '"  required>' +
+  
+            "</div>" +
+
+            "<!-- Taller del producto -->" +
+  
+            '<div class="col-xs-2 ingresoServicio">' +
+  
+            '<input type="number" class="form-control nuevoServicioProducto" name="nuevoServicioProducto" id="nuevoServicioProducto" value="'+servicio+'" readonly>' +
   
             "</div>" +
   
@@ -248,8 +256,17 @@ CARGAR LA TABLA DINÁMICA DE CIERRES
   
   $(".formularioCierre").on("change", "input.nuevaCantidadProducto", function() {
     
+    
+  
   
     var nuevoServicio = Number($(this).attr("servicio")) - $(this).val();
+    var inputSer = $(this)
+    .parent()
+    .parent()
+    .children(".ingresoServicio")
+    .children(".nuevoServicioProducto");
+    // console.log(inputSer);
+    inputSer.val(nuevoServicio);
   
     $(this).attr("nuevoServicio", nuevoServicio);
   
@@ -621,7 +638,7 @@ $(".tablaCierres").on("click", ".btnVisualizarCierre", function () {
 
 $(".box").on("click", ".btnCierreDeta", function () {
   $(".tablaDetalleCierrreTotal").DataTable({
-    ajax:"ajax/tabla-ver-cierres.ajax.php",
+    ajax:"ajax/produccion/tabla-ver-cierres.ajax.php",
     deferRender: true,
     retrieve: true,
     processing: true,

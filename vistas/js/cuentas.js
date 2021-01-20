@@ -21,7 +21,7 @@ if (localStorage.getItem("capturarRango10") != null) {
  //CUENTAS 
 function cargarTablaCuentas(fechaInicial, fechaFinal){
   $('.tablaCuentas').DataTable({
-    "ajax": "ajax/tabla-cuentas.ajax.php?perfil="+$("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
+    "ajax": "ajax/cuentas-corrientes/tabla-cuentas.ajax.php?perfil="+$("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
     "deferRender": true,
     "retrieve": true,
     "processing": true,
@@ -66,7 +66,7 @@ if (localStorage.getItem("capturarRango11") != null) {
  //CUENTAS PENDIENTES
 function cargarTablaCuentasPendientes(fechaInicial, fechaFinal){
   $('.tablaCuentasPendientes').DataTable({
-    "ajax": "ajax/tabla-cuentas-pendientes.ajax.php?perfil="+$("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
+    "ajax": "ajax/cuentas-corrientes/tabla-cuentas-pendientes.ajax.php?perfil="+$("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
     "deferRender": true,
     "retrieve": true,
     "processing": true,
@@ -112,7 +112,7 @@ if (localStorage.getItem("capturarRango12") != null) {
  //CUENTAS 
 function cargarTablaCuentasAprobadas(fechaInicial, fechaFinal){
   $('.tablaCuentasAprobadas').DataTable({
-    "ajax": "ajax/tabla-cuentas-aprobadas.ajax.php?perfil="+$("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
+    "ajax": "ajax/cuentas-corrientes/tabla-cuentas-aprobadas.ajax.php?perfil="+$("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
     "deferRender": true,
     "retrieve": true,
     "processing": true,
@@ -911,7 +911,7 @@ if (localStorage.getItem("cliente") != null) {
 //CUENTAS consultar
 function cargarTablaCuentasConsultar(cliente){
 $('.tablaCuentasConsultar').DataTable({
-  "ajax": "ajax/tabla-cuentas-consultar.ajax.php?perfil="+$("#perfilOculto").val()+"&cliente=" + cliente ,
+  "ajax": "ajax/cuentas-corrientes/tabla-cuentas-consultar.ajax.php?perfil="+$("#perfilOculto").val()+"&cliente=" + cliente ,
   "deferRender": true,
   "retrieve": true,
   "processing": true,

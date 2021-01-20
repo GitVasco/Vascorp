@@ -1,5 +1,5 @@
 $('.tablaTipoPagos').DataTable({
-    "ajax": "ajax/tabla-tipopagos.ajax.php?perfil="+$("#perfilOculto").val(),
+    "ajax": "ajax/maestros/tabla-tipopagos.ajax.php?perfil="+$("#perfilOculto").val(),
     "deferRender": true,
     "retrieve": true,
     "processing": true,

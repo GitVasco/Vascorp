@@ -2,7 +2,7 @@
 * TABLA CON LAS VENTAS TOTALES POR MES
 */
 $('.tablaMovimientos').DataTable( {
-    "ajax": "ajax/tabla-movimientos.ajax.php",
+    "ajax": "ajax/movimientos/tabla-movimientos.ajax.php",
     "deferRender": true,
 	"retrieve": true,
     "processing": true,
@@ -135,7 +135,7 @@ if (localStorage.getItem("modeloP") != null) {
 */
 function cargarTablaMProd(modeloP) {
 	$(".tablaMProd").DataTable({
-		"ajax": "ajax/tabla-mProd.ajax.php?perfil=" + $("#perfilOculto").val() + "&modeloP=" + modeloP,
+		"ajax": "ajax/movimientos/tabla-mProd.ajax.php?perfil=" + $("#perfilOculto").val() + "&modeloP=" + modeloP,
 		"deferRender": true,
 		"retrieve": true,
 		"processing": true,
@@ -223,7 +223,7 @@ if (localStorage.getItem("modeloV") != null) {
 */
 function cargarTablaMVta(modeloV) {
 	$(".tablaMVta").DataTable({
-		"ajax": "ajax/tabla-mVta.ajax.php?perfil=" + $("#perfilOculto").val() + "&modeloV=" + modeloV,
+		"ajax": "ajax/movimientos/tabla-mVta.ajax.php?perfil=" + $("#perfilOculto").val() + "&modeloV=" + modeloV,
 		"deferRender": true,
 		"retrieve": true,
 		"processing": true,
@@ -311,7 +311,7 @@ if (localStorage.getItem("lineaMpIng") != null) {
 */
 function cargarTablaMpIng(lineaMpIng) {
 	$(".tablaMpIng").DataTable({
-		"ajax": "ajax/tabla-mping.ajax.php?perfil=" + $("#perfilOculto").val() + "&lineaMpIng=" + lineaMpIng,
+		"ajax": "ajax/movimientos/tabla-mping.ajax.php?perfil=" + $("#perfilOculto").val() + "&lineaMpIng=" + lineaMpIng,
 		"deferRender": true,
 		"retrieve": true,
 		"processing": true,
@@ -398,7 +398,7 @@ if (localStorage.getItem("lineaMpSal") != null) {
 */
 function cargarTablaMpSal(lineaMpSal) {
 	$(".tablaMpSal").DataTable({
-		"ajax": "ajax/tabla-mpsal.ajax.php?perfil=" + $("#perfilOculto").val() + "&lineaMpSal=" + lineaMpSal,
+		"ajax": "ajax/movimientos/tabla-mpsal.ajax.php?perfil=" + $("#perfilOculto").val() + "&lineaMpSal=" + lineaMpSal,
 		"deferRender": true,
 		"retrieve": true,
 		"processing": true,

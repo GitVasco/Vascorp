@@ -122,16 +122,21 @@
                       <label for="">Codigo</label>
 
                     </div>
+                    <div class="col-xs-5">
 
-                    <div class="col-xs-6">
-
-                      <label>Articulo</label>
+                      <label >Articulo</label>
 
                     </div>
 
-                    <div class="col-xs-3">
+                    <div class="col-xs-2">
 
-                      <label for="">Cantidad</label>
+                      <label for="" >Cantidad</label>
+
+                    </div>
+
+                    <div class="col-xs-2">
+
+                      <label for="" >Servicio</label>
 
                     </div>
 
@@ -174,15 +179,21 @@
                     </div>
                   </div>
 
-                  <div class="col-xs-6" style="padding-right:0px">
+                  <div class="col-xs-5" style="padding-right:0px">
 
                       <input type="text" class="form-control nuevaDescripcionProducto" articuloCierre="'.$infoProducto["articulo"].'" name="agregarProducto" value="'.$infoProducto["packing"].'" codigoP="'.$infoProducto["articulo"].'" saldo ="'.$detaServicios["saldo"].'" readonly required>
 
                   </div>
 
-                  <div class="col-xs-3">
+                  <div class="col-xs-2">
 
                     <input type="number" class="form-control nuevaCantidadProducto" name="nuevaCantidadProducto" min="0" value="'.$value["cantidad"].'" servicio="'.$servicioAntiguo.'" nuevoServicio="'.$infoProducto["servicio"].'" required>
+
+                  </div>
+
+                  <div class="col-xs-2 ingresoServicio">
+
+                    <input type="number" class="form-control nuevoServicioProducto" name="nuevoServicioProducto" min="0" value="'.$infoProducto["servicio"].'" readonly>
 
                   </div>
 

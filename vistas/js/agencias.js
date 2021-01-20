@@ -1,5 +1,5 @@
 $('.tablaAgencias').DataTable({
-    "ajax": "ajax/tabla-agencias.ajax.php?perfil="+$("#perfilOculto").val(),
+    "ajax": "ajax/maestros/tabla-agencias.ajax.php?perfil="+$("#perfilOculto").val(),
     "deferRender": true,
     "retrieve": true,
     "processing": true,

@@ -1,5 +1,5 @@
 $('.tablaMateriaPrima').DataTable( {
-    "ajax": "ajax/tabla-materiaprima.ajax.php",
+    "ajax": "ajax/maestros/tabla-materiaprima.ajax.php",
     "deferRender": true,
 	"retrieve": true,
 	"processing": true,
@@ -35,7 +35,7 @@ $('.tablaMateriaPrima').DataTable( {
 * tabla paraa cargar la lista de materia - URGENCIA
 */
 $('.tablaUrgenciasAMP').DataTable( {
-    "ajax": "ajax/tabla-urgenciasamp.ajax.php?perfil="+$("#perfilOculto").val(),
+    "ajax": "ajax/maestros/tabla-urgenciasamp.ajax.php?perfil="+$("#perfilOculto").val(),
     "deferRender": true,
 	"retrieve": true,
 	"processing": true,
@@ -299,7 +299,7 @@ if (localStorage.getItem("proyMp") != null) {
 */
 function cargarTablaProyMp(proyMp) {
 	$(".tablaProyMp").DataTable({
-		"ajax": "ajax/tabla-proymp.ajax.php?perfil=" + $("#perfilOculto").val() + "&proyMp=" + proyMp,
+		"ajax": "ajax/maestros/tabla-proymp.ajax.php?perfil=" + $("#perfilOculto").val() + "&proyMp=" + proyMp,
 		"deferRender": true,
 		"retrieve": true,
 		"processing": true,

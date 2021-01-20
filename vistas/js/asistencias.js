@@ -10,7 +10,7 @@ if (localStorage.getItem("capturarRango2") != null) {
 
 function cargarTablaAsistencias(fechaInicial, fechaFinal){
 $('.tablaAsistencias').DataTable({
-    "ajax": "ajax/tabla-asistencias.ajax.php?perfil="+$("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
+    "ajax": "ajax/produccion/tabla-asistencias.ajax.php?perfil="+$("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
     "deferRender": true,
     "retrieve": true,
     "processing": true,

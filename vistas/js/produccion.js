@@ -2,7 +2,7 @@
 * tabla paraa cargar la lista de quincenas
 */
 $('.tablaQuincena').DataTable( {
-    "ajax": "ajax/tabla-quincenas.ajax.php?perfil="+$("#perfilOculto").val(),
+    "ajax": "ajax/produccion/tabla-quincenas.ajax.php?perfil="+$("#perfilOculto").val(),
     "deferRender": true,
 	"retrieve": true,
 	"processing": true,
@@ -100,7 +100,7 @@ if (localStorage.getItem("sectorEfi") != null) {
 function cargarEficiencia(inicio,fin,nquincena,id,sectorEfi){
 
 	$('.tablaEficiencia').DataTable({
-		"ajax": "ajax/tabla-eficiencia.ajax.php?perfil=" + $("#perfilOculto").val() + "&inicio=" + inicio + "&fin=" + fin + "&nquincena=" + nquincena + "&id=" + id + "&sectorEfi="+sectorEfi,
+		"ajax": "ajax/produccion/tabla-eficiencia.ajax.php?perfil=" + $("#perfilOculto").val() + "&inicio=" + inicio + "&fin=" + fin + "&nquincena=" + nquincena + "&id=" + id + "&sectorEfi="+sectorEfi,
 		"deferRender": true,
 		"retrieve": true,
 		"processing": true,
@@ -179,7 +179,7 @@ if (localStorage.getItem("sectorTra") != null) {
 function cargarPagos(inicio,fin,nquincena,id,sectorTra){
 
 	$('.tablaPagos').DataTable({
-		"ajax": "ajax/tabla-pagos.ajax.php?perfil=" + $("#perfilOculto").val() + "&inicio=" + inicio + "&fin=" + fin + "&nquincena=" + nquincena + "&id=" + id + "&sectorTra=" + sectorTra,
+		"ajax": "ajax/produccion/tabla-pagos.ajax.php?perfil=" + $("#perfilOculto").val() + "&inicio=" + inicio + "&fin=" + fin + "&nquincena=" + nquincena + "&id=" + id + "&sectorTra=" + sectorTra,
 		"deferRender": true,
 		"retrieve": true,
 		"processing": true,

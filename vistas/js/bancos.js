@@ -1,5 +1,5 @@
 $('.tablaBancos').DataTable({
-    "ajax": "ajax/tabla-bancos.ajax.php?perfil="+$("#perfilOculto").val(),
+    "ajax": "ajax/maestros/tabla-bancos.ajax.php?perfil="+$("#perfilOculto").val(),
     "deferRender": true,
     "retrieve": true,
     "processing": true,

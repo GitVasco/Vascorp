@@ -2,7 +2,7 @@
 * tabla paraa cargar la lista de articulos
 */
 $('.tablaArticulos').DataTable( {
-    "ajax": "ajax/tabla-articulos.ajax.php?perfil="+$("#perfilOculto").val(),
+    "ajax": "ajax/maestros/tabla-articulos.ajax.php?perfil="+$("#perfilOculto").val(),
     "deferRender": true,
 	"retrieve": true,
 	"processing": true,
@@ -38,7 +38,7 @@ $('.tablaArticulos').DataTable( {
 * tabla paraa cargar la lista de articulos - URGENCIA
 */
 $('.tablaUrgencias').DataTable( {
-    "ajax": "ajax/tabla-urgencias.ajax.php?perfil="+$("#perfilOculto").val(),
+    "ajax": "ajax/maestros/tabla-urgencias.ajax.php?perfil="+$("#perfilOculto").val(),
     "deferRender": true,
 	"retrieve": true,
 	"processing": true,

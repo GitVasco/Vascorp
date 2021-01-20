@@ -1,5 +1,5 @@
 $('.tablaAbonos').DataTable({
-    "ajax": "ajax/tabla-abonos.ajax.php?perfil="+$("#perfilOculto").val(),
+    "ajax": "ajax/cuentas-corrientes/tabla-abonos.ajax.php?perfil="+$("#perfilOculto").val(),
     "deferRender": true,
     "retrieve": true,
     "processing": true,
@@ -129,7 +129,7 @@ if (localStorage.getItem("saldo") != null) {
 }
 
   $('.tablaAbonosCancelar').DataTable({
-    "ajax": "ajax/tabla-abonos-cancelar.ajax.php?perfil="+$("#perfilOculto").val(),
+    "ajax": "ajax/cuentas-corrientes/tabla-abonos-cancelar.ajax.php?perfil="+$("#perfilOculto").val(),
     "deferRender": true,
     "retrieve": true,
     "processing": true,
@@ -164,7 +164,7 @@ if (localStorage.getItem("saldo") != null) {
 
 function cargarTablaCuentasCancelar(saldo) {
   $('.tablaCuentasCancelar').DataTable({
-    "ajax": "ajax/tabla-cuentas-cancelar.ajax.php?perfil="+$("#perfilOculto").val()+ "&saldo=" + saldo,
+    "ajax": "ajax/cuentas-corrientes/tabla-cuentas-cancelar.ajax.php?perfil="+$("#perfilOculto").val()+ "&saldo=" + saldo,
     "deferRender": true,
     "retrieve": true,
     "processing": true,

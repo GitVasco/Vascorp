@@ -1,5 +1,5 @@
 $('.tablaUnidadesMedida').DataTable({
-    "ajax": "ajax/tabla-unidadesmedida.ajax.php?perfil="+$("#perfilOculto").val(),
+    "ajax": "ajax/maestros/tabla-unidadesmedida.ajax.php?perfil="+$("#perfilOculto").val(),
     "deferRender": true,
     "retrieve": true,
     "processing": true,

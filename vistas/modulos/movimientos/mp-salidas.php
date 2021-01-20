@@ -55,13 +55,13 @@
 
             <div class="box-body">
 
-                <table class="table table-bordered table-condensed table-hover dt-responsive tablaMpSal" width="100%">
+                <table class="table table-bordered table-condensed   dt-responsive tablaMpSal" width="100%">
 
                     <input type="hidden" value="<?=$_SESSION["perfil"];?>" id="perfilOculto">
 
                     <thead>
 
-                        <tr class="info">
+                        <tr >
                             <th>Cod. SubLin</th>
                             <th>Cod. Fab</th>
                             <th>Cod. Pro</th>

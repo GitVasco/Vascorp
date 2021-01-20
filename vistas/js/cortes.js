@@ -15,7 +15,7 @@ if (localStorage.getItem("modeloCorte") != null) {
 
 function cargarTablaEnCortes(modeloCorte) {
 	$('.tablaCortes').DataTable({
-		"ajax": "ajax/tabla-cortes.ajax.php?perfil=" + $("#perfilOculto").val()+ "&modeloCorte=" + modeloCorte,
+		"ajax": "ajax/produccion/tabla-cortes.ajax.php?perfil=" + $("#perfilOculto").val()+ "&modeloCorte=" + modeloCorte,
 		"deferRender": true,
 		"retrieve": true,
 		"processing": true,

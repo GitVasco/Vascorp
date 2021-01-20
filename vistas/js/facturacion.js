@@ -2,7 +2,7 @@
 * cargamos la tabla para guais de remision
 */
 $(".tablaGuiasRemision").DataTable({
-    ajax: "ajax/tabla-guiasremision.ajax.php",
+    ajax: "ajax/facturacion/tabla-guiasremision.ajax.php",
     deferRender: true,
     retrieve: true,
     processing: true,
@@ -37,7 +37,7 @@ $(".tablaGuiasRemision").DataTable({
 * cargamos la tabla para FACTURAS
 */
 $(".tablaFacturas").DataTable({
-    ajax: "ajax/tabla-facturas.ajax.php",
+    ajax: "ajax/facturacion/tabla-facturas.ajax.php",
     deferRender: true,
     retrieve: true,
     processing: true,
@@ -72,7 +72,7 @@ $(".tablaFacturas").DataTable({
 * cargamos la tabla para FACTURAS
 */
 $(".tablaBoletas").DataTable({
-    ajax: "ajax/tabla-boletas.ajax.php",
+    ajax: "ajax/facturacion/tabla-boletas.ajax.php",
     deferRender: true,
     retrieve: true,
     processing: true,

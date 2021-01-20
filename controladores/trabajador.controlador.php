@@ -262,18 +262,7 @@ class ControladorTrabajador{
 
 				echo'<script>
 
-				swal({
-					  type: "success",
-					  title: "El trabajador ha sido configurado correctamente",
-					  showConfirmButton: true,
-					  confirmButtonText: "Cerrar"
-					  }).then(function(result){
-								if (result.value) {
-
-								window.location = "marcar-taller";
-
-								}
-							})
+					window.location = "marcar-taller";
 
 				</script>';
 

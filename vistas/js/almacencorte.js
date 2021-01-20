@@ -13,7 +13,7 @@ if (localStorage.getItem("capturarRango4") != null) {
 
 function cargarTablaAlmacenCortes(fechaInicial, fechaFinal){
 $('.tablaAlmacenCorte').DataTable({
-	"ajax": "ajax/tabla-almacencorte.ajax.php?perfil=" + $("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
+	"ajax": "ajax/produccion/tabla-almacencorte.ajax.php?perfil=" + $("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
 	"deferRender": true,
 	"retrieve": true,
 	"processing": true,
@@ -51,7 +51,7 @@ $('.tablaAlmacenCorte').DataTable({
 * tabla de articulos en almacen de corte
 */
 $('.tablaArticulosAlmacenCorte').DataTable( {
-    "ajax": "ajax/tabla-articulosalmacencorte.ajax.php",
+    "ajax": "ajax/produccion/tabla-articulosalmacencorte.ajax.php",
     "deferRender": true,
 	"retrieve": true,
     "processing": true,
@@ -529,7 +529,7 @@ $(".tablaAlmacenCorte").on("click", ".btnVisualizarAC", function () {
     
     $(".tablaVerACDetalle").DataTable().destroy();
     $('.tablaVerACDetalle').DataTable({
-        "ajax": "ajax/tabla-ver-almacencorte.ajax.php?perfil=" + $("#perfilOculto").val()+"&codigo="+ codigoDAC,
+        "ajax": "ajax/produccion/tabla-ver-almacencorte.ajax.php?perfil=" + $("#perfilOculto").val()+"&codigo="+ codigoDAC,
         "deferRender": true,
         "retrieve": true,
         "processing": true,

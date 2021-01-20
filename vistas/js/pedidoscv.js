@@ -2,7 +2,7 @@
 * cargamos la tabla para articulos en pedidos
 */
 $(".tablaArticulosPedidos").DataTable({
-    ajax: "ajax/tabla-pedidos.ajax.php",
+    ajax: "ajax/facturacion/tabla-pedidos.ajax.php",
     deferRender: true,
     retrieve: true,
     processing: true,
@@ -593,7 +593,7 @@ $(".crearPedido").click(function () {
 * cargamos la tabla de pedidos
 */
 $(".tablaPedidosCV").DataTable({
-    ajax: "ajax/tabla-pedidosCV.ajax.php",
+    ajax: "ajax/facturacion/tabla-pedidosCV.ajax.php",
     deferRender: true,
     retrieve: true,
     processing: true,
@@ -926,7 +926,7 @@ $(".btnInicioPed").click(function(){
 * CARGADOS TABLA GENERADOS
 */
 $(".tablaPedidosGenerados").DataTable({
-    ajax: "ajax/tabla-pedidos-generados.ajax.php",
+    ajax: "ajax/facturacion/tabla-pedidos-generados.ajax.php",
     deferRender: true,
     retrieve: true,
     processing: true,
@@ -962,7 +962,7 @@ $(".tablaPedidosGenerados").DataTable({
 * CARGADOS TABLA APROBADOS
 */
 $(".tablaPedidosAprobados").DataTable({
-    ajax: "ajax/tabla-pedidos-aprobados.ajax.php",
+    ajax: "ajax/facturacion/tabla-pedidos-aprobados.ajax.php",
     deferRender: true,
     retrieve: true,
     processing: true,
@@ -998,7 +998,7 @@ $(".tablaPedidosAprobados").DataTable({
 * CARGADOS TABLA APT
 */
 $(".tablaPedidosAPT").DataTable({
-    ajax: "ajax/tabla-pedidos-apt.ajax.php",
+    ajax: "ajax/facturacion/tabla-pedidos-apt.ajax.php",
     deferRender: true,
     retrieve: true,
     processing: true,
@@ -1034,7 +1034,7 @@ $(".tablaPedidosAPT").DataTable({
 * CARGADOS TABLA CONFIRMADOS
 */
 $(".tablaPedidosConfirmados").DataTable({
-    ajax: "ajax/tabla-pedidos-confirmados.ajax.php",
+    ajax: "ajax/facturacion/tabla-pedidos-confirmados.ajax.php",
     deferRender: true,
     retrieve: true,
     processing: true,
@@ -1070,7 +1070,7 @@ $(".tablaPedidosConfirmados").DataTable({
 * CARGADOS TABLA FACTURADOS
 */
 $(".tablaPedidosFacturados").DataTable({
-    ajax: "ajax/tabla-pedidos-facturados.ajax.php",
+    ajax: "ajax/facturacion/tabla-pedidos-facturados.ajax.php",
     deferRender: true,
     retrieve: true,
     processing: true,

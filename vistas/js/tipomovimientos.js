@@ -1,5 +1,5 @@
 $('.tablaTipoMovimientos').DataTable({
-    "ajax": "ajax/tabla-tipomovimientos.ajax.php?perfil="+$("#perfilOculto").val(),
+    "ajax": "ajax/maestros/tabla-tipomovimientos.ajax.php?perfil="+$("#perfilOculto").val(),
     "deferRender": true,
     "retrieve": true,
     "processing": true,

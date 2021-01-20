@@ -2,7 +2,7 @@
 * CARGAR TABLA CLIENTES
 */
 $('.tablaClientes').DataTable({
-	"ajax": "ajax/tabla-clientes.ajax.php?perfil=" + $("#perfilOculto").val(),
+	"ajax": "ajax/facturacion/tabla-clientes.ajax.php?perfil=" + $("#perfilOculto").val(),
 	"deferRender": true,
 	"retrieve": true,
 	"processing": true,

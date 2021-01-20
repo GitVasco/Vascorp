@@ -118,15 +118,21 @@
                       <label for="">Codigo</label>
 
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-xs-5">
 
                       <label >Articulo</label>
 
                     </div>
 
-                    <div class="col-xs-3">
+                    <div class="col-xs-2">
 
                       <label for="" >Cantidad</label>
+
+                    </div>
+
+                    <div class="col-xs-2">
+
+                      <label for="" >Servicio</label>
 
                     </div>
 

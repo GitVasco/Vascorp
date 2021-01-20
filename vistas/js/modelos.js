@@ -2,7 +2,7 @@
 * tabla paraa cargar la lista de modelos
 */
 $('.tablaModelos').DataTable( {
-    "ajax": "ajax/tabla-modelos.ajax.php?perfil="+$("#perfilOculto").val(),
+    "ajax": "ajax/maestros/tabla-modelos.ajax.php?perfil="+$("#perfilOculto").val(),
     "deferRender": true,
 	"retrieve": true,
 	"processing": true,
