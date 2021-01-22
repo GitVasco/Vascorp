@@ -764,6 +764,14 @@
 
                             </li>
 
+                            <li>
+
+                                <a href="pago-servicio">
+                                <i class="fa fa-circle-o"></i> Pago servicio
+                                </a>
+
+                            </li>
+
                         </ul>
 
                     </li>

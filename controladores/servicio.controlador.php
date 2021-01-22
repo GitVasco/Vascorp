@@ -570,4 +570,155 @@ class ControladorServicios{
 
 	} 
 
+	/* 
+    *MOSTRAR QUINCENAS
+    */
+    static public function ctrMostrarPagoServicios($valor){
+
+		$respuesta = ModeloServicios::mdlMostrarPagoServicios($valor);
+
+		return $respuesta;
+
+	}
+
+	/* 
+	* CREAR QUINCENA
+	*/
+	static public function ctrCrearPagoServicios(){
+
+        if(isset($_POST["mes"])){
+
+            $datos = array( "ano" => $_POST["año"],
+                            "mes" => $_POST["mes"],
+                            "inicio" => $_POST["inicio"],
+                            "fin" => $_POST["fin"],
+                            "usuario" => $_POST["usuario"]);
+            //var_dump($datos);
+
+            $respuesta = ModeloServicios::mdlCrearPagoServicio($datos);
+                
+            if($respuesta == "ok"){
+
+                echo'<script>
+
+                    swal({
+                          type: "success",
+                          title: "El pago servicio ha sido guardada correctamente",
+                          showConfirmButton: true,
+                          confirmButtonText: "Cerrar"
+                          }).then(function(result){
+                                    if (result.value) {
+
+                                    window.location = "pago-servicio";
+
+                                    }
+                                })
+
+                    </script>';
+
+            }  
+
+
+		}
+
+    }
+    
+    /* 
+    *EDITAR QUINCENA
+    */
+
+	static public function ctrEditarPagoServicio(){
+
+		if(isset($_POST["editarMes"])){
+
+            $datos = array( "id" => $_POST["id"],
+                            "ano" => $_POST["editarAño"],
+                            "mes" => $_POST["editarMes"],
+                            "inicio" => $_POST["editarInicio"],
+                            "fin" => $_POST["editarFin"],
+                            "usuario" => $_POST["editarUsuario"]);
+            // var_dump($datos);
+
+            $respuesta = ModeloServicios::mdlEditarPagoServicio($datos);
+
+            if($respuesta == "ok"){
+
+                echo'<script>
+
+                swal({
+                      type: "success",
+                      title: "El pago servicio ha sido cambiado correctamente",
+                      showConfirmButton: true,
+                      confirmButtonText: "Cerrar"
+                      }).then(function(result){
+                                if (result.value) {
+
+                                window.location = "pago-servicio";
+
+                                }
+                            })
+
+                </script>';
+
+            }
+
+		}
+
+    }    
+
+	static public function ctrEliminarPagoServicio(){
+
+		if(isset($_GET["idPagoServicio"])){
+
+      //var_dump($_GET["idQuincena"]);
+
+			$id = $_GET["idPagoServicio"];
+
+			date_default_timezone_set('America/Lima');
+			$fecha = new DateTime();
+			$precios=ControladorServicios::ctrMostrarPagoServicios("id",$datos);
+			$usuario= $_SESSION["nombre"];
+			$para      = 'notificacionesvascorp@gmail.com';
+			$asunto    = 'Se elimino un precio servicio';
+			$descripcion   = 'El usuario '.$usuario.' elimino el pago servicio '.$precios["ano"].' - '.$precios["mes"];
+			$de = 'From: notificacionesvascorp@gmail.com';
+			if($_SESSION["correo"] == 1){
+				mail($para, $asunto, $descripcion, $de);
+			}
+			if($_SESSION["datos"] == 1){
+				$datos2= array( "usuario" => $usuario,
+								"concepto" => $descripcion,
+								"fecha" => $fecha->format("Y-m-d H:i:s"));
+				$auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
+			}
+
+			$respuesta = ModeloServicios::mdlEliminarPagoServicio($id);
+
+			if($respuesta == "ok"){
+
+        //var_dump($respuesta);
+				
+				echo'<script>
+
+				swal({
+					  type: "success",
+					  title: "La pago servicio ha sido borrado correctamente",
+					  showConfirmButton: true,
+					  confirmButtonText: "Cerrar"
+					  }).then(function(result){
+								if (result.value) {
+
+								window.location = "pago-servicio";
+
+								}
+							})
+
+				</script>';
+
+			}		
+		}
+
+
+	}	  
+
 }

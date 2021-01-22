@@ -399,10 +399,10 @@ class ControladorCierres{
 	MOSTRAR ULTIMO SERVICIOS
 	=============================================*/
 
-	static public function ctrMostrarArticulosCierre(){
+	static public function ctrMostrarArticulosCierre($sectorCierre){
 
 
-		$respuesta = ModeloCierres::mdlMostrarArticulosCiere();
+		$respuesta = ModeloCierres::mdlMostrarArticulosCiere($sectorCierre);
 
 		return $respuesta;
 

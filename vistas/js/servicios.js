@@ -894,7 +894,7 @@ $(".box").on("click", ".btnServicioDeta", function () {
           'background-color':'#F7E4E9',
           'color':'black'
         })
-      }else if(data[0] == "T10 - GUSTAVO"){
+      }else if(data[0] == "T7 - GUSTAVO"){
         $('td',row).css({
           'background-color':'#D4F8F7',
           'color':'black'
@@ -915,3 +915,175 @@ $(".box").on("click", ".btnServicioDeta", function () {
   });
 });
 
+$(".tablaPagoServicios").on("click", ".btnVerPagoSer", function () {
+  var inicio = $(this).attr("inicio");
+  var fin = $(this).attr("fin");
+  var inicio = $(this).attr("id");
+  $("#btnReportePagoServicios").val(inicio)
+  $(".tablaVerPagoSer").DataTable().destroy();
+  $(".tablaVerPagoSer").DataTable({
+    ajax:"ajax/produccion/tabla-ver-pagoservicios.ajax.php?perfil=" + $("#perfilOculto").val()+"&inicio="+ inicio+"&fin="+fin,
+    deferRender: true,
+    retrieve: true,
+    processing: true,
+    language: {
+      sProcessing: "Procesando...",
+      sLengthMenu: "Mostrar _MENU_ registros",
+      sZeroRecords: "No se encontraron resultados",
+      sEmptyTable: "Ningún dato disponible en esta tabla",
+      sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+      sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
+      sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+      sInfoPostFix: "",
+      sSearch: "Buscar:",
+      sUrl: "",
+      sInfoThousands: ",",
+      sLoadingRecords: "Cargando...",
+      oPaginate: {
+        sFirst: "Primero",
+        sLast: "Último",
+        sNext: "Siguiente",
+        sPrevious: "Anterior"
+      },
+      oAria: {
+        sSortAscending: ": Activar para ordenar la columna de manera ascendente",
+        sSortDescending: ": Activar para ordenar la columna de manera descendente"
+      }
+    },
+    "createdRow":function(row,data,index){
+      if(data[0] == "T4 - ADELA"){
+        $('td',row).css({
+          'background-color':'#D6C4D5',
+          'color':'black'
+        })
+      }else if (data[0] == "T6 - PABLO"){
+        $('td',row).css({
+          'background-color':'#C7C1D8',
+          'color':'black'
+        })
+      }else if(data[0] == "T9 - FRANCISCO"){
+        $('td',row).css({
+          'background-color':'#DADEBE',
+          'color':'black'
+        })
+      }else if(data[0] == "TA - ELVIRA"){
+        $('td',row).css({
+          'background-color':'#F7E4E9',
+          'color':'black'
+        })
+      }else if(data[0] == "T7 - GUSTAVO"){
+        $('td',row).css({
+          'background-color':'#D4F8F7',
+          'color':'black'
+        })
+      }else if(data[0] == "T6 - PABLO"){
+        $('td',row).css({
+          'background-color':'#D4F8E2',
+          'color':'black'
+        })
+      }else if(data[0] == "T8 - MIGUEL"){
+        $('td',row).css({
+          'background-color':'#F4F8D4',
+          'color':'black'
+        })
+      }
+    }
+  
+  });
+});
+$('.tablaPagoServicios').DataTable( {
+  "ajax": "ajax/produccion/tabla-pago-servicio.ajax.php?perfil="+$("#perfilOculto").val(),
+  "deferRender": true,
+  "retrieve": true,
+  "processing": true,
+  "language": {
+
+    "sProcessing":     "Procesando...",
+    "sLengthMenu":     "Mostrar _MENU_ registros",
+    "sZeroRecords":    "No se encontraron resultados",
+    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0",
+    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+    "sInfoPostFix":    "",
+    "sSearch":         "Buscar:",
+    "sUrl":            "",
+    "sInfoThousands":  ",",
+    "sLoadingRecords": "Cargando...",
+    "oPaginate": {
+    "sFirst":    "Primero",
+    "sLast":     "Último",
+    "sNext":     "Siguiente",
+    "sPrevious": "Anterior"
+    },
+    "oAria": {
+      "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+      "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+    }
+
+}    
+} );
+/*
+* EDITAR PAGO SERVICIO
+*/
+$(".tablaPagoServicios").on("click",".btnEditarPagoServicio",function(){
+
+	var idPagoServicio=$(this).attr("id");
+    var datos=new FormData();
+    // console.log(idPagoServicio);
+	datos.append("idPagoServicio",idPagoServicio);
+	$.ajax({
+		url:"ajax/servicios.ajax.php",
+		type:"POST",
+		data:datos,
+		cache:false,
+		contentType:false,
+		processData:false,
+		dataType:"json",
+		success:function(respuesta){
+
+            //console.log(respuesta)
+            $("#id").val(respuesta["id"]);
+            $("#editarMes").val(respuesta["nmes"]);
+            $("#editarMes").selectpicker('refresh');
+            $("#editarSemana").selectpicker('refresh');
+            $("#editarInicio").val(respuesta["inicio"]);
+            $("#editarFin").val(respuesta["fin"]);
+            
+        }
+        
+    });
+    
+});
+
+$(".tablaPagoServicios tbody").on("click", "button.btnEliminarPagoServicio", function(){
+
+	var idPagoServicio = $(this).attr("id");
+	//console.log("idQuincena", idQuincena);
+
+	swal({
+
+		title: '¿Está seguro de borrar el pago de servicio?',
+		text: "¡Si no lo está puede cancelar la accíón!",
+		type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si, borrar pago de servicio!'
+        }).then(function(result) {
+        if (result.value) {
+
+        	window.location = "index.php?ruta=pago-servicio&idPagoServicio="+ idPagoServicio ;
+
+        }
+
+
+	})
+
+})
+
+$(".btnReportePagoServicios").click(function(){
+  var idPagoServicio = $(this).val();
+  window.location = "vistas/reportes_excel/rpt_pago_servicio.php?idPagoServicio="+idPagoServicio;
+})

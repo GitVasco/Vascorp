@@ -861,10 +861,40 @@ function cargarTablaProduccionVasco(mesV) {
 
 
 $("#nuevoTalleres").change(function(){
-	$("#nuevoCodigo").val($(this).val()+"1234");
+	var ingreso = $(this).val();
+    var datos2 = new FormData();
+    datos2.append("ingreso", ingreso);
+    $.ajax({
+      url: "ajax/talleres.ajax.php",
+      method: "POST",
+      data: datos2,
+      cache: false,
+      contentType: false,
+      processData: false,
+      dataType: "json",
+      success: function(respuesta) {
+		  console.log(respuesta);
+        $("#nuevoCodigo").val(ingreso+("000"+respuesta["ultimo_codigo"]).slice(-4));
+      }
+    })
 })
 $("#editarTalleres").change(function(){
-	$("#editarCodigo").val($(this).val()+"1234");
+	var ingreso = $(this).val();
+    var datos2 = new FormData();
+    datos2.append("ingreso", ingreso);
+    $.ajax({
+      url: "ajax/talleres.ajax.php",
+      method: "POST",
+      data: datos2,
+      cache: false,
+      contentType: false,
+      processData: false,
+      dataType: "json",
+      success: function(respuesta) {
+		  console.log(respuesta);
+        $("#nuevoCodigo").val(ingreso+("000"+respuesta["ultimo_codigo"]).slice(-4));
+      }
+    })
 })
 $('.tablaArticulosTalleres').DataTable( {
     "ajax": "ajax/produccion/tabla-articulostaller.ajax.php",
@@ -1752,9 +1782,29 @@ function cargarTablaTalleresGenerados(articuloTallerP) {
 
 		},
 		"createdRow":function(row,data,index){
-			if(data[1].substr(-1) == 'A' || data[1].substr(-1) == 'B' || data[1].substr(-1) == 'C' || data[1].substr(-1) == 'D' || data[1].substr(-1) == 'E' ){
+			if(data[1].substr(-1) == 'A' ){
 				$('td',row).css({
 					'background-color':'#FDEC8A',
+					'color':'black'
+				})
+			}if(data[1].substr(-1) == 'B'){
+				$('td',row).css({
+					'background-color':'#DCF6C8',
+					'color':'black'
+				})
+			}if(data[1].substr(-1) == 'C'){
+				$('td',row).css({
+					'background-color':'#FFCE6B',
+					'color':'black'
+				})
+			}if(data[1].substr(-1) == 'D'){
+				$('td',row).css({
+					'background-color':'#FF746B',
+					'color':'black'
+				})
+			}if(data[1].substr(-1) == 'E'){
+				$('td',row).css({
+					'background-color':'#F98EF1',
 					'color':'black'
 				})
 			}

@@ -427,60 +427,60 @@ class ModeloServicios{
 			SUM(
 			  CASE
 				WHEN a.cod_talla = '1' 
-				THEN sd.cantidad 
+				THEN sd.saldo 
 				ELSE 0 
 			  END
 			) AS t1,
 			SUM(
 			  CASE
 				WHEN a.cod_talla = '2' 
-				THEN sd.cantidad 
+				THEN sd.saldo 
 				ELSE 0 
 			  END
 			) AS t2,
 			SUM(
 			  CASE
 				WHEN a.cod_talla = '3' 
-				THEN sd.cantidad 
+				THEN sd.saldo 
 				ELSE 0 
 			  END
 			) AS t3,
 			SUM(
 			  CASE
 				WHEN a.cod_talla = '4' 
-				THEN sd.cantidad 
+				THEN sd.saldo 
 				ELSE 0 
 			  END
 			) AS t4,
 			SUM(
 			  CASE
 				WHEN a.cod_talla = '5' 
-				THEN sd.cantidad 
+				THEN sd.saldo 
 				ELSE 0 
 			  END
 			) AS t5,
 			SUM(
 			  CASE
 				WHEN a.cod_talla = '6' 
-				THEN sd.cantidad 
+				THEN sd.saldo 
 				ELSE 0 
 			  END
 			) AS t6,
 			SUM(
 			  CASE
 				WHEN a.cod_talla = '7' 
-				THEN sd.cantidad 
+				THEN sd.saldo 
 				ELSE 0 
 			  END
 			) AS t7,
 			SUM(
 			  CASE
 				WHEN a.cod_talla = '8' 
-				THEN sd.cantidad 
+				THEN sd.saldo 
 				ELSE 0 
 			  END
 			) AS t8,
-			SUM(sd.cantidad) AS total 
+			SUM(sd.saldo) AS total 
 		  FROM
 			servicios_detallejf sd 
 			LEFT JOIN articulojf a 
@@ -494,7 +494,8 @@ class ModeloServicios{
 			a.modelo,
 			a.nombre,
 			a.cod_color,
-			a.color");
+			a.color
+		  HAVING SUM(sd.saldo) > 0");
 	
 			$stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
 	
@@ -513,60 +514,60 @@ class ModeloServicios{
 			SUM(
 			  CASE
 				WHEN a.cod_talla = '1' 
-				THEN sd.cantidad 
+				THEN sd.saldo 
 				ELSE 0 
 			  END
 			) AS t1,
 			SUM(
 			  CASE
 				WHEN a.cod_talla = '2' 
-				THEN sd.cantidad 
+				THEN sd.saldo 
 				ELSE 0 
 			  END
 			) AS t2,
 			SUM(
 			  CASE
 				WHEN a.cod_talla = '3' 
-				THEN sd.cantidad 
+				THEN sd.saldo 
 				ELSE 0 
 			  END
 			) AS t3,
 			SUM(
 			  CASE
 				WHEN a.cod_talla = '4' 
-				THEN sd.cantidad 
+				THEN sd.saldo 
 				ELSE 0 
 			  END
 			) AS t4,
 			SUM(
 			  CASE
 				WHEN a.cod_talla = '5' 
-				THEN sd.cantidad 
+				THEN sd.saldo 
 				ELSE 0 
 			  END
 			) AS t5,
 			SUM(
 			  CASE
 				WHEN a.cod_talla = '6' 
-				THEN sd.cantidad 
+				THEN sd.saldo 
 				ELSE 0 
 			  END
 			) AS t6,
 			SUM(
 			  CASE
 				WHEN a.cod_talla = '7' 
-				THEN sd.cantidad 
+				THEN sd.saldo 
 				ELSE 0 
 			  END
 			) AS t7,
 			SUM(
 			  CASE
 				WHEN a.cod_talla = '8' 
-				THEN sd.cantidad 
+				THEN sd.saldo 
 				ELSE 0 
 			  END
 			) AS t8,
-			SUM(sd.cantidad) AS total 
+			SUM(sd.saldo) AS total 
 		  FROM
 			servicios_detallejf sd 
 			LEFT JOIN articulojf a 
@@ -575,12 +576,15 @@ class ModeloServicios{
 			  ON s.codigo = sd.codigo
 			LEFT JOIN sectorjf se
 			  ON  s.taller=se.cod_sector
+			WHERE total > 0
 		  GROUP BY sd.codigo,
 			a.modelo,
 			a.nombre,
 			a.cod_color,
 			a.color
-			ORDER BY a.modelo ASC");
+			HAVING SUM(sd.saldo) > 0
+			ORDER BY a.modelo ASC
+		   ");
 
 		$stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
 
@@ -591,5 +595,295 @@ class ModeloServicios{
 		$stmt=null;
 
 	}
+
+	
+    /* 
+	* MOSTRAR PRODUCCION
+	*/
+	static public function mdlMostrarPagoServicios($valor){
+
+		if ($valor != null) {
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+                                                            q.id,
+                                                            q.ano,
+                                                            m.mes,
+                                                            q.mes AS nmes,
+                                                            q.inicio,
+                                                            q.fin,
+                                                            u.nombre,
+                                                            q.fecha_creacion 
+                                                        FROM
+                                                            pago_serviciosjf q 
+                                                            LEFT JOIN usuariosjf u 
+                                                            ON q.usuario = u.id 
+                                                            LEFT JOIN 
+                                                            (SELECT DISTINCT 
+                                                                codigo,
+                                                                descripcion AS mes 
+                                                            FROM
+                                                                meses) AS m 
+                                                            ON q.mes = m.codigo 
+                                                        WHERE q.id = :valor");
+
+			$stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
+
+			$stmt->execute();
+
+			return $stmt->fetch();
+		} else {
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+                                            q.id,
+                                            q.ano,
+                                            CASE
+                                              WHEN q.mes = '1' 
+                                              THEN 'Enero' 
+                                              WHEN q.mes = '2' 
+                                              THEN 'Febrero' 
+                                              WHEN q.mes = '3' 
+                                              THEN 'Marzo' 
+                                              WHEN q.mes = '4' 
+                                              THEN 'Abril' 
+                                              WHEN q.mes = '5' 
+                                              THEN 'Mayo' 
+                                              WHEN q.mes = '6' 
+                                              THEN 'Junio' 
+                                              WHEN q.mes = '7' 
+                                              THEN 'Julio' 
+                                              WHEN q.mes = '8' 
+                                              THEN 'Agosto' 
+                                              WHEN q.mes = '9' 
+                                              THEN 'Septiembre' 
+                                              WHEN q.mes = '10' 
+                                              THEN 'Octubre' 
+                                              WHEN q.mes = '11' 
+                                              THEN 'Noviembre' 
+                                              ELSE 'Diciembre' 
+                                            END AS mes,
+                                            q.mes AS nmes,
+                                            q.inicio,
+                                            q.fin,
+                                            u.nombre,
+                                            q.fecha_creacion 
+                                          FROM
+                                            pago_serviciosjf q 
+                                            LEFT JOIN usuariosjf u 
+                                              ON q.usuario = u.id");
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+    }
+
+	/*
+	* CREAR QUINCENA
+	*/
+	static public function mdlCrearPagoServicio($datos){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO pago_serviciosjf (
+                                                ano,
+                                                mes,
+                                                inicio,
+                                                fin,
+                                                usuario
+                                            ) 
+                                            VALUES
+                                                (
+                                                :ano,
+                                                :mes,
+                                                :inicio,
+                                                :fin,
+                                                :usuario
+                                                )");
+
+		$stmt->bindParam(":ano", $datos["ano"], PDO::PARAM_STR);
+		$stmt->bindParam(":mes", $datos["mes"], PDO::PARAM_STR);
+		$stmt->bindParam(":inicio", $datos["inicio"], PDO::PARAM_STR);
+		$stmt->bindParam(":fin", $datos["fin"], PDO::PARAM_STR);
+		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt->close();
+		$stmt = null;
+    }
     
+	static public function mdlEditarPagoServicio($datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE 
+                                                    pago_serviciosjf 
+                                                SET
+                                                    ano = :ano,
+                                                    mes = :mes,
+                                                    inicio = :inicio,
+                                                    fin = :fin,
+                                                    usuario = :usuario 
+                                                WHERE id = :id");
+
+		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
+		$stmt->bindParam(":ano", $datos["ano"], PDO::PARAM_STR);
+        $stmt->bindParam(":mes", $datos["mes"], PDO::PARAM_STR);
+        $stmt->bindParam(":inicio", $datos["inicio"], PDO::PARAM_STR);
+        $stmt->bindParam(":fin", $datos["fin"], PDO::PARAM_STR);
+        $stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	}   
+	
+	/* 
+	* BORRAR QUINCENA
+	*/
+	static public function mdlEliminarPagoServicio($id){
+
+		$stmt = Conexion::conectar()->prepare("DELETE FROM pago_serviciosjf WHERE id = :id ");
+
+		$stmt->bindParam(":id", $id, PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+      return "ok";
+      
+		} else {
+
+			return "error";
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+	}  
+
+	 /* 
+	* MOSTRAR PRODUCCION
+	*/
+	static public function mdlVerPagoServicios($inicio,$fin){
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+		c.taller,
+		s.cod_sector,
+		s.nom_sector,
+		sd.codigo,
+		c.fecha,
+		a.modelo,
+		a.nombre,
+		a.cod_color,
+		a.color,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '1' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t1,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '2' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t2,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '3' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t3,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '4' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t4,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '5' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t5,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '6' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t6,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '7' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t7,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '8' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t8,
+		SUM(sd.cantidad) AS total_und,
+		ROUND(SUM(sd.cantidad) / 12, 2) AS total_docenas,
+		ps.precio_doc,
+		ROUND(
+		  (
+			(SUM(sd.cantidad) / 12) * ps.precio_doc
+		  ),
+		  2
+		) AS total_soles 
+	  FROM
+		cierresjf c 
+		LEFT JOIN cierres_detallejf sd 
+		  ON c.codigo = sd.codigo 
+		LEFT JOIN articulojf a 
+		  ON sd.articulo = a.articulo 
+		LEFT JOIN precio_serviciojf ps 
+		  ON c.taller = ps.taller 
+		  AND a.modelo = ps.modelo 
+		LEFT JOIN sectorjf s 
+		  ON c.taller = s.cod_sector 
+	  WHERE c.fecha BETWEEN '".$inicio."' 
+		AND '".$fin."' 
+	  GROUP BY sd.codigo,
+		a.modelo,
+		a.nombre,
+		a.cod_color,
+		a.color");
+
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt->close();
+
+		$stmt = null;
+    }
+
 }

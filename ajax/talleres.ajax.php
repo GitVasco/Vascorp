@@ -2,7 +2,7 @@
 
 require_once "../controladores/talleres.controlador.php";
 require_once "../modelos/talleres.modelo.php";
-
+require_once "../modelos/ingresos.modelo.php";
 class AjaxTalleres{
 /*=============================================
   EDITAR CANTIDAD DE TALLER
@@ -41,6 +41,14 @@ class AjaxTalleres{
   
     }
 
+    public $ingreso;
+	  public function ajaxUltimoServicio(){
+        $ingreso=$this->ingreso;
+		    $respuesta=ModeloIngresos::mdlUltimoIngreso("movimientos_cabecerajf");
+        echo json_encode($respuesta);
+        
+    }
+
 }
 /*=============================================
 EDITAR CANTIDAD DE TALLER
@@ -70,4 +78,15 @@ if(isset($_POST["fecha"])){
 	$selectTaller = new AjaxTalleres();
 	$selectTaller -> fecha = $_POST["fecha"];
 	$selectTaller -> ajaxSelectTaller();
+}
+
+/*=============================================
+SELECT ingreso
+=============================================*/	
+if(isset($_POST["ingreso"])){
+
+	$ultimoServicio = new AjaxTalleres();
+	$ultimoServicio -> ingreso =$_POST["ingreso"];
+  $ultimoServicio -> ajaxUltimoServicio();
+    
 }

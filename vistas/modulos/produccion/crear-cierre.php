@@ -103,8 +103,7 @@
 
                     </select>
 
-                    <span class="input-group-addon"><button type="button" class="btn btn-default btn-xs"
-                        data-toggle="modal" data-target="#modalAgregarSector" data-dismiss="modal">Agregar
+                    <span class="input-group-addon"><button type="button" class="btn btn-default btn-xs btnLimpiarSectorCierre">Limpiar
                         sector</button></span>
 
                   </div>

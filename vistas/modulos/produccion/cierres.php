@@ -23,7 +23,7 @@
     <div class="box">
       <div class="box-header with-border">
         <a href="crear-cierre">
-          <button class="btn btn-primary" name="RegistrarCierre" >
+          <button class="btn btn-primary btnRegistroCierre" name="RegistrarCierre" >
             Registrar Cierre
           </button>
         </a>

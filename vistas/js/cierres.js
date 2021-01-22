@@ -8,6 +8,7 @@ CARGAR LA TABLA DINÁMICA DE CIERRES
     deferRender: true,
     retrieve: true,
     processing: true,
+    order: [[5, "desc"]],
     language: {
       sProcessing: "Procesando...",
       sLengthMenu: "Mostrar _MENU_ registros",
@@ -34,8 +35,17 @@ CARGAR LA TABLA DINÁMICA DE CIERRES
     }
   });
   
+  // Validamos que venga la variable capturaRango en el localStorage
+if (localStorage.getItem("sectorCierre") != null) {
+	cargarTablaArticuloCierres(localStorage.getItem("sectorCierre"));
+} else {
+	cargarTablaArticuloCierres(null);
+}
+
+	
+function cargarTablaArticuloCierres(sectorCierre){
  $(".tablaArticuloCierre").DataTable({
-  ajax: "ajax/produccion/tabla-articulocierres.ajax.php",
+  ajax: "ajax/produccion/tabla-articulocierres.ajax.php?perfil=" + $("#perfilOculto").val()+"&sectorCierre=" + sectorCierre,
   deferRender: true,
   retrieve: true,
   processing: true,
@@ -64,6 +74,7 @@ CARGAR LA TABLA DINÁMICA DE CIERRES
     }
   }
 });
+}
 
   /*=============================================
   AGREGANDO PRODUCTOS A LA VENTA DESDE LA TABLA
@@ -145,7 +156,7 @@ CARGAR LA TABLA DINÁMICA DE CIERRES
   
             '<div class="col-xs-2">' +
   
-            '<input type="number" class="form-control nuevaCantidadProducto" name="nuevaCantidadProducto" min="1" value="0" servicio="' + servicio + '" nuevoServicio="' + servicio + '"  required>' +
+            '<input type="number" class="form-control nuevaCantidadProducto" name="nuevaCantidadProducto" min="1" value="0" servicio="' + saldoServicio + '" nuevoServicio="' + saldoServicio + '"  required>' +
   
             "</div>" +
 
@@ -153,7 +164,7 @@ CARGAR LA TABLA DINÁMICA DE CIERRES
   
             '<div class="col-xs-2 ingresoServicio">' +
   
-            '<input type="number" class="form-control nuevoServicioProducto" name="nuevoServicioProducto" id="nuevoServicioProducto" value="'+servicio+'" readonly>' +
+            '<input type="number" class="form-control nuevoServicioProducto" name="nuevoServicioProducto" id="nuevoServicioProducto" value="'+saldoServicio+'" readonly>' +
   
             "</div>" +
   
@@ -475,6 +486,9 @@ function sumarTotalCierre() {
   
   $("#seleccionarSector").change(function(){
     var cierre = $(this).val();
+    $(".tablaArticuloCierre").DataTable().destroy();
+    localStorage.setItem("sectorCierre", cierre);
+    cargarTablaArticuloCierres(localStorage.getItem("sectorCierre"));
     var datos2 = new FormData();
     datos2.append("cierre", cierre);
     $.ajax({
@@ -687,7 +701,7 @@ $(".box").on("click", ".btnCierreDeta", function () {
           'background-color':'#F7E4E9',
           'color':'black'
         })
-      }else if(data[0] == "T10 - GUSTAVO"){
+      }else if(data[0] == "T7 - GUSTAVO"){
         $('td',row).css({
           'background-color':'#D4F8F7',
           'color':'black'
@@ -707,3 +721,11 @@ $(".box").on("click", ".btnCierreDeta", function () {
   
   });
 });
+$(".box").on("click",".btnRegistroCierre",function(){
+  localStorage.removeItem("sectorCierre");
+
+})
+$(".box").on("click",".btnLimpiarSectorCierre",function(){
+  localStorage.removeItem("sectorCierre");
+  window.location = "crear-cierre";
+})

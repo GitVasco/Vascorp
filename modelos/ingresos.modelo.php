@@ -413,6 +413,21 @@ class ModeloIngresos{
 		}
 
 	}
+
+	static public function mdlUltimoIngreso($tabla){
+
+		$sql="SELECT COUNT(taller) + 1 AS ultimo_codigo FROM $tabla";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->execute();
+
+		return $stmt->fetch();
+
+		$stmt=null;
+
+
+	}
 	
 
 }

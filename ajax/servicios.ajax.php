@@ -60,6 +60,17 @@ class AjaxServicios{
           echo json_encode($respuesta);
           
       }
+
+      public $idPagoServicio;
+      public function ajaxEditarPagoServicio(){
+       
+        $valor = $this->idPagoServicio;
+    
+        $respuesta = ControladorServicios::ctrMostrarPagoServicios($valor);
+    
+        echo json_encode($respuesta);
+    
+      }
 }
 
 // OBJETOS
@@ -100,5 +111,13 @@ if(isset($_POST["codigoDServicio"])){
 	$detalleServicios=new AjaxServicios();
 	$detalleServicios->codigoDServicio=$_POST["codigoDServicio"];
     $detalleServicios->ajaxVisualizarDetalleServicio();
+    
+}
+
+if(isset($_POST["idPagoServicio"])){
+
+	$editarPagoServicio=new AjaxServicios();
+	$editarPagoServicio->idPagoServicio=$_POST["idPagoServicio"];
+    $editarPagoServicio->ajaxEditarPagoServicio();
     
 }

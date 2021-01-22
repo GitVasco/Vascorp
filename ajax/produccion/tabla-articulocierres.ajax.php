@@ -12,7 +12,7 @@ class TablaProductosCierres{
     public function mostrarTablaProductosCierres(){
     
 
-        $articulos = ControladorCierres::ctrMostrarArticulosCierre();	
+        $articulos = ControladorCierres::ctrMostrarArticulosCierre($_GET["sectorCierre"]);	
         if(count($articulos)>0){
 
         $datosJson = '{

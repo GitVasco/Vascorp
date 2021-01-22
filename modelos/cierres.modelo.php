@@ -285,13 +285,24 @@ class ModeloCierres{
 	/* 
 	* MOSTRAR ARTICULOS PARA LA TABLA DE SERVICIOS O VENTAS
 	*/
-	static public function mdlMostrarArticulosCiere(){
+	static public function mdlMostrarArticulosCiere($sectorCierre){
+		if($sectorCierre != "null"){
 
-		$stmt = Conexion::conectar()->prepare("CALL sp_1070_consulta_cierre_articulos()");
+			$stmt = Conexion::conectar()->prepare("CALL sp_1072_consulta_cierre_articulos_sector(:valor)");
+			$stmt->bindParam(":valor", $sectorCierre, PDO::PARAM_STR);
+			$stmt->execute();
+	
+			return $stmt->fetchAll();
+			
+		}else{
 
-		$stmt->execute();
+			$stmt = Conexion::conectar()->prepare("CALL sp_1070_consulta_cierre_articulos()");
 
-		return $stmt->fetchAll();
+			$stmt->execute();
+	
+			return $stmt->fetchAll();
+		}
+		
 
 		$stmt->close();
 		$stmt = null;
