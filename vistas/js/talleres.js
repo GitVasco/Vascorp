@@ -1752,7 +1752,7 @@ function cargarTablaTalleresGenerados(articuloTallerP) {
 		"deferRender": true,
 		"retrieve": true,
 		"processing": true,
-		"order": [[0, "asc"]],
+		"order": [[1, "asc"]],
 		"pageLength": 20,
 		"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
 		"language": {
@@ -2039,3 +2039,88 @@ $(".tablaTalleresOperaciones").on("click", ".btnImprimirTicket", function () {
 	window.open("vistas/reportes_ticket/produccion_ticket_detalle.php?ultimo=" +ultimo + "&modelo=" + modelo + "&nombre=" + nombre + "&color=" + color + "&talla=" + talla + "&cant_taller=" + cant_taller + "&cod_operacion=" + cod_operacion + "&nom_operacion=" + nom_operacion,"_blank");
 	
 })
+
+$("#ticketArticulo").change(function(){
+
+	var articulo = $(this).val();
+	// console.log(articulo.length);
+	if(articulo.length == 8){
+		var modelo = articulo.substring(0,5);
+	}else{
+		var modelo = articulo.substring(0,4);
+	}
+	var datos= new FormData();
+	datos.append("modelo",modelo);
+	$.ajax({
+		url:"ajax/talleres.ajax.php",
+		method:"POST",
+		data:datos,
+		cache: false,
+		contentType:false,
+		processData:false,
+		dataType: "json",
+		success:function(respuesta){
+			$("#ticketOperacion").find('option').remove();
+			$("#ticketOperacion").append('<option value="">Seleccionar operacion</option>')
+			for (let i = 0; i < respuesta.length; i++) {
+				$("#ticketOperacion").append("<option value='"+respuesta[i]["cod_operacion"]+"'>"+respuesta[i]["cod_operacion"]+" - "+respuesta[i]["nombre"]+"</option>");
+				
+			}
+			$('#ticketOperacion').selectpicker('refresh');
+		}
+	});
+	
+});
+
+$(".tablaTalleresT").on("click",".btnReiniciarTallerT",function(){
+	var codigo = $(this).attr("codigoTallerT");
+	var estadoTaller=$(this).attr("estadoTaller");
+	// console.log("estadoTaller", estadoTaller); 
+	// Capturamos el id del usuario y el estado
+	swal({
+        title: '¿Está seguro de reiniciar el taller del codigo '+codigo+'?',
+        text: "¡Si no lo está puede cancelar la acción!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si, reiniciar el taller!'
+    }).then(function (result) {
+
+        if (result.value) {
+
+			
+			// console.log("codigo", codigo);
+			
+			//Realizamos la activación-desactivación por una petición AJAX
+			var datos=new FormData();
+			datos.append("activarId",codigo);
+			datos.append("activarEstado",estadoTaller);
+			$.ajax({
+				url:"ajax/talleres.ajax.php",
+				type:"POST",
+				data:datos,
+				cache:false,
+				contentType:false,
+				processData:false,
+				success:function(respuesta){
+					console.log(respuesta);
+					swal({
+						type: "success",
+						title: "¡Ok!",
+						text: "¡El taller fue reiniciado con éxito!",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar",
+						closeOnConfirm: false
+					}).then((result)=>{
+						if(result.value){
+							window.location="en-tallert";}
+					});}
+			});
+
+		}
+	})
+
+});
+

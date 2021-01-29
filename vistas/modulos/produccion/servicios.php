@@ -28,8 +28,31 @@
           </button>
         </a>
         <button class="btn btn-info btnServicioDeta" data-toggle='modal' data-target='#modalVerServicioDeta' codigoServicio><i class="fa fa-eye"></i> Ver servicios</button>
-        <button class="btn btn-outline-success pull-right btnReporteAlmacen"  style="border:green 1px solid">
+        <button class="btn btn-outline-success  btnReporteAlmacen"  style="border:green 1px solid">
                       <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Servicios  </button>
+        <button type="button" class="btn btn-default pull-right" id="daterange-btnServicios">
+            <span>
+              <i class="fa fa-calendar"></i>
+
+              <?php
+
+                if(isset($_GET["fechaInicial"])){
+
+                  echo $_GET["fechaInicial"]." - ".$_GET["fechaFinal"];
+
+                }else{
+                
+                  echo 'Rango de fecha';
+
+                }
+
+              ?>
+
+            </span>
+
+            <i class="fa fa-caret-down"></i>
+
+          </button>
       </div>
       <div class="box-body">
 
@@ -306,12 +329,38 @@ MODAL VISUALIZAR INFORMACION
         ======================================-->
 
         <div class="modal-body ">
+          <div class="box-header width-border">
+          <button type="button" class="btn btn-default pull-right" id="daterange-btnVerServicios">
+            <span>
+              <i class="fa fa-calendar"></i>
 
-              <table class="table table-bordered table-striped  tablaDetalleSerTotal">
+              <?php
+
+                if(isset($_GET["fechaInicial"])){
+
+                  echo $_GET["fechaInicial"]." - ".$_GET["fechaFinal"];
+
+                }else{
+                
+                  echo 'Rango de fecha';
+
+                }
+
+              ?>
+
+            </span>
+
+            <i class="fa fa-caret-down"></i>
+
+          </button>
+          </div>
+          <div class="box-body">
+            <table class="table table-bordered table-striped  tablaDetalleSerTotal">
 
               <thead>
 
                 <tr>
+                  <th style="width:100px"></th>
                   <th style="width:100px"></th>
                   <th></th>
                   <th></th>
@@ -330,6 +379,7 @@ MODAL VISUALIZAR INFORMACION
 
                 <tr>
                   <th style="width:100px"></th>
+                  <th style="width:100px"></th>
                   <th></th>
                   <th></th>
                   <th style="width:180px"></th>
@@ -347,6 +397,7 @@ MODAL VISUALIZAR INFORMACION
 
                 <tr>
                   <th style="width:100px">Taller</th>
+                  <th style="width:100px">Fecha</th>
                   <th>Codigo</th>
                   <th>Modelo</th>
                   <th style="width:180px">Nombre</th>
@@ -362,17 +413,16 @@ MODAL VISUALIZAR INFORMACION
                   <th>Total</th>
                 </tr>
 
-                </thead>
+              </thead>
 
-                <tbody>
-
-
-
-                </tbody>
-
-              </table>
+              <tbody>
 
 
+
+              </tbody>
+
+            </table>
+          </div>
 
         </div>
 

@@ -13,9 +13,21 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
 
  })  */
  
+ if (localStorage.getItem("capturarRango19") != null) {
+	$("#daterange-btnServicios span").html(localStorage.getItem("capturarRango19"));
+	cargarTablaServicios(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
+} else {
+	$("#daterange-btnServicios span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
+	cargarTablaServicios(null, null);
+}
 
+
+/* 
+* TABLA PARA PRODUCCION Brasier
+*/
+function cargarTablaServicios(fechaInicial,fechaFinal) {
  $(".tablaServicios").DataTable({
-    ajax: "ajax/produccion/tabla-servicios.ajax.php",
+    ajax: "ajax/produccion/tabla-servicios.ajax.php?perfil="+$("#perfilOculto").val() + "&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
     deferRender: true,
     retrieve: true,
     processing: true,
@@ -44,6 +56,123 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
       }
     }
   });
+}
+
+/*=============================================
+RANGO DE FECHAS
+=============================================*/
+
+$("#daterange-btnServicios").daterangepicker(
+  {
+    cancelClass: "CancelarServicios",
+    locale:{
+  "daysOfWeek": [
+    "Dom",
+    "Lun",
+    "Mar",
+    "Mie",
+    "Jue",
+    "Vie",
+    "Sab"
+  ],
+  "monthNames": [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre"
+  ],
+  },
+    ranges: {
+      Hoy: [moment(), moment()],
+      Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+      "Últimos 7 días": [moment().subtract(6, "days"), moment()],
+      "Últimos 30 días": [moment().subtract(29, "days"), moment()],
+      "Este mes": [moment().startOf("month"), moment().endOf("month")],
+      "Último mes": [
+        moment()
+          .subtract(1, "month")
+          .startOf("month"),
+        moment()
+          .subtract(1, "month")
+          .endOf("month")
+      ]
+    },
+    
+    startDate: moment(),
+    endDate: moment()
+  },
+  function(start, end) {
+    $("#daterange-btnServicios span").html(
+      start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
+    );
+
+    var fechaInicial = start.format("YYYY-MM-DD");
+
+    var fechaFinal = end.format("YYYY-MM-DD");
+
+    var capturarRango19 = $("#daterange-btnServicios span").html();
+  
+    localStorage.setItem("capturarRango19", capturarRango19);
+    localStorage.setItem("fechaInicial", localStorage.getItem("fechaInicial"));
+    localStorage.setItem("fechaFinal", localStorage.getItem("fechaFinal"));
+
+    // Recargamos la tabla con la información para ser mostrada en la tabla
+    $(".tablaServicios").DataTable().destroy();
+    cargarTablaServicios(fechaInicial, fechaFinal);
+  });
+
+/*=============================================
+CANCELAR RANGO DE FECHAS
+=============================================*/
+
+$(".daterangepicker.opensleft .range_inputs .CancelarServicios").on(
+  "click",
+  function() {
+    localStorage.removeItem("capturarRango19");
+    localStorage.removeItem("fechaInicial");
+    localStorage.removeItem("fechaFinal");
+    localStorage.clear();
+    window.location = "servicios";
+  }
+);
+
+/*=============================================
+CAPTURAR HOY
+=============================================*/
+
+$(".daterangepicker.opensleft .ranges li").on("click", function() {
+  var textoHoy = $(this).attr("data-range-key");
+
+  if (textoHoy == "Hoy") {
+    var d = new Date();
+
+    var dia = d.getDate();
+    var mes = d.getMonth() + 1;
+    var año = d.getFullYear();
+
+    dia = ("0" + dia).slice(-2);
+    mes = ("0" + mes).slice(-2);
+
+    var fechaInicial = año + "-" + mes + "-" + dia;
+    var fechaFinal = año + "-" + mes + "-" + dia;
+
+    localStorage.setItem("capturarRango19", "Hoy");
+    localStorage.setItem("fechaInicial", fechaInicial);
+    localStorage.setItem("fechaFinal", fechaFinal);
+  // Recargamos la tabla con la información para ser mostrada en la tabla
+    $(".tablaServicios").DataTable().destroy();
+    cargarTablaServicios(fechaInicial, fechaFinal);
+  }
+});
+  
   
  $(".tablaArticuloServicio").DataTable({
   ajax: "ajax/produccion/tabla-articuloservicios.ajax.php",
@@ -733,119 +862,25 @@ $(".tablaServicios").on("click", ".btnVisualizarServicio", function () {
 
 
 /* 
-* VISUALIZAR DETALLE DEL CORTE
+* VISUALIZAR DETALLE DEL SERVICIO GENERAL
 */ 
-$(".box").on("click", ".btnServicioDeta", function () {
 
-  //   var codigoDServicio = $(this).attr("codigoServicio");	
-  //   //console.log("codigoDAC", codigoDAC);
+if (localStorage.getItem("capturarRango20") != null) {
+	$("#daterange-btnServicios span").html(localStorage.getItem("capturarRango20"));
+	cargarTablaServiciosGeneral(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
+} else {
+	$("#daterange-btnServicios span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
+	cargarTablaServiciosGeneral(null, null);
+}
 
-  //   var datosDOC = new FormData();
-  //   datosDOC.append("codigoDServicio", codigoDServicio);
-    
-  //   $.ajax({
 
-	// 	url:"ajax/servicios.ajax.php",
-	// 	method: "POST",
-	// 	data: datosDOC,
-	// 	cache: false,
-	// 	contentType: false,
-	// 	processData: false,
-	// 	dataType:"json",
-	// 	success:function(respuestaDetalle){
+/* 
+* TABLA PARA PRODUCCION Brasier
+*/
+function cargarTablaServiciosGeneral(fechaInicial,fechaFinal) {
 
-	// 		// console.log("respuestaDetalle", respuestaDetalle);
-
-  //     $(".detalleSerTotal").remove();
-            
-	// 		for(var id of respuestaDetalle){
-
-  //               if(id.t1 > 0){
-
-  //                   var t1 = id.t1;
-  //               }else
-
-  //                   var t1 = "";
-
-  //               if(id.t2 > 0){
-
-  //                   var t2 = id.t2;
-  //               }else
-
-  //                   var t2 = "";
-                    
-  //               if(id.t3 > 0){
-
-  //                   var t3 = id.t3;
-  //               }else
-
-  //                   var t3 = "";
-                    
-  //               if(id.t4 > 0){
-
-  //                   var t4 = id.t4;
-  //               }else
-
-  //                   var t4 = "";    
-                    
-  //               if(id.t5 > 0){
-
-  //                   var t5 = id.t5;
-  //               }else
-
-  //                   var t5 = "";
-                    
-  //               if(id.t6 > 0){
-
-  //                   var t6 = id.t6;
-  //               }else
-
-  //                   var t6 = "";
-                    
-  //               if(id.t7 > 0){
-
-  //                   var t7 = id.t7;
-  //               }else
-
-  //                   var t7 = "";
-                    
-  //               if(id.t8 > 0){
-
-  //                   var t8 = id.t8;
-  //               }else
-
-  //                   var t8 = "";   
-          
-          
-
-	// 			$('.tablaDetalleSerTotal').append(
-
-	// 				'<tr class="detalleSerTotal">' +
-  //           '<td>' + id.cod_sector+" - "+id.nom_sector + ' </td>' +
-  //           '<td>' + id.codigo + ' </td>' +
-	// 					'<td><b>' + id.modelo + ' </b></td>' +
-	// 					'<td>' + id.nombre + ' </td>' +
-	// 					'<td>' + id.color + ' </td>' +
-	// 					'<td><b>' + t1 + ' </b></td>' +
-	// 					'<td><b>' + t2 + ' </b></td>' +
-	// 					'<td><b>' + t3 + ' </b></td>' +
-  //           '<td><b>' + t4 + ' </b></td>' +
-  //           '<td><b>' + t5 + ' </b></td>' +
-  //           '<td><b>' + t6 + ' </b></td>' +
-  //           '<td><b>' + t7 + ' </b></td>' +
-  //           '<td><b>' + t8 + ' </b></td>' +
-	// 				'</tr>'
-
-	// 			)
-
-	// 		}            
-
-	// 	}
-
-	// })
-  
   $(".tablaDetalleSerTotal").DataTable({
-    ajax:"ajax/produccion/tabla-ver-servicios.ajax.php",
+    ajax:"ajax/produccion/tabla-ver-servicios.ajax.php?perfil="+$("#perfilOculto").val() + "&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
     deferRender: true,
     retrieve: true,
     processing: true,
@@ -913,13 +948,128 @@ $(".box").on("click", ".btnServicioDeta", function () {
     }
   
   });
+}
+
+/*=============================================
+RANGO DE FECHAS
+=============================================*/
+
+$("#daterange-btnVerServicios").daterangepicker(
+  {
+    cancelClass: "CancelarVerServicios",
+    locale:{
+  "daysOfWeek": [
+    "Dom",
+    "Lun",
+    "Mar",
+    "Mie",
+    "Jue",
+    "Vie",
+    "Sab"
+  ],
+  "monthNames": [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre"
+  ],
+  },
+    ranges: {
+      Hoy: [moment(), moment()],
+      Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+      "Últimos 7 días": [moment().subtract(6, "days"), moment()],
+      "Últimos 30 días": [moment().subtract(29, "days"), moment()],
+      "Este mes": [moment().startOf("month"), moment().endOf("month")],
+      "Último mes": [
+        moment()
+          .subtract(1, "month")
+          .startOf("month"),
+        moment()
+          .subtract(1, "month")
+          .endOf("month")
+      ]
+    },
+    
+    startDate: moment(),
+    endDate: moment()
+  },
+  function(start, end) {
+    $("#daterange-btnVerServicios span").html(
+      start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
+    );
+
+    var fechaInicial = start.format("YYYY-MM-DD");
+
+    var fechaFinal = end.format("YYYY-MM-DD");
+
+    var capturarRango20 = $("#daterange-btnVerServicios span").html();
+  
+    localStorage.setItem("capturarRango20", capturarRango20);
+    localStorage.setItem("fechaInicial", localStorage.getItem("fechaInicial"));
+    localStorage.setItem("fechaFinal", localStorage.getItem("fechaFinal"));
+
+    // Recargamos la tabla con la información para ser mostrada en la tabla
+    $(".tablaDetalleSerTotal").DataTable().destroy();
+    cargarTablaServiciosGeneral(fechaInicial, fechaFinal);
+  });
+
+/*=============================================
+CANCELAR RANGO DE FECHAS
+=============================================*/
+
+$(".daterangepicker.opensleft .range_inputs .CancelarVerServicios").on(
+  "click",
+  function() {
+    localStorage.removeItem("capturarRango20");
+    localStorage.removeItem("fechaInicial");
+    localStorage.removeItem("fechaFinal");
+    localStorage.clear();
+    window.location = "servicios";
+  }
+);
+
+/*=============================================
+CAPTURAR HOY
+=============================================*/
+
+$(".daterangepicker.opensleft .ranges li").on("click", function() {
+  var textoHoy = $(this).attr("data-range-key");
+
+  if (textoHoy == "Hoy") {
+    var d = new Date();
+
+    var dia = d.getDate();
+    var mes = d.getMonth() + 1;
+    var año = d.getFullYear();
+
+    dia = ("0" + dia).slice(-2);
+    mes = ("0" + mes).slice(-2);
+
+    var fechaInicial = año + "-" + mes + "-" + dia;
+    var fechaFinal = año + "-" + mes + "-" + dia;
+
+    localStorage.setItem("capturarRango20", "Hoy");
+    localStorage.setItem("fechaInicial", fechaInicial);
+    localStorage.setItem("fechaFinal", fechaFinal);
+  // Recargamos la tabla con la información para ser mostrada en la tabla
+    $(".tablaDetalleSerTotal").DataTable().destroy();
+    cargarTablaServiciosGeneral(fechaInicial, fechaFinal);
+  }
 });
 
 $(".tablaPagoServicios").on("click", ".btnVerPagoSer", function () {
   var inicio = $(this).attr("inicio");
   var fin = $(this).attr("fin");
-  var inicio = $(this).attr("id");
-  $("#btnReportePagoServicios").val(inicio)
+  $("#btnReportePagoServicios").attr("inicio",inicio);
+  $("#btnReportePagoServicios").attr("fin",fin);
   $(".tablaVerPagoSer").DataTable().destroy();
   $(".tablaVerPagoSer").DataTable({
     ajax:"ajax/produccion/tabla-ver-pagoservicios.ajax.php?perfil=" + $("#perfilOculto").val()+"&inicio="+ inicio+"&fin="+fin,
@@ -1084,6 +1234,13 @@ $(".tablaPagoServicios tbody").on("click", "button.btnEliminarPagoServicio", fun
 })
 
 $(".btnReportePagoServicios").click(function(){
-  var idPagoServicio = $(this).val();
-  window.location = "vistas/reportes_excel/rpt_pago_servicio.php?idPagoServicio="+idPagoServicio;
+  var inicio = $(this).attr("inicio");
+  var fin = $(this).attr("fin");
+  window.location = "vistas/reportes_excel/rpt_pago_servicio.php?inicio="+inicio+"&fin="+fin;
+})
+
+$(".tablaPagoServicios tbody").on("click", "button.btnReportePagoServicios2", function(){
+  var inicio = $(this).attr("inicio");
+  var fin = $(this).attr("fin");
+  window.location = "vistas/reportes_excel/rpt_pago_servicio.php?inicio="+inicio+"&fin="+fin;
 })

@@ -289,6 +289,36 @@ class ModeloTrabajador{
 
 		$stmt = null;
 
-    }	
+	}
+	
+	/*=============================================
+	MOSTRAR TRABAJADOR
+	=============================================*/
+
+	static public function mdlMostrarTrabajador2($valor){
+
+		if($valor != null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT t.* FROM trabajadores_graljf t WHERE t.id = $valor");
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();
+
+		}else{
+
+			$stmt = Conexion::conectar()->prepare("SELECT  t.* FROM trabajadores_graljf t");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }
 
 }

@@ -14,6 +14,13 @@ class ControladorTrabajador{
 
 	}
 
+	static public function ctrMostrarTrabajador2($valor){
+		$respuesta = ModeloTrabajador::mdlMostrarTrabajador2($valor);
+
+		return $respuesta;
+
+	}
+
 	/*=============================================
 	CREAR TRABAJADOR
 	=============================================*/

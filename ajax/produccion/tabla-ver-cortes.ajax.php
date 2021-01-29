@@ -1,20 +1,20 @@
 <?php
 
-require_once "../../controladores/cierres.controlador.php";
-require_once "../../modelos/cierres.modelo.php";
+require_once "../../controladores/almacencorte.controlador.php";
+require_once "../../modelos/almacencorte.modelo.php";
 
-class TablaVerCierres{
+class TablaVerCortes{
 
     /*=============================================
     MOSTRAR LA TABLA DE PRODUCTOS
     =============================================*/ 
 
-    public function mostrarTablaVerCierres(){
+    public function mostrarTablaVerCortes(){
 
         $item = null;     
         $valor = null;
 
-        $cierres = ControladorCierres::ctrRangoFechasVerCierres($_GET["fechaInicial"],$_GET["fechaFinal"]);	
+        $cierres = ControladorAlmacenCorte::ctrRangoFechasVerCortes($_GET["fechaInicial"],$_GET["fechaFinal"]);	
         if(count($cierres)>0){
 
         $datosJson = '{
@@ -24,10 +24,8 @@ class TablaVerCierres{
 
     
             $datosJson .= '[
-            "'.$cierres[$i]["cod_sector"]." - ".$cierres[$i]["nom_sector"].'",
-            "'.$cierres[$i]["guia"].'",
+            "'.$cierres[$i]["almacencorte"].'",
             "'.$cierres[$i]["fechas"].'",
-            "'.$cierres[$i]["codigo"].'",
             "'.$cierres[$i]["modelo"].'",
             "'.$cierres[$i]["nombre"].'",
             "'.$cierres[$i]["color"].'",
@@ -39,7 +37,7 @@ class TablaVerCierres{
             "'.$cierres[$i]["t6"].'",
             "'.$cierres[$i]["t7"].'",
             "'.$cierres[$i]["t8"].'",
-            "'.$cierres[$i]["total"].'"
+            "'.$cierres[$i]["subtotal"].'"
             ],';        
             }
 
@@ -65,5 +63,5 @@ class TablaVerCierres{
 /*=============================================
 ACTIVAR TABLA DE SERVICIOS
 =============================================*/ 
-$activarVerCierres = new TablaVerCierres();
-$activarVerCierres -> mostrarTablaVerCierres();
+$activarVerCortes = new TablaVerCortes();
+$activarVerCortes -> mostrarTablaVerCortes();

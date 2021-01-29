@@ -14,7 +14,7 @@ class TablaVerServicios{
         $item = null;     
         $valor = null;
 
-        $servicios = ControladorServicios::ctrVisualizarServicioDetalle( $valor);	
+        $servicios = ControladorServicios::ctrRangoFechasVerServicios($_GET["fechaInicial"], $_GET["fechaFinal"]);	
         if(count($servicios)>0){
 
         $datosJson = '{
@@ -25,6 +25,7 @@ class TablaVerServicios{
     
             $datosJson .= '[
             "'.$servicios[$i]["cod_sector"]." - ".$servicios[$i]["nom_sector"].'",
+            "'.$servicios[$i]["fechas"].'",
             "'.$servicios[$i]["codigo"].'",
             "'.$servicios[$i]["modelo"].'",
             "'.$servicios[$i]["nombre"].'",

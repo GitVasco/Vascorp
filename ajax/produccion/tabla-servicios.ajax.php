@@ -14,7 +14,7 @@ class TablaServicios{
         $item = null;     
         $valor = null;
 
-        $servicios = ControladorServicios::ctrMostrarServicios($item, $valor);	
+        $servicios = ControladorServicios::ctrRangoFechasServicios($_GET["fechaInicial"], $_GET["fechaFinal"]);	
         if(count($servicios)>0){
 
         $datosJson = '{
@@ -44,14 +44,14 @@ class TablaServicios{
         =============================================*/         
         
         $botones =  "<div class='btn-group'><button class='btn btn-info btnVisualizarServicio' title='Visualizar Servicio' data-toggle='modal' data-target='#modalVisualizarServicio' codigoServicio='".$servicios[$i]["codigo"]."'><i class='fa fa-eye'></i></button><button class='btn btn-warning btnEditarServicio' title='Editar Servicio' idServicio='".$servicios[$i]["codigo"]."' data-toggle='modal' data-target='#modalEditarServicio'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarServicio' title='Eliminar Servicio' idServicio='".$servicios[$i]["codigo"]."'><i class='fa fa-times'></i></button><button class='btn btn-outline-success pull-right btnDetalleServicio' idServicio='".$servicios[$i]["codigo"]."' style='border:green 1px solid'><img src='vistas/img/plantilla/excel.png' width='18px'></button></div>"; 
-
+        $fecha=substr($servicios[$i]["fecha"],0,10);
             $datosJson .= '[
             "'.($i+1).'",
             "'.$servicios[$i]["codigo"].'",
-            "'.$servicios[$i]["usuario"].'",
+            "'.$servicios[$i]["nombre"].'",
             "'.$servicios[$i]["taller"]." - ".$servicios[$i]["nom_sector"].'",
             "'.$servicios[$i]["total"].'",
-            "'.$servicios[$i]["fecha"].'",
+            "'.$fecha.'",
             "'.$estado.'",
             "'.$botones.'"
             ],';        

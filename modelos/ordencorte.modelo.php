@@ -458,7 +458,7 @@ class ModeloOrdenCorte{
 
 	}	
 
-/*=============================================
+	/*=============================================	
 	RANGO FECHAS
 	=============================================*/	
 
@@ -693,6 +693,689 @@ class ModeloOrdenCorte{
 
 		$stmt=null;
 		
+	}
+
+	static public function mdlRangoFechasOrdenCortesGeneral($tabla, $fechaInicial, $fechaFinal){
+
+		if($fechaInicial == "null"){
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			doc.ordencorte,
+			a.modelo,
+			a.nombre,
+			a.color,
+			DATE(oc.fecha) as fechas,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '1' 
+				THEN doc.saldo 
+				ELSE 0 
+			END
+			) AS t1,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '2' 
+				THEN doc.saldo 
+				ELSE 0 
+			END
+			) AS t2,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '3' 
+				THEN doc.saldo 
+				ELSE 0 
+			END
+			) AS t3,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '4' 
+				THEN doc.saldo 
+				ELSE 0 
+			END
+			) AS t4,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '5' 
+				THEN doc.saldo 
+				ELSE 0 
+			END
+			) AS t5,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '6' 
+				THEN doc.saldo 
+				ELSE 0 
+			END
+			) AS t6,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '7' 
+				THEN doc.saldo 
+				ELSE 0 
+			END
+			) AS t7,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '8' 
+				THEN doc.saldo 
+				ELSE 0 
+			END
+			) AS t8,
+			SUM(doc.saldo) AS subtotal 
+		FROM
+			$tabla doc 
+			LEFT JOIN articulojf a 
+			ON doc.articulo = a.articulo 
+			LEFT JOIN ordencortejf oc 
+   			ON doc.ordencorte = oc.codigo 
+		GROUP BY doc.ordencorte,
+			a.modelo,
+			a.nombre,
+			a.color ORDER BY doc.id ASC");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();	
+
+
+		}else if($fechaInicial == $fechaFinal){
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			doc.ordencorte,
+			a.modelo,
+			a.nombre,
+			a.color,
+			DATE(oc.fecha) as fechas,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '1' 
+				THEN doc.saldo 
+				ELSE 0 
+			END
+			) AS t1,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '2' 
+				THEN doc.saldo 
+				ELSE 0 
+			END
+			) AS t2,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '3' 
+				THEN doc.saldo 
+				ELSE 0 
+			END
+			) AS t3,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '4' 
+				THEN doc.saldo 
+				ELSE 0 
+			END
+			) AS t4,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '5' 
+				THEN doc.saldo 
+				ELSE 0 
+			END
+			) AS t5,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '6' 
+				THEN doc.saldo 
+				ELSE 0 
+			END
+			) AS t6,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '7' 
+				THEN doc.saldo 
+				ELSE 0 
+			END
+			) AS t7,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '8' 
+				THEN doc.saldo 
+				ELSE 0 
+			END
+			) AS t8,
+			SUM(doc.saldo) AS subtotal 
+		FROM
+			$tabla doc 
+			LEFT JOIN articulojf a 
+			ON doc.articulo = a.articulo 
+			LEFT JOIN ordencortejf oc 
+   			ON doc.ordencorte = oc.codigo 
+			WHERE DATE(oc.fecha) like '%$fechaFinal%
+		GROUP BY doc.ordencorte,
+			a.modelo,
+			a.nombre,
+			a.color  '");
+
+			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}else{
+
+			$fechaActual = new DateTime();
+			$fechaActual ->add(new DateInterval("P1D"));
+			$fechaActualMasUno = $fechaActual->format("Y-m-d");
+
+			$fechaFinal2 = new DateTime($fechaFinal);
+			$fechaFinal2 ->add(new DateInterval("P1D"));
+			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+
+			if($fechaFinalMasUno == $fechaActualMasUno){
+
+				$stmt = Conexion::conectar()->prepare("SELECT 
+				doc.ordencorte,
+				a.modelo,
+				a.nombre,
+				a.color,
+				DATE(oc.fecha) as fechas,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '1' 
+					THEN doc.saldo 
+					ELSE 0 
+				END
+				) AS t1,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '2' 
+					THEN doc.saldo 
+					ELSE 0 
+				END
+				) AS t2,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '3' 
+					THEN doc.saldo 
+					ELSE 0 
+				END
+				) AS t3,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '4' 
+					THEN doc.saldo 
+					ELSE 0 
+				END
+				) AS t4,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '5' 
+					THEN doc.saldo 
+					ELSE 0 
+				END
+				) AS t5,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '6' 
+					THEN doc.saldo 
+					ELSE 0 
+				END
+				) AS t6,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '7' 
+					THEN doc.saldo 
+					ELSE 0 
+				END
+				) AS t7,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '8' 
+					THEN doc.saldo 
+					ELSE 0 
+				END
+				) AS t8,
+				SUM(doc.saldo) AS subtotal 
+			FROM
+				$tabla doc 
+				LEFT JOIN articulojf a 
+				ON doc.articulo = a.articulo 
+				LEFT JOIN ordencortejf oc 
+   				ON doc.ordencorte = oc.codigo 
+				WHERE DATE(oc.fecha) BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'
+			GROUP BY doc.ordencorte,
+				a.modelo,
+				a.nombre,
+				a.color");
+
+			}else{
+
+
+				$stmt = Conexion::conectar()->prepare("SELECT 
+				doc.ordencorte,
+				a.modelo,
+				a.nombre,
+				a.color,
+				DATE(oc.fecha) as fechas,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '1' 
+					THEN doc.saldo 
+					ELSE 0 
+				END
+				) AS t1,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '2' 
+					THEN doc.saldo 
+					ELSE 0 
+				END
+				) AS t2,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '3' 
+					THEN doc.saldo 
+					ELSE 0 
+				END
+				) AS t3,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '4' 
+					THEN doc.saldo 
+					ELSE 0 
+				END
+				) AS t4,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '5' 
+					THEN doc.saldo 
+					ELSE 0 
+				END
+				) AS t5,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '6' 
+					THEN doc.saldo 
+					ELSE 0 
+				END
+				) AS t6,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '7' 
+					THEN doc.saldo 
+					ELSE 0 
+				END
+				) AS t7,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '8' 
+					THEN doc.saldo 
+					ELSE 0 
+				END
+				) AS t8,
+				SUM(doc.saldo) AS subtotal 
+			FROM
+				$tabla doc 
+				LEFT JOIN articulojf a 
+				ON doc.articulo = a.articulo 
+				LEFT JOIN ordencortejf oc 
+   				ON doc.ordencorte = oc.codigo 
+			WHERE DATE(oc.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'
+			GROUP BY doc.ordencorte,
+				a.modelo,
+				a.nombre,
+				a.color ");
+
+			}
+		
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+	}
+
+	
+	static public function mdlRangoFechasOrdenCortesCantidad($tabla, $fechaInicial, $fechaFinal){
+
+		if($fechaInicial == "null"){
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			doc.ordencorte,
+			a.modelo,
+			a.nombre,
+			a.color,
+			DATE(oc.fecha) as fechas,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '1' 
+				THEN doc.cantidad 
+				ELSE 0 
+			END
+			) AS t1,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '2' 
+				THEN doc.cantidad 
+				ELSE 0 
+			END
+			) AS t2,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '3' 
+				THEN doc.cantidad 
+				ELSE 0 
+			END
+			) AS t3,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '4' 
+				THEN doc.cantidad 
+				ELSE 0 
+			END
+			) AS t4,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '5' 
+				THEN doc.cantidad 
+				ELSE 0 
+			END
+			) AS t5,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '6' 
+				THEN doc.cantidad 
+				ELSE 0 
+			END
+			) AS t6,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '7' 
+				THEN doc.cantidad 
+				ELSE 0 
+			END
+			) AS t7,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '8' 
+				THEN doc.cantidad 
+				ELSE 0 
+			END
+			) AS t8,
+			SUM(doc.cantidad) AS subtotal 
+		FROM
+			$tabla doc 
+			LEFT JOIN articulojf a 
+			ON doc.articulo = a.articulo 
+			LEFT JOIN ordencortejf oc 
+   			ON doc.ordencorte = oc.codigo 
+		GROUP BY doc.ordencorte,
+			a.modelo,
+			a.nombre,
+			a.color ORDER BY doc.id ASC");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();	
+
+
+		}else if($fechaInicial == $fechaFinal){
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			doc.ordencorte,
+			a.modelo,
+			a.nombre,
+			a.color,
+			DATE(oc.fecha) as fechas,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '1' 
+				THEN doc.cantidad 
+				ELSE 0 
+			END
+			) AS t1,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '2' 
+				THEN doc.cantidad 
+				ELSE 0 
+			END
+			) AS t2,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '3' 
+				THEN doc.cantidad 
+				ELSE 0 
+			END
+			) AS t3,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '4' 
+				THEN doc.cantidad 
+				ELSE 0 
+			END
+			) AS t4,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '5' 
+				THEN doc.cantidad 
+				ELSE 0 
+			END
+			) AS t5,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '6' 
+				THEN doc.cantidad 
+				ELSE 0 
+			END
+			) AS t6,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '7' 
+				THEN doc.cantidad 
+				ELSE 0 
+			END
+			) AS t7,
+			SUM(
+			CASE
+				WHEN a.cod_talla = '8' 
+				THEN doc.cantidad 
+				ELSE 0 
+			END
+			) AS t8,
+			SUM(doc.cantidad) AS subtotal 
+		FROM
+			$tabla doc 
+			LEFT JOIN articulojf a 
+			ON doc.articulo = a.articulo 
+			LEFT JOIN ordencortejf oc 
+   			ON doc.ordencorte = oc.codigo 
+			WHERE DATE(oc.fecha) like '%$fechaFinal%
+		GROUP BY doc.ordencorte,
+			a.modelo,
+			a.nombre,
+			a.color  '");
+
+			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}else{
+
+			$fechaActual = new DateTime();
+			$fechaActual ->add(new DateInterval("P1D"));
+			$fechaActualMasUno = $fechaActual->format("Y-m-d");
+
+			$fechaFinal2 = new DateTime($fechaFinal);
+			$fechaFinal2 ->add(new DateInterval("P1D"));
+			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+
+			if($fechaFinalMasUno == $fechaActualMasUno){
+
+				$stmt = Conexion::conectar()->prepare("SELECT 
+				doc.ordencorte,
+				a.modelo,
+				a.nombre,
+				a.color,
+				DATE(oc.fecha) as fechas,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '1' 
+					THEN doc.cantidad 
+					ELSE 0 
+				END
+				) AS t1,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '2' 
+					THEN doc.cantidad 
+					ELSE 0 
+				END
+				) AS t2,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '3' 
+					THEN doc.cantidad 
+					ELSE 0 
+				END
+				) AS t3,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '4' 
+					THEN doc.cantidad 
+					ELSE 0 
+				END
+				) AS t4,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '5' 
+					THEN doc.cantidad 
+					ELSE 0 
+				END
+				) AS t5,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '6' 
+					THEN doc.cantidad 
+					ELSE 0 
+				END
+				) AS t6,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '7' 
+					THEN doc.cantidad 
+					ELSE 0 
+				END
+				) AS t7,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '8' 
+					THEN doc.cantidad 
+					ELSE 0 
+				END
+				) AS t8,
+				SUM(doc.cantidad) AS subtotal 
+			FROM
+				$tabla doc 
+				LEFT JOIN articulojf a 
+				ON doc.articulo = a.articulo 
+				LEFT JOIN ordencortejf oc 
+   				ON doc.ordencorte = oc.codigo 
+				WHERE DATE(oc.fecha) BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'
+			GROUP BY doc.ordencorte,
+				a.modelo,
+				a.nombre,
+				a.color");
+
+			}else{
+
+
+				$stmt = Conexion::conectar()->prepare("SELECT 
+				doc.ordencorte,
+				a.modelo,
+				a.nombre,
+				a.color,
+				DATE(oc.fecha) as fechas,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '1' 
+					THEN doc.cantidad 
+					ELSE 0 
+				END
+				) AS t1,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '2' 
+					THEN doc.cantidad 
+					ELSE 0 
+				END
+				) AS t2,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '3' 
+					THEN doc.cantidad 
+					ELSE 0 
+				END
+				) AS t3,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '4' 
+					THEN doc.cantidad 
+					ELSE 0 
+				END
+				) AS t4,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '5' 
+					THEN doc.cantidad 
+					ELSE 0 
+				END
+				) AS t5,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '6' 
+					THEN doc.cantidad 
+					ELSE 0 
+				END
+				) AS t6,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '7' 
+					THEN doc.cantidad 
+					ELSE 0 
+				END
+				) AS t7,
+				SUM(
+				CASE
+					WHEN a.cod_talla = '8' 
+					THEN doc.cantidad 
+					ELSE 0 
+				END
+				) AS t8,
+				SUM(doc.cantidad) AS subtotal 
+			FROM
+				$tabla doc 
+				LEFT JOIN articulojf a 
+				ON doc.articulo = a.articulo 
+				LEFT JOIN ordencortejf oc 
+   				ON doc.ordencorte = oc.codigo 
+			WHERE DATE(oc.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'
+			GROUP BY doc.ordencorte,
+				a.modelo,
+				a.nombre,
+				a.color ");
+
+			}
+		
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
 	}
 
 }

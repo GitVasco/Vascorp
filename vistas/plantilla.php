@@ -186,6 +186,7 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "tipodocumentos" ||
                   $_GET["ruta"] == "tipotrabajador" ||
                   $_GET["ruta"] == "trabajador" ||
+                  $_GET["ruta"] == "trabajador2" ||
                   $_GET["ruta"] == "operaciones" ||
                   $_GET["ruta"] == "modelosjf" ||
                   $_GET["ruta"] == "crear-articulo" ||

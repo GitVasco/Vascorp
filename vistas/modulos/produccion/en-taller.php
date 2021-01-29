@@ -28,9 +28,14 @@
         <button class="btn btn-danger" data-toggle="modal" data-target="#modalEliminarArticulo"> 
         <i class="fa fa-trash"></i> Eliminar bloque
         </button>
-        <button class="btn btn-success btnCrearTicket" data-toggle="modal" data-target="#modalCrearTicket" idTaller="2021493731"> 
+        <button class="btn btn-warning btnCrearTicket" data-toggle="modal" data-target="#modalCrearTicket" idTaller="2021493731"> 
+        <i class="fa fa-plus-square"></i> Crear surtido
+        </button>
+
+        <button class="btn btn-success btnCrearTicketOriginal" data-toggle="modal" data-target="#modalCrearTicketOriginal" > 
         <i class="fa fa-plus-square"></i> Crear ticket
         </button>
+
         <button type="button" class="btn btn-default btnReporteTalleres" style="border:green 1px solid">
           <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Talleres  </button>
 
@@ -560,7 +565,7 @@ MODAL ELIMINAR ARTICULO
 
           <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" class="btn btn-primary">Crear Ticket</button>
+          <button type="submit" class="btn btn-primary">Crear Surtida</button>
 
         </div>
 
@@ -580,6 +585,112 @@ MODAL ELIMINAR ARTICULO
 
 </div>
 
+<div id="modalCrearTicketOriginal" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form role="form" method="post" enctype="multipart/form-data">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Crear Ticket</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <div class="form-group col-lg-12">
+              <label for="">Articulo</label>
+              <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+                  <select class="form-control input-lg selectpicker" id="ticketArticulo" name="ticketArticulo" data-live-search="true">
+                    <option value="">Seleccionar Articulo</option>
+                    <?php 
+
+                      $articulo =controladorArticulos::ctrMostrarArticulosTicket();
+                      foreach ($articulo as $key => $value) {
+                        echo '<option value="'.$value["articulo"].'">'.$value["modelo"]." - ". $value["color"]." - ".$value["talla"].'</option>';
+                      }
+                    ?>
+                  </select>
+                  
+                  <input type="hidden"  name="ticketUser" value="<?php echo $_SESSION["id"]?>">
+                  
+              </div>
+            </div>  
+
+
+            <div class="form-group col-lg-12">
+            <label for="">Operacion</label>
+              <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+
+                  <select type="text" class="form-control input-lg selectpicker" id="ticketOperacion" name="ticketOperacion" data-live-search="true">
+                  <option value="">Seleccionar Operación</option>
+                  
+                  </select>
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-12">
+            <label for="">Cantidad</label>
+              <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+
+                  <input type="text" class="form-control input-lg" name="ticketCantidad" id="ticketCantidad" required>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Crear Ticket</button>
+
+        </div>
+
+      </form>
+
+        <?php
+
+          $crearTicketOriginal = new ControladorTalleres();
+          $crearTicketOriginal -> ctrCrearTicketOriginal();
+
+        ?>  
+
+
+    </div>
+
+  </div>
+
+</div>
 <script>
 window.document.title = "Talleres General"
 </script>

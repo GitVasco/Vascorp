@@ -33,6 +33,7 @@
           </button>
 
         </a>
+        <button class="btn btn-info btnVerCorteDeta"  data-toggle='modal' data-target='#modalVerCorteDeta'><i class="fa fa-eye"> </i> Visualizar Corte</button>
         <button type="button" class="btn btn-default pull-right" id="daterange-btnCortes">
           <span>
             <i class="fa fa-calendar"></i>
@@ -218,6 +219,7 @@ MODAL VISUALIZAR INFORMACION
 
                 <tr>
                   <th></th>
+                  <th style="width:100px"></th>
                   <th></th>
                   <th style="width:250px"></th>
                   <th></th>
@@ -234,6 +236,7 @@ MODAL VISUALIZAR INFORMACION
 
                 <tr>
                   <th></th>
+                  <th style="width:100px"></th>
                   <th></th>
                   <th style="width:250px"></th>
                   <th></th>
@@ -250,6 +253,7 @@ MODAL VISUALIZAR INFORMACION
 
                 <tr>
                   <th>Corte</th>
+                  <th style="width:100px">Fecha</th>
                   <th>Modelo</th>
                   <th style="width:250px">Nombre</th>
                   <th>Color</th>
@@ -300,6 +304,155 @@ MODAL VISUALIZAR INFORMACION
 
 </div>
 
+<div id="modalVerCorteDeta" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog" style="width: 60% !important;">
+
+    <div class="modal-content">
+
+      <form role="form" method="post">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Detalle del Corte</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+            <div class="box-header width-border">
+            <button type="button" class="btn btn-default pull-right" id="daterange-btnVerCortes">
+            <span>
+              <i class="fa fa-calendar"></i>
+
+              <?php
+
+                if(isset($_GET["fechaInicial"])){
+
+                  echo $_GET["fechaInicial"]." - ".$_GET["fechaFinal"];
+
+                }else{
+                
+                  echo 'Rango de fecha';
+
+                }
+
+              ?>
+
+            </span>
+
+            <i class="fa fa-caret-down"></i>
+
+          </button>
+            </div>
+            <!-- TABLA DE DETALLES -->
+
+            <div class="form-group col-lg-12">
+            <label>TABLA DETALLES</label>
+            </div>
+
+            <div class="box-body">
+
+
+              <table class="table table-bordered table-striped dt-responsive tablaDetalleCorteTotal">
+
+              <thead>
+
+                <tr>
+                  <th></th>
+                  <th  style="width:100px"></th>
+                  <th ></th>
+                  <th style="width:250px"></th>
+                  <th></th>
+                  <th>S</th>
+                  <th>M</th>
+                  <th>L</th>
+                  <th>XL</th>
+                  <th>XXL</th>
+                  <th>XS</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                </tr>
+
+                <tr>
+                  <th></th>
+                  <th style="width:100px"></th>
+                  <th ></th>
+                  <th style="width:250px"></th>
+                  <th></th>
+                  <th>28</th>
+                  <th>30</th>
+                  <th>32</th>
+                  <th>34</th>
+                  <th>36</th>
+                  <th>38</th>
+                  <th>40</th>
+                  <th>42</th>
+                  <th></th>
+                </tr>
+
+                <tr>
+                  <th>Corte</th>
+                  <th style="width:100px">Fecha</th>
+                  <th>Modelo</th>
+                  <th style="width:250px">Nombre</th>
+                  <th>Color</th>
+                  <th>3</th>
+                  <th>4</th>
+                  <th>6</th>
+                  <th>8</th>
+                  <th>10</th>
+                  <th>12</th>
+                  <th>14</th>
+                  <th>16</th>
+                  <th>Total</th>
+                </tr>
+
+                </thead>
+
+                <tbody>
+
+
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
+
+        </div>
+
+
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
 
 <!--=====================================
 MODAL EDITAR TELA

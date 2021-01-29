@@ -909,37 +909,316 @@ $(".box").on("click", ".btnReporteOrdenC", function () {
 })
 
 
+if (localStorage.getItem("capturarRango18") != null) {
+	$("#daterange-btnGeneralCorte span").html(localStorage.getItem("capturarRango18"));
+    cargarTablaGeneralCortes(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
+} else {
+	$("#daterange-btnGeneralCorte span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
+    cargarTablaGeneralCortes(null,null);
+}
 
-$(".box").on("click", ".btnOrdenCorteDeta", function () {
-    $(".tablaDetalleOrdenCorteTotal").DataTable({
-      ajax:"ajax/produccion/tabla-ver-ordencorte-general.ajax.php",
+
+function cargarTablaGeneralCortes(fechaInicial, fechaFinal){
+$(".tablaDetalleOrdenCorteTotal").DataTable({
+    ajax:"ajax/produccion/tabla-ver-ordencorte-general.ajax.php?perfil=" + $("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
+    deferRender: true,
+    retrieve: true,
+    processing: true,
+    language: {
+    sProcessing: "Procesando...",
+    sLengthMenu: "Mostrar _MENU_ registros",
+    sZeroRecords: "No se encontraron resultados",
+    sEmptyTable: "Ningún dato disponible en esta tabla",
+    sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+    sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
+    sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+    sInfoPostFix: "",
+    sSearch: "Buscar:",
+    sUrl: "",
+    sInfoThousands: ",",
+    sLoadingRecords: "Cargando...",
+    oPaginate: {
+        sFirst: "Primero",
+        sLast: "Último",
+        sNext: "Siguiente",
+        sPrevious: "Anterior"
+    },
+    oAria: {
+        sSortAscending: ": Activar para ordenar la columna de manera ascendente",
+        sSortDescending: ": Activar para ordenar la columna de manera descendente"
+    }
+    }
+
+});
+}
+
+/*=============================================
+RANGO DE FECHAS
+=============================================*/
+
+$("#daterange-btnGeneralCorte").daterangepicker(
+    {
+      cancelClass: "CancelarGeneralCorte",
+      locale:{
+		"daysOfWeek": [
+			"Dom",
+			"Lun",
+			"Mar",
+			"Mie",
+			"Jue",
+			"Vie",
+			"Sab"
+		],
+		"monthNames": [
+			"Enero",
+			"Febrero",
+			"Marzo",
+			"Abril",
+			"Mayo",
+			"Junio",
+			"Julio",
+			"Agosto",
+			"Septiembre",
+			"Octubre",
+			"Noviembre",
+			"Diciembre"
+		],
+	  },
+      ranges: {
+        Hoy: [moment(), moment()],
+        Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+        "Últimos 7 días": [moment().subtract(6, "days"), moment()],
+        "Últimos 30 días": [moment().subtract(29, "days"), moment()],
+        "Este mes": [moment().startOf("month"), moment().endOf("month")],
+        "Último mes": [
+          moment()
+            .subtract(1, "month")
+            .startOf("month"),
+          moment()
+            .subtract(1, "month")
+            .endOf("month")
+        ]
+      },
+      
+      startDate: moment(),
+      endDate: moment()
+    },
+    function(start, end) {
+      $("#daterange-btnGeneralCorte span").html(
+        start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
+      );
+  
+      var fechaInicial = start.format("YYYY-MM-DD");
+  
+      var fechaFinal = end.format("YYYY-MM-DD");
+  
+      var capturarRango18 = $("#daterange-btnGeneralCorte span").html();
+  
+      localStorage.setItem("capturarRango18", capturarRango18);
+      localStorage.setItem("fechaInicial", fechaInicial);
+      localStorage.setItem("fechaFinal", fechaFinal);
+      // Recargamos la tabla con la información para ser mostrada en la tabla
+      $(".tablaDetalleOrdenCorteTotal").DataTable().destroy();
+      cargarTablaGeneralCortes(fechaInicial, fechaFinal);
+    });
+  
+  /*=============================================
+  CANCELAR RANGO DE FECHAS
+  =============================================*/
+  
+  $(".daterangepicker.opensleft .range_inputs .CancelarGeneralCorte").on(
+    "click",
+    function() {
+      localStorage.removeItem("capturarRango18");
+      localStorage.removeItem("fechaInicial");
+      localStorage.removeItem("fechaFinal");
+      localStorage.clear();
+      window.location = "ordencorte";
+    }
+  );
+  
+  /*=============================================
+  CAPTURAR HOY
+  =============================================*/
+  
+  $(".daterangepicker.opensleft .ranges li").on("click", function() {
+    var textoHoy = $(this).attr("data-range-key");
+  
+    if (textoHoy == "Hoy") {
+      var d = new Date();
+  
+      var dia = d.getDate();
+      var mes = d.getMonth() + 1;
+      var año = d.getFullYear();
+  
+      dia = ("0" + dia).slice(-2);
+      mes = ("0" + mes).slice(-2);
+  
+      var fechaInicial = año + "-" + mes + "-" + dia;
+      var fechaFinal = año + "-" + mes + "-" + dia;
+  
+      localStorage.setItem("capturarRango18", "Hoy");
+      localStorage.setItem("fechaInicial", fechaInicial);
+      localStorage.setItem("fechaFinal", fechaFinal);
+      // Recargamos la tabla con la información para ser mostrada en la tabla
+      $(".tablaDetalleOrdenCorteTotal").DataTable().destroy();
+      cargarTablaGeneralCortes(fechaInicial, fechaFinal);
+    }
+  });
+
+  if (localStorage.getItem("capturarRango21") != null) {
+    $("#daterange-btnCantidadCorte span").html(localStorage.getItem("capturarRango21"));
+    cargarTablaCantidadCortes(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
+  } else {
+    $("#daterange-btnCantidadCorte span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
+    cargarTablaCantidadCortes(null,null);
+  }
+  
+  
+function cargarTablaCantidadCortes(fechaInicial, fechaFinal){
+  $(".tablaCantidadOrdenCorteTotal").DataTable({
+      ajax:"ajax/produccion/tabla-ver-ordencorte-cantidad.ajax.php?perfil=" + $("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
       deferRender: true,
       retrieve: true,
       processing: true,
       language: {
-        sProcessing: "Procesando...",
-        sLengthMenu: "Mostrar _MENU_ registros",
-        sZeroRecords: "No se encontraron resultados",
-        sEmptyTable: "Ningún dato disponible en esta tabla",
-        sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
-        sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
-        sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
-        sInfoPostFix: "",
-        sSearch: "Buscar:",
-        sUrl: "",
-        sInfoThousands: ",",
-        sLoadingRecords: "Cargando...",
-        oPaginate: {
+      sProcessing: "Procesando...",
+      sLengthMenu: "Mostrar _MENU_ registros",
+      sZeroRecords: "No se encontraron resultados",
+      sEmptyTable: "Ningún dato disponible en esta tabla",
+      sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+      sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
+      sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+      sInfoPostFix: "",
+      sSearch: "Buscar:",
+      sUrl: "",
+      sInfoThousands: ",",
+      sLoadingRecords: "Cargando...",
+      oPaginate: {
           sFirst: "Primero",
           sLast: "Último",
           sNext: "Siguiente",
           sPrevious: "Anterior"
-        },
-        oAria: {
+      },
+      oAria: {
           sSortAscending: ": Activar para ordenar la columna de manera ascendente",
           sSortDescending: ": Activar para ordenar la columna de manera descendente"
-        }
       }
-    
-    });
+      }
+  
   });
+  }
+  
+  /*=============================================
+  RANGO DE FECHAS
+  =============================================*/
+  
+  $("#daterange-btnCantidadCorte").daterangepicker(
+      {
+        cancelClass: "CancelarCantidadCorte",
+        locale:{
+      "daysOfWeek": [
+        "Dom",
+        "Lun",
+        "Mar",
+        "Mie",
+        "Jue",
+        "Vie",
+        "Sab"
+      ],
+      "monthNames": [
+        "Enero",
+        "Febrero",
+        "Marzo",
+        "Abril",
+        "Mayo",
+        "Junio",
+        "Julio",
+        "Agosto",
+        "Septiembre",
+        "Octubre",
+        "Noviembre",
+        "Diciembre"
+      ],
+      },
+        ranges: {
+          Hoy: [moment(), moment()],
+          Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+          "Últimos 7 días": [moment().subtract(6, "days"), moment()],
+          "Últimos 30 días": [moment().subtract(29, "days"), moment()],
+          "Este mes": [moment().startOf("month"), moment().endOf("month")],
+          "Último mes": [
+            moment()
+              .subtract(1, "month")
+              .startOf("month"),
+            moment()
+              .subtract(1, "month")
+              .endOf("month")
+          ]
+        },
+        
+        startDate: moment(),
+        endDate: moment()
+      },
+      function(start, end) {
+        $("#daterange-btnCantidadCorte span").html(
+          start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
+        );
+    
+        var fechaInicial = start.format("YYYY-MM-DD");
+    
+        var fechaFinal = end.format("YYYY-MM-DD");
+    
+        var capturarRango21 = $("#daterange-btnCantidadCorte span").html();
+    
+        localStorage.setItem("capturarRango21", capturarRango21);
+        localStorage.setItem("fechaInicial", fechaInicial);
+        localStorage.setItem("fechaFinal", fechaFinal);
+        // Recargamos la tabla con la información para ser mostrada en la tabla
+        $(".tablaCantidadOrdenCorteTotal").DataTable().destroy();
+        cargarTablaCantidadCortes(fechaInicial, fechaFinal);
+      });
+    
+    /*=============================================
+    CANCELAR RANGO DE FECHAS
+    =============================================*/
+    
+    $(".daterangepicker.opensleft .range_inputs .CancelarCantidadCorte").on(
+      "click",
+      function() {
+        localStorage.removeItem("capturarRango21");
+        localStorage.removeItem("fechaInicial");
+        localStorage.removeItem("fechaFinal");
+        localStorage.clear();
+        window.location = "ordencorte";
+      }
+    );
+    
+    /*=============================================
+    CAPTURAR HOY
+    =============================================*/
+    
+    $(".daterangepicker.opensleft .ranges li").on("click", function() {
+      var textoHoy = $(this).attr("data-range-key");
+    
+      if (textoHoy == "Hoy") {
+        var d = new Date();
+    
+        var dia = d.getDate();
+        var mes = d.getMonth() + 1;
+        var año = d.getFullYear();
+    
+        dia = ("0" + dia).slice(-2);
+        mes = ("0" + mes).slice(-2);
+    
+        var fechaInicial = año + "-" + mes + "-" + dia;
+        var fechaFinal = año + "-" + mes + "-" + dia;
+    
+        localStorage.setItem("capturarRango21", "Hoy");
+        localStorage.setItem("fechaInicial", fechaInicial);
+        localStorage.setItem("fechaFinal", fechaFinal);
+        // Recargamos la tabla con la información para ser mostrada en la tabla
+        $(".tablaCantidadOrdenCorteTotal").DataTable().destroy();
+        cargarTablaCantidadCortes(fechaInicial, fechaFinal);
+      }
+    });

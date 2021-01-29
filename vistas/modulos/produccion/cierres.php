@@ -28,8 +28,32 @@
           </button>
         </a>
         <button class="btn btn-info btnCierreDeta" data-toggle='modal' data-target='#modalVerCierreDeta' codigoServicio><i class="fa fa-eye"></i> Ver cierres</button>
-        <button class="btn btn-outline-success pull-right btnReporteAlmacen"  style="border:green 1px solid">
+        <button class="btn btn-outline-success btnReporteAlmacen"  style="border:green 1px solid">
                       <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Cierres  </button>
+
+        <button type="button" class="btn btn-default pull-right" id="daterange-btnCierres">
+          <span>
+            <i class="fa fa-calendar"></i>
+
+            <?php
+
+              if(isset($_GET["fechaInicial"])){
+
+                echo $_GET["fechaInicial"]." - ".$_GET["fechaFinal"];
+
+              }else{
+              
+                echo 'Rango de fecha';
+
+              }
+
+            ?>
+
+          </span>
+
+          <i class="fa fa-caret-down"></i>
+
+        </button>
       </div>
       <div class="box-body">
 
@@ -43,6 +67,7 @@
 
               <th>#</th>
               <th>Codigo</th>
+              <th>N° Guia</th>
               <th>Usuario</th>
               <th>Taller</th>
               <th>Total</th>
@@ -113,7 +138,22 @@ MODAL VISUALIZAR INFORMACION
 
             </div>
 
+            <!-- ENTRADA PARA LA GUIA-->
             
+            <div class="form-group col-lg-2">
+
+              <label>N° Guia</label>
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+
+                <strong><input type="text" class="form-control input-sm" name="guia" id="guia" required readonly></strong>
+
+              </div>
+
+            </div> 
+
             <!-- ENTRADA PARA LA FECHA-->
             
             <div class="form-group col-lg-2">
@@ -132,7 +172,7 @@ MODAL VISUALIZAR INFORMACION
  
             <!-- ENTRADA PARA LA RESPONSABLE-->
             
-            <div class="form-group col-lg-4">
+            <div class="form-group col-lg-2">
 
               <label>Responsable</label>
               
@@ -197,6 +237,8 @@ MODAL VISUALIZAR INFORMACION
                   <th></th>
                   <th></th>
                   <th></th>
+                  <th></th>
+                  <th></th>
                   <th>S</th>
                   <th>M</th>
                   <th>L</th>
@@ -209,6 +251,8 @@ MODAL VISUALIZAR INFORMACION
                 </tr>
 
                 <tr>
+                  <th></th>
+                  <th></th>
                   <th></th>
                   <th></th>
                   <th></th>
@@ -227,6 +271,8 @@ MODAL VISUALIZAR INFORMACION
 
                 <tr>
                   <th>Taller</th>
+                  <th>Guia</th>
+                  <th>Fecha</th>
                   <th>Codigo</th>
                   <th>Modelo</th>
                   <th>Nombre</th>
@@ -285,7 +331,7 @@ MODAL VISUALIZAR INFORMACION
 
 <div id="modalVerCierreDeta" class="modal fade" role="dialog">
   
-  <div class="modal-dialog" style="width: 58% !important;">
+  <div class="modal-dialog" style="width: 65% !important;">
 
     <div class="modal-content">
 
@@ -306,15 +352,44 @@ MODAL VISUALIZAR INFORMACION
         <!--=====================================
         CUERPO DEL MODAL
         ======================================-->
+        
+        <div class="modal-body">
+          <div class="box-header width-border">
+            <button type="button" class="btn btn-default pull-right" id="daterange-btnVerCierres">
+            <span>
+              <i class="fa fa-calendar"></i>
 
-        <div class="modal-body ">
+              <?php
 
-              <table class="table table-bordered table-striped  tablaDetalleCierrreTotal">
+                if(isset($_GET["fechaInicial"])){
+
+                  echo $_GET["fechaInicial"]." - ".$_GET["fechaFinal"];
+
+                }else{
+                
+                  echo 'Rango de fecha';
+
+                }
+
+              ?>
+
+            </span>
+
+            <i class="fa fa-caret-down"></i>
+
+          </button>
+          
+          </div>
+          
+          <div class="box-body">
+            <table class="table table-bordered table-striped  tablaDetalleCierrreTotal">
 
               <thead>
 
                 <tr>
                   <th style="width:100px"></th>
+                  <th></th>
+                  <th style="width:130px"></th>
                   <th></th>
                   <th></th>
                   <th style="width:180px"></th>
@@ -333,6 +408,8 @@ MODAL VISUALIZAR INFORMACION
                 <tr>
                   <th style="width:100px"></th>
                   <th></th>
+                  <th style="width:130px"></th>
+                  <th></th>
                   <th></th>
                   <th style="width:180px"></th>
                   <th style="width:100px"></th>
@@ -349,6 +426,8 @@ MODAL VISUALIZAR INFORMACION
 
                 <tr>
                   <th style="width:100px">Taller</th>
+                  <th>Guia</th>
+                  <th style="width:130px">Fecha</th>
                   <th>Codigo</th>
                   <th>Modelo</th>
                   <th style="width:180px">Nombre</th>
@@ -373,6 +452,9 @@ MODAL VISUALIZAR INFORMACION
                 </tbody>
 
               </table>
+          </div>
+
+              
 
 
 

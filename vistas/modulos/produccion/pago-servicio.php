@@ -329,7 +329,7 @@ MODAL VISUALIZAR INFORMACION
 
 <div id="modalVerPagoServicio" class="modal fade" role="dialog">
   
-  <div class="modal-dialog" style="width: 70% !important;">
+  <div class="modal-dialog" style="width: 80% !important;">
 
     <div class="modal-content">
 
@@ -373,7 +373,9 @@ MODAL VISUALIZAR INFORMACION
               <thead>
 
                 <tr>
+                  <th style="width:150px"></th>
                   <th></th>
+                  <th style="width:100px"></th>
                   <th></th>
                   <th></th>
                   <th style="width:250px"></th>
@@ -388,10 +390,14 @@ MODAL VISUALIZAR INFORMACION
                   <th></th>
                   <th></th>
                   <th></th>
+                  <th></th>
+                  <th></th>
                 </tr>
 
                 <tr>
+                  <th style="width:150px"></th>
                   <th></th>
+                  <th style="width:100px"></th>
                   <th></th>
                   <th></th>
                   <th style="width:250px"></th>
@@ -405,11 +411,15 @@ MODAL VISUALIZAR INFORMACION
                   <th>38</th>
                   <th>40</th>
                   <th>42</th>
+                  <th>Total</th>
                   <th></th>
+                  <th>Total</th>
                 </tr>
 
                 <tr>
-                  <th>Taller</th>
+                  <th style="width:150px">Taller</th>
+                  <th>Guia</th>
+                  <th style="width:100px">Fecha</th>
                   <th>Codigo</th>
                   <th>Modelo</th>
                   <th style="width:250px">Nombre</th>
@@ -423,7 +433,9 @@ MODAL VISUALIZAR INFORMACION
                   <th>12</th>
                   <th>14</th>
                   <th>16</th>
-                  <th>Total</th>
+                  <th>doc</th>
+                  <th>P/D</th>
+                  <th>S/.</th>
                 </tr>
 
                 </thead>

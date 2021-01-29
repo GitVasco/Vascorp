@@ -31,7 +31,7 @@
 
         <!-- search form -->
         <div class="input-group sidebar-form">
-        <input type="text" name="q" class="form-control search-menu-box" placeholder="Search...">
+        <input type="text" name="q" class="form-control search-menu-box" placeholder="Buscar...">
         </div>
 
             <!-- Escritorio -->
@@ -440,6 +440,16 @@
 
                             <i class="fa fa-circle-o"></i>
                             <span>Trabajador</span>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+                        <a href="trabajador2">
+
+                            <i class="fa fa-circle-o"></i>
+                            <span>Trabajador 2</span>
 
                         </a>
 

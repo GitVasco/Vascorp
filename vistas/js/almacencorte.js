@@ -912,3 +912,200 @@ $(".tablaAlmacenCorte").on("click", ".btnEditarNotificacion", function () {
     })
 })
 
+
+if (localStorage.getItem("capturarRango17") != null) {
+    $("#daterange-btnVerCierres span").html(localStorage.getItem("capturarRango17"));
+    cargarTablaDetalleCortes(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
+  } else {
+    $("#daterange-btnVerCierres span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
+    cargarTablaDetalleCortes(null, null);
+  }
+  
+  
+    
+    function cargarTablaDetalleCortes(fechaInicial,fechaFinal) {
+    $(".tablaDetalleCorteTotal").DataTable({
+      ajax:"ajax/produccion/tabla-ver-cortes.ajax.php?perfil="+$("#perfilOculto").val() + "&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
+      deferRender: true,
+      retrieve: true,
+      processing: true,
+      language: {
+        sProcessing: "Procesando...",
+        sLengthMenu: "Mostrar _MENU_ registros",
+        sZeroRecords: "No se encontraron resultados",
+        sEmptyTable: "Ningún dato disponible en esta tabla",
+        sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+        sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
+        sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+        sInfoPostFix: "",
+        sSearch: "Buscar:",
+        sUrl: "",
+        sInfoThousands: ",",
+        sLoadingRecords: "Cargando...",
+        oPaginate: {
+          sFirst: "Primero",
+          sLast: "Último",
+          sNext: "Siguiente",
+          sPrevious: "Anterior"
+        },
+        oAria: {
+          sSortAscending: ": Activar para ordenar la columna de manera ascendente",
+          sSortDescending: ": Activar para ordenar la columna de manera descendente"
+        }
+      },
+      "createdRow":function(row,data,index){
+        if(data[0] == "T4 - ADELA"){
+          $('td',row).css({
+            'background-color':'#D6C4D5',
+            'color':'black'
+          })
+        }else if (data[0] == "T6 - PABLO"){
+          $('td',row).css({
+            'background-color':'#C7C1D8',
+            'color':'black'
+          })
+        }else if(data[0] == "T9 - FRANCISCO"){
+          $('td',row).css({
+            'background-color':'#DADEBE',
+            'color':'black'
+          })
+        }else if(data[0] == "TA - ELVIRA"){
+          $('td',row).css({
+            'background-color':'#F7E4E9',
+            'color':'black'
+          })
+        }else if(data[0] == "T7 - GUSTAVO"){
+          $('td',row).css({
+            'background-color':'#D4F8F7',
+            'color':'black'
+          })
+        }else if(data[0] == "T6 - PABLO"){
+          $('td',row).css({
+            'background-color':'#D4F8E2',
+            'color':'black'
+          })
+        }else if(data[0] == "T8 - MIGUEL"){
+          $('td',row).css({
+            'background-color':'#F4F8D4',
+            'color':'black'
+          })
+        }
+      }
+    
+      });
+    }
+
+/*=============================================
+RANGO DE FECHAS
+=============================================*/
+
+$("#daterange-btnVerCortes").daterangepicker(
+    {
+      cancelClass: "CancelarVerCortes",
+      locale:{
+    "daysOfWeek": [
+      "Dom",
+      "Lun",
+      "Mar",
+      "Mie",
+      "Jue",
+      "Vie",
+      "Sab"
+    ],
+    "monthNames": [
+      "Enero",
+      "Febrero",
+      "Marzo",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Septiembre",
+      "Octubre",
+      "Noviembre",
+      "Diciembre"
+    ],
+    },
+      ranges: {
+        Hoy: [moment(), moment()],
+        Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+        "Últimos 7 días": [moment().subtract(6, "days"), moment()],
+        "Últimos 30 días": [moment().subtract(29, "days"), moment()],
+        "Este mes": [moment().startOf("month"), moment().endOf("month")],
+        "Último mes": [
+          moment()
+            .subtract(1, "month")
+            .startOf("month"),
+          moment()
+            .subtract(1, "month")
+            .endOf("month")
+        ]
+      },
+      
+      startDate: moment(),
+      endDate: moment()
+    },
+    function(start, end) {
+      $("#daterange-btnVerCortes span").html(
+        start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
+      );
+  
+      var fechaInicial = start.format("YYYY-MM-DD");
+  
+      var fechaFinal = end.format("YYYY-MM-DD");
+  
+      var capturarRango17 = $("#daterange-btnVerCortes span").html();
+    
+      localStorage.setItem("capturarRango17", capturarRango17);
+      localStorage.setItem("fechaInicial", localStorage.getItem("fechaInicial"));
+      localStorage.setItem("fechaFinal", localStorage.getItem("fechaFinal"));
+  
+      // Recargamos la tabla con la información para ser mostrada en la tabla
+      $(".tablaDetalleCorteTotal").DataTable().destroy();
+      cargarTablaDetalleCortes(fechaInicial, fechaFinal);
+    });
+  
+  /*=============================================
+  CANCELAR RANGO DE FECHAS
+  =============================================*/
+  
+  $(".daterangepicker.opensleft .range_inputs .CancelarVerCortes").on(
+    "click",
+    function() {
+      localStorage.removeItem("capturarRango17");
+      localStorage.removeItem("fechaInicial");
+      localStorage.removeItem("fechaFinal");
+      localStorage.clear();
+      window.location = "almacencorte";
+    }
+  );
+  
+  /*=============================================
+  CAPTURAR HOY
+  =============================================*/
+  
+  $(".daterangepicker.opensleft .ranges li").on("click", function() {
+    var textoHoy = $(this).attr("data-range-key");
+  
+    if (textoHoy == "Hoy") {
+      var d = new Date();
+  
+      var dia = d.getDate();
+      var mes = d.getMonth() + 1;
+      var año = d.getFullYear();
+  
+      dia = ("0" + dia).slice(-2);
+      mes = ("0" + mes).slice(-2);
+  
+      var fechaInicial = año + "-" + mes + "-" + dia;
+      var fechaFinal = año + "-" + mes + "-" + dia;
+  
+      localStorage.setItem("capturarRango17", "Hoy");
+      localStorage.setItem("fechaInicial", fechaInicial);
+      localStorage.setItem("fechaFinal", fechaFinal);
+    // Recargamos la tabla con la información para ser mostrada en la tabla
+      $(".tablaDetalleCorteTotal").DataTable().destroy();
+      cargarTablaDetalleCortes(fechaInicial, fechaFinal);
+    }
+  });

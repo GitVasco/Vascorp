@@ -788,6 +788,7 @@ class ModeloServicios{
 		s.nom_sector,
 		sd.codigo,
 		c.fecha,
+		c.guia,
 		a.modelo,
 		a.nombre,
 		a.cod_color,
@@ -868,7 +869,7 @@ class ModeloServicios{
 		  AND a.modelo = ps.modelo 
 		LEFT JOIN sectorjf s 
 		  ON c.taller = s.cod_sector 
-	  WHERE c.fecha BETWEEN '".$inicio."' 
+	  WHERE DATE(c.fecha) BETWEEN '".$inicio."' 
 		AND '".$fin."' 
 	  GROUP BY sd.codigo,
 		a.modelo,
@@ -884,6 +885,716 @@ class ModeloServicios{
 		$stmt->close();
 
 		$stmt = null;
-    }
+	}
+	
+	static public function mdlVerSectores($inicio,$fin){
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+		c.taller,
+		s.nom_completo
+	  FROM
+		cierresjf c 
+		LEFT JOIN cierres_detallejf sd 
+		  ON c.codigo = sd.codigo 
+		LEFT JOIN articulojf a 
+		  ON sd.articulo = a.articulo 
+		LEFT JOIN precio_serviciojf ps 
+		  ON c.taller = ps.taller 
+		  AND a.modelo = ps.modelo 
+		LEFT JOIN sectorjf s 
+		  ON c.taller = s.cod_sector 
+	  WHERE DATE(c.fecha) BETWEEN '".$inicio."' 
+		AND '".$fin."' 
+	  GROUP BY c.taller ;
+	  ");
+
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt->close();
+
+		$stmt = null;
+	}
+	
+	static public function mdlVerTotalPagar($inicio,$fin,$sector){
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+		c.taller,
+		ROUND(
+		  SUM(sd.cantidad / 12 * ps.precio_doc),
+		  2
+		) AS total_soles 
+	  FROM
+		cierresjf c 
+		LEFT JOIN cierres_detallejf sd 
+		  ON c.codigo = sd.codigo 
+		LEFT JOIN articulojf a 
+		  ON sd.articulo = a.articulo 
+		LEFT JOIN precio_serviciojf ps 
+		  ON c.taller = ps.taller 
+		  AND a.modelo = ps.modelo 
+		LEFT JOIN sectorjf s 
+		  ON c.taller = s.cod_sector 
+	  WHERE DATE(c.fecha) BETWEEN '".$inicio."' 
+		AND '".$fin."' 
+		AND c.taller = '".$sector."' 
+	  GROUP BY c.taller ");
+
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt->close();
+
+		$stmt = null;
+	}
+
+	static public function mdlVerPagoServicioSector($inicio,$fin,$sector){
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+		c.taller,
+		s.cod_sector,
+		s.nom_sector,
+		sd.codigo,
+		c.fecha,
+		CASE
+		  WHEN MONTH(c.fecha) = '1' 
+		  THEN CONCAT(DAY(c.fecha), '-Ene') 
+		  WHEN MONTH(c.fecha) = '2' 
+		  THEN CONCAT(DAY(c.fecha), '-Feb') 
+		  WHEN MONTH(c.fecha) = '3' 
+		  THEN CONCAT(DAY(c.fecha), '-Mar') 
+		  WHEN MONTH(c.fecha) = '4' 
+		  THEN CONCAT(DAY(c.fecha), '-Abr') 
+		  WHEN MONTH(c.fecha) = '5' 
+		  THEN CONCAT(DAY(c.fecha), '-May') 
+		  WHEN MONTH(c.fecha) = '6' 
+		  THEN CONCAT(DAY(c.fecha), '-Jun') 
+		  WHEN MONTH(c.fecha) = '7' 
+		  THEN CONCAT(DAY(c.fecha), '-Jul') 
+		  WHEN MONTH(c.fecha) = '8' 
+		  THEN CONCAT(DAY(c.fecha), '-Ago') 
+		  WHEN MONTH(c.fecha) = '9' 
+		  THEN CONCAT(DAY(c.fecha), '-Sep') 
+		  WHEN MONTH(c.fecha) = '10' 
+		  THEN CONCAT(DAY(c.fecha), '-Oct') 
+		  WHEN MONTH(c.fecha) = '11' 
+		  THEN CONCAT(DAY(c.fecha), '-Nov') 
+		  ELSE CONCAT(DAY(c.fecha), '-Dic') 
+		END AS fec2,
+		c.guia,
+		a.modelo,
+		a.nombre,
+		a.cod_color,
+		a.color,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '1' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t1,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '2' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t2,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '3' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t3,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '4' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t4,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '5' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t5,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '6' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t6,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '7' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t7,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '8' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t8,
+		SUM(sd.cantidad) AS total_und,
+		ROUND(SUM(sd.cantidad) / 12, 2) AS total_docenas,
+		ps.precio_doc,
+		ROUND(
+		  (
+			(SUM(sd.cantidad) / 12) * ps.precio_doc
+		  ),
+		  2
+		) AS total_soles 
+	  FROM
+		cierresjf c 
+		LEFT JOIN cierres_detallejf sd 
+		  ON c.codigo = sd.codigo 
+		LEFT JOIN articulojf a 
+		  ON sd.articulo = a.articulo 
+		LEFT JOIN precio_serviciojf ps 
+		  ON c.taller = ps.taller 
+		  AND a.modelo = ps.modelo 
+		LEFT JOIN sectorjf s 
+		  ON c.taller = s.cod_sector 
+	  WHERE DATE(c.fecha) BETWEEN '".$inicio."' 
+		AND '".$fin."' 
+		AND c.taller = '".$sector."' 
+	  GROUP BY sd.codigo,
+		a.modelo,
+		a.nombre,
+		a.cod_color,
+		a.color ");
+
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt->close();
+
+		$stmt = null;
+	}
+	
+	static public function mdlVerSumaPagos($inicio,$fin,$sector){
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+		c.taller,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '1' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t1,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '2' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t2,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '3' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t3,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '4' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t4,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '5' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t5,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '6' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t6,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '7' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t7,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '8' 
+			THEN sd.cantidad 
+			ELSE 0 
+		  END
+		) AS t8,
+		SUM(sd.cantidad) AS total_und,
+		ROUND(SUM(sd.cantidad) / 12, 2) AS total_docenas 
+	  FROM
+		cierresjf c 
+		LEFT JOIN cierres_detallejf sd 
+		  ON c.codigo = sd.codigo 
+		LEFT JOIN articulojf a 
+		  ON sd.articulo = a.articulo 
+		LEFT JOIN precio_serviciojf ps 
+		  ON c.taller = ps.taller 
+		  AND a.modelo = ps.modelo 
+		LEFT JOIN sectorjf s 
+		  ON c.taller = s.cod_sector 
+	  WHERE DATE(c.fecha) BETWEEN '".$inicio."' 
+		AND '".$fin."' 
+	  AND c.taller='".$sector."'
+	  GROUP BY c.taller ;");
+
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt->close();
+
+		$stmt = null;
+	}
+
+	/*=============================================
+	RANGO FECHAS
+	=============================================*/	
+
+	static public function mdlRangoFechasServicios($tabla, $fechaInicial, $fechaFinal){
+
+		if($fechaInicial == "null"){
+
+			$stmt = Conexion::conectar()->prepare("SELECT se.*, s.nom_sector,u.nombre FROM  $tabla se LEFT JOIN sectorjf s on se.taller = s.cod_sector LEFT JOIN usuariosjf u ON se.usuario = u.id ORDER BY se.id ASC");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();	
+
+
+		}else if($fechaInicial == $fechaFinal){
+
+			$stmt = Conexion::conectar()->prepare("SELECT se.*, s.nom_sector,u.nombre FROM  $tabla se LEFT JOIN sectorjf s on se.taller = s.cod_sector LEFT JOIN usuariosjf u ON se.usuario = u.id WHERE DATE(se.fecha) like '%$fechaFinal%'");
+
+			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}else{
+
+			$fechaActual = new DateTime();
+			$fechaActual ->add(new DateInterval("P1D"));
+			$fechaActualMasUno = $fechaActual->format("Y-m-d");
+
+			$fechaFinal2 = new DateTime($fechaFinal);
+			$fechaFinal2 ->add(new DateInterval("P1D"));
+			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+
+			if($fechaFinalMasUno == $fechaActualMasUno){
+
+				$stmt = Conexion::conectar()->prepare("SELECT se.*, s.nom_sector,u.nombre FROM  $tabla se LEFT JOIN sectorjf s on se.taller = s.cod_sector LEFT JOIN usuariosjf u ON se.usuario = u.id WHERE DATE(se.fecha) BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'");
+
+			}else{
+
+
+				$stmt = Conexion::conectar()->prepare("SELECT se.*, s.nom_sector,u.nombre FROM  $tabla se LEFT JOIN sectorjf s on se.taller = s.cod_sector LEFT JOIN usuariosjf u ON se.usuario = u.id WHERE DATE(se.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'");
+
+			}
+		
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+	}
+
+	/*=============================================
+	RANGO FECHAS
+	=============================================*/	
+
+	static public function mdlRangoFechasVerServicios($tabla, $fechaInicial, $fechaFinal){
+
+		if($fechaInicial == "null"){
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			sd.codigo,
+			DATE(s.fecha) AS fechas,
+			a.modelo,
+			a.nombre,
+			a.cod_color,
+			a.color,
+			se.cod_sector,
+			se.nom_sector,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '1' 
+				THEN sd.cantidad 
+				ELSE 0 
+			  END
+			) AS t1,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '2' 
+				THEN sd.cantidad 
+				ELSE 0 
+			  END
+			) AS t2,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '3' 
+				THEN sd.cantidad 
+				ELSE 0 
+			  END
+			) AS t3,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '4' 
+				THEN sd.cantidad 
+				ELSE 0 
+			  END
+			) AS t4,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '5' 
+				THEN sd.cantidad 
+				ELSE 0 
+			  END
+			) AS t5,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '6' 
+				THEN sd.cantidad 
+				ELSE 0 
+			  END
+			) AS t6,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '7' 
+				THEN sd.cantidad 
+				ELSE 0 
+			  END
+			) AS t7,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '8' 
+				THEN sd.cantidad 
+				ELSE 0 
+			  END
+			) AS t8,
+			SUM(sd.cantidad) AS total 
+		  FROM
+			servicios_detallejf sd 
+			LEFT JOIN articulojf a 
+			  ON sd.articulo = a.articulo 
+			LEFT JOIN serviciosjf s 
+			  ON sd.codigo = s.codigo 
+			LEFT JOIN sectorjf se 
+			  ON s.taller = se.cod_sector 
+		  GROUP BY sd.codigo,
+			a.modelo,
+			a.nombre,
+			a.cod_color,
+			a.color ORDER BY sd.id ASC");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();	
+
+
+		}else if($fechaInicial == $fechaFinal){
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			sd.codigo,
+			DATE(s.fecha) AS fechas,
+			a.modelo,
+			a.nombre,
+			a.cod_color,
+			a.color,
+			se.cod_sector,
+			se.nom_sector,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '1' 
+				THEN sd.cantidad 
+				ELSE 0 
+			  END
+			) AS t1,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '2' 
+				THEN sd.cantidad 
+				ELSE 0 
+			  END
+			) AS t2,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '3' 
+				THEN sd.cantidad 
+				ELSE 0 
+			  END
+			) AS t3,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '4' 
+				THEN sd.cantidad 
+				ELSE 0 
+			  END
+			) AS t4,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '5' 
+				THEN sd.cantidad 
+				ELSE 0 
+			  END
+			) AS t5,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '6' 
+				THEN sd.cantidad 
+				ELSE 0 
+			  END
+			) AS t6,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '7' 
+				THEN sd.cantidad 
+				ELSE 0 
+			  END
+			) AS t7,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '8' 
+				THEN sd.cantidad 
+				ELSE 0 
+			  END
+			) AS t8,
+			SUM(sd.cantidad) AS total 
+		  FROM
+			servicios_detallejf sd 
+			LEFT JOIN articulojf a 
+			  ON sd.articulo = a.articulo 
+			LEFT JOIN serviciosjf s 
+			  ON sd.codigo = s.codigo 
+			LEFT JOIN sectorjf se 
+			  ON s.taller = se.cod_sector 
+			WHERE DATE(s.fecha) like '%$fechaFinal%'
+		  GROUP BY sd.codigo,
+			a.modelo,
+			a.nombre,
+			a.cod_color,
+			a.color ");
+
+			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}else{
+
+			$fechaActual = new DateTime();
+			$fechaActual ->add(new DateInterval("P1D"));
+			$fechaActualMasUno = $fechaActual->format("Y-m-d");
+
+			$fechaFinal2 = new DateTime($fechaFinal);
+			$fechaFinal2 ->add(new DateInterval("P1D"));
+			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+
+			if($fechaFinalMasUno == $fechaActualMasUno){
+
+				$stmt = Conexion::conectar()->prepare("SELECT 
+				sd.codigo,
+				DATE(s.fecha) AS fechas,
+				a.modelo,
+				a.nombre,
+				a.cod_color,
+				a.color,
+				se.cod_sector,
+				se.nom_sector,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '1' 
+					THEN sd.cantidad 
+					ELSE 0 
+				  END
+				) AS t1,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '2' 
+					THEN sd.cantidad 
+					ELSE 0 
+				  END
+				) AS t2,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '3' 
+					THEN sd.cantidad 
+					ELSE 0 
+				  END
+				) AS t3,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '4' 
+					THEN sd.cantidad 
+					ELSE 0 
+				  END
+				) AS t4,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '5' 
+					THEN sd.cantidad 
+					ELSE 0 
+				  END
+				) AS t5,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '6' 
+					THEN sd.cantidad 
+					ELSE 0 
+				  END
+				) AS t6,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '7' 
+					THEN sd.cantidad 
+					ELSE 0 
+				  END
+				) AS t7,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '8' 
+					THEN sd.cantidad 
+					ELSE 0 
+				  END
+				) AS t8,
+				SUM(sd.cantidad) AS total 
+			  FROM
+				servicios_detallejf sd 
+				LEFT JOIN articulojf a 
+				  ON sd.articulo = a.articulo 
+				LEFT JOIN serviciosjf s 
+				  ON sd.codigo = s.codigo 
+				LEFT JOIN sectorjf se 
+				  ON s.taller = se.cod_sector 
+				WHERE DATE(s.fecha) BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'
+			  GROUP BY sd.codigo,
+				a.modelo,
+				a.nombre,
+				a.cod_color,
+				a.color");
+
+			}else{
+
+
+				$stmt = Conexion::conectar()->prepare("SELECT 
+				sd.codigo,
+				DATE(s.fecha) AS fechas,
+				a.modelo,
+				a.nombre,
+				a.cod_color,
+				a.color,
+				se.cod_sector,
+				se.nom_sector,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '1' 
+					THEN sd.cantidad 
+					ELSE 0 
+				  END
+				) AS t1,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '2' 
+					THEN sd.cantidad 
+					ELSE 0 
+				  END
+				) AS t2,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '3' 
+					THEN sd.cantidad 
+					ELSE 0 
+				  END
+				) AS t3,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '4' 
+					THEN sd.cantidad 
+					ELSE 0 
+				  END
+				) AS t4,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '5' 
+					THEN sd.cantidad 
+					ELSE 0 
+				  END
+				) AS t5,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '6' 
+					THEN sd.cantidad 
+					ELSE 0 
+				  END
+				) AS t6,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '7' 
+					THEN sd.cantidad 
+					ELSE 0 
+				  END
+				) AS t7,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '8' 
+					THEN sd.cantidad 
+					ELSE 0 
+				  END
+				) AS t8,
+				SUM(sd.cantidad) AS total 
+			  FROM
+				servicios_detallejf sd 
+				LEFT JOIN articulojf a 
+				  ON sd.articulo = a.articulo 
+				LEFT JOIN serviciosjf s 
+				  ON sd.codigo = s.codigo 
+				LEFT JOIN sectorjf se 
+				  ON s.taller = se.cod_sector 
+				WHERE DATE(s.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'
+
+			  GROUP BY sd.codigo,
+				a.modelo,
+				a.nombre,
+				a.cod_color,
+				a.color ");
+
+			}
+		
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+	}
 
 }

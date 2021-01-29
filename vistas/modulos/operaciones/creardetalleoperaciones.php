@@ -225,7 +225,7 @@
             <?php 
               $item=null;
               $valor=null;
-              $ultimovalor="";
+              $ultimovalor=0;
               $operaciones=ControladorOperaciones::ctrMostrarOperaciones($item,$valor);
               foreach($operaciones as $key => $value) {
                 $ultimovalor=$value["codigo"];

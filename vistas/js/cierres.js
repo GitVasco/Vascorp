@@ -2,9 +2,22 @@
 CARGAR LA TABLA DINÁMICA DE CIERRES
 =============================================*/
 
+if (localStorage.getItem("capturarRango15") != null) {
+	$("#daterange-btnCierres span").html(localStorage.getItem("capturarRango15"));
+	cargarTablaCierres(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
+} else {
+	$("#daterange-btnCierres span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
+	cargarTablaCierres(null, null);
+}
+
+
+/* 
+* TABLA PARA PRODUCCION Brasier
+*/
+function cargarTablaCierres(fechaInicial,fechaFinal) {
 
  $(".tablaCierres").DataTable({
-    ajax: "ajax/produccion/tabla-cierres.ajax.php",
+    ajax: "ajax/produccion/tabla-cierres.ajax.php?perfil="+$("#perfilOculto").val() + "&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
     deferRender: true,
     retrieve: true,
     processing: true,
@@ -34,6 +47,122 @@ CARGAR LA TABLA DINÁMICA DE CIERRES
       }
     }
   });
+}
+
+/*=============================================
+RANGO DE FECHAS
+=============================================*/
+
+$("#daterange-btnCierres").daterangepicker(
+  {
+    cancelClass: "CancelarCierres",
+    locale:{
+  "daysOfWeek": [
+    "Dom",
+    "Lun",
+    "Mar",
+    "Mie",
+    "Jue",
+    "Vie",
+    "Sab"
+  ],
+  "monthNames": [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre"
+  ],
+  },
+    ranges: {
+      Hoy: [moment(), moment()],
+      Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+      "Últimos 7 días": [moment().subtract(6, "days"), moment()],
+      "Últimos 30 días": [moment().subtract(29, "days"), moment()],
+      "Este mes": [moment().startOf("month"), moment().endOf("month")],
+      "Último mes": [
+        moment()
+          .subtract(1, "month")
+          .startOf("month"),
+        moment()
+          .subtract(1, "month")
+          .endOf("month")
+      ]
+    },
+    
+    startDate: moment(),
+    endDate: moment()
+  },
+  function(start, end) {
+    $("#daterange-btnCierres span").html(
+      start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
+    );
+
+    var fechaInicial = start.format("YYYY-MM-DD");
+
+    var fechaFinal = end.format("YYYY-MM-DD");
+
+    var capturarRango15 = $("#daterange-btnCierres span").html();
+  
+    localStorage.setItem("capturarRango15", capturarRango15);
+    localStorage.setItem("fechaInicial", localStorage.getItem("fechaInicial"));
+    localStorage.setItem("fechaFinal", localStorage.getItem("fechaFinal"));
+
+    // Recargamos la tabla con la información para ser mostrada en la tabla
+    $(".tablaCierres").DataTable().destroy();
+    cargarTablaCierres(fechaInicial, fechaFinal);
+  });
+
+/*=============================================
+CANCELAR RANGO DE FECHAS
+=============================================*/
+
+$(".daterangepicker.opensleft .range_inputs .CancelarCierres").on(
+  "click",
+  function() {
+    localStorage.removeItem("capturarRango15");
+    localStorage.removeItem("fechaInicial");
+    localStorage.removeItem("fechaFinal");
+    localStorage.clear();
+    window.location = "cierres";
+  }
+);
+
+/*=============================================
+CAPTURAR HOY
+=============================================*/
+
+$(".daterangepicker.opensleft .ranges li").on("click", function() {
+  var textoHoy = $(this).attr("data-range-key");
+
+  if (textoHoy == "Hoy") {
+    var d = new Date();
+
+    var dia = d.getDate();
+    var mes = d.getMonth() + 1;
+    var año = d.getFullYear();
+
+    dia = ("0" + dia).slice(-2);
+    mes = ("0" + mes).slice(-2);
+
+    var fechaInicial = año + "-" + mes + "-" + dia;
+    var fechaFinal = año + "-" + mes + "-" + dia;
+
+    localStorage.setItem("capturarRango15", "Hoy");
+    localStorage.setItem("fechaInicial", fechaInicial);
+    localStorage.setItem("fechaFinal", fechaFinal);
+  // Recargamos la tabla con la información para ser mostrada en la tabla
+    $(".tablaCierres").DataTable().destroy();
+    cargarTablaCierres(fechaInicial, fechaFinal);
+  }
+});
   
   // Validamos que venga la variable capturaRango en el localStorage
 if (localStorage.getItem("sectorCierre") != null) {
@@ -530,6 +659,7 @@ $(".tablaCierres").on("click", ".btnVisualizarCierre", function () {
 			// console.log("respuesta", respuesta);
 
       $("#cierre").val(respuesta["codigo"]);
+      $("#guia").val(respuesta["guia"]);
       $("#fecha").val(respuesta["fecha"]);
       $("#nombre").val(respuesta["taller"]+" - "+respuesta["nom_sector"]);
       $("#cantidad").val(respuesta["total"]);
@@ -625,6 +755,8 @@ $(".tablaCierres").on("click", ".btnVisualizarCierre", function () {
 
 					'<tr class="detalleMP">' +
             '<td>' + id.cod_sector+" - "+id.nom_sector + ' </td>' +  
+            '<td>' + id.guia + ' </td>' +
+            '<td>' + id.fechas + ' </td>' +
             '<td>' + id.codigo + ' </td>' +
 						'<td><b>' + id.modelo + ' </b></td>' +
 						'<td>' + id.nombre + ' </td>' +
@@ -650,9 +782,19 @@ $(".tablaCierres").on("click", ".btnVisualizarCierre", function () {
   
 });
 
-$(".box").on("click", ".btnCierreDeta", function () {
+if (localStorage.getItem("capturarRango16") != null) {
+  $("#daterange-btnVerCierres span").html(localStorage.getItem("capturarRango16"));
+  cargarTablaDetalleCierres(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
+} else {
+  $("#daterange-btnVerCierres span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
+  cargarTablaDetalleCierres(null, null);
+}
+
+
+  
+  function cargarTablaDetalleCierres(fechaInicial,fechaFinal) {
   $(".tablaDetalleCierrreTotal").DataTable({
-    ajax:"ajax/produccion/tabla-ver-cierres.ajax.php",
+    ajax:"ajax/produccion/tabla-ver-cierres.ajax.php?perfil="+$("#perfilOculto").val() + "&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
     deferRender: true,
     retrieve: true,
     processing: true,
@@ -719,8 +861,8 @@ $(".box").on("click", ".btnCierreDeta", function () {
       }
     }
   
-  });
-});
+    });
+  }
 $(".box").on("click",".btnRegistroCierre",function(){
   localStorage.removeItem("sectorCierre");
 
@@ -729,3 +871,118 @@ $(".box").on("click",".btnLimpiarSectorCierre",function(){
   localStorage.removeItem("sectorCierre");
   window.location = "crear-cierre";
 })
+
+/*=============================================
+RANGO DE FECHAS
+=============================================*/
+
+$("#daterange-btnVerCierres").daterangepicker(
+  {
+    cancelClass: "CancelarVerCierres",
+    locale:{
+  "daysOfWeek": [
+    "Dom",
+    "Lun",
+    "Mar",
+    "Mie",
+    "Jue",
+    "Vie",
+    "Sab"
+  ],
+  "monthNames": [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre"
+  ],
+  },
+    ranges: {
+      Hoy: [moment(), moment()],
+      Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+      "Últimos 7 días": [moment().subtract(6, "days"), moment()],
+      "Últimos 30 días": [moment().subtract(29, "days"), moment()],
+      "Este mes": [moment().startOf("month"), moment().endOf("month")],
+      "Último mes": [
+        moment()
+          .subtract(1, "month")
+          .startOf("month"),
+        moment()
+          .subtract(1, "month")
+          .endOf("month")
+      ]
+    },
+    
+    startDate: moment(),
+    endDate: moment()
+  },
+  function(start, end) {
+    $("#daterange-btnVerCierres span").html(
+      start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
+    );
+
+    var fechaInicial = start.format("YYYY-MM-DD");
+
+    var fechaFinal = end.format("YYYY-MM-DD");
+
+    var capturarRango16 = $("#daterange-btnVerCierres span").html();
+  
+    localStorage.setItem("capturarRango16", capturarRango16);
+    localStorage.setItem("fechaInicial", localStorage.getItem("fechaInicial"));
+    localStorage.setItem("fechaFinal", localStorage.getItem("fechaFinal"));
+
+    // Recargamos la tabla con la información para ser mostrada en la tabla
+    $(".tablaDetalleCierrreTotal").DataTable().destroy();
+    cargarTablaDetalleCierres(fechaInicial, fechaFinal);
+  });
+
+/*=============================================
+CANCELAR RANGO DE FECHAS
+=============================================*/
+
+$(".daterangepicker.opensleft .range_inputs .CancelarVerCierres").on(
+  "click",
+  function() {
+    localStorage.removeItem("capturarRango16");
+    localStorage.removeItem("fechaInicial");
+    localStorage.removeItem("fechaFinal");
+    localStorage.clear();
+    window.location = "cierres";
+  }
+);
+
+/*=============================================
+CAPTURAR HOY
+=============================================*/
+
+$(".daterangepicker.opensleft .ranges li").on("click", function() {
+  var textoHoy = $(this).attr("data-range-key");
+
+  if (textoHoy == "Hoy") {
+    var d = new Date();
+
+    var dia = d.getDate();
+    var mes = d.getMonth() + 1;
+    var año = d.getFullYear();
+
+    dia = ("0" + dia).slice(-2);
+    mes = ("0" + mes).slice(-2);
+
+    var fechaInicial = año + "-" + mes + "-" + dia;
+    var fechaFinal = año + "-" + mes + "-" + dia;
+
+    localStorage.setItem("capturarRango16", "Hoy");
+    localStorage.setItem("fechaInicial", fechaInicial);
+    localStorage.setItem("fechaFinal", fechaFinal);
+  // Recargamos la tabla con la información para ser mostrada en la tabla
+    $(".tablaDetalleCierrreTotal").DataTable().destroy();
+    cargarTablaDetalleCierres(fechaInicial, fechaFinal);
+  }
+});

@@ -541,7 +541,7 @@ MODAL EDITAR CORREO
             <!-- ENTRADA PARA EL USUARIO -->
 
              <div class="form-group  col-lg-6">
-              <label for=""><strong>Guardar correos</strong></label>
+              <label for=""><strong>Guardar bd</strong></label>
               <div class="input-group">
                 <label class="switch">
                   <input type="checkbox"  id="nuevoDatos" name="nuevoDatos" value="1" >

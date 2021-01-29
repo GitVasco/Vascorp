@@ -21,7 +21,7 @@
             <div class="box-header with-border">
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 
-                    <select class="form-control selectpicker input-lg" id="modeloMov" name="modeloMov" data-live-search="true">
+                    <select class="form-control selectpicker input-lg" id="modeloV" name="modeloV" data-live-search="true">
 
                     <option value="">Seleccione Modelo</option>
 
@@ -45,8 +45,7 @@
 
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 
-                    <button class="btn btn-primary btnCargarModV">CARGAR</button>
-                    <button class="btn btn-danger btnLimpiarModV">LIMPIAR</button>
+                    <button class="btn btn-primary btnLimpiarModV"><i class="fa fa-refresh"></i> LIMPIAR</button>
 
                 </div>
                 <div class=" pull-right ">

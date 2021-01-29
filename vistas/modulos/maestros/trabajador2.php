@@ -12,7 +12,7 @@
       
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
       
-      <li class="active">Administrar trabajadores</li>
+      <li class="active">Administrar trabajadores generales</li>
     
     </ol>
 
@@ -24,36 +24,28 @@
 
       <div class="box-header with-border">
   
-        <button class="btn btn-primary AgregarCodigo"  idTrabajador=100 data-toggle="modal" data-target="#modalAgregarTrabajador">
-          
-          Agregar trabajadores
 
-        </button>
+        <button class="btn btn-info btnCarnetTra" ><i class="fa fa-id-card-o"></i> Carnet trabajadores </button>
 
-        <div class="pull-right">
-          <button class="btn btn-outline-success btnReporteTra" style="border:green 1px solid">
-          <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Trabajadores  </button>
-        </div>
       </div>
 
       <div class="box-body">
         
-       <table class="table table-bordered table-striped dt-responsive tablaTrabajador">
+       <table class="table table-bordered table-striped dt-responsive tablaTrabajador2">
          
         <thead>
          
          <tr>
            
-           <th>Codigo</th>
-           <th>Tipo Documento</th>
+           <th>#</th>
            <th>Nro Documento</th>
            <th>Nombre</th>
            <th>Apellido Paterno</th>
            <th>Apellido Materno</th>
            <th>Tipo Trabajador</th>
            <th>Estado</th>
-           <th>Sueldo</th>
            <th>Sector</th>
+           <th>Funcion</th>
            <th>Acciones</th>
 
          </tr> 
@@ -77,7 +69,7 @@
 MODAL AGREGAR TRABAJADOR
 ======================================-->
 
-<div id="modalAgregarTrabajador" class="modal fade" role="dialog">
+<div id="modalAgregarTrabajador2" class="modal fade" role="dialog">
   
   <div class="modal-dialog">
 
@@ -315,7 +307,7 @@ MODAL AGREGAR TRABAJADOR
 MODAL EDITAR TRABAJADOR
 ======================================-->
 
-<div id="modalEditarTrabajador" class="modal fade" role="dialog">
+<div id="modalEditarTrabajador2" class="modal fade" role="dialog">
   
   <div class="modal-dialog">
 
@@ -582,5 +574,5 @@ MODAL EDITAR TRABAJADOR
 ?>
 
 <script>
-window.document.title = "Trabajador"
+window.document.title = "Trabajador General"
 </script>

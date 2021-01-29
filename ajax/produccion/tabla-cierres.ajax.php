@@ -11,10 +11,8 @@ class TablaCierres{
 
     public function mostrarTablaCierres(){
 
-        $item = null;     
-        $valor = null;
 
-        $cierres = ControladorCierres::ctrMostrarCierres($item, $valor);	
+        $cierres = ControladorCierres::ctrRangoFechasCierres($_GET["fechaInicial"], $_GET["fechaFinal"]);	
         if(count($cierres)>0){
 
         $datosJson = '{
@@ -42,16 +40,17 @@ class TablaCierres{
         /*=============================================
         TRAEMOS LAS ACCIONES
         =============================================*/         
-        
+        $fecha=substr($cierres[$i]["fecha"],0,10);
         $botones =  "<div class='btn-group'><button class='btn btn-info btnVisualizarCierre' title='Visualizar Cierre' data-toggle='modal' data-target='#modalVisualizarCierre' codigoCierre='".$cierres[$i]["codigo"]."'><i class='fa fa-eye'></i></button><button class='btn btn-warning btnEditarCierre' title='Editar Cierre' idCierre='".$cierres[$i]["codigo"]."' data-toggle='modal' data-target='#modalEditarCierre'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarCierre' title='Eliminar Cierre' idCierre='".$cierres[$i]["codigo"]."'><i class='fa fa-times'></i></button><button class='btn btn-outline-success pull-right btnDetalleCierre' idCierre='".$cierres[$i]["codigo"]."' style='border:green 1px solid'><img src='vistas/img/plantilla/excel.png' width='18px'></button></div>"; 
 
             $datosJson .= '[
             "'.($i+1).'",
             "'.$cierres[$i]["codigo"].'",
-            "'.$cierres[$i]["usuario"].'",
+            "'.$cierres[$i]["guia"].'",
+            "'.$cierres[$i]["nombre"].'",
             "'.$cierres[$i]["taller"]." - ".$cierres[$i]["nom_sector"].'",
             "'.$cierres[$i]["total"].'",
-            "'.$cierres[$i]["fecha"].'",
+            "'.$fecha.'",
             "'.$estado.'",
             "'.$botones.'"
             ],';        

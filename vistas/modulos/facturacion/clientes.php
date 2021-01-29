@@ -327,7 +327,7 @@ MODAL AGREGAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <input type="text" class="form-control input-sm" name="telefono" placeholder="Telefono - 1" required>
+                  <input type="text" class="form-control input-sm" name="telefono" placeholder="Telefono - 1" >
 
                 </div>
 
@@ -341,7 +341,7 @@ MODAL AGREGAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <input type="text" class="form-control input-sm" name="telefono2" placeholder="Telefono - 2" required>
+                  <input type="text" class="form-control input-sm" name="telefono2" placeholder="Telefono - 2" >
 
                 </div>
 
@@ -355,7 +355,7 @@ MODAL AGREGAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <input type="text" class="form-control input-sm" name="email" placeholder="E - mail" required>
+                  <input type="text" class="form-control input-sm" name="email" placeholder="E - mail" >
 
                 </div>
 
@@ -369,7 +369,7 @@ MODAL AGREGAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <input type="text" class="form-control input-sm" name="contacto" placeholder="Contacto" required>
+                  <input type="text" class="form-control input-sm" name="contacto" placeholder="Contacto" >
 
                 </div>
 
@@ -383,7 +383,7 @@ MODAL AGREGAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <select class="form-control input-sm" id="vendedor" name="vendedor" required>
+                  <select class="form-control input-sm" id="vendedor" name="vendedor" >
 
                     <option value="">Vendedor</option>
                     <option value="00">00   - Oficina</option>
@@ -741,7 +741,7 @@ MODAL EDITAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <input type="text" class="form-control input-sm" name="editarTelefono" id="editarTelefono" placeholder="Telefono - 1" required>
+                  <input type="text" class="form-control input-sm" name="editarTelefono" id="editarTelefono" placeholder="Telefono - 1" >
 
                 </div>
 
@@ -755,7 +755,7 @@ MODAL EDITAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <input type="text" class="form-control input-sm" name="editarTelefono2" id="editarTelefono2" placeholder="Telefono - 2" required>
+                  <input type="text" class="form-control input-sm" name="editarTelefono2" id="editarTelefono2" placeholder="Telefono - 2" >
 
                 </div>
 
@@ -769,7 +769,7 @@ MODAL EDITAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <input type="text" class="form-control input-sm" name="editarEmail" id="editarEmail" placeholder="E - mail" required>
+                  <input type="text" class="form-control input-sm" name="editarEmail" id="editarEmail" placeholder="E - mail" >
 
                 </div>
 
@@ -783,7 +783,7 @@ MODAL EDITAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <input type="text" class="form-control input-sm" name="editarContacto" id="editarContacto" placeholder="Contacto" required>
+                  <input type="text" class="form-control input-sm" name="editarContacto" id="editarContacto" placeholder="Contacto" >
 
                 </div>
 
@@ -797,7 +797,7 @@ MODAL EDITAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <select class="form-control input-sm" id="editarVendedor" name="editarVendedor"  data-live-search="true" required>
+                  <select class="form-control input-sm" id="editarVendedor" name="editarVendedor"  data-live-search="true" >
 
                     <option value="">Vendedor</option>
                     <option value="00">00   - Oficina</option>

@@ -36,7 +36,7 @@ class TablaTalleresT{
     
             }else{
     
-                $estado = "<span style='font-size:85%' class='label label-success'>Terminado</span>";
+                $estado = "<button class='btn btn-success btn-xs btnReiniciarTallerT' codigoTallerT='".$talleres[$i]["codigo"]."' estadoTaller='1'>Terminado</button>";
     
             } 
             $botones="<div class='btn-group'><button class='btn btn-warning btnEditarTallerTerminado' title='Editar Taller terminado' idTallerT='".$talleres[$i]["id"]."' data-toggle='modal' data-target='#editarTallerT' ><i class='fa fa-pencil'></i></button><button class='btn btn-success btnDividirTallerTerminado' title='Dividir cantidad'  idTaller='".$talleres[$i]["codigo"]."' data-toggle='modal' data-target='#dividirTallerT' ><i class='fa fa-random'></i></button></div>";    

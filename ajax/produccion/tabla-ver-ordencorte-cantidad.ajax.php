@@ -3,14 +3,14 @@
 require_once "../../controladores/ordencorte.controlador.php";
 require_once "../../modelos/ordencorte.modelo.php";
 
-class TablaVerOrdenCorteG{
+class TablaVerOrdenCorteCantidad{
 
     /* 
     * MOSTRAR TABLA DE ORDENES DE CORTE
     */
-    public function mostrarVerTablaOrdenCorteG(){
+    public function mostrarVerTablaOrdenCorteCantidad(){
 
-        $ordencorte = ControladorOrdenCorte::ctrRangoFechasOrdenCortesGeneral($_GET["fechaInicial"],$_GET["fechaFinal"]);
+        $ordencorte = ControladorOrdenCorte::ctrRangoFechasOrdenCortesCantidad($_GET["fechaInicial"],$_GET["fechaFinal"]);
         // $ordencorte = ControladorOrdenCorte::ctrRangoFechasOrdenCortes($item,$valor);
         
         if(count($ordencorte)>0){
@@ -62,5 +62,5 @@ class TablaVerOrdenCorteG{
 /*=============================================
 ACTIVAR TABLA DE orden$ordencorte
 =============================================*/ 
-$activarVerOrdenCorteG = new TablaVerOrdenCorteG();
-$activarVerOrdenCorteG -> mostrarVerTablaOrdenCorteG();
+$activarVerOrdenCorteCantidad = new TablaVerOrdenCorteCantidad();
+$activarVerOrdenCorteCantidad -> mostrarVerTablaOrdenCorteCantidad();

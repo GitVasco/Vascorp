@@ -100,7 +100,7 @@ class ModeloOperaciones{
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ORDER BY codigo ASC");
 
 			$stmt -> execute();
 
@@ -429,7 +429,8 @@ class ModeloOperaciones{
 		$tabla dt 
 		LEFT JOIN operacionesjf o 
 		ON dt.cod_operacion = o.codigo
-	  WHERE dt.$item = :$item";
+	  WHERE dt.$item = :$item
+	  ORDER BY dt.id ASC";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":".$item,$valor,PDO::PARAM_STR);

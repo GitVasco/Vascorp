@@ -73,7 +73,7 @@ class TablaClientes{
                 "'.$tipo_documento.'",
                 "'.$clientes[$i]["documento"].'",
                 "'.$clientes[$i]["telefono"].'",
-                "'.$clientes[$i]["ubigeo"].'",
+                "'.$clientes[$i]["ubigeos"].'",
                 "'.$clientes[$i]["fecha"].'",
                 "'.$botones.'"
                 ],';        
