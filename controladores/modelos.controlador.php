@@ -13,7 +13,19 @@ class ControladorModelos{
 
 		return $respuesta;
 
-    }
+	}
+	
+	/* 
+	* MOSTRAR MODELOS Activos
+	*/
+	static public function ctrMostrarModelosActivos(){
+
+
+		$respuesta = ModeloModelos::mdlMostrarModelosActivos();
+
+		return $respuesta;
+
+    }	
     
 	/* 
 	* CREAR ARTICULO
