@@ -10,7 +10,7 @@ class TablaTalleresGenerado{
     */
     public function mostrarTablaTalleresGenerado(){
 
-        $talleres = ControladorTalleres::ctrMostrarTalleresGenerados($_GET["articuloTallerP"],$_GET["operacionTallerP"]);
+        $talleres = ControladorTalleres::ctrMostrarTalleresGenerados($_GET["articuloTallerP"]);
         if(count($talleres)>0){
 
         #var_dump("almacencorte", $talleres);
