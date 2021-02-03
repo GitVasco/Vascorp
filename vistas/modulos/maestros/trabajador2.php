@@ -23,9 +23,55 @@
     <div class="box">
 
       <div class="box-header with-border">
-  
 
-        <button class="btn btn-info btnCarnetTra" ><i class="fa fa-id-card-o"></i> Carnet trabajadores </button>
+        <div class="col-lg-1">
+          <button class="btn btn-info btnPaseGeneral" ><i class="fa fa-file-text"></i> Pase laboral</button>
+        </div>
+          
+        <div class="col-lg-1">
+          <button class="btn btn-success btnCarnetTra" ><i class="fa fa-id-card-o"></i> Carnet trabajadores </button>
+        </div>
+          
+        <div class="col-lg-1" style="margin-left:55px;"> 
+        <button class="btn btn-warning btnCarnetTraReves" ><i class="fa fa-id-card-o"></i> Carnet trabajadores reversa</button>
+        </div>
+        
+
+        <?php
+          $activo=ControladorTrabajador::ctrMostrarTrabajador2Activo(null);
+          $inactivo=ControladorTrabajador::ctrMostrarTrabajador2Inactivo(null);
+
+
+        ?>
+        
+
+        <div class=" col-lg-1 pull-right">
+
+            <span><b>N° trabajadores Inactivos:</b></span>
+
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span> 
+
+                <input type="text" class="form-control input-lg" style="background-color:lightpink;color:white" value="<?php echo count($inactivo)?>" readonly>
+
+              </div>
+
+        </div>
+
+        <div class=" col-lg-1 pull-right">
+
+            <span><b>N° trabajadores Activos:</b></span>
+
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span> 
+
+                <input type="text" class="form-control input-lg" style="background-color:lightgreen;color:white" value="<?php echo count($activo)?>" readonly>
+
+              </div>
+
+        </div>
 
       </div>
 
@@ -42,7 +88,6 @@
            <th>Nombre</th>
            <th>Apellido Paterno</th>
            <th>Apellido Materno</th>
-           <th>Tipo Trabajador</th>
            <th>Estado</th>
            <th>Sector</th>
            <th>Funcion</th>

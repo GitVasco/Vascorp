@@ -307,7 +307,7 @@ class ModeloTrabajador{
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT  t.* FROM trabajadores_graljf t");
+			$stmt = Conexion::conectar()->prepare("SELECT  t.* FROM trabajadores_graljf t ORDER BY t.sector ASC");
 
 			$stmt -> execute();
 
@@ -319,6 +319,63 @@ class ModeloTrabajador{
 
 		$stmt = null;
 
-    }
+	}
+
+	static public function mdlMostrarTrabajador2Activo($valor){
+
+		
+
+		$stmt = Conexion::conectar()->prepare("SELECT  t.* FROM trabajadores_graljf t WHERE t.estado='1' ORDER BY t.sector ASC");
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+		
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+	static public function mdlMostrarTrabajador2Inactivo($valor){
+
+		
+
+		$stmt = Conexion::conectar()->prepare("SELECT  t.* FROM trabajadores_graljf t WHERE t.estado='0' ORDER BY t.sector ASC");
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+		
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+	
+	/* 
+	* Método para activar y desactivar un Trabajador
+	*/
+	static public function mdlActualizarTrabajador2($tabla,$valor1, $valor2){
+
+		$sql = "UPDATE $tabla SET estado=:estado WHERE id=:valor";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":estado", $valor1, PDO::PARAM_STR);
+		$stmt->bindParam(":valor", $valor2, PDO::PARAM_INT);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt = null;
+	}
 
 }

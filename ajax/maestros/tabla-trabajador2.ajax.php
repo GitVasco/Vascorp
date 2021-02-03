@@ -28,14 +28,14 @@ class TablaTrabajador2{
         if($trabajador[$i]["estado"] == 0){
 
             /* $estado = "<button class='btn btn-danger btn-xs btnActivar'>".$articulos[$i]["id"]."</button>"; */
-            $estado = "<button class='btn btn-danger btn-xs btnActivarTrabajador2' idTrabajador='".$trabajador[$i]["id"]."' estadoTrabajador='Activo'>Inactivo</button>";
+            $estado = "<button class='btn btn-danger btn-xs btnActivarTrabajador2' idTrabajador2='".$trabajador[$i]["id"]."' estadoTrabajador2='1'>Inactivo</button>";
 
         }
 
         else{
 
             /* $estado = "<button class='btn btn-success btn-xs btnActivar'>".$articulos[$i]["id"]."</button>"; */
-            $estado = "<button class='btn btn-success btn-xs btnActivarTrabajador2' idTrabajador='".$trabajador[$i]["id"]."' estadoTrabajador='Inactivo'>Activo</button>";
+            $estado = "<button class='btn btn-success btn-xs btnActivarTrabajador2' idTrabajador2='".$trabajador[$i]["id"]."' estadoTrabajador2='0'>Activo</button>";
 
         }
 
@@ -43,16 +43,15 @@ class TablaTrabajador2{
         TRAEMOS LAS ACCIONES
         =============================================*/         
         
-        $botones =  "<div class='btn-group'><button class='btn btn-default  btnPaseLaboral' title='Pase laboral de trabajador' codigo='".$trabajador[$i]["id"]."' style='color:red'><i class='fa fa-file-pdf-o' ></i></button></div>"; 
+        $botones =  "<div class='btn-group'><button class='btn btn-info  btnPaseLaboral' title='Pase laboral de trabajador' codigo='".$trabajador[$i]["id"]."'><i class='fa fa-file-text' ></i></button><button class='btn btn-success  btnCarnetID' title='Carnet  de trabajador' codigo='".$trabajador[$i]["id"]."' ><i class='fa fa-id-card-o' ></i></button><button class='btn btn-warning  btnCarnetIDReves' title='Carnet  de trabajador reversa' codigo='".$trabajador[$i]["id"]."' ><i class='fa fa-id-card-o' ></i></button></div>"; 
 
             $datosJson .= '[
-            "'.($key+1).'",
+            "'.($i+1).'",
             "'.$trabajador[$i]["dni"].'",
             "'.$trabajador[$i]["nombres"].'",
             "'.$trabajador[$i]["ape_pat"].'",
             "'.$trabajador[$i]["ape_mat"].'",
             "'.$estado.'",
-            "'.$trabajador[$i]["funcion"].'",
             "'.$trabajador[$i]["sector"].'",
             "'.$trabajador[$i]["funcion"].'",
             "'.$botones.'"

@@ -13,7 +13,7 @@
 
   
 
-    $respuesta = ControladorTrabajador::ctrMostrarTrabajador2(null);
+    $respuesta = ControladorTrabajador::ctrMostrarTrabajador2Activo(null);
     //var_dump($respuesta["pedido"]);
     //var_dump($respuesta);
 
@@ -28,25 +28,25 @@
 
     if($newMonth == "01"){
         $mes="Enero";
-    }if($newMonth == "02"){
+    }else if($newMonth == "02"){
         $mes="Febrero";
-    }if($newMonth == "03"){
+    }else if($newMonth == "03"){
         $mes="Marzo";
-    }if($newMonth == "04"){
+    }else if($newMonth == "04"){
         $mes="Abril";
-    }if($newMonth == "05"){
+    }else if($newMonth == "05"){
         $mes="Mayo";
-    }if($newMonth == "06"){
+    }else if($newMonth == "06"){
         $mes="Junio";
-    }if($newMonth == "07"){
+    }else if($newMonth == "07"){
         $mes="Julio";
-    }if($newMonth == "08"){
+    }else if($newMonth == "08"){
         $mes="Agosto";
-    }if($newMonth == "09"){
+    }else if($newMonth == "09"){
         $mes="Septiembre";
-    }if($newMonth == "10"){
+    }else if($newMonth == "10"){
         $mes="Octubre";
-    }if($newMonth == "11"){
+    }else if($newMonth == "11"){
         $mes="Noviembre";
     }else{
         $mes="Diciembre";
@@ -69,19 +69,21 @@
        echo
       '<tr>
         <div class="carnet fondo">
-            <img src="../../vistas/img/plantilla/jackyform_letras.png" width="200px" height="100px">
-            <p style="border:1px solid pink; width:100%"></p>
-            <img src="../../vistas/img/modelos/10010/117.png" width="100px" height="150px">
+            <img src="../../vistas/img/plantilla/jackyform_paloma2.png" width="200px" height="100px">
+            <p style="border:1px solid darkred; width:100%"></p>
+            <img src="'.$value["imagen"].'" width="100px" height="150px">
             <p><b>'.$value["ape_pat"]." ".$value["ape_mat"].'<br>'.$value["nombres"].'</b></p>
             <p><b>D.N.I: '.$value["dni"].'</b></p>
             <p><b>'.$value["funcion"].'</b></p>
 
-        </div>';
+        </div>
+        
+        </tr>';
 
         }
         ?>
         
-      </tr>
+      
       
 
     </thead>

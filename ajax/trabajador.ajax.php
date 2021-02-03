@@ -40,6 +40,18 @@ class AjaxTrabajador{
 
 		echo $respuesta;
 	}
+
+
+	public function ajaxActivarDesactivarTrabajador2(){
+
+		$tabla="trabajadores_graljf";
+		$valor1=$this->activarEstadoTrabajador2;
+		$valor2=$this->activarTrabajador2;
+
+		$respuesta=ModeloTrabajador::mdlActualizarTrabajador2($tabla,$valor1,$valor2);
+
+		echo $respuesta;
+	}
 }
 
 /*=============================================
@@ -60,4 +72,11 @@ if(isset($_POST["activarTrabajador"])){
 	$activarTrabajador->activarTrabajador=$_POST["activarTrabajador"];
 	$activarTrabajador->activarEstadoTrabajador=$_POST["activarEstadoTrabajador"];
 	$activarTrabajador->ajaxActivarDesactivarTrabajador();
+}
+
+if(isset($_POST["activarTrabajador2"])){
+	$activarTrabajador2=new AjaxTrabajador();
+	$activarTrabajador2->activarTrabajador2=$_POST["activarTrabajador2"];
+	$activarTrabajador2->activarEstadoTrabajador2=$_POST["activarEstadoTrabajador2"];
+	$activarTrabajador2->ajaxActivarDesactivarTrabajador2();
 }

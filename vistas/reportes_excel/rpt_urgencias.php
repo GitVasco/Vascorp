@@ -494,7 +494,6 @@ $sqlDetalle = mysql_query("SELECT
                                     END AS stock,
                                     (a.stock - a.pedidos) AS stockB,
                                     a.pedidos,
-                                    a.tipo,
                                     a.taller,
                                     a.alm_corte,
                                     a.ord_corte,

@@ -179,8 +179,8 @@ $(".tablaTrabajador").on("click",".btnActivarTrabajador",function(){
 	// Capturamos el id del usuario y el estado
 	var idTrabajador=$(this).attr("idTrabajador");
 	var estadoTrabajador=$(this).attr("estadoTrabajador");
-	console.log("idTrabajador", idTrabajador);
-	console.log("estadoTrabajador", estadoTrabajador); 
+	// console.log("idTrabajador", idTrabajador);
+	// console.log("estadoTrabajador", estadoTrabajador); 
 	// Realizamos la activación-desactivación por una petición AJAX
 	var datos=new FormData();
 	datos.append("activarTrabajador",idTrabajador);
@@ -236,6 +236,21 @@ $(".tablaTrabajador2").on("click", ".btnPaseLaboral", function () {
   
 })
 
+$(".tablaTrabajador2").on("click", ".btnCarnetID", function () {
+
+    var codigo = $(this).attr("codigo");
+
+    window.open("vistas/reportes_ticket/carnet_id.php?codigo=" +codigo,"_blank");
+  
+})
+$(".tablaTrabajador2").on("click", ".btnCarnetIDReves", function () {
+
+    var codigo = $(this).attr("codigo");
+
+    window.open("vistas/reportes_ticket/carnet_id_reversa.php?codigo=" +codigo,"_blank");
+  
+})
+
 
 /* 
 * BOTON REPORTE DE PASE LABORAL
@@ -246,3 +261,63 @@ $(".box").on("click", ".btnCarnetTra", function () {
     window.open("vistas/reportes_ticket/carnet_trabajador.php","_blank");
   
 })
+
+$(".box").on("click", ".btnCarnetTraReves", function () {
+
+
+    window.open("vistas/reportes_ticket/carnet_trabajador_reverso.php","_blank");
+  
+})
+
+$(".box").on("click", ".btnPaseGeneral", function () {
+
+
+    window.open("vistas/reportes_ticket/pase_laboral_general.php","_blank");
+  
+})
+
+// ACTIVANDO-DESACTIVANDO TRABAJADOR
+$(".tablaTrabajador2").on("click",".btnActivarTrabajador2",function(){
+	// Capturamos el id del usuario y el estado
+	var idTrabajador2=$(this).attr("idTrabajador2");
+	var estadoTrabajador2=$(this).attr("estadoTrabajador2");
+	// console.log("idTrabajador2", idTrabajador2);
+	// console.log("estadoTrabajado2r", estadoTrabajador2); 
+	// Realizamos la activación-desactivación por una petición AJAX
+	var datos=new FormData();
+	datos.append("activarTrabajador2",idTrabajador2);
+	datos.append("activarEstadoTrabajador2",estadoTrabajador2);
+	$.ajax({
+		url:"ajax/trabajador.ajax.php",
+		type:"POST",
+		data:datos,
+		cache:false,
+		contentType:false,
+		processData:false,
+		success:function(respuesta){
+			if(window.matchMedia("(max-width:767px)").matches){
+				swal({
+					type: "success",
+					title: "¡Ok!",
+					text: "¡La información fue actualizada con éxito!",
+					showConfirmButton: true,
+					confirmButtonText: "Cerrar",
+					closeOnConfirm: false
+				}).then((result)=>{
+					if(result.value){
+						window.location="trabajador2";}
+				});}}
+	});
+
+	// Cambiamos el estado del botón físicamente
+	if(estadoTrabajador2 == '0'){
+		$(this).removeClass("btn-success");
+		$(this).addClass("btn-danger");
+		$(this).html("Inactivo");
+		$(this).attr("estadoTrabajador2","1");}
+	else{
+		$(this).addClass("btn-success");
+		$(this).removeClass("btn-danger");
+		$(this).html("Activo");
+		$(this).attr("estadoTrabajador2","0");}
+});

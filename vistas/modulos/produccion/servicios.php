@@ -306,7 +306,7 @@ MODAL VISUALIZAR INFORMACION
 
 <div id="modalVerServicioDeta" class="modal fade" role="dialog">
   
-  <div class="modal-dialog" style="width: 58% !important;">
+  <div class="modal-dialog" style="width: 70% !important;">
 
     <div class="modal-content">
 
@@ -360,12 +360,12 @@ MODAL VISUALIZAR INFORMACION
               <thead>
 
                 <tr>
-                  <th style="width:100px"></th>
+                  <th style="width:150px"></th>
                   <th style="width:100px"></th>
                   <th></th>
                   <th></th>
                   <th style="width:180px"></th>
-                  <th style="width:100px"></th>
+                  <th style="width:150px"></th>
                   <th>S</th>
                   <th>M</th>
                   <th>L</th>
@@ -378,12 +378,12 @@ MODAL VISUALIZAR INFORMACION
                 </tr>
 
                 <tr>
-                  <th style="width:100px"></th>
+                  <th style="width:150px"></th>
                   <th style="width:100px"></th>
                   <th></th>
                   <th></th>
                   <th style="width:180px"></th>
-                  <th style="width:100px"></th>
+                  <th style="width:150px"></th>
                   <th>28</th>
                   <th>30</th>
                   <th>32</th>
@@ -396,12 +396,12 @@ MODAL VISUALIZAR INFORMACION
                 </tr>
 
                 <tr>
-                  <th style="width:100px">Taller</th>
+                  <th style="width:150px">Taller</th>
                   <th style="width:100px">Fecha</th>
                   <th>Codigo</th>
                   <th>Modelo</th>
                   <th style="width:180px">Nombre</th>
-                  <th style="width:100px">Color</th>
+                  <th style="width:150px">Color</th>
                   <th>3</th>
                   <th>4</th>
                   <th>6</th>
