@@ -29,6 +29,7 @@
           Agregar trabajadores
 
         </button>
+
         <div class="pull-right">
           <button class="btn btn-outline-success btnReporteTra" style="border:green 1px solid">
           <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Trabajadores  </button>

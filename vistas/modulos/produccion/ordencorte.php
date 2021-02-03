@@ -33,7 +33,8 @@
           </button>
 
         </a>
-        <button class="btn btn-info btnOrdenCorteDeta" data-toggle='modal' data-target='#modalVerOrdenCorteDeta' ordencorte><i class="fa fa-eye"></i> Ver ordenes de corte</button>
+        <button class="btn btn-info btnOrdenCorteDeta" data-toggle='modal' data-target='#modalVerOrdenCorteDeta' ordencorte><i class="fa fa-eye"></i> Ver OC saldo</button>
+        <button class="btn btn-warning btnOrdenCorteCantidad" data-toggle='modal' data-target='#modalVerOrdenCorteCantidad' ordencorte><i class="fa fa-eye"></i> Ver OC cantidad</button>
         <button class="btn btn-outline-success btnReporteOrdenC" modelo="" style="border:green 1px solid">
                     <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Orden corte  </button>
         <button type="button" class="btn btn-default pull-right" id="daterange-btnCorte">
@@ -371,6 +372,31 @@ MODAL VISUALIZAR INFORMACION
 
         <div class="modal-body">
 
+          <div class="box-header">
+          <button type="button" class="btn btn-default pull-right" id="daterange-btnGeneralCorte">
+          <span>
+            <i class="fa fa-calendar"></i>
+
+            <?php
+
+              if(isset($_GET["fechaInicial"])){
+
+                echo $_GET["fechaInicial"]." - ".$_GET["fechaFinal"];
+
+              }else{
+              
+                echo 'Rango de fecha';
+
+              }
+
+            ?>
+
+          </span>
+
+          <i class="fa fa-caret-down"></i>
+
+        </button>
+          </div>
           <div class="box-body">
 
             <!-- TABLA DE DETALLES -->
@@ -388,6 +414,7 @@ MODAL VISUALIZAR INFORMACION
                 <tr>
                   <th></th>
                   <th style="width:100px"></th>
+                  <th style="width:100px"></th>
                   <th style="width:280px"></th>
                   <th style="width:150px"></th>
                   <th style="width:100px">S</th>
@@ -404,6 +431,7 @@ MODAL VISUALIZAR INFORMACION
                 <tr>
                   <th></th>
                   <th style="width:100px"></th>
+                  <th style="width:100px"></th>
                   <th style="width:280px"></th>
                   <th style="width:150px"></th>
                   <th style="width:100px">28</th>
@@ -419,6 +447,163 @@ MODAL VISUALIZAR INFORMACION
 
                 <tr>
                   <th>Ord. Corte</th>
+                  <th style="width:100px">Fecha</th>
+                  <th style="width:100px">Modelo</th>
+                  <th style="width:280px">Nombre</th>
+                  <th style="width:150px">Color</th>
+                  <th style="width:100px">3</th>
+                  <th style="width:100px">4</th>
+                  <th style="width:100px">6</th>
+                  <th style="width:100px">8</th>
+                  <th style="width:100px">10</th>
+                  <th style="width:100px">12</th>
+                  <th style="width:100px">14</th>
+                  <th style="width:100px">16</th>
+                  <th style="width:100px">Total</th>
+                </tr>
+
+                </thead>
+
+                <tbody>
+
+
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
+
+        </div>
+
+
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!--=====================================
+MODAL VISUALIZAR INFORMACION
+======================================-->
+
+<div id="modalVerOrdenCorteCantidad" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog" style="width: 70% !important;">
+
+    <div class="modal-content">
+
+      <form role="form" method="post">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Detalle de la Orden de Corte Cantidad</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-header">
+          <button type="button" class="btn btn-default pull-right" id="daterange-btnCantidadCorte">
+          <span>
+            <i class="fa fa-calendar"></i>
+
+            <?php
+
+              if(isset($_GET["fechaInicial"])){
+
+                echo $_GET["fechaInicial"]." - ".$_GET["fechaFinal"];
+
+              }else{
+              
+                echo 'Rango de fecha';
+
+              }
+
+            ?>
+
+          </span>
+
+          <i class="fa fa-caret-down"></i>
+
+        </button>
+          </div>
+          <div class="box-body">
+
+            <!-- TABLA DE DETALLES -->
+
+            <div class="form-group col-lg-12">
+            <label>TABLA DETALLES</label>
+            </div>
+
+            <div class="box-body">
+
+              <table class="table table-bordered table-striped dt-responsive tablaCantidadOrdenCorteTotal">
+
+              <thead>
+
+                <tr>
+                  <th></th>
+                  <th style="width:100px"></th>
+                  <th style="width:100px"></th>
+                  <th style="width:280px"></th>
+                  <th style="width:150px"></th>
+                  <th style="width:100px">S</th>
+                  <th style="width:100px">M</th>
+                  <th style="width:100px">L</th>
+                  <th style="width:100px">XL</th>
+                  <th style="width:100px">XXL</th>
+                  <th style="width:100px">XS</th>
+                  <th style="width:100px"></th>
+                  <th style="width:100px"></th>
+                  <th style="width:100px"></th>
+                </tr>
+
+                <tr>
+                  <th></th>
+                  <th style="width:100px"></th>
+                  <th style="width:100px"></th>
+                  <th style="width:280px"></th>
+                  <th style="width:150px"></th>
+                  <th style="width:100px">28</th>
+                  <th style="width:100px">30</th>
+                  <th style="width:100px">32</th>
+                  <th style="width:100px">34</th>
+                  <th style="width:100px">36</th>
+                  <th style="width:100px">38</th>
+                  <th style="width:100px">40</th>
+                  <th style="width:100px">42</th>
+                  <th style="width:100px"></th>
+                </tr>
+
+                <tr>
+                  <th>Ord. Corte</th>
+                  <th style="width:100px">Fecha</th>
                   <th style="width:100px">Modelo</th>
                   <th style="width:280px">Nombre</th>
                   <th style="width:150px">Color</th>

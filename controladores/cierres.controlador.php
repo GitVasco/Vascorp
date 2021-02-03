@@ -99,6 +99,7 @@ class ControladorCierres{
 				============================================== */
 
 				$datos=array("codigo"=>$_POST["nuevoCierre"],
+							 "guia"=>$_POST["nuevaGuia"],
 							 "taller"=>$_POST["seleccionarSector"],
 							 "usuario"=>$_POST["idVendedor"],
 							 "total"=>$_POST["totalVenta"],
@@ -221,6 +222,7 @@ class ControladorCierres{
 			EDITAMOS LOS CAMBIOS DE LA VENTA listaMetodoPago
 			============================================== */
 			$datos=array("codigo"=>$_POST["editarCierre"],
+						 "guia"=>$_POST["editarGuia"],
 						 "usuario"=>$_POST["idVendedor"],
 						 "taller"=>$_POST["idSectorVenta"],
 						 "total"=>$_POST["totalVenta"],
@@ -415,4 +417,32 @@ class ControladorCierres{
 		return $respuesta;
 
 	} 
+
+	/*=============================================
+	RANGO FECHAS
+	=============================================*/	
+
+	static public function ctrRangoFechasCierres($fechaInicial, $fechaFinal){
+
+		$tabla = "cierresjf";
+
+		$respuesta = ModeloCierres::mdlRangoFechasCierres($tabla, $fechaInicial, $fechaFinal);
+
+		return $respuesta;
+		
+	}
+	
+	/*=============================================
+	RANGO FECHAS
+	=============================================*/	
+
+	static public function ctrRangoFechasVerCierres($fechaInicial, $fechaFinal){
+
+		$tabla = "cierresjf";
+
+		$respuesta = ModeloCierres::mdlRangoFechasVerCierres($tabla, $fechaInicial, $fechaFinal);
+
+		return $respuesta;
+		
+    }
 }

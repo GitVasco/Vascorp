@@ -663,5 +663,30 @@ class ModeloArticulos
 		$stmt = null;
 	}
 
+	/* 
+	* MOSTRAR ARTICULOS
+	*/
+	static public function mdlMostrarArticulosTicket(){
+
+		
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+												articulo,
+												modelo,
+												color,
+												talla
+											FROM
+												articulojf
+										 	WHERE estado = 'Activo'");
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+		
+
+		$stmt->close();
+
+		$stmt = null;
+	}
 }
 

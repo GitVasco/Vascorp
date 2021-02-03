@@ -578,7 +578,7 @@ for ($i=0; $i < count($sqlCabecera) ; $i++) {
     }
 
     $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", $cont);
-    $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", $sqlCabecera[$i]["modelo"]);
+    $objPHPExcel->getActiveSheet()->setCellValueExplicit("B$fila", utf8_encode($sqlCabecera[$i]["modelo"]), PHPExcel_Cell_DataType::TYPE_STRING);
     $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", utf8_encode($sqlCabecera[$i]["nombre"]));
     $objPHPExcel->getActiveSheet()->SetCellValue("D$fila", utf8_encode($sqlCabecera[$i]["color"]));
     $objPHPExcel->getActiveSheet()->SetCellValue("E$fila", $t1);

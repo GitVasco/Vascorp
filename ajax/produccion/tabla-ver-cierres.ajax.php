@@ -14,7 +14,7 @@ class TablaVerCierres{
         $item = null;     
         $valor = null;
 
-        $cierres = ControladorCierres::ctrVisualizarCierrreDetalle($valor);	
+        $cierres = ControladorCierres::ctrRangoFechasVerCierres($_GET["fechaInicial"],$_GET["fechaFinal"]);	
         if(count($cierres)>0){
 
         $datosJson = '{
@@ -25,6 +25,8 @@ class TablaVerCierres{
     
             $datosJson .= '[
             "'.$cierres[$i]["cod_sector"]." - ".$cierres[$i]["nom_sector"].'",
+            "'.$cierres[$i]["guia"].'",
+            "'.$cierres[$i]["fechas"].'",
             "'.$cierres[$i]["codigo"].'",
             "'.$cierres[$i]["modelo"].'",
             "'.$cierres[$i]["nombre"].'",

@@ -14,17 +14,21 @@ class TablaVerPagoServicios{
         $inicio = $_GET["inicio"];     
         $fin = $_GET["fin"];
 
-        $pagoservicios = ModeloServicios::mdlVerPagoServicios($inicio,$fin);	
+        $pagoservicios = ControladorServicios::ctrVerPagoServicios($inicio,$fin);	
         if(count($pagoservicios)>0){
 
         $datosJson = '{
         "data": [';
 
-        for($i = 0; $i < count($pagoservicios); $i++){
 
+        for($i = 0; $i < count($pagoservicios); $i++){
+            //convirtiendo fecha datetime a date por cadena
+            $fecha=substr($pagoservicios[$i]["fecha"],0,10);
     
             $datosJson .= '[
             "'.$pagoservicios[$i]["cod_sector"]." - ".$pagoservicios[$i]["nom_sector"].'",
+            "'.$pagoservicios[$i]["guia"].'",
+            "'.$fecha.'",
             "'.$pagoservicios[$i]["codigo"].'",
             "'.$pagoservicios[$i]["modelo"].'",
             "'.$pagoservicios[$i]["nombre"].'",
@@ -38,7 +42,9 @@ class TablaVerPagoServicios{
             "'.$pagoservicios[$i]["t6"].'",
             "'.$pagoservicios[$i]["t7"].'",
             "'.$pagoservicios[$i]["t8"].'",
-            "'.$pagoservicios[$i]["total"].'"
+            "'.$pagoservicios[$i]["total_docenas"].'",
+            "'.$pagoservicios[$i]["precio_doc"].'",
+            "'.$pagoservicios[$i]["total_soles"].'"
             ],';        
             }
 

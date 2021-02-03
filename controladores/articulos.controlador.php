@@ -62,6 +62,17 @@ class controladorArticulos{
 
 	}
 	/* 
+	* MOSTRAR ARTICULOS
+	*/
+	static public function ctrMostrarArticulosTicket(){
+
+
+		$respuesta = ModeloArticulos::mdlMostrarArticulosTicket();
+
+		return $respuesta;
+
+	}
+	/* 
 	* CREAR ARTICULO
 	*/
 	static public function ctrCrearArticulo(){

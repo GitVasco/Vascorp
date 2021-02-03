@@ -3,6 +3,8 @@ session_start();
 // Requerimos el controlador y el modelo
 require_once '../controladores/articulos.controlador.php';
 require_once '../modelos/articulos.modelo.php';
+require_once '../controladores/usuarios.controlador.php';
+require_once '../modelos/usuarios.modelo.php';
 
 class AjaxArticulos{
 
@@ -15,7 +17,8 @@ class AjaxArticulos{
 	public function ajaxActivarDesactivarArticulo(){
 
 		$valor1=$this->activarEstado;
-
+		date_default_timezone_set('America/Lima');
+		$fecha = new DateTime();
 		$valor2=$this->activarId;
 		$articulo=ControladorArticulos::ctrMostrarArticulos($valor2);
 		$usuario= $_SESSION["nombre"];
@@ -25,13 +28,29 @@ class AjaxArticulos{
 			$asunto    = 'Se activo un articulo';
 			$descripcion   = 'El usuario '.$usuario.' activo el articulo '.$articulo["articulo"].' - '.$articulo["nombre"]." talla: ".$articulo["talla"]." color: ".$articulo["color"];
 			$de = 'From: notificacionesvascorp@gmail.com';
-			mail($para, $asunto, $descripcion, $de);	
+			if($_SESSION["correo"] == 1){
+				mail($para, $asunto, $descripcion, $de);
+			  }
+			if($_SESSION["datos"] == 1){
+				$datos2= array( "usuario" => $usuario,
+						"concepto" => $descripcion,
+						"fecha" => $fecha->format("Y-m-d H:i:s"));
+				$auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
+			}	
 		}else{
 			$para      = 'notificacionesvascorp@gmail.com';
 			$asunto    = 'Se descontinuo un articulo';
 			$descripcion   = 'El usuario '.$usuario.' descontinuo el articulo '.$articulo["articulo"].' - '.$articulo["nombre"]." talla: ".$articulo["talla"]." color: ".$articulo["color"];
 			$de = 'From: notificacionesvascorp@gmail.com';
-			mail($para, $asunto, $descripcion, $de);
+			if($_SESSION["correo"] == 1){
+				mail($para, $asunto, $descripcion, $de);
+			}
+			if($_SESSION["datos"] == 1){
+			$datos2= array( "usuario" => $usuario,
+					"concepto" => $descripcion,
+					"fecha" => $fecha->format("Y-m-d H:i:s"));
+			$auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
+			}
 		}
 		$respuesta=ModeloArticulos::mdlActualizarArticulo($valor1, $valor2);
 

@@ -43,8 +43,7 @@
 
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 
-                    <button class="btn btn-primary btnCargarMpIng">CARGAR</button>
-                    <button class="btn btn-danger btnLimpiarMpIng">LIMPIAR</button>
+                    <button class="btn btn-primary btnLimpiarMpIng"><i class="fa fa-refresh"></i> LIMPIAR</button>
 
                 </div>
                 <div class=" pull-right ">

@@ -10,7 +10,7 @@ class TablaVerOrdenCorteG{
     */
     public function mostrarVerTablaOrdenCorteG(){
 
-        $ordencorte = ControladorOrdenCorte::ctrVisualizarOrdenCorteDetalle(null,null);
+        $ordencorte = ControladorOrdenCorte::ctrRangoFechasOrdenCortesGeneral($_GET["fechaInicial"],$_GET["fechaFinal"]);
         // $ordencorte = ControladorOrdenCorte::ctrRangoFechasOrdenCortes($item,$valor);
         
         if(count($ordencorte)>0){
@@ -23,6 +23,7 @@ class TablaVerOrdenCorteG{
           
                 $datosJson .= '[
                 "'.$ordencorte[$i]["ordencorte"].'",
+                "'.$ordencorte[$i]["fechas"].'",
                 "'.$ordencorte[$i]["modelo"].'",
                 "'.$ordencorte[$i]["nombre"].'",
                 "'.$ordencorte[$i]["color"].'",

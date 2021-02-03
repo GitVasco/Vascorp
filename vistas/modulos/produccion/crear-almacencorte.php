@@ -248,6 +248,7 @@
               <thead>
 
                 <tr>
+                  <th style="width:10px">Acciones</th>
                   <th>OC</th>
                   <th>Modelo</th>
                   <th>Color</th>
@@ -255,7 +256,7 @@
                   <th>Cantidad</th>
                   <th>Saldo</th>
                   <th>Alm. Corte</th>
-                  <th style="width:10px">Acciones</th>
+                  
                 </tr>
 
               </thead>

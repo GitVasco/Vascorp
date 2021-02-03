@@ -1,7 +1,7 @@
 <?php
 
-require_once "../controladores/articulos.controlador.php";
-require_once "../modelos/articulos.modelo.php";
+require_once "../../controladores/articulos.controlador.php";
+require_once "../../modelos/articulos.modelo.php";
 
 class TablaUrgencias{
 

@@ -25,6 +25,7 @@ class TablaVerAlmacenCortes{
     
             $datosJson .= '[
             "'.$almacencortes[$i]["almacencorte"].'",
+            "'.$almacencortes[$i]["fechas"].'",
             "'.$almacencortes[$i]["modelo"].'",
             "'.$almacencortes[$i]["nombre"].'",
             "'.$almacencortes[$i]["color"].'",

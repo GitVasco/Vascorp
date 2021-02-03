@@ -571,11 +571,51 @@ class ControladorServicios{
 	} 
 
 	/* 
-    *MOSTRAR QUINCENAS
+    *MOSTRAR PAGO SERVICIOS SEMANALES
     */
     static public function ctrMostrarPagoServicios($valor){
 
 		$respuesta = ModeloServicios::mdlMostrarPagoServicios($valor);
+
+		return $respuesta;
+
+	}
+
+	static public function ctrVerPagoServicios($inicio,$fin){
+
+		$respuesta = ModeloServicios::mdlVerPagoServicios($inicio,$fin);
+
+		return $respuesta;
+
+	}
+
+	static public function ctrVerSectores($inicio,$fin){
+
+		$respuesta = ModeloServicios::mdlVerSectores($inicio,$fin);
+
+		return $respuesta;
+
+	}
+
+	static public function ctrVerTotalPagar($inicio,$fin,$sector){
+
+		$respuesta = ModeloServicios::mdlVerTotalPagar($inicio,$fin,$sector);
+
+		return $respuesta;
+
+	}
+
+	static public function ctrVerPagoServicioSector($inicio,$fin,$sector){
+
+		$respuesta = ModeloServicios::mdlVerPagoServicioSector($inicio,$fin,$sector);
+
+		return $respuesta;
+
+	}
+
+	static public function ctrVerSumaPagos($inicio,$fin,$sector){
+
+		$respuesta = ModeloServicios::mdlVerSumaPagos($inicio,$fin,$sector);
 
 		return $respuesta;
 
@@ -720,5 +760,33 @@ class ControladorServicios{
 
 
 	}	  
+
+	/*=============================================
+	RANGO FECHAS
+	=============================================*/	
+
+	static public function ctrRangoFechasServicios($fechaInicial, $fechaFinal){
+
+		$tabla = "serviciosjf";
+
+		$respuesta = ModeloServicios::mdlRangoFechasServicios($tabla, $fechaInicial, $fechaFinal);
+
+		return $respuesta;
+		
+	}
+	
+	/*=============================================
+	RANGO FECHAS
+	=============================================*/	
+
+	static public function ctrRangoFechasVerServicios($fechaInicial, $fechaFinal){
+
+		$tabla = "serviciosjf";
+
+		$respuesta = ModeloServicios::mdlRangoFechasVerServicios($tabla, $fechaInicial, $fechaFinal);
+
+		return $respuesta;
+		
+    }
 
 }

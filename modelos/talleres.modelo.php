@@ -2368,7 +2368,8 @@ class ModeloTalleres{
                                                           LEFT JOIN sectorjf s 
                                                             ON et.sector = s.cod_sector 
                                                         WHERE et.estado = '1' AND
-                                                        et.articulo = '".$articuloTaller."'");
+                                                        et.articulo = '".$articuloTaller."'
+                                                        AND et.total_precio > 0");
     
         $stmt -> execute();
     
@@ -2409,7 +2410,8 @@ class ModeloTalleres{
                                                             ON et.cod_operacion = o.codigo 
                                                           LEFT JOIN sectorjf s 
                                                             ON et.sector = s.cod_sector 
-                                                        WHERE et.estado = '1'");
+                                                        WHERE et.estado = '1'
+                                                        AND et.total_precio > 0");
     
         $stmt -> execute();
     
@@ -2512,7 +2514,37 @@ class ModeloTalleres{
   
       $stmt = null;
 
-		}
+    }
+    
+    static public function mdlActualizarTallerT($valor1, $valor2){
+
+      $sql = " UPDATE 
+                  entallerjf 
+                SET
+                  fecha_proceso = NULL,
+                  fecha_terminado = NULL,
+                  trabajador=0,
+                  estado = :estado
+                WHERE codigo = :valor";
+  
+      $stmt = Conexion::conectar()->prepare($sql);
+  
+      $stmt->bindParam(":estado", $valor1, PDO::PARAM_STR);
+      $stmt->bindParam(":valor", $valor2, PDO::PARAM_STR);
+  
+      if ($stmt->execute()) {
+  
+        return "ok";
+
+      } else {
+  
+        return "error";
+      }
+  
+      $stmt = null;
+    
+  }
+  
 
     
 }

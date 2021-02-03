@@ -99,9 +99,19 @@ class ModeloClientes{
 		}else{
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
-			*
+			c.*,
+			CONCAT(ub.codigo,
+					' - ',
+					ub.departamento,
+					' /',
+					ub.provincia,
+					' /',
+					ub.distrito
+					) AS ubigeos 
 		  FROM
 			clientesjf c 
+		  LEFT JOIN ubigeo ub
+		  ON c.ubigeo = ub.codigo
 		  WHERE c.fecha IS NOT NULL 
 		  ORDER BY id DESC ");
 

@@ -45,7 +45,7 @@ $(".tablaOperaciones tbody").on("click","button.btnEditarOperacion",function(){
 		processData:false,
 		dataType: "json",
 		success:function(respuesta){
-			$("#editarCodigo").val(respuesta["codigo"]);
+			$("#editarCodigoOpe").val(respuesta["codigo"]);
 			$("#editarOperacion").val(respuesta["nombre"]);
 			$("#idOperacion").val(respuesta["id"]);
 		}
@@ -588,4 +588,65 @@ $(".formularioOperacion").on("keyup", "input.nuevoTiempoStandar", function() {
 	var precio = (tiempo/60)*0.1*12;
 	inputPrecio.val(precio.toFixed(2));
 	sumarTotalPrecios();
+});
+
+
+// VALIDACIÓN DE UN DOCUMENTO EXISTENTE EN LA BD AL REGISTRAR
+$("#codigoOpe").change(function () {
+	var codigoOpe = $(this).val();
+	var datos = new FormData();
+	datos.append("codigoOpe", codigoOpe);
+	$.ajax({
+		url: "ajax/operaciones.ajax.php",
+		type: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function (respuesta) {
+			if (respuesta) {
+				if ($(".msgError").length == 0) {
+					$("#codigoOpe").parent().after('<div class="alert alert-danger alert-dismissable msgError" id="mensajeError">' +
+						'<a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>' +
+						'<strong>Error!</strong> El codigo ya existe en la Base de Datos, por favor verifique.' +
+						'</div>');
+				}
+				$("#codigoOpe").val("");
+				$("#codigoOpe").focus();
+			} else {
+				$(".msgError").remove();
+			}
+		}
+	});
+});
+
+// VALIDACIÓN DE UN DOCUMENTO EXISTENTE EN LA BD AL EDITAR
+$("#editarCodigoOpe").change(function () {
+	var codigoOpe = $(this).val();
+	var datos = new FormData();
+	datos.append("codigoOpe", codigoOpe);
+	$.ajax({
+		url: "ajax/operaciones.ajax.php",
+		type: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function (respuesta) {
+			if (respuesta) {
+				if ($(".msgError").length == 0) {
+					$("#editarCodigoOpe").parent().after('<div class="alert alert-danger alert-dismissable msgError" id="mensajeError">' +
+						'<a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>' +
+						'<strong>Error!</strong> El codigo ya existe en la Base de Datos, por favor verifique.' +
+						'</div>');
+				}
+				$("#editarCodigoOpe").val("");
+				$("#editarCodigoOpe").focus();
+			} else {
+				$(".msgError").remove();
+			}
+		}
+	});
 });

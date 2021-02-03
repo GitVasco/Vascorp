@@ -58,6 +58,21 @@
                 </div>
 
                 <!--=====================================
+                ENTRADA DE GUIA
+                ======================================-->
+
+                <div class="form-group">
+
+                  <div class="input-group">
+
+                    <span class="input-group-addon"><i class="fa fa-file-text-o"></i></span>
+                    <input type="text" class="form-control" id="nuevaGuia" name="nuevaGuia"  >
+
+                  </div>
+
+                </div>
+
+                <!--=====================================
                 ENTRADA DEL CODIGO
                 ======================================-->
 
@@ -72,6 +87,7 @@
 
                 </div>
 
+                
                 <!--=====================================
                 ENTRADA DEL CLIENTE
                 ======================================-->

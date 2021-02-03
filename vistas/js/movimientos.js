@@ -88,11 +88,11 @@ $(".tablaMovimientos").on("click", ".btnActualizarMes", function () {
 /* 
 * BOTON ACEPTAR
 */
-$(".box").on("click", ".btnCargarModP", function () {
+$("#modeloP").change(function(){
 
 	$(".tablaMProd").DataTable().destroy();
 
-	var modeloP = document.getElementById("modeloMov").value;
+	var modeloP = $(this).val();
 	//console.log(modeloP);
 
 	localStorage.setItem("modeloP", modeloP);
@@ -176,11 +176,10 @@ function cargarTablaMProd(modeloP) {
 /* 
 * BOTON ACEPTAR
 */
-$(".box").on("click", ".btnCargarModV", function () {
-
+$("#modeloV").change(function(){
 	$(".tablaMVta").DataTable().destroy();
 
-	var modeloV = document.getElementById("modeloMov").value;
+	var modeloV = $(this).val();
 	//console.log(modeloV);
 
 	localStorage.setItem("modeloV", modeloV);
@@ -264,11 +263,11 @@ function cargarTablaMVta(modeloV) {
 /* 
 * BOTON ACEPTAR
 */
-$(".box").on("click", ".btnCargarMpIng", function () {
+$("#lineaMPIng").change(function(){
 
 	$(".tablaMpIng").DataTable().destroy();
 
-	var lineaMpIng = document.getElementById("lineaMPIng").value;
+	var lineaMpIng = $(this).val();
 	//console.log(lineaMp);
 
 	localStorage.setItem("lineaMpIng", lineaMpIng);
@@ -352,11 +351,12 @@ function cargarTablaMpIng(lineaMpIng) {
 /* 
 * BOTON ACEPTAR
 */
-$(".box").on("click", ".btnCargarMpSal", function () {
+$("#lineaMPSal").change(function(){
 
 	$(".tablaMpSal").DataTable().destroy();
 
-	var lineaMpSal = document.getElementById("lineaMPSal").value;
+	var lineaMpSal = $(this).val();
+	console.log(lineaMpSal);
 	//console.log(lineaMp);
 	$(".btnReporteSalida").attr("linea",lineaMpSal);
 	localStorage.setItem("lineaMpSal", lineaMpSal);
@@ -374,7 +374,7 @@ $(".box").on("click", ".btnLimpiarMpSal", function () {
 	localStorage.removeItem("lineaMpSal");
 	localStorage.clear();
 	$(".btnReporteSalida").attr("linea","");
-	window.location = "mp-Salresos";
+	window.location = "mp-salidas";
 	
 })
 

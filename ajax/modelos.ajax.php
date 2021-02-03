@@ -3,6 +3,8 @@ session_start();
 // Requerimos el controlador y el modelo
 require_once '../controladores/modelos.controlador.php';
 require_once '../modelos/modelos.modelo.php';
+require_once '../controladores/usuarios.controlador.php';
+require_once '../modelos/usuarios.modelo.php';
 
 class AjaxModelos{
 	//ACTIVAR ARTICULO
@@ -23,13 +25,29 @@ class AjaxModelos{
 			$asunto    = 'Se activo un modelo';
 			$descripcion   = 'El usuario '.$usuario.' activo el modelo '.$modelo["modelo"].' - '.$modelo["nombre"];
 			$de = 'From: notificacionesvascorp@gmail.com';
-			mail($para, $asunto, $descripcion, $de);	
+			if($_SESSION["correo"] == 1){
+				mail($para, $asunto, $descripcion, $de);
+			  }
+			if($_SESSION["datos"] == 1){
+				$datos2= array( "usuario" => $usuario,
+						"concepto" => $descripcion,
+						"fecha" => $fecha->format("Y-m-d H:i:s"));
+				$auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
+			}
 		}else{
 			$para      = 'notificacionesvascorp@gmail.com';
 			$asunto    = 'Se descontinuo un modelo';
 			$descripcion   = 'El usuario '.$usuario.' descontinuo el modelo '.$modelo["modelo"].' - '.$modelo["nombre"];
 			$de = 'From: notificacionesvascorp@gmail.com';
-			mail($para, $asunto, $descripcion, $de);
+			if($_SESSION["correo"] == 1){
+				mail($para, $asunto, $descripcion, $de);
+			}
+			if($_SESSION["datos"] == 1){
+				$datos2= array( "usuario" => $usuario,
+						"concepto" => $descripcion,
+						"fecha" => $fecha->format("Y-m-d H:i:s"));
+				$auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
+			}
 		}
 		$respuesta=ModeloModelos::mdlActualizarModelo($tabla,$tabla2,$valor1, $valor2);
 

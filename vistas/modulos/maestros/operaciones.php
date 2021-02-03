@@ -113,7 +113,7 @@ MODAL AGREGAR OPERACION
               
                 <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
-                <input type="text" min="0" class="form-control input-lg" name="nuevoCodigo" value="<?php echo $ultimovalor+1 ?>" readonly>
+                <input type="text" min="0" class="form-control input-lg" name="nuevoCodigo" id="codigoOpe" value="<?php echo $ultimovalor+1 ?>" readonly>
 
               </div>
 
@@ -208,7 +208,7 @@ MODAL EDITAR OPERACION
               
                 <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
-                <input type="text" min="0" class="form-control input-lg" name="editarCodigo" id="editarCodigo" required>
+                <input type="text" min="0" class="form-control input-lg" name="editarCodigo" id="editarCodigoOpe" required>
 
               </div>
 

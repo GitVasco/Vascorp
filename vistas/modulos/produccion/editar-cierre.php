@@ -91,6 +91,23 @@
                     
                     <span class="input-group-addon"><i class="fa fa-key"></i></span>
 
+                   <input type="text" class="form-control" name="editarGuia" value="<?php echo $venta["guia"]; ?>" >
+               
+                  </div>
+                
+                </div>
+
+
+                <!--=====================================
+                ENTRADA DEL CODIGO
+                ======================================-->
+
+                <div class="form-group">
+                  
+                  <div class="input-group">
+                    
+                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
+
                    <input type="text" class="form-control" id="nuevaVenta" name="editarCierre" value="<?php echo $venta["codigo"]; ?>" readonly>
                
                   </div>

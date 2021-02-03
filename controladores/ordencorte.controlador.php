@@ -451,6 +451,25 @@ class ControladorOrdenCorte{
 		return $respuesta;
 		
     }
+    static public function ctrRangoFechasOrdenCortesGeneral($fechaInicial, $fechaFinal){
+
+		$tabla = "detalles_ordencortejf";
+
+		$respuesta = ModeloOrdenCorte::mdlRangoFechasOrdenCortesGeneral($tabla, $fechaInicial, $fechaFinal);
+
+		return $respuesta;
+		
+    }
+
+    static public function ctrRangoFechasOrdenCortesCantidad($fechaInicial, $fechaFinal){
+
+		$tabla = "detalles_ordencortejf";
+
+		$respuesta = ModeloOrdenCorte::mdlRangoFechasOrdenCortesCantidad($tabla, $fechaInicial, $fechaFinal);
+
+		return $respuesta;
+		
+    }
 
 	/* 
 	* MOSTRAR ORDEN DE CORTE PENDIENTES Y ABIERTOS

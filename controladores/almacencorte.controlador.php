@@ -284,7 +284,18 @@ class ControladorAlmacenCorte{
 
 		return $respuesta;
 		
+    }
+    
+    static public function ctrRangoFechasVerCortes($fechaInicial, $fechaFinal){
+
+		$tabla = "almacencortejf";
+
+		$respuesta = ModeloAlmacenCorte::mdlRangoFechasVerCortes($tabla, $fechaInicial, $fechaFinal);
+
+		return $respuesta;
+		
 	}
+
 
     /*
     * MOSTRAR DATOS DE ALMACEN DE CORTE

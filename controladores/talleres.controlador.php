@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 class ControladorTalleres{
 
     /*
@@ -68,6 +68,16 @@ class ControladorTalleres{
 
     }
 
+    /*
+    * MOSTRAR DATOS DE TALLERES TERMINADO GENERAL
+    */
+    static public function ctrActualizarTallerT($valor1,$valor2){
+
+        $respuesta = ModeloTalleres::mdlActualizarTallerT($valor1, $valor2);
+
+        return $respuesta;
+
+    }
 
     /* 
     * ACTUALIZAR A EN PROCESO
@@ -952,6 +962,121 @@ class ControladorTalleres{
                     $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos);
                     $respuesta = ModeloTalleres::mdlIngresarTaller($datos2);
 
+                }elseif($dividir == 'E'){
+
+                    $datos = array("codigo" => $_POST["editarCodigo"], 
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperaciones"],
+                            "cantidad" => $_POST["editarCantidades"],
+                            "editarBarra" => $_POST["editarBarra"]);
+
+                    $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
+                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperaciones"]."F";
+                    $datos2 = array("codigo" => $_POST["editarCodigo"],
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperaciones"],
+                            "cantidad" => $cantidad2,
+                            "editarBarra" => $codigoBarraNuevo);
+                    $tabla="entallerjf";
+                    $id=$_POST["editarTaller"];
+                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos);
+                    $respuesta = ModeloTalleres::mdlIngresarTaller($datos2);
+
+                }elseif($dividir == 'F'){
+
+                    $datos = array("codigo" => $_POST["editarCodigo"], 
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperaciones"],
+                            "cantidad" => $_POST["editarCantidades"],
+                            "editarBarra" => $_POST["editarBarra"]);
+
+                    $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
+                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperaciones"]."G";
+                    $datos2 = array("codigo" => $_POST["editarCodigo"],
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperaciones"],
+                            "cantidad" => $cantidad2,
+                            "editarBarra" => $codigoBarraNuevo);
+                    $tabla="entallerjf";
+                    $id=$_POST["editarTaller"];
+                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos);
+                    $respuesta = ModeloTalleres::mdlIngresarTaller($datos2);
+
+                }elseif($dividir == 'G'){
+
+                    $datos = array("codigo" => $_POST["editarCodigo"], 
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperaciones"],
+                            "cantidad" => $_POST["editarCantidades"],
+                            "editarBarra" => $_POST["editarBarra"]);
+
+                    $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
+                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperaciones"]."H";
+                    $datos2 = array("codigo" => $_POST["editarCodigo"],
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperaciones"],
+                            "cantidad" => $cantidad2,
+                            "editarBarra" => $codigoBarraNuevo);
+                    $tabla="entallerjf";
+                    $id=$_POST["editarTaller"];
+                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos);
+                    $respuesta = ModeloTalleres::mdlIngresarTaller($datos2);
+
+                }elseif($dividir == 'H'){
+
+                    $datos = array("codigo" => $_POST["editarCodigo"], 
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperaciones"],
+                            "cantidad" => $_POST["editarCantidades"],
+                            "editarBarra" => $_POST["editarBarra"]);
+
+                    $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
+                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperaciones"]."I";
+                    $datos2 = array("codigo" => $_POST["editarCodigo"],
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperaciones"],
+                            "cantidad" => $cantidad2,
+                            "editarBarra" => $codigoBarraNuevo);
+                    $tabla="entallerjf";
+                    $id=$_POST["editarTaller"];
+                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos);
+                    $respuesta = ModeloTalleres::mdlIngresarTaller($datos2);
+
+                }elseif($dividir == 'I'){
+
+                    $datos = array("codigo" => $_POST["editarCodigo"], 
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperaciones"],
+                            "cantidad" => $_POST["editarCantidades"],
+                            "editarBarra" => $_POST["editarBarra"]);
+
+                    $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
+                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperaciones"]."J";
+                    $datos2 = array("codigo" => $_POST["editarCodigo"],
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperaciones"],
+                            "cantidad" => $cantidad2,
+                            "editarBarra" => $codigoBarraNuevo);
+                    $tabla="entallerjf";
+                    $id=$_POST["editarTaller"];
+                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos);
+                    $respuesta = ModeloTalleres::mdlIngresarTaller($datos2);
+
                 }else{
                     $datos = array("codigo" => $_POST["editarCodigo"], 
                             "usuario" => $_POST["usuario"],
@@ -1028,7 +1153,7 @@ class ControladorTalleres{
                              "usuario" => $_POST["verUser"],
                              "cantidad" => $_POST["verCantidad"]);
             $respuestaCab=ModeloCortes::mdlMandarTallerCab($datosCab);
-            var_dump($respuestaCab);
+            
             
 
             $ultId=ModeloCortes::mdlUltCodigo();
@@ -1041,7 +1166,6 @@ class ControladorTalleres{
                     "editarBarra" => $ultId["ult_codigo"].$_POST["verCodOP"]);
 
             $respuesta=ModeloTalleres::mdlIngresarTaller($datos);
-            var_dump($respuesta);
             
             if($respuesta == "ok"){
                 $ultimo = $ultId["ult_codigo"].$_POST["verCodOP"];
@@ -1082,5 +1206,85 @@ class ControladorTalleres{
             }
 
         }
+    }
+
+    static public function ctrCrearTicketOriginal(){
+
+        if(isset($_POST["ticketArticulo"])){
+
+            /* 
+            * registramos en la tabla taller cabecera para el código
+            */
+            $datosCab = array( "usuario" => $_POST["ticketUser"],
+                            "articulo" => $_POST["ticketArticulo"],
+                            "cantidad" => $_POST["ticketCantidad"]);
+
+            $respuestaCab = ModeloCortes::mdlMandarTallerCab($datosCab);
+
+            if($respuestaCab == "ok"){
+
+                /* 
+                * ultimo codigo
+                */
+                $ult_codigo = ModeloCortes::mdlUltCodigo();
+                //var_dump($ult_codigo[ult_codigo]);
+
+                /* 
+                * Registramos en la tabla taller detalle
+                */
+                $datos = array("codigo" => $ult_codigo["ult_codigo"], 
+                    "usuario" => $_POST["ticketUser"],
+                    "articulo" => $_POST["ticketArticulo"],
+                    "operacion" => $_POST["ticketOperacion"],
+                    "cantidad" => $_POST["ticketCantidad"],
+                    "editarBarra" => $ult_codigo["ult_codigo"].$_POST["ticketOperacion"]);
+                
+
+                $respuesta=ModeloTalleres::mdlIngresarTaller($datos);
+
+                var_dump($respuesta);
+                if($respuesta == "ok"){
+
+                    $ultimo = $ult_codigo["ult_codigo"].$_POST["ticketOperacion"];
+                    $valor=$_POST["ticketArticulo"];
+                    $rpt_articulo=ModeloArticulos::mdlMostrarArticulos($valor);
+                    $modelo = $rpt_articulo["modelo"];
+                    $nombre = $rpt_articulo["nombre"];
+                    $color = $rpt_articulo["color"];
+                    $talla = $rpt_articulo["talla"];
+                    $cantidad = $_POST["ticketCantidad"];
+                    $cod_ope = $_POST["ticketOperacion"];
+                    $tablaop="operacionesjf";
+                    $itemop="codigo";
+                    $rpt_operacion=ModeloOperaciones::mdlMostrarOperaciones($tablaop,$itemop,$cod_ope);
+                    $nom_ope = $rpt_operacion["nombre"];
+    
+                    echo '<script>
+    
+                    window.open("vistas/reportes_ticket/produccion_ticket_detalle.php?ultimo='.$ultimo.'&modelo='.$modelo.'&nombre='.$nombre.'&color='.$color.'&talla='.$talla.'&cant_taller='.$cantidad.'&cod_operacion='.$cod_ope.'&nom_operacion='.$nom_ope.'","_blank");
+                    </script>';
+                    echo'<script>
+
+                    swal({
+                          type: "success",
+                          title: "Se mando a taller correctamente",
+                          showConfirmButton: true,
+                          confirmButtonText: "Cerrar"
+                          }).then(function(result){
+                                    if (result.value) {
+
+                                    window.location = "en-taller";
+
+                                    }
+                                })
+
+                    </script>';
+
+                }
+
+            }
+
+        }
+
     }
 }

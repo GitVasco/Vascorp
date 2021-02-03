@@ -30,6 +30,17 @@ class AjaxOperaciones{
 
     echo json_encode($respuesta);
 
+  }
+  
+  /*=============================================
+	VALIDAR CODIGO OPERACION
+	=============================================*/	
+	public $codigoOpe;
+	public function ajaxValidarOperaciones(){
+		$item="codigo";
+		$valor=$this->codigoOpe;
+		$respuesta=ControladorOperaciones::ctrMostrarOperaciones($item,$valor);
+		echo json_encode($respuesta);
 	}
 }
 
@@ -75,4 +86,14 @@ if(isset($_POST["codigoOperacion"])){
 	$operacion = new AjaxOperaciones();
 	$operacion -> codigoOperacion = $_POST["codigoOperacion"];
 	$operacion -> ajaxVerOperacion();
+}
+
+
+/*=============================================
+VALIDAR CODIGO
+=============================================*/ 
+if(isset($_POST["codigoOpe"])){
+	$validarCodigo=new AjaxOperaciones();
+	$validarCodigo->codigoOpe=$_POST["codigoOpe"];
+	$validarCodigo->ajaxValidarOperaciones();
 }
