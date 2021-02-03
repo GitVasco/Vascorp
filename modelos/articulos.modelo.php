@@ -293,15 +293,98 @@ class ModeloArticulos
 	/* 
 	* MOSTRAR ARTICULOS PARA LA TABLA URGENCIA
 	*/
-	static public function mdlMostrarUrgencia($tabla, $valor){
+	static public function mdlMostrarUrgencia($tabla, $valor, $modelo){
 
-		if ($valor == null) {
+		if ($valor == null && $modelo != "null" ) {
 
-			$stmt = Conexion::conectar()->prepare("CALL sp_1048_cons_urg_art_porc()");
+			$stmt = Conexion::conectar()->prepare("CALL sp_1048_cons_urg_art_porc(:modelo)");
+
+			$stmt->bindParam(":modelo", $modelo, PDO::PARAM_STR);
 
 			$stmt->execute();
 
 			return $stmt->fetchAll();
+		
+		}else if ($valor == null && $modelo == "null" ){
+
+			$stmt = Conexion::conectar()->prepare("  SELECT 
+			a.articulo,
+			a.id_marca,
+			m.marca,
+			a.modelo,
+			a.nombre,
+			a.cod_color,
+			a.color,
+			a.cod_talla,
+			a.talla,
+			a.estado,
+			a.urgencia,
+			a.mp_faltante,
+			ROUND(
+			  (
+				IFNULL(v.ult_mes, 0) * a.urgencia / 100
+			  ),
+			  0
+			) AS configuracion,
+			CASE
+			  WHEN a.stock < 0 
+			  THEN 0 
+			  ELSE a.stock 
+			END AS stock,
+			(a.stock - a.pedidos) AS stockB,
+			a.pedidos,
+			a.taller,
+			a.alm_corte,
+			a.ord_corte,
+			a.proyeccion,
+			IFNULL(p.prod, 0) AS prod,
+			IFNULL(
+			  ROUND(
+				(IFNULL(p.prod, 0) / a.proyeccion) * 100,
+				2
+			  ),
+			  0
+			) AS avance,
+			IFNULL(v.ult_mes, 0) AS ult_mes 
+		  FROM
+			articulojf a 
+			LEFT JOIN marcasjf m 
+			  ON a.id_marca = m.id 
+			LEFT JOIN 
+			  (SELECT 
+				m.articulo,
+				SUM(m.cantidad) AS prod 
+			  FROM
+				movimientosjf m 
+			  WHERE YEAR(m.fecha) = '2021' 
+				AND MONTH(m.fecha) >= 1 
+				AND tipo = 'E20' 
+			  GROUP BY m.articulo) AS p 
+			  ON a.articulo = p.articulo 
+			LEFT JOIN 
+			  (SELECT 
+				m.articulo,
+				SUM(m.cantidad) AS ult_mes 
+			  FROM
+				movimientosjf m 
+			  WHERE m.tipo IN ('S02', 'S03', 'S70') 
+				AND DATEDIFF(DATE(NOW()), m.fecha) <= 30 
+			  GROUP BY m.articulo) AS v 
+			  ON a.articulo = v.articulo 
+		  WHERE ROUND(
+			  (
+				IFNULL(v.ult_mes, 0) * a.urgencia / 100
+			  ),
+			  0
+			) > (a.stock - a.pedidos) 
+			AND a.estado = 'Activo'");
+
+			$stmt->bindParam(":modelo", $modelo, PDO::PARAM_STR);
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+
 		} else {
 
 			$stmt = Conexion::conectar()->prepare("CALL sp_1036_consulta_articulos_p(:valor)");
@@ -688,5 +771,37 @@ class ModeloArticulos
 
 		$stmt = null;
 	}
+
+	/*
+	* CONFIGURAR MP FALTANTE
+	*/
+	static public function mdlMpFaltante($modelo, $faltante){
+
+		$sql="UPDATE
+					articulojf
+				SET
+					mp_faltante = :faltante
+				WHERE articulo LIKE :modelo ";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":modelo", $modelo, PDO::PARAM_STR);
+		$stmt->bindParam(":faltante", $faltante, PDO::PARAM_STR);
+
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+
+	}
+
 }
 

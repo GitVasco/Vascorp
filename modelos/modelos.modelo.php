@@ -35,7 +35,27 @@ class ModeloModelos
 		$stmt = null;
 	}
 
+	/* 
+	* MOSTRAR MODELOS
+	*/
+	static public function mdlMostrarModelosActivos(){
 
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			modelo,
+			CONCAT(modelo, ' - ', nombre) AS nombre 
+		  FROM
+			modelojf 
+		  WHERE estado = 'activo' ORDER BY modelo");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+
+		$stmt -> close();
+
+		$stmt = null;
+	}
 
 	/*
 	* REGISTRO DE MODELO

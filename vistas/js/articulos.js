@@ -34,41 +34,85 @@ $('.tablaArticulos').DataTable( {
 	}    
 } );
 
+$("#selectArticuloUrgencia").change(function(){
+	$(".tablaUrgencias").DataTable().destroy();
+	var articuloUrgencia=$(this).val();
+	console.log(articuloUrgencia);
+	localStorage.setItem("articuloUrgencia", articuloUrgencia);
+	cargarTablaUrgencias(localStorage.getItem("articuloUrgencia"));
+});
+
+/* 
+* BOTON LIMPIAR MODELO CORTE
+*/
+$(".box").on("click", ".btnLimpiarArticuloUrgencia", function () {
+
+	localStorage.removeItem("articuloUrgencia");
+	localStorage.clear();
+	window.location = "urgencias";
+	
+})
+
+/*
+* CARGAR TABLA URGENCIAS
+*/
+if (localStorage.getItem("articuloUrgencia") != null ) {
+
+	cargarTablaUrgencias(localStorage.getItem("articuloUrgencia"));
+	// console.log("lleno");
+	
+}else{
+
+	cargarTablaUrgencias(null);
+	// console.log("vacio");
+
+}
+
+
 /* 
 * tabla paraa cargar la lista de articulos - URGENCIA
 */
-$('.tablaUrgencias').DataTable( {
-    "ajax": "ajax/maestros/tabla-urgencias.ajax.php?perfil="+$("#perfilOculto").val(),
-    "deferRender": true,
-	"retrieve": true,
-	"processing": true,
-	 "language": {
 
-			"sProcessing":     "Procesando...",
-			"sLengthMenu":     "Mostrar _MENU_ registros",
-			"sZeroRecords":    "No se encontraron resultados",
-			"sEmptyTable":     "Ningún dato disponible en esta tabla",
-			"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
-			"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0",
-			"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-			"sInfoPostFix":    "",
-			"sSearch":         "Buscar:",
-			"sUrl":            "",
-			"sInfoThousands":  ",",
-			"sLoadingRecords": "Cargando...",
-			"oPaginate": {
-			"sFirst":    "Primero",
-			"sLast":     "Último",
-			"sNext":     "Siguiente",
-			"sPrevious": "Anterior"
-			},
-			"oAria": {
-				"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-				"sSortDescending": ": Activar para ordenar la columna de manera descendente"
-			}
+function cargarTablaUrgencias(articuloUrgencia){
 
-	}    
-} );
+	$('.tablaUrgencias').DataTable( {
+		"ajax": "ajax/maestros/tabla-urgencias.ajax.php?perfil="+$("#perfilOculto").val()+"&articuloUrgencia=" + articuloUrgencia,
+		"deferRender": true,
+		"retrieve": true,
+		"processing": true,
+		"pageLength": 20,
+		"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+		 "language": {
+	
+				"sProcessing":     "Procesando...",
+				"sLengthMenu":     "Mostrar _MENU_ registros",
+				"sZeroRecords":    "No se encontraron resultados",
+				"sEmptyTable":     "Ningún dato disponible en esta tabla",
+				"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+				"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0",
+				"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+				"sInfoPostFix":    "",
+				"sSearch":         "Buscar:",
+				"sUrl":            "",
+				"sInfoThousands":  ",",
+				"sLoadingRecords": "Cargando...",
+				"oPaginate": {
+				"sFirst":    "Primero",
+				"sLast":     "Último",
+				"sNext":     "Siguiente",
+				"sPrevious": "Anterior"
+				},
+				"oAria": {
+					"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+				}
+	
+		}    
+	} );
+
+}
+
+
 
 
 

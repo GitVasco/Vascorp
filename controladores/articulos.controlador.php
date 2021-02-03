@@ -591,11 +591,11 @@ class controladorArticulos{
 	/* 
 	* MOSTRAR ARTICULOS PARA LA TABLA URGENCIA
 	*/	
-	static public function ctrMostrarUrgencia($valor){
+	static public function ctrMostrarUrgencia($valor, $modelo){
 
 		$tabla = "articulojf";
 		
-		$respuesta = ModeloArticulos::mdlMostrarUrgencia($tabla,$valor);
+		$respuesta = ModeloArticulos::mdlMostrarUrgencia($tabla,$valor, $modelo);
 
 		return $respuesta;
 		
@@ -1155,6 +1155,40 @@ class controladorArticulos{
 		$respuesta = ModeloArticulos::mdlMostrarArticulosTallerP();
 
 		return $respuesta;
+
+	}
+
+	/*
+	* CONFIGURAR MP FALTANTE
+	*/
+	static public function ctrMpFaltante(){
+
+		if(isset($_POST["articuloA"])){
+
+			$modelo = '%'.$_POST["modeloA"].$_POST["cod_color"].'%';
+			$faltante = $_POST["mpFaltante"];
+
+			$respuesta = ModeloArticulos::mdlMpFaltante($modelo, $faltante);
+
+			//var_dump($modelo, $faltante);
+			//var_dump($respuesta);
+
+			if($respuesta == "ok"){
+
+				echo'<script>
+
+					swal({
+						type: "success",
+						title: "La materia prima ha sido editada correctamente",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar"
+						})
+
+					</script>';
+
+			}
+
+		}
 
 	}
 

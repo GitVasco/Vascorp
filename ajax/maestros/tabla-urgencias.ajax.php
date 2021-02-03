@@ -12,7 +12,7 @@ class TablaUrgencias{
     public function mostrarUrgencias(){
 
         $valor = null;
-        $articulos = controladorArticulos::ctrMostrarUrgencia($valor);	
+        $articulos = controladorArticulos::ctrMostrarUrgencia($valor,$_GET["articuloUrgencia"]);	
         if(count($articulos)>0){
 
         #var_dump("articulos", $articulos);
@@ -147,11 +147,11 @@ class TablaUrgencias{
 
             }
 
-            /* 
+            /*
             todo: BOTONES
-            */                
-            $botones =  "<div class='btn-group'><button class='btn btn-info btnVerUrgencias' codigo='".$articulos[$i]["articulo"]."' data-toggle='modal' data-target='#modalVisualizarUrgencias'><i class='fa fa-eye'></i></button></div>"; 
-            
+            */
+            $botones =  "<div class='btn-group'><button class='btn btn-info btnVerUrgencias' codigo='".$articulos[$i]["articulo"]."' data-toggle='modal' data-target='#modalVisualizarUrgencias'><i class='fa fa-eye'></i></button><button class='btn btn-primary btnMpFaltante' codigo='".$articulos[$i]["articulo"]."' data-toggle='modal' data-target='#modalMpFaltante'><i class='fa fa-fire'></i></button></div>"; 
+
                 $datosJson .= '[
                 "'.$modelo.'",
                 "'.$articulos[$i]["nombre"].'",
@@ -166,13 +166,14 @@ class TablaUrgencias{
                 "'.$alm_corte.'",
                 "'.$ord_corte.'",
                 "'.$ult_mes.'",
+                "'.$articulos[$i]["mp_faltante"].'",
                 "'.$botones.'"
-                ],';        
+                ],';
         }
 
             $datosJson=substr($datosJson, 0, -1);
 
-            $datosJson .= '] 
+            $datosJson .= ']
 
             }';
 

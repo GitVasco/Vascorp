@@ -120,7 +120,7 @@ $borde_1->applyFromArray(
       'bold' => true,
       'underline' =>false,
       'color' => array('rgb' => 'FF0008'),
-      'size' => 10
+      'size' => 8
     )
 ));
 
@@ -140,7 +140,7 @@ $borde_2->applyFromArray(
       'bold' => true,
       'underline' =>false,
       'color' => array('rgb' => '0400FF'),
-      'size' => 10
+      'size' => 8
     )
 ));
 
@@ -160,7 +160,7 @@ $borde_3->applyFromArray(
       'bold' => true,
       'underline' =>false,
       'color' => array('rgb' => '000000'),
-      'size' => 10
+      'size' => 8
     )
 ));
 
@@ -180,7 +180,7 @@ $borde_4->applyFromArray(
       'bold' => true,
       'underline' =>false,
       'color' => array('rgb' => '0174BB'),
-      'size' => 10
+      'size' => 8
     )
 ));
 
@@ -200,7 +200,7 @@ $borde_5->applyFromArray(
       'bold' => true,
       'underline' =>false,
       'color' => array('rgb' => '00833E'),
-      'size' => 10
+      'size' => 8
     )
 ));
 
@@ -220,7 +220,7 @@ $borde_6->applyFromArray(
       'bold' => false,
       'underline' =>false,
       'color' => array('rgb' => '000000'),
-      'size' => 10
+      'size' => 8
     )
 ));
 
@@ -240,7 +240,7 @@ $borde_7->applyFromArray(
       'bold' => true,
       'underline' =>false,
       'color' => array('rgb' => 'A4001E'),
-      'size' => 10
+      'size' => 8
     )
 ));
 
@@ -264,7 +264,7 @@ $borde_8->applyFromArray(
       'bold' => true,
       'underline' =>false,
       'color' => array('rgb' => 'FF0008'),
-      'size' => 10
+      'size' => 8
     )
 ));
 
@@ -434,39 +434,45 @@ $objPHPExcel->getActiveSheet()->setSharedStyle($borde_5, "F$fila");
 $objPHPExcel->getActiveSheet()->getStyle("F$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 $objPHPExcel->getActiveSheet()->getStyle("F$fila")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", 'STOCK');
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde_4, "G$fila");
+$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", 'MAT. FALTANTE');
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde_1, "G$fila");
 $objPHPExcel->getActiveSheet()->getStyle("G$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 $objPHPExcel->getActiveSheet()->getStyle("G$fila")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+$objPHPExcel->getActiveSheet()->getStyle("G$fila")->getAlignment()->setWrapText(true);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("H$fila", 'PEDIDOS');
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde_1, "H$fila");
+$objPHPExcel->getActiveSheet()->SetCellValue("H$fila", 'STOCK');
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde_4, "H$fila");
 $objPHPExcel->getActiveSheet()->getStyle("H$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 $objPHPExcel->getActiveSheet()->getStyle("H$fila")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("I$fila", 'EN TALLER');
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde_3, "I$fila");
+$objPHPExcel->getActiveSheet()->SetCellValue("I$fila", 'PEDIDOS');
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde_1, "I$fila");
 $objPHPExcel->getActiveSheet()->getStyle("I$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 $objPHPExcel->getActiveSheet()->getStyle("I$fila")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-$objPHPExcel->getActiveSheet()->getStyle("I$fila")->getAlignment()->setWrapText(true);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("J$fila", 'ALM. CORTE');
+$objPHPExcel->getActiveSheet()->SetCellValue("J$fila", 'EN TALLER');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde_3, "J$fila");
 $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getAlignment()->setWrapText(true);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("K$fila", 'ORD. CORTE');
+$objPHPExcel->getActiveSheet()->SetCellValue("K$fila", 'ALM. CORTE');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde_3, "K$fila");
 $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setWrapText(true);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("L$fila", 'VTAS. ULT. 30 DIAS');
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde_4, "L$fila");
+$objPHPExcel->getActiveSheet()->SetCellValue("L$fila", 'ORD. CORTE');
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde_3, "L$fila");
 $objPHPExcel->getActiveSheet()->getStyle("L$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 $objPHPExcel->getActiveSheet()->getStyle("L$fila")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 $objPHPExcel->getActiveSheet()->getStyle("L$fila")->getAlignment()->setWrapText(true);
+
+$objPHPExcel->getActiveSheet()->SetCellValue("M$fila", 'VTAS. ULT. 30 DIAS');
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde_4, "M$fila");
+$objPHPExcel->getActiveSheet()->getStyle("M$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$objPHPExcel->getActiveSheet()->getStyle("M$fila")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+$objPHPExcel->getActiveSheet()->getStyle("M$fila")->getAlignment()->setWrapText(true);
 
 #query para sacar los datos deL detalle
 $sqlDetalle = mysql_query("SELECT 
@@ -481,6 +487,7 @@ $sqlDetalle = mysql_query("SELECT
                                     a.talla,
                                     a.estado,
                                     a.urgencia,
+                                    a.mp_faltante,
                                     ROUND(
                                     (
                                         IFNULL(v.ult_mes, 0) * a.urgencia / 100
@@ -517,7 +524,7 @@ $sqlDetalle = mysql_query("SELECT
                                         SUM(m.cantidad) AS prod 
                                     FROM
                                         movimientosjf m 
-                                    WHERE YEAR(m.fecha) = '2020' 
+                                    WHERE YEAR(m.fecha) = '2021' 
                                         AND MONTH(m.fecha) >= 1 
                                         AND tipo = 'E20' 
                                     GROUP BY m.articulo) AS p 
@@ -550,12 +557,13 @@ while($respDetalle = mysql_fetch_array($sqlDetalle)){
     $objPHPExcel->getActiveSheet()->SetCellValue("D$fila", "T".utf8_encode($respDetalle["talla"]));
     $objPHPExcel->getActiveSheet()->SetCellValue("E$fila", utf8_encode($respDetalle["proyeccion"]));
     $objPHPExcel->getActiveSheet()->SetCellValue("F$fila", utf8_encode($respDetalle["avance"])." %");
-    $objPHPExcel->getActiveSheet()->SetCellValue("G$fila", utf8_encode($respDetalle["stockB"]));
-    $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", utf8_encode($respDetalle["pedidos"]));
-    $objPHPExcel->getActiveSheet()->SetCellValue("I$fila", utf8_encode($respDetalle["taller"]));
-    $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", utf8_encode($respDetalle["alm_corte"]));
-    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", utf8_encode($respDetalle["ord_corte"]));
-    $objPHPExcel->getActiveSheet()->SetCellValue("L$fila", utf8_encode($respDetalle["ult_mes"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("G$fila", utf8_encode($respDetalle["mp_faltante"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", utf8_encode($respDetalle["stockB"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("I$fila", utf8_encode($respDetalle["pedidos"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", utf8_encode($respDetalle["taller"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", utf8_encode($respDetalle["alm_corte"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("L$fila", utf8_encode($respDetalle["ord_corte"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("M$fila", utf8_encode($respDetalle["ult_mes"]));
 
 
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde_2, "A$fila");
@@ -578,29 +586,29 @@ while($respDetalle = mysql_fetch_array($sqlDetalle)){
 
     }
 
+    if(utf8_encode($respDetalle["mp_faltante"]) == "F/TELA"){
+
+      $objPHPExcel->getActiveSheet()->setSharedStyle($borde_8, "G$fila");
+
+  }else{
+
+      $objPHPExcel->getActiveSheet()->setSharedStyle($borde_7, "G$fila");
+
+  }
+
     if(utf8_encode($respDetalle["stockB"]) < 0){
 
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_8, "G$fila");
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_8, "H$fila");
 
     }else{
 
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_7, "G$fila");
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_7, "H$fila");
 
     }
 
-    $objPHPExcel->getActiveSheet()->setSharedStyle($borde_2, "H$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde_2, "I$fila");
 
     if(utf8_encode($respDetalle["taller"]) <= 0){
-
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_8, "I$fila");
-
-    }else{
-
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_6, "I$fila");
-
-    }
-
-    if(utf8_encode($respDetalle["alm_corte"]) <= 0){
 
         $objPHPExcel->getActiveSheet()->setSharedStyle($borde_8, "J$fila");
 
@@ -609,18 +617,28 @@ while($respDetalle = mysql_fetch_array($sqlDetalle)){
         $objPHPExcel->getActiveSheet()->setSharedStyle($borde_6, "J$fila");
 
     }
-    
-    if(utf8_encode($respDetalle["ord_corte"]) <= 0){
 
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_1, "K$fila");
+    if(utf8_encode($respDetalle["alm_corte"]) <= 0){
+
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_8, "K$fila");
 
     }else{
 
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_3, "K$fila");
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_6, "K$fila");
+
+    }
+    
+    if(utf8_encode($respDetalle["ord_corte"]) <= 0){
+
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_1, "L$fila");
+
+    }else{
+
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_3, "L$fila");
 
     }
 
-    $objPHPExcel->getActiveSheet()->setSharedStyle($borde_4, "L$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde_4, "M$fila");
 
 }
 
