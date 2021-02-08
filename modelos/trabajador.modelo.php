@@ -222,12 +222,14 @@ class ModeloTrabajador{
 	/* 
 	* Método para poner a todos en CERO
 	*/
-	static public function mdlTrabajadorSet(){
+	static public function mdlTrabajadorSet($usuario){
 
 		$sql = "UPDATE 
 					trabajadorjf 
 				SET
-					configuracion = 0";
+					configuracion = 0,
+					usuario = 0
+					where usuario = $usuario";
 
 		$stmt = Conexion::conectar()->prepare($sql);
 
@@ -245,17 +247,19 @@ class ModeloTrabajador{
 	/* 
 	* Método para configurar trabajador
 	*/
-	static public function ctrConfigurarTrabajador($cod_tra){
+	static public function ctrConfigurarTrabajador($cod_tra, $usuario){
 
 		$sql = "UPDATE 
 					trabajadorjf 
 				SET
-					configuracion = 1 
+					configuracion = 1,
+					usuario = :usuario
 				WHERE cod_tra = :cod_tra";
 
 		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->bindParam(":cod_tra", $cod_tra,PDO::PARAM_INT);
+		$stmt->bindParam(":usuario", $usuario,PDO::PARAM_INT);
 
 		$stmt->execute();
 
@@ -266,7 +270,7 @@ class ModeloTrabajador{
 	* MOSTRAR TRABAJADOR CONFIGURADO
 	*/
 
-	static public function mdlMostrarTrabajadorConfigurado(){
+	static public function mdlMostrarTrabajadorConfigurado($usuario){
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
 									t.cod_tra,
@@ -281,7 +285,7 @@ class ModeloTrabajador{
 									) AS trabajador 
 								FROM
 									trabajadorjf t 
-								WHERE t.configuracion = '1' ");
+								WHERE t.configuracion = '1' and usuario = $usuario ");
 
 		$stmt -> execute();
 
