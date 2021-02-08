@@ -105,6 +105,8 @@ class ControladorTalleres{
                 $respuesta = ModeloTalleres::mdlProceso($fecha,$codigo,$trabajador);
                 //var_dump($respuesta);
 
+                $respuesta2 = ModeloTalleres::mdlTerminado($fecha,$codigo,$trabajador);
+
                 if($respuesta == "ok"){
 
                 echo'<script>
