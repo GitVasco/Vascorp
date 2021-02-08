@@ -260,9 +260,9 @@ class ControladorTrabajador{
 	/* 
 	* Trabajador seleccionado
 	*/
-	static public function ctrMostrarTrabajadorConfigurado(){
+	static public function ctrMostrarTrabajadorConfigurado($usuario){
 
-		$respuesta = ModeloTrabajador::mdlMostrarTrabajadorConfigurado();
+		$respuesta = ModeloTrabajador::mdlMostrarTrabajadorConfigurado($usuario);
 
 		return $respuesta;
 
@@ -275,12 +275,16 @@ class ControladorTrabajador{
 
 		if(isset($_POST["trabajadorSelect"])){
 
-			$respuesta = ModeloTrabajador::mdlTrabajadorSet();
+			$usuario = $_POST["usuario"];
+			//var_dump($trabajador);
+
+			$respuesta = ModeloTrabajador::mdlTrabajadorSet($usuario);
+			//$respuesta = "false";
 			
 			if($respuesta == "ok"){
 
 				$cod_tra = $_POST["trabajadorSelect"];
-				ModeloTrabajador::ctrConfigurarTrabajador($cod_tra);
+				ModeloTrabajador::ctrConfigurarTrabajador($cod_tra,$usuario);
 
 				echo'<script>
 

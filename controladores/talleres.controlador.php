@@ -96,6 +96,8 @@ class ControladorTalleres{
 
                 # Actualizamos ultima_compra en la tabla Clientes
                 date_default_timezone_set('America/Lima');
+
+                //$fecha = "2021-02-04";
                 $fecha = date('Y-m-d G:i:s');
                 //var_dump($fecha);
 
@@ -123,6 +125,8 @@ class ControladorTalleres{
 
                 # Actualizamos ultima_compra en la tabla Clientes
                 date_default_timezone_set('America/Lima');
+
+                //$fecha = "2021-02-04";
                 $fecha = date('Y-m-d G:i:s');
                 //var_dump($fecha);
 

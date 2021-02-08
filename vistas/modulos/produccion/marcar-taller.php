@@ -118,7 +118,8 @@
 
                                 <?php
 
-                                $trabajador = ControladorTrabajador::ctrMostrarTrabajadorConfigurado();
+                                $usuario = $_SESSION["id"];
+                                $trabajador = ControladorTrabajador::ctrMostrarTrabajadorConfigurado($usuario);
                                 //var_dump($trabajador);
 
 
@@ -143,7 +144,7 @@
 
                                             <input type="hidden" id="cod_tra" name="cod_tra" value="<?php echo $trabajador["cod_tra"]; ?>">
 
-                                        </div>
+                                            </div>
 
                                     </div>                                
 
@@ -244,6 +245,8 @@ MODAL CONFIGURAR Trabajador
               <div class="input-group">
 
                 <span class="input-group-addon"><i class="fa fa-user-o"></i></span>
+
+                <input type="hidden" id="usuario" name="usuario" value = "<?php echo $_SESSION["id"]?>">
 
                   <select class="form-control input-sm selectpicker" id="trabajadorSelect" name="trabajadorSelect" data-live-search="true" required>
 
