@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 class ControladorTalleres{
 
     /*
@@ -97,7 +97,7 @@ class ControladorTalleres{
                 # Actualizamos ultima_compra en la tabla Clientes
                 date_default_timezone_set('America/Lima');
 
-                //$fecha = "2021-02-04";
+                //$fecha = "2021-02-10";
                 $fecha = date('Y-m-d G:i:s');
                 //var_dump($fecha);
 
@@ -126,7 +126,7 @@ class ControladorTalleres{
                 # Actualizamos ultima_compra en la tabla Clientes
                 date_default_timezone_set('America/Lima');
 
-                //$fecha = "2021-02-04";
+                //$fecha = "2021-02-10";
                 $fecha = date('Y-m-d G:i:s');
                 //var_dump($fecha);
 
@@ -1248,7 +1248,7 @@ class ControladorTalleres{
 
                 $respuesta=ModeloTalleres::mdlIngresarTaller($datos);
 
-                var_dump($respuesta);
+                //var_dump($respuesta);
                 if($respuesta == "ok"){
 
                     $ultimo = $ult_codigo["ult_codigo"].$_POST["ticketOperacion"];
@@ -1277,12 +1277,12 @@ class ControladorTalleres{
                           showConfirmButton: true,
                           confirmButtonText: "Cerrar"
                           }).then(function(result){
-                                    if (result.value) {
+                            if (result.value) {
 
-                                    window.location = "en-taller";
+                            window.location = "en-taller";
 
-                                    }
-                                })
+                            }
+                        })
 
                     </script>';
 
