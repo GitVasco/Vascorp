@@ -2043,7 +2043,7 @@ $(".tablaTalleresOperaciones").on("click", ".btnImprimirTicket", function () {
 $("#ticketArticulo").change(function(){
 
 	var articulo = $(this).val();
-	// console.log(articulo.length);
+	//console.log(articulo.length);
 	if(articulo.length == 8){
 		var modelo = articulo.substring(0,5);
 	}else{
@@ -2060,6 +2060,9 @@ $("#ticketArticulo").change(function(){
 		processData:false,
 		dataType: "json",
 		success:function(respuesta){
+
+			//console.log(respuesta);
+
 			$("#ticketOperacion").find('option').remove();
 			$("#ticketOperacion").append('<option value="">Seleccionar operacion</option>')
 			for (let i = 0; i < respuesta.length; i++) {
