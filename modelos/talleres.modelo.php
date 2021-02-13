@@ -1850,7 +1850,7 @@ class ModeloTalleres{
             ON MONTH(et.fecha_terminado) = m.codigo 
         WHERE et.estado = '3' 
               AND (m.tipo = 'brasier'
-                  OR a.modelo IN ('10013'))
+                  OR a.modelo IN ('10013')) AND
           DATE(et.fecha_terminado) BETWEEN '$fechaInicial' AND '$fechaFinal'
           GROUP BY MONTH(et.fecha_terminado),
                 DAY(et.fecha_terminado),   
