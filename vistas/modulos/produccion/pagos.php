@@ -69,6 +69,7 @@
 
           echo '<th>Cod. Trab.</th>
                 <th>Trabajador</th>
+                <th>27</th>
                 <th>28</th>
                 <th>29</th>
                 <th>30</th>
@@ -95,6 +96,7 @@
 
           echo '<th>Cod. Trab.</th>
                 <th>Trabajador</th>
+                <th>12</th>
                 <th>13</th>
                 <th>14</th>
                 <th>15</th>
@@ -132,6 +134,7 @@
         <tr>
          <th></th>
          <th>TOTAL: </th>
+         <th></th>
          <th></th>
          <th></th>
          <th></th>

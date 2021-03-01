@@ -1049,6 +1049,13 @@ class ModeloProduccion
                 END
               ) AS d16,
               SUM(
+              CASE
+                WHEN DAY(fecha_terminado) = '27' 
+                THEN et.total_precio 
+                ELSE 0 
+              END
+              ) AS d27,
+              SUM(
                 CASE
                   WHEN DAY(fecha_terminado) = '28' 
                   THEN et.total_precio 
@@ -1090,7 +1097,10 @@ class ModeloProduccion
                   LEFT JOIN entallerjf et 
                     ON a.id_trabajador = et.trabajador 
                     AND DATE(a.fecha) = DATE(et.fecha_terminado) 
-                WHERE et.trabajador IS NOT NULL) AS asi 
+                WHERE et.trabajador IS NOT NULL 
+                AND (a.fecha BETWEEN :inicio
+                  AND :fin
+                )) AS asi 
                 ON et.trabajador = asi.trabajador 
                 AND DATE(fecha_terminado) = asi.fecha 
               LEFT JOIN trabajadorjf t 
@@ -1128,6 +1138,13 @@ class ModeloProduccion
                     ELSE 0 
                   END
                 ) AS d1,
+                SUM(
+                  CASE
+                    WHEN DAY(fecha_terminado) = '12' 
+                    THEN et.total_precio 
+                    ELSE 0 
+                  END
+                ) AS d12,                
                 SUM(
                   CASE
                     WHEN DAY(fecha_terminado) = '13' 
@@ -1275,7 +1292,10 @@ class ModeloProduccion
                     LEFT JOIN entallerjf et 
                       ON a.id_trabajador = et.trabajador 
                       AND DATE(a.fecha) = DATE(et.fecha_terminado) 
-                  WHERE et.trabajador IS NOT NULL) AS asi 
+                  WHERE et.trabajador IS NOT NULL
+                  AND (a.fecha BETWEEN :inicio
+                  AND :fin
+                  )) AS asi 
                   ON et.trabajador = asi.trabajador 
                   AND DATE(fecha_terminado) = asi.fecha 
                 LEFT JOIN trabajadorjf t 
@@ -1422,6 +1442,13 @@ class ModeloProduccion
               ) AS d16,
               SUM(
                 CASE
+                  WHEN DAY(fecha_terminado) = '27' 
+                  THEN et.total_precio 
+                  ELSE 0 
+                END
+              ) AS d27,              
+              SUM(
+                CASE
                   WHEN DAY(fecha_terminado) = '28' 
                   THEN et.total_precio 
                   ELSE 0 
@@ -1462,7 +1489,10 @@ class ModeloProduccion
                   LEFT JOIN entallerjf et 
                     ON a.id_trabajador = et.trabajador 
                     AND DATE(a.fecha) = DATE(et.fecha_terminado) 
-                WHERE et.trabajador IS NOT NULL) AS asi 
+                WHERE et.trabajador IS NOT NULL
+                AND (a.fecha BETWEEN :inicio
+                  AND :fin
+                )) AS asi 
                 ON et.trabajador = asi.trabajador 
                 AND DATE(fecha_terminado) = asi.fecha 
               LEFT JOIN trabajadorjf t 
@@ -1499,6 +1529,13 @@ class ModeloProduccion
                     ELSE 0 
                   END
                 ) AS d1,
+                SUM(
+                  CASE
+                    WHEN DAY(fecha_terminado) = '12' 
+                    THEN et.total_precio 
+                    ELSE 0 
+                  END
+                ) AS d12,                
                 SUM(
                   CASE
                     WHEN DAY(fecha_terminado) = '13' 
@@ -1646,7 +1683,10 @@ class ModeloProduccion
                     LEFT JOIN entallerjf et 
                       ON a.id_trabajador = et.trabajador 
                       AND DATE(a.fecha) = DATE(et.fecha_terminado) 
-                  WHERE et.trabajador IS NOT NULL) AS asi 
+                  WHERE et.trabajador IS NOT NULL
+                  AND (a.fecha BETWEEN :inicio
+                  AND :fin
+                  )) AS asi 
                   ON et.trabajador = asi.trabajador 
                   AND DATE(fecha_terminado) = asi.fecha 
                 LEFT JOIN trabajadorjf t 

@@ -183,7 +183,7 @@ function cargarPagos(inicio,fin,nquincena,id,sectorTra){
 		"deferRender": true,
 		"retrieve": true,
 		"processing": true,
-		"order": [[22, "desc"]],
+		"order": [[23, "desc"]],
 		"pageLength": 20,
 		"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
 		"language": {
@@ -276,6 +276,9 @@ function cargarPagos(inicio,fin,nquincena,id,sectorTra){
 			)
 			$(api.column(22).footer()).html(
 				api.column(22,{page:'current'}).data().sum().toFixed(2)
+			)
+			$(api.column(23).footer()).html(
+				api.column(23,{page:'current'}).data().sum().toFixed(2)
 			)
 		}
 		
