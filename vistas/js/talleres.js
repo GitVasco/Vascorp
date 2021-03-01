@@ -1661,7 +1661,8 @@ $(".tablaTalleresT").on("click", ".btnDividirTallerTerminado", function () {
 			$("#cantidades").val(respuesta["cantidad"]);
 			$("#editarCantidades").val(respuesta["cantidad"]);
 			$("#editarCodOperaciones").val(respuesta["cod_operacion"]);
-			$("#editarOperacion").val(respuesta["nom_operacion"]);
+			$("#editarCOTT").val(respuesta["cod_operacion"]);
+			$("#editarOTT").val(respuesta["nom_operacion"]);
 			$("#editarBarra").val(respuesta["codigo"]);
 			$("#editarTaller").val(respuesta["id"]);
 			$("#trabajador").val(respuesta["trabajador"]);
@@ -1861,7 +1862,8 @@ $(".tablaTalleresGenerado").on("click", ".btnDividirTallerGenerado", function ()
 			$("#cantidades").val(respuesta["cantidad"]);
 			$("#editarCantidades").val(respuesta["cantidad"]);
 			$("#editarCodOperaciones").val(respuesta["cod_operacion"]);
-			$("#editarOperacion").val(respuesta["nom_operacion"]);
+			$("#editarCOTP").val(respuesta["cod_operacion"]);
+			$("#editarOTP").val(respuesta["nom_operacion"]);
 			$("#editarBarra").val(respuesta["codigo"]);
 			$("#editarTaller").val(respuesta["id"]);
 			$("#trabajador").val(respuesta["trabajador"]);
@@ -1976,6 +1978,8 @@ $(".box").on("click", ".btnLimpiarModeloTallerOp", function () {
 			$("#editarArticulo").val(respuesta["articulo"]);
 			$("#cantidad").val(respuesta["cantidad"]);
 			$("#editarCodOperacion").val(respuesta["cod_operacion"]);
+			$("#editarCOTO").val(respuesta["cod_operacion"]);
+			$("#editarOTO").val(respuesta["nom_operacion"]);
 			$("#editarCantidad2").val(respuesta["cantidad"]);
 			$("#editarTaller").val(respuesta["id"]);
 			$("#editarBarra").val(respuesta["codigo"]);

@@ -55,12 +55,15 @@ class ModeloTalleres{
             a.modelo,
             a.nombre,
             a.color,
-            a.talla
+            a.talla,
+            o.nombre AS nom_operacion
         FROM
           entallerjf  t
           LEFT JOIN articulojf a
           ON a.articulo = t.articulo
-          WHERE codigo='$valor'");
+          LEFT JOIN operacionesjf o 
+          ON t.cod_operacion = o.codigo 
+          WHERE t.codigo='$valor'");
 
 			$stmt->execute();
 

@@ -469,6 +469,35 @@ MODAL EDITAR CANTIDAD
 
             </div>
 
+            <!-- ENTRADA PARA LA OPERACION -->
+            <div class="form-group col-lg-4">
+
+              <label>Cod. Op</label>
+
+              <div class="input-group">
+
+                <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+
+                <input type="text" class="form-control" id="editarCOTT" name="editarCOTT"  readonly>
+
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-8">
+
+              <label>Operacion</label>
+
+              <div class="input-group">
+
+                <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+
+                <input type="text" class="form-control" id="editarOTT" name="editarOTT"  readonly>
+
+              </div>
+
+            </div>
+
             <div class="form-group col-lg-4">
 
               <label>Modelo</label>
