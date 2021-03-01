@@ -90,7 +90,8 @@
                 <th>14</th>
                 <th>15</th>
                 <th>16</th>
-                <th>Total S/</th>';
+                <th>Total S/</th>
+                <th>Pend. S/</th>';
 
          }else{
 
@@ -117,7 +118,8 @@
                 <th>30</th>
                 <th>31</th>
                 <th>1</th>
-                <th>Total S/</th>';
+                <th>Total S/</th>
+                <th>Pend. S/</th>';
 
          }
          
@@ -134,6 +136,7 @@
         <tr>
          <th></th>
          <th>TOTAL: </th>
+         <th></th>
          <th></th>
          <th></th>
          <th></th>

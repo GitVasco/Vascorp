@@ -312,6 +312,22 @@ class TablaPagos{
                             $total = "<b class='azul'>".number_format($pagos[$i]["total"],2)."</b>";
 
                         }
+
+                        /* 
+                        *TOTALES PENDIENTES
+                        */
+                        
+                        $pendiente = $pagos[$i]["sueldo_total"] - $pagos[$i]["total"];
+
+                        if($pagos[$i]["total"] < $pagos[$i]["sueldo_total"]){
+
+                            $totalPendiente = "<b class='guinda'>".number_format($pendiente,2)."</b>";
+
+                        }else{
+
+                            $totalPendiente = "<b class='azul'>".number_format($pendiente,2)."</b>";
+
+                        }                        
             
                         $datosJson .= '[
                         "'.$pagos[$i]["trabajador"].'",
@@ -337,7 +353,8 @@ class TablaPagos{
                         "<b>'.$d14.'</b>",
                         "<b>'.$d15.'</b>",
                         "<b>'.$d16.'</b>",
-                        "'.$total.'"
+                        "'.$total.'",
+                        "'.$totalPendiente.'"
                         ],';  
             
                     }
@@ -648,6 +665,22 @@ class TablaPagos{
 
                         }
 
+                        /* 
+                        *TOTALES PENDIENTES
+                        */
+                        
+                        $pendiente = $pagos[$i]["sueldo_total"] - $pagos[$i]["total"];
+
+                        if($pagos[$i]["total"] < $pagos[$i]["sueldo_total"]){
+
+                            $totalPendiente = "<b class='guinda'>".number_format($pendiente,2)."</b>";
+
+                        }else{
+
+                            $totalPendiente = "<b class='azul'>".number_format($pendiente,2)."</b>";
+
+                        } 
+
                         $datosJson .= '[
                         "'.$pagos[$i]["trabajador"].'",
                         "<b>'.$pagos[$i]["nom_tra"].'</b>",
@@ -672,7 +705,8 @@ class TablaPagos{
                         "<b>'.$d30.'</b>",
                         "<b>'.$d31.'</b>",
                         "<b>'.$d1.'</b>",
-                        "'.$total.'"
+                        "'.$total.'",
+                        "'.$totalPendiente.'"
                         ],';  
             
                     }

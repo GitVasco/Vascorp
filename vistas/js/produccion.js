@@ -280,6 +280,9 @@ function cargarPagos(inicio,fin,nquincena,id,sectorTra){
 			$(api.column(23).footer()).html(
 				api.column(23,{page:'current'}).data().sum().toFixed(2)
 			)
+			$(api.column(24).footer()).html(
+				api.column(24,{page:'current'}).data().sum().toFixed(2)
+			)
 		}
 		
 	});
