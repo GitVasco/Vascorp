@@ -21,7 +21,7 @@ function cargarTablaCierres(fechaInicial,fechaFinal) {
     deferRender: true,
     retrieve: true,
     processing: true,
-    order: [[5, "desc"]],
+    order: [[6, "desc"]],
     language: {
       sProcessing: "Procesando...",
       sLengthMenu: "Mostrar _MENU_ registros",

@@ -262,11 +262,13 @@ $(".tablaTalleresG").on("click", ".btnEditarTallerG", function () {
 		processData:false,
 		dataType: "json",
 		success:function(respuesta){
-			// console.log(respuesta);
+			console.log(respuesta);
 			$("#editarCodigo").val(respuesta["id_cabecera"]);
 			$("#editarArticulo").val(respuesta["articulo"]);
 			$("#cantidad").val(respuesta["cantidad"]);
 			$("#editarCodOperacion").val(respuesta["cod_operacion"]);
+			$("#editarCOT").val(respuesta["cod_operacion"]);
+			$("#editarOT").val(respuesta["nom_operacion"]);
 			$("#editarCantidad2").val(respuesta["cantidad"]);
 			$("#editarTaller").val(respuesta["id"]);
 			$("#editarBarra").val(respuesta["codigo"]);
@@ -315,7 +317,7 @@ $("#daterange-btnTaller").daterangepicker(
 		],
 	  },
       ranges: {
-        Hoy: [moment(), moment()],
+        HOY: [moment(), moment()],
         Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
         "Últimos 7 días": [moment().subtract(6, "days"), moment()],
         "Últimos 30 días": [moment().subtract(29, "days"), moment()],
@@ -374,7 +376,7 @@ $("#daterange-btnTaller").daterangepicker(
   $(".daterangepicker.opensleft .ranges li").on("click", function() {
     var textoHoy = $(this).attr("data-range-key");
   
-    if (textoHoy == "Hoy") {
+    if (textoHoy == "HOY") {
       var d = new Date();
   
       var dia = d.getDate();
@@ -387,7 +389,7 @@ $("#daterange-btnTaller").daterangepicker(
       var fechaInicial = año + "-" + mes + "-" + dia;
       var fechaFinal = año + "-" + mes + "-" + dia;
   
-      localStorage.setItem("capturarRango5", "Hoy");
+      localStorage.setItem("capturarRango5", "HOY");
       localStorage.setItem("fechaInicial", fechaInicial);
       localStorage.setItem("fechaFinal", fechaFinal);
       // Recargamos la tabla con la información para ser mostrada en la tabla

@@ -192,7 +192,7 @@ class ControladorTalleres{
     }    
     
     /*=============================================
-	EDITAR Cantidad
+	Dividir Cantidad Taller General
 	=============================================*/
 
 	static public function ctrEditarCantidad(){
@@ -327,11 +327,11 @@ class ControladorTalleres{
                     $rpt_operacion=ModeloOperaciones::mdlMostrarOperaciones($tablaop,$itemop,$cod_ope);
                     $nom_ope = $rpt_operacion["nombre"];
 
-                    $ultimo2 = $codigoBarraNuevo;
+                    // $ultimo2 = $codigoBarraNuevo;
 
                     echo'<script>
                     
-                    window.open("vistas/reportes_ticket/produccion_ticket_dividir.php?ultimo='.$ultimo.'&modelo='.$modelo.'&nombre='.$nombre.'&color='.$color.'&talla='.$talla.'&cant_taller='.$cantidad.'&cod_operacion='.$cod_ope.'&nom_operacion='.$nom_ope.'&ultimo2='.$ultimo2.'&cant_taller2='.$cantidad2.'","_blank");
+                    window.open("vistas/reportes_ticket/produccion_ticket_dividir2.php?ultimo='.$ultimo.'&modelo='.$modelo.'&nombre='.$nombre.'&color='.$color.'&talla='.$talla.'&cant_taller='.$cantidad.'&cod_operacion='.$cod_ope.'&nom_operacion='.$nom_ope.'","_blank");
                     </script>';
 					echo'<script>
 
@@ -443,8 +443,8 @@ class ControladorTalleres{
 	}
 
     
- /*=============================================
-	EDITAR Cantidad TERMINADO
+    /*=============================================
+	Dividir Cantidad Taller Terminado
 	=============================================*/
 
 	static public function ctrEditarCantidadTerminado(){
@@ -593,11 +593,11 @@ class ControladorTalleres{
                     $rpt_operacion=ModeloOperaciones::mdlMostrarOperaciones($tablaop,$itemop,$cod_ope);
                     $nom_ope = $rpt_operacion["nombre"];
 
-                    $ultimo2 = $codigoBarraNuevo;
+                    // $ultimo2 = $codigoBarraNuevo;
 
                     echo'<script>
                     
-                    window.open("vistas/reportes_ticket/produccion_ticket_dividir.php?ultimo='.$ultimo.'&modelo='.$modelo.'&nombre='.$nombre.'&color='.$color.'&talla='.$talla.'&cant_taller='.$cantidad.'&cod_operacion='.$cod_ope.'&nom_operacion='.$nom_ope.'&ultimo2='.$ultimo2.'&cant_taller2='.$cantidad2.'","_blank");
+                    window.open("vistas/reportes_ticket/produccion_ticket_dividir2.php?ultimo='.$ultimo.'&modelo='.$modelo.'&nombre='.$nombre.'&color='.$color.'&talla='.$talla.'&cant_taller='.$cantidad.'&cod_operacion='.$cod_ope.'&nom_operacion='.$nom_ope.'","_blank");
                     </script>';
 					echo'<script>
 
@@ -706,7 +706,7 @@ class ControladorTalleres{
     }
 
     /*=============================================
-	EDITAR Cantidad Operacion
+	Dividir cantidad Taller Operaciones
 	=============================================*/
 
 	static public function ctrEditarCantidadOperacion(){
@@ -841,11 +841,11 @@ class ControladorTalleres{
                     $rpt_operacion=ModeloOperaciones::mdlMostrarOperaciones($tablaop,$itemop,$cod_ope);
                     $nom_ope = $rpt_operacion["nombre"];
 
-                    $ultimo2 = $codigoBarraNuevo;
+                    // $ultimo2 = $codigoBarraNuevo;
 
                     echo'<script>
                     
-                    window.open("vistas/reportes_ticket/produccion_ticket_dividir.php?ultimo='.$ultimo.'&modelo='.$modelo.'&nombre='.$nombre.'&color='.$color.'&talla='.$talla.'&cant_taller='.$cantidad.'&cod_operacion='.$cod_ope.'&nom_operacion='.$nom_ope.'&ultimo2='.$ultimo2.'&cant_taller2='.$cantidad2.'","_blank");
+                    window.open("vistas/reportes_ticket/produccion_ticket_dividir2.php?ultimo='.$ultimo.'&modelo='.$modelo.'&nombre='.$nombre.'&color='.$color.'&talla='.$talla.'&cant_taller='.$cantidad.'&cod_operacion='.$cod_ope.'&nom_operacion='.$nom_ope.'","_blank");
                     </script>';
 					echo'<script>
 
@@ -872,7 +872,7 @@ class ControladorTalleres{
     }
 
     /*=============================================
-	EDITAR Cantidad
+	Dividir Cantidad Taller Generado
 	=============================================*/
 
 	static public function ctrEditarCantidadGenerado(){
@@ -1122,11 +1122,11 @@ class ControladorTalleres{
                     $rpt_operacion=ModeloOperaciones::mdlMostrarOperaciones($tablaop,$itemop,$cod_ope);
                     $nom_ope = $rpt_operacion["nombre"];
 
-                    $ultimo2 = $codigoBarraNuevo;
+                    // $ultimo2 = $codigoBarraNuevo;
 
                     echo'<script>
                     
-                    window.open("vistas/reportes_ticket/produccion_ticket_dividir.php?ultimo='.$ultimo.'&modelo='.$modelo.'&nombre='.$nombre.'&color='.$color.'&talla='.$talla.'&cant_taller='.$cantidad.'&cod_operacion='.$cod_ope.'&nom_operacion='.$nom_ope.'&ultimo2='.$ultimo2.'&cant_taller2='.$cantidad2.'","_blank");
+                    window.open("vistas/reportes_ticket/produccion_ticket_dividir2.php?ultimo='.$ultimo.'&modelo='.$modelo.'&nombre='.$nombre.'&color='.$color.'&talla='.$talla.'&cant_taller='.$cantidad.'&cod_operacion='.$cod_ope.'&nom_operacion='.$nom_ope.'","_blank");
                     </script>';
 					echo'<script>
 
