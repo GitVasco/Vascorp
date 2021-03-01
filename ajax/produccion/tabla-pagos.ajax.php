@@ -236,6 +236,19 @@ class TablaPagos{
                         }
                         
                         /* 
+                        *d27
+                        */
+                        if($pagos[$i]["d27"] > 0){
+
+                            $d27 = number_format($pagos[$i]["d27"],2);
+
+                        }else{
+
+                            $d27 = '';
+
+                        }
+
+                        /* 
                         *d28    
                         */
                         if($pagos[$i]["d28"] > 0){
@@ -303,6 +316,7 @@ class TablaPagos{
                         $datosJson .= '[
                         "'.$pagos[$i]["trabajador"].'",
                         "<b>'.$pagos[$i]["nom_tra"].'</b>",
+                        "<b>'.$d27.'</b>",
                         "<b>'.$d28.'</b>",
                         "<b>'.$d29.'</b>",
                         "<b>'.$d30.'</b>",
@@ -360,7 +374,20 @@ class TablaPagos{
                             $d1 = '';
 
                         }
-                        
+
+                        /* 
+                        *d12    
+                        */
+                        if($pagos[$i]["d12"] > 0){
+
+                            $d12 = number_format($pagos[$i]["d12"],2);
+
+                        }else{
+
+                            $d12 = '';
+
+                        } 
+
                         /* 
                         *d13    
                         */
@@ -624,6 +651,7 @@ class TablaPagos{
                         $datosJson .= '[
                         "'.$pagos[$i]["trabajador"].'",
                         "<b>'.$pagos[$i]["nom_tra"].'</b>",
+                        "<b>'.$d12.'</b>",
                         "<b>'.$d13.'</b>",
                         "<b>'.$d14.'</b>",
                         "<b>'.$d15.'</b>",
