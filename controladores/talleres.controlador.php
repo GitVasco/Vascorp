@@ -636,7 +636,7 @@ class ControladorTalleres{
 
             $cod = $_POST["nuevoCodigo"];
 
-            $nombre_impresora = "Star BSC10"; 
+            $nombre_impresora = "Star BSC10 en SISTEMAS-2"; 
  
             $connector = new WindowsPrintConnector($nombre_impresora);
             $printer = new Printer($connector);
@@ -678,8 +678,11 @@ class ControladorTalleres{
                 $printer -> text("Operación:".$value["cod_operacion"]." - ".$value["operacion"]."\n");//Modelo
                 
                 $item="{B".$value["codigo"]."";
+
                 //BARCODE
+                $printer->selectPrintMode(Printer::MODE_DOUBLE_HEIGHT | Printer::MODE_DOUBLE_WIDTH);
                 $printer->setJustification(Printer::JUSTIFY_CENTER);
+                $printer->setBarcodeWidth(8);
                 $printer->setBarcodeTextPosition(Printer::BARCODE_TEXT_BELOW);
                 $printer->barcode( "{B1234567" , Printer::BARCODE_CODE128 );
 				$printer -> feed(1);
