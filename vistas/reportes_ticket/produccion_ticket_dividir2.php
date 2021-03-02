@@ -51,14 +51,6 @@ $documento = "20513613939";
       </tr>
 
       <tr>
-        <td colspan="3">===============================</td>
-      </tr>  
-
-      <tr>
-        <!-- Mostramos los datos del cliente en el documento HTML -->
-        <td><strong>Trabajador:  </strong></td>
-      </tr>
-      <tr>
       <td colspan="3">===============================</td>
       </tr>
 

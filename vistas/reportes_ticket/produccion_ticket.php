@@ -20,7 +20,7 @@ $respuesta = ControladorCortes::ctrMostrarEnTalleres($codigo);
 //var_dump($respuesta);
 
 //Establecemos los datos de la empresa
-$empresa = "Corporacion Vasco S.A.C.";
+$empresa = "Corporacion Vasco SAC";
 $documento = "20513613939";
 
 ?>
@@ -34,16 +34,13 @@ $documento = "20513613939";
 
       echo '<table border="0" align="center" width="300px">
 
-              <br>
-
               <tr>
                 <td colspan="3">================================</td>
               </tr>  
 
               <tr>
-                <td align="center">
-                  <!-- Mostramos los datos de la empresa en el documento HTML -->
-                  .::<strong> '.$empresa.' </strong>::.<br>
+                <td align="center" colspan="3">
+                  <strong>'.$empresa.'</strong><br>
                   '.$documento.'<br>
                 </td>
               </tr>
@@ -58,7 +55,7 @@ $documento = "20513613939";
               </tr>
 
               <tr>
-                <td style="font-size: x-large;"><strong>'.$value["modelo"]." - ".str_pad(($key+1),2,"0",STR_PAD_LEFT).'</strong></td>
+                <td style="font-size: x-large;"><strong>'.$value["modelo"].'</strong></td>
                 <td style="font-size: x-large;"><strong>'.$value["nombre"].'</strong></td>
               </tr>
     
@@ -88,7 +85,7 @@ $documento = "20513613939";
                 </tr>
                 
                 <tr>
-                  <td><strong>'.$value["cod_operacion"]. "-".str_pad(($key+1),2,"0",STR_PAD_LEFT). '</strong></td>
+                  <td><strong>'.$value["cod_operacion"].'</strong></td>
                   <td style="font-size: x-large;"><strong>'.$value["operacion"].'</strong></td>
                 </tr>
         

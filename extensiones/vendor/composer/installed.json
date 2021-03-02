@@ -1,17 +1,17 @@
 [
     {
         "name": "mike42/escpos-php",
-        "version": "v2.0.2",
-        "version_normalized": "2.0.2.0",
+        "version": "v2.2",
+        "version_normalized": "2.2.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/mike42/escpos-php.git",
-            "reference": "416e340f9cb90fa40611484f1b3c68df06205a84"
+            "reference": "e5496cf819b048b11877117bd14a9cea4fb17c03"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/mike42/escpos-php/zipball/416e340f9cb90fa40611484f1b3c68df06205a84",
-            "reference": "416e340f9cb90fa40611484f1b3c68df06205a84",
+            "url": "https://api.github.com/repos/mike42/escpos-php/zipball/e5496cf819b048b11877117bd14a9cea4fb17c03",
+            "reference": "e5496cf819b048b11877117bd14a9cea4fb17c03",
             "shasum": ""
         },
         "require": {
@@ -28,7 +28,7 @@
             "ext-imagick": "Will be used for image printing if present. Required for PDF printing or use of custom fonts.",
             "guzzlehttp/guzzle": "Allows the use of the ApiConnector to send print jobs over HTTP."
         },
-        "time": "2018-06-30T03:06:21+00:00",
+        "time": "2019-10-05T05:59:00+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

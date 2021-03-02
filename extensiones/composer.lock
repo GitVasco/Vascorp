@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8679a847d6e986ada27c09d9f5a298a7",
+    "content-hash": "23a4a975105438af5ec640433c0bbc0c",
     "packages": [
         {
             "name": "mike42/escpos-php",
-            "version": "v2.0.2",
+            "version": "v2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mike42/escpos-php.git",
-                "reference": "416e340f9cb90fa40611484f1b3c68df06205a84"
+                "reference": "e5496cf819b048b11877117bd14a9cea4fb17c03"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mike42/escpos-php/zipball/416e340f9cb90fa40611484f1b3c68df06205a84",
-                "reference": "416e340f9cb90fa40611484f1b3c68df06205a84",
+                "url": "https://api.github.com/repos/mike42/escpos-php/zipball/e5496cf819b048b11877117bd14a9cea4fb17c03",
+                "reference": "e5496cf819b048b11877117bd14a9cea4fb17c03",
                 "shasum": ""
             },
             "require": {
@@ -59,7 +59,7 @@
                 "print",
                 "receipt"
             ],
-            "time": "2018-06-30T03:06:21+00:00"
+            "time": "2019-10-05T05:59:00+00:00"
         }
     ],
     "packages-dev": [],

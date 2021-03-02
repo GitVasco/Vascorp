@@ -1,5 +1,8 @@
 <?php
 //session_start();
+use Mike42\Escpos\Printer;
+use Mike42\Escpos\EscposImage;
+use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 class ControladorTalleres{
 
     /*
@@ -633,11 +636,59 @@ class ControladorTalleres{
 
             $cod = $_POST["nuevoCodigo"];
 
-            echo'<script>
-            
-            window.open("vistas/reportes_ticket/produccion_ticket.php?codigo='.$cod.'" ,"_blank");
-                   
-            </script>';
+            $nombre_impresora = "Star BSC10"; 
+ 
+            $connector = new WindowsPrintConnector($nombre_impresora);
+            $printer = new Printer($connector);
+ 
+            $fecha = date("d-m-Y");
+
+            $respuesta = ControladorCortes::ctrMostrarEnTalleres($cod);
+            //Establecemos los datos de la empresa
+            $empresa = "Corporacion Vasco S.A.C.";
+            $documento = "20513613939";
+
+            foreach ($respuesta as $key => $value) {
+                
+                $printer -> setFont(Printer::FONT_B);
+                $printer -> setJustification(Printer::JUSTIFY_CENTER);
+                $printer -> setTextSize(1, 1);
+                //Activamos negrita
+
+                $printer->setPrintLeftMargin(0); // margen 0
+                $printer->setEmphasis(true);
+				$printer -> text(".::Corporación Vasco S.A.C::."."\n");//Nombre de la empresa
+ 
+				$printer -> text("=================================="."\n");//Dirección de la empresa
+                //Quitamos negrita
+                
+                
+                $printer -> setJustification(Printer::JUSTIFY_LEFT);
+
+				$printer -> text("Modelo:".$value["modelo"]." - ".$value["nombre"]."\n");//Modelo
+
+                $printer->setEmphasis(false);
+
+				$printer -> text("Color y Talla:  ".$value["color"]." - T".$value["talla"]."\n");//Color Y tALLA
+
+                $printer -> text("Cantidad:  ".$value["cantidad"]."\n");//Cantidad
+                //Activamos negrita
+                $printer->setEmphasis(true);
+
+                $printer -> text("Operación:".$value["cod_operacion"]." - ".$value["operacion"]."\n");//Modelo
+                
+                $item="{B".$value["codigo"]."";
+                //BARCODE
+                $printer->setJustification(Printer::JUSTIFY_CENTER);
+                $printer->setBarcodeTextPosition(Printer::BARCODE_TEXT_BELOW);
+                $printer->barcode( "{B1234567" , Printer::BARCODE_CODE128 );
+				$printer -> feed(1);
+                  
+                $printer -> cut();
+          
+                }
+                $printer -> close();
+
 
             echo'<script>
 
