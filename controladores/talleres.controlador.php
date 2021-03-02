@@ -201,7 +201,9 @@ class ControladorTalleres{
 	static public function ctrEditarCantidad(){
 
 		if(isset($_POST["editarCantidad2"])){
-                $dividir=substr($_POST["editarBarra"],-1);
+            $dividir=substr($_POST["editarBarra"],-1);
+            $cantidad= strlen($_POST["editarBarra"]);
+            if($cantidad == 11){
                 if($dividir == 'A'){
                     $datos = array("codigo" => $_POST["editarCodigo"], 
                             "usuario" => $_POST["usuario"],
@@ -211,7 +213,7 @@ class ControladorTalleres{
                             "editarBarra" => $_POST["editarBarra"]);
 
                     $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
-                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperacion"]."B";
+                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperacion"]."2";
                     $datos2 = array("codigo" => $_POST["editarCodigo"],
                                 "usuario" => $_POST["usuario"],
                                 "articulo" => $_POST["editarArticulo"],
@@ -233,7 +235,7 @@ class ControladorTalleres{
                             "editarBarra" => $_POST["editarBarra"]);
 
                     $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
-                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperacion"]."C";
+                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperacion"]."3";
                     $datos2 = array("codigo" => $_POST["editarCodigo"],
                                 "usuario" => $_POST["usuario"],
                                 "articulo" => $_POST["editarArticulo"],
@@ -255,7 +257,7 @@ class ControladorTalleres{
                             "editarBarra" => $_POST["editarBarra"]);
 
                     $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
-                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperacion"]."D";
+                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperacion"]."4";
                     $datos2 = array("codigo" => $_POST["editarCodigo"],
                             "usuario" => $_POST["usuario"],
                             "articulo" => $_POST["editarArticulo"],
@@ -278,7 +280,7 @@ class ControladorTalleres{
                             "editarBarra" => $_POST["editarBarra"]);
 
                     $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
-                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperacion"]."E";
+                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperacion"]."5";
                     $datos2 = array("codigo" => $_POST["editarCodigo"],
                             "usuario" => $_POST["usuario"],
                             "articulo" => $_POST["editarArticulo"],
@@ -291,7 +293,7 @@ class ControladorTalleres{
                     $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos);
                     $respuesta = ModeloTalleres::mdlIngresarTaller($datos2);
 
-                }else{
+                }elseif($dividir == 'E'){
                     $datos = array("codigo" => $_POST["editarCodigo"], 
                             "usuario" => $_POST["usuario"],
                             "articulo" => $_POST["editarArticulo"],
@@ -300,7 +302,51 @@ class ControladorTalleres{
                             "editarBarra" => $_POST["editarBarra"]);
 
                     $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
-                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperacion"]."A";
+                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperacion"]."6";
+                    $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperacion"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                    $tabla="entallerjf";
+                    $id=$_POST["editarTaller"];
+                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                    $respuesta = ModeloTalleres::mdlIngresarTaller($datos);
+                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+
+                }elseif($dividir == 'F'){
+                    $datos = array("codigo" => $_POST["editarCodigo"], 
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperacion"],
+                            "cantidad" => $_POST["editarCantidad2"],
+                            "editarBarra" => $_POST["editarBarra"]);
+
+                    $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
+                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperacion"]."7";
+                    $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperacion"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                    $tabla="entallerjf";
+                    $id=$_POST["editarTaller"];
+                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                    $respuesta = ModeloTalleres::mdlIngresarTaller($datos);
+                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+
+                }elseif($dividir == '1'){
+                    $datos = array("codigo" => $_POST["editarCodigo"], 
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperacion"],
+                            "cantidad" => $_POST["editarCantidad2"],
+                            "editarBarra" => $_POST["editarBarra"]);
+
+                    $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
+                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperacion"]."2";
                     $datos2 = array("codigo" => $_POST["editarCodigo"],
                             "usuario" => $_POST["usuario"],
                             "articulo" => $_POST["editarArticulo"],
@@ -311,8 +357,188 @@ class ControladorTalleres{
                     $id=$_POST["editarTaller"];
                     $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
                     $respuesta = ModeloTalleres::mdlIngresarTaller($datos);
+                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+
+                }elseif($dividir == '2'){
+
+                    $datos = array("codigo" => $_POST["editarCodigo"], 
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperacion"],
+                            "cantidad" => $_POST["editarCantidad2"],
+                            "editarBarra" => $_POST["editarBarra"]);
+
+                    $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
+                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperacion"]."3";
+                    $datos2 = array("codigo" => $_POST["editarCodigo"],
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperacion"],
+                            "cantidad" => $cantidad2,
+                            "editarBarra" => $codigoBarraNuevo);
+                    $tabla="entallerjf";
+                    $id=$_POST["editarTaller"];
+                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos);
                     $respuesta = ModeloTalleres::mdlIngresarTaller($datos2);
+
+                }elseif($dividir == '3'){
+                    $datos = array("codigo" => $_POST["editarCodigo"], 
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperacion"],
+                            "cantidad" => $_POST["editarCantidad2"],
+                            "editarBarra" => $_POST["editarBarra"]);
+
+                    $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
+                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperacion"]."4";
+                    $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperacion"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                    $tabla="entallerjf";
+                    $id=$_POST["editarTaller"];
+                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                    $respuesta = ModeloTalleres::mdlIngresarTaller($datos);
+                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+
+                }elseif($dividir == '4'){
+                    $datos = array("codigo" => $_POST["editarCodigo"], 
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperacion"],
+                            "cantidad" => $_POST["editarCantidad2"],
+                            "editarBarra" => $_POST["editarBarra"]);
+
+                    $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
+                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperacion"]."5";
+                    $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperacion"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                    $tabla="entallerjf";
+                    $id=$_POST["editarTaller"];
+                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                    $respuesta = ModeloTalleres::mdlIngresarTaller($datos);
+                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+
+                }elseif($dividir == '5'){
+                    $datos = array("codigo" => $_POST["editarCodigo"], 
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperacion"],
+                            "cantidad" => $_POST["editarCantidad2"],
+                            "editarBarra" => $_POST["editarBarra"]);
+
+                    $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
+                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperacion"]."6";
+                    $datos2 = array("codigo" => $_POST["editarCodigo"],
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperacion"],
+                            "cantidad" => $cantidad2,
+                            "editarBarra" => $codigoBarraNuevo);
+                    $tabla="entallerjf";
+                    $id=$_POST["editarTaller"];
+                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                    $respuesta = ModeloTalleres::mdlIngresarTaller($datos);
+                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+
+                }elseif($dividir == '6'){
+
+                    $datos = array("codigo" => $_POST["editarCodigo"], 
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperacion"],
+                            "cantidad" => $_POST["editarCantidad2"],
+                            "editarBarra" => $_POST["editarBarra"]);
+
+                    $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
+                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperacion"]."7";
+                    $datos2 = array("codigo" => $_POST["editarCodigo"],
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperacion"],
+                            "cantidad" => $cantidad2,
+                            "editarBarra" => $codigoBarraNuevo);
+                    $tabla="entallerjf";
+                    $id=$_POST["editarTaller"];
+                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos);
+                    $respuesta = ModeloTalleres::mdlIngresarTaller($datos2);
+
+                }elseif($dividir == '7'){
+                    $datos = array("codigo" => $_POST["editarCodigo"], 
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperacion"],
+                            "cantidad" => $_POST["editarCantidad2"],
+                            "editarBarra" => $_POST["editarBarra"]);
+
+                    $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
+                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperacion"]."8";
+                    $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperacion"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                    $tabla="entallerjf";
+                    $id=$_POST["editarTaller"];
+                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                    $respuesta = ModeloTalleres::mdlIngresarTaller($datos);
+                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+
+                }elseif($dividir == '8'){
+                    $datos = array("codigo" => $_POST["editarCodigo"], 
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperacion"],
+                            "cantidad" => $_POST["editarCantidad2"],
+                            "editarBarra" => $_POST["editarBarra"]);
+
+                    $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
+                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperacion"]."9";
+                    $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperacion"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                    $tabla="entallerjf";
+                    $id=$_POST["editarTaller"];
+                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                    $respuesta = ModeloTalleres::mdlIngresarTaller($datos);
+                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+
                 }
+
+            }else{
+                $datos = array("codigo" => $_POST["editarCodigo"], 
+                        "usuario" => $_POST["usuario"],
+                        "articulo" => $_POST["editarArticulo"],
+                        "operacion" => $_POST["editarCodOperacion"],
+                        "cantidad" => $_POST["editarCantidad2"],
+                        "editarBarra" => $_POST["editarBarra"]);
+
+                $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
+                $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperacion"]."1";
+                $datos2 = array("codigo" => $_POST["editarCodigo"],
+                        "usuario" => $_POST["usuario"],
+                        "articulo" => $_POST["editarArticulo"],
+                        "operacion" => $_POST["editarCodOperacion"],
+                        "cantidad" => $cantidad2,
+                        "editarBarra" => $codigoBarraNuevo);
+                $tabla="entallerjf";
+                $id=$_POST["editarTaller"];
+                $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                $respuesta = ModeloTalleres::mdlIngresarTaller($datos);
+                $respuesta = ModeloTalleres::mdlIngresarTaller($datos2);
+            }
                 
                 
 				if($respuesta == "ok" ){
@@ -454,56 +680,58 @@ class ControladorTalleres{
 
 		if(isset($_POST["editarCantidades"])){
             $dividir=substr($_POST["editarBarra"],-1);
-            if($dividir == 'A'){
-                $datos = array("codigo" => $_POST["editarCodigo"], 
-                        "usuario" => $_POST["usuario"],
-                        "articulo" => $_POST["editarArticulo"],
-                        "operacion" => $_POST["editarCodOperaciones"],
-                        "cantidad" => $_POST["editarCantidades"],
-                        "editarBarra" => $_POST["editarBarra"],
-                        "trabajador" => $_POST["trabajador"],
-                        "fecha_proceso" => $_POST["fecha_proceso"],
-                        "fecha_terminado" => $_POST["fecha_terminado"]);
-
-                $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
-                $codigoBarraNuevo=$_POST["editarCodigo"].$_POST["editarCodOperaciones"]."B";
-                $datos2 = array("codigo" => $_POST["editarCodigo"],
+            $cantidad= strlen($_POST["editarBarra"]);
+            if($cantidad == 11){
+                if($dividir == 'A'){
+                    $datos = array("codigo" => $_POST["editarCodigo"], 
                             "usuario" => $_POST["usuario"],
                             "articulo" => $_POST["editarArticulo"],
                             "operacion" => $_POST["editarCodOperaciones"],
-                            "cantidad" => $cantidad2,
-                            "editarBarra" => $codigoBarraNuevo);
-                $tabla="entallerjf";
-                $id=$_POST["editarTaller"];
-                $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
-                $respuesta = ModeloTalleres::mdlIngresarTallerTerminado($datos);
-                $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
-
-            }else if($dividir == 'B'){
-                $datos = array("codigo" => $_POST["editarCodigo"], 
-                        "usuario" => $_POST["usuario"],
-                        "articulo" => $_POST["editarArticulo"],
-                        "operacion" => $_POST["editarCodOperaciones"],
-                        "cantidad" => $_POST["editarCantidades"],
-                        "editarBarra" => $_POST["editarBarra"],
-                        "trabajador" => $_POST["trabajador"],
-                        "fecha_proceso" => $_POST["fecha_proceso"],
-                        "fecha_terminado" => $_POST["fecha_terminado"]);
-
-                $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
-                $codigoBarraNuevo=$_POST["editarCodigo"].$_POST["editarCodOperaciones"]."C";
-                $datos2 = array("codigo" => $_POST["editarCodigo"],
+                            "cantidad" => $_POST["editarCantidades"],
+                            "editarBarra" => $_POST["editarBarra"],
+                            "trabajador" => $_POST["trabajador"],
+                            "fecha_proceso" => $_POST["fecha_proceso"],
+                            "fecha_terminado" => $_POST["fecha_terminado"]);
+    
+                    $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
+                    $codigoBarraNuevo=$_POST["editarCodigo"].$_POST["editarCodOperaciones"]."2";
+                    $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                    $tabla="entallerjf";
+                    $id=$_POST["editarTaller"];
+                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                    $respuesta = ModeloTalleres::mdlIngresarTallerTerminado($datos);
+                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                }else if($dividir == 'B'){
+                    $datos = array("codigo" => $_POST["editarCodigo"], 
                             "usuario" => $_POST["usuario"],
                             "articulo" => $_POST["editarArticulo"],
                             "operacion" => $_POST["editarCodOperaciones"],
-                            "cantidad" => $cantidad2,
-                            "editarBarra" => $codigoBarraNuevo);
-                $tabla="entallerjf";
-                $id=$_POST["editarTaller"];
-                $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
-                $respuesta = ModeloTalleres::mdlIngresarTallerTerminado($datos);
-                $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
-
+                            "cantidad" => $_POST["editarCantidades"],
+                            "editarBarra" => $_POST["editarBarra"],
+                            "trabajador" => $_POST["trabajador"],
+                            "fecha_proceso" => $_POST["fecha_proceso"],
+                            "fecha_terminado" => $_POST["fecha_terminado"]);
+    
+                    $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
+                    $codigoBarraNuevo=$_POST["editarCodigo"].$_POST["editarCodOperaciones"]."3";
+                    $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                    $tabla="entallerjf";
+                    $id=$_POST["editarTaller"];
+                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                    $respuesta = ModeloTalleres::mdlIngresarTallerTerminado($datos);
+                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+    
                 }else if($dividir == 'C'){
                     $datos = array("codigo" => $_POST["editarCodigo"], 
                             "usuario" => $_POST["usuario"],
@@ -516,7 +744,7 @@ class ControladorTalleres{
                             "fecha_terminado" => $_POST["fecha_terminado"]);
 
                     $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
-                    $codigoBarraNuevo=$_POST["editarCodigo"].$_POST["editarCodOperaciones"]."D";
+                    $codigoBarraNuevo=$_POST["editarCodigo"].$_POST["editarCodOperaciones"]."4";
                     $datos2 = array("codigo" => $_POST["editarCodigo"],
                                 "usuario" => $_POST["usuario"],
                                 "articulo" => $_POST["editarArticulo"],
@@ -528,8 +756,8 @@ class ControladorTalleres{
                     $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
                     $respuesta = ModeloTalleres::mdlIngresarTallerTerminado($datos);
                     $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
-
-                } else if($dividir == 'D'){
+    
+                }else if($dividir == 'D'){
 
                     $datos = array("codigo" => $_POST["editarCodigo"], 
                             "usuario" => $_POST["usuario"],
@@ -542,7 +770,7 @@ class ControladorTalleres{
                             "fecha_terminado" => $_POST["fecha_terminado"]);
 
                     $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
-                    $codigoBarraNuevo=$_POST["editarCodigo"].$_POST["editarCodOperaciones"]."E";
+                    $codigoBarraNuevo=$_POST["editarCodigo"].$_POST["editarCodOperaciones"]."5";
                     $datos2 = array("codigo" => $_POST["editarCodigo"],
                                 "usuario" => $_POST["usuario"],
                                 "articulo" => $_POST["editarArticulo"],
@@ -554,8 +782,58 @@ class ControladorTalleres{
                     $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
                     $respuesta = ModeloTalleres::mdlIngresarTallerTerminado($datos);
                     $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
-
-                }else{
+    
+                }else if($dividir == 'E'){
+                    $datos = array("codigo" => $_POST["editarCodigo"], 
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperaciones"],
+                            "cantidad" => $_POST["editarCantidades"],
+                            "editarBarra" => $_POST["editarBarra"],
+                            "trabajador" => $_POST["trabajador"],
+                            "fecha_proceso" => $_POST["fecha_proceso"],
+                            "fecha_terminado" => $_POST["fecha_terminado"]);
+    
+                    $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
+                    $codigoBarraNuevo=$_POST["editarCodigo"].$_POST["editarCodOperaciones"]."6";
+                    $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                    $tabla="entallerjf";
+                    $id=$_POST["editarTaller"];
+                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                    $respuesta = ModeloTalleres::mdlIngresarTallerTerminado($datos);
+                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                }else if($dividir == 'F'){
+                    $datos = array("codigo" => $_POST["editarCodigo"], 
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperaciones"],
+                            "cantidad" => $_POST["editarCantidades"],
+                            "editarBarra" => $_POST["editarBarra"],
+                            "trabajador" => $_POST["trabajador"],
+                            "fecha_proceso" => $_POST["fecha_proceso"],
+                            "fecha_terminado" => $_POST["fecha_terminado"]);
+    
+                    $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
+                    $codigoBarraNuevo=$_POST["editarCodigo"].$_POST["editarCodOperaciones"]."7";
+                    $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                    $tabla="entallerjf";
+                    $id=$_POST["editarTaller"];
+                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                    $respuesta = ModeloTalleres::mdlIngresarTallerTerminado($datos);
+                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                }else if($dividir == '1'){
                     $datos = array("codigo" => $_POST["editarCodigo"], 
                             "usuario" => $_POST["usuario"],
                             "articulo" => $_POST["editarArticulo"],
@@ -567,7 +845,211 @@ class ControladorTalleres{
                             "fecha_terminado" => $_POST["fecha_terminado"]);
 
                     $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
-                    $codigoBarraNuevo=$_POST["editarCodigo"].$_POST["editarCodOperaciones"]."A";
+                    $codigoBarraNuevo=$_POST["editarCodigo"].$_POST["editarCodOperaciones"]."2";
+                    $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                    $tabla="entallerjf";
+                    $id=$_POST["editarTaller"];
+                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                    $respuesta = ModeloTalleres::mdlIngresarTallerTerminado($datos);
+                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                }else if($dividir == '2'){
+
+                    $datos = array("codigo" => $_POST["editarCodigo"], 
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperaciones"],
+                            "cantidad" => $_POST["editarCantidades"],
+                            "editarBarra" => $_POST["editarBarra"],
+                            "trabajador" => $_POST["trabajador"],
+                            "fecha_proceso" => $_POST["fecha_proceso"],
+                            "fecha_terminado" => $_POST["fecha_terminado"]);
+
+                    $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
+                    $codigoBarraNuevo=$_POST["editarCodigo"].$_POST["editarCodOperaciones"]."3";
+                    $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                    $tabla="entallerjf";
+                    $id=$_POST["editarTaller"];
+                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                    $respuesta = ModeloTalleres::mdlIngresarTallerTerminado($datos);
+                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                }else if($dividir == '3'){
+                    $datos = array("codigo" => $_POST["editarCodigo"], 
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperaciones"],
+                            "cantidad" => $_POST["editarCantidades"],
+                            "editarBarra" => $_POST["editarBarra"],
+                            "trabajador" => $_POST["trabajador"],
+                            "fecha_proceso" => $_POST["fecha_proceso"],
+                            "fecha_terminado" => $_POST["fecha_terminado"]);
+    
+                    $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
+                    $codigoBarraNuevo=$_POST["editarCodigo"].$_POST["editarCodOperaciones"]."4";
+                    $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                    $tabla="entallerjf";
+                    $id=$_POST["editarTaller"];
+                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                    $respuesta = ModeloTalleres::mdlIngresarTallerTerminado($datos);
+                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                }else if($dividir == '4'){
+                    $datos = array("codigo" => $_POST["editarCodigo"], 
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperaciones"],
+                            "cantidad" => $_POST["editarCantidades"],
+                            "editarBarra" => $_POST["editarBarra"],
+                            "trabajador" => $_POST["trabajador"],
+                            "fecha_proceso" => $_POST["fecha_proceso"],
+                            "fecha_terminado" => $_POST["fecha_terminado"]);
+    
+                    $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
+                    $codigoBarraNuevo=$_POST["editarCodigo"].$_POST["editarCodOperaciones"]."5";
+                    $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                    $tabla="entallerjf";
+                    $id=$_POST["editarTaller"];
+                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                    $respuesta = ModeloTalleres::mdlIngresarTallerTerminado($datos);
+                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                }else if($dividir == '5'){
+                    $datos = array("codigo" => $_POST["editarCodigo"], 
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperaciones"],
+                            "cantidad" => $_POST["editarCantidades"],
+                            "editarBarra" => $_POST["editarBarra"],
+                            "trabajador" => $_POST["trabajador"],
+                            "fecha_proceso" => $_POST["fecha_proceso"],
+                            "fecha_terminado" => $_POST["fecha_terminado"]);
+
+                    $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
+                    $codigoBarraNuevo=$_POST["editarCodigo"].$_POST["editarCodOperaciones"]."6";
+                    $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                    $tabla="entallerjf";
+                    $id=$_POST["editarTaller"];
+                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                    $respuesta = ModeloTalleres::mdlIngresarTallerTerminado($datos);
+                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                }else if($dividir == '6'){
+
+                    $datos = array("codigo" => $_POST["editarCodigo"], 
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperaciones"],
+                            "cantidad" => $_POST["editarCantidades"],
+                            "editarBarra" => $_POST["editarBarra"],
+                            "trabajador" => $_POST["trabajador"],
+                            "fecha_proceso" => $_POST["fecha_proceso"],
+                            "fecha_terminado" => $_POST["fecha_terminado"]);
+
+                    $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
+                    $codigoBarraNuevo=$_POST["editarCodigo"].$_POST["editarCodOperaciones"]."7";
+                    $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                    $tabla="entallerjf";
+                    $id=$_POST["editarTaller"];
+                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                    $respuesta = ModeloTalleres::mdlIngresarTallerTerminado($datos);
+                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                }else if($dividir == '7'){
+                    $datos = array("codigo" => $_POST["editarCodigo"], 
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperaciones"],
+                            "cantidad" => $_POST["editarCantidades"],
+                            "editarBarra" => $_POST["editarBarra"],
+                            "trabajador" => $_POST["trabajador"],
+                            "fecha_proceso" => $_POST["fecha_proceso"],
+                            "fecha_terminado" => $_POST["fecha_terminado"]);
+    
+                    $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
+                    $codigoBarraNuevo=$_POST["editarCodigo"].$_POST["editarCodOperaciones"]."8";
+                    $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                    $tabla="entallerjf";
+                    $id=$_POST["editarTaller"];
+                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                    $respuesta = ModeloTalleres::mdlIngresarTallerTerminado($datos);
+                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                }else if($dividir == '8'){
+                    $datos = array("codigo" => $_POST["editarCodigo"], 
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperaciones"],
+                            "cantidad" => $_POST["editarCantidades"],
+                            "editarBarra" => $_POST["editarBarra"],
+                            "trabajador" => $_POST["trabajador"],
+                            "fecha_proceso" => $_POST["fecha_proceso"],
+                            "fecha_terminado" => $_POST["fecha_terminado"]);
+    
+                    $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
+                    $codigoBarraNuevo=$_POST["editarCodigo"].$_POST["editarCodOperaciones"]."9";
+                    $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                    $tabla="entallerjf";
+                    $id=$_POST["editarTaller"];
+                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                    $respuesta = ModeloTalleres::mdlIngresarTallerTerminado($datos);
+                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                }
+
+            }else{
+                    $datos = array("codigo" => $_POST["editarCodigo"], 
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["editarArticulo"],
+                            "operacion" => $_POST["editarCodOperaciones"],
+                            "cantidad" => $_POST["editarCantidades"],
+                            "editarBarra" => $_POST["editarBarra"],
+                            "trabajador" => $_POST["trabajador"],
+                            "fecha_proceso" => $_POST["fecha_proceso"],
+                            "fecha_terminado" => $_POST["fecha_terminado"]);
+
+                    $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
+                    $codigoBarraNuevo=$_POST["editarCodigo"].$_POST["editarCodOperaciones"]."1";
                     $datos2 = array("codigo" => $_POST["editarCodigo"],
                                 "usuario" => $_POST["usuario"],
                                 "articulo" => $_POST["editarArticulo"],
@@ -636,7 +1118,7 @@ class ControladorTalleres{
 
             $cod = $_POST["nuevoCodigo"];
 
-            $nombre_impresora = "Star BSC10 en SISTEMAS-2"; 
+            $nombre_impresora = "Star BSC10"; 
  
             $connector = new WindowsPrintConnector($nombre_impresora);
             $printer = new Printer($connector);
@@ -676,15 +1158,20 @@ class ControladorTalleres{
                 $printer->setEmphasis(true);
 
                 $printer -> text("Operación:".$value["cod_operacion"]." - ".$value["operacion"]."\n");//Modelo
-                
-                $item="{B".$value["codigo"]."";
-
+               
+                $cantidad= strlen($value["codigo"]);
+                $a=substr($value["codigo"],0,2);
+                $b=substr($value["codigo"],2,2);
+                $c=substr($value["codigo"],4,2);
+                $d=substr($value["codigo"],6,2);
+                $e=substr($value["codigo"],8,2);
+                $item = "{C" . chr ( $a ). chr ( $b ). chr ( $c ). chr ( $d ). chr ( $e ) ;
                 //BARCODE
                 $printer->selectPrintMode(Printer::MODE_DOUBLE_HEIGHT | Printer::MODE_DOUBLE_WIDTH);
                 $printer->setJustification(Printer::JUSTIFY_CENTER);
                 $printer->setBarcodeWidth(8);
                 $printer->setBarcodeTextPosition(Printer::BARCODE_TEXT_BELOW);
-                $printer->barcode( "{B1234567" , Printer::BARCODE_CODE128 );
+                $printer->barcode( $item , Printer::BARCODE_CODE128 );
 				$printer -> feed(1);
                   
                 $printer -> cut();
@@ -767,95 +1254,320 @@ class ControladorTalleres{
 
 		if(isset($_POST["editarCantidad2"])){
                 $dividir=substr($_POST["editarBarra"],-1);
-                if($dividir == 'A'){
-                    $datos = array("codigo" => $_POST["editarCodigo"], 
-                            "usuario" => $_POST["usuario"],
-                            "articulo" => $_POST["editarArticulo"],
-                            "operacion" => $_POST["editarCodOperacion"],
-                            "cantidad" => $_POST["editarCantidad2"],
-                            "editarBarra" => $_POST["editarBarra"]);
-
-                    $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
-                    $codigoBarraNuevo=$_POST["editarBarra"]."B";
-                    $datos2 = array("codigo" => $_POST["editarCodigo"],
+                $cantidad= strlen($_POST["editarBarra"]);
+                if($cantidad == 11){
+                    if($dividir == 'A'){
+                        $datos = array("codigo" => $_POST["editarCodigo"], 
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperacion"],
+                                "cantidad" => $_POST["editarCantidad2"],
+                                "editarBarra" => $_POST["editarBarra"]);
+    
+                        $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
+                        $codigoBarraNuevo=$_POST["editarBarra"]."2";
+                        $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                    "usuario" => $_POST["usuario"],
+                                    "articulo" => $_POST["editarArticulo"],
+                                    "operacion" => $_POST["editarCodOperacion"],
+                                    "cantidad" => $cantidad2,
+                                    "editarBarra" => $codigoBarraNuevo);
+                        $tabla="entallerjf";
+                        $id=$_POST["editarTaller"];
+                        $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                        $respuesta = ModeloTalleres::mdlIngresarTaller($datos);
+                        $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                    }else if($dividir == 'B'){
+                        $datos = array("codigo" => $_POST["editarCodigo"], 
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperacion"],
+                                "cantidad" => $_POST["editarCantidad2"],
+                                "editarBarra" => $_POST["editarBarra"]);
+    
+                        $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
+                        $codigoBarraNuevo=$_POST["editarBarra"]."3";
+                        $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                    "usuario" => $_POST["usuario"],
+                                    "articulo" => $_POST["editarArticulo"],
+                                    "operacion" => $_POST["editarCodOperacion"],
+                                    "cantidad" => $cantidad2,
+                                    "editarBarra" => $codigoBarraNuevo);
+                        $tabla="entallerjf";
+                        $id=$_POST["editarTaller"];
+                        $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                        $respuesta = ModeloTalleres::mdlIngresarTaller($datos);
+                        $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                    }else if($dividir == 'C'){
+                        $datos = array("codigo" => $_POST["editarCodigo"], 
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperacion"],
+                                "cantidad" => $_POST["editarCantidad2"],
+                                "editarBarra" => $_POST["editarBarra"]);
+    
+                        $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
+                        $codigoBarraNuevo=$_POST["editarBarra"]."4";
+                        $datos2 = array("codigo" => $_POST["editarCodigo"],
                                 "usuario" => $_POST["usuario"],
                                 "articulo" => $_POST["editarArticulo"],
                                 "operacion" => $_POST["editarCodOperacion"],
                                 "cantidad" => $cantidad2,
                                 "editarBarra" => $codigoBarraNuevo);
-                    $tabla="entallerjf";
-                    $id=$_POST["editarTaller"];
-                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
-                    $respuesta = ModeloTalleres::mdlIngresarTaller($datos);
-                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
-
-                }else if($dividir == 'B'){
-                    $datos = array("codigo" => $_POST["editarCodigo"], 
-                            "usuario" => $_POST["usuario"],
-                            "articulo" => $_POST["editarArticulo"],
-                            "operacion" => $_POST["editarCodOperacion"],
-                            "cantidad" => $_POST["editarCantidad2"],
-                            "editarBarra" => $_POST["editarBarra"]);
-
-                    $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
-                    $codigoBarraNuevo=$_POST["editarBarra"]."C";
-                    $datos2 = array("codigo" => $_POST["editarCodigo"],
+                        $tabla="entallerjf";
+                        $id=$_POST["editarTaller"];
+                        $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                        $respuesta = ModeloTalleres::mdlIngresarTaller($datos);
+                        $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                    }else if($dividir == 'D'){
+    
+                        $datos = array("codigo" => $_POST["editarCodigo"], 
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperacion"],
+                                "cantidad" => $_POST["editarCantidad2"],
+                                "editarBarra" => $_POST["editarBarra"]);
+    
+                        $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
+                        $codigoBarraNuevo=$_POST["editarBarra"]."5";
+                        $datos2 = array("codigo" => $_POST["editarCodigo"],
                                 "usuario" => $_POST["usuario"],
                                 "articulo" => $_POST["editarArticulo"],
                                 "operacion" => $_POST["editarCodOperacion"],
                                 "cantidad" => $cantidad2,
                                 "editarBarra" => $codigoBarraNuevo);
-                    $tabla="entallerjf";
-                    $id=$_POST["editarTaller"];
-                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
-                    $respuesta = ModeloTalleres::mdlIngresarTaller($datos);
-                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
-
-                }else if($dividir == 'C'){
-                    $datos = array("codigo" => $_POST["editarCodigo"], 
-                            "usuario" => $_POST["usuario"],
-                            "articulo" => $_POST["editarArticulo"],
-                            "operacion" => $_POST["editarCodOperacion"],
-                            "cantidad" => $_POST["editarCantidad2"],
-                            "editarBarra" => $_POST["editarBarra"]);
-
-                    $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
-                    $codigoBarraNuevo=$_POST["editarBarra"]."D";
-                    $datos2 = array("codigo" => $_POST["editarCodigo"],
-                            "usuario" => $_POST["usuario"],
-                            "articulo" => $_POST["editarArticulo"],
-                            "operacion" => $_POST["editarCodOperacion"],
-                            "cantidad" => $cantidad2,
-                            "editarBarra" => $codigoBarraNuevo);
-                    $tabla="entallerjf";
-                    $id=$_POST["editarTaller"];
-                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
-                    $respuesta = ModeloTalleres::mdlIngresarTaller($datos);
-                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
-
-                } else if($dividir == 'D'){
-
-                    $datos = array("codigo" => $_POST["editarCodigo"], 
-                            "usuario" => $_POST["usuario"],
-                            "articulo" => $_POST["editarArticulo"],
-                            "operacion" => $_POST["editarCodOperacion"],
-                            "cantidad" => $_POST["editarCantidad2"],
-                            "editarBarra" => $_POST["editarBarra"]);
-
-                    $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
-                    $codigoBarraNuevo=$_POST["editarBarra"]."E";
-                    $datos2 = array("codigo" => $_POST["editarCodigo"],
-                            "usuario" => $_POST["usuario"],
-                            "articulo" => $_POST["editarArticulo"],
-                            "operacion" => $_POST["editarCodOperacion"],
-                            "cantidad" => $cantidad2,
-                            "editarBarra" => $codigoBarraNuevo);
-                    $tabla="entallerjf";
-                    $id=$_POST["editarTaller"];
-                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
-                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos);
-                    $respuesta = ModeloTalleres::mdlIngresarTaller($datos2);
-
+                        $tabla="entallerjf";
+                        $id=$_POST["editarTaller"];
+                        $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                        $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos);
+                        $respuesta = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                    }else if($dividir == 'E'){
+                        $datos = array("codigo" => $_POST["editarCodigo"], 
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperacion"],
+                                "cantidad" => $_POST["editarCantidad2"],
+                                "editarBarra" => $_POST["editarBarra"]);
+    
+                        $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
+                        $codigoBarraNuevo=$_POST["editarBarra"]."6";
+                        $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                    "usuario" => $_POST["usuario"],
+                                    "articulo" => $_POST["editarArticulo"],
+                                    "operacion" => $_POST["editarCodOperacion"],
+                                    "cantidad" => $cantidad2,
+                                    "editarBarra" => $codigoBarraNuevo);
+                        $tabla="entallerjf";
+                        $id=$_POST["editarTaller"];
+                        $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                        $respuesta = ModeloTalleres::mdlIngresarTaller($datos);
+                        $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                    }else if($dividir == 'F'){
+                        $datos = array("codigo" => $_POST["editarCodigo"], 
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperacion"],
+                                "cantidad" => $_POST["editarCantidad2"],
+                                "editarBarra" => $_POST["editarBarra"]);
+    
+                        $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
+                        $codigoBarraNuevo=$_POST["editarBarra"]."7";
+                        $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                    "usuario" => $_POST["usuario"],
+                                    "articulo" => $_POST["editarArticulo"],
+                                    "operacion" => $_POST["editarCodOperacion"],
+                                    "cantidad" => $cantidad2,
+                                    "editarBarra" => $codigoBarraNuevo);
+                        $tabla="entallerjf";
+                        $id=$_POST["editarTaller"];
+                        $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                        $respuesta = ModeloTalleres::mdlIngresarTaller($datos);
+                        $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                    }else if($dividir == '1'){
+                        $datos = array("codigo" => $_POST["editarCodigo"], 
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperacion"],
+                                "cantidad" => $_POST["editarCantidad2"],
+                                "editarBarra" => $_POST["editarBarra"]);
+    
+                        $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
+                        $codigoBarraNuevo=$_POST["editarBarra"]."2";
+                        $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperacion"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                        $tabla="entallerjf";
+                        $id=$_POST["editarTaller"];
+                        $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                        $respuesta = ModeloTalleres::mdlIngresarTaller($datos);
+                        $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                    } else if($dividir == '2'){
+    
+                        $datos = array("codigo" => $_POST["editarCodigo"], 
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperacion"],
+                                "cantidad" => $_POST["editarCantidad2"],
+                                "editarBarra" => $_POST["editarBarra"]);
+    
+                        $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
+                        $codigoBarraNuevo=$_POST["editarBarra"]."3";
+                        $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperacion"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                        $tabla="entallerjf";
+                        $id=$_POST["editarTaller"];
+                        $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                        $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos);
+                        $respuesta = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                    }else if($dividir == '3'){
+                        $datos = array("codigo" => $_POST["editarCodigo"], 
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperacion"],
+                                "cantidad" => $_POST["editarCantidad2"],
+                                "editarBarra" => $_POST["editarBarra"]);
+    
+                        $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
+                        $codigoBarraNuevo=$_POST["editarBarra"]."4";
+                        $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                    "usuario" => $_POST["usuario"],
+                                    "articulo" => $_POST["editarArticulo"],
+                                    "operacion" => $_POST["editarCodOperacion"],
+                                    "cantidad" => $cantidad2,
+                                    "editarBarra" => $codigoBarraNuevo);
+                        $tabla="entallerjf";
+                        $id=$_POST["editarTaller"];
+                        $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                        $respuesta = ModeloTalleres::mdlIngresarTaller($datos);
+                        $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                    }else if($dividir == '4'){
+                        $datos = array("codigo" => $_POST["editarCodigo"], 
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperacion"],
+                                "cantidad" => $_POST["editarCantidad2"],
+                                "editarBarra" => $_POST["editarBarra"]);
+    
+                        $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
+                        $codigoBarraNuevo=$_POST["editarBarra"]."5";
+                        $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                    "usuario" => $_POST["usuario"],
+                                    "articulo" => $_POST["editarArticulo"],
+                                    "operacion" => $_POST["editarCodOperacion"],
+                                    "cantidad" => $cantidad2,
+                                    "editarBarra" => $codigoBarraNuevo);
+                        $tabla="entallerjf";
+                        $id=$_POST["editarTaller"];
+                        $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                        $respuesta = ModeloTalleres::mdlIngresarTaller($datos);
+                        $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                    }else if($dividir == '5'){
+                        $datos = array("codigo" => $_POST["editarCodigo"], 
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperacion"],
+                                "cantidad" => $_POST["editarCantidad2"],
+                                "editarBarra" => $_POST["editarBarra"]);
+    
+                        $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
+                        $codigoBarraNuevo=$_POST["editarBarra"]."6";
+                        $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperacion"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                        $tabla="entallerjf";
+                        $id=$_POST["editarTaller"];
+                        $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                        $respuesta = ModeloTalleres::mdlIngresarTaller($datos);
+                        $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                    } else if($dividir == '6'){
+    
+                        $datos = array("codigo" => $_POST["editarCodigo"], 
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperacion"],
+                                "cantidad" => $_POST["editarCantidad2"],
+                                "editarBarra" => $_POST["editarBarra"]);
+    
+                        $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
+                        $codigoBarraNuevo=$_POST["editarBarra"]."7";
+                        $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperacion"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                        $tabla="entallerjf";
+                        $id=$_POST["editarTaller"];
+                        $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                        $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos);
+                        $respuesta = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                    }else if($dividir == '7'){
+                        $datos = array("codigo" => $_POST["editarCodigo"], 
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperacion"],
+                                "cantidad" => $_POST["editarCantidad2"],
+                                "editarBarra" => $_POST["editarBarra"]);
+    
+                        $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
+                        $codigoBarraNuevo=$_POST["editarBarra"]."8";
+                        $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                    "usuario" => $_POST["usuario"],
+                                    "articulo" => $_POST["editarArticulo"],
+                                    "operacion" => $_POST["editarCodOperacion"],
+                                    "cantidad" => $cantidad2,
+                                    "editarBarra" => $codigoBarraNuevo);
+                        $tabla="entallerjf";
+                        $id=$_POST["editarTaller"];
+                        $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                        $respuesta = ModeloTalleres::mdlIngresarTaller($datos);
+                        $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                    }else if($dividir == '8'){
+                        $datos = array("codigo" => $_POST["editarCodigo"], 
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperacion"],
+                                "cantidad" => $_POST["editarCantidad2"],
+                                "editarBarra" => $_POST["editarBarra"]);
+    
+                        $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
+                        $codigoBarraNuevo=$_POST["editarBarra"]."9";
+                        $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                    "usuario" => $_POST["usuario"],
+                                    "articulo" => $_POST["editarArticulo"],
+                                    "operacion" => $_POST["editarCodOperacion"],
+                                    "cantidad" => $cantidad2,
+                                    "editarBarra" => $codigoBarraNuevo);
+                        $tabla="entallerjf";
+                        $id=$_POST["editarTaller"];
+                        $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                        $respuesta = ModeloTalleres::mdlIngresarTaller($datos);
+                        $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                    }
                 }else{
                     $datos = array("codigo" => $_POST["editarCodigo"], 
                             "usuario" => $_POST["usuario"],
@@ -865,7 +1577,7 @@ class ControladorTalleres{
                             "editarBarra" => $_POST["editarBarra"]);
 
                     $cantidad2=$_POST["cantidad"]-$_POST["editarCantidad2"];
-                    $codigoBarraNuevo = $_POST["editarBarra"]."A";
+                    $codigoBarraNuevo = $_POST["editarBarra"]."1";
                     $datos2 = array("codigo" => $_POST["editarCodigo"],
                             "usuario" => $_POST["usuario"],
                             "articulo" => $_POST["editarArticulo"],
@@ -933,209 +1645,332 @@ class ControladorTalleres{
 
 		if(isset($_POST["editarCantidades"])){
                 $dividir=substr($_POST["editarBarra"],-1);
-                if($dividir == 'A'){
-                    $datos = array("codigo" => $_POST["editarCodigo"], 
-                            "usuario" => $_POST["usuario"],
-                            "articulo" => $_POST["editarArticulo"],
-                            "operacion" => $_POST["editarCodOperaciones"],
-                            "cantidad" => $_POST["editarCantidades"],
-                            "editarBarra" => $_POST["editarBarra"]);
-
-                    $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
-                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperaciones"]."B";
-                    $datos2 = array("codigo" => $_POST["editarCodigo"],
+                $cantidad= strlen($_POST["editarBarra"]);
+                if($cantidad == 11){
+                    if($dividir == 'A'){
+                        $datos = array("codigo" => $_POST["editarCodigo"], 
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $_POST["editarCantidades"],
+                                "editarBarra" => $_POST["editarBarra"]);
+    
+                        $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
+                        $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperaciones"]."2";
+                        $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                    "usuario" => $_POST["usuario"],
+                                    "articulo" => $_POST["editarArticulo"],
+                                    "operacion" => $_POST["editarCodOperaciones"],
+                                    "cantidad" => $cantidad2,
+                                    "editarBarra" => $codigoBarraNuevo);
+                        $tabla="entallerjf";
+                        $id=$_POST["editarTaller"];
+                        $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                        $respuesta = ModeloTalleres::mdlIngresarTaller($datos);
+                        $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                    }elseif($dividir == 'B'){
+                        $datos = array("codigo" => $_POST["editarCodigo"], 
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $_POST["editarCantidades"],
+                                "editarBarra" => $_POST["editarBarra"]);
+    
+                        $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
+                        $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperaciones"]."3";
+                        $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                    "usuario" => $_POST["usuario"],
+                                    "articulo" => $_POST["editarArticulo"],
+                                    "operacion" => $_POST["editarCodOperaciones"],
+                                    "cantidad" => $cantidad2,
+                                    "editarBarra" => $codigoBarraNuevo);
+                        $tabla="entallerjf";
+                        $id=$_POST["editarTaller"];
+                        $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                        $respuesta = ModeloTalleres::mdlIngresarTaller($datos);
+                        $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                    }elseif($dividir == 'C'){
+                        $datos = array("codigo" => $_POST["editarCodigo"], 
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $_POST["editarCantidades"],
+                                "editarBarra" => $_POST["editarBarra"]);
+    
+                        $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
+                        $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperaciones"]."4";
+                        $datos2 = array("codigo" => $_POST["editarCodigo"],
                                 "usuario" => $_POST["usuario"],
                                 "articulo" => $_POST["editarArticulo"],
                                 "operacion" => $_POST["editarCodOperaciones"],
                                 "cantidad" => $cantidad2,
                                 "editarBarra" => $codigoBarraNuevo);
-                    $tabla="entallerjf";
-                    $id=$_POST["editarTaller"];
-                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
-                    $respuesta = ModeloTalleres::mdlIngresarTaller($datos);
-                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
-
-                }elseif($dividir == 'B'){
-                    $datos = array("codigo" => $_POST["editarCodigo"], 
-                            "usuario" => $_POST["usuario"],
-                            "articulo" => $_POST["editarArticulo"],
-                            "operacion" => $_POST["editarCodOperaciones"],
-                            "cantidad" => $_POST["editarCantidades"],
-                            "editarBarra" => $_POST["editarBarra"]);
-
-                    $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
-                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperaciones"]."C";
-                    $datos2 = array("codigo" => $_POST["editarCodigo"],
+                        $tabla="entallerjf";
+                        $id=$_POST["editarTaller"];
+                        $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                        $respuesta = ModeloTalleres::mdlIngresarTaller($datos);
+                        $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                    }elseif($dividir == 'D'){
+    
+                        $datos = array("codigo" => $_POST["editarCodigo"], 
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $_POST["editarCantidades"],
+                                "editarBarra" => $_POST["editarBarra"]);
+    
+                        $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
+                        $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperaciones"]."5";
+                        $datos2 = array("codigo" => $_POST["editarCodigo"],
                                 "usuario" => $_POST["usuario"],
                                 "articulo" => $_POST["editarArticulo"],
                                 "operacion" => $_POST["editarCodOperaciones"],
                                 "cantidad" => $cantidad2,
                                 "editarBarra" => $codigoBarraNuevo);
-                    $tabla="entallerjf";
-                    $id=$_POST["editarTaller"];
-                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
-                    $respuesta = ModeloTalleres::mdlIngresarTaller($datos);
-                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+                        $tabla="entallerjf";
+                        $id=$_POST["editarTaller"];
+                        $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                        $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos);
+                        $respuesta = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                    }elseif($dividir == 'E'){
+    
+                        $datos = array("codigo" => $_POST["editarCodigo"], 
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $_POST["editarCantidades"],
+                                "editarBarra" => $_POST["editarBarra"]);
+    
+                        $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
+                        $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperaciones"]."6";
+                        $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                        $tabla="entallerjf";
+                        $id=$_POST["editarTaller"];
+                        $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                        $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos);
+                        $respuesta = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                    }elseif($dividir == 'F'){
+    
+                        $datos = array("codigo" => $_POST["editarCodigo"], 
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $_POST["editarCantidades"],
+                                "editarBarra" => $_POST["editarBarra"]);
+    
+                        $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
+                        $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperaciones"]."7";
+                        $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                        $tabla="entallerjf";
+                        $id=$_POST["editarTaller"];
+                        $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                        $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos);
+                        $respuesta = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                    }elseif($dividir == '1'){
+    
+                        $datos = array("codigo" => $_POST["editarCodigo"], 
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $_POST["editarCantidades"],
+                                "editarBarra" => $_POST["editarBarra"]);
+    
+                        $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
+                        $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperaciones"]."2";
+                        $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                        $tabla="entallerjf";
+                        $id=$_POST["editarTaller"];
+                        $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                        $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos);
+                        $respuesta = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                    }elseif($dividir == '2'){
+    
+                        $datos = array("codigo" => $_POST["editarCodigo"], 
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $_POST["editarCantidades"],
+                                "editarBarra" => $_POST["editarBarra"]);
+    
+                        $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
+                        $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperaciones"]."3";
+                        $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                        $tabla="entallerjf";
+                        $id=$_POST["editarTaller"];
+                        $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                        $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos);
+                        $respuesta = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                    }elseif($dividir == '3'){
+    
+                        $datos = array("codigo" => $_POST["editarCodigo"], 
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $_POST["editarCantidades"],
+                                "editarBarra" => $_POST["editarBarra"]);
+    
+                        $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
+                        $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperaciones"]."4";
+                        $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                        $tabla="entallerjf";
+                        $id=$_POST["editarTaller"];
+                        $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                        $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos);
+                        $respuesta = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                    }elseif($dividir == '4'){
+    
+                        $datos = array("codigo" => $_POST["editarCodigo"], 
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $_POST["editarCantidades"],
+                                "editarBarra" => $_POST["editarBarra"]);
+    
+                        $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
+                        $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperaciones"]."5";
+                        $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                        $tabla="entallerjf";
+                        $id=$_POST["editarTaller"];
+                        $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                        $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos);
+                        $respuesta = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                    }elseif($dividir == '5'){
+    
+                        $datos = array("codigo" => $_POST["editarCodigo"], 
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $_POST["editarCantidades"],
+                                "editarBarra" => $_POST["editarBarra"]);
+    
+                        $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
+                        $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperaciones"]."6";
+                        $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                        $tabla="entallerjf";
+                        $id=$_POST["editarTaller"];
+                        $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                        $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos);
+                        $respuesta = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                    }
+                    elseif($dividir == '6'){
+    
+                        $datos = array("codigo" => $_POST["editarCodigo"], 
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $_POST["editarCantidades"],
+                                "editarBarra" => $_POST["editarBarra"]);
+    
+                        $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
+                        $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperaciones"]."7";
+                        $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                        $tabla="entallerjf";
+                        $id=$_POST["editarTaller"];
+                        $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                        $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos);
+                        $respuesta = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                    }
+                    elseif($dividir == '7'){
+    
+                        $datos = array("codigo" => $_POST["editarCodigo"], 
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $_POST["editarCantidades"],
+                                "editarBarra" => $_POST["editarBarra"]);
+    
+                        $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
+                        $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperaciones"]."8";
+                        $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                        $tabla="entallerjf";
+                        $id=$_POST["editarTaller"];
+                        $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                        $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos);
+                        $respuesta = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                    }
+                    elseif($dividir == '8'){
+    
+                        $datos = array("codigo" => $_POST["editarCodigo"], 
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $_POST["editarCantidades"],
+                                "editarBarra" => $_POST["editarBarra"]);
+    
+                        $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
+                        $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperaciones"]."9";
+                        $datos2 = array("codigo" => $_POST["editarCodigo"],
+                                "usuario" => $_POST["usuario"],
+                                "articulo" => $_POST["editarArticulo"],
+                                "operacion" => $_POST["editarCodOperaciones"],
+                                "cantidad" => $cantidad2,
+                                "editarBarra" => $codigoBarraNuevo);
+                        $tabla="entallerjf";
+                        $id=$_POST["editarTaller"];
+                        $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
+                        $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos);
+                        $respuesta = ModeloTalleres::mdlIngresarTaller($datos2);
+    
+                    }
 
-                }elseif($dividir == 'C'){
-                    $datos = array("codigo" => $_POST["editarCodigo"], 
-                            "usuario" => $_POST["usuario"],
-                            "articulo" => $_POST["editarArticulo"],
-                            "operacion" => $_POST["editarCodOperaciones"],
-                            "cantidad" => $_POST["editarCantidades"],
-                            "editarBarra" => $_POST["editarBarra"]);
-
-                    $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
-                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperaciones"]."D";
-                    $datos2 = array("codigo" => $_POST["editarCodigo"],
-                            "usuario" => $_POST["usuario"],
-                            "articulo" => $_POST["editarArticulo"],
-                            "operacion" => $_POST["editarCodOperaciones"],
-                            "cantidad" => $cantidad2,
-                            "editarBarra" => $codigoBarraNuevo);
-                    $tabla="entallerjf";
-                    $id=$_POST["editarTaller"];
-                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
-                    $respuesta = ModeloTalleres::mdlIngresarTaller($datos);
-                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
-
-                }elseif($dividir == 'D'){
-
-                    $datos = array("codigo" => $_POST["editarCodigo"], 
-                            "usuario" => $_POST["usuario"],
-                            "articulo" => $_POST["editarArticulo"],
-                            "operacion" => $_POST["editarCodOperaciones"],
-                            "cantidad" => $_POST["editarCantidades"],
-                            "editarBarra" => $_POST["editarBarra"]);
-
-                    $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
-                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperaciones"]."E";
-                    $datos2 = array("codigo" => $_POST["editarCodigo"],
-                            "usuario" => $_POST["usuario"],
-                            "articulo" => $_POST["editarArticulo"],
-                            "operacion" => $_POST["editarCodOperaciones"],
-                            "cantidad" => $cantidad2,
-                            "editarBarra" => $codigoBarraNuevo);
-                    $tabla="entallerjf";
-                    $id=$_POST["editarTaller"];
-                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
-                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos);
-                    $respuesta = ModeloTalleres::mdlIngresarTaller($datos2);
-
-                }elseif($dividir == 'E'){
-
-                    $datos = array("codigo" => $_POST["editarCodigo"], 
-                            "usuario" => $_POST["usuario"],
-                            "articulo" => $_POST["editarArticulo"],
-                            "operacion" => $_POST["editarCodOperaciones"],
-                            "cantidad" => $_POST["editarCantidades"],
-                            "editarBarra" => $_POST["editarBarra"]);
-
-                    $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
-                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperaciones"]."F";
-                    $datos2 = array("codigo" => $_POST["editarCodigo"],
-                            "usuario" => $_POST["usuario"],
-                            "articulo" => $_POST["editarArticulo"],
-                            "operacion" => $_POST["editarCodOperaciones"],
-                            "cantidad" => $cantidad2,
-                            "editarBarra" => $codigoBarraNuevo);
-                    $tabla="entallerjf";
-                    $id=$_POST["editarTaller"];
-                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
-                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos);
-                    $respuesta = ModeloTalleres::mdlIngresarTaller($datos2);
-
-                }elseif($dividir == 'F'){
-
-                    $datos = array("codigo" => $_POST["editarCodigo"], 
-                            "usuario" => $_POST["usuario"],
-                            "articulo" => $_POST["editarArticulo"],
-                            "operacion" => $_POST["editarCodOperaciones"],
-                            "cantidad" => $_POST["editarCantidades"],
-                            "editarBarra" => $_POST["editarBarra"]);
-
-                    $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
-                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperaciones"]."G";
-                    $datos2 = array("codigo" => $_POST["editarCodigo"],
-                            "usuario" => $_POST["usuario"],
-                            "articulo" => $_POST["editarArticulo"],
-                            "operacion" => $_POST["editarCodOperaciones"],
-                            "cantidad" => $cantidad2,
-                            "editarBarra" => $codigoBarraNuevo);
-                    $tabla="entallerjf";
-                    $id=$_POST["editarTaller"];
-                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
-                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos);
-                    $respuesta = ModeloTalleres::mdlIngresarTaller($datos2);
-
-                }elseif($dividir == 'G'){
-
-                    $datos = array("codigo" => $_POST["editarCodigo"], 
-                            "usuario" => $_POST["usuario"],
-                            "articulo" => $_POST["editarArticulo"],
-                            "operacion" => $_POST["editarCodOperaciones"],
-                            "cantidad" => $_POST["editarCantidades"],
-                            "editarBarra" => $_POST["editarBarra"]);
-
-                    $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
-                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperaciones"]."H";
-                    $datos2 = array("codigo" => $_POST["editarCodigo"],
-                            "usuario" => $_POST["usuario"],
-                            "articulo" => $_POST["editarArticulo"],
-                            "operacion" => $_POST["editarCodOperaciones"],
-                            "cantidad" => $cantidad2,
-                            "editarBarra" => $codigoBarraNuevo);
-                    $tabla="entallerjf";
-                    $id=$_POST["editarTaller"];
-                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
-                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos);
-                    $respuesta = ModeloTalleres::mdlIngresarTaller($datos2);
-
-                }elseif($dividir == 'H'){
-
-                    $datos = array("codigo" => $_POST["editarCodigo"], 
-                            "usuario" => $_POST["usuario"],
-                            "articulo" => $_POST["editarArticulo"],
-                            "operacion" => $_POST["editarCodOperaciones"],
-                            "cantidad" => $_POST["editarCantidades"],
-                            "editarBarra" => $_POST["editarBarra"]);
-
-                    $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
-                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperaciones"]."I";
-                    $datos2 = array("codigo" => $_POST["editarCodigo"],
-                            "usuario" => $_POST["usuario"],
-                            "articulo" => $_POST["editarArticulo"],
-                            "operacion" => $_POST["editarCodOperaciones"],
-                            "cantidad" => $cantidad2,
-                            "editarBarra" => $codigoBarraNuevo);
-                    $tabla="entallerjf";
-                    $id=$_POST["editarTaller"];
-                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
-                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos);
-                    $respuesta = ModeloTalleres::mdlIngresarTaller($datos2);
-
-                }elseif($dividir == 'I'){
-
-                    $datos = array("codigo" => $_POST["editarCodigo"], 
-                            "usuario" => $_POST["usuario"],
-                            "articulo" => $_POST["editarArticulo"],
-                            "operacion" => $_POST["editarCodOperaciones"],
-                            "cantidad" => $_POST["editarCantidades"],
-                            "editarBarra" => $_POST["editarBarra"]);
-
-                    $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
-                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperaciones"]."J";
-                    $datos2 = array("codigo" => $_POST["editarCodigo"],
-                            "usuario" => $_POST["usuario"],
-                            "articulo" => $_POST["editarArticulo"],
-                            "operacion" => $_POST["editarCodOperaciones"],
-                            "cantidad" => $cantidad2,
-                            "editarBarra" => $codigoBarraNuevo);
-                    $tabla="entallerjf";
-                    $id=$_POST["editarTaller"];
-                    $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
-                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos);
-                    $respuesta = ModeloTalleres::mdlIngresarTaller($datos2);
 
                 }else{
                     $datos = array("codigo" => $_POST["editarCodigo"], 
@@ -1146,7 +1981,7 @@ class ControladorTalleres{
                             "editarBarra" => $_POST["editarBarra"]);
 
                     $cantidad2=$_POST["cantidades"]-$_POST["editarCantidades"];
-                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperaciones"]."A";
+                    $codigoBarraNuevo = $_POST["editarCodigo"].$_POST["editarCodOperaciones"]."1";
                     $datos2 = array("codigo" => $_POST["editarCodigo"],
                             "usuario" => $_POST["usuario"],
                             "articulo" => $_POST["editarArticulo"],
