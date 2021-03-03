@@ -242,9 +242,9 @@ MODAL MANDAR A TALLER
 
             <div class="form-group col-lg-12">
 
-                  <div>
-                    <label >Enviar a talleres</label>
-                  </div>
+              <div>
+                <label >Enviar a talleres</label>
+              </div>
               <div class="col-xs-6">
 
                 <div class="input-group">
@@ -269,12 +269,21 @@ MODAL MANDAR A TALLER
 
                 </div>
 
-                <br>
+                
 
               </div>
 
+              
             </div>
 
+            <div class="form-group col-lg-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="1" id="ticket" name="ticket" checked>
+                  <label class="form-check-label" for="flexCheckDefault">
+                   Imprimir Tickets
+                  </label>
+                </div>
+              </div>
           </div>
 
           <!--=====================================

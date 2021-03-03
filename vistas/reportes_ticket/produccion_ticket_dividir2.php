@@ -34,7 +34,7 @@ $documento = "20513613939";
 ?>
   <div class="zona_impresion">
     <!-- codigo imprimir -->
-    <br>
+   
 
     <table border="0" align="center" width="300px">
 
@@ -42,13 +42,9 @@ $documento = "20513613939";
         <td align="center">
           <!-- Mostramos los datos de la empresa en el documento HTML -->
           .::<strong> <?php echo $empresa; ?></strong>::.<br>
-          <?php echo $documento; ?><br>
         </td>
       </tr>
   
-      <tr>
-        <td align="center"><?php echo $fecha; ?></td>
-      </tr>
 
       <tr>
       <td colspan="3">===============================</td>
@@ -56,52 +52,27 @@ $documento = "20513613939";
 
     </table>
 
-    <table border="0" align="center" width="300px">
+    <!-- Contenido    -->
+    <table border="0"  width="300px">
 
       <tr>
-        <td><strong><u>Modelo</u></strong></td>
-        <td><strong><u>Nombre</u></strong></td>      
+        <td><b>Modelo:</b><strong ><?php echo $modelo?> - <?php echo $nombre?></strong></strong></td>  
+      </tr>
+
+      <tr>
+        <td><b>Color y Talla:  </b><?php echo $color?> - T<?php echo $talla?></td>
+        
+      </tr>
+
+      <tr>
+        <td><b>Cantidad:  </b><?php echo $cantidad?></td>
+      </tr>
+
+      <tr>
+        <td><b>Operación:</b><strong ><?php echo $cod_operacion?> - <?php echo $nom_operacion?></strong></td>      
       </tr>
       
-      <tr>
-        <td style="font-size: x-large;"><?php echo $modelo?></td>
-        <td style="font-size: x-large;"><?php echo $nombre?></td>
-      </tr>
-
-    </table>
-
-    <br>
-
-    <table border="0" align="center" width="300px">
-
-      <tr>
-        <td><strong><u>Color</u></strong></td>
-        <td><strong><u>Talla</u></strong></td>      
-        <td><strong><u>Cantidad</u></strong></td>
-      </tr>
-      
-      <tr>
-        <td style="font-size: x-large;"><?php echo $color?></td>
-        <td style="font-size: x-large;"><?php echo $talla?></td>
-        <td style="font-size: x-large;"><?php echo $cantidad?></td>
-      </tr>
-
-    </table>
-    <br>
-
-    <table border="0" align="center" width="300px">
-
-        <tr>
-            <td><strong><u>Cod. Operación</u></strong></td>
-            <td><strong><u>Operación</u></strong></td>      
-        </tr>
-    
-        <tr>
-            <td style="font-size: x-large;"><?php echo $cod_operacion?></td>
-            <td style="font-size: x-large;"><?php echo $nom_operacion?></td>
-        </tr>
-
-    </table>
+    </table
 
 
     <table border="0" align="center" width="300px">

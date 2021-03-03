@@ -1785,32 +1785,87 @@ function cargarTablaTalleresGenerados(articuloTallerP) {
 
 		},
 		"createdRow":function(row,data,index){
-			if(data[1].substr(-1) == 'A' ){
-				$('td',row).css({
-					'background-color':'#FDEC8A',
-					'color':'black'
-				})
-			}if(data[1].substr(-1) == 'B'){
-				$('td',row).css({
-					'background-color':'#DCF6C8',
-					'color':'black'
-				})
-			}if(data[1].substr(-1) == 'C'){
-				$('td',row).css({
-					'background-color':'#FFCE6B',
-					'color':'black'
-				})
-			}if(data[1].substr(-1) == 'D'){
-				$('td',row).css({
-					'background-color':'#FF746B',
-					'color':'black'
-				})
-			}if(data[1].substr(-1) == 'E'){
-				$('td',row).css({
-					'background-color':'#F98EF1',
-					'color':'black'
-				})
+			var cantidad = data[1].length;
+			if (cantidad == 11){
+				if(data[1].substr(-1) == 'A' ){
+					$('td',row).css({
+						'background-color':'#FDEC8A',
+						'color':'black'
+					})
+				}if(data[1].substr(-1) == 'B'){
+					$('td',row).css({
+						'background-color':'#DCF6C8',
+						'color':'black'
+					})
+				}if(data[1].substr(-1) == 'C'){
+					$('td',row).css({
+						'background-color':'#FFCE6B',
+						'color':'black'
+					})
+				}if(data[1].substr(-1) == 'D'){
+					$('td',row).css({
+						'background-color':'#FF746B',
+						'color':'black'
+					})
+				}if(data[1].substr(-1) == 'E'){
+					$('td',row).css({
+						'background-color':'#F98EF1',
+						'color':'black'
+					})
+				}if(data[1].substr(-1) == 'F'){
+					$('td',row).css({
+						'background-color':'#A6FA52',
+						'color':'black'
+					})
+				}if(data[1].substr(-1) == '1' ){
+					$('td',row).css({
+						'background-color':'#FDEC8A',
+						'color':'black'
+					})
+				}if(data[1].substr(-1) == '2'){
+					$('td',row).css({
+						'background-color':'#DCF6C8',
+						'color':'black'
+					})
+				}if(data[1].substr(-1) == '3'){
+					$('td',row).css({
+						'background-color':'#FFCE6B',
+						'color':'black'
+					})
+				}if(data[1].substr(-1) == '4'){
+					$('td',row).css({
+						'background-color':'#FF746B',
+						'color':'black'
+					})
+				}if(data[1].substr(-1) == '5'){
+					$('td',row).css({
+						'background-color':'#F98EF1',
+						'color':'black'
+					})
+				}if(data[1].substr(-1) == '6'){
+					$('td',row).css({
+						'background-color':'#A6FA52',
+						'color':'black'
+					})
+				}if(data[1].substr(-1) == '7'){
+					$('td',row).css({
+						'background-color':'#35FAE2',
+						'color':'black'
+					})
+				}if(data[1].substr(-1) == '8'){
+					$('td',row).css({
+						'background-color':'#276BE1',
+						'color':'black'
+					})
+				}if(data[1].substr(-1) == '9'){
+					$('td',row).css({
+						'background-color':'#A9F3EA',
+						'color':'black'
+					})
+				}
 			}
+			
+		
 		}
 
 	});

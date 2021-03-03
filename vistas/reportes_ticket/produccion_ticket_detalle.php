@@ -32,7 +32,7 @@ $documento = "20513613939";
 ?>
   <div class="zona_impresion">
     <!-- codigo imprimir -->
-    <br>
+ 
 
   <!-- Cabecera -->
     <table border="0" align="center" width="300px">
@@ -95,9 +95,7 @@ $documento = "20513613939";
     </table>
  
 
-    <br>
   </div>
-  <p>&nbsp;</p>
 
 </body>
 

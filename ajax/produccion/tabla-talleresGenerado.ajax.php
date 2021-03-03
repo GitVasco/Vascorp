@@ -37,7 +37,13 @@ class TablaTalleresGenerado{
                 $estado = "<span style='font-size:85%' class='label label-success'>Terminado</span>";
     
             }   
-            $botones="<div class='btn-group'><button class='btn btn-warning btnDividirTallerGenerado' title='Dividir cantidad'  idTaller='".$talleres[$i]["codigo"]."' data-toggle='modal' data-target='#dividirTallerGenerado' ><i class='fa fa-random'></i></button><button class='btn btn-success btnImprimirTicket' ultimo='".$talleres[$i]["codigo"]."'modelo='".$talleres[$i]["modelo"]."'nombre='".$talleres[$i]["nombre"]."'color='".$talleres[$i]["color"]."'talla='".$talleres[$i]["talla"]."'cant_taller='".$talleres[$i]["cantidad"]."'cod_operacion='".$talleres[$i]["cod_operacion"]."'nom_operacion='".$talleres[$i]["nom_operacion"]."'><i class='fa fa-print'></i></button></div>";    
+            $cantidadBarra=strlen($talleres[$i]["codigo"]);
+            if($cantidadBarra==11){
+                $botones="<div class='btn-group'><button class='btn btn-warning btnDividirTallerGenerado' title='Dividir cantidad'  idTaller='".$talleres[$i]["codigo"]."' data-toggle='modal' data-target='#dividirTallerGenerado' ><i class='fa fa-random'></i></button><button class='btn btn-danger btnRegresarTallerGenerado' title='Regresar cantidad'  idTaller='".$talleres[$i]["codigo"]."' data-toggle='modal' data-target='#regresarTallerGenerado' ><i class='fa fa-backward'></i></button><button class='btn btn-success btnImprimirTicket' ultimo='".$talleres[$i]["codigo"]."'modelo='".$talleres[$i]["modelo"]."'nombre='".$talleres[$i]["nombre"]."'color='".$talleres[$i]["color"]."'talla='".$talleres[$i]["talla"]."'cant_taller='".$talleres[$i]["cantidad"]."'cod_operacion='".$talleres[$i]["cod_operacion"]."'nom_operacion='".$talleres[$i]["nom_operacion"]."'><i class='fa fa-print'></i></button></div>";    
+            }else{
+                $botones="<div class='btn-group'><button class='btn btn-warning btnDividirTallerGenerado' title='Dividir cantidad'  idTaller='".$talleres[$i]["codigo"]."' data-toggle='modal' data-target='#dividirTallerGenerado' ><i class='fa fa-random'></i></button><button class='btn btn-success btnImprimirTicket' ultimo='".$talleres[$i]["codigo"]."'modelo='".$talleres[$i]["modelo"]."'nombre='".$talleres[$i]["nombre"]."'color='".$talleres[$i]["color"]."'talla='".$talleres[$i]["talla"]."'cant_taller='".$talleres[$i]["cantidad"]."'cod_operacion='".$talleres[$i]["cod_operacion"]."'nom_operacion='".$talleres[$i]["nom_operacion"]."'><i class='fa fa-print'></i></button></div>";    
+            }
+            
 
                 $datosJson .= '[
                 "'.$talleres[$i]["id"].'",

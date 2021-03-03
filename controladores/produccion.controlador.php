@@ -71,7 +71,7 @@ class ControladorProduccion{
                             "inicio" => $_POST["editarInicio"],
                             "fin" => $_POST["editarFin"],
                             "usuario" => $_POST["editarUsuario"]);
-            var_dump($datos);
+            
 
             $respuesta = ModeloProduccion::mdlEditarQuincenas($datos);
 
