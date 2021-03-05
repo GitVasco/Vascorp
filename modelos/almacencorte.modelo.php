@@ -82,11 +82,12 @@ class ModeloAlmacenCorte{
 	*/
 	static public function mdlGuardarAlmacenCorte($datos){
 
-		$sql="CALL sp_1059_insert_almcorte_p(:codigo, :usuario, :total, :estado)";
+		$sql="CALL sp_1059_insert_almcorte_p(:codigo, :guia, :usuario, :total, :estado)";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 
 		$stmt->bindParam(":codigo",$datos["codigo"],PDO::PARAM_INT);
+		$stmt->bindParam(":guia",$datos["guia"],PDO::PARAM_STR);
 		$stmt->bindParam(":usuario",$datos["usuario"],PDO::PARAM_INT);
 		$stmt->bindParam(":total",$datos["total"],PDO::PARAM_INT);
 		$stmt->bindParam(":estado",$datos["estado"],PDO::PARAM_STR);
@@ -322,6 +323,7 @@ class ModeloAlmacenCorte{
 			$stmt = Conexion::conectar()->prepare("SELECT  
 			ac.id,
 			ac.codigo,
+			ac.guia,
 			ac.usuario,
 			u.nombre,
 			ac.total,
@@ -346,6 +348,7 @@ class ModeloAlmacenCorte{
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			ac.id,
 			ac.codigo,
+			ac.guia,
 			ac.usuario,
 			u.nombre,
 			ac.total,
@@ -381,6 +384,7 @@ class ModeloAlmacenCorte{
 				$stmt = Conexion::conectar()->prepare("SELECT 
 				ac.id,
 				ac.codigo,
+				ac.guia,
 				ac.usuario,
 				u.nombre,
 				ac.total,
@@ -401,6 +405,7 @@ class ModeloAlmacenCorte{
 				$stmt = Conexion::conectar()->prepare("SELECT 
 				ac.id,
 				ac.codigo,
+				ac.guia,
 				ac.usuario,
 				u.nombre,
 				ac.total,

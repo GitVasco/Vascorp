@@ -729,8 +729,8 @@ $("#daterange-btnBrasieres").daterangepicker(
       var capturarRango14 = $("#daterange-btnBrasieres span").html();
 	  
       localStorage.setItem("capturarRango14", capturarRango14);
-      localStorage.setItem("fechaInicial", localStorage.getItem("fechaInicial"));
-	  localStorage.setItem("fechaFinal", localStorage.getItem("fechaFinal"));
+      localStorage.setItem("fechaInicial", fechaInicial);
+	  localStorage.setItem("fechaFinal", fechaFinal);
 
 	  $(".btnReporteProduccionBrasier").attr("fechaInicial",localStorage.getItem("fechaInicial"));
 	  $(".btnReporteProduccionBrasier").attr("fechaFinal",localStorage.getItem("fechaFinal"));
@@ -864,6 +864,9 @@ function cargarTablaProduccionVasco(mesV) {
 
 $("#nuevoTalleres").change(function(){
 	var ingreso = $(this).val();
+	$(".tablaArticulosTalleres").DataTable().destroy();
+    localStorage.setItem("sectorIngreso", ingreso);
+    cargarTablaArticuloTalleres(localStorage.getItem("sectorIngreso"));
     var datos2 = new FormData();
     datos2.append("ingreso", ingreso);
     $.ajax({
@@ -898,8 +901,18 @@ $("#editarTalleres").change(function(){
       }
     })
 })
+
+
+if (localStorage.getItem("sectorIngreso") != null) {
+	cargarTablaArticuloTalleres(localStorage.getItem("sectorIngreso"));
+} else {
+	cargarTablaArticuloTalleres(null);
+}
+
+	
+function cargarTablaArticuloTalleres(sectorIngreso){
 $('.tablaArticulosTalleres').DataTable( {
-    "ajax": "ajax/produccion/tabla-articulostaller.ajax.php",
+    "ajax": "ajax/produccion/tabla-articulostaller.ajax.php?perfil=" + $("#perfilOculto").val()+"&sectorIngreso=" + sectorIngreso,
     "deferRender": true,
 	"retrieve": true,
     "processing": true,
@@ -930,6 +943,7 @@ $('.tablaArticulosTalleres').DataTable( {
 			}
 		}
 })
+}
 
 $("#daterange-btnTallerT").daterangepicker(
     {
@@ -1047,6 +1061,7 @@ $(".tablaArticulosTalleres tbody").on("click", "button.agregarArtiTaller", funct
 	var articuloIngreso = $(this).attr("articuloIngreso");
 	
     var talleres = $(this).attr("taller");
+	var idCierre = $(this).attr("idCierre");
     $(this).removeClass("btn-primary agregarArtiTaller");
 
     $(this).addClass("btn-default");
@@ -1065,12 +1080,12 @@ $(".tablaArticulosTalleres tbody").on("click", "button.agregarArtiTaller", funct
         dataType: "json",
         success: function (respuesta) {
 
-            console.log("respuesta", respuesta); 
+            // console.log("respuesta", respuesta); 
 
             var articulo = respuesta["articulo"];
             var packing = respuesta["packingB"];
             var taller = respuesta["taller"];
-
+			
             /* 
             todo: AGREGAR LOS CAMPOS
             */
@@ -1087,7 +1102,7 @@ $(".tablaArticulosTalleres tbody").on("click", "button.agregarArtiTaller", funct
                         
                             '<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarTaller" articuloIngreso="' + articuloIngreso + '"><i class="fa fa-times"></i></button></span>' +
 
-                            '<input type="text" class="form-control nuevaDescripcionProducto input-sm" articuloIngreso="' + articuloIngreso + '" name="agregarT" value="' + packing + '" codigoAC="' + articulo + '" readonly required>' +
+                            '<input type="text" class="form-control nuevaDescripcionProducto input-sm" articuloIngreso="' + articuloIngreso + '" name="agregarT" value="' + packing + '" codigoAC="' + articulo + '" idCierre= "'+idCierre+'" readonly required>' +
 
                         "</div>" +
 
@@ -1097,7 +1112,7 @@ $(".tablaArticulosTalleres tbody").on("click", "button.agregarArtiTaller", funct
 
                     '<div class="col-xs-6">' +
 
-                        '<input type="number" class="form-control nuevaCantidadArticuloIngreso input-sm" name="nuevaCantidadArticuloIngreso" id="nuevaCantidadArticuloIngreso" min="1" value="0" taller="' + taller + '" articulo="'+ articulo +'" nuevoTaller="' + Number(Number(taller) - Number($("#nuevaCantidadArticuloIngreso").val())) + '" required>' +
+                        '<input type="number" class="form-control nuevaCantidadArticuloIngreso input-sm" name="nuevaCantidadArticuloIngreso" id="nuevaCantidadArticuloIngreso" min="1" value="0" taller="' + talleres + '" articulo="'+ articulo +'" nuevoTaller="' + Number(Number(talleres) - Number($("#nuevaCantidadArticuloIngreso").val)) + '" required>' +
 
                     "</div>" +
 
@@ -1176,7 +1191,7 @@ $(".formularioIngreso").on("click", "button.quitarTaller", function () {
     });
 
 	localStorage.setItem("quitarTaller", JSON.stringify(idQuitarArticuloT));
-	console.log(articuloIngreso);
+	// console.log(articuloIngreso);
     $("button.recuperarBoton[articuloIngreso='" + articuloIngreso + "']").removeClass('btn-default');
 
     $("button.recuperarBoton[articuloIngreso='" + articuloIngreso + "']").addClass('btn-primary agregarArtiTaller');
@@ -1212,7 +1227,7 @@ $(".formularioIngreso").on("click", "button.quitarTaller", function () {
 */
 $(".formularioIngreso").on("change", "input.nuevaCantidadArticuloIngreso", function() {
 
-    var nuevoTaller = Number($(this).attr("taller")) + Number($(this).val());
+    var nuevoTaller = Number($(this).attr("taller")) - Number($(this).val());
     var articulo = $(this).attr("articulo");
     //console.log(articulo);
 
@@ -1307,12 +1322,13 @@ function listarArticulosIngreso() {
         id: $(descripcion[i]).attr("articuloIngreso"),
         articulo: $(descripcion[i]).attr("codigoAC"),
         cantidad: $(cantidad[i]).val(),
-        taller: $(cantidad[i]).attr("nuevoTaller")
+        taller: $(cantidad[i]).attr("nuevoTaller"),
+		idCierre: $(descripcion[i]).attr("idCierre")
 
       });
     }
   
-    // console.log("listaArticulos", JSON.stringify(listaArticulos)); 
+    console.log("listaArticulos", JSON.stringify(listaArticulos)); 
   
     $("#listaArticulosIngreso").val(JSON.stringify(listaArticulos));
 
@@ -1324,6 +1340,9 @@ function listarArticulosIngreso() {
 $(".tablaIngresoM").on("click", ".btnEditarIngStock", function () {
 
 	var idIngreso = $(this).attr("idIngreso");
+	var sectorIngreso = $(this).attr("sectorIngreso");
+	console.log(sectorIngreso);
+	localStorage.setItem("sectorIngreso",sectorIngreso);
 
   window.location = "index.php?ruta=editar-ingreso&idIngreso=" + idIngreso;
   
@@ -1924,6 +1943,80 @@ $(".tablaTalleresGenerado").on("click", ".btnDividirTallerGenerado", function ()
 			$("#trabajador").val(respuesta["trabajador"]);
 			$("#fecha_proceso").val(respuesta["fecha_proceso"]);
 			$("#fecha_terminado").val(respuesta["fecha_terminado"]);
+			
+
+        }
+
+    })
+
+})
+
+$(".tablaTalleresGenerado").on("click", ".btnRegresarTallerGenerado", function () {
+
+	var idTaller = $(this).attr("idTaller");
+    var datos = new FormData();
+    datos.append("idTaller", idTaller);
+
+    $.ajax({
+        url: "ajax/talleres.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuesta) {
+			$("#regresarCodigo").val(respuesta["id_cabecera"]);
+			$("#regresarArticulo").val(respuesta["articulo"]);
+			$("#regresarNombre").val(respuesta["nombre"]);
+			$("#regresarModelos").val(respuesta["modelo"]);
+			$("#regresarColores").val(respuesta["color"]);
+			$("#regresarTallas").val(respuesta["talla"]);
+			$("#regresarCantidades").val(respuesta["cantidad"]);
+			$("#regresarCantidades").val(respuesta["cantidad"]);
+			$("#regresarCodOperaciones").val(respuesta["cod_operacion"]);
+			$("#regresarCOTP").val(respuesta["cod_operacion"]);
+			$("#regresarOTP").val(respuesta["nom_operacion"]);
+			var barra= respuesta["codigo"];
+			var ultBarra=barra.substr(-1);
+			if(barra.length == 11){
+				if(ultBarra == "A"){
+					$("#regresarBarra").val(barra.substr(0,10));
+				}else if(ultBarra=="B"){
+					$("#regresarBarra").val(barra.substr(0,10)+"A");
+				}else if(ultBarra=="C"){
+					$("#regresarBarra").val(barra.substr(0,10)+"B");
+				}else if(ultBarra=="D"){
+					$("#regresarBarra").val(barra.substr(0,10)+"C");
+				}else if(ultBarra=="E"){
+					$("#regresarBarra").val(barra.substr(0,10)+"D");
+				}else if(ultBarra=="F"){
+					$("#regresarBarra").val(barra.substr(0,10)+"E");
+				}else if(ultBarra=="1"){
+					$("#regresarBarra").val(barra.substr(0,10));
+				}else if(ultBarra=="2"){
+					$("#regresarBarra").val(barra.substr(0,10)+"1");
+				}else if(ultBarra=="3"){
+					$("#regresarBarra").val(barra.substr(0,10)+"2");
+				}else if(ultBarra=="4"){
+					$("#regresarBarra").val(barra.substr(0,10)+"3");
+				}else if(ultBarra=="5"){
+					$("#regresarBarra").val(barra.substr(0,10)+"4");
+				}else if(ultBarra=="6"){
+					$("#regresarBarra").val(barra.substr(0,10)+"5");
+				}else if(ultBarra=="7"){
+					$("#regresarBarra").val(barra.substr(0,10)+"6");
+				}else if(ultBarra=="8"){
+					$("#regresarBarra").val(barra.substr(0,10)+"7");
+				}else if(ultBarra=="9"){
+					$("#regresarBarra").val(barra.substr(0,10)+"8");
+				}
+			}
+			$("#regresarBarraAntigua").val(barra);
+			$("#regresarTaller").val(respuesta["id"]);
+			$("#trabajador").val(respuesta["trabajador"]);
+			$("#regresarFecha_proceso").val(respuesta["fecha_proceso"]);
+			$("#regresarFecha_terminado").val(respuesta["fecha_terminado"]);
 			
 
         }

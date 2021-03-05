@@ -10,7 +10,7 @@ class ModeloCuentas{
 
 	static public function mdlIngresarCuenta($tabla,$datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(tipo_doc,num_cta,cliente,vendedor,fecha,fecha_ven,fecha_cep,tip_mon,monto,tip_cambio,estado,notas,cod_pago,doc_origen,renovacion,protesta,usuario,saldo,ult_pago,estado_doc,banco,num_unico,fecha_envio,fecha_abono) VALUES (:tipo_doc,:num_cta,:cliente,:vendedor,:fecha,:fecha_ven,:fecha_cep,:tip_mon,:monto,:tip_cambio,:estado,:notas,:cod_pago,:doc_origen,:renovacion,:protesta,:usuario,:saldo,:ult_pago,:estado_doc,:banco,:num_unico,:fecha_envio,:fecha_abono)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(tipo_doc,num_cta,cliente,vendedor,fecha,fecha_ven,fecha_cep,tip_mon,monto,tip_cambio,estado,notas,cod_pago,doc_origen,renovacion,protesta,usuario,saldo,ult_pago,estado_doc,banco,num_unico,fecha_envio,fecha_abono,tip_mov) VALUES (:tipo_doc,:num_cta,:cliente,:vendedor,:fecha,:fecha_ven,:fecha_cep,:tip_mon,:monto,:tip_cambio,:estado,:notas,:cod_pago,:doc_origen,:renovacion,:protesta,:usuario,:saldo,:ult_pago,:estado_doc,:banco,:num_unico,:fecha_envio,:fecha_abono,:tip_mov)");
 
 		$stmt->bindParam(":tipo_doc", $datos["tipo_doc"], PDO::PARAM_STR);
 		$stmt->bindParam(":num_cta", $datos["num_cta"], PDO::PARAM_STR);
@@ -36,6 +36,7 @@ class ModeloCuentas{
 		$stmt->bindParam(":num_unico", $datos["num_unico"], PDO::PARAM_STR);
 		$stmt->bindParam(":fecha_envio", $datos["fecha_envio"], PDO::PARAM_STR);
 		$stmt->bindParam(":fecha_abono", $datos["fecha_abono"], PDO::PARAM_STR);
+		$stmt->bindParam(":tip_mov", $datos["tip_mov"], PDO::PARAM_STR);
 
 
 		if($stmt->execute()){
@@ -117,7 +118,7 @@ class ModeloCuentas{
 
 		if($item != null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item and tipo_doc NOT IN ('01','03','07','08','09','85')");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item AND tip_mov = '-'");
 
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 
@@ -127,7 +128,7 @@ class ModeloCuentas{
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE tipo_doc NOT IN ('01','03','07','08','09','85')");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE tip_mov = '-' ");
 
 			$stmt -> execute();
 
@@ -327,7 +328,7 @@ class ModeloCuentas{
 
 		if($fechaInicial == "null"){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE tipo_doc IN ('01','03','07','08','09','85')  ORDER BY id ASC");
+			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.tipo_doc IN ('01','03','07','08','09','85')  ORDER BY c.id ASC");
 
 			$stmt -> execute();
 
@@ -336,7 +337,7 @@ class ModeloCuentas{
 
 		}else if($fechaInicial == $fechaFinal){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha like '%$fechaFinal%' AND tipo_doc IN ('01','03','07','08','09','85')");
+			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.fecha like '%$fechaFinal%' AND c.tipo_doc IN ('01','03','07','08','09','85')");
 
 			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 
@@ -356,12 +357,12 @@ class ModeloCuentas{
 
 			if($fechaFinalMasUno == $fechaActualMasUno){
 
-				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' AND tipo_doc IN ('01','03','07','08','09','85')");
+				$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' AND c.tipo_doc IN ('01','03','07','08','09','85')");
 
 			}else{
 
 
-				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND tipo_doc IN ('01','03','07','08','09','85')");
+				$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND c.tipo_doc IN ('01','03','07','08','09','85')");
 
 			}
 		
@@ -381,7 +382,7 @@ class ModeloCuentas{
 
 		if($fechaInicial == "null"){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE tipo_doc IN ('01','03','07','08','09','85') AND estado='PENDIENTE' ORDER BY id ASC");
+			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.tipo_doc IN ('01','03','07','08','09','85') AND c.estado='PENDIENTE' ORDER BY c.id ASC");
 
 			$stmt -> execute();
 
@@ -390,7 +391,7 @@ class ModeloCuentas{
 
 		}else if($fechaInicial == $fechaFinal){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha like '%$fechaFinal%' AND tipo_doc IN ('01','03','07','08','09','85') AND estado='PENDIENTE' ");
+			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.fecha like '%$fechaFinal%' AND c.tipo_doc IN ('01','03','07','08','09','85') AND c.estado='PENDIENTE' ");
 
 			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 
@@ -410,12 +411,12 @@ class ModeloCuentas{
 
 			if($fechaFinalMasUno == $fechaActualMasUno){
 
-				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' AND tipo_doc IN ('01','03','07','08','09','85') AND estado='PENDIENTE' ");
+				$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' AND c.tipo_doc IN ('01','03','07','08','09','85') AND c.estado='PENDIENTE' ");
 
 			}else{
 
 
-				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND tipo_doc IN ('01','03','07','08','09','85') AND estado='PENDIENTE' ");
+				$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND c.tipo_doc IN ('01','03','07','08','09','85') AND c.estado='PENDIENTE' ");
 
 			}
 		
@@ -435,7 +436,7 @@ class ModeloCuentas{
 
 		if($fechaInicial == "null"){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE tipo_doc IN ('01','03','07','08','09','85') AND estado='CANCELADO'  ORDER BY id ASC");
+			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.tipo_doc IN ('01','03','07','08','09','85') AND estado='CANCELADO'  ORDER BY id ASC");
 
 			$stmt -> execute();
 
@@ -444,7 +445,7 @@ class ModeloCuentas{
 
 		}else if($fechaInicial == $fechaFinal){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha like '%$fechaFinal%' AND tipo_doc IN ('01','03','07','08','09','85') AND estado='CANCELADO' ");
+			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.fecha like '%$fechaFinal%' AND c.tipo_doc IN ('01','03','07','08','09','85') AND c.estado='CANCELADO' ");
 
 			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 
@@ -464,12 +465,12 @@ class ModeloCuentas{
 
 			if($fechaFinalMasUno == $fechaActualMasUno){
 
-				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' AND tipo_doc IN ('01','03','07','08','09','85') AND estado='CANCELADO'");
+				$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' AND c.tipo_doc IN ('01','03','07','08','09','85') AND c.estado='CANCELADO'");
 
 			}else{
 
 
-				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND tipo_doc IN ('01','03','07','08','09','85') AND estado='CANCELADO'");
+				$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND c.tipo_doc IN ('01','03','07','08','09','85') AND c.estado='CANCELADO'");
 
 			}
 		

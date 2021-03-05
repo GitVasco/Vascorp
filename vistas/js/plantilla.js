@@ -71,4 +71,24 @@ window.addEventListener("beforeunload", function (e) {
 	localStorage.removeItem("capturarRango10");
 	localStorage.removeItem("capturarRango11");
 	localStorage.removeItem("capturarRango12");
+	// localStorage.removeItem("sectorIngreso");
 });
+//Libreria Toastr
+toastr.options = {
+	"closeButton": true,
+	"debug": false,
+	"newestOnTop": false,
+	"progressBar": false,
+	"positionClass": "toast-top-right",
+	"preventDuplicates": false,
+	"onclick": null,
+	"showDuration": "300",
+	"hideDuration": "1000",
+	"timeOut": "1000",
+	"extendedTimeOut": "2000",
+	"showEasing": "swing",
+	"hideEasing": "linear",
+	"showMethod": "fadeIn",
+	"hideMethod": "fadeOut"
+  }
+ 

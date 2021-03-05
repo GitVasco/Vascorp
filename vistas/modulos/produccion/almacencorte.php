@@ -70,6 +70,7 @@
          <tr>
            
            <th>Corte</th>
+           <th>Guia</th>
            <th>Responsable</th>
            <th><center>Cantidad Total</center></th>
            <th>Estado</th>
@@ -155,10 +156,26 @@ MODAL VISUALIZAR INFORMACION
               </div>
 
             </div>   
- 
+
+            <!-- ENTRADA PARA LA GUIA-->
+                        
+            <div class="form-group col-lg-2">
+
+              <label>N° Guia</label>
+
+              <div class="input-group">
+
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+
+                <strong><input type="text" class="form-control input-sm" name="guia" id="guia"  readonly></strong>
+
+              </div>
+
+            </div>    
+
             <!-- ENTRADA PARA LA RESPONSABLE-->
             
-            <div class="form-group col-lg-4">
+            <div class="form-group col-lg-2">
 
               <label>Responsable</label>
               

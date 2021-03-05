@@ -51,6 +51,7 @@ class TablaAlmacenCorte{
                    
                 $datosJson .= '[
                 "'.$codigo.'",
+                "'.$almacencorte[$i]["guia"].'",
                 "'.$almacencorte[$i]["nombre"].'",
                 "<center><b>'.$total.'</b></center>",
                 "'.$estadoAC.'",

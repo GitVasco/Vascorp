@@ -170,7 +170,8 @@ class ModeloIngresos{
 											fecha,
 											articulo,
 											cantidad,
-											almacen
+											almacen,
+											idcierre
 										) 
 										VALUES
 											(
@@ -180,7 +181,8 @@ class ModeloIngresos{
 											:fecha,
 											:articulo,
 											:cantidad,
-											:almacen
+											:almacen,
+											:idcierre
 											)";
 
 		$stmt=Conexion::conectar()->prepare($sql);
@@ -192,6 +194,7 @@ class ModeloIngresos{
 		$stmt->bindParam(":articulo",$datos["articulo"],PDO::PARAM_STR);
 		$stmt->bindParam(":cantidad",$datos["cantidad"],PDO::PARAM_INT);
 		$stmt->bindParam(":almacen",$datos["almacen"],PDO::PARAM_STR);
+		$stmt->bindParam(":idcierre",$datos["idcierre"],PDO::PARAM_INT);
 
 
 		if($stmt->execute()){
@@ -217,7 +220,8 @@ class ModeloIngresos{
 											articulo,
 											cliente,
 											cantidad,
-											almacen
+											almacen,
+											idcierre
 										) 
 										VALUES
 											(
@@ -228,7 +232,8 @@ class ModeloIngresos{
 											:articulo,
 											:cliente,
 											:cantidad,
-											:almacen
+											:almacen,
+											:idcierre
 											)";
 
 		$stmt=Conexion::conectar()->prepare($sql);
@@ -241,6 +246,7 @@ class ModeloIngresos{
 		$stmt->bindParam(":cliente",$datos["cliente"],PDO::PARAM_STR);
 		$stmt->bindParam(":cantidad",$datos["cantidad"],PDO::PARAM_INT);
 		$stmt->bindParam(":almacen",$datos["almacen"],PDO::PARAM_STR);
+		$stmt->bindParam(":idcierre",$datos["idcierre"],PDO::PARAM_INT);
 
 
 		if($stmt->execute()){

@@ -386,7 +386,7 @@ MODAL EDITAR TIPO PAGO
                 <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
 
                 <input type="text" class="form-control input-lg" name="cancelarDocumento2" value="<?php echo $_GET["numCta"]?>"  readonly required>
-
+                <input type="hidden" name="cancelarTipoDocumento2" id="cancelarTipoDocumento2" >
               </div>
 
             </div>

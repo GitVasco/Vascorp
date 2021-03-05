@@ -437,6 +437,20 @@ class ControladorOrdenCorte{
 		return $respuesta;
 
     }   
+
+
+    /* 
+	* VISUALIZAR DATOS DE LA ORDEN DE CORTE DETALLE
+	*/
+	static public function ctrVisualizarOrdenCorteDetalleCantidad($item, $valor){
+
+		$tabla = "detalles_ordencortejf";
+
+        $respuesta = ModeloOrdenCorte::mdlVisualizarOrdenCorteDetalleCantidad($tabla, $item, $valor);
+        
+		return $respuesta;
+
+    }   
     
     /*=============================================
 	RANGO FECHAS

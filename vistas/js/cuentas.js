@@ -244,6 +244,7 @@ $(".tablaCuentas").on("click", ".btnCancelarCuenta", function () {
       success: function (respuesta) {
 
           $("#idCuenta2").val(respuesta["id"]);
+          $("#cancelarTipoDocumento").val(respuesta["tipo_doc"]);
           $("#cancelarDocumento").val(respuesta["num_cta"]);
           $("#cancelarVendedor").val(respuesta["vendedor"]);
           $("#cancelarCliente").val(respuesta["cliente"]);
@@ -314,6 +315,16 @@ $(".tablaCuentas").on("click", ".btnEliminarCuenta", function(){
 //     window.location = "vistas/reportes_excel/rpt_color.php";
   
 // })
+
+$(".box").on("click", ".btnCodigoCuenta", function () {
+  
+  $("#nuevaMoneda").val("Soles");
+  $("#nuevaMoneda").selectpicker("refresh");
+  
+  
+  
+})
+
 $(".tablaCuentas").on("click", ".btnVisualizarCuenta", function () {
   var numCuenta = $(this).attr("numCta");
   window.location = "index.php?ruta=ver-cuentas&numCta=" + numCuenta ;
@@ -872,6 +883,7 @@ $(".btnCancelarCuenta2").click(function(){
       dataType: "json",
       success: function (respuesta) {
           $("#idCuenta3").val(respuesta["id"]);
+          $("#cancelarTipoDocumento2").val(respuesta["tipo_doc"]);
           $("#cancelarDocumento2").val(respuesta["num_cta"]);
           $("#cancelarVendedor2").val(respuesta["vendedor"]);
           $("#cancelarCliente2").val(respuesta["cliente"]);
@@ -944,3 +956,64 @@ $('.tablaCuentasConsultar').DataTable({
   }    
 });
 }
+
+//Dividir letra
+
+$(".tablaCuentas").on("click", ".btnDividirLetra", function () {
+
+  var idCuenta = $(this).attr("idCuenta");
+  var cliente = $(this).attr("cliente");
+
+  var datos = new FormData();
+  datos.append("idCuenta", idCuenta);
+
+  $.ajax({
+
+      url: "ajax/cuentas.ajax.php",
+      method: "POST",
+      data: datos,
+      cache: false,
+      contentType: false,
+      processData: false,
+      dataType: "json",
+      success: function (respuesta) {
+          console.log(respuesta);
+          $("#idCuenta4").val(respuesta["id"]);
+          $("#dividirDocumento").val(respuesta["tipo_doc"]);
+          $("#dividirNroDocumento").val(respuesta["num_cta"]);
+          $("#dividirFecha").val(respuesta["fecha"]);
+          $("#dividirFechaVencimiento").val(respuesta["fecha_ven"]);
+          $("#dividirSaldo").val(respuesta["saldo"]);
+          $("#dividirVendedor").val(respuesta["vendedor"]);
+          $("#dividirCliente").val(respuesta["cliente"]);
+          $("#dividirNomCliente").val(cliente);
+          $("#dividirFecha2").val(respuesta["fecha_ven"]);
+          $("#dividirNroDocumento2").val(respuesta["num_cta"]);
+
+          var fecha= new Date(respuesta["fecha_ven"]);
+          fecha.setDate(fecha.getDate() + 31);
+          var mes=(fecha.getMonth() + 1);
+          var dia =fecha.getDate();
+          if(mes.toString().length == 1){
+            if(dia.toString().length == 1){
+              var resultado= fecha.getFullYear() + '-0' +
+              (fecha.getMonth() + 1) + '-' + "0"+fecha.getDate();
+            }else{
+              var resultado= fecha.getFullYear() + '-0' +
+              (fecha.getMonth() + 1) + '-' + fecha.getDate();
+            }
+          }else{
+            if(dia.toString().length == 1){
+              var resultado= fecha.getFullYear() + '-' +
+              (fecha.getMonth() + 1) + '-' + "0"+fecha.getDate();
+            }else{
+              var resultado= fecha.getFullYear() + '-' +
+              (fecha.getMonth() + 1) + '-' + fecha.getDate();
+            }
+          }
+          $("#dividirFechaVencimiento2").val(resultado);
+      }
+
+  })
+
+})

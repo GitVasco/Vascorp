@@ -59,6 +59,9 @@
   <!-- Morris chart -->
   <link rel="stylesheet" href="vistas/bower_components/morris.js/morris.css">
 
+  <!-- Toastr -->
+  <link rel="stylesheet" href="vistas/bower_components/toastr/toastr.min.css">
+
   <!--=====================================
   PLUGINS DE JAVASCRIPT
   ======================================-->
@@ -113,6 +116,9 @@
   <script src="vistas/bower_components/Chart.js/Chart.js"></script>
   <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment-with-locales.min.js"></script>
   <script src ="http://cdn.datatables.net/plug-ins/1.10.16/api/sum().js"></script>
+
+  <script src="vistas/bower_components/toastr/toastr.min.js"></script>
+
   <style>
     .table thead, .table tfoot{
       background-color:#3c8dbc;

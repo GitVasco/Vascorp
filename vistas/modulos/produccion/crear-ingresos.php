@@ -235,6 +235,7 @@
               <thead>
 
                 <tr>
+                  <th class="text-center">Guia</th>
                   <th class="text-center">Modelo</th>
                   <th class="text-center">Color</th>
                   <th class="text-center">Talla</th>
