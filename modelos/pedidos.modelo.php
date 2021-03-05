@@ -463,7 +463,7 @@ class ModeloPedidos{
 				FROM
 					temporaljf t
 					LEFT JOIN clientesjf c
-					ON t.cliente = c.id
+					ON t.cliente = c.codigo
 					LEFT JOIN ubigeojf u
 					ON c.ubigeo = u.cod_ubi
 				WHERE t.codigo = $valor";
