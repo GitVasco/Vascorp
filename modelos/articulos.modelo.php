@@ -198,6 +198,61 @@ class ModeloArticulos
 	}
 
 	/* 
+	* Método para actualizar el  taller en ingresos
+	*/
+	static public function mdlRecuperarTaller($articulo, $cantidad){
+
+		$sql = "UPDATE 
+						articulojf 
+					SET
+						taller = taller + :cantidad
+					WHERE articulo = :articulo ";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":articulo", $articulo, PDO::PARAM_STR);
+		$stmt->bindParam(":cantidad", $cantidad, PDO::PARAM_INT);
+
+		$stmt->execute();
+
+		$stmt = null;
+	}
+
+	/* 
+	* Método para actualizar un cierre CON EL id
+	*/
+	static public function mdlActualizarUnCierre($tabla, $item1, $valor1, $valor2){
+
+		$sql = "UPDATE $tabla SET $item1=:$item1 WHERE id=:id";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":" . $item1, $valor1, PDO::PARAM_STR);
+		$stmt->bindParam(":id", $valor2, PDO::PARAM_INT);
+
+		$stmt->execute();
+
+		$stmt = null;
+	}
+
+	/* 
+	* Método para recuperar un cierre CON EL id
+	*/
+	static public function mdlRecuperarUnCierre($tabla, $item1, $valor1, $valor2){
+
+		$sql = "UPDATE $tabla SET cantidad = cantidad + :cantidad WHERE id=:id";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":cantidad" , $valor1, PDO::PARAM_STR);
+		$stmt->bindParam(":id", $valor2, PDO::PARAM_INT);
+
+		$stmt->execute();
+
+		$stmt = null;
+	}
+
+	/* 
 	* METODO PARA VER LA CONFIGURACION DE LAS URGENCIAS
 	*/
 	static public function mdlConfiguracion(){
@@ -267,25 +322,95 @@ class ModeloArticulos
 	/* 
 	* MOSTRAR ARTICULOS PARA LA TABLA DE ORDENES DE CORTE
 	*/
-	static public function mdlMostrarArticulosTaller(){
+	static public function mdlMostrarArticulosTaller($sectorIngreso){
+		if($sectorIngreso=="T4" || $sectorIngreso=="T6" || $sectorIngreso=="T9" || $sectorIngreso=="T2" || $sectorIngreso=="T8" || $sectorIngreso=="T0" || $sectorIngreso=="TA"){
 
-		$stmt = Conexion::conectar()->prepare("SELECT a.articulo,
-		a.modelo,
-		a.marca,
-		a.nombre,
-		a.color,
-	   	a.talla,
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			a.articulo,
+			cd.id,
+			c.guia,
+			a.modelo,
+			a.cod_color,
+			a.color,
+			a.cod_talla,
+			a.talla,
+			a.stock,
+			cd.cantidad AS taller,
+			a.alm_corte,
+			a.ord_corte 
+			FROM
+			  cierres_detallejf cd 
+			  LEFT JOIN cierresjf c 
+				ON cd.codigo = c.codigo 
+			  LEFT JOIN articulojf a 
+				ON cd.articulo = a.articulo 
+			WHERE LEFT(cd.codigo, 2) = '".$sectorIngreso."' 
+			ORDER BY c.guia, a.articulo;");
+	
+			$stmt->execute();
+	
+			return $stmt->fetchAll();
+	
+		}else{
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			a.articulo, 
+			'' as guia,
+			a.modelo,
+			a.marca,
+			a.nombre,
+			a.color,
+			a.talla,
+			a.stock,
+			a.taller,
+			a.alm_corte,
+			a.ord_corte FROM
+			articulojf a 
+			WHERE a.taller > 0");
+	
+			$stmt->execute();
+	
+			return $stmt->fetchAll();
+	
+		}
+		
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlMostrarArticulosCierres($idCierre){
+		
+		$stmt = Conexion::conectar()->prepare("SELECT 
+		a.articulo,
+		cd.id,
+		c.guia,
+		CONCAT(
+			  a.modelo,
+			  ' - ',
+			  a.nombre,
+			  ' - ',
+			  a.color,
+			  ' - ',
+			  a.talla
+			) AS packing, 
+		a.talla,
 		a.stock,
-		a.taller,
+		cd.cantidad AS taller,
 		a.alm_corte,
-		a.ord_corte FROM
-		articulojf a 
-		WHERE a.taller > 0");
+		a.ord_corte 
+		FROM
+			cierres_detallejf cd 
+			LEFT JOIN cierresjf c 
+			ON cd.codigo = c.codigo 
+			LEFT JOIN articulojf a 
+			ON cd.articulo = a.articulo 
+		WHERE cd.id ='".$idCierre."'
+		ORDER BY c.guia, a.articulo;");
 
 		$stmt->execute();
 
-		return $stmt->fetchAll();
+		return $stmt->fetch();
 
+		
 		$stmt->close();
 		$stmt = null;
 	}
@@ -699,6 +824,90 @@ class ModeloArticulos
 
 		$stmt->bindParam(":articulo", $datos["articulo"], PDO::PARAM_STR);
 		$stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+
+	}
+
+	/*
+	* ACTUALIZAR LA CANTIDAD DE STOCK DEL ARTICULO
+	*/
+	static public function mdlActualizarStockIngreso($valor1,$valor2){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE
+													articulojf
+												SET
+													stock = stock + :cantidad
+												WHERE articulo = :articulo");
+
+		$stmt->bindParam(":articulo", $valor1, PDO::PARAM_STR);
+		$stmt->bindParam(":cantidad", $valor2, PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+
+	}
+
+	/*
+	* ACTUALIZAR LA CANTIDAD DE SERVICOP DE ARTICULO
+	*/
+	static public function mdlActualizarArticuloServicio($valor1,$valor2){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE
+													articulojf
+												SET
+													servicio = servicio - :cantidad
+												WHERE articulo = :articulo");
+
+		$stmt->bindParam(":articulo", $valor1, PDO::PARAM_STR);
+		$stmt->bindParam(":cantidad", $valor2, PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+
+	}
+
+	/*
+	* * RECUPERAMOS LA CANTIDAD DE SERVICOP DE ARTICULO
+	*/
+	static public function mdlRecuperarArticuloServicio($valor1,$valor2){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE
+													articulojf
+												SET
+													servicio = servicio + :cantidad
+												WHERE articulo = :articulo");
+
+		$stmt->bindParam(":articulo", $valor1, PDO::PARAM_STR);
+		$stmt->bindParam(":cantidad", $valor2, PDO::PARAM_STR);
 
 		if ($stmt->execute()) {
 

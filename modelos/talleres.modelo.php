@@ -323,6 +323,28 @@ class ModeloTalleres{
 		$stmt = null;
 
   }    
+
+  static public function mdlEliminarTallerGenerado($tabla,$datos){
+
+		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id AND estado = '1'");
+
+		$stmt -> bindParam(":id", $datos, PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+  }    
   
   	/*=============================================
 	ELIMINAR TALLER DETALLE
@@ -2427,6 +2449,57 @@ class ModeloTalleres{
   
   
   }
+
+  static public function mdlMostrarTalleresGenerados2($codigoTaller){
+
+      $stmt = Conexion::conectar()->prepare("SELECT 
+                                                      et.id,
+                                                      et.fecha,
+                                                      et.sector,
+                                                      CONCAT(et.sector, '-', s.nom_sector) AS nom_sector,
+                                                      et.articulo,
+                                                      a.modelo,
+                                                      a.nombre,
+                                                      a.color,
+                                                      a.talla,
+                                                      et.cod_operacion,
+                                                      o.nombre AS nom_operacion,
+                                                      et.trabajador AS cod_trabajador,
+                                                      CONCAT(
+                                                        t.nom_tra,
+                                                        ' ',
+                                                        t.ape_pat_tra,
+                                                        ' ',
+                                                        t.ape_mat_tra
+                                                      ) AS trabajador,
+                                                      et.cantidad,
+                                                      DATE(et.fecha) AS fecha,
+                                                      et.estado,
+                                                      et.codigo 
+                                                    FROM
+                                                      entallerjf et 
+                                                      LEFT JOIN trabajadorjf t 
+                                                        ON et.trabajador = t.cod_tra 
+                                                      LEFT JOIN articulojf a 
+                                                        ON et.articulo = a.articulo 
+                                                      LEFT JOIN operacionesjf o 
+                                                        ON et.cod_operacion = o.codigo 
+                                                      LEFT JOIN sectorjf s 
+                                                        ON et.sector = s.cod_sector 
+                                                    WHERE et.codigo = '".$codigoTaller."'
+                                                    AND et.total_precio > 0");
+
+    $stmt -> execute();
+
+    return $stmt -> fetch();
+    
+
+    $stmt -> close();
+
+    $stmt = null;
+
+
+}
 
   /*=============================================
 	RANGO FECHAS

@@ -116,7 +116,7 @@ class ControladorTalleres{
 
                 echo'<script>
 
-                    window.location = "marcar-taller";
+                Command: toastr["success"]("Registrado exitosamente!");
 
                 </script>';
 
@@ -141,10 +141,10 @@ class ControladorTalleres{
                 $respuesta = ModeloTalleres::mdlProceso($fecha,$codigo,$trabajador);
 
                 if($respuesta == "ok"){
-
                     echo'<script>
+                        
 
-                            window.location = "marcar-taller";
+                        Command: toastr["success"]("Registrado exitosamente!");
 
                         </script>';
 
@@ -2037,6 +2037,76 @@ class ControladorTalleres{
 					</script>';
 
 				}
+
+
+		}
+
+    }
+
+    /*=============================================
+	Dividir Cantidad Taller Generado
+	=============================================*/
+
+	static public function ctrRegresarCantidadGenerado(){
+
+		if(isset($_POST["regresarCantidades"])){
+                $barraAntiguo=ModeloTalleres::mdlMostrarTalleresGenerados2($_POST["regresarBarra"]);
+                var_dump($barraAntiguo);
+                $cantidad2=$barraAntiguo["cantidad"]+$_POST["regresarCantidades"];
+                $datos2 = array("codigo" => $_POST["regresarCodigo"],
+                            "usuario" => $_POST["usuario"],
+                            "articulo" => $_POST["regresarArticulo"],
+                            "operacion" => $_POST["regresarCodOperaciones"],
+                            "cantidad" => $cantidad2,
+                            "editarBarra" => $_POST["regresarBarra"]);
+                $tabla="entallerjf";
+                $id=$_POST["regresarTaller"];
+                $estadoAntiguo=$barraAntiguo["estado"];
+               
+    
+                if($estadoAntiguo == "1"){
+                    $eliminar=ModeloTalleres::mdlEliminarTallerGenerado($tabla,$id);
+                    $eliminarAntiguo=ModeloTalleres::mdlEliminarTallerGenerado($tabla,$barraAntiguo["id"]);
+                    $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);
+                    
+                        echo'<script>
+    
+                        swal({
+                              type: "success",
+                              title: "La cantidad ha sido regresada correctamente",
+                              showConfirmButton: true,
+                              confirmButtonText: "Cerrar"
+                              }).then(function(result){
+                                        if (result.value) {
+    
+                                        window.location = "en-tallerp";
+    
+                                        }
+                                    })
+    
+                        </script>';
+                }else{
+                    echo'<script>
+    
+                    swal({
+                          type: "error",
+                          title: "El codigo de barra anterior ya fue terminado",
+                          showConfirmButton: true,
+                          confirmButtonText: "Cerrar"
+                          }).then(function(result){
+                                    if (result.value) {
+
+                                    window.location = "en-tallerp";
+
+                                    }
+                                })
+
+                    </script>';
+
+                }
+                
+                
+				
 
 
 		}

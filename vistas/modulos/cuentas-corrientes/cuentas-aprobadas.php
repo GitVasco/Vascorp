@@ -24,7 +24,7 @@
 
       <div class="box-header with-border">
   
-        <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarCuenta">
+        <button class="btn btn-primary btnCodigoCuenta" data-toggle="modal" data-target="#modalAgregarCuenta">
           
           Agregar cuentas
 
@@ -295,7 +295,7 @@ MODAL AGREGAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <select type="text" class="form-control input-lg selectpicker" name="nuevoBanco" data-live-search="true"  required>
+                <select type="text" class="form-control input-lg selectpicker" name="nuevoBanco" data-live-search="true"  >
                   <option value="">Seleccionar banco</option>
 
                   <?php
@@ -446,7 +446,7 @@ MODAL AGREGAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-usd"></i></span> 
 
-                <select type="text" class="form-control input-lg selectpicker" name="nuevaMoneda" data-live-search="true"  required>
+                <select type="text" class="form-control input-lg selectpicker" name="nuevaMoneda" id ="nuevaMoneda" data-live-search="true"  required>
                   <option value="">Seleccionar moneda</option>
                   <option value="Soles">Soles</option>
                   <option value="Dólares">Dólares</option>   
@@ -1074,7 +1074,7 @@ MODAL EDITAR TIPO PAGO
                 <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
 
                 <input type="text" class="form-control input-lg" name="cancelarDocumento" id="cancelarDocumento"  readonly required>
-
+                <input type="hidden" name="cancelarTipoDocumento" id="cancelarTipoDocumento" >
               </div>
 
             </div>
@@ -1161,7 +1161,6 @@ MODAL EDITAR TIPO PAGO
 
 </div>
 
-
 <div id="modalAgregarLetras" class="modal fade" role="dialog">
   
   <div class="modal-dialog" style="width: 55% !important;">
@@ -1223,13 +1222,13 @@ MODAL EDITAR TIPO PAGO
 
             <!-- ENTRADA PARA EL NOMBRE -->
             
-            <div class="form-group col-lg-3">
+            <div class="form-group col-lg-offset-2 col-lg-3 ">
             <label for=""><b>Fecha</b></label>
               <div class="input-group">
               
                 <span class="input-group-addon"><i class="fa fa-text-width"></i></span> 
 
-                <input type="date" class="form-control input-lg" name="letraFecha" id="letraFecha" readonly>
+                <input type="text" class="form-control input-lg" name="letraFecha" id="letraFecha" readonly>
 
               </div>
 
@@ -1260,7 +1259,7 @@ MODAL EDITAR TIPO PAGO
 
             <!-- ENTRADA PARA EL VENDEDOR -->
             
-            <div class="form-group col-lg-2">
+            <div class="form-group  col-lg-3">
             <label for=""><b>Vendedor</b></label>
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
@@ -1274,7 +1273,7 @@ MODAL EDITAR TIPO PAGO
 
             <!-- ENTRADA PARA EL NOMBRE -->
             
-            <div class="form-group col-lg-2">
+            <div class="form-group col-lg-3">
               <label for="">Monto</label>
               <div class="input-group">
               
@@ -1286,7 +1285,7 @@ MODAL EDITAR TIPO PAGO
 
             </div>
 
-            <div class="form-group col-lg-2">
+            <div class="form-group col-lg-3 col-lg-offset-5">
               <label for="">Saldo</label>
               <div class="input-group">
               
@@ -1549,6 +1548,216 @@ MODAL IMPORTAR CUENTAS DE BANCO
 
 </div>
 
+<!--=====================================
+MODAL DIVIDIR LETRA
+======================================-->
+
+<div id="modalDividirLetra" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog" style="width: 85% !important;">
+
+    <div class="modal-content">
+
+      <form role="form" method="post">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Dividir letra</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+          
+            <!-- ENTRADA PARA EL CODIGO -->
+            
+            <div class="form-group col-lg-3">
+            <label for=""><b>Tipo de documento</b></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
+
+                <input type="text" class="form-control input-lg " name="dividirDocumento" id="dividirDocumento" data-live-search="true"  readonly>
+                     
+                <input type="hidden" id="dividirUsuario" name="dividirUsuario" value="<?php echo $_SESSION["id"]?>">
+                <input type="hidden" id="idCuenta4" name="idCuenta4" >
+              </div>
+
+            </div>          
+            <!-- ENTRADA PARA LA FECHA  --> 
+            <div class="form-group col-lg-offset-6 col-lg-3">
+              <label for="">Fecha </label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
+
+                <input type="date" class="form-control input-lg" name="dividirFecha" id="dividirFecha"  readonly>
+
+              </div>
+
+            </div>
+            <!-- ENTRADA PARA EL NOMBRE -->
+            
+            <div class="form-group col-lg-3">
+              <label for=""><b>Nro. Documento</b></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
+
+                <input type="text" class="form-control input-lg" name="dividirNroDocumento" id="dividirNroDocumento"  readonly >
+
+              </div>
+
+            </div>
+            
+           <!-- ENTRADA PARA LA FECHA  --> 
+            <div class="form-group col-lg-offset-6 col-lg-3">
+              <label for="">Fecha Vencimiento</label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
+
+                <input type="date" class="form-control input-lg" name="dividirFechaVencimiento" id="dividirFechaVencimiento"  readonly>
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA LA NOTA -->
+            
+            <div class="form-group col-lg-2">
+            <label for=""><b>Clientes</b></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+
+                <input type="text" class="form-control input-lg" name="dividirCliente" id="dividirCliente"  readonly>
+                <input type="text"  name="dividirVendedor" id="dividirVendedor"  >
+                
+
+              </div>
+
+            </div>
+            <div class="form-group col-lg-4">
+            <br>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+
+                <input type="text" class="form-control input-lg" name="dividirNomCliente" id="dividirNomCliente" readonly>
+                
+
+              </div>
+
+            </div>
+            
+            
+            <div class="form-group col-lg-offset-3 col-lg-3">
+              <label for="">Saldo </label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-usd"></i></span> 
+
+                <input type="number" min="0" step="any" class="form-control input-lg" name="dividirSaldo" id="dividirSaldo" readonly>
+                
+              </div>
+
+            </div>
+
+            <div class="box  box-primary  col-lg-12">
+                    <label for="">Nuevo Documento</label>
+            </div>
+            <div class="form-group col-lg-3">
+              <label for=""><b>Nro. Documento</b></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
+
+                <input type="text" class="form-control input-lg" name="dividirNroDocumento2" id="dividirNroDocumento2"  required >
+
+              </div>
+
+            </div>
+            
+           <!-- ENTRADA PARA LA FECHA  --> 
+            <div class="form-group col-lg-offset-6 col-lg-3">
+              <label for="">Fecha </label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
+
+                <input type="date" class="form-control input-lg" name="dividirFecha2" id="dividirFecha2"  required>
+
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-3">
+              <label for=""><b>Monto S/.</b></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
+
+                <input type="number" min ="0" step = "any" class="form-control input-lg" name="dividirMonto" id="dividirMonto" value="0" required >
+
+              </div>
+
+            </div>
+            
+           <!-- ENTRADA PARA LA FECHA  --> 
+            <div class="form-group col-lg-offset-6 col-lg-3">
+              <label for="">Fecha Vencimiento</label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
+
+                <input type="date" class="form-control input-lg" name="dividirFechaVencimiento2" id="dividirFechaVencimiento2"  required>
+
+              </div>
+
+            </div>
+  
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Dividir letra</button>
+
+        </div>
+
+      </form>
+
+      <?php
+      $dividirLetra = new ControladorCuentas();
+      $dividirLetra -> ctrDividirLetra();
+      ?>   
+
+
+    </div>
+
+  </div>
+
+</div>
 <?php
 
   $eliminarCuenta = new ControladorCuentas();

@@ -180,6 +180,7 @@ class ControladorAlmacenCorte{
                     todo: Guardar cabeera de ALMACEN DE CORTE
                     */
                     $datos=array(   "codigo"=>$_POST["nuevaAlmacenCorte"],
+                                    "guia"=>$_POST["nuevaGuia"],
                                     "usuario"=>$_POST["idUsuario"],
                                     "total"=>$_POST["totalAlmacenCorte"],
                                     "estado"=>"1");

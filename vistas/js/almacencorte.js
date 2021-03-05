@@ -513,6 +513,7 @@ $(".tablaAlmacenCorte").on("click", ".btnVisualizarAC", function () {
 			//console.log("respuesta", respuesta);
 
             $("#almacencorte").val(respuesta["codigo"]);
+            $("#guia").val(respuesta["guia"]);
             $("#fecha").val(respuesta["fecha"]);
             $("#nombre").val(respuesta["nombre"]);
             $("#cantidad").val(respuesta["total"]);

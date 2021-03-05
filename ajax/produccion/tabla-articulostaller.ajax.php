@@ -11,7 +11,7 @@ class TablaArticulosTaller{
 
     public function mostrarArticuloTaller(){
 
-        $articulos = controladorArticulos::ctrMostrarArticulosTaller();	
+        $articulos = controladorArticulos::ctrMostrarArticulosTaller($_GET["sectorIngreso"]);	
         if(count($articulos)>0){
 
         $datosJson = '{
@@ -53,7 +53,7 @@ class TablaArticulosTaller{
         /* 
         todo: BOTONES
         */                
-        $botones =  "<div class='btn-group '><button class='btn btn-primary btn-xs  agregarArtiTaller recuperarBoton' articuloIngreso='".$articulos[$i]["articulo"]."' taller='".$articulos[$i]["taller"]."'><i class='fa fa-plus-circle'></i></button></div>";
+        $botones =  "<div class='btn-group '><button class='btn btn-primary btn-xs  agregarArtiTaller recuperarBoton' articuloIngreso='".$articulos[$i]["articulo"]."' taller='".$articulos[$i]["taller"]."' idCierre='".$articulos[$i]["id"]."'><i class='fa fa-plus-circle'></i></button></div>";
         
         
         /* 
@@ -110,6 +110,7 @@ class TablaArticulosTaller{
 
 
             $datosJson .= '[
+            "<center>'.$articulos[$i]["guia"].'</center>",
             "<center>'.$articulos[$i]["modelo"].'</center>",
             "<center>'.$articulos[$i]["color"].'</center>",
             "<center>'.$articulos[$i]["talla"].'</center>",

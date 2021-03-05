@@ -220,14 +220,16 @@ class ControladorCuentas{
 
 			$tabla="cuenta_ctejf";
 			   $datos = array("id" => $_POST["idCuenta2"],
-			   			   "tipo_doc"=>$_POST["cancelarCodigo"],
+			   			   "tipo_doc"=>$_POST["cancelarTipoDocumento"],
 						   "num_cta"=>$_POST["cancelarDocumento"],
 						   "cliente"=>$_POST["cancelarCliente"],
 						   "vendedor"=>$_POST["cancelarVendedor"],
 						   "monto"=>$_POST["cancelarMonto"],
 						   "notas"=>$_POST["cancelarNota"],
 						   "usuario"=>$_POST["cancelarUsuario"],
-						   "fecha"=>$_POST["cancelarFechaUltima"]);
+						   "fecha"=>$_POST["cancelarFechaUltima"],
+							"cod_pago" => $_POST["cancelarCodigo"],
+							"tip_mov" => "-");
 
 				$cuenta=ControladorCuentas::ctrMostrarCuentas("id",$_POST["idCuenta2"]);
 				$saldoNuevo=$cuenta["saldo"]-$_POST["cancelarMonto"];
@@ -448,18 +450,20 @@ class ControladorCuentas{
 			$documento=$doc1.$doc2."-";
             for ($i=0; $i <count($fechasInput) ; $i++) { 
 
-				$datos = array("tipo_doc"=>$_POST["letraCodigo"],
+				$datos = array("tipo_doc"=>"85",
 							"num_cta"=>$documento.($i+1),
 							"cliente"=>$_POST["letraCli"],
 							"vendedor"=>$_POST["letraVendedor"],	
 							"tip_mon"=>$_POST["letraMoneda"],
 							"monto"=>$_POST["monto".$i],
+							"saldo"=>$_POST["monto".$i],
 							"notas"=>$_POST["obs".$i],
+							"estado"=>"PENDIENTE",
 							"usuario"=>$_POST["letraUsuario"],
 							"fecha"=>$_POST["letraFecha"],
 							"fecha_ven"=>$fechasInput[$i],
 							"cod_pago"=>$_POST["letraCodigo"],
-							"doc_origen"=>$documento.($i+1));
+							"doc_origen"=>$_POST["letraDocumento"]);
 
 					
 					$respuesta = ModeloCuentas::mdlIngresarCuenta($tabla,$datos);
@@ -644,14 +648,17 @@ class ControladorCuentas{
 
 			$tabla="cuenta_ctejf";
 			   $datos = array("id" => $_POST["idCuenta3"],
-			   			   "tipo_doc"=>$_POST["cancelarCodigo2"],
+			   			   "tipo_doc"=>$_POST["cancelarTipoDocumento2"],
 						   "num_cta"=>$_POST["cancelarDocumento2"],
 						   "cliente"=>$_POST["cancelarCliente2"],
 						   "vendedor"=>$_POST["cancelarVendedor2"],
 						   "monto"=>$_POST["cancelarMonto3"],
 						   "notas"=>$_POST["cancelarNota2"],
 						   "usuario"=>$_POST["cancelarUsuario2"],
-						   "fecha"=>$_POST["cancelarFechaUltima2"]);
+						   "fecha"=>$_POST["cancelarFechaUltima2"],
+						   "cod_pago" => $_POST["cancelarCodigo2"],
+						   "tip_mov" => "-"	
+						);
 
 				$cuenta=ControladorCuentas::ctrMostrarCuentas("id",$_POST["idCuenta3"]);
 				$saldoNuevo=$cuenta["saldo"]-$_POST["cancelarMonto3"];
@@ -674,6 +681,63 @@ class ControladorCuentas{
 									if (result.value) {
 
 									window.location = "index.php?ruta=ver-cuentas&numCta='.$cuenta["num_cta"].'";
+
+									}
+								})
+
+					</script>';
+
+
+			}
+		}
+
+	}
+
+	/*=============================================
+	CANCELAR CUENTAS
+	=============================================*/
+
+	static public function ctrDividirLetra(){
+
+		if(isset($_POST["dividirNroDocumento2"])){
+
+			$tabla="cuenta_ctejf";
+			   $datos = array(
+			   			   "tipo_doc"=>$_POST["dividirDocumento"],
+						   "num_cta"=>$_POST["dividirNroDocumento2"],
+						   "cliente"=>$_POST["dividirCliente"],
+						   "vendedor"=>$_POST["dividirVendedor"],
+						   "monto"=>$_POST["dividirMonto"],
+						   "saldo"=>$_POST["dividirMonto"],
+						   "usuario"=>$_POST["dividirUsuario"],
+						   "fecha"=>$_POST["dividirFecha2"],
+						   "estado"=>"PENDIENTE",
+						   "fecha_ven"=>$_POST["dividirFechaVencimiento2"],
+						   "cod_pago" => $_POST["dividirDocumento"],
+						   "doc_origen" => $_POST["dividirNroDocumento"],
+						   "tip_mon" => "Soles",
+						   "renovacion" =>0,
+						   "protesta" =>0,
+							"estado_doc"=> "GENERADO");
+
+				$saldoNuevo=$_POST["dividirSaldo"]-$_POST["dividirMonto"];
+				$actualizado=ModeloCuentas::mdlActualizarUnDato($tabla,"saldo",$saldoNuevo,$_POST["idCuenta4"]);
+				$actualizado2=ModeloCuentas::mdlActualizarUnDato($tabla,"renovacion",1,$_POST["idCuenta4"]);
+			   	$respuesta = ModeloCuentas::mdlIngresarCuenta($tabla,$datos);
+
+			   	if($respuesta == "ok"){
+
+					echo'<script>	
+
+					swal({
+						  type: "success",
+						  title: "La letra ha sido dividida correctamente",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+									if (result.value) {
+
+									window.location = "index.php?ruta=cuentas";
 
 									}
 								})

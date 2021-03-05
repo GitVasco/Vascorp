@@ -89,21 +89,8 @@
                     <div class="input-group">
 
                         <span class="input-group-addon"><i class="fa fa-wrench"></i></span>
-                        <select class="form-control  input-sm selectpicker" name="editarTalleres" id="editarTalleres" data-live-search="true">
-                        <option value="">Seleccionar un taller</option>
-                        <?php
-
-                            $sector=ControladorSectores::ctrMostrarSectores(null);
-                            foreach ($sector as $key => $value) {
-
-                                echo '<option value="' . $value["cod_sector"] . '">' . $value["cod_sector"] . "-". $value["nom_sector"].'</option>';
-          
-                              }
-
-                            
-
-                        ?>
-                        </select>
+                        <input type="text" class="form-control  input-sm " name="editarTalleres" id="editarTalleres" readonly>
+                        
 
                     </div>
 
@@ -145,9 +132,13 @@
                   #var_dump("ordencorte", $ordencorte["codigo"]);
                   #var_dump("listaArticuloOC", $listaArticuloOC);
                   foreach($listaArticuloIng as $key=>$value){
+                    if($ingreso["taller"]=="T1" || $ingreso["taller"]=="T3" || $ingreso["taller"]=="T5" ){
 
-                    $infoArticulo = ControladorArticulos::ctrMostrarArticulos($value["articulo"]);
-                    $tallerAntiguo = $infoArticulo["taller"] - $value["cantidad"];
+                      $infoArticulo = ControladorArticulos::ctrMostrarArticulos($value["articulo"]);
+                    }else{
+                      $infoArticulo = ControladorIngresos::ctrMostrarArticulosCierres($value["idcierre"]);
+                    }
+                    $tallerAntiguo = $infoArticulo["taller"] + $value["cantidad"];
                     $stockG = $infoArticulo["stockG"];
                     echo '<div class="row" style="padding:5px 15px">
 
@@ -157,7 +148,7 @@
                         
                                 <span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarTaller" articuloIngreso="'.$infoArticulo["articulo"].'"><i class="fa fa-times"></i></button></span>
                         
-                                <input type="text" class="form-control nuevaDescripcionProducto input-sm" articuloIngreso="'.$infoArticulo["articulo"].'" name="agregarT" value="'.$infoArticulo["packing"].'" codigoAC="'.$infoArticulo["articulo"].'" readonly required>
+                                <input type="text" class="form-control nuevaDescripcionProducto input-sm" articuloIngreso="'.$infoArticulo["articulo"].'" name="agregarT" value="'.$infoArticulo["packing"].'" codigoAC="'.$infoArticulo["articulo"].'" idCierre= "'.$value["idcierre"].'" readonly required>
                         
                               </div>
                         
@@ -275,6 +266,7 @@
               <thead>
 
                 <tr>
+                  <th class="text-center">Guia</th>
                   <th class="text-center">Modelo</th>
                   <th class="text-center">Color</th>
                   <th class="text-center">Talla</th>

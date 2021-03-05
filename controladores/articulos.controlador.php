@@ -556,9 +556,9 @@ class controladorArticulos{
 	/* 
 	* MOSTRAR ARTICULOS PARA LA TABLA DE ORDENES DE CORTE
 	*/	
-	static public function ctrMostrarArticulosTaller(){
+	static public function ctrMostrarArticulosTaller($sectorIngreso){
 
-		$respuesta = ModeloArticulos::mdlMostrarArticulosTaller();
+		$respuesta = ModeloArticulos::mdlMostrarArticulosTaller($sectorIngreso);
 
 		return $respuesta;
 		

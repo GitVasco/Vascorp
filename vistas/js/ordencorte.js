@@ -704,6 +704,84 @@ $(".tablaOrdenCorte").on("click", ".btnVisualizarOC", function () {
   
 })
 
+/* 
+* VISUALIZAR DETALLE DE LA ORDEN DE CORTE
+*/ 
+$(".tablaOrdenCorte").on("click", ".btnVisualizarOCCantidad", function () {
+
+	var codigoOC = $(this).attr("codigo");
+    //console.log("codigoOC", codigoOC);
+    
+    var datos = new FormData();
+	datos.append("codigoOC", codigoOC);
+
+	$.ajax({
+
+		url:"ajax/ordencorte.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType:"json",
+		success:function(respuesta){
+
+			//console.log("respuesta", respuesta);
+
+            $("#ordencorte2").val(respuesta["codigo"]);
+            $("#fecha2").val(respuesta["fecha"]);
+            $("#configuracion2").val(respuesta["configuracion"]);
+            $("#nombre2").val(respuesta["nombre"]);
+            $("#cantidad2").val(respuesta["total"]);
+            $("#saldo2").val(respuesta["saldo"]);
+            $("#estado2").val(respuesta["estado"]);
+
+            $("#cantidad2").number(true, 0);
+            $("#saldo2").number(true, 0);
+			
+		}
+
+    })
+    
+     var codigoDOC = $(this).attr("codigo");	
+
+    $(".tablaVerOrdenCorteCantidad").DataTable().destroy();
+    $('.tablaVerOrdenCorteCantidad').DataTable({
+        "ajax": "ajax/produccion/tabla-ver-ordencorte-detacantidad.ajax.php?perfil=" + $("#perfilOculto").val()+"&codigo="+ codigoDOC,
+        "deferRender": true,
+        "retrieve": true,
+        "processing": true,
+        "order": [[0, "desc"]],
+        "language": {
+    
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+    
+        }
+    
+    });
+  
+})
 
 /* 
 * BOTON REPORTE DE ORDEN DE CORTE
