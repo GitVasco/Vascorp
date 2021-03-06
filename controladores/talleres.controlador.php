@@ -136,9 +136,9 @@ class ControladorTalleres{
                 $codigo = $_POST["codigoBarra"];
                 $trabajador = $_POST["cod_tra"];
 
-                $respuesta = ModeloTalleres::mdlTerminado($fecha,$codigo,$trabajador);
-
                 $respuesta = ModeloTalleres::mdlProceso($fecha,$codigo,$trabajador);
+
+                $respuesta = ModeloTalleres::mdlTerminado($fecha,$codigo,$trabajador);
 
                 if($respuesta == "ok"){
                     echo'<script>
