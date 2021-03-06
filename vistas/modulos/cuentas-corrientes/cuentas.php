@@ -223,7 +223,7 @@ MODAL AGREGAR TIPO PAGO
 
                   $valor = null;
 
-                  $marcas = ControladorClientes::ctrMostrarClientes($valor);
+                  $marcas = ControladorClientes::ctrMostrarClientes(null,$valor);
 
                   foreach ($marcas as $key => $value) {
                     echo '<option value="' . $value["codigo"] . '">' . $value["codigo"] ." - ". $value["nombre"] . '</option>';
@@ -668,7 +668,7 @@ MODAL EDITAR TIPO PAGO
 
                   $valor = null;
 
-                  $marcas = ControladorClientes::ctrMostrarClientes($valor);
+                  $marcas = ControladorClientes::ctrMostrarClientes(null,$valor);
 
                   foreach ($marcas as $key => $value) {
                     echo '<option value="' . $value["codigo"] . '">' . $value["codigo"] ." - ". $value["nombre"] . '</option>';
@@ -1646,7 +1646,7 @@ MODAL DIVIDIR LETRA
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
                 <input type="text" class="form-control input-lg" name="dividirCliente" id="dividirCliente"  readonly>
-                <input type="text"  name="dividirVendedor" id="dividirVendedor"  >
+                <input type="hidden"  name="dividirVendedor" id="dividirVendedor"  >
                 
 
               </div>

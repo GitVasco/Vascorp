@@ -1644,7 +1644,7 @@ MODAL DIVIDIR LETRA
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
                 <input type="text" class="form-control input-lg" name="dividirCliente" id="dividirCliente"  readonly>
-                <input type="text"  name="dividirVendedor" id="dividirVendedor"  >
+                <input type="hidden"  name="dividirVendedor" id="dividirVendedor"  >
                 
 
               </div>
