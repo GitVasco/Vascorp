@@ -288,6 +288,7 @@ CUERPO DOCUMENTO
 
         }else if( $_GET["ruta"] == "cuentas" ||
                   $_GET["ruta"] == "ver-cuentas" ||
+                  $_GET["ruta"] == "ver-cuentas-consultar" ||
                   $_GET["ruta"] == "abonos" ||
                   $_GET["ruta"] == "cancelar-abonos"||
                   $_GET["ruta"] == "cuentas-pendientes"||

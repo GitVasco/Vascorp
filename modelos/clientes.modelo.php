@@ -335,7 +335,41 @@ class ModeloClientes{
 
 	}	
 
+/*=============================================
+	MOSTRAR CLIENTES CUENTAS
+	=============================================*/
 
+	static public function mdlMostrarClientesCuentas($tabla, $item, $valor){
+
+		if($item != null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT codigo,nombre FROM $tabla WHERE $item = :$item ORDER BY id ASC");
+
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();
+
+		}else{
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			codigo,nombre
+		  FROM
+			clientesjf 
+		  ORDER BY id DESC ");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
 
     
 }    

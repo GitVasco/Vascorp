@@ -28,7 +28,16 @@
       <div class="box box-success">
         <div class="box-body">
           <div class="col-md-3" style="margin-bottom:10px">
-            <a href="cuentas" class="btn btn-primary"><i class ="fa fa-arrow-left"> Atrás </i></a>
+            <?php 
+              if($_GET["rutas"] == "cuentas-pendientes") {
+                echo'<a href="cuentas-pendientes" class="btn btn-danger"><i class ="fa fa-arrow-left"> Atrás </i></a>';
+              }else if($_GET["rutas"] == "cuentas-aprobadas") {
+                echo'<a href="cuentas-aprobadas" class="btn btn-danger"><i class ="fa fa-arrow-left"> Atrás </i></a>';
+              }else{
+                echo'<a href="cuentas" class="btn btn-danger"><i class ="fa fa-arrow-left"> Atrás </i></a>';
+              }
+            ?>
+            
           </div>
           <div class="col-md-12"></div>
 
@@ -99,15 +108,16 @@
     <div class=" col-lg-7">
       <div class="box box-warning">
         <div class="box-body">
-         <table class="table table-bordered table-striped dt-responsive tablas">
+         <table class="table table-bordered table-striped dt-responsive tablaVerCuentas">
          
           <thead>
          
           <tr>
-           <th>Nro Doc.</th>
-           <th>Vendedor</th>
-           <th>Monto</th>
+           <th>Tipo</th>
+           <th>Doc. origen</th>
+           <th>Fecha</th>
            <th>Notas</th>
+           <th>Monto</th>
            <th>Acciones</th>
 
           </tr> 
@@ -115,33 +125,6 @@
           </thead>
 
           <tbody>
-            <?php
-                $cancelaciones=ControladorCuentas::ctrMostrarCancelaciones("num_cta",$_GET["numCta"]);
-                foreach ($cancelaciones as $key => $value) {
-           
-                    echo    ' <tr>
-        
-                                <td>'.$value["num_cta"].'</td>
-            
-                                <td>'.$value["vendedor"].'</td>
-                                
-                                <td>'.$value["monto"].'</td>
-                                
-                                <td>'.$value["notas"].'</td>
-
-                                <td>
-
-                                    <div class="btn-group">
-                                        
-                                        <button class="btn btn-warning btnEditarCancelacion" idCancelacion="'.$value["id"].'" data-toggle="modal" data-target="#modalEditarCancelacion"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btnEliminarCancelacion" idCancelacion="'.$value["id"].'" ><i class="fa fa-times"></i></button>
-                                    
-                                    </div>  
-
-                                 </td>
-                                
-                            </tr>';
-                }
-            ?>
           </tbody>
 
           </table>
@@ -227,7 +210,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="cancelarDocumento" id="cancelarDocumento" required>
+                <input type="text" class="form-control input-lg" name="cancelarDocumento" id="cancelarDocumento"  required>
 
               </div>
 
@@ -313,8 +296,9 @@ MODAL EDITAR TIPO PAGO
 </div>
 
 
+
 <!--=====================================
-MODAL EDITAR TIPO PAGO
+MODAL CANCELAR CUENTA
 ======================================-->
 
 <div id="modalCancelarCuenta" class="modal fade" role="dialog">
@@ -346,16 +330,156 @@ MODAL EDITAR TIPO PAGO
           <div class="box-body">
 
           
+            <!-- ENTRADA PARA EL NOMBRE -->
+            
+            <div class="form-group col-lg-1">
+              <label for=""><b>Tipo de documento</b></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
+
+                <input type="text" class="form-control input-md" name="cancelarTipoDocumento2" id="cancelarTipoDocumento2"   readonly>
+
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-2">
+              <div style="margin-top:23px"></div>
+              <label for=""><b>Nro de documento</b></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
+
+                <input type="text" class="form-control input-md" name="cancelarDocumentoOriginal2" id="cancelarDocumentoOriginal2"   readonly>
+
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-2">
+              <div style="margin-top:23px"></div>
+              <label for=""><b>Fecha Emisión</b></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
+
+                <input type="date" class="form-control input-md" name="cancelarFechaOrigen2" id="cancelarFechaOrigen2"   readonly>
+
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-2">
+              <div style="margin-top:23px"></div>
+              <label for=""><b>Fecha Vencimiento</b></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
+
+                <input type="date" class="form-control input-md" name="cancelarVencimientoOrigen2" id="cancelarVencimientoOrigen2"   readonly>
+
+              </div>
+
+            </div>
+            <div class="form-group col-lg-2">
+              <div style="margin-top:23px"></div>
+              <label for=""><b>Clientes</b></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
+
+                <input type="text" class="form-control input-md" name="cancelarCliente2" id="cancelarCliente2"   readonly>
+
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-3">
+              <div style="margin-top:46px"></div>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
+
+                <input type="text" class="form-control input-md" name="cancelarClienteNomOrigen2" id="cancelarClienteNomOrigen2"   readonly>
+
+              </div>
+
+            </div>
+            <div class="col-lg-12"></div>
+            <div class="form-group col-lg-1">
+              <label for=""><b>Vendedor</b></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
+
+                <input type="text" class="form-control input-md" name="cancelarVendedor2" id="cancelarVendedor2"   readonly>
+
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-2">
+              <label for=""><b>Estado</b></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
+
+                <input type="text" class="form-control input-md" name="cancelarEstado2" id="cancelarEstado2"   readonly>
+
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-2">
+              <label for=""><b>Saldo</b></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
+
+                <input type="number" class="form-control input-md" name="cancelarSaldoAntiguo2" id="cancelarSaldoAntiguo2"   readonly>
+
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-2">
+              <label for=""><b>Num. Unico</b></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
+
+                <input type="number" class="form-control input-md" name="cancelarNumUnico2" id="cancelarNumUnico2"   readonly>
+
+              </div>
+
+            </div>
+          
+            
+            <div class="form-group col-lg-2">
+              <label for=""><b>Total S/.</b></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
+
+                <input type="number" class="form-control input-md" name="cancelarTotal2" id="cancelarTotal2"   readonly>
+
+              </div>
+
+            </div>
+
+            <div class="col-lg-12 bg-primary"></div>
+
             <!-- ENTRADA PARA EL CODIGO -->
             
-            <div class="form-group col-lg-3">
+            <div class="form-group col-lg-2">
             <label for=""><b>Documento por cancelar</b></label><br>
             <label for=""><b>Tipo de cancelacion</b></label>
               <div class="input-group">
               
                 <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
-                <select type="text" class="form-control input-lg selectpicker" name="cancelarCodigo2" id="cancelarCodigo2" data-live-search="true"  required>
+                <select type="text" class="form-control input-md selectpicker" name="cancelarCodigo2" id="cancelarCodigo2" data-live-search="true"  required>
                   <option value="">Seleccionar tipo de cancelacion</option>
 
                     <?php
@@ -385,8 +509,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="cancelarDocumento2" value="<?php echo $_GET["numCta"]?>"  readonly required>
-                <input type="hidden" name="cancelarTipoDocumento2" id="cancelarTipoDocumento2" >
+                <input type="text" class="form-control input-md" name="cancelarDocumento2" id="cancelarDocumento2" placeholder="Documento origen"  >  
               </div>
 
             </div>
@@ -403,7 +526,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
 
-                <input type="date" class="form-control input-lg" name="cancelarFechaUltima2" id="cancelarFechaUltima2" value="<?php echo $fecha->format("Y-m-d")?>"  required>
+                <input type="date" class="form-control input-md" name="cancelarFechaUltima2" id="cancelarFechaUltima2" value="<?php echo $fecha->format("Y-m-d")?>"  required>
 
               </div>
 
@@ -411,14 +534,14 @@ MODAL EDITAR TIPO PAGO
 
             <!-- ENTRADA PARA LA NOTA -->
             
-            <div class="form-group col-lg-3">
+            <div class="form-group col-lg-2">
             <div style="margin-top:23px"></div>
             <label for=""><b>Notas</b></label>
               <div class="input-group">
               
                 <span class="input-group-addon"><i class="fa fa-text-width"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="cancelarNota2" id="cancelarNota2" >
+                <input type="text" class="form-control input-md" name="cancelarNota2" id="cancelarNota2" >
 
               </div>
 
@@ -432,10 +555,20 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-usd"></i></span> 
 
-                <input type="number" min="0" step="any" class="form-control input-lg" name="cancelarMonto3" id="cancelarMonto3" value="0" required>
-                <input type="hidden"  id="cancelarSaldo2" >
-                <input type="hidden"  id="cancelarVendedor2" name="cancelarVendedor2" >
-                <input type="hidden"  id="cancelarCliente2" name="cancelarCliente2" >
+                <input type="number" min="0" step="any" class="form-control input-md" name="cancelarMonto3" id="cancelarMonto3" value="0" required>
+
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-2">
+            <div style="margin-top:23px"></div>
+            <label for=""><b>Saldo</b></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-text-width"></i></span> 
+
+                <input type="number" min="0" step="any" class="form-control input-md" name="cancelarSaldo2" id="cancelarSaldo2" value="0" readonly>
 
               </div>
 

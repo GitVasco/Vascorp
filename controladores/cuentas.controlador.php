@@ -44,30 +44,68 @@ class ControladorCuentas{
 							   "banco"=>$_POST["nuevoBanco"],
 							   "num_unico"=>$_POST["nuevoUnico"],
 							   "fecha_envio"=>$_POST["nuevaFechaEnvio"],
-							   "fecha_abono"=>$_POST["nuevaFechaAbono"]);
+							   "fecha_abono"=>$_POST["nuevaFechaAbono"],
+							   "tip_mov" => "+");
 							   
 
 
 			   	$respuesta = ModeloCuentas::mdlIngresarCuenta($tabla,$datos);
 
 			   	if($respuesta == "ok"){
+					if($_POST["ruta"] == "cuentas-pendientes"){
+						echo'<script>
 
-					echo'<script>
+						swal({
+							type: "success",
+							title: "La cuenta ha sido guardada correctamente",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar"
+							}).then(function(result){
+										if (result.value) {
 
-					swal({
-						  type: "success",
-						  title: "La cuenta ha sido guardada correctamente",
-						  showConfirmButton: true,
-						  confirmButtonText: "Cerrar"
-						  }).then(function(result){
-									if (result.value) {
+										window.location = "cuentas-pendientes";
 
-									window.location = "cuentas";
+										}
+									})
 
-									}
-								})
+						</script>';
 
-					</script>';
+					}else if($_POST["ruta"] == "cuentas-aprobadas"){
+						echo'<script>
+
+						swal({
+							  type: "success",
+							  title: "La cuenta ha sido guardada correctamente",
+							  showConfirmButton: true,
+							  confirmButtonText: "Cerrar"
+							  }).then(function(result){
+										if (result.value) {
+	
+										window.location = "cuentas-aprobadas";
+	
+										}
+									})
+	
+						</script>';
+					}else{
+						echo'<script>
+
+						swal({
+							  type: "success",
+							  title: "La cuenta ha sido guardada correctamente",
+							  showConfirmButton: true,
+							  confirmButtonText: "Cerrar"
+							  }).then(function(result){
+										if (result.value) {
+	
+										window.location = "cuentas";
+	
+										}
+									})
+	
+						</script>';
+					}
+					
 
 				}
 
@@ -85,6 +123,42 @@ class ControladorCuentas{
 	static public function ctrMostrarCuentas($item,$valor){
 		$tabla="cuenta_ctejf";
 		$respuesta = ModeloCuentas::mdlMostrarCuentas($tabla,$item,$valor);
+
+		return $respuesta;
+
+	}
+
+	/*=============================================
+	MOSTRAR CUENTAS
+	=============================================*/
+
+	static public function ctrMostrarCuentaCredito($valor){
+		$tabla="cuenta_ctejf";
+		$respuesta = ModeloCuentas::mdlMostrarCuentaCredito($tabla,$valor);
+
+		return $respuesta;
+
+	}
+
+	/*=============================================
+	MOSTRAR CUENTAS
+	=============================================*/
+
+	static public function ctrMostrarCuentaDeuda($valor){
+		$tabla="cuenta_ctejf";
+		$respuesta = ModeloCuentas::mdlMostrarCuentaDeuda($tabla,$valor);
+
+		return $respuesta;
+
+	}
+
+	/*=============================================
+	MOSTRAR CUENTAS
+	=============================================*/
+
+	static public function ctrMostrarCuentaDeudaVencida($valor){
+		$tabla="cuenta_ctejf";
+		$respuesta = ModeloCuentas::mdlMostrarCuentaDeudaVencida($tabla,$valor);
 
 		return $respuesta;
 
@@ -185,25 +259,81 @@ class ControladorCuentas{
 						   
 
 			   	$respuesta = ModeloCuentas::mdlEditarCuenta($tabla,$datos);
+
+				date_default_timezone_set('America/Lima');
+				$fecha = new DateTime();
+				$cuentas=ControladorCuentas::ctrMostrarCuentas("id",$_POST["idCuenta"]);
+				$usuario= $_SESSION["nombre"];
+				$para      = 'notificacionesvascorp@gmail.com';
+				$asunto    = 'Se edito una cuenta';
+				$descripcion   = 'El usuario '.$usuario.' edito la cuenta '.$cuentas["tipo_doc"].' - '.$cuentas["num_cta"];
+				$de = 'From: notificacionesvascorp@gmail.com';
+				if($_SESSION["correo"] == 1){
+					mail($para, $asunto, $descripcion, $de);
+				}
+				if($_SESSION["datos"] == 1){
+					$datos2= array( "usuario" => $usuario,
+									"concepto" => $descripcion,
+									"fecha" => $fecha->format("Y-m-d H:i:s"));
+					$auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
+				}
+				var_dump($auditoria);
+
 			   	if($respuesta == "ok"){
 
-					echo'<script>
+					if($_POST["editarRuta"] == "cuentas-pendientes"){
+						echo'<script>
 
-					swal({
-						  type: "success",
-						  title: "La cuenta ha sido cambiada correctamente",
-						  showConfirmButton: true,
-						  confirmButtonText: "Cerrar"
-						  }).then(function(result){
-									if (result.value) {
+						swal({
+							type: "success",
+							title: "La cuenta ha sido guardada correctamente",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar"
+							}).then(function(result){
+										if (result.value) {
 
-									window.location = "cuentas";
+										window.location = "cuentas-pendientes";
 
-									}
-								})
+										}
+									})
 
-					</script>';
+						</script>';
 
+					}else if($_POST["editarRuta"] == "cuentas-aprobadas"){
+						echo'<script>
+
+						swal({
+							  type: "success",
+							  title: "La cuenta ha sido guardada correctamente",
+							  showConfirmButton: true,
+							  confirmButtonText: "Cerrar"
+							  }).then(function(result){
+										if (result.value) {
+	
+										window.location = "cuentas-aprobadas";
+	
+										}
+									})
+	
+						</script>';
+					}else{
+						echo'<script>
+
+						swal({
+							  type: "success",
+							  title: "La cuenta ha sido guardada correctamente",
+							  showConfirmButton: true,
+							  confirmButtonText: "Cerrar"
+							  }).then(function(result){
+										if (result.value) {
+	
+										window.location = "cuentas";
+	
+										}
+									})
+	
+						</script>';
+					}
 
 			}
 		}
@@ -221,14 +351,17 @@ class ControladorCuentas{
 			$tabla="cuenta_ctejf";
 			   $datos = array("id" => $_POST["idCuenta2"],
 			   			   "tipo_doc"=>$_POST["cancelarTipoDocumento"],
-						   "num_cta"=>$_POST["cancelarDocumento"],
+						   "num_cta"=>$_POST["cancelarDocumentoOriginal"],
 						   "cliente"=>$_POST["cancelarCliente"],
 						   "vendedor"=>$_POST["cancelarVendedor"],
 						   "monto"=>$_POST["cancelarMonto"],
 						   "notas"=>$_POST["cancelarNota"],
 						   "usuario"=>$_POST["cancelarUsuario"],
 						   "fecha"=>$_POST["cancelarFechaUltima"],
+						   "fecha_ven"=>$_POST["cancelarVencimientoOrigen"],
 							"cod_pago" => $_POST["cancelarCodigo"],
+							"doc_origen" => $_POST["cancelarDocumento"],
+							"saldo"=>0,
 							"tip_mov" => "-");
 
 				$cuenta=ControladorCuentas::ctrMostrarCuentas("id",$_POST["idCuenta2"]);
@@ -292,27 +425,66 @@ class ControladorCuentas{
 				$auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
 			}
 			
-			$respuesta = ModeloCuentas::mdlEliminarCuenta($tabla,$datos);
+			$datos3 = array("num_cta"=>$cuentas["num_cta"],
+							"usuario_bkp" => $_SESSION["id"],
+							"fecha_bkp" => $fecha->format("Y-m-d H:i:s"));
+			$ingreso_bkp = ModeloCuentas::mdlIngresarCuentaBckp("cuenta_cte_bkpjf",$datos3);	
+			var_dump($ingreso_bkp);
+			$respuesta = ModeloCuentas::mdlEliminarCuentaCancelacion($tabla,$cuentas["num_cta"]);	
 			if($respuesta == "ok"){
-				
-				
-				echo'<script>
+				if($_GET["rutas"] == "cuentas-pendientes"){
+					echo'<script>
 
-				swal({
-					  type: "success",
-					  title: "La cuenta ha sido borrada correctamente",
-					  showConfirmButton: true,
-					  confirmButtonText: "Cerrar",
-					  closeOnConfirm: false
-					  }).then(function(result){
-								if (result.value) {
+					swal({
+						type: "success",
+						title: "La cuenta ha sido guardada correctamente",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar"
+						}).then(function(result){
+									if (result.value) {
 
-								window.location = "cuentas";
+									window.location = "cuentas-pendientes";
 
-								}
-							})
+									}
+								})
 
-				</script>';
+					</script>';
+
+				}else if($_GET["rutas"] == "cuentas-aprobadas"){
+					echo'<script>
+
+					swal({
+						  type: "success",
+						  title: "La cuenta ha sido guardada correctamente",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+									if (result.value) {
+
+									window.location = "cuentas-aprobadas";
+
+									}
+								})
+
+					</script>';
+				}else{
+					echo'<script>
+
+					swal({
+						  type: "success",
+						  title: "La cuenta ha sido guardada correctamente",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+									if (result.value) {
+
+									window.location = "cuentas";
+
+									}
+								})
+
+					</script>';
+				}
 
 			}		
 
@@ -347,6 +519,24 @@ class ControladorCuentas{
 					$estado=ModeloCuentas::mdlActualizarUnDato($tabla,"estado","PENDIENTE",$idOrigen);
 				}
 				$actualizacion=ModeloCuentas::mdlActualizarUnDato($tabla,"saldo",$saldoNuevo,$idOrigen);
+				date_default_timezone_set('America/Lima');
+				$fecha = new DateTime();
+				$cancelacion=ModeloCuentas::mdlMostrarCancelacion($tabla,"id",$datos);
+				$usuario= $_SESSION["nombre"];
+				$para      = 'notificacionesvascorp@gmail.com';
+				$asunto    = 'Se edito una cancelación';
+				$descripcion   = 'El usuario '.$usuario.' edito una cancelacion de la cuenta de '.$cancelacion["tipo_doc"].' - '.$cancelacion["num_cta"];
+				$de = 'From: notificacionesvascorp@gmail.com';
+				if($_SESSION["correo"] == 1){
+					mail($para, $asunto, $descripcion, $de);
+				}
+				if($_SESSION["datos"] == 1){
+					$datos2= array( "usuario" => $usuario,
+									"concepto" => $descripcion,
+									"fecha" => $fecha->format("Y-m-d H:i:s"));
+					$auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
+				}
+					
 			   	$respuesta = ModeloCuentas::mdlEditarCuenta($tabla,$datos);
 			   	if($respuesta == "ok"){
 
@@ -386,10 +576,11 @@ class ControladorCuentas{
 			date_default_timezone_set('America/Lima');
 			$fecha = new DateTime();
 			$cancelacion=ModeloCuentas::mdlMostrarCancelacion($tabla,"id",$datos);
+			
 			$usuario= $_SESSION["nombre"];
 			$para      = 'notificacionesvascorp@gmail.com';
-			$asunto    = 'Se elimino una cuenta';
-			$descripcion   = 'El usuario '.$usuario.' elimino una cancelacion de la cuenta de '.$cuentas["codigo"].' - '.$cuentas["num_cta"];
+			$asunto    = 'Se elimino una cancelación';
+			$descripcion   = 'El usuario '.$usuario.' elimino una cancelacion de la cuenta de '.$cancelacion["tipo_doc"].' - '.$cancelacion["num_cta"];
 			$de = 'From: notificacionesvascorp@gmail.com';
 			if($_SESSION["correo"] == 1){
 				mail($para, $asunto, $descripcion, $de);
@@ -407,7 +598,12 @@ class ControladorCuentas{
 				$estado=ModeloCuentas::mdlActualizarUnDato($tabla,"estado","PENDIENTE",$idOrigen);
 			}
 			$actualizacion=ModeloCuentas::mdlActualizarUnDato($tabla,"saldo",$saldoNuevo,$idOrigen);
-			$respuesta = ModeloCuentas::mdlEliminarCuenta($tabla,$datos);
+			$datos3 = array("id"=>$cancelacion["id"],
+						   "usuario_bkp"=>$_SESSION["id"],
+						   "fecha_bkp"=>$fecha->format("Y-m-d H:i:s"));
+			$ingreso_bkp = ModeloCuentas::mdlIngresarCuentaBckp2("cuenta_cte_bkpjf",$datos3);
+			//Despues de realizar el bkp eliminamos
+			$respuesta = ModeloCuentas::mdlEliminarCuenta($tabla,$datos);		
 			if($respuesta == "ok"){
 				
 				
@@ -422,7 +618,7 @@ class ControladorCuentas{
 					  }).then(function(result){
 								if (result.value) {
 
-								window.location = "index.php?ruta=ver-cuentas&numCta='.$origen["num_cta"].'";
+								window.location = "index.php?ruta=ver-cuentas&numCta='.$origen["num_cta"].'&rutas=cuentas";
 
 								}
 							})
@@ -649,14 +845,17 @@ class ControladorCuentas{
 			$tabla="cuenta_ctejf";
 			   $datos = array("id" => $_POST["idCuenta3"],
 			   			   "tipo_doc"=>$_POST["cancelarTipoDocumento2"],
-						   "num_cta"=>$_POST["cancelarDocumento2"],
+						   "num_cta"=>$_POST["cancelarDocumentoOriginal2"],
 						   "cliente"=>$_POST["cancelarCliente2"],
 						   "vendedor"=>$_POST["cancelarVendedor2"],
 						   "monto"=>$_POST["cancelarMonto3"],
 						   "notas"=>$_POST["cancelarNota2"],
 						   "usuario"=>$_POST["cancelarUsuario2"],
 						   "fecha"=>$_POST["cancelarFechaUltima2"],
+						   "fecha_ven"=>$_POST["cancelarVencimientoOrigen2"],
 						   "cod_pago" => $_POST["cancelarCodigo2"],
+						   "doc_origen" => $_POST["cancelarDocumento2"],
+						   "saldo"=>0,
 						   "tip_mov" => "-"	
 						);
 
@@ -701,8 +900,9 @@ class ControladorCuentas{
 
 		if(isset($_POST["dividirNroDocumento2"])){
 
-			$tabla="cuenta_ctejf";
-			   $datos = array(
+			    $tabla="cuenta_ctejf";
+				// Ingresar nueva cuenta de letra
+			    $datos = array(
 			   			   "tipo_doc"=>$_POST["dividirDocumento"],
 						   "num_cta"=>$_POST["dividirNroDocumento2"],
 						   "cliente"=>$_POST["dividirCliente"],
@@ -712,18 +912,35 @@ class ControladorCuentas{
 						   "usuario"=>$_POST["dividirUsuario"],
 						   "fecha"=>$_POST["dividirFecha2"],
 						   "estado"=>"PENDIENTE",
+						   "notas"=>"Renovación",
 						   "fecha_ven"=>$_POST["dividirFechaVencimiento2"],
 						   "cod_pago" => $_POST["dividirDocumento"],
 						   "doc_origen" => $_POST["dividirNroDocumento"],
 						   "tip_mon" => "Soles",
-						   "renovacion" =>0,
+						   "renovacion" =>1,
 						   "protesta" =>0,
-							"estado_doc"=> "GENERADO");
+							"estado_doc"=> "GENERADO",
+							"tip_mov" => "+");
 
 				$saldoNuevo=$_POST["dividirSaldo"]-$_POST["dividirMonto"];
 				$actualizado=ModeloCuentas::mdlActualizarUnDato($tabla,"saldo",$saldoNuevo,$_POST["idCuenta4"]);
-				$actualizado2=ModeloCuentas::mdlActualizarUnDato($tabla,"renovacion",1,$_POST["idCuenta4"]);
 			   	$respuesta = ModeloCuentas::mdlIngresarCuenta($tabla,$datos);
+
+				// ingresar Cancelación
+				$datos2 = array("tipo_doc"=>$_POST["dividirDocumento"],
+								"num_cta"=>$_POST["dividirNroDocumento"],
+								"cliente"=>$_POST["dividirCliente"],
+								"vendedor"=>$_POST["dividirVendedor"],
+								"monto"=>$_POST["dividirMonto"],
+								"notas" => "Renovación",
+								"usuario"=>$_POST["dividirUsuario"],
+								"fecha"=>$_POST["dividirFecha2"],
+								"fecha_ven"=>$_POST["dividirFechaVencimiento2"],
+								"cod_pago" => $_POST["dividirDocumento"],
+								"doc_origen" => $_POST["dividirNroDocumento2"],
+								"saldo"=>0,
+								"tip_mov" => "-");
+				$respuesta2 = ModeloCuentas::mdlIngresarCuenta($tabla,$datos2);   
 
 			   	if($respuesta == "ok"){
 

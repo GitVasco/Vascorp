@@ -73,8 +73,8 @@
 
         </button>
         <div class="pull-right">
-          <button class="btn btn-outline-success btnReporteColor" style="border:green 1px solid">
-          <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte cuentas  </button>
+          <button class="btn btn-outline-success btnReporteCuentasPendientes"  fechaInicial="" fechaFinal="" style="border:green 1px solid">
+          <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte cuentas pendientes </button>
         </div>
       </div>
         
@@ -85,18 +85,18 @@
         <thead>
          
          <tr>
-           <th>Tipo Doc.</th>
-           <th>Nro Doc.</th>
-           <th>Cliente</th>
-           <th>Vendedor</th>
-           <th>Fecha</th>
-           <th>Vencimiento</th>
-           <th>Monto</th>
-           <th>Saldo</th>
-           <th>Estado doc.</th>
-           <th>Nro. unico</th>
-           <th>Doc. origen</th>
-           <th>Acciones</th>
+            <th style="width:10px">Tipo Doc.</th>
+            <th>Nro Doc.</th>
+            <th>Cliente</th>
+            <th  style="width:10px">Ven.</th>
+            <th>Fecha</th>
+            <th style="width:20px">Vencimiento</th>
+            <th>Monto</th>
+            <th>Saldo</th>
+            <th style="width:20px">Estado doc.</th>
+            <th style="width:100px">Nro. unico</th>
+            <th>Doc. origen</th>
+            <th>Acciones</th>
 
          </tr> 
 
@@ -186,7 +186,7 @@ MODAL AGREGAR TIPO PAGO
                 <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
 
                 <input type="text" class="form-control input-lg" name="nuevoDocumento" placeholder="Numero de documento" required>
-
+                <input type="hidden" name="ruta" value="cuentas-pendientes">
               </div>
 
             </div>
@@ -216,21 +216,7 @@ MODAL AGREGAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <select type="text" class="form-control input-lg selectpicker"  data-live-search="true" name="nuevoCliente"  required>
-                <option value="">Seleccionar cliente</option>
-
-                  <?php
-
-                  $valor = null;
-
-                  $marcas = ControladorClientes::ctrMostrarClientes($valor);
-
-                  foreach ($marcas as $key => $value) {
-                    echo '<option value="' . $value["codigo"] . '">' . $value["codigo"] ." - ". $value["nombre"] . '</option>';
-                  }
-
-                  ?>
-                </select>
+                <select type="text" class="form-control input-lg selectpicker"  data-live-search="true" name="nuevoCliente" id="nuevoClienteCuenta" required></select>
 
               </div>
 
@@ -321,7 +307,7 @@ MODAL AGREGAR TIPO PAGO
                     
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <select type="text" class="form-control input-lg selectpicker" name="nuevoTipoDocumento" data-live-search="true"  required>
+                <select type="text" class="form-control input-lg selectpicker" name="nuevoTipoDocumento" data-live-search="true"  >
                   <option value="">Seleccionar tipo de documento</option>
 
                     <?php
@@ -363,7 +349,7 @@ MODAL AGREGAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-sort-numeric-asc"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="nuevoUnico" placeholder="Ingresar nro. unico" required>
+                <input type="text" class="form-control input-lg" name="nuevoUnico" placeholder="Ingresar nro. unico" >
 
               </div>
 
@@ -392,7 +378,7 @@ MODAL AGREGAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
 
-                <input type="date" class="form-control input-lg" name="nuevaFechaAcep"  required>
+                <input type="date" class="form-control input-lg" name="nuevaFechaAcep"  >
 
               </div>
 
@@ -406,7 +392,7 @@ MODAL AGREGAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
 
-                <input type="date" class="form-control input-lg" name="nuevaFechaEnvio"  required>
+                <input type="date" class="form-control input-lg" name="nuevaFechaEnvio"  >
 
               </div>
 
@@ -515,10 +501,11 @@ MODAL AGREGAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-usd"></i></span> 
 
-                <select type="text" class="form-control input-lg selectpicker" name="nuevoEstado" data-live-search="true"  required>
+                <select type="text" class="form-control input-lg selectpicker" name="nuevoEstado" id="nuevoEstado" data-live-search="true"  required>
                   <option value="">Seleccionar estado de documento</option>
-                  <option value="GENERADO">GENERADO</option>
-                  <option value="ENVIADO">ENVIADO</option>   
+                  <option value="COBRANZAS">COBRANZAS</option>
+                  <option value="COBRANZAS GARANTIA">COBRANZAS GARANTIA</option>   
+                  <option value="DESCUENTO">DESCUENTO</option>   
                  </select>    
               </div>
 
@@ -631,7 +618,7 @@ MODAL EDITAR TIPO PAGO
                 <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
 
                 <input type="text" class="form-control input-lg" name="editarDocumento" id="editarDocumento" required>
-
+                <input type="hidden" name="editarRuta" value="cuentas-pendientes">
               </div>
 
             </div>
@@ -661,21 +648,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <select type="text" class="form-control input-lg selectpicker"  data-live-search="true" name="editarCliente" id="editarCliente"  required>
-                <option value="">Seleccionar cliente</option>
-
-                  <?php
-
-                  $valor = null;
-
-                  $marcas = ControladorClientes::ctrMostrarClientes($valor);
-
-                  foreach ($marcas as $key => $value) {
-                    echo '<option value="' . $value["codigo"] . '">' . $value["codigo"] ." - ". $value["nombre"] . '</option>';
-                  }
-
-                  ?>
-                </select>
+                <select type="text" class="form-control input-lg selectpicker"  data-live-search="true" name="editarCliente" id="editarCliente"  required></select>
 
               </div>
 
@@ -740,7 +713,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <select type="text" class="form-control input-lg selectpicker" name="editarBanco" id="editarBanco" data-live-search="true"  required>
+                <select type="text" class="form-control input-lg selectpicker" name="editarBanco" id="editarBanco" data-live-search="true"  >
                   <option value="">Seleccionar banco</option>
 
                   <?php
@@ -766,7 +739,7 @@ MODAL EDITAR TIPO PAGO
                     
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <select type="text" class="form-control input-lg selectpicker" name="editarTipoDocumento" id="editarTipoDocumento" data-live-search="true"  required>
+                <select type="text" class="form-control input-lg selectpicker" name="editarTipoDocumento" id="editarTipoDocumento" data-live-search="true"  >
                   <option value="">Seleccionar tipo de documento</option>
 
                     <?php
@@ -807,7 +780,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-sort-numeric-asc"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="editarUnico" id="editarUnico"  required>
+                <input type="text" class="form-control input-lg" name="editarUnico" id="editarUnico"  >
 
               </div>
 
@@ -821,7 +794,7 @@ MODAL EDITAR TIPO PAGO
                 
                 <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="editarOrigen" id="editarOrigen" required>
+                <input type="text" class="form-control input-lg" name="editarOrigen" id="editarOrigen" >
 
               </div>
 
@@ -836,7 +809,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
 
-                <input type="date" class="form-control input-lg" name="editarFechaAcep" id="editarFechaAcep" required>
+                <input type="date" class="form-control input-lg" name="editarFechaAcep" id="editarFechaAcep" >
 
               </div>
 
@@ -850,7 +823,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
 
-                <input type="date" class="form-control input-lg" name="editarFechaEnvio" id="editarFechaEnvio"  required>
+                <input type="date" class="form-control input-lg" name="editarFechaEnvio" id="editarFechaEnvio"  >
 
               </div>
 
@@ -945,7 +918,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-usd"></i></span> 
 
-                <input type="number" min="0" step="any" class="form-control input-lg" name="editarTipoCambio" id="editarTipoCambio" required>
+                <input type="number" min="0" step="any" class="form-control input-lg" name="editarTipoCambio" id="editarTipoCambio" >
 
               </div>
 
@@ -961,8 +934,9 @@ MODAL EDITAR TIPO PAGO
 
                 <select type="text" class="form-control input-lg selectpicker" name="editarEstado" id="editarEstado" data-live-search="true"  required>
                   <option value="">Seleccionar estado de documento</option>
-                  <option value="GENERADO">GENERADO</option>
-                  <option value="ENVIADO">ENVIADO</option>   
+                  <option value="COBRANZAS">COBRANZAS</option>
+                  <option value="COBRANZAS GARANTIA">COBRANZAS GARANTIA</option>   
+                  <option value="DESCUENTO">DESCUENTO</option>   
                  </select>    
               </div>
 
@@ -1002,7 +976,7 @@ MODAL EDITAR TIPO PAGO
 
 
 <!--=====================================
-MODAL EDITAR TIPO PAGO
+MODAL CANCELAR CUENTA
 ======================================-->
 
 <div id="modalCancelarCuenta" class="modal fade" role="dialog">
@@ -1034,16 +1008,156 @@ MODAL EDITAR TIPO PAGO
           <div class="box-body">
 
           
+            <!-- ENTRADA PARA EL NOMBRE -->
+            
+            <div class="form-group col-lg-1">
+              <label for=""><b>Tipo de documento</b></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
+
+                <input type="text" class="form-control input-md" name="cancelarTipoDocumento" id="cancelarTipoDocumento"   readonly>
+
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-2">
+              <div style="margin-top:23px"></div>
+              <label for=""><b>Nro de documento</b></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
+
+                <input type="text" class="form-control input-md" name="cancelarDocumentoOriginal" id="cancelarDocumentoOriginal"   readonly>
+
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-2">
+              <div style="margin-top:23px"></div>
+              <label for=""><b>Fecha Emisión</b></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
+
+                <input type="date" class="form-control input-md" name="cancelarFechaOrigen" id="cancelarFechaOrigen"   readonly>
+
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-2">
+              <div style="margin-top:23px"></div>
+              <label for=""><b>Fecha Vencimiento</b></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
+
+                <input type="date" class="form-control input-md" name="cancelarVencimientoOrigen" id="cancelarVencimientoOrigen"   readonly>
+
+              </div>
+
+            </div>
+            <div class="form-group col-lg-2">
+              <div style="margin-top:23px"></div>
+              <label for=""><b>Clientes</b></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
+
+                <input type="text" class="form-control input-md" name="cancelarCliente" id="cancelarCliente"   readonly>
+
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-3">
+              <div style="margin-top:46px"></div>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
+
+                <input type="text" class="form-control input-md" name="cancelarClienteNomOrigen" id="cancelarClienteNomOrigen"   readonly>
+
+              </div>
+
+            </div>
+            <div class="col-lg-12"></div>
+            <div class="form-group col-lg-1">
+              <label for=""><b>Vendedor</b></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
+
+                <input type="text" class="form-control input-md" name="cancelarVendedor" id="cancelarVendedor"   readonly>
+
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-2">
+              <label for=""><b>Estado</b></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
+
+                <input type="text" class="form-control input-md" name="cancelarEstado" id="cancelarEstado"   readonly>
+
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-2">
+              <label for=""><b>Saldo</b></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
+
+                <input type="number" class="form-control input-md" name="cancelarSaldoAntiguo" id="cancelarSaldoAntiguo"   readonly>
+
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-2">
+              <label for=""><b>Num. Unico</b></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
+
+                <input type="number" class="form-control input-md" name="cancelarNumUnico" id="cancelarNumUnico"   readonly>
+
+              </div>
+
+            </div>
+          
+            
+            <div class="form-group col-lg-2">
+              <label for=""><b>Total S/.</b></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
+
+                <input type="number" class="form-control input-md" name="cancelarTotal" id="cancelarTotal"   readonly>
+
+              </div>
+
+            </div>
+
+            <div class="col-lg-12 bg-primary"></div>
+
             <!-- ENTRADA PARA EL CODIGO -->
             
-            <div class="form-group col-lg-3">
+            <div class="form-group col-lg-2">
             <label for=""><b>Documento por cancelar</b></label><br>
             <label for=""><b>Tipo de cancelacion</b></label>
               <div class="input-group">
               
                 <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
-                <select type="text" class="form-control input-lg selectpicker" name="cancelarCodigo" id="cancelarCodigo" data-live-search="true"  required>
+                <select type="text" class="form-control input-md selectpicker" name="cancelarCodigo" id="cancelarCodigo" data-live-search="true"  required>
                   <option value="">Seleccionar tipo de cancelacion</option>
 
                     <?php
@@ -1073,8 +1187,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-credit-card"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="cancelarDocumento" id="cancelarDocumento"  readonly required>
-                <input type="hidden" name="cancelarTipoDocumento" id="cancelarTipoDocumento" >
+                <input type="text" class="form-control input-md" name="cancelarDocumento" id="cancelarDocumento" placeholder="Documento origen"  required>  
               </div>
 
             </div>
@@ -1091,7 +1204,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
 
-                <input type="date" class="form-control input-lg" name="cancelarFechaUltima" id="cancelarFechaUltima" value="<?php echo $fecha->format("Y-m-d")?>"  required>
+                <input type="date" class="form-control input-md" name="cancelarFechaUltima" id="cancelarFechaUltima" value="<?php echo $fecha->format("Y-m-d")?>"  required>
 
               </div>
 
@@ -1099,14 +1212,14 @@ MODAL EDITAR TIPO PAGO
 
             <!-- ENTRADA PARA LA NOTA -->
             
-            <div class="form-group col-lg-3">
+            <div class="form-group col-lg-2">
             <div style="margin-top:23px"></div>
             <label for=""><b>Notas</b></label>
               <div class="input-group">
               
                 <span class="input-group-addon"><i class="fa fa-text-width"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="cancelarNota" id="cancelarNota" required>
+                <input type="text" class="form-control input-md" name="cancelarNota" id="cancelarNota" >
 
               </div>
 
@@ -1120,10 +1233,20 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-usd"></i></span> 
 
-                <input type="number" min="0" step="any" class="form-control input-lg" name="cancelarMonto" id="cancelarMonto" value="0">
-                <input type="hidden"  id="cancelarSaldo" >
-                <input type="hidden"  id="cancelarVendedor" name="cancelarVendedor" >
-                <input type="hidden"  id="cancelarCliente" name="cancelarCliente" >
+                <input type="number" min="0" step="any" class="form-control input-md" name="cancelarMonto" id="cancelarMonto" value="0" required>
+
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-2">
+            <div style="margin-top:23px"></div>
+            <label for=""><b>Saldo</b></label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-text-width"></i></span> 
+
+                <input type="number" min="0" step="any" class="form-control input-md" name="cancelarSaldo" id="cancelarSaldo" value="0" readonly>
 
               </div>
 
