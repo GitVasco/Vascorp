@@ -33,6 +33,17 @@ class AjaxClientes{
 		echo json_encode($respuesta);
 	}
 
+	public $clienteCuenta;
+
+	public function ajaxMostrarClienteCuenta(){
+
+		$respuesta = ControladorClientes::ctrMostrarClientesCuentas(null, null);
+
+		echo json_encode($respuesta);
+
+
+	}
+
 
 }
 
@@ -52,4 +63,10 @@ if(isset($_POST["documento"])){
 	$validarDocumento=new AjaxClientes();
 	$validarDocumento->documento=$_POST["documento"];
 	$validarDocumento->ajaxValidarDocumento();
+}
+
+if(isset($_POST["clienteCuenta"])){
+	$clienteCuenta=new AjaxClientes();
+	$clienteCuenta->clienteCuenta=$_POST["clienteCuenta"];
+	$clienteCuenta->ajaxMostrarClienteCuenta();
 }

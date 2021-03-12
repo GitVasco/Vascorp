@@ -75,13 +75,13 @@
          
          <tr>
            
-           <th>Orden de Corte</th>
+           <th style="width:100px;">Or. de Corte</th>
            <th>Responsable</th>
            <th><center>Cantidad Total</center></th>
            <th>Saldo</th> 
            <th>Estado</th>
            <th>Fecha</th>
-           <th style="width:150px">Acciones</th>
+           <th style="width:200px">Acciones</th>
 
          </tr> 
 

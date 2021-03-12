@@ -296,7 +296,6 @@ $(".tablaQuincena").on("click", ".btnReportePagosTrusas", function () {
 	inicio = $(this).attr("inicio");
 	fin = $(this).attr("fin");
 	id = $(this).attr("id");
-	console.log(inicio, fin, id);
 
     window.location = "vistas/reportes_excel/rpt_pagos_trusas.php?inicio=" + inicio + "&fin=" + fin + "&id=" + id;
   
@@ -310,7 +309,6 @@ $(".tablaQuincena").on("click", ".btnReportePagosBrasier", function () {
 	inicio = $(this).attr("inicio");
 	fin = $(this).attr("fin");
 	id = $(this).attr("id");
-	console.log(inicio, fin, id);
 
     window.location = "vistas/reportes_excel/rpt_pagos_brasier.php?inicio=" + inicio + "&fin=" + fin + "&id=" + id;
   

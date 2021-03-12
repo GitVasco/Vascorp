@@ -68,9 +68,12 @@ window.addEventListener("beforeunload", function (e) {
 	localStorage.removeItem("capturarRango6");
 	localStorage.removeItem("capturarRango7");
 	localStorage.removeItem("capturarRango9");
-	localStorage.removeItem("capturarRango10");
 	localStorage.removeItem("capturarRango11");
 	localStorage.removeItem("capturarRango12");
+	localStorage.removeItem("envioLetras");
+	localStorage.removeItem("ano");
+	localStorage.removeItem("anoP");
+	localStorage.removeItem("anoC");
 	// localStorage.removeItem("sectorIngreso");
 });
 //Libreria Toastr

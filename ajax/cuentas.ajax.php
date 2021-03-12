@@ -44,6 +44,50 @@ class AjaxCuentas{
         echo json_encode($respuesta);
     
       }
+
+      public $clienteCredito;
+    
+      public function ajaxCuentaCredito(){
+        $valor = $this->clienteCredito;
+    
+        $respuesta = ControladorCuentas::ctrMostrarCuentaCredito($valor);
+    
+        echo json_encode($respuesta);
+    
+      }
+
+      public $clienteDeuda;
+    
+      public function ajaxCuentaDeuda(){
+        $valor = $this->clienteDeuda;
+    
+        $respuesta = ControladorCuentas::ctrMostrarCuentaDeuda($valor);
+    
+        echo json_encode($respuesta);
+    
+      }
+
+      public $clienteDeudaVencida;
+    
+      public function ajaxCuentaDeudaVencida(){
+        $valor = $this->clienteDeudaVencida;
+    
+        $respuesta = ControladorCuentas::ctrMostrarCuentaDeudaVencida($valor);
+    
+        echo json_encode($respuesta);
+    
+      }
+
+      public $letraCuenta;
+    
+      public function ajaxCuentaLetras(){
+        $valor = $this->letraCuenta;
+    
+        $respuesta = ControladorCuentas::ctrMostrarCuentasUnicos("id",$valor);
+    
+        echo json_encode($respuesta);
+    
+      }
     
     }
     
@@ -75,4 +119,44 @@ class AjaxCuentas{
       $cancelaCuenta = new AjaxCuentas();
       $cancelaCuenta -> numCta = $_POST["numCta"];
       $cancelaCuenta -> ajaxCancelarCuenta();
+  }
+
+  /*=============================================
+    MOSTRAR CREDITO
+    =============================================*/	
+    if(isset($_POST["clienteCredito"])){
+    
+      $cuentaCredito = new AjaxCuentas();
+      $cuentaCredito -> clienteCredito = $_POST["clienteCredito"];
+      $cuentaCredito -> ajaxCuentaCredito();
+  }
+
+  /*=============================================
+    MOSTRAR DEUDA
+    =============================================*/	
+    if(isset($_POST["clienteDeuda"])){
+    
+      $cuentaDeuda = new AjaxCuentas();
+      $cuentaDeuda -> clienteDeuda = $_POST["clienteDeuda"];
+      $cuentaDeuda -> ajaxCuentaDeuda();
+  }
+
+  /*=============================================
+    MOSTRAR DEUDA
+    =============================================*/	
+    if(isset($_POST["clienteDeudaVencida"])){
+    
+      $cuentaDeudaVencida = new AjaxCuentas();
+      $cuentaDeudaVencida -> clienteDeudaVencida = $_POST["clienteDeudaVencida"];
+      $cuentaDeudaVencida -> ajaxCuentaDeudaVencida();
+  }
+
+  /*=============================================
+    ENVIO LETRAS
+    =============================================*/	
+    if(isset($_POST["letraCuenta"])){
+    
+      $cuentaLetras = new AjaxCuentas();
+      $cuentaLetras -> letraCuenta = $_POST["letraCuenta"];
+      $cuentaLetras -> ajaxCuentaLetras();
   }

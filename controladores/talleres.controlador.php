@@ -121,6 +121,12 @@ class ControladorTalleres{
                 </script>';
 
 
+                }else{
+                    echo'<script>
+
+                        Command: toastr["error"]("El ticket ya fue registrado antes!");
+
+                        </script>';
                 }
                 
 
@@ -136,6 +142,8 @@ class ControladorTalleres{
                 $codigo = $_POST["codigoBarra"];
                 $trabajador = $_POST["cod_tra"];
 
+                $respuesta = ModeloTalleres::mdlProceso($fecha,$codigo,$trabajador);
+
                 $respuesta = ModeloTalleres::mdlTerminado($fecha,$codigo,$trabajador);
 
                 if($respuesta == "ok"){
@@ -146,6 +154,12 @@ class ControladorTalleres{
 
                         </script>';
 
+                }else{
+                    echo'<script>
+
+                        Command: toastr["error"]("El ticket ya fue registrado antes!");
+
+                        </script>';
                 }
 
             }
