@@ -568,12 +568,12 @@ MODAL EDITAR CLIENTE
 
                     <option value="">Tipo Documento</option>
 
-                    <option value="SD">SIN DOCUMENTO</option>
-                    <option value="DNI">DNI</option>
-                    <option value="C. Extra.">C. Extra.</option>
-                    <option value="RUC">RUC</option>
-                    <option value="PASAPORTE">PASAPORTE</option>
-                    <option value="C. Diplom.">C. Diplom.</option>
+                    <option value="0">SIN DOCUMENTO</option>
+                    <option value="1">DNI</option>
+                    <option value="4">C. Extra.</option>
+                    <option value="6">RUC</option>
+                    <option value="7">PASAPORTE</option>
+                    <option value="A">C. Diplom.</option>
 
                   </select>
 
@@ -607,8 +607,8 @@ MODAL EDITAR CLIENTE
 
                     <option value="">Tipo Persona</option>
 
-                    <option value="NATURAL">Natural</option>
-                    <option value="JURÍDICA">Jurídica</option>
+                    <option value="1">Natural</option>
+                    <option value="2">Jurídica</option>
 
                   </select>
 
@@ -853,6 +853,7 @@ MODAL EDITAR CLIENTE
                     <option value="precio8">Lista - 08</option>
                     <option value="precio9">Lista - 09</option>
                     <option value="precio10">Lista - 10</option>
+                    <option value="precio11">Lista - 11</option>
 
 
                   </select>

@@ -112,7 +112,7 @@ class ModeloClientes{
 			clientesjf c 
 		  LEFT JOIN ubigeo ub
 		  ON c.ubigeo = ub.codigo
-		  WHERE c.fecha IS NOT NULL 
+		  WHERE c.fecha IS NOT NULL AND c.estado=1
 		  ORDER BY id DESC ");
 
 			$stmt -> execute();
