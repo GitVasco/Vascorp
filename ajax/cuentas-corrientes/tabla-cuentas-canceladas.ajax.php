@@ -13,7 +13,7 @@ class TablaCuentasAprobadas{
     public function mostrarTablaCuentasAprobadas(){
 
 
-        $cuenta = ControladorCuentas::ctrRangoFechasCuentasAprobadas($_GET["fechaInicial"], $_GET["fechaFinal"]);
+        $cuenta = ControladorCuentas::ctrRangoFechasCuentasAprobadas($_GET["ano"]);
         if(count($cuenta)>0){
 
         $datosJson = '{
@@ -57,8 +57,8 @@ class TablaCuentasAprobadas{
             "'.$cuenta[$i]["num_cta"].'",
             "'.$cuenta[$i]["cliente"]." - ".$cuenta[$i]["nombre"].'",
             "'.$cuenta[$i]["vendedor"].'",
-            "'.$cuenta[$i]["nuevaFecha"].'",
-            "'.$cuenta[$i]["nuevaFechaVen"].'",
+            "'.$cuenta[$i]["fecha"].'",
+            "'.$cuenta[$i]["fecha_ven"].'",
             "'.number_format($cuenta[$i]["monto"],2).'",
             "'.number_format($cuenta[$i]["saldo"],2).'",
             "'.$estado.'",

@@ -1,29 +1,45 @@
-$("#tipoCuenta").change(function(){
-  var tipo = $(this).val();
-  if(tipo=='PENDIENTE'){
-    window.location="cuentas-pendientes";
-  }else if(tipo=='CANCELADO'){
-    window.location="cuentas-aprobadas";
-  }else{
-    window.location="cuentas";
-  }
+//cuentas  select ano
+$("#selectAnoCuenta").change(function(){
+  //ano de cuenta  
+  var ano = $(this).val();
+  localStorage.setItem("ano",ano);
+  $(".tablaCuentas").DataTable().destroy();
+  cargarTablaCuentas(ano);
+  $(".btnReporteCuentas").attr("ano",localStorage.getItem("ano"));
+ });
+
+ //cuentas pendientes select ano
+ $("#selectAnoCuentaP").change(function(){
+  //ano de cuenta  
+  var anoP = $(this).val();
+  localStorage.setItem("anoP",anoP);
+  $(".tablaCuentasPendientes").DataTable().destroy();
+  cargarTablaCuentasPendientes(anoP);
+  $(".btnReporteCuentasPendientes").attr("ano",localStorage.getItem("anoP"));
+ });
+
+ //cuentas canceladas select ano
+ $("#selectAnoCuentaC").change(function(){
+  //ano de cuenta  
+  var anoC = $(this).val();
+  localStorage.setItem("anoC",anoC);
+  $(".tablaCuentasAprobadas").DataTable().destroy();
+  cargarTablaCuentasAprobadas(anoC);
+  $(".btnReporteCuentasAprobadas").attr("ano",localStorage.getItem("anoC"));
  });
 
  // Validamos que venga la variable capturaRango en el localStorage
-if (localStorage.getItem("capturarRango10") != null) {
-	$("#daterange-btnCuentas span").html(localStorage.getItem("capturarRango10"));
-	cargarTablaCuentas(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
-  $(".btnReporteCuentas").attr("fechaInicial",localStorage.getItem("fechaInicial"));
-	$(".btnReporteCuentas").attr("fechaFinal",localStorage.getItem("fechaFinal"));
+if (localStorage.getItem("ano") != null) {
+	cargarTablaCuentas(localStorage.getItem("ano"));
+  
 } else {
-	$("#daterange-btnCuentas span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
-	cargarTablaCuentas(null, null);
+	cargarTablaCuentas(null);
 }
 
  //CUENTAS 
-function cargarTablaCuentas(fechaInicial, fechaFinal){
+function cargarTablaCuentas(ano){
   $('.tablaCuentas').DataTable({
-    "ajax": "ajax/cuentas-corrientes/tabla-cuentas.ajax.php?perfil="+$("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
+    "ajax": "ajax/cuentas-corrientes/tabla-cuentas.ajax.php?perfil="+$("#perfilOculto").val()+"&ano=" + ano ,
     "deferRender": true,
     "retrieve": true,
     "processing": true,
@@ -57,20 +73,17 @@ function cargarTablaCuentas(fechaInicial, fechaFinal){
   });
 }
 // Validamos que venga la variable capturaRango en el localStorage
-if (localStorage.getItem("capturarRango11") != null) {
-	$("#daterange-btnCuentasPendientes span").html(localStorage.getItem("capturarRango11"));
-	cargarTablaCuentasPendientes(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
-  $(".btnReporteCuentasPendientes").attr("fechaInicial",localStorage.getItem("fechaInicial"));
-	$(".btnReporteCuentasPendientes").attr("fechaFinal",localStorage.getItem("fechaFinal"));
+if (localStorage.getItem("anoP") != null) {
+	cargarTablaCuentasPendientes(localStorage.getItem("anoP"));
+  
 } else {
-	$("#daterange-btnCuentasPendientes span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
-	cargarTablaCuentasPendientes(null, null);
+	cargarTablaCuentasPendientes(null);
 }
 
  //CUENTAS PENDIENTES
-function cargarTablaCuentasPendientes(fechaInicial, fechaFinal){
+function cargarTablaCuentasPendientes(ano){
   $('.tablaCuentasPendientes').DataTable({
-    "ajax": "ajax/cuentas-corrientes/tabla-cuentas-pendientes.ajax.php?perfil="+$("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
+    "ajax": "ajax/cuentas-corrientes/tabla-cuentas-pendientes.ajax.php?perfil="+$("#perfilOculto").val()+"&ano=" + ano ,
     "deferRender": true,
     "retrieve": true,
     "processing": true,
@@ -105,21 +118,17 @@ function cargarTablaCuentasPendientes(fechaInicial, fechaFinal){
 }
 
 // Validamos que venga la variable capturaRango en el localStorage
-if (localStorage.getItem("capturarRango12") != null) {
-	$("#daterange-btnCuentasAprobadas span").html(localStorage.getItem("capturarRango12"));
-	cargarTablaCuentasAprobadas(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
-  $(".btnReporteCuentasAprobadas").attr("fechaInicial",localStorage.getItem("fechaInicial"));
-	$(".btnReporteCuentasAprobadas").attr("fechaFinal",localStorage.getItem("fechaFinal"));
+if (localStorage.getItem("anoC") != null) {
+	cargarTablaCuentasAprobadas(localStorage.getItem("anoC"));
   
 } else {
-	$("#daterange-btnCuentasAprobadas span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
-	cargarTablaCuentasAprobadas(null, null);
+	cargarTablaCuentasAprobadas(null);
 }
 
  //CUENTAS 
-function cargarTablaCuentasAprobadas(fechaInicial, fechaFinal){
+function cargarTablaCuentasAprobadas(ano){
   $('.tablaCuentasAprobadas').DataTable({
-    "ajax": "ajax/cuentas-corrientes/tabla-cuentas-aprobadas.ajax.php?perfil="+$("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
+    "ajax": "ajax/cuentas-corrientes/tabla-cuentas-canceladas.ajax.php?perfil="+$("#perfilOculto").val()+"&ano=" + ano ,
     "deferRender": true,
     "retrieve": true,
     "processing": true,
@@ -594,7 +603,7 @@ $(".tablaCuentasPendientes").on("click", ".btnEliminarCuenta", function(){
 $(".tablaCuentasAprobadas").on("click", ".btnEliminarCuenta", function(){
 
 	var idCuenta = $(this).attr("idCuenta");
-	var rutas = "cuentas-aprobadas";
+	var rutas = "cuentas-canceladas";
 	swal({
         title: '¿Está seguro de borrar la cuenta?',
         text: "¡Si no lo está puede cancelar la acción!",
@@ -616,25 +625,22 @@ $(".tablaCuentasAprobadas").on("click", ".btnEliminarCuenta", function(){
 
 //Reporte de Cuentas
 $(".box").on("click", ".btnReporteCuentas", function () {
-    var inicio = $(this).attr("fechaInicial");
-	  var fin = $(this).attr("fechaFinal");
-    window.location = "vistas/reportes_excel/rpt_cuentas.php?inicio="+inicio+"&fin="+fin;
+    var ano = $(this).attr("ano");
+    window.location = "vistas/reportes_excel/rpt_cuentas.php?ano="+ano;
   
 })
 
 //Reporte de Cuentas
 $(".box").on("click", ".btnReporteCuentasPendientes", function () {
-    var inicio = $(this).attr("fechaInicial");
-	  var fin = $(this).attr("fechaFinal");
-    window.location = "vistas/reportes_excel/rpt_cuentas_pendientes.php?inicio="+inicio+"&fin="+fin;
+    var anoP = $(this).attr("ano");
+    window.location = "vistas/reportes_excel/rpt_cuentas_pendientes.php?anoP="+anoP;
 
 })
 
 //Reporte de Cuentas
 $(".box").on("click", ".btnReporteCuentasAprobadas", function () {
-    var inicio = $(this).attr("fechaInicial");
-	  var fin = $(this).attr("fechaFinal");
-    window.location = "vistas/reportes_excel/rpt_cuentas_aprobadas.php?inicio="+inicio+"&fin="+fin;
+    var anoC = $(this).attr("ano");
+    window.location = "vistas/reportes_excel/rpt_cuentas_aprobadas.php?anoC="+anoC;
 
 })
 
@@ -693,7 +699,7 @@ $(".tablaCuentasPendientes").on("click", ".btnVisualizarCuenta", function () {
 $(".tablaCuentasAprobadas").on("click", ".btnVisualizarCuenta", function () {
   var numCuenta = $(this).attr("numCta");
   localStorage.setItem("numCta2",numCuenta);
-  var rutas="cuentas-aprobadas";
+  var rutas="cuentas-canceladas";
   window.location = "index.php?ruta=ver-cuentas&numCta=" + numCuenta  +"&rutas=" + rutas;
 
 })
@@ -1219,7 +1225,7 @@ $(".daterangepicker.opensleft .range_inputs .CancelarFechaCuentaAprobada").on(
     localStorage.removeItem("fechaInicial");
     localStorage.removeItem("fechaFinal");
     localStorage.clear();
-    window.location = "cuentas-aprobadas";
+    window.location = "cuentas-canceladas";
   }
 );
 
@@ -1511,6 +1517,66 @@ $(".tablaCuentas").on("click", ".btnDividirLetra", function () {
 
 })
 
+$(".tablaCuentasPendientes").on("click", ".btnDividirLetra", function () {
+
+  var idCuenta = $(this).attr("idCuenta");
+  var cliente = $(this).attr("cliente");
+
+  var datos = new FormData();
+  datos.append("idCuenta", idCuenta);
+
+  $.ajax({
+
+      url: "ajax/cuentas.ajax.php",
+      method: "POST",
+      data: datos,
+      cache: false,
+      contentType: false,
+      processData: false,
+      dataType: "json",
+      success: function (respuesta) {
+          console.log(respuesta);
+          $("#idCuenta4").val(respuesta["id"]);
+          $("#dividirDocumento").val(respuesta["tipo_doc"]);
+          $("#dividirNroDocumento").val(respuesta["num_cta"]);
+          $("#dividirFecha").val(respuesta["fecha"]);
+          $("#dividirFechaVencimiento").val(respuesta["fecha_ven"]);
+          $("#dividirSaldo").val(respuesta["saldo"]);
+          $("#dividirVendedor").val(respuesta["vendedor"]);
+          $("#dividirCliente").val(respuesta["cliente"]);
+          $("#dividirNomCliente").val(cliente);
+          $("#dividirFecha2").val(respuesta["fecha_ven"]);
+          $("#dividirNroDocumento2").val(respuesta["num_cta"]);
+
+          var fecha= new Date(respuesta["fecha_ven"]);
+          fecha.setDate(fecha.getDate() + 31);
+          var mes=(fecha.getMonth() + 1);
+          var dia =fecha.getDate();
+          if(mes.toString().length == 1){
+            if(dia.toString().length == 1){
+              var resultado= fecha.getFullYear() + '-0' +
+              (fecha.getMonth() + 1) + '-' + "0"+fecha.getDate();
+            }else{
+              var resultado= fecha.getFullYear() + '-0' +
+              (fecha.getMonth() + 1) + '-' + fecha.getDate();
+            }
+          }else{
+            if(dia.toString().length == 1){
+              var resultado= fecha.getFullYear() + '-' +
+              (fecha.getMonth() + 1) + '-' + "0"+fecha.getDate();
+            }else{
+              var resultado= fecha.getFullYear() + '-' +
+              (fecha.getMonth() + 1) + '-' + fecha.getDate();
+            }
+          }
+          $("#dividirFechaVencimiento2").val(resultado);
+      }
+
+  })
+
+})
+
+
 $(".box").on("click", "#cargaClienteCuenta", function () {
   var clienteCuenta = "1";
 
@@ -1625,3 +1691,487 @@ $('.tablaVerCuentas').DataTable({
   }    
 });
 }
+
+$('.tablaEnvioLetras').DataTable({
+  "ajax": "ajax/cuentas-corrientes/tabla-envio-letras.ajax.php?perfil="+$("#perfilOculto").val(),
+  "deferRender": true,
+  "retrieve": true,
+  "processing": true,
+  "order": [[0, "asc"]],
+  "pageLength": 20,
+  "lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+  "language": {
+    "sProcessing":     "Procesando...",
+    "sLengthMenu":     "Mostrar _MENU_ registros",
+    "sZeroRecords":    "No se encontraron resultados",
+    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0",
+    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+    "sInfoPostFix":    "",
+    "sSearch":         "Buscar:",
+    "sUrl":            "",
+    "sInfoThousands":  ",",
+    "sLoadingRecords": "Cargando...",
+    "oPaginate": {
+    "sFirst":    "Primero",
+    "sLast":     "Último",
+    "sNext":     "Siguiente",
+    "sPrevious": "Anterior"
+    },
+    "oAria": {
+      "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+      "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+    }
+  }    
+});
+
+
+/* 
+* AGREGANDO LOS ARTICULOS DE ORDEN DE CORTE A CORTE
+*/
+
+$(".tablaEnvioLetras tbody").on("click", "button.agregarEnvioCuenta", function () {
+
+  var idcuenta = $(this).attr("idcuenta");
+  //console.log("ordcorte", ordcorte);
+  //console.log("articuloAC", articuloAC);
+  //console.log("idCorte", idCorte);
+  //console.log("saldo", saldo);
+
+  $(this).removeClass("btn-primary agregarEnvioCuenta");
+  $(this).addClass("btn-default");
+
+  var datos = new FormData();
+  datos.append("letraCuenta", idcuenta);
+
+  $.ajax({
+
+      url: "ajax/cuentas.ajax.php",
+      method: "POST",
+      data: datos,
+      cache: false,
+      contentType: false,
+      processData: false,
+      dataType: "json",
+      success: function (respuesta) {
+
+          // console.log("respuesta", respuesta);
+
+          var nrocta = respuesta["cuenta"];
+          var cliente = respuesta["cliente"]+"-"+respuesta["nombre"];
+          var monto = respuesta["monto"];
+
+          /* 
+          todo: AGREGAR LOS CAMPOS
+          */
+
+          $(".nuevoCampoEnvio").append(
+
+              '<div class="row" style="padding:5px 15px">' +
+
+                  "<!-- Numero de CUENTA Y QUITAR -->" +
+
+                  '<div class="col-xs-3" style="padding-right:0px">' +
+
+                      '<div class="input-group">' +
+                      
+                          '<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarEnvioCuenta" idcuenta="' + idcuenta + '"><i class="fa fa-times"></i></button></span>' +
+
+                          '<input type="text" class="form-control nuevoNumCuenta"   name="nrocta" value="' + nrocta + '" idcuenta="' + idcuenta + '" fecha_ven ="'+respuesta["fechaVen"]+'" readonly required>' +
+
+                      "</div>" +
+
+                  "</div>" +
+
+                  "<!-- Descripción del CLIENTE -->" +
+
+                  '<div class="col-xs-7" style="padding-right:0px">' +                        
+
+                          '<input type="text" class="form-control nuevaDescripcionCliente" name="cliente" value="' + cliente + '"  nombres ="'+respuesta["nombres"]+'" ape_pat ="'+respuesta["ape_paterno"]+'" ape_mat ="'+respuesta["ape_materno"]+'" documento ="'+respuesta["documento"]+'" readonly required>' +                        
+
+                  "</div>" +
+
+                  "<!-- MONTO -->" +
+
+                  '<div class="col-xs-2">' +
+
+                      '<input type="number" class="form-control nuevoMonto" name="nuevoMonto"  value="' + monto + '" readonly required>' +
+
+                  "</div>" +               
+              
+              "</div>"
+
+          );
+
+          // SUMAR TOTAL DE UNIDADES
+
+          sumarTotalEnvio();
+
+
+          
+
+          // AGRUPAR PRODUCTOS EN FORMATO JSON
+
+          listarCuentas();
+
+
+                    
+      }
+
+  })
+
+
+});
+
+/* 
+* CUANDO CARGUE LA TABLA CADA VEZ QUE NAVEGUE EN ELLA
+*/
+$(".tablaEnvioLetras").on("draw.dt", function () {
+  /* console.log("tabla"); */
+
+  if (localStorage.getItem("quitarEnvioCuenta") != null) {
+      var listaIdEnvioCuenta = JSON.parse(localStorage.getItem("quitarEnvioCuenta"));
+      //console.log("listaIdArticuloAC", listaIdArticuloAC);
+      
+
+      for (var i = 0; i < listaIdEnvioCuenta.length; i++) {
+          $("button.recuperarEnvioCuenta[idcuenta='" + listaIdEnvioCuenta[i]["idcuenta"] + "']").removeClass("btn-default");
+
+          $("button.recuperarEnvioCuenta[idcuenta='" + listaIdEnvioCuenta[i]["idcuenta"] + "']").addClass("btn-primary agregarEnvioCuenta");
+      }
+  }
+});
+
+/* 
+* QUITAR ARTICULO DE CORTE Y RECUPERAR BOTÓN
+*/
+var idQuitarEnvioCuenta = [];
+
+localStorage.removeItem("quitarEnvioCuenta");
+
+$(".formularioEnvioLetra").on("click", "button.quitarEnvioCuenta", function () {
+
+  /* console.log("boton"); */
+
+  $(this).parent().parent().parent().parent().remove();
+
+  var idcuenta = $(this).attr("idcuenta");
+
+  /*=============================================
+  ALMACENAR EN EL LOCALSTORAGE EL ID DEL MATERIA PRIMA A QUITAR
+  =============================================*/
+
+  if (localStorage.getItem("quitarEnvioCuenta") == null) {
+
+    idQuitarEnvioCuenta = [];
+
+  } else {
+
+    idQuitarEnvioCuenta.concat(localStorage.getItem("quitarEnvioCuenta"))
+
+  }
+
+  idQuitarEnvioCuenta.push({
+      "idcuenta": idcuenta
+  });
+
+  localStorage.setItem("quitarEnvioCuenta", JSON.stringify(idQuitarEnvioCuenta));
+
+  $("button.recuperarEnvioCuenta[idcuenta='" + idcuenta + "']").removeClass('btn-default');
+
+  $("button.recuperarEnvioCuenta[idcuenta='" + idcuenta + "']").addClass('btn-primary agregarEnvioCuenta');
+
+
+  if ($(".nuevoCampoEnvio").children().length == 0) {
+
+      $("#nuevoTotalCuentaEnvio").val(0);
+      $("#totalEnvioCuentas").val(0);
+      $("#nuevoTotalCuentaEnvio").attr("total", 0);
+      
+
+
+  } else {
+
+          // SUMAR TOTAL DE UNIDADES
+
+          sumarTotalEnvio();
+
+          // AGREGAR IMPUESTO
+
+          
+
+          // AGRUPAR PRODUCTOS EN FORMATO JSON
+
+          listarCuentas();
+
+  }
+
+})
+
+
+/* 
+* SUMAR EL TOTAL DE LOS CORTES
+*/
+
+function sumarTotalEnvio() {
+
+  var num_cta = $(".nuevoNumCuenta");  
+  //console.log("cantidadAc", cantidadAc);
+
+
+  var sumarTotal = num_cta.length;
+
+  //console.log("sumarTotal", sumarTotal);
+
+  $("#nuevoTotalCuentaEnvio").val(sumarTotal);
+  $("#totalEnvioCuentas").val(sumarTotal);
+  $("#nuevoTotalCuentaEnvio").attr("total", sumarTotal);
+
+}
+
+/* 
+*formato al total
+*/
+$("#nuevoTotalCuentaEnvio").number(true, 0);
+
+
+/* 
+* LISTAR TODOS LOS ARTICULOS
+*/
+function listarCuentas() {
+
+  var listaCuenta = [];
+
+  var numcta = $(".nuevoNumCuenta");
+  var cliente = $(".nuevaDescripcionCliente");
+  var monto = $(".nuevoMonto");
+
+  
+  for (var i = 0; i < numcta.length; i++) {
+
+    listaCuenta.push({
+      idcuenta: $(numcta[i]).attr("idcuenta"),
+      numcta: $(numcta[i]).val(),
+      fecha: $(numcta[i]).attr("fecha_ven"),
+      cliente_nom: $(cliente[i]).attr("nombres"),
+      cliente_pat: $(cliente[i]).attr("ape_pat"),
+      cliente_mat: $(cliente[i]).attr("ape_mat"),
+      cliente_doc: $(cliente[i]).attr("documento"),
+      monto: $(monto[i]).val()
+
+    });
+  }
+
+  console.log("listaCuenta", JSON.stringify(listaCuenta));
+  //console.log("listArticulo", listArticulo);
+
+  $("#listaEnvioLetra").val(JSON.stringify(listaCuenta));
+  
+}
+
+
+
+/* 
+*FUNCIÓN PARA DESACTIVAR LOS BOTONES AGREGAR CUANDO EL ARTICULO YA HABÍA SIDO SELECCIONADO EN LA CARPETA
+*/
+function quitarAgregarEnvioCuenta() {
+
+//Capturamos todos los id de productos que fueron elegidos en la venta
+  var idCuenta = $(".quitarEnvioCuenta");
+  //console.log("articuloAC", articuloAC);
+
+//Capturamos todos los botones de agregar que aparecen en la tabla
+  var botonesTablaEnvio = $(".tablaEnvioLetras tbody button.agregarEnvioCuenta");
+  //console.log("botonesTablaAC", botonesTablaAC);
+
+//Recorremos en un ciclo para obtener los diferentes articuloAC que fueron agregados a la venta
+for (var i = 0; i < idCuenta.length; i++) {
+
+  //Capturamos los Id de los productos agregados a la venta
+  var boton = $(idCuenta[i]).attr("idCuenta");
+
+  //Hacemos un recorrido por la tabla que aparece para desactivar los botones de agregar
+  for (var j = 0; j < botonesTablaEnvio.length; j++) {
+
+    if ($(botonesTablaEnvio[j]).attr("idCuenta") == boton) {
+
+      $(botonesTablaEnvio[j]).removeClass("btn-primary agregarEnvioCuenta");
+      $(botonesTablaEnvio[j]).addClass("btn-default");
+
+    }
+  }
+
+}
+
+}
+
+/* 
+* CADA VEZ QUE CARGUE LA TABLA CUANDO NAVEGAMOS EN ELLA EJECUTAR LA FUNCIÓN:
+*/
+$(".tablaEnvioLetras").on("draw.dt", function() {
+  quitarAgregarEnvioCuenta();
+});
+
+
+if (localStorage.getItem("capturarRango22") != null) {
+	$("#daterange-btnEnvioCta span").html(localStorage.getItem("capturarRango22"));
+	cargarTablaEnvioCuentas(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
+} else {
+	$("#daterange-btnEnvioCta span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
+	cargarTablaEnvioCuentas(null, null);
+}
+
+
+function cargarTablaEnvioCuentas(fechaInicial, fechaFinal){
+$('.tablaEnvioCuentas').DataTable({
+	"ajax": "ajax/cuentas-corrientes/tabla-envio-cuentas.ajax.php?perfil=" + $("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
+	"deferRender": true,
+	"retrieve": true,
+	"processing": true,
+	"order": [[0, "desc"]],
+	"language": {
+
+		"sProcessing": "Procesando...",
+		"sLengthMenu": "Mostrar _MENU_ registros",
+		"sZeroRecords": "No se encontraron resultados",
+		"sEmptyTable": "Ningún dato disponible en esta tabla",
+		"sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+		"sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0",
+		"sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+		"sInfoPostFix": "",
+		"sSearch": "Buscar:",
+		"sUrl": "",
+		"sInfoThousands": ",",
+		"sLoadingRecords": "Cargando...",
+		"oPaginate": {
+			"sFirst": "Primero",
+			"sLast": "Último",
+			"sNext": "Siguiente",
+			"sPrevious": "Anterior"
+		},
+		"oAria": {
+			"sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+			"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+		}
+
+	}
+
+    });
+}
+
+
+$("#daterange-btnEnvioCta").daterangepicker(
+  {
+    cancelClass: "CancelarEnvioCta",
+    locale:{
+  "daysOfWeek": [
+    "Dom",
+    "Lun",
+    "Mar",
+    "Mie",
+    "Jue",
+    "Vie",
+    "Sab"
+  ],
+  "monthNames": [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre"
+  ],
+  },
+    ranges: {
+      Hoy: [moment(), moment()],
+      Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+      "Últimos 7 días": [moment().subtract(6, "days"), moment()],
+      "Últimos 30 días": [moment().subtract(29, "days"), moment()],
+      "Este mes": [moment().startOf("month"), moment().endOf("month")],
+      "Último mes": [
+        moment()
+          .subtract(1, "month")
+          .startOf("month"),
+        moment()
+          .subtract(1, "month")
+          .endOf("month")
+      ]
+    },
+    
+    startDate: moment(),
+    endDate: moment()
+  },
+  function(start, end) {
+    $("#daterange-btnEnvioCta span").html(
+      start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
+    );
+
+    var fechaInicial = start.format("YYYY-MM-DD");
+
+    var fechaFinal = end.format("YYYY-MM-DD");
+
+    var capturarRango22 = $("#daterange-btnEnvioCta span").html();
+
+    localStorage.setItem("capturarRango22", capturarRango22);
+    localStorage.setItem("fechaInicial", fechaInicial);
+    localStorage.setItem("fechaFinal", fechaFinal);
+    // Recargamos la tabla con la información para ser mostrada en la tabla
+    $(".tablaEnvioCuentas").DataTable().destroy();
+    cargarTablaEnvioCuentas(fechaInicial, fechaFinal);
+  });
+
+/*=============================================
+CANCELAR RANGO DE FECHAS
+=============================================*/
+
+$(".daterangepicker.opensleft .range_inputs .CancelarEnvioCta").on(
+  "click",
+  function() {
+    localStorage.removeItem("capturarRango22");
+    localStorage.removeItem("fechaInicial");
+    localStorage.removeItem("fechaFinal");
+    localStorage.clear();
+    window.location = "ver-envio-letras";
+  }
+);
+
+/*=============================================
+CAPTURAR HOY
+=============================================*/
+
+$(".daterangepicker.opensleft .ranges li").on("click", function() {
+  var textoHoy = $(this).attr("data-range-key");
+
+  if (textoHoy == "Hoy") {
+    var d = new Date();
+
+    var dia = d.getDate();
+    var mes = d.getMonth() + 1;
+    var año = d.getFullYear();
+
+    dia = ("0" + dia).slice(-2);
+    mes = ("0" + mes).slice(-2);
+
+    var fechaInicial = año + "-" + mes + "-" + dia;
+    var fechaFinal = año + "-" + mes + "-" + dia;
+
+    localStorage.setItem("capturarRango22", "Hoy");
+    localStorage.setItem("fechaInicial", fechaInicial);
+    localStorage.setItem("fechaFinal", fechaFinal);
+    // Recargamos la tabla con la información para ser mostrada en la tabla
+    $(".tablaEnvioCuentas").DataTable().destroy();
+    cargarTablaEnvioCuentas(fechaInicial, fechaFinal);
+  }
+});
+
+  
+
+
+

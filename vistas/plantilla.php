@@ -289,10 +289,12 @@ CUERPO DOCUMENTO
         }else if( $_GET["ruta"] == "cuentas" ||
                   $_GET["ruta"] == "ver-cuentas" ||
                   $_GET["ruta"] == "ver-cuentas-consultar" ||
+                  $_GET["ruta"] == "envio-letras" ||
+                  $_GET["ruta"] == "ver-envio-letras" ||
                   $_GET["ruta"] == "abonos" ||
                   $_GET["ruta"] == "cancelar-abonos"||
                   $_GET["ruta"] == "cuentas-pendientes"||
-                  $_GET["ruta"] == "cuentas-aprobadas" ||
+                  $_GET["ruta"] == "cuentas-canceladas" ||
                   $_GET["ruta"] == "consultar-cuentas" ) {
 
             include "modulos/cuentas-corrientes/".$_GET["ruta"].".php";

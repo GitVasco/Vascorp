@@ -31,8 +31,8 @@
             <?php 
               if($_GET["rutas"] == "cuentas-pendientes") {
                 echo'<a href="cuentas-pendientes" class="btn btn-danger"><i class ="fa fa-arrow-left"> Atrás </i></a>';
-              }else if($_GET["rutas"] == "cuentas-aprobadas") {
-                echo'<a href="cuentas-aprobadas" class="btn btn-danger"><i class ="fa fa-arrow-left"> Atrás </i></a>';
+              }else if($_GET["rutas"] == "cuentas-canceladas") {
+                echo'<a href="cuentas-canceladas" class="btn btn-danger"><i class ="fa fa-arrow-left"> Atrás </i></a>';
               }else{
                 echo'<a href="cuentas" class="btn btn-danger"><i class ="fa fa-arrow-left"> Atrás </i></a>';
               }

@@ -77,6 +77,17 @@ class AjaxCuentas{
         echo json_encode($respuesta);
     
       }
+
+      public $letraCuenta;
+    
+      public function ajaxCuentaLetras(){
+        $valor = $this->letraCuenta;
+    
+        $respuesta = ControladorCuentas::ctrMostrarCuentasUnicos("id",$valor);
+    
+        echo json_encode($respuesta);
+    
+      }
     
     }
     
@@ -138,4 +149,14 @@ class AjaxCuentas{
       $cuentaDeudaVencida = new AjaxCuentas();
       $cuentaDeudaVencida -> clienteDeudaVencida = $_POST["clienteDeudaVencida"];
       $cuentaDeudaVencida -> ajaxCuentaDeudaVencida();
+  }
+
+  /*=============================================
+    ENVIO LETRAS
+    =============================================*/	
+    if(isset($_POST["letraCuenta"])){
+    
+      $cuentaLetras = new AjaxCuentas();
+      $cuentaLetras -> letraCuenta = $_POST["letraCuenta"];
+      $cuentaLetras -> ajaxCuentaLetras();
   }

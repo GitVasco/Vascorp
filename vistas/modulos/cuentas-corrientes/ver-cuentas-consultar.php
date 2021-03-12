@@ -99,10 +99,11 @@
           <thead>
          
           <tr>
+           <th>Tipo</th>
            <th>Nro Doc.</th>
-           <th>Vendedor</th>
-           <th>Monto</th>
+           <th>Fecha</th>
            <th>Notas</th>
+           <th>Monto</th>
 
           </tr> 
 

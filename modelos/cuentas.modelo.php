@@ -148,6 +148,44 @@ class ModeloCuentas{
 		$stmt = null;
 
 	}
+
+	/*=============================================
+	MOSTRAR CUENTAS
+	=============================================*/
+
+	static public function mdlMostrarCuentasUnicos($tabla,$item,$valor){
+
+		if($item != null){
+			$stmt = Conexion::conectar()->prepare("SELECT c.*,REPLACE(DATE_FORMAT(c.fecha_ven,'%d-%m-%Y'),'-','') AS fechaVen,REPLACE(c.num_cta,'-','') AS cuenta,cli.nombre,cli.ape_paterno,cli.ape_materno,cli.nombres,cli.documento FROM $tabla c 
+			LEFT JOIN clientesjf cli ON c.cliente=cli.codigo
+			WHERE c.tip_mov ='+'
+			AND c.tipo_doc = '85'
+			AND c.estado= 'PENDIENTE'
+			AND c.id = $valor");
+			$stmt -> execute();
+	
+			return $stmt -> fetch();
+		}else{
+			$stmt = Conexion::conectar()->prepare("SELECT c.*,REPLACE(DATE_FORMAT(c.fecha_ven,'%d-%m-%Y'),'-','') AS fechaVen,REPLACE(c.num_cta,'-','') AS cuenta,cli.nombre,cli.ape_paterno,cli.ape_materno,cli.nombres,cli.documento FROM $tabla c 
+			LEFT JOIN clientesjf cli ON c.cliente=cli.codigo
+			WHERE c.tip_mov ='+'
+			AND c.tipo_doc = '85'
+			AND c.estado= 'PENDIENTE'
+			AND c.estado_doc IS NULL ");
+	
+	
+			$stmt -> execute();
+	
+			return $stmt -> fetchAll();
+		}
+
+		
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
 	
 	static public function mdlMostrarPagos($tabla,$item,$valor){
 
@@ -429,48 +467,23 @@ class ModeloCuentas{
 	RANGO FECHAS
 	=============================================*/	
 
-	static public function mdlRangoFechasCuentas($tabla, $fechaInicial, $fechaFinal){
+	static public function mdlRangoFechasCuentas($tabla, $ano){
 
-		if($fechaInicial == "null"){
+		if($ano == "null"){
 
-			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre, DATE_FORMAT(c.fecha, '%d-%m-%Y') AS nuevaFecha, DATE_FORMAT(c.fecha_ven, '%d-%m-%Y')AS nuevaFechaVen FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.tip_mov ='+'  ORDER BY c.id ASC");
+			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.tip_mov ='+'  AND YEAR(c.fecha) = YEAR(NOW()) ORDER BY c.id ASC");
 
 			$stmt -> execute();
 
 			return $stmt -> fetchAll();	
 
 
-		}else if($fechaInicial == $fechaFinal){
+		}else {
 
-			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre, DATE_FORMAT(c.fecha, '%d-%m-%Y')AS nuevaFecha, DATE_FORMAT(c.fecha_ven, '%d-%m-%Y')AS nuevaFechaVen FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.fecha like '%$fechaFinal%' AND c.tip_mov ='+'");
+			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE YEAR(c.fecha) = '".$ano."' AND c.tip_mov ='+'");
 
 			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 
-			$stmt -> execute();
-
-			return $stmt -> fetchAll();
-
-		}else{
-
-			$fechaActual = new DateTime();
-			$fechaActual ->add(new DateInterval("P1D"));
-			$fechaActualMasUno = $fechaActual->format("Y-m-d");
-
-			$fechaFinal2 = new DateTime($fechaFinal);
-			$fechaFinal2 ->add(new DateInterval("P1D"));
-			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
-
-			if($fechaFinalMasUno == $fechaActualMasUno){
-
-				$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre,DATE_FORMAT(c.fecha, '%d-%m-%Y')AS nuevaFecha, DATE_FORMAT(c.fecha_ven, '%d-%m-%Y')AS nuevaFechaVen FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' AND c.tip_mov ='+'");
-
-			}else{
-
-
-				$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre,DATE_FORMAT(c.fecha, '%d-%m-%Y')AS nuevaFecha, DATE_FORMAT(c.fecha_ven, '%d-%m-%Y')AS nuevaFechaVen FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND c.tip_mov ='+'");
-
-			}
-		
 			$stmt -> execute();
 
 			return $stmt -> fetchAll();
@@ -483,48 +496,23 @@ class ModeloCuentas{
 	RANGO FECHAS
 	=============================================*/	
 
-	static public function mdlRangoFechasCuentasPendientes($tabla, $fechaInicial, $fechaFinal){
+	static public function mdlRangoFechasCuentasPendientes($tabla, $ano){
 
-		if($fechaInicial == "null"){
+		if($ano == "null"){
 
-			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre,DATE_FORMAT(c.fecha, '%d-%m-%Y')AS nuevaFecha, DATE_FORMAT(c.fecha_ven, '%d-%m-%Y')AS nuevaFechaVen FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.tip_mov ='+' AND c.estado='PENDIENTE' ORDER BY c.id ASC");
+			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.tip_mov ='+'  AND c.estado='PENDIENTE' ORDER BY c.id ASC");
 
 			$stmt -> execute();
 
 			return $stmt -> fetchAll();	
 
 
-		}else if($fechaInicial == $fechaFinal){
+		}else {
 
-			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre,DATE_FORMAT(c.fecha, '%d-%m-%Y')AS nuevaFecha, DATE_FORMAT(c.fecha_ven, '%d-%m-%Y')AS nuevaFechaVen FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.fecha like '%$fechaFinal%' AND c.tip_mov ='+' AND c.estado='PENDIENTE' ");
+			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE YEAR(c.fecha) = '".$ano."' AND c.tip_mov ='+' AND c.estado='PENDIENTE' ");
 
 			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 
-			$stmt -> execute();
-
-			return $stmt -> fetchAll();
-
-		}else{
-
-			$fechaActual = new DateTime();
-			$fechaActual ->add(new DateInterval("P1D"));
-			$fechaActualMasUno = $fechaActual->format("Y-m-d");
-
-			$fechaFinal2 = new DateTime($fechaFinal);
-			$fechaFinal2 ->add(new DateInterval("P1D"));
-			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
-
-			if($fechaFinalMasUno == $fechaActualMasUno){
-
-				$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre,DATE_FORMAT(c.fecha, '%d-%m-%Y')AS nuevaFecha, DATE_FORMAT(c.fecha_ven, '%d-%m-%Y')AS nuevaFechaVen FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' AND c.tip_mov ='+' AND c.estado='PENDIENTE' ");
-
-			}else{
-
-
-				$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre,DATE_FORMAT(c.fecha, '%d-%m-%Y')AS nuevaFecha, DATE_FORMAT(c.fecha_ven, '%d-%m-%Y')AS nuevaFechaVen FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND c.tip_mov ='+' AND c.estado='PENDIENTE' ");
-
-			}
-		
 			$stmt -> execute();
 
 			return $stmt -> fetchAll();
@@ -537,48 +525,23 @@ class ModeloCuentas{
 	RANGO FECHAS
 	=============================================*/	
 
-	static public function mdlRangoFechasCuentasAprobadas($tabla, $fechaInicial, $fechaFinal){
+	static public function mdlRangoFechasCuentasAprobadas($tabla, $ano){
 
-		if($fechaInicial == "null"){
+		if($ano == "null"){
 
-			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre,DATE_FORMAT(c.fecha, '%d-%m-%Y')AS nuevaFecha, DATE_FORMAT(c.fecha_ven, '%d-%m-%Y')AS nuevaFechaVen FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.tip_mov ='+' AND estado='CANCELADO'  ORDER BY id ASC");
+			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.tip_mov ='+' AND c.estado='CANCELADO' AND YEAR(c.fecha) = YEAR(NOW())  ORDER BY id ASC");
 
 			$stmt -> execute();
 
 			return $stmt -> fetchAll();	
 
 
-		}else if($fechaInicial == $fechaFinal){
+		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre,DATE_FORMAT(c.fecha, '%d-%m-%Y')AS nuevaFecha, DATE_FORMAT(c.fecha_ven, '%d-%m-%Y')AS nuevaFechaVen FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.fecha like '%$fechaFinal%' AND c.tip_mov ='+' AND c.estado='CANCELADO' ");
+			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE YEAR(c.fecha) = '".$ano."' AND c.tip_mov ='+' AND c.estado='CANCELADO' ");
 
 			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 
-			$stmt -> execute();
-
-			return $stmt -> fetchAll();
-
-		}else{
-
-			$fechaActual = new DateTime();
-			$fechaActual ->add(new DateInterval("P1D"));
-			$fechaActualMasUno = $fechaActual->format("Y-m-d");
-
-			$fechaFinal2 = new DateTime($fechaFinal);
-			$fechaFinal2 ->add(new DateInterval("P1D"));
-			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
-
-			if($fechaFinalMasUno == $fechaActualMasUno){
-
-				$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre,DATE_FORMAT(c.fecha, '%d-%m-%Y')AS nuevaFecha, DATE_FORMAT(c.fecha_ven, '%d-%m-%Y')AS nuevaFechaVen FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' AND c.tip_mov ='+' AND c.estado='CANCELADO'");
-
-			}else{
-
-
-				$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre,DATE_FORMAT(c.fecha, '%d-%m-%Y')AS nuevaFecha, DATE_FORMAT(c.fecha_ven, '%d-%m-%Y')AS nuevaFechaVen FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND c.tip_mov ='+' AND c.estado='CANCELADO'");
-
-			}
-		
 			$stmt -> execute();
 
 			return $stmt -> fetchAll();
@@ -663,4 +626,115 @@ class ModeloCuentas{
 		$stmt = null;
 
     }
+
+
+	/*=============================================
+	RANGO FECHAS ENVIOS DE CUENTAS
+	=============================================*/	
+
+	static public function mdlRangoFechaEnvioCuentas($tabla, $fechaInicial, $fechaFinal){
+
+		if($fechaInicial == "null"){
+
+			$stmt = Conexion::conectar()->prepare("SELECT e.*,u.nombre FROM $tabla e LEFT JOIN usuariosjf u ON e.usuario=u.id  ORDER BY e.id ASC");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();	
+
+
+		}else if($fechaInicial == $fechaFinal){
+
+			$stmt = Conexion::conectar()->prepare("SELECT e.*,u.nombre FROM $tabla e LEFT JOIN usuariosjf u ON e.usuario=u.id WHERE e.fecha like '%$fechaFinal%' ");
+
+			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}else{
+
+			$fechaActual = new DateTime();
+			$fechaActual ->add(new DateInterval("P1D"));
+			$fechaActualMasUno = $fechaActual->format("Y-m-d");
+
+			$fechaFinal2 = new DateTime($fechaFinal);
+			$fechaFinal2 ->add(new DateInterval("P1D"));
+			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+
+			if($fechaFinalMasUno == $fechaActualMasUno){
+
+				$stmt = Conexion::conectar()->prepare("SELECT e.*,u.nombre FROM $tabla e LEFT JOIN usuariosjf u ON e.usuario=u.id  WHERE e.fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' ");
+
+			}else{
+
+
+				$stmt = Conexion::conectar()->prepare("SELECT e.*,u.nombre FROM $tabla e LEFT JOIN usuariosjf u ON e.usuario=u.id  WHERE e.fecha BETWEEN '$fechaInicial' AND '$fechaFinal'");
+
+			}
+		
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+	}
+
+	/*=============================================
+	CREAR ENVIO LETRA CABECERA
+	=============================================*/
+
+	static public function mdlIngresarEnvioLetra($tabla,$datos){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(codigo,fecha,usuario,cantidad,archivo) VALUES (:codigo,:fecha,:usuario,:cantidad,:archivo)");
+
+		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
+		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+		$stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_STR);
+		$stmt->bindParam(":archivo", $datos["archivo"], PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	} 
+
+	/*=============================================
+	CREAR ENVIO LETRA DETALLE
+	=============================================*/
+
+	static public function mdlIngresarEnvioLetraDetalle($tabla,$datos){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(num_cta,codigo) VALUES (:num_cta,:codigo)");
+
+		$stmt->bindParam(":num_cta", $datos["num_cta"], PDO::PARAM_STR);
+		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	} 
+
 }

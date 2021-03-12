@@ -1058,14 +1058,53 @@
                 </a>
 
                 <ul class="treeview-menu">
-                    <li>
+                <li class="treeview">
 
-                        <a href="cuentas">
+                    <a href="#"><i class="fa fa-clipboard"></i> Cuentas
 
-                            <i class="fa fa-circle-o"></i>
-                            <span>Cuentas</span>
+                        <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                        </span>
 
-                        </a>
+                    </a>
+
+                        <ul class="treeview-menu">
+
+                            <li>
+
+                            <a href="cuentas">
+
+                                <i class="fa fa-circle-o text-blue"></i>
+                                <span>Generales</span>
+
+                            </a>
+
+                            </li>
+
+                            <li>
+
+                            <a href="cuentas-pendientes">
+
+                                <i class="fa fa-circle-o text-red"></i>
+                                <span>Pendientes</span>
+
+                            </a>
+
+                            </li>
+
+                            <li>
+
+                            <a href="cuentas-canceladas">
+
+                                <i class="fa fa-circle-o text-green"></i>
+                                <span>Canceladas</span>
+
+                            </a>
+
+                            </li>
+
+
+                        </ul>
 
                     </li>
 
@@ -1094,6 +1133,15 @@
 
                             <i class="fa fa-circle-o"></i>
                             <span>Consultar cuentas</span>
+
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="ver-envio-letras">
+
+                            <i class="fa fa-circle-o"></i>
+                            <span>Envio letras</span>
 
                         </a>
                     </li>

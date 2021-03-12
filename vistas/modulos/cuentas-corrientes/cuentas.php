@@ -41,39 +41,30 @@
           Actualizar numero unico
 
         </button>
-        <div class="col-lg-2">
-          <select name="tipoCuenta" id="tipoCuenta" class="form-control input-lg">
-            <option value="">------TIPO DE CUENTA------</option>
-            <option value="PENDIENTE">PENDIENTES</option>
-            <option value="CANCELADO">CANCELADOS</option>
-            <option value="TODOS">TODOS</option>
+        <div class="col-lg-2 pull-right">
+          <select class="form-control input-lg selectpicker" name="selectAnoCuenta" id="selectAnoCuenta" data-live-search="true">
+            <option value="">Seleccionar Año</option>
+            <option value="2015">2015</option>
+            <option value="2016">2016</option>
+            <option value="2017">2017</option>
+            <option value="2018">2018</option>
+            <option value="2019">2019</option>
+            <option value="2020">2020</option>
+            <option value="2021">2021</option>
+            <option value="2022">2022</option>
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+            <option value="2027">2027</option>
+            <option value="2028">2028</option>
+            <option value="2029">2029</option>
+            <option value="2030">2030</option>
           </select>
         </div>
-        <button type="button" class="btn btn-default pull-right" id="daterange-btnCuentas" style="margin-left:10px">
-          <span>
-            <i class="fa fa-calendar"></i>
-
-            <?php
-
-              if(isset($_GET["fechaInicial"])){
-
-                echo $_GET["fechaInicial"]." - ".$_GET["fechaFinal"];
-
-              }else{
-              
-                echo 'Rango de fecha';
-
-              }
-
-            ?>
-
-          </span>
-
-          <i class="fa fa-caret-down"></i>
-
-        </button>
+        
         <div class="pull-right">
-          <button class="btn btn-outline-success btnReporteCuentas"  fechaInicial="" fechaFinal="" style="border:green 1px solid">
+          <button class="btn btn-outline-success btnReporteCuentas"  ano="null"  style="border:green 1px solid">
           <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte cuentas  </button>
         </div>
       </div>
@@ -504,9 +495,9 @@ MODAL AGREGAR TIPO PAGO
 
                 <select type="text" class="form-control input-lg selectpicker" name="nuevoEstado" id="nuevoEstado" data-live-search="true"  >
                   <option value="">Seleccionar estado de documento</option>
-                  <option value="COBRANZAS">COBRANZAS</option>
-                  <option value="COBRANZAS GARANTIA">COBRANZAS GARANTIA</option>   
-                  <option value="DESCUENTO">DESCUENTO</option>   
+                  <option value="01">01-COBRANZAS</option>
+                  <option value="02">02-COBRANZAS GARANTIA</option>   
+                  <option value="03">03-DESCUENTO</option>   
                  </select>    
               </div>
 
@@ -935,9 +926,9 @@ MODAL EDITAR TIPO PAGO
 
                 <select type="text" class="form-control input-lg selectpicker" name="editarEstado" id="editarEstado" data-live-search="true"  >
                   <option value="">Seleccionar estado de documento</option>
-                  <option value="COBRANZAS">COBRANZAS</option>
-                  <option value="COBRANZAS GARANTIA">COBRANZAS GARANTIA</option>   
-                  <option value="DESCUENTO">DESCUENTO</option>      
+                  <option value="01">01-COBRANZAS</option>
+                  <option value="02">02-COBRANZAS GARANTIA</option>   
+                  <option value="03">03-DESCUENTO</option>         
                  </select>    
               </div>
 

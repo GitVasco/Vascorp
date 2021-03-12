@@ -3,15 +3,18 @@
 require_once "../../controladores/cuentas.controlador.php";
 require_once "../../modelos/cuentas.modelo.php";
 
-class TablaVerCuentas{
+class TablaEnvioCuentas{
 
     /*=============================================
     MOSTRAR LA TABLA DE CuentaS
     =============================================*/ 
 
-    public function mostrarTablaVerCuentas(){
+    public function mostrarTablaEnvioCuentas(){
 
-        $Cuenta = ControladorCuentas::ctrMostrarCancelaciones("num_cta",$_GET["numCta"]);
+        $item = null;     
+        $valor = null;
+
+        $Cuenta = ControladorCuentas::ctrRangoFechaEnvioCuentas($_GET["fechaInicial"], $_GET["fechaFinal"]);	
         if(count($Cuenta)>0){
 
         $datosJson = '{
@@ -22,13 +25,15 @@ class TablaVerCuentas{
         /*=============================================
         TRAEMOS LAS ACCIONES
         =============================================*/         
-       
+        
+        $botones =  "<div class='btn-group'><button class='btn btn-info btnVisualizarEnvioCuenta' idCuenta='".$Cuenta[$i]["id"]."' data-toggle='modal' data-target='#modalVisualizarEnvioCuenta'><i class='fa fa-eye'></i></button><a class='btn btn-success' href='".$Cuenta[$i]["archivo"]."' download ><i class='fa fa-download'></i></a></div>"; 
+
             $datosJson .= '[
-            "'.$Cuenta[$i]["cod_pago"].'",
-            "'.$Cuenta[$i]["doc_origen"].'",
+            "'.$Cuenta[$i]["codigo"].'",
             "'.$Cuenta[$i]["fecha"].'",
-            "'.$Cuenta[$i]["notas"].'",
-            "'.$Cuenta[$i]["monto"].'"
+            "'.$Cuenta[$i]["nombre"].'",
+            "'.$Cuenta[$i]["cantidad"].'",
+            "'.$botones.'"
             ],';        
             }
 
@@ -56,6 +61,6 @@ class TablaVerCuentas{
 /*=============================================
 ACTIVAR TABLA DE Cuenta
 =============================================*/ 
-$activarVerCuentas = new TablaVerCuentas();
-$activarVerCuentas -> mostrarTablaVerCuentas();
+$activarEnvioCuentas = new TablaEnvioCuentas();
+$activarEnvioCuentas -> mostrarTablaEnvioCuentas();
 

@@ -6,8 +6,7 @@ header('Content-Type: text/html; charset=ISO-8859-1');
 * RECIBIMOS VARIABLE DESDE LA VISTA
 */
 
-$inicio = $_GET["inicio"];
-$fin = $_GET["fin"];
+$anoP = $_GET["anoP"];
 
 
 /* 
@@ -258,7 +257,12 @@ $objPHPExcel->createSheet(0);
 $objPHPExcel->setActiveSheetIndex(0);
 
 # Titulo de la hoja
-$objPHPExcel->getActiveSheet()->setTitle("REPORTE DE CUENTAS ".$inicio, " - ".$fin);
+if($anoP=="null"){
+  $objPHPExcel->getActiveSheet()->setTitle("REPORTE DE CUENTAS PENDIENTES GENERAL");
+}else{
+  $objPHPExcel->getActiveSheet()->setTitle("REPORTE DE CUENTAS PENDIENTES ".$anoP);
+}
+
 
 # Orientacion hoja
 $objPHPExcel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
@@ -306,23 +310,15 @@ todo: INICIO CABECERA
 // $respCabecera = mysql_fetch_array($sqlCabecera);
 
 $fila = 2;
-$objPHPExcel->getActiveSheet()->SetCellValue("F$fila", 'CUENTAS');
+if($anoP=="null"){
+  $objPHPExcel->getActiveSheet()->SetCellValue("F$fila", 'CUENTAS PENDIENTES GENERAL');
+}else{
+  $objPHPExcel->getActiveSheet()->SetCellValue("F$fila", 'CUENTAS PENDIENTES DEL '.$anoP);
+}
 $objPHPExcel->getActiveSheet()->mergeCells("F$fila:G$fila");
 $objPHPExcel->getActiveSheet()->setSharedStyle($texto1, "F$fila:G$fila");
 $objPHPExcel->getActiveSheet()->getStyle("F$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 $objPHPExcel->getActiveSheet()->getStyle("F$fila")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-
-$fila = 3 ;
-$objPHPExcel->getActiveSheet()->SetCellValue("D$fila", 'FECHA DE INICIO:');
-$objPHPExcel->getActiveSheet()->setSharedStyle($texto1, "D$fila");
-$objPHPExcel->getActiveSheet()->SetCellValue("E$fila", $inicio);
-$objPHPExcel->getActiveSheet()->mergeCells("E$fila:F$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($texto2, "E$fila:F$fila");
-
-$objPHPExcel->getActiveSheet()->SetCellValue("I$fila", 'FECHA DE FIN:');
-$objPHPExcel->getActiveSheet()->setSharedStyle($texto1, "I$fila");
-$objPHPExcel->getActiveSheet()->SetCellValue("J$fila", $fin);
-$objPHPExcel->getActiveSheet()->setSharedStyle($texto2, "J$fila");
 
 /* 
 todo: FIN CABECERA
@@ -475,7 +471,7 @@ $objPHPExcel->getActiveSheet()->setSharedStyle($borde3, "L$fila");
 $objPHPExcel->getActiveSheet()->getStyle("L$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 #query para sacar los datos deL detalle
-$sqlCabecera = ControladorCuentas::ctrRangoFechasCuentas($inicio,$fin);
+$sqlCabecera = ControladorCuentas::ctrRangoFechasCuentasPendientes($anoP);
 
 $cont = 0;
 for($i = 0; $i < count($sqlCabecera); $i++){
@@ -546,7 +542,12 @@ header("Content-Type: application/vnd.ms-excel");
 */
 
 # Nombre del archivo
-header('Content-Disposition: attachment; filename=" CUENTAS DE '.$inicio." - ".$fin.'.xls"');
+if($anoP == "null"){
+  header('Content-Disposition: attachment; filename=" CUENTAS PENDIENTES GENERAL.xls"');
+  
+}else{
+  header('Content-Disposition: attachment; filename=" CUENTAS PENDIENTES DEL '.$anoP.'.xls"');
+}
 
 
 //forzar a descarga por el navegador

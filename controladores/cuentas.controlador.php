@@ -70,7 +70,7 @@ class ControladorCuentas{
 
 						</script>';
 
-					}else if($_POST["ruta"] == "cuentas-aprobadas"){
+					}else if($_POST["ruta"] == "cuentas-canceladas"){
 						echo'<script>
 
 						swal({
@@ -81,7 +81,7 @@ class ControladorCuentas{
 							  }).then(function(result){
 										if (result.value) {
 	
-										window.location = "cuentas-aprobadas";
+										window.location = "cuentas-canceladas";
 	
 										}
 									})
@@ -159,6 +159,18 @@ class ControladorCuentas{
 	static public function ctrMostrarCuentaDeudaVencida($valor){
 		$tabla="cuenta_ctejf";
 		$respuesta = ModeloCuentas::mdlMostrarCuentaDeudaVencida($tabla,$valor);
+
+		return $respuesta;
+
+	}
+
+	/*=============================================
+	MOSTRAR CUENTAS
+	=============================================*/
+
+	static public function ctrMostrarCuentasUnicos($item,$valor){
+		$tabla="cuenta_ctejf";
+		$respuesta = ModeloCuentas::mdlMostrarCuentasUnicos($tabla,$item,$valor);
 
 		return $respuesta;
 
@@ -299,7 +311,7 @@ class ControladorCuentas{
 
 						</script>';
 
-					}else if($_POST["editarRuta"] == "cuentas-aprobadas"){
+					}else if($_POST["editarRuta"] == "cuentas-canceladas"){
 						echo'<script>
 
 						swal({
@@ -310,7 +322,7 @@ class ControladorCuentas{
 							  }).then(function(result){
 										if (result.value) {
 	
-										window.location = "cuentas-aprobadas";
+										window.location = "cuentas-canceladas";
 	
 										}
 									})
@@ -450,7 +462,7 @@ class ControladorCuentas{
 
 					</script>';
 
-				}else if($_GET["rutas"] == "cuentas-aprobadas"){
+				}else if($_GET["rutas"] == "cuentas-canceladas"){
 					echo'<script>
 
 					swal({
@@ -461,7 +473,7 @@ class ControladorCuentas{
 						  }).then(function(result){
 									if (result.value) {
 
-									window.location = "cuentas-aprobadas";
+									window.location = "cuentas-canceladas";
 
 									}
 								})
@@ -690,6 +702,7 @@ class ControladorCuentas{
 
 	}
 
+	//Cancelar Letras 
 	static public function ctrImportarCuenta(){
 
         if(isset($_POST["importBanco"])){
@@ -705,69 +718,32 @@ class ControladorCuentas{
 				mysql_select_db($con["db"], $conexion);
 				for ($i = 6; $i <= $data->sheets[0]['numRows']; $i++) {
 					for ($j = 1; $j <= 1; $j++) {
-						$tipo="00";
 						$documento=$data->sheets[0]['cells'][$i][1];
 						$unico=$data->sheets[0]['cells'][$i][2];
 						$fecha_ven=$data->sheets[0]['cells'][$i][5];
 						$monto=$data->sheets[0]['cells'][$i][6];
 						$montoConv=str_replace(",","",$monto);
+						$montoReducido=substr($montoConv,3);
 						$estado=$data->sheets[0]['cells'][$i][8];
-						$fecha=$data->sheets[0]['cells'][$i][9];
-						$fecha_cep=$data->sheets[0]['cells'][$i][10];
+						$fecha=$data->sheets[0]['cells'][$i][10];
 						$tipo_mon="Soles";
 						$usuario=$_SESSION["id"];
 						$saldo=0;
 						$existe=ControladorCuentas::ctrMostrarCuentas("num_unico",$unico);
-						$sqlInsertar = mysql_query("INSERT INTO cuenta_ctejf (tipo_doc,num_cta,cliente,vendedor,fecha,fecha_ven,tip_mon,monto,estado,cod_pago,doc_origen,usuario,saldo,num_unico,fecha_abono)  values('".$tipo."','".$documento."','".$existe["cliente"]."','".$existe["vendedor"]."','".substr($fecha,6,4)."-".substr($fecha,3,2)."-".substr($fecha,0,2)."','".substr($fecha_ven,6,4)."-".substr($fecha_ven,3,2)."-".substr($fecha_ven,0,2)."','".$tipo_mon."',".$montoConv.",'".$estado."','".$tipo."','".$documento."','".$usuario."',".$saldo.",'".$unico."','".substr($fecha_cep,6,4)."-".substr($fecha_cep,3,2)."-".substr($fecha_cep,0,2)."')");
-						
-						
-						if($existe){
-							$saldoImportar=$existe["saldo"]-$montoConv;
-							ModeloCuentas::mdlActualizarUnDato("cuenta_ctejf","saldo",$saldoImportar,$existe["id"]);
-						}
-					}
-				}
-				echo'<script>
 
-				swal({
-					type: "success",
-					title: "Las cuentas han sido canceladas correctamente",
-					showConfirmButton: true,
-					confirmButtonText: "Cerrar"
-					}).then(function(result){
-								if (result.value) {
+						$sqlInsertar = mysql_query("INSERT INTO cuenta_ctejf (tipo_doc,num_cta,cliente,vendedor,fecha,fecha_ven,tip_mon,monto,notas,estado,cod_pago,doc_origen,usuario,saldo,num_unico,tip_mov)  values('85','".$existe["num_cta"]."','".$existe["cliente"]."','".$existe["vendedor"]."','".substr($fecha,6,4)."-".substr($fecha,3,2)."-".substr($fecha,0,2)."','".substr($fecha_ven,6,4)."-".substr($fecha_ven,3,2)."-".substr($fecha_ven,0,2)."','".$tipo_mon."',".$montoReducido.",'Pago Telecredito','".$estado."','00','".$existe["doc_origen"]."','".$usuario."',".$saldo.",'".$unico."','-')");
 
-								window.location = "cuentas";
-
-								}
-							})
-
-				</script>';
-				
-		}
-	}
-
-	static public function ctrImportarLetra(){
-
-        if(isset($_POST["importLetra"])){
-				
-				include "/../vistas/reportes_excel/Excel/reader.php";
-				$directorio="vistas/cuentas/".$_FILES["nuevaUnico"]["name"];
-				$archivo=move_uploaded_file($_FILES["nuevaUnico"]['tmp_name'], $directorio);
-				$data = new Spreadsheet_Excel_Reader();
-				$data->setOutputEncoding('CP1251');
-				$data->read("vistas/cuentas/".$_FILES["nuevaUnico"]["name"]);
-				$con=ControladorUsuarios::ctrMostrarConexiones("id",1);
-				$conexion = mysql_connect($con["ip"], $con["user"], $con["pwd"]) or die("No se pudo conectar: " . mysql_error());
-				mysql_select_db($con["db"], $conexion);
-				for ($i = 6; $i <= $data->sheets[0]['numRows']; $i++) {
-					for ($j = 1; $j <= 1; $j++) {
-						$documento=$data->sheets[0]['cells'][$i][1];
-						$unico=$data->sheets[0]['cells'][$i][2];
-						$existe=ControladorCuentas::ctrMostrarCuentas("num_cta",$documento);
 						
 						if($existe){
-							$sqlInsertar = mysql_query("UPDATE cuenta_ctejf SET num_unico = '".$unico."' WHERE num_cta = '".$documento."'") or die(mysql_error());
+							$saldoImportar=$existe["saldo"]-$montoReducido;
+							$actualizarSaldo=ModeloCuentas::mdlActualizarUnDato("cuenta_ctejf","saldo",$saldoImportar,$existe["id"]);
+							
+							$actualizarPago=ModeloCuentas::mdlActualizarUnDato("cuenta_ctejf","ult_pago",substr($fecha,6,4)."-".substr($fecha,3,2)."-".substr($fecha,0,2),$existe["id"]);
+						
+							if($saldoImportar == 0){
+								$actualizarEstado=ModeloCuentas::mdlActualizarUnDato("cuenta_ctejf","estado",'CANCELADO',$existe["id"]);
+								
+							}
 							
 						}
 					}
@@ -792,15 +768,66 @@ class ControladorCuentas{
 		}
 	}
 
+	//Actualizar numero unico
+	static public function ctrImportarLetra(){
+
+        if(isset($_POST["importLetra"])){
+				
+				include "/../vistas/reportes_excel/Excel/reader.php";
+				$directorio="vistas/cuentas/".$_FILES["nuevaUnico"]["name"];
+				$archivo=move_uploaded_file($_FILES["nuevaUnico"]['tmp_name'], $directorio);
+				$data = new Spreadsheet_Excel_Reader();
+				$data->setOutputEncoding('CP1251');
+				$data->read("vistas/cuentas/".$_FILES["nuevaUnico"]["name"]);
+				$con=ControladorUsuarios::ctrMostrarConexiones("id",1);
+				$conexion = mysql_connect($con["ip"], $con["user"], $con["pwd"]) or die("No se pudo conectar: " . mysql_error());
+				mysql_select_db($con["db"], $conexion);
+				for ($i = 6; $i <= $data->sheets[0]['numRows']; $i++) {
+					for ($j = 1; $j <= 1; $j++) {
+						$documento=$data->sheets[0]['cells'][$i][1];
+						$unico=$data->sheets[0]['cells'][$i][2];
+
+						$sqlInsertar = mysql_query("UPDATE 
+							cuenta_ctejf 
+						  SET
+							num_unico = '".$unico."' 
+						  WHERE REPLACE(num_cta, '-', '') = '".$documento."' 
+							AND tipo_doc = '85' 
+							AND tip_mov = '+' 
+							AND YEAR(fecha) >= 2019 ") or die(mysql_error());
+
+							
+					}
+				}
+				echo'<script>
+
+				swal({
+					type: "success",
+					title: "Las cuentas han sido canceladas correctamente",
+					showConfirmButton: true,
+					confirmButtonText: "Cerrar"
+					}).then(function(result){
+								if (result.value) {
+
+								window.location = "cuentas";
+
+								}
+							})
+
+				</script>';
+				
+		}
+	}
+
 	/*=============================================
 	RANGO FECHAS CUENTAS
 	=============================================*/	
 
-	static public function ctrRangoFechasCuentas($fechaInicial, $fechaFinal){
+	static public function ctrRangoFechasCuentas($ano){
 
 		$tabla = "cuenta_ctejf";
 
-		$respuesta = ModeloCuentas::mdlRangoFechasCuentas($tabla, $fechaInicial, $fechaFinal);
+		$respuesta = ModeloCuentas::mdlRangoFechasCuentas($tabla, $ano);
 
 		return $respuesta;
 		
@@ -810,11 +837,11 @@ class ControladorCuentas{
 	RANGO FECHAS CUENTAS
 	=============================================*/	
 
-	static public function ctrRangoFechasCuentasPendientes($fechaInicial, $fechaFinal){
+	static public function ctrRangoFechasCuentasPendientes($ano){
 
 		$tabla = "cuenta_ctejf";
 
-		$respuesta = ModeloCuentas::mdlRangoFechasCuentasPendientes($tabla, $fechaInicial, $fechaFinal);
+		$respuesta = ModeloCuentas::mdlRangoFechasCuentasPendientes($tabla, $ano);
 
 		return $respuesta;
 		
@@ -824,11 +851,25 @@ class ControladorCuentas{
 	RANGO FECHAS CUENTAS
 	=============================================*/	
 
-	static public function ctrRangoFechasCuentasAprobadas($fechaInicial, $fechaFinal){
+	static public function ctrRangoFechasCuentasAprobadas($ano){
 
 		$tabla = "cuenta_ctejf";
 
-		$respuesta = ModeloCuentas::mdlRangoFechasCuentasAprobadas($tabla, $fechaInicial, $fechaFinal);
+		$respuesta = ModeloCuentas::mdlRangoFechasCuentasAprobadas($tabla, $ano);
+
+		return $respuesta;
+		
+	}
+
+	/*=============================================
+	RANGO FECHAS ENVIO CUENTAS
+	=============================================*/	
+
+	static public function ctrRangoFechaEnvioCuentas($fechaInicial, $fechaFinal){
+
+		$tabla = "envio_letra_cabecerajf";
+
+		$respuesta = ModeloCuentas::mdlRangoFechaEnvioCuentas($tabla, $fechaInicial, $fechaFinal);
 
 		return $respuesta;
 		
@@ -919,7 +960,7 @@ class ControladorCuentas{
 						   "tip_mon" => "Soles",
 						   "renovacion" =>1,
 						   "protesta" =>0,
-							"estado_doc"=> "GENERADO",
+							"estado_doc"=> " ",
 							"tip_mov" => "+");
 
 				$saldoNuevo=$_POST["dividirSaldo"]-$_POST["dividirMonto"];
@@ -965,6 +1006,114 @@ class ControladorCuentas{
 			}
 		}
 
+	}
+
+	static public function ctrCrearEnvioLetras(){
+		if(isset($_POST["nuevoCodigoEnvio"])){
+
+			if($_POST["listaEnvioLetra"]==""){
+				# Mostramos una alerta suave
+				echo '<script>
+						swal({
+							type: "error",
+							title: "Error",
+							text: "¡No se seleccionó ninguna cuenta. Por favor, intenteló de nuevo!",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar"
+						}).then((result)=>{
+							if(result.value){
+								window.location="ver-envio-letras";}
+						});
+					</script>';
+			}else{
+				$tabla="envio_letra_cabecerajf";
+				date_default_timezone_set('America/Lima');
+				$fecha= new DateTime();
+				$ruta="vistas/letras/L".$fecha->format("Y").$fecha->format("m").$fecha->format("d").$fecha->format("H").$fecha->format("i").".txt";
+				$file = fopen( $ruta, "w");
+				$datos = array("codigo" => $_POST["nuevoCodigoEnvio"],
+				   				 "fecha"=>$fecha->format("Y-m-d"),
+					   		     "usuario"=>$_POST["idUsuario"],
+							     "cantidad"=>$_POST["nuevoTotalCuentaEnvio"],
+								 "archivo"=>$ruta
+							   );
+
+			   	$respuesta = ModeloCuentas::mdlIngresarEnvioLetra($tabla,$datos);
+				
+				//DETALLE
+				
+				$cuentas=json_decode($_POST["listaEnvioLetra"],true);
+
+				//Creo nombre del archivo txt y asigno ruta
+				
+
+				foreach($cuentas as $key=>$value){
+					$tabla2="envio_letrasjf";
+					$datos2=array("num_cta"=>$value["numcta"],
+								  "codigo"=>$_POST["nuevoCodigoEnvio"]);
+					$respuesta2= ModeloCuentas::mdlIngresarEnvioLetraDetalle($tabla2,$datos2);
+					$actualizarEnvio=ModeloCuentas::mdlActualizarUnDato("cuenta_ctejf","fecha_envio",$fecha->format("Y-m-d"),$value["idcuenta"]);
+					$actualizarAceptacion=ModeloCuentas::mdlActualizarUnDato("cuenta_ctejf","fecha_cep",$fecha->format("Y-m-d"),$value["idcuenta"]);
+					$actualizarEstadoDoc=ModeloCuentas::mdlActualizarUnDato("cuenta_ctejf","estado_doc","01",$value["idcuenta"]);
+
+					//saltos para el txt
+					$salto1= 72;
+					$salto2= 24;
+					$salto3= 24;
+					$salto4= 16;
+					$salto5= 12 ;
+					$salto6= 14 ;
+
+
+					fwrite($file,str_pad( $value["cliente_nom"],$salto1).str_pad( $value["cliente_pat"],$salto2).str_pad( $value["cliente_mat"],$salto3).str_pad( $value["cliente_doc"],$salto4).str_pad( $value["numcta"],$salto5).str_pad( $value["fecha"],$salto6). $value["monto"] . PHP_EOL);
+				}
+				fclose($file);
+			   	if($respuesta == "ok"  && $respuesta2=="ok"){
+
+					echo'<script>
+
+					swal({
+						  type: "success",
+						  title: "El envio de letra ha sido guardado correctamente",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+									if (result.value) {
+
+									window.location = "ver-envio-letras";
+
+									}
+								})
+
+					</script>';
+
+				}
+
+			else{
+
+				echo'<script>
+
+					swal({
+						  type: "error",
+						  title: "¡El envio no puede ir vacío o llevar caracteres especiales!",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+							if (result.value) {
+
+							window.location = "ver-envio-letras";
+
+							}
+						})
+
+			  	</script>';
+
+
+
+			}
+		}
+
+		}
 	}
    
 }
