@@ -121,6 +121,12 @@ class ControladorTalleres{
                 </script>';
 
 
+                }else{
+                    echo'<script>
+
+                        Command: toastr["error"]("El ticket ya fue registrado antes!");
+
+                        </script>';
                 }
                 
 
@@ -148,6 +154,12 @@ class ControladorTalleres{
 
                         </script>';
 
+                }else{
+                    echo'<script>
+
+                        Command: toastr["error"]("El ticket ya fue registrado antes!");
+
+                        </script>';
                 }
 
             }

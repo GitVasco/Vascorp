@@ -101,6 +101,20 @@ class ControladorClientes{
 	}
 
 	/*=============================================
+	MOSTRAR CLIENTES CUENTAS
+	=============================================*/
+
+	static public function ctrMostrarClientesCuentas($item, $valor){
+
+		$tabla = "clientesjf";
+
+		$respuesta = ModeloClientes::mdlMostrarClientesCuentas($tabla, $item, $valor);
+
+		return $respuesta;
+
+	}
+
+	/*=============================================
 	MOSTRAR CLIENTES P
 	=============================================*/
 
