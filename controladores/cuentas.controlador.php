@@ -199,6 +199,29 @@ class ControladorCuentas{
 		return $respuesta;
 
 	}
+
+	/*=============================================
+	MOSTRAR CUENTAS IMPRESION DE LETRAS
+	=============================================*/
+
+	static public function ctrMostrarCuentasLetras($item,$valor){
+		$tabla="cuenta_ctejf";
+		$respuesta = ModeloCuentas::mdlMostrarCuentasLetras($tabla,$item,$valor);
+
+		return $respuesta;
+
+	}
+	/*=============================================
+	MOSTRAR CUENTAS GENERADOS DE LETRAS
+	=============================================*/
+
+	static public function ctrMostrarCuentasGeneradosLetras($item,$valor){
+		$tabla="cuenta_ctejf";
+		$respuesta = ModeloCuentas::mdlMostrarCuentasGeneradosLetras($tabla,$item,$valor);
+
+		return $respuesta;
+
+	}
 	
 	
     /*=============================================
@@ -671,13 +694,19 @@ class ControladorCuentas{
 							"fecha"=>$_POST["letraFecha"],
 							"fecha_ven"=>$fechasInput[$i],
 							"cod_pago"=>$_POST["letraCodigo"],
-							"doc_origen"=>$_POST["letraDocumento"]);
+							"doc_origen"=>$_POST["letraDocumento"],
+							"tip_mov"=>'+');
 
 					
 					$respuesta = ModeloCuentas::mdlIngresarCuenta($tabla,$datos);
 				}
 				$eliminado = ModeloCuentas::mdlEliminarCuenta($tabla,$_POST["idCuenta3"]);
 			   	if($respuesta == "ok"){
+					$numCuenta=$_POST["letraDocumento"];
+					echo'<script>
+                    
+                    window.open("vistas/reportes_ticket/imprimir_generado_letra.php?numCuenta='.$numCuenta.'","_blank");
+                    </script>';
 
 					echo'<script>
 

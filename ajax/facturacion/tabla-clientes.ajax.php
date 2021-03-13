@@ -79,7 +79,7 @@ class TablaClientes{
             TRAEMOS LAS ACCIONES
             =============================================*/         
             
-            $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarCliente' codigo='".$clientes[$i]["codigo"]."' data-toggle='modal' data-target='#modalEditarCliente'><i class='fa fa-pencil'></i></button></div>"; 
+            $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarCliente' codigo='".$clientes[$i]["codigo"]."' data-toggle='modal' data-target='#modalEditarCliente' title='Editar cliente'><i class='fa fa-pencil' ></i></button><button class='btn btn-primary btnEditarAval' title='Editar Aval'  codigo='".$clientes[$i]["codigo"]."' data-toggle='modal' data-target='#modalEditarAval'><i class='fa fa-user'></i></button></div>"; 
 
                 $datosJson .= '[
                 "'.$clientes[$i]["codigo"].'",

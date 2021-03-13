@@ -150,13 +150,188 @@ class ModeloCuentas{
 	}
 
 	/*=============================================
+	MOSTRAR CUENTAS LETRAS IMPRESION
+	=============================================*/
+
+	static public function mdlMostrarCuentasLetras($tabla,$item,$valor){
+
+		if($item != null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			c.num_cta,
+			c.doc_origen,
+			c.fecha_ven,
+			c.fecha,
+			c.monto,
+			cli.codigo,
+			cli.nombre,
+			cli.direccion,
+			uc.ubcli,
+			cli.documento,
+			cli.telefono,
+			cli.ubigeo,
+			cli.aval_nombre,
+			cli.aval_dir,
+			cli.aval_postal,
+			ua.ubaval,
+			cli.aval_telf,
+			cli.aval_ruc 
+		  FROM
+			cuenta_ctejf c 
+			LEFT JOIN clientesjf cli 
+			  ON c.cliente = cli.codigo 
+			LEFT JOIN 
+			  (SELECT 
+				codigo,
+				CONCAT(
+				  Departamento,
+				  '/',
+				  provincia,
+				  '/',
+				  distrito
+				) AS ubcli 
+			  FROM
+				ubigeo) AS uc 
+			  ON cli.ubigeo = uc.codigo 
+			LEFT JOIN 
+			  (SELECT 
+				codigo,
+				CONCAT(
+				  Departamento,
+				  '/',
+				  provincia,
+				  '/',
+				  distrito
+				) AS ubaval 
+			  FROM
+				ubigeo) AS ua 
+			  ON cli.aval_postal = ua.codigo 
+			  WHERE c.tip_mov ='+' 
+			  AND c.$item = :$item ");
+
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();
+
+		}else{
+
+			$stmt = Conexion::conectar()->prepare("SELECT c.num_cta,c.doc_origen,c.fecha_ven,c.fecha,c.monto,cli.nombre,cli.direccion,cli.documento,cli.telefono FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.tip_mov ='+'");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+	/*=============================================
+	MOSTRAR CUENTAS GENERA LETRAS IMPRESION
+	=============================================*/
+
+	static public function mdlMostrarCuentasGeneradosLetras($tabla,$item,$valor){
+
+		if($item != null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			c.num_cta,
+			c.doc_origen,
+			c.fecha_ven,
+			c.fecha,
+			c.monto,
+			cli.codigo,
+			cli.nombre,
+			cli.direccion,
+			uc.ubcli,
+			cli.documento,
+			cli.telefono,
+			cli.ubigeo,
+			cli.aval_nombre,
+			cli.aval_dir,
+			cli.aval_postal,
+			ua.ubaval,
+			cli.aval_telf,
+			cli.aval_ruc 
+		  FROM
+			cuenta_ctejf c 
+			LEFT JOIN clientesjf cli 
+			  ON c.cliente = cli.codigo 
+			LEFT JOIN 
+			  (SELECT 
+				codigo,
+				CONCAT(
+				  Departamento,
+				  '/',
+				  provincia,
+				  '/',
+				  distrito
+				) AS ubcli 
+			  FROM
+				ubigeo) AS uc 
+			  ON cli.ubigeo = uc.codigo 
+			LEFT JOIN 
+			  (SELECT 
+				codigo,
+				CONCAT(
+				  Departamento,
+				  '/',
+				  provincia,
+				  '/',
+				  distrito
+				) AS ubaval 
+			  FROM
+				ubigeo) AS ua 
+			  ON cli.aval_postal = ua.codigo 
+			  WHERE c.tip_mov ='+' 
+			  AND c.$item = :$item ");
+
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}else{
+
+			$stmt = Conexion::conectar()->prepare("SELECT c.num_cta,c.doc_origen,c.fecha_ven,c.fecha,c.monto,cli.nombre,cli.direccion,cli.documento,cli.telefono FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.tip_mov ='+'");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+	/*=============================================
 	MOSTRAR CUENTAS
 	=============================================*/
 
 	static public function mdlMostrarCuentasUnicos($tabla,$item,$valor){
 
 		if($item != null){
-			$stmt = Conexion::conectar()->prepare("SELECT c.*,REPLACE(DATE_FORMAT(c.fecha_ven,'%d-%m-%Y'),'-','') AS fechaVen,REPLACE(c.num_cta,'-','') AS cuenta,cli.nombre,cli.ape_paterno,cli.ape_materno,cli.nombres,cli.documento FROM $tabla c 
+			$stmt = Conexion::conectar()->prepare("SELECT c.*,CONCAT(
+				SUBSTR(c.fecha_ven, 9, 2),
+				SUBSTR(c.fecha_ven, 6, 2),
+				SUBSTR(c.fecha_ven, 3, 2)
+			  ) AS fechaVen,
+			  REPLACE(c.num_cta,'-','') AS cuenta,
+			  cli.nombre,
+			  cli.ape_paterno,
+			  cli.ape_materno,
+			  cli.nombres,
+			  cli.documento 
+			  FROM $tabla c 
 			LEFT JOIN clientesjf cli ON c.cliente=cli.codigo
 			WHERE c.tip_mov ='+'
 			AND c.tipo_doc = '85'
@@ -171,7 +346,7 @@ class ModeloCuentas{
 			WHERE c.tip_mov ='+'
 			AND c.tipo_doc = '85'
 			AND c.estado= 'PENDIENTE'
-			AND c.estado_doc IS NULL ");
+			AND (c.estado_doc IS NULL OR c.estado_doc = '') ");
 	
 	
 			$stmt -> execute();
@@ -186,6 +361,8 @@ class ModeloCuentas{
 		$stmt = null;
 
 	}
+
+	
 	
 	static public function mdlMostrarPagos($tabla,$item,$valor){
 
