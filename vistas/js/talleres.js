@@ -1058,12 +1058,12 @@ $("#daterange-btnTallerT").daterangepicker(
 
 $(".tablaArticulosTalleres tbody").on("click", "button.agregarArtiTaller", function () {
 
-	var articuloIngreso = $(this).attr("articuloIngreso");
+	var articuloIngreso = $(this).attr("articulo");
 	
     var talleres = $(this).attr("taller");
 	var idCierre = $(this).attr("idCierre");
     $(this).removeClass("btn-primary agregarArtiTaller");
-
+	
     $(this).addClass("btn-default");
 
     var datos = new FormData();
@@ -1089,36 +1089,82 @@ $(".tablaArticulosTalleres tbody").on("click", "button.agregarArtiTaller", funct
             /* 
             todo: AGREGAR LOS CAMPOS
             */
+			if(idCierre == ''){
+				$(".nuevoArticuloIngreso").append(
 
-            $(".nuevoArticuloIngreso").append(
+					'<div class="row" style="padding:5px 15px">' +
+	
+						"<!-- Descripción del Articulo -->" +
+	
+						'<div class="col-xs-6" style="padding-right:0px">' +
+	
+							'<div class="input-group">' +
+							
+								'<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarTaller" articuloIngreso="' + articuloIngreso + '"><i class="fa fa-times"></i></button></span>' +
+	
+								'<input type="text" class="form-control nuevaDescripcionProducto input-sm" articuloIngreso="' + articuloIngreso + '" name="agregarT" value="' + packing + '" codigoAC="' + articulo + '" idCierre= "'+idCierre+'" readonly required>' +
+	
+							"</div>" +
+	
+						"</div>" +
+	
+						"<!-- Cantidad de la Orden de Corte -->" +
+	
+						'<div class="col-xs-3">' +
+	
+							'<input type="number" class="form-control nuevaCantidadArticuloIngreso input-sm" name="nuevaCantidadArticuloIngreso" id="nuevaCantidadArticuloIngreso" min="1" value="0" taller="' + talleres + '" articulo="'+ articulo +'" nuevoTaller="' + Number(Number(talleres) - Number($("#nuevaCantidadArticuloIngreso").val)) + '" required>' +
+	
+						"</div>" +
+						"<!-- saldo de la Orden de Corte -->" +
+	
+						'<div class="col-xs-3 divSaldoIngreso">' +
+	
+							'<input type="number" class="form-control nuevoSaldoIngreso input-sm" name="nuevoSaldoIngreso" id="nuevoSaldoIngreso" value="'+taller+'" readonly>' +
+	
+						"</div>" +
+	
+					"</div>"
+	
+				);
+			}else{
+				$(".nuevoArticuloIngreso").append(
 
-                '<div class="row" style="padding:5px 15px">' +
-
-                    "<!-- Descripción del Articulo -->" +
-
-                    '<div class="col-xs-6" style="padding-right:0px">' +
-
-                        '<div class="input-group">' +
-                        
-                            '<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarTaller" articuloIngreso="' + articuloIngreso + '"><i class="fa fa-times"></i></button></span>' +
-
-                            '<input type="text" class="form-control nuevaDescripcionProducto input-sm" articuloIngreso="' + articuloIngreso + '" name="agregarT" value="' + packing + '" codigoAC="' + articulo + '" idCierre= "'+idCierre+'" readonly required>' +
-
-                        "</div>" +
-
-                    "</div>" +
-
-                    "<!-- Cantidad de la Orden de Corte -->" +
-
-                    '<div class="col-xs-6">' +
-
-                        '<input type="number" class="form-control nuevaCantidadArticuloIngreso input-sm" name="nuevaCantidadArticuloIngreso" id="nuevaCantidadArticuloIngreso" min="1" value="0" taller="' + talleres + '" articulo="'+ articulo +'" nuevoTaller="' + Number(Number(talleres) - Number($("#nuevaCantidadArticuloIngreso").val)) + '" required>' +
-
-                    "</div>" +
-
-                "</div>"
-
-            );
+					'<div class="row" style="padding:5px 15px">' +
+	
+						"<!-- Descripción del Articulo -->" +
+	
+						'<div class="col-xs-6" style="padding-right:0px">' +
+	
+							'<div class="input-group">' +
+							
+								'<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarTaller" articuloIngreso="' + idCierre + '"><i class="fa fa-times"></i></button></span>' +
+	
+								'<input type="text" class="form-control nuevaDescripcionProducto input-sm" articuloIngreso="' + idCierre + '" name="agregarT" value="' + packing + '" codigoAC="' + articulo + '" idCierre= "'+idCierre+'" readonly required>' +
+	
+							"</div>" +
+	
+						"</div>" +
+	
+						"<!-- Cantidad de la Orden de Corte -->" +
+	
+						'<div class="col-xs-3">' +
+	
+							'<input type="number" class="form-control nuevaCantidadArticuloIngreso input-sm" name="nuevaCantidadArticuloIngreso" id="nuevaCantidadArticuloIngreso" min="1" value="0" taller="' + talleres + '" articulo="'+ articulo +'" nuevoTaller="' + Number(Number(talleres) - Number($("#nuevaCantidadArticuloIngreso").val)) + '" required>' +
+	
+						"</div>" +
+						"<!-- saldo de la Orden de Corte -->" +
+	
+						'<div class="col-xs-3 divSaldoIngreso">' +
+	
+							'<input type="number" class="form-control nuevoSaldoIngreso input-sm" name="nuevoSaldoIngreso" id="nuevoSaldoIngreso" value="'+talleres+'" readonly>' +
+	
+						"</div>" +
+	
+					"</div>"
+	
+				);
+			}
+            
 
             // SUMAR TOTAL DE UNIDADES
 
@@ -1163,8 +1209,10 @@ $(".tablaArticulosTalleres").on("draw.dt", function () {
 * QUITAR ARTICULO DE LA ORDEN DE CORTE Y RECUPERAR BOTÓN
 */
 var idQuitarArticuloT= [];
+var idQuitarCierreT = []
 
 localStorage.removeItem("quitarTaller");
+localStorage.removeItem("quitarTallerCierre");
 
 $(".formularioIngreso").on("click", "button.quitarTaller", function () {
 
@@ -1172,6 +1220,7 @@ $(".formularioIngreso").on("click", "button.quitarTaller", function () {
 
     $(this).parent().parent().parent().parent().remove();
     var articuloIngreso = $(this).attr("articuloIngreso");
+	console.log(articuloIngreso);
     /*=============================================
     ALMACENAR EN EL LOCALSTORAGE EL ID DEL MATERIA PRIMA A QUITAR
     =============================================*/
@@ -1230,7 +1279,14 @@ $(".formularioIngreso").on("change", "input.nuevaCantidadArticuloIngreso", funct
     var nuevoTaller = Number($(this).attr("taller")) - Number($(this).val());
     var articulo = $(this).attr("articulo");
     //console.log(articulo);
+	var inputTaller = $(this)
+    .parent()
+    .parent()
+    .children(".divSaldoIngreso")
+    .children(".nuevoSaldoIngreso");
+    //console.log(pendiente);
 
+	inputTaller.val(nuevoTaller);
     var pendiente = $(this)
     .parent()
     .parent()

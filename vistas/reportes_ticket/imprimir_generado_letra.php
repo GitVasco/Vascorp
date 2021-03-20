@@ -52,7 +52,7 @@ $cuentas = ControladorCuentas::ctrMostrarCuentasGeneradosLetras("doc_origen",$nu
                     <td style="width:80px;text-align:center">'.$diaEmision.'</td>
                     <td style="width:50px;text-align:center">'.$mesEmision.'</td>
                     <td style="width:50px;text-align:center">'.$anoEmision.'</td>
-                    <td style="width:250px;text-align:center">'.$lugar.'</td>
+                    <td style="width:242px;text-align:center">'.$lugar.'</td>
                     <td style="width:50px">'.$diaVencimiento.'</td>
                     <td style="width:50px">'.$mesVencimiento.'</td>
                     <td style="width:100px">'.$anoVencimiento.'</td>
@@ -69,7 +69,7 @@ $cuentas = ControladorCuentas::ctrMostrarCuentasGeneradosLetras("doc_origen",$nu
             <table   style="padding-top:40px">
     
                 <tr>
-                    <td style="width:350px;text-align:right">'.$respuesta["nombre"].'</td>
+                    <td style="width:600px;text-align:right">'.$respuesta["nombre"].'</td>
                 
                 </tr>
             </table>      
@@ -90,8 +90,6 @@ $cuentas = ControladorCuentas::ctrMostrarCuentasGeneradosLetras("doc_origen",$nu
                     <td style="width:235px;text-align:right">'.$respuesta["documento"].'</td>
                     <td style="width:300px;text-align:right">'.$respuesta["telefono"].'</td>
                 </tr>
-            </table>
-            <table style="padding-bottom:400px">
             </table>';
             if($respuesta["aval_nombre"]){
                 
@@ -122,7 +120,12 @@ $cuentas = ControladorCuentas::ctrMostrarCuentasGeneradosLetras("doc_origen",$nu
                     
                 </tr>
             </table>
+            <table style="padding-bottom:585px">
+            </table>
             ';
+        }else{
+            echo'<table style="padding-bottom:585px">
+            </table>';
         }   
     }
     

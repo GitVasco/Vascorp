@@ -116,9 +116,15 @@
 
                     </div>
 
-                    <div class="col-xs-2">
+                    <div class="col-xs-3">
 
                       <label for="">En Taller</label>
+
+                    </div>
+
+                    <div class="col-xs-3">
+
+                      <label for="">Saldo</label>
 
                     </div>
 

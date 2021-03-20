@@ -14,10 +14,10 @@ require_once "../../extensiones/cantidad_en_letras.php";
 /* 
 todo: traemos todos lso datos para el ticket
 */
-$idCuenta = $_GET["idCuenta"];
+$numCuenta = $_GET["numCuenta"];
 $fecha = date("d-m-Y");
 
-$respuesta = ControladorCuentas::ctrMostrarCuentasLetras("id",$idCuenta);
+$respuesta = ControladorCuentas::ctrMostrarCuentasLetras("num_cta",$numCuenta);
 
 
 //Establecemos los datos de las letras
@@ -62,10 +62,10 @@ $letras= CantidadEnLetra($respuesta["monto"]);
                     <td>'.$letras.'</td>  
                 </tr>
             </table>
-            <table   style="padding-top:40px">
+            <table   style="padding-top:40px;margin-left:100px">
     
                 <tr>
-                    <td style="width:350px;text-align:right">'.$respuesta["nombre"].'</td>
+                    <td style="width:600px;text-align:left">'.$respuesta["nombre"].'</td>
                 
                 </tr>
             </table>      

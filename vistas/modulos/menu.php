@@ -1145,6 +1145,15 @@
 
                         </a>
                     </li>
+
+                    <li>
+                        <a href="reportes-generales">
+
+                            <i class="fa fa-circle-o"></i>
+                            <span>Reportes Generales</span>
+
+                        </a>
+                    </li>
                 </ul>
             </li>
             <!--  Ticket-->
