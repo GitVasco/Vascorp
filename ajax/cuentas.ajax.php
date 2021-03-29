@@ -88,7 +88,114 @@ class AjaxCuentas{
         echo json_encode($respuesta);
     
       }
+
+      public $datosCuenta;
+      public function ajaxCrearCuentaNota(){
+        $valor = $this->datosCuenta;
+        $datos = json_decode($valor);
+        foreach ($datos->{"datosCuenta"} as  $value) {
+          $doc = $value->{"tipo_doc"};
+          $cta = $value->{"num_cta"};
+          $cli = $value->{"cliente"};
+          $vend = $value->{"vendedor"};
+          $monto = $value->{"monto"};
+          $saldo = $value->{"saldo"};
+          $fecha = $value->{"fecha"};
+          $estado = $value->{"estado"};
+          $nota = $value->{"notas"};
+          $reno = $value->{"renovacion"};
+          $prot = $value->{"protesta"};
+          $mon = $value->{"tip_mon"};
+          $pago = $value->{"cod_pago"};
+          $origen = $value->{"doc_origen"};
+          $mov = $value->{"tip_mov"};
+          $user = $value->{"usuario"};
+          $arregloCuenta = array("tipo_doc"=>$doc,
+                                  "num_cta"=>$cta,
+                                  "cliente"=>$cli,
+                                  "vendedor"=>$vend,
+                                  "fecha"=>$fecha,
+                                  "tip_mon"=>$mon,
+                                  "monto"=>$monto,
+                                  "estado"=>$estado,
+                                  "notas"=>$nota,
+                                  "cod_pago"=>$pago,
+                                  "doc_origen"=>$origen,
+                                  "renovacion"=>$reno,
+                                  "protesta"=>$prot,
+                                  "usuario"=>$user,
+                                  "saldo"=>$saldo,
+                                  "tip_mov" => $mov);
+          
+          $respuesta = ModeloCuentas::mdlIngresarCuenta("cuenta_ctejf",$arregloCuenta);
+          $aumento = ModeloCuentas::mdlActualizarNotaSerie("nota_debito","serie_nd",substr($cta,0,4));
+        }
     
+        echo $respuesta;
+    
+      }
+
+      /*=============================================
+      VALIDAR DOCUMENTO DE CUENTA
+      =============================================*/	
+      public $documento;
+      public function ajaxValidarDocumento(){
+        $item="num_cta";
+        $valor=$this->documento;
+        $item2="tipo_doc";
+        $valor2="08";
+        $respuesta=ControladorCuentas::ctrValidarCuenta($item,$valor,$item2,$valor2);
+        echo json_encode($respuesta);
+      }
+    
+      /*=============================================
+      EDITAR DOCUMENTO DE CUENTA
+      =============================================*/	
+      public $datosCuenta2;
+      public function ajaxEditarCuentaNota(){
+        $valor = $this->datosCuenta2;
+        $datos = json_decode($valor);
+        foreach ($datos->{"datosCuenta"} as  $value) {
+          $id = $value->{"id"};
+          $doc = $value->{"tipo_doc"};
+          $cta = $value->{"num_cta"};
+          $cli = $value->{"cliente"};
+          $vend = $value->{"vendedor"};
+          $monto = $value->{"monto"};
+          $saldo = $value->{"saldo"};
+          $fecha = $value->{"fecha"};
+          $estado = $value->{"estado"};
+          $nota = $value->{"notas"};
+          $reno = $value->{"renovacion"};
+          $prot = $value->{"protesta"};
+          $mon = $value->{"tip_mon"};
+          $pago = $value->{"cod_pago"};
+          $origen = $value->{"doc_origen"};
+          $user = $value->{"usuario"};
+          $arregloCuenta = array("id"=>$id,
+                                  "tipo_doc"=>$doc,
+                                  "num_cta"=>$cta,
+                                  "cliente"=>$cli,
+                                  "vendedor"=>$vend,
+                                  "fecha"=>$fecha,
+                                  "tip_mon"=>$mon,
+                                  "monto"=>$monto,
+                                  "estado"=>$estado,
+                                  "notas"=>$nota,
+                                  "cod_pago"=>$pago,
+                                  "doc_origen"=>$origen,
+                                  "renovacion"=>$reno,
+                                  "protesta"=>$prot,
+                                  "usuario"=>$user,
+                                  "saldo"=>$saldo);
+          
+          $respuesta = ModeloCuentas::mdlEditarCuenta("cuenta_ctejf",$arregloCuenta);
+        }
+        
+    
+        echo $respuesta;
+    
+      }
     }
     
     
@@ -159,4 +266,33 @@ class AjaxCuentas{
       $cuentaLetras = new AjaxCuentas();
       $cuentaLetras -> letraCuenta = $_POST["letraCuenta"];
       $cuentaLetras -> ajaxCuentaLetras();
+  }
+
+  /*=============================================
+    CREAR CUENTA
+    =============================================*/	
+    if(isset($_POST["jsonCuenta"])){
+      
+      $crearCuenta = new AjaxCuentas();
+      $crearCuenta -> datosCuenta = $_POST["jsonCuenta"];
+      $crearCuenta -> ajaxCrearCuentaNota();
+  }
+
+  /*=============================================
+    VALIDAR CUENTA
+    =============================================*/	
+  if(isset($_POST["documento"])){
+    $validarDocumento=new AjaxCuentas();
+    $validarDocumento->documento=$_POST["documento"];
+    $validarDocumento->ajaxValidarDocumento();
+  }
+
+  /*=============================================
+    EDITAR CUENTA
+    =============================================*/	
+    if(isset($_POST["jsonCuenta2"])){
+      
+      $editarCuenta = new AjaxCuentas();
+      $editarCuenta -> datosCuenta2 = $_POST["jsonCuenta2"];
+      $editarCuenta -> ajaxEditarCuentaNota();
   }

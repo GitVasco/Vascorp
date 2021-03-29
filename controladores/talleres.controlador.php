@@ -1078,14 +1078,14 @@ class ControladorTalleres{
                 }
                 
 				if($respuesta == "ok" && $respuesta2=="ok"){
-                    $ultimo = $_POST["editarBarra"];
+                    $ultimo = $codigoBarraNuevo;
                     $valor=$_POST["editarArticulo"];
                     $rpt_articulo=ModeloArticulos::mdlMostrarArticulos($valor);
                     $modelo = $rpt_articulo["modelo"];
                     $nombre = $rpt_articulo["nombre"];
                     $color = $rpt_articulo["color"];
                     $talla = $rpt_articulo["talla"];
-                    $cantidad = $_POST["editarCantidades"];
+                    $cantidad = $cantidad2;
                     $cod_ope = $_POST["editarCodOperaciones"];
                     $tablaop="operacionesjf";
                     $itemop="codigo";

@@ -282,6 +282,7 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "guias-remision" ||
                   $_GET["ruta"] == "guias-remision" ||
                   $_GET["ruta"] == "facturas" ||
+                  $_GET["ruta"] == "notas-credito" ||
                   $_GET["ruta"] == "boletas" ){
 
               include "modulos/facturacion/".$_GET["ruta"].".php";

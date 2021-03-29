@@ -24,9 +24,9 @@ class MYPDF extends TCPDF {
         $this->Cell(0, 8, $fechaCabecera, 0, false, 'R', 0, '', 0, false, false, false );
         
         $this->Ln(2);
-        $this->Cell(0, 15, 'PAGOS EFECTUADOS  - '.$fechaActual, 0, false, 'C', 0, '', 0, false, false, false );
+        $this->Cell(0, 15, 'Estados de Cuentas -- Desde  - '.$fechaActual, 0, false, 'C', 0, '', 0, false, false, false );
         $this->Ln(7);
-        $this->Cell(0, 9, '              Tipo             Nro. doc.            Fecha            Cliente              Razon social / Nombre cliente           Tipo            Nro.doc                Fact. S/                   Letra S/     ', 0, 1, 'C', 0, '', 0, false, false, false );
+        $this->Cell(0, 9, '              Tipo             Nro. doc.            Fecha            Nro. Doc. Original          Importe S/ ', 0, 1, 'C', 0, '', 0, false, false, false );
         
         $this->Cell(0, 0, '====================================================================================================================================', 0, 1, 'L', 0, '', 0, false, 'M', 'M' );
 

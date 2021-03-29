@@ -838,6 +838,29 @@ class ControladorFacturacion{
 
     }
 
+    /*
+    * MOSTRAR talonarios credito
+    */
+	static public function ctrMostrarTalonarios($item, $valor){
+        $tabla="talonariosjf";
+		$respuesta = ModeloFacturacion::mdlMostrarTalonarios($tabla, $item, $valor);
+
+		return $respuesta;
+
+    }
+
+    /*
+    * MOSTRAR talonarios debito
+    */
+	static public function ctrMostrarTalonariosDebito($item, $valor){
+        $tabla="talonariosjf";
+		$respuesta = ModeloFacturacion::mdlMostrarTalonariosDebito($tabla, $item, $valor);
+
+		return $respuesta;
+
+    }
+
+
     static public function ctrFacturarGuia(){
 
         if(isset($_POST["codPedido"])){

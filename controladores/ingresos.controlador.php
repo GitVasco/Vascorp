@@ -39,6 +39,15 @@ class ControladorIngresos{
 
     }
 
+    // VISUALIZAR CIERRE DETALLE
+	static public function ctrVisualizarIngresoDetalle($valor){
+
+        $respuesta = ModeloIngresos::mdlVisualizarIngresoDetalle($valor);
+        
+		return $respuesta;
+
+	} 
+
     /* 
     * CREAR INGRESO
     */
@@ -134,6 +143,7 @@ class ControladorIngresos{
                     $fecha=new DateTime();
                     $datos = array( "tipo"=>"E20",
                                     "usuario"=>$_POST["idUsuario"],
+                                    "guia"=>$_POST["nuevaGuiaIng"],
                                     "taller"=>$_POST["nuevoTalleres"],
                                     "documento"=>$_POST["nuevoCodigo"],
                                     "total"=>$_POST["totalTaller"],
@@ -297,6 +307,7 @@ class ControladorIngresos{
                     $fecha=new DateTime();
                     $datos = array( "tipo"=>"E20",
                                     "usuario"=>$_POST["idUsuario"],
+                                    "guia"=>$_POST["nuevaGuiaIng"],
                                     "taller"=>$_POST["nuevoTalleres"],
                                     "documento"=>$_POST["nuevoCodigo"],
                                     "total"=>$_POST["totalTaller"],
@@ -482,6 +493,7 @@ class ControladorIngresos{
                 todo: Editamos los cambios de la cabecera Orden de Corte
                 */
                 $datos = array( "documento"=>$_POST["editarCodigo"],
+                                "guia"=>$_POST["editarGuiaIng"],
                                 "taller"=>$_POST["editarTalleres"],
                                 "usuario"=>$_POST["idUsuario"],
                                 "total"=>$_POST["totalTaller"],
@@ -688,6 +700,7 @@ class ControladorIngresos{
                 todo: Editamos los cambios de la cabecera Orden de Corte
                 */
                 $datos = array( "documento"=>$_POST["editarCodigo"],
+                                "guia"=>$_POST["editarGuiaIng"],
                                 "taller"=>$_POST["editarTalleres"],
                                 "usuario"=>$_POST["idUsuario"],
                                 "total"=>$_POST["totalTaller"],
@@ -816,9 +829,10 @@ class ControladorIngresos{
 
                 //Actualizamos Stock
                 $item2="stock";
-                $valor2= $value["cantidad"];
+                $datosArt = array( "articulo" => $value["articulo"],
+                                    "cantidad" => $value["cantidad"]);
 
-                ModeloArticulos::mdlActualizarStock( $valor, $valor2);
+                ModeloArticulos::mdlActualizarStock( $datosArt);
 
                 
 
@@ -839,12 +853,14 @@ class ControladorIngresos{
 
                 //Actualizamos Stock
                 $item2="stock";
-                $valor2= $value["cantidad"];
+                $datosArt = array( "articulo" => $value["articulo"],
+                                    "cantidad" => $value["cantidad"]);
 
-                ModeloArticulos::mdlActualizarStock( $articulo, $valor2);
+                ModeloArticulos::mdlActualizarStock( $datosArt);
+
 
                 //Actualizamos servicio
-                
+                $valor2=$value["cantidad"];
                 ModeloArticulos::mdlRecuperarArticuloServicio( $articulo, $valor2);
             }
         }
@@ -898,4 +914,13 @@ class ControladorIngresos{
 		
     }
    
+    static public function ctrRangoFechasVerIngresos($fechaInicial, $fechaFinal){
+
+		$tabla = "movimientos_cabecerajf";
+
+		$respuesta = ModeloIngresos::mdlRangoFechasVerIngresos($tabla, $fechaInicial, $fechaFinal);
+
+		return $respuesta;
+		
+    }
 }

@@ -657,7 +657,7 @@ $(".tablaCierres").on("click", ".btnVisualizarCierre", function () {
 		success:function(respuesta){
 
 			// console.log("respuesta", respuesta);
-
+      $("#idCierre").val(respuesta["id"]);
       $("#cierre").val(respuesta["codigo"]);
       $("#guia").val(respuesta["guia"]);
       $("#fecha").val(respuesta["fecha"]);
@@ -689,7 +689,7 @@ $(".tablaCierres").on("click", ".btnVisualizarCierre", function () {
 		dataType:"json",
 		success:function(respuestaDetalle){
 
-			console.log("respuestaDetalle", respuestaDetalle);
+			// console.log("respuestaDetalle", respuestaDetalle);
 
       $(".detalleMP").remove();
             

@@ -247,6 +247,18 @@ class ControladorCuentas{
 		return $respuesta;
 
     }
+
+	/*=============================================
+	VALIDAR CUENTA
+	=============================================*/
+
+	static public function ctrValidarCuenta($item,$valor,$item2,$valor2){
+		$tabla="cuenta_ctejf";
+		$respuesta = ModeloCuentas::mdlValidarCuenta($tabla,$item,$valor,$item2,$valor2);
+
+		return $respuesta;
+
+    }
 	/*=============================================
 	EDITAR CUENTAS
 	=============================================*/
@@ -1197,9 +1209,9 @@ class ControladorCuentas{
 	MOSTRAR REPORTES PAGOS
 	=============================================*/
 
-	static public function ctrMostrarReportePagos($orden1,$orden2,$tip_doc,$vend,$inicio,$fin){
+	static public function ctrMostrarReportePagos($orden1,$orden2,$canc,$vend,$inicio,$fin){
 		$tabla="cuenta_ctejf";
-		$respuesta = ModeloCuentas::mdlMostrarReportePagos($tabla,$orden1,$orden2,$tip_doc,$vend,$inicio,$fin);
+		$respuesta = ModeloCuentas::mdlMostrarReportePagos($tabla,$orden1,$orden2,$canc,$vend,$inicio,$fin);
 
 		return $respuesta;
 
@@ -1256,9 +1268,9 @@ class ControladorCuentas{
 	MOSTRAR REPORTES TOTAL PAGOS
 	=============================================*/
 
-	static public function ctrMostrarReporteTotalPagos($orden1,$orden2,$tip_doc,$vend,$inicio,$fin){
+	static public function ctrMostrarReporteTotalPagos($orden1,$orden2,$canc,$vend,$inicio,$fin){
 		$tabla="cuenta_ctejf";
-		$respuesta = ModeloCuentas::mdlMostrarReporteTotalPagos($tabla,$orden1,$orden2,$tip_doc,$vend,$inicio,$fin);
+		$respuesta = ModeloCuentas::mdlMostrarReporteTotalPagos($tabla,$orden1,$orden2,$canc,$vend,$inicio,$fin);
 
 		return $respuesta;
 

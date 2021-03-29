@@ -445,4 +445,44 @@ class ControladorCierres{
 		return $respuesta;
 		
     }
+
+	/*=============================================
+	CAMBIAR FEHA CIERRE
+	=============================================*/
+
+	static public function ctrCambiarFechaCierre(){
+
+		if(isset($_POST["idCierre"])){
+
+				$tabla="cierresjf";
+				$valor1=$_POST["fecha"];
+				$valor2 = $_POST["idCierre"];
+
+			   	$respuesta = ModeloCierres::mdlActualizarUnDato($tabla,"fecha",$valor1,$valor2);
+
+
+					echo'<script>
+
+					swal({
+						  type: "success",
+						  title: "La fecha del cierre ha sido cambiada correctamente",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+									if (result.value) {
+
+									window.location = "cierres";
+
+									}
+								})
+
+					</script>';
+
+
+			
+
+		}
+
+    }
+    
 }

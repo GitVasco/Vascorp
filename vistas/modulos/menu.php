@@ -1028,6 +1028,17 @@
 
                     </li>
 
+                    <li>
+
+                        <a href="notas-credito">
+
+                            <i class="fa fa-circle-o text-orange"></i>
+                            <span>Notas credito</span>
+
+                        </a>
+
+                    </li>
+
                         </ul>
 
                     </li>

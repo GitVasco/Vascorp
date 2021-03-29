@@ -1917,6 +1917,12 @@ $(".box").on("change", "#tipoDocumentoReporte", function () {
 
 })
 
+$(".box").on("change", "#tipoCancelacionReporte", function () {
+  var canc = $(this).val();
+  $(".btnGenerarReporteCuenta").attr("canc",canc);
+
+})
+
 $(".box").on("change", "#tipoClienteReporte", function () {
   var cliente = $(this).val();
   $(".btnGenerarReporteCuenta").attr("cli",cliente);
@@ -1964,6 +1970,7 @@ $(".btnGenerarReporteCuenta").click(function(){
  var orden1 = $(this).attr("orden1");
  var orden2 = $(this).attr("orden2");
  var tip_doc = $(this).attr("tip_doc");
+ var canc = $(this).attr("canc");
  var cli = $(this).attr("cli");
  var vend = $(this).attr("vend");
  var banco = $(this).attr("banco");
@@ -1987,7 +1994,9 @@ $(".btnGenerarReporteCuenta").click(function(){
     }
 
   }else if(consulta== "pagos"){
-    window.open("extensiones/tcpdf/pdf/reporte_pago_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&tip_doc="+tip_doc+"&vend="+vend+"&inicio="+inicio+"&fin="+fin,"_blank");
+    window.open("extensiones/tcpdf/pdf/reporte_pago_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&canc="+canc+"&vend="+vend+"&inicio="+inicio+"&fin="+fin,"_blank");
+  }else if(consulta== "fechaActualSaldo"){
+    window.open("extensiones/tcpdf/pdf/reporte_estado_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&canc="+canc+"&vend="+vend+"&inicio="+inicio+"&fin="+fin,"_blank");
   }
   
  }else{

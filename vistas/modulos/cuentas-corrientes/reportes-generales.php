@@ -312,7 +312,7 @@
         
         </div>
         <div align="center">
-            <button class="btn btn-success btnGenerarReporteCuenta" consulta="pendiente" orden1="tipo" orden2="ordNumCuenta" tip_doc="" cli="" vend="" banco="" inicio="" fin="" impresion="pantalla"><i class="fa fa-check"></i> Aceptar</button>    
+            <button class="btn btn-success btnGenerarReporteCuenta" consulta="pendiente" orden1="tipo" orden2="ordNumCuenta" tip_doc="" cli="" vend="" banco="" canc="todo" inicio="" fin="" impresion="pantalla"><i class="fa fa-check"></i> Aceptar</button>    
 
         </div>
         
@@ -330,3 +330,8 @@
     </section>
 
 </div>
+
+
+<script>
+window.document.title = "Reportes generales"
+</script>

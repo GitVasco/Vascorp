@@ -1146,6 +1146,7 @@ $('.tablaPagoServicios').DataTable( {
   "deferRender": true,
   "retrieve": true,
   "processing": true,
+  "order": [[3, "desc"]],
   "language": {
 
     "sProcessing":     "Procesando...",

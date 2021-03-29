@@ -245,6 +245,8 @@ class ModeloFacturacion{
 
     }
 
+
+
     /*
     * ACTUALIZAR PEDIDO A FACTURADO
     */
@@ -635,5 +637,65 @@ class ModeloFacturacion{
 		$stmt=null;
 
 	}
+
+    /*=============================================
+	MOSTRAR TIPO DE PAGO
+	=============================================*/
+
+	static public function mdlMostrarTalonarios($tabla,$item,$valor){
+
+		if($item != null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT nota_credito FROM $tabla WHERE $item = :$item");
+
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();
+
+		}else{
+
+			$stmt = Conexion::conectar()->prepare("SELECT serie_nc FROM $tabla ");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }
+
+    static public function mdlMostrarTalonariosDebito($tabla,$item,$valor){
+
+		if($item != null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT nota_debito FROM $tabla WHERE $item = :$item");
+
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();
+
+		}else{
+
+			$stmt = Conexion::conectar()->prepare("SELECT serie_nd FROM $tabla ");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }
 
 }
