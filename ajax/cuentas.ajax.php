@@ -128,7 +128,6 @@ class AjaxCuentas{
                                   "tip_mov" => $mov);
           
           $respuesta = ModeloCuentas::mdlIngresarCuenta("cuenta_ctejf",$arregloCuenta);
-          $aumento = ModeloCuentas::mdlActualizarNotaSerie("nota_debito","serie_nd",substr($cta,0,4));
         }
     
         echo $respuesta;

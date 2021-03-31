@@ -23,8 +23,23 @@ class TablaPagoServicio{
         for($i = 0; $i < count($quincena); $i++){
 
             /* 
-            * BOTONES            
+            * BOTONES   
+            
+            
             */
+
+            if($quincena[$i]["estado_pago"] == "POR PAGAR"){
+
+                /* $estado = "<button class='btn btn-danger btn-xs btnActivar'>".$articulos[$i]["id"]."</button>"; */
+                $estado_pago = "<button class='btn btn-warning btn-xs btnPagarCierreServicio'  inicio='".$quincena[$i]["inicio"]."' fin='".$quincena[$i]["fin"]."' idPago='".$quincena[$i]["id"]."' estadoPago='PAGADO'>POR PAGAR</button>";
+    
+            }else{
+    
+                /* $estado = "<button class='btn btn-success btn-xs btnActivarArt'>".$articulos[$i]["id"]."</button>"; */
+                $estado_pago = "<button class='btn btn-primary btn-xs btnPagarCierreServicio'  inicio='".$quincena[$i]["inicio"]."' fin='".$quincena[$i]["fin"]."' idPago='".$quincena[$i]["id"]."' estadoPago='POR PAGAR'>PAGADO</button>";
+    
+            }
+         
             $botones =  "<div class='btn-group'><button class='btn btn-info btnVerPagoSer' title='Ver pagos'  inicio='".$quincena[$i]["inicio"]."' fin='".$quincena[$i]["fin"]."' data-toggle='modal' data-target='#modalVerPagoServicio'><i class='fa fa-eye'></i></button><button class='btn btn-warning btnEditarPagoServicio' title='Editar Fechas' id='".$quincena[$i]["id"]."' data-toggle='modal' data-target='#modalEditarPagoServicio'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarPagoServicio' title='Eliminar' id='".$quincena[$i]["id"]."'><i class='fa fa-times'></i></button><button class='btn btn-outline-success btnReportePagoServicios2' inicio='".$quincena[$i]["inicio"]."' fin='".$quincena[$i]["fin"]."' style='border:green 1px solid' ><img src='vistas/img/plantilla/excel.png' width='20px'></button></div>";
             
             $datosJson .= '[
@@ -35,6 +50,7 @@ class TablaPagoServicio{
             "'.$quincena[$i]["fin"].'",
             "'.$quincena[$i]["nombre"].'",
             "'.$quincena[$i]["fecha_creacion"].'",
+            "'.$estado_pago.'",
             "'.$botones.'"
             ],';        
             }

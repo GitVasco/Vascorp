@@ -49,6 +49,7 @@
               <th>Usuario</th>
               <th>Fecha Creacion</th>
               <th>Acciones</th>
+              <th>Actualizar</th>
               <th>Pagos Trusas</th>
               <th>Pagos Brasier</th>
 

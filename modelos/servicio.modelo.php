@@ -612,7 +612,8 @@ class ModeloServicios{
                                                             q.inicio,
                                                             q.fin,
                                                             u.nombre,
-                                                            q.fecha_creacion 
+                                                            q.fecha_creacion,
+															q.estado_pago
                                                         FROM
                                                             pago_serviciosjf q 
                                                             LEFT JOIN usuariosjf u 
@@ -665,7 +666,8 @@ class ModeloServicios{
                                             q.inicio,
                                             q.fin,
                                             u.nombre,
-                                            q.fecha_creacion 
+                                            q.fecha_creacion,
+											q.estado_pago
                                           FROM
                                             pago_serviciosjf q 
                                             LEFT JOIN usuariosjf u 
@@ -1596,6 +1598,26 @@ class ModeloServicios{
 
 		}
 
+	}
+
+	static public function mdlPagarServicio($valor1, $valor2){
+
+		$sql = "UPDATE pago_serviciosjf SET estado_pago = :estado_pago WHERE id = :id ";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":estado_pago", $valor1, PDO::PARAM_STR);
+		$stmt->bindParam(":id", $valor2, PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt = null;
 	}
 
 }

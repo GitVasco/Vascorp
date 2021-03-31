@@ -71,6 +71,38 @@ class AjaxServicios{
         echo json_encode($respuesta);
     
       }
+
+      //PAGAR ESTADO DE PAGO
+	public $idPago;
+    public $estadoPago;
+
+	public function ajaxPagarServicio(){
+        $valor1=$this->estadoPago;
+		$valor2=$this->idPago;
+
+		//ENVIAR CORREO Y GUARDAR EN AUDITORIA
+		// date_default_timezone_set('America/Lima');
+		// $fecha = new DateTime();
+		// $cierre=ControladorCierres::ctrMostrarCierres("guia",$valor2);
+		// $usuario= $_SESSION["nombre"];	
+		// $para      = 'notificacionesvascorp@gmail.com';
+		// $asunto    = 'Se pago un cierre';
+		// $descripcion   = 'El usuario '.$usuario.' pago el cierre '.$cierre["codigo"];
+		// $de = 'From: notificacionesvascorp@gmail.com';
+		// if($_SESSION["correo"] == 1){
+		// 	mail($para, $asunto, $descripcion, $de);
+		// 	}
+		// if($_SESSION["datos"] == 1){
+		// 	$datos2= array( "usuario" => $usuario,
+		// 			"concepto" => $descripcion,
+		// 			"fecha" => $fecha->format("Y-m-d H:i:s"));
+		// 	$auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
+		// }	
+
+		$respuesta=ModeloServicios::mdlPagarServicio($valor1,$valor2);
+
+		echo $respuesta;
+	}
 }
 
 // OBJETOS
@@ -119,5 +151,14 @@ if(isset($_POST["idPagoServicio"])){
 	$editarPagoServicio=new AjaxServicios();
 	$editarPagoServicio->idPagoServicio=$_POST["idPagoServicio"];
     $editarPagoServicio->ajaxEditarPagoServicio();
+    
+}
+
+if(isset($_POST["idPago"])){
+
+	$pagarCierreServicio=new AjaxServicios();
+	$pagarCierreServicio->idPago=$_POST["idPago"];
+    $pagarCierreServicio->estadoPago=$_POST["estadoPago"];
+    $pagarCierreServicio->ajaxPagarServicio();
     
 }

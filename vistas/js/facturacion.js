@@ -469,106 +469,399 @@ $("#notaNoAfecto").change(function(){
 });
 
 $(".btnGuardarNotaCredito").click(function(){
+    var nota = $('input[name=optNotas1]:checked').val();
     var chkCuenta = document.getElementById("radioCtaCte");
-    if(chkCuenta.checked == true){
-
+    if(nota == 'credito'){
         var documento =$("#tipoNotaDocumento").val();
-        var existe = new FormData();
-        existe.append("documento", documento);
-
-        var cliente=$("#selectNotaCliente").val();
-        var vendedor=$("#selectNotaVendedor").val();
-        var monto=$("#notaTotal").val();
-        var fecha=$("#notaFecha").val();
-        var usuario=$("#notaUsuario").val();
-        var datos = new Array();
-        
-        $.ajax({
-            url: "ajax/cuentas.ajax.php",
-            type: "POST",
-            data: existe,
-            cache: false,
-            contentType: false,
-            processData: false,
-            dataType: "json",
-            success: function (respuesta) {
-                // console.log(respuesta);
-                if (respuesta) {
-                    datos.push({
-                        'id':respuesta["id"],
-                        'tipo_doc':'08',
-                        'num_cta' : documento,
-                        'cliente':cliente,
-                        'vendedor':vendedor,
-                        'monto':monto,
-                        'saldo':monto,
-                        'fecha':fecha,
-                        'estado':'PENDIENTE',
-                        'notas':'Nro doc '+documento+'/'+documento,
-                        'renovacion':0,
-                        'protesta':0,
-                        'tip_mon':'Soles',
-                        'cod_pago':'08',
-                        'doc_origen':documento,
-                        'usuario': usuario
-                    });
-                    var cuenta = {"datosCuenta" : datos}
-                    
-                    var jsonCuenta2= {"jsonCuenta2":JSON.stringify(cuenta)};
-                    $.ajax({
-                        url:"ajax/cuentas.ajax.php",
-                        method: "POST",
-                        data: jsonCuenta2,
-                        cache: false,
-                        success:function(respuesta2){
-                            
-                            Command:toastr["success"]("Editado exitosamente!");
-
-                        }
-
-                    })
-                }else{
-                    datos.push({
-                        'tipo_doc':'08',
-                        'num_cta' : documento,
-                        'cliente':cliente,
-                        'vendedor':vendedor,
-                        'monto':monto,
-                        'saldo':monto,
-                        'fecha':fecha,
-                        'estado':'PENDIENTE',
-                        'notas':'Nro doc '+documento+'/'+documento,
-                        'renovacion':0,
-                        'protesta':0,
-                        'tip_mon':'Soles',
-                        'cod_pago':'08',
-                        'doc_origen':documento,
-                        'usuario': usuario,
-                        'tip_mov':'+'
-                    });
-                    var cuenta = {"datosCuenta" : datos}
-                    
-                    //CREAR CUENTA
-                    var jsonCuenta= {"jsonCuenta":JSON.stringify(cuenta)};
-                    $.ajax({
-                        url:"ajax/cuentas.ajax.php",
-                        method: "POST",
-                        data: jsonCuenta,
-                        cache: false,
-                        success:function(respuesta2){
-                            
-                            Command:toastr["success"]("Registrado exitosamente!");
-
-                        }
-
-                    })
+            var existe = new FormData();
+            existe.append("documentoCredito", documento);
+            var cliente=$("#selectNotaCliente").val();
+            var vendedor=$("#selectNotaVendedor").val();
+            var neto = $("#notaSubTotal").val();
+            var igv = $("#notaIGV").val();
+            var monto=$("#notaTotal").val();
+            var fecha=$("#notaFecha").val();
+            var usuario=$("#notaUsuario").val();
+            var origen_venta = $("#notaNroFactura").val();
+            var datos = new Array();
+            
+            $.ajax({
+                url: "ajax/facturacion.ajax.php",
+                type: "POST",
+                data: existe,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: "json",
+                success: function (respuesta) {
+                    // console.log(respuesta);
+                    if (respuesta) {
+                        datos.push({
+                            'tipo_doc':'08',
+                            'tipo_venta':'E05',
+                            'num_cta' : documento,
+                            'cliente':cliente,
+                            'vendedor':vendedor,
+                            'neto':neto,
+                            'igv':igv,
+                            'monto':monto,
+                            'saldo':monto,
+                            'fecha':fecha,
+                            'estado':'PENDIENTE',
+                            'notas':'Nro doc '+documento+'/'+documento,
+                            'renovacion':0,
+                            'protesta':0,
+                            'tip_mon':'Soles',
+                            'cod_pago':'08',
+                            'doc_origen':documento,
+                            'usuario': usuario,
+                            'origen_venta':origen_venta
+                        });
+                        var cuenta = {"datosCuenta" : datos}
+                        
+                        var jsonCuenta2= {"jsonCuenta2":JSON.stringify(cuenta)};
+                        $.ajax({
+                            url:"ajax/facturacion.ajax.php",
+                            method: "POST",
+                            data: jsonCuenta2,
+                            cache: false,
+                            success:function(respuesta2){
+                                
+                                Command:toastr["success"]("Editado de venta exitosamente!");
+    
+                            }
+    
+                        })
+                    }else{
+                        datos.push({
+                            'tipo_doc':'08',
+                            'tipo_venta':'E05',
+                            'num_cta' : documento,
+                            'cliente':cliente,
+                            'vendedor':vendedor,
+                            'neto':neto,
+                            'igv':igv,
+                            'monto':monto,
+                            'saldo':monto,
+                            'fecha':fecha,
+                            'estado':'PENDIENTE',
+                            'notas':'Nro doc '+documento+'/'+documento,
+                            'renovacion':0,
+                            'protesta':0,
+                            'tip_mon':'Soles',
+                            'cod_pago':'08',
+                            'doc_origen':documento,
+                            'usuario': usuario,
+                            'tip_doc_venta':'NC',
+                            'origen_venta':origen_venta
+                        });
+                        var cuenta = {"datosCuenta" : datos}
+                        
+                        var jsonCuenta= {"jsonCuenta":JSON.stringify(cuenta)};
+                        $.ajax({
+                            url:"ajax/facturacion.ajax.php",
+                            method: "POST",
+                            data: jsonCuenta,
+                            cache: false,
+                            success:function(respuesta2){
+                                
+                                Command:toastr["success"]("Registrado de venta exitosamente!");
+    
+                            }
+    
+                        })
+                    }
+                
                 }
-            }
             });
-        
-        
+
     }else{
-        console.log("error");
+        if(chkCuenta.checked == true){
+
+            var documento =$("#tipoNotaDocumento").val();
+            var existe = new FormData();
+            existe.append("documento", documento);
+            var cliente=$("#selectNotaCliente").val();
+            var vendedor=$("#selectNotaVendedor").val();
+            var neto = $("#notaSubTotal").val();
+            var igv = $("#notaIGV").val();
+            var monto=$("#notaTotal").val();
+            var fecha=$("#notaFecha").val();
+            var usuario=$("#notaUsuario").val();
+            var origen_venta = $("#notaNroFactura").val();
+            var datos = new Array();
+            
+            $.ajax({
+                url: "ajax/cuentas.ajax.php",
+                type: "POST",
+                data: existe,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: "json",
+                success: function (respuesta) {
+                    // console.log(respuesta);
+                    if (respuesta) {
+                        datos.push({
+                            'id':respuesta["id"],
+                            'tipo_doc':'08',
+                            'tipo_venta':'E23',
+                            'num_cta' : documento,
+                            'cliente':cliente,
+                            'vendedor':vendedor,
+                            'neto':neto,
+                            'igv':igv,
+                            'monto':monto,
+                            'saldo':monto,
+                            'fecha':fecha,
+                            'estado':'PENDIENTE',
+                            'notas':'Nro doc '+documento+'/'+documento,
+                            'renovacion':0,
+                            'protesta':0,
+                            'tip_mon':'Soles',
+                            'cod_pago':'08',
+                            'doc_origen':documento,
+                            'usuario': usuario,
+                            'tip_doc_venta':'ND',
+                            'origen_venta':origen_venta
+                        });
+                        var cuenta = {"datosCuenta" : datos}
+                        
+                        var jsonCuenta2= {"jsonCuenta2":JSON.stringify(cuenta)};
+                        $.ajax({
+                            url:"ajax/cuentas.ajax.php",
+                            method: "POST",
+                            data: jsonCuenta2,
+                            cache: false,
+                            success:function(respuesta2){
+                                var existe = new FormData();
+                                existe.append("documentoDebito", documento);
+                                $.ajax({
+                                    url: "ajax/facturacion.ajax.php",
+                                    type: "POST",
+                                    data: existe,
+                                    cache: false,
+                                    contentType: false,
+                                    processData: false,
+                                    dataType: "json",
+                                    success: function (respuesta3) {
+                                        // console.log(respuesta);
+                                        if (respuesta3) {
+                                            
+                                            $.ajax({
+                                                url:"ajax/facturacion.ajax.php",
+                                                method: "POST",
+                                                data: jsonCuenta2,
+                                                cache: false,
+                                                success:function(respuesta4){
+                                                    
+                                                    Command:toastr["success"]("Editado  de venta exitosamente!");
+                        
+                                                }
+                        
+                                            })
+                                        }else{
+                                            
+                                            var jsonCuenta= {"jsonCuenta":JSON.stringify(cuenta)};
+                                            $.ajax({
+                                                url:"ajax/facturacion.ajax.php",
+                                                method: "POST",
+                                                data: jsonCuenta,
+                                                cache: false,
+                                                success:function(respuesta4){
+                                                    
+                                                    Command:toastr["success"]("Registrado  de venta exitosamente!");
+                        
+                                                }
+                        
+                                            })
+                                        }
+
+                                        Command:toastr["success"]("Editado de cuenta exitosamente!");
+                                    }
+                                });
+    
+                            }
+    
+                        })
+                    }else{
+                        datos.push({
+                            'tipo_doc':'08',
+                            'tipo_venta':'E23',
+                            'num_cta' : documento,
+                            'cliente':cliente,
+                            'vendedor':vendedor,
+                            'neto':neto,
+                            'igv':igv,
+                            'monto':monto,
+                            'saldo':monto,
+                            'fecha':fecha,
+                            'estado':'PENDIENTE',
+                            'notas':'Nro doc '+documento+'/'+documento,
+                            'renovacion':0,
+                            'protesta':0,
+                            'tip_mon':'Soles',
+                            'cod_pago':'08',
+                            'doc_origen':documento,
+                            'usuario': usuario,
+                            'tip_mov':'+',
+                            'tip_doc_venta':'ND',
+                            'origen_venta':origen_venta
+                        });
+                        var cuenta = {"datosCuenta" : datos}
+                        
+                        //CREAR CUENTA
+                        var jsonCuenta= {"jsonCuenta":JSON.stringify(cuenta)};
+                        $.ajax({
+                            url:"ajax/cuentas.ajax.php",
+                            method: "POST",
+                            data: jsonCuenta,
+                            cache: false,
+                            success:function(respuesta2){
+
+                                //PASAR LOS DATOS POR AJAX PARA REGISTRAR LA VENTA
+                                var existe = new FormData();
+                                existe.append("documentoDebito", documento);
+                                $.ajax({
+                                    url: "ajax/facturacion.ajax.php",
+                                    type: "POST",
+                                    data: existe,
+                                    cache: false,
+                                    contentType: false,
+                                    processData: false,
+                                    dataType: "json",
+                                    success: function (respuesta3) {
+                                        // console.log(respuesta);
+                                        if (respuesta3) {
+                                            var jsonCuenta2= {"jsonCuenta2":JSON.stringify(cuenta)};
+                                            $.ajax({
+                                                url:"ajax/facturacion.ajax.php",
+                                                method: "POST",
+                                                data: jsonCuenta2,
+                                                cache: false,
+                                                success:function(respuesta4){
+                                                    
+                                                    Command:toastr["success"]("Editado  de venta exitosamente!");
+                        
+                                                }
+                        
+                                            })
+                                        }else{
+                                            
+                                            
+                                            $.ajax({
+                                                url:"ajax/facturacion.ajax.php",
+                                                method: "POST",
+                                                data: jsonCuenta,
+                                                cache: false,
+                                                success:function(respuesta4){
+                                                    
+                                                    Command:toastr["success"]("Registrado  de venta exitosamente!");
+                        
+                                                }
+                        
+                                            })
+                                        }
+
+                                        Command:toastr["success"]("Registrado de cuenta exitosamente!");
+                                    }
+                                });
+    
+                            }
+    
+                        })
+                    }
+                }
+                });
+            
+            
+        }else{
+            //PASAR LOS DATOS POR AJAX PARA REGISTRAR LA VENTA
+            var documento =$("#tipoNotaDocumento").val();
+            var cliente=$("#selectNotaCliente").val();
+            var vendedor=$("#selectNotaVendedor").val();
+            var neto = $("#notaSubTotal").val();
+            var igv = $("#notaIGV").val();
+            var monto=$("#notaTotal").val();
+            var fecha=$("#notaFecha").val();
+            var usuario=$("#notaUsuario").val();
+            var origen_venta = $("#notaNroFactura").val();
+            var datos = new Array();
+            datos.push({
+                'tipo_doc':'08',
+                'tipo_venta':'E23',
+                'num_cta' : documento,
+                'cliente':cliente,
+                'vendedor':vendedor,
+                'neto':neto,
+                'igv':igv,
+                'monto':monto,
+                'saldo':monto,
+                'fecha':fecha,
+                'estado':'PENDIENTE',
+                'notas':'Nro doc '+documento+'/'+documento,
+                'renovacion':0,
+                'protesta':0,
+                'tip_mon':'Soles',
+                'cod_pago':'08',
+                'doc_origen':documento,
+                'usuario': usuario,
+                'tip_mov':'+',
+                'tip_doc_venta':'ND',
+                'origen_venta':origen_venta
+            });
+            var cuenta = {"datosCuenta" : datos}
+            
+            //CREAR CUENTA
+            var jsonCuenta= {"jsonCuenta":JSON.stringify(cuenta)};
+
+            var existe = new FormData();
+            existe.append("documentoDebito", documento);
+            $.ajax({
+                url: "ajax/facturacion.ajax.php",
+                type: "POST",
+                data: existe,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: "json",
+                success: function (respuesta3) {
+                    // console.log(respuesta);
+                    if (respuesta3) {
+                        var jsonCuenta2= {"jsonCuenta2":JSON.stringify(cuenta)};
+                        $.ajax({
+                            url:"ajax/facturacion.ajax.php",
+                            method: "POST",
+                            data: jsonCuenta2,
+                            cache: false,
+                            success:function(respuesta4){
+                                
+                                Command:toastr["success"]("Editado  de venta exitosamente!");
+    
+                            }
+    
+                        })
+                    }else{
+                        
+                        
+                        $.ajax({
+                            url:"ajax/facturacion.ajax.php",
+                            method: "POST",
+                            data: jsonCuenta,
+                            cache: false,
+                            success:function(respuesta4){
+                                
+                                Command:toastr["success"]("Registrado  de venta exitosamente!");
+    
+                            }
+    
+                        })
+                    }
+                }
+            });
+        }
     }
+    
+    
     
 });

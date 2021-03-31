@@ -137,6 +137,7 @@ class ModeloFacturacion{
 
     }
 
+
     /*
     * ACTUALIZAR TALONARIO + 1 GUIA
     */
@@ -698,4 +699,122 @@ class ModeloFacturacion{
 
     }
 
+    	/*
+	* REGISTAR DOCUMENTO  VENTA CON NOTA DE CREDITO O DEBITO
+	*/
+	static public function mdlRegistrarVentaNota($datos){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO ventajf (
+                                                        tipo,
+                                                        documento,
+                                                        neto,
+                                                        igv,
+                                                        dscto,
+                                                        total,
+                                                        cliente,
+                                                        vendedor,
+                                                        agencia,
+                                                        fecha,
+                                                        lista_precios,
+                                                        tipo_documento,
+                                                        doc_destino,
+                                                        doc_origen,
+                                                        usuario,
+                                                        estado
+                                                    )
+                                                    VALUES
+                                                        (
+                                                        :tipo,
+                                                        :documento,
+                                                        :neto,
+                                                        :igv,
+                                                        0,
+                                                        :total,
+                                                        :cliente,
+                                                        :vendedor,
+                                                        '',
+                                                        :fecha,
+                                                        '',
+                                                        :tipo_documento,
+                                                        '',
+                                                        :doc_origen,
+                                                        :usuario,
+                                                        'FACTURADO'
+                                                        )");
+
+        $stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
+        $stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
+        $stmt->bindParam(":neto", $datos["neto"], PDO::PARAM_STR);
+        $stmt->bindParam(":igv", $datos["igv"], PDO::PARAM_STR);
+        $stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
+        $stmt->bindParam(":cliente", $datos["cliente"], PDO::PARAM_STR);
+        $stmt->bindParam(":vendedor", $datos["vendedor"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+        $stmt->bindParam(":doc_origen", $datos["doc_origen"], PDO::PARAM_STR);
+        $stmt->bindParam(":tipo_documento", $datos["tipo_documento"], PDO::PARAM_STR);
+        $stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+        
+
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+
+    }
+
+     	/*
+	* EDITAR DOCUMENTO  VENTA CON NOTA DE CREDITO O DEBITO
+	*/
+	static public function mdlEditarVentaNota($datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE ventajf SET 
+                                                        tipo = :tipo,
+                                                        documento = :documento,
+                                                        neto = :neto,
+                                                        igv = :igv,
+                                                        total = :total,
+                                                        cliente = :cliente,
+                                                        vendedor = :vendedor,
+                                                        fecha = :fecha,
+                                                        doc_origen = :doc_origen,
+                                                        usuario = :usuario
+                                                    WHERE tipo = :tipo
+                                                    AND documento = :documento");
+
+        $stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
+        $stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
+        $stmt->bindParam(":neto", $datos["neto"], PDO::PARAM_STR);
+        $stmt->bindParam(":igv", $datos["igv"], PDO::PARAM_STR);
+        $stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
+        $stmt->bindParam(":cliente", $datos["cliente"], PDO::PARAM_STR);
+        $stmt->bindParam(":vendedor", $datos["vendedor"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+        $stmt->bindParam(":doc_origen", $datos["doc_origen"], PDO::PARAM_STR);
+        $stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+        
+
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+
+    }
+
+    
 }

@@ -1743,4 +1743,35 @@ class ModeloProduccion
 		$stmt = null;
 	}  
     
+  /* 
+	* ACTUALIZAR QUINCENA
+	*/
+	static public function mdlActualizarPrecioTiempo($inicio,$fin){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE 
+    entallerjf e 
+    LEFT JOIN articulojf a 
+      ON e.articulo = a.articulo 
+    LEFT JOIN operaciones_detallejf od 
+      ON e.cod_operacion = od.cod_operacion 
+      AND a.modelo = od.modelo SET e.total_precio = (e.cantidad / 12) * precio_doc 
+  WHERE DATE(e.fecha_terminado) BETWEEN :inicio
+    AND :fin ");
+
+		$stmt->bindParam(":inicio", $inicio, PDO::PARAM_STR);
+    $stmt->bindParam(":fin", $fin, PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+      return "ok";
+      
+		} else {
+
+			return "error";
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+	}  
 }

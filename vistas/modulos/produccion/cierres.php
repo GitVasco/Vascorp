@@ -73,6 +73,7 @@
               <th>Total</th>
               <th>Fecha</th>
               <th>Estado</th>
+              <th>Estado Pago</th>
               <th>Acciones</th>
 
             </tr>

@@ -918,4 +918,56 @@ class ModeloCierres{
 		}
 
 	}
+
+	/* 
+	* Método para activar y desactivar un usuario
+	*/
+	static public function mdlPagarCierre($valor1, $valor2){
+
+		$sql = "UPDATE cierresjf SET estado_pago = :estado_pago WHERE guia = :guia ";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":estado_pago", $valor1, PDO::PARAM_STR);
+		$stmt->bindParam(":guia", $valor2, PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt = null;
+	}
+
+	/* 
+	* Método para activar y desactivar un usuario
+	*/
+	static public function mdlPagarCierreServicio($estado,$inicio,$fin){
+
+		$sql = "UPDATE 
+		cierresjf 
+	  SET
+		estado_pago = :estado_pago 
+	  WHERE (DATE(fecha) BETWEEN :inicio 
+		  AND :fin) ";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":estado_pago", $estado, PDO::PARAM_STR);
+		$stmt->bindParam(":inicio", $inicio, PDO::PARAM_STR);
+		$stmt->bindParam(":fin", $fin, PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt = null;
+	}
 }

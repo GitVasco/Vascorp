@@ -1030,7 +1030,7 @@
 
                     <li>
 
-                        <a href="notas-credito">
+                        <a href="ver-nota-credito">
 
                             <i class="fa fa-circle-o text-orange"></i>
                             <span>Notas credito</span>

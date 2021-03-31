@@ -190,19 +190,6 @@
                 </div>
             </div>
 
-            <div class="form-group col-lg-2">
-            <label for="">Motivo</label>
-                <div class="input-group">
-                
-                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
-
-                    <input type="text"  class="form-control input-lg" name="notaMotivo" id="notaMotivo" required>
-
-                </div>
-            </div>
-
-            
-
             <div class="form-group col-lg-3">
             <label for="">Fecha fact.</label>
                 <div class="input-group">
@@ -215,13 +202,48 @@
             </div>
 
             <div class="form-group col-lg-2">
+            <label for="">Motivo</label>
+                <div class="input-group">
+                
+
+                    <select  class="form-control input-lg selectpicker" name="notaMotivo" id="notaMotivo" data-live-search="true" style="width:200px !important" required>
+                    <option value="">Seleccionar motivo</option>
+                    <?php
+                      $item= "tipo_dato";
+                      $valor = "TMOT";
+
+                    $documentos = ControladorCuentas::ctrMostrarPagos($item,$valor);
+
+                    foreach ($documentos as $key => $value) {
+                      echo '<option value="' . $value["codigo"] . '">' .$value["codigo"]. " - " . $value["descripcion"] . '</option>';
+                    }
+
+                    ?>   
+                    </select>
+
+                </div>
+            </div>
+
+            
+            <div class="form-group col-lg-2">
             <label for="">Tipo cont.</label>
                 <div class="input-group">
                 
-                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
 
-                    <input type="text"  class="form-control input-lg" name="notaTipoCont" id="notaTipoCont" required>
+                    <select  class="form-control input-lg selectpicker" name="notaTipoCont" id="notaTipoCont" data-live-search="true" required>
+                    <option value="">Seleccionar tipo contable</option>
+                    <?php
+                      $item= "tipo_dato";
+                      $valor = "TCON";
 
+                    $documentos = ControladorCuentas::ctrMostrarPagos($item,$valor);
+
+                    foreach ($documentos as $key => $value) {
+                      echo '<option value="' . $value["codigo"] . '">' .$value["codigo"]. " - " . $value["descripcion"] . '</option>';
+                    }
+
+                    ?>   
+                    </select>
                 </div>
             </div>
         </div>
@@ -295,7 +317,7 @@
 
             <div class="form-group">
             <label for="">Detalle</label>
-                <textarea class="form-control" rows="8" readonly></textarea>
+                <textarea class="form-control" rows="8" ></textarea>
             </div>
         </div>
     </div>

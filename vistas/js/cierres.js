@@ -986,3 +986,42 @@ $(".daterangepicker.opensleft .ranges li").on("click", function() {
     cargarTablaDetalleCierres(fechaInicial, fechaFinal);
   }
 });
+
+$(".tablaCierres").on("click",".btnPagarCierre",function(){
+	// Capturamos la guia de cierre y el estado de pago
+  
+	var guiaCierre=$(this).attr("guiaCierre");
+	var estadoPago=$(this).attr("estadoPago");
+	//Realizamos el pago por una petición AJAX
+	var datos=new FormData();
+	datos.append("activarGuia",guiaCierre);
+	datos.append("activarPago",estadoPago);
+	$.ajax({
+	url:"ajax/cierres.ajax.php",
+	type:"POST",
+	data:datos,
+	cache:false,
+	contentType:false,
+	processData:false,
+	success:function(respuesta){
+    if(estadoPago == "POR PAGAR"){
+      Command: toastr["warning"]("Por pagar !");
+      
+    }else{
+      Command: toastr["info"]("Pagado exitosamente!");
+    }
+    
+  }
+	});
+	//Cambiamos el estado del botón físicamente
+	if(estadoPago=='PAGADO'){
+	$(this).removeClass("btn-warning");
+	$(this).addClass("btn-primary");
+	$(this).html("PAGADO");
+  $(this).attr("estadoPago","POR PAGAR");}
+  else{
+    $(this).removeClass("btn-primary");
+	  $(this).addClass("btn-warning");
+	  $(this).html("POR PAGAR");
+    $(this).attr("estadoPago","PAGADO");}
+});
