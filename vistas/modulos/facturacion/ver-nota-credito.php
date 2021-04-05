@@ -4,7 +4,7 @@
     
     <h1>
       
-      Administrar bancos
+      Administrar notas de credito/debito
     
     </h1>
 
@@ -12,7 +12,7 @@
       
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
       
-      <li class="active">Administrar bancos</li>
+      <li class="active">Administrar notas de credito/debito</li>
     
     </ol>
 
@@ -26,9 +26,33 @@
   
         <a class="btn btn-primary" href="notas-credito">
           
-          Agregar nota de credito
+          Agregar notas de credito/debito
 
         </a>
+
+        <button type="button" class="btn btn-default pull-right" id="daterange-btnNotasCD">
+          <span>
+            <i class="fa fa-calendar"></i>
+
+            <?php
+
+              if(isset($_GET["fechaInicial"])){
+
+                echo $_GET["fechaInicial"]." - ".$_GET["fechaFinal"];
+
+              }else{
+              
+                echo 'Rango de fecha';
+
+              }
+
+            ?>
+
+          </span>
+
+          <i class="fa fa-caret-down"></i>
+
+        </button>
 
       </div>
         
@@ -39,9 +63,14 @@
         <thead>
          
          <tr>
-           
-           <th>Codigo</th>
-           <th>Descripcion</th>
+           <th>N° </th>
+           <th>Tipo doc.</th>
+           <th>documento</th>
+           <th>Total</th>
+           <th>Cliente</th>
+           <th>Fecha</th>
+           <th>Usuario</th>
+           <th>Estado</th>
            <th>Acciones</th>
 
          </tr> 
@@ -63,5 +92,5 @@
 </div>
 
 <script>
-window.document.title = "Notas de credito"
+window.document.title = "Notas de credito/debito"
 </script>

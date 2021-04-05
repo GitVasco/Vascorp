@@ -861,6 +861,17 @@ class ControladorFacturacion{
     }
 
 
+    /*
+    * MOSTRAR NOTAS DE VENTA CREDITO/DEBITO
+    */
+	static public function ctrRangoFechasNotasCD($fechaInicial, $fechaFinal){
+		$respuesta = ModeloFacturacion::mdlRangoFechasNotasCD( $fechaInicial, $fechaFinal);
+
+		return $respuesta;
+
+    }
+
+
     static public function ctrFacturarGuia(){
 
         if(isset($_POST["codPedido"])){

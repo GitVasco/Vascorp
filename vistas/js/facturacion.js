@@ -482,7 +482,14 @@ $(".btnGuardarNotaCredito").click(function(){
             var monto=$("#notaTotal").val();
             var fecha=$("#notaFecha").val();
             var usuario=$("#notaUsuario").val();
+            //datos de notas cd
             var origen_venta = $("#notaNroFactura").val();
+            var tip_nota = $("#selectNotaDocumento").val();
+            var fecha_origen=$("#notaFechaFactura").val();
+            var motivo=$("#notaMotivo").val();
+            var tip_cont=$("#notaTipoCont").val();
+            var observacion=$("#notaTexto").val();
+            
             var datos = new Array();
             
             $.ajax({
@@ -515,7 +522,12 @@ $(".btnGuardarNotaCredito").click(function(){
                             'cod_pago':'08',
                             'doc_origen':documento,
                             'usuario': usuario,
-                            'origen_venta':origen_venta
+                            'origen_venta':origen_venta,
+                            'tip_nota':tip_nota,
+                            'fecha_origen':fecha_origen,
+                            'motivo':motivo,
+                            'tip_cont':tip_cont,
+                            'observacion':observacion
                         });
                         var cuenta = {"datosCuenta" : datos}
                         
@@ -528,7 +540,7 @@ $(".btnGuardarNotaCredito").click(function(){
                             success:function(respuesta2){
                                 
                                 Command:toastr["success"]("Editado de venta exitosamente!");
-    
+                                Command:toastr["success"]("Editado  de detalle nota exitosamente!");
                             }
     
                         })
@@ -553,7 +565,12 @@ $(".btnGuardarNotaCredito").click(function(){
                             'doc_origen':documento,
                             'usuario': usuario,
                             'tip_doc_venta':'NC',
-                            'origen_venta':origen_venta
+                            'origen_venta':origen_venta,
+                            'tip_nota':tip_nota,
+                            'fecha_origen':fecha_origen,
+                            'motivo':motivo,
+                            'tip_cont':tip_cont,
+                            'observacion':observacion
                         });
                         var cuenta = {"datosCuenta" : datos}
                         
@@ -566,6 +583,8 @@ $(".btnGuardarNotaCredito").click(function(){
                             success:function(respuesta2){
                                 
                                 Command:toastr["success"]("Registrado de venta exitosamente!");
+
+                                Command:toastr["success"]("Registrado  de detalle nota exitosamente!");
     
                             }
     
@@ -588,7 +607,13 @@ $(".btnGuardarNotaCredito").click(function(){
             var monto=$("#notaTotal").val();
             var fecha=$("#notaFecha").val();
             var usuario=$("#notaUsuario").val();
+
             var origen_venta = $("#notaNroFactura").val();
+            var tip_nota = $("#selectNotaDocumento").val();
+            var fecha_origen=$("#notaFechaFactura").val();
+            var motivo=$("#notaMotivo").val();
+            var tip_cont=$("#notaTipoCont").val();
+            var observacion=$("#notaTexto").val();
             var datos = new Array();
             
             $.ajax({
@@ -623,7 +648,12 @@ $(".btnGuardarNotaCredito").click(function(){
                             'doc_origen':documento,
                             'usuario': usuario,
                             'tip_doc_venta':'ND',
-                            'origen_venta':origen_venta
+                            'origen_venta':origen_venta,
+                            'tip_nota':tip_nota,
+                            'fecha_origen':fecha_origen,
+                            'motivo':motivo,
+                            'tip_cont':tip_cont,
+                            'observacion':observacion
                         });
                         var cuenta = {"datosCuenta" : datos}
                         
@@ -656,6 +686,8 @@ $(".btnGuardarNotaCredito").click(function(){
                                                 success:function(respuesta4){
                                                     
                                                     Command:toastr["success"]("Editado  de venta exitosamente!");
+
+                                                    Command:toastr["success"]("Editado  de detalle nota exitosamente!");
                         
                                                 }
                         
@@ -671,6 +703,8 @@ $(".btnGuardarNotaCredito").click(function(){
                                                 success:function(respuesta4){
                                                     
                                                     Command:toastr["success"]("Registrado  de venta exitosamente!");
+
+                                                    Command:toastr["success"]("Registrado  de detalle nota exitosamente!");
                         
                                                 }
                         
@@ -706,7 +740,12 @@ $(".btnGuardarNotaCredito").click(function(){
                             'usuario': usuario,
                             'tip_mov':'+',
                             'tip_doc_venta':'ND',
-                            'origen_venta':origen_venta
+                            'origen_venta':origen_venta,
+                            'tip_nota':tip_nota,
+                            'fecha_origen':fecha_origen,
+                            'motivo':motivo,
+                            'tip_cont':tip_cont,
+                            'observacion':observacion
                         });
                         var cuenta = {"datosCuenta" : datos}
                         
@@ -742,6 +781,7 @@ $(".btnGuardarNotaCredito").click(function(){
                                                 success:function(respuesta4){
                                                     
                                                     Command:toastr["success"]("Editado  de venta exitosamente!");
+                                                    Command:toastr["success"]("Editado  de detalle nota exitosamente!");
                         
                                                 }
                         
@@ -757,6 +797,8 @@ $(".btnGuardarNotaCredito").click(function(){
                                                 success:function(respuesta4){
                                                     
                                                     Command:toastr["success"]("Registrado  de venta exitosamente!");
+
+                                                    Command:toastr["success"]("Registrado  de detalle nota exitosamente!");
                         
                                                 }
                         
@@ -785,7 +827,14 @@ $(".btnGuardarNotaCredito").click(function(){
             var monto=$("#notaTotal").val();
             var fecha=$("#notaFecha").val();
             var usuario=$("#notaUsuario").val();
+
             var origen_venta = $("#notaNroFactura").val();
+            var tip_nota = $("#selectNotaDocumento").val();
+            var fecha_origen=$("#notaFechaFactura").val();
+            var motivo=$("#notaMotivo").val();
+            var tip_cont=$("#notaTipoCont").val();
+            var observacion=$("#notaTexto").val();
+
             var datos = new Array();
             datos.push({
                 'tipo_doc':'08',
@@ -808,7 +857,12 @@ $(".btnGuardarNotaCredito").click(function(){
                 'usuario': usuario,
                 'tip_mov':'+',
                 'tip_doc_venta':'ND',
-                'origen_venta':origen_venta
+                'origen_venta':origen_venta,
+                'tip_nota':tip_nota,
+                'fecha_origen':fecha_origen,
+                'motivo':motivo,
+                'tip_cont':tip_cont,
+                'observacion':observacion
             });
             var cuenta = {"datosCuenta" : datos}
             
@@ -852,6 +906,8 @@ $(".btnGuardarNotaCredito").click(function(){
                             success:function(respuesta4){
                                 
                                 Command:toastr["success"]("Registrado  de venta exitosamente!");
+
+                                Command:toastr["success"]("Registrado  de detalle nota exitosamente!");
     
                             }
     
@@ -865,3 +921,178 @@ $(".btnGuardarNotaCredito").click(function(){
     
     
 });
+
+
+if (localStorage.getItem("capturarRango23") != null) {
+	$("#daterange-btnNotasCD span").html(localStorage.getItem("capturarRango23"));
+	cargarTablaNotaCD(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
+} else {
+	$("#daterange-btnNotasCD span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
+	cargarTablaNotaCD(null, null);
+}
+
+/* 
+* TABLA PARA PRODUCCION TRUSAS
+*/
+function cargarTablaNotaCD(fechaInicial,fechaFinal) {
+	$('.tablaNotaCredito').DataTable( {
+		"ajax": "ajax/facturacion/tabla-notacreditocd.ajax.php?perfil="+$("#perfilOculto").val() +"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
+		"deferRender": true,
+		"retrieve": true,
+		"processing": true,
+		"order": [[1, "desc"]],
+		"pageLength": 20,
+		"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+		"language": {
+
+				"sProcessing":     "Procesando...",
+				"sLengthMenu":     "Mostrar _MENU_ registros",
+				"sZeroRecords":    "No se encontraron resultados",
+				"sEmptyTable":     "Ningún dato disponible en esta tabla",
+				"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+				"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0",
+				"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+				"sInfoPostFix":    "",
+				"sSearch":         "Buscar:",
+				"sUrl":            "",
+				"sInfoThousands":  ",",
+				"sLoadingRecords": "Cargando...",
+				"oPaginate": {
+				"sFirst":    "Primero",
+				"sLast":     "Último",
+				"sNext":     "Siguiente",
+				"sPrevious": "Anterior"
+				},
+				"oAria": {
+					"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+				}
+
+		}
+	} );
+}
+
+
+/*=============================================
+RANGO DE FECHAS
+=============================================*/
+
+
+$("#daterange-btnNotasCD").daterangepicker(
+    {
+      cancelClass: "CancelarNotasCD",
+      locale:{
+		"daysOfWeek": [
+			"Dom",
+			"Lun",
+			"Mar",
+			"Mie",
+			"Jue",
+			"Vie",
+			"Sab"
+		],
+		"monthNames": [
+			"Enero",
+			"Febrero",
+			"Marzo",
+			"Abril",
+			"Mayo",
+			"Junio",
+			"Julio",
+			"Agosto",
+			"Septiembre",
+			"Octubre",
+			"Noviembre",
+			"Diciembre"
+		],
+	  },
+      ranges: {
+        Hoy: [moment(), moment()],
+        Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+        "Últimos 7 días": [moment().subtract(6, "days"), moment()],
+        "Últimos 30 días": [moment().subtract(29, "days"), moment()],
+        "Este mes": [moment().startOf("month"), moment().endOf("month")],
+        "Último mes": [
+          moment()
+            .subtract(1, "month")
+            .startOf("month"),
+          moment()
+            .subtract(1, "month")
+            .endOf("month")
+        ]
+      },
+      
+      startDate: moment(),
+      endDate: moment()
+    },
+    function(start, end) {
+      $("#daterange-btnNotasCD span").html(
+        start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
+      );
+  
+      var fechaInicial = start.format("YYYY-MM-DD");
+  
+      var fechaFinal = end.format("YYYY-MM-DD");
+  
+      var capturarRango23 = $("#daterange-btnNotasCD span").html();
+  
+	  localStorage.setItem("capturarRango23", capturarRango23);
+      localStorage.setItem("fechaInicial", fechaInicial);
+	  localStorage.setItem("fechaFinal", fechaFinal);
+	  
+      // Recargamos la tabla con la información para ser mostrada en la tabla
+      $(".tablaNotaCredito").DataTable().destroy();
+      cargarTablaNotaCD(fechaInicial, fechaFinal);
+    });
+  
+  /*=============================================
+  CANCELAR RANGO DE FECHAS
+  =============================================*/
+  
+  $(".daterangepicker.opensleft .range_inputs .CancelarNotasCD").on(
+    "click",
+    function() {
+      localStorage.removeItem("capturarRango23");
+      localStorage.removeItem("fechaInicial");
+      localStorage.removeItem("fechaFinal");
+      localStorage.clear();
+      window.location = "ver-nota-credito";
+    }
+  );
+  
+  /*=============================================
+  CAPTURAR HOY
+  =============================================*/
+  
+  $(".daterangepicker.opensleft .ranges li").on("click", function() {
+    var textoHoy = $(this).attr("data-range-key");
+  
+    if (textoHoy == "Hoy") {
+      var d = new Date();
+  
+      var dia = d.getDate();
+      var mes = d.getMonth() + 1;
+      var año = d.getFullYear();
+  
+      dia = ("0" + dia).slice(-2);
+      mes = ("0" + mes).slice(-2);
+  
+      var fechaInicial = año + "-" + mes + "-" + dia;
+      var fechaFinal = año + "-" + mes + "-" + dia;
+  
+      localStorage.setItem("capturarRango23", "Hoy");
+      localStorage.setItem("fechaInicial", fechaInicial);
+	  localStorage.setItem("fechaFinal", fechaFinal);
+      // Recargamos la tabla con la información para ser mostrada en la tabla
+      $(".tablaNotaCredito").DataTable().destroy();
+      cargarTablaNotaCD(fechaInicial, fechaFinal);
+    }
+  });
+
+
+$(".tablaNotaCredito").on("click", ".btnEditarNotaCD", function () {
+    var tipo = $(this).attr("tipo");
+    var documento = $(this).attr("documento");
+
+    window.location = "index.php?ruta=editar-nota-credito&tipo="+tipo+"&documento="+documento;
+})

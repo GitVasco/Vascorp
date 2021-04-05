@@ -17,20 +17,49 @@
     </ol>
 
   </section>
+
+  <?php 
+    $tipo = $_GET["tipo"];
+    $documento = $_GET["documento"];
+
+    $venta = ModeloFacturacion::mdlMostraVentaDocumento($documento,$tipo);
+    
+
+    ?>
     <section class="container-fluid col-lg-4">
         <div class="box">
             <div class="box-body">
                 <form method="post">
-                    <div class="form-check">
-                    <label class="form-check-label" for="radio1">
-                        <input type="radio" class="form-check-input optNotas1" id="radio1" name="optNotas1" value="credito" > Notas de Crédito
-                    </label>
-                    </div>
-                    <div class="form-check">
-                    <label class="form-check-label" for="radio2">
-                        <input type="radio" class="form-check-input optNotas1" id="radio2" name="optNotas1" value="debido"> Notas de Débito
-                    </label>
-                    </div>
+
+                 <?php 
+                    if($tipo == 'E05'){
+                        echo'<div class="form-check">
+                        <label class="form-check-label" for="radio1">
+                            <input type="radio" class="form-check-input optNotas1" id="radio1" name="optNotas1" value="credito" checked> Notas de Crédito
+                        </label>
+                        </div>
+                        <div class="form-check">
+                        <label class="form-check-label" for="radio2">
+                            <input type="radio" class="form-check-input optNotas1" id="radio2" name="optNotas1" value="debido" disabled> Notas de Débito
+                        </label>
+                        </div>';
+                    }else{
+                        echo'<div class="form-check">
+                        <label class="form-check-label" for="radio1">
+                            <input type="radio" class="form-check-input optNotas1" id="radio1" name="optNotas1" value="credito" disabled> Notas de Crédito
+                        </label>
+                        </div>
+                        <div class="form-check">
+                        <label class="form-check-label" for="radio2">
+                            <input type="radio" class="form-check-input optNotas1" id="radio2" name="optNotas1" value="debido" checked> Notas de Débito
+                        </label>
+                        </div>';
+
+                    }
+                
+                    
+
+                ?>
                 </form>
             </div>
         
@@ -44,20 +73,18 @@
             <div class="box-body">
             
                 <div class="form-group">
-                <label for=""  class="col-form-label col-lg-4">N° Serie</label>
-                <div class="col-lg-8">
-                <select class="form-control input-lg selectpicker" id="tipoNotaSerie" name="tipoNotaSerie" data-live-search="true">
-                    <option value="">Seleccionar serie</option>
+                    <label for=""  class="col-form-label col-lg-4">N° Serie</label>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control input-md " id="tipoNotaSerie" name="tipoNotaSerie" value="<?php echo substr($venta["documento"],0,4);?>" readonly>
 
-                    </select>
-                </div>
+                    </div>
                     
                 </div>
-
+                <br><br>
                 <div class="form-group">
                     <label for="" class="col-form-label col-lg-4">N° Documento</label>
                     <div class="col-lg-8">
-                    <input type="text" name="tipoNotaDocumento" id="tipoNotaDocumento"  class="form-control input-md" value="0" readonly>
+                        <input type="text" name="tipoNotaDocumento" id="tipoNotaDocumento"  class="form-control input-md" value="<?php echo $venta["documento"];?>" readonly>
                     </div>
                     
                 </div>
@@ -88,16 +115,18 @@
                 
                     <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                    <select class="form-control input-lg selectpicker" data-live-search="true" name="selectNotaCliente" id="selectNotaCliente">
-                    <option value="">Seleccionar cliente</option>
+                    <select class="form-control input-lg selectpicker" data-live-search="true" name="selectNotaCliente" id="selectNotaCliente" >
 
                         <?php
 
-                        $item=null;
-                        $valor = null;
+                        $item = "codigo";
+                        $valor = $venta["cliente"];
 
-                        $clientes = ControladorClientes::ctrMostrarClientes($item,$valor);
-                        foreach ($clientes as $key => $value) {
+                        $clientes = ControladorClientes::ctrMostrarClientesP($item, $valor);
+                        echo '<option value="'.$clientes["codigo"].'">'.$clientes["nombreB"].'</option>';
+
+                        $client2 = ControladorClientes::ctrMostrarClientesP(null, null);
+                        foreach ($client2 as $key => $value) {
                             echo '<option value="' . $value["codigo"] . '">' .$value["codigo"]. " - " .$value["nombre"]. '</option>';
                         }
 
@@ -137,14 +166,16 @@
                     <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
                     <select class="form-control input-lg selectpicker" data-live-search="true" name="selectNotaVendedor" id="selectNotaVendedor">
-                    <option value="">Seleccionar vendedor</option>
                     <?php
 
-                        $item=null;
-                        $valor = null;
+                        $item = "codigo";
+                        $valor = $venta["vendedor"];
 
-                        $clientes = ControladorVendedores::ctrMostrarVendedores($item,$valor);
-                        foreach ($clientes as $key => $value) {
+                        $vendedor = ControladorVendedores::ctrMostrarVendedores($item,$valor);
+                        echo '<option value="'.$vendedor["codigo"].'">'.$vendedor["codigo"]. " - " .$vendedor["descripcion"].'</option>';
+
+                        $vendedores2 = ControladorVendedores::ctrMostrarVendedores(null, null);
+                        foreach ($vendedores2 as $key => $value) {
                             echo '<option value="' . $value["codigo"] . '">' .$value["codigo"]. " - " .$value["descripcion"]. '</option>';
                         }
 
@@ -253,7 +284,7 @@
             <div class="form-group  col-lg-12" style="margin-top:23px">
                 <label for="" class="col-form-label col-lg-6">Sub - Total: </label>
                 <div class="input-group">
-                    <input type="number"  class="form-control input-sm " name="notaSubTotal" id="notaSubTotal" step ="any" min="0">
+                    <input type="number"  class="form-control input-sm " name="notaSubTotal" id="notaSubTotal" step ="any" min="0" value="<?php echo $venta["neto"];?>">
 
                 </div>
             </div>
@@ -261,7 +292,7 @@
             <div class="form-group  col-lg-12">
                 <label for="" class="col-form-label col-lg-6">Descuentos: </label>
                 <div class="input-group">
-                    <input type="number"  class="form-control input-sm" name="notaDsctos" id="notaDsctos" step ="any" min="0" value="0.00">
+                    <input type="number"  class="form-control input-sm" name="notaDsctos" id="notaDsctos" step ="any" min="0" value="<?php echo $venta["dscto"];?>">
 
                 </div>
             </div>
@@ -288,7 +319,7 @@
                 </div>
 
                 <div class="col-lg-6">
-                <input type="number"  class="form-control input-sm" name="notaIGV" id="notaIGV" step ="any" min="0" value="0.00" readonly>
+                <input type="number"  class="form-control input-sm" name="notaIGV" id="notaIGV" step ="any" min="0" value="<?php echo $venta["igv"];?>" readonly>
                 </div>
                 </div>
             </div>
@@ -304,7 +335,7 @@
             <div class="form-group  col-lg-12">
                 <label for="" class="col-form-label col-lg-6">Total:</label>
                 <div class="input-group">
-                    <input type="number"  class="form-control input-sm" name="notaTotal" id="notaTotal" step ="any" min="0" value="0.00" readonly>
+                    <input type="number"  class="form-control input-sm" name="notaTotal" id="notaTotal" step ="any" min="0" value="<?php echo substr($venta["total"],1);?>" readonly>
                     <input type="hidden" name="notaUsuario" id ="notaUsuario" value="<?php echo $_SESSION["id"]?>">
                 </div>
             </div>

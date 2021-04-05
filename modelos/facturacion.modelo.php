@@ -816,5 +816,239 @@ class ModeloFacturacion{
 
     }
 
+     /*
+    * Ingresar Notas de credito o debito 
+    */
+	static public function mdlIngresarNotaCD($datos){
+
+		$sql="INSERT INTO notascd_jf (
+                        tipo,
+                        documento,
+                        tipo_doc,
+                        doc_origen,
+                        fecha_origen,
+                        motivo,
+                        tip_cont,
+                        observacion,
+                        usuario
+                    )
+                    VALUES
+                        (
+                        :tipo,
+                        :documento,
+                        :tipo_doc,
+                        :doc_origen,
+                        :fecha_origen,
+                        :motivo,
+                        :tip_cont,
+                        :observacion,
+                        :usuario
+                        )";
+
+        $stmt=Conexion::conectar()->prepare($sql);
+
+        $stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
+        $stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
+        $stmt->bindParam(":tipo_doc", $datos["tipo_doc"], PDO::PARAM_STR);
+        $stmt->bindParam(":doc_origen", $datos["doc_origen"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecha_origen", $datos["fecha_origen"], PDO::PARAM_STR);
+        $stmt->bindParam(":motivo", $datos["motivo"], PDO::PARAM_STR);
+        $stmt->bindParam(":tip_cont", $datos["tip_cont"], PDO::PARAM_STR);
+        $stmt->bindParam(":observacion", $datos["observacion"], PDO::PARAM_STR);
+        $stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+            return "ok";
+
+		} else {
+
+			return "error";
+		}
+
+		$stmt=null;
+
+    }
+
+     	/*
+	* EDITAR NOTA DE CREDITO O DEBITO
+	*/
+	static public function mdlEditarNotaCD($datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE notascd_jf SET 
+                                                        tipo = :tipo,
+                                                        documento = :documento,
+                                                        tipo_doc = :tipo_doc,
+                                                        doc_origen = :doc_origen,
+                                                        fecha_origen = :fecha_origen,
+                                                        motivo = :motivo,
+                                                        tip_cont = :tip_cont,
+                                                        observacion = :observacion,
+                                                        usuario = :usuario
+                                                    WHERE tipo = :tipo
+                                                    AND documento = :documento");
+
+        $stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
+        $stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
+        $stmt->bindParam(":tipo_doc", $datos["tipo_doc"], PDO::PARAM_STR);
+        $stmt->bindParam(":doc_origen", $datos["doc_origen"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecha_origen", $datos["fecha_origen"], PDO::PARAM_STR);
+        $stmt->bindParam(":motivo", $datos["motivo"], PDO::PARAM_STR);
+        $stmt->bindParam(":tip_cont", $datos["tip_cont"], PDO::PARAM_STR);
+        $stmt->bindParam(":observacion", $datos["observacion"], PDO::PARAM_STR);
+        $stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+        
+
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+
+    }
     
+    /*
+	* Método para mostrar produccion de trusas
+	*/
+	static public function mdlRangoFechasNotasCD($fechaInicial,$fechaFinal){
+
+        if($fechaInicial=="null"){
+    
+          $sql="SELECT 
+          v.tipo,
+          v.tipo_documento,
+          v.documento,
+          v.total,
+          v.cliente,
+          c.nombre,
+          v.usuario,
+          u.nombre as nombres,
+          v.estado,
+          v.fecha 
+        FROM
+          ventajf v 
+          LEFT JOIN clientesjf c 
+            ON v.cliente = c.codigo 
+          LEFT JOIN usuariosjf u 
+            ON v.usuario = u.id 
+        WHERE v.tipo IN ('E05', 'E23') 
+          AND YEAR(v.fecha) = 2021";
+    
+          $stmt=Conexion::conectar()->prepare($sql);
+          
+          $stmt->execute();
+    
+          return $stmt->fetchAll();
+    
+        }else if($fechaInicial == $fechaFinal){
+    
+          $sql="SELECT 
+          v.tipo,
+          v.tipo_documento,
+          v.documento,
+          v.total,
+          v.cliente,
+          c.nombre,
+          v.usuario,
+          u.nombre as nombres,
+          v.estado,
+          v.fecha 
+        FROM
+          ventajf v 
+          LEFT JOIN clientesjf c 
+            ON v.cliente = c.codigo 
+          LEFT JOIN usuariosjf u 
+            ON v.usuario = u.id 
+        WHERE v.tipo IN ('E05', 'E23') 
+          AND DATE(v.fecha)  like '%$fechaFinal%' ";
+    
+          $stmt=Conexion::conectar()->prepare($sql);
+    
+          $stmt->bindParam(":mes", $mes, PDO::PARAM_STR);
+    
+          $stmt->execute();
+          
+          return $stmt->fetchAll();
+    
+        }else{
+          $fechaActual = new DateTime();
+                $fechaActual ->add(new DateInterval("P1D"));
+                $fechaActualMasUno = $fechaActual->format("Y-m-d");
+    
+                $fechaFinal2 = new DateTime($fechaFinal);
+                $fechaFinal2 ->add(new DateInterval("P1D"));
+                $fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+    
+                if($fechaFinalMasUno == $fechaActualMasUno){
+            $sql="SELECT 
+            v.tipo,
+            v.tipo_documento,
+            v.documento,
+            v.total,
+            v.cliente,
+            c.nombre,
+            v.usuario,
+            u.nombre as nombres,
+            v.estado,
+            v.fecha 
+          FROM
+            ventajf v 
+            LEFT JOIN clientesjf c 
+              ON v.cliente = c.codigo 
+            LEFT JOIN usuariosjf u 
+              ON v.usuario = u.id 
+          WHERE v.tipo IN ('E05', 'E23') 
+            AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'";
+    
+          $stmt=Conexion::conectar()->prepare($sql);
+    
+          $stmt->bindParam(":mes", $mes, PDO::PARAM_STR);
+    
+          $stmt->execute();
+    
+          return $stmt->fetchAll();
+    
+          }else{
+    
+            $sql="SELECT 
+            v.tipo,
+            v.tipo_documento,
+            v.documento,
+            v.total,
+            v.cliente,
+            c.nombre,
+            v.usuario,
+            u.nombre as nombres,
+            v.estado,
+            v.fecha 
+          FROM
+            ventajf v 
+            LEFT JOIN clientesjf c 
+              ON v.cliente = c.codigo 
+            LEFT JOIN usuariosjf u 
+              ON v.usuario = u.id 
+          WHERE v.tipo IN ('E05', 'E23') 
+            AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'";
+    
+            $stmt=Conexion::conectar()->prepare($sql);
+    
+            $stmt->bindParam(":mes", $mes, PDO::PARAM_STR);
+    
+            $stmt->execute();
+    
+            return $stmt->fetchAll();
+          }
+    
+        }
+    
+          $stmt=null;
+    
+      }
 }
