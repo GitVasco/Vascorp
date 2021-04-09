@@ -862,10 +862,81 @@ class ControladorFacturacion{
 
 
     /*
-    * MOSTRAR NOTAS DE VENTA CREDITO/DEBITO
+    * MOSTRAR RANGO DE FECHAS DE NOTAS DE VENTA CREDITO/DEBITO
     */
 	static public function ctrRangoFechasNotasCD($fechaInicial, $fechaFinal){
 		$respuesta = ModeloFacturacion::mdlRangoFechasNotasCD( $fechaInicial, $fechaFinal);
+
+		return $respuesta;
+
+    }
+
+     /*
+    * MOSTRAR RANGO DE FECHAS DE FACTURAS
+    */
+	static public function ctrRangoFechasFacturas($fechaInicial, $fechaFinal){
+		$respuesta = ModeloFacturacion::mdlRangoFechasNotasCD( $fechaInicial, $fechaFinal);
+
+		return $respuesta;
+
+    }
+
+     /*
+    * MOSTRAR RANGO DE FECHA DE BOLETAS
+    */
+	static public function ctrRangoFechasBoletas($fechaInicial, $fechaFinal){
+		$respuesta = ModeloFacturacion::mdlRangoFechasBoletas( $fechaInicial, $fechaFinal);
+
+		return $respuesta;
+
+    }
+
+     /*
+    * MOSTRAR RANGO DE FECHA DE PROFORMAS
+    */
+	static public function ctrRangoFechasProformas($fechaInicial, $fechaFinal){
+		$respuesta = ModeloFacturacion::mdlRangoFechasProformas( $fechaInicial, $fechaFinal);
+
+		return $respuesta;
+
+    }
+
+    /*
+    * MOSTRAR VENTA DE NOTAS PARA IMPRESION
+    */
+	static public function ctrMostrarVentaImpresion($documento, $tipo){
+		$respuesta = ModeloFacturacion::mdlMostrarVentaImpresion( $documento, $tipo);
+
+		return $respuesta;
+
+    }
+
+    /*
+    * MOSTRAR MODELO DE NOTAS PARA IMPRESION
+    */
+	static public function ctrMostrarModeloImpresion($documento, $tipo){
+		$respuesta = ModeloFacturacion::mdlMostrarModeloImpresion( $documento, $tipo);
+
+		return $respuesta;
+
+    }
+
+    /*
+    * MOSTRAR MODELO DE PROFORMAS PARA IMPRESION
+    */
+	static public function ctrMostrarModeloProforma($documento, $tipo){
+		$respuesta = ModeloFacturacion::mdlMostrarModeloProforma( $documento, $tipo);
+
+		return $respuesta;
+
+    }
+
+
+    /*
+    * MOSTRAR UNIDADES DE BOLETA Y FACTURA PARA IMPRESION
+    */
+	static public function ctrMostrarUnidadesImpresion($documento, $tipo){
+		$respuesta = ModeloFacturacion::mdlMostrarUnidadesImpresion( $documento, $tipo);
 
 		return $respuesta;
 

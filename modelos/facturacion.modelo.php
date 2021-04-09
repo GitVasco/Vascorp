@@ -341,6 +341,7 @@ class ModeloFacturacion{
 		if($valor == null){
 
 			$sql="SELECT
+                    v.tipo,
                     v.tipo_documento,
                     v.documento,
                     v.total,
@@ -639,6 +640,171 @@ class ModeloFacturacion{
 
 	}
 
+  /*
+    * MOSTRAR IMPRESION DE FACTURA
+    */
+	static public function mdlMostrarVentaImpresion($valor, $tipoDoc){
+
+			$sql="SELECT 
+      v.tipo,
+      v.documento,
+      v.neto,
+      v.igv,
+      v.dscto,
+      v.total,
+      n.observacion,
+      n.doc_origen,
+      DATE_FORMAT(n.fecha_origen,'%d/%m/%Y') AS fecha_origen,
+      v.cliente,
+      c.nombre,
+      c.documento as dni,
+      c.direccion,
+      CONCAT(u.distrito, ' / ', u.provincia) AS nom_ubigeo,
+      u.departamento,
+      c.ubigeo,
+      v.agencia,
+      DATE_FORMAT(v.fecha,'%d/%m/%Y') AS fecha,
+      v.tipo_documento,
+      v.lista_precios,
+      v.condicion_venta,
+      cv.descripcion,
+      v.vendedor,
+      ven.descripcion AS nom_vendedor,
+      cv.dias,
+      v.doc_destino,
+      v.doc_origen 
+    FROM
+      ventajf v 
+      LEFT JOIN condiciones_ventajf cv 
+        ON v.condicion_venta = cv.id 
+      LEFT JOIN clientesjf c 
+        ON v.cliente = c.codigo 
+      LEFT JOIN ubigeo u 
+        ON c.ubigeo = u.codigo 
+        LEFT JOIN notascd_jf n
+        ON v.documento=n.documento AND v.tipo=n.tipo
+      LEFT JOIN 
+        (SELECT 
+          codigo,
+          descripcion 
+        FROM
+          maestrajf m 
+        WHERE m.tipo_dato = 'TVEND') ven 
+        ON v.vendedor = ven.codigo 
+    WHERE v.documento = :codigo
+    AND v.tipo = :tipo_doc";
+
+        $stmt=Conexion::conectar()->prepare($sql);
+
+        $stmt -> bindParam(":codigo", $valor, PDO::PARAM_INT);
+        $stmt -> bindParam(":tipo_doc", $tipoDoc, PDO::PARAM_INT);
+
+		$stmt->execute();
+
+		return $stmt->fetch();
+
+
+		$stmt=null;
+
+	}
+
+  /*
+    * MOSTRAR MODELO PARA NC , FACTURA Y BOLETA
+    */
+	static public function mdlMostrarModeloImpresion($valor, $tipoDoc){
+
+    $sql="SELECT 
+    a.modelo,
+    ROUND(SUM(cantidad), 0) AS cantidad,
+    'C62' AS unidad,
+    a.nombre,
+    ROUND(m.precio, 2) AS precio,
+    ROUND(m.dscto1, 2) AS dscto1,
+    ROUND(SUM(m.cantidad * m.precio), 2) AS total 
+  FROM
+    movimientosjf_2021 m 
+    LEFT JOIN articulojf a 
+      ON m.articulo = a.articulo 
+  WHERE m.tipo = :tipo_doc 
+    AND m.documento = :codigo 
+  GROUP BY a.modelo ";
+
+      $stmt=Conexion::conectar()->prepare($sql);
+
+      $stmt -> bindParam(":codigo", $valor, PDO::PARAM_STR);
+      $stmt -> bindParam(":tipo_doc", $tipoDoc, PDO::PARAM_STR);
+
+  $stmt->execute();
+
+  return $stmt->fetchAll();
+
+
+  $stmt=null;
+
+}
+
+ /*
+    * MOSTRAR MODELO PROFORMA IMPRESION
+    */
+    static public function mdlMostrarModeloProforma($valor, $tipoDoc){
+
+      $sql="SELECT 
+      a.modelo,
+      ROUND(SUM(cantidad), 0) AS cantidad,
+      'C62' AS unidad,
+      a.nombre,
+      ROUND(m.precio * 1.18, 2) AS precio,
+      ROUND(m.dscto1, 2) AS dscto1,
+      ROUND(SUM(m.cantidad * m.precio) * 1.18, 2) AS total 
+    FROM
+      movimientosjf_2021 m 
+      LEFT JOIN articulojf a 
+        ON m.articulo = a.articulo
+    WHERE m.tipo = :tipo_doc 
+      AND m.documento = :codigo 
+    GROUP BY a.modelo ";
+  
+        $stmt=Conexion::conectar()->prepare($sql);
+  
+        $stmt -> bindParam(":codigo", $valor, PDO::PARAM_STR);
+        $stmt -> bindParam(":tipo_doc", $tipoDoc, PDO::PARAM_STR);
+  
+    $stmt->execute();
+  
+    return $stmt->fetchAll();
+  
+  
+    $stmt=null;
+  
+  }
+
+ /*
+    * MOSTRAR NUMERO DE UNIDADES BOLETA FACTURA
+    */
+    static public function mdlMostrarUnidadesImpresion($valor, $tipoDoc){
+
+      $sql="SELECT 
+      m.documento,
+      ROUND(SUM(cantidad), 0) AS cantidad 
+    FROM
+      movimientosjf_2021 m 
+    WHERE m.tipo = :tipo_doc 
+      AND m.documento = :codigo 
+    GROUP BY m.documento  ";
+  
+        $stmt=Conexion::conectar()->prepare($sql);
+  
+        $stmt -> bindParam(":codigo", $valor, PDO::PARAM_STR);
+        $stmt -> bindParam(":tipo_doc", $tipoDoc, PDO::PARAM_STR);
+  
+    $stmt->execute();
+  
+    return $stmt->fetch();
+  
+  
+    $stmt=null;
+  
+  }
     /*=============================================
 	MOSTRAR TIPO DE PAGO
 	=============================================*/
@@ -1051,4 +1217,562 @@ class ModeloFacturacion{
           $stmt=null;
     
       }
+
+        /*
+	* Método para mostrar produccion de trusas
+	*/
+	static public function mdlRangoFechasFacturas($fechaInicial,$fechaFinal){
+
+    if($fechaInicial=="null"){
+
+      $sql="SELECT
+      v.tipo,
+      v.tipo_documento,
+      v.documento,
+      v.total,
+      v.cliente,
+      c.nombre,
+      c.tipo_documento AS tip_doc,
+      c.documento AS num_doc,
+      v.vendedor,
+      v.fecha,
+      cv.descripcion,
+      v.doc_destino,
+      LEFT(v.doc_destino,4) AS serie_dest,
+      SUBSTR(v.doc_destino,5,8) AS nro_dest,
+      v.estado,
+      IFNULL(a.nombre, '') AS agencia,
+      IFNULL(u.nom_ubi, '') AS ubigeo
+  FROM
+      ventajf v
+      LEFT JOIN clientesjf c
+      ON v.cliente = c.codigo
+      LEFT JOIN condiciones_ventajf cv
+      ON v.condicion_venta = cv.id
+      LEFT JOIN agenciasjf a
+      ON v.agencia = a.id
+      LEFT JOIN ubigeojf u
+      ON c.ubigeo = u.cod_ubi
+  WHERE v.tipo = 'S03'
+      AND v.estado = 'FACTURADO'
+      AND YEAR(v.fecha) = 2021";
+
+      $stmt=Conexion::conectar()->prepare($sql);
+      
+      $stmt->execute();
+
+      return $stmt->fetchAll();
+
+    }else if($fechaInicial == $fechaFinal){
+
+      $sql="SELECT
+      v.tipo,
+      v.tipo_documento,
+      v.documento,
+      v.total,
+      v.cliente,
+      c.nombre,
+      c.tipo_documento AS tip_doc,
+      c.documento AS num_doc,
+      v.vendedor,
+      v.fecha,
+      cv.descripcion,
+      v.doc_destino,
+      LEFT(v.doc_destino,4) AS serie_dest,
+      SUBSTR(v.doc_destino,5,8) AS nro_dest,
+      v.estado,
+      IFNULL(a.nombre, '') AS agencia,
+      IFNULL(u.nom_ubi, '') AS ubigeo
+  FROM
+      ventajf v
+      LEFT JOIN clientesjf c
+      ON v.cliente = c.codigo
+      LEFT JOIN condiciones_ventajf cv
+      ON v.condicion_venta = cv.id
+      LEFT JOIN agenciasjf a
+      ON v.agencia = a.id
+      LEFT JOIN ubigeojf u
+      ON c.ubigeo = u.cod_ubi
+  WHERE v.tipo = 'S03'
+      AND v.estado = 'FACTURADO'
+      AND DATE(v.fecha)  like '%$fechaFinal%' ";
+
+      $stmt=Conexion::conectar()->prepare($sql);
+
+      $stmt->bindParam(":mes", $mes, PDO::PARAM_STR);
+
+      $stmt->execute();
+      
+      return $stmt->fetchAll();
+
+    }else{
+      $fechaActual = new DateTime();
+            $fechaActual ->add(new DateInterval("P1D"));
+            $fechaActualMasUno = $fechaActual->format("Y-m-d");
+
+            $fechaFinal2 = new DateTime($fechaFinal);
+            $fechaFinal2 ->add(new DateInterval("P1D"));
+            $fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+
+            if($fechaFinalMasUno == $fechaActualMasUno){
+        $sql="SELECT
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.total,
+        v.cliente,
+        c.nombre,
+        c.tipo_documento AS tip_doc,
+        c.documento AS num_doc,
+        v.vendedor,
+        v.fecha,
+        cv.descripcion,
+        v.doc_destino,
+        LEFT(v.doc_destino,4) AS serie_dest,
+        SUBSTR(v.doc_destino,5,8) AS nro_dest,
+        v.estado,
+        IFNULL(a.nombre, '') AS agencia,
+        IFNULL(u.nom_ubi, '') AS ubigeo
+    FROM
+        ventajf v
+        LEFT JOIN clientesjf c
+        ON v.cliente = c.codigo
+        LEFT JOIN condiciones_ventajf cv
+        ON v.condicion_venta = cv.id
+        LEFT JOIN agenciasjf a
+        ON v.agencia = a.id
+        LEFT JOIN ubigeojf u
+        ON c.ubigeo = u.cod_ubi
+    WHERE v.tipo = 'S03'
+        AND v.estado = 'FACTURADO'
+        AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'";
+
+      $stmt=Conexion::conectar()->prepare($sql);
+
+      $stmt->bindParam(":mes", $mes, PDO::PARAM_STR);
+
+      $stmt->execute();
+
+      return $stmt->fetchAll();
+
+      }else{
+
+        $sql="SELECT
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.total,
+        v.cliente,
+        c.nombre,
+        c.tipo_documento AS tip_doc,
+        c.documento AS num_doc,
+        v.vendedor,
+        v.fecha,
+        cv.descripcion,
+        v.doc_destino,
+        LEFT(v.doc_destino,4) AS serie_dest,
+        SUBSTR(v.doc_destino,5,8) AS nro_dest,
+        v.estado,
+        IFNULL(a.nombre, '') AS agencia,
+        IFNULL(u.nom_ubi, '') AS ubigeo
+    FROM
+        ventajf v
+        LEFT JOIN clientesjf c
+        ON v.cliente = c.codigo
+        LEFT JOIN condiciones_ventajf cv
+        ON v.condicion_venta = cv.id
+        LEFT JOIN agenciasjf a
+        ON v.agencia = a.id
+        LEFT JOIN ubigeojf u
+        ON c.ubigeo = u.cod_ubi
+    WHERE v.tipo = 'S03'
+        AND v.estado = 'FACTURADO'
+        AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'";
+
+        $stmt=Conexion::conectar()->prepare($sql);
+
+        $stmt->bindParam(":mes", $mes, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+      }
+
+    }
+
+      $stmt=null;
+
+  }
+
+    /*
+	* Método para mostrar produccion de trusas
+	*/
+	static public function mdlRangoFechasBoletas($fechaInicial,$fechaFinal){
+
+    if($fechaInicial=="null"){
+
+      $sql="SELECT
+      v.tipo,
+      v.tipo_documento,
+      v.documento,
+      v.total,
+      v.cliente,
+      c.nombre,
+      c.tipo_documento AS tip_doc,
+      c.documento AS num_doc,
+      v.vendedor,
+      v.fecha,
+      cv.descripcion,
+      v.doc_destino,
+      LEFT(v.doc_destino,4) AS serie_dest,
+      SUBSTR(v.doc_destino,5,8) AS nro_dest,
+      v.estado,
+      IFNULL(a.nombre, '') AS agencia,
+      IFNULL(u.nom_ubi, '') AS ubigeo
+  FROM
+      ventajf v
+      LEFT JOIN clientesjf c
+      ON v.cliente = c.codigo
+      LEFT JOIN condiciones_ventajf cv
+      ON v.condicion_venta = cv.id
+      LEFT JOIN agenciasjf a
+      ON v.agencia = a.id
+      LEFT JOIN ubigeojf u
+      ON c.ubigeo = u.cod_ubi
+  WHERE v.tipo = 'S02'
+      AND v.estado = 'FACTURADO'
+      AND YEAR(v.fecha) = 2021";
+
+      $stmt=Conexion::conectar()->prepare($sql);
+      
+      $stmt->execute();
+
+      return $stmt->fetchAll();
+
+    }else if($fechaInicial == $fechaFinal){
+
+      $sql="SELECT
+      v.tipo,
+      v.tipo_documento,
+      v.documento,
+      v.total,
+      v.cliente,
+      c.nombre,
+      c.tipo_documento AS tip_doc,
+      c.documento AS num_doc,
+      v.vendedor,
+      v.fecha,
+      cv.descripcion,
+      v.doc_destino,
+      LEFT(v.doc_destino,4) AS serie_dest,
+      SUBSTR(v.doc_destino,5,8) AS nro_dest,
+      v.estado,
+      IFNULL(a.nombre, '') AS agencia,
+      IFNULL(u.nom_ubi, '') AS ubigeo
+  FROM
+      ventajf v
+      LEFT JOIN clientesjf c
+      ON v.cliente = c.codigo
+      LEFT JOIN condiciones_ventajf cv
+      ON v.condicion_venta = cv.id
+      LEFT JOIN agenciasjf a
+      ON v.agencia = a.id
+      LEFT JOIN ubigeojf u
+      ON c.ubigeo = u.cod_ubi
+  WHERE v.tipo = 'S02'
+      AND v.estado = 'FACTURADO'
+      AND DATE(v.fecha)  like '%$fechaFinal%' ";
+
+      $stmt=Conexion::conectar()->prepare($sql);
+
+      $stmt->bindParam(":mes", $mes, PDO::PARAM_STR);
+
+      $stmt->execute();
+      
+      return $stmt->fetchAll();
+
+    }else{
+      $fechaActual = new DateTime();
+            $fechaActual ->add(new DateInterval("P1D"));
+            $fechaActualMasUno = $fechaActual->format("Y-m-d");
+
+            $fechaFinal2 = new DateTime($fechaFinal);
+            $fechaFinal2 ->add(new DateInterval("P1D"));
+            $fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+
+            if($fechaFinalMasUno == $fechaActualMasUno){
+        $sql="SELECT
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.total,
+        v.cliente,
+        c.nombre,
+        c.tipo_documento AS tip_doc,
+        c.documento AS num_doc,
+        v.vendedor,
+        v.fecha,
+        cv.descripcion,
+        v.doc_destino,
+        LEFT(v.doc_destino,4) AS serie_dest,
+        SUBSTR(v.doc_destino,5,8) AS nro_dest,
+        v.estado,
+        IFNULL(a.nombre, '') AS agencia,
+        IFNULL(u.nom_ubi, '') AS ubigeo
+    FROM
+        ventajf v
+        LEFT JOIN clientesjf c
+        ON v.cliente = c.codigo
+        LEFT JOIN condiciones_ventajf cv
+        ON v.condicion_venta = cv.id
+        LEFT JOIN agenciasjf a
+        ON v.agencia = a.id
+        LEFT JOIN ubigeojf u
+        ON c.ubigeo = u.cod_ubi
+    WHERE v.tipo = 'S02'
+        AND v.estado = 'FACTURADO'
+        AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'";
+
+      $stmt=Conexion::conectar()->prepare($sql);
+
+      $stmt->bindParam(":mes", $mes, PDO::PARAM_STR);
+
+      $stmt->execute();
+
+      return $stmt->fetchAll();
+
+      }else{
+
+        $sql="SELECT
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.total,
+        v.cliente,
+        c.nombre,
+        c.tipo_documento AS tip_doc,
+        c.documento AS num_doc,
+        v.vendedor,
+        v.fecha,
+        cv.descripcion,
+        v.doc_destino,
+        LEFT(v.doc_destino,4) AS serie_dest,
+        SUBSTR(v.doc_destino,5,8) AS nro_dest,
+        v.estado,
+        IFNULL(a.nombre, '') AS agencia,
+        IFNULL(u.nom_ubi, '') AS ubigeo
+    FROM
+        ventajf v
+        LEFT JOIN clientesjf c
+        ON v.cliente = c.codigo
+        LEFT JOIN condiciones_ventajf cv
+        ON v.condicion_venta = cv.id
+        LEFT JOIN agenciasjf a
+        ON v.agencia = a.id
+        LEFT JOIN ubigeojf u
+        ON c.ubigeo = u.cod_ubi
+    WHERE v.tipo = 'S02'
+        AND v.estado = 'FACTURADO'
+        AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'";
+
+        $stmt=Conexion::conectar()->prepare($sql);
+
+        $stmt->bindParam(":mes", $mes, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+      }
+
+    }
+
+      $stmt=null;
+
+  }
+
+    /*
+	* Método para mostrar produccion de trusas
+	*/
+	static public function mdlRangoFechasProformas($fechaInicial,$fechaFinal){
+
+    if($fechaInicial=="null"){
+
+      $sql="SELECT
+      v.tipo,
+      v.tipo_documento,
+      v.documento,
+      v.total,
+      v.cliente,
+      c.nombre,
+      c.tipo_documento AS tip_doc,
+      c.documento AS num_doc,
+      v.vendedor,
+      v.fecha,
+      cv.descripcion,
+      v.doc_destino,
+      LEFT(v.doc_destino,4) AS serie_dest,
+      SUBSTR(v.doc_destino,5,8) AS nro_dest,
+      v.estado,
+      IFNULL(a.nombre, '') AS agencia,
+      IFNULL(u.nom_ubi, '') AS ubigeo
+  FROM
+      ventajf v
+      LEFT JOIN clientesjf c
+      ON v.cliente = c.codigo
+      LEFT JOIN condiciones_ventajf cv
+      ON v.condicion_venta = cv.id
+      LEFT JOIN agenciasjf a
+      ON v.agencia = a.id
+      LEFT JOIN ubigeojf u
+      ON c.ubigeo = u.cod_ubi
+  WHERE v.tipo = 'S70'
+      AND v.estado = 'FACTURADO'
+      AND YEAR(v.fecha) = 2021";
+
+      $stmt=Conexion::conectar()->prepare($sql);
+      
+      $stmt->execute();
+
+      return $stmt->fetchAll();
+
+    }else if($fechaInicial == $fechaFinal){
+
+      $sql="SELECT
+      v.tipo,
+      v.tipo_documento,
+      v.documento,
+      v.total,
+      v.cliente,
+      c.nombre,
+      c.tipo_documento AS tip_doc,
+      c.documento AS num_doc,
+      v.vendedor,
+      v.fecha,
+      cv.descripcion,
+      v.doc_destino,
+      LEFT(v.doc_destino,4) AS serie_dest,
+      SUBSTR(v.doc_destino,5,8) AS nro_dest,
+      v.estado,
+      IFNULL(a.nombre, '') AS agencia,
+      IFNULL(u.nom_ubi, '') AS ubigeo
+  FROM
+      ventajf v
+      LEFT JOIN clientesjf c
+      ON v.cliente = c.codigo
+      LEFT JOIN condiciones_ventajf cv
+      ON v.condicion_venta = cv.id
+      LEFT JOIN agenciasjf a
+      ON v.agencia = a.id
+      LEFT JOIN ubigeojf u
+      ON c.ubigeo = u.cod_ubi
+  WHERE v.tipo = 'S70'
+      AND v.estado = 'FACTURADO'
+      AND DATE(v.fecha)  like '%$fechaFinal%' ";
+
+      $stmt=Conexion::conectar()->prepare($sql);
+
+      $stmt->bindParam(":mes", $mes, PDO::PARAM_STR);
+
+      $stmt->execute();
+      
+      return $stmt->fetchAll();
+
+    }else{
+      $fechaActual = new DateTime();
+            $fechaActual ->add(new DateInterval("P1D"));
+            $fechaActualMasUno = $fechaActual->format("Y-m-d");
+
+            $fechaFinal2 = new DateTime($fechaFinal);
+            $fechaFinal2 ->add(new DateInterval("P1D"));
+            $fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+
+            if($fechaFinalMasUno == $fechaActualMasUno){
+        $sql="SELECT
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.total,
+        v.cliente,
+        c.nombre,
+        c.tipo_documento AS tip_doc,
+        c.documento AS num_doc,
+        v.vendedor,
+        v.fecha,
+        cv.descripcion,
+        v.doc_destino,
+        LEFT(v.doc_destino,4) AS serie_dest,
+        SUBSTR(v.doc_destino,5,8) AS nro_dest,
+        v.estado,
+        IFNULL(a.nombre, '') AS agencia,
+        IFNULL(u.nom_ubi, '') AS ubigeo
+    FROM
+        ventajf v
+        LEFT JOIN clientesjf c
+        ON v.cliente = c.codigo
+        LEFT JOIN condiciones_ventajf cv
+        ON v.condicion_venta = cv.id
+        LEFT JOIN agenciasjf a
+        ON v.agencia = a.id
+        LEFT JOIN ubigeojf u
+        ON c.ubigeo = u.cod_ubi
+    WHERE v.tipo = 'S70'
+        AND v.estado = 'FACTURADO'
+        AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'";
+
+      $stmt=Conexion::conectar()->prepare($sql);
+
+      $stmt->bindParam(":mes", $mes, PDO::PARAM_STR);
+
+      $stmt->execute();
+
+      return $stmt->fetchAll();
+
+      }else{
+
+        $sql="SELECT
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.total,
+        v.cliente,
+        c.nombre,
+        c.tipo_documento AS tip_doc,
+        c.documento AS num_doc,
+        v.vendedor,
+        v.fecha,
+        cv.descripcion,
+        v.doc_destino,
+        LEFT(v.doc_destino,4) AS serie_dest,
+        SUBSTR(v.doc_destino,5,8) AS nro_dest,
+        v.estado,
+        IFNULL(a.nombre, '') AS agencia,
+        IFNULL(u.nom_ubi, '') AS ubigeo
+    FROM
+        ventajf v
+        LEFT JOIN clientesjf c
+        ON v.cliente = c.codigo
+        LEFT JOIN condiciones_ventajf cv
+        ON v.condicion_venta = cv.id
+        LEFT JOIN agenciasjf a
+        ON v.agencia = a.id
+        LEFT JOIN ubigeojf u
+        ON c.ubigeo = u.cod_ubi
+    WHERE v.tipo = 'S70'
+        AND v.estado = 'FACTURADO'
+        AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'";
+
+        $stmt=Conexion::conectar()->prepare($sql);
+
+        $stmt->bindParam(":mes", $mes, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+      }
+
+    }
+
+      $stmt=null;
+
+  }
 }

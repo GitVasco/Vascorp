@@ -36,8 +36,18 @@ $(".tablaGuiasRemision").DataTable({
 /*
 * cargamos la tabla para FACTURAS
 */
+if (localStorage.getItem("capturarRango24") != null) {
+	$("#daterange-btnFactura span").html(localStorage.getItem("capturarRango24"));
+	cargarTablaFactura(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
+} else {
+	$("#daterange-btnFactura span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
+	cargarTablaFactura(null, null);
+}
+
+function cargarTablaFactura(fechaInicial,fechaFinal) {
+
 $(".tablaFacturas").DataTable({
-    ajax: "ajax/facturacion/tabla-facturas.ajax.php",
+    ajax: "ajax/facturacion/tabla-facturas.ajax.php?perfil="+$("#perfilOculto").val() +"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
     deferRender: true,
     retrieve: true,
     processing: true,
@@ -67,12 +77,23 @@ $(".tablaFacturas").DataTable({
         }
     }
 });
+}
 
 /*
-* cargamos la tabla para FACTURAS
+* cargamos la tabla para BOLETAS
 */
+
+if (localStorage.getItem("capturarRango25") != null) {
+	$("#daterange-btnBoleta span").html(localStorage.getItem("capturarRango25"));
+	cargarTablaBoleta(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
+} else {
+	$("#daterange-btnBoleta span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
+	cargarTablaBoleta(null, null);
+}
+
+function cargarTablaBoleta(fechaInicial,fechaFinal) {
 $(".tablaBoletas").DataTable({
-    ajax: "ajax/facturacion/tabla-boletas.ajax.php",
+    ajax: "ajax/facturacion/tabla-boletas.ajax.php?perfil="+$("#perfilOculto").val() +"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
     deferRender: true,
     retrieve: true,
     processing: true,
@@ -102,6 +123,52 @@ $(".tablaBoletas").DataTable({
         }
     }
 });
+}
+
+/*
+* cargamos la tabla para PROFORMAS
+*/
+if (localStorage.getItem("capturarRango26") != null) {
+	$("#daterange-btnProforma span").html(localStorage.getItem("capturarRango26"));
+	cargarTablaProforma(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
+} else {
+	$("#daterange-btnProforma span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
+	cargarTablaProforma(null, null);
+}
+
+function cargarTablaProforma(fechaInicial,fechaFinal) {
+$(".tablaProformas").DataTable({
+    ajax: "ajax/facturacion/tabla-proformas.ajax.php?perfil="+$("#perfilOculto").val() +"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
+    deferRender: true,
+    retrieve: true,
+    processing: true,
+    "order": [[1, "desc"]],
+    language: {
+        sProcessing: "Procesando...",
+        sLengthMenu: "Mostrar _MENU_ registros",
+        sZeroRecords: "No se encontraron resultados",
+        sEmptyTable: "Ningún dato disponible en esta tabla",
+        sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+        sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
+        sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+        sInfoPostFix: "",
+        sSearch: "Buscar:",
+        sUrl: "",
+        sInfoThousands: ",",
+        sLoadingRecords: "Cargando...",
+        oPaginate: {
+            sFirst: "Primero",
+            sLast: "Último",
+            sNext: "Siguiente",
+            sPrevious: "Anterior"
+        },
+        oAria: {
+            sSortAscending: ": Activar para ordenar la columna de manera ascendente",
+            sSortDescending: ": Activar para ordenar la columna de manera descendente"
+        }
+    }
+});
+}
 /*
 * ACTIVAR MODAL A
 */
@@ -277,6 +344,7 @@ $(".box").on("change", ".optNotas1", function () {
     var nota = $(this).val();
     
     var serie = $("#tipoNotaSerie");
+    var motivo =$("#notaMotivo");
     var documento = $("#tipoNotaDocumento");
     if(nota== "credito"){
         var datos = new FormData();
@@ -306,6 +374,34 @@ $(".box").on("change", ".optNotas1", function () {
                 documento.val("0");
                 $("#radioCtaCte").prop("disabled", true);
                 $("#radioCtaCte").prop("checked", false);
+            }
+    
+        })
+
+        var datos2 = new FormData();
+        datos2.append("documentoMotivo", "TMOT");
+    
+        $.ajax({
+    
+            url:"ajax/cuentas.ajax.php",
+            method: "POST",
+            data: datos2,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType:"json",
+            success:function(respuesta2){
+    
+            //    console.log(respuesta);
+                motivo.find('option').remove();
+
+                motivo.append('<option value="">Seleccionar motivo</option>');
+    
+                for(var id of respuesta2){
+                    motivo.append('<option value="' + id.codigo + '">' + id.codigo + ' - '+id.descripcion+ '</option>');
+                    //console.log(serie);
+                }
+                motivo.selectpicker("refresh");
             }
     
         })
@@ -341,6 +437,34 @@ $(".box").on("change", ".optNotas1", function () {
                 // document.getElementById("radioCtaCte").checked = false;
             }
 
+        })
+
+        var datos2 = new FormData();
+        datos2.append("documentoMotivo", "TMOTD");
+    
+        $.ajax({
+    
+            url:"ajax/cuentas.ajax.php",
+            method: "POST",
+            data: datos2,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType:"json",
+            success:function(respuesta2){
+    
+            //    console.log(respuesta);
+                motivo.find('option').remove();
+
+                motivo.append('<option value="">Seleccionar motivo</option>');
+    
+                for(var id of respuesta2){
+                    motivo.append('<option value="' + id.codigo + '">' + id.codigo + ' - '+id.descripcion+ '</option>');
+                    //console.log(serie);
+                }
+                motivo.selectpicker("refresh");
+            }
+    
         })
     }
         
@@ -469,6 +593,7 @@ $("#notaNoAfecto").change(function(){
 });
 
 $(".btnGuardarNotaCredito").click(function(){
+    
     var nota = $('input[name=optNotas1]:checked').val();
     var chkCuenta = document.getElementById("radioCtaCte");
     if(nota == 'credito'){
@@ -918,7 +1043,8 @@ $(".btnGuardarNotaCredito").click(function(){
         }
     }
     
-    
+    $(".btnImprimirNotaCredito").attr("tipo", tipo);
+    $(".btnImprimirNotaCredito").attr("documento", documento);
     
 });
 
@@ -1079,7 +1205,6 @@ $("#daterange-btnNotasCD").daterangepicker(
   
       var fechaInicial = año + "-" + mes + "-" + dia;
       var fechaFinal = año + "-" + mes + "-" + dia;
-  
       localStorage.setItem("capturarRango23", "Hoy");
       localStorage.setItem("fechaInicial", fechaInicial);
 	  localStorage.setItem("fechaFinal", fechaFinal);
@@ -1096,3 +1221,378 @@ $(".tablaNotaCredito").on("click", ".btnEditarNotaCD", function () {
 
     window.location = "index.php?ruta=editar-nota-credito&tipo="+tipo+"&documento="+documento;
 })
+
+$(".btnImprimirNotaCredito").click(function(){
+    var tipo = $(this).attr("tipo");
+    var documento = $(this).attr("documento");
+    window.open("extensiones/tcpdf/pdf/reporte_notascd.php?tipo="+tipo+"&documento="+documento,"_blank");
+})
+
+$(".tablaFacturas").on("click", ".btnImprimirFactura", function () {
+    var tipo = $(this).attr("tipo");
+    var documento = $(this).attr("documento");
+
+    window.open("extensiones/tcpdf/pdf/reporte_factura.php?tipo="+tipo+"&documento="+documento,"_blank");
+})
+
+$(".tablaBoletas").on("click", ".btnImprimirBoleta", function () {
+    var tipo = $(this).attr("tipo");
+    var documento = $(this).attr("documento");
+
+    window.open("extensiones/tcpdf/pdf/reporte_boleta.php?tipo="+tipo+"&documento="+documento,"_blank");
+})
+
+$(".tablaProformas").on("click", ".btnImprimirProforma", function () {
+    var tipo = $(this).attr("tipo");
+    var documento = $(this).attr("documento");
+
+    window.open("extensiones/tcpdf/pdf/reporte_proforma.php?tipo="+tipo+"&documento="+documento,"_blank");
+})
+
+/*=============================================
+RANGO DE FECHAS FACTURA
+=============================================*/
+
+
+$("#daterange-btnFactura").daterangepicker(
+    {
+      cancelClass: "CancelarFactura",
+      locale:{
+		"daysOfWeek": [
+			"Dom",
+			"Lun",
+			"Mar",
+			"Mie",
+			"Jue",
+			"Vie",
+			"Sab"
+		],
+		"monthNames": [
+			"Enero",
+			"Febrero",
+			"Marzo",
+			"Abril",
+			"Mayo",
+			"Junio",
+			"Julio",
+			"Agosto",
+			"Septiembre",
+			"Octubre",
+			"Noviembre",
+			"Diciembre"
+		],
+	  },
+      ranges: {
+        Hoy: [moment(), moment()],
+        Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+        "Últimos 7 días": [moment().subtract(6, "days"), moment()],
+        "Últimos 30 días": [moment().subtract(29, "days"), moment()],
+        "Este mes": [moment().startOf("month"), moment().endOf("month")],
+        "Último mes": [
+          moment()
+            .subtract(1, "month")
+            .startOf("month"),
+          moment()
+            .subtract(1, "month")
+            .endOf("month")
+        ]
+      },
+      
+      startDate: moment(),
+      endDate: moment()
+    },
+    function(start, end) {
+      $("#daterange-btnFactura span").html(
+        start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
+      );
+  
+      var fechaInicial = start.format("YYYY-MM-DD");
+  
+      var fechaFinal = end.format("YYYY-MM-DD");
+  
+      var capturarRango24 = $("#daterange-btnFactura span").html();
+  
+	  localStorage.setItem("capturarRango24", capturarRango24);
+      localStorage.setItem("fechaInicial", fechaInicial);
+	  localStorage.setItem("fechaFinal", fechaFinal);
+	  
+      // Recargamos la tabla con la información para ser mostrada en la tabla
+      $(".tablaFacturas").DataTable().destroy();
+      cargarTablaFactura(fechaInicial, fechaFinal);
+    });
+  
+  /*=============================================
+  CANCELAR RANGO DE FECHAS
+  =============================================*/
+  
+  $(".daterangepicker.opensleft .range_inputs .CancelarFactura").on(
+    "click",
+    function() {
+      localStorage.removeItem("capturarRango24");
+      localStorage.removeItem("fechaInicial");
+      localStorage.removeItem("fechaFinal");
+      localStorage.clear();
+      window.location = "facturas";
+    }
+  );
+  
+  /*=============================================
+  CAPTURAR HOY
+  =============================================*/
+  
+  $(".daterangepicker.opensleft .ranges li").on("click", function() {
+    var textoHoy = $(this).attr("data-range-key");
+  
+    if (textoHoy == "Hoy") {
+      var d = new Date();
+  
+      var dia = d.getDate();
+      var mes = d.getMonth() + 1;
+      var año = d.getFullYear();
+  
+      dia = ("0" + dia).slice(-2);
+      mes = ("0" + mes).slice(-2);
+  
+      var fechaInicial = año + "-" + mes + "-" + dia;
+      var fechaFinal = año + "-" + mes + "-" + dia;
+      localStorage.setItem("capturarRango24", "Hoy");
+      localStorage.setItem("fechaInicial", fechaInicial);
+	  localStorage.setItem("fechaFinal", fechaFinal);
+      // Recargamos la tabla con la información para ser mostrada en la tabla
+      $(".tablaFacturas").DataTable().destroy();
+      cargarTablaFactura(fechaInicial, fechaFinal);
+    }
+  });
+
+
+
+  /*=============================================
+RANGO DE FECHAS BOLETAS
+=============================================*/
+
+
+$("#daterange-btnBoleta").daterangepicker(
+    {
+      cancelClass: "CancelarBoleta",
+      locale:{
+		"daysOfWeek": [
+			"Dom",
+			"Lun",
+			"Mar",
+			"Mie",
+			"Jue",
+			"Vie",
+			"Sab"
+		],
+		"monthNames": [
+			"Enero",
+			"Febrero",
+			"Marzo",
+			"Abril",
+			"Mayo",
+			"Junio",
+			"Julio",
+			"Agosto",
+			"Septiembre",
+			"Octubre",
+			"Noviembre",
+			"Diciembre"
+		],
+	  },
+      ranges: {
+        Hoy: [moment(), moment()],
+        Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+        "Últimos 7 días": [moment().subtract(6, "days"), moment()],
+        "Últimos 30 días": [moment().subtract(29, "days"), moment()],
+        "Este mes": [moment().startOf("month"), moment().endOf("month")],
+        "Último mes": [
+          moment()
+            .subtract(1, "month")
+            .startOf("month"),
+          moment()
+            .subtract(1, "month")
+            .endOf("month")
+        ]
+      },
+      
+      startDate: moment(),
+      endDate: moment()
+    },
+    function(start, end) {
+      $("#daterange-btnBoleta span").html(
+        start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
+      );
+  
+      var fechaInicial = start.format("YYYY-MM-DD");
+  
+      var fechaFinal = end.format("YYYY-MM-DD");
+  
+      var capturarRango25 = $("#daterange-btnBoleta span").html();
+  
+	  localStorage.setItem("capturarRango25", capturarRango25);
+      localStorage.setItem("fechaInicial", fechaInicial);
+	  localStorage.setItem("fechaFinal", fechaFinal);
+	  
+      // Recargamos la tabla con la información para ser mostrada en la tabla
+      $(".tablaBoletas").DataTable().destroy();
+      cargarTablaBoleta(fechaInicial, fechaFinal);
+    });
+  
+  /*=============================================
+  CANCELAR RANGO DE FECHAS
+  =============================================*/
+  
+  $(".daterangepicker.opensleft .range_inputs .CancelarBoleta").on(
+    "click",
+    function() {
+      localStorage.removeItem("capturarRango25");
+      localStorage.removeItem("fechaInicial");
+      localStorage.removeItem("fechaFinal");
+      localStorage.clear();
+      window.location = "boletas";
+    }
+  );
+  
+  /*=============================================
+  CAPTURAR HOY
+  =============================================*/
+  
+  $(".daterangepicker.opensleft .ranges li").on("click", function() {
+    var textoHoy = $(this).attr("data-range-key");
+  
+    if (textoHoy == "Hoy") {
+      var d = new Date();
+  
+      var dia = d.getDate();
+      var mes = d.getMonth() + 1;
+      var año = d.getFullYear();
+  
+      dia = ("0" + dia).slice(-2);
+      mes = ("0" + mes).slice(-2);
+  
+      var fechaInicial = año + "-" + mes + "-" + dia;
+      var fechaFinal = año + "-" + mes + "-" + dia;
+      localStorage.setItem("capturarRango25", "Hoy");
+      localStorage.setItem("fechaInicial", fechaInicial);
+	  localStorage.setItem("fechaFinal", fechaFinal);
+      // Recargamos la tabla con la información para ser mostrada en la tabla
+      $(".tablaBoletas").DataTable().destroy();
+      cargarTablaBoleta(fechaInicial, fechaFinal);
+    }
+  });
+
+
+  /*=============================================
+RANGO DE FECHAS PROFORMAS
+=============================================*/
+
+
+$("#daterange-btnProforma").daterangepicker(
+    {
+      cancelClass: "CancelarProforma",
+      locale:{
+		"daysOfWeek": [
+			"Dom",
+			"Lun",
+			"Mar",
+			"Mie",
+			"Jue",
+			"Vie",
+			"Sab"
+		],
+		"monthNames": [
+			"Enero",
+			"Febrero",
+			"Marzo",
+			"Abril",
+			"Mayo",
+			"Junio",
+			"Julio",
+			"Agosto",
+			"Septiembre",
+			"Octubre",
+			"Noviembre",
+			"Diciembre"
+		],
+	  },
+      ranges: {
+        Hoy: [moment(), moment()],
+        Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+        "Últimos 7 días": [moment().subtract(6, "days"), moment()],
+        "Últimos 30 días": [moment().subtract(29, "days"), moment()],
+        "Este mes": [moment().startOf("month"), moment().endOf("month")],
+        "Último mes": [
+          moment()
+            .subtract(1, "month")
+            .startOf("month"),
+          moment()
+            .subtract(1, "month")
+            .endOf("month")
+        ]
+      },
+      
+      startDate: moment(),
+      endDate: moment()
+    },
+    function(start, end) {
+      $("#daterange-btnProforma span").html(
+        start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
+      );
+  
+      var fechaInicial = start.format("YYYY-MM-DD");
+  
+      var fechaFinal = end.format("YYYY-MM-DD");
+  
+      var capturarRango26 = $("#daterange-btnProforma span").html();
+  
+	  localStorage.setItem("capturarRango26", capturarRango26);
+      localStorage.setItem("fechaInicial", fechaInicial);
+	  localStorage.setItem("fechaFinal", fechaFinal);
+	  
+      // Recargamos la tabla con la información para ser mostrada en la tabla
+      $(".tablaProformas").DataTable().destroy();
+      cargarTablaProforma(fechaInicial, fechaFinal);
+    });
+  
+  /*=============================================
+  CANCELAR RANGO DE FECHAS
+  =============================================*/
+  
+  $(".daterangepicker.opensleft .range_inputs .CancelarProforma").on(
+    "click",
+    function() {
+      localStorage.removeItem("capturarRango26");
+      localStorage.removeItem("fechaInicial");
+      localStorage.removeItem("fechaFinal");
+      localStorage.clear();
+      window.location = "proformas";
+    }
+  );
+  
+  /*=============================================
+  CAPTURAR HOY
+  =============================================*/
+  
+  $(".daterangepicker.opensleft .ranges li").on("click", function() {
+    var textoHoy = $(this).attr("data-range-key");
+  
+    if (textoHoy == "Hoy") {
+      var d = new Date();
+  
+      var dia = d.getDate();
+      var mes = d.getMonth() + 1;
+      var año = d.getFullYear();
+  
+      dia = ("0" + dia).slice(-2);
+      mes = ("0" + mes).slice(-2);
+  
+      var fechaInicial = año + "-" + mes + "-" + dia;
+      var fechaFinal = año + "-" + mes + "-" + dia;
+      localStorage.setItem("capturarRango26", "Hoy");
+      localStorage.setItem("fechaInicial", fechaInicial);
+	  localStorage.setItem("fechaFinal", fechaFinal);
+      // Recargamos la tabla con la información para ser mostrada en la tabla
+      $(".tablaProformas").DataTable().destroy();
+      cargarTablaProforma(fechaInicial, fechaFinal);
+    }
+  });

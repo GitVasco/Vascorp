@@ -422,5 +422,70 @@ class ModeloMateriaPrima{
 		$stmt=null;
    }      	
 
+   /* 
+	* MOSTRAR MATERIA PRIMA POR ARTICULO
+	*/
+	static public function mdlMostrarMateriaArticulo($valor){
+
+		$sql="SELECT DISTINCT 
+		dt.mat_pri,
+		mp.descripcion,
+		mp.unidad,
+		ROUND(dt.consumo, 6) AS consumo,
+		CASE
+		  WHEN dt.tej_princ = 'no' 
+		  THEN '' 
+		  ELSE 'SI' 
+		END AS tej_princ,
+		ROUND(dt.precio_mp, 6) AS precio_mp,
+		ROUND(dt.total_detalle, 6) AS total_detalle 
+	  FROM
+		detalles_tarjetajf dt 
+		LEFT JOIN 
+		  (SELECT DISTINCT 
+			p.codpro,
+			tblin.des_larga AS linea,
+			SUBSTRING(p.codfab, 1, 6) AS codlinea,
+			p.codfab,
+			p.despro AS despro,
+			CONCAT(
+			  (SUBSTRING(p.CodFab, 1, 6)),
+			  ' - ',
+			  p.DesPro,
+			  ' - ',
+			  tbcol.des_larga
+			) AS descripcion,
+			p.codalm01 AS stock,
+			tbund.des_corta AS unidad,
+			tbcol.des_larga AS color,
+			p.cospro 
+		  FROM
+			producto p 
+			INNER JOIN tabla_m_detalle AS tbund 
+			  ON p.undpro = tbund.cod_argumento 
+			  AND (tbund.Cod_Tabla = 'TUND') 
+			INNER JOIN tabla_m_detalle AS tbcol 
+			  ON p.ColPro = tbcol.cod_argumento 
+			  AND (tbcol.Cod_Tabla = 'TCOL') 
+			INNER JOIN tabla_m_detalle AS tblin 
+			  ON LEFT(p.codfab, 3) = tblin.des_corta 
+			  AND (tblin.cod_tabla = 'Tlin') 
+		  WHERE p.estpro = '1' 
+			AND tblin.des_larga IN ('BLONDA', 'ELASTICO', 'TELA')) AS mp 
+		  ON dt.mat_pri = mp.codpro 
+	  WHERE dt.articulo LIKE '%".$valor."%' 
+		AND mp.descripcion IS NOT NULL ";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":articulo", $valor, PDO::PARAM_STR);
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt=null;
+
+	}
 
 }

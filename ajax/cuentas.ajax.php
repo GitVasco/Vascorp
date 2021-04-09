@@ -195,6 +195,21 @@ class AjaxCuentas{
         echo $respuesta;
     
       }
+
+      public $documentoMotivo;
+    
+      public function ajaxMostrarMotivos(){
+        $item= "tipo_dato";
+        $valor = $this->documentoMotivo;
+
+        $respuesta = ControladorCuentas::ctrMostrarPagos($item,$valor);
+    
+        echo json_encode($respuesta);
+    
+      }
+
+
+
     }
     
     
@@ -295,3 +310,16 @@ class AjaxCuentas{
       $editarCuenta -> datosCuenta2 = $_POST["jsonCuenta2"];
       $editarCuenta -> ajaxEditarCuentaNota();
   }
+
+  /*=============================================
+    MOSTRAR MOTIVO CREDITO
+    =============================================*/	
+    if(isset($_POST["documentoMotivo"])){
+    
+      $motivos = new AjaxCuentas();
+      $motivos -> documentoMotivo = $_POST["documentoMotivo"];
+      $motivos -> ajaxMostrarMotivos();
+  }
+
+
+ 

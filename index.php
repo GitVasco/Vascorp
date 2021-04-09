@@ -46,6 +46,8 @@ require_once "controladores/talonarios.controlador.php";
 
 require_once "controladores/facturacion.controlador.php";
 
+require_once "controladores/procedimiento.controlador.php";
+
 /* 
 * MODELOS
 */
@@ -136,6 +138,8 @@ require_once "modelos/produccion.modelo.php";
 require_once "modelos/talonarios.modelo.php";
 
 require_once "modelos/facturacion.modelo.php";
+
+require_once "modelos/procedimiento.modelo.php";
 
 require_once "extensiones/vendor/autoload.php";
 

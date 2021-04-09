@@ -351,7 +351,8 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-4">
+    <div class="col-lg-3">
+            <div style="border:1px solid blue;border-radius:10px; padding:10px">Sonvarios</div>
     </div>
     <div class="col-lg-12">
         <div class="col-lg-3"></div>
@@ -368,16 +369,20 @@
         </div>
 
         <div class="form-group col-lg-1">
-            <button class="btn btn-success btn-lg  btnImprimirNotaCredito"><i class="fa fa-print"></i> Imprimir</button>
+            <button class="btn btn-success btn-lg  btnImprimirNotaCredito" tipo="<?php echo $venta["tipo"]?>" documento="<?php echo $venta["documento"]?>"><i class="fa fa-print"></i> Imprimir</button>
         </div>
 
         <div class="form-group col-lg-1">
             <button class="btn btn-danger btn-lg  btnTerminarNotaCredito"><i class="fa fa-play-circle-o"></i> Terminar</button>
         </div>
+        
     </div>
+    
+   
+    
     </section>
+    
 </div>
-
 
 <script>
 window.document.title = "Notas de crédito"

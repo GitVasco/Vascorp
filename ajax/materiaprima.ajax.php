@@ -65,6 +65,19 @@ class AjaxMateriaPrima{
 			echo json_encode($respuestaDetalle);
 	}	
 
+	/* 
+	* VISUALIZAR  MATERIA PRIMA DE ARTICULO
+	*/
+	public $articuloSublimado;
+	public function ajaxVisualizarMateriaArticulo(){
+
+		$valor = $this->articuloSublimado;
+
+		$respuestaDetalle = ControladorMateriaPrima::ctrMostrarMateriaArticulo($valor);
+
+		echo json_encode($respuestaDetalle);
+}	
+
 }
 
 
@@ -112,4 +125,15 @@ if(isset($_POST["articuloMPDetalle"])){
 	$visualizarMateriaPrimaDetalle -> articuloMPDetalle = $_POST["articuloMPDetalle"];
 	$visualizarMateriaPrimaDetalle -> ajaxVisualizarMateriaPrimaDetalle();
   
+}
+
+/* 
+ * MOSTRAR ARTICULO MATERIA PRIMA SUBLIMADO
+*/
+if(isset($_POST["articuloSublimado"])){
+
+  $visualizarMateriaSublimado = new AjaxMateriaPrima();
+  $visualizarMateriaSublimado -> articuloSublimado = $_POST["articuloSublimado"];
+  $visualizarMateriaSublimado -> ajaxVisualizarMateriaArticulo();
+
 }

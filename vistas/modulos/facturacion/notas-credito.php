@@ -165,7 +165,7 @@
 
                     <?php
                       $item= "tipo_dato";
-                      $valor = "TCAN";
+                      $valor = "tdoc";
 
                     $documentos = ControladorCuentas::ctrMostrarPagos($item,$valor);
 
@@ -211,14 +211,14 @@
                     <select  class="form-control input-lg selectpicker" name="notaMotivo" id="notaMotivo" data-live-search="true" style="width:200px !important" required>
                     <option value="">Seleccionar motivo</option>
                     <?php
-                      $item= "tipo_dato";
-                      $valor = "TMOT";
+                    //   $item= "tipo_dato";
+                    //   $valor = "TMOT";
 
-                    $documentos = ControladorCuentas::ctrMostrarPagos($item,$valor);
+                    // $documentos = ControladorCuentas::ctrMostrarPagos($item,$valor);
 
-                    foreach ($documentos as $key => $value) {
-                      echo '<option value="' . $value["codigo"] . '">' .$value["codigo"]. " - " . $value["descripcion"] . '</option>';
-                    }
+                    // foreach ($documentos as $key => $value) {
+                    //   echo '<option value="' . $value["codigo"] . '">' .$value["codigo"]. " - " . $value["descripcion"] . '</option>';
+                    // }
 
                     ?>   
                     </select>
@@ -337,7 +337,7 @@
         </div>
 
         <div class="form-group col-lg-1">
-            <button class="btn btn-success btn-lg  btnImprimirNotaCredito"><i class="fa fa-print"></i> Imprimir</button>
+            <button class="btn btn-success btn-lg  btnImprimirNotaCredito" tipo="" documento="" disabled><i class="fa fa-print" ></i> Imprimir</button>
         </div>
 
         <div class="form-group col-lg-1">

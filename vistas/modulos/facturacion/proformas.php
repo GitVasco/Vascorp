@@ -4,7 +4,7 @@
 
         <h1>
 
-            Administrar Boletas
+            Administrar Proformas
 
         </h1>
 
@@ -12,7 +12,7 @@
 
             <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-            <li class="active">Administrar Facturas</li>
+            <li class="active">Administrar Proformas</li>
 
         </ol>
 
@@ -21,8 +21,9 @@
     <section class="content">
 
         <div class="box">
+
             <div class="box-header with-border">
-                <button type="button" class="btn btn-default pull-right" id="daterange-btnBoleta">
+                <button type="button" class="btn btn-default pull-right" id="daterange-btnProforma">
                 <span>
                     <i class="fa fa-calendar"></i>
 
@@ -49,7 +50,7 @@
 
             <div class="box-body">
 
-                <table class="table table-bordered table-striped dt-responsive tablaBoletas">
+                <table class="table table-bordered table-striped dt-responsive tablaProformas">
 
                     <thead>
 
@@ -83,5 +84,5 @@
 </div>
 
 <script>
-    window.document.title = "Boletas"
+    window.document.title = "Proformas"
 </script>

@@ -26,6 +26,18 @@ class ControladorModelos{
 		return $respuesta;
 
     }	
+
+	/* 
+	* MOSTRAR COLORES DE MODELOS
+	*/
+	static public function ctrMostrarColorModelo($valor){
+
+
+		$respuesta = ModeloModelos::mdlMostrarColorModelo($valor);
+
+		return $respuesta;
+
+	}
     
 	/* 
 	* CREAR ARTICULO

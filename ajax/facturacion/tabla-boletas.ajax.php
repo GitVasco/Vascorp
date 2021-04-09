@@ -11,11 +11,8 @@ class TablaGuiasRemision{
 
     public function mostrarTablaGuiasRemision(){
 
-        $tipo = "S02";
-        $estado = "GENERADO";
-        $valor = null;
 
-        $gremision = ControladorFacturacion::ctrMostrarTablas($tipo, $estado, $valor);
+        $gremision = ControladorFacturacion::ctrRangoFechasBoletas($_GET["fechaInicial"],$_GET["fechaFinal"]);
 
         if(count($gremision)>0){
 
@@ -29,10 +26,10 @@ class TablaGuiasRemision{
         =============================================*/
 
         if($gremision[$i]["doc_destino"] != ""){
-            $botones =  "<div class='btn-group'><button title='Facturar Pedido' class='btn btn-primary btnFacturarA' documento='".$gremision[$i]["documento"]."' cod_cli='".$gremision[$i]["cliente"]."'  nom_cli='".$gremision[$i]["nombre"]."' tip_doc='".$gremision[$i]["tip_doc"]."' nro_doc='".$gremision[$i]["num_doc"]."' cod_ven='".$gremision[$i]["vendedor"]."' serie_dest='".$gremision[$i]["serie_dest"]."' nro_dest='".$gremision[$i]["nro_dest"]."' data-toggle='modal' data-target='#modalFacturarA'><i class='fa fa-paper-plane'></i></button></div>";
+            $botones =  "<div class='btn-group'><button title='Facturar Pedido' class='btn btn-primary btnFacturarA' documento='".$gremision[$i]["documento"]."' cod_cli='".$gremision[$i]["cliente"]."'  nom_cli='".$gremision[$i]["nombre"]."' tip_doc='".$gremision[$i]["tip_doc"]."' nro_doc='".$gremision[$i]["num_doc"]."' cod_ven='".$gremision[$i]["vendedor"]."' serie_dest='".$gremision[$i]["serie_dest"]."' nro_dest='".$gremision[$i]["nro_dest"]."' data-toggle='modal' data-target='#modalFacturarA'><i class='fa fa-paper-plane'></i></button><button title='Imprimir Boleta' class='btn btn-success btnImprimirBoleta' tipo='".$gremision[$i]["tipo"]."' documento='".$gremision[$i]["documento"]."'><i class='fa fa-print'></i></button></div>";
         }else{
 
-            $botones =  "<div class='btn-group'><button title='Facturar Pedido' class='btn btn-primary btnFacturarB' documento='".$gremision[$i]["documento"]."' cod_cli='".$gremision[$i]["cliente"]."'  nom_cli='".$gremision[$i]["nombre"]."' tip_doc='".$gremision[$i]["tip_doc"]."' nro_doc='".$gremision[$i]["num_doc"]."' cod_ven='".$gremision[$i]["vendedor"]."' data-toggle='modal' data-target='#modalFacturarB'><i class='fa fa-paper-plane'></i></button></div>";
+            $botones =  "<div class='btn-group'><button title='Facturar Pedido' class='btn btn-primary btnFacturarB' documento='".$gremision[$i]["documento"]."' cod_cli='".$gremision[$i]["cliente"]."'  nom_cli='".$gremision[$i]["nombre"]."' tip_doc='".$gremision[$i]["tip_doc"]."' nro_doc='".$gremision[$i]["num_doc"]."' cod_ven='".$gremision[$i]["vendedor"]."' data-toggle='modal' data-target='#modalFacturarB'><i class='fa fa-paper-plane'></i></button><button title='Imprimir Boleta' class='btn btn-success btnImprimirBoleta' tipo='".$gremision[$i]["tipo"]."' documento='".$gremision[$i]["documento"]."'><i class='fa fa-print'></i></button></div>";
 
         }
 

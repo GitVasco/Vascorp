@@ -332,5 +332,30 @@ class ModeloModelos
 		$stmt = null;
 	}
 
+	/* 
+	* MOSTRAR MODELOS
+	*/
+	static public function mdlMostrarColorModelo($valor){
+
+		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT
+		  a.modelo,
+		  a.nombre,
+		  a.cod_color,
+		  a.color 
+		FROM
+		  articulojf a 
+		WHERE a.modelo = :modelo");
+
+		$stmt -> bindParam(":modelo", $valor, PDO::PARAM_STR);
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+
+	$stmt -> close();
+
+	$stmt = null;
+}
 
 }

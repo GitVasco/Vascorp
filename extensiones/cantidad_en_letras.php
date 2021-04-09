@@ -131,7 +131,7 @@ class EnLetras
         $Rtn=str_replace("DIEZ DOS", "DOCE", $Rtn ); 
         $Rtn=str_replace("DIEZ TRES", "TRECE", $Rtn ); 
         $Rtn=str_replace("DIEZ CUATRO", "CATORCE", $Rtn ); 
-        $Rtn=str_replace("DIEZ CINCO", "QINCE", $Rtn ); 
+        $Rtn=str_replace("DIEZ CINCO", "QUINCE", $Rtn ); 
         $Rtn=str_replace("DIEZ SEIS", "DIECISEIS", $Rtn ); 
         $Rtn=str_replace("DIEZ SIETE", "DIECISIETE", $Rtn ); 
         $Rtn=str_replace("DIEZ OCHO", "DIECIOCHO", $Rtn ); 

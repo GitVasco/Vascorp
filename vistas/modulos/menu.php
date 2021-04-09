@@ -785,6 +785,25 @@
                         </ul>
 
                     </li>
+                    <li class="treeview">
+
+                        <a href="#"><i class="fa fa-bolt"></i> Procedimientos
+
+                            <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+
+                                <a href="sublimados">
+                                <i class="fa fa-circle-o"></i> Sublimados
+                                </a>
+
+                            </li>
+                        </ul>
+                    </li>
 
                 </ul>
 
@@ -1030,9 +1049,20 @@
 
                     <li>
 
-                        <a href="ver-nota-credito">
+                        <a href="proformas">
 
                             <i class="fa fa-circle-o text-orange"></i>
+                            <span>Proformas</span>
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="ver-nota-credito">
+
+                            <i class="fa fa-circle-o text-green"></i>
                             <span>Notas credito</span>
 
                         </a>
