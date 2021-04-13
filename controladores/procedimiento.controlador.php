@@ -14,13 +14,16 @@ class ControladorProcedimientos{
 				$inicio = new DateTime($_POST["nuevaFechaInicio"]);
 				$fin = new DateTime($_POST["nuevaFechaFin"]);
 				$tiempoUtilizado = date_diff($fin,$inicio);
+				$horas  = $tiempoUtilizado->format("%H");
+				$minutos  = $tiempoUtilizado->format("%i");
+				$totalMinutos= ($horas*60)+$minutos;
 			   	$datos = array("modelo"=>$_POST["nuevoModeloSublimado"],
 							   "color_modelo"=>$_POST["nuevoColorModelo"],
 							   "cantidad"=>$_POST["nuevaCantidad"],
 							   "materia_prima"=>$_POST["nuevaMateriaSublimado"],
 							   "fecha_inicio"=>$_POST["nuevaFechaInicio"],
 							   "fecha_fin"=>$_POST["nuevaFechaFin"],
-							   "tiempo_utilizado"=>$tiempoUtilizado->format("%i"),
+							   "tiempo_utilizado"=>$totalMinutos,
 							   "cod_corte"=>$_POST["nuevoCorteSublimado"],
 							   "usuario"=>$_POST["nuevoUsuario"]);
 
@@ -84,19 +87,26 @@ class ControladorProcedimientos{
 
 	static public function ctrEditarSublimado(){
 
-		if(isset($_POST["editarDescripcion"])){
+		if(isset($_POST["idSublimado"])){
 
 				$tabla="sublimado_jf";
+				$inicio = new DateTime($_POST["editarFechaInicio"]);
+				$fin = new DateTime($_POST["editarFechaFin"]);
+				$tiempoUtilizado = date_diff($fin,$inicio);
+				$horas  = $tiempoUtilizado->format("%H");
+				$minutos  = $tiempoUtilizado->format("%i");
+				$totalMinutos= ($horas*60)+$minutos;
+
 				$datos = array("id"=>$_POST["idSublimado"],
-							   "modelo"=>$_POST["nuevoModeloSublimado"],
-							   "color_modelo"=>$_POST["nuevoColorModelo"],
-							   "cantidad"=>$_POST["nuevaCantidad"],
-							   "materia_prima"=>$_POST["nuevaMateriaSublimado"],
-							   "fecha_inicio"=>$_POST["nuevaFechaInicio"],
-							   "fecha_fin"=>$_POST["nuevaFechaFin"],
-							   "tiempo_utilizado"=>$_POST["nuevoTiempoU"],
-							   "cod_corte"=>$_POST["nuevoCorteSublimado"],
-							   "usuario"=>$_POST["nuevoUsuario"]);
+							   "modelo"=>$_POST["editarModeloSublimado"],
+							   "color_modelo"=>$_POST["editarColorModelo"],
+							   "cantidad"=>$_POST["editarCantidad"],
+							   "materia_prima"=>$_POST["editarMateriaSublimado"],
+							   "fecha_inicio"=>$_POST["editarFechaInicio"],
+							   "fecha_fin"=>$_POST["editarFechaFin"],
+							   "tiempo_utilizado"=>$totalMinutos,
+							   "cod_corte"=>$_POST["editarCorteSublimado"],
+							   "usuario"=>$_POST["editarUsuario"]);
 
 			   	$respuesta = ModeloProcedimientos::mdlEditarSublimado($tabla,$datos);
 

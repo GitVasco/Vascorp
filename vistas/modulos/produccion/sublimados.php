@@ -30,7 +30,7 @@
 
         </button>
 
-        <button class="btn btn-outline-success btnReporteColor" style="border:green 1px solid">
+        <button class="btn btn-outline-success btnReporteSublimados" fechaInicial="" fechaFinal="" style="border:green 1px solid">
           <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte sublimados  </button>
         
 
@@ -101,7 +101,7 @@
 </div>
 
 <!--=====================================
-MODAL AGREGAR TIPO PAGO
+MODAL AGREGAR SUBLIMADO
 ======================================-->
 
 <div id="modalAgregarSublimado" class="modal fade" role="dialog">
@@ -215,7 +215,7 @@ MODAL AGREGAR TIPO PAGO
 
                   <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 
-                  <input type="datetime" class="form-control"  name="nuevaFechaInicio" data-inputmask="'mask':'9999-99-99 99:99:99'" data-mask   value="<?php echo $fechaActual;?>" required>
+                  <input type="datetime" class="form-control"  name="nuevaFechaInicio" id="nuevaFechaInicioSub" data-inputmask="'mask':'9999-99-99 99:99:99'" data-mask   value="<?php echo $fechaActual;?>" required>
 
               </div>
 
@@ -228,7 +228,7 @@ MODAL AGREGAR TIPO PAGO
 
                   <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 
-                  <input type="datetime" class="form-control"  name="nuevaFechaFin" data-inputmask="'mask':'9999-99-99 99:99:99'" data-mask value="<?php echo $fechaActual;?>" required>
+                  <input type="datetime" class="form-control"  name="nuevaFechaFin" id="nuevaFechaFinSub" data-inputmask="'mask':'9999-99-99 99:99:99'" data-mask value="<?php echo $fechaActual;?>" required readonly>
 
               </div>
 
@@ -283,7 +283,7 @@ MODAL AGREGAR TIPO PAGO
 
 
 <!--=====================================
-MODAL EDITAR TIPO PAGO
+MODAL EDITAR SUBLIMADO
 ======================================-->
 
 <div id="modalEditarSublimado" class="modal fade" role="dialog">
@@ -314,31 +314,100 @@ MODAL EDITAR TIPO PAGO
 
           <div class="box-body">
 
-          
-            <!-- ENTRADA PARA EL CODIGO  -->
+          <!-- ENTRADA PARA EL CODIGO -->
             
-            <div class="form-group">
-              
+          <div class="form-group">
+              <label for="">Modelo</label>   
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-list"></i></span> 
 
-                <input type="text"  class="form-control input-lg" name="editarCodigo" id="editarCodigo" required>
+                <input type="text" class="form-control input-md " name="editarModeloSublimado2" id="editarModeloSublimado2"  readonly>
+              </div>
+
+            </div>          
+
+            <!-- ENTRADA PARA EL CODIGO -->
+            
+            <div class="form-group">
+              <label for="">Color modelo</label>   
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-list"></i></span> 
+
+                <input type="text" class="form-control input-md " name="editarColorModelo2" id="editarColorModelo2"  readonly>
+              </div>
+
+            </div>  
+
+            <!-- ENTRADA PARA EL CODIGO -->
+            
+            <div class="form-group">
+              <label for="">Materia Prima</label>   
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-list"></i></span> 
+
+                <input type="text" class="form-control input-md " name="editarMateriaSublimado2"  id="editarMateriaSublimado2"  readonly>
+                 
+              </div>
+
+            </div>  
+
+            <!-- ENTRADA PARA EL CODIGO -->
+            
+            <div class="form-group">
+              <label for="">Orden Corte</label>   
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-list"></i></span> 
+
+                <input type="text" class="form-control input-md " name="editarCorteSublimado" id="editarCorteSublimado"  readonly>
+              </div>
+
+            </div>  
+
+
+            <div class="form-group ">
+            <label for="">Fecha Inicio</label>                    
+              <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+
+                  <input type="datetime" class="form-control"  name="editarFechaInicio" id="editarFechaInicioSub" data-inputmask="'mask':'9999-99-99 99:99:99'" data-mask   required>
 
               </div>
 
-            </div>
+            </div>       
 
+            
+            <div class="form-group ">
+            <label for="">Fecha Fin</label>                    
+              <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+
+                  <input type="datetime" class="form-control "  name="editarFechaFin" id="editarFechaFinSub" data-inputmask="'mask':'9999-99-99 99:99:99'" data-mask  required readonly>
+
+              </div>
+
+            </div>   
             <!-- ENTRADA PARA EL NOMBRE -->
             
             <div class="form-group">
-              
+              <label for="">Cantidad</label>   
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-text-height"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="editarDescripcion" id="editarDescripcion" required>
-                <input type="hidden" id="idProcedimiento" name="idProcedimiento">
+                <input type="number" class="form-control input-md" name="editarCantidad" id="editarCantidadSub"  required>
+                <input type="hidden" name="editarUsuario" value="<?php echo $_SESSION["id"];?>">
+                <input type="hidden" name="idSublimado" id="idSublimado" >
+                <input type="hidden" name="editarModeloSublimado" id="editarModeloSublimado" >
+                <input type="hidden" name="editarColorModelo" id="editarColorModelo" >
+                <input type="hidden" name="editarMateriaSublimado" id="editarMateriaSublimado" >
+                
+
               </div>
 
             </div>
@@ -363,8 +432,8 @@ MODAL EDITAR TIPO PAGO
 
       <?php
 
-        $editarBanco = new ControladorBancos();
-        $editarBanco -> ctrEditarBanco();
+        $editarSublimado = new ControladorProcedimientos();
+        $editarSublimado -> ctrEditarSublimado();
 
       ?>   
 
@@ -378,8 +447,8 @@ MODAL EDITAR TIPO PAGO
 
 <?php
 
-  $eliminarBanco = new ControladorBancos();
-  $eliminarBanco -> ctrEliminarBanco();
+  $eliminarSublimado = new ControladorProcedimientos();
+  $eliminarSublimado -> ctrEliminarSublimado();
 
 ?>
 

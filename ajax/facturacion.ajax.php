@@ -1,8 +1,11 @@
 <?php
-
+session_start();
 require_once "../controladores/facturacion.controlador.php";
 require_once "../modelos/facturacion.modelo.php";
-require_once "../modelos/cuentas.modelo.php";
+require_once "../modelos/articulos.modelo.php";
+require_once "../modelos/articulos.controlador.php";
+require_once "../modelos/pedidos.modelo.php";
+require_once "../modelos/pedidos.controlador.php";
 
 
 class AjaxFacturacion{
@@ -171,6 +174,24 @@ class AjaxFacturacion{
     
       }
 
+      /*=============================================
+      ACTIVAR PEDIDO
+      =============================================*/	
+      public function ajaxActivarPedido(){
+        
+        $valor=$this->activarId;
+        $estado= $this->activarEstado;
+        $usuario=$_SESSION["id"];
+        if($estado == 'APROBADO'){
+          $detalle = ControladorPedidos::ctrMostrarDetallesTemporal($valor);
+          foreach ($detalle as $key => $value) {
+            $articulo = ModeloFacturacion::mdlActualizarArticuloPedido($value["articulo"],$value["cantidad"]);
+          }
+        }
+        $respuesta=ModeloFacturacion::mdlActualizarPedido($valor,$estado,$usuario);
+        echo $respuesta;
+      }
+
     }
     
 
@@ -211,4 +232,14 @@ class AjaxFacturacion{
       $editarVenta = new AjaxFacturacion();
       $editarVenta -> datosVenta2 = $_POST["jsonCuenta2"];
       $editarVenta -> ajaxEditarVentaNota();
+  }
+
+   /*=============================================
+    ACTIVAR PEDIDOS
+    =============================================*/	
+    if(isset($_POST["activarEstado"])){
+      $activarPedido=new AjaxFacturacion();
+      $activarPedido->activarEstado=$_POST["activarEstado"];
+      $activarPedido->activarId=$_POST["activarId"];
+      $activarPedido->ajaxActivarPedido();
   }

@@ -282,7 +282,7 @@ $(".btnCalCant").click(function () {
 $("#seleccionarCliente").change(function(){
 
     var cliList = document.getElementById("seleccionarCliente").value;
-    //console.log(cliList);
+    // console.log(cliList);
 
     var datos = new FormData();
     datos.append("cliList", cliList);
@@ -298,7 +298,7 @@ $("#seleccionarCliente").change(function(){
 		dataType:"json",
 		success:function(respuestaDet){
 
-            //console.log(respuestaDet);
+            // console.log(respuestaDet);
 
             $("#lista").val(respuestaDet["lista_precios"]);
 
@@ -1101,3 +1101,158 @@ $(".tablaPedidosFacturados").DataTable({
         }
     }
 });
+
+$(".tablaPedidosGenerados").on("click", ".btnAprobarPedido", function () {
+    var codigo = $(this).attr("codigo");
+	var estadoPedido=$(this).attr("estadoPedido");
+	//Realizamos la activación-desactivación por una petición AJAX
+	var datos=new FormData();
+	datos.append("activarId",codigo);
+	datos.append("activarEstado",estadoPedido);
+
+    $.ajax({
+        url:"ajax/facturacion.ajax.php",
+        type:"POST",
+        data:datos,
+        cache:false,
+        contentType:false,
+        processData:false,
+        success:function(respuesta){
+            // console.log(respuesta);
+            swal({
+                type: "success",
+                title: "¡Ok!",
+                text: "¡El pedido fue aprobado con éxito!",
+                showConfirmButton: true,
+                confirmButtonText: "Cerrar",
+                closeOnConfirm: false
+            }).then((result)=>{
+                if(result.value){
+                    window.location="pedidos-generados";}
+            });}
+    });
+})
+
+
+$(".tablaPedidosAprobados").on("click", ".btnAptear", function () {
+    var codigo = $(this).attr("codigo");
+	var estadoPedido=$(this).attr("estadoPedido");
+	//Realizamos la activación-desactivación por una petición AJAX
+	var datos=new FormData();
+	datos.append("activarId",codigo);
+	datos.append("activarEstado",estadoPedido);
+
+    $.ajax({
+        url:"ajax/facturacion.ajax.php",
+        type:"POST",
+        data:datos,
+        cache:false,
+        contentType:false,
+        processData:false,
+        success:function(respuesta){
+            // console.log(respuesta);
+            swal({
+                type: "success",
+                title: "¡Ok!",
+                text: "¡El pedido fue dado de apta con éxito!",
+                showConfirmButton: true,
+                confirmButtonText: "Cerrar",
+                closeOnConfirm: false
+            }).then((result)=>{
+                if(result.value){
+                    window.location="pedidos-aprobados";}
+            });}
+    });
+})
+
+$(".tablaPedidosAPT").on("click", ".btnConfirmar", function () {
+    var codigo = $(this).attr("codigo");
+	var estadoPedido=$(this).attr("estadoPedido");
+	//Realizamos la activación-desactivación por una petición AJAX
+	var datos=new FormData();
+	datos.append("activarId",codigo);
+	datos.append("activarEstado",estadoPedido);
+
+    $.ajax({
+        url:"ajax/facturacion.ajax.php",
+        type:"POST",
+        data:datos,
+        cache:false,
+        contentType:false,
+        processData:false,
+        success:function(respuesta){
+            // console.log(respuesta);
+            swal({
+                type: "success",
+                title: "¡Ok!",
+                text: "¡El pedido fue confirmado con éxito!",
+                showConfirmButton: true,
+                confirmButtonText: "Cerrar",
+                closeOnConfirm: false
+            }).then((result)=>{
+                if(result.value){
+                    window.location="pedidos-apt";}
+            });}
+    });
+})
+
+$(".tablaPedidosConfirmados").on("click", ".btnFacturar", function () {
+    var codigo = $(this).attr("codigo");
+	var estadoPedido=$(this).attr("estadoPedido");
+	//Realizamos la activación-desactivación por una petición AJAX
+	var datos=new FormData();
+	datos.append("activarId",codigo);
+	datos.append("activarEstado",estadoPedido);
+
+    $.ajax({
+        url:"ajax/facturacion.ajax.php",
+        type:"POST",
+        data:datos,
+        cache:false,
+        contentType:false,
+        processData:false,
+        success:function(respuesta){
+            // console.log(respuesta);
+            swal({
+                type: "success",
+                title: "¡Ok!",
+                text: "¡El pedido fue facturado con éxito!",
+                showConfirmButton: true,
+                confirmButtonText: "Cerrar",
+                closeOnConfirm: false
+            }).then((result)=>{
+                if(result.value){
+                    window.location="pedidos-confirmados";}
+            });}
+    });
+})
+
+$(".formularioPedidoCV").on("click", ".btnCargarCliente", function () {
+    var clienteCuenta = "1";
+
+    var datos = new FormData();
+    datos.append("clienteCuenta", clienteCuenta);
+    $.ajax({
+
+        url: "ajax/clientes.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuesta2) {
+        
+        $("#seleccionarCliente").find('option').remove();
+        $("#seleccionarCliente").append("<option value='' > Seleccionar cliente </option>");
+        for (let i = 0; i < respuesta2.length; i++) {
+            
+            $("#seleccionarCliente").append("<option value='"+respuesta2[i]["codigo"]+"'>"+respuesta2[i]["codigo"]+" - "+respuesta2[i]["nombre"]+"</option>");
+            
+        }
+        $("#seleccionarCliente").selectpicker("refresh");
+        }
+
+    })
+
+})

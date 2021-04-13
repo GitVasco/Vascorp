@@ -2622,5 +2622,31 @@ class ModeloTalleres{
   }
   
 
+  static public function mdlActualizarAyer(){
+
+    $sql = " UPDATE 
+    entallerjf 
+  SET
+    fecha_proceso = DATE_SUB(NOW(), INTERVAL 1 DAY),
+    fecha_terminado = DATE_SUB(NOW(), INTERVAL 1 DAY) 
+  WHERE DATE(fecha_terminado) = DATE(NOW())";
+
+    $stmt = Conexion::conectar()->prepare($sql);
+
+
+    if ($stmt->execute()) {
+
+      return "ok";
+
+    } else {
+
+      return "error";
+    }
+
+    $stmt = null;
+  
+}
+
+
     
 }

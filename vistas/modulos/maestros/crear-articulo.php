@@ -250,24 +250,24 @@
 
                 <td class="text-center">'.$value["nom_color"].'</td>';
 
-                if( $_SESSION["perfil"] == "Supervisores" ||
-                    $_SESSION["perfil"] == "Sistemas"){
+                // if( $_SESSION["perfil"] == "Supervisores" ||
+                //     $_SESSION["perfil"] == "Sistemas"){
 
                         echo '<td class="text-center">
 
                                  <div class="btn-group"><button class="btn btn-primary btn-xs recuperarBoton  agregarColor" idColor="'.$value["cod_color"].'"><i class="fa fa-plus-circle"></i> Agregar</button></div>
                             </td>';
 
-                }else{
+                // }else{
 
-                    echo '<td class="text-center">
+                //     echo '<td class="text-center">
 
-                            <div class="btn-group"><button class="btn btn-primary btn-xs recuperarBoton  agregarColor" idColor="'.$value["cod_color"].'"><i class="fa fa-plus-circle"></i> Agregar</button></div>
+                //             <div class="btn-group"><button class="btn btn-primary btn-xs recuperarBoton  agregarColor" idColor="'.$value["cod_color"].'"><i class="fa fa-plus-circle"></i> Agregar</button></div>
 
-                            </div>  
+                //             </div>  
 
-                        </td>';
-                        }
+                //         </td>';
+                //         }
                             echo '</tr>';
 
                     }

@@ -198,7 +198,7 @@ class ModeloClientes{
 										c.lista_precios 
 									FROM
 										clientesjf c 
-									WHERE c.codigo = $valor ");
+									WHERE c.codigo = '".$valor."'");
 
 		$stmt -> execute();
 

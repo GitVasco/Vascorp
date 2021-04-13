@@ -133,17 +133,17 @@
 
                                         } else {
 
-                                            $clientes = ControladorClientes::ctrMostrarClientesP(null, null);
-                                            var_dump($clientes);
+                                            // $clientes = ControladorClientes::ctrMostrarClientesP(null, null);
+                                            // var_dump($clientes);
 
                                             echo '<option value="">Seleccione Cliente</option>';
-                                            //var_dump($clientes);
+                                            // //var_dump($clientes);
 
-                                            foreach ($clientes as $key => $value) {
+                                            // foreach ($clientes as $key => $value) {
 
-                                                echo '<option value="'.$value["codigo"].'">'.$value["nombreB"].'</option>';
+                                            //     echo '<option value="'.$value["codigo"].'">'.$value["nombreB"].'</option>';
 
-                                            }
+                                            // }
 
                                         }
 
@@ -152,9 +152,15 @@
 
                                         </select>
 
+
                                         <?php
+                                            
 
                                             $valor = $_GET["pedido"];
+
+                                            if($valor == ""){
+                                                echo "<button  type='button' class='btn btn-primary btnCargarCliente'> Cargar</button> ";
+                                            }
 
                                             $pedido = ControladorPedidos::ctrMostrarTemporal($valor);
                                             //var_dump("pedido", $pedido);

@@ -39,7 +39,7 @@ class AjaxPedidos{
 
         $valor = $this->cliList;
 
-        $respuestaDet = controladorClientes::ctrVerLista($valor);
+        $respuestaDet = ControladorClientes::ctrVerLista($valor);
        
         echo json_encode($respuestaDet);
     }      

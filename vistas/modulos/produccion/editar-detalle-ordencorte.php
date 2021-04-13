@@ -76,8 +76,8 @@
 
                     <td class="text-center">'.$value["saldo"].'</td>';
 
-                    if( $_SESSION["perfil"] == "Supervisores" ||
-                        $_SESSION["perfil"] == "Sistemas"){
+                    // if( $_SESSION["perfil"] == "Supervisores" ||
+                    //     $_SESSION["perfil"] == "Sistemas"){
 
                           echo '<td>
 
@@ -91,20 +91,20 @@
           
                               </td>';
 
-                    }else{
+                    // }else{
 
-                      echo '<td>
+                    //   echo '<td>
 
-                              <div class="btn-group">
+                    //           <div class="btn-group">
                                   
-                                <button  type="button" class="btn btn-warning btnEditarDetalleCorte" data-toggle="modal" data-target="#modalEditarDetalleCorte" idDetalle="'.$value["id"].'"><i class="fa fa-pencil"></i></button>
+                    //             <button  type="button" class="btn btn-warning btnEditarDetalleCorte" data-toggle="modal" data-target="#modalEditarDetalleCorte" idDetalle="'.$value["id"].'"><i class="fa fa-pencil"></i></button>
 
-                              </div>  
+                    //           </div>  
 
-                            </td>';
+                    //         </td>';
 
                       
-                    }
+                    // }
 
 
 

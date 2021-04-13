@@ -46,7 +46,59 @@ class ModeloProcedimientos{
 
 		if($item != null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE  $item = :$item");
+			$stmt = Conexion::conectar()->prepare("SELECT 
+      s.id,
+      s.modelo,
+      m.nombre,
+      s.color_modelo,
+      c.nom_color,
+      s.cantidad,
+      s.materia_prima,
+      m.descripcion,
+      m.color, 
+      s.fecha_inicio,
+      s.fecha_fin,
+      s.tiempo_utilizado,
+      s.cod_corte,
+      u.nombre as nom_user
+    FROM
+      sublimado_jf s 
+      LEFT JOIN modelojf m 
+        ON s.modelo = m.modelo 
+      LEFT JOIN colorjf c 
+        ON s.color_modelo = c.cod_color 
+      LEFT JOIN 
+        (SELECT DISTINCT 
+          p.codpro,
+          tblin.des_larga AS linea,
+          SUBSTRING(p.codfab, 1, 6) AS codlinea,
+          p.codfab,
+          p.despro AS despro,
+          CONCAT(
+            (SUBSTRING(p.CodFab, 1, 6)),
+            ' - ',
+            p.DesPro
+          ) AS descripcion,
+          p.codalm01 AS stock,
+          tbund.des_corta AS unidad,
+          tbcol.des_larga AS color,
+          p.cospro 
+        FROM
+          producto p 
+          INNER JOIN tabla_m_detalle AS tbund 
+            ON p.undpro = tbund.cod_argumento 
+            AND (tbund.Cod_Tabla = 'TUND') 
+          INNER JOIN tabla_m_detalle AS tbcol 
+            ON p.ColPro = tbcol.cod_argumento 
+            AND (tbcol.Cod_Tabla = 'TCOL') 
+          INNER JOIN tabla_m_detalle AS tblin 
+            ON LEFT(p.codfab, 3) = tblin.des_corta 
+            AND (tblin.cod_tabla = 'Tlin') 
+        WHERE p.estpro = '1') m 
+        ON s.materia_prima = m.codpro 
+      LEFT JOIN usuariosjf u 
+        ON s.usuario = u.id
+      WHERE  s.$item = :$item");
 
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 
@@ -56,7 +108,58 @@ class ModeloProcedimientos{
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+			$stmt = Conexion::conectar()->prepare("SELECT 
+      s.id,
+      s.modelo,
+      m.nombre,
+      s.color_modelo,
+      c.nom_color,
+      s.cantidad,
+      s.materia_prima,
+      m.descripcion,
+      m.color,
+      s.fecha_inicio,
+      s.fecha_fin,
+      s.tiempo_utilizado,
+      s.cod_corte,
+      u.nombre as nom_user
+    FROM
+      sublimado_jf s 
+      LEFT JOIN modelojf m 
+        ON s.modelo = m.modelo 
+      LEFT JOIN colorjf c 
+        ON s.color_modelo = c.cod_color 
+      LEFT JOIN 
+        (SELECT DISTINCT 
+          p.codpro,
+          tblin.des_larga AS linea,
+          SUBSTRING(p.codfab, 1, 6) AS codlinea,
+          p.codfab,
+          p.despro AS despro,
+          CONCAT(
+            (SUBSTRING(p.CodFab, 1, 6)),
+            ' - ',
+            p.DesPro
+          ) AS descripcion,
+          p.codalm01 AS stock,
+          tbund.des_corta AS unidad,
+          tbcol.des_larga AS color,
+          p.cospro 
+        FROM
+          producto p 
+          INNER JOIN tabla_m_detalle AS tbund 
+            ON p.undpro = tbund.cod_argumento 
+            AND (tbund.Cod_Tabla = 'TUND') 
+          INNER JOIN tabla_m_detalle AS tbcol 
+            ON p.ColPro = tbcol.cod_argumento 
+            AND (tbcol.Cod_Tabla = 'TCOL') 
+          INNER JOIN tabla_m_detalle AS tblin 
+            ON LEFT(p.codfab, 3) = tblin.des_corta 
+            AND (tblin.cod_tabla = 'Tlin') 
+        WHERE p.estpro = '1') m 
+        ON s.materia_prima = m.codpro 
+      LEFT JOIN usuariosjf u 
+        ON s.usuario = u.id");
 
 			$stmt -> execute();
 

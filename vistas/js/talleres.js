@@ -262,7 +262,7 @@ $(".tablaTalleresG").on("click", ".btnEditarTallerG", function () {
 		processData:false,
 		dataType: "json",
 		success:function(respuesta){
-			console.log(respuesta);
+			// console.log(respuesta);
 			$("#editarCodigo").val(respuesta["id_cabecera"]);
 			$("#editarArticulo").val(respuesta["articulo"]);
 			$("#cantidad").val(respuesta["cantidad"]);
@@ -878,7 +878,7 @@ $("#nuevoTalleres").change(function(){
       processData: false,
       dataType: "json",
       success: function(respuesta) {
-		  console.log(respuesta);
+		//   console.log(respuesta);
         $("#nuevoCodigo").val(ingreso+("000"+respuesta["ultimo_codigo"]).slice(-4));
       }
     })
@@ -2212,7 +2212,7 @@ $(".box").on("click", ".btnCrearTicket", function () {
 		processData:false,
 		dataType: "json",
 		success:function(respuesta){
-			 console.log(respuesta);
+			//  console.log(respuesta);
 			$("#verCab").val(respuesta["id_cabecera"]);
 			$("#verArti").val(respuesta["articulo"]);
 			$("#verCodOP").val(respuesta["cod_operacion"]);
@@ -2318,7 +2318,7 @@ $(".tablaTalleresT").on("click",".btnReiniciarTallerT",function(){
 				contentType:false,
 				processData:false,
 				success:function(respuesta){
-					console.log(respuesta);
+					// console.log(respuesta);
 					swal({
 						type: "success",
 						title: "¡Ok!",
@@ -2682,4 +2682,91 @@ $(".tablaIngresoM").on("click", ".btnVisualizarIngreso", function () {
 
 	})
   
+});
+
+
+$(".tablaTalleresGenerado").on("click",".btnCerrarTaller",function(){
+	var codigo = $(this).attr("codigoTallerG");
+	var estadoTaller=$(this).attr("estadoTaller");
+	//Realizamos la activación-desactivación por una petición AJAX
+	var datos=new FormData();
+	datos.append("activarId",codigo);
+	datos.append("activarEstado",estadoTaller);
+	$.ajax({
+		url:"ajax/talleres.ajax.php",
+		type:"POST",
+		data:datos,
+		cache:false,
+		contentType:false,
+		processData:false,
+		success:function(respuesta){
+			if(estadoTaller == "4"){
+
+				Command: toastr["error"]("Ticket cerrado correctamente!");
+			}else{
+
+				Command: toastr["info"]("Ticket generado correctamente!");
+			}
+
+			
+			}
+	});
+
+	if(estadoTaller == '4' ){
+		$(this).removeClass("btn-info");
+		$(this).addClass("btn-danger");
+		$(this).html("Cerrado");
+		$(this).attr("estadoTaller","1")}
+	else{
+		$(this).removeClass("btn-danger");
+		$(this).addClass("btn-info");
+		$(this).html("Generado");
+		$(this).attr("estadoTaller","4");
+	}
+
+});
+
+$(".box").on("click",".btnActualizarFecha",function(){
+	// console.log("estadoTaller", estadoTaller); 
+	// Capturamos el id del usuario y el estado
+	var fecha='probando';
+	swal({
+        title: '¿Está seguro de actualizar el taller con fecha de ayer',
+        text: "¡Si no lo está puede cancelar la acción!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si, actualizar el taller!'
+    }).then(function (result) {
+
+        if (result.value) {
+			var datos=new FormData();
+			datos.append("actualizarFecha",fecha);
+			$.ajax({
+				url:"ajax/talleres.ajax.php",
+				type:"POST",
+				data:datos,
+				cache:false,
+				contentType:false,
+				processData:false,
+				success:function(respuesta){
+					// console.log(respuesta);
+					swal({
+						type: "success",
+						title: "¡Ok!",
+						text: "¡El taller fue actualizado ayer con éxito!",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar",
+						closeOnConfirm: false
+					}).then((result)=>{
+						if(result.value){
+							window.location="en-tallert";}
+					});}
+			});
+
+		}
+	})
+
 });

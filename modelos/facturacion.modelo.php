@@ -1775,4 +1775,60 @@ class ModeloFacturacion{
       $stmt=null;
 
   }
+
+
+   /*
+    * ACTUALIZAR PEDIDO A FACTURADO
+    */
+	static public function mdlActualizarPedido($codigo,$estado,$usuario){
+
+		$sql="UPDATE
+                    temporaljf
+                SET
+                    estado = :estado,
+                    usuario_estado = :usuario_estado
+                WHERE codigo = :codigo";
+
+        $stmt=Conexion::conectar()->prepare($sql);
+
+        $stmt->bindParam(":codigo", $codigo, PDO::PARAM_STR);
+        $stmt->bindParam(":estado", $estado, PDO::PARAM_STR);
+        $stmt->bindParam(":usuario_estado", $usuario, PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt=null;
+
+    }
+
+
+     /*
+    * ACTUALIZAR PEDIDO DE ARTICULO
+    */
+	static public function mdlActualizarArticuloPedido($codigo,$pedido){
+
+		$sql="UPDATE articulojf SET pedidos = pedidos + :pedido WHERE articulo = :codigo";
+
+        $stmt=Conexion::conectar()->prepare($sql);
+
+        $stmt->bindParam(":codigo", $codigo, PDO::PARAM_STR);
+        $stmt->bindParam(":pedido", $pedido, PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt=null;
+
+    }
 }

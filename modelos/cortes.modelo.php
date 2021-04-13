@@ -395,4 +395,31 @@ class ModeloCortes{
 
     }    
 
+    /*
+	* Método para mostrar los cortes DEL SUBLIMADO POR ARTICULO
+	*/
+	static public function mdlMostrarCorteSublimado($valor1,$valor2){
+
+
+        $stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+        IFNULL(ac.guia, '') AS guia,
+        DATE_FORMAT(ac.fecha, '%d/%m/%Y') AS fecha
+      FROM
+        almacencortejf ac 
+        LEFT JOIN almacencorte_detallejf ad 
+          ON ac.codigo = ad.almacencorte 
+        LEFT JOIN articulojf a 
+          ON ad.articulo = a.articulo 
+      WHERE a.modelo = '".$valor1."' 
+      AND a.cod_color = '".$valor2."'");
+
+        $stmt -> execute();
+
+        return $stmt -> fetchAll();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }
 }
