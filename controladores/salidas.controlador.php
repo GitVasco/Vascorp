@@ -1,15 +1,15 @@
 <?php
 
-class ControladorPedidos{
+class ControladorSalidas{
 
     /*
     * MOSTRAR CABECERA DE TEMPORAL
     */
 	static public function ctrMostrarTemporal($valor){
 
-		$tabla = "temporaljf";
+		$tabla = "ing_sal";
 
-		$respuesta = ModeloPedidos::mdlMostrarTemporal($tabla, $valor);
+		$respuesta = ModeloSalidas::mdlMostrarTemporal($tabla, $valor);
 
 		return $respuesta;
 
@@ -20,7 +20,7 @@ class ControladorPedidos{
     */
 	static public function ctrMostrarTemporalTotal($valor){
 
-		$respuesta = ModeloPedidos::mdlMostrarTemporalTotal($valor);
+		$respuesta = ModeloSalidas::mdlMostrarTemporalTotal($valor);
 
 		return $respuesta;
 
@@ -31,32 +31,32 @@ class ControladorPedidos{
     */
 	static public function ctrMostrarDetallesTemporal($valor){
 
-		$tabla = "detalle_temporal";
+		$tabla = "detalle_ing_sal";
 
-		$respuesta = ModeloPedidos::mdlMostraDetallesTemporal($tabla, $valor);
+		$respuesta = ModeloSalidas::mdlMostraDetallesTemporal($tabla, $valor);
 
 		return $respuesta;
 
     }
     
     /* 
-    * CREAR ARTICULOS EN EL PEDIDO
+    * CREAR ARTICULOS EN LA SALIDA
     */
 
-    static public function ctrCrearPedido(){
+    static public function ctrCrearSalida(){
 
-        if(isset($_POST["pedido"])){
+        if(isset($_POST["salida"])){
 
             /*
             todo: VARIABLES GLOBALES DEL TALONARIO
             */
-            $tabla = "temporaljf";
+            $tabla = "ing_sal";
 
             #ver si ya existe el pedido
-            $pedido = ModeloPedidos::mdlMostrarTemporal($tabla, $_POST["pedido"]);
+            $salida = ModeloSalidas::mdlMostrarTemporal($tabla, $_POST["salida"]);
             #var_dump("pedido", $pedido);
 
-            if($pedido["codigo"] != ""){ #si ya existe
+            if($salida["codigo"] != ""){ #si ya existe
 
                 /*
                 todo: GUARDAR EL DETALLE TEMPORAL - CUANDO YA EXISTE EL TEMPORAL
@@ -80,7 +80,7 @@ class ControladorPedidos{
                         $eliminar = array(  "codigo" => $val3,
                                             "articulo" => $val1);
 
-                        $limpiar = ModeloPedidos::mdlEliminarDetalleTemporal($tabla, $eliminar);
+                        $limpiar = ModeloSalidas::mdlEliminarDetalleTemporal($tabla, $eliminar);
                         #var_dump("eliminar", $eliminar);
                         #var_dump("limpiar", $limpiar);
 
@@ -97,7 +97,7 @@ class ControladorPedidos{
 
                             echo '  <script>
 
-                                        window.location="index.php?ruta=crear-pedidocv&pedido='.$_POST["pedido"].'";
+                                        window.location="index.php?ruta=crear-salidas-varios&salida='.$_POST["salida"].'";
 
                                     </script>';
 
@@ -112,9 +112,9 @@ class ControladorPedidos{
             }else{ #si no existe
 
                 #vemos el numero que sigue en el talonario y actualizamos en +1
-                $numero = ControladorMovimientos::ctrMostrarTalonario();
+                $numero = ControladorMovimientos::ctrMostrarTalonarioSalida();
                 $talonario = $numero["pedido"] + 1;
-                ModeloPedidos::mdlActualizarTalonario();
+                ModeloSalidas::mdlActualizarTalonario();
 
                 $usuario = $_POST["usuario"];
                 $talonarioN = $usuario.$talonario;
@@ -129,7 +129,7 @@ class ControladorPedidos{
                                 "usuario" => $_POST["usuario"]);
                                 // var_dump($datos);
 
-                ModeloPedidos::mdlGuardarTemporal($tabla, $datos);
+                ModeloSalidas::mdlGuardarTemporal($tabla, $datos);
 
                 /*
                 todo: GUARDAR EL DETALLE TEMPORAL
@@ -141,7 +141,7 @@ class ControladorPedidos{
 
                     $articulo = $value["articulo"];
                     #var_dump("articulo", $value["articulo"]);
-                    $tabla = "detalle_temporal";
+                    $tabla = "detalle_ing_sal";
                     $val1 = $articulo;
                     $val2 = $_POST[$articulo];
                     $val3 = $talonarioN;
@@ -155,14 +155,14 @@ class ControladorPedidos{
                                         "precio"    => $val4);
                         #var_dump("datos", $datos);
 
-                        $respuesta = ModeloPedidos::mdlGuardarTemporalDetalle($tabla, $datos);
+                        $respuesta = ModeloSalidas::mdlGuardarTemporalDetalle($tabla, $datos);
                         #var_dump("respuesta", $respuesta);
 
                         if($respuesta = "ok"){
 
                             echo '  <script>
 
-                                        window.location="index.php?ruta=crear-pedidocv&pedido='.$talonarioN.'";
+                                        window.location="index.php?ruta=crear-salidas-varios&salida='.$talonarioN.'";
 
                                     </script>';
 
@@ -182,7 +182,7 @@ class ControladorPedidos{
     /* 
     *CREAR CONDICIONES DE VENTA Y TOTALES
     */
-    static public function ctrCrearPedidoTotales(){
+    static public function ctrCrearSalidasTotales(){
 
         if(isset($_POST["codigoM"])){
 
@@ -196,13 +196,11 @@ class ControladorPedidos{
                             "sub_total" => $_POST["subTotalM"],
                             "impuesto" => $_POST["igvM"],
                             "total" => $_POST["totalM"],
-                            "usuario" => $_POST["usuarioM"],
-                            "condicion_venta" => $_POST["condicionVentaM"],
-                            "agencia" => $_POST["agenciaM"]);
+                            "usuario" => $_POST["usuarioM"]);
 
             //var_dump($datos);
 
-            $respuesta = ModeloPedidos::mdlActualizarTotalesPedido($datos);
+            $respuesta = ModeloSalidas::mdlActualizarTotalesPedido($datos);
             //var_dump($respuesta);
             if($respuesta == "ok"){
 
@@ -229,7 +227,7 @@ class ControladorPedidos{
 
                 }
 
-                $respuesta = ModeloPedidos::mdlEliminarDetalleTemporalTotal($datos);
+                $respuesta = ModeloSalidas::mdlEliminarDetalleTemporalTotal($datos);
 
                 //var_dump($respuesta);
 
@@ -243,7 +241,7 @@ class ControladorPedidos{
 
                     //var_dump($datos);
 
-                    $resp = ModeloPedidos::mdlGuardarTemporalDetalle("detalle_temporal", $datos);
+                    $resp = ModeloSalidas::mdlGuardarTemporalDetalle("detalle_ing_sal", $datos);
 
                     if($resp == "ok"){
 
@@ -257,7 +255,7 @@ class ControladorPedidos{
                                     confirmButtonText: "Cerrar"
                                 }).then((result)=>{
                                     if(result.value){
-                                        window.location="pedidoscv";}
+                                        window.location="salidas-varios";}
                                 });
                             </script>';
 
@@ -287,7 +285,7 @@ class ControladorPedidos{
     */
 	static public function ctrMostraPedidosCabecera($valor){
 
-		$respuesta = ModeloPedidos::mdlMostraPedidosCabecera($valor);
+		$respuesta = ModeloSalidas::mdlMostraPedidosCabecera($valor);
 
 		return $respuesta;
 
@@ -296,9 +294,9 @@ class ControladorPedidos{
     /*
     * MOSTRAR CABECERA DE TEMPORAL - GENERAL
     */
-	static public function ctrMostraPedidosGeneral($valor){
+	static public function ctrMostrarSalidasGeneral($valor){
 
-		$respuesta = ModeloPedidos::mdlMostraPedidosGeneral($valor);
+		$respuesta = ModeloSalidas::mdlMostrarSalidasGeneral($valor);
 
 		return $respuesta;
 
@@ -309,7 +307,7 @@ class ControladorPedidos{
     */
 	static public function ctrMostraPedidosTablas($valor){
 
-		$respuesta = ModeloPedidos::mdlMostraPedidosTablas($valor);
+		$respuesta = ModeloSalidas::mdlMostraPedidosTablas($valor);
 
 		return $respuesta;
 
@@ -320,7 +318,7 @@ class ControladorPedidos{
     */
 	static public function ctrPedidoImpresion($codigo, $modelo){
 
-		$respuesta = ModeloPedidos::mdlPedidoImpresion($codigo, $modelo);
+		$respuesta = ModeloSalidas::mdlPedidoImpresion($codigo, $modelo);
 
 		return $respuesta;
 
@@ -331,7 +329,7 @@ class ControladorPedidos{
     */
 	static public function ctrPedidoImpresionMod($valor){
 
-		$respuesta = ModeloPedidos::mdlPedidoImpresionMod($valor);
+		$respuesta = ModeloSalidas::mdlPedidoImpresionMod($valor);
 
 		return $respuesta;
 
@@ -342,7 +340,7 @@ class ControladorPedidos{
     */
 	static public function ctrPedidoImpresionCab($valor){
 
-		$respuesta = ModeloPedidos::mdlPedidoImpresionCab($valor);
+		$respuesta = ModeloSalidas::mdlPedidoImpresionCab($valor);
 
 		return $respuesta;
 
@@ -353,7 +351,7 @@ class ControladorPedidos{
     */
 	static public function ctrPedidoImpresionTotales($valor){
 
-		$respuesta = ModeloPedidos::mdlPedidoImpresionTotales($valor);
+		$respuesta = ModeloSalidas::mdlPedidoImpresionTotales($valor);
 
 		return $respuesta;
 

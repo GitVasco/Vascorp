@@ -1,7 +1,7 @@
 <?php
 require_once "conexion.php";
 
-class ModeloPedidos{
+class ModeloSalidas{
 
     /*
     * MOSTRAR TEMPORAL CABECERA
@@ -29,7 +29,7 @@ class ModeloPedidos{
 												dt.codigo,
 												SUM(total) AS totalArt
 											FROM
-												detalle_temporal dt
+												detalle_ing_sal dt
 											WHERE dt.codigo = $valor");
 
         $stmt -> execute();
@@ -143,7 +143,7 @@ class ModeloPedidos{
 
 		$stmt = Conexion::conectar()->prepare("DELETE
 												FROM
-												detalle_temporal
+												detalle_ing_sal
 												WHERE codigo = :codigo");
 
         $stmt -> bindParam(":codigo", $datos["codigo"], PDO::PARAM_INT);
@@ -185,7 +185,7 @@ class ModeloPedidos{
 	static public function mdlActualizarTotalesPedido($datos){
 
 		$sql="UPDATE
-					temporaljf
+					ing_sal
 				SET
 					cliente = :cliente,
 					op_gravada = :op_gravada,
@@ -261,7 +261,7 @@ class ModeloPedidos{
 				cv.dias,
 				DATE_ADD(DATE(t.fecha), INTERVAL cv.dias DAY) AS fecha_ven
 			FROM
-				temporaljf t
+				ing_sal t
 				LEFT JOIN clientesjf c
 				ON t.cliente = c.id
 				LEFT JOIN condiciones_ventajf cv
@@ -307,7 +307,7 @@ class ModeloPedidos{
 					cv.dias,
 					DATE_ADD(DATE(t.fecha), INTERVAL cv.dias DAY) AS fecha_ven
 				FROM
-					temporaljf t
+					ing_sal t
 					LEFT JOIN clientesjf c
 					ON t.cliente = c.id
 					LEFT JOIN condiciones_ventajf cv
@@ -396,7 +396,7 @@ class ModeloPedidos{
 						) AS t8,
 						SUM(dt.cantidad) AS total
 					FROM
-						detalle_temporal dt
+						detalle_ing_sal dt
 						LEFT JOIN articulojf a
 						ON dt.articulo = a.articulo
 						LEFT JOIN modelojf m
@@ -426,7 +426,7 @@ class ModeloPedidos{
 			m.id_modelo,
 			m.modelo
 		FROM
-			detalle_temporal dt
+			detalle_ing_sal dt
 			LEFT JOIN articulojf a
 			ON dt.articulo = a.articulo
 			LEFT JOIN modelojf m
@@ -461,7 +461,7 @@ class ModeloPedidos{
 					c.tipo_documento,
 					c.documento
 				FROM
-					temporaljf t
+					ing_sal t
 					LEFT JOIN clientesjf c
 					ON t.cliente = c.codigo
 					LEFT JOIN ubigeojf u
@@ -544,7 +544,7 @@ class ModeloPedidos{
 					) AS t8,
 					SUM(dt.cantidad) AS total 
 				FROM
-					detalle_temporal dt
+					detalle_ing_sal dt
 					LEFT JOIN articulojf a
 					ON dt.articulo = a.articulo
 				WHERE dt.codigo = $valor";
@@ -562,7 +562,7 @@ class ModeloPedidos{
     /*
     * MOSTRAR DETALLE DE TEMPORAL
     */
-	static public function mdlMostraPedidosGeneral($valor){
+	static public function mdlMostrarSalidasGeneral($valor){
 
 		if($valor == null){
 
@@ -594,7 +594,7 @@ class ModeloPedidos{
 						cv.dias,
 						DATE_ADD(DATE(t.fecha), INTERVAL cv.dias DAY) AS fecha_ven
 					FROM
-						temporaljf t
+						ing_sal t
 						LEFT JOIN clientesjf c
 						ON t.cliente = c.codigo
 						LEFT JOIN condiciones_ventajf cv
@@ -639,7 +639,7 @@ class ModeloPedidos{
 					cv.dias,
 					DATE_ADD(DATE(t.fecha), INTERVAL cv.dias DAY) AS fecha_ven
 				FROM
-					temporaljf t
+					ing_sal t
 					LEFT JOIN clientesjf c
 					ON t.cliente = c.codigo
 					LEFT JOIN condiciones_ventajf cv
@@ -695,7 +695,7 @@ class ModeloPedidos{
 						cv.dias,
 						DATE_ADD(DATE(t.fecha), INTERVAL cv.dias DAY) AS fecha_ven
 					FROM
-						temporaljf t
+						ing_sal t
 						LEFT JOIN clientesjf c
 						ON t.cliente = c.codigo
 						LEFT JOIN condiciones_ventajf cv
@@ -741,7 +741,7 @@ class ModeloPedidos{
 					cv.dias,
 					DATE_ADD(DATE(t.fecha), INTERVAL cv.dias DAY) AS fecha_ven
 				FROM
-					temporaljf t
+					ing_sal t
 					LEFT JOIN clientesjf c
 					ON t.cliente = c.codigo
 					LEFT JOIN condiciones_ventajf cv
@@ -796,5 +796,22 @@ class ModeloPedidos{
 
 		$stmt->close();
 		$stmt = null;
+	}
+
+	/*
+    * MOSTRAR TEMPORAL CABECERA
+    */
+    static public function mdlMostrarArgumentoSalida($valor){
+
+        $stmt = Conexion::conectar()->prepare("SELECT argumento FROM maestrajf WHERE codigo = $valor ORDER BY id ASC");
+
+        $stmt -> execute();
+
+        return $stmt -> fetch();
+
+		$stmt -> close();
+
+		$stmt = null;
+
 	}
 }

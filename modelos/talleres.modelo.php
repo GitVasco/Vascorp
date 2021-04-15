@@ -2647,6 +2647,29 @@ class ModeloTalleres{
   
 }
 
+  static public function mdlActualizarArticuloGenerado($valor){
 
+    $sql = "UPDATE 
+      entallerjf 
+    SET
+      estado = 1 
+    WHERE estado = 4 
+      AND articulo = '".$valor."'";
+
+    $stmt = Conexion::conectar()->prepare($sql);
+
+
+    if ($stmt->execute()) {
+
+      return "ok";
+
+    } else {
+
+      return "error";
+    }
+
+    $stmt = null;
+
+  }
     
 }

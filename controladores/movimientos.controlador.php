@@ -130,6 +130,17 @@ class ControladorMovimientos{
         return $respuesta;
 
     }      
+
+     /* 
+    * MOSTRAR ULTIMO NUMERO DE TALONARIO SALIDA
+    */
+    static public function ctrMostrarTalonarioSalida(){
+
+        $respuesta = ModeloMovimientos::mdlMostrarTalonarioSalida();
+
+        return $respuesta;
+
+    }  
     
     /* 
     * MOSTRAR LOS MOVIMIENTOS DE PRODUCCION POR MODELO

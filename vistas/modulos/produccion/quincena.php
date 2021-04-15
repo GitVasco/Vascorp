@@ -52,6 +52,7 @@
               <th>Actualizar</th>
               <th>Pagos Trusas</th>
               <th>Pagos Brasier</th>
+              <th>Avance Producción</th>
 
             </tr>
 
@@ -373,6 +374,10 @@ MODAL EDITAR QUINCENA
 
   $eliminarQuincena = new ControladorProduccion();
   $eliminarQuincena -> ctrEliminarQuincena();
+
+
+  $imprimirAvance = new ControladorProduccion();
+  $imprimirAvance -> ctrImprimirAvance();
 
 ?>
 

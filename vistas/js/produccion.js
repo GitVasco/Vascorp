@@ -433,3 +433,18 @@ $(".tablaQuincena tbody").on("click", "button.btnActualizarPrecioServicio", func
 		});
 
 })
+
+/*=============================================
+ELIMINAR QUICENA
+=============================================*/
+
+$(".tablaQuincena tbody").on("click", "button.btnImprimirAvance", function(){
+
+	var inicioQuincena = $(this).attr("inicio");
+	var finQuincena = $(this).attr("fin");
+	//console.log("idQuincena", idQuincena);
+
+	window.location = "index.php?ruta=quincena&inicioQuincena="+ inicioQuincena+"&finQuincena="+ finQuincena;
+
+    
+})

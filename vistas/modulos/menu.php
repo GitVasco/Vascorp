@@ -802,6 +802,14 @@
                                 </a>
 
                             </li>
+
+                            <li>
+
+                                <a href="salidas-varios">
+                                <i class="fa fa-circle-o"></i> Salidas Varios
+                                </a>
+
+                            </li>
                         </ul>
                     </li>
 

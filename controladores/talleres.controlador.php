@@ -2266,4 +2266,41 @@ class ControladorTalleres{
         }
 
     }
+
+
+    /* 
+	* Asignar codigo de barra a trabajador
+	*/
+
+	static public function ctrActualizarGenerado(){
+
+		if(isset($_POST["salidaArticulo"])){
+
+            $valor= $_POST["salidaArticulo"];
+            $respuesta = ModeloTalleres::mdlActualizarArticuloGenerado($valor);
+            // var_dump($respuesta);
+
+            if($respuesta == "ok"){
+
+                echo'<script>
+                    swal({
+						  type: "success",
+						  title: "Los talleres cerrados fueron generados correctamente",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+									if (result.value) {
+
+									window.location = "en-tallerp";
+
+									}
+								})
+
+					</script>';
+
+            }
+
+		}
+
+    }  
 }
