@@ -150,13 +150,211 @@ class ModeloCuentas{
 	}
 
 	/*=============================================
+	VALIDAR CUENTA
+	=============================================*/
+
+	static public function mdlValidarCuenta($tabla,$item,$valor,$item2,$valor2){
+		
+
+		$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.tip_mov ='+' AND c.$item = :$item AND c.$item2 = :$item2 ");
+
+		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+		$stmt -> bindParam(":".$item2, $valor2, PDO::PARAM_STR);
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+
+		
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+	/*=============================================
+	MOSTRAR CUENTAS LETRAS IMPRESION
+	=============================================*/
+
+	static public function mdlMostrarCuentasLetras($tabla,$item,$valor){
+
+		if($item != null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			c.num_cta,
+			c.doc_origen,
+			c.fecha_ven,
+			c.fecha,
+			c.monto,
+			cli.codigo,
+			cli.nombre,
+			cli.direccion,
+			uc.ubcli,
+			cli.documento,
+			cli.telefono,
+			cli.ubigeo,
+			cli.aval_nombre,
+			cli.aval_dir,
+			cli.aval_postal,
+			ua.ubaval,
+			cli.aval_telf,
+			cli.aval_ruc 
+		  FROM
+			cuenta_ctejf c 
+			LEFT JOIN clientesjf cli 
+			  ON c.cliente = cli.codigo 
+			LEFT JOIN 
+			  (SELECT 
+				codigo,
+				CONCAT(
+				  Departamento,
+				  '/',
+				  provincia,
+				  '/',
+				  distrito
+				) AS ubcli 
+			  FROM
+				ubigeo) AS uc 
+			  ON cli.ubigeo = uc.codigo 
+			LEFT JOIN 
+			  (SELECT 
+				codigo,
+				CONCAT(
+				  Departamento,
+				  '/',
+				  provincia,
+				  '/',
+				  distrito
+				) AS ubaval 
+			  FROM
+				ubigeo) AS ua 
+			  ON cli.aval_postal = ua.codigo 
+			  WHERE c.tip_mov ='+' 
+			  AND c.$item = :$item ");
+
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();
+
+		}else{
+
+			$stmt = Conexion::conectar()->prepare("SELECT c.num_cta,c.doc_origen,c.fecha_ven,c.fecha,c.monto,cli.nombre,cli.direccion,cli.documento,cli.telefono FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.tip_mov ='+'");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+	/*=============================================
+	MOSTRAR CUENTAS GENERA LETRAS IMPRESION
+	=============================================*/
+
+	static public function mdlMostrarCuentasGeneradosLetras($tabla,$item,$valor){
+
+		if($item != null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			c.num_cta,
+			c.doc_origen,
+			c.fecha_ven,
+			c.fecha,
+			c.monto,
+			cli.codigo,
+			cli.nombre,
+			cli.direccion,
+			uc.ubcli,
+			cli.documento,
+			cli.telefono,
+			cli.ubigeo,
+			cli.aval_nombre,
+			cli.aval_dir,
+			cli.aval_postal,
+			ua.ubaval,
+			cli.aval_telf,
+			cli.aval_ruc 
+		  FROM
+			cuenta_ctejf c 
+			LEFT JOIN clientesjf cli 
+			  ON c.cliente = cli.codigo 
+			LEFT JOIN 
+			  (SELECT 
+				codigo,
+				CONCAT(
+				  Departamento,
+				  '/',
+				  provincia,
+				  '/',
+				  distrito
+				) AS ubcli 
+			  FROM
+				ubigeo) AS uc 
+			  ON cli.ubigeo = uc.codigo 
+			LEFT JOIN 
+			  (SELECT 
+				codigo,
+				CONCAT(
+				  Departamento,
+				  '/',
+				  provincia,
+				  '/',
+				  distrito
+				) AS ubaval 
+			  FROM
+				ubigeo) AS ua 
+			  ON cli.aval_postal = ua.codigo 
+			  WHERE c.tip_mov ='+' 
+			  AND c.$item = :$item ");
+
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}else{
+
+			$stmt = Conexion::conectar()->prepare("SELECT c.num_cta,c.doc_origen,c.fecha_ven,c.fecha,c.monto,cli.nombre,cli.direccion,cli.documento,cli.telefono FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.tip_mov ='+'");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+	/*=============================================
 	MOSTRAR CUENTAS
 	=============================================*/
 
 	static public function mdlMostrarCuentasUnicos($tabla,$item,$valor){
 
 		if($item != null){
-			$stmt = Conexion::conectar()->prepare("SELECT c.*,REPLACE(DATE_FORMAT(c.fecha_ven,'%d-%m-%Y'),'-','') AS fechaVen,REPLACE(c.num_cta,'-','') AS cuenta,cli.nombre,cli.ape_paterno,cli.ape_materno,cli.nombres,cli.documento FROM $tabla c 
+			$stmt = Conexion::conectar()->prepare("SELECT c.*,CONCAT(
+				SUBSTR(c.fecha_ven, 9, 2),
+				SUBSTR(c.fecha_ven, 6, 2),
+				SUBSTR(c.fecha_ven, 3, 2)
+			  ) AS fechaVen,
+			  REPLACE(c.num_cta,'-','') AS cuenta,
+			  cli.nombre,
+			  cli.ape_paterno,
+			  cli.ape_materno,
+			  cli.nombres,
+			  cli.documento 
+			  FROM $tabla c 
 			LEFT JOIN clientesjf cli ON c.cliente=cli.codigo
 			WHERE c.tip_mov ='+'
 			AND c.tipo_doc = '85'
@@ -171,7 +369,7 @@ class ModeloCuentas{
 			WHERE c.tip_mov ='+'
 			AND c.tipo_doc = '85'
 			AND c.estado= 'PENDIENTE'
-			AND c.estado_doc IS NULL ");
+			AND (c.estado_doc IS NULL OR c.estado_doc = '') ");
 	
 	
 			$stmt -> execute();
@@ -186,6 +384,8 @@ class ModeloCuentas{
 		$stmt = null;
 
 	}
+
+	
 	
 	static public function mdlMostrarPagos($tabla,$item,$valor){
 
@@ -736,5 +936,2135 @@ class ModeloCuentas{
 		$stmt = null;
 
 	} 
+
+	static public function mdlMostrarReporteCobrar($tabla,$orden1,$orden2,$tip_doc,$cli,$vend,$banco){
+
+		if($orden1 == 'tipo' && $orden2 == 'ordNumCuenta' ){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.banco,
+			cc.fecha,
+			cc.vendedor,
+			cc.fecha_ven,
+			cc.cliente,
+			c.nombre,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta,
+			IFNULL(cc.num_unico, '') AS num_unico 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+		  ORDER BY cc.tipo_doc,
+			cc.num_cta ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+
+		}else if($orden1 == 'tipo' && $orden2 == 'ordVencimiento'){
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.banco,
+			cc.fecha,
+			cc.vendedor,
+			cc.fecha_ven,
+			cc.cliente,
+			c.nombre,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta,
+			IFNULL(cc.num_unico, '') AS num_unico 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+		  ORDER BY cc.tipo_doc,cc.num_cta,
+			cc.fecha_ven ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+
+		}else if($orden1 == 'tipo' && $orden2 == 'ordCliente'){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.banco,
+			cc.fecha,
+			cc.vendedor,
+			cc.fecha_ven,
+			cc.cliente,
+			c.nombre,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta,
+			IFNULL(cc.num_unico, '') AS num_unico 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+		  ORDER BY cc.tipo_doc,cc.num_cta,
+			cc.cliente ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+		}else if ($orden1 == 'cliente' && $orden2 == 'ordNumCuenta' && $cli != 'todo'){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.fecha,
+			cc.fecha_ven,
+			cc.vendedor,
+			cc.doc_origen,
+			FORMAT(cc.saldo,2) AS saldo
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+			AND cc.cliente = '".$cli."' 
+		  ORDER BY cc.tipo_doc ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+
+		}else if ($orden1 == 'cliente' && $orden2 == 'ordNumCuenta' && $cli == 'todo'){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.cliente,
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.fecha,
+			cc.fecha_ven,
+			cc.vendedor,
+			cc.doc_origen,
+			CASE
+			  WHEN cc.estado_doc = '01' 
+			  THEN 'COBRANZA' 
+			  ELSE '' 
+			END AS estado_doc,
+			CASE
+			  WHEN cc.banco = '02' 
+			  THEN 'BCP' 
+			  ELSE '' 
+			END AS banco,
+			cc.num_unico,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+		  UNION
+		  SELECT 
+			cc.cliente,
+			c.nombre,
+			'',
+			'0000-00-00',
+			'',
+			'',
+			'',
+			'',
+			'',
+			'',
+			'',
+			'' 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+		  GROUP BY cc.cliente 
+		  UNION
+		  SELECT 
+			cc.cliente,
+			'',
+			'',
+			'9999-12-31',
+			'',
+			'',
+			'',
+			'',
+			'',
+			'Total Cliente',
+			FORMAT(SUM(cc.saldo), 2) AS saldo_total,
+			'' 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+		  GROUP BY cc.cliente 
+		  ORDER BY cliente,
+			fecha ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+		}else if ($orden1 == 'vendedor' && $orden2 == 'ordNumCuenta' && $vend == 'todo'){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.banco,
+			cc.fecha,
+			cc.vendedor,
+			cc.fecha_ven,
+			cc.cliente,
+			c.nombre,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta,
+			IFNULL(cc.num_unico, '') AS num_unico 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+		  ORDER BY cc.tipo_doc,
+			cc.num_cta ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+		}else if ($orden1 == 'vendedor' && $orden2 == 'ordNumCuenta' && $vend != 'todo'){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.fecha,
+			cc.fecha_ven,
+			cc.doc_origen,
+			cc.cliente,
+			c.nombre,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+			LEFT JOIN 
+			  (SELECT 
+				* 
+			  FROM
+				maestrajf 
+			  WHERE tipo_dato = 'tvend') v 
+			  ON cc.vendedor = v.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+			AND cc.vendedor = '".$vend."' 
+		  ORDER BY cc.tipo_doc");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+		}else if ($orden1 == 'vendedor' && $orden2 == 'ordCliente' && $vend == 'todo'){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.banco,
+			cc.fecha,
+			cc.vendedor,
+			cc.fecha_ven,
+			cc.cliente,
+			c.nombre,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta,
+			IFNULL(cc.num_unico, '') AS num_unico 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+		  ORDER BY cc.tipo_doc,
+		  cc.cliente,
+		  cc.num_cta
+			 ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+		}else if($orden1 == 'fecha_ven' && $orden2 == 'ordNumCuenta'){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.banco,
+			cc.fecha,
+			cc.vendedor,
+			cc.fecha_ven,
+			cc.cliente,
+			c.nombre,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta,
+			IFNULL(cc.num_unico, '') AS num_unico 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+		  ORDER BY cc.tipo_doc,
+			cc.fecha_ven,
+			cc.num_cta ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+
+    }
+
+	static public function mdlMostrarReporteVencidos($tabla,$orden1,$orden2,$tip_doc,$cli,$vend,$banco){
+
+		if($orden1 == 'tipo' && $orden2 == 'ordNumCuenta' ){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.banco,
+			cc.fecha,
+			cc.vendedor,
+			cc.fecha_ven,
+			cc.cliente,
+			c.nombre,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta,
+			IFNULL(cc.num_unico, '') AS num_unico 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+		    AND NOW()>cc.fecha_ven  
+		  ORDER BY cc.tipo_doc,
+			cc.num_cta ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+
+		}else if($orden1 == 'tipo' && $orden2 == 'ordVencimiento'){
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.banco,
+			cc.fecha,
+			cc.vendedor,
+			cc.fecha_ven,
+			cc.cliente,
+			c.nombre,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta,
+			IFNULL(cc.num_unico, '') AS num_unico 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+		    AND NOW()>cc.fecha_ven 
+		  ORDER BY cc.tipo_doc,cc.num_cta,
+			cc.fecha_ven ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+
+		}else if($orden1 == 'tipo' && $orden2 == 'ordCliente'){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.banco,
+			cc.fecha,
+			cc.vendedor,
+			cc.fecha_ven,
+			cc.cliente,
+			c.nombre,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta,
+			IFNULL(cc.num_unico, '') AS num_unico 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+		    AND NOW()>cc.fecha_ven  
+		  ORDER BY cc.tipo_doc,cc.num_cta,
+			cc.cliente ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+		}else if ($orden1 == 'cliente' && $orden2 == 'ordNumCuenta' && $cli != 'todo'){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.fecha,
+			cc.fecha_ven,
+			cc.vendedor,
+			cc.doc_origen,
+			FORMAT(cc.saldo,2) AS saldo
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+			AND cc.cliente = '".$cli."' 
+		    AND NOW()>cc.fecha_ven  
+		  ORDER BY cc.tipo_doc ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+
+		}else if ($orden1 == 'cliente' && $orden2 == 'ordNumCuenta' && $cli == 'todo'){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.cliente,
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.fecha,
+			cc.fecha_ven,
+			cc.vendedor,
+			cc.doc_origen,
+			CASE
+			  WHEN cc.estado_doc = '01' 
+			  THEN 'COBRANZA' 
+			  ELSE '' 
+			END AS estado_doc,
+			CASE
+			  WHEN cc.banco = '02' 
+			  THEN 'BCP' 
+			  ELSE '' 
+			END AS banco,
+			cc.num_unico,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+		  UNION
+		  SELECT 
+			cc.cliente,
+			c.nombre,
+			'',
+			'0000-00-00',
+			'',
+			'',
+			'',
+			'',
+			'',
+			'',
+			'',
+			'' 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+		  GROUP BY cc.cliente 
+		  UNION
+		  SELECT 
+			cc.cliente,
+			'',
+			'',
+			'9999-12-31',
+			'',
+			'',
+			'',
+			'',
+			'',
+			'Total Cliente',
+			FORMAT(SUM(cc.saldo), 2) AS saldo_total,
+			'' 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+		    AND NOW()>cc.fecha_ven  
+		  GROUP BY cc.cliente 
+		  ORDER BY cliente,
+			fecha ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+		}else if ($orden1 == 'vendedor' && $orden2 == 'ordNumCuenta' && $vend == 'todo'){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.banco,
+			cc.fecha,
+			cc.vendedor,
+			cc.fecha_ven,
+			cc.cliente,
+			c.nombre,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta,
+			IFNULL(cc.num_unico, '') AS num_unico 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente'  
+		    AND NOW()>cc.fecha_ven 
+		  ORDER BY cc.tipo_doc,
+			cc.num_cta ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+		}else if ($orden1 == 'vendedor' && $orden2 == 'ordNumCuenta' && $vend != 'todo'){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.fecha,
+			cc.fecha_ven,
+			cc.doc_origen,
+			cc.cliente,
+			c.nombre,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+			LEFT JOIN 
+			  (SELECT 
+				* 
+			  FROM
+				maestrajf 
+			  WHERE tipo_dato = 'tvend') v 
+			  ON cc.vendedor = v.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+			AND cc.vendedor = '".$vend."'  
+		    AND NOW()>cc.fecha_ven 
+		  ORDER BY cc.tipo_doc");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+		}else if ($orden1 == 'vendedor' && $orden2 == 'ordCliente' && $vend == 'todo'){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.banco,
+			cc.fecha,
+			cc.vendedor,
+			cc.fecha_ven,
+			cc.cliente,
+			c.nombre,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta,
+			IFNULL(cc.num_unico, '') AS num_unico 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+		    AND NOW()>cc.fecha_ven  
+		  ORDER BY cc.tipo_doc,
+		  cc.cliente,
+		  cc.num_cta
+			 ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+		}else if($orden1 == 'fecha_ven' && $orden2 == 'ordNumCuenta'){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.banco,
+			cc.fecha,
+			cc.vendedor,
+			cc.fecha_ven,
+			cc.cliente,
+			c.nombre,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta,
+			IFNULL(cc.num_unico, '') AS num_unico 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+		    AND NOW()>cc.fecha_ven  
+		  ORDER BY cc.tipo_doc,
+			cc.fecha_ven,
+			cc.num_cta ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+
+    }
+
+	static public function mdlMostrarReporteNoVencidos($tabla,$orden1,$orden2,$tip_doc,$cli,$vend,$banco){
+
+		if($orden1 == 'tipo' && $orden2 == 'ordNumCuenta' ){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.banco,
+			cc.fecha,
+			cc.vendedor,
+			cc.fecha_ven,
+			cc.cliente,
+			c.nombre,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta,
+			IFNULL(cc.num_unico, '') AS num_unico 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+		    AND NOW()<cc.fecha_ven  
+		  ORDER BY cc.tipo_doc,
+			cc.num_cta ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+
+		}else if($orden1 == 'tipo' && $orden2 == 'ordVencimiento'){
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.banco,
+			cc.fecha,
+			cc.vendedor,
+			cc.fecha_ven,
+			cc.cliente,
+			c.nombre,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta,
+			IFNULL(cc.num_unico, '') AS num_unico 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+		    AND NOW()<cc.fecha_ven 
+		  ORDER BY cc.tipo_doc,cc.num_cta,
+			cc.fecha_ven ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+
+		}else if($orden1 == 'tipo' && $orden2 == 'ordCliente'){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.banco,
+			cc.fecha,
+			cc.vendedor,
+			cc.fecha_ven,
+			cc.cliente,
+			c.nombre,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta,
+			IFNULL(cc.num_unico, '') AS num_unico 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+		    AND NOW()<cc.fecha_ven  
+		  ORDER BY cc.tipo_doc,cc.num_cta,
+			cc.cliente ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+		}else if ($orden1 == 'cliente' && $orden2 == 'ordNumCuenta' && $cli != 'todo'){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.fecha,
+			cc.fecha_ven,
+			cc.vendedor,
+			cc.doc_origen,
+			FORMAT(cc.saldo,2) AS saldo
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+			AND cc.cliente = '".$cli."' 
+		    AND NOW()<cc.fecha_ven  
+		  ORDER BY cc.tipo_doc ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+
+		}else if ($orden1 == 'cliente' && $orden2 == 'ordNumCuenta' && $cli == 'todo'){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.cliente,
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.fecha,
+			cc.fecha_ven,
+			cc.vendedor,
+			cc.doc_origen,
+			CASE
+			  WHEN cc.estado_doc = '01' 
+			  THEN 'COBRANZA' 
+			  ELSE '' 
+			END AS estado_doc,
+			CASE
+			  WHEN cc.banco = '02' 
+			  THEN 'BCP' 
+			  ELSE '' 
+			END AS banco,
+			cc.num_unico,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+		  UNION
+		  SELECT 
+			cc.cliente,
+			c.nombre,
+			'',
+			'0000-00-00',
+			'',
+			'',
+			'',
+			'',
+			'',
+			'',
+			'',
+			'' 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+		  GROUP BY cc.cliente 
+		  UNION
+		  SELECT 
+			cc.cliente,
+			'',
+			'',
+			'9999-12-31',
+			'',
+			'',
+			'',
+			'',
+			'',
+			'Total Cliente',
+			FORMAT(SUM(cc.saldo), 2) AS saldo_total,
+			'' 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+		    AND NOW()<cc.fecha_ven  
+		  GROUP BY cc.cliente 
+		  ORDER BY cliente,
+			fecha ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+		}else if ($orden1 == 'vendedor' && $orden2 == 'ordNumCuenta' && $vend == 'todo'){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.banco,
+			cc.fecha,
+			cc.vendedor,
+			cc.fecha_ven,
+			cc.cliente,
+			c.nombre,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta,
+			IFNULL(cc.num_unico, '') AS num_unico 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente'  
+		    AND NOW()<cc.fecha_ven 
+		  ORDER BY cc.tipo_doc,
+			cc.num_cta ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+		}else if ($orden1 == 'vendedor' && $orden2 == 'ordNumCuenta' && $vend != 'todo'){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.fecha,
+			cc.fecha_ven,
+			cc.doc_origen,
+			cc.cliente,
+			c.nombre,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+			LEFT JOIN 
+			  (SELECT 
+				* 
+			  FROM
+				maestrajf 
+			  WHERE tipo_dato = 'tvend') v 
+			  ON cc.vendedor = v.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+			AND cc.vendedor = '".$vend."'  
+		    AND NOW()<cc.fecha_ven 
+		  ORDER BY cc.tipo_doc");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+		}else if ($orden1 == 'vendedor' && $orden2 == 'ordCliente' && $vend == 'todo'){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.banco,
+			cc.fecha,
+			cc.vendedor,
+			cc.fecha_ven,
+			cc.cliente,
+			c.nombre,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta,
+			IFNULL(cc.num_unico, '') AS num_unico 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+		    AND NOW()<cc.fecha_ven  
+		  ORDER BY cc.tipo_doc,
+		  cc.cliente,
+		  cc.num_cta
+			 ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+		}else if($orden1 == 'fecha_ven' && $orden2 == 'ordNumCuenta'){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.banco,
+			cc.fecha,
+			cc.vendedor,
+			cc.fecha_ven,
+			cc.cliente,
+			c.nombre,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta,
+			IFNULL(cc.num_unico, '') AS num_unico 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+		    AND NOW()<cc.fecha_ven  
+		  ORDER BY cc.tipo_doc,
+			cc.fecha_ven,
+			cc.num_cta ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+
+    }
+
+	static public function mdlMostrarReporteProtestados($tabla,$orden1,$orden2,$tip_doc,$cli,$vend,$banco){
+
+		if($orden1 == 'tipo' && $orden2 == 'ordNumCuenta' ){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.banco,
+			cc.fecha,
+			cc.vendedor,
+			cc.fecha_ven,
+			cc.cliente,
+			c.nombre,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta,
+			IFNULL(cc.num_unico, '') AS num_unico 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+  			AND cc.protesta = 1  
+		  ORDER BY cc.tipo_doc,
+			cc.num_cta ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+
+		}else if($orden1 == 'tipo' && $orden2 == 'ordVencimiento'){
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.banco,
+			cc.fecha,
+			cc.vendedor,
+			cc.fecha_ven,
+			cc.cliente,
+			c.nombre,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta,
+			IFNULL(cc.num_unico, '') AS num_unico 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+  			AND cc.protesta = 1   
+		  ORDER BY cc.tipo_doc,cc.num_cta,
+			cc.fecha_ven ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+
+		}else if($orden1 == 'tipo' && $orden2 == 'ordCliente'){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.banco,
+			cc.fecha,
+			cc.vendedor,
+			cc.fecha_ven,
+			cc.cliente,
+			c.nombre,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta,
+			IFNULL(cc.num_unico, '') AS num_unico 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+  			AND cc.protesta = 1   
+		  ORDER BY cc.tipo_doc,cc.num_cta,
+			cc.cliente ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+		}else if ($orden1 == 'cliente' && $orden2 == 'ordNumCuenta' && $cli != 'todo'){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.fecha,
+			cc.fecha_ven,
+			cc.vendedor,
+			cc.doc_origen,
+			FORMAT(cc.saldo,2) AS saldo
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+			AND cc.cliente = '".$cli."'  
+  			AND cc.protesta = 1  
+		  ORDER BY cc.tipo_doc ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+
+		}else if ($orden1 == 'cliente' && $orden2 == 'ordNumCuenta' && $cli == 'todo'){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.cliente,
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.fecha,
+			cc.fecha_ven,
+			cc.vendedor,
+			cc.doc_origen,
+			CASE
+			  WHEN cc.estado_doc = '01' 
+			  THEN 'COBRANZA' 
+			  ELSE '' 
+			END AS estado_doc,
+			CASE
+			  WHEN cc.banco = '02' 
+			  THEN 'BCP' 
+			  ELSE '' 
+			END AS banco,
+			cc.num_unico,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+		  UNION
+		  SELECT 
+			cc.cliente,
+			c.nombre,
+			'',
+			'0000-00-00',
+			'',
+			'',
+			'',
+			'',
+			'',
+			'',
+			'',
+			'' 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+		  GROUP BY cc.cliente 
+		  UNION
+		  SELECT 
+			cc.cliente,
+			'',
+			'',
+			'9999-12-31',
+			'',
+			'',
+			'',
+			'',
+			'',
+			'Total Cliente',
+			FORMAT(SUM(cc.saldo), 2) AS saldo_total,
+			'' 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+  			AND cc.protesta = 1   
+		  GROUP BY cc.cliente 
+		  ORDER BY cliente,
+			fecha ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+		}else if ($orden1 == 'vendedor' && $orden2 == 'ordNumCuenta' && $vend == 'todo'){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.banco,
+			cc.fecha,
+			cc.vendedor,
+			cc.fecha_ven,
+			cc.cliente,
+			c.nombre,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta,
+			IFNULL(cc.num_unico, '') AS num_unico 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+  			AND cc.protesta = 1   
+		  ORDER BY cc.tipo_doc,
+			cc.num_cta ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+		}else if ($orden1 == 'vendedor' && $orden2 == 'ordNumCuenta' && $vend != 'todo'){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.fecha,
+			cc.fecha_ven,
+			cc.doc_origen,
+			cc.cliente,
+			c.nombre,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+			LEFT JOIN 
+			  (SELECT 
+				* 
+			  FROM
+				maestrajf 
+			  WHERE tipo_dato = 'tvend') v 
+			  ON cc.vendedor = v.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+			AND cc.vendedor = '".$vend."' 
+  			AND cc.protesta = 1   
+		  ORDER BY cc.tipo_doc");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+		}else if ($orden1 == 'vendedor' && $orden2 == 'ordCliente' && $vend == 'todo'){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.banco,
+			cc.fecha,
+			cc.vendedor,
+			cc.fecha_ven,
+			cc.cliente,
+			c.nombre,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta,
+			IFNULL(cc.num_unico, '') AS num_unico 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+  			AND cc.protesta = 1   
+		  ORDER BY cc.tipo_doc,
+		  cc.cliente,
+		  cc.num_cta
+			 ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+		}else if($orden1 == 'fecha_ven' && $orden2 == 'ordNumCuenta'){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.banco,
+			cc.fecha,
+			cc.vendedor,
+			cc.fecha_ven,
+			cc.cliente,
+			c.nombre,
+			FORMAT(cc.saldo, 2) AS saldo,
+			CASE
+			  WHEN cc.protesta = 0 
+			  THEN '' 
+			  ELSE 'Si' 
+			END AS protesta,
+			IFNULL(cc.num_unico, '') AS num_unico 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+  			AND cc.protesta = 1   
+		  ORDER BY cc.tipo_doc,
+			cc.fecha_ven,
+			cc.num_cta ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+
+    }
+
+	static public function mdlMostrarReportePagos($tabla,$orden1,$orden2,$canc,$vend,$inicio,$fin){
+		
+	if($orden1 == "fecha_ven" && $orden2 == "ordNumCuenta" && $canc=="todo"){
+		$stmt = Conexion::conectar()->prepare("SELECT 
+		'-1' AS tipo_doc,
+		'Fecha de pago:' AS num_cta,
+		cc.fecha,
+		'' AS cliente,
+		'' AS nombre,
+		'' AS cod_pago,
+		'' AS doc_origen,
+		'' AS fact,
+		'' AS letra 
+	  FROM
+		cuenta_ctejf cc 
+		LEFT JOIN clientesjf c 
+		  ON cc.cliente = c.codigo 
+		LEFT JOIN 
+		  (SELECT 
+			* 
+		  FROM
+			maestrajf 
+		  WHERE tipo_dato = 'tvend') v 
+		  ON cc.vendedor = v.codigo 
+	  WHERE cc.tip_mov = '-' 
+		AND (
+		  cc.fecha BETWEEN '".$inicio."' 
+		  AND '".$fin."'
+		) 
+	  GROUP BY cc.fecha 
+	  UNION
+	  SELECT 
+		cc.tipo_doc,
+		cc.num_cta,
+		cc.fecha,
+		cc.cliente,
+		c.nombre,
+		cc.cod_pago,
+		cc.doc_origen,
+		CASE
+		  WHEN cc.tipo_doc IN ('01', '03', '09', '08', '07') 
+		  THEN FORMAT(cc.monto, 2) 
+		  ELSE '' 
+		END AS fact,
+		CASE
+		  WHEN cc.tipo_doc IN ('85') 
+		  THEN FORMAT(cc.monto, 2) 
+		  ELSE '' 
+		END AS letra 
+	  FROM
+		cuenta_ctejf cc 
+		LEFT JOIN clientesjf c 
+		  ON cc.cliente = c.codigo 
+		LEFT JOIN 
+		  (SELECT 
+			* 
+		  FROM
+			maestrajf 
+		  WHERE tipo_dato = 'tvend') v 
+		  ON cc.vendedor = v.codigo 
+	  WHERE cc.tip_mov = '-' 
+		AND (
+		  cc.fecha BETWEEN '".$inicio."' 
+		  AND '".$fin."'
+		) 
+		UNION
+		SELECT 
+		  '999' AS tipo_doc,
+		  'Fecha de pago:',
+		  cc.fecha,
+		  '',
+		  '',
+		  '',
+		  '',
+		  FORMAT(
+			SUM(
+			  CASE
+				WHEN cc.tipo_doc IN ('01', '03', '09', '08', '07') 
+				THEN cc.monto 
+				ELSE '' 
+			  END
+			),
+			2
+		  ) AS fact,
+		  FORMAT(
+			SUM(
+			  CASE
+				WHEN cc.tipo_doc IN ('85') 
+				THEN cc.monto 
+				ELSE '' 
+			  END
+			),
+			2
+		  ) AS letra 
+		FROM
+		  cuenta_ctejf cc 
+		  LEFT JOIN clientesjf c 
+			ON cc.cliente = c.codigo 
+		  LEFT JOIN 
+			(SELECT 
+			  * 
+			FROM
+			  maestrajf 
+			WHERE tipo_dato = 'tvend') v 
+			ON cc.vendedor = v.codigo 
+		WHERE cc.tip_mov = '-' 
+		  AND (
+			cc.fecha BETWEEN '".$inicio."' 
+		  AND '".$fin."'
+		  ) 
+		GROUP BY cc.fecha 
+		ORDER BY fecha,
+		  tipo_doc");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+	}else if($orden1 == "vendedor" && $orden2 == "ordNumCuenta" ){
+		$stmt = Conexion::conectar()->prepare("SELECT 
+		'-1' AS tipo_doc,
+		'Vendedor: ' AS num_cta,
+		CONCAT( m.codigo , ' ', m.descripcion) AS fecha,
+		'' AS cliente,
+		'' AS nombre,
+		'' AS cod_pago,
+		'' AS doc_origen,
+		'' AS fact,
+		'' AS letra 
+	  FROM
+		maestrajf m 
+	  WHERE m.tipo_dato = 'tvend' 
+		AND m.codigo = '".$vend."' 
+	  UNION
+	  SELECT 
+		cc.tipo_doc,
+		cc.num_cta,
+		cc.fecha,
+		cc.cliente,
+		c.nombre,
+		cc.cod_pago,
+		cc.doc_origen,
+		CASE
+		  WHEN cc.tipo_doc IN ('01', '03', '09', '08', '07') 
+		  THEN FORMAT(cc.monto, 2) 
+		  ELSE '' 
+		END AS fact,
+		CASE
+		  WHEN cc.tipo_doc IN ('85') 
+		  THEN FORMAT(cc.monto, 2) 
+		  ELSE '' 
+		END AS letra 
+	  FROM
+		cuenta_ctejf cc 
+		LEFT JOIN clientesjf c 
+		  ON cc.cliente = c.codigo 
+		LEFT JOIN 
+		  (SELECT 
+			* 
+		  FROM
+			maestrajf 
+		  WHERE tipo_dato = 'tvend') v 
+		  ON cc.vendedor = v.codigo 
+	  WHERE cc.tip_mov = '-' 
+		AND (
+		  cc.fecha BETWEEN '".$inicio."' 
+		  AND '".$fin."'
+		) 
+		AND cc.vendedor = '".$vend."'  
+	  UNION
+	  SELECT 
+		'999' AS tipo_doc,
+		'' AS num_cta,
+		'9999-12-31' AS fecha,
+		'' AS cliente,
+		'' AS nombre,
+		cc.cod_pago,
+		'' AS doc_origen,
+		FORMAT(
+		  SUM(
+			CASE
+			  WHEN cc.tipo_doc IN ('01', '03', '09', '08', '07') 
+			  THEN cc.monto 
+			  ELSE '' 
+			END
+		  ),
+		  2
+		) AS fact,
+		FORMAT(
+		  SUM(
+			CASE
+			  WHEN cc.tipo_doc IN ('85') 
+			  THEN cc.monto 
+			  ELSE '' 
+			END
+		  ),
+		  2
+		) AS letra 
+	  FROM
+		cuenta_ctejf cc 
+		LEFT JOIN clientesjf c 
+		  ON cc.cliente = c.codigo 
+		LEFT JOIN 
+		  (SELECT 
+			* 
+		  FROM
+			maestrajf 
+		  WHERE tipo_dato = 'tvend') v 
+		  ON cc.vendedor = v.codigo 
+	  WHERE cc.tip_mov = '-' 
+		AND (
+		  cc.fecha BETWEEN '".$inicio."' 
+		  AND '".$fin."'
+		) 
+		AND cc.vendedor = '".$vend."' 
+	  GROUP BY cc.cod_pago 
+	  ORDER BY cod_pago,
+		tipo_doc,
+		fecha,
+		num_cta ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+	}else if($orden1 == "fecha_ven" && $orden2 == "ordNumCuenta" && $canc != "todo"){
+		$stmt = Conexion::conectar()->prepare("SELECT 
+		cc.tipo_doc,
+		cc.num_cta,
+		cc.fecha,
+		cc.cliente,
+		c.nombre,
+		cc.cod_pago,
+		cc.doc_origen,
+		CASE
+		  WHEN cc.tipo_doc IN ('01', '03', '09', '08', '07') 
+		  THEN FORMAT(cc.monto, 2) 
+		  ELSE '' 
+		END AS fact,
+		CASE
+		  WHEN cc.tipo_doc IN ('85') 
+		  THEN FORMAT(cc.monto, 2) 
+		  ELSE '' 
+		END AS letra 
+	  FROM
+		cuenta_ctejf cc 
+		LEFT JOIN clientesjf c 
+		  ON cc.cliente = c.codigo 
+		LEFT JOIN 
+		  (SELECT 
+			* 
+		  FROM
+			maestrajf 
+		  WHERE tipo_dato = 'tvend') v 
+		  ON cc.vendedor = v.codigo 
+	  WHERE cc.tip_mov = '-' 
+		AND (
+		  cc.fecha BETWEEN '".$inicio."' 
+		  AND '".$fin."'
+		) 
+		AND cc.cod_pago = '".$canc."'  
+	  UNION
+	  SELECT 
+		'999' AS tipo_doc,
+		'' AS num_cta,
+		'9999-12-31' AS fecha,
+		'' AS cliente,
+		'' AS nombre,
+		cc.cod_pago,
+		'' AS doc_origen,
+		FORMAT(
+		  SUM(
+			CASE
+			  WHEN cc.tipo_doc IN ('01', '03', '09', '08', '07') 
+			  THEN cc.monto 
+			  ELSE '' 
+			END
+		  ),
+		  2
+		) AS fact,
+		FORMAT(
+		  SUM(
+			CASE
+			  WHEN cc.tipo_doc IN ('85') 
+			  THEN cc.monto 
+			  ELSE '' 
+			END
+		  ),
+		  2
+		) AS letra 
+	  FROM
+		cuenta_ctejf cc 
+		LEFT JOIN clientesjf c 
+		  ON cc.cliente = c.codigo 
+		LEFT JOIN 
+		  (SELECT 
+			* 
+		  FROM
+			maestrajf 
+		  WHERE tipo_dato = 'tvend') v 
+		  ON cc.vendedor = v.codigo 
+	  WHERE cc.tip_mov = '-' 
+		AND (
+		  cc.fecha BETWEEN '".$inicio."' 
+		  AND '".$fin."'
+		) 
+		AND cc.cod_pago = '".$canc."' 
+	  GROUP BY cc.cod_pago 
+	  ORDER BY cod_pago,
+		tipo_doc,
+		fecha,
+		num_cta ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+	}
+		
+
+
+		$stmt -> close();
+
+		$stmt = null;
+
+
+    }
+
+	static public function mdlMostrarReporteTotalCobrar($tabla,$orden1,$orden2,$tip_doc,$cli,$vend,$banco){
+
+		
+		$stmt = Conexion::conectar()->prepare("SELECT 
+		FORMAT(SUM(cc.saldo), 2) AS saldo_total 
+		FROM
+		cuenta_ctejf cc 
+		LEFT JOIN clientesjf c 
+		ON cc.cliente = c.codigo 
+		WHERE cc.tip_mov = '+' 
+		AND cc.estado = 'Pendiente' 
+		ORDER BY cc.tipo_doc ");
+		// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+		
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }
+
+	static public function mdlMostrarReporteTotalVencidos($tabla,$orden1,$orden2,$tip_doc,$cli,$vend,$banco){
+
+			
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			FORMAT(SUM(cc.saldo), 2) AS saldo_total 
+			FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			ON cc.cliente = c.codigo 
+			WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+		    AND NOW()>cc.fecha_ven  
+			ORDER BY cc.tipo_doc ");
+			// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
+	
+			$stmt -> execute();
+	
+			return $stmt -> fetch();
+	
+			$stmt -> close();
+	
+			$stmt = null;
+	
+		}
+
+		static public function mdlMostrarReporteTotalNoVencidos($tabla,$orden1,$orden2,$tip_doc,$cli,$vend,$banco){
+
+				$stmt = Conexion::conectar()->prepare("SELECT 
+				FORMAT(SUM(cc.saldo), 2) AS saldo_total 
+				FROM
+				cuenta_ctejf cc 
+				LEFT JOIN clientesjf c 
+				ON cc.cliente = c.codigo 
+				WHERE cc.tip_mov = '+' 
+				AND cc.estado = 'Pendiente' 
+				AND NOW()<cc.fecha_ven  
+				ORDER BY cc.tipo_doc ");
+				// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
+		
+				$stmt -> execute();
+		
+				return $stmt -> fetch();
+				
+		
+				$stmt -> close();
+		
+				$stmt = null;
+		
+			}
+
+			static public function mdlMostrarReporteTotalProtestados($tabla,$orden1,$orden2,$tip_doc,$cli,$vend,$banco){
+
+		
+				$stmt = Conexion::conectar()->prepare("SELECT 
+				FORMAT(SUM(cc.saldo), 2) AS saldo_total 
+				FROM
+				cuenta_ctejf cc 
+				LEFT JOIN clientesjf c 
+				ON cc.cliente = c.codigo 
+				WHERE cc.tip_mov = '+' 
+				AND cc.estado = 'Pendiente'
+				AND cc.protesta = 1  
+				ORDER BY cc.tipo_doc ");
+				// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
+		
+				$stmt -> execute();
+		
+				return $stmt -> fetch();
+				
+		
+				$stmt -> close();
+		
+				$stmt = null;
+		
+			}
+
+			static public function mdlMostrarReporteTotalPagos($tabla,$orden1,$orden2,$canc,$vend,$inicio,$fin){
+
+				if($orden1 == "fecha_ven" && $orden2 == "ordNumCuenta"){
+					$stmt = Conexion::conectar()->prepare("SELECT 
+					'Total General' AS total_gral,
+					FORMAT(
+					  SUM(
+						CASE
+						  WHEN cc.tipo_doc IN ('01', '03', '09', '08', '07') 
+						  THEN cc.monto 
+						  ELSE '' 
+						END
+					  ),
+					  2
+					) AS fact,
+					FORMAT(
+					  SUM(
+						CASE
+						  WHEN cc.tipo_doc IN ('85') 
+						  THEN cc.monto 
+						  ELSE '' 
+						END
+					  ),
+					  2
+					) AS letra 
+				  FROM
+					cuenta_ctejf cc 
+					LEFT JOIN clientesjf c 
+					  ON cc.cliente = c.codigo 
+					LEFT JOIN 
+					  (SELECT 
+						* 
+					  FROM
+						maestrajf 
+					  WHERE tipo_dato = 'tvend') v 
+					  ON cc.vendedor = v.codigo 
+				  WHERE cc.tip_mov = '-' 
+					AND (
+					  cc.fecha BETWEEN '".$inicio."' 
+					 AND '".$fin."'
+					) ");
+					// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
+			
+					$stmt -> execute();
+			
+					return $stmt -> fetch();
+				}else if ($orden1 == "vendedor" && $orden2 == "ordNumCuenta"){
+					$stmt = Conexion::conectar()->prepare("SELECT 
+					'Total General' AS total_gral,
+					cc.vendedor, 
+					FORMAT(
+					  SUM(
+						CASE
+						  WHEN cc.tipo_doc IN ('01', '03', '09', '08', '07') 
+						  THEN cc.monto 
+						  ELSE '' 
+						END
+					  ),
+					  2
+					) AS fact,
+					FORMAT(
+					  SUM(
+						CASE
+						  WHEN cc.tipo_doc IN ('85') 
+						  THEN cc.monto 
+						  ELSE '' 
+						END
+					  ),
+					  2
+					) AS letra 
+				  FROM
+					cuenta_ctejf cc 
+					LEFT JOIN clientesjf c 
+					  ON cc.cliente = c.codigo 
+					LEFT JOIN 
+					  (SELECT 
+						* 
+					  FROM
+						maestrajf 
+					  WHERE tipo_dato = 'tvend') v 
+					  ON cc.vendedor = v.codigo 
+				  WHERE cc.tip_mov = '-' 
+					AND (
+					  cc.fecha BETWEEN '".$inicio."' 
+					 AND '".$fin."'
+					) AND cc.vendedor= '".$vend."'  
+				  GROUP BY cc.vendedor ");
+					// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
+			
+					$stmt -> execute();
+			
+					return $stmt -> fetch();
+				}
+				
+				
+		
+				$stmt -> close();
+		
+				$stmt = null;
+		
+			}
+
+	static public function mdlMostrarReporteNombre($tabla,$cli,$vend){	
+
+		if(isset($cli)){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.cliente,
+			c.nombre,
+			FORMAT(SUM(cc.saldo), 2) AS saldo_total 
+			FROM
+				cuenta_ctejf cc 
+				LEFT JOIN clientesjf c 
+				ON cc.cliente = c.codigo 
+			WHERE cc.tip_mov = '+' 
+				AND cc.estado = 'Pendiente' 
+				AND cc.cliente = '".$cli."' 
+			GROUP BY cc.cliente 
+			  ORDER BY cc.tipo_doc");
+	
+			// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
+	
+			$stmt -> execute();
+	
+			return $stmt -> fetch();
+		}else{
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.vendedor,
+			v.descripcion,
+			FORMAT(SUM(cc.saldo),2) AS total_general
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+			LEFT JOIN 
+			  (SELECT 
+				* 
+			  FROM
+				maestrajf 
+			  WHERE tipo_dato = 'tvend') v 
+			  ON cc.vendedor = v.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+			AND cc.vendedor = '".$vend."' 
+		  GROUP BY cc.vendedor 
+		  ORDER BY cc.tipo_doc ");
+	
+			// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
+	
+			$stmt -> execute();
+	
+			return $stmt -> fetch();
+		}
+		
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }
+
+	static public function mdlMostrarReporteNombreVencidos($tabla,$cli,$vend){	
+
+		if(isset($cli)){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.cliente,
+			c.nombre,
+			FORMAT(SUM(cc.saldo), 2) AS saldo_total 
+			FROM
+				cuenta_ctejf cc 
+				LEFT JOIN clientesjf c 
+				ON cc.cliente = c.codigo 
+			WHERE cc.tip_mov = '+' 
+				AND cc.estado = 'Pendiente' 
+				AND cc.cliente = '".$cli."' 
+		    	AND NOW()>cc.fecha_ven  
+			GROUP BY cc.cliente 
+			  ORDER BY cc.tipo_doc ");
+	
+			// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
+	
+			$stmt -> execute();
+	
+			return $stmt -> fetch();
+		}else{
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.vendedor,
+			v.descripcion,
+			FORMAT(SUM(cc.saldo),2) AS total_general
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+			LEFT JOIN 
+			  (SELECT 
+				* 
+			  FROM
+				maestrajf 
+			  WHERE tipo_dato = 'tvend') v 
+			  ON cc.vendedor = v.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+			AND cc.vendedor = '".$vend."'
+			AND NOW()>cc.fecha_ven  
+		  GROUP BY cc.vendedor 
+		  ORDER BY cc.tipo_doc ;");
+	
+			// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
+	
+			$stmt -> execute();
+	
+			return $stmt -> fetch();
+		}
+		
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }
+
+	static public function mdlMostrarReporteNombreNoVencidos($tabla,$cli,$vend){	
+
+		if(isset($cli)){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.cliente,
+			c.nombre
+			FORMAT(SUM(cc.saldo), 2) AS saldo_total 
+			FROM
+				cuenta_ctejf cc 
+				LEFT JOIN clientesjf c 
+				ON cc.cliente = c.codigo 
+			WHERE cc.tip_mov = '+' 
+				AND cc.estado = 'Pendiente' 
+				AND cc.cliente = '".$cli."' 
+				AND NOW()<cc.fecha_ven  
+			GROUP BY cc.cliente 
+			  ORDER BY cc.tipo_doc ");
+	
+			// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
+	
+			$stmt -> execute();
+	
+			return $stmt -> fetch();
+		}else{
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.vendedor,
+			v.descripcion,
+			FORMAT(SUM(cc.saldo),2) AS total_general
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+			LEFT JOIN 
+			  (SELECT 
+				* 
+			  FROM
+				maestrajf 
+			  WHERE tipo_dato = 'tvend') v 
+			  ON cc.vendedor = v.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+			AND cc.vendedor = '".$vend."'
+			AND NOW()<cc.fecha_ven  
+		  GROUP BY cc.vendedor 
+		  ORDER BY cc.tipo_doc ;");
+	
+			// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
+	
+			$stmt -> execute();
+	
+			return $stmt -> fetch();
+		}
+		
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }
+
+	static public function mdlMostrarReporteNombreProtestados($tabla,$cli,$vend){	
+
+		if(isset($cli)){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.cliente,
+			c.nombre,
+			FORMAT(SUM(cc.saldo), 2) AS saldo_total 
+			FROM
+				cuenta_ctejf cc 
+				LEFT JOIN clientesjf c 
+				ON cc.cliente = c.codigo 
+			WHERE cc.tip_mov = '+' 
+				AND cc.estado = 'Pendiente' 
+				AND cc.cliente = '".$cli."'
+				AND cc.protesta = 1   
+			GROUP BY cc.cliente 
+			  ORDER BY cc.tipo_doc");
+	
+			// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
+	
+			$stmt -> execute();
+	
+			return $stmt -> fetch();
+		}else{
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.vendedor,
+			v.descripcion,
+			FORMAT(SUM(cc.saldo),2) AS total_general
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+			LEFT JOIN 
+			  (SELECT 
+				* 
+			  FROM
+				maestrajf 
+			  WHERE tipo_dato = 'tvend') v 
+			  ON cc.vendedor = v.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'Pendiente' 
+			AND cc.vendedor = '".$vend."'
+			AND cc.protesta = 1   
+		  GROUP BY cc.vendedor 
+		  ORDER BY cc.tipo_doc ");
+	
+			// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
+	
+			$stmt -> execute();
+	
+			return $stmt -> fetch();
+		}
+		
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }
+	
+    /*
+    * ACTUALIZAR NOTA DE CREDITO O DEBITO + 1 POR SERIE
+    */
+    static public function mdlActualizarNotaSerie($item,$item2,$valor2){
+
+		$sql="UPDATE
+                    talonariosjf
+                SET
+                    $item = $item + 1
+                WHERE $item2 = :$item2";
+
+        $stmt=Conexion::conectar()->prepare($sql);
+
+        $stmt->bindParam(":".$item2, $valor2, PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt=null;
+
+    }
+
+
 
 }

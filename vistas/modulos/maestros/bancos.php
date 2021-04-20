@@ -262,5 +262,5 @@ MODAL EDITAR TIPO PAGO
 ?>
 
 <script>
-window.document.title = "Tipo de pagos"
+window.document.title = "Bancos"
 </script>

@@ -14,6 +14,17 @@ class ControladorMateriaPrima{
     }
 
 	/* 
+	* MOSTRAR DATOS DE LA MATERIA PRIMA POR ARTICULO
+	*/
+	static public function ctrMostrarMateriaArticulo($valor){
+
+		$respuesta = ModeloMateriaPrima::mdlMostrarMateriaArticulo($valor);
+
+		return $respuesta;
+
+    }
+
+	/* 
 	*EDITAR NOMBRE DE MATERIA PRIMA
 	*/
 	static public function ctrEditarMateriaPrima(){

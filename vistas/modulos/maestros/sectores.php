@@ -72,8 +72,8 @@
 
                     <td>'.$value["nom_sector"].'</td>';
 
-                    if( $_SESSION["perfil"] == "Supervisores" ||
-                        $_SESSION["perfil"] == "Sistemas"){
+                    // if( $_SESSION["perfil"] == "Supervisores" ||
+                    //     $_SESSION["perfil"] == "Sistemas"){
 
                           echo '<td>
 
@@ -87,20 +87,20 @@
           
                               </td>';
 
-                    }else{
+                    // }else{
 
-                      echo '<td>
+                    //   echo '<td>
 
-                              <div class="btn-group">
+                    //           <div class="btn-group">
                                   
-                                <button class="btn btn-warning btnEditarSector" data-toggle="modal" data-target="#modalEditarSector" idSector="'.$value["cod_sector"].'"><i class="fa fa-pencil"></i></button>
+                    //             <button class="btn btn-warning btnEditarSector" data-toggle="modal" data-target="#modalEditarSector" idSector="'.$value["cod_sector"].'"><i class="fa fa-pencil"></i></button>
 
-                              </div>  
+                    //           </div>  
 
-                            </td>';
+                    //         </td>';
 
                       
-                    }
+                    // }
 
 
 

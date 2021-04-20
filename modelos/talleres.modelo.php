@@ -1069,7 +1069,7 @@ class ModeloTalleres{
               WHERE et.estado = '3' 
                 AND m.tipo NOT IN ('brasier')
                 AND m.modelo NOT IN ('10013') 
-                AND MONTH(et.fecha_terminado) = MONTH(NOW()) 
+                AND MONTH(et.fecha_terminado) = MONTH(NOW())  
               GROUP BY MONTH(et.fecha_terminado),
                 DAY(et.fecha_terminado),
                 et.trabajador,
@@ -2622,5 +2622,54 @@ class ModeloTalleres{
   }
   
 
+  static public function mdlActualizarAyer(){
+
+    $sql = " UPDATE 
+    entallerjf 
+  SET
+    fecha_proceso = DATE_SUB(NOW(), INTERVAL 1 DAY),
+    fecha_terminado = DATE_SUB(NOW(), INTERVAL 1 DAY) 
+  WHERE DATE(fecha_terminado) = DATE(NOW())";
+
+    $stmt = Conexion::conectar()->prepare($sql);
+
+
+    if ($stmt->execute()) {
+
+      return "ok";
+
+    } else {
+
+      return "error";
+    }
+
+    $stmt = null;
+  
+}
+
+  static public function mdlActualizarArticuloGenerado($valor){
+
+    $sql = "UPDATE 
+      entallerjf 
+    SET
+      estado = 1 
+    WHERE estado = 4 
+      AND articulo = '".$valor."'";
+
+    $stmt = Conexion::conectar()->prepare($sql);
+
+
+    if ($stmt->execute()) {
+
+      return "ok";
+
+    } else {
+
+      return "error";
+    }
+
+    $stmt = null;
+
+  }
     
 }

@@ -29,7 +29,7 @@ class TablaPrecioServicios{
         $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarPrecioServicio' idPrecioServicio='".$precio[$i]["id"]."' data-toggle='modal' data-target='#modalEditarPrecioServicio'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarPrecioServicio' idPrecioServicio='".$precio[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
 
             $datosJson .= '[
-            "'.$precio[$i]["taller"].'",
+            "'.$precio[$i]["taller"]." - ".$precio[$i]["nom_sector"].'",
             "'.$precio[$i]["modelo"].'",
             "'.$precio[$i]["nombre"].'",
             "'.$precio[$i]["precio_doc"].'",

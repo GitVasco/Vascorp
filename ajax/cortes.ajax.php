@@ -16,6 +16,19 @@ class ajaxCortes{
 
 	}
 
+	public $modeloSublimado;
+	public $colorSublimado;
+	public function ajaxMostrarCorteSublimado(){
+
+		$valor1 = $this->modeloSublimado;
+		$valor2 = $this->colorSublimado;
+
+		$respuesta = ControladorCortes::ctrMostrarCorteSublimado($valor1,$valor2);
+
+        echo json_encode($respuesta);
+
+	}
+
 }
 
 /*
@@ -27,5 +40,14 @@ if(isset($_POST["articulo"])){
 	$mostrar = new ajaxCortes();
 	$mostrar -> articulo = $_POST["articulo"];
     $mostrar -> ajaxMostrarCortes();
+
+}
+
+if(isset($_POST["modeloSublimado"])){
+
+	$mostrarSublimado = new ajaxCortes();
+	$mostrarSublimado -> modeloSublimado = $_POST["modeloSublimado"];
+	$mostrarSublimado -> colorSublimado = $_POST["colorSublimado"];
+    $mostrarSublimado -> ajaxMostrarCorteSublimado();
 
 }

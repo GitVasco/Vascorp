@@ -75,8 +75,14 @@ class AjaxTalleres{
     date_default_timezone_set('America/Lima');
     $fecha = new DateTime();
     $para      = 'notificacionesvascorp@gmail.com';
-    $asunto    = 'Se reinicio un taller';
-    $descripcion   = 'El usuario '.$usuario.' reinicio el taller con el codigo '.$valor2;
+    if($valor1 == '4'){
+      $asunto    = 'Se cerro un taller';
+      $descripcion   = 'El usuario '.$usuario.' cerro el taller con el codigo '.$valor2;
+    }else{
+      $asunto    = 'Se reinicio un taller';
+      $descripcion   = 'El usuario '.$usuario.' reinicio el taller con el codigo '.$valor2;
+    }
+    
     $de = 'From: notificacionesvascorp@gmail.com';
     if($_SESSION["correo"] == 1){
       mail($para, $asunto, $descripcion, $de);
@@ -92,6 +98,14 @@ class AjaxTalleres{
 
 		echo $respuesta;
 	}
+
+  public function ajaxActualizarAyer(){
+
+    $respuesta = ModeloTalleres::mdlActualizarAyer();
+
+    echo $respuesta;
+
+  }
 
 }
 /*=============================================
@@ -153,4 +167,14 @@ if(isset($_POST["activarId"])){
 	$activar->activarId=$_POST["activarId"];
 	$activar->activarEstado=$_POST["activarEstado"];
 	$activar->ajaxReiniciarTallerT();
+}
+
+/*=============================================
+ACTUALIZAR FECHA AYER
+=============================================*/	
+if(isset($_POST["actualizarFecha"])){
+  
+	$actualizarAyer = new AjaxTalleres();
+  $actualizarAyer -> ajaxActualizarAyer();
+    
 }

@@ -73,6 +73,7 @@
               <th>Total</th>
               <th>Fecha</th>
               <th>Estado</th>
+              <th>Estado Pago</th>
               <th>Acciones</th>
 
             </tr>
@@ -149,7 +150,7 @@ MODAL VISUALIZAR INFORMACION
                 <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
 
                 <strong><input type="text" class="form-control input-sm" name="guia" id="guia" required readonly></strong>
-
+                <input type="hidden" name="idCierre" id="idCierre">
               </div>
 
             </div> 
@@ -164,7 +165,7 @@ MODAL VISUALIZAR INFORMACION
               
                 <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
 
-                <strong><input type="text" class="form-control input-sm" name="fecha" id="fecha" required readonly></strong>
+                <strong><input type="datetime" class="form-control input-sm" name="fecha" id="fecha" data-inputmask="'mask':'9999-99-99 99:99:99'" data-mask required ></strong>
 
               </div>
 
@@ -311,13 +312,18 @@ MODAL VISUALIZAR INFORMACION
         <div class="modal-footer">
 
           <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
-
+          <button type="submit" class="btn btn-success pull-right" ><i class="fa fa-calendar"></i> Cambiar fecha</button>
         </div>
 
 
 
       </form>
+      <?php
 
+        $fechaCierre = new ControladorCierres();
+        $fechaCierre -> ctrCambiarFechaCierre();
+
+        ?>      
     </div>
 
   </div>

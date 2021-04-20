@@ -1743,4 +1743,172 @@ class ModeloProduccion
 		$stmt = null;
 	}  
     
+  /* 
+	* ACTUALIZAR QUINCENA
+	*/
+	static public function mdlActualizarPrecioTiempo($inicio,$fin){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE 
+    entallerjf e 
+    LEFT JOIN articulojf a 
+      ON e.articulo = a.articulo 
+    LEFT JOIN operaciones_detallejf od 
+      ON e.cod_operacion = od.cod_operacion 
+      AND a.modelo = od.modelo SET e.total_precio = (e.cantidad / 12) * precio_doc 
+  WHERE DATE(e.fecha_terminado) BETWEEN :inicio
+    AND :fin ");
+
+		$stmt->bindParam(":inicio", $inicio, PDO::PARAM_STR);
+    $stmt->bindParam(":fin", $fin, PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+      return "ok";
+      
+		} else {
+
+			return "error";
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+	}  
+
+
+  	/* 
+	* MOSTRAR PRODUCCION
+	*/
+	static public function mdlMostrarAvances($inicio,$fin){
+
+    $stmt = Conexion::conectar()->prepare("SELECT 
+    a.id_trabajador,
+    CONCAT(t.nom_tra, ' ', t.ape_pat_tra) AS nombre,
+    FORMAT(ROUND(et.produccion, 2), 2) AS produccion,
+    FORMAT(ROUND(et.sueldo_quincena, 2), 2) AS sueldo,
+    FORMAT(ROUND(et.diferencia, 2), 2) AS diferencia,
+    FORMAT(ROUND(et.incentivo, 2), 2) AS incentivo,
+    FORMAT(
+      CASE
+        WHEN et.produccion > et.sueldo_quincena 
+        THEN ROUND(et.produccion + et.incentivo, 2) 
+        ELSE ROUND(et.sueldo_quincena, 2) 
+      END,
+      2
+    ) AS total 
+  FROM
+    asistenciasjf a 
+    LEFT JOIN 
+      (SELECT 
+        et.trabajador,
+        SUM(total_precio) AS produccion,
+        (t.sueldo_total / 2) AS sueldo_quincena,
+        CASE
+          WHEN SUM(total_precio) >= 600 
+          THEN 'A' 
+          WHEN SUM(total_precio) >= 550 
+          AND SUM(total_precio) < 600 
+          THEN 'B' 
+          WHEN SUM(total_precio) >= 501 
+          AND SUM(total_precio) < 550 
+          THEN 'C' 
+          WHEN SUM(total_precio) >= 475 
+          AND SUM(total_precio) <= 500 
+          THEN 'D' 
+          WHEN SUM(total_precio) >= 450 
+          AND SUM(total_precio) < 475 
+          THEN 'E' 
+          WHEN SUM(total_precio) >= 0 
+          AND SUM(total_precio) < 450 
+          THEN 'F' 
+        END AS categoria,
+        CASE
+          WHEN SUM(total_precio) > (t.sueldo_total / 2) 
+          THEN 0 
+          WHEN SUM(total_precio) < (t.sueldo_total / 2) 
+          THEN ROUND(
+            SUM(total_precio) - (t.sueldo_total / 2),
+            2
+          ) 
+        END AS diferencia,
+        CASE
+          WHEN SUM(total_precio) > (t.sueldo_total / 2) 
+          AND (SUM(total_precio) >= 600) 
+          THEN 110 
+          WHEN SUM(total_precio) > (t.sueldo_total / 2) 
+          AND (
+            SUM(total_precio) >= 550 
+            AND SUM(total_precio) < 600
+          ) 
+          THEN 110 
+          WHEN SUM(total_precio) > (t.sueldo_total / 2) 
+          AND (
+            SUM(total_precio) >= 500 
+            AND SUM(total_precio) < 550
+          ) 
+          THEN 100 
+          WHEN SUM(total_precio) > (t.sueldo_total / 2) 
+          AND (
+            SUM(total_precio) >= 475 
+            AND SUM(total_precio) < 500
+          ) 
+          THEN 85 
+          WHEN SUM(total_precio) > (t.sueldo_total / 2) 
+          AND (
+            SUM(total_precio) >= 450 
+            AND SUM(total_precio) < 475
+          ) 
+          THEN 70 
+          WHEN SUM(total_precio) > (t.sueldo_total / 2) 
+          AND (
+            SUM(total_precio) >= 0 
+            AND SUM(total_precio) < 450
+          ) 
+          THEN 55 
+          ELSE 0 
+        END AS incentivo 
+      FROM
+        entallerjf et 
+        LEFT JOIN trabajadorjf t 
+          ON et.trabajador = t.cod_tra 
+        LEFT JOIN articulojf a 
+          ON et.articulo = a.articulo 
+        LEFT JOIN modelojf m 
+          ON a.modelo = m.modelo 
+      WHERE (
+          DATE(et.fecha_terminado) BETWEEN '".$inicio."' 
+      AND '".$fin."'
+        ) 
+        AND m.tipo NOT IN ('BRASIER') 
+      GROUP BY et.trabajador) AS et 
+      ON a.id_trabajador = et.trabajador 
+    LEFT JOIN trabajadorjf t 
+      ON a.id_trabajador = t.cod_tra 
+    LEFT JOIN tipo_trabajadorjf tt 
+      ON t.cod_tip_tra = tt.cod_tip_tra 
+  WHERE (
+      DATE(a.fecha) BETWEEN '".$inicio."' 
+      AND '".$fin."'
+    ) 
+    AND tt.cod_tip_tra = '1' 
+    AND et.produccion > 0 
+    AND a.estado = 'asistio' 
+  GROUP BY a.id_trabajador 
+  ORDER BY 
+    CASE
+      WHEN et.produccion > et.sueldo_quincena 
+      THEN ROUND(et.produccion + et.incentivo, 2) 
+      ELSE ROUND(et.sueldo_quincena, 2) 
+    END DESC");
+
+
+    $stmt->execute();
+
+    return $stmt->fetchAll();
+		
+
+		$stmt->close();
+
+		$stmt = null;
+    }
 }

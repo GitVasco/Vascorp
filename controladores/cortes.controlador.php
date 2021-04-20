@@ -38,6 +38,17 @@ class ControladorCortes{
     }
 
     /*
+    * MOSTRAR DATOS DE CORTES SUBLIMADO
+    */
+    static public function ctrMostrarCorteSublimado($valor1,$valor2){
+
+        $respuesta = ModeloCortes::mdlMostrarCorteSublimado($valor1,$valor2);
+
+        return $respuesta;
+
+    }
+
+    /*
     *MANDAR A CORTE A TALLER
     */
     static public function ctrMandarTaller(){

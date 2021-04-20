@@ -404,3 +404,47 @@ $(".box").on("click", ".btnLimpiarSectorEfi", function () {
 	window.location = "index.php?ruta=eficiencia&inicio="+inicio+"&fin="+fin+"&nquincena="+nquincena+"&id="+id;
 	
 })
+
+
+/*=============================================
+Actualizar Precio Servicio
+=============================================*/
+
+$(".tablaQuincena tbody").on("click", "button.btnActualizarPrecioServicio", function(){
+
+	var inicioPrecioTiempo = $(this).attr("inicio");
+	var finPrecioTiempo = $(this).attr("fin");
+	var datos=new FormData();
+	datos.append("inicioPrecioTiempo",inicioPrecioTiempo);
+	datos.append("finPrecioTiempo",finPrecioTiempo);
+	$.ajax({
+		url:"ajax/quincena.ajax.php",
+		type:"POST",
+		data:datos,
+		cache:false,
+		contentType:false,
+		processData:false,
+		success:function(respuesta){
+		
+			Command: toastr["success"]("Actualizado exitosamente!");
+		
+		
+			}
+		});
+
+})
+
+/*=============================================
+ELIMINAR QUICENA
+=============================================*/
+
+$(".tablaQuincena tbody").on("click", "button.btnImprimirAvance", function(){
+
+	var inicioQuincena = $(this).attr("inicio");
+	var finQuincena = $(this).attr("fin");
+	//console.log("idQuincena", idQuincena);
+
+	window.location = "index.php?ruta=quincena&inicioQuincena="+ inicioQuincena+"&finQuincena="+ finQuincena;
+
+    
+})

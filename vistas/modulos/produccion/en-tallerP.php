@@ -42,6 +42,9 @@
             <div class="col-lg-2">
             <a href="operacion-taller"  class="btn btn-success"><i class="fa fa-text-height"></i> Talleres Operaciones Ser.</a>
             </div>
+            <button class="btn btn-warning btnCrearTicketOriginal" data-toggle="modal" data-target="#modalActualizarGenerado" > 
+             Actualizar Generado
+            </button>
             <div class="pull-right">
               <button type="button" class="btn btn-outline-success btnReporteTallerGenerado" linea="" style="border:green 1px solid">
                     <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Taller Generados</button>
@@ -464,6 +467,88 @@ MODAL EDITAR CANTIDAD
 
 
       ?>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<div id="modalActualizarGenerado" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form role="form" method="post" enctype="multipart/form-data">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Actualizar Taller</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <div class="form-group col-lg-12">
+              <label for="">Articulo</label>
+              <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+                  <select class="form-control input-lg selectpicker" id="salidaArticulo" name="salidaArticulo" data-live-search="true">
+                    <option value="">Seleccionar Articulo</option>
+                    <?php 
+
+                      $articulo =controladorArticulos::ctrMostrarArticulosTicket();
+                      foreach ($articulo as $key => $value) {
+                        echo '<option value="'.$value["articulo"].'">'.$value["modelo"]." - ". $value["color"]." - ".$value["talla"].'</option>';
+                      }
+                    ?>
+                  </select>
+                  
+                  
+              </div>
+            </div>  
+
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Actualizar Taller</button>
+
+        </div>
+
+      </form>
+
+        <?php
+
+          $actualizarGenerado = new ControladorTalleres();
+          $actualizarGenerado -> ctrActualizarGenerado();
+
+        ?>  
+
 
     </div>
 

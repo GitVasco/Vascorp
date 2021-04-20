@@ -180,3 +180,47 @@ $(".tablas").on("click", ".btnEliminarCliente", function(){
   })
 
 })
+
+/*=============================================
+EDITAR AVAL
+=============================================*/
+$(".tablaClientes").on("click", ".btnEditarAval", function () {
+
+    var codigo = $(this).attr("codigo");
+    /* console.log("codigo", codigo); */
+
+	var datos = new FormData();
+	datos.append("codigo", codigo);
+	
+	$.ajax({
+
+		url:"ajax/clientes.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType:"json",
+		success:function(respuesta){
+			// console.log(respuesta);
+			$("#avalCliente").val(respuesta["codigo"]);
+			$("#editarAvalNombre").val(respuesta["aval_nombre"]);
+            $("#editarAvalDir").val(respuesta["aval_dir"]);
+			if(respuesta["aval_postal"] != null){
+				$("#editarAvalPostal").val(respuesta["aval_postal"]);
+				$("#editarAvalPostal").selectpicker('refresh');
+			}else{
+				$("#editarAvalPostal").val("");
+				$("#editarAvalPostal").selectpicker('refresh');
+			}
+            
+            $("#editarAvalTelf").val(respuesta["aval_telf"]);
+			$("#editarAvalRuc").val(respuesta["aval_ruc"]);
+			
+			$("#editarAvalLibreta").val(respuesta["aval_libreta"]);
+			
+		}
+	})
+
+
+})

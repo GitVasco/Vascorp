@@ -81,6 +81,17 @@ class AjaxModelos{
 
 	}
 
+	public $modelo3;
+	public function ajaxVerColorModelo(){
+
+		$valor = $this->modelo3;
+
+		$respuesta = ControladorModelos::ctrMostrarColorModelo($valor);
+
+		echo json_encode($respuesta);
+
+	}
+
 }
 
 
@@ -117,5 +128,17 @@ if(isset($_POST["modelo2"])){
 	$verModelo = new AjaxModelos();
 	$verModelo -> modelo = $_POST["modelo2"];
 	$verModelo -> ajaxVerModelo();
+  
+}
+
+/*=============================================
+VER COLOR MODELO
+=============================================*/ 
+
+if(isset($_POST["modelo3"])){
+
+	$verColorModelo = new AjaxModelos();
+	$verColorModelo -> modelo3 = $_POST["modelo3"];
+	$verColorModelo -> ajaxVerColorModelo();
   
 }

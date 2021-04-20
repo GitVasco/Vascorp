@@ -275,6 +275,23 @@ class ModeloMovimientos{
       $stmt = null;
    } 
 
+   static public function mdlMostrarTalonarioSalida(){
+
+      $stmt = Conexion::conectar()->prepare("SELECT 
+      pedido 
+    FROM
+      talonariosjf 
+    WHERE LEFT(pedido, 1) = '3' ");
+
+      $stmt -> execute();
+
+      return $stmt -> fetch();
+
+      $stmt -> close();
+
+      $stmt = null;
+   } 
+
 	// Método para mostrar el Rango de Fechas de Ventas
 	static public function mdlMovProdMod($modelo){
 

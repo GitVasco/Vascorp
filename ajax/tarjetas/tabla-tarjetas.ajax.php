@@ -70,18 +70,18 @@ class TablaTarjetas{
             /* 
             todo: PARA SUPER-SISTEMAS-COSTOS-DISEÑO TIENEN ACCESO TOTAL
             */
-            if( $_GET["perfil"]=="Supervisores" ||
-                $_GET["perfil"]=="Sistemas" ||
-                $_GET["perfil"]=="Costos" ||
-                $_GET["perfil"]=="Udp"){
+            // if( $_GET["perfil"]=="Supervisores" ||
+            //     $_GET["perfil"]=="Sistemas" ||
+            //     $_GET["perfil"]=="Costos" ||
+            //     $_GET["perfil"]=="Udp"){
 
                 $botones =  "<div class='btn-group'><button class='btn btn-info btnVisualizarTarjeta' title='Visualizar Tarjeta' data-toggle='modal' data-target='#modalVisualizarTarjeta' articuloTarjeta='".$tarjetas[$i]["articulo"]."'><i class='fa fa-eye'></i></button><button class='btn btn-primary  btnCopiarTarjeta' title='Copiar Tarjeta' idTarjeta='".$tarjetas[$i]["id"]."'><i class='fa fa-files-o'></i></button><button class='btn btn-warning  btnEditarTarjeta' title='Editar Tarjeta' idTarjeta='".$tarjetas[$i]["id"]."'><i class='fa fa-pencil'></i></button><button class='btn btn-success  btnAgregarFicha' title='Ficha tecnica' data-toggle='modal' data-target='#modalAgregarFichaTecnica'idTarjeta='".$tarjetas[$i]["id"]."'><i class='fa fa-file-pdf-o'></i></button><button class='btn btn-danger  btnEliminarTarjeta' title='Eliminar Tarjeta' idTarjeta='".$tarjetas[$i]["id"]."'><i class='fa fa-times'></i></button></div>";
 
-            }else{
+            // }else{
 
-                $botones =  "<div class='btn-group'><button class='btn btn-info btnVisualizarTarjeta' data-toggle='modal' data-target='#modalVisualizarTarjeta' articuloTarjeta='".$tarjetas[$i]["articulo"]."'><i class='fa fa-eye'></i></button></div>"; 
+            //     $botones =  "<div class='btn-group'><button class='btn btn-info btnVisualizarTarjeta' data-toggle='modal' data-target='#modalVisualizarTarjeta' articuloTarjeta='".$tarjetas[$i]["articulo"]."'><i class='fa fa-eye'></i></button></div>"; 
 
-            }
+            // }
             
 
     

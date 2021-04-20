@@ -26,7 +26,7 @@ class TablaTalleresGenerado{
             if($talleres[$i]["estado"] == "1"){
 
 
-                $estado = "<span style='font-size:85%' class='label label-info'>Generado</span>";
+                $estado = "<button class='btn btn-info btn-xs btnCerrarTaller' codigoTallerG='".$talleres[$i]["codigo"]."' estadoTaller='4'>Generado</button>";
     
             }elseif($talleres[$i]["estado"] == "2"){
     

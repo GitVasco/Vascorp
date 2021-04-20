@@ -74,8 +74,8 @@
                     ;
                     
 
-                    if( $_SESSION["perfil"] == "Supervisores" ||
-                        $_SESSION["perfil"] == "Sistemas"){
+                    // if( $_SESSION["perfil"] == "Supervisores" ||
+                    //     $_SESSION["perfil"] == "Sistemas"){
 
                           echo '<td>
 
@@ -89,20 +89,20 @@
           
                               </td>';
 
-                    }else{
+                    // }else{
 
-                      echo '<td>
+                    //   echo '<td>
 
-                              <div class="btn-group">
+                    //           <div class="btn-group">
                                   
-                                <button class="btn btn-warning btnEditarConexion" data-toggle="modal" data-target="#modalEditarConexion" idConexion="'.$value["id"].'"><i class="fa fa-pencil"></i></button>
+                    //             <button class="btn btn-warning btnEditarConexion" data-toggle="modal" data-target="#modalEditarConexion" idConexion="'.$value["id"].'"><i class="fa fa-pencil"></i></button>
 
-                              </div>  
+                    //           </div>  
 
-                            </td>';
+                    //         </td>';
 
                       
-                    }
+                    // }
 
 
 
