@@ -762,4 +762,39 @@ class ModeloPedidos{
 
 	}
 
+	/*
+	* GUARDAR TEMPORAL BKP
+	*/
+	static public function mdlGuardarTemporalBkp($tabla, $datos){
+
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (codigo, cliente, vendedor, lista,op_gravada,descuento_total,sub_total,igv,total,condicion_venta,estado,fecha,usuario,agencia,usuario_estado) VALUES (:codigo, :cliente, :vendedor, :lista,:op_gravada,:descuento_total,:sub_total,:igv,:total,:condicion_venta,:estado,:fecha,:usuario,:agencia,:usuario_estado)");
+
+		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
+		$stmt->bindParam(":cliente", $datos["cliente"], PDO::PARAM_STR);
+		$stmt->bindParam(":vendedor", $datos["vendedor"], PDO::PARAM_STR);
+		$stmt->bindParam(":lista", $datos["lista"], PDO::PARAM_STR);
+		$stmt->bindParam(":op_gravada", $datos["op_gravada"], PDO::PARAM_STR);
+		$stmt->bindParam(":descuento_total", $datos["descuento_total"], PDO::PARAM_STR);
+		$stmt->bindParam(":sub_total", $datos["sub_total"], PDO::PARAM_STR);
+		$stmt->bindParam(":igv", $datos["igv"], PDO::PARAM_STR);
+		$stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
+		$stmt->bindParam(":condicion_venta", $datos["condicion_venta"], PDO::PARAM_STR);
+		$stmt->bindParam(":estado", $datos["estado"], PDO::PARAM_STR);
+		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+		$stmt->bindParam(":agencia", $datos["agencia"], PDO::PARAM_STR);
+		$stmt->bindParam(":usuario_estado", $datos["usuario_estado"], PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
 }

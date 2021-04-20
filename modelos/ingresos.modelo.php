@@ -8,7 +8,7 @@ class ModeloIngresos{
 
 		if($item != null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item ORDER BY id DESC");
+			$stmt = Conexion::conectar()->prepare("SELECT mc.*, s.nom_sector,u.nombre  FROM  $tabla mc LEFT JOIN sectorjf s on mc.taller = s.cod_sector LEFT JOIN usuariosjf u ON mc.usuario = u.id WHERE mc.$item = :$item ");
 
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 
@@ -74,6 +74,7 @@ class ModeloIngresos{
 
 		$sql="INSERT INTO $tabla (			tipo,
 											usuario,
+											guia,
 											taller,
 											documento,
 											total,
@@ -83,6 +84,7 @@ class ModeloIngresos{
 										VALUES
 											(:tipo,
 											:usuario,
+											:guia,
 											:taller,
 											:documento,
 											:total,
@@ -94,6 +96,7 @@ class ModeloIngresos{
 
 		$stmt->bindParam(":tipo",$datos["tipo"],PDO::PARAM_STR);
         $stmt->bindParam(":usuario",$datos["usuario"],PDO::PARAM_INT);
+		$stmt->bindParam(":guia",$datos["guia"],PDO::PARAM_STR);
         $stmt->bindParam(":taller",$datos["taller"],PDO::PARAM_STR);
         $stmt->bindParam(":documento",$datos["documento"],PDO::PARAM_STR);
 		$stmt->bindParam(":total",$datos["total"],PDO::PARAM_INT);
@@ -117,6 +120,7 @@ class ModeloIngresos{
 		$sql="INSERT INTO $tabla (			tipo,
 											usuario,
 											taller,
+											guia,
 											documento,
 											total,
 											fecha,
@@ -127,6 +131,7 @@ class ModeloIngresos{
 											(:tipo,
 											:usuario,
 											:taller,
+											:guia,
 											:documento,
 											:total,
 											:fecha,
@@ -138,7 +143,8 @@ class ModeloIngresos{
 
 		$stmt->bindParam(":tipo",$datos["tipo"],PDO::PARAM_STR);
         $stmt->bindParam(":usuario",$datos["usuario"],PDO::PARAM_INT);
-        $stmt->bindParam(":taller",$datos["taller"],PDO::PARAM_STR);
+        $stmt->bindParam(":guia",$datos["guia"],PDO::PARAM_STR);
+		$stmt->bindParam(":taller",$datos["taller"],PDO::PARAM_STR);
         $stmt->bindParam(":documento",$datos["documento"],PDO::PARAM_STR);
 		$stmt->bindParam(":total",$datos["total"],PDO::PARAM_INT);
 		$stmt->bindParam(":fecha",$datos["fecha"],PDO::PARAM_STR);
@@ -267,11 +273,12 @@ class ModeloIngresos{
 	*/
 	static public function mdlEditarIngreso($tabla,$datos){
 
-		$sql="UPDATE $tabla SET usuario=:usuario, taller=:taller, documento=:documento, total=:total, fecha=:fecha WHERE id=:id";
+		$sql="UPDATE $tabla SET usuario=:usuario, guia = :guia, taller=:taller, documento=:documento, total=:total, fecha=:fecha WHERE id=:id";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 
 		$stmt->bindParam(":usuario",$datos["usuario"],PDO::PARAM_INT);
+		$stmt->bindParam(":guia",$datos["guia"],PDO::PARAM_STR);
         $stmt->bindParam(":taller",$datos["taller"],PDO::PARAM_STR);
         $stmt->bindParam(":documento",$datos["documento"],PDO::PARAM_STR);
 		$stmt->bindParam(":total",$datos["total"],PDO::PARAM_INT);
@@ -293,11 +300,12 @@ class ModeloIngresos{
 
 	static public function mdlEditarSegunda($tabla,$datos){
 
-		$sql="UPDATE $tabla SET usuario=:usuario, taller=:taller, documento=:documento, total=:total, fecha=:fecha,trabajador=:trabajador WHERE id=:id";
+		$sql="UPDATE $tabla SET usuario=:usuario, guia = :guia, taller=:taller, documento=:documento, total=:total, fecha=:fecha,trabajador=:trabajador WHERE id=:id";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 
 		$stmt->bindParam(":usuario",$datos["usuario"],PDO::PARAM_INT);
+		$stmt->bindParam(":guia",$datos["guia"],PDO::PARAM_STR);
         $stmt->bindParam(":taller",$datos["taller"],PDO::PARAM_STR);
 		$stmt->bindParam(":documento",$datos["documento"],PDO::PARAM_STR);
 		$stmt->bindParam(":trabajador",$datos["trabajador"],PDO::PARAM_INT);
@@ -435,5 +443,542 @@ class ModeloIngresos{
 
 	}
 	
+	//VISUALIZAR DETALLE INGRESO
+	static public function mdlVisualizarIngresoDetalle($valor){
+	
+		if($valor!=null){
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			m.documento,
+			DATE(m.fecha) AS fechas,
+			a.modelo,
+			a.nombre,
+			a.cod_color,
+			a.color,
+			se.cod_sector,
+			se.nom_sector,
+			FORMAT(SUM(
+			  CASE
+				WHEN a.cod_talla = '1' 
+				THEN m.cantidad 
+				ELSE 0 
+			  END
+			),0) AS t1,
+			FORMAT(SUM(
+			  CASE
+				WHEN a.cod_talla = '2' 
+				THEN m.cantidad 
+				ELSE 0 
+			  END
+			),0) AS t2,
+			FORMAT(SUM(
+			  CASE
+				WHEN a.cod_talla = '3' 
+				THEN m.cantidad 
+				ELSE 0 
+			  END
+			),0) AS t3,
+			FORMAT(SUM(
+			  CASE
+				WHEN a.cod_talla = '4' 
+				THEN m.cantidad 
+				ELSE 0 
+			  END
+			),0) AS t4,
+			FORMAT(SUM(
+			  CASE
+				WHEN a.cod_talla = '5' 
+				THEN m.cantidad 
+				ELSE 0 
+			  END
+			),0) AS t5,
+			FORMAT(SUM(
+			  CASE
+				WHEN a.cod_talla = '6' 
+				THEN m.cantidad 
+				ELSE 0 
+			  END
+			),0) AS t6,
+			FORMAT(SUM(
+			  CASE
+				WHEN a.cod_talla = '7' 
+				THEN m.cantidad 
+				ELSE 0 
+			  END
+			),0) AS t7,
+			FORMAT(SUM(
+			  CASE
+				WHEN a.cod_talla = '8' 
+				THEN m.cantidad 
+				ELSE 0 
+			  END
+			),0) AS t8,
+			FORMAT(SUM(m.cantidad),0) AS total 
+		  FROM
+			movimientosjf_2021 m 
+			LEFT JOIN articulojf a 
+			  ON m.articulo = a.articulo 
+			LEFT JOIN sectorjf se 
+			  ON LEFT(m.documento, 2) = se.cod_sector 
+		  WHERE m.documento = :valor 
+		  GROUP BY m.documento,
+			a.modelo,
+			a.nombre,
+			a.cod_color,
+			a.color");
+	
+			$stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
+	
+			$stmt->execute();
+	
+			return $stmt->fetchAll();
+	
+		}else{
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			m.documento,
+			DATE(m.fecha) AS fechas,
+			a.modelo,
+			a.nombre,
+			a.cod_color,
+			a.color,
+			se.cod_sector,
+			se.nom_sector,
+			FORMAT(SUM(
+			  CASE
+				WHEN a.cod_talla = '1' 
+				THEN m.cantidad 
+				ELSE 0 
+			  END
+			),0) AS t1,
+			FORMAT(SUM(
+			  CASE
+				WHEN a.cod_talla = '2' 
+				THEN m.cantidad 
+				ELSE 0 
+			  END
+			),0) AS t2,
+			FORMAT(SUM(
+			  CASE
+				WHEN a.cod_talla = '3' 
+				THEN m.cantidad 
+				ELSE 0 
+			  END
+			),0) AS t3,
+			FORMAT(SUM(
+			  CASE
+				WHEN a.cod_talla = '4' 
+				THEN m.cantidad 
+				ELSE 0 
+			  END
+			),0) AS t4,
+			FORMAT(SUM(
+			  CASE
+				WHEN a.cod_talla = '5' 
+				THEN m.cantidad 
+				ELSE 0 
+			  END
+			),0) AS t5,
+			FORMAT(SUM(
+			  CASE
+				WHEN a.cod_talla = '6' 
+				THEN m.cantidad 
+				ELSE 0 
+			  END
+			),0) AS t6,
+			FORMAT(SUM(
+			  CASE
+				WHEN a.cod_talla = '7' 
+				THEN m.cantidad 
+				ELSE 0 
+			  END
+			),0) AS t7,
+			FORMAT(SUM(
+			  CASE
+				WHEN a.cod_talla = '8' 
+				THEN m.cantidad 
+				ELSE 0 
+			  END
+			),0) AS t8,
+			FORMAT(SUM(m.cantidad),0) AS total 
+		  FROM
+			movimientosjf_2021 m 
+			LEFT JOIN articulojf a 
+			  ON m.articulo = a.articulo 
+			LEFT JOIN sectorjf se 
+			  ON LEFT(m.documento, 2) = se.cod_sector 
+		  GROUP BY m.documento,
+			a.modelo,
+			a.nombre,
+			a.cod_color,
+			a.color");
+	
+			$stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
+	
+			$stmt->execute();
+	
+			return $stmt->fetchAll();
+	
+		}
+	
+			
+			$stmt=null;
+	
+		}
 
+
+		static public function mdlRangoFechasVerIngresos($tabla, $fechaInicial, $fechaFinal){
+
+			if($fechaInicial == "null"){
+	
+				$stmt = Conexion::conectar()->prepare("SELECT 
+				m.documento,
+				DATE(m.fecha) AS fechas,
+				a.modelo,
+				a.nombre,
+				a.cod_color,
+				a.color,
+				se.cod_sector,
+				se.nom_sector,
+				FORMAT(SUM(
+				  CASE
+					WHEN a.cod_talla = '1' 
+					THEN m.cantidad 
+					ELSE 0 
+				  END
+				),0) AS t1,
+				FORMAT(SUM(
+				  CASE
+					WHEN a.cod_talla = '2' 
+					THEN m.cantidad 
+					ELSE 0 
+				  END
+				),0) AS t2,
+				FORMAT(SUM(
+				  CASE
+					WHEN a.cod_talla = '3' 
+					THEN m.cantidad 
+					ELSE 0 
+				  END
+				),0) AS t3,
+				FORMAT(SUM(
+				  CASE
+					WHEN a.cod_talla = '4' 
+					THEN m.cantidad 
+					ELSE 0 
+				  END
+				),0) AS t4,
+				FORMAT(SUM(
+				  CASE
+					WHEN a.cod_talla = '5' 
+					THEN m.cantidad 
+					ELSE 0 
+				  END
+				),0) AS t5,
+				FORMAT(SUM(
+				  CASE
+					WHEN a.cod_talla = '6' 
+					THEN m.cantidad 
+					ELSE 0 
+				  END
+				),0) AS t6,
+				FORMAT(SUM(
+				  CASE
+					WHEN a.cod_talla = '7' 
+					THEN m.cantidad 
+					ELSE 0 
+				  END
+				),0) AS t7,
+				FORMAT(SUM(
+				  CASE
+					WHEN a.cod_talla = '8' 
+					THEN m.cantidad 
+					ELSE 0 
+				  END
+				),0) AS t8,
+				FORMAT(SUM(m.cantidad),0) AS total 
+			  FROM
+				movimientosjf_2021 m 
+				LEFT JOIN articulojf a 
+				  ON m.articulo = a.articulo 
+				LEFT JOIN sectorjf se 
+				  ON LEFT(m.documento, 2) = se.cod_sector 
+			  GROUP BY m.documento,
+				a.modelo,
+				a.nombre,
+				a.cod_color,
+				a.color ");
+	
+				$stmt -> execute();
+	
+				return $stmt -> fetchAll();	
+	
+	
+			}else if($fechaInicial == $fechaFinal){
+	
+				$stmt = Conexion::conectar()->prepare("SELECT 
+				m.documento,
+				DATE(m.fecha) AS fechas,
+				a.modelo,
+				a.nombre,
+				a.cod_color,
+				a.color,
+				se.cod_sector,
+				se.nom_sector,
+				FORMAT(SUM(
+				  CASE
+					WHEN a.cod_talla = '1' 
+					THEN m.cantidad 
+					ELSE 0 
+				  END
+				),0) AS t1,
+				FORMAT(SUM(
+				  CASE
+					WHEN a.cod_talla = '2' 
+					THEN m.cantidad 
+					ELSE 0 
+				  END
+				),0) AS t2,
+				FORMAT(SUM(
+				  CASE
+					WHEN a.cod_talla = '3' 
+					THEN m.cantidad 
+					ELSE 0 
+				  END
+				),0) AS t3,
+				FORMAT(SUM(
+				  CASE
+					WHEN a.cod_talla = '4' 
+					THEN m.cantidad 
+					ELSE 0 
+				  END
+				),0) AS t4,
+				FORMAT(SUM(
+				  CASE
+					WHEN a.cod_talla = '5' 
+					THEN m.cantidad 
+					ELSE 0 
+				  END
+				),0) AS t5,
+				FORMAT(SUM(
+				  CASE
+					WHEN a.cod_talla = '6' 
+					THEN m.cantidad 
+					ELSE 0 
+				  END
+				),0) AS t6,
+				FORMAT(SUM(
+				  CASE
+					WHEN a.cod_talla = '7' 
+					THEN m.cantidad 
+					ELSE 0 
+				  END
+				),0) AS t7,
+				FORMAT(SUM(
+				  CASE
+					WHEN a.cod_talla = '8' 
+					THEN m.cantidad 
+					ELSE 0 
+				  END
+				),0) AS t8,
+				FORMAT(SUM(m.cantidad),0) AS total 
+			  FROM
+				movimientosjf_2021 m 
+				LEFT JOIN articulojf a 
+				  ON m.articulo = a.articulo 
+				LEFT JOIN sectorjf se 
+				  ON LEFT(m.documento, 2) = se.cod_sector 
+				WHERE DATE(m.fecha) like '%$fechaFinal%'
+				GROUP BY m.documento,
+				a.modelo,
+				a.nombre,
+				a.cod_color,
+				a.color");
+	
+				$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+	
+				$stmt -> execute();
+	
+				return $stmt -> fetchAll();
+	
+			}else{
+	
+				$fechaActual = new DateTime();
+				$fechaActual ->add(new DateInterval("P1D"));
+				$fechaActualMasUno = $fechaActual->format("Y-m-d");
+	
+				$fechaFinal2 = new DateTime($fechaFinal);
+				$fechaFinal2 ->add(new DateInterval("P1D"));
+				$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+	
+				if($fechaFinalMasUno == $fechaActualMasUno){
+	
+					$stmt = Conexion::conectar()->prepare("SELECT 
+					m.documento,
+					DATE(m.fecha) AS fechas,
+					a.modelo,
+					a.nombre,
+					a.cod_color,
+					a.color,
+					se.cod_sector,
+					se.nom_sector,
+					FORMAT(SUM(
+					  CASE
+						WHEN a.cod_talla = '1' 
+						THEN m.cantidad 
+						ELSE 0 
+					  END
+					),0) AS t1,
+					FORMAT(SUM(
+					  CASE
+						WHEN a.cod_talla = '2' 
+						THEN m.cantidad 
+						ELSE 0 
+					  END
+					),0) AS t2,
+					FORMAT(SUM(
+					  CASE
+						WHEN a.cod_talla = '3' 
+						THEN m.cantidad 
+						ELSE 0 
+					  END
+					),0) AS t3,
+					FORMAT(SUM(
+					  CASE
+						WHEN a.cod_talla = '4' 
+						THEN m.cantidad 
+						ELSE 0 
+					  END
+					),0) AS t4,
+					FORMAT(SUM(
+					  CASE
+						WHEN a.cod_talla = '5' 
+						THEN m.cantidad 
+						ELSE 0 
+					  END
+					),0) AS t5,
+					FORMAT(SUM(
+					  CASE
+						WHEN a.cod_talla = '6' 
+						THEN m.cantidad 
+						ELSE 0 
+					  END
+					),0) AS t6,
+					FORMAT(SUM(
+					  CASE
+						WHEN a.cod_talla = '7' 
+						THEN m.cantidad 
+						ELSE 0 
+					  END
+					),0) AS t7,
+					FORMAT(SUM(
+					  CASE
+						WHEN a.cod_talla = '8' 
+						THEN m.cantidad 
+						ELSE 0 
+					  END
+					),0) AS t8,
+					FORMAT(SUM(m.cantidad),0) AS total 
+				  FROM
+					movimientosjf_2021 m 
+					LEFT JOIN articulojf a 
+					  ON m.articulo = a.articulo 
+					LEFT JOIN sectorjf se 
+					  ON LEFT(m.documento, 2) = se.cod_sector 
+					WHERE DATE(m.fecha) BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'
+				  GROUP BY m.documento,
+					a.modelo,
+					a.nombre,
+					a.cod_color,
+					a.color");
+	
+				}else{
+	
+	
+					$stmt = Conexion::conectar()->prepare("SELECT 
+					m.documento,
+					DATE(m.fecha) AS fechas,
+					a.modelo,
+					a.nombre,
+					a.cod_color,
+					a.color,
+					se.cod_sector,
+					se.nom_sector,
+					FORMAT(SUM(
+					  CASE
+						WHEN a.cod_talla = '1' 
+						THEN m.cantidad 
+						ELSE 0 
+					  END
+					),0) AS t1,
+					FORMAT(SUM(
+					  CASE
+						WHEN a.cod_talla = '2' 
+						THEN m.cantidad 
+						ELSE 0 
+					  END
+					),0) AS t2,
+					FORMAT(SUM(
+					  CASE
+						WHEN a.cod_talla = '3' 
+						THEN m.cantidad 
+						ELSE 0 
+					  END
+					),0) AS t3,
+					FORMAT(SUM(
+					  CASE
+						WHEN a.cod_talla = '4' 
+						THEN m.cantidad 
+						ELSE 0 
+					  END
+					),0) AS t4,
+					FORMAT(SUM(
+					  CASE
+						WHEN a.cod_talla = '5' 
+						THEN m.cantidad 
+						ELSE 0 
+					  END
+					),0) AS t5,
+					FORMAT(SUM(
+					  CASE
+						WHEN a.cod_talla = '6' 
+						THEN m.cantidad 
+						ELSE 0 
+					  END
+					),0) AS t6,
+					FORMAT(SUM(
+					  CASE
+						WHEN a.cod_talla = '7' 
+						THEN m.cantidad 
+						ELSE 0 
+					  END
+					),0) AS t7,
+					FORMAT(SUM(
+					  CASE
+						WHEN a.cod_talla = '8' 
+						THEN m.cantidad 
+						ELSE 0 
+					  END
+					),0) AS t8,
+					FORMAT(SUM(m.cantidad),0) AS total 
+				  FROM
+					movimientosjf_2021 m 
+					LEFT JOIN articulojf a 
+					  ON m.articulo = a.articulo 
+					LEFT JOIN sectorjf se 
+					  ON LEFT(m.documento, 2) = se.cod_sector 
+					WHERE DATE(m.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'
+					GROUP BY m.documento,
+					a.modelo,
+					a.nombre,
+					a.cod_color,
+					a.color ");
+	
+				}
+			
+				$stmt -> execute();
+	
+				return $stmt -> fetchAll();
+	
+			}
+	
+		}
 }

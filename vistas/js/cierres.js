@@ -657,7 +657,7 @@ $(".tablaCierres").on("click", ".btnVisualizarCierre", function () {
 		success:function(respuesta){
 
 			// console.log("respuesta", respuesta);
-
+      $("#idCierre").val(respuesta["id"]);
       $("#cierre").val(respuesta["codigo"]);
       $("#guia").val(respuesta["guia"]);
       $("#fecha").val(respuesta["fecha"]);
@@ -689,7 +689,7 @@ $(".tablaCierres").on("click", ".btnVisualizarCierre", function () {
 		dataType:"json",
 		success:function(respuestaDetalle){
 
-			console.log("respuestaDetalle", respuestaDetalle);
+			// console.log("respuestaDetalle", respuestaDetalle);
 
       $(".detalleMP").remove();
             
@@ -985,4 +985,43 @@ $(".daterangepicker.opensleft .ranges li").on("click", function() {
     $(".tablaDetalleCierrreTotal").DataTable().destroy();
     cargarTablaDetalleCierres(fechaInicial, fechaFinal);
   }
+});
+
+$(".tablaCierres").on("click",".btnPagarCierre",function(){
+	// Capturamos la guia de cierre y el estado de pago
+  
+	var guiaCierre=$(this).attr("guiaCierre");
+	var estadoPago=$(this).attr("estadoPago");
+	//Realizamos el pago por una petición AJAX
+	var datos=new FormData();
+	datos.append("activarGuia",guiaCierre);
+	datos.append("activarPago",estadoPago);
+	$.ajax({
+	url:"ajax/cierres.ajax.php",
+	type:"POST",
+	data:datos,
+	cache:false,
+	contentType:false,
+	processData:false,
+	success:function(respuesta){
+    if(estadoPago == "POR PAGAR"){
+      Command: toastr["warning"]("Por pagar !");
+      
+    }else{
+      Command: toastr["info"]("Pagado exitosamente!");
+    }
+    
+  }
+	});
+	//Cambiamos el estado del botón físicamente
+	if(estadoPago=='PAGADO'){
+	$(this).removeClass("btn-warning");
+	$(this).addClass("btn-primary");
+	$(this).html("PAGADO");
+  $(this).attr("estadoPago","POR PAGAR");}
+  else{
+    $(this).removeClass("btn-primary");
+	  $(this).addClass("btn-warning");
+	  $(this).html("POR PAGAR");
+    $(this).attr("estadoPago","PAGADO");}
 });

@@ -838,6 +838,111 @@ class ControladorFacturacion{
 
     }
 
+    /*
+    * MOSTRAR talonarios credito
+    */
+	static public function ctrMostrarTalonarios($item, $valor){
+        $tabla="talonariosjf";
+		$respuesta = ModeloFacturacion::mdlMostrarTalonarios($tabla, $item, $valor);
+
+		return $respuesta;
+
+    }
+
+    /*
+    * MOSTRAR talonarios debito
+    */
+	static public function ctrMostrarTalonariosDebito($item, $valor){
+        $tabla="talonariosjf";
+		$respuesta = ModeloFacturacion::mdlMostrarTalonariosDebito($tabla, $item, $valor);
+
+		return $respuesta;
+
+    }
+
+
+    /*
+    * MOSTRAR RANGO DE FECHAS DE NOTAS DE VENTA CREDITO/DEBITO
+    */
+	static public function ctrRangoFechasNotasCD($fechaInicial, $fechaFinal){
+		$respuesta = ModeloFacturacion::mdlRangoFechasNotasCD( $fechaInicial, $fechaFinal);
+
+		return $respuesta;
+
+    }
+
+     /*
+    * MOSTRAR RANGO DE FECHAS DE FACTURAS
+    */
+	static public function ctrRangoFechasFacturas($fechaInicial, $fechaFinal){
+		$respuesta = ModeloFacturacion::mdlRangoFechasNotasCD( $fechaInicial, $fechaFinal);
+
+		return $respuesta;
+
+    }
+
+     /*
+    * MOSTRAR RANGO DE FECHA DE BOLETAS
+    */
+	static public function ctrRangoFechasBoletas($fechaInicial, $fechaFinal){
+		$respuesta = ModeloFacturacion::mdlRangoFechasBoletas( $fechaInicial, $fechaFinal);
+
+		return $respuesta;
+
+    }
+
+     /*
+    * MOSTRAR RANGO DE FECHA DE PROFORMAS
+    */
+	static public function ctrRangoFechasProformas($fechaInicial, $fechaFinal){
+		$respuesta = ModeloFacturacion::mdlRangoFechasProformas( $fechaInicial, $fechaFinal);
+
+		return $respuesta;
+
+    }
+
+    /*
+    * MOSTRAR VENTA DE NOTAS PARA IMPRESION
+    */
+	static public function ctrMostrarVentaImpresion($documento, $tipo){
+		$respuesta = ModeloFacturacion::mdlMostrarVentaImpresion( $documento, $tipo);
+
+		return $respuesta;
+
+    }
+
+    /*
+    * MOSTRAR MODELO DE NOTAS PARA IMPRESION
+    */
+	static public function ctrMostrarModeloImpresion($documento, $tipo){
+		$respuesta = ModeloFacturacion::mdlMostrarModeloImpresion( $documento, $tipo);
+
+		return $respuesta;
+
+    }
+
+    /*
+    * MOSTRAR MODELO DE PROFORMAS PARA IMPRESION
+    */
+	static public function ctrMostrarModeloProforma($documento, $tipo){
+		$respuesta = ModeloFacturacion::mdlMostrarModeloProforma( $documento, $tipo);
+
+		return $respuesta;
+
+    }
+
+
+    /*
+    * MOSTRAR UNIDADES DE BOLETA Y FACTURA PARA IMPRESION
+    */
+	static public function ctrMostrarUnidadesImpresion($documento, $tipo){
+		$respuesta = ModeloFacturacion::mdlMostrarUnidadesImpresion( $documento, $tipo);
+
+		return $respuesta;
+
+    }
+
+
     static public function ctrFacturarGuia(){
 
         if(isset($_POST["codPedido"])){
@@ -1161,6 +1266,187 @@ class ControladorFacturacion{
 
                 }
 
+
+        }
+
+    }
+
+
+    static public function ctrFacturarSalida(){
+
+        if(isset($_POST["codSalida"])){
+
+
+                /*
+                todo: BAJAR EL STOCK
+                */
+                $tabla = "detalle_ing_sal";
+
+                $respuesta = ModeloSalidas::mdlMostraDetallesTemporal($tabla, $_POST["codSalida"]);
+                //var_dump($respuesta);
+
+                foreach($respuesta as $value){
+
+                    $datos = array( "articulo" => $value["articulo"],
+                                    "cantidad" => $value["cantidad"]);
+                    //var_dump($datos);
+                    $inicioTipo = substr($_POST["tdoc"],0,1);
+                    if($inicioTipo == 'E'){
+                        $respuestaGuia = ModeloArticulos::mdlActualizarStockIngreso($value["articulo"],$value["cantidad"]);
+                    }else{
+                        $respuestaGuia = ModeloArticulos::mdlActualizarStock($datos);
+                    }
+                    
+                    //var_dump($respuestaGuia);
+
+                }
+
+                //var_dump($respuestaGuia);
+
+                /*
+                todo: registrar en movimientos
+                */
+                if($respuestaGuia == "ok"){
+
+                    foreach($respuesta as $value){
+
+                        $tipo= $_POST["tdoc"];
+
+                        $documento = $_POST["serieSalida"];
+                        $doc = $tipo.$documento;
+                        //var_dump($doc);
+
+                        $cliente = $_POST["codCli"];
+                        //var_dump($cliente);
+
+                        $vendedor = $_POST["codVen"];
+                        //var_dump($vendedor);
+
+                        $dscto = $_POST["dscto"];
+                        //var_dump($dscto);
+
+                        $total = $value["cantidad"] * $value["precio"] * ((100 - $dscto)/100);
+                        //var_dump($total);
+
+                        $datosM = array("tipo" => $tipo,
+                                        "documento" => $doc,
+                                        "articulo" => $value["articulo"],
+                                        "cliente" => $cliente,
+                                        "vendedor" => $vendedor,
+                                        "cantidad" => $value["cantidad"],
+                                        "precio" => $value["precio"],
+                                        "dscto2" => $dscto,
+                                        "total" => $total,
+                                        "nombre_tipo" => $_POST["nomTipo"]);
+                        //var_dump($datosM);
+
+                        $respuestaMovimientos = ModeloFacturacion::mdlRegistrarMovimientos($datosM);
+
+                    }
+
+                    //var_dump($respuestaMovimientos);
+
+                    /*
+                    todo: registrar en ventajf
+                    */
+                    if($respuestaMovimientos == "ok"){
+
+                        $respuestaDoc = ModeloSalidas::mdlMostrarSalidasCabecera($_POST["codSalida"]);
+                        //var_dump($respuestaDoc);
+
+                        $tipo= $_POST["tdoc"];
+
+                        $documento = $_POST["serieSalida"];
+                        $doc = $tipo.$documento;
+                        //var_dump($doc);
+
+                        $usuario = $_POST["idUsuario"];
+                        //var_dump($usuario);
+
+                        $docOrigen = $_POST["codSalida"];
+                        //var_dump("$docOrigen");
+
+                        $docDestino = $_POST["serieSeparado"];
+                        $docDest = str_replace ( '-', '', $docDestino);
+                        //var_dump($docDest);
+
+                        $datosD = array("tipo" => $tipo,
+                                        "documento" => $doc,
+                                        "neto" => $respuestaDoc["op_gravada"],
+                                        "igv" => $respuestaDoc["igv"],
+                                        "dscto" => $respuestaDoc["descuento_total"],
+                                        "total" => $respuestaDoc["total"],
+                                        "cliente" => $respuestaDoc["cod_cli"],
+                                        "vendedor" => $respuestaDoc["vendedor"],
+                                        "agencia" => $respuestaDoc["agencia"],
+                                        "lista_precios" => $respuestaDoc["lista"],
+                                        "condicion_venta" => $respuestaDoc["condicion_venta"],
+                                        "doc_destino" => $docDest,
+                                        "doc_origen" => $docOrigen,
+                                        "usuario" => $usuario,
+                                        "tipo_documento" => $_POST["nomTipo"]);
+                        //var_dump($datosD);
+
+                        $respuestaDocumento = ModeloSalidas::mdlRegistrarDocumentoSalida($datosD);
+
+                    }
+
+                    //var_dump($respuestaDocumento);
+
+                    /* 
+                    todo: SUMAR 1 AL DOCUMENTO
+                    */
+                    if($respuestaDocumento == "ok"){
+
+                        $serie = $_POST["tdoc"];
+                        //var_dump($serie);
+
+                        $talonario = ModeloSalidas::mdlActualizarArgumento($serie);
+
+                    }
+
+                    //var_dump($talonario);
+
+                    /*
+                    todo: CAMBIAR EL ESTADO DEL PEDIDO
+                    */
+                    if($talonario == "ok"){
+
+                        $estado = ModeloSalidas::mdlActualizarSalidaF($_POST["codSalida"]);
+
+                        //var_dump($estado);
+
+                        if($estado == "ok"){
+
+                            echo'<script>
+
+                            swal({
+                                    type: "success",
+                                    title: "Se Genero el documento '.$documento.'",
+                                    showConfirmButton: true,
+                                    confirmButtonText: "Cerrar"
+                            }).then(function(result){
+                                            if (result.value) {
+
+                                            window.location = "salidas-varios";
+
+                                            }
+                                        })
+
+                            </script>';
+
+                        }
+
+                    }
+
+
+                }
+
+            
+
+        }else{
+
+            //var_dump("no");
 
         }
 

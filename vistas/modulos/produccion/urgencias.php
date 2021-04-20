@@ -44,8 +44,8 @@
             </div>
       <?php
       
-      if( $_SESSION["perfil"] == 'Supervisores' ||
-          $_SESSION["perfil"] == 'Sistemas'){
+      // if( $_SESSION["perfil"] == 'Supervisores' ||
+      //     $_SESSION["perfil"] == 'Sistemas'){
 
         
   
@@ -73,19 +73,19 @@
 
                </div>';
 
-      }else{
+      // }else{
 
-        echo '<div class="box-header with-border">
+      //   echo '<div class="box-header with-border">
 
-                <a href="vistas/reportes_excel/rpt_urgencias.php" class="btn btn-default pull-right" style="border:green 1px solid">
+      //           <a href="vistas/reportes_excel/rpt_urgencias.php" class="btn btn-default pull-right" style="border:green 1px solid">
 
-                  <img src="vistas/img/plantilla/excel.png" width="20px"> URGENCIAS
+      //             <img src="vistas/img/plantilla/excel.png" width="20px"> URGENCIAS
                 
-                </a>
+      //           </a>
   
-            </div>';
+      //       </div>';
 
-      }
+      // }
 
       ?>
 

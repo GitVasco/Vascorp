@@ -262,7 +262,7 @@ $(".tablaTalleresG").on("click", ".btnEditarTallerG", function () {
 		processData:false,
 		dataType: "json",
 		success:function(respuesta){
-			console.log(respuesta);
+			// console.log(respuesta);
 			$("#editarCodigo").val(respuesta["id_cabecera"]);
 			$("#editarArticulo").val(respuesta["articulo"]);
 			$("#cantidad").val(respuesta["cantidad"]);
@@ -878,7 +878,7 @@ $("#nuevoTalleres").change(function(){
       processData: false,
       dataType: "json",
       success: function(respuesta) {
-		  console.log(respuesta);
+		//   console.log(respuesta);
         $("#nuevoCodigo").val(ingreso+("000"+respuesta["ultimo_codigo"]).slice(-4));
       }
     })
@@ -1058,12 +1058,12 @@ $("#daterange-btnTallerT").daterangepicker(
 
 $(".tablaArticulosTalleres tbody").on("click", "button.agregarArtiTaller", function () {
 
-	var articuloIngreso = $(this).attr("articuloIngreso");
+	var articuloIngreso = $(this).attr("articulo");
 	
     var talleres = $(this).attr("taller");
 	var idCierre = $(this).attr("idCierre");
     $(this).removeClass("btn-primary agregarArtiTaller");
-
+	
     $(this).addClass("btn-default");
 
     var datos = new FormData();
@@ -1089,36 +1089,82 @@ $(".tablaArticulosTalleres tbody").on("click", "button.agregarArtiTaller", funct
             /* 
             todo: AGREGAR LOS CAMPOS
             */
+			if(idCierre == ''){
+				$(".nuevoArticuloIngreso").append(
 
-            $(".nuevoArticuloIngreso").append(
+					'<div class="row" style="padding:5px 15px">' +
+	
+						"<!-- Descripción del Articulo -->" +
+	
+						'<div class="col-xs-6" style="padding-right:0px">' +
+	
+							'<div class="input-group">' +
+							
+								'<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarTaller" articuloIngreso="' + articuloIngreso + '"><i class="fa fa-times"></i></button></span>' +
+	
+								'<input type="text" class="form-control nuevaDescripcionProducto input-sm" articuloIngreso="' + articuloIngreso + '" name="agregarT" value="' + packing + '" codigoAC="' + articulo + '" idCierre= "'+idCierre+'" readonly required>' +
+	
+							"</div>" +
+	
+						"</div>" +
+	
+						"<!-- Cantidad de la Orden de Corte -->" +
+	
+						'<div class="col-xs-3">' +
+	
+							'<input type="number" class="form-control nuevaCantidadArticuloIngreso input-sm" name="nuevaCantidadArticuloIngreso" id="nuevaCantidadArticuloIngreso" min="1" value="0" taller="' + talleres + '" articulo="'+ articulo +'" nuevoTaller="' + Number(Number(talleres) - Number($("#nuevaCantidadArticuloIngreso").val)) + '" required>' +
+	
+						"</div>" +
+						"<!-- saldo de la Orden de Corte -->" +
+	
+						'<div class="col-xs-3 divSaldoIngreso">' +
+	
+							'<input type="number" class="form-control nuevoSaldoIngreso input-sm" name="nuevoSaldoIngreso" id="nuevoSaldoIngreso" value="'+taller+'" readonly>' +
+	
+						"</div>" +
+	
+					"</div>"
+	
+				);
+			}else{
+				$(".nuevoArticuloIngreso").append(
 
-                '<div class="row" style="padding:5px 15px">' +
-
-                    "<!-- Descripción del Articulo -->" +
-
-                    '<div class="col-xs-6" style="padding-right:0px">' +
-
-                        '<div class="input-group">' +
-                        
-                            '<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarTaller" articuloIngreso="' + articuloIngreso + '"><i class="fa fa-times"></i></button></span>' +
-
-                            '<input type="text" class="form-control nuevaDescripcionProducto input-sm" articuloIngreso="' + articuloIngreso + '" name="agregarT" value="' + packing + '" codigoAC="' + articulo + '" idCierre= "'+idCierre+'" readonly required>' +
-
-                        "</div>" +
-
-                    "</div>" +
-
-                    "<!-- Cantidad de la Orden de Corte -->" +
-
-                    '<div class="col-xs-6">' +
-
-                        '<input type="number" class="form-control nuevaCantidadArticuloIngreso input-sm" name="nuevaCantidadArticuloIngreso" id="nuevaCantidadArticuloIngreso" min="1" value="0" taller="' + talleres + '" articulo="'+ articulo +'" nuevoTaller="' + Number(Number(talleres) - Number($("#nuevaCantidadArticuloIngreso").val)) + '" required>' +
-
-                    "</div>" +
-
-                "</div>"
-
-            );
+					'<div class="row" style="padding:5px 15px">' +
+	
+						"<!-- Descripción del Articulo -->" +
+	
+						'<div class="col-xs-6" style="padding-right:0px">' +
+	
+							'<div class="input-group">' +
+							
+								'<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarTaller" articuloIngreso="' + idCierre + '"><i class="fa fa-times"></i></button></span>' +
+	
+								'<input type="text" class="form-control nuevaDescripcionProducto input-sm" articuloIngreso="' + idCierre + '" name="agregarT" value="' + packing + '" codigoAC="' + articulo + '" idCierre= "'+idCierre+'" readonly required>' +
+	
+							"</div>" +
+	
+						"</div>" +
+	
+						"<!-- Cantidad de la Orden de Corte -->" +
+	
+						'<div class="col-xs-3">' +
+	
+							'<input type="number" class="form-control nuevaCantidadArticuloIngreso input-sm" name="nuevaCantidadArticuloIngreso" id="nuevaCantidadArticuloIngreso" min="1" value="0" taller="' + talleres + '" articulo="'+ articulo +'" nuevoTaller="' + Number(Number(talleres) - Number($("#nuevaCantidadArticuloIngreso").val)) + '" required>' +
+	
+						"</div>" +
+						"<!-- saldo de la Orden de Corte -->" +
+	
+						'<div class="col-xs-3 divSaldoIngreso">' +
+	
+							'<input type="number" class="form-control nuevoSaldoIngreso input-sm" name="nuevoSaldoIngreso" id="nuevoSaldoIngreso" value="'+talleres+'" readonly>' +
+	
+						"</div>" +
+	
+					"</div>"
+	
+				);
+			}
+            
 
             // SUMAR TOTAL DE UNIDADES
 
@@ -1163,8 +1209,10 @@ $(".tablaArticulosTalleres").on("draw.dt", function () {
 * QUITAR ARTICULO DE LA ORDEN DE CORTE Y RECUPERAR BOTÓN
 */
 var idQuitarArticuloT= [];
+var idQuitarCierreT = []
 
 localStorage.removeItem("quitarTaller");
+localStorage.removeItem("quitarTallerCierre");
 
 $(".formularioIngreso").on("click", "button.quitarTaller", function () {
 
@@ -1172,6 +1220,7 @@ $(".formularioIngreso").on("click", "button.quitarTaller", function () {
 
     $(this).parent().parent().parent().parent().remove();
     var articuloIngreso = $(this).attr("articuloIngreso");
+	console.log(articuloIngreso);
     /*=============================================
     ALMACENAR EN EL LOCALSTORAGE EL ID DEL MATERIA PRIMA A QUITAR
     =============================================*/
@@ -1230,7 +1279,14 @@ $(".formularioIngreso").on("change", "input.nuevaCantidadArticuloIngreso", funct
     var nuevoTaller = Number($(this).attr("taller")) - Number($(this).val());
     var articulo = $(this).attr("articulo");
     //console.log(articulo);
+	var inputTaller = $(this)
+    .parent()
+    .parent()
+    .children(".divSaldoIngreso")
+    .children(".nuevoSaldoIngreso");
+    //console.log(pendiente);
 
+	inputTaller.val(nuevoTaller);
     var pendiente = $(this)
     .parent()
     .parent()
@@ -1341,7 +1397,7 @@ $(".tablaIngresoM").on("click", ".btnEditarIngStock", function () {
 
 	var idIngreso = $(this).attr("idIngreso");
 	var sectorIngreso = $(this).attr("sectorIngreso");
-	console.log(sectorIngreso);
+	// console.log(sectorIngreso);
 	localStorage.setItem("sectorIngreso",sectorIngreso);
 
   window.location = "index.php?ruta=editar-ingreso&idIngreso=" + idIngreso;
@@ -2156,7 +2212,7 @@ $(".box").on("click", ".btnCrearTicket", function () {
 		processData:false,
 		dataType: "json",
 		success:function(respuesta){
-			 console.log(respuesta);
+			//  console.log(respuesta);
 			$("#verCab").val(respuesta["id_cabecera"]);
 			$("#verArti").val(respuesta["articulo"]);
 			$("#verCodOP").val(respuesta["cod_operacion"]);
@@ -2262,7 +2318,7 @@ $(".tablaTalleresT").on("click",".btnReiniciarTallerT",function(){
 				contentType:false,
 				processData:false,
 				success:function(respuesta){
-					console.log(respuesta);
+					// console.log(respuesta);
 					swal({
 						type: "success",
 						title: "¡Ok!",
@@ -2281,3 +2337,436 @@ $(".tablaTalleresT").on("click",".btnReiniciarTallerT",function(){
 
 });
 
+//tabla dinamica de ver Ingresos General
+if (localStorage.getItem("capturarRango10") != null) {
+	$("#daterange-btnVerIngresos span").html(localStorage.getItem("capturarRango10"));
+	cargarTablaDetalleIngresos(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
+  } else {
+	$("#daterange-btnVerIngresos span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
+	cargarTablaDetalleIngresos(null, null);
+  }
+  
+  
+	
+	function cargarTablaDetalleIngresos(fechaInicial,fechaFinal) {
+	$(".tablaDetalleIngresoTotal").DataTable({
+	  ajax:"ajax/produccion/tabla-ver-ingresos.ajax.php?perfil="+$("#perfilOculto").val() + "&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
+	  deferRender: true,
+	  retrieve: true,
+	  processing: true,
+	  language: {
+		sProcessing: "Procesando...",
+		sLengthMenu: "Mostrar _MENU_ registros",
+		sZeroRecords: "No se encontraron resultados",
+		sEmptyTable: "Ningún dato disponible en esta tabla",
+		sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+		sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
+		sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+		sInfoPostFix: "",
+		sSearch: "Buscar:",
+		sUrl: "",
+		sInfoThousands: ",",
+		sLoadingRecords: "Cargando...",
+		oPaginate: {
+		  sFirst: "Primero",
+		  sLast: "Último",
+		  sNext: "Siguiente",
+		  sPrevious: "Anterior"
+		},
+		oAria: {
+		  sSortAscending: ": Activar para ordenar la columna de manera ascendente",
+		  sSortDescending: ": Activar para ordenar la columna de manera descendente"
+		}
+	  },
+	  "createdRow":function(row,data,index){
+		if(data[0] == "T4 - ADELA"){
+		  $('td',row).css({
+			'background-color':'#D6C4D5',
+			'color':'black'
+		  })
+		}else if (data[0] == "T6 - PABLO"){
+		  $('td',row).css({
+			'background-color':'#C7C1D8',
+			'color':'black'
+		  })
+		}else if(data[0] == "T9 - FRANCISCO"){
+		  $('td',row).css({
+			'background-color':'#DADEBE',
+			'color':'black'
+		  })
+		}else if(data[0] == "TA - ELVIRA"){
+		  $('td',row).css({
+			'background-color':'#F7E4E9',
+			'color':'black'
+		  })
+		}else if(data[0] == "T7 - GUSTAVO"){
+		  $('td',row).css({
+			'background-color':'#D4F8F7',
+			'color':'black'
+		  })
+		}else if(data[0] == "T6 - PABLO"){
+		  $('td',row).css({
+			'background-color':'#D4F8E2',
+			'color':'black'
+		  })
+		}else if(data[0] == "T8 - MIGUEL"){
+		  $('td',row).css({
+			'background-color':'#F4F8D4',
+			'color':'black'
+		  })
+		}
+	  }
+	
+	  });
+	}
+
+	
+/*=============================================
+RANGO DE FECHAS
+=============================================*/
+
+$("#daterange-btnVerIngresos").daterangepicker(
+	{
+	  cancelClass: "CancelarVerIngresos",
+	  locale:{
+	"daysOfWeek": [
+	  "Dom",
+	  "Lun",
+	  "Mar",
+	  "Mie",
+	  "Jue",
+	  "Vie",
+	  "Sab"
+	],
+	"monthNames": [
+	  "Enero",
+	  "Febrero",
+	  "Marzo",
+	  "Abril",
+	  "Mayo",
+	  "Junio",
+	  "Julio",
+	  "Agosto",
+	  "Septiembre",
+	  "Octubre",
+	  "Noviembre",
+	  "Diciembre"
+	],
+	},
+	  ranges: {
+		Hoy: [moment(), moment()],
+		Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+		"Últimos 7 días": [moment().subtract(6, "days"), moment()],
+		"Últimos 30 días": [moment().subtract(29, "days"), moment()],
+		"Este mes": [moment().startOf("month"), moment().endOf("month")],
+		"Último mes": [
+		  moment()
+			.subtract(1, "month")
+			.startOf("month"),
+		  moment()
+			.subtract(1, "month")
+			.endOf("month")
+		]
+	  },
+	  
+	  startDate: moment(),
+	  endDate: moment()
+	},
+	function(start, end) {
+	  $("#daterange-btnVerIngresos span").html(
+		start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
+	  );
+  
+	  var fechaInicial = start.format("YYYY-MM-DD");
+  
+	  var fechaFinal = end.format("YYYY-MM-DD");
+  
+	  var capturarRango10 = $("#daterange-btnVerIngresos span").html();
+	
+	  localStorage.setItem("capturarRango10", capturarRango10);
+	  localStorage.setItem("fechaInicial", localStorage.getItem("fechaInicial"));
+	  localStorage.setItem("fechaFinal", localStorage.getItem("fechaFinal"));
+  
+	  // Recargamos la tabla con la información para ser mostrada en la tabla
+	  $(".tablaDetalleIngresoTotal").DataTable().destroy();
+	  cargarTablaDetalleIngresos(fechaInicial, fechaFinal);
+	});
+  
+  /*=============================================
+  CANCELAR RANGO DE FECHAS
+  =============================================*/
+  
+  $(".daterangepicker.opensleft .range_inputs .CancelarVerIngresos").on(
+	"click",
+	function() {
+	  localStorage.removeItem("capturarRango10");
+	  localStorage.removeItem("fechaInicial");
+	  localStorage.removeItem("fechaFinal");
+	  localStorage.clear();
+	  window.location = "ingresos";
+	}
+  );
+  
+  /*=============================================
+  CAPTURAR HOY
+  =============================================*/
+  
+  $(".daterangepicker.opensleft .ranges li").on("click", function() {
+	var textoHoy = $(this).attr("data-range-key");
+  
+	if (textoHoy == "Hoy") {
+	  var d = new Date();
+  
+	  var dia = d.getDate();
+	  var mes = d.getMonth() + 1;
+	  var año = d.getFullYear();
+  
+	  dia = ("0" + dia).slice(-2);
+	  mes = ("0" + mes).slice(-2);
+  
+	  var fechaInicial = año + "-" + mes + "-" + dia;
+	  var fechaFinal = año + "-" + mes + "-" + dia;
+  
+	  localStorage.setItem("capturarRango10", "Hoy");
+	  localStorage.setItem("fechaInicial", fechaInicial);
+	  localStorage.setItem("fechaFinal", fechaFinal);
+	// Recargamos la tabla con la información para ser mostrada en la tabla
+	  $(".tablaDetalleIngresoTotal").DataTable().destroy();
+	  cargarTablaDetalleIngresos(fechaInicial, fechaFinal);
+	}
+  });
+
+  //ver tabla de cada ingreso registrado
+
+  
+$(".tablaIngresoM").on("click", ".btnVisualizarIngreso", function () {
+
+	var codigoIngreso = $(this).attr("codigoIngreso");
+    //console.log("codigoAC", codigoAC);
+    
+  var datos = new FormData();
+	datos.append("codigoIngreso", codigoIngreso);
+
+	$.ajax({
+
+		url:"ajax/ingresos.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType:"json",
+		success:function(respuesta){
+
+			// console.log("respuesta", respuesta);
+
+      $("#cierre").val(respuesta["documento"]);
+      $("#guia").val(respuesta["guia"]);
+      $("#fecha").val(respuesta["fecha"]);
+      $("#nombre").val(respuesta["taller"]+" - "+respuesta["nom_sector"]);
+      $("#cantidad").val(respuesta["total"]);
+      $("#estado").val(respuesta["estado"]);
+
+      $("#cantidad").number(true, 0);
+
+			
+		}
+
+    })
+    
+    var codigoDIngreso = $(this).attr("codigoIngreso");	
+    //console.log("codigoDAC", codigoDAC);
+
+    var datosDOC = new FormData();
+    datosDOC.append("codigoDIngreso", codigoDIngreso);
+    
+    $.ajax({
+
+		url:"ajax/ingresos.ajax.php",
+		method: "POST",
+		data: datosDOC,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType:"json",
+		success:function(respuestaDetalle){
+
+			// console.log("respuestaDetalle", respuestaDetalle);
+
+      $(".detalleMP").remove();
+            
+			for(var id of respuestaDetalle){
+
+                if(id.t1 > 0){
+
+                    var t1 = id.t1;
+                }else
+
+                    var t1 = "";
+
+                if(id.t2 > 0){
+
+                    var t2 = id.t2;
+                }else
+
+                    var t2 = "";
+                    
+                if(id.t3 > 0){
+
+                    var t3 = id.t3;
+                }else
+
+                    var t3 = "";
+                    
+                if(id.t4 > 0){
+
+                    var t4 = id.t4;
+                }else
+
+                    var t4 = "";    
+                    
+                if(id.t5 > 0){
+
+                    var t5 = id.t5;
+                }else
+
+                    var t5 = "";
+                    
+                if(id.t6 > 0){
+
+                    var t6 = id.t6;
+                }else
+
+                    var t6 = "";
+                    
+                if(id.t7 > 0){
+
+                    var t7 = id.t7;
+                }else
+
+                    var t7 = "";
+                    
+                if(id.t8 > 0){
+
+                    var t8 = id.t8;
+                }else
+
+                    var t8 = "";                    
+
+				$('.tablaDetalleIngreso').append(
+
+					'<tr class="detalleMP">' +
+            '<td>' + id.cod_sector+" - "+id.nom_sector + ' </td>' +  
+            '<td>' + id.guia + ' </td>' +
+            '<td>' + id.fechas + ' </td>' +
+            '<td>' + id.codigo + ' </td>' +
+						'<td><b>' + id.modelo + ' </b></td>' +
+						'<td>' + id.nombre + ' </td>' +
+						'<td>' + id.color + ' </td>' +
+						'<td><b>' + t1 + ' </b></td>' +
+						'<td><b>' + t2 + ' </b></td>' +
+						'<td><b>' + t3 + ' </b></td>' +
+            '<td><b>' + t4 + ' </b></td>' +
+            '<td><b>' + t5 + ' </b></td>' +
+            '<td><b>' + t6 + ' </b></td>' +
+            '<td><b>' + t7 + ' </b></td>' +
+            '<td><b>' + t8 + ' </b></td>' +
+            '<td><b>' + id.total + ' </b></td>' +
+					'</tr>'
+
+				)
+
+			}            
+
+		}
+
+	})
+  
+});
+
+
+$(".tablaTalleresGenerado").on("click",".btnCerrarTaller",function(){
+	var codigo = $(this).attr("codigoTallerG");
+	var estadoTaller=$(this).attr("estadoTaller");
+	//Realizamos la activación-desactivación por una petición AJAX
+	var datos=new FormData();
+	datos.append("activarId",codigo);
+	datos.append("activarEstado",estadoTaller);
+	$.ajax({
+		url:"ajax/talleres.ajax.php",
+		type:"POST",
+		data:datos,
+		cache:false,
+		contentType:false,
+		processData:false,
+		success:function(respuesta){
+			if(estadoTaller == "4"){
+
+				Command: toastr["error"]("Ticket cerrado correctamente!");
+			}else{
+
+				Command: toastr["info"]("Ticket generado correctamente!");
+			}
+
+			
+			}
+	});
+
+	if(estadoTaller == '4' ){
+		$(this).removeClass("btn-info");
+		$(this).addClass("btn-danger");
+		$(this).html("Cerrado");
+		$(this).attr("estadoTaller","1")}
+	else{
+		$(this).removeClass("btn-danger");
+		$(this).addClass("btn-info");
+		$(this).html("Generado");
+		$(this).attr("estadoTaller","4");
+	}
+
+});
+
+$(".box").on("click",".btnActualizarFecha",function(){
+	// console.log("estadoTaller", estadoTaller); 
+	// Capturamos el id del usuario y el estado
+	var fecha='probando';
+	swal({
+        title: '¿Está seguro de actualizar el taller con fecha de ayer',
+        text: "¡Si no lo está puede cancelar la acción!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si, actualizar el taller!'
+    }).then(function (result) {
+
+        if (result.value) {
+			var datos=new FormData();
+			datos.append("actualizarFecha",fecha);
+			$.ajax({
+				url:"ajax/talleres.ajax.php",
+				type:"POST",
+				data:datos,
+				cache:false,
+				contentType:false,
+				processData:false,
+				success:function(respuesta){
+					// console.log(respuesta);
+					swal({
+						type: "success",
+						title: "¡Ok!",
+						text: "¡El taller fue actualizado ayer con éxito!",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar",
+						closeOnConfirm: false
+					}).then((result)=>{
+						if(result.value){
+							window.location="en-tallert";}
+					});}
+			});
+
+		}
+	})
+
+});

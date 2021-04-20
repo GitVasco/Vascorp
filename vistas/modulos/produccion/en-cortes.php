@@ -278,7 +278,7 @@ MODAL MANDAR A TALLER
 
             <div class="form-group col-lg-6">
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="1" id="ticket" name="ticket" checked>
+                  <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault" name="ticket" checked>
                   <label class="form-check-label" for="flexCheckDefault">
                    Imprimir Tickets
                   </label>

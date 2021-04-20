@@ -1146,6 +1146,7 @@ $('.tablaPagoServicios').DataTable( {
   "deferRender": true,
   "retrieve": true,
   "processing": true,
+  "order": [[3, "desc"]],
   "language": {
 
     "sProcessing":     "Procesando...",
@@ -1244,3 +1245,63 @@ $(".tablaPagoServicios tbody").on("click", "button.btnReportePagoServicios2", fu
   var fin = $(this).attr("fin");
   window.location = "vistas/reportes_excel/rpt_pago_servicio.php?inicio="+inicio+"&fin="+fin;
 })
+
+$(".tablaPagoServicios").on("click",".btnPagarCierreServicio",function(){
+	// Capturamos la guia de cierre y el estado de pago
+  
+	var idPago=$(this).attr("idPago");
+  var inicio=$(this).attr("inicio");
+  var fin=$(this).attr("fin");
+  
+	var estadoPago=$(this).attr("estadoPago");
+	//Realizamos el pago por una petición AJAX
+	var datos=new FormData();
+	datos.append("idPago",idPago);
+  datos.append("estadoPago",estadoPago);
+	$.ajax({
+    url:"ajax/servicios.ajax.php",
+    type:"POST",
+    data:datos,
+    cache:false,
+    contentType:false,
+    processData:false,
+    success:function(respuesta){
+      // console.log("se pago en la quincena");
+      var datos2=new FormData();
+	    datos2.append("inicio",inicio);
+      datos2.append("fin",fin);
+      datos2.append("estadoPagoServicio",estadoPago);
+      $.ajax({
+        url:"ajax/cierres.ajax.php",
+        type:"POST",
+        data:datos2,
+        cache:false,
+        contentType:false,
+        processData:false,
+        success:function(respuesta){
+          if(estadoPago == "POR PAGAR"){
+            Command: toastr["warning"]("Por pagar !");
+            
+          }else{
+            Command: toastr["info"]("Pagado exitosamente!");
+          }
+          
+        }
+        });
+      
+        
+    }
+  });
+  //Cambiamos el estado del botón físicamente
+  if(estadoPago=='PAGADO'){
+    $(this).removeClass("btn-warning");
+    $(this).addClass("btn-primary");
+    $(this).html("PAGADO");
+    $(this).attr("estadoPago","POR PAGAR");}
+  else{
+    $(this).removeClass("btn-primary");
+    $(this).addClass("btn-warning");
+    $(this).html("POR PAGAR");
+    $(this).attr("estadoPago","PAGADO");}
+  
+});

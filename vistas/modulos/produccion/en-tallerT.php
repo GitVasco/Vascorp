@@ -35,6 +35,9 @@
             </button>
             <button type="button" class="btn btn-outline-success btnReporteTallerTerminado" linea="" style="border:green 1px solid">
                     <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Taller Terminados</button>
+
+            <button type="button" class="btn btn-primary btnActualizarFecha"><i class ="fa fa-backward"></i>  Actualizar ayer </button>
+
             <button type="button" class="btn btn-default pull-right" id="daterange-btnTallerT">
 
           <span>

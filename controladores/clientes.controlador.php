@@ -358,6 +358,49 @@ class ControladorClientes{
 
     } 	
 
-    
+    /*=============================================
+	EDITAR TIPO DE PAGO
+	=============================================*/
+
+	static public function ctrEditarAval(){
+
+		if(isset($_POST["editarAvalNombre"])){
+
+				$tabla="clientesjf";
+				   $datos = array("codigo"=>$_POST["avalCliente"],
+				   				"aval_nombre"=> $_POST["editarAvalNombre"],
+                               "aval_dir"=>$_POST["editarAvalDir"],
+							   "aval_postal"=> $_POST["editarAvalPostal"],
+                               "aval_telf"=>$_POST["editarAvalTelf"],
+							   "aval_ruc"=> $_POST["editarAvalRuc"],
+                               "aval_libreta"=>$_POST["editarAvalLibreta"]);
+			   	$respuesta = ModeloClientes::mdlEditarAval($tabla,$datos);
+				// var_dump($datos);
+				// var_dump($respuesta);
+
+			   	if($respuesta == "ok"){
+
+					echo'<script>
+
+					swal({
+						  type: "success",
+						  title: "El aval ha sido guardado correctamente",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+									if (result.value) {
+
+									window.location = "clientes";
+
+									}
+								})
+
+					</script>';
+
+
+			}
+		}
+
+    }
 
 }    

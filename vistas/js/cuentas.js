@@ -443,78 +443,6 @@ $(".tablaCuentasAprobadas").on("click", ".btnEditarCuenta", function () {
 
 })
 
-$(".tablaCuentas").on("click", ".btnCancelarCuenta", function () {
-
-  var idCuenta = $(this).attr("idCuenta");
-
-  var datos = new FormData();
-  datos.append("idCuenta", idCuenta);
-
-  $.ajax({
-
-      url: "ajax/cuentas.ajax.php",
-      method: "POST",
-      data: datos,
-      cache: false,
-      contentType: false,
-      processData: false,
-      dataType: "json",
-      success: function (respuesta) {
-
-          $("#idCuenta2").val(respuesta["id"]);
-          $("#cancelarTipoDocumento").val(respuesta["tipo_doc"]);
-          $("#cancelarDocumentoOriginal").val(respuesta["num_cta"]);
-          $("#cancelarFechaOrigen").val(respuesta["fecha"]);
-          $("#cancelarVencimientoOrigen").val(respuesta["fecha_ven"]);
-          $("#cancelarEstado").val(respuesta["estado"]);
-          $("#cancelarNumUnico").val(respuesta["num_unico"]);
-          $("#cancelarVendedor").val(respuesta["vendedor"]);
-          $("#cancelarCliente").val(respuesta["cliente"]);
-          $("#cancelarClienteNomOrigen").val(respuesta["nombre"]);
-          $("#cancelarSaldo").val(respuesta["saldo"]);
-          $("#cancelarSaldoAntiguo").val(respuesta["saldo"]);
-          $("#cancelarTotal").val(respuesta["saldo"]);
-      }
-
-  })
-
-})
-$(".tablaCuentasPendientes").on("click", ".btnCancelarCuenta", function () {
-
-  var idCuenta = $(this).attr("idCuenta");
-
-  var datos = new FormData();
-  datos.append("idCuenta", idCuenta);
-
-  $.ajax({
-
-      url: "ajax/cuentas.ajax.php",
-      method: "POST",
-      data: datos,
-      cache: false,
-      contentType: false,
-      processData: false,
-      dataType: "json",
-      success: function (respuesta) {
-
-          $("#idCuenta2").val(respuesta["id"]);
-          $("#cancelarTipoDocumento").val(respuesta["tipo_doc"]);
-          $("#cancelarDocumentoOriginal").val(respuesta["num_cta"]);
-          $("#cancelarFechaOrigen").val(respuesta["fecha"]);
-          $("#cancelarVencimientoOrigen").val(respuesta["fecha_ven"]);
-          $("#cancelarEstado").val(respuesta["estado"]);
-          $("#cancelarNumUnico").val(respuesta["num_unico"]);
-          $("#cancelarVendedor").val(respuesta["vendedor"]);
-          $("#cancelarCliente").val(respuesta["cliente"]);
-          $("#cancelarClienteNomOrigen").val(respuesta["nombre"]);
-          $("#cancelarSaldo").val(respuesta["saldo"]);
-          $("#cancelarSaldoAntiguo").val(respuesta["saldo"]);
-          $("#cancelarTotal").val(respuesta["saldo"]);
-      }
-
-  })
-
-})
 $("#cancelarMonto").keyup(function(){
   var saldo = $(this).val();
   var saldoAntiguo = $("#cancelarSaldoAntiguo").val();
@@ -820,6 +748,76 @@ $(".tablaCuentas").on("click", ".btnAgregarLetra", function () {
 
 })
 
+$(".tablaCuentasPendientes").on("click", ".btnAgregarLetra", function () {
+
+  var idCuenta = $(this).attr("idCuenta");
+  var cliente = $(this).attr("cliente");
+  var datos = new FormData();
+  datos.append("idCuenta", idCuenta);
+
+  $.ajax({
+
+      url: "ajax/cuentas.ajax.php",
+      method: "POST",
+      data: datos,
+      cache: false,
+      contentType: false,
+      processData: false,
+      dataType: "json",
+      success: function (respuesta) {
+          $("#idCuenta3").val(respuesta["id"]);
+          $("#letraCodigo").val(respuesta["tipo_doc"]);
+          $("#letraDocumento").val(respuesta["num_cta"]);
+          $("#letraUsuario").val(respuesta["usuario"]);
+          $("#letraVendedor").val(respuesta["vendedor"]);
+          $("#letraCli").val(respuesta["cliente"]);
+          $("#letraFecha").val(respuesta["fecha"]);
+          $("#letraMonto").val(respuesta["monto"]);
+          $("#letraSaldo").val(respuesta["saldo"]);
+          $("#letraMoneda").val(respuesta["tip_mon"]);
+          $("#letraCliente").val(cliente);
+          $(".letraCuenta").remove();
+      }
+
+  })
+
+})
+
+$(".tablaCuentasAprobadas").on("click", ".btnAgregarLetra", function () {
+
+  var idCuenta = $(this).attr("idCuenta");
+  var cliente = $(this).attr("cliente");
+  var datos = new FormData();
+  datos.append("idCuenta", idCuenta);
+
+  $.ajax({
+
+      url: "ajax/cuentas.ajax.php",
+      method: "POST",
+      data: datos,
+      cache: false,
+      contentType: false,
+      processData: false,
+      dataType: "json",
+      success: function (respuesta) {
+          $("#idCuenta3").val(respuesta["id"]);
+          $("#letraCodigo").val(respuesta["tipo_doc"]);
+          $("#letraDocumento").val(respuesta["num_cta"]);
+          $("#letraUsuario").val(respuesta["usuario"]);
+          $("#letraVendedor").val(respuesta["vendedor"]);
+          $("#letraCli").val(respuesta["cliente"]);
+          $("#letraFecha").val(respuesta["fecha"]);
+          $("#letraMonto").val(respuesta["monto"]);
+          $("#letraSaldo").val(respuesta["saldo"]);
+          $("#letraMoneda").val(respuesta["tip_mon"]);
+          $("#letraCliente").val(cliente);
+          $(".letraCuenta").remove();
+      }
+
+  })
+
+})
+
 $(".btnGenerarLetra").click(function(){
   $(this).attr("disabled", true);
   $(this).removeClass("btn-primary");
@@ -916,349 +914,7 @@ $(".btnLimpiarLetra").click(function(){
 });
 
 
-$("#daterange-btnCuentas").daterangepicker(
-  {
-  cancelClass: "CancelarFechaCuenta",
-  locale:{
-  "daysOfWeek": [
-    "Dom",
-    "Lun",
-    "Mar",
-    "Mie",
-    "Jue",
-    "Vie",
-    "Sab"
-  ],
-  "monthNames": [
-    "Enero",
-    "Febrero",
-    "Marzo",
-    "Abril",
-    "Mayo",
-    "Junio",
-    "Julio",
-    "Agosto",
-    "Septiembre",
-    "Octubre",
-    "Noviembre",
-    "Diciembre"
-  ],
-  },
-    ranges: {
-      Hoy: [moment(), moment()],
-      Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
-      "Últimos 7 días": [moment().subtract(6, "days"), moment()],
-      "Últimos 30 días": [moment().subtract(29, "days"), moment()],
-      "Este mes": [moment().startOf("month"), moment().endOf("month")],
-      "Último mes": [
-        moment()
-          .subtract(1, "month")
-          .startOf("month"),
-        moment()
-          .subtract(1, "month")
-          .endOf("month")
-      ]
-    },
-    
-    startDate: moment(),
-    endDate: moment()
-  },
-  function(start, end) {
-    $("#daterange-btnCuentas span").html(
-      start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
-    );
 
-    var fechaInicial = start.format("YYYY-MM-DD");
-
-    var fechaFinal = end.format("YYYY-MM-DD");
-
-    var capturarRango10 = $("#daterange-btnCuentas span").html();
-
-    localStorage.setItem("capturarRango10", capturarRango10);
-    localStorage.setItem("fechaInicial", fechaInicial);
-    localStorage.setItem("fechaFinal", fechaFinal);
-    // Recargamos la tabla con la información para ser mostrada en la tabla
-
-    $(".btnReporteCuentas").attr("fechaInicial",localStorage.getItem("fechaInicial"));
-	  $(".btnReporteCuentas").attr("fechaFinal",localStorage.getItem("fechaFinal"));
-    $(".tablaCuentas").DataTable().destroy();
-    cargarTablaCuentas(fechaInicial, fechaFinal);
-  });
-
-/*=============================================
-CANCELAR RANGO DE FECHAS
-=============================================*/
-
-$(".daterangepicker.opensleft .range_inputs .CancelarFechaCuenta").on(
-  "click",
-  function() {
-    localStorage.removeItem("capturarRango10");
-    localStorage.removeItem("fechaInicial");
-    localStorage.removeItem("fechaFinal");
-    localStorage.clear();
-    window.location = "cuentas";
-  }
-);
-
-/*=============================================
-CAPTURAR HOY
-=============================================*/
-
-$(".daterangepicker.opensleft .ranges li").on("click", function() {
-  var textoHoy = $(this).attr("data-range-key");
-
-  if (textoHoy == "Hoy") {
-    var d = new Date();
-
-    var dia = d.getDate();
-    var mes = d.getMonth() + 1;
-    var año = d.getFullYear();
-
-    dia = ("0" + dia).slice(-2);
-    mes = ("0" + mes).slice(-2);
-
-    var fechaInicial = año + "-" + mes + "-" + dia;
-    var fechaFinal = año + "-" + mes + "-" + dia;
-
-    localStorage.setItem("capturarRango10", "Hoy");
-    localStorage.setItem("fechaInicial", fechaInicial);
-    localStorage.setItem("fechaFinal", fechaFinal);
-    // Recargamos la tabla con la información para ser mostrada en la tabla
-    $(".btnReporteCuentas").attr("fechaInicial",localStorage.getItem("fechaInicial"));
-	  $(".btnReporteCuentas").attr("fechaFinal",localStorage.getItem("fechaFinal"));
-    $(".tablaCuentas").DataTable().destroy();
-    cargarTablaCuentas(fechaInicial, fechaFinal);
-  }
-});
-
-$("#daterange-btnCuentasPendientes").daterangepicker(
-  {
-  cancelClass: "CancelarFechaCuentaPendiente",
-  locale:{
-  "daysOfWeek": [
-    "Dom",
-    "Lun",
-    "Mar",
-    "Mie",
-    "Jue",
-    "Vie",
-    "Sab"
-  ],
-  "monthNames": [
-    "Enero",
-    "Febrero",
-    "Marzo",
-    "Abril",
-    "Mayo",
-    "Junio",
-    "Julio",
-    "Agosto",
-    "Septiembre",
-    "Octubre",
-    "Noviembre",
-    "Diciembre"
-  ],
-  },
-    ranges: {
-      Hoy: [moment(), moment()],
-      Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
-      "Últimos 7 días": [moment().subtract(6, "days"), moment()],
-      "Últimos 30 días": [moment().subtract(29, "days"), moment()],
-      "Este mes": [moment().startOf("month"), moment().endOf("month")],
-      "Último mes": [
-        moment()
-          .subtract(1, "month")
-          .startOf("month"),
-        moment()
-          .subtract(1, "month")
-          .endOf("month")
-      ]
-    },
-    
-    startDate: moment(),
-    endDate: moment()
-  },
-  function(start, end) {
-    $("#daterange-btnCuentasPendientes span").html(
-      start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
-    );
-
-    var fechaInicial = start.format("YYYY-MM-DD");
-
-    var fechaFinal = end.format("YYYY-MM-DD");
-
-    var capturarRango11 = $("#daterange-btnCuentasPendientes span").html();
-
-    localStorage.setItem("capturarRango11", capturarRango11);
-    localStorage.setItem("fechaInicial", fechaInicial);
-    localStorage.setItem("fechaFinal", fechaFinal);
-    // Recargamos la tabla con la información para ser mostrada en la tabla
-    $(".btnReporteCuentasPendientes").attr("fechaInicial",localStorage.getItem("fechaInicial"));
-	  $(".btnReporteCuentasPendientes").attr("fechaFinal",localStorage.getItem("fechaFinal"));
-    $(".tablaCuentasPendientes").DataTable().destroy();
-    cargarTablaCuentasPendientes(fechaInicial, fechaFinal);
-  });
-
-/*=============================================
-CANCELAR RANGO DE FECHAS
-=============================================*/
-
-$(".daterangepicker.opensleft .range_inputs .CancelarFechaCuentaPendiente").on(
-  "click",
-  function() {
-    localStorage.removeItem("capturarRango11");
-    localStorage.removeItem("fechaInicial");
-    localStorage.removeItem("fechaFinal");
-    localStorage.clear();
-    window.location = "cuentas-pendientes";
-  }
-);
-
-/*=============================================
-CAPTURAR HOY
-=============================================*/
-
-$(".daterangepicker.opensleft .ranges li").on("click", function() {
-  var textoHoy = $(this).attr("data-range-key");
-
-  if (textoHoy == "Hoy") {
-    var d = new Date();
-
-    var dia = d.getDate();
-    var mes = d.getMonth() + 1;
-    var año = d.getFullYear();
-
-    dia = ("0" + dia).slice(-2);
-    mes = ("0" + mes).slice(-2);
-
-    var fechaInicial = año + "-" + mes + "-" + dia;
-    var fechaFinal = año + "-" + mes + "-" + dia;
-
-    localStorage.setItem("capturarRango11", "Hoy");
-    localStorage.setItem("fechaInicial", fechaInicial);
-    localStorage.setItem("fechaFinal", fechaFinal);
-    // Recargamos la tabla con la información para ser mostrada en la tabla
-    $(".btnReporteCuentasPendientes").attr("fechaInicial",localStorage.getItem("fechaInicial"));
-	  $(".btnReporteCuentasPendientes").attr("fechaFinal",localStorage.getItem("fechaFinal"));
-    $(".tablaCuentasPendientes").DataTable().destroy();
-    cargarTablaCuentasPendientes(fechaInicial, fechaFinal);
-  }
-});
-
-
-$("#daterange-btnCuentasAprobadas").daterangepicker(
-  {
-  cancelClass: "CancelarFechaCuentaAprobada",
-  locale:{
-  "daysOfWeek": [
-    "Dom",
-    "Lun",
-    "Mar",
-    "Mie",
-    "Jue",
-    "Vie",
-    "Sab"
-  ],
-  "monthNames": [
-    "Enero",
-    "Febrero",
-    "Marzo",
-    "Abril",
-    "Mayo",
-    "Junio",
-    "Julio",
-    "Agosto",
-    "Septiembre",
-    "Octubre",
-    "Noviembre",
-    "Diciembre"
-  ],
-  },
-    ranges: {
-      Hoy: [moment(), moment()],
-      Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
-      "Últimos 7 días": [moment().subtract(6, "days"), moment()],
-      "Últimos 30 días": [moment().subtract(29, "days"), moment()],
-      "Este mes": [moment().startOf("month"), moment().endOf("month")],
-      "Último mes": [
-        moment()
-          .subtract(1, "month")
-          .startOf("month"),
-        moment()
-          .subtract(1, "month")
-          .endOf("month")
-      ]
-    },
-    
-    startDate: moment(),
-    endDate: moment()
-  },
-  function(start, end) {
-    $("#daterange-btnCuentasAprobadas span").html(
-      start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
-    );
-
-    var fechaInicial = start.format("YYYY-MM-DD");
-
-    var fechaFinal = end.format("YYYY-MM-DD");
-
-    var capturarRango12 = $("#daterange-btnCuentasAprobadas span").html();
-
-    localStorage.setItem("capturarRango12", capturarRango12);
-    localStorage.setItem("fechaInicial", fechaInicial);
-    localStorage.setItem("fechaFinal", fechaFinal);
-    // Recargamos la tabla con la información para ser mostrada en la tabla
-    $(".btnReporteCuentasAprobadas").attr("fechaInicial",localStorage.getItem("fechaInicial"));
-	  $(".btnReporteCuentasAprobadas").attr("fechaFinal",localStorage.getItem("fechaFinal"));
-    $(".tablaCuentasAprobadas").DataTable().destroy();
-    cargarTablaCuentasAprobadas(fechaInicial, fechaFinal);
-  });
-
-/*=============================================
-CANCELAR RANGO DE FECHAS
-=============================================*/
-
-$(".daterangepicker.opensleft .range_inputs .CancelarFechaCuentaAprobada").on(
-  "click",
-  function() {
-    localStorage.removeItem("capturarRango12");
-    localStorage.removeItem("fechaInicial");
-    localStorage.removeItem("fechaFinal");
-    localStorage.clear();
-    window.location = "cuentas-canceladas";
-  }
-);
-
-/*=============================================
-CAPTURAR HOY
-=============================================*/
-
-$(".daterangepicker.opensleft .ranges li").on("click", function() {
-  var textoHoy = $(this).attr("data-range-key");
-
-  if (textoHoy == "Hoy") {
-    var d = new Date();
-
-    var dia = d.getDate();
-    var mes = d.getMonth() + 1;
-    var año = d.getFullYear();
-
-    dia = ("0" + dia).slice(-2);
-    mes = ("0" + mes).slice(-2);
-
-    var fechaInicial = año + "-" + mes + "-" + dia;
-    var fechaFinal = año + "-" + mes + "-" + dia;
-
-    localStorage.setItem("capturarRango12", "Hoy");
-    localStorage.setItem("fechaInicial", fechaInicial);
-    localStorage.setItem("fechaFinal", fechaFinal);
-    // Recargamos la tabla con la información para ser mostrada en la tabla
-    $(".btnReporteCuentasAprobadas").attr("fechaInicial",localStorage.getItem("fechaInicial"));
-	  $(".btnReporteCuentasAprobadas").attr("fechaFinal",localStorage.getItem("fechaFinal"));
-    $(".tablaCuentasAprobadas").DataTable().destroy();
-    cargarTablaCuentasAprobadas(fechaInicial, fechaFinal);
-  }
-});
 $(".btnCancelarCuenta2").click(function(){
   var numCta = $(this).attr("numCta");
   var datos = new FormData();
@@ -2172,6 +1828,179 @@ $(".daterangepicker.opensleft .ranges li").on("click", function() {
 });
 
   
+//Imprimir letra con hoja pequeña
+$(".tablaCuentas").on("click", ".btnImprimirLetra", function () {
+
+  var numCuenta = $(this).attr("numCuenta");
+  //console.log(codigo);
 
 
+window.open("vistas/reportes_ticket/imprimir_letra.php?numCuenta=" +numCuenta,"_blank");
 
+})
+
+//Imprimir letra con hoja pequeña
+$(".tablaCuentasPendientes").on("click", ".btnImprimirLetra", function () {
+
+  var numCuenta = $(this).attr("numCuenta");
+  //console.log(codigo);
+
+
+window.open("vistas/reportes_ticket/imprimir_letra.php?numCuenta=" +numCuenta,"_blank");
+
+})
+
+//Imprimir letra con hoja pequeña
+$(".tablaCuentasAprobadas").on("click", ".btnImprimirLetra", function () {
+
+  var numCuenta = $(this).attr("numCuenta");
+  //console.log(codigo);
+
+
+window.open("vistas/reportes_ticket/imprimir_letra.php?numCuenta=" +numCuenta,"_blank");
+
+})
+
+
+$(".box").on("change", ".optradio", function () {
+  var consulta = $(this).val();
+  $(".btnGenerarReporteCuenta").attr("consulta",consulta);
+  // console.log(consulta);
+  if(consulta == "pendiente" || consulta == 'pendienteVencidoMenor' || consulta == 'pendienteVencidoMayor' || consulta == 'protestado' || consulta == 'option5' || consulta == 'estadoEnvioVacio' || consulta == 'unicoCartera' || consulta == 'option8' || consulta == 'option9' || consulta == 'cancelado' ){
+    $("#fechaCuentaInicio").prop("disabled", true);
+    $("#fechaCuentaFin").prop("disabled", true);
+  }else{
+    $("#fechaCuentaInicio").prop("disabled", false);
+    $("#fechaCuentaFin").prop("disabled", false);
+  }
+
+  if (consulta=='pagos'){
+    $(".campoCancelacion").removeClass("hidden");
+    $(".campoDocumento").addClass("hidden");
+    $(".btnGenerarReporteCuenta").attr("tip_doc",'');
+  }else{
+    $(".campoDocumento").removeClass("hidden");
+    $(".campoCancelacion").addClass("hidden");
+    $(".btnGenerarReporteCuenta").attr("canc",'');
+  }
+})
+
+$(".box").on("change", ".radioOrd1", function () {
+  var orden1 = $(this).val();
+  $(".btnGenerarReporteCuenta").attr("orden1",orden1);
+  if(orden1 == "vendedor"){
+    $(".campoVendedor").removeClass("hidden");
+    $(".campoCliente").addClass("hidden");
+    $(".btnGenerarReporteCuenta").attr("cli",'');
+  }else if(orden1 == "cliente"){
+    $(".campoCliente").removeClass("hidden");
+    $(".campoVendedor").addClass("hidden");
+    $(".btnGenerarReporteCuenta").attr("vend",'');
+  }else{
+    $(".campoVendedor").addClass("hidden");
+    $(".campoCliente").addClass("hidden");
+    $(".btnGenerarReporteCuenta").attr("cli",'');
+    $(".btnGenerarReporteCuenta").attr("vend",'');
+  }
+
+})
+
+$(".box").on("change", ".radioOrd2", function () {
+  var orden2 = $(this).val();
+  $(".btnGenerarReporteCuenta").attr("orden2",orden2);
+
+})
+
+$(".box").on("change", "#tipoDocumentoReporte", function () {
+  var tip_doc = $(this).val();
+  $(".btnGenerarReporteCuenta").attr("tip_doc",tip_doc);
+
+})
+
+$(".box").on("change", "#tipoCancelacionReporte", function () {
+  var canc = $(this).val();
+  $(".btnGenerarReporteCuenta").attr("canc",canc);
+
+})
+
+$(".box").on("change", "#tipoClienteReporte", function () {
+  var cliente = $(this).val();
+  $(".btnGenerarReporteCuenta").attr("cli",cliente);
+
+})
+
+$(".box").on("change", "#tipoVendedorReporte", function () {
+  var vendedor = $(this).val();
+  $(".btnGenerarReporteCuenta").attr("vend",vendedor);
+
+})
+
+$(".box").on("change", "#tipoBancoReporte", function () {
+  var banco = $(this).val();
+  $(".btnGenerarReporteCuenta").attr("banco",banco);
+
+})
+
+$(".box").on("change", "#fechaCuentaInicio", function () {
+  var inicio = $(this).val();
+  $(".btnGenerarReporteCuenta").attr("inicio",inicio);
+
+})
+
+$(".box").on("change", "#fechaCuentaFin", function () {
+  var fin = $(this).val();
+  $(".btnGenerarReporteCuenta").attr("fin",fin);
+
+})
+
+$(".box").on("change", "#fechaCuentaFin", function () {
+  var fin = $(this).val();
+  $(".btnGenerarReporteCuenta").attr("fin",fin);
+
+})
+
+$(".box").on("change", ".radioImpresion", function () {
+  var impresion = $(this).val();
+  $(".btnGenerarReporteCuenta").attr("impresion",impresion);
+
+})
+
+$(".btnGenerarReporteCuenta").click(function(){ 
+ var consulta = $(this).attr("consulta");
+ var orden1 = $(this).attr("orden1");
+ var orden2 = $(this).attr("orden2");
+ var tip_doc = $(this).attr("tip_doc");
+ var canc = $(this).attr("canc");
+ var cli = $(this).attr("cli");
+ var vend = $(this).attr("vend");
+ var banco = $(this).attr("banco");
+ var inicio = $(this).attr("inicio");
+ var fin = $(this).attr("fin");
+ var impresion = $(this).attr("impresion");
+ if(impresion == "pantalla"){
+   if(consulta=='pendiente' || consulta=='pendienteVencidoMenor'|| consulta=='pendienteVencidoMayor'|| consulta=='protestado'){
+    if(orden1 == "cliente"){
+      window.open("extensiones/tcpdf/pdf/reporte_cliente_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&cli="+cli,"_blank");
+    }else if (orden1 == "tipo"){
+      window.open("extensiones/tcpdf/pdf/reporte_general_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2,"_blank");
+    }else if(orden1 == "vendedor"){
+      if(vend== ''){
+        window.open("extensiones/tcpdf/pdf/reporte_general_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&vend="+vend,"_blank");
+      }else{
+        window.open("extensiones/tcpdf/pdf/reporte_vendedor_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&vend="+vend,"_blank");
+      }
+    }else if(orden1 == "fecha_ven"){
+      window.open("extensiones/tcpdf/pdf/reporte_general_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2,"_blank");
+    }
+
+  }else if(consulta== "pagos"){
+    window.open("extensiones/tcpdf/pdf/reporte_pago_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&canc="+canc+"&vend="+vend+"&inicio="+inicio+"&fin="+fin,"_blank");
+  }else if(consulta== "fechaActualSaldo"){
+    window.open("extensiones/tcpdf/pdf/reporte_estado_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&canc="+canc+"&vend="+vend+"&inicio="+inicio+"&fin="+fin,"_blank");
+  }
+  
+ }else{
+  alert("hola");
+ }
+  
+})

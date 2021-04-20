@@ -37,6 +37,13 @@ class TablaQuincena{
             *brasier
             */
             $brasier = "<button class='btn btn-outline-success  btnReportePagosBrasier' title='Reporte de Pagos Brasier' id='".$quincena[$i]["id"]."' inicio='".$quincena[$i]["inicio"]."' fin='".$quincena[$i]["fin"]."' style='border:green 1px solid'><img src='vistas/img/plantilla/excel.png' width='20px'></button>";
+
+            /* 
+            *produccion
+            */
+            $produccion = "<button class='btn btn-info btnImprimirAvance' title='Avance de produccion'  inicio='".$quincena[$i]["inicio"]."' fin='".$quincena[$i]["fin"]."' ><i class='fa fa-print'></i></button>";
+
+            $actualizar = "<button class='btn btn-success btn-xs btnActualizarPrecioServicio' title='Actualizar precio tiempo'  inicio='".$quincena[$i]["inicio"]."' fin='".$quincena[$i]["fin"]."' ><i class='fa fa-refresh'></i> Actualizar</button>";
      
             $datosJson .= '[
             "'.($i+1).'",
@@ -48,8 +55,10 @@ class TablaQuincena{
             "'.$quincena[$i]["nombre"].'",
             "'.$quincena[$i]["fecha_creacion"].'",
             "'.$botones.'",
+            "<center>'.$actualizar.'</center>",
             "<center>'.$trusas.'</center>",
-            "<center>'.$brasier.'</center>"
+            "<center>'.$brasier.'</center>",
+            "<center>'.$produccion.'</center>"
             ],';        
             }
 

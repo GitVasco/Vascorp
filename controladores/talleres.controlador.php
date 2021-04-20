@@ -1078,14 +1078,14 @@ class ControladorTalleres{
                 }
                 
 				if($respuesta == "ok" && $respuesta2=="ok"){
-                    $ultimo = $_POST["editarBarra"];
+                    $ultimo = $codigoBarraNuevo;
                     $valor=$_POST["editarArticulo"];
                     $rpt_articulo=ModeloArticulos::mdlMostrarArticulos($valor);
                     $modelo = $rpt_articulo["modelo"];
                     $nombre = $rpt_articulo["nombre"];
                     $color = $rpt_articulo["color"];
                     $talla = $rpt_articulo["talla"];
-                    $cantidad = $_POST["editarCantidades"];
+                    $cantidad = $cantidad2;
                     $cod_ope = $_POST["editarCodOperaciones"];
                     $tablaop="operacionesjf";
                     $itemop="codigo";
@@ -2266,4 +2266,41 @@ class ControladorTalleres{
         }
 
     }
+
+
+    /* 
+	* Asignar codigo de barra a trabajador
+	*/
+
+	static public function ctrActualizarGenerado(){
+
+		if(isset($_POST["salidaArticulo"])){
+
+            $valor= $_POST["salidaArticulo"];
+            $respuesta = ModeloTalleres::mdlActualizarArticuloGenerado($valor);
+            // var_dump($respuesta);
+
+            if($respuesta == "ok"){
+
+                echo'<script>
+                    swal({
+						  type: "success",
+						  title: "Los talleres cerrados fueron generados correctamente",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+									if (result.value) {
+
+									window.location = "en-tallerp";
+
+									}
+								})
+
+					</script>';
+
+            }
+
+		}
+
+    }  
 }

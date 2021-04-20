@@ -199,6 +199,29 @@ class ControladorCuentas{
 		return $respuesta;
 
 	}
+
+	/*=============================================
+	MOSTRAR CUENTAS IMPRESION DE LETRAS
+	=============================================*/
+
+	static public function ctrMostrarCuentasLetras($item,$valor){
+		$tabla="cuenta_ctejf";
+		$respuesta = ModeloCuentas::mdlMostrarCuentasLetras($tabla,$item,$valor);
+
+		return $respuesta;
+
+	}
+	/*=============================================
+	MOSTRAR CUENTAS GENERADOS DE LETRAS
+	=============================================*/
+
+	static public function ctrMostrarCuentasGeneradosLetras($item,$valor){
+		$tabla="cuenta_ctejf";
+		$respuesta = ModeloCuentas::mdlMostrarCuentasGeneradosLetras($tabla,$item,$valor);
+
+		return $respuesta;
+
+	}
 	
 	
     /*=============================================
@@ -220,6 +243,18 @@ class ControladorCuentas{
 	static public function ctrMostrarCancelaciones($item,$valor){
 		$tabla="cuenta_ctejf";
 		$respuesta = ModeloCuentas::mdlMostrarCancelaciones($tabla,$item,$valor);
+
+		return $respuesta;
+
+    }
+
+	/*=============================================
+	VALIDAR CUENTA
+	=============================================*/
+
+	static public function ctrValidarCuenta($item,$valor,$item2,$valor2){
+		$tabla="cuenta_ctejf";
+		$respuesta = ModeloCuentas::mdlValidarCuenta($tabla,$item,$valor,$item2,$valor2);
 
 		return $respuesta;
 
@@ -671,13 +706,18 @@ class ControladorCuentas{
 							"fecha"=>$_POST["letraFecha"],
 							"fecha_ven"=>$fechasInput[$i],
 							"cod_pago"=>$_POST["letraCodigo"],
-							"doc_origen"=>$_POST["letraDocumento"]);
+							"doc_origen"=>$_POST["letraDocumento"],
+							"renovacion"=>0,
+							"protesta"=>0,
+							"tip_mov"=>'+');
 
 					
 					$respuesta = ModeloCuentas::mdlIngresarCuenta($tabla,$datos);
 				}
 				$eliminado = ModeloCuentas::mdlEliminarCuenta($tabla,$_POST["idCuenta3"]);
 			   	if($respuesta == "ok"){
+					$numCuenta=$_POST["letraDocumento"];
+					
 
 					echo'<script>
 
@@ -1115,5 +1155,173 @@ class ControladorCuentas{
 
 		}
 	}
+
+
+	/*=============================================
+	MOSTRAR REPORTES COBRAR
+	=============================================*/
+
+	static public function ctrMostrarReporteCobrar($orden1,$orden2,$tip_doc,$cli,$vend,$banco){
+		$tabla="cuenta_ctejf";
+		$respuesta = ModeloCuentas::mdlMostrarReporteCobrar($tabla,$orden1,$orden2,$tip_doc,$cli,$vend,$banco);
+
+		return $respuesta;
+
+	}
+
+	/*=============================================
+	MOSTRAR REPORTES VENCIDOS
+	=============================================*/
+
+	static public function ctrMostrarReporteVencidos($orden1,$orden2,$tip_doc,$cli,$vend,$banco){
+		$tabla="cuenta_ctejf";
+		$respuesta = ModeloCuentas::mdlMostrarReporteVencidos($tabla,$orden1,$orden2,$tip_doc,$cli,$vend,$banco);
+
+		return $respuesta;
+
+	}
+
+	/*=============================================
+	MOSTRAR REPORTES NO VENCIDOS
+	=============================================*/
+
+	static public function ctrMostrarReporteNoVencidos($orden1,$orden2,$tip_doc,$cli,$vend,$banco){
+		$tabla="cuenta_ctejf";
+		$respuesta = ModeloCuentas::mdlMostrarReporteNoVencidos($tabla,$orden1,$orden2,$tip_doc,$cli,$vend,$banco);
+
+		return $respuesta;
+
+	}
+
+	/*=============================================
+	MOSTRAR REPORTES PROTESTADOS
+	=============================================*/
+
+	static public function ctrMostrarReporteProtestados($orden1,$orden2,$tip_doc,$cli,$vend,$banco){
+		$tabla="cuenta_ctejf";
+		$respuesta = ModeloCuentas::mdlMostrarReporteProtestados($tabla,$orden1,$orden2,$tip_doc,$cli,$vend,$banco);
+
+		return $respuesta;
+
+	}
+
+	/*=============================================
+	MOSTRAR REPORTES PAGOS
+	=============================================*/
+
+	static public function ctrMostrarReportePagos($orden1,$orden2,$canc,$vend,$inicio,$fin){
+		$tabla="cuenta_ctejf";
+		$respuesta = ModeloCuentas::mdlMostrarReportePagos($tabla,$orden1,$orden2,$canc,$vend,$inicio,$fin);
+
+		return $respuesta;
+
+	}
+	/*=============================================
+	MOSTRAR REPORTES TOTAL COBRAR
+	=============================================*/
+
+	static public function ctrMostrarReporteTotalCobrar($orden1,$orden2,$tip_doc,$cli,$vend,$banco){
+		$tabla="cuenta_ctejf";
+		$respuesta = ModeloCuentas::mdlMostrarReporteTotalCobrar($tabla,$orden1,$orden2,$tip_doc,$cli,$vend,$banco);
+
+		return $respuesta;
+
+	}
+
+	/*=============================================
+	MOSTRAR REPORTES TOTAL VENCIDOS
+	=============================================*/
+
+	static public function ctrMostrarReporteTotalVencidos($orden1,$orden2,$tip_doc,$cli,$vend,$banco){
+		$tabla="cuenta_ctejf";
+		$respuesta = ModeloCuentas::mdlMostrarReporteTotalVencidos($tabla,$orden1,$orden2,$tip_doc,$cli,$vend,$banco);
+
+		return $respuesta;
+
+	}
+
+	/*=============================================
+	MOSTRAR REPORTES TOTAL NO VENCIDOS
+	=============================================*/
+
+	static public function ctrMostrarReporteTotalNoVencidos($orden1,$orden2,$tip_doc,$cli,$vend,$banco){
+		$tabla="cuenta_ctejf";
+		$respuesta = ModeloCuentas::mdlMostrarReporteTotalNoVencidos($tabla,$orden1,$orden2,$tip_doc,$cli,$vend,$banco);
+
+		return $respuesta;
+
+	}
+
+	/*=============================================
+	MOSTRAR REPORTES TOTAL PROTESTADOS
+	=============================================*/
+
+	static public function ctrMostrarReporteTotalProtestados($orden1,$orden2,$tip_doc,$cli,$vend,$banco){
+		$tabla="cuenta_ctejf";
+		$respuesta = ModeloCuentas::mdlMostrarReporteTotalProtestados($tabla,$orden1,$orden2,$tip_doc,$cli,$vend,$banco);
+
+		return $respuesta;
+
+	}
+
+	/*=============================================
+	MOSTRAR REPORTES TOTAL PAGOS
+	=============================================*/
+
+	static public function ctrMostrarReporteTotalPagos($orden1,$orden2,$canc,$vend,$inicio,$fin){
+		$tabla="cuenta_ctejf";
+		$respuesta = ModeloCuentas::mdlMostrarReporteTotalPagos($tabla,$orden1,$orden2,$canc,$vend,$inicio,$fin);
+
+		return $respuesta;
+
+	}
+
+
+	/*=============================================
+	MOSTRAR REPORTES NOMBRE
+	=============================================*/
+
+	static public function ctrMostrarReporteNombre($cli,$vend){
+		$tabla="cuenta_ctejf";
+		$respuesta = ModeloCuentas::mdlMostrarReporteNombre($tabla,$cli,$vend);
+
+		return $respuesta;
+
+	}
+
+	/*=============================================
+	MOSTRAR REPORTES NOMBRE VENCIDOS
+	=============================================*/
+	static public function ctrMostrarReporteNombreVencidos($cli,$vend){
+		$tabla="cuenta_ctejf";
+		$respuesta = ModeloCuentas::mdlMostrarReporteNombreVencidos($tabla,$cli,$vend);
+
+		return $respuesta;
+
+	}
+
+	/*=============================================
+	MOSTRAR REPORTES NOMBRE NO VENCIDOS
+	=============================================*/
+	static public function ctrMostrarReporteNombreNoVencidos($cli,$vend){
+		$tabla="cuenta_ctejf";
+		$respuesta = ModeloCuentas::mdlMostrarReporteNombreNoVencidos($tabla,$cli,$vend);
+
+		return $respuesta;
+
+	}
+
+	/*=============================================
+	MOSTRAR REPORTES NOMBRE PROTESTADOS
+	=============================================*/
+	static public function ctrMostrarReporteNombreProtestados($cli,$vend){
+		$tabla="cuenta_ctejf";
+		$respuesta = ModeloCuentas::mdlMostrarReporteNombreProtestados($tabla,$cli,$vend);
+
+		return $respuesta;
+
+	}
+
+	
    
 }

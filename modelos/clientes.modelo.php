@@ -198,7 +198,7 @@ class ModeloClientes{
 										c.lista_precios 
 									FROM
 										clientesjf c 
-									WHERE c.codigo = $valor ");
+									WHERE c.codigo = '".$valor."'");
 
 		$stmt -> execute();
 
@@ -370,6 +370,38 @@ class ModeloClientes{
 		$stmt = null;
 
 	}
+
+		/*=============================================
+	EDITAR TIPO DE PAGO
+	=============================================*/
+
+	static public function mdlEditarAval($tabla,$datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET aval_nombre = :aval_nombre, aval_dir = :aval_dir,aval_postal = :aval_postal, aval_telf = :aval_telf,aval_ruc = :aval_ruc, aval_libreta = :aval_libreta WHERE codigo = :codigo");
+
+		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
+		$stmt->bindParam(":aval_nombre", $datos["aval_nombre"], PDO::PARAM_STR);
+		$stmt->bindParam(":aval_dir", $datos["aval_dir"], PDO::PARAM_STR);
+		$stmt->bindParam(":aval_postal", $datos["aval_postal"], PDO::PARAM_STR);
+		$stmt->bindParam(":aval_telf", $datos["aval_telf"], PDO::PARAM_STR);
+		$stmt->bindParam(":aval_ruc", $datos["aval_ruc"], PDO::PARAM_STR);
+		$stmt->bindParam(":aval_libreta", $datos["aval_libreta"], PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+    }
+	
 
     
 }    

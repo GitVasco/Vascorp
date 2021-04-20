@@ -24,13 +24,13 @@
 
       <?php
 
-      if (
-        $_SESSION["perfil"] == "Sistemas" ||
-        $_SESSION["perfil"] == "Supervisores" ||
-        $_SESSION["perfil"] == "Produccion" ||
-        $_SESSION["perfil"] == "Udp" ||
-        $_SESSION["perfil"] == "Costos"
-      ) {
+      // if (
+      //   $_SESSION["perfil"] == "Sistemas" ||
+      //   $_SESSION["perfil"] == "Supervisores" ||
+      //   $_SESSION["perfil"] == "Produccion" ||
+      //   $_SESSION["perfil"] == "Udp" ||
+      //   $_SESSION["perfil"] == "Costos"
+      // ) {
 
         echo '<div class="box-header with-border">
   
@@ -53,7 +53,7 @@
                 </div>
                 </div>
                 ';
-      }
+      // }
 
       ?>
 

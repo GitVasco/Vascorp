@@ -47,6 +47,7 @@
               <th>Fin</th>
               <th>Usuario</th>
               <th>Fecha Creacion</th>
+              <th>Pago</th>
               <th>Acciones</th>
 
             </tr>

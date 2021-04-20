@@ -901,6 +901,164 @@ MODAL EDITAR CLIENTE
 
 </div>
 
+
+<!--=====================================
+MODAL EDITAR AVAL DE CLIENTE
+======================================-->
+
+<div id="modalEditarAval" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form role="form" method="post">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Editar Aval</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+          
+            <!-- ENTRADA PARA EL CODIGO  -->
+            
+            <div class="form-group">
+              <label for="">Nombre</label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+
+                <input type="text"  class="form-control input-lg" name="editarAvalNombre" id="editarAvalNombre" required>
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA EL NOMBRE -->
+            
+            <div class="form-group">
+              <label for="">Dirección</label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-map"></i></span> 
+
+                <input type="text" class="form-control input-lg" style="text-transform:uppercase" name="editarAvalDir" id="editarAvalDir" required>
+                <input type="hidden" id="avalCliente" name="avalCliente">
+              </div>
+
+            </div>
+
+            <div class="form-group">
+              <label for="">Cod. postal</label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span> 
+
+                <select  class="form-control input-lg selectpicker" data-live-search="true" name="editarAvalPostal" id="editarAvalPostal" required>
+                  <option value="">Seleccionar codigo postal</option>
+                  <?php
+                    
+                    $ubigeo = ControladorClientes::ctrMostrarUbigeos();
+                    #var_dump("ubigeo", $ubigeo);
+
+                    foreach ($ubigeo as $key => $value) {
+
+                      echo '<option value="' . $value["codigo"] . '">' . $value["codigo"] . ' - ' . $value["ubigeo"] . '</option>';
+
+                    }
+
+                    
+                    ?>
+
+                </select>
+
+              </div>
+
+            </div>
+
+            <div class="form-group">
+              <label for="">Teléfono</label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-phone"></i></span> 
+
+                <input type="text"  class="form-control input-lg" name="editarAvalTelf" id="editarAvalTelf" >
+
+              </div>
+
+            </div>
+
+            <div class="form-group">
+              <label for="">RUC</label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
+
+                <input type="number"  class="form-control input-lg" name="editarAvalRuc" id="editarAvalRuc" required>
+
+              </div>
+
+            </div>
+
+            <div class="form-group">
+              <label for="">DNI</label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-id-card-o"></i></span> 
+
+                <input type="number"  class="form-control input-lg" name="editarAvalLibreta" id="editarAvalLibreta" >
+
+              </div>
+
+            </div>
+  
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Guardar Aval</button>
+
+        </div>
+
+      </form>
+
+      <?php
+
+        $editarAval = new ControladorClientes();
+        $editarAval -> ctrEditarAval();
+
+      ?>   
+
+
+    </div>
+
+  </div>
+
+</div>
+
 <script>
 window.document.title = "Clientes"
 </script>

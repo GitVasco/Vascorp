@@ -1,5 +1,7 @@
 <?php
-
+use Mike42\Escpos\Printer;
+use Mike42\Escpos\EscposImage;
+use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 class ControladorProduccion{
 
     /* 
@@ -12,6 +14,17 @@ class ControladorProduccion{
 		return $respuesta;
 
 	}
+
+  /* 
+    *MOSTRAR AVANCES
+    */
+    static public function ctrMostrarAvances($inicio,$fin){
+
+      $respuesta = ModeloProduccion::mdlMostrarAvances($inicio,$fin);
+  
+      return $respuesta;
+  
+    }
 
 	/* 
 	* CREAR QUINCENA
@@ -161,5 +174,115 @@ class ControladorProduccion{
 
 
 	}	  
+
+  static public function ctrImprimirAvance(){
+
+    if(isset($_GET["inicioQuincena"] ) && isset($_GET["finQuincena"])){
+
+            $inicio = $_GET["inicioQuincena"];
+
+            $fin = $_GET["finQuincena"];
+        
+
+            $nombre_impresora = "Star BSC10"; 
+
+            $connector = new WindowsPrintConnector($nombre_impresora);
+            $printer = new Printer($connector);
+
+            $fecha = date("d-m-Y");
+
+            $respuesta = ControladorProduccion::ctrMostrarAvances($inicio,$fin);
+            //Establecemos los datos de la empresa
+            $empresa = "Corporacion Vasco S.A.C.";
+            $documento = "20513613939";
+
+            foreach ($respuesta as $key => $value) {
+                
+                $printer -> setFont(Printer::FONT_B);
+                $printer -> setJustification(Printer::JUSTIFY_CENTER);
+                $printer -> setTextSize(1, 1);
+                //Activamos negrita
+
+                $printer->setPrintLeftMargin(0); // margen 0
+                $printer->setEmphasis(true);
+                $printer -> text("AVANCE PAGO DE ".$inicio." AL ".$fin."\n");//Nombre de la empresa
+
+                $printer -> text("======================================="."\n");//Dirección de la empresa
+                //Quitamos negrita
+                
+                
+                $printer -> setJustification(Printer::JUSTIFY_LEFT);
+
+                $printer -> text("ID:".$value["id_trabajador"]."\n");
+
+                $printer->setEmphasis(false);
+
+                $printer -> text("Nombre:     ".$value["nombre"]."\n");
+
+                $printer -> text("Produccion:                 ".$value["produccion"]."\n");
+
+                $printer -> text("Sueldo:                     ".$value["sueldo"]."\n");
+
+                $diferencia = substr($value["diferencia"],0,1);
+                $tamano = strlen($value["diferencia"]);
+
+                if($diferencia == "-"){
+                  if($tamano == 7){
+                    $printer -> text("Diferencia:                ".$value["diferencia"]."\n");
+                  }else{
+                    $printer -> text("Diferencia:                 ".$value["diferencia"]."\n");
+                  }
+                  
+
+                }else{
+
+                  $printer -> text("Incentivo:                  ".$value["incentivo"]."\n");
+
+                }
+
+                
+
+                
+
+                //Activamos negrita
+                $printer->setEmphasis(true);
+
+                $printer -> text("---------------------------------------"."\n");//Divisor Total
+            
+                $printer -> text("Total:                      ".$value["total"]."\n");
+
+                
+                $printer -> text("---------------------------------------"."\n");//Divisor Total
+
+                $printer -> feed(1);
+                
+                $printer -> cut();
+        
+                }
+
+            $printer -> close();
+
+            echo'<script>
+
+            swal({
+                  type: "success",
+                  title: "Se imprimio el avance correctamente",
+                  showConfirmButton: true,
+                  confirmButtonText: "Cerrar"
+                  }).then(function(result){
+                            if (result.value) {
+
+                            window.location = "quincena";
+
+                            }
+                        })
+
+            </script>';
+        }
+
+        
+
+        
+  }
 
 }

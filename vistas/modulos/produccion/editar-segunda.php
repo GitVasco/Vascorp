@@ -134,9 +134,15 @@
 
                     </div>
 
-                    <div class="col-xs-2">
+                    <div class="col-xs-3">
 
                       <label for="">En Taller</label>
+
+                    </div>
+
+                    <div class="col-xs-3">
+
+                      <label for="">Saldo</label>
 
                     </div>
 
@@ -179,9 +185,15 @@
                         
                             </div>
                         
-                            <div class="col-xs-6">
+                            <div class="col-xs-3">
                         
                               <input type="number" class="form-control nuevaCantidadArticuloIngreso input-sm" name="nuevaCantidadArticuloIngreso" id="nuevaCantidadArticuloIngreso" min="1" value="'.$value["cantidad"].'" taller="'.$tallerAntiguo.'" articulo="'.$infoArticulo["articulo"].'" nuevotaller="'.$infoArticulo["taller"].'" required>
+                        
+                            </div>
+                            
+                            <div class="col-xs-3 divSaldoIngreso">
+                        
+                              <input type="number" class="form-control nuevoSaldoIngreso input-sm" name="nuevoSaldoIngreso" id="nuevoSaldoIngreso" min="1" value="'.$infoArticulo["taller"].'" readonly>
                         
                             </div>';
                             echo '</div>';  

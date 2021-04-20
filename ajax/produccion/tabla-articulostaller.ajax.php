@@ -52,8 +52,13 @@ class TablaArticulosTaller{
        
         /* 
         todo: BOTONES
-        */                
-        $botones =  "<div class='btn-group '><button class='btn btn-primary btn-xs  agregarArtiTaller recuperarBoton' articuloIngreso='".$articulos[$i]["articulo"]."' taller='".$articulos[$i]["taller"]."' idCierre='".$articulos[$i]["id"]."'><i class='fa fa-plus-circle'></i></button></div>";
+        */             
+        if($articulos[$i]["guia"] == ""){
+            $botones =  "<div class='btn-group '><button class='btn btn-primary btn-xs  agregarArtiTaller recuperarBoton' articuloIngreso='".$articulos[$i]["articulo"]."' taller='".$articulos[$i]["taller"]."' articulo='".$articulos[$i]["articulo"]."' idCierre='".$articulos[$i]["id"]."'><i class='fa fa-plus-circle'></i></button></div>";
+        }else{
+            $botones =  "<div class='btn-group '><button class='btn btn-primary btn-xs  agregarArtiTaller recuperarBoton' articuloIngreso='".$articulos[$i]["id"]."' taller='".$articulos[$i]["taller"]."' articulo='".$articulos[$i]["articulo"]."' idCierre='".$articulos[$i]["id"]."'><i class='fa fa-plus-circle'></i></button></div>";
+        }
+        
         
         
         /* 

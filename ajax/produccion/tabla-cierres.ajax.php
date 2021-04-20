@@ -36,6 +36,17 @@ class TablaCierres{
 
         }
 
+        if($cierres[$i]["estado_pago"] == "POR PAGAR"){
+
+            /* $estado = "<button class='btn btn-danger btn-xs btnActivar'>".$articulos[$i]["id"]."</button>"; */
+            $estado_pago = "<button class='btn btn-warning btn-xs btnPagarCierre' guiaCierre='".$cierres[$i]["guia"]."' estadoPago='PAGADO'>POR PAGAR</button>";
+
+        }else{
+
+            /* $estado = "<button class='btn btn-success btn-xs btnActivarArt'>".$articulos[$i]["id"]."</button>"; */
+            $estado_pago = "<button class='btn btn-primary btn-xs btnPagarCierre' guiaCierre='".$cierres[$i]["guia"]."' estadoPago='POR PAGAR'>PAGADO</button>";
+
+        }
      
         /*=============================================
         TRAEMOS LAS ACCIONES
@@ -52,6 +63,7 @@ class TablaCierres{
             "'.$cierres[$i]["total"].'",
             "'.$fecha.'",
             "'.$estado.'",
+            "'.$estado_pago.'",
             "'.$botones.'"
             ],';        
             }
