@@ -26,6 +26,17 @@ class ControladorSalidas{
 
     }
 
+     /*
+    * MOSTRAR CABECERA DE TEMPORAL TOTAL
+    */
+	static public function ctrMostrarArgumentoSalida($valor){
+
+		$respuesta = ModeloSalidas::mdlMostrarArgumentoSalida($valor);
+
+		return $respuesta;
+
+    }
+
     /*
     *MOSTRAR DETALLE DE TAMPOERAL
     */

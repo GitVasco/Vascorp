@@ -126,7 +126,7 @@ MODAL FACTURAR
 
                       <span class="input-group-addon"><i class="fa fa-key"></i></span>
 
-                      <input type="text" class="form-control input-sm" id="codPedido" name="codPedido" readonly>
+                      <input type="text" class="form-control input-sm" id="codSalida" name="codSalida" readonly>
 
                   </div>
 
@@ -217,7 +217,7 @@ MODAL FACTURAR
               <div class="input-group">
 
                 <span class="input-group-addon"><i class="fa fa-share-square-o"></i></span>
-                <select type="text" class="form-control input-sm selectpicker" name="tdoc" id="tdoc" data-live-search="true"  required>
+                <select type="text" class="form-control input-sm selectpicker" name="tdoc" id="tdoc2" data-live-search="true"  required>
                   <option value="">Seleccionar tipo de documento</option>
 
                     <?php
@@ -246,7 +246,8 @@ MODAL FACTURAR
               <div class="input-group">
 
                 <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                <input type="text" class="form-control input-md" name="serieSeparado" id="serieSeparado" readonly >
+                <input type="text" class="form-control input-md" name="serieSalida" id="serieSalida" readonly >
+                <input type="hidden"  name="nomTipo" id="nomTipo" readonly >
                   
 
               </div>
@@ -278,7 +279,7 @@ MODAL FACTURAR
       <?php
 
       $facturar = new controladorFacturacion();
-      $facturar->ctrFacturar();
+      $facturar->ctrFacturarSalida();
 
       ?>
 

@@ -208,6 +208,17 @@ class AjaxCuentas{
     
       }
 
+      public $documentoSalida;
+    
+      public function ajaxNombreDocumento(){
+        $item= "codigo";
+        $valor = $this->documentoSalida;
+
+        $respuesta = ControladorCuentas::ctrMostrarPagos($item,$valor);
+    
+        echo json_encode($respuesta);
+    
+      }
 
 
     }
@@ -322,4 +333,11 @@ class AjaxCuentas{
   }
 
 
- 
+ /*=============================================
+    MOSTRAR DESCRIPCION MAESTRA
+    =============================================*/	
+    if(isset($_POST["documentoSalida"])){
+      $descripcionDocumento=new AjaxCuentas();
+      $descripcionDocumento->documentoSalida=$_POST["documentoSalida"];
+      $descripcionDocumento->ajaxNombreDocumento();
+    }

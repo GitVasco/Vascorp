@@ -229,7 +229,7 @@ class ModeloSalidas{
     /*
     * MOSTRAR DETALLE DE TEMPORAL
     */
-	static public function mdlMostraPedidosCabecera($valor){
+	static public function mdlMostrarSalidasCabecera($valor){
 
 		if($valor == null){
 
@@ -601,6 +601,7 @@ class ModeloSalidas{
 						ON t.condicion_venta = cv.id
 						LEFT JOIN usuariosjf u
 						ON t.usuario = u.id
+					WHERE t.estado='GENERADO'
 					ORDER BY fecha DESC";
 
 		$stmt=Conexion::conectar()->prepare($sql);
@@ -803,7 +804,7 @@ class ModeloSalidas{
     */
     static public function mdlMostrarArgumentoSalida($valor){
 
-        $stmt = Conexion::conectar()->prepare("SELECT argumento FROM maestrajf WHERE codigo = $valor ORDER BY id ASC");
+        $stmt = Conexion::conectar()->prepare("SELECT argumento FROM maestrajf WHERE codigo = '".$valor."' ");
 
         $stmt -> execute();
 
@@ -814,4 +815,134 @@ class ModeloSalidas{
 		$stmt = null;
 
 	}
+
+	
+    /*
+    * ACTUALIZAR ARGUMENTO + 1 GUIA
+    */
+	static public function mdlActualizarArgumento($valor){
+
+		$sql="UPDATE
+                    maestrajf
+                SET
+                    argumento = argumento + 1
+                WHERE codigo = :valor";
+
+        $stmt=Conexion::conectar()->prepare($sql);
+
+        $stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt=null;
+
+    }
+
+	  /*
+    * ACTUALIZAR PEDIDO A FACTURADO
+    */
+	static public function mdlActualizarSalidaF($codigo){
+
+		$sql="UPDATE
+                    ing_sal
+                SET
+                    estado = 'FACTURADO'
+                WHERE codigo = :codigo";
+
+        $stmt=Conexion::conectar()->prepare($sql);
+
+        $stmt->bindParam(":codigo", $codigo, PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt=null;
+
+    }
+
+	/*
+	* REGISTAR DOCUMENTO 
+	*/
+	static public function mdlRegistrarDocumentoSalida($datos){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO doc_ing_sal (
+                                                        tipo,
+                                                        documento,
+                                                        neto,
+                                                        igv,
+                                                        dscto,
+                                                        total,
+                                                        cliente,
+                                                        vendedor,
+                                                        agencia,
+                                                        fecha,
+                                                        tipo_documento,
+                                                        lista_precios,
+                                                        condicion_venta,
+                                                        doc_destino,
+                                                        doc_origen,
+                                                        usuario
+                                                    )
+                                                    VALUES
+                                                        (
+                                                        :tipo,
+                                                        :documento,
+                                                        :neto,
+                                                        :igv,
+                                                        :dscto,
+                                                        :total,
+                                                        :cliente,
+                                                        :vendedor,
+                                                        :agencia,
+                                                        DATE(NOW()),
+                                                        :tipo_documento,
+                                                        :lista_precios,
+                                                        :condicion_venta,
+                                                        :doc_destino,
+                                                        :doc_origen,
+                                                        :usuario
+                                                        )");
+
+        $stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
+        $stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
+        $stmt->bindParam(":neto", $datos["neto"], PDO::PARAM_STR);
+        $stmt->bindParam(":igv", $datos["igv"], PDO::PARAM_STR);
+        $stmt->bindParam(":dscto", $datos["dscto"], PDO::PARAM_STR);
+        $stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
+        $stmt->bindParam(":cliente", $datos["cliente"], PDO::PARAM_STR);
+        $stmt->bindParam(":vendedor", $datos["vendedor"], PDO::PARAM_STR);
+        $stmt->bindParam(":agencia", $datos["agencia"], PDO::PARAM_STR);
+        $stmt->bindParam(":lista_precios", $datos["lista_precios"], PDO::PARAM_STR);
+        $stmt->bindParam(":condicion_venta", $datos["condicion_venta"], PDO::PARAM_STR);
+        $stmt->bindParam(":doc_destino", $datos["doc_destino"], PDO::PARAM_STR);
+        $stmt->bindParam(":doc_origen", $datos["doc_origen"], PDO::PARAM_STR);
+        $stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+        $stmt->bindParam(":tipo_documento", $datos["tipo_documento"], PDO::PARAM_STR);
+
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+
+    }
+
 }

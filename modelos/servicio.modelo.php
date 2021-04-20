@@ -343,7 +343,7 @@ class ModeloServicios{
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT pd.*,m.nombre FROM $tabla pd LEFT JOIN modelojf  m ON pd.modelo = m.modelo ORDER BY pd.id DESC");
+			$stmt = Conexion::conectar()->prepare("SELECT pd.*,m.nombre,s.nom_sector FROM $tabla pd LEFT JOIN modelojf  m ON pd.modelo = m.modelo LEFT JOIN sectorjf s ON pd.taller = s.cod_sector ORDER BY pd.id DESC");
 
 			$stmt -> execute();
 

@@ -590,13 +590,13 @@ $(".tablaSalidaVarios").on("click", ".btnImprimirSalida", function () {
 /* 
 * AL CAMBIAR EL SELECT DE DOCUMENTO
 */
-$("#tdoc").change(function(){
+$("#tdoc2").change(function(){
 
-	var documento = document.getElementById("tdoc").value;
+	var documento = document.getElementById("tdoc2").value;
     //console.log(documento);
 
 
-    var serie = $("#serie");
+    var serie = $("#serieSalida");
     //console.log(serie);
 
     var datos = new FormData();
@@ -613,9 +613,31 @@ $("#tdoc").change(function(){
         dataType:"json",
         success:function(respuesta){
 
-            console.log(respuesta);
+            // console.log(respuesta);
 
-            // Limpiamos el select
+            var numero = Number(respuesta["argumento"])+Number(1);
+            serie.val(("00000"+numero).slice(-5));
+            
+
+        }
+
+    })
+
+    var datos2 = new FormData();
+    datos2.append("documentoSalida", documento);
+
+    $.ajax({
+
+        url:"ajax/cuentas.ajax.php",
+        method: "POST",
+        data: datos2,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType:"json",
+        success:function(respuesta2){
+
+            $("#nomTipo").val(respuesta2[0]["descripcion"]);
             
 
         }
@@ -641,7 +663,7 @@ $(".tablaSalidaVarios tbody").on("click", "button.btnFacturarSalida", function()
     var cod_ven = $(this).attr("cod_ven");
     //console.log(nro_doc);
 
-    $("#codPedido").val(codigo);
+    $("#codSalida").val(codigo);
     $("#codCli").val(cod_cli);
     $("#nomCli").val(nom_cli);
     $("#tipDoc").val(tip_doc);
