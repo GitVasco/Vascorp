@@ -282,7 +282,7 @@ $(".btnCalCant").click(function () {
 $("#seleccionarCliente").change(function(){
 
     var cliList = document.getElementById("seleccionarCliente").value;
-    //console.log(cliList);
+    console.log(cliList);
 
     var datos = new FormData();
     datos.append("cliList", cliList);
@@ -298,7 +298,7 @@ $("#seleccionarCliente").change(function(){
 		dataType:"json",
 		success:function(respuestaDet){
 
-            //console.log(respuestaDet);
+            console.log(respuestaDet);
 
             $("#lista").val(respuestaDet["lista_precios"]);
 

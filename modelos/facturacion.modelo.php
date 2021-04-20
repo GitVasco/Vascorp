@@ -62,9 +62,9 @@ class ModeloFacturacion{
 		$stmt = null;
 
     }
-    
+
 	/*
-	* REGISTAR DOCUMENTO 
+	* REGISTAR DOCUMENTO
 	*/
 	static public function mdlRegistrarDocumento($datos){
 
