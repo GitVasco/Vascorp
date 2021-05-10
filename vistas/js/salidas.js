@@ -583,7 +583,7 @@ $(".tablaSalidaVarios").on("click", ".btnImprimirSalida", function () {
     //console.log(codigo);
 
 
-	window.open("vistas/reportes_ticket/impresion_pedido.php?codigo=" +codigo,"_blank");
+	window.open("vistas/reportes_ticket/impresion_salida.php?codigo=" +codigo,"_blank");
 
 })
 

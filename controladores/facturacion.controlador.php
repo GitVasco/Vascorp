@@ -875,7 +875,7 @@ class ControladorFacturacion{
     * MOSTRAR RANGO DE FECHAS DE FACTURAS
     */
 	static public function ctrRangoFechasFacturas($fechaInicial, $fechaFinal){
-		$respuesta = ModeloFacturacion::mdlRangoFechasNotasCD( $fechaInicial, $fechaFinal);
+		$respuesta = ModeloFacturacion::mdlRangoFechasFacturas( $fechaInicial, $fechaFinal);
 
 		return $respuesta;
 

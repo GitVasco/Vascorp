@@ -92,6 +92,7 @@
            <th>Documento</th> 
            <th>Total</th>
            <th>Fecha</th>
+           <th>Almacen</th>
            <th style="width:150px">Acciones</th>
 
          </tr> 

@@ -79,10 +79,10 @@ class ControladorSalidas{
 
                     $articulo = $value["articulo"];
                     #var_dump("articulo", $value["articulo"]);
-                    $tabla = "detalle_temporal";
+                    $tabla = "detalle_ing_sal";
                     $val1 = $articulo;
                     $val2 = $_POST[$articulo];
-                    $val3 = $_POST["pedido"];
+                    $val3 = $_POST["salida"];
                     $val4 = $_POST["precio"];
 
                     if($val2 > 0){
@@ -294,9 +294,9 @@ class ControladorSalidas{
     /*
     * MOSTRAR CABECERA DE TEMPORAL
     */
-	static public function ctrMostraPedidosCabecera($valor){
+	static public function ctrMostrarSalidasCabecera($valor){
 
-		$respuesta = ModeloSalidas::mdlMostraPedidosCabecera($valor);
+		$respuesta = ModeloSalidas::mdlMostrarSalidasCabecera($valor);
 
 		return $respuesta;
 
@@ -324,12 +324,12 @@ class ControladorSalidas{
 
     }
 
-    /*
+     /*
     * MOSTRAR PEDIDO CON FORMATO DE IMRPESION
     */
-	static public function ctrPedidoImpresion($codigo, $modelo){
+	static public function ctrSalidaImpresion($codigo, $modelo){
 
-		$respuesta = ModeloSalidas::mdlPedidoImpresion($codigo, $modelo);
+		$respuesta = ModeloSalidas::mdlSalidaImpresion($codigo, $modelo);
 
 		return $respuesta;
 
@@ -338,9 +338,9 @@ class ControladorSalidas{
     /*
     * MOSTRAR PEDIDO CON FORMATO DE IMRPESION - MODELOS
     */
-	static public function ctrPedidoImpresionMod($valor){
+	static public function ctrSalidaImpresionMod($valor){
 
-		$respuesta = ModeloSalidas::mdlPedidoImpresionMod($valor);
+		$respuesta = ModeloSalidas::mdlSalidaImpresionMod($valor);
 
 		return $respuesta;
 
@@ -349,9 +349,9 @@ class ControladorSalidas{
     /*
     * MOSTRAR PEDIDO CON FORMATO DE IMRPESION - CABECERA
     */
-	static public function ctrPedidoImpresionCab($valor){
+	static public function ctrSalidaImpresionCab($valor){
 
-		$respuesta = ModeloSalidas::mdlPedidoImpresionCab($valor);
+		$respuesta = ModeloSalidas::mdlSalidaImpresionCab($valor);
 
 		return $respuesta;
 
@@ -360,9 +360,9 @@ class ControladorSalidas{
     /*
     * MOSTRAR PEDIDO CON FORMATO DE IMRPESION - TOTALES GENERALES
     */
-	static public function ctrPedidoImpresionTotales($valor){
+	static public function ctrSalidaImpresionTotales($valor){
 
-		$respuesta = ModeloSalidas::mdlPedidoImpresionTotales($valor);
+		$respuesta = ModeloSalidas::mdlSalidaImpresionTotales($valor);
 
 		return $respuesta;
 

@@ -446,6 +446,9 @@ class ControladorUsuarios{
 			$tabla ="usuariosjf";
 			$datos = $_GET["idUsuario"];
 
+			$tabla2="usuario_permisojf";
+			$borrado=ModeloUsuarios::mdlBorrarUsuarioPermiso($tabla2, $datos);
+
 			if($_GET["fotoUsuario"] != ""){
 
 				unlink($_GET["fotoUsuario"]);

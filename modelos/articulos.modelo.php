@@ -603,7 +603,7 @@ class ModeloArticulos
 											modelo,
 											$lista as precio
 										FROM
-											preciojf where modelo=$modelo ");
+											preciojf where modelo='$modelo' ");
 
 		$stmt->execute();
 

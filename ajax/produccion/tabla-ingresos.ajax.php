@@ -20,6 +20,21 @@ class TablaIngresos{
     
             for($i = 0; $i < count($ingreso); $i++){
                    
+            /*
+            todo: ESTADO
+            */
+            if($ingreso[$i]["almacen"] == "01"){
+
+
+                $estado = "<span style='font-size:85%' class='label label-info'>APT</span>";
+    
+            }else{
+    
+                $estado = "<span style='font-size:85%' class='label label-danger'>SEGUNDA</span>";
+    
+            }       
+              
+
             /* 
             todo: formato de miles
             */
@@ -42,6 +57,7 @@ class TablaIngresos{
                 "'.$ingreso[$i]["documento"].'",
                 "'.$total.'",
                 "'.$ingreso[$i]["fecha"].'",
+                "'.$estado.'",
                 "'.$botones.'"
                 ],';        
                 }

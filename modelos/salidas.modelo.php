@@ -327,11 +327,10 @@ class ModeloSalidas{
 		$stmt=null;
 
 	}
-
-    /*
+/*
     * MOSTRAR LOS DATOS PARA LA IMPRESION
     */
-	static public function mdlPedidoImpresion($codigo, $modelo){
+	static public function mdlSalidaImpresion($codigo, $modelo){
 
 		$sql="SELECT 
 						m.id_modelo,
@@ -401,8 +400,8 @@ class ModeloSalidas{
 						ON dt.articulo = a.articulo
 						LEFT JOIN modelojf m
 						ON a.modelo = m.modelo
-					WHERE dt.codigo = $codigo
-						AND m.modelo = $modelo
+					WHERE dt.codigo = '".$codigo."'
+						AND m.modelo = '".$modelo."'
 					GROUP BY m.modelo,
 						a.cod_color,
 						a.color";
@@ -420,7 +419,7 @@ class ModeloSalidas{
 	/*
     * MOSTRAR LOS DATOS PARA LA IMPRESION
     */
-	static public function mdlPedidoImpresionMod($valor){
+	static public function mdlSalidaImpresionMod($valor){
 
 		$sql="SELECT
 			m.id_modelo,
@@ -447,7 +446,7 @@ class ModeloSalidas{
 	/*
     * MOSTRAR LOS DATOS PARA LA IMPRESION CABECERA
     */
-	static public function mdlPedidoImpresionCab($valor){
+	static public function mdlSalidaImpresionCab($valor){
 
 		$sql="SELECT
 					t.codigo AS pedido,
@@ -458,7 +457,7 @@ class ModeloSalidas{
 					c.ubigeo,
 					u.nom_ubi,
 					t.vendedor,
-					c.tipo_documento,
+					td.tipo_doc,
 					c.documento
 				FROM
 					ing_sal t
@@ -466,6 +465,8 @@ class ModeloSalidas{
 					ON t.cliente = c.codigo
 					LEFT JOIN ubigeojf u
 					ON c.ubigeo = u.cod_ubi
+					LEFT JOIN tipo_documentojf td
+    				ON td.cod_doc = c.tipo_documento
 				WHERE t.codigo = $valor";
 
 		$stmt=Conexion::conectar()->prepare($sql);
@@ -481,7 +482,7 @@ class ModeloSalidas{
 	/*
     * MOSTRAR PEDIDO CON FORMATO DE IMRPESION - TOTALES GENERALES
     */
-	static public function mdlPedidoImpresionTotales($valor){
+	static public function mdlSalidaImpresionTotales($valor){
 
 		$sql="SELECT
 					'TOTAL',
@@ -558,6 +559,7 @@ class ModeloSalidas{
 		$stmt=null;
 
 	}
+
 
     /*
     * MOSTRAR DETALLE DE TEMPORAL
