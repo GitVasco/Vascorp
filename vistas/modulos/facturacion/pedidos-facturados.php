@@ -4,7 +4,7 @@
 
     <h1>
 
-      Pedidos General
+      Pedidos Facturados
 
     </h1>
 
@@ -12,7 +12,7 @@
 
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-      <li class="active">Pedidos General</li>
+      <li class="active">Pedidos Facturados</li>
 
     </ol>
 

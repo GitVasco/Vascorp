@@ -61,8 +61,9 @@ class ControladorPedidos{
                 /*
                 todo: GUARDAR EL DETALLE TEMPORAL - CUANDO YA EXISTE EL TEMPORAL
                 */
-                $valor = $_POST["modeloModal"];
+                $valor = $_POST["modeloModalA"];
                 $respuesta = controladorArticulos::ctrVerArticulos($valor);
+                //var_dump($respuesta);
 
                 foreach($respuesta as $value){
 
@@ -72,17 +73,19 @@ class ControladorPedidos{
                     $val1 = $articulo;
                     $val2 = $_POST[$articulo];
                     $val3 = $_POST["pedido"];
-                    $val4 = $_POST["precio"];
+                    $val4 = $_POST["precioA"];
+
+                    //var_dump($val2);
+
+                    #1ero eliminar si ya se registro
+                    $eliminar = array(  "codigo" => $val3,
+                                        "articulo" => $val1);
+
+                    $limpiar = ModeloPedidos::mdlEliminarDetalleTemporal($tabla, $eliminar);
+                    //var_dump("eliminar", $eliminar);
+                    #var_dump("limpiar", $limpiar);                    
 
                     if($val2 > 0){
-
-                        #1ero eliminar si ya se registro
-                        $eliminar = array(  "codigo" => $val3,
-                                            "articulo" => $val1);
-
-                        $limpiar = ModeloPedidos::mdlEliminarDetalleTemporal($tabla, $eliminar);
-                        #var_dump("eliminar", $eliminar);
-                        #var_dump("limpiar", $limpiar);
 
                         $datos = array( "codigo"    => $val3,
                                         "articulo"  => $val1,
@@ -94,7 +97,7 @@ class ControladorPedidos{
                         #var_dump("respuesta", $respuesta);
 
                         if($respuesta = "ok"){
-
+                            
                             echo '  <script>
 
                                         window.location="index.php?ruta=crear-pedidocv&pedido='.$_POST["pedido"].'";
@@ -134,7 +137,7 @@ class ControladorPedidos{
                 /*
                 todo: GUARDAR EL DETALLE TEMPORAL
                 */
-                $valor = $_POST["modeloModal"];
+                $valor = $_POST["modeloModalA"];
                 $respuesta = controladorArticulos::ctrVerArticulos($valor);
 
                 foreach($respuesta as $value){
@@ -145,7 +148,7 @@ class ControladorPedidos{
                     $val1 = $articulo;
                     $val2 = $_POST[$articulo];
                     $val3 = $talonarioN;
-                    $val4 = $_POST["precio"];
+                    $val4 = $_POST["precioA"];
 
                     if($val2 > 0){
 
