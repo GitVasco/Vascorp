@@ -22,6 +22,19 @@ class AjaxPedidos{
     /* 
 	* VISUALIZAR COLORES
 	*/
+	public function ajaxVerColoresCantidades(){
+
+        $pedido = $this->pedido;
+        $modelo = $this->modeloA;
+
+        $respuesta = controladorArticulos::ctrVerColoresCantidades($pedido, $modelo);
+       
+        echo json_encode($respuesta);
+    }    
+
+    /* 
+	* VISUALIZAR COLORES
+	*/
 	public function ajaxVerDatos(){
 
         $modelo = $this->mod;
@@ -55,6 +68,18 @@ if(isset($_POST["modelo"])){
     $visualizarMateriaPrimaDetalle = new AjaxPedidos();
     $visualizarMateriaPrimaDetalle -> modelo = $_POST["modelo"];
     $visualizarMateriaPrimaDetalle -> ajaxVerColores();
+
+}
+
+/* 
+ * VISUALIZAR COLORES Y MODIFICAR
+*/
+if(isset($_POST["pedido"])){
+
+    $verColoresyCantidades = new AjaxPedidos();
+    $verColoresyCantidades -> pedido = $_POST["pedido"];
+    $verColoresyCantidades -> modeloA = $_POST["modeloA"];
+    $verColoresyCantidades -> ajaxVerColoresCantidades();
 
 }
 
