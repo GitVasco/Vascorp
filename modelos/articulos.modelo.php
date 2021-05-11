@@ -581,7 +581,9 @@ class ModeloArticulos
 	*/
 	static public function mdlVerColoresCantidades($pedido, $modelo){
 
-		$sql = "SELECT 
+		if($pedido != null){
+
+			$sql = "SELECT 
 		a.modelo,
 		a.cod_color,
 		a.color,
@@ -717,6 +719,141 @@ class ModeloArticulos
 		$stmt->execute();
 
 		return $stmt->fetchAll();
+
+		}else{
+
+			$sql = "SELECT 
+			a.modelo,
+			a.cod_color,
+			a.color,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '1' 
+				THEN '1' 
+				ELSE '0' 
+			  END
+			) AS t1,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '2' 
+				THEN '1' 
+				ELSE '0' 
+			  END
+			) AS t2,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '3' 
+				THEN '1' 
+				ELSE '0' 
+			  END
+			) AS t3,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '4' 
+				THEN '1' 
+				ELSE '0' 
+			  END
+			) AS t4,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '5' 
+				THEN '1' 
+				ELSE '0' 
+			  END
+			) AS t5,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '6' 
+				THEN '1' 
+				ELSE '0' 
+			  END
+			) AS t6,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '7' 
+				THEN '1' 
+				ELSE '0' 
+			  END
+			) AS t7,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '8' 
+				THEN '1' 
+				ELSE '0' 
+			  END
+			) AS t8,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '1' 
+				THEN '0' 
+				ELSE '0' 
+			  END
+			) AS v1,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '2' 
+				THEN '0' 
+				ELSE '0' 
+			  END
+			) AS v2,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '3' 
+				THEN '0' 
+				ELSE '0' 
+			  END
+			) AS v3,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '4' 
+				THEN '0' 
+				ELSE '0' 
+			  END
+			) AS v4,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '5' 
+				THEN '0' 
+				ELSE '0' 
+			  END
+			) AS v5,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '6' 
+				THEN '0' 
+				ELSE '0' 
+			  END
+			) AS v6,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '7' 
+				THEN '0' 
+				ELSE '0' 
+			  END
+			) AS v7,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '8' 
+				THEN '0' 
+				ELSE '0' 
+			  END
+			) AS v8 
+		  FROM
+			articulojf a 
+		  WHERE a.modelo = '10010' 
+			AND a.estado = 'activo' 
+		  GROUP BY a.modelo,
+			a.cod_color,
+			a.color";
+
+			$stmt=Conexion::conectar()->prepare($sql);
+
+			$stmt->execute();
+	
+			return $stmt->fetchAll();			
+
+		}
+		
 
 		$stmt=null;
 
