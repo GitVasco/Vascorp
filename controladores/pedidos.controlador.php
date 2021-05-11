@@ -121,16 +121,17 @@ class ControladorPedidos{
 
                 $usuario = $_POST["usuario"];
                 $talonarioN = $usuario.$talonario;
+                var_dump($talonarioN);
 
                 /*
                 todo: GUARDAR CABECERA
                 */
                 $datos = array( "codigo" => $talonarioN,
-                                "cliente" => $_POST["cliente"],
-                                "vendedor" => $_POST["vendedor"],
+                                "cliente" => $_POST["clienteA"],
+                                "vendedor" => $_POST["vendedorA"],
                                 "lista" => $_POST["nLista"],
                                 "usuario" => $_POST["usuario"]);
-                                // var_dump($datos);
+                                var_dump($datos);
 
                 ModeloPedidos::mdlGuardarTemporal($tabla, $datos);
 
