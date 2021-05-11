@@ -169,7 +169,7 @@ class ModeloSalidas{
     */
 	static public function mdlActualizarTalonario(){
 
-		$sql="UPDATE talonariosjf SET pedido = pedido+1";
+		$sql="UPDATE talonariosjf SET pedido = pedido+1 WHERE id = 2";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 
@@ -946,5 +946,45 @@ class ModeloSalidas{
 		$stmt = null;
 
     }
+
+	/*
+    * MOSTRAR DETALLE DE TEMPORAL
+    */
+	static public function mdlListarDocumentos($valor){
+
+		if($valor == null){
+
+			$sql="SELECT 
+			d.*,u.nombre  
+		  FROM
+			doc_ing_sal d
+		 LEFT JOIN usuariosjf u ON u.id = d.usuario ";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		}else{
+
+		$sql="SELECT 
+		* 
+		FROM
+		doc_ing_sal  
+		AND documento = $valor";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->execute();
+
+		return $stmt->fetch();
+
+		}
+
+		$stmt=null;
+
+	}
+
 
 }

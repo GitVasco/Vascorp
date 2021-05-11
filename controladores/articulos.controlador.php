@@ -1203,5 +1203,16 @@ class controladorArticulos{
 
 	}
 
+	/* 
+	* MOSTRAR  COLORES y cantidades
+	*/	
+	static public function ctrVerColoresCantidades2($salida, $modelo){
+
+		$respuesta = ModeloArticulos::mdlVerColoresCantidades2($salida, $modelo);
+
+		return $respuesta;
+		
+	}
+
 }
 

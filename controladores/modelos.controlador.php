@@ -476,7 +476,8 @@ class ControladorModelos{
 							   "precio7"=>$_POST["precio7"],
 							   "precio8"=>$_POST["precio8"],
 							   "precio9"=>$_POST["precio9"],
-							   "precio10"=>$_POST["precio10"]
+							   "precio10"=>$_POST["precio10"],
+							   "precio11"=>$_POST["precio11"]
 							);
 
 				   $respuesta = ModeloModelos::mdlEditarPrecio($tabla,$datos);

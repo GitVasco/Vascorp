@@ -95,6 +95,11 @@
                                 <!--=====================================
                                 ENTRADA DEL CLIENTE
                                 ======================================-->
+                                <div class="form-group">
+                                    <div class='progress progress-striped'>
+                                        <div id='progressBar1' class='progress-bar' role='progressbar' aria-valuenow='0' aria-valuemin='0' aria-valuemax='100' style='width: 0%'>0%</div>
+                                    </div>
+                                </div>
 
                                 <div class="form-group">
 
@@ -763,7 +768,7 @@
 
                     <div class="box-body">
 
-                        <table class="table table-bordered table-striped dt-responsive tablaArticulosPedidos">
+                        <table class="table table-bordered table-striped dt-responsive tablaArticulosSalidas">
 
                             <thead>
 
@@ -793,11 +798,12 @@
 
 </div>
 
+
 <!--=====================================
-MODAL AGREGAR ARTICULOS
+MODAL MODIFICAR ARTICULOS
 ======================================-->
 
-<div id="modalAgregarClienteP" class="modal fade" role="dialog">
+<div id="modalModificarClienteP" class="modal fade" role="dialog">
 
     <div class="modal-dialog" style="width: 60% !important;">
 
@@ -833,7 +839,7 @@ MODAL AGREGAR ARTICULOS
 
                                     <span class="input-group-addon"><i class="fa fa-key"></i></span>
 
-                                    <input type="text" class="form-control input-sm" id="modeloModal" name="modeloModal" readonly>
+                                    <input type="text" class="form-control input-sm" id="modeloModalA" name="modeloModalA" readonly>
 
                                 </div>
 
@@ -845,7 +851,7 @@ MODAL AGREGAR ARTICULOS
 
                                     <span class="input-group-addon"><i class="fa fa-money"></i></span>
 
-                                    <input type="text" class="form-control input-sm" id="precio" name="precio">
+                                    <input type="text" class="form-control input-sm" id="precioA" name="precioA">
 
                                 </div>
 
@@ -857,7 +863,7 @@ MODAL AGREGAR ARTICULOS
 
                                     <span class="input-group-addon"><i class="fa fa-key"></i></span>
 
-                                    <input type="text" class="form-control input-sm" id="cliente" name="cliente" placeholder="Tiene que escoger el Cliente" required>
+                                    <input type="text" class="form-control input-sm" id="clienteA" name="clienteA" placeholder="Tiene que escoger el Cliente" required>
 
                                 </div>
 
@@ -869,7 +875,7 @@ MODAL AGREGAR ARTICULOS
 
                                     <span class="input-group-addon"><i class="fa fa-key"></i></span>
 
-                                    <input type="text" class="form-control input-sm" id="vendedor" name="vendedor" placeholder="Tiene que escoger el Vendedor" required>
+                                    <input type="text" class="form-control input-sm" id="vendedorA" name="vendedorA" placeholder="Tiene que escoger el Vendedor" required>
 
                                     <input type="hidden" class="form-control input-sm" id="nLista" name="nLista" readonly>
 
@@ -973,7 +979,7 @@ MODAL AGREGAR ARTICULOS
 
                         <div class="input-group">
 
-                            <input type="text" name="totalCantidad" id="totalCantidad" readonly>
+                            <input type="text" name="totalCantidadA" id="totalCantidadA" readonly>
 
 
                         </div>
@@ -986,7 +992,7 @@ MODAL AGREGAR ARTICULOS
 
                         <div class="input-group">
 
-                            <input type="text" name="totalSoles" id="totalSoles" readonly>
+                            <input type="text" name="totalSolesA" id="totalSolesA" readonly>
 
 
                         </div>
@@ -1000,7 +1006,7 @@ MODAL AGREGAR ARTICULOS
 
                         <div class="input-group">
 
-                            <button type="button" class="btn btn-success pull-left btnCalCant">Calcular</button>
+                            <button type="button" class="btn btn-success pull-left btnCalCantA">Calcular</button>
 
                         </div>
 
@@ -1038,7 +1044,6 @@ MODAL AGREGAR ARTICULOS
     </div>
 
 </div>
-
 <!--=====================================
 MODAL PARA GENERAR EL PEDIDO
 ======================================-->

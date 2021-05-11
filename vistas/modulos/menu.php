@@ -39,7 +39,7 @@
             if($_SESSION["escritorio"] == 1){
             ?>
 
-            <li class="active">
+            <li class="<?php if($_GET["ruta"] == "inicio") echo 'active';?>">
 
                 <a href="inicio">
 
@@ -59,7 +59,7 @@
             if($_SESSION["analisis"] == 1){
             ?>
 
-            <li class="active">
+            <li class="<?php if($_GET["ruta"] == "inicio-gerencia") echo 'active';?>">
 
                 <a href="inicio-gerencia">
 
@@ -80,7 +80,7 @@
             if($_SESSION["usuarios"] == 1){
             ?>
 
-            <li>
+            <li class="<?php if($_GET["ruta"] == "usuarios") echo 'active';?>">
 
                 <a href="usuarios">
 
@@ -100,7 +100,7 @@
             if($_SESSION["backend"] == 1){
             ?>
 
-            <li class="treeview">
+            <li class="treeview <?php if($_GET["ruta"] == "movimientos" || $_GET["ruta"] == "backupDB" || $_GET["ruta"] == "bkplista" || $_GET["ruta"] == "cargas-automaticas" || $_GET["ruta"] == "conexionjf") echo 'active';?>">
 
                 <a href="#">
 
@@ -118,7 +118,7 @@
 
                 <ul class="treeview-menu">
 
-                    <li>
+                    <li class="<?php if($_GET["ruta"] == "movimientos") echo 'active';?>">
 
                         <a href="movimientos">
 
@@ -129,7 +129,7 @@
 
                     </li>
 
-                    <li>
+                    <li class="<?php if($_GET["ruta"] == "backupDB") echo 'active';?>">
 
                         <a href="backupDB">
 
@@ -140,7 +140,7 @@
 
                     </li>
 
-                    <li>
+                    <li class="<?php if($_GET["ruta"] == "bkplista") echo 'active';?>">
 
                         <a href="bkplista">
 
@@ -151,7 +151,7 @@
 
                     </li>
 
-                    <li>
+                    <li class="<?php if($_GET["ruta"] == "cargas-automaticas") echo 'active';?>">
 
                         <a href="cargas-automaticas">
 
@@ -162,7 +162,7 @@
 
                     </li>
 
-                    <li>
+                    <li class="<?php if($_GET["ruta"] == "conexionjf") echo 'active';?>">
 
                         <a href="conexionjf">
 
@@ -186,7 +186,7 @@
             if($_SESSION["movimientos"] == 1){
             ?>
 
-            <li class="treeview">
+            <li class="treeview <?php if($_GET["ruta"] == "m-produccion" || $_GET["ruta"] == "m-ventas" || $_GET["ruta"] == "mp-ingresos" || $_GET["ruta"] == "mp-salidas" ) echo 'active';?>">
 
                 <a href="#">
 
@@ -204,7 +204,7 @@
 
                 <ul class="treeview-menu">
 
-                    <li>
+                    <li class="<?php if($_GET["ruta"] == "m-produccion") echo 'active';?>">
 
                         <a href="m-produccion">
 
@@ -215,7 +215,7 @@
 
                     </li>
 
-                    <li>
+                    <li class="<?php if($_GET["ruta"] == "m-ventas") echo 'active';?>">
 
                         <a href="m-ventas">
 
@@ -226,7 +226,7 @@
 
                     </li>
 
-                    <li>
+                    <li class="<?php if($_GET["ruta"] == "mp-ingresos") echo 'active';?>">
 
                         <a href="mp-ingresos">
 
@@ -237,7 +237,7 @@
 
                     </li>
 
-                    <li>
+                    <li class="<?php if($_GET["ruta"] == "mp-salidas") echo 'active';?>">
 
                         <a href="mp-salidas">
 
@@ -807,6 +807,14 @@
 
                                 <a href="salidas-varios">
                                 <i class="fa fa-circle-o"></i> Salidas Varios
+                                </a>
+
+                            </li>
+
+                            <li>
+
+                                <a href="listar-documento">
+                                <i class="fa fa-circle-o"></i> Listar Documentos
                                 </a>
 
                             </li>

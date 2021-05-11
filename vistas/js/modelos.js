@@ -480,17 +480,23 @@ $("#nuevaMarca").change(function(){
 });
 
 //Ingresar readonly para precios 
-for (let index = 1; index <= 10; index++) {
+for (let index = 1; index <= 11; index++) {
 	$(".tablaDetallePrecio").on("click","a.editarPrecio"+index,function(){
 		
-		$("#precio"+index).attr("readonly",false);
-		document.getElementById("precio"+index).style.background="white";
+		if($('#precio'+index).attr("readonly")){
+
+			$("#precio"+index).attr("readonly",false);
+		}else{
+			$("#precio"+index).attr("readonly",true);
+		}
 	})
 }
 
 $(".tablaModelos tbody").on("click","button.btnVerPrecio",function(){
 	var modelo=$(this).attr("modelo");
 	$("#modelo").val(modelo);
+	var desc=$(this).attr("descripcion");
+	$("#descModelo").val(desc);
 	var datos = new FormData();
 	datos.append("modelo", modelo);
 
@@ -506,13 +512,13 @@ $(".tablaModelos tbody").on("click","button.btnVerPrecio",function(){
 		success:function(respuesta){
 			$(".detallePR").remove();
 
-			for(var i=1; i <=10 ; i++){
+			for(var i=1; i <=11 ; i++){
 			
 			$('.tablaDetallePrecio').append(
 
 				'<tr class="detallePR">' +
 					'<td class="text-center">' + i + ' </td>' +
-					'<td class="text-center"><input type="number" min="0" step ="any" class="form-control" name="precio'+i+'" id="precio'+i+'" value="'+ respuesta["precio"+i+""] +'" readonly style="background:gray"> </td><td class="text-center"><a type="button"class="btn btn-sm btn-primary editarPrecio'+i+'">Editar Precio</a></td>' +
+					'<td class="text-center"><input type="number" min="0" step ="any" class="form-control input-md" name="precio'+i+'" id="precio'+i+'" value="'+ respuesta["precio"+i+""] +'" readonly > </td><td class="text-center"><a type="button"class="btn btn-sm btn-primary editarPrecio'+i+'">Editar Precio</a></td>' +
 				'</tr>')
 
 			}

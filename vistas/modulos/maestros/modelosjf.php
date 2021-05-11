@@ -518,7 +518,21 @@ MODAL AGREGAR MODELO
 
           <div class="box-body">
 
-            <input type="hidden" name="modelo" id="modelo">
+          <div class="form-group">
+            <label for="">Modelo</label>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-text-height"></i></span>
+                <input type="text" class="form-control input-md" name="modelo" id="modelo" readonly>
+              </div>
+            </div>
+
+            <div class="form-group">
+            <label for="">Descripcion</label>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-text-height"></i></span>
+                <input type="text" class="form-control input-md" name="descModelo" id="descModelo" readonly>
+              </div>
+            </div>
             <!-- ENTRADA PARA LISTAR PRECIOS -->
               <table class="tablaDetallePrecio">
                 <thead>

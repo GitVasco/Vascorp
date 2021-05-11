@@ -72,7 +72,7 @@ class ControladorSalidas{
                 /*
                 todo: GUARDAR EL DETALLE TEMPORAL - CUANDO YA EXISTE EL TEMPORAL
                 */
-                $valor = $_POST["modeloModal"];
+                $valor = $_POST["modeloModalA"];
                 $respuesta = controladorArticulos::ctrVerArticulos($valor);
 
                 foreach($respuesta as $value){
@@ -83,7 +83,7 @@ class ControladorSalidas{
                     $val1 = $articulo;
                     $val2 = $_POST[$articulo];
                     $val3 = $_POST["salida"];
-                    $val4 = $_POST["precio"];
+                    $val4 = $_POST["precioA"];
 
                     if($val2 > 0){
 
@@ -134,8 +134,8 @@ class ControladorSalidas{
                 todo: GUARDAR CABECERA
                 */
                 $datos = array( "codigo" => $talonarioN,
-                                "cliente" => $_POST["cliente"],
-                                "vendedor" => $_POST["vendedor"],
+                                "cliente" => $_POST["clienteA"],
+                                "vendedor" => $_POST["vendedorA"],
                                 "lista" => $_POST["nLista"],
                                 "usuario" => $_POST["usuario"]);
                                 // var_dump($datos);
@@ -145,7 +145,7 @@ class ControladorSalidas{
                 /*
                 todo: GUARDAR EL DETALLE TEMPORAL
                 */
-                $valor = $_POST["modeloModal"];
+                $valor = $_POST["modeloModalA"];
                 $respuesta = controladorArticulos::ctrVerArticulos($valor);
 
                 foreach($respuesta as $value){
@@ -156,7 +156,7 @@ class ControladorSalidas{
                     $val1 = $articulo;
                     $val2 = $_POST[$articulo];
                     $val3 = $talonarioN;
-                    $val4 = $_POST["precio"];
+                    $val4 = $_POST["precioA"];
 
                     if($val2 > 0){
 
@@ -363,6 +363,17 @@ class ControladorSalidas{
 	static public function ctrSalidaImpresionTotales($valor){
 
 		$respuesta = ModeloSalidas::mdlSalidaImpresionTotales($valor);
+
+		return $respuesta;
+
+    }
+
+    /*
+    * LISTAR DOCUMENTOS
+    */
+	static public function ctrListarDocumentos($valor){
+
+		$respuesta = ModeloSalidas::mdlListarDocumentos($valor);
 
 		return $respuesta;
 

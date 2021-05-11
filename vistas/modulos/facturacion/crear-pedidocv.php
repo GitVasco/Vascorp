@@ -95,6 +95,11 @@
                                 <!--=====================================
                                 ENTRADA DEL CLIENTE
                                 ======================================-->
+                                <div class="form-group">
+                                    <div class='progress progress-striped'>
+                                        <div id='progressBar1' class='progress-bar' role='progressbar' aria-valuenow='0' aria-valuemin='0' aria-valuemax='100' style='width: 0%'>0%</div>
+                                    </div>
+                                </div>
 
                                 <div class="form-group">
 
