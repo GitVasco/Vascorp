@@ -115,7 +115,7 @@ MODAL AGREGAR TIPO PAGO
               <div class="col-lg-3 col-md-3">
 
                   <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevoTipoProv" required>
-                    <option value="">Seleccionar tipo </option>
+                    <option value="">SELECCIONAR TIPO PROVEEDOR</option>
                     <?php
                       $item="tipo_dato";
                       $valor = "TNAC";
@@ -133,8 +133,13 @@ MODAL AGREGAR TIPO PAGO
               <label for=""  class="col-form-label col-lg-1 col-md-1">RUC</label>
 
               <div class="col-lg-3 col-md-3">
-
-                  <input type="number"  class="form-control input-md" name="nuevoRUC" placeholder="Ingresar RUC" id = "nuevoRucPro" required>
+                  <div class="input-group">
+                    <input type="number"  class="form-control input-md" name="nuevoRUC" placeholder="Ingresar RUC" id = "nuevoRucPro" required>
+                    <div class="input-group-addon" style="padding:0px !important;border: 0px !important">
+                        <button type="button" class="btn btn-default" onclick="ObtenerDatosRuc()"><i class="fa fa-search "></i></button>	
+                    </div>
+                  </div>
+                  
 
               </div>
 
@@ -156,7 +161,7 @@ MODAL AGREGAR TIPO PAGO
               <label for="" class="col-form-label col-lg-1 col-md-2 col-sm-3">RAZ SOCIAL</label>
               <div class="col-lg-11 col-md-10 col-sm-9">
 
-                <input type="text" style="text-transform:uppercase;" class="form-control input-md" name="nuevaRazPro" placeholder="Ingresar razon social" required>
+                <input type="text" style="text-transform:uppercase;" class="form-control input-md" name="nuevaRazPro" id="nuevaRazPro" placeholder="Ingresar razon social" required readonly>
 
               </div>
 
@@ -168,7 +173,7 @@ MODAL AGREGAR TIPO PAGO
               <label for="" class="col-form-label col-lg-1 col-md-2 col-sm-3">DIRECCION</label>
               <div class="col-lg-11 col-md-10 col-sm-9">
               
-                <input type="text" style="text-transform:uppercase;" class="form-control input-md" name="nuevaDireccion" placeholder="Ingresar direccion" required>
+                <input type="text" style="text-transform:uppercase;" class="form-control input-md" name="nuevaDireccion" id="nuevaDireccion" placeholder="Ingresar direccion" required>
 
               </div>
 
@@ -180,8 +185,8 @@ MODAL AGREGAR TIPO PAGO
               <label for="" class="col-form-label col-lg-1 col-md-2 col-sm-3">DISTRITO</label>
               <div class="col-lg-11 col-md-10 col-sm-9">
 
-                <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevoUbiPro" required>
-                  <option value="">Seleccionar ubigeo</option>
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevoUbiPro" id="nuevoUbiPro" required>
+                  <option value="">SELECCIONAR UBIGEO</option>
                   <?php
                      $ubigeo = ControladorClientes::ctrMostrarUbigeos();
                      #var_dump("ubigeo", $ubigeo);
@@ -290,7 +295,7 @@ MODAL AGREGAR TIPO PAGO
 
                     $condiciones = ControladorCondicionVentas::ctrMostrarCondicionVentas($item, $valor);
 
-                    echo '<option value="">Seleccionar forma de pago</option>';
+                    echo '<option value="">SELECCIONAR FORMA DE PAGO</option>';
 
                     foreach ($condiciones as $key => $value) {
 
@@ -326,7 +331,7 @@ MODAL AGREGAR TIPO PAGO
 
                     $bancos = ControladorBancos::ctrMostrarBancos($item, $valor);
 
-                    echo '<option value="">Seleccionar banco</option>';
+                    echo '<option value="">SELECCIONAR BANCO</option>';
 
                     foreach ($bancos as $key => $value) {
 
@@ -343,9 +348,13 @@ MODAL AGREGAR TIPO PAGO
               <div class="col-lg-3 col-md-3 col-sm-3">
                
                 <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevaMoneda" >
-                  <option value="">Seleccionar moneda</option>
-                  <option value="1">1-Soles</option>
-                  <option value="2">2-Dólares</option>   
+                  <option value="">SELECCIONAR MONEDA</option>
+                  <?php
+                    $monedas = ControladorProveedores::ctrMostrarMonedas();
+                    foreach ($monedas as $key => $value) {
+                      echo '<option value="' . $value["Cod_Argumento"] . '">' .$value["Cod_Argumento"]. " - " . $value["Des_Larga"] . '</option>';
+                    }
+                  ?>
                 </select>
 
               </div>
@@ -374,7 +383,7 @@ MODAL AGREGAR TIPO PAGO
 
                     $bancos = ControladorBancos::ctrMostrarBancos($item, $valor);
 
-                    echo '<option value="">Seleccionar banco</option>';
+                    echo '<option value="">SELECCIONAR BANCO</option>';
 
                     foreach ($bancos as $key => $value) {
 
@@ -391,9 +400,13 @@ MODAL AGREGAR TIPO PAGO
               <div class="col-lg-3 col-md-3 col-sm-3">
                
                 <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevaMoneda1" >
-                  <option value="">Seleccionar moneda</option>
-                  <option value="1">1-Soles</option>
-                  <option value="2">2-Dólares</option>   
+                  <option value="">SELECCIONAR MONEDA</option>
+                  <?php
+                    $monedas = ControladorProveedores::ctrMostrarMonedas();
+                    foreach ($monedas as $key => $value) {
+                      echo '<option value="' . $value["Cod_Argumento"] . '">' .$value["Cod_Argumento"]. " - " . $value["Des_Larga"] . '</option>';
+                    }
+                  ?>
                 </select>
 
               </div>
@@ -495,7 +508,7 @@ MODAL EDITAR PROVEEDOR
               <div class="col-lg-3 col-md-3">
 
                   <select  class="form-control input-md selectpicker" data-live-search="true" name="editarTipoProv" id="editarTipoProv" required>
-                    
+                    <option value="">SELECCIONAR TIPO PROVEEDOR</option>
                     <?php
                       $item="tipo_dato";
                       $valor = "TNAC";
@@ -561,7 +574,7 @@ MODAL EDITAR PROVEEDOR
               <div class="col-lg-11 col-md-10 col-sm-9">
 
                 <select  class="form-control input-md selectpicker" data-live-search="true" name="editarUbiPro" id="editarUbiPro" required>
-                  
+                  <option value="">SELECCIONAR UBIGEO</option>
                   <?php
                      $ubigeo = ControladorClientes::ctrMostrarUbigeos();
                      #var_dump("ubigeo", $ubigeo);
@@ -663,7 +676,7 @@ MODAL EDITAR PROVEEDOR
               <div class="col-lg-3 col-md-3 col-sm-3">
 
                 <select  class="form-control input-md selectpicker" data-live-search="true" name="editarFormaPago" id="editarFormaPago">
-                  
+                <option value="">SELECCIONAR FORMA DE PAGO</option>
                   <?php
                     $item = null;
                     $valor = null;
@@ -698,7 +711,7 @@ MODAL EDITAR PROVEEDOR
               <div class="col-lg-3 col-md-3 col-sm-3">
               
                 <select  class="form-control input-md selectpicker" data-live-search="true" name="editarBanco" id="editarBanco">
-                  <option value="">Seleccionar Banco</option>
+                  <option value="">SELECCIONAR BANCO</option>
                   <?php
                     $item = null;
                     $valor = null;
@@ -721,9 +734,14 @@ MODAL EDITAR PROVEEDOR
               <div class="col-lg-3 col-md-3 col-sm-3">
                
                 <select  class="form-control input-md selectpicker" data-live-search="true" name="editarMoneda" id="editarMoneda" >
-                  <option value="">Seleccionar Moneda</option>
-                  <option value="1">1-Soles</option>
-                  <option value="2">2-Dólares</option>   
+                  <option value="">SELECCIONAR MONEDA</option>
+                  <?php
+                    $monedas = ControladorProveedores::ctrMostrarMonedas();
+                    foreach ($monedas as $key => $value) {
+                      echo '<option value="' . $value["Cod_Argumento"] . '">' .$value["Cod_Argumento"]. " - " . $value["Des_Larga"] . '</option>';
+                    }
+                  ?>
+                </select>
                 </select>
 
               </div>
@@ -745,7 +763,7 @@ MODAL EDITAR PROVEEDOR
               <div class="col-lg-3 col-md-3 col-sm-3">
               
                 <select  class="form-control input-md selectpicker" data-live-search="true" name="editarBanco1" id="editarBanco1" >
-                  <option value="">Seleccionar Banco</option>
+                  <option value="">SELECCIONAR BANCO</option>
                   <?php
                     $item = null;
                     $valor = null;
@@ -767,9 +785,14 @@ MODAL EDITAR PROVEEDOR
               <div class="col-lg-3 col-md-3 col-sm-3">
                
                 <select  class="form-control input-md selectpicker" data-live-search="true" name="editarMoneda1" id="editarMoneda1">
-                  <option value="">Seleccionar Moneda</option>
-                  <option value="1">1-Soles</option>
-                  <option value="2">2-Dólares</option>   
+                  <option value="">SELECCIONAR MONEDA</option>
+                  <?php
+                    $monedas = ControladorProveedores::ctrMostrarMonedas();
+                    foreach ($monedas as $key => $value) {
+                      echo '<option value="' . $value["Cod_Argumento"] . '">' .$value["Cod_Argumento"]. " - " . $value["Des_Larga"] . '</option>';
+                    }
+                  ?>
+                </select>
                 </select>
 
               </div>

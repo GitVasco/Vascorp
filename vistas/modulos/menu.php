@@ -21,7 +21,7 @@
             in_array(7,$valores)?$_SESSION['produccion']=1:$_SESSION['produccion']=0;
             in_array(8,$valores)?$_SESSION['tarjetas']=1:$_SESSION['tarjetas']=0;
             in_array(9,$valores)?$_SESSION['operaciones']=1:$_SESSION['operaciones']=0;
-            in_array(10,$valores)?$_SESSION['clientes']=1:$_SESSION['clientes']=0;
+            in_array(10,$valores)?$_SESSION['materiaprima']=1:$_SESSION['materiaprima']=0;
             in_array(11,$valores)?$_SESSION['ventas']=1:$_SESSION['ventas']=0;
             in_array(12,$valores)?$_SESSION['facturacion']=1:$_SESSION['facturacion']=0;
             in_array(13,$valores)?$_SESSION['ticket']=1:$_SESSION['ticket']=0;
@@ -260,7 +260,7 @@
             if($_SESSION["maestros"] == 1){
             ?>
 
-            <li class="treeview <?php if($_GET["ruta"] == "articulos" || $_GET["ruta"] == "crear-articulo" || $_GET["ruta"] == "agencias" || $_GET["ruta"] == "bancos" || $_GET["ruta"] == "colores" || $_GET["ruta"] == "condicionesventa" || $_GET["ruta"] == "tipodocumentos" || $_GET["ruta"] == "marcas" || $_GET["ruta"] == "materiaprima" || $_GET["ruta"] == "modelosjf" || $_GET["ruta"] == "operaciones" || $_GET["ruta"] == "paras" || $_GET["ruta"] == "sectores" || $_GET["ruta"] == "marcas" || $_GET["ruta"] == "tipomovimientos" || $_GET["ruta"] == "tipopagos" || $_GET["ruta"] == "tipotrabajador" || $_GET["ruta"] == "trabajador" || $_GET["ruta"] == "trabajador2" || $_GET["ruta"] == "unidadesmedida" || $_GET["ruta"] == "vendedor" || $_GET["ruta"] == "proveedor" ) echo 'active';?>">
+            <li class="treeview <?php if($_GET["ruta"] == "articulos" || $_GET["ruta"] == "crear-articulo" || $_GET["ruta"] == "agencias" || $_GET["ruta"] == "bancos" || $_GET["ruta"] == "colores" || $_GET["ruta"] == "condicionesventa" || $_GET["ruta"] == "tipodocumentos" || $_GET["ruta"] == "marcas" || $_GET["ruta"] == "modelosjf" || $_GET["ruta"] == "operaciones" || $_GET["ruta"] == "paras" || $_GET["ruta"] == "sectores" || $_GET["ruta"] == "marcas" || $_GET["ruta"] == "tipomovimientos" || $_GET["ruta"] == "tipopagos" || $_GET["ruta"] == "tipotrabajador" || $_GET["ruta"] == "trabajador" || $_GET["ruta"] == "trabajador2" || $_GET["ruta"] == "unidadesmedida" || $_GET["ruta"] == "vendedor" || $_GET["ruta"] == "proveedor" ) echo 'active';?>">
 
                 <a href="#">
 
@@ -352,16 +352,7 @@
 
                     </li>
 
-                    <li class="<?php if($_GET["ruta"] == "materiaprima") echo 'active';?>">
-
-                        <a href="materiaprima">
-
-                            <i class="fa fa-circle-o"></i>
-                            <span> Materia Prima</span>
-
-                        </a>
-
-                    </li>
+                   
 
                     <li class="<?php if($_GET["ruta"] == "modelosjf") echo 'active';?>">
 
@@ -922,17 +913,17 @@
 
             <!-- Clientes-->
             <?php
-            if($_SESSION["clientes"] == 1){
+            if($_SESSION["materiaprima"] == 1){
             ?>
 
-            <li class="<?php if($_GET["ruta"] == "clientes") echo 'active';?>">
+            <li class="<?php if($_GET["ruta"] == "materiaprima") echo 'active';?>">
 
-                <a href="clientes">
+            <a href="materiaprima ">
 
-                    <i class="fa fa-users"></i>
-                    <span>Clientes</span>
+                <i class="fa fa-cut text-orange"></i>
+                <span> Materia Prima</span>
 
-                </a>
+            </a>
 
             </li>
 
@@ -999,7 +990,7 @@
             <?php
             if($_SESSION["facturacion"] == 1){
             ?>
-            <li class="treeview <?php if($_GET["ruta"] == "pedidoscv" || $_GET["ruta"] == "guias-remision"  || $_GET["ruta"] == "crear-pedidoscv" || $_GET["ruta"] == "pedidos-generados"  || $_GET["ruta"] == "pedidos-aprobados"  || $_GET["ruta"] == "pedidos-apt" || $_GET["ruta"] == "pedidos-confirmados" || $_GET["ruta"] == "pedidos-facturados"  || $_GET["ruta"] == "facturas" || $_GET["ruta"] == "boletas" || $_GET["ruta"] == "proformas"|| $_GET["ruta"] == "ver-nota-credito" || $_GET["ruta"] == "notas-credito" ) echo 'active';?>">
+            <li class="treeview <?php if($_GET["ruta"] == "pedidoscv" || $_GET["ruta"] == "clientes"  ||$_GET["ruta"] == "guias-remision"  || $_GET["ruta"] == "crear-pedidoscv" || $_GET["ruta"] == "pedidos-generados"  || $_GET["ruta"] == "pedidos-aprobados"  || $_GET["ruta"] == "pedidos-apt" || $_GET["ruta"] == "pedidos-confirmados" || $_GET["ruta"] == "pedidos-facturados"  || $_GET["ruta"] == "facturas" || $_GET["ruta"] == "boletas" || $_GET["ruta"] == "proformas"|| $_GET["ruta"] == "ver-nota-credito" || $_GET["ruta"] == "notas-credito" ) echo 'active';?>">
 
                 <a href="#">
 
@@ -1028,6 +1019,17 @@
                         </a>
 
                         <ul class="treeview-menu">
+
+                        <li class="<?php if($_GET["ruta"] == "clientes") echo 'active';?>">
+
+                            <a href="clientes">
+
+                                <i class="fa fa-users"></i>
+                                <span>Clientes</span>
+
+                            </a>
+
+                        </li>
 
                     <li class="<?php if($_GET["ruta"] == "pedidoscv") echo 'active';?>">
 

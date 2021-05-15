@@ -268,16 +268,24 @@
 
                                     ?>
 
+                                
                                 <!--=====================================
                                 ENTRADA PARA AGREGAR PRODUCTO
                                 ======================================-->
 
                                 <div class="form-group row nuevoProductoPedido" style="height:500px; overflow: scroll;">
 
-                                <p class="buscador" id="elid">
-                                    <label>Buscar:</label>
-                                    <input type="text" class="form-control input-sm" id="buscador" name="buscador">
-                                </p>
+                                <div class=" form-group buscador" id="elid" style="padding-bottom:25px">
+                                    <label for="" class="col-form-label col-lg-1">Buscar:</label>
+                                    <div class="col-lg-11">
+                                        <div class="input-group">
+                                            
+                                            <input type="text" class="form-control " id="buscador" name="buscador"/>
+                                            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                        </div>
+                                    </div>
+                                        
+                                </div>
 
                                 <!--=====================================
                                         TITULOS

@@ -3,6 +3,9 @@
 require_once "../controladores/salidas.controlador.php";
 require_once "../modelos/salidas.modelo.php";
 
+require_once "../controladores/articulos.controlador.php";
+require_once "../modelos/articulos.modelo.php";
+
 
 class AjaxSalidas{
     /*=============================================

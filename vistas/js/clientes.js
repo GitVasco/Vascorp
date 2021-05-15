@@ -7,6 +7,8 @@ $('.tablaClientes').DataTable({
 	"retrieve": true,
 	"processing": true,
 	"order": [[0, "asc"]],
+	"pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
 	"language": {
 
 		"sProcessing": "Procesando...",
@@ -224,3 +226,80 @@ $(".tablaClientes").on("click", ".btnEditarAval", function () {
 
 
 })
+
+//VALIDA SI ES RUC O DNI 
+function ObtenerDatosCliente(){
+	tipodoc = $("#tipo_documento").val();
+	console.log(tipodoc);
+	if(tipodoc == "DNI"){
+		ObtenerDatosDni();
+	}else if(tipodoc == "RUC"){
+		ObtenerDatosRuc2();
+	}
+}
+
+
+// OBTENER DATOS DE DNI POR API
+function ObtenerDatosDni(){
+	var nuevoDni = $("#documentoCliente").val();
+	var datos = new FormData();
+	datos.append("nuevoDni",nuevoDni);
+	$.ajax({
+		type: "POST",
+		url: 'ajax/clientes.ajax.php',
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success:function( jsonx ) {
+			// console.log(jsonx);
+			if(jsonx["success"]==false){
+				$('#nuevaRazPro').val("");
+				$('#ape_paterno').val("");
+				$("#ape_materno").val("");
+				$("#nombres").val("");
+				
+			}else{
+				$('#nuevaRazPro').val(jsonx["apellidoPaterno"] +" "+jsonx["apellidoMaterno"] +" "+jsonx["nombres"]);
+				$('#ape_paterno').val(jsonx["apellidoPaterno"]);
+				$("#ape_materno").val(jsonx["apellidoMaterno"]);
+				$("#nombres").val(jsonx["nombres"]);
+			}
+		  
+		}
+	})
+}
+
+//OBTENER DATOS POR RUC MEDIANTE LA API 
+function ObtenerDatosRuc2(){
+	var nuevoRuc = $("#documentoCliente").val();
+	var datos = new FormData();
+	datos.append("nuevoRuc",nuevoRuc);
+	$.ajax({
+		type: "POST",
+		url: 'ajax/proveedor.ajax.php',
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success:function( jsonx ) {
+			// console.log(jsonx);
+			if(jsonx["success"]==false){
+				$('#nuevaRazPro').attr('readonly',false);
+				$('#nuevaRazPro').val("");
+				$('#nuevaDireccion').val("");
+				$("#nuevoUbiPro").val("");
+				$("#nuevoUbiPro").selectpicker("refresh");
+				
+			}else{
+				$('#nuevaRazPro').val(jsonx["razonSocial"]);
+				$('#nuevaDireccion').val(jsonx["direccion"]);
+				$("#nuevoUbiPro").val(jsonx["ubigeo"]);
+				$("#nuevoUbiPro").selectpicker("refresh");
+			}
+		  
+		}
+	})
+}

@@ -14,6 +14,17 @@ class ControladorProveedores{
     }
 
 	/*=============================================
+	MOSTRAR TIPO DE MONEDAS
+	=============================================*/
+
+	static public function ctrMostrarMonedas(){
+		$respuesta = ModeloProveedores::mdlMostrarMonedas();
+
+		return $respuesta;
+
+    }
+
+	/*=============================================
 	CREAR PROVEEDOR
 	=============================================*/
 
@@ -110,12 +121,32 @@ class ControladorProveedores{
 
 	static public function ctrEditarProveedor(){
 
-		if(isset($_POST["editarDescripcion"])){
+		if(isset($_POST["editarRUC"])){
 
-				$tabla="proveedor";
-				   $datos = array("id"=>$_POST["idBanco"],
-				   				"codigo"=> $_POST["editarCodigo"],
-                               "descripcion"=>$_POST["editarDescripcion"]);
+			$tabla="proveedor";
+			$datos = array("CodRuc"=>$_POST["editarCodigoPro"],
+							"TipPro"=>$_POST["editarTipoProv"],
+							"RucPro"=>$_POST["editarRUC"],
+							"RazPro"=>$_POST["editarRazPro"],
+							"DirPro"=>$_POST["editarDireccion"],
+							"UbiPro"=>$_POST["editarUbiPro"],
+							"TelPro1"=>$_POST["editarTlf1"],
+							"TelPro2"=>$_POST["editarTlf2"],
+							"TelPro3"=>$_POST["editarTlf3"],
+							"FaxPro"=>$_POST["editarTlf4"],
+							"ConPro"=>$_POST["editarContacto"],
+							"EmaPro"=>$_POST["editarEmail1"],
+							"EmaPro2"=>$_POST["editarEmail2"],
+							"WebPro"=>$_POST["editarWeb"],
+							"TieEnt"=>$_POST["editarTipoEntr"],
+							"ForPag"=>$_POST["editarFormaPago"],
+							"Dia"=>$_POST["editarDias"],
+							"Banco"=>$_POST["editarBanco"],
+							"Moneda"=>$_POST["editarMoneda"],
+							"NroCta"=>$_POST["editarNroCuenta"],
+							"Banco1"=>$_POST["editarBanco1"],
+							"Moneda1"=>$_POST["editarMoneda1"],
+							"NroCta1"=>$_POST["editarNroCuenta1"]);
 
 			   	$respuesta = ModeloProveedores::mdlEditarProveedor($tabla,$datos);
 
@@ -125,7 +156,7 @@ class ControladorProveedores{
 
 					swal({
 						  type: "success",
-						  title: "El banco ha sido cambiado correctamente",
+						  title: "El proveedor ha sido cambiado correctamente",
 						  showConfirmButton: true,
 						  confirmButtonText: "Cerrar"
 						  }).then(function(result){
@@ -145,22 +176,24 @@ class ControladorProveedores{
     }
     
 	/*=============================================
-	ELIMINAR TIPO DE PAGO
+	ANULAR PROVEEDOR
 	=============================================*/
 
 	static public function ctrEliminarProveedor(){
 
-		if(isset($_GET["idProveedor"])){
+		if(isset($_GET["CodRuc"])){
 
-			$datos = $_GET["idProveedor"];
+			$datos = $_GET["CodRuc"];
 			$tabla="proveedor";
+			$PcAnu= gethostbyaddr($_SERVER['REMOTE_ADDR']);
+
 			date_default_timezone_set('America/Lima');
 			$fecha = new DateTime();
-			$bancos=ControladorProveedores::ctrMostrarProveedores("id",$datos);
+			$bancos=ControladorProveedores::ctrMostrarProveedores("CodRuc",$datos);
 			$usuario= $_SESSION["nombre"];
 			$para      = 'notificacionesvascorp@gmail.com';
-			$proveedor    = 'Se elimino un proveedor';
-			$descripcion   = 'El usuario '.$usuario.' elimino el proveedor '.$proveedor["codigo"].' - '.$proveedor["descripcion"];
+			$proveedor    = 'Se anulo un proveedor';
+			$descripcion   = 'El usuario '.$usuario.' anulo el proveedor '.$proveedor["CodRuc"].' - '.$proveedor["RazPro"];
 			$de = 'From: notificacionesvascorp@gmail.com';
 			if($_SESSION["correo"] == 1){
 				mail($para, $asunto, $descripcion, $de);
@@ -171,8 +204,11 @@ class ControladorProveedores{
 								"fecha" => $fecha->format("Y-m-d H:i:s"));
 				$auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
 			}
-			
-			$respuesta = ModeloProveedores::mdlEliminarProveedor($tabla,$datos);
+			$datosAnulado = array("CodRuc" => $_GET["CodRuc"],
+								  "UsuAnu" => $_SESSION["id"],
+								  "PcAnu" => $PcAnu,
+								  "FecAnu" => $fecha->format("Y-m-d H:i:s"));
+			$respuesta = ModeloProveedores::mdlEliminarProveedor($tabla,$datosAnulado);
 			if($respuesta == "ok"){
 				
 				

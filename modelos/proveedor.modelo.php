@@ -187,4 +187,23 @@ class ModeloProveedores{
 
 	}    
 
+	/*=============================================
+	MOSTRAR MONEDAS
+	=============================================*/
+
+	static public function mdlMostrarMonedas(){
+
+		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT  * FROM Tabla_M_Detalle WHERE  Cod_Tabla = 'TMON' AND Cod_Argumento NOT LIKE '0'");
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }
+
 }

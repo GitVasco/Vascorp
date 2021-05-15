@@ -51,13 +51,15 @@ $(".tablaProveedores").on("click", ".btnEditarProveedor", function () {
         processData: false,
         dataType: "json",
         success: function (respuesta) {
-            console.log(respuesta);
+            // console.log(respuesta);
             $("#editarTipoProv").val(respuesta["TipPro"]);
+			$("#editarTipoProv").selectpicker("refresh");
             $("#editarRucPro").val(respuesta["RucPro"]);
             $("#editarCodigoPro").val(respuesta["CodRuc"]);
 			$("#editarRazPro").val(respuesta["RazPro"]);
 			$("#editarDireccion").val(respuesta["DirPro"]);
 			$("#editarUbiPro").val(respuesta["UbiPro"]);
+			$("#editarUbiPro").selectpicker("refresh");
 			$("#editarTlf1").val(respuesta["TelPro1"]);
 			$("#editarTlf2").val(respuesta["TelPro2"]);
 			$("#editarTlf3").val(respuesta["TelPro3"]);
@@ -68,6 +70,7 @@ $(".tablaProveedores").on("click", ".btnEditarProveedor", function () {
 			$("#editarWeb").val(respuesta["WebPro"]);
 			$("#editarTipoEntr").val(respuesta["TieEnt"]);
 			$("#editarFormaPago").val(respuesta["ForPag"]);
+			$("#editarFormaPago").selectpicker("refresh");
 			$("#editarDias").val(respuesta["Dia"]);
 			$("#editarBanco").val(respuesta["Banco"]);
 			$("#editarBanco").selectpicker("refresh");
@@ -87,7 +90,7 @@ $(".tablaProveedores").on("click", ".btnEditarProveedor", function () {
 
 
 /*=============================================
-ELIMINAR PROVEEDOR
+ANULAR PROVEEDOR
 =============================================*/
 $(".tablaProveedores").on("click", ".btnEliminarProveedor", function(){
 
@@ -174,3 +177,36 @@ $("#editarRucPro").change(function () {
 		}
 	});
 });
+
+//OBTENER DATOS POR RUC MEDIANTE LA API 
+function ObtenerDatosRuc(){
+	var nuevoRuc = $("#nuevoRucPro").val();
+	var datos = new FormData();
+	datos.append("nuevoRuc",nuevoRuc);
+	$.ajax({
+		type: "POST",
+		url: 'ajax/proveedor.ajax.php',
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success:function( jsonx ) {
+			// console.log(jsonx);
+			if(jsonx["success"]==false){
+				$('#nuevaRazPro').attr('readonly',false);
+				$('#nuevaRazPro').val("");
+				$('#nuevaDireccion').val("");
+				$("#nuevoUbiPro").val("");
+				$("#nuevoUbiPro").selectpicker("refresh");
+				
+			}else{
+				$('#nuevaRazPro').val(jsonx["razonSocial"]);
+				$('#nuevaDireccion').val(jsonx["direccion"]);
+				$("#nuevoUbiPro").val(jsonx["ubigeo"]);
+				$("#nuevoUbiPro").selectpicker("refresh");
+			}
+		  
+		}
+	})
+}
