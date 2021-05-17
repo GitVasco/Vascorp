@@ -7,6 +7,8 @@ $('.tablaMovimientos').DataTable( {
 	"retrieve": true,
     "processing": true,
     "order": [[0, "desc"]],
+	"pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
 	 "language": {
 
 			"sProcessing":     "Procesando...",

@@ -6,7 +6,7 @@ require_once "../../modelos/almacencorte.modelo.php";
 class TablaVerCortes{
 
     /*=============================================
-    MOSTRAR LA TABLA DE PRODUCTOS
+    MOSTRAR LA TABLA DE VISUALIZAR CORTE
     =============================================*/ 
 
     public function mostrarTablaVerCortes(){
@@ -14,30 +14,76 @@ class TablaVerCortes{
         $item = null;     
         $valor = null;
 
-        $cierres = ControladorAlmacenCorte::ctrRangoFechasVerCortes($_GET["fechaInicial"],$_GET["fechaFinal"]);	
-        if(count($cierres)>0){
+        $cortes = ControladorAlmacenCorte::ctrRangoFechasVerCortes($_GET["fechaInicial"],$_GET["fechaFinal"]);	
+        if(count($cortes)>0){
 
         $datosJson = '{
         "data": [';
 
-        for($i = 0; $i < count($cierres); $i++){
+        for($i = 0; $i < count($cortes); $i++){
+            if($cortes[$i]["t1"] == '0'){
+                $t1 = '';
+            }else{
+                $t1 = $cortes[$i]["t1"];
+            }  
 
+            if($cortes[$i]["t2"] == '0'){
+                $t2 = '';
+            }else{
+                $t2 = $cortes[$i]["t2"];
+            }  
+
+            if($cortes[$i]["t3"] == '0'){
+                $t3 = '';
+            }else{
+                $t3 = $cortes[$i]["t3"];
+            }  
+
+            if($cortes[$i]["t4"] == '0'){
+                $t4 = '';
+            }else{
+                $t4 = $cortes[$i]["t4"];
+            }  
+
+            if($cortes[$i]["t5"] == '0'){
+                $t5 = '';
+            }else{
+                $t5 = $cortes[$i]["t5"];
+            }  
+
+            if($cortes[$i]["t6"] == '0'){
+                $t6 = '';
+            }else{
+                $t6 = $cortes[$i]["t6"];
+            }  
+
+            if($cortes[$i]["t7"] == '0'){
+                $t7 = '';
+            }else{
+                $t7 = $cortes[$i]["t7"];
+            }  
+
+            if($cortes[$i]["t8"] == '0'){
+                $t8 = '';
+            }else{
+                $t8 = $cortes[$i]["t8"];
+            }  
     
             $datosJson .= '[
-            "'.$cierres[$i]["almacencorte"].'",
-            "'.$cierres[$i]["fechas"].'",
-            "'.$cierres[$i]["modelo"].'",
-            "'.$cierres[$i]["nombre"].'",
-            "'.$cierres[$i]["color"].'",
-            "'.$cierres[$i]["t1"].'",
-            "'.$cierres[$i]["t2"].'",
-            "'.$cierres[$i]["t3"].'",
-            "'.$cierres[$i]["t4"].'",
-            "'.$cierres[$i]["t5"].'",
-            "'.$cierres[$i]["t6"].'",
-            "'.$cierres[$i]["t7"].'",
-            "'.$cierres[$i]["t8"].'",
-            "'.$cierres[$i]["subtotal"].'"
+            "'.$cortes[$i]["almacencorte"].'",
+            "'.$cortes[$i]["fechas"].'",
+            "'.$cortes[$i]["modelo"].'",
+            "'.$cortes[$i]["nombre"].'",
+            "'.$cortes[$i]["color"].'",
+            "'.$t1.'",
+            "'.$t2.'",
+            "'.$t3.'",
+            "'.$t4.'",
+            "'.$t5.'",
+            "'.$t6.'",
+            "'.$t7.'",
+            "'.$t8.'",
+            "'.$cortes[$i]["subtotal"].'"
             ],';        
             }
 
