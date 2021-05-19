@@ -137,7 +137,7 @@ class ControladorOperaciones{
 
 		if(isset($_POST["editarOperacion"])){
 
-			var_dump("editarOperacion", $_POST["editarOperacion"]);
+			// var_dump("editarOperacion", $_POST["editarOperacion"]);
 
 
 			   	$datos = array("id"=>$_POST["idOperacion"],

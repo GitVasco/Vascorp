@@ -6,6 +6,8 @@ $('.tablaModelos').DataTable( {
     "deferRender": true,
 	"retrieve": true,
 	"processing": true,
+	"pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
 	 "language": {
 
 			"sProcessing":     "Procesando...",
@@ -262,7 +264,7 @@ $(".tablaModelos tbody").on("click","button.btnGenerarArticulo",function(){
 })
 
 //AGREGAR COLOR X ARTICULO
-$(".tablas tbody").on("click","button.agregarColor",function(){
+$(".tablaArticuloColores tbody").on("click","button.agregarColor",function(){
 	var idColor = $(this).attr("idColor");
   
   
@@ -315,7 +317,7 @@ $(".tablas tbody").on("click","button.agregarColor",function(){
 CUANDO CARGUE LA TABLA CADA VEZ QUE NAVEGUE EN ELLA
 =============================================*/
 
-$(".tablas").on("draw.dt", function() {
+$(".tablaArticuloColores").on("draw.dt", function() {
 	//console.log("tabla");
   
 	if (localStorage.getItem("quitarColor") != null) {
@@ -392,7 +394,7 @@ function quitarAgregarColores() {
 	var idColores = $(".quitarColor");
   
 	//Capturamos todos los botones de agregar que aparecen en la tabla
-	var botonesTabla = $(".tablas tbody button.agregarColor");
+	var botonesTabla = $(".tablaArticuloColores tbody button.agregarColor");
 	
 	
   
@@ -412,7 +414,7 @@ function quitarAgregarColores() {
 	}
   }
 
-  $(".tablas").on("draw.dt", function() {
+  $(".tablaArticuloColores").on("draw.dt", function() {
 	quitarAgregarColores();
   });
 

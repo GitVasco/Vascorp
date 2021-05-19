@@ -140,7 +140,7 @@ class ControladorTipoTrabajador{
 
 		if(isset($_POST["editarTipoTrabajador"])){
 
-			var_dump("editarTipoTrabajador", $_POST["editarTipoTrabajador"]);
+			// var_dump("editarTipoTrabajador", $_POST["editarTipoTrabajador"]);
 
 			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["editarTipoTrabajador"]) &&
 			   preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["editarSectorTrabajador"])

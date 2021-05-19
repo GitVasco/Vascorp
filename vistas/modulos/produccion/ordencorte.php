@@ -645,7 +645,7 @@ MODAL VISUALIZAR INFORMACION
 
             <div class="box-body">
 
-              <table class="table table-bordered table-striped dt-responsive tablaDetalleOrdenCorteTotal">
+              <table class="table table-bordered table-striped dt-responsive tablaDetalleOrdenCorteTotal" width="100%">
 
               <thead>
 
@@ -801,7 +801,7 @@ MODAL VISUALIZAR INFORMACION
 
             <div class="box-body">
 
-              <table class="table table-bordered table-striped dt-responsive tablaCantidadOrdenCorteTotal">
+              <table class="table table-bordered table-striped dt-responsive tablaCantidadOrdenCorteTotal" width="100%">
 
               <thead>
 

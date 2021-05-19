@@ -41,7 +41,7 @@ class TablaCuentasConsultar{
                 $estado =  "<button class='btn btn-success btn-xs'>CANCELADO</button>";
             }
                 
-            $botones =  "<div class='btn-group'><button class='btn btn-primary btnVisualizarCuentaConsultar' numCta='".$cuenta[$i]["num_cta"]."'  title='Visualizar cuenta'><i class='fa fa-eye'></i></button></div>";
+            $botones =  "<div class='btn-group'><button class='btn btn-sm btn-primary btnVisualizarCuentaConsultar' numCta='".$cuenta[$i]["num_cta"]."'  title='Visualizar cuenta'><i class='fa fa-eye'></i></button></div>";
              
             $datosJson .= '[
             "'.$cuenta[$i]["tipo_doc"].'",

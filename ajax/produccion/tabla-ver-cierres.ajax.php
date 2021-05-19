@@ -21,7 +21,53 @@ class TablaVerCierres{
         "data": [';
 
         for($i = 0; $i < count($cierres); $i++){
+            if($cierres[$i]["t1"] == '0'){
+                $t1 = '';
+            }else{
+                $t1 = $cierres[$i]["t1"];
+            }  
 
+            if($cierres[$i]["t2"] == '0'){
+                $t2 = '';
+            }else{
+                $t2 = $cierres[$i]["t2"];
+            }  
+
+            if($cierres[$i]["t3"] == '0'){
+                $t3 = '';
+            }else{
+                $t3 = $cierres[$i]["t3"];
+            }  
+
+            if($cierres[$i]["t4"] == '0'){
+                $t4 = '';
+            }else{
+                $t4 = $cierres[$i]["t4"];
+            }  
+
+            if($cierres[$i]["t5"] == '0'){
+                $t5 = '';
+            }else{
+                $t5 = $cierres[$i]["t5"];
+            }  
+
+            if($cierres[$i]["t6"] == '0'){
+                $t6 = '';
+            }else{
+                $t6 = $cierres[$i]["t6"];
+            }  
+
+            if($cierres[$i]["t7"] == '0'){
+                $t7 = '';
+            }else{
+                $t7 = $cierres[$i]["t7"];
+            }  
+
+            if($cierres[$i]["t8"] == '0'){
+                $t8 = '';
+            }else{
+                $t8 = $cierres[$i]["t8"];
+            }  
     
             $datosJson .= '[
             "'.$cierres[$i]["cod_sector"]." - ".$cierres[$i]["nom_sector"].'",
@@ -31,14 +77,14 @@ class TablaVerCierres{
             "'.$cierres[$i]["modelo"].'",
             "'.$cierres[$i]["nombre"].'",
             "'.$cierres[$i]["color"].'",
-            "'.$cierres[$i]["t1"].'",
-            "'.$cierres[$i]["t2"].'",
-            "'.$cierres[$i]["t3"].'",
-            "'.$cierres[$i]["t4"].'",
-            "'.$cierres[$i]["t5"].'",
-            "'.$cierres[$i]["t6"].'",
-            "'.$cierres[$i]["t7"].'",
-            "'.$cierres[$i]["t8"].'",
+            "'.$t1.'",
+            "'.$t2.'",
+            "'.$t3.'",
+            "'.$t4.'",
+            "'.$t5.'",
+            "'.$t6.'",
+            "'.$t7.'",
+            "'.$t8.'",
             "'.$cierres[$i]["total"].'"
             ],';        
             }

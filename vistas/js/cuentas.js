@@ -1619,7 +1619,7 @@ function listarCuentas() {
     });
   }
 
-  console.log("listaCuenta", JSON.stringify(listaCuenta));
+  // console.log("listaCuenta", JSON.stringify(listaCuenta));
   //console.log("listArticulo", listArticulo);
 
   $("#listaEnvioLetra").val(JSON.stringify(listaCuenta));
@@ -1686,6 +1686,8 @@ $('.tablaEnvioCuentas').DataTable({
 	"retrieve": true,
 	"processing": true,
 	"order": [[0, "desc"]],
+  "pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
 	"language": {
 
 		"sProcessing": "Procesando...",

@@ -31,6 +31,8 @@ function cargarTablaServicios(fechaInicial,fechaFinal) {
     deferRender: true,
     retrieve: true,
     processing: true,
+    "pageLength": 20,
+	  "lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
     language: {
       sProcessing: "Procesando...",
       sLengthMenu: "Mostrar _MENU_ registros",
@@ -179,6 +181,8 @@ $(".daterangepicker.opensleft .ranges li").on("click", function() {
   deferRender: true,
   retrieve: true,
   processing: true,
+  "pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
   language: {
     sProcessing: "Procesando...",
     sLengthMenu: "Mostrar _MENU_ registros",
@@ -210,6 +214,8 @@ $(".tablaPrecioServicios").DataTable({
   deferRender: true,
   retrieve: true,
   processing: true,
+  "pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
   language: {
     sProcessing: "Procesando...",
     sLengthMenu: "Mostrar _MENU_ registros",
@@ -492,7 +498,7 @@ $(".tablaPrecioServicios").DataTable({
       });
     }
   
-     console.log("listaProductos", JSON.stringify(listaProductos)); 
+    //  console.log("listaProductos", JSON.stringify(listaProductos)); 
   
     $("#listaProductos").val(JSON.stringify(listaProductos));
     // console.log(JSON.stringify(listaProductos));
@@ -1147,6 +1153,8 @@ $('.tablaPagoServicios').DataTable( {
   "retrieve": true,
   "processing": true,
   "order": [[3, "desc"]],
+  "pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
   "language": {
 
     "sProcessing":     "Procesando...",

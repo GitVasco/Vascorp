@@ -24,7 +24,7 @@ class TablaPedidosCV{
         TRAEMOS LAS ACCIONES
         =============================================*/
 
-        $botones =  "<div class='btn-group'><button class='btn btn-primary btn-xs modificarArtPed' data-toggle='modal' data-target='#modalModificarClienteP' modelo='".$pedidos[$i]["modelo"]."'>Agregar</button></div>";
+        $botones =  "<div class='btn-group'><button class='btn btn-sm btn-primary btn-xs modificarArtPed' data-toggle='modal' data-target='#modalModificarClienteP' modelo='".$pedidos[$i]["modelo"]."'>Agregar</button></div>";
 
             $datosJson .= '[
             "'.($i+1).'",

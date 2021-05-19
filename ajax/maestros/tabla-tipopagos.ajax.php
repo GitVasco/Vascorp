@@ -6,7 +6,7 @@ require_once "../../modelos/tipopago.modelo.php";
 class TablaTipoPagos{
 
     /*=============================================
-    MOSTRAR LA TABLA DE UNIDADES DE MEDIDA
+    MOSTRAR LA TABLA DE TIPO DE PAGOS
     =============================================*/ 
 
     public function mostrarTablaTipoPagos(){
@@ -26,10 +26,9 @@ class TablaTipoPagos{
         TRAEMOS LAS ACCIONES
         =============================================*/         
         
-        $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarTipoPago' idTipoPago='".$tipopago[$i]["id"]."' data-toggle='modal' data-target='#modalEditarTipoPago'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarTipoPago' idTipoPago='".$tipopago[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
+        $botones =  "<div class='btn-group'><button class='btn btn-sm btn-warning btnEditarTipoPago' idTipoPago='".$tipopago[$i]["id"]."' data-toggle='modal' data-target='#modalEditarTipoPago'><i class='fa fa-pencil'></i></button><button class='btn btn-sm btn-danger btnEliminarTipoPago' idTipoPago='".$tipopago[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
 
             $datosJson .= '[
-            "'.($i+1).'",
             "'.$tipopago[$i]["codigo"].'",
             "'.$tipopago[$i]["descripcion"].'",
             "'.$botones.'"

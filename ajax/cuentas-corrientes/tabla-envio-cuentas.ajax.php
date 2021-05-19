@@ -26,7 +26,7 @@ class TablaEnvioCuentas{
         TRAEMOS LAS ACCIONES
         =============================================*/         
         
-        $botones =  "<div class='btn-group'><button class='btn btn-info btnVisualizarEnvioCuenta' idCuenta='".$Cuenta[$i]["id"]."' data-toggle='modal' data-target='#modalVisualizarEnvioCuenta'><i class='fa fa-eye'></i></button><a class='btn btn-success' href='".$Cuenta[$i]["archivo"]."' download ><i class='fa fa-download'></i></a></div>"; 
+        $botones =  "<div class='btn-group'><button class='btn btn-sm btn-info btnVisualizarEnvioCuenta' idCuenta='".$Cuenta[$i]["id"]."' data-toggle='modal' data-target='#modalVisualizarEnvioCuenta'><i class='fa fa-eye'></i></button><a class='btn btn-sm btn-success' href='".$Cuenta[$i]["archivo"]."' download ><i class='fa fa-download'></i></a></div>"; 
 
             $datosJson .= '[
             "'.$Cuenta[$i]["codigo"].'",

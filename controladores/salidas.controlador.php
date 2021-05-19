@@ -272,7 +272,7 @@ class ControladorSalidas{
 
                     }else{
 
-                        var_dump("no llego aqui");
+                        // var_dump("no llego aqui");
 
                     }
 
@@ -283,7 +283,7 @@ class ControladorSalidas{
 
             }else{
 
-                var_dump("no llego aqui");
+                // var_dump("no llego aqui");
 
             }
 

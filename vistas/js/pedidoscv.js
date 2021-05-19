@@ -1135,7 +1135,7 @@ $(".tablaArticulosPedidos").on("click", ".modificarArtPed", function () {
 		dataType:"json",
 		success:function(respuestaA){ 
 
-            console.log("respuestaA", respuestaA);
+            // console.log("respuestaA", respuestaA);
 
             $(".detalleCT").remove();
 

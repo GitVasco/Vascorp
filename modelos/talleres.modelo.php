@@ -1181,7 +1181,7 @@ class ModeloTalleres{
                     LEFT JOIN entallerjf et 
                       ON a.id_trabajador = et.trabajador 
                       AND DATE(a.fecha) = DATE(et.fecha_terminado) 
-                  WHERE et.trabajador IS NOT NULL) AS asi 
+                  WHERE et.trabajador IS NOT NULL AND DATE(a.fecha) LIKE '%$fechaFinal%' ) AS asi 
                   ON et.trabajador = asi.trabajador 
                   AND DATE(fecha_terminado) = asi.fecha 
                 LEFT JOIN tipo_trabajadorjf tt 
@@ -1319,7 +1319,7 @@ class ModeloTalleres{
             LEFT JOIN entallerjf et 
               ON a.id_trabajador = et.trabajador 
               AND DATE(a.fecha) = DATE(et.fecha_terminado) 
-          WHERE et.trabajador IS NOT NULL) AS asi 
+          WHERE et.trabajador IS NOT NULL AND DATE(a.fecha) LIKE '%$fechaFinal%' ) AS asi 
           ON et.trabajador = asi.trabajador 
           AND DATE(fecha_terminado) = asi.fecha 
         LEFT JOIN tipo_trabajadorjf tt 
@@ -1449,7 +1449,7 @@ class ModeloTalleres{
             LEFT JOIN entallerjf et 
               ON a.id_trabajador = et.trabajador 
               AND DATE(a.fecha) = DATE(et.fecha_terminado) 
-          WHERE et.trabajador IS NOT NULL) AS asi 
+          WHERE et.trabajador IS NOT NULL AND DATE(a.fecha) LIKE '%$fechaFinal%' ) AS asi 
           ON et.trabajador = asi.trabajador 
           AND DATE(fecha_terminado) = asi.fecha 
         LEFT JOIN tipo_trabajadorjf tt 

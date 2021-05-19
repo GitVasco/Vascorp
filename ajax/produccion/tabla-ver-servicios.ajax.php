@@ -22,6 +22,53 @@ class TablaVerServicios{
 
         for($i = 0; $i < count($servicios); $i++){
 
+            if($servicios[$i]["t1"] == '0'){
+                $t1 = '';
+            }else{
+                $t1 = $servicios[$i]["t1"];
+            }  
+
+            if($servicios[$i]["t2"] == '0'){
+                $t2 = '';
+            }else{
+                $t2 = $servicios[$i]["t2"];
+            }  
+
+            if($servicios[$i]["t3"] == '0'){
+                $t3 = '';
+            }else{
+                $t3 = $servicios[$i]["t3"];
+            }  
+
+            if($servicios[$i]["t4"] == '0'){
+                $t4 = '';
+            }else{
+                $t4 = $servicios[$i]["t4"];
+            }  
+
+            if($servicios[$i]["t5"] == '0'){
+                $t5 = '';
+            }else{
+                $t5 = $servicios[$i]["t5"];
+            }  
+
+            if($servicios[$i]["t6"] == '0'){
+                $t6 = '';
+            }else{
+                $t6 = $servicios[$i]["t6"];
+            }  
+
+            if($servicios[$i]["t7"] == '0'){
+                $t7 = '';
+            }else{
+                $t7 = $servicios[$i]["t7"];
+            }  
+
+            if($servicios[$i]["t8"] == '0'){
+                $t8 = '';
+            }else{
+                $t8 = $servicios[$i]["t8"];
+            }  
     
             $datosJson .= '[
             "'.$servicios[$i]["cod_sector"]." - ".$servicios[$i]["nom_sector"].'",
@@ -30,14 +77,14 @@ class TablaVerServicios{
             "'.$servicios[$i]["modelo"].'",
             "'.$servicios[$i]["nombre"].'",
             "'.$servicios[$i]["color"].'",
-            "'.$servicios[$i]["t1"].'",
-            "'.$servicios[$i]["t2"].'",
-            "'.$servicios[$i]["t3"].'",
-            "'.$servicios[$i]["t4"].'",
-            "'.$servicios[$i]["t5"].'",
-            "'.$servicios[$i]["t6"].'",
-            "'.$servicios[$i]["t7"].'",
-            "'.$servicios[$i]["t8"].'",
+            "'.$t1.'",
+            "'.$t2.'",
+            "'.$t3.'",
+            "'.$t4.'",
+            "'.$t5.'",
+            "'.$t6.'",
+            "'.$t7.'",
+            "'.$t8.'",
             "'.$servicios[$i]["total"].'"
             ],';        
             }

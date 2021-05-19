@@ -107,7 +107,7 @@
                                         $valor = $_GET["pedido"];
 
                                         $pedido = ControladorPedidos::ctrMostrarTemporal($valor);
-                                        var_dump("pedido", $pedido);
+                                        // var_dump("pedido", $pedido);
 
                                         if ($pedido["codigo"] != "") {
 

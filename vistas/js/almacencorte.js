@@ -58,7 +58,8 @@ $('.tablaArticulosAlmacenCorte').DataTable( {
 	"retrieve": true,
     "processing": true,
     "pageLength": 20,
-	 "language": {
+    "lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+	  "language": {
 
 			"sProcessing":     "Procesando...",
 			"sLengthMenu":     "Mostrar _MENU_ registros",

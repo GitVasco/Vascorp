@@ -7,6 +7,8 @@ $(".tablaGuiasRemision").DataTable({
     retrieve: true,
     processing: true,
     "order": [[1, "desc"]],
+    "pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
     language: {
         sProcessing: "Procesando...",
         sLengthMenu: "Mostrar _MENU_ registros",
@@ -52,6 +54,8 @@ $(".tablaFacturas").DataTable({
     retrieve: true,
     processing: true,
     "order": [[1, "desc"]],
+    "pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
     language: {
         sProcessing: "Procesando...",
         sLengthMenu: "Mostrar _MENU_ registros",
@@ -98,6 +102,8 @@ $(".tablaBoletas").DataTable({
     retrieve: true,
     processing: true,
     "order": [[1, "desc"]],
+    "pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
     language: {
         sProcessing: "Procesando...",
         sLengthMenu: "Mostrar _MENU_ registros",
@@ -143,6 +149,8 @@ $(".tablaProformas").DataTable({
     retrieve: true,
     processing: true,
     "order": [[1, "desc"]],
+    "pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
     language: {
         sProcessing: "Procesando...",
         sLengthMenu: "Mostrar _MENU_ registros",

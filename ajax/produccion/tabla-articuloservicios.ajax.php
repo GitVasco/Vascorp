@@ -36,7 +36,7 @@ class TablaProductosServicios{
         TRAEMOS LAS ACCIONES
         =============================================*/         
         
-        $botones =  "<div class='btn-group'><button class='btn btn-primary agregarProducto recuperarBoton' articuloServicio='".$articulos[$i]["articulo"]."'><i class='fa fa-plus-circle'></i> Agregar</button></div>"; 
+        $botones =  "<div class='btn-group'><button class='btn btn-primary btn-xs agregarProducto recuperarBoton' articuloServicio='".$articulos[$i]["articulo"]."'><i class='fa fa-plus-circle'></i> Agregar</button></div>"; 
 
             $datosJson .= '[
             "'.$articulos[$i]["articulo"].'",

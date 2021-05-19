@@ -26,7 +26,7 @@ class TablaAbonos{
         TRAEMOS LAS ACCIONES
         =============================================*/         
         
-        $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarAbono' idAbono='".$abono[$i]["id"]."' data-toggle='modal' data-target='#modalEditarAbono'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarAbono' idAbono='".$abono[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
+        $botones =  "<div class='btn-group'><button class='btn btn-sm btn-warning btnEditarAbono' idAbono='".$abono[$i]["id"]."' data-toggle='modal' data-target='#modalEditarAbono'><i class='fa fa-pencil'></i></button><button class='btn btn-sm btn-danger btnEliminarAbono' idAbono='".$abono[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
 
             $datosJson .= '[
             "'.$abono[$i]["fecha"].'",

@@ -6,7 +6,7 @@ require_once "../../modelos/agencia.modelo.php";
 class TablaAgencias{
 
     /*=============================================
-    MOSTRAR LA TABLA DE PRODUCTOS
+    MOSTRAR LA TABLA DE AGENCIAS
     =============================================*/ 
 
     public function mostrarTablaAgencias(){
@@ -26,10 +26,9 @@ class TablaAgencias{
         TRAEMOS LAS ACCIONES
         =============================================*/         
         
-        $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarAgencia' idAgencia='".$agencias[$i]["id"]."' data-toggle='modal' data-target='#modalEditarAgencia'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarAgencia' idAgencia='".$agencias[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
+        $botones =  "<div class='btn-group'><button class='btn btn-sm btn-warning btnEditarAgencia' idAgencia='".$agencias[$i]["id"]."' data-toggle='modal' data-target='#modalEditarAgencia'><i class='fa fa-pencil'></i></button><button class='btn btn-sm btn-danger btnEliminarAgencia' idAgencia='".$agencias[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
 
             $datosJson .= '[
-            "'.($i+1).'",
             "'.$agencias[$i]["codigo"].'",
             "'.$agencias[$i]["nombre"].'",
             "'.$agencias[$i]["ruc"].'",

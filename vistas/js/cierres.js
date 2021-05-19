@@ -22,6 +22,8 @@ function cargarTablaCierres(fechaInicial,fechaFinal) {
     retrieve: true,
     processing: true,
     order: [[6, "desc"]],
+    "pageLength": 20,
+	  "lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
     language: {
       sProcessing: "Procesando...",
       sLengthMenu: "Mostrar _MENU_ registros",
@@ -178,6 +180,8 @@ function cargarTablaArticuloCierres(sectorCierre){
   deferRender: true,
   retrieve: true,
   processing: true,
+  "pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
   language: {
     sProcessing: "Procesando...",
     sLengthMenu: "Mostrar _MENU_ registros",

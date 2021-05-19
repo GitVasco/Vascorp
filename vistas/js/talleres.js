@@ -917,7 +917,8 @@ $('.tablaArticulosTalleres').DataTable( {
 	"retrieve": true,
     "processing": true,
     "pageLength": 20,
-	 "language": {
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+	"language": {
 
 			"sProcessing":     "Procesando...",
 			"sLengthMenu":     "Mostrar _MENU_ registros",
@@ -1384,7 +1385,7 @@ function listarArticulosIngreso() {
       });
     }
   
-    console.log("listaArticulos", JSON.stringify(listaArticulos)); 
+    // console.log("listaArticulos", JSON.stringify(listaArticulos)); 
   
     $("#listaArticulosIngreso").val(JSON.stringify(listaArticulos));
 
@@ -1464,7 +1465,7 @@ $('.tablaIngresoM').DataTable({
 	"deferRender": true,
 	"retrieve": true,
 	"processing": true,
-	"order": [[0, "desc"]],
+	"order": [[6, "desc"]],
 	"pageLength": 20,
 	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
 	"language": {
@@ -2657,9 +2658,7 @@ $(".tablaIngresoM").on("click", ".btnVisualizarIngreso", function () {
 
 					'<tr class="detalleMP">' +
             '<td>' + id.cod_sector+" - "+id.nom_sector + ' </td>' +  
-            '<td>' + id.guia + ' </td>' +
             '<td>' + id.fechas + ' </td>' +
-            '<td>' + id.codigo + ' </td>' +
 						'<td><b>' + id.modelo + ' </b></td>' +
 						'<td>' + id.nombre + ' </td>' +
 						'<td>' + id.color + ' </td>' +

@@ -9,7 +9,7 @@ require_once '../modelos/usuarios.modelo.php';
 class AjaxArticulos{
 
 	/* 
-	* Activar-Desactivar Usuario
+	* Activar-Desactivar Articulo
 	*/
 	public $activarId;
 	public $activarEstado;
@@ -129,7 +129,9 @@ class AjaxArticulos{
 }
 
 //OBJETOS
-
+/*=============================================
+ACTIVAR Y DESACTIVAR ARTICULO
+=============================================*/ 
 if(isset($_POST["activarId"])){
 	$activar=new AjaxArticulos();
 	$activar->activarId=$_POST["activarId"];

@@ -42,7 +42,9 @@ $('.tablaUrgenciasAMP').DataTable( {
 	"retrieve": true,
 	"processing": true,
 	"order": [[6, "desc"]],
-	 "language": {
+	"pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+	"language": {
 
 			"sProcessing":     "Procesando...",
 			"sLengthMenu":     "Mostrar _MENU_ registros",
@@ -255,11 +257,11 @@ $(".tablaMateriaPrima tbody").on("click", "button.btnEditarCosto", function(){
 /* 
 * BOTON ACEPTAR
 */
-$(".box").on("click", ".btnCargarProyMp", function () {
+$("#proyMp").change(function(){
 
 	$(".tablaProyMp").DataTable().destroy();
 
-	var proyMp = document.getElementById("proyMp").value;
+	var proyMp = $(this).val();
 	//console.log(lineaMp);
 	$(".btnReporteProyeccion").attr("corte",proyMp);
 	localStorage.setItem("proyMp", proyMp);

@@ -324,7 +324,7 @@ class ControladorCuentas{
 									"fecha" => $fecha->format("Y-m-d H:i:s"));
 					$auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
 				}
-				var_dump($auditoria);
+				// var_dump($auditoria);
 
 			   	if($respuesta == "ok"){
 
@@ -476,7 +476,7 @@ class ControladorCuentas{
 							"usuario_bkp" => $_SESSION["id"],
 							"fecha_bkp" => $fecha->format("Y-m-d H:i:s"));
 			$ingreso_bkp = ModeloCuentas::mdlIngresarCuentaBckp("cuenta_cte_bkpjf",$datos3);	
-			var_dump($ingreso_bkp);
+			// var_dump($ingreso_bkp);
 			$respuesta = ModeloCuentas::mdlEliminarCuentaCancelacion($tabla,$cuentas["num_cta"]);	
 			if($respuesta == "ok"){
 				if($_GET["rutas"] == "cuentas-pendientes"){

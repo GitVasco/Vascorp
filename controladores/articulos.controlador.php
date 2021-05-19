@@ -476,7 +476,7 @@ class controladorArticulos{
 
 			$dato = $_POST["urgencia"];
 			
-			var_dump("dato", $dato);
+			// var_dump("dato", $dato);
 
 			$respuesta = ModeloArticulos::mdlConfigurarUrgencia($dato);
 			
@@ -514,7 +514,7 @@ class controladorArticulos{
 
 			$dato = $_POST["urgencia"];
 			
-			var_dump("dato", $dato);
+			// var_dump("dato", $dato);
 
 			$respuesta = ModeloArticulos::mdlConfigurarUrgencia($dato);
 			

@@ -29,7 +29,7 @@
                 <option value="">--------Seleccionar articulo-------</option>
                 <?php
                     $modelos =controladorModelos::ctrMostrarModelosActivos();
-                    var_dump($modelos);
+                    // var_dump($modelos);
                     foreach ($modelos as $key => $value) {
                             echo '<option value="'.$value["modelo"].'">'.$value["nombre"].'</option>';
 

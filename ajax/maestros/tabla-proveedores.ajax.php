@@ -30,7 +30,7 @@ class TablaProveedores{
         TRAEMOS LAS ACCIONES
         =============================================*/         
         
-        $botones =  "<div class='btn-group'><button class='btn btn-warning btn-sm btnEditarProveedor' CodRuc='".$proveedor[$i]["CodRuc"]."' data-toggle='modal' data-target='#modalEditarProveedor'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btn-sm btnEliminarProveedor' CodRuc='".$proveedor[$i]["CodRuc"]."'><i class='fa fa-times'></i></button></div>"; 
+        $botones =  "<div class='btn-group'><button class='btn btn-sm btn-warning btn-sm btnEditarProveedor' CodRuc='".$proveedor[$i]["CodRuc"]."' data-toggle='modal' data-target='#modalEditarProveedor'><i class='fa fa-pencil'></i></button><button class='btn btn-sm btn-danger btn-sm btnEliminarProveedor' CodRuc='".$proveedor[$i]["CodRuc"]."'><i class='fa fa-times'></i></button></div>"; 
 
             $datosJson .= '[
             "'.$proveedor[$i]["CodRuc"].'",

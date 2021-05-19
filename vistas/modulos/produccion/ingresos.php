@@ -245,13 +245,11 @@ MODAL VISUALIZAR INFORMACION
 
             <div class="box-body">
 
-              <table class="table table-bordered table-striped dt-responsive tablaDetalleIngreso">
+              <table class="table table-bordered table-striped dt-responsive tablaDetalleIngreso" width = "100%"> 
 
               <thead>
 
                 <tr>
-                  <th></th>
-                  <th></th>
                   <th></th>
                   <th></th>
                   <th></th>
@@ -274,8 +272,6 @@ MODAL VISUALIZAR INFORMACION
                   <th></th>
                   <th></th>
                   <th></th>
-                  <th></th>
-                  <th></th>
                   <th>28</th>
                   <th>30</th>
                   <th>32</th>
@@ -289,9 +285,7 @@ MODAL VISUALIZAR INFORMACION
 
                 <tr>
                   <th>Taller</th>
-                  <th>Guia</th>
                   <th>Fecha</th>
-                  <th>Codigo</th>
                   <th>Modelo</th>
                   <th>Nombre</th>
                   <th>Color</th>
@@ -363,7 +357,7 @@ MODAL VISUALIZAR INFORMACION
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title">Detalle del Cierre</h4>
+          <h4 class="modal-title">Detalle del Ingreso</h4>
 
         </div>
 
@@ -400,7 +394,7 @@ MODAL VISUALIZAR INFORMACION
           </div>
           
           <div class="box-body">
-            <table class="table table-bordered table-striped  tablaDetalleIngresoTotal">
+            <table class="table table-bordered table-striped  tablaDetalleIngresoTotal" width = "100%">
 
               <thead>
 

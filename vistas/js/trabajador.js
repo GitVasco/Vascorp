@@ -3,7 +3,9 @@ $('.tablaTrabajador').DataTable( {
     "deferRender": true,
 	"retrieve": true,
 	"processing": true,
-	 "language": {
+	"pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+	"language": {
 
 			"sProcessing":     "Procesando...",
 			"sLengthMenu":     "Mostrar _MENU_ registros",
@@ -36,7 +38,9 @@ $('.tablaTrabajador2').DataTable( {
     "deferRender": true,
 	"retrieve": true,
 	"processing": true,
-	 "language": {
+	"pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+	"language": {
 
 			"sProcessing":     "Procesando...",
 			"sLengthMenu":     "Mostrar _MENU_ registros",
@@ -117,7 +121,7 @@ $(".tablaTrabajador tbody").on("click","button.btnEditarTrabajador",function(){
 				processData:false,
 				dataType: "json",
 				success:function(respuesta){
-				console.log("respuesta", respuesta);
+				// console.log("respuesta", respuesta);
 				$("#editarTipoDocumento").val(respuesta["cod_doc"]);
 				$("#editarTipoDocumento").selectpicker('refresh');
 
@@ -137,7 +141,7 @@ $(".tablaTrabajador tbody").on("click","button.btnEditarTrabajador",function(){
 				processData:false,
 				dataType: "json",
 				success:function(respuesta){
-					console.log("respuesta", respuesta);
+					// console.log("respuesta", respuesta);
 				$("#editarTipoTrabajador").val(respuesta["cod_tip_tra"]);
 				$("#editarTipoTrabajador").selectpicker('refresh');
 					

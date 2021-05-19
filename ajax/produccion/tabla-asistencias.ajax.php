@@ -27,21 +27,21 @@ class TablaAsistencia{
         =============================================*/ 
         if($asistencia[$i]["estado"] == "ASISTIO"){
 
-            $imagen = "<button class='btnAprobarAsistencia' idAsistencia='".$asistencia[$i]["id"]."' estadoAsistencia='FALTA'><img id='estadoImagen' src='vistas/img/plantilla/asistio.png'  width='40px'></button>";
+            $imagen = "<button class='btnAprobarAsistencia' idAsistencia='".$asistencia[$i]["id"]."' estadoAsistencia='FALTA'><img id='estadoImagen' src='vistas/img/plantilla/asistio.png'  width='20px'></button>";
             
 
         }else{
 
-            $imagen = "<button class='btnAprobarAsistencia' idAsistencia='".$asistencia[$i]["id"]."' estadoAsistencia='ASISTIO'><img id='estadoImagen' src='vistas/img/plantilla/falto.png'  width='40px'></button>";
+            $imagen = "<button class='btnAprobarAsistencia' idAsistencia='".$asistencia[$i]["id"]."' estadoAsistencia='ASISTIO'><img id='estadoImagen' src='vistas/img/plantilla/falto.png'  width='20px'></button>";
             
         }
         /*=============================================
         TRAEMOS LAS ACCIONES
         =============================================*/      
         if($asistencia[$i]["estado_para"] == 1) {
-            $botones =  "<div class='btn-group'><button class='btn btn-danger btnEditarAsistencia' idAsistencia='".$asistencia[$i]["id"]."' data-toggle='modal' data-target='#modalEditarAsistencia' title='Editar para'><i class='fa fa-exclamation-triangle'></i></button><div class='btn-group'><button class='btn btn-primary btnEditarPara' idAsistencia='".$asistencia[$i]["id"]."' data-toggle='modal' data-target='#modalEditarPara' title='Editar nueva para'><i class='fa fa-plus'></i></button><button class='btn btn-success btnEditarExtras' idAsistencia='".$asistencia[$i]["id"]."' data-toggle='modal' data-target='#modalEditarExtras' title='Editar horas extras'><i class='fa fa-clock-o'></i></button></div>"; 
+            $botones =  "<div class='btn-group'><button class='btn btn-sm btn-danger btnEditarAsistencia' idAsistencia='".$asistencia[$i]["id"]."' data-toggle='modal' data-target='#modalEditarAsistencia' title='Editar para'><i class='fa fa-exclamation-triangle'></i></button><div class='btn-group'><button class='btn btn-sm btn-primary btnEditarPara' idAsistencia='".$asistencia[$i]["id"]."' data-toggle='modal' data-target='#modalEditarPara' title='Editar nueva para'><i class='fa fa-plus'></i></button><button class='btn btn-sm btn-success btnEditarExtras' idAsistencia='".$asistencia[$i]["id"]."' data-toggle='modal' data-target='#modalEditarExtras' title='Editar horas extras'><i class='fa fa-clock-o'></i></button></div>"; 
         }else{
-            $botones =  "<button class='btn btn-primary btnEditarPara' idAsistencia='".$asistencia[$i]["id"]."' data-toggle='modal' data-target='#modalEditarPara' title='Editar nueva para'><i class='fa fa-plus'></i></button><button class='btn btn-success btnEditarExtras' idAsistencia='".$asistencia[$i]["id"]."' data-toggle='modal' data-target='#modalEditarExtras' title='Editar horas extras'><i class='fa fa-clock-o'></i></button></div>"; 
+            $botones =  "<button class='btn btn-sm btn-primary btnEditarPara' idAsistencia='".$asistencia[$i]["id"]."' data-toggle='modal' data-target='#modalEditarPara' title='Editar nueva para'><i class='fa fa-plus'></i></button><button class='btn btn-sm btn-success btnEditarExtras' idAsistencia='".$asistencia[$i]["id"]."' data-toggle='modal' data-target='#modalEditarExtras' title='Editar horas extras'><i class='fa fa-clock-o'></i></button></div>"; 
         }
         
         

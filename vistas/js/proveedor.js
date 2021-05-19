@@ -4,8 +4,8 @@ $('.tablaProveedores').DataTable({
     "retrieve": true,
     "processing": true,
     "order": [[0, "asc"]],
-		"pageLength": 15,
-		"lengthMenu": [[15, 30, 60, -1], [15, 30, 60, 'Todos']],
+		"pageLength": 20,
+		"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
     "language": {
 			"sProcessing":     "Procesando...",
 			"sLengthMenu":     "Mostrar _MENU_ registros",
@@ -114,12 +114,14 @@ $(".tablaProveedores").on("click", ".btnEliminarProveedor", function(){
   })
 
 })
-//Reporte de Colores
-// $(".box").on("click", ".btnReporteColor", function () {
-//     window.location = "vistas/reportes_excel/rpt_color.php";
-  
-// })
 
+// Reporte de Proveedor
+$(".box").on("click", ".btnReporteProveedor", function () {
+    window.location = "vistas/reportes_excel/rpt_proveedor.php";
+  
+})
+
+//Validar si el ruc existe en la base de datos al crear
 $("#nuevoRucPro").keyup(function () {
 	var RucPro = $(this).val();
 	var datos = new FormData();
@@ -149,6 +151,8 @@ $("#nuevoRucPro").keyup(function () {
 	});
 });
 
+
+//Validar si el ruc existe en la base de datos al editar
 $("#editarRucPro").change(function () {
 	var RucPro = $(this).val();
 	var datos = new FormData();

@@ -3,6 +3,8 @@ $('.tablaTipoTrabajador').DataTable( {
     "deferRender": true,
 	"retrieve": true,
 	"processing": true,
+	"pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
 	 "language": {
 
 			"sProcessing":     "Procesando...",
@@ -67,7 +69,7 @@ $(".tablaTipoTrabajador tbody").on("click","button.btnEditarTipoTrabajador",func
 		dataType: "json",
 		success:function(respuesta){
 
-			console.log("respuesta", respuesta);
+			// console.log("respuesta", respuesta);
 
 			$("#editarTipoTrabajador").val(respuesta["nom_tip_trabajador"]);
 			$("#editarSectorTrabajador").val(respuesta["detalle"]);
