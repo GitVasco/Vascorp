@@ -222,7 +222,8 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "unidadesmedida" ||
                   $_GET["ruta"] == "bancos" ||
                   $_GET["ruta"] == "proveedor" ||
-                  $_GET["ruta"] == "vendedor" ){
+                  $_GET["ruta"] == "vendedor" ||
+                  $_GET["ruta"] == "tabla-maestra"){
 
               include "modulos/maestros/".$_GET["ruta"].".php";
 
@@ -414,7 +415,12 @@ CUERPO DOCUMENTO
   <script src="vistas/js/cierres.js"></script>
   <script src="vistas/js/procedimientos.js"></script>
   <script src="vistas/js/salidas.js"></script>
+<<<<<<< HEAD
   <script src="vistas/js/proveedor.js"></script>
+=======
+  <script src="vistas/js/tablamaestra.js"></script>
+
+>>>>>>> joel
 </body>
 
 </html>
