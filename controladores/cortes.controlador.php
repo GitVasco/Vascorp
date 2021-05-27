@@ -56,14 +56,6 @@ class ControladorCortes{
         if(isset($_POST["nuevoArticulo"])){
 
             /* 
-            * Actualizamos la cantidad que queda en corte y pasa al taller en el articulo
-            */
-            $articulo  = $_POST["nuevoArticulo"];
-            $cantidad =  $_POST["nuevoAlmCorte"];
-
-            ModeloArticulos::mdlActualizarTallerCorte($articulo,$cantidad);
-
-            /* 
             * registramos en la tabla taller cabecera para el código
             */
             $datosCab = array( "usuario" => $_POST["usuario"],
@@ -94,10 +86,27 @@ class ControladorCortes{
                 if($respuesta == "ok"){
                     
                     $cod = $ult_codigo["ult_codigo"];
+
+                    /* 
+                    * Recibimos el checkbox del ticket y validamos si imprimira o no 
+                    */
                     
                     $ticket=$_POST["ticket"];
 
                     if($ticket == "1"){
+
+                        /* 
+                        * Actualizamos la cantidad que queda en corte y pasa al taller en el articulo
+                        */
+                        $articulo  = $_POST["nuevoArticulo"];
+                        $cantidad =  $_POST["nuevoAlmCorte"];
+
+                        $actualizaArticuloTaller = ModeloArticulos::mdlActualizarTallerCorte($articulo,$cantidad);
+
+                         /* 
+                        * Mandamos a imprimir con la orden de cut para cortar cada ticket 
+                        */
+
                         $nombre_impresora = "Star BSC10"; 
  
                         $connector = new WindowsPrintConnector($nombre_impresora);
@@ -159,6 +168,37 @@ class ControladorCortes{
                             }
     
                         $printer -> close();
+                    }else {
+                        /* 
+                        * Actualizamos la cantidad que queda en corte y pasa al servicio en el articulo
+                        */
+                        $articulo  = $_POST["nuevoArticulo"];
+                        $cantidad =  $_POST["nuevoAlmCorte"];
+
+                        $actualizaArticuloServicio = ModeloArticulos::mdlActualizarServicioCorte($articulo,$cantidad);
+
+                        /* 
+                        * Traemos el codigo del servicio cabecera creado mediante el evento 
+                        */
+
+                        $sector = $_POST["seleccionarSectorServicio"];
+
+                        $primerServicio = ModeloServicios::mdlPrimerServicio($sector);
+
+                        $codigoServicio = $primerServicio["codigo"];
+
+                        /* 
+                        * Guardamos el detalle del servicio y lo asignamos a la cabecera con el codigo de servicio 
+                        */
+
+                        $datosDetalle=array("articulo"=>$articulo,
+                                            "cantidad"=>$cantidad,
+                                            "codigo"=>$codigoServicio,
+                                            "saldo"=>$cantidad,
+                                            "cabecera_taller"=>$ult_codigo["ult_codigo"]);
+
+						$respuestaDetalle =ModeloServicios::mdlGuardarDetallesServicios("servicios_detallejf",$datosDetalle);
+
                     }
 
                     

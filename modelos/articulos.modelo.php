@@ -921,12 +921,56 @@ class ModeloArticulos
 	/* 
 	* Método para actualizar el corte y taller
 	*/
+	static public function mdlActualizarServicioCorte($articulo, $cantidad){
+
+		$sql = "UPDATE 
+						articulojf 
+					SET
+						servicio = servicio + :cantidad,
+						alm_corte = alm_corte - :cantidad 
+					WHERE articulo = :articulo ";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":articulo", $articulo, PDO::PARAM_STR);
+		$stmt->bindParam(":cantidad", $cantidad, PDO::PARAM_INT);
+
+		$stmt->execute();
+
+		$stmt = null;
+	}
+
+	/* 
+	* Método para actualizar el corte y taller
+	*/
 	static public function mdlActualizarTallerEliminado($articulo, $cantidad){
 
 		$sql = "UPDATE 
 						articulojf 
 					SET
 						taller = taller - :cantidad,
+						alm_corte = alm_corte + :cantidad 
+					WHERE articulo = :articulo ";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":articulo", $articulo, PDO::PARAM_STR);
+		$stmt->bindParam(":cantidad", $cantidad, PDO::PARAM_INT);
+
+		$stmt->execute();
+
+		$stmt = null;
+	}
+
+	/* 
+	* Método para actualizar el corte y servicio
+	*/
+	static public function mdlActualizarServicioEliminado($articulo, $cantidad){
+
+		$sql = "UPDATE 
+						articulojf 
+					SET
+						servicio = servicio - :cantidad,
 						alm_corte = alm_corte + :cantidad 
 					WHERE articulo = :articulo ";
 

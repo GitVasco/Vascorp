@@ -299,9 +299,9 @@ MODAL MANDAR A TALLER
                   $item = null;
                   $valor = null;
 
-                  $categorias = ControladorSectores::ctrMostrarSectores($item, $valor);
+                  $sectores = ControladorSectores::ctrMostrarSectores($item, $valor);
 
-                  foreach ($categorias as $key => $value) {
+                  foreach ($sectores as $key => $value) {
 
                     echo '<option value="'.$value["cod_sector"].'">'.$value["cod_sector"]." - ".$value["nom_sector"].'</option>';
 
