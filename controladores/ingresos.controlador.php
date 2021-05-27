@@ -269,11 +269,7 @@ class ControladorIngresos{
 
                             ModeloArticulos::mdlActualizarUnDato($tabla, $item1, $valor1, $valor);
 
-                            //Actualizamos Stock
-                            $item2="stock";
-                            $valor2= $value["cantidad"];
-    
-                            ModeloArticulos::mdlActualizarStockIngreso( $valor, $valor2);
+                            
     
                         }
                     }else{
@@ -290,12 +286,8 @@ class ControladorIngresos{
     
                             ModeloArticulos::mdlActualizarUnCierre($tabla, $item1, $valor1, $valor);
 
-                            //Actualizamos Stock
-                            $item2="stock";
+                           
                             $valor2= $value["cantidad"];
-    
-                            ModeloArticulos::mdlActualizarStockIngreso( $articulo, $valor2);
-
                             //Actualizamos servicio
                             
                             ModeloArticulos::mdlActualizarArticuloServicio( $articulo, $valor2);
@@ -659,14 +651,6 @@ class ControladorIngresos{
 
                             ModeloArticulos::mdlActualizarUnDato($tabla, $item1, $valor1, $valor);
 
-                            //Actualizamos Stock
-                            $item2="stock";
-                            $valor2= $value["cantidad"];
-    
-                            ModeloArticulos::mdlActualizarStockIngreso( $valor, $valor2);
-
-                            
-    
                         }
                     }else{
                         foreach($listaArticulosOC as $value){
@@ -681,13 +665,8 @@ class ControladorIngresos{
                             $valor1 = $value["taller"];
     
                             ModeloArticulos::mdlActualizarUnCierre($tabla, $item1, $valor1, $valor);
-
-                            //Actualizamos Stock
-                            $item2="stock";
+                            
                             $valor2= $value["cantidad"];
-    
-                            ModeloArticulos::mdlActualizarStockIngreso( $articulo, $valor2);
-
                             //Actualizamos servicio
                             
                             ModeloArticulos::mdlActualizarArticuloServicio( $articulo, $valor2);

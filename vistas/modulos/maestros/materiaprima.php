@@ -22,7 +22,15 @@
 
     <div class="box">
       <div class="box-header with-border">
+        
+        <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarMateriaPrima">
+            
+          Agregar Materia Prima
+
+        </button>
+
         <div class="pull-right">
+
           <button class="btn btn-outline-success btnReporteMateria" style="border:green 1px solid">
           <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Materia Prima  </button>
         </div>
@@ -37,6 +45,7 @@
            
            <th style="width:10px">#</th>
            <th>Código</th>
+           <th>Cod. Fab.</th>
            <th>Cod. Línea</th>
            <th>Línea</th>
            <th>Descripcion</th>
@@ -45,7 +54,7 @@
            <th>Sal. Prom.</th>
            <th>Unidad</th>
            <th>Costo</th>
-           <th style="width:100px">Acciones</th>
+           <th style="width:165px">Acciones</th>
 
          </tr>
 
@@ -66,14 +75,13 @@
 
 </div>
 
-
 <!--=====================================
-MODAL EDITAR MATERIA PRIMA
+MODAL AGREGAR MATERIA PRIMA
 ======================================-->
 
-<div id="modalEditarMateriaPrima" class="modal fade" role="dialog">
+<div id="modalAgregarMateriaPrima" class="modal fade" role="dialog">
   
-  <div class="modal-dialog">
+  <div class="modal-dialog" style="width:77%">
 
     <div class="modal-content">
 
@@ -87,9 +95,14 @@ MODAL EDITAR MATERIA PRIMA
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title">Editar Materia Prima</h4>
+          <h4 class="modal-title">Agregar Materia Prima</h4>
 
         </div>
+
+        <?php 
+        date_default_timezone_set('America/Lima');
+        $fecha = new DateTime();
+        ?>
 
         <!--=====================================
         CUERPO DEL MODAL
@@ -99,35 +112,401 @@ MODAL EDITAR MATERIA PRIMA
 
           <div class="box-body">
 
-            <!-- ENTRADA PARA EL CÓDIGO -->
             
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-code"></i></span> 
+            
+            <div class="form-group" id="alertaCodigoFab">
 
-                <input type="text" class="form-control input-lg" id="editarCodigo" name="editarCodigo" placeholder="Ingresar código" readonly required>
+              <!-- ENTRADA PARA EL CÓDIGO FABRICA -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">COD. FABRICA</label>
+              <div class="col-lg-2">
+
+                <input type="text" class="form-control input-md"  name="nuevoCodigoFab"  id ="nuevoCodigoFab" placeholder="INGRESAR CODIGO FAB" readonly required>
+
+              </div>
+              <!-- ENTRADA PARA EL CÓDIGO ALTERNO-->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">COD ALTERNO</label>
+              <div class="col-lg-2">
+              
+                <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="nuevoCodigoAlt"  id ="nuevoCodigoAlt" placeholder="Ingresar código"  required>
+              </div>
+
+              <!-- ENTRADA PARA LA FECHA DE EMISION -->
+              <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3 text-right">FECHA EMISION</label>
+              <div class="col-lg-2">
+              
+                <input type="date" class="form-control input-md" name="nuevaFechaEmision" value="<?php echo $fecha->format("Y-m-d")?>"readonly>
 
               </div>
 
             </div>
 
-            <!-- ENTRADA PARA LA DESCRIPCIÓN -->
+            <div class="col-lg-12"></div>
 
-            <div class="form-group">
+            <!-- ENTRADA PARA LA LINEA -->
+            <div class="form-group" style ="padding-top:25px">
               
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-product-hunt"></i></span> 
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">LINEA</label>
+              <div class="col-lg-5">
 
-                <input type="text" class="form-control input-lg" id="editarDescripcion" name="editarDescripcion" placeholder="Ingresar nombre" required>
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevaLinea" id="nuevaLinea" required>
+                  
+                  <?php
+
+                    $lineas = ControladorMateriaPrima::ctrMostrarLineas();
+
+                    echo '<option value="">SELECCIONAR LINEAS</option>';
+
+                    foreach ($lineas as $key => $value) {
+
+                        echo '<option value="'.$value["Des_Corta"].'">'.$value["Des_Corta"].' - '.$value["Cod_Argumento"].' - '.$value["Des_Larga"].'</option>';
+
+                    }
+
+                  ?>
+                </select>
 
               </div>
 
-            </div>            
-                       
+            </div>
 
+            <!-- ENTRADA PARA LA SUB LINEA -->
+            <div class="form-group" style ="padding-top:25px">
+              
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">SUB LINEA</label>
+              <div class="col-lg-5">
+
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevaSubLinea" id="nuevaSubLinea" required>
+                  <option value="">SELECCIONAR SUBLINEAS</option>
+                  
+                </select>
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA EL COLOR -->
+            <div class="form-group" style ="padding-top:25px">
+              
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">COLOR</label>
+              <div class="col-lg-5">
+
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevoColorMateria" id="nuevoColorMateria" required>
+                  
+                  <?php
+
+                    $colores = ControladorMateriaPrima::ctrMostrarColores();
+
+                    echo '<option value="">SELECCIONAR COLOR</option>';
+
+                    foreach ($colores as $key => $value) {
+
+                        echo '<option value="'.$value["Cod_Argumento"].'">'.$value["Cod_Argumento"].' - '.$value["Des_Larga"].'</option>';
+
+                    }
+
+                  ?>
+                </select>
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA LA TALLA -->
+            <div class="form-group" style ="padding-top:25px">
+              
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">TALLA</label>
+              <div class="col-lg-5">
+
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevaTallaMateria" id="nuevaTallaMateria" required>
+                  
+                  <?php
+
+                    $tallas = ControladorMateriaPrima::ctrMostrarTallas();
+
+                    echo '<option value="">SELECCIONAR TALLA</option>';
+
+                    foreach ($tallas as $key => $value) {
+
+                        echo '<option value="'.$value["Cod_Argumento"].'">'.$value["Cod_Argumento"].' - '.$value["Des_Larga"].'</option>';
+
+                    }
+
+                  ?>
+                </select>
+
+              </div>
+
+            </div>
+
+            <div class="col-lg-12"></div>
+
+            <!-- ENTRADA PARA LA DESCRIPCION -->
+            <div class="form-group" style="padding-top:25px">
+
+              
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">DESCRIPCION</label>
+              <div class="col-lg-11">
+
+                <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="nuevaDescripcion" placeholder="Ingresar descripción"  required>
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA LA UND. MEDIDA -->
+            <div class="form-group" style ="padding-top:25px">
+              
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">UNID. MEDIDA</label>
+              <div class="col-lg-2">
+
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevaUnidadMedida" required>
+                  
+                  <?php
+                    $item = null;
+                    $valor = null;
+
+                    $bancos = ControladorMateriaPrima::ctrMostrarUndMedida();
+
+                    echo '<option value="">SELECCIONAR UNID MEDIDA</option>';
+
+                    foreach ($bancos as $key => $value) {
+
+                        echo '<option value="'.$value["Cod_Argumento"].'">'.$value["Cod_Argumento"].' - '.$value["Des_Larga"].' - '.$value["Des_Corta"].'</option>';
+
+                    }
+
+                  ?>
+                </select>
+
+              </div>
+
+            </div>
+            
+            <div class="col-lg-12"></div>
+
+            <div class="form-group" style="padding-top:25px">
+
+              <!-- ENTRADA PARA EL CÓDIGO FABRICA -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">PESO</label>
+              <div class="col-lg-2">
+
+                <input type="number" min = "0" step="any"  class="form-control input-md"  name="nuevoPeso"   value="0.00" >
+
+              </div>
+              <!-- ENTRADA PARA EL CÓDIGO ALTERNO-->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">%AD VAL</label>
+              <div class="col-lg-2">
+              
+                <input type="number" min = "0" step="any" class="form-control input-md"  name="nuevoAdVal"  value="0.00"  >
+              </div>
+
+              <!-- ENTRADA PARA LA FECHA DE EMISION -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">%SEGURO</label>
+              <div class="col-lg-2">
+              
+                <input type="number" min = "0" step="any" class="form-control input-md" name="nuevoSeguro" value="0.00"  >
+
+              </div>
+
+            </div>
+
+            <div class="col-lg-12"></div>
+
+            <div class="form-group" style="padding-top:25px">
+
+              <!-- ENTRADA PARA EL CÓDIGO FABRICA -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">STK ACTUAL</label>
+              <div class="col-lg-2">
+
+                <input type="number" min = "0" step="any"  class="form-control input-md"  name="nuevoStockActual"   value="0.00"  readonly>
+
+              </div>
+              <!-- ENTRADA PARA EL CÓDIGO ALTERNO-->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">STK MIN</label>
+              <div class="col-lg-2">
+              
+                <input type="number" min = "0" step="any" class="form-control input-md"  name="nuevoStockMinimo"  value="0.00"  >
+              </div>
+
+              <!-- ENTRADA PARA LA FECHA DE EMISION -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">STK MAX.</label>
+              <div class="col-lg-2">
+              
+                <input type="number" min = "0" step="any" class="form-control input-md" name="nuevoStockMaximo" value="0.00"  >
+
+              </div>
+
+            </div>
+            <div class="col-lg-12"></div>
+            <label for="" style="padding-top:25px">PROVEEDORES X LISTA DE PRECIO</label>
+
+            <div class="form-group" style="padding-top:25px">
+
+              <!-- ENTRADA PARA EL CÓDIGO FABRICA -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">PROVEEDOR</label>
+              <div class="col-lg-5">
+
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevoProveedor" id="nuevoProveedor" >
+                  
+                  <?php
+                    $item = null;
+                    $valor = null;
+
+                    $proveedores = ControladorProveedores::ctrMostrarProveedores($item, $valor);
+
+                    echo '<option value="">SELECCIONAR PROVEEDOR</option>';
+
+                    foreach ($proveedores as $key => $value) {
+
+                        echo '<option value="'.$value["CodRuc"].'">'.$value["CodRuc"].' - '.$value["RazPro"].'</option>';
+
+                    }
+
+                  ?>
+                </select>
+
+              </div>
+              <!-- ENTRADA PARA EL CÓDIGO ALTERNO-->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">MONEDA</label>
+              <div class="col-lg-2">
+              
+                <input type="text" class="form-control input-md"  name="nuevaMoneda"  id="nuevaMoneda" readonly >
+              </div>
+
+              <!-- ENTRADA PARA LA FECHA DE EMISION -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">PRECIO S/IGV</label>
+              <div class="col-lg-2">
+              
+                <input type="number" min = "0" step="any" class="form-control input-md" name="nuevoPrecioSIGV"  >
+
+              </div>
+
+            </div>
+
+
+            <div class="form-group" style="padding-top:25px">
+
+              <!-- ENTRADA PARA EL CÓDIGO FABRICA -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">PROVEEDOR</label>
+              <div class="col-lg-5">
+
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevoProveedor1" id="nuevoProveedor1">
+                  
+                  <?php
+                    $item = null;
+                    $valor = null;
+
+                    $proveedores = ControladorProveedores::ctrMostrarProveedores($item, $valor);
+
+                    echo '<option value="">SELECCIONAR PROVEEDOR</option>';
+
+                    foreach ($proveedores as $key => $value) {
+
+                        echo '<option value="'.$value["CodRuc"].'">'.$value["CodRuc"].' - '.$value["RazPro"].'</option>';
+
+                    }
+
+                  ?>
+                </select>
+
+              </div>
+              <!-- ENTRADA PARA EL CÓDIGO ALTERNO-->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">MONEDA</label>
+              <div class="col-lg-2">
+              
+                <input type="text" class="form-control input-md"  name="nuevaMoneda1" id="nuevaMoneda1"  readonly >
+              </div>
+
+              <!-- ENTRADA PARA LA FECHA DE EMISION -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">PRECIO S/IGV</label>
+              <div class="col-lg-2">
+              
+                <input type="number" min = "0" step="any" class="form-control input-md" name="nuevoPrecioSIGV1"  >
+
+              </div>
+
+            </div>
+
+            <div class="form-group" style="padding-top:25px">
+
+              <!-- ENTRADA PARA EL CÓDIGO FABRICA -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">PROVEEDOR</label>
+              <div class="col-lg-5">
+
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevoProveedor2" id="nuevoProveedor2" >
+                  
+                  <?php
+                    $item = null;
+                    $valor = null;
+
+                    $proveedores = ControladorProveedores::ctrMostrarProveedores($item, $valor);
+
+                    echo '<option value="">SELECCIONAR PROVEEDOR</option>';
+
+                    foreach ($proveedores as $key => $value) {
+
+                        echo '<option value="'.$value["CodRuc"].'">'.$value["CodRuc"].' - '.$value["RazPro"].'</option>';
+
+                    }
+
+                  ?>
+                </select>
+
+              </div>
+              <!-- ENTRADA PARA EL CÓDIGO ALTERNO-->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">MONEDA</label>
+              <div class="col-lg-2">
+              
+                <input type="text" class="form-control input-md"  name="nuevaMoneda2" id="nuevaMoneda2"   readonly >
+              </div>
+
+              <!-- ENTRADA PARA LA FECHA DE EMISION -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">PRECIO S/IGV</label>
+              <div class="col-lg-2">
+              
+                <input type="number" min = "0" step="any" class="form-control input-md" name="nuevoPrecioSIGV2"  >
+
+              </div>
+
+            </div>
+
+            <div class="col-lg-12"></div>
+
+             <!-- ENTRADA PARA LA OBSERVACION DE PROVEEDOR 1 -->
+            <div class="form-group" style="padding-top:25px">
+
+              <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">OBSERVACION PROV 1</label>
+              <div class="col-lg-10">
+
+                <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="nuevaObservacion1" placeholder="Ingresar observación de proveedor 1"  >
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA LA OBSERVACION DE PROVEEDOR 2 -->
+            <div class="form-group" style="padding-top:25px">
+
+              <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">OBSERVACION PROV 2</label>
+              <div class="col-lg-10">
+
+                <input type="text" class="form-control input-md" style="text-transform:uppercase;"  name="nuevaObservacion2" placeholder="Ingresar observación de proveedor 2"  >
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA LA OBSERVACION DE PROVEEDOR 3 -->
+            <div class="form-group" style="padding-top:25px">
+
+              <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">OBSERVACION PROV 3</label>
+              <div class="col-lg-10">
+
+                <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="nuevaObservacion3" placeholder="Ingresar observación de proveedor 3"  >
+
+              </div>
+
+            </div>
 
           </div>
 
@@ -149,6 +528,543 @@ MODAL EDITAR MATERIA PRIMA
 
       <?php
 
+      $guardarMateriaPrima = new ControladorMateriaPrima();
+      $guardarMateriaPrima -> ctrCrearMateriaPrima();
+
+      ?>    
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+<!--=====================================
+MODAL EDITAR MATERIA PRIMA
+======================================-->
+
+<div id="modalEditarMateriaPrima" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog" style="width:77%">
+
+    <div class="modal-content">
+
+      <form role="form" method="post" enctype="multipart/form-data">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Editar Materia Prima</h4>
+
+        </div>
+
+        
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            
+            
+            <div class="form-group" id="alertaCodigoFab">
+
+              <!-- ENTRADA PARA EL CÓDIGO FABRICA -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">COD. FABRICA</label>
+              <div class="col-lg-2">
+
+                <input type="text" class="form-control input-md"  name="editarCodigoFab"  id ="editarCodigoFab" placeholder="INGRESAR CODIGO FAB" readonly required>
+                <input type="hidden" name="editarCodigoPro" id="editarCodigoPro">
+              </div>
+              <!-- ENTRADA PARA EL CÓDIGO ALTERNO-->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">COD ALTERNO</label>
+              <div class="col-lg-2">
+              
+                <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="editarCodigoAlt"  id ="editarCodigoAlt"  required>
+              </div>
+
+              <!-- ENTRADA PARA LA FECHA DE EMISION -->
+              <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3 text-right">FECHA EMISION</label>
+              <div class="col-lg-2">
+              
+                <input type="date" class="form-control input-md" name="editarFechaEmision"  id="editarFechaEmision" readonly>
+
+              </div>
+
+            </div>
+
+            <div class="col-lg-12"></div>
+
+            <!-- ENTRADA PARA LA LINEA -->
+            <div class="form-group" style ="padding-top:25px">
+              
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">LINEA</label>
+              <div class="col-lg-5">
+
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="editarLinea" id="editarLinea" disabled>
+                  
+                  <?php
+
+                    $lineas = ControladorMateriaPrima::ctrMostrarLineas();
+
+                    echo '<option value="">SELECCIONAR LINEAS</option>';
+
+                    foreach ($lineas as $key => $value) {
+
+                        echo '<option value="'.$value["Des_Corta"].'">'.$value["Des_Corta"].' - '.$value["Cod_Argumento"].' - '.$value["Des_Larga"].'</option>';
+
+                    }
+
+                  ?>
+                </select>
+
+              </div>
+
+              <!-- ENTRADA PARA LA FECHA DE EMISION -->
+              <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3 text-right">REGISTRADO POR</label>
+              <div class="col-lg-2">
+              
+                <input type="text" class="form-control input-md" name="editarUsuarioReg"  id="editarUsuarioReg" readonly>
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA LA SUB LINEA -->
+            <div class="form-group" style ="padding-top:25px">
+              
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">SUB LINEA</label>
+              <div class="col-lg-5">
+
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="editarSubLinea" id="editarSubLinea" disabled>
+                  <option value="">SELECCIONAR SUBLINEAS</option>
+                  <?php
+                    $valor = null;
+                    $sublineas = ControladorMateriaPrima::ctrMostrarSubLineas($valor);
+
+
+                    foreach ($sublineas as $key => $value) {
+
+                        echo '<option value="'.$value["Cod_Argumento"].'">'.$value["Cod_Argumento"].' - '.$value["Des_Larga"].'</option>';
+
+                    }
+
+                  ?>
+                </select>
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA EL COLOR -->
+            <div class="form-group" style ="padding-top:25px">
+              
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">COLOR</label>
+              <div class="col-lg-5">
+
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="editarColorMateria" id="editarColorMateria" disabled>
+                  
+                  <?php
+
+                    $colores = ControladorMateriaPrima::ctrMostrarColores();
+
+                    echo '<option value="">SELECCIONAR COLOR</option>';
+
+                    foreach ($colores as $key => $value) {
+
+                        echo '<option value="'.$value["Cod_Argumento"].'">'.$value["Cod_Argumento"].' - '.$value["Des_Larga"].'</option>';
+
+                    }
+
+                  ?>
+                </select>
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA LA TALLA -->
+            <div class="form-group" style ="padding-top:25px">
+              
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">TALLA</label>
+              <div class="col-lg-5">
+
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="editarTallaMateria" id="editarTallaMateria" disabled>
+                  
+                  <?php
+
+                    $tallas = ControladorMateriaPrima::ctrMostrarTallas();
+
+                    echo '<option value="">SELECCIONAR TALLA</option>';
+
+                    foreach ($tallas as $key => $value) {
+
+                        echo '<option value="'.$value["Cod_Argumento"].'">'.$value["Cod_Argumento"].' - '.$value["Des_Larga"].'</option>';
+
+                    }
+
+                  ?>
+                </select>
+
+              </div>
+
+            </div>
+
+            <div class="col-lg-12"></div>
+
+            <!-- ENTRADA PARA LA DESCRIPCION -->
+            <div class="form-group" style="padding-top:25px">
+
+              
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">DESCRIPCION</label>
+              <div class="col-lg-11">
+
+                <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="editarDescripcion" id="editarDescripcion" required>
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA LA UND. MEDIDA -->
+            <div class="form-group" style ="padding-top:25px">
+              
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">UNID. MEDIDA</label>
+              <div class="col-lg-2">
+
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="editarUnidadMedida" id="editarUnidadMedida" required>
+                  
+                  <?php
+                    $item = null;
+                    $valor = null;
+
+                    $bancos = ControladorMateriaPrima::ctrMostrarUndMedida();
+
+                    echo '<option value="">SELECCIONAR UNID MEDIDA</option>';
+
+                    foreach ($bancos as $key => $value) {
+
+                        echo '<option value="'.$value["Cod_Argumento"].'">'.$value["Cod_Argumento"].' - '.$value["Des_Larga"].' - '.$value["Des_Corta"].'</option>';
+
+                    }
+
+                  ?>
+                </select>
+
+              </div>
+
+            </div>
+            
+            <div class="col-lg-12"></div>
+
+            <div class="form-group" style="padding-top:25px">
+
+              <!-- ENTRADA PARA EL CÓDIGO FABRICA -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">PESO</label>
+              <div class="col-lg-2">
+
+                <input type="number" min = "0" step="any"  class="form-control input-md"  name="editarPeso" id="editarPeso">
+
+              </div>
+              <!-- ENTRADA PARA EL CÓDIGO ALTERNO-->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">%AD VAL</label>
+              <div class="col-lg-2">
+              
+                <input type="number" min = "0" step="any" class="form-control input-md"  name="editarAdVal" id="editarAdVal">
+              </div>
+
+              <!-- ENTRADA PARA LA FECHA DE EMISION -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">%SEGURO</label>
+              <div class="col-lg-2">
+              
+                <input type="number" min = "0" step="any" class="form-control input-md" name="editarSeguro" id="editarSeguro">
+
+              </div>
+
+            </div>
+
+            <div class="col-lg-12"></div>
+
+            <div class="form-group" style="padding-top:25px">
+
+              <!-- ENTRADA PARA EL CÓDIGO FABRICA -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">STK ACTUAL</label>
+              <div class="col-lg-2">
+
+                <input type="number" min = "0" step="any"  class="form-control input-md"  name="editarStockActual" id="editarStockActual" readonly >
+
+              </div>
+              <!-- ENTRADA PARA EL CÓDIGO ALTERNO-->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">STK MIN</label>
+              <div class="col-lg-2">
+              
+                <input type="number" min = "0" step="any" class="form-control input-md"  name="editarStockMinimo"  id="editarStockMinimo">
+              </div>
+
+              <!-- ENTRADA PARA LA FECHA DE EMISION -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">STK MAX.</label>
+              <div class="col-lg-2">
+              
+                <input type="number" min = "0" step="any" class="form-control input-md" name="editarStockMaximo"  id="editarStockMaximo">
+
+              </div>
+
+            </div>
+            <div class="col-lg-12"></div>
+            <label for="" style="padding-top:25px">PROVEEDORES X LISTA DE PRECIO</label>
+
+            <div class="form-group" style="padding-top:25px">
+
+              <!-- ENTRADA PARA EL CÓDIGO FABRICA -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">PROVEEDOR</label>
+              <div class="col-lg-4">
+
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="editarProveedor" id="editarProveedor" >
+                  
+                  <?php
+                    $item = null;
+                    $valor = null;
+
+                    $proveedores = ControladorProveedores::ctrMostrarProveedores($item, $valor);
+
+                    echo '<option value="">SELECCIONAR PROVEEDOR</option>';
+
+                    foreach ($proveedores as $key => $value) {
+
+                        echo '<option value="'.$value["CodRuc"].'">'.$value["CodRuc"].' - '.$value["RazPro"].'</option>';
+
+                    }
+
+                  ?>
+                </select>
+
+              </div>
+              <!-- ENTRADA PARA EL CÓDIGO ALTERNO-->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">MONEDA</label>
+              <div class="col-lg-2">
+              
+                <select  class="form-control input-md selectpicker"  name="editarMoneda"  id="editarMoneda" data-live-search="true" >
+                <option value="">SELECCIONAR MONEDAS</option>
+                  <?php
+                    $valor = null;
+                    $sublineas = ControladorProveedores::ctrMostrarMonedas();
+
+
+                    foreach ($sublineas as $key => $value) {
+
+                        echo '<option value="'.$value["Des_Larga"].'">'.$value["Des_Larga"].'</option>';
+
+                    }
+
+                  ?>
+                </select>
+              </div>
+
+              <!-- ENTRADA PARA LA FECHA DE EMISION -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">PRECIO S/IGV</label>
+              <div class="col-lg-2">
+              
+                <input type="number" min = "0" step="any" class="form-control input-md" name="editarPrecioSIGV" id="editarPrecioSIGV" >
+
+              </div>
+
+              <div class="col-lg-1">
+                    <button type="button" class="btn btn-info form-control" id="btnLimpiarProveedor1" title="Limpiar Proveedor 1"><i class="fa fa-refresh"></i></button>
+              </div>
+
+            </div>
+
+
+            <div class="form-group" style="padding-top:25px">
+
+              <!-- ENTRADA PARA EL CÓDIGO FABRICA -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">PROVEEDOR</label>
+              <div class="col-lg-4">
+
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="editarProveedor1" id="editarProveedor1">
+                  
+                  <?php
+                    $item = null;
+                    $valor = null;
+
+                    $proveedores = ControladorProveedores::ctrMostrarProveedores($item, $valor);
+
+                    echo '<option value="">SELECCIONAR PROVEEDOR</option>';
+
+                    foreach ($proveedores as $key => $value) {
+
+                        echo '<option value="'.$value["CodRuc"].'">'.$value["CodRuc"].' - '.$value["RazPro"].'</option>';
+
+                    }
+
+                  ?>
+                </select>
+
+              </div>
+              <!-- ENTRADA PARA EL CÓDIGO ALTERNO-->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">MONEDA</label>
+              <div class="col-lg-2">
+              
+                <select  class="form-control input-md selectpicker"  name="editarMoneda1"  id="editarMoneda1" data-live-search="true" >
+                  <option value="">SELECCIONAR MONEDAS</option>
+                  <?php
+                    $valor = null;
+                    $sublineas = ControladorProveedores::ctrMostrarMonedas();
+
+
+                    foreach ($sublineas as $key => $value) {
+
+                        echo '<option value="'.$value["Des_Larga"].'">'.$value["Des_Larga"].'</option>';
+
+                    }
+
+                  ?>
+                </select>
+              </div>
+
+              <!-- ENTRADA PARA LA FECHA DE EMISION -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">PRECIO S/IGV</label>
+              <div class="col-lg-2">
+              
+                <input type="number" min = "0" step="any" class="form-control input-md" name="editarPrecioSIGV1" id="editarPrecioSIGV1" >
+
+              </div>
+
+              <div class="col-lg-1">
+                    <button type="button" class="btn btn-info form-control" id="btnLimpiarProveedor2" title="Limpiar Proveedor 2"><i class="fa fa-refresh"></i></button>
+              </div>
+
+            </div>
+
+            <div class="form-group" style="padding-top:25px">
+
+              <!-- ENTRADA PARA EL CÓDIGO FABRICA -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">PROVEEDOR</label>
+              <div class="col-lg-4">
+
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="editarProveedor2" id="editarProveedor2" >
+                  
+                  <?php
+                    $item = null;
+                    $valor = null;
+
+                    $proveedores = ControladorProveedores::ctrMostrarProveedores($item, $valor);
+
+                    echo '<option value="">SELECCIONAR PROVEEDOR</option>';
+
+                    foreach ($proveedores as $key => $value) {
+
+                        echo '<option value="'.$value["CodRuc"].'">'.$value["CodRuc"].' - '.$value["RazPro"].'</option>';
+
+                    }
+
+                  ?>
+                </select>
+
+              </div>
+              <!-- ENTRADA PARA EL CÓDIGO ALTERNO-->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">MONEDA</label>
+              <div class="col-lg-2">
+              
+                <select  class="form-control input-md selectpicker"  name="editarMoneda2"  id="editarMoneda2" data-live-search="true" >
+                  <option value="">SELECCIONAR MONEDAS</option>
+                  <?php
+                    $valor = null;
+                    $sublineas = ControladorProveedores::ctrMostrarMonedas();
+
+
+                    foreach ($sublineas as $key => $value) {
+
+                        echo '<option value="'.$value["Des_Larga"].'">'.$value["Des_Larga"].'</option>';
+
+                    }
+
+                  ?>
+                </select>
+              </div>
+
+              <!-- ENTRADA PARA LA FECHA DE EMISION -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">PRECIO S/IGV</label>
+              <div class="col-lg-2">
+              
+                <input type="number" min = "0" step="any" class="form-control input-md" name="editarPrecioSIGV2"  id="editarPrecioSIGV2">
+
+              </div>
+
+              <div class="col-lg-1">
+                    <button type="button" class="btn btn-info form-control" id="btnLimpiarProveedor3" title="Limpiar Proveedor 3"><i class="fa fa-refresh"></i></button>
+              </div>
+
+            </div>
+
+            <div class="col-lg-12"></div>
+
+             <!-- ENTRADA PARA LA OBSERVACION DE PROVEEDOR 1 -->
+            <div class="form-group" style="padding-top:25px">
+
+              <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">OBSERVACION PROV 1</label>
+              <div class="col-lg-10">
+
+                <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="editarObservacion1" id="editarObservacion1" >
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA LA OBSERVACION DE PROVEEDOR 2 -->
+            <div class="form-group" style="padding-top:25px">
+
+              <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">OBSERVACION PROV 2</label>
+              <div class="col-lg-10">
+
+                <input type="text" class="form-control input-md" style="text-transform:uppercase;"  name="editarObservacion2"  id="editarObservacion2" >
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA LA OBSERVACION DE PROVEEDOR 3 -->
+            <div class="form-group" style="padding-top:25px">
+
+              <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">OBSERVACION PROV 3</label>
+              <div class="col-lg-10">
+
+                <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="editarObservacion3" id="editarObservacion3"  >
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Guardar cambios</button>
+
+        </div>
+
+      </form>
+
+      <?php
+
       $editarMateriaPrima = new ControladorMateriaPrima();
       $editarMateriaPrima -> ctrEditarMateriaPrima();
 
@@ -160,6 +1076,528 @@ MODAL EDITAR MATERIA PRIMA
 
 </div>
 
+
+<!--=====================================
+MODAL DUPLICAR MATERIA PRIMA
+======================================-->
+
+<div id="modalDuplicarMateriaPrima" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog" style="width:77%">
+
+    <div class="modal-content">
+
+      <form role="form" method="post" enctype="multipart/form-data">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Nuevo color Materia Prima</h4>
+
+        </div>
+
+        
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            
+            
+            <div class="form-group" id="alertaCodigoFab2">
+
+              <!-- ENTRADA PARA EL CÓDIGO FABRICA -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">COD. FABRICA</label>
+              <div class="col-lg-2">
+
+                <input type="text" class="form-control input-md"  name="duplicarCodigoFab"  id ="duplicarCodigoFab" placeholder="INGRESAR CODIGO FAB" readonly required>
+              </div>
+              <!-- ENTRADA PARA EL CÓDIGO ALTERNO-->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">COD ALTERNO</label>
+              <div class="col-lg-2">
+              
+                <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="duplicarCodigoAlt"  id ="duplicarCodigoAlt"  required>
+              </div>
+
+              <!-- ENTRADA PARA LA FECHA DE EMISION -->
+              <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3 text-right">FECHA EMISION</label>
+              <div class="col-lg-2">
+              
+                <input type="date" class="form-control input-md" name="duplicarFechaEmision" value="<?php echo $fecha->format("Y-m-d");?>" readonly>
+
+              </div>
+
+            </div>
+
+            <div class="col-lg-12"></div>
+
+            <!-- ENTRADA PARA LA LINEA -->
+            <div class="form-group" style ="padding-top:25px">
+              
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">LINEA</label>
+              <div class="col-lg-5">
+                <input type="hidden" name="duplicarFamPro" id="duplicarFamPro">
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="duplicarLinea" id="duplicarLinea" disabled>
+                  
+                  <?php
+
+                    $lineas = ControladorMateriaPrima::ctrMostrarLineas();
+
+                    echo '<option value="">SELECCIONAR LINEAS</option>';
+
+                    foreach ($lineas as $key => $value) {
+
+                        echo '<option value="'.$value["Des_Corta"].'">'.$value["Des_Corta"].' - '.$value["Cod_Argumento"].' - '.$value["Des_Larga"].'</option>';
+
+                    }
+
+                  ?>
+                </select>
+
+              </div>
+
+              <!-- ENTRADA PARA LA FECHA DE EMISION -->
+              <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3 text-right">CODIGO</label>
+              <div class="col-lg-2">
+              
+                <input type="text" class="form-control input-md" name="duplicarCodigoPro"  id="duplicarCodigoPro" readonly>
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA LA SUB LINEA -->
+            <div class="form-group" style ="padding-top:25px">
+              
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">SUB LINEA</label>
+              <div class="col-lg-5">
+
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="duplicarSubLinea" id="duplicarSubLinea" disabled>
+                  <option value="">SELECCIONAR SUBLINEAS</option>
+                  <?php
+                    $valor = null;
+                    $sublineas = ControladorMateriaPrima::ctrMostrarSubLineas($valor);
+
+
+                    foreach ($sublineas as $key => $value) {
+
+                        echo '<option value="'.$value["Cod_Argumento"].'">'.$value["Cod_Argumento"].' - '.$value["Des_Larga"].'</option>';
+
+                    }
+
+                  ?>
+                </select>
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA EL COLOR -->
+            <div class="form-group" style ="padding-top:25px">
+              
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">COLOR</label>
+              <div class="col-lg-5">
+
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="duplicarColorMateria" id="duplicarColorMateria" required>
+                  
+                  <?php
+
+                    $colores = ControladorMateriaPrima::ctrMostrarColores();
+
+                    echo '<option value="">SELECCIONAR COLOR</option>';
+
+                    foreach ($colores as $key => $value) {
+
+                        echo '<option value="'.$value["Cod_Argumento"].'">'.$value["Cod_Argumento"].' - '.$value["Des_Larga"].'</option>';
+
+                    }
+
+                  ?>
+                </select>
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA LA TALLA -->
+            <div class="form-group" style ="padding-top:25px">
+              
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">TALLA</label>
+              <div class="col-lg-5">
+
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="duplicarTallaMateria" id="duplicarTallaMateria" required>
+                  
+                  <?php
+
+                    $tallas = ControladorMateriaPrima::ctrMostrarTallas();
+
+                    echo '<option value="">SELECCIONAR TALLA</option>';
+
+                    foreach ($tallas as $key => $value) {
+
+                        echo '<option value="'.$value["Cod_Argumento"].'">'.$value["Cod_Argumento"].' - '.$value["Des_Larga"].'</option>';
+
+                    }
+
+                  ?>
+                </select>
+
+              </div>
+
+            </div>
+
+            <div class="col-lg-12"></div>
+
+            <!-- ENTRADA PARA LA DESCRIPCION -->
+            <div class="form-group" style="padding-top:25px">
+
+              
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">DESCRIPCION</label>
+              <div class="col-lg-11">
+
+                <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="duplicarDescripcion" id="duplicarDescripcion" required>
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA LA UND. MEDIDA -->
+            <div class="form-group" style ="padding-top:25px">
+              
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">UNID. MEDIDA</label>
+              <div class="col-lg-2">
+
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="duplicarUnidadMedida" id="duplicarUnidadMedida" required>
+                  
+                  <?php
+                    $item = null;
+                    $valor = null;
+
+                    $bancos = ControladorMateriaPrima::ctrMostrarUndMedida();
+
+                    echo '<option value="">SELECCIONAR UNID MEDIDA</option>';
+
+                    foreach ($bancos as $key => $value) {
+
+                        echo '<option value="'.$value["Cod_Argumento"].'">'.$value["Cod_Argumento"].' - '.$value["Des_Larga"].' - '.$value["Des_Corta"].'</option>';
+
+                    }
+
+                  ?>
+                </select>
+
+              </div>
+
+            </div>
+            
+            <div class="col-lg-12"></div>
+
+            <div class="form-group" style="padding-top:25px">
+
+              <!-- ENTRADA PARA EL CÓDIGO FABRICA -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">PESO</label>
+              <div class="col-lg-2">
+
+                <input type="number" min = "0" step="any"  class="form-control input-md"  name="duplicarPeso" id="duplicarPeso">
+
+              </div>
+              <!-- ENTRADA PARA EL CÓDIGO ALTERNO-->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">%AD VAL</label>
+              <div class="col-lg-2">
+              
+                <input type="number" min = "0" step="any" class="form-control input-md"  name="duplicarAdVal" id="duplicarAdVal">
+              </div>
+
+              <!-- ENTRADA PARA LA FECHA DE EMISION -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">%SEGURO</label>
+              <div class="col-lg-2">
+              
+                <input type="number" min = "0" step="any" class="form-control input-md" name="duplicarSeguro" id="duplicarSeguro">
+
+              </div>
+
+            </div>
+
+            <div class="col-lg-12"></div>
+
+            <div class="form-group" style="padding-top:25px">
+
+              <!-- ENTRADA PARA EL CÓDIGO FABRICA -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">STK ACTUAL</label>
+              <div class="col-lg-2">
+
+                <input type="number" min = "0" step="any"  class="form-control input-md"  name="duplicarStockActual" id="duplicarStockActual" readonly >
+
+              </div>
+              <!-- ENTRADA PARA EL CÓDIGO ALTERNO-->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">STK MIN</label>
+              <div class="col-lg-2">
+              
+                <input type="number" min = "0" step="any" class="form-control input-md"  name="duplicarStockMinimo"  id="duplicarStockMinimo">
+              </div>
+
+              <!-- ENTRADA PARA LA FECHA DE EMISION -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">STK MAX.</label>
+              <div class="col-lg-2">
+              
+                <input type="number" min = "0" step="any" class="form-control input-md" name="duplicarStockMaximo"  id="duplicarStockMaximo">
+
+              </div>
+
+            </div>
+            <div class="col-lg-12"></div>
+            <label for="" style="padding-top:25px">PROVEEDORES X LISTA DE PRECIO</label>
+
+            <div class="form-group" style="padding-top:25px">
+
+              <!-- ENTRADA PARA EL CÓDIGO FABRICA -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">PROVEEDOR</label>
+              <div class="col-lg-5">
+
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="duplicarProveedor" id="duplicarProveedor" >
+                  
+                  <?php
+                    $item = null;
+                    $valor = null;
+
+                    $proveedores = ControladorProveedores::ctrMostrarProveedores($item, $valor);
+
+                    echo '<option value="">SELECCIONAR PROVEEDOR</option>';
+
+                    foreach ($proveedores as $key => $value) {
+
+                        echo '<option value="'.$value["CodRuc"].'">'.$value["CodRuc"].' - '.$value["RazPro"].'</option>';
+
+                    }
+
+                  ?>
+                </select>
+
+              </div>
+              <!-- ENTRADA PARA EL CÓDIGO ALTERNO-->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">MONEDA</label>
+              <div class="col-lg-2">
+              
+                <select  class="form-control input-md selectpicker"  name="duplicarMoneda"  id="duplicarMoneda" data-live-search="true" >
+                <option value="">SELECCIONAR MONEDAS</option>
+                  <?php
+                    $valor = null;
+                    $sublineas = ControladorProveedores::ctrMostrarMonedas();
+
+
+                    foreach ($sublineas as $key => $value) {
+
+                        echo '<option value="'.$value["Des_Larga"].'">'.$value["Des_Larga"].'</option>';
+
+                    }
+
+                  ?>
+                </select>
+              </div>
+
+              <!-- ENTRADA PARA LA FECHA DE EMISION -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">PRECIO S/IGV</label>
+              <div class="col-lg-2">
+              
+                <input type="number" min = "0" step="any" class="form-control input-md" name="duplicarPrecioSIGV" id="duplicarPrecioSIGV" >
+
+              </div>
+
+
+            </div>
+
+
+            <div class="form-group" style="padding-top:25px">
+
+              <!-- ENTRADA PARA EL CÓDIGO FABRICA -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">PROVEEDOR</label>
+              <div class="col-lg-5">
+
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="duplicarProveedor1" id="duplicarProveedor1">
+                  
+                  <?php
+                    $item = null;
+                    $valor = null;
+
+                    $proveedores = ControladorProveedores::ctrMostrarProveedores($item, $valor);
+
+                    echo '<option value="">SELECCIONAR PROVEEDOR</option>';
+
+                    foreach ($proveedores as $key => $value) {
+
+                        echo '<option value="'.$value["CodRuc"].'">'.$value["CodRuc"].' - '.$value["RazPro"].'</option>';
+
+                    }
+
+                  ?>
+                </select>
+
+              </div>
+              <!-- ENTRADA PARA EL CÓDIGO ALTERNO-->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">MONEDA</label>
+              <div class="col-lg-2">
+              
+                <select  class="form-control input-md selectpicker"  name="duplicarMoneda1"  id="duplicarMoneda1" data-live-search="true" >
+                  <option value="">SELECCIONAR MONEDAS</option>
+                  <?php
+                    $valor = null;
+                    $sublineas = ControladorProveedores::ctrMostrarMonedas();
+
+
+                    foreach ($sublineas as $key => $value) {
+
+                        echo '<option value="'.$value["Des_Larga"].'">'.$value["Des_Larga"].'</option>';
+
+                    }
+
+                  ?>
+                </select>
+              </div>
+
+              <!-- ENTRADA PARA LA FECHA DE EMISION -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">PRECIO S/IGV</label>
+              <div class="col-lg-2">
+              
+                <input type="number" min = "0" step="any" class="form-control input-md" name="duplicarPrecioSIGV1" id="duplicarPrecioSIGV1" >
+
+              </div>
+
+            </div>
+
+            <div class="form-group" style="padding-top:25px">
+
+              <!-- ENTRADA PARA EL CÓDIGO FABRICA -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">PROVEEDOR</label>
+              <div class="col-lg-5">
+
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="duplicarProveedor2" id="duplicarProveedor2" >
+                  
+                  <?php
+                    $item = null;
+                    $valor = null;
+
+                    $proveedores = ControladorProveedores::ctrMostrarProveedores($item, $valor);
+
+                    echo '<option value="">SELECCIONAR PROVEEDOR</option>';
+
+                    foreach ($proveedores as $key => $value) {
+
+                        echo '<option value="'.$value["CodRuc"].'">'.$value["CodRuc"].' - '.$value["RazPro"].'</option>';
+
+                    }
+
+                  ?>
+                </select>
+
+              </div>
+              <!-- ENTRADA PARA EL CÓDIGO ALTERNO-->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">MONEDA</label>
+              <div class="col-lg-2">
+              
+                <select  class="form-control input-md selectpicker"  name="duplicarMoneda2"  id="duplicarMoneda2" data-live-search="true" >
+                  <option value="">SELECCIONAR MONEDAS</option>
+                  <?php
+                    $valor = null;
+                    $sublineas = ControladorProveedores::ctrMostrarMonedas();
+
+
+                    foreach ($sublineas as $key => $value) {
+
+                        echo '<option value="'.$value["Des_Larga"].'">'.$value["Des_Larga"].'</option>';
+
+                    }
+
+                  ?>
+                </select>
+              </div>
+
+              <!-- ENTRADA PARA LA FECHA DE EMISION -->
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">PRECIO S/IGV</label>
+              <div class="col-lg-2">
+              
+                <input type="number" min = "0" step="any" class="form-control input-md" name="duplicarPrecioSIGV2"  id="duplicarPrecioSIGV2">
+
+              </div>
+
+            </div>
+
+            <div class="col-lg-12"></div>
+
+             <!-- ENTRADA PARA LA OBSERVACION DE PROVEEDOR 1 -->
+            <div class="form-group" style="padding-top:25px">
+
+              <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">OBSERVACION PROV 1</label>
+              <div class="col-lg-10">
+
+                <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="duplicarObservacion1" id="duplicarObservacion1" >
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA LA OBSERVACION DE PROVEEDOR 2 -->
+            <div class="form-group" style="padding-top:25px">
+
+              <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">OBSERVACION PROV 2</label>
+              <div class="col-lg-10">
+
+                <input type="text" class="form-control input-md" style="text-transform:uppercase;"  name="duplicarObservacion2"  id="duplicarObservacion2" >
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA LA OBSERVACION DE PROVEEDOR 3 -->
+            <div class="form-group" style="padding-top:25px">
+
+              <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">OBSERVACION PROV 3</label>
+              <div class="col-lg-10">
+
+                <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="duplicarObservacion3" id="duplicarObservacion3"  >
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Guardar nuevo color</button>
+
+        </div>
+
+      </form>
+
+      <?php
+
+      $duplicarMateriaPrima = new ControladorMateriaPrima();
+      $duplicarMateriaPrima -> ctrDuplicarMateriaPrima();
+
+      ?>    
+
+    </div>
+
+  </div>
+
+</div>
 
 
 <!--=====================================
@@ -553,6 +1991,13 @@ MODAL EDITAR COSTOS
   </div>
 
 </div>
+
+<?php
+
+  $anularMateriaPrima = new ControladorMateriaPrima();
+  $anularMateriaPrima -> ctrAnularMateriaPrima();
+
+?>
 
 <script>
 window.document.title = "Materia Prima"

@@ -446,6 +446,9 @@ class ControladorUsuarios{
 			$tabla ="usuariosjf";
 			$datos = $_GET["idUsuario"];
 
+			$tabla2="usuario_permisojf";
+			$borrado=ModeloUsuarios::mdlBorrarUsuarioPermiso($tabla2, $datos);
+
 			if($_GET["fotoUsuario"] != ""){
 
 				unlink($_GET["fotoUsuario"]);
@@ -505,7 +508,7 @@ class ControladorUsuarios{
 			}else{
 				$valor1=$_POST["nuevoDatos"];
 			}
-			var_dump($valor3);
+			// var_dump($valor3);
 			$respuesta = ModeloUsuarios::mdlActualizarCorreo($tabla, $item1, $valor1, $item2, $valor2, $item3, $valor3);
 
 			if($respuesta == "ok"){

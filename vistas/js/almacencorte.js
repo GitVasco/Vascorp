@@ -18,6 +18,8 @@ $('.tablaAlmacenCorte').DataTable({
 	"retrieve": true,
 	"processing": true,
 	"order": [[0, "desc"]],
+  "pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
 	"language": {
 
 		"sProcessing": "Procesando...",
@@ -56,7 +58,8 @@ $('.tablaArticulosAlmacenCorte').DataTable( {
 	"retrieve": true,
     "processing": true,
     "pageLength": 20,
-	 "language": {
+    "lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+	  "language": {
 
 			"sProcessing":     "Procesando...",
 			"sLengthMenu":     "Mostrar _MENU_ registros",
@@ -1059,8 +1062,8 @@ $("#daterange-btnVerCortes").daterangepicker(
       var capturarRango17 = $("#daterange-btnVerCortes span").html();
     
       localStorage.setItem("capturarRango17", capturarRango17);
-      localStorage.setItem("fechaInicial", localStorage.getItem("fechaInicial"));
-      localStorage.setItem("fechaFinal", localStorage.getItem("fechaFinal"));
+      localStorage.setItem("fechaInicial", fechaInicial);
+      localStorage.setItem("fechaFinal", fechaFinal);
   
       // Recargamos la tabla con la información para ser mostrada en la tabla
       $(".tablaDetalleCorteTotal").DataTable().destroy();

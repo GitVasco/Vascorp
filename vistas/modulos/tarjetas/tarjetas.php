@@ -70,7 +70,7 @@
 
               <th>Código Interno</th>
               <th>Estado Tarjeta</th>
-              <th style="width:50px">Fecha</th>
+              <th style="width:65px">Fecha</th>
               <th>Total</th>
               <th>Artículo</th>
               <th>Modelo</th>

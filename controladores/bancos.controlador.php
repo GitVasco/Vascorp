@@ -13,7 +13,7 @@ class ControladorBancos{
 				$tabla="maestrajf";
 			   	$datos = array("codigo"=>$_POST["nuevoCodigo"],
 							   "descripcion"=>$_POST["nuevaDescripcion"],
-							   "tipo_dato"=>"TBAN",);
+							   "tipo_dato"=>"TBAN");
 
 			   	$respuesta = ModeloBancos::mdlIngresarBanco($tabla,$datos);
 

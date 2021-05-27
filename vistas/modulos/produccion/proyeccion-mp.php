@@ -43,7 +43,6 @@
 
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 
-                    <button class="btn btn-primary btnCargarProyMp">CARGAR</button>
                     <button class="btn btn-danger btnLimpiarProyMp">LIMPIAR</button>
 
                 </div>
@@ -62,7 +61,7 @@
 
                     <thead>
 
-                        <tr class="info">
+                        <tr >
                             <th>Cod. Lin</th>
                             <th>Cod. Pro.</th>
                             <th>Cod. Fab</th>

@@ -26,9 +26,9 @@
 
                 <input type="hidden" value="<?php echo $_SESSION['perfil']; ?>" id="perfilOculto">
                 
-                <table class="table table-bordered table-striped dt-responsive tablaMovimientos" width="100%">
+                <table class="table table-bordered table-striped dt-responsive tablaMovimientos" width="100%" >
 
-                    <thead>
+                    <thead >
 
                         <tr>
 

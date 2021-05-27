@@ -516,7 +516,7 @@ class ControladorOrdenCorte{
                 $datos = array("codigo"=>$_GET["codigo"],
                                 "usuario"=>$_POST["idUsuario"],                                
                                 "lastUpdate"=>$_POST["fechaActual"]);
-                var_dump($datos);
+                // var_dump($datos);
                 ModeloOrdenCorte::mdlAgregarCantidadOC($datos);
 
                 ModeloArticulos::mdlSumOc($_POST["articulo"],$_POST["cantidad"]);
@@ -627,7 +627,7 @@ class ControladorOrdenCorte{
         if($respuesta=="ok"){
 
             ModeloArticulos::mdlSumOc($_GET["idDetalle"], $_GET["cantidad"]);
-            var_dump($_GET["idDetalle"], $_GET["cantidad"]);
+            // var_dump($_GET["idDetalle"], $_GET["cantidad"]);
 
             echo '<script>
                             swal({

@@ -476,56 +476,56 @@ class ModeloOrdenCorte{
 				CASE
 					WHEN a.cod_talla = '1' 
 					THEN doc.cantidad 
-					ELSE 0 
+					ELSE '' 
 				END
 				) AS t1,
 				SUM(
 				CASE
 					WHEN a.cod_talla = '2' 
 					THEN doc.cantidad 
-					ELSE 0 
+					ELSE '' 
 				END
 				) AS t2,
 				SUM(
 				CASE
 					WHEN a.cod_talla = '3' 
 					THEN doc.cantidad 
-					ELSE 0 
+					ELSE ''
 				END
 				) AS t3,
 				SUM(
 				CASE
 					WHEN a.cod_talla = '4' 
 					THEN doc.cantidad 
-					ELSE 0 
+					ELSE '' 
 				END
 				) AS t4,
 				SUM(
 				CASE
 					WHEN a.cod_talla = '5' 
 					THEN doc.cantidad 
-					ELSE 0 
+					ELSE '' 
 				END
 				) AS t5,
 				SUM(
 				CASE
 					WHEN a.cod_talla = '6' 
 					THEN doc.cantidad 
-					ELSE 0 
+					ELSE '' 
 				END
 				) AS t6,
 				SUM(
 				CASE
 					WHEN a.cod_talla = '7' 
 					THEN doc.cantidad 
-					ELSE 0 
+					ELSE ''
 				END
 				) AS t7,
 				SUM(
 				CASE
 					WHEN a.cod_talla = '8' 
 					THEN doc.cantidad 
-					ELSE 0 
+					ELSE ''
 				END
 				) AS t8,
 				SUM(doc.cantidad) AS subtotal 
@@ -557,56 +557,56 @@ class ModeloOrdenCorte{
 			CASE
 				WHEN a.cod_talla = '1' 
 				THEN doc.cantidad 
-				ELSE 0 
+				ELSE '' 
 			END
 			) AS t1,
 			SUM(
 			CASE
 				WHEN a.cod_talla = '2' 
 				THEN doc.cantidad 
-				ELSE 0 
+				ELSE '' 
 			END
 			) AS t2,
 			SUM(
 			CASE
 				WHEN a.cod_talla = '3' 
 				THEN doc.cantidad 
-				ELSE 0 
+				ELSE ''
 			END
 			) AS t3,
 			SUM(
 			CASE
 				WHEN a.cod_talla = '4' 
 				THEN doc.cantidad 
-				ELSE 0 
+				ELSE '' 
 			END
 			) AS t4,
 			SUM(
 			CASE
 				WHEN a.cod_talla = '5' 
 				THEN doc.cantidad 
-				ELSE 0 
+				ELSE '' 
 			END
 			) AS t5,
 			SUM(
 			CASE
 				WHEN a.cod_talla = '6' 
 				THEN doc.cantidad 
-				ELSE 0 
+				ELSE '' 
 			END
 			) AS t6,
 			SUM(
 			CASE
 				WHEN a.cod_talla = '7' 
 				THEN doc.cantidad 
-				ELSE 0 
+				ELSE '' 
 			END
 			) AS t7,
 			SUM(
 			CASE
 				WHEN a.cod_talla = '8' 
 				THEN doc.cantidad 
-				ELSE 0 
+				ELSE '' 
 			END
 			) AS t8,
 			SUM(doc.cantidad) AS subtotal 

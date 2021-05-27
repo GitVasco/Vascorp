@@ -886,7 +886,7 @@ class ModeloArticulos
 											modelo,
 											$lista as precio
 										FROM
-											preciojf where modelo=$modelo ");
+											preciojf where modelo='$modelo' ");
 
 		$stmt->execute();
 
@@ -1294,6 +1294,288 @@ class ModeloArticulos
 		$stmt = null;
 
 	}
+
+	/* 
+	* MOSTRAR COLORES Y CANTIDADES
+	*/
+	static public function mdlVerColoresCantidades2($salida, $modelo){
+
+		if($salida != null){
+
+			$sql = "SELECT 
+		a.modelo,
+		a.cod_color,
+		a.color,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '1' 
+			THEN '1' 
+			ELSE '0' 
+		  END
+		) AS t1,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '2' 
+			THEN '1' 
+			ELSE '0' 
+		  END
+		) AS t2,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '3' 
+			THEN '1' 
+			ELSE '0' 
+		  END
+		) AS t3,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '4' 
+			THEN '1' 
+			ELSE '0' 
+		  END
+		) AS t4,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '5' 
+			THEN '1' 
+			ELSE '0' 
+		  END
+		) AS t5,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '6' 
+			THEN '1' 
+			ELSE '0' 
+		  END
+		) AS t6,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '7' 
+			THEN '1' 
+			ELSE '0' 
+		  END
+		) AS t7,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '8' 
+			THEN '1' 
+			ELSE '0' 
+		  END
+		) AS t8,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '1' 
+			THEN t.cantidad 
+			ELSE '0' 
+		  END
+		) AS v1,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '2' 
+			THEN t.cantidad 
+			ELSE '0' 
+		  END
+		) AS v2,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '3' 
+			THEN t.cantidad 
+			ELSE '0' 
+		  END
+		) AS v3,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '4' 
+			THEN t.cantidad 
+			ELSE '0' 
+		  END
+		) AS v4,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '5' 
+			THEN t.cantidad 
+			ELSE '0' 
+		  END
+		) AS v5,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '6' 
+			THEN t.cantidad 
+			ELSE '0' 
+		  END
+		) AS v6,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '7' 
+			THEN t.cantidad 
+			ELSE '0' 
+		  END
+		) AS v7,
+		SUM(
+		  CASE
+			WHEN a.cod_talla = '8' 
+			THEN t.cantidad 
+			ELSE '0' 
+		  END
+		) AS v8 
+	  FROM
+		articulojf a 
+		LEFT JOIN 
+		  (SELECT 
+			* 
+		  FROM
+			detalle_ing_sal t 
+		  WHERE codigo = $salida) AS t 
+		  ON a.articulo = t.articulo 
+	  WHERE a.modelo = '".$modelo."'
+		AND a.estado = 'activo' 
+	  GROUP BY a.modelo,
+		a.cod_color,
+		a.color";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		}else{
+
+			$sql = "SELECT 
+			a.modelo,
+			a.cod_color,
+			a.color,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '1' 
+				THEN '1' 
+				ELSE '0' 
+			  END
+			) AS t1,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '2' 
+				THEN '1' 
+				ELSE '0' 
+			  END
+			) AS t2,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '3' 
+				THEN '1' 
+				ELSE '0' 
+			  END
+			) AS t3,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '4' 
+				THEN '1' 
+				ELSE '0' 
+			  END
+			) AS t4,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '5' 
+				THEN '1' 
+				ELSE '0' 
+			  END
+			) AS t5,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '6' 
+				THEN '1' 
+				ELSE '0' 
+			  END
+			) AS t6,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '7' 
+				THEN '1' 
+				ELSE '0' 
+			  END
+			) AS t7,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '8' 
+				THEN '1' 
+				ELSE '0' 
+			  END
+			) AS t8,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '1' 
+				THEN '0' 
+				ELSE '0' 
+			  END
+			) AS v1,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '2' 
+				THEN '0' 
+				ELSE '0' 
+			  END
+			) AS v2,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '3' 
+				THEN '0' 
+				ELSE '0' 
+			  END
+			) AS v3,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '4' 
+				THEN '0' 
+				ELSE '0' 
+			  END
+			) AS v4,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '5' 
+				THEN '0' 
+				ELSE '0' 
+			  END
+			) AS v5,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '6' 
+				THEN '0' 
+				ELSE '0' 
+			  END
+			) AS v6,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '7' 
+				THEN '0' 
+				ELSE '0' 
+			  END
+			) AS v7,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '8' 
+				THEN '0' 
+				ELSE '0' 
+			  END
+			) AS v8 
+		  FROM
+			articulojf a 
+		  WHERE a.modelo = '".$modelo."' 
+			AND a.estado = 'activo' 
+		  GROUP BY a.modelo,
+			a.cod_color,
+			a.color";
+
+			$stmt=Conexion::conectar()->prepare($sql);
+
+			$stmt->execute();
+	
+			return $stmt->fetchAll();			
+
+		}
+
+		$stmt=null;
+
+	}	
 
 }
 

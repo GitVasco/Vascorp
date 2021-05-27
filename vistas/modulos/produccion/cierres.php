@@ -228,7 +228,7 @@ MODAL VISUALIZAR INFORMACION
 
             <div class="box-body">
 
-              <table class="table table-bordered table-striped dt-responsive tablaDetalleOC">
+              <table class="table table-bordered table-striped dt-responsive tablaDetalleOC" width="100%">
 
               <thead>
 
@@ -388,7 +388,7 @@ MODAL VISUALIZAR INFORMACION
           </div>
           
           <div class="box-body">
-            <table class="table table-bordered table-striped  tablaDetalleCierrreTotal">
+            <table class="table table-bordered table-striped  tablaDetalleCierrreTotal" width="100%">
 
               <thead>
 

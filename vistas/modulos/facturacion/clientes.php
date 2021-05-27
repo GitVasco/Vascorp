@@ -112,35 +112,6 @@ MODAL AGREGAR CLIENTE
                 <b>Datos Principales</b>
 
               </div>
-
-              <!-- ENTRADA PARA EL CODIGO -->
-
-              <div class="form-group col-lg-2">
-
-                <div class="input-group">
-
-                  <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
-
-                  <input type="text" class="form-control input-sm" name="codigoCliente" placeholder="Código" required>
-
-                </div>
-
-              </div>
-
-              <!-- ENTRADA PARA RAZON SOCIAL -->
-
-              <div class="form-group col-lg-6">
-
-                <div class="input-group">
-
-                  <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
-
-                  <input type="text" class="form-control input-sm" name="nombre" placeholder="Razón Social o Nombre Completo" required>
-
-                </div>
-
-              </div>
-
               <!-- ENTRADA PARA EL TIPO DOCUMENTO -->
 
               <div class="form-group col-lg-2">
@@ -172,14 +143,44 @@ MODAL AGREGAR CLIENTE
 
                 <div class="input-group">
 
-                  <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
+                  
 
                   <input type="text" class="form-control input-sm" name="documento" id="documentoCliente" placeholder="Nro. Documento" required>
+                  <span class="input-group-addon" style="padding:0px !important;border: 0px !important"><button type="button" class="btn btn-sm btn-default" onclick="ObtenerDatosCliente()"><i class="fa fa-search "></i></button>	</span>
+                </div>
+
+              </div>
+
+
+              <!-- ENTRADA PARA EL CODIGO -->
+
+              <div class="form-group col-lg-2">
+
+                <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
+
+                  <input type="text" class="form-control input-sm" name="codigoCliente" placeholder="Código" required>
 
                 </div>
 
               </div>
 
+              <!-- ENTRADA PARA RAZON SOCIAL -->
+
+              <div class="form-group col-lg-6">
+
+                <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
+
+                  <input type="text" class="form-control input-sm" name="nombre" id="nuevaRazPro" placeholder="Razón Social o Nombre Completo" required>
+
+                </div>
+
+              </div>
+
+              
               <!-- ENTRADA PARA EL TIPO PERSONA -->
 
               <div class="form-group col-lg-2">
@@ -209,7 +210,7 @@ MODAL AGREGAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <input type="text" class="form-control input-sm" name="ape_paterno" placeholder="Apellido Paterno">
+                  <input type="text" class="form-control input-sm" name="ape_paterno" id="ape_paterno" placeholder="Apellido Paterno" >
 
                 </div>
 
@@ -223,7 +224,7 @@ MODAL AGREGAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <input type="text" class="form-control input-sm" name="ape_materno" placeholder="Apellido Materno">
+                  <input type="text" class="form-control input-sm" name="ape_materno" id="ape_materno" placeholder="Apellido Materno" >
 
                 </div>
 
@@ -237,7 +238,7 @@ MODAL AGREGAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <input type="text" class="form-control input-sm" name="nombres" placeholder="Nombres">
+                  <input type="text" class="form-control input-sm" name="nombres" id="nombres" placeholder="Nombres" >
 
                 </div>
 
@@ -266,7 +267,7 @@ MODAL AGREGAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <input type="text" class="form-control input-sm" name="direccion" placeholder="Direccion de Facturación" required>
+                  <input type="text" class="form-control input-sm" name="direccion" id="nuevaDireccion" placeholder="Direccion de Facturación" required>
 
                 </div>
 
@@ -280,7 +281,7 @@ MODAL AGREGAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <select class="form-control input-sm selectpicker" id="ubigeo" name="ubigeo" data-live-search="true" required>
+                  <select class="form-control input-sm selectpicker" id="nuevoUbiPro" name="ubigeo" data-live-search="true" required>
 
                     <option value="">Ubigeo</option>
 

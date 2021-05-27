@@ -1,4 +1,40 @@
 
+/*=============================================
+TABLA DE USUARIOS
+=============================================*/
+  $('.tablaUsuarios').DataTable({
+    "ajax": "ajax/maestros/tabla-usuarios.ajax.php?perfil="+$("#perfilOculto").val(),
+    "deferRender": true,
+    "retrieve": true,
+    "processing": true,
+    "order": [[0, "asc"]],
+	"pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+    "language": {
+			"sProcessing":     "Procesando...",
+			"sLengthMenu":     "Mostrar _MENU_ registros",
+			"sZeroRecords":    "No se encontraron resultados",
+			"sEmptyTable":     "Ningún dato disponible en esta tabla",
+			"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+			"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0",
+			"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+			"sInfoPostFix":    "",
+			"sSearch":         "Buscar:",
+			"sUrl":            "",
+			"sInfoThousands":  ",",
+			"sLoadingRecords": "Cargando...",
+			"oPaginate": {
+			"sFirst":    "Primero",
+			"sLast":     "Último",
+			"sNext":     "Siguiente",
+			"sPrevious": "Anterior"
+			},
+			"oAria": {
+				"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+				"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+			}
+    }    
+  });
 
 /*=============================================
 SUBIENDO LA FOTO DEL USUARIO
@@ -52,7 +88,7 @@ $(".nuevaFoto").change(function(){
 /*=============================================
 EDITAR USUARIO
 =============================================*/
-$(".tablas").on("click", ".btnEditarUsuario", function(){
+$(".tablaUsuarios").on("click", ".btnEditarUsuario", function(){
 
     var idUsuario = $(this).attr("idUsuario");
 	
@@ -125,7 +161,7 @@ $(".tablas").on("click", ".btnEditarUsuario", function(){
 /*=============================================
 ACTIVAR USUARIO
 =============================================*/
-$(".tablas").on("click", ".btnActivarUS", function(){
+$(".tablaUsuarios").on("click", ".btnActivarUS", function(){
 
 	var idUsuario = $(this).attr("idUsuario");
 	var estadoUsuario = $(this).attr("estadoUsuario");
@@ -224,7 +260,7 @@ $("#nuevoUsuario").change(function(){
 /*=============================================
 ELIMINAR USUARIO
 =============================================*/
-$(".tablas").on("click", ".btnEliminarUsuario", function(){
+$(".tablaUsuarios").on("click", ".btnEliminarUsuario", function(){
 
 	var idUsuario = $(this).attr("idUsuario");
 	var fotoUsuario = $(this).attr("fotoUsuario");
@@ -251,7 +287,7 @@ $(".tablas").on("click", ".btnEliminarUsuario", function(){
   
   })
 
-$(".tablas").on("click", ".btnEditarCorreo", function(){
+$(".tablaUsuarios").on("click", ".btnEditarCorreo", function(){
 	var idUsuario = $(this).attr("idUsuario");
 	$("#idUsuarioCorreo").val(idUsuario);
 	var datos = new FormData();

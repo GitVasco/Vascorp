@@ -76,7 +76,36 @@ class AjaxMateriaPrima{
 		$respuestaDetalle = ControladorMateriaPrima::ctrMostrarMateriaArticulo($valor);
 
 		echo json_encode($respuestaDetalle);
-}	
+	}	
+
+	/* 
+	* SELECT SUBLINEA PARA CREAR MATERIA PRIMA
+	*/
+	public $linea;
+	public function ajaxSelectSubLineas(){
+
+		$valor = $this->linea;
+
+		$respuestaDetalle = ControladorMateriaPrima::ctrMostrarSubLineas($valor);
+
+		echo json_encode($respuestaDetalle);
+	}	
+
+	/* 
+	* EDITAR NOMBRE DE LA MATERIA PRIMA
+	*/
+
+	public $CodigoFab;
+
+	public function ajaxValidarCodFab(){
+
+		$valor = $this->CodigoFab;
+
+		$respuesta = ControladorMateriaPrima::ctrMostrarMateriaFabrica($valor);
+
+		echo json_encode($respuesta);
+
+	}
 
 }
 
@@ -136,4 +165,28 @@ if(isset($_POST["articuloSublimado"])){
   $visualizarMateriaSublimado -> articuloSublimado = $_POST["articuloSublimado"];
   $visualizarMateriaSublimado -> ajaxVisualizarMateriaArticulo();
 
+}
+
+/* 
+* SELECT PARA MOSTRAR LAS SUBLINEAS AL CREAR MATERIAPRIMA
+*/
+
+if(isset($_POST["linea"])){
+
+	$selectSubLineas = new AjaxMateriaPrima();
+	$selectSubLineas -> linea = $_POST["linea"];
+	$selectSubLineas -> ajaxSelectSubLineas();
+  
+}
+
+/* 
+* VALIDAR CODIGO DE FABRICA AL CREAR MATERIA PRIMA
+*/
+
+if(isset($_POST["CodigoFab"])){
+
+	$validarMateriaPrima = new AjaxMateriaPrima();
+	$validarMateriaPrima -> CodigoFab = $_POST["CodigoFab"];
+	$validarMateriaPrima -> ajaxValidarCodFab();
+  
 }

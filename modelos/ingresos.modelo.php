@@ -701,6 +701,7 @@ class ModeloIngresos{
 				  ON m.articulo = a.articulo 
 				LEFT JOIN sectorjf se 
 				  ON LEFT(m.documento, 2) = se.cod_sector 
+			  WHERE m.tipo='E20'
 			  GROUP BY m.documento,
 				a.modelo,
 				a.nombre,

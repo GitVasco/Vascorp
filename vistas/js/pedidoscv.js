@@ -1016,7 +1016,23 @@ $(".formularioPedidoCV").on("click", ".btnCargarCliente", function () {
         contentType: false,
         processData: false,
         dataType: "json",
-        success: function (respuesta2) {
+        xhr: function () {
+            var xhr = $.ajaxSettings.xhr();
+            xhr.upload.onprogress = function (event) {
+                var perc = Math.round((event.loaded / event.total) * 100);
+                $("#progressBar1").html('Cargando clientes..');
+                $("#progressBar1").css('width', perc + '%');
+            };
+            return xhr;
+        },
+        beforeSend: function (xhr) {
+            $("#progressBar1").text('0%');
+            $("#progressBar1").css('width', '0%');
+        },
+        success: function (respuesta2)
+        {        
+            $("#progressBar1").addClass("progress-bar");
+            $("#progressBar1").text('100% - Carga realizada');
         
         $("#seleccionarCliente").find('option').remove();
         $("#seleccionarCliente").append("<option value='' > Seleccionar cliente </option>");
@@ -1119,7 +1135,7 @@ $(".tablaArticulosPedidos").on("click", ".modificarArtPed", function () {
 		dataType:"json",
 		success:function(respuestaA){ 
 
-            console.log("respuestaA", respuestaA);
+            // console.log("respuestaA", respuestaA);
 
             $(".detalleCT").remove();
 

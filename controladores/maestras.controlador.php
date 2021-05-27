@@ -13,4 +13,15 @@ class ControladorMaestras{
 
     }
 
+    /* 
+    * LISTAR TABLA DETALLE
+    */
+    static public function ctrMostrarMaestrasDetalle($valor){
+
+        $respuesta = ModeloMaestras::mdlMostrarMaestrasDetalle($valor);
+
+        return $respuesta;
+
+    }    
+
 }

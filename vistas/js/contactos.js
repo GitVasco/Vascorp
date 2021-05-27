@@ -6,7 +6,9 @@ $('.tablaContactos').DataTable( {
     "deferRender": true,
 	"retrieve": true,
 	"processing": true,
-	 "language": {
+	"pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+	"language": {
 
 			"sProcessing":     "Procesando...",
 			"sLengthMenu":     "Mostrar _MENU_ registros",
@@ -86,7 +88,7 @@ $(".tablaContactos").on("click", ".btnChat", function () {
 
     var de = $(this).attr("de");
     var para = $(this).attr("para");
-    console.log("de", de, "para", para);
+    // console.log("de", de, "para", para);
     
     var datos = new FormData();
 	datos.append("de", de);

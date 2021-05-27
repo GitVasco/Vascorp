@@ -369,7 +369,7 @@ MODAL VISUALIZAR INFORMACION
 
             <div class="box-body">
 
-              <table class="table table-bordered table-striped dt-responsive tablaVerPagoSer">
+              <table class="table table-bordered table-striped dt-responsive tablaVerPagoSer" width="100%">
 
               <thead>
 

@@ -31,7 +31,7 @@
         </button>
 
         <div class="pull-right">
-          <button class="btn btn-outline-success btnReporteColor" style="border:green 1px solid">
+          <button class="btn btn-outline-success" style="border:green 1px solid">
           <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte vendedores  </button>
         </div>
       </div>
@@ -67,7 +67,7 @@
 </div>
 
 <!--=====================================
-MODAL AGREGAR TIPO PAGO
+MODAL AGREGAR VENDEDOR
 ======================================-->
 
 <div id="modalAgregarVendedor" class="modal fade" role="dialog">
@@ -161,7 +161,7 @@ MODAL AGREGAR TIPO PAGO
 
 
 <!--=====================================
-MODAL EDITAR TIPO PAGO
+MODAL EDITAR VENDEDOR
 ======================================-->
 
 <div id="modalEditarVendedor" class="modal fade" role="dialog">

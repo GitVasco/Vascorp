@@ -277,7 +277,7 @@ class ModeloModelos
 	*/
 	static public function mdlEditarPrecio($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET modelo=:modelo,precio1=:precio1,precio2=:precio2,precio3=:precio3,precio4=:precio4,precio5=:precio5,precio6=:precio6,precio7=:precio7,precio8=:precio8,precio9=:precio9,precio10=:precio10");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET precio1=:precio1,precio2=:precio2,precio3=:precio3,precio4=:precio4,precio5=:precio5,precio6=:precio6,precio7=:precio7,precio8=:precio8,precio9=:precio9,precio10=:precio10,precio11=:precio11 WHERE modelo = :modelo");
 
 		$stmt->bindParam(":modelo", $datos["modelo"], PDO::PARAM_STR);
 		$stmt->bindParam(":precio1", $datos["precio1"], PDO::PARAM_INT);
@@ -290,6 +290,7 @@ class ModeloModelos
 		$stmt->bindParam(":precio8", $datos["precio8"], PDO::PARAM_INT);
 		$stmt->bindParam(":precio9", $datos["precio9"], PDO::PARAM_INT);
 		$stmt->bindParam(":precio10", $datos["precio10"], PDO::PARAM_INT);
+		$stmt->bindParam(":precio11", $datos["precio11"], PDO::PARAM_INT);
 
 		if ($stmt->execute()) {
 			return "ok";

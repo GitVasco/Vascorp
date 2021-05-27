@@ -31,6 +31,8 @@ function cargarTablaServicios(fechaInicial,fechaFinal) {
     deferRender: true,
     retrieve: true,
     processing: true,
+    "pageLength": 20,
+	  "lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
     language: {
       sProcessing: "Procesando...",
       sLengthMenu: "Mostrar _MENU_ registros",
@@ -121,8 +123,8 @@ $("#daterange-btnServicios").daterangepicker(
     var capturarRango19 = $("#daterange-btnServicios span").html();
   
     localStorage.setItem("capturarRango19", capturarRango19);
-    localStorage.setItem("fechaInicial", localStorage.getItem("fechaInicial"));
-    localStorage.setItem("fechaFinal", localStorage.getItem("fechaFinal"));
+    localStorage.setItem("fechaInicial", fechaInicial);
+    localStorage.setItem("fechaFinal", fechaFinal);
 
     // Recargamos la tabla con la información para ser mostrada en la tabla
     $(".tablaServicios").DataTable().destroy();
@@ -179,6 +181,8 @@ $(".daterangepicker.opensleft .ranges li").on("click", function() {
   deferRender: true,
   retrieve: true,
   processing: true,
+  "pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
   language: {
     sProcessing: "Procesando...",
     sLengthMenu: "Mostrar _MENU_ registros",
@@ -210,6 +214,8 @@ $(".tablaPrecioServicios").DataTable({
   deferRender: true,
   retrieve: true,
   processing: true,
+  "pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
   language: {
     sProcessing: "Procesando...",
     sLengthMenu: "Mostrar _MENU_ registros",
@@ -492,7 +498,7 @@ $(".tablaPrecioServicios").DataTable({
       });
     }
   
-     console.log("listaProductos", JSON.stringify(listaProductos)); 
+    //  console.log("listaProductos", JSON.stringify(listaProductos)); 
   
     $("#listaProductos").val(JSON.stringify(listaProductos));
     // console.log(JSON.stringify(listaProductos));
@@ -1013,8 +1019,8 @@ $("#daterange-btnVerServicios").daterangepicker(
     var capturarRango20 = $("#daterange-btnVerServicios span").html();
   
     localStorage.setItem("capturarRango20", capturarRango20);
-    localStorage.setItem("fechaInicial", localStorage.getItem("fechaInicial"));
-    localStorage.setItem("fechaFinal", localStorage.getItem("fechaFinal"));
+    localStorage.setItem("fechaInicial", fechaInicial);
+    localStorage.setItem("fechaFinal", fechaFinal);
 
     // Recargamos la tabla con la información para ser mostrada en la tabla
     $(".tablaDetalleSerTotal").DataTable().destroy();
@@ -1147,6 +1153,8 @@ $('.tablaPagoServicios').DataTable( {
   "retrieve": true,
   "processing": true,
   "order": [[3, "desc"]],
+  "pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
   "language": {
 
     "sProcessing":     "Procesando...",

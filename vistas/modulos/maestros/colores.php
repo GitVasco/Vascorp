@@ -37,14 +37,13 @@
       </div>
         
       <div class="box-body">
-        
-       <table class="table table-bordered table-striped dt-responsive tablas">
+       <input type="hidden" value="<?=$_SESSION["perfil"];?>" id="perfilOculto"> 
+       <table class="table table-bordered table-striped dt-responsive tablaColores">
          
         <thead>
          
          <tr>
            
-           <th style="width:10px">#</th>
            <th>Codigo</th>
            <th>Color</th>
            <th>Acciones</th>
@@ -52,67 +51,6 @@
          </tr> 
 
         </thead>
-
-        <tbody>
-
-        <?php
-
-          $item = null;
-          $valor = null;
-          $colores = ControladorColores::ctrMostrarColores($item, $valor);
-
-          foreach ($colores as $key => $value) {
-            
-
-            echo '<tr>
-
-                    <td>'.($key+1).'</td>
-
-                    <td>'.$value["cod_color"].'</td>
-
-                    <td>'.$value["nom_color"].'</td>';
-
-                    // if( $_SESSION["perfil"] == "Supervisores" ||
-                    //     $_SESSION["perfil"] == "Sistemas"){
-
-                          echo '<td>
-
-                                <div class="btn-group">
-                                    
-                                  <button class="btn btn-warning btnEditarColor" data-toggle="modal" data-target="#modalEditarColor" idColor="'.$value["cod_color"].'"><i class="fa fa-pencil"></i></button>
-          
-                                  <button class="btn btn-danger btnEliminarColor" idColor="'.$value["cod_color"].'"><i class="fa fa-times"></i></button>
-          
-                                </div>  
-          
-                              </td>';
-
-                    // }else{
-
-                    //   echo '<td>
-
-                    //           <div class="btn-group">
-                                  
-                    //             <button class="btn btn-warning btnEditarColor" data-toggle="modal" data-target="#modalEditarColor" idColor="'.$value["cod_color"].'"><i class="fa fa-pencil"></i></button>
-
-                    //           </div>  
-
-                    //         </td>';
-
-                      
-                    // }
-
-
-
-
-                  echo '</tr>';
-          
-            }
-
-        ?>
-         
-         
-        </tbody>
 
        </table>
 

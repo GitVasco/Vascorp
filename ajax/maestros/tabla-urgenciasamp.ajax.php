@@ -23,7 +23,7 @@ class TablaUrgenciasAMP{
             /* 
             todo: BOTONES
             */                
-            $botones =  "<div class='btn-group'><button class='btn btn-info btnVerUrgenciasAMP' codigoAMP='".$mp[$i]["mat_pri"]."' data-toggle='modal' data-target='#modalVisualizarUrgenciasAMP'><i class='fa fa-eye'></i></button></div>"; 
+            $botones =  "<div class='btn-group'><button class='btn btn-sm btn-info btnVerUrgenciasAMP' codigoAMP='".$mp[$i]["mat_pri"]."' data-toggle='modal' data-target='#modalVisualizarUrgenciasAMP'><i class='fa fa-eye'></i></button></div>"; 
             
                 $datosJson .= '[
                 "'.$mp[$i]["mat_pri"].'",

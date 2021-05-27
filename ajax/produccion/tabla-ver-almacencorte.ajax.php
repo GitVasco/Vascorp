@@ -21,7 +21,53 @@ class TablaVerAlmacenCortes{
         "data": [';
 
         for($i = 0; $i < count($almacencortes); $i++){
+            if($almacencortes[$i]["t1"] == '0'){
+                $t1 = '';
+            }else{
+                $t1 = $almacencortes[$i]["t1"];
+            }  
 
+            if($almacencortes[$i]["t2"] == '0'){
+                $t2 = '';
+            }else{
+                $t2 = $almacencortes[$i]["t2"];
+            }  
+
+            if($almacencortes[$i]["t3"] == '0'){
+                $t3 = '';
+            }else{
+                $t3 = $almacencortes[$i]["t3"];
+            }  
+
+            if($almacencortes[$i]["t4"] == '0'){
+                $t4 = '';
+            }else{
+                $t4 = $almacencortes[$i]["t4"];
+            }  
+
+            if($almacencortes[$i]["t5"] == '0'){
+                $t5 = '';
+            }else{
+                $t5 = $almacencortes[$i]["t5"];
+            }  
+
+            if($almacencortes[$i]["t6"] == '0'){
+                $t6 = '';
+            }else{
+                $t6 = $almacencortes[$i]["t6"];
+            }  
+
+            if($almacencortes[$i]["t7"] == '0'){
+                $t7 = '';
+            }else{
+                $t7 = $almacencortes[$i]["t7"];
+            }  
+
+            if($almacencortes[$i]["t8"] == '0'){
+                $t8 = '';
+            }else{
+                $t8 = $almacencortes[$i]["t8"];
+            }  
     
             $datosJson .= '[
             "'.$almacencortes[$i]["almacencorte"].'",
@@ -29,14 +75,14 @@ class TablaVerAlmacenCortes{
             "'.$almacencortes[$i]["modelo"].'",
             "'.$almacencortes[$i]["nombre"].'",
             "'.$almacencortes[$i]["color"].'",
-            "'.$almacencortes[$i]["t1"].'",
-            "'.$almacencortes[$i]["t2"].'",
-            "'.$almacencortes[$i]["t3"].'",
-            "'.$almacencortes[$i]["t4"].'",
-            "'.$almacencortes[$i]["t5"].'",
-            "'.$almacencortes[$i]["t6"].'",
-            "'.$almacencortes[$i]["t7"].'",
-            "'.$almacencortes[$i]["t8"].'",
+            "'.$t1.'",
+            "'.$t2.'",
+            "'.$t3.'",
+            "'.$t4.'",
+            "'.$t5.'",
+            "'.$t6.'",
+            "'.$t7.'",
+            "'.$t8.'",
             "'.$almacencortes[$i]["subtotal"].'"
             ],';        
             }

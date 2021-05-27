@@ -134,8 +134,8 @@ class ControladorContactos{
 
                 $respuesta = ModeloUsuarios::mdlEditarContacto($tabla, $datos);
                 
-                var_dump("respuesta", $respuesta);
-                var_dump("datos", $datos);
+                // var_dump("respuesta", $respuesta);
+                // var_dump("datos", $datos);
                 
 				if($respuesta == "ok"){
 

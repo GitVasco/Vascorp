@@ -87,7 +87,7 @@
   <!-- SweetAlert 2 -->
   <script src="vistas/plugins/sweetalert2/sweetalert2.all.js"></script>
   <!-- By default SweetAlert2 doesn't support IE. To enable IE 11 support, include Promise polyfill:-->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+  <script src="vistas/plugins/sweetalert2/core.js"></script>
 
   <!-- iCheck 1.0.1 -->
   <script src="vistas/plugins/iCheck/icheck.min.js"></script>  
@@ -114,8 +114,12 @@
 
   <!-- ChartJS http://www.chartjs.org/-->
   <script src="vistas/bower_components/Chart.js/Chart.js"></script>
-  <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment-with-locales.min.js"></script>
-  <script src ="http://cdn.datatables.net/plug-ins/1.10.16/api/sum().js"></script>
+
+  <!-- Libreria de suma datatable-->
+  <script src ="vistas/bower_components/sumas/sum().js"></script>
+  
+<!-- Libreria de hora local -->
+  <script src="vistas/bower_components/moment/locale/es.js"></script>
 
   <script src="vistas/bower_components/toastr/toastr.min.js"></script>
 
@@ -129,6 +133,18 @@
     }
     .guinda{
       color:#8B0000;
+    }
+
+    .table > tbody > tr > th,
+    .table > tfoot > tr > th,
+    .table > thead > tr > td,
+    .table > tbody > tr > td,
+    .table > tfoot > tr > td {
+      padding: 2px !important;
+    }
+
+    .table > thead > tr > th{
+      padding: 5px !important;
     }
   </style>
 </head>
@@ -205,6 +221,7 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "condicionesventa" ||
                   $_GET["ruta"] == "unidadesmedida" ||
                   $_GET["ruta"] == "bancos" ||
+                  $_GET["ruta"] == "proveedor" ||
                   $_GET["ruta"] == "vendedor" ||
                   $_GET["ruta"] == "tabla-maestra"){
 
@@ -248,6 +265,7 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "sublimados"||
                   $_GET["ruta"] == "salidas-varios"||
                   $_GET["ruta"] == "crear-salidas-varios"||
+                  $_GET["ruta"] == "listar-documento"||
                   $_GET["ruta"] == "pago-servicio"){
 
               include "modulos/produccion/".$_GET["ruta"].".php";
@@ -398,7 +416,7 @@ CUERPO DOCUMENTO
   <script src="vistas/js/procedimientos.js"></script>
   <script src="vistas/js/salidas.js"></script>
   <script src="vistas/js/tablamaestra.js"></script>
-
+  <script src="vistas/js/proveedor.js"></script>
 </body>
 
 </html>

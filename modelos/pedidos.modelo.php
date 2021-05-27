@@ -263,7 +263,7 @@ class ModeloPedidos{
 			FROM
 				temporaljf t
 				LEFT JOIN clientesjf c
-				ON t.cliente = c.id
+				ON t.cliente = c.codigo
 				LEFT JOIN condiciones_ventajf cv
 				ON t.condicion_venta = cv.id
 				LEFT JOIN usuariosjf u
@@ -309,7 +309,7 @@ class ModeloPedidos{
 				FROM
 					temporaljf t
 					LEFT JOIN clientesjf c
-					ON t.cliente = c.id
+					ON t.cliente = c.codigo
 					LEFT JOIN condiciones_ventajf cv
 					ON t.condicion_venta = cv.id
 					LEFT JOIN usuariosjf u
@@ -401,8 +401,8 @@ class ModeloPedidos{
 						ON dt.articulo = a.articulo
 						LEFT JOIN modelojf m
 						ON a.modelo = m.modelo
-					WHERE dt.codigo = $codigo
-						AND m.modelo = $modelo
+					WHERE dt.codigo = '".$codigo."'
+						AND m.modelo = '".$modelo."'
 					GROUP BY m.modelo,
 						a.cod_color,
 						a.color";
@@ -458,7 +458,7 @@ class ModeloPedidos{
 					c.ubigeo,
 					u.nom_ubi,
 					t.vendedor,
-					c.tipo_documento,
+					td.tipo_doc,
 					c.documento
 				FROM
 					temporaljf t
@@ -466,6 +466,8 @@ class ModeloPedidos{
 					ON t.cliente = c.codigo
 					LEFT JOIN ubigeojf u
 					ON c.ubigeo = u.cod_ubi
+					LEFT JOIN tipo_documentojf td
+    				ON td.cod_doc = c.tipo_documento
 				WHERE t.codigo = $valor";
 
 		$stmt=Conexion::conectar()->prepare($sql);

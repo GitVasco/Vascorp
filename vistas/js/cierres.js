@@ -22,6 +22,8 @@ function cargarTablaCierres(fechaInicial,fechaFinal) {
     retrieve: true,
     processing: true,
     order: [[6, "desc"]],
+    "pageLength": 20,
+	  "lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
     language: {
       sProcessing: "Procesando...",
       sLengthMenu: "Mostrar _MENU_ registros",
@@ -112,8 +114,8 @@ $("#daterange-btnCierres").daterangepicker(
     var capturarRango15 = $("#daterange-btnCierres span").html();
   
     localStorage.setItem("capturarRango15", capturarRango15);
-    localStorage.setItem("fechaInicial", localStorage.getItem("fechaInicial"));
-    localStorage.setItem("fechaFinal", localStorage.getItem("fechaFinal"));
+    localStorage.setItem("fechaInicial", fechaInicial);
+    localStorage.setItem("fechaFinal", fechaFinal);
 
     // Recargamos la tabla con la información para ser mostrada en la tabla
     $(".tablaCierres").DataTable().destroy();
@@ -178,6 +180,8 @@ function cargarTablaArticuloCierres(sectorCierre){
   deferRender: true,
   retrieve: true,
   processing: true,
+  "pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
   language: {
     sProcessing: "Procesando...",
     sLengthMenu: "Mostrar _MENU_ registros",
@@ -935,8 +939,8 @@ $("#daterange-btnVerCierres").daterangepicker(
     var capturarRango16 = $("#daterange-btnVerCierres span").html();
   
     localStorage.setItem("capturarRango16", capturarRango16);
-    localStorage.setItem("fechaInicial", localStorage.getItem("fechaInicial"));
-    localStorage.setItem("fechaFinal", localStorage.getItem("fechaFinal"));
+    localStorage.setItem("fechaInicial", fechaInicial);
+    localStorage.setItem("fechaFinal", fechaFinal);
 
     // Recargamos la tabla con la información para ser mostrada en la tabla
     $(".tablaDetalleCierrreTotal").DataTable().destroy();

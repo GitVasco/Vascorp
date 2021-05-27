@@ -36,7 +36,7 @@ class TablaProductosCierres{
         TRAEMOS LAS ACCIONES
         =============================================*/         
         
-        $botones =  "<div class='btn-group'><button class='btn btn-primary btn-sm agregarServicio recuperarBoton' codServicio ='".$articulos[$i]["id"]."' codDetalle ='".$articulos[$i]["codigo"]."' articuloCierre='".$articulos[$i]["articulo"]."' saldoServicio='".$articulos[$i]["saldo"]."'><i class='fa fa-plus-circle'></i> Agregar</button></div>"; 
+        $botones =  "<div class='btn-group'><button class='btn btn-primary btn-xs agregarServicio recuperarBoton' codServicio ='".$articulos[$i]["id"]."' codDetalle ='".$articulos[$i]["codigo"]."' articuloCierre='".$articulos[$i]["articulo"]."' saldoServicio='".$articulos[$i]["saldo"]."'><i class='fa fa-plus-circle'></i> Agregar</button></div>"; 
 
             $datosJson .= '[
             "'.$articulos[$i]["codigo"].'",

@@ -44,6 +44,21 @@ class AjaxClientes{
 
 	}
 
+	/*=============================================
+	CONSULTAR DNI CLIENTE
+	=============================================*/	
+	public $nuevoDni;
+	public function ajaxConsultarDNI(){
+
+		$valor=$this->nuevoDni;
+
+		$ws = file_get_contents("https://dniruc.apisperu.com/api/v1/dni/$valor?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im5vdGlmaWNhY2lvbmVzdmFzY29ycEBnbWFpbC5jb20ifQ.c-6WZwJBvvbLMYouVDCfsnSn0NnoT88AmAJVRIIcGx4");
+
+
+		echo $ws;
+
+	}
+
 
 }
 
@@ -59,14 +74,32 @@ if(isset($_POST["codigo"])){
 
 }
 
+/*=============================================
+VALIDAR DOCUMENTO EXISTENTE
+=============================================*/	
 if(isset($_POST["documento"])){
 	$validarDocumento=new AjaxClientes();
 	$validarDocumento->documento=$_POST["documento"];
 	$validarDocumento->ajaxValidarDocumento();
 }
 
+/*=============================================
+CARGAR CLIENTES CON BOTON 
+=============================================*/	
 if(isset($_POST["clienteCuenta"])){
 	$clienteCuenta=new AjaxClientes();
 	$clienteCuenta->clienteCuenta=$_POST["clienteCuenta"];
 	$clienteCuenta->ajaxMostrarClienteCuenta();
+}
+
+/*=============================================
+CONSULTAR DNI CLIENTE
+=============================================*/	
+
+if(isset($_POST["nuevoDni"])){
+
+	$consultarDni = new AjaxClientes();
+	$consultarDni -> nuevoDni = $_POST["nuevoDni"];
+	$consultarDni -> ajaxConsultarDNI();
+
 }

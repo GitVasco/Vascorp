@@ -19,19 +19,23 @@ class TablaMaestraCabecera{
 
         for($i = 0; $i < count($maestras); $i++){  
 
+            /* 
+            * boton en el codigo de tabla
+            */
+
+            $cod_tabla = "<button class='btn btn-link btn-xs btnActivarSubLinea' codigo='".$maestras[$i]["cod_tabla"]."'>".$maestras[$i]["cod_tabla"]."</button>";
+
+
         /*=============================================
         TRAEMOS LAS ACCIONES
         =============================================*/         
         
-        $botones =  "<div class='btn-group'><button class='btn btn-warning btnCrearSubLinea' codigo='".$maestras[$i]["cod_tabla"]."' data-toggle='modal' data-target='#modalCrearSubLinea'><i class='fa fa-pencil'></i></button></div>"; 
+        $botones =  "<div class='btn-group'><button class='btn btn-primary btn-xs btnCrearSubLinea' codigo='".$maestras[$i]["cod_tabla"]."' data-toggle='modal' data-target='#modalAgregarSubLinea'><i class='fa fa-plus'></i></button></div>"; 
 
             $datosJson .= '[
-            "'.($i+1).'",
-            "'.$maestras[$i]["cod_tabla"].'",
+            "'.$cod_tabla.'",
             "'.$maestras[$i]["descripcion"].'",
             "'.$maestras[$i]["lon_campo"].'",
-            "'.$maestras[$i]["tip_campo"].'",
-            "'.$maestras[$i]["tip_generacion"].'",
             "'.$botones.'"
             ],';        
             }
@@ -60,6 +64,6 @@ class TablaMaestraCabecera{
 /*=============================================
 ACTIVAR TABLA DE AGENCIAS
 =============================================*/ 
-$activarAgencias = new TablaMaestraCabecera();
-$activarAgencias -> mostrarTablaMaestraCabecera();
+$activarTabla = new TablaMaestraCabecera();
+$activarTabla -> mostrarTablaMaestraCabecera();
 

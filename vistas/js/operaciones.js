@@ -3,6 +3,8 @@ $('.tablaOperaciones').DataTable( {
     "deferRender": true,
 	"retrieve": true,
 	"processing": true,
+	"pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
 	 "language": {
 
 			"sProcessing":     "Procesando...",
@@ -83,6 +85,8 @@ $('.tablaDetalleOperaciones').DataTable( {
     "deferRender": true,
 	"retrieve": true,
 	"processing": true,
+	"pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
 	 "language": {
 
 			"sProcessing":     "Procesando...",
@@ -118,6 +122,8 @@ $('.tablaArticuloOperaciones').DataTable( {
     "deferRender": true,
 	"retrieve": true,
 	"processing": true,
+	"pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
 	 "language": {
 
 			"sProcessing":     "Procesando...",

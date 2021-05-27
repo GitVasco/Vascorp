@@ -18,6 +18,8 @@ $('.tablaSublimados').DataTable({
     "retrieve": true,
     "processing": true,
     "order": [[0, "asc"]],
+    "pageLength": 20,
+	  "lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
     "language": {
 			"sProcessing":     "Procesando...",
 			"sLengthMenu":     "Mostrar _MENU_ registros",
@@ -176,8 +178,8 @@ $("#daterange-btnSublimado").daterangepicker(
     localStorage.setItem("fechaInicial", fechaInicial);
 	  localStorage.setItem("fechaFinal", fechaFinal);
 
-	  $(".btnReporteSublimados").attr("fechaInicial",localStorage.getItem("fechaInicial"));
-	  $(".btnReporteSublimados").attr("fechaFinal",localStorage.getItem("fechaFinal"));
+	  $(".btnReporteSublimados").attr("fechaInicial",fechaInicial);
+	  $(".btnReporteSublimados").attr("fechaFinal",fechaFinal);
       // Recargamos la tabla con la información para ser mostrada en la tabla
       $(".tablaSublimados").DataTable().destroy();
       cargarTablaSublimado(fechaInicial, fechaFinal);
@@ -220,8 +222,8 @@ $("#daterange-btnSublimado").daterangepicker(
       localStorage.setItem("capturarRango27", "Hoy");
       localStorage.setItem("fechaInicial", fechaInicial);
 	  localStorage.setItem("fechaFinal", fechaFinal);
-    $(".btnReporteSublimados").attr("fechaInicial",localStorage.getItem("fechaInicial"));
-	  $(".btnReporteSublimados").attr("fechaFinal",localStorage.getItem("fechaFinal"));
+    $(".btnReporteSublimados").attr("fechaInicial",fechaInicial);
+	  $(".btnReporteSublimados").attr("fechaFinal",fechaFinal);
       // Recargamos la tabla con la información para ser mostrada en la tabla
       $(".tablaSublimados").DataTable().destroy();
       cargarTablaSublimado(fechaInicial, fechaFinal);

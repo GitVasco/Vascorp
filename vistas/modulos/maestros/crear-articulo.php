@@ -222,7 +222,7 @@
 
           <div class="box-body">
 
-            <table class="table table-bordered table-striped dt-responsive tablas">
+            <table class="table table-bordered table-striped dt-responsive tablaArticuloColores">
 
               <thead>
 
@@ -233,47 +233,6 @@
                 </tr>
 
               </thead>
-              <tbody>
-              <?php
-
-                $item = null;
-                $valor = null;
-
-                $colores = ControladorColores::ctrMostrarColores($item, $valor);
-
-                foreach ($colores as $key => $value) {
-                
-
-                echo '<tr>
-
-                <td class="text-center">'.$value["cod_color"].'</td>
-
-                <td class="text-center">'.$value["nom_color"].'</td>';
-
-                // if( $_SESSION["perfil"] == "Supervisores" ||
-                //     $_SESSION["perfil"] == "Sistemas"){
-
-                        echo '<td class="text-center">
-
-                                 <div class="btn-group"><button class="btn btn-primary btn-xs recuperarBoton  agregarColor" idColor="'.$value["cod_color"].'"><i class="fa fa-plus-circle"></i> Agregar</button></div>
-                            </td>';
-
-                // }else{
-
-                //     echo '<td class="text-center">
-
-                //             <div class="btn-group"><button class="btn btn-primary btn-xs recuperarBoton  agregarColor" idColor="'.$value["cod_color"].'"><i class="fa fa-plus-circle"></i> Agregar</button></div>
-
-                //             </div>  
-
-                //         </td>';
-                //         }
-                            echo '</tr>';
-
-                    }
-
-                    ?>
-              </tbody>
 
             </table>
 

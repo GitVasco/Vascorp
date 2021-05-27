@@ -37,13 +37,12 @@
 
       <div class="box-body">
         
-       <table class="table table-bordered table-striped dt-responsive tablas">
+       <table class="table table-bordered table-striped dt-responsive tablaSectores">
          
         <thead>
          
          <tr>
            
-           <th style="width:10px">#</th>
            <th>Codigo</th>
            <th>Sector</th>
            <th>Acciones</th>
@@ -51,68 +50,6 @@
          </tr> 
 
         </thead>
-
-        <tbody>
-
-        <?php
-
-          $item = null;
-          $valor = null;
-
-          $sectores = ControladorSectores::ctrMostrarSectores($item, $valor);
-
-          foreach ($sectores as $key => $value) {
-            
-
-            echo '<tr>
-
-                    <td>'.($key+1).'</td>
-
-                    <td>'.$value["cod_sector"].'</td>
-
-                    <td>'.$value["nom_sector"].'</td>';
-
-                    // if( $_SESSION["perfil"] == "Supervisores" ||
-                    //     $_SESSION["perfil"] == "Sistemas"){
-
-                          echo '<td>
-
-                                <div class="btn-group">
-                                    
-                                  <button class="btn btn-warning btnEditarSector" data-toggle="modal" data-target="#modalEditarSector" idSector="'.$value["cod_sector"].'"><i class="fa fa-pencil"></i></button>
-          
-                                  <button class="btn btn-danger btnEliminarSector" idSector="'.$value["cod_sector"].'"><i class="fa fa-times"></i></button>
-          
-                                </div>  
-          
-                              </td>';
-
-                    // }else{
-
-                    //   echo '<td>
-
-                    //           <div class="btn-group">
-                                  
-                    //             <button class="btn btn-warning btnEditarSector" data-toggle="modal" data-target="#modalEditarSector" idSector="'.$value["cod_sector"].'"><i class="fa fa-pencil"></i></button>
-
-                    //           </div>  
-
-                    //         </td>';
-
-                      
-                    // }
-
-
-
-
-                  echo '</tr>';
-          
-            }
-
-        ?>
-         
-         
-        </tbody>
 
        </table>
 

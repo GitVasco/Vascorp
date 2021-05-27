@@ -2063,7 +2063,7 @@ class ControladorTalleres{
 
 		if(isset($_POST["regresarCantidades"])){
                 $barraAntiguo=ModeloTalleres::mdlMostrarTalleresGenerados2($_POST["regresarBarra"]);
-                var_dump($barraAntiguo);
+                // var_dump($barraAntiguo);
                 $cantidad2=$barraAntiguo["cantidad"]+$_POST["regresarCantidades"];
                 $datos2 = array("codigo" => $_POST["regresarCodigo"],
                             "usuario" => $_POST["usuario"],

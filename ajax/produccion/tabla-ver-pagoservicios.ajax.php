@@ -24,6 +24,54 @@ class TablaVerPagoServicios{
         for($i = 0; $i < count($pagoservicios); $i++){
             //convirtiendo fecha datetime a date por cadena
             $fecha=substr($pagoservicios[$i]["fecha"],0,10);
+
+            if($pagoservicios[$i]["t1"] == '0'){
+                $t1 = '';
+            }else{
+                $t1 = $pagoservicios[$i]["t1"];
+            }  
+
+            if($pagoservicios[$i]["t2"] == '0'){
+                $t2 = '';
+            }else{
+                $t2 = $pagoservicios[$i]["t2"];
+            }  
+
+            if($pagoservicios[$i]["t3"] == '0'){
+                $t3 = '';
+            }else{
+                $t3 = $pagoservicios[$i]["t3"];
+            }  
+
+            if($pagoservicios[$i]["t4"] == '0'){
+                $t4 = '';
+            }else{
+                $t4 = $pagoservicios[$i]["t4"];
+            }  
+
+            if($pagoservicios[$i]["t5"] == '0'){
+                $t5 = '';
+            }else{
+                $t5 = $pagoservicios[$i]["t5"];
+            }  
+
+            if($pagoservicios[$i]["t6"] == '0'){
+                $t6 = '';
+            }else{
+                $t6 = $pagoservicios[$i]["t6"];
+            }  
+
+            if($pagoservicios[$i]["t7"] == '0'){
+                $t7 = '';
+            }else{
+                $t7 = $pagoservicios[$i]["t7"];
+            }  
+
+            if($pagoservicios[$i]["t8"] == '0'){
+                $t8 = '';
+            }else{
+                $t8 = $pagoservicios[$i]["t8"];
+            }  
     
             $datosJson .= '[
             "'.$pagoservicios[$i]["cod_sector"]." - ".$pagoservicios[$i]["nom_sector"].'",
@@ -34,14 +82,14 @@ class TablaVerPagoServicios{
             "'.$pagoservicios[$i]["nombre"].'",
             "'.$pagoservicios[$i]["cod_color"].'",
             "'.$pagoservicios[$i]["color"].'",
-            "'.$pagoservicios[$i]["t1"].'",
-            "'.$pagoservicios[$i]["t2"].'",
-            "'.$pagoservicios[$i]["t3"].'",
-            "'.$pagoservicios[$i]["t4"].'",
-            "'.$pagoservicios[$i]["t5"].'",
-            "'.$pagoservicios[$i]["t6"].'",
-            "'.$pagoservicios[$i]["t7"].'",
-            "'.$pagoservicios[$i]["t8"].'",
+            "'.$t1.'",
+            "'.$t2.'",
+            "'.$t3.'",
+            "'.$t4.'",
+            "'.$t5.'",
+            "'.$t6.'",
+            "'.$t7.'",
+            "'.$t8.'",
             "'.$pagoservicios[$i]["total_docenas"].'",
             "'.$pagoservicios[$i]["precio_doc"].'",
             "'.$pagoservicios[$i]["total_soles"].'"

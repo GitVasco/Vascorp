@@ -14,6 +14,72 @@ class ControladorMateriaPrima{
     }
 
 	/* 
+	* VALIDAR CODIGO DE FABRICA EN MATERIA PRIMA
+	*/
+	static public function ctrMostrarMateriaFabrica($valor){
+
+		$respuesta = ModeloMateriaPrima::mdlMostrarMateriaFabrica($valor);
+
+		return $respuesta;
+
+    }
+
+	/* 
+	* MOSTRAR DATOS DE LA MATERIA PRIMA
+	*/
+	static public function ctrMostrarLineas(){
+
+		$respuesta = ModeloMateriaPrima::mdlMostrarLineas();
+
+		return $respuesta;
+
+    }
+
+	/* 
+	* MOSTRAR DATOS DE LA MATERIA PRIMA
+	*/
+	static public function ctrMostrarSubLineas($valor){
+
+		$respuesta = ModeloMateriaPrima::mdlMostrarSubLineas($valor);
+
+		return $respuesta;
+
+    }
+
+	/* 
+	* MOSTRAR DATOS DE LA MATERIA PRIMA
+	*/
+	static public function ctrMostrarTallas(){
+
+		$respuesta = ModeloMateriaPrima::mdlMostrarTallas();
+
+		return $respuesta;
+
+    }
+
+	/* 
+	* MOSTRAR DATOS DE LA MATERIA PRIMA
+	*/
+	static public function ctrMostrarColores(){
+
+		$respuesta = ModeloMateriaPrima::mdlMostrarColores();
+
+		return $respuesta;
+
+    }
+
+	/* 
+	* MOSTRAR DATOS DE LA MATERIA PRIMA
+	*/
+	static public function ctrMostrarUndMedida(){
+
+		$respuesta = ModeloMateriaPrima::mdlMostrarUndMedida();
+
+		return $respuesta;
+
+    }
+
+	/* 
 	* MOSTRAR DATOS DE LA MATERIA PRIMA POR ARTICULO
 	*/
 	static public function ctrMostrarMateriaArticulo($valor){
@@ -25,26 +91,85 @@ class ControladorMateriaPrima{
     }
 
 	/* 
-	*EDITAR NOMBRE DE MATERIA PRIMA
+	*CREAR MATERIA PRIMA
 	*/
-	static public function ctrEditarMateriaPrima(){
+	static public function ctrCrearMateriaPrima(){
 
-		if(isset($_POST["editarDescripcion"])){
+		if(isset($_POST["nuevaDescripcion"])){
 
-			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["editarDescripcion"])){
+			date_default_timezone_set('America/Lima');
+			$fecha = new DateTime();
+			$PcReg= gethostbyaddr($_SERVER['REMOTE_ADDR']);
 
-				$datos = array("descripcion" => $_POST["editarDescripcion"],
-							"codpro" => $_POST["editarCodigo"]);
+			$ultimoCod = ModeloMateriaPrima::mdlMostrarUltimoCodPro();
 
-				$respuesta = ModeloMateriaPrima::mdlEditarMateriaPrima($datos);
+            $suma = $ultimoCod["CodPro"]+1;
+            $codigoPro = str_pad($suma,strlen($ultimoCod["CodPro"]),'0',STR_PAD_LEFT);
 
-				if($respuesta == "ok"){
+			$datos = array(	"Cod_Local"=>'01',
+							"Cod_Entidad"=>'01',
+							"CodPro"=>$codigoPro,
+							"CodProv1"=>$_POST["nuevoProveedor"],
+							"PreProv1"=>$_POST["nuevoPrecioSIGV"],
+							"MonProv1"=>$_POST["nuevaMoneda"],
+							"ObsProv1"=>$_POST["nuevaObservacion1"],
+							"CodProv2"=>$_POST["nuevoProveedor1"],
+							"PreProv2"=>$_POST["nuevoPrecioSIGV1"],
+							"MonProv2"=>$_POST["nuevaMoneda1"],
+							"ObsProv2"=>$_POST["nuevaObservacion2"],
+							"CodProv3"=>$_POST["nuevoProveedor2"],
+							"PreProv3"=>$_POST["nuevoPrecioSIGV2"],
+							"MonProv3"=>$_POST["nuevaMoneda2"],
+							"ObsProv3"=>$_POST["nuevaObservacion3"],
+							"FecReg"=>$fecha->format("Y-m-d H:i:s"),
+							"PcReg"=>$PcReg,
+							"UsuReg"=>$_SESSION["nombre"]);
+
+			$respuesta = ModeloMateriaPrima::mdlIngresarPrecioMP("preciomp",$datos);
+			// var_dump($datos);
+			// var_dump($respuesta);
+
+			$FamPro = $_POST["nuevaLinea"].$_POST["nuevaSubLinea"];
+
+			$datos2 = array("CodAlt"=>$_POST["nuevoCodigoAlt"],
+							"Cod_Local"=>'01',
+							"Cod_Entidad"=>'01',
+							"CodPro"=>$codigoPro,
+							"CodFab"=>$_POST["nuevoCodigoFab"],
+							"DesPro"=>$_POST["nuevaDescripcion"],
+							"ColPro"=>$_POST["nuevoColorMateria"],
+							"UndPro"=>$_POST["nuevaUnidadMedida"],
+							"Mo"=>'',
+							"PaiPro"=>'',
+							"PrePro"=>'',
+							"PreFob"=>'',
+							"CosPro"=>'',
+							"Por_AdVal"=>$_POST["nuevoAdVal"],
+							"Por_Seg"=>$_POST["nuevoSeguro"],
+							"PesPro"=>$_POST["nuevoPeso"],
+							"Stk_Act"=>$_POST["nuevoStockActual"],
+							"Stk_Min"=>$_POST["nuevoStockMinimo"],
+							"Stk_Max"=>$_POST["nuevoStockMaximo"],
+							"EstPro"=>'1',
+							"TalPro"=>$_POST["nuevaTallaMateria"],
+							"FamPro"=>$FamPro,
+							"Proveedor"=>'',
+							"CodAlm01"=>'0',
+							"FecReg"=>$fecha->format("Y-m-d H:i:s"),
+							"PcReg"=>$PcReg,
+							"UsuReg"=>$_SESSION["nombre"]);
+
+				$respuesta2 = ModeloMateriaPrima::mdlIngresarMateriaPrima("producto",$datos2);
+				// var_dump($datos2);
+				// var_dump($respuesta2);
+
+				if($respuesta == "ok" && $respuesta2 == "ok"){
 
 					echo'<script>
 
 						swal({
 							type: "success",
-							title: "La materia prima ha sido editada correctamente",
+							title: "La materia prima ha sido creada correctamente",
 							showConfirmButton: true,
 							confirmButtonText: "Cerrar"
 							}).then(function(result){
@@ -57,28 +182,102 @@ class ControladorMateriaPrima{
 
 						</script>';
 
+				}else{
+					echo'<script>
+
+						swal({
+							type: "warning",
+							title: "La materia prima no fue creada con exito",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar"
+							}).then(function(result){
+										if (result.value) {
+
+										window.location = "materiaprima";
+
+										}
+									})
+
+						</script>';
 				}
 
 
-			}else{
+			
+		}
+
+	}
+
+	/* 
+	*EDITAR NOMBRE DE MATERIA PRIMA
+	*/
+	static public function ctrEditarMateriaPrima(){
+
+		if(isset($_POST["editarDescripcion"])){
+			date_default_timezone_set('America/Lima');
+			$fecha = new DateTime();
+			$PcMod= gethostbyaddr($_SERVER['REMOTE_ADDR']);
+
+			$datos = array(	"CodPro"=>$_POST["editarCodigoPro"],
+							"CodProv1"=>$_POST["editarProveedor"],
+							"PreProv1"=>$_POST["editarPrecioSIGV"],
+							"MonProv1"=>$_POST["editarMoneda"],
+							"ObsProv1"=>$_POST["editarObservacion1"],
+							"CodProv2"=>$_POST["editarProveedor1"],
+							"PreProv2"=>$_POST["editarPrecioSIGV1"],
+							"MonProv2"=>$_POST["editarMoneda1"],
+							"ObsProv2"=>$_POST["editarObservacion2"],
+							"CodProv3"=>$_POST["editarProveedor2"],
+							"PreProv3"=>$_POST["editarPrecioSIGV2"],
+							"MonProv3"=>$_POST["editarMoneda2"],
+							"ObsProv3"=>$_POST["editarObservacion3"],
+							"FecMod"=>$fecha->format("Y-m-d H:i:s"),
+							"PcMod"=>$PcMod,
+							"UsuMod"=>$_SESSION["nombre"]);
+
+			$respuesta = ModeloMateriaPrima::mdlEditarPrecioMP("preciomp",$datos);
+
+
+			$datos2 = array("CodAlt"=>$_POST["editarCodigoAlt"],
+							"CodPro"=>$_POST["editarCodigoPro"],
+							"DesPro"=>$_POST["editarDescripcion"],
+							"UndPro"=>$_POST["editarUnidadMedida"],
+							"Por_AdVal"=>$_POST["editarAdVal"],
+							"Por_Seg"=>$_POST["editarSeguro"],
+							"PesPro"=>$_POST["editarPeso"],
+							"Stk_Min"=>$_POST["editarStockMinimo"],
+							"Stk_Max"=>$_POST["editarStockMaximo"],
+							"FecMod"=>$fecha->format("Y-m-d H:i:s"),
+							"PcMod"=>$PcMod,
+							"UsuMod"=>$_SESSION["nombre"]);
+
+
+			$respuesta2 = ModeloMateriaPrima::mdlEditarMateriaPrima($datos2);
+			// var_dump($respuesta2);
+			// var_dump($datos2);
+
+			if($respuesta == "ok"){
 
 				echo'<script>
 
 					swal({
-						type: "error",
-						title: "¡La Materia Prima no puede ir con los campos vacíos o llevar caracteres especiales!",
+						type: "success",
+						title: "La materia prima ha sido editada correctamente",
 						showConfirmButton: true,
 						confirmButtonText: "Cerrar"
 						}).then(function(result){
-							if (result.value) {
+									if (result.value) {
 
-							window.location = "materiaprima";
+									window.location = "materiaprima";
 
-							}
-						})
+									}
+								})
 
-				</script>';
+					</script>';
+
 			}
+
+
+			
 		}
 
 	}
@@ -197,5 +396,192 @@ class ControladorMateriaPrima{
         return $respuesta;
 
 	}  
+
+
+	/* 
+    * DUPLICAR MATERIA PRIMA PARA CREAR NUEVO COLOR
+    */
 	
+	static public function ctrDuplicarMateriaPrima(){
+
+		if(isset($_POST["duplicarDescripcion"])){	
+
+			$existe= ModeloMateriaPrima::mdlMostrarExisteMateria($_POST["duplicarCodigoFab"]);
+			if ($existe){
+				echo'<script>
+
+				swal({
+					type: "error",
+					title: "La materia prima ya se encuentra registrada",
+					showConfirmButton: true,
+					confirmButtonText: "Cerrar"
+					}).then(function(result){
+								if (result.value) {
+
+								window.location = "materiaprima";
+
+								}
+							})
+
+				</script>';
+			}else{
+				date_default_timezone_set('America/Lima');
+			$fecha = new DateTime();
+			$PcReg= gethostbyaddr($_SERVER['REMOTE_ADDR']);
+
+			$ultimoCod = ModeloMateriaPrima::mdlMostrarUltimoCodPro();
+
+            $suma = $ultimoCod["CodPro"]+1;
+            $codigoPro = str_pad($suma,strlen($ultimoCod["CodPro"]),'0',STR_PAD_LEFT);
+
+
+
+			$datos = array(	"Cod_Local"=>'01',
+							"Cod_Entidad"=>'01',
+							"CodPro"=>$codigoPro,
+							"CodProv1"=>$_POST["duplicarProveedor"],
+							"PreProv1"=>$_POST["duplicarPrecioSIGV"],
+							"MonProv1"=>$_POST["duplicarMoneda"],
+							"ObsProv1"=>$_POST["duplicarObservacion1"],
+							"CodProv2"=>$_POST["duplicarProveedor1"],
+							"PreProv2"=>$_POST["duplicarPrecioSIGV1"],
+							"MonProv2"=>$_POST["duplicarMoneda1"],
+							"ObsProv2"=>$_POST["duplicarObservacion2"],
+							"CodProv3"=>$_POST["duplicarProveedor2"],
+							"PreProv3"=>$_POST["duplicarPrecioSIGV2"],
+							"MonProv3"=>$_POST["duplicarMoneda2"],
+							"ObsProv3"=>$_POST["duplicarObservacion3"],
+							"FecReg"=>$fecha->format("Y-m-d H:i:s"),
+							"PcReg"=>$PcReg,
+							"UsuReg"=>$_SESSION["nombre"]);
+
+			$respuesta = ModeloMateriaPrima::mdlIngresarPrecioMP("preciomp",$datos);
+			// var_dump($datos);
+			// var_dump($respuesta);
+
+
+			$datos2 = array("CodAlt"=>$_POST["duplicarCodigoAlt"],
+							"Cod_Local"=>'01',
+							"Cod_Entidad"=>'01',
+							"CodPro"=>$codigoPro,
+							"CodFab"=>$_POST["duplicarCodigoFab"],
+							"DesPro"=>$_POST["duplicarDescripcion"],
+							"ColPro"=>$_POST["duplicarColorMateria"],
+							"UndPro"=>$_POST["duplicarUnidadMedida"],
+							"Mo"=>'',
+							"PaiPro"=>'',
+							"PrePro"=>'',
+							"PreFob"=>'',
+							"CosPro"=>'',
+							"Por_AdVal"=>$_POST["duplicarAdVal"],
+							"Por_Seg"=>$_POST["duplicarSeguro"],
+							"PesPro"=>$_POST["duplicarPeso"],
+							"Stk_Act"=>$_POST["duplicarStockActual"],
+							"Stk_Min"=>$_POST["duplicarStockMinimo"],
+							"Stk_Max"=>$_POST["duplicarStockMaximo"],
+							"EstPro"=>'1',
+							"TalPro"=>$_POST["duplicarTallaMateria"],
+							"FamPro"=>$_POST["duplicarFamPro"],
+							"Proveedor"=>'',
+							"CodAlm01"=>'0',
+							"FecReg"=>$fecha->format("Y-m-d H:i:s"),
+							"PcReg"=>$PcReg,
+							"UsuReg"=>$_SESSION["nombre"]);
+
+				$respuesta2 = ModeloMateriaPrima::mdlIngresarMateriaPrima("producto",$datos2);
+				
+
+				if($respuesta == "ok" && $respuesta2 == "ok"){
+
+					echo'<script>
+
+						swal({
+							type: "success",
+							title: "La materia prima ha sido creada correctamente",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar"
+							}).then(function(result){
+										if (result.value) {
+
+										window.location = "materiaprima";
+
+										}
+									})
+
+						</script>';
+
+				}else{
+					echo'<script>
+
+						swal({
+							type: "warning",
+							title: "La materia prima no fue creada con exito",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar"
+							}).then(function(result){
+										if (result.value) {
+
+										window.location = "materiaprima";
+
+										}
+									})
+
+						</script>';
+				}
+
+			}
+
+			
+
+
+			
+		}
+
+	}
+
+	/* 
+	*ANULAR MATERIA PRIMA
+	*/
+	static public function ctrAnularMateriaPrima(){
+
+		if(isset($_GET["idMateriaPrima"])){
+			date_default_timezone_set('America/Lima');
+			$fecha = new DateTime();
+			$PcAnu= gethostbyaddr($_SERVER['REMOTE_ADDR']);
+
+			$datos = array(	"CodPro"=>$_GET["idMateriaPrima"],
+							"EstPro"=>'0',
+							"FecAnu"=>$fecha->format("Y-m-d H:i:s"),
+							"PcAnu"=>$PcAnu,
+							"UsuAnu"=>$_SESSION["nombre"]);
+
+			$respuesta = ModeloMateriaPrima::mdlAnularMateriaPrima($datos);
+
+
+			if($respuesta == "ok"){
+
+				echo'<script>
+
+					swal({
+						type: "success",
+						title: "La materia prima ha sido anulada correctamente",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar"
+						}).then(function(result){
+									if (result.value) {
+
+									window.location = "materiaprima";
+
+									}
+								})
+
+					</script>';
+
+			}
+
+
+			
+		}
+
+	}
 }

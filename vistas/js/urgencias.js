@@ -168,7 +168,7 @@ $(".tablaUrgenciasAMP").on("click", ".btnVerUrgenciasAMP", function () {
 	})    
 
     var codigoART = $(this).attr("codigoAMP");
-    console.log("codigoART", codigoART);
+    // console.log("codigoART", codigoART);
 
 	var datosC = new FormData();
 	datosC.append("codigoART", codigoART);
@@ -184,7 +184,7 @@ $(".tablaUrgenciasAMP").on("click", ".btnVerUrgenciasAMP", function () {
 		dataType:"json",
 		success:function(respuestaC){
 
-			console.log("respuestaC", respuestaC);
+			// console.log("respuestaC", respuestaC);
 
 			$(".detalleART").remove();
 

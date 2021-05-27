@@ -26,10 +26,9 @@ class TablaCondicionVentas{
         TRAEMOS LAS ACCIONES
         =============================================*/         
         
-        $botones =  "<div class='btn-group'><button class='btn btn-warning btnEditarCondicionVenta' idCondicionVenta='".$CondicionVenta[$i]["id"]."' data-toggle='modal' data-target='#modalEditarCondicionVenta'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarCondicionVenta' idCondicionVenta='".$CondicionVenta[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
+        $botones =  "<div class='btn-group'><button class='btn btn-sm btn-warning btnEditarCondicionVenta' idCondicionVenta='".$CondicionVenta[$i]["id"]."' data-toggle='modal' data-target='#modalEditarCondicionVenta'><i class='fa fa-pencil'></i></button><button class='btn btn-sm btn-danger btnEliminarCondicionVenta' idCondicionVenta='".$CondicionVenta[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
 
             $datosJson .= '[
-            "'.($i+1).'",
             "'.$CondicionVenta[$i]["codigo"].'",
             "'.$CondicionVenta[$i]["descripcion"].'",
             "'.$CondicionVenta[$i]["cta_cte"].'",
