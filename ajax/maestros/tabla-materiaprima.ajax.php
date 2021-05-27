@@ -39,11 +39,12 @@ class TablaMateriaPrima{
             TRAEMOS LAS ACCIONES
             =============================================*/         
 
-                $botones = "<div class='btn-group'><button class='btn btn-sm btn-info btnVisualizarArticulos' title='Visualizar Articulos' data-toggle='modal' data-target='#modalVisualizarArticulos' articuloMP='".$materiaprima[$i]["codigo"]."'><i class='fa fa-eye'></i></button><button class='btn btn-sm btn-warning btnEditarMateriaPrima' idMateriaPrima='".$materiaprima[$i]["codigo"]."' data-toggle='modal' data-target='#modalEditarMateriaPrima'><i class='fa fa-pencil'></i></button><button class='btn btn-sm btn-primary btnEditarCosto' title='Visualizar Costo' data-toggle='modal' data-target='#modalEditarCostos' materiaPrima='".$materiaprima[$i]["codigo"]."'><i class='fa fa-money'></i></button></div>";
+                $botones = "<div class='btn-group'><button class='btn btn-sm btn-info btnVisualizarArticulos' title='Visualizar Articulos' data-toggle='modal' data-target='#modalVisualizarArticulos' articuloMP='".$materiaprima[$i]["codigo"]."'><i class='fa fa-eye'></i></button><button class='btn btn-sm btn-warning btnEditarMateriaPrima' idMateriaPrima='".$materiaprima[$i]["codigo"]."' data-toggle='modal' data-target='#modalEditarMateriaPrima' title='Editar Materia Prima'><i class='fa fa-pencil'></i></button><button class='btn btn-sm btn-success btnDuplicarMateriaPrima' idMateriaPrima='".$materiaprima[$i]["codigo"]."' data-toggle='modal' data-target='#modalDuplicarMateriaPrima' title='Nuevo Color'><i class='fa fa-clone'></i></button><button class='btn btn-sm btn-primary btnEditarCosto' title='Visualizar Costo' data-toggle='modal' data-target='#modalEditarCostos' materiaPrima='".$materiaprima[$i]["codigo"]."'><i class='fa fa-money'></i></button><button class='btn btn-sm btn-danger btnAnularMateriaPrima' title='Anular Materia Prima' idMateriaPrima='".$materiaprima[$i]["codigo"]."'><i class='fa fa-times'></i></button></div>";
     
                 $datosJson .= '[
                 "'.($i+1).'",
                 "'.$materiaprima[$i]["codigo"].'",
+                "'.$materiaprima[$i]["CodFab"].'",
                 "'.$materiaprima[$i]["codlinea"].'",
                 "'.$materiaprima[$i]["linea"].'",
                 "'.$descripcion.'",

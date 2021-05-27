@@ -157,3 +157,11 @@ $(".box").on("click", ".btnLimpiarModeloCorte", function () {
 	
 })
 
+
+$("#imprimirTicket").change(function(){
+	if(this.checked == false){
+		$(".campoSector").removeClass("hidden");
+	}else{
+		$(".campoSector").addClass("hidden");
+	}
+})

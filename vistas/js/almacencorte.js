@@ -1062,8 +1062,8 @@ $("#daterange-btnVerCortes").daterangepicker(
       var capturarRango17 = $("#daterange-btnVerCortes span").html();
     
       localStorage.setItem("capturarRango17", capturarRango17);
-      localStorage.setItem("fechaInicial", localStorage.getItem("fechaInicial"));
-      localStorage.setItem("fechaFinal", localStorage.getItem("fechaFinal"));
+      localStorage.setItem("fechaInicial", fechaInicial);
+      localStorage.setItem("fechaFinal", fechaFinal);
   
       // Recargamos la tabla con la información para ser mostrada en la tabla
       $(".tablaDetalleCorteTotal").DataTable().destroy();

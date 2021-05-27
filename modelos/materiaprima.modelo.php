@@ -33,31 +33,6 @@ class ModeloMateriaPrima{
 
     }    
     
-	/* 
-	* EDITAR NOMBRE DE LA MATERIA PRIMA
-	*/
-	static public function mdlEditarMateriaPrima($datos){
-
-		$stmt = Conexion::conectar()->prepare("CALL sp_1030_update_mp_p(:descripcion, :valor)");
-
-		$stmt->bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
-		$stmt->bindParam(":valor", $datos["codpro"], PDO::PARAM_STR);
-
-
-		if($stmt->execute()){
-
-			return "ok";
-
-		}else{
-
-			return "error";
-		
-		}
-
-		$stmt -> close();
-		$stmt = null;
-
-	}
 	
 	/* 
 	* Método para vizualizar detalle de la materia prima
@@ -487,5 +462,374 @@ class ModeloMateriaPrima{
 		$stmt=null;
 
 	}
+
+	/*=============================================
+	MOSTRAR LINEAS
+	=============================================*/
+
+	static public function mdlMostrarLineas(){
+
+		$stmt = Conexion::conectar()->prepare("SELECT distinct * FROM Tabla_M_Detalle WHERE  Cod_Tabla = 'TLIN' and Cod_Argumento not like '000'");
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }
+
+	/*=============================================
+	MOSTRAR SUBLINEAS
+	=============================================*/
+
+	static public function mdlMostrarSubLineas($valor){
+		if($valor == null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT * FROM Tabla_M_Detalle WHERE Cod_Tabla = 'TSUB' ");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}else{
+			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT * FROM Tabla_M_Detalle WHERE Cod_Tabla = 'TSUB' AND Des_Corta = '".$valor."' ");
+
+			$stmt -> execute();
+	
+			return $stmt -> fetchAll();
+		}
+
+		
+
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }
+
+	/*=============================================
+	MOSTRAR TALLAS
+	=============================================*/
+
+	static public function mdlMostrarTallas(){
+
+		$stmt = Conexion::conectar()->prepare("SELECT  distinct * FROM Tabla_M_Detalle WHERE  Cod_Tabla = 'TTAL'");
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }
+
+	/*=============================================
+	MOSTRAR COLORES
+	=============================================*/
+
+	static public function mdlMostrarColores(){
+
+		$stmt = Conexion::conectar()->prepare("SELECT  distinct * FROM Tabla_M_Detalle WHERE  Cod_Tabla = 'TCOL' and Cod_Argumento not like '0000' ");
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }
+
+	/*=============================================
+	MOSTRAR COLORES
+	=============================================*/
+
+	static public function mdlMostrarUndMedida(){
+
+		$stmt = Conexion::conectar()->prepare("SELECT distinct * FROM Tabla_M_Detalle WHERE  Cod_Tabla = 'TUND' and Cod_Argumento not like '000'  ");
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }
+
+	/*=============================================
+	CREAR PRECIO DE MATERIA PRIMA
+	=============================================*/
+
+	static public function mdlIngresarPrecioMP($tabla,$datos){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(Cod_Local,Cod_Entidad,CodPro, CodProv1, PreProv1,MonProv1,ObsProv1,CodProv2, PreProv2,MonProv2,ObsProv2,CodProv3,PreProv3,MonProv3,ObsProv3,FecReg,UsuReg,PcReg) VALUES (:Cod_Local,:Cod_Entidad,:CodPro,:CodProv1, :PreProv1,:MonProv1,:ObsProv1,:CodProv2,:PreProv2,:MonProv2,:ObsProv2,:CodProv3,:PreProv3,:MonProv3,:ObsProv3,:FecReg,:UsuReg,:PcReg)");
+
+		$stmt->bindParam(":Cod_Local", $datos["Cod_Local"], PDO::PARAM_STR);
+		$stmt->bindParam(":Cod_Entidad", $datos["Cod_Entidad"], PDO::PARAM_STR);
+        $stmt->bindParam(":CodPro", $datos["CodPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":CodProv1", $datos["CodProv1"], PDO::PARAM_STR);
+        $stmt->bindParam(":PreProv1", $datos["PreProv1"], PDO::PARAM_STR);
+        $stmt->bindParam(":MonProv1", $datos["MonProv1"], PDO::PARAM_STR);
+        $stmt->bindParam(":ObsProv1", $datos["ObsProv1"], PDO::PARAM_STR);
+        $stmt->bindParam(":CodProv2", $datos["CodProv2"], PDO::PARAM_STR);
+        $stmt->bindParam(":PreProv2", $datos["PreProv2"], PDO::PARAM_STR);
+        $stmt->bindParam(":MonProv2", $datos["MonProv2"], PDO::PARAM_STR);
+        $stmt->bindParam(":ObsProv2", $datos["ObsProv2"], PDO::PARAM_STR);
+        $stmt->bindParam(":CodProv3", $datos["CodProv3"], PDO::PARAM_STR);
+        $stmt->bindParam(":PreProv3", $datos["PreProv3"], PDO::PARAM_STR);
+        $stmt->bindParam(":MonProv3", $datos["MonProv3"], PDO::PARAM_STR);
+        $stmt->bindParam(":ObsProv3", $datos["ObsProv3"], PDO::PARAM_STR);
+        $stmt->bindParam(":FecReg", $datos["FecReg"], PDO::PARAM_STR);
+        $stmt->bindParam(":PcReg", $datos["PcReg"], PDO::PARAM_STR);
+        $stmt->bindParam(":UsuReg", $datos["UsuReg"], PDO::PARAM_STR);
+
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	}    
+
+
+	/*=============================================
+	CREAR MATERIA PRIMA
+	=============================================*/
+
+	static public function mdlIngresarMateriaPrima($tabla,$datos){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(CodAlt,Cod_Local,Cod_Entidad,CodPro,CodFab,DesPro,ColPro,UndPro,Mo,PaiPro,PrePro,PreFob,CosPro,Por_AdVal,Por_Seg,PesPro,Stk_Act,Stk_Min,Stk_Max,EstPro,TalPro,FamPro, Proveedor, CodAlm01, FecReg, UsuReg, PcReg) VALUES (:CodAlt,:Cod_Local,:Cod_Entidad,:CodPro,:CodFab,:DesPro,:ColPro,:UndPro,:Mo,:PaiPro,:PrePro,:PreFob,:CosPro,:Por_AdVal,:Por_Seg,:PesPro,:Stk_Act,:Stk_Min,:Stk_Max,:EstPro,:TalPro,:FamPro,:Proveedor,:CodAlm01,:FecReg,:UsuReg,:PcReg)");
+
+		$stmt->bindParam(":CodAlt", $datos["CodAlt"], PDO::PARAM_STR);
+		$stmt->bindParam(":Cod_Local", $datos["Cod_Local"], PDO::PARAM_STR);
+		$stmt->bindParam(":Cod_Entidad", $datos["Cod_Entidad"], PDO::PARAM_STR);
+        $stmt->bindParam(":CodPro", $datos["CodPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":CodFab", $datos["CodFab"], PDO::PARAM_STR);
+        $stmt->bindParam(":DesPro", $datos["DesPro"], PDO::PARAM_STR);
+        $stmt->bindParam(":ColPro", $datos["ColPro"], PDO::PARAM_STR);
+        $stmt->bindParam(":UndPro", $datos["UndPro"], PDO::PARAM_STR);
+        $stmt->bindParam(":Mo", $datos["Mo"], PDO::PARAM_STR);
+        $stmt->bindParam(":PaiPro", $datos["PaiPro"], PDO::PARAM_STR);
+        $stmt->bindParam(":PrePro", $datos["PrePro"], PDO::PARAM_STR);
+        $stmt->bindParam(":PreFob", $datos["PreFob"], PDO::PARAM_STR);
+        $stmt->bindParam(":CosPro", $datos["CosPro"], PDO::PARAM_STR);
+        $stmt->bindParam(":Por_AdVal", $datos["Por_AdVal"], PDO::PARAM_STR);
+        $stmt->bindParam(":Por_Seg", $datos["Por_Seg"], PDO::PARAM_STR);
+        $stmt->bindParam(":PesPro", $datos["PesPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":Stk_Act", $datos["Stk_Act"], PDO::PARAM_STR);
+        $stmt->bindParam(":Stk_Min", $datos["Stk_Min"], PDO::PARAM_STR);
+        $stmt->bindParam(":Stk_Max", $datos["Stk_Max"], PDO::PARAM_STR);
+        $stmt->bindParam(":EstPro", $datos["EstPro"], PDO::PARAM_STR);
+        $stmt->bindParam(":TalPro", $datos["TalPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":FamPro", $datos["FamPro"], PDO::PARAM_STR);
+        $stmt->bindParam(":Proveedor", $datos["Proveedor"], PDO::PARAM_STR);
+        $stmt->bindParam(":CodAlm01", $datos["CodAlm01"], PDO::PARAM_STR);
+        $stmt->bindParam(":FecReg", $datos["FecReg"], PDO::PARAM_STR);
+        $stmt->bindParam(":PcReg", $datos["PcReg"], PDO::PARAM_STR);
+        $stmt->bindParam(":UsuReg", $datos["UsuReg"], PDO::PARAM_STR);
+
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	}    
+
+
+	/*=============================================
+	VALIDAR CODIGO DE FABRICA MATERIA PRIMA
+	=============================================*/
+
+	static public function mdlMostrarMateriaFabrica($valor){
+
+		$stmt = Conexion::conectar()->prepare("SELECT  * FROM producto WHERE  CodFab = '".$valor."'");
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }
+
+	/*=============================================
+	MOSTRAR ULTIMO CODIGOPRO DE MATERIA PRIMA
+	=============================================*/
+
+	static public function mdlMostrarUltimoCodPro(){
+
+
+		$stmt = Conexion::conectar()->prepare("SELECT MAX(CodPro) AS CodPro FROM producto");
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }
+
+
+	/*=============================================
+	EDITAR PRECIO DE MATERIA PRIMA
+	=============================================*/
+
+	static public function mdlEditarPrecioMP($tabla,$datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE preciomp SET CodProv1=:CodProv1,MonProv1=:MonProv1,PreProv1=:PreProv1, ObsProv1=:ObsProv1,CodProv2=:CodProv2,MonProv2=:MonProv2,PreProv2=:PreProv2,ObsProv2=:ObsProv2,CodProv3=:CodProv3,MonProv3=:MonProv3,PreProv3=:PreProv3,ObsProv3=:ObsProv3,UsuMod=:UsuMod,FecMod=:FecMod,PcMod=:PcMod WHERE CodPro = :CodPro");
+
+        $stmt->bindParam(":CodPro", $datos["CodPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":CodProv1", $datos["CodProv1"], PDO::PARAM_STR);
+        $stmt->bindParam(":PreProv1", $datos["PreProv1"], PDO::PARAM_STR);
+        $stmt->bindParam(":MonProv1", $datos["MonProv1"], PDO::PARAM_STR);
+        $stmt->bindParam(":ObsProv1", $datos["ObsProv1"], PDO::PARAM_STR);
+        $stmt->bindParam(":CodProv2", $datos["CodProv2"], PDO::PARAM_STR);
+        $stmt->bindParam(":PreProv2", $datos["PreProv2"], PDO::PARAM_STR);
+        $stmt->bindParam(":MonProv2", $datos["MonProv2"], PDO::PARAM_STR);
+        $stmt->bindParam(":ObsProv2", $datos["ObsProv2"], PDO::PARAM_STR);
+        $stmt->bindParam(":CodProv3", $datos["CodProv3"], PDO::PARAM_STR);
+        $stmt->bindParam(":PreProv3", $datos["PreProv3"], PDO::PARAM_STR);
+        $stmt->bindParam(":MonProv3", $datos["MonProv3"], PDO::PARAM_STR);
+        $stmt->bindParam(":ObsProv3", $datos["ObsProv3"], PDO::PARAM_STR);
+        $stmt->bindParam(":FecMod", $datos["FecMod"], PDO::PARAM_STR);
+        $stmt->bindParam(":PcMod", $datos["PcMod"], PDO::PARAM_STR);
+        $stmt->bindParam(":UsuMod", $datos["UsuMod"], PDO::PARAM_STR);
+
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	}    
+
+	/*=============================================
+	EDITAR MATERIA PRIMA
+	=============================================*/
+	static public function mdlEditarMateriaPrima($datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE producto SET CodAlt=:CodAlt,DesPro=:DesPro,UndPro=:UndPro,Por_AdVal=:Por_AdVal,Por_Seg=:Por_Seg,PesPro=:PesPro,Stk_Min=:Stk_Min,Stk_Max=:Stk_Max,UsuMod=:UsuMod,FecMod=:FecMod,PcMod=:PcMod WHERE CodPro = :CodPro");
+
+		$stmt->bindParam(":CodAlt", $datos["CodAlt"], PDO::PARAM_STR);
+        $stmt->bindParam(":CodPro", $datos["CodPro"], PDO::PARAM_STR);
+        $stmt->bindParam(":DesPro", $datos["DesPro"], PDO::PARAM_STR);
+        $stmt->bindParam(":UndPro", $datos["UndPro"], PDO::PARAM_STR);
+        $stmt->bindParam(":Por_AdVal", $datos["Por_AdVal"], PDO::PARAM_STR);
+        $stmt->bindParam(":Por_Seg", $datos["Por_Seg"], PDO::PARAM_STR);
+        $stmt->bindParam(":PesPro", $datos["PesPro"], PDO::PARAM_STR);
+        $stmt->bindParam(":Stk_Min", $datos["Stk_Min"], PDO::PARAM_STR);
+        $stmt->bindParam(":Stk_Max", $datos["Stk_Max"], PDO::PARAM_STR);
+        $stmt->bindParam(":FecMod", $datos["FecMod"], PDO::PARAM_STR);
+        $stmt->bindParam(":PcMod", $datos["PcMod"], PDO::PARAM_STR);
+        $stmt->bindParam(":UsuMod", $datos["UsuMod"], PDO::PARAM_STR);
+
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt -> close();
+		$stmt = null;
+
+	}
+
+
+	/*=============================================
+	MOSTRAR ULTIMO CODIGOPRO DE MATERIA PRIMA
+	=============================================*/
+
+	static public function mdlMostrarExisteMateria($valor){
+
+
+		$stmt = Conexion::conectar()->prepare("SELECT CodPro FROM producto WHERE CodFab = '".$valor."'");
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }
+
+	/*=============================================
+	ANULAR MATERIA PRIMA
+	=============================================*/
+
+	static public function mdlAnularMateriaPrima($datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE producto SET EstPro=:EstPro,UsuAnu=:UsuAnu,FecAnu=:FecAnu,PcAnu=:PcAnu WHERE CodPro = :CodPro");
+
+        $stmt->bindParam(":CodPro", $datos["CodPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":EstPro", $datos["EstPro"], PDO::PARAM_STR);
+        $stmt->bindParam(":FecAnu", $datos["FecAnu"], PDO::PARAM_STR);
+        $stmt->bindParam(":PcAnu", $datos["PcAnu"], PDO::PARAM_STR);
+        $stmt->bindParam(":UsuAnu", $datos["UsuAnu"], PDO::PARAM_STR);
+
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	}    
 
 }

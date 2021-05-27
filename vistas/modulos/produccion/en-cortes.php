@@ -240,18 +240,16 @@ MODAL MANDAR A TALLER
 
             <!-- ENTRADA PARA EL TOTAL DEL CORTE -->
 
-            <div class="form-group col-lg-12">
+            <div class="form-group ">
 
-              <div>
-                <label >Enviar a talleres</label>
-              </div>
+                
               <div class="col-xs-6">
-
+                <label >Enviar a talleres</label>
                 <div class="input-group">
 
                   <span class="input-group-addon"><i class="fa fa-arrow-up"></i></span>
 
-                  <input type="number" class="form-control input-lg" id="almCorte" name="almCorte" min="0" placeholder="Por enviar" required readonly>
+                  <input type="number" class="form-control input-md" id="almCorte" name="almCorte" min="0" placeholder="Por enviar" required readonly>
 
                 </div>
 
@@ -259,31 +257,63 @@ MODAL MANDAR A TALLER
 
               <!-- ENTRADA PARA EL TOTAL DEL CORTE -->
 
-              <div class="col-xs-6">
-
+              <div class="col-xs-6" style="padding-top:25px">
                 <div class="input-group">
 
                   <span class="input-group-addon"><i class="fa fa-arrow-down"></i></span>
 
-                  <input type="number" class="form-control input-lg" id="nuevoAlmCorte" name="nuevoAlmCorte" min="0" max="" placeholder="Mandar" required>
+                  <input type="number" class="form-control input-md" id="nuevoAlmCorte" name="nuevoAlmCorte" min="0" max="" placeholder="Mandar" required>
 
                 </div>
 
-                
-
               </div>
-
               
             </div>
 
-            <div class="form-group col-lg-6">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault" name="ticket" checked>
-                  <label class="form-check-label" for="flexCheckDefault">
-                   Imprimir Tickets
-                  </label>
-                </div>
+            <div class="form-group col-lg-6" style="padding-top:15px">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="1" id="imprimirTicket" name="ticket" checked>
+                <label class="form-check-label" for="imprimirTicket">
+                  Imprimir Tickets
+                </label>
               </div>
+            </div>
+            
+            <div class="col-lg-12"></div>
+            <!--=====================================
+            ENTRADA DEL SECTOR
+            ======================================-->
+
+            <div class="form-group col-lg-12 campoSector hidden ">
+
+              <div class="input-group">
+
+                <span class="input-group-addon"><i class="fa fa-users"></i></span>
+
+                <select class="form-control selectpicker " id="seleccionarSectorServicio" name="seleccionarSectorServicio" data-live-search="true" >
+
+                  <option value="">Seleccionar sector</option>
+
+                  <?php
+
+                  $item = null;
+                  $valor = null;
+
+                  $categorias = ControladorSectores::ctrMostrarSectores($item, $valor);
+
+                  foreach ($categorias as $key => $value) {
+
+                    echo '<option value="'.$value["cod_sector"].'">'.$value["cod_sector"]." - ".$value["nom_sector"].'</option>';
+
+                  }
+
+                  ?>
+
+                </select>
+
+              </div>
+
+            </div>
           </div>
 
           <!--=====================================

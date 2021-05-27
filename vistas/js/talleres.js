@@ -539,8 +539,8 @@ $("#daterange-btnTrusas").daterangepicker(
       localStorage.setItem("fechaInicial", fechaInicial);
 	  localStorage.setItem("fechaFinal", fechaFinal);
 	  
-	  $(".btnReporteProduccionTrusas").attr("fechaInicial",localStorage.getItem("fechaInicial"));
-	  $(".btnReporteProduccionTrusas").attr("fechaFinal",localStorage.getItem("fechaFinal"));
+	  $(".btnReporteProduccionTrusas").attr("fechaInicial",fechaInicial);
+	  $(".btnReporteProduccionTrusas").attr("fechaFinal",fechaFinal);
       // Recargamos la tabla con la información para ser mostrada en la tabla
       $(".tablaProduccionTrusas").DataTable().destroy();
       cargarTablaProduccionTrusas(fechaInicial, fechaFinal);
@@ -584,8 +584,8 @@ $("#daterange-btnTrusas").daterangepicker(
       localStorage.setItem("capturarRango13", "Hoy");
       localStorage.setItem("fechaInicial", fechaInicial);
 	  localStorage.setItem("fechaFinal", fechaFinal);
-	  $(".btnReporteProduccionTrusas").attr("fechaInicial",localStorage.getItem("fechaInicial"));
-	  $(".btnReporteProduccionTrusas").attr("fechaFinal",localStorage.getItem("fechaFinal"));
+	  $(".btnReporteProduccionTrusas").attr("fechaInicial",fechaInicial);
+	  $(".btnReporteProduccionTrusas").attr("fechaFinal",fechaFinal);
       // Recargamos la tabla con la información para ser mostrada en la tabla
       $(".tablaProduccionTrusas").DataTable().destroy();
       cargarTablaProduccionTrusas(fechaInicial, fechaFinal);
@@ -732,8 +732,8 @@ $("#daterange-btnBrasieres").daterangepicker(
       localStorage.setItem("fechaInicial", fechaInicial);
 	  localStorage.setItem("fechaFinal", fechaFinal);
 
-	  $(".btnReporteProduccionBrasier").attr("fechaInicial",localStorage.getItem("fechaInicial"));
-	  $(".btnReporteProduccionBrasier").attr("fechaFinal",localStorage.getItem("fechaFinal"));
+	  $(".btnReporteProduccionBrasier").attr("fechaInicial",fechaInicial);
+	  $(".btnReporteProduccionBrasier").attr("fechaFinal",fechaFinal);
       // Recargamos la tabla con la información para ser mostrada en la tabla
       $(".tablaProduccionBrasier").DataTable().destroy();
       cargarTablaProduccionBrasier(fechaInicial, fechaFinal);
@@ -778,8 +778,8 @@ $("#daterange-btnBrasieres").daterangepicker(
       localStorage.setItem("fechaInicial", fechaInicial);
       localStorage.setItem("fechaFinal", fechaFinal);
 	  // Recargamos la tabla con la información para ser mostrada en la tabla
-	  $(".btnReporteProduccionBrasier").attr("fechaInicial",localStorage.getItem("fechaInicial"));
-	  $(".btnReporteProduccionBrasier").attr("fechaFinal",localStorage.getItem("fechaFinal"));
+	  $(".btnReporteProduccionBrasier").attr("fechaInicial",fechaInicial);
+	  $(".btnReporteProduccionBrasier").attr("fechaFinal",fechaFinal);
       $(".tablaProduccionBrasier").DataTable().destroy();
       cargarTablaProduccionBrasier(fechaInicial, fechaFinal);
     }
@@ -2485,8 +2485,8 @@ $("#daterange-btnVerIngresos").daterangepicker(
 	  var capturarRango10 = $("#daterange-btnVerIngresos span").html();
 	
 	  localStorage.setItem("capturarRango10", capturarRango10);
-	  localStorage.setItem("fechaInicial", localStorage.getItem("fechaInicial"));
-	  localStorage.setItem("fechaFinal", localStorage.getItem("fechaFinal"));
+	  localStorage.setItem("fechaInicial", fechaInicial);
+	  localStorage.setItem("fechaFinal", fechaFinal);
   
 	  // Recargamos la tabla con la información para ser mostrada en la tabla
 	  $(".tablaDetalleIngresoTotal").DataTable().destroy();

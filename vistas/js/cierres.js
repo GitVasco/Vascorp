@@ -114,8 +114,8 @@ $("#daterange-btnCierres").daterangepicker(
     var capturarRango15 = $("#daterange-btnCierres span").html();
   
     localStorage.setItem("capturarRango15", capturarRango15);
-    localStorage.setItem("fechaInicial", localStorage.getItem("fechaInicial"));
-    localStorage.setItem("fechaFinal", localStorage.getItem("fechaFinal"));
+    localStorage.setItem("fechaInicial", fechaInicial);
+    localStorage.setItem("fechaFinal", fechaFinal);
 
     // Recargamos la tabla con la información para ser mostrada en la tabla
     $(".tablaCierres").DataTable().destroy();
@@ -939,8 +939,8 @@ $("#daterange-btnVerCierres").daterangepicker(
     var capturarRango16 = $("#daterange-btnVerCierres span").html();
   
     localStorage.setItem("capturarRango16", capturarRango16);
-    localStorage.setItem("fechaInicial", localStorage.getItem("fechaInicial"));
-    localStorage.setItem("fechaFinal", localStorage.getItem("fechaFinal"));
+    localStorage.setItem("fechaInicial", fechaInicial);
+    localStorage.setItem("fechaFinal", fechaFinal);
 
     // Recargamos la tabla con la información para ser mostrada en la tabla
     $(".tablaDetalleCierrreTotal").DataTable().destroy();
