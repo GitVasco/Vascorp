@@ -121,7 +121,7 @@ class ControladorPedidos{
 
                 $usuario = $_POST["usuario"];
                 $talonarioN = $usuario.$talonario;
-                var_dump($talonarioN);
+                //var_dump($talonarioN);
 
                 /*
                 todo: GUARDAR CABECERA
