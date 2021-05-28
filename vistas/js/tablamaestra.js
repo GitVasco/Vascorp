@@ -38,7 +38,6 @@ $('.TablaMaestraCabecera').DataTable({
 /* 
 * ACTIVAR SUB LINEA
 */  
-
 if (localStorage.getItem("codigoSubLinea") != null) {
 
 	cargarTablaMaestraDetalle(localStorage.getItem("codigoSubLinea"));
@@ -102,3 +101,143 @@ function cargarTablaMaestraDetalle(codigoSubLinea){
   });  
 
 }
+
+/*=============================================
+AGREGAR SUBLINEA
+=============================================*/
+$(".TablaMaestraCabecera").on("click", ".btnCrearSubLinea", function () {
+
+	$("#nuevoVal3").val("");
+	document.getElementById("nuevoVal3").readOnly = false;
+
+	/* $(".TablaMaestraDetalle").DataTable().destroy();
+
+	var codigoSubLinea = $(this).attr("codigo");
+	//console.log("codigo", codigoSubLinea);
+
+	localStorage.setItem("codigoSubLinea", codigoSubLinea);
+	cargarTablaMaestraDetalle(localStorage.getItem("codigoSubLinea")); */
+
+    var subLinea = $(this).attr("codigo");
+	var descripcion = $(this).attr("descripcion");
+	//console.log(subLinea);
+
+	$("#nuevoCodTabla").val(subLinea);
+	$("#nuevaDescripcion").val(descripcion);
+
+    var datos = new FormData();
+    datos.append("subLinea", subLinea);
+
+    $.ajax({
+
+        url: "ajax/tablamaestra.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuesta) {
+			//console.log(respuesta);
+
+            $("#nuevoCorrelativo").val(respuesta["correlativo"]);
+
+        }
+
+    })
+
+	if(subLinea == 'TSUB'){
+
+		$(".campoSubLineaA").addClass("hidden");
+		$(".campoSubLineaB").removeClass("hidden");
+
+	}else{
+
+		$(".campoSubLineaB").addClass("hidden");
+		$(".campoSubLineaA").removeClass("hidden");
+
+	}
+})
+
+$("#nuevaDescCortaSelect").change(function(){
+
+	var des_corta = $(this).val();
+	console.log("des_corta", des_corta);
+
+    var datos = new FormData();
+    datos.append("des_corta", des_corta);
+
+    $.ajax({
+
+        url: "ajax/tablamaestra.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuesta) {
+			//console.log(respuesta);
+
+            $("#nuevoVal3").val(respuesta["correlativo"]);
+			document.getElementById("nuevoVal3").readOnly = true;
+
+        }
+
+    })	
+	
+})
+
+/*=============================================
+EDITAR SUBLINEA
+=============================================*/
+$(".TablaMaestraDetalle").on("click", ".btnEditarSubLinea", function () {
+
+	var codigo = $(this).attr("codigo");
+	var argumento = $(this).attr("argumento");
+	//console.log(codigo, argumento);
+
+	$("#editarCodTabla").val(codigo);
+	$("#editarCorrelativo").val(argumento);
+
+    var datos = new FormData();
+    datos.append("codigo", codigo);
+	datos.append("argumento", argumento);
+
+    $.ajax({
+
+        url: "ajax/tablamaestra.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuesta) {
+			//console.log(respuesta);
+
+            $("#editarDescCorta").val(respuesta["des_corta"]);
+			$("#editarDescLarga").val(respuesta["des_larga"]);
+			$("#editarVal1").val(respuesta["valor_1"]);
+			$("#editarVal2").val(respuesta["valor_2"]);
+			
+			$("#editarVal4").val(respuesta["valor_4"]);
+			$("#editarVal5").val(respuesta["valor_5"]);
+
+			if(codigo == 'TSUB'){
+
+				$("#editarVal3").val(respuesta["valor_3"]);
+				document.getElementById("editarVal3").readOnly = true;
+
+			}else{
+
+				$("#editarVal3").val(respuesta["valor_3"]);
+				document.getElementById("editarVal3").readOnly = false;
+
+			}
+
+        }
+
+    })	
+
+})
