@@ -889,26 +889,29 @@ $("#daterange-btnCorte").daterangepicker(
   
   $(".daterangepicker.opensleft .ranges li").on("click", function() {
     var textoHoy = $(this).attr("data-range-key");
-  
-    if (textoHoy == "Hoy") {
-      var d = new Date();
-  
-      var dia = d.getDate();
-      var mes = d.getMonth() + 1;
-      var año = d.getFullYear();
-  
-      dia = ("0" + dia).slice(-2);
-      mes = ("0" + mes).slice(-2);
-  
-      var fechaInicial = año + "-" + mes + "-" + dia;
-      var fechaFinal = año + "-" + mes + "-" + dia;
-  
-      localStorage.setItem("capturarRango3", "Hoy");
-      localStorage.setItem("fechaInicial", fechaInicial);
-      localStorage.setItem("fechaFinal", fechaFinal);
-      // Recargamos la tabla con la información para ser mostrada en la tabla
-      $(".tablaOrdenCorte").DataTable().destroy();
-      cargarTablaCortes(fechaInicial, fechaFinal);
+    var ruta = $("#rutaAcceso").val();
+    if(ruta == "ordencorte"){
+
+      if (textoHoy == "Hoy") {
+        var d = new Date();
+    
+        var dia = d.getDate();
+        var mes = d.getMonth() + 1;
+        var año = d.getFullYear();
+    
+        dia = ("0" + dia).slice(-2);
+        mes = ("0" + mes).slice(-2);
+    
+        var fechaInicial = año + "-" + mes + "-" + dia;
+        var fechaFinal = año + "-" + mes + "-" + dia;
+    
+        localStorage.setItem("capturarRango3", "Hoy");
+        localStorage.setItem("fechaInicial", fechaInicial);
+        localStorage.setItem("fechaFinal", fechaFinal);
+        // Recargamos la tabla con la información para ser mostrada en la tabla
+        $(".tablaOrdenCorte").DataTable().destroy();
+        cargarTablaCortes(fechaInicial, fechaFinal);
+      }
     }
   });
 
@@ -1123,26 +1126,29 @@ $("#daterange-btnGeneralCorte").daterangepicker(
   
   $(".daterangepicker.opensleft .ranges li").on("click", function() {
     var textoHoy = $(this).attr("data-range-key");
-  
-    if (textoHoy == "Hoy") {
-      var d = new Date();
-  
-      var dia = d.getDate();
-      var mes = d.getMonth() + 1;
-      var año = d.getFullYear();
-  
-      dia = ("0" + dia).slice(-2);
-      mes = ("0" + mes).slice(-2);
-  
-      var fechaInicial = año + "-" + mes + "-" + dia;
-      var fechaFinal = año + "-" + mes + "-" + dia;
-  
-      localStorage.setItem("capturarRango18", "Hoy");
-      localStorage.setItem("fechaInicial", fechaInicial);
-      localStorage.setItem("fechaFinal", fechaFinal);
-      // Recargamos la tabla con la información para ser mostrada en la tabla
-      $(".tablaDetalleOrdenCorteTotal").DataTable().destroy();
-      cargarTablaGeneralCortes(fechaInicial, fechaFinal);
+    var ruta = $("#rutaAcceso").val();
+    if(ruta == "ordencorte"){
+
+      if (textoHoy == "Hoy") {
+        var d = new Date();
+    
+        var dia = d.getDate();
+        var mes = d.getMonth() + 1;
+        var año = d.getFullYear();
+    
+        dia = ("0" + dia).slice(-2);
+        mes = ("0" + mes).slice(-2);
+    
+        var fechaInicial = año + "-" + mes + "-" + dia;
+        var fechaFinal = año + "-" + mes + "-" + dia;
+    
+        localStorage.setItem("capturarRango18", "Hoy");
+        localStorage.setItem("fechaInicial", fechaInicial);
+        localStorage.setItem("fechaFinal", fechaFinal);
+        // Recargamos la tabla con la información para ser mostrada en la tabla
+        $(".tablaDetalleOrdenCorteTotal").DataTable().destroy();
+        cargarTablaGeneralCortes(fechaInicial, fechaFinal);
+      }
     }
   });
 
@@ -1280,25 +1286,28 @@ function cargarTablaCantidadCortes(fechaInicial, fechaFinal){
     
     $(".daterangepicker.opensleft .ranges li").on("click", function() {
       var textoHoy = $(this).attr("data-range-key");
-    
-      if (textoHoy == "Hoy") {
-        var d = new Date();
-    
-        var dia = d.getDate();
-        var mes = d.getMonth() + 1;
-        var año = d.getFullYear();
-    
-        dia = ("0" + dia).slice(-2);
-        mes = ("0" + mes).slice(-2);
-    
-        var fechaInicial = año + "-" + mes + "-" + dia;
-        var fechaFinal = año + "-" + mes + "-" + dia;
-    
-        localStorage.setItem("capturarRango21", "Hoy");
-        localStorage.setItem("fechaInicial", fechaInicial);
-        localStorage.setItem("fechaFinal", fechaFinal);
-        // Recargamos la tabla con la información para ser mostrada en la tabla
-        $(".tablaCantidadOrdenCorteTotal").DataTable().destroy();
-        cargarTablaCantidadCortes(fechaInicial, fechaFinal);
+      var ruta = $("#rutaAcceso").val();
+      if(ruta == "ordencorte"){
+
+        if (textoHoy == "Hoy") {
+          var d = new Date();
+      
+          var dia = d.getDate();
+          var mes = d.getMonth() + 1;
+          var año = d.getFullYear();
+      
+          dia = ("0" + dia).slice(-2);
+          mes = ("0" + mes).slice(-2);
+      
+          var fechaInicial = año + "-" + mes + "-" + dia;
+          var fechaFinal = año + "-" + mes + "-" + dia;
+      
+          localStorage.setItem("capturarRango21", "Hoy");
+          localStorage.setItem("fechaInicial", fechaInicial);
+          localStorage.setItem("fechaFinal", fechaFinal);
+          // Recargamos la tabla con la información para ser mostrada en la tabla
+          $(".tablaCantidadOrdenCorteTotal").DataTable().destroy();
+          cargarTablaCantidadCortes(fechaInicial, fechaFinal);
+        }
       }
     });

@@ -68,7 +68,7 @@
       <div class="box-body">
 
         <input type="hidden" value="<?=$_SESSION["perfil"];?>" id="perfilOculto">
-        
+        <input type="hidden" value="<?= $_GET["ruta"]; ?>" id="rutaAcceso">
        <table class="table table-bordered table-striped dt-responsive tablaOrdenCorte">
          
         <thead>
@@ -644,7 +644,7 @@ MODAL VISUALIZAR INFORMACION
             </div>
 
             <div class="box-body">
-
+              
               <table class="table table-bordered table-striped dt-responsive tablaDetalleOrdenCorteTotal" width="100%">
 
               <thead>

@@ -206,27 +206,30 @@ $("#daterange-btnSublimado").daterangepicker(
   
   $(".daterangepicker.opensleft .ranges li").on("click", function() {
     var textoHoy = $(this).attr("data-range-key");
+    var ruta = $("#rutaAcceso").val();
+    if(ruta == "sublimados"){
   
-    if (textoHoy == "Hoy") {
-      var d = new Date();
-  
-      var dia = d.getDate();
-      var mes = d.getMonth() + 1;
-      var año = d.getFullYear();
-  
-      dia = ("0" + dia).slice(-2);
-      mes = ("0" + mes).slice(-2);
-  
-      var fechaInicial = año + "-" + mes + "-" + dia;
-      var fechaFinal = año + "-" + mes + "-" + dia;
-      localStorage.setItem("capturarRango27", "Hoy");
-      localStorage.setItem("fechaInicial", fechaInicial);
-	  localStorage.setItem("fechaFinal", fechaFinal);
-    $(".btnReporteSublimados").attr("fechaInicial",fechaInicial);
-	  $(".btnReporteSublimados").attr("fechaFinal",fechaFinal);
-      // Recargamos la tabla con la información para ser mostrada en la tabla
-      $(".tablaSublimados").DataTable().destroy();
-      cargarTablaSublimado(fechaInicial, fechaFinal);
+      if (textoHoy == "Hoy") {
+        var d = new Date();
+    
+        var dia = d.getDate();
+        var mes = d.getMonth() + 1;
+        var año = d.getFullYear();
+    
+        dia = ("0" + dia).slice(-2);
+        mes = ("0" + mes).slice(-2);
+    
+        var fechaInicial = año + "-" + mes + "-" + dia;
+        var fechaFinal = año + "-" + mes + "-" + dia;
+        localStorage.setItem("capturarRango27", "Hoy");
+        localStorage.setItem("fechaInicial", fechaInicial);
+        localStorage.setItem("fechaFinal", fechaFinal);
+        $(".btnReporteSublimados").attr("fechaInicial",fechaInicial);
+        $(".btnReporteSublimados").attr("fechaFinal",fechaFinal);
+        // Recargamos la tabla con la información para ser mostrada en la tabla
+        $(".tablaSublimados").DataTable().destroy();
+        cargarTablaSublimado(fechaInicial, fechaFinal);
+      }
     }
   });
 

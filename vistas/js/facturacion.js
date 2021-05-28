@@ -1200,26 +1200,29 @@ $("#daterange-btnNotasCD").daterangepicker(
   
   $(".daterangepicker.opensleft .ranges li").on("click", function() {
     var textoHoy = $(this).attr("data-range-key");
-  
-    if (textoHoy == "Hoy") {
-      var d = new Date();
-  
-      var dia = d.getDate();
-      var mes = d.getMonth() + 1;
-      var año = d.getFullYear();
-  
-      dia = ("0" + dia).slice(-2);
-      mes = ("0" + mes).slice(-2);
-  
-      var fechaInicial = año + "-" + mes + "-" + dia;
-      var fechaFinal = año + "-" + mes + "-" + dia;
-      localStorage.setItem("capturarRango23", "Hoy");
-      localStorage.setItem("fechaInicial", fechaInicial);
-	  localStorage.setItem("fechaFinal", fechaFinal);
-      // Recargamos la tabla con la información para ser mostrada en la tabla
-      $(".tablaNotaCredito").DataTable().destroy();
-      cargarTablaNotaCD(fechaInicial, fechaFinal);
-    }
+    var ruta = $("#rutaAcceso").val();
+
+    if(ruta == "ver-nota-credito"){
+        if (textoHoy == "Hoy") {
+        var d = new Date();
+    
+        var dia = d.getDate();
+        var mes = d.getMonth() + 1;
+        var año = d.getFullYear();
+    
+        dia = ("0" + dia).slice(-2);
+        mes = ("0" + mes).slice(-2);
+    
+        var fechaInicial = año + "-" + mes + "-" + dia;
+        var fechaFinal = año + "-" + mes + "-" + dia;
+        localStorage.setItem("capturarRango23", "Hoy");
+        localStorage.setItem("fechaInicial", fechaInicial);
+        localStorage.setItem("fechaFinal", fechaFinal);
+        // Recargamos la tabla con la información para ser mostrada en la tabla
+        $(".tablaNotaCredito").DataTable().destroy();
+        cargarTablaNotaCD(fechaInicial, fechaFinal);
+        }
+    }       
   });
 
 
@@ -1350,25 +1353,28 @@ $("#daterange-btnFactura").daterangepicker(
   
   $(".daterangepicker.opensleft .ranges li").on("click", function() {
     var textoHoy = $(this).attr("data-range-key");
-  
-    if (textoHoy == "Hoy") {
-      var d = new Date();
-  
-      var dia = d.getDate();
-      var mes = d.getMonth() + 1;
-      var año = d.getFullYear();
-  
-      dia = ("0" + dia).slice(-2);
-      mes = ("0" + mes).slice(-2);
-  
-      var fechaInicial = año + "-" + mes + "-" + dia;
-      var fechaFinal = año + "-" + mes + "-" + dia;
-      localStorage.setItem("capturarRango24", "Hoy");
-      localStorage.setItem("fechaInicial", fechaInicial);
-	  localStorage.setItem("fechaFinal", fechaFinal);
-      // Recargamos la tabla con la información para ser mostrada en la tabla
-      $(".tablaFacturas").DataTable().destroy();
-      cargarTablaFactura(fechaInicial, fechaFinal);
+    var ruta = $("#rutaAcceso").val();
+    if(ruta == "facturas"){
+
+        if (textoHoy == "Hoy") {
+        var d = new Date();
+    
+        var dia = d.getDate();
+        var mes = d.getMonth() + 1;
+        var año = d.getFullYear();
+    
+        dia = ("0" + dia).slice(-2);
+        mes = ("0" + mes).slice(-2);
+    
+        var fechaInicial = año + "-" + mes + "-" + dia;
+        var fechaFinal = año + "-" + mes + "-" + dia;
+        localStorage.setItem("capturarRango24", "Hoy");
+        localStorage.setItem("fechaInicial", fechaInicial);
+        localStorage.setItem("fechaFinal", fechaFinal);
+        // Recargamos la tabla con la información para ser mostrada en la tabla
+        $(".tablaFacturas").DataTable().destroy();
+        cargarTablaFactura(fechaInicial, fechaFinal);
+        }
     }
   });
 
@@ -1467,25 +1473,28 @@ $("#daterange-btnBoleta").daterangepicker(
   
   $(".daterangepicker.opensleft .ranges li").on("click", function() {
     var textoHoy = $(this).attr("data-range-key");
-  
-    if (textoHoy == "Hoy") {
-      var d = new Date();
-  
-      var dia = d.getDate();
-      var mes = d.getMonth() + 1;
-      var año = d.getFullYear();
-  
-      dia = ("0" + dia).slice(-2);
-      mes = ("0" + mes).slice(-2);
-  
-      var fechaInicial = año + "-" + mes + "-" + dia;
-      var fechaFinal = año + "-" + mes + "-" + dia;
-      localStorage.setItem("capturarRango25", "Hoy");
-      localStorage.setItem("fechaInicial", fechaInicial);
-	  localStorage.setItem("fechaFinal", fechaFinal);
-      // Recargamos la tabla con la información para ser mostrada en la tabla
-      $(".tablaBoletas").DataTable().destroy();
-      cargarTablaBoleta(fechaInicial, fechaFinal);
+    var ruta = $("#rutaAcceso").val();
+
+    if(ruta == "boletas"){
+        if (textoHoy == "Hoy") {
+        var d = new Date();
+    
+        var dia = d.getDate();
+        var mes = d.getMonth() + 1;
+        var año = d.getFullYear();
+    
+        dia = ("0" + dia).slice(-2);
+        mes = ("0" + mes).slice(-2);
+    
+        var fechaInicial = año + "-" + mes + "-" + dia;
+        var fechaFinal = año + "-" + mes + "-" + dia;
+        localStorage.setItem("capturarRango25", "Hoy");
+        localStorage.setItem("fechaInicial", fechaInicial);
+        localStorage.setItem("fechaFinal", fechaFinal);
+        // Recargamos la tabla con la información para ser mostrada en la tabla
+        $(".tablaBoletas").DataTable().destroy();
+        cargarTablaBoleta(fechaInicial, fechaFinal);
+        }
     }
   });
 
@@ -1583,24 +1592,28 @@ $("#daterange-btnProforma").daterangepicker(
   
   $(".daterangepicker.opensleft .ranges li").on("click", function() {
     var textoHoy = $(this).attr("data-range-key");
+    var ruta = $("#rutaAcceso").val();
+
+    if(ruta == "proformas"){
   
-    if (textoHoy == "Hoy") {
-      var d = new Date();
-  
-      var dia = d.getDate();
-      var mes = d.getMonth() + 1;
-      var año = d.getFullYear();
-  
-      dia = ("0" + dia).slice(-2);
-      mes = ("0" + mes).slice(-2);
-  
-      var fechaInicial = año + "-" + mes + "-" + dia;
-      var fechaFinal = año + "-" + mes + "-" + dia;
-      localStorage.setItem("capturarRango26", "Hoy");
-      localStorage.setItem("fechaInicial", fechaInicial);
-	  localStorage.setItem("fechaFinal", fechaFinal);
-      // Recargamos la tabla con la información para ser mostrada en la tabla
-      $(".tablaProformas").DataTable().destroy();
-      cargarTablaProforma(fechaInicial, fechaFinal);
+        if (textoHoy == "Hoy") {
+        var d = new Date();
+    
+        var dia = d.getDate();
+        var mes = d.getMonth() + 1;
+        var año = d.getFullYear();
+    
+        dia = ("0" + dia).slice(-2);
+        mes = ("0" + mes).slice(-2);
+    
+        var fechaInicial = año + "-" + mes + "-" + dia;
+        var fechaFinal = año + "-" + mes + "-" + dia;
+        localStorage.setItem("capturarRango26", "Hoy");
+        localStorage.setItem("fechaInicial", fechaInicial);
+        localStorage.setItem("fechaFinal", fechaFinal);
+        // Recargamos la tabla con la información para ser mostrada en la tabla
+        $(".tablaProformas").DataTable().destroy();
+        cargarTablaProforma(fechaInicial, fechaFinal);
+        }
     }
   });

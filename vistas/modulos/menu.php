@@ -906,7 +906,7 @@
             <?php
             if($_SESSION["materiaprima"] == 1){
             ?>
-            <li class="treeview <?php if($_GET["ruta"] == "materiaprima" || $_GET["ruta"] == "proveedor") echo 'active';?>">
+            <li class="treeview <?php if($_GET["ruta"] == "materiaprima" || $_GET["ruta"] == "notas-ingresos" || $_GET["ruta"] == "notas-salidas" || $_GET["ruta"] == "proveedor") echo 'active';?>">
 
             <a href="#">
 
@@ -941,6 +941,28 @@
 
                         <i class="fa fa-cut text-orange"></i>
                         <span> Materia Prima</span>
+
+                    </a>
+
+                    </li>
+
+                    <li class="<?php if($_GET["ruta"] == "notas-ingresos") echo 'active';?>">
+
+                    <a href="notas-ingresos">
+
+                        <i class="fa fa-file-o text-green"></i>
+                        <span> Notas Ingresos</span>
+
+                    </a>
+
+                    </li>
+
+                    <li class="<?php if($_GET["ruta"] == "notas-salidas") echo 'active';?>">
+
+                    <a href="notas-salidas">
+
+                        <i class="fa fa-file-o text-danger"></i>
+                        <span> Notas Salidas</span>
 
                     </a>
 

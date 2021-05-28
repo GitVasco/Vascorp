@@ -575,7 +575,7 @@ class ModeloMateriaPrima{
 
 	static public function mdlIngresarPrecioMP($tabla,$datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(Cod_Local,Cod_Entidad,CodPro, CodProv1, PreProv1,MonProv1,ObsProv1,CodProv2, PreProv2,MonProv2,ObsProv2,CodProv3,PreProv3,MonProv3,ObsProv3,FecReg,UsuReg,PcReg) VALUES (:Cod_Local,:Cod_Entidad,:CodPro,:CodProv1, :PreProv1,:MonProv1,:ObsProv1,:CodProv2,:PreProv2,:MonProv2,:ObsProv2,:CodProv3,:PreProv3,:MonProv3,:ObsProv3,:FecReg,:UsuReg,:PcReg)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(Cod_Local,Cod_Entidad,CodPro, CodProv1, PreProv1,MonProv1,ObsProv1,CodProv2, PreProv2,MonProv2,ObsProv2,CodProv3,PreProv3,MonProv3,ObsProv3,FecReg,UsuReg,PcReg) VALUES (:Cod_Local,:Cod_Entidad,:CodPro,:CodProv1, :PreProv1,:MonProv1,UPPER(:ObsProv1),:CodProv2,:PreProv2,:MonProv2,UPPER(:ObsProv2),:CodProv3,:PreProv3,:MonProv3,UPPER(:ObsProv3),:FecReg,UPPER(:UsuReg),UPPER(:PcReg))");
 
 		$stmt->bindParam(":Cod_Local", $datos["Cod_Local"], PDO::PARAM_STR);
 		$stmt->bindParam(":Cod_Entidad", $datos["Cod_Entidad"], PDO::PARAM_STR);
@@ -619,7 +619,7 @@ class ModeloMateriaPrima{
 
 	static public function mdlIngresarMateriaPrima($tabla,$datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(CodAlt,Cod_Local,Cod_Entidad,CodPro,CodFab,DesPro,ColPro,UndPro,Mo,PaiPro,PrePro,PreFob,CosPro,Por_AdVal,Por_Seg,PesPro,Stk_Act,Stk_Min,Stk_Max,EstPro,TalPro,FamPro, Proveedor, CodAlm01, FecReg, UsuReg, PcReg) VALUES (:CodAlt,:Cod_Local,:Cod_Entidad,:CodPro,:CodFab,:DesPro,:ColPro,:UndPro,:Mo,:PaiPro,:PrePro,:PreFob,:CosPro,:Por_AdVal,:Por_Seg,:PesPro,:Stk_Act,:Stk_Min,:Stk_Max,:EstPro,:TalPro,:FamPro,:Proveedor,:CodAlm01,:FecReg,:UsuReg,:PcReg)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(CodAlt,Cod_Local,Cod_Entidad,CodPro,CodFab,DesPro,ColPro,UndPro,Mo,PaiPro,PrePro,PreFob,CosPro,Por_AdVal,Por_Seg,PesPro,Stk_Act,Stk_Min,Stk_Max,EstPro,TalPro,FamPro, Proveedor, CodAlm01, FecReg, UsuReg, PcReg) VALUES (:CodAlt,:Cod_Local,:Cod_Entidad,:CodPro,:CodFab,UPPER(:DesPro),:ColPro,:UndPro,:Mo,:PaiPro,:PrePro,:PreFob,:CosPro,:Por_AdVal,:Por_Seg,:PesPro,:Stk_Act,:Stk_Min,:Stk_Max,:EstPro,:TalPro,:FamPro,:Proveedor,:CodAlm01,:FecReg,UPPER(:UsuReg),UPPER(:PcReg))");
 
 		$stmt->bindParam(":CodAlt", $datos["CodAlt"], PDO::PARAM_STR);
 		$stmt->bindParam(":Cod_Local", $datos["Cod_Local"], PDO::PARAM_STR);
@@ -711,7 +711,7 @@ class ModeloMateriaPrima{
 
 	static public function mdlEditarPrecioMP($tabla,$datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE preciomp SET CodProv1=:CodProv1,MonProv1=:MonProv1,PreProv1=:PreProv1, ObsProv1=:ObsProv1,CodProv2=:CodProv2,MonProv2=:MonProv2,PreProv2=:PreProv2,ObsProv2=:ObsProv2,CodProv3=:CodProv3,MonProv3=:MonProv3,PreProv3=:PreProv3,ObsProv3=:ObsProv3,UsuMod=:UsuMod,FecMod=:FecMod,PcMod=:PcMod WHERE CodPro = :CodPro");
+		$stmt = Conexion::conectar()->prepare("UPDATE preciomp SET CodProv1=:CodProv1,MonProv1=:MonProv1,PreProv1=:PreProv1, ObsProv1=UPPER(:ObsProv1),CodProv2=:CodProv2,MonProv2=:MonProv2,PreProv2=:PreProv2,ObsProv2=UPPER(:ObsProv2),CodProv3=:CodProv3,MonProv3=:MonProv3,PreProv3=:PreProv3,ObsProv3=UPPER(:ObsProv3),UsuMod=UPPER(:UsuMod),FecMod=:FecMod,PcMod=UPPER(:PcMod) WHERE CodPro = :CodPro");
 
         $stmt->bindParam(":CodPro", $datos["CodPro"], PDO::PARAM_STR);
 		$stmt->bindParam(":CodProv1", $datos["CodProv1"], PDO::PARAM_STR);
@@ -751,7 +751,7 @@ class ModeloMateriaPrima{
 	=============================================*/
 	static public function mdlEditarMateriaPrima($datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE producto SET CodAlt=:CodAlt,DesPro=:DesPro,UndPro=:UndPro,Por_AdVal=:Por_AdVal,Por_Seg=:Por_Seg,PesPro=:PesPro,Stk_Min=:Stk_Min,Stk_Max=:Stk_Max,UsuMod=:UsuMod,FecMod=:FecMod,PcMod=:PcMod WHERE CodPro = :CodPro");
+		$stmt = Conexion::conectar()->prepare("UPDATE producto SET CodAlt=UPPER(:CodAlt),DesPro=UPPER(:DesPro),UndPro=UPPER(:UndPro),Por_AdVal=:Por_AdVal,Por_Seg=:Por_Seg,PesPro=:PesPro,Stk_Min=:Stk_Min,Stk_Max=:Stk_Max,UsuMod=UPPER(:UsuMod),FecMod=:FecMod,PcMod=UPPER(:PcMod) WHERE CodPro = :CodPro");
 
 		$stmt->bindParam(":CodAlt", $datos["CodAlt"], PDO::PARAM_STR);
         $stmt->bindParam(":CodPro", $datos["CodPro"], PDO::PARAM_STR);
@@ -808,7 +808,7 @@ class ModeloMateriaPrima{
 
 	static public function mdlAnularMateriaPrima($datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE producto SET EstPro=:EstPro,UsuAnu=:UsuAnu,FecAnu=:FecAnu,PcAnu=:PcAnu WHERE CodPro = :CodPro");
+		$stmt = Conexion::conectar()->prepare("UPDATE producto SET EstPro=:EstPro,UsuAnu=UPPER(:UsuAnu),FecAnu=:FecAnu,PcAnu=UPPER(:PcAnu) WHERE CodPro = :CodPro");
 
         $stmt->bindParam(":CodPro", $datos["CodPro"], PDO::PARAM_STR);
 		$stmt->bindParam(":EstPro", $datos["EstPro"], PDO::PARAM_STR);

@@ -203,7 +203,6 @@ CUERPO DOCUMENTO
                 include "modulos/movimientos/".$_GET["ruta"].".php";
 
         }else if( $_GET["ruta"] == "articulos" ||
-                  $_GET["ruta"] == "materiaprima" ||
                   $_GET["ruta"] == "marcas" ||
                   $_GET["ruta"] == "colores" ||
                   $_GET["ruta"] == "tipodocumentos" ||
@@ -221,11 +220,20 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "condicionesventa" ||
                   $_GET["ruta"] == "unidadesmedida" ||
                   $_GET["ruta"] == "bancos" ||
-                  $_GET["ruta"] == "proveedor" ||
+                  
                   $_GET["ruta"] == "vendedor" ||
                   $_GET["ruta"] == "tabla-maestra"){
 
               include "modulos/maestros/".$_GET["ruta"].".php";
+
+        }else if( $_GET["ruta"] == "materiaprima" ||
+                  $_GET["ruta"] == "notas-ingresos" ||
+                  $_GET["ruta"] == "crea-nota-ingreso" ||
+                  $_GET["ruta"] == "notas-salidas" ||
+                  $_GET["ruta"] == "crear-nota-salida" ||
+                  $_GET["ruta"] == "proveedor" ){
+        
+              include "modulos/materiaprima/".$_GET["ruta"].".php";
 
         }else if( $_GET["ruta"] == "ordencorte" ||
                   $_GET["ruta"] == "crear-ordencorte" ||
