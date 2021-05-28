@@ -30,7 +30,7 @@ class TablaMaestraCabecera{
         TRAEMOS LAS ACCIONES
         =============================================*/         
         
-        $botones =  "<div class='btn-group'><button class='btn btn-primary btn-xs btnCrearSubLinea' codigo='".$maestras[$i]["cod_tabla"]."' data-toggle='modal' data-target='#modalAgregarSubLinea'><i class='fa fa-plus'></i></button></div>"; 
+        $botones =  "<div class='btn-group'><button class='btn btn-primary btn-xs btnCrearSubLinea' codigo='".$maestras[$i]["cod_tabla"]."' descripcion='".$maestras[$i]["descripcion"]."' data-toggle='modal' data-target='#modalAgregarSubLinea'><i class='fa fa-plus'></i></button></div>"; 
 
             $datosJson .= '[
             "'.$cod_tabla.'",

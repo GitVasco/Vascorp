@@ -108,9 +108,7 @@ MODAL AGREGAR MATERIA PRIMA
 
         <div class="modal-body">
 
-          <div class="box-body">
-
-            
+          <div class="box-body">            
             
             <div class="form-group" id="alertaCodigoFab">
 

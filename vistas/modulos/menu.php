@@ -926,6 +926,17 @@
 
                     <li class="<?php if($_GET["ruta"] == "materiaprima") echo 'active';?>">
 
+                    <a href="tabla-maestra ">
+
+                        <i class="fa fa-database text-blue"></i>
+                        <span> Maestras Mp</span>
+
+                    </a>
+
+                    </li>
+
+                    <li class="<?php if($_GET["ruta"] == "materiaprima") echo 'active';?>">
+
                     <a href="materiaprima ">
 
                         <i class="fa fa-cut text-orange"></i>
