@@ -101,13 +101,14 @@ class ModeloServicios{
 	// Método para guardar las ventas
 	static public function mdlGuardarDetallesServicios($tabla,$datos){
 
-		$sql="INSERT INTO $tabla(codigo,articulo,cantidad,saldo) VALUES (:codigo,:articulo,:cantidad,:saldo)";
+		$sql="INSERT INTO $tabla(codigo,articulo,cantidad,saldo,cabecera_taller) VALUES (:codigo,:articulo,:cantidad,:saldo,:cabecera_taller)";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":codigo",$datos["codigo"],PDO::PARAM_STR);
 		$stmt->bindParam(":articulo",$datos["articulo"],PDO::PARAM_STR);
 		$stmt->bindParam(":cantidad",$datos["cantidad"],PDO::PARAM_INT);
 		$stmt->bindParam(":saldo",$datos["saldo"],PDO::PARAM_INT);
+		$stmt->bindParam(":cabecera_taller",$datos["cabecera_taller"],PDO::PARAM_INT);
 		
 		$stmt->execute();
 
@@ -1619,5 +1620,30 @@ class ModeloServicios{
 
 		$stmt = null;
 	}
+
+	// TRAER EL PRIMER SERVICIO CREADO POR EVENTO PARA MANDAR DE ALMACEN CORTE
+	static public function mdlPrimerServicio($taller){
+		$sql="SELECT 
+				codigo 
+			FROM
+				serviciosjf 
+			WHERE taller = :taller
+				AND DATE(fecha) = DATE(NOW()) 
+			ORDER BY id ASC 
+			LIMIT 1 ";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":taller",$taller,PDO::PARAM_STR);
+
+		$stmt->execute();
+
+		return $stmt->fetch();
+
+		$stmt -> close();
+
+		$stmt=null;
+	}
+
 
 }

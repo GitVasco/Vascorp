@@ -56,7 +56,7 @@ $(".TablaMaestraCabecera tbody").on("click", "button.btnActivarSubLinea", functi
 	$(".TablaMaestraDetalle").DataTable().destroy();
 
 	var codigoSubLinea = $(this).attr("codigo");
-	console.log("codigo", codigoSubLinea);
+	//console.log("codigo", codigoSubLinea);
 
 	localStorage.setItem("codigoSubLinea", codigoSubLinea);
 	cargarTablaMaestraDetalle(localStorage.getItem("codigoSubLinea"));

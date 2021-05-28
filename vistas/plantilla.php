@@ -415,8 +415,9 @@ CUERPO DOCUMENTO
   <script src="vistas/js/cierres.js"></script>
   <script src="vistas/js/procedimientos.js"></script>
   <script src="vistas/js/salidas.js"></script>
-  <script src="vistas/js/tablamaestra.js"></script>
   <script src="vistas/js/proveedor.js"></script>
+  <script src="vistas/js/tablamaestra.js"></script>
+
 </body>
 
 </html>

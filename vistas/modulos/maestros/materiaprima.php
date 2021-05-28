@@ -46,14 +46,12 @@
            <th style="width:10px">#</th>
            <th>Código</th>
            <th>Cod. Fab.</th>
-           <th>Cod. Línea</th>
-           <th>Línea</th>
+           <th>Cod. Alt</th>
            <th>Descripcion</th>
            <th>Color</th>
-           <th>Stock</th>
-           <th>Sal. Prom.</th>
            <th>Unidad</th>
-           <th>Costo</th>
+           <th>Proveedor</th>
+           <th>Stock</th>
            <th style="width:165px">Acciones</th>
 
          </tr>
@@ -110,9 +108,7 @@ MODAL AGREGAR MATERIA PRIMA
 
         <div class="modal-body">
 
-          <div class="box-body">
-
-            
+          <div class="box-body">            
             
             <div class="form-group" id="alertaCodigoFab">
 

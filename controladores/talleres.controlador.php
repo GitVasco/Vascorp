@@ -1229,13 +1229,36 @@ class ControladorTalleres{
             //Traemos la cabecera taller
             $cabeceraTaller=ControladorTalleres::ctrMostrarTallerCabecera("id",$cod);
 
-            /* 
-            * Actualizamos la cantidad que quedo en taller y regresa al corte en el codigo unico eliminado
-            */
-            $articulo  = $cabeceraTaller["articulo"];
-            $cantidad =  $cabeceraTaller["cantidad"];
+            $existeServicio = ControladorServicios::ctrMostrarDetallesServicios("cabecera_taller",$cod);
 
-            $respuesta=ModeloArticulos::mdlActualizarTallerEliminado($articulo,$cantidad);
+            if($existeServicio){
+
+                /* 
+                * Actualizamos la cantidad que quedo en taller y regresa al corte en el codigo unico eliminado
+                */
+                $articulo  = $cabeceraTaller["articulo"];
+                $cantidad =  $cabeceraTaller["cantidad"];
+
+                $respuesta=ModeloArticulos::mdlActualizarServicioEliminado($articulo,$cantidad);
+
+                /* 
+                * Eliminar el servicio detalle 
+                */
+                $eliminarDeta=ModeloServicios::mdlEliminarDato("servicios_detallejf","cabecera_taller",$cod);
+
+            }else{
+
+                /* 
+                * Actualizamos la cantidad que quedo en taller y regresa al corte en el codigo unico eliminado
+                */
+                $articulo  = $cabeceraTaller["articulo"];
+                $cantidad =  $cabeceraTaller["cantidad"];
+
+                $respuesta=ModeloArticulos::mdlActualizarTallerEliminado($articulo,$cantidad);
+
+            }
+
+            
 
 
             $respuesta2=ModeloTalleres::mdlEliminarTaller($tabla2,$cod);
