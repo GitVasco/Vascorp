@@ -244,9 +244,9 @@ RANGO DE FECHAS
 
 $("#daterange-btnes").daterangepicker(
     {
-      cancelClass: "Cancelar",
+      cancelClass: "CancelarAsistencia",
       ranges: {
-        HOY: [moment(), moment()],
+        Hoy: [moment(), moment()],
         Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
         "Últimos 7 días": [moment().subtract(6, "days"), moment()],
         "Últimos 30 días": [moment().subtract(29, "days"), moment()],
@@ -287,7 +287,7 @@ $("#daterange-btnes").daterangepicker(
   CANCELAR RANGO DE FECHAS
   =============================================*/
   
-  $(".daterangepicker.opensleft .range_inputs .Cancelar").on(
+  $(".daterangepicker.opensleft .range_inputs .CancelarAsistencia").on(
     "click",
     function() {
       localStorage.removeItem("capturarRango2");
@@ -304,26 +304,28 @@ $("#daterange-btnes").daterangepicker(
   
   $(".daterangepicker.opensleft .ranges li").on("click", function() {
     var textoHoy = $(this).attr("data-range-key");
-  
-    if (textoHoy == "HOY") {
-      var d = new Date();
-  
-      var dia = d.getDate();
-      var mes = d.getMonth() + 1;
-      var año = d.getFullYear();
-  
-      dia = ("0" + dia).slice(-2);
-      mes = ("0" + mes).slice(-2);
-  
-      var fechaInicial = año + "-" + mes + "-" + dia;
-      var fechaFinal = año + "-" + mes + "-" + dia;
-  
-      localStorage.setItem("capturarRango2", "Hoy");
-      localStorage.setItem("fechaInicial", fechaInicial);
-      localStorage.setItem("fechaFinal", fechaFinal);
-      // Recargamos la tabla con la información para ser mostrada en la tabla
-      $(".tablaAsistencias").DataTable().destroy();
-      cargarTablaAsistencias(fechaInicial, fechaFinal);
+    var ruta = $("#rutaAcceso").val();
+    if(ruta == "asistencia"){
+      if (textoHoy == "Hoy") {
+        var d = new Date();
+    
+        var dia = d.getDate();
+        var mes = d.getMonth() + 1;
+        var año = d.getFullYear();
+    
+        dia = ("0" + dia).slice(-2);
+        mes = ("0" + mes).slice(-2);
+    
+        var fechaInicial = año + "-" + mes + "-" + dia;
+        var fechaFinal = año + "-" + mes + "-" + dia;
+    
+        localStorage.setItem("capturarRango2", "Hoy");
+        localStorage.setItem("fechaInicial", fechaInicial);
+        localStorage.setItem("fechaFinal", fechaFinal);
+        // Recargamos la tabla con la información para ser mostrada en la tabla
+        $(".tablaAsistencias").DataTable().destroy();
+        cargarTablaAsistencias(fechaInicial, fechaFinal);
+      }
     }
   });
   

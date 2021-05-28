@@ -129,6 +129,8 @@ $("#daterange-btnServicios").daterangepicker(
     // Recargamos la tabla con la información para ser mostrada en la tabla
     $(".tablaServicios").DataTable().destroy();
     cargarTablaServicios(fechaInicial, fechaFinal);
+    
+    
   });
 
 /*=============================================
@@ -150,28 +152,33 @@ $(".daterangepicker.opensleft .range_inputs .CancelarServicios").on(
 CAPTURAR HOY
 =============================================*/
 
-$(".daterangepicker.opensleft .ranges li").on("click", function() {
+$(".daterangepicker.opensleft .ranges li ").on("click", function() {
+  
   var textoHoy = $(this).attr("data-range-key");
+  var ruta = $("#rutaAcceso").val();
+  if(ruta == "servicios"){
 
-  if (textoHoy == "Hoy") {
-    var d = new Date();
+    if (textoHoy == "Hoy") {
+      var d = new Date();
 
-    var dia = d.getDate();
-    var mes = d.getMonth() + 1;
-    var año = d.getFullYear();
+      var dia = d.getDate();
+      var mes = d.getMonth() + 1;
+      var año = d.getFullYear();
 
-    dia = ("0" + dia).slice(-2);
-    mes = ("0" + mes).slice(-2);
+      dia = ("0" + dia).slice(-2);
+      mes = ("0" + mes).slice(-2);
 
-    var fechaInicial = año + "-" + mes + "-" + dia;
-    var fechaFinal = año + "-" + mes + "-" + dia;
+      var fechaInicial = año + "-" + mes + "-" + dia;
+      var fechaFinal = año + "-" + mes + "-" + dia;
 
-    localStorage.setItem("capturarRango19", "Hoy");
-    localStorage.setItem("fechaInicial", fechaInicial);
-    localStorage.setItem("fechaFinal", fechaFinal);
-  // Recargamos la tabla con la información para ser mostrada en la tabla
-    $(".tablaServicios").DataTable().destroy();
-    cargarTablaServicios(fechaInicial, fechaFinal);
+      localStorage.setItem("capturarRango19", "Hoy");
+      localStorage.setItem("fechaInicial", fechaInicial);
+      localStorage.setItem("fechaFinal", fechaFinal);
+    // Recargamos la tabla con la información para ser mostrada en la tabla
+      $(".tablaServicios").DataTable().destroy();
+      cargarTablaServicios(fechaInicial, fechaFinal);
+    }
+
   }
 });
   
@@ -1027,6 +1034,8 @@ $("#daterange-btnVerServicios").daterangepicker(
     cargarTablaServiciosGeneral(fechaInicial, fechaFinal);
   });
 
+
+
 /*=============================================
 CANCELAR RANGO DE FECHAS
 =============================================*/
@@ -1046,28 +1055,31 @@ $(".daterangepicker.opensleft .range_inputs .CancelarVerServicios").on(
 CAPTURAR HOY
 =============================================*/
 
-$(".daterangepicker.opensleft .ranges li").on("click", function() {
+$(".daterangepicker.opensleft .ranges li ").on("click", function() {
   var textoHoy = $(this).attr("data-range-key");
+  var ruta = $("#rutaAcceso").val();
+  if(ruta == "servicios"){
 
-  if (textoHoy == "Hoy") {
-    var d = new Date();
+    if (textoHoy == "Hoy") {
+      var d = new Date();
 
-    var dia = d.getDate();
-    var mes = d.getMonth() + 1;
-    var año = d.getFullYear();
+      var dia = d.getDate();
+      var mes = d.getMonth() + 1;
+      var año = d.getFullYear();
 
-    dia = ("0" + dia).slice(-2);
-    mes = ("0" + mes).slice(-2);
+      dia = ("0" + dia).slice(-2);
+      mes = ("0" + mes).slice(-2);
 
-    var fechaInicial = año + "-" + mes + "-" + dia;
-    var fechaFinal = año + "-" + mes + "-" + dia;
+      var fechaInicial = año + "-" + mes + "-" + dia;
+      var fechaFinal = año + "-" + mes + "-" + dia;
 
-    localStorage.setItem("capturarRango20", "Hoy");
-    localStorage.setItem("fechaInicial", fechaInicial);
-    localStorage.setItem("fechaFinal", fechaFinal);
-  // Recargamos la tabla con la información para ser mostrada en la tabla
-    $(".tablaDetalleSerTotal").DataTable().destroy();
-    cargarTablaServiciosGeneral(fechaInicial, fechaFinal);
+      localStorage.setItem("capturarRango20", "Hoy");
+      localStorage.setItem("fechaInicial", fechaInicial);
+      localStorage.setItem("fechaFinal", fechaFinal);
+    // Recargamos la tabla con la información para ser mostrada en la tabla
+      $(".tablaDetalleSerTotal").DataTable().destroy();
+      cargarTablaServiciosGeneral(fechaInicial, fechaFinal);
+    }
   }
 });
 

@@ -317,7 +317,7 @@ $("#daterange-btnTaller").daterangepicker(
 		],
 	  },
       ranges: {
-        HOY: [moment(), moment()],
+        Hoy: [moment(), moment()],
         Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
         "Últimos 7 días": [moment().subtract(6, "days"), moment()],
         "Últimos 30 días": [moment().subtract(29, "days"), moment()],
@@ -375,27 +375,30 @@ $("#daterange-btnTaller").daterangepicker(
   
   $(".daterangepicker.opensleft .ranges li").on("click", function() {
     var textoHoy = $(this).attr("data-range-key");
-  
-    if (textoHoy == "HOY") {
-      var d = new Date();
-  
-      var dia = d.getDate();
-      var mes = d.getMonth() + 1;
-      var año = d.getFullYear();
-  
-      dia = ("0" + dia).slice(-2);
-      mes = ("0" + mes).slice(-2);
-  
-      var fechaInicial = año + "-" + mes + "-" + dia;
-      var fechaFinal = año + "-" + mes + "-" + dia;
-  
-      localStorage.setItem("capturarRango5", "HOY");
-      localStorage.setItem("fechaInicial", fechaInicial);
-      localStorage.setItem("fechaFinal", fechaFinal);
-      // Recargamos la tabla con la información para ser mostrada en la tabla
-      $(".tablaTalleresG").DataTable().destroy();
-      cargarTablaTalleres(fechaInicial, fechaFinal);
-    }
+	var ruta = $("#rutaAcceso").val();
+	if(ruta == "en-taller"){
+
+		if (textoHoy == "Hoy") {
+		var d = new Date();
+	
+		var dia = d.getDate();
+		var mes = d.getMonth() + 1;
+		var año = d.getFullYear();
+	
+		dia = ("0" + dia).slice(-2);
+		mes = ("0" + mes).slice(-2);
+	
+		var fechaInicial = año + "-" + mes + "-" + dia;
+		var fechaFinal = año + "-" + mes + "-" + dia;
+	
+		localStorage.setItem("capturarRango5", "Hoy");
+		localStorage.setItem("fechaInicial", fechaInicial);
+		localStorage.setItem("fechaFinal", fechaFinal);
+		// Recargamos la tabla con la información para ser mostrada en la tabla
+		$(".tablaTalleresG").DataTable().destroy();
+		cargarTablaTalleres(fechaInicial, fechaFinal);
+		}
+	}
   });
 
 
@@ -567,29 +570,32 @@ $("#daterange-btnTrusas").daterangepicker(
   
   $(".daterangepicker.opensleft .ranges li").on("click", function() {
     var textoHoy = $(this).attr("data-range-key");
-  
-    if (textoHoy == "Hoy") {
-      var d = new Date();
-  
-      var dia = d.getDate();
-      var mes = d.getMonth() + 1;
-      var año = d.getFullYear();
-  
-      dia = ("0" + dia).slice(-2);
-      mes = ("0" + mes).slice(-2);
-  
-      var fechaInicial = año + "-" + mes + "-" + dia;
-      var fechaFinal = año + "-" + mes + "-" + dia;
-  
-      localStorage.setItem("capturarRango13", "Hoy");
-      localStorage.setItem("fechaInicial", fechaInicial);
-	  localStorage.setItem("fechaFinal", fechaFinal);
-	  $(".btnReporteProduccionTrusas").attr("fechaInicial",fechaInicial);
-	  $(".btnReporteProduccionTrusas").attr("fechaFinal",fechaFinal);
-      // Recargamos la tabla con la información para ser mostrada en la tabla
-      $(".tablaProduccionTrusas").DataTable().destroy();
-      cargarTablaProduccionTrusas(fechaInicial, fechaFinal);
-    }
+	var ruta = $("#rutaAcceso").val();
+	if(ruta == "produccion-trusas"){
+
+		if (textoHoy == "Hoy") {
+		var d = new Date();
+	
+		var dia = d.getDate();
+		var mes = d.getMonth() + 1;
+		var año = d.getFullYear();
+	
+		dia = ("0" + dia).slice(-2);
+		mes = ("0" + mes).slice(-2);
+	
+		var fechaInicial = año + "-" + mes + "-" + dia;
+		var fechaFinal = año + "-" + mes + "-" + dia;
+	
+		localStorage.setItem("capturarRango13", "Hoy");
+		localStorage.setItem("fechaInicial", fechaInicial);
+		localStorage.setItem("fechaFinal", fechaFinal);
+		$(".btnReporteProduccionTrusas").attr("fechaInicial",fechaInicial);
+		$(".btnReporteProduccionTrusas").attr("fechaFinal",fechaFinal);
+		// Recargamos la tabla con la información para ser mostrada en la tabla
+		$(".tablaProduccionTrusas").DataTable().destroy();
+		cargarTablaProduccionTrusas(fechaInicial, fechaFinal);
+		}
+	}
   });
 
 
@@ -760,29 +766,32 @@ $("#daterange-btnBrasieres").daterangepicker(
   
   $(".daterangepicker.opensleft .ranges li").on("click", function() {
     var textoHoy = $(this).attr("data-range-key");
-  
-    if (textoHoy == "Hoy") {
-      var d = new Date();
-  
-      var dia = d.getDate();
-      var mes = d.getMonth() + 1;
-      var año = d.getFullYear();
-  
-      dia = ("0" + dia).slice(-2);
-      mes = ("0" + mes).slice(-2);
-  
-      var fechaInicial = año + "-" + mes + "-" + dia;
-      var fechaFinal = año + "-" + mes + "-" + dia;
-  
-      localStorage.setItem("capturarRango14", "Hoy");
-      localStorage.setItem("fechaInicial", fechaInicial);
-      localStorage.setItem("fechaFinal", fechaFinal);
-	  // Recargamos la tabla con la información para ser mostrada en la tabla
-	  $(".btnReporteProduccionBrasier").attr("fechaInicial",fechaInicial);
-	  $(".btnReporteProduccionBrasier").attr("fechaFinal",fechaFinal);
-      $(".tablaProduccionBrasier").DataTable().destroy();
-      cargarTablaProduccionBrasier(fechaInicial, fechaFinal);
-    }
+	var ruta = $("#rutaAcceso").val();
+	if(ruta == "produccion-brasier"){
+
+		if (textoHoy == "Hoy") {
+		var d = new Date();
+	
+		var dia = d.getDate();
+		var mes = d.getMonth() + 1;
+		var año = d.getFullYear();
+	
+		dia = ("0" + dia).slice(-2);
+		mes = ("0" + mes).slice(-2);
+	
+		var fechaInicial = año + "-" + mes + "-" + dia;
+		var fechaFinal = año + "-" + mes + "-" + dia;
+	
+		localStorage.setItem("capturarRango14", "Hoy");
+		localStorage.setItem("fechaInicial", fechaInicial);
+		localStorage.setItem("fechaFinal", fechaFinal);
+		// Recargamos la tabla con la información para ser mostrada en la tabla
+		$(".btnReporteProduccionBrasier").attr("fechaInicial",fechaInicial);
+		$(".btnReporteProduccionBrasier").attr("fechaFinal",fechaFinal);
+		$(".tablaProduccionBrasier").DataTable().destroy();
+		cargarTablaProduccionBrasier(fechaInicial, fechaFinal);
+		}
+	}
   });
 
 /* 
@@ -1033,27 +1042,30 @@ $("#daterange-btnTallerT").daterangepicker(
   
   $(".daterangepicker.opensleft .ranges li").on("click", function() {
     var textoHoy = $(this).attr("data-range-key");
-  
-    if (textoHoy == "Hoy") {
-      var d = new Date();
-  
-      var dia = d.getDate();
-      var mes = d.getMonth() + 1;
-      var año = d.getFullYear();
-  
-      dia = ("0" + dia).slice(-2);
-      mes = ("0" + mes).slice(-2);
-  
-      var fechaInicial = año + "-" + mes + "-" + dia;
-      var fechaFinal = año + "-" + mes + "-" + dia;
-  
-      localStorage.setItem("capturarRango8", "Hoy");
-      localStorage.setItem("fechaInicial", fechaInicial);
-      localStorage.setItem("fechaFinal", fechaFinal);
-      // Recargamos la tabla con la información para ser mostrada en la tabla
-      $(".tablaTalleresT").DataTable().destroy();
-      cargarTablaTalleresTerminados(fechaInicial, fechaFinal);
-    }
+	var ruta = $("#rutaAcceso").val();
+	if(ruta == "en-tallert"){
+
+		if (textoHoy == "Hoy") {
+		var d = new Date();
+	
+		var dia = d.getDate();
+		var mes = d.getMonth() + 1;
+		var año = d.getFullYear();
+	
+		dia = ("0" + dia).slice(-2);
+		mes = ("0" + mes).slice(-2);
+	
+		var fechaInicial = año + "-" + mes + "-" + dia;
+		var fechaFinal = año + "-" + mes + "-" + dia;
+	
+		localStorage.setItem("capturarRango8", "Hoy");
+		localStorage.setItem("fechaInicial", fechaInicial);
+		localStorage.setItem("fechaFinal", fechaFinal);
+		// Recargamos la tabla con la información para ser mostrada en la tabla
+		$(".tablaTalleresT").DataTable().destroy();
+		cargarTablaTalleresTerminados(fechaInicial, fechaFinal);
+		}
+	}
   });
 
 
@@ -1585,27 +1597,30 @@ $("#daterange-btnIngresoM").daterangepicker(
   
   $(".daterangepicker.opensleft .ranges li").on("click", function() {
     var textoHoy = $(this).attr("data-range-key");
-  
-    if (textoHoy == "Hoy") {
-      var d = new Date();
-  
-      var dia = d.getDate();
-      var mes = d.getMonth() + 1;
-      var año = d.getFullYear();
-  
-      dia = ("0" + dia).slice(-2);
-      mes = ("0" + mes).slice(-2);
-  
-      var fechaInicial = año + "-" + mes + "-" + dia;
-      var fechaFinal = año + "-" + mes + "-" + dia;
-  
-      localStorage.setItem("capturarRango9", "Hoy");
-      localStorage.setItem("fechaInicial", fechaInicial);
-      localStorage.setItem("fechaFinal", fechaFinal);
-      // Recargamos la tabla con la información para ser mostrada en la tabla
-      $(".tablaIngresoM").DataTable().destroy();
-      cargarTablaIngresosM(fechaInicial, fechaFinal);
-    }
+	var ruta = $("#rutaAcceso").val();
+	if(ruta == "ingresos"){
+
+		if (textoHoy == "Hoy") {
+		var d = new Date();
+	
+		var dia = d.getDate();
+		var mes = d.getMonth() + 1;
+		var año = d.getFullYear();
+	
+		dia = ("0" + dia).slice(-2);
+		mes = ("0" + mes).slice(-2);
+	
+		var fechaInicial = año + "-" + mes + "-" + dia;
+		var fechaFinal = año + "-" + mes + "-" + dia;
+	
+		localStorage.setItem("capturarRango9", "Hoy");
+		localStorage.setItem("fechaInicial", fechaInicial);
+		localStorage.setItem("fechaFinal", fechaFinal);
+		// Recargamos la tabla con la información para ser mostrada en la tabla
+		$(".tablaIngresoM").DataTable().destroy();
+		cargarTablaIngresosM(fechaInicial, fechaFinal);
+		}
+	}
   });
 
 /*=============================================
@@ -2514,27 +2529,29 @@ $("#daterange-btnVerIngresos").daterangepicker(
   
   $(".daterangepicker.opensleft .ranges li").on("click", function() {
 	var textoHoy = $(this).attr("data-range-key");
-  
-	if (textoHoy == "Hoy") {
-	  var d = new Date();
-  
-	  var dia = d.getDate();
-	  var mes = d.getMonth() + 1;
-	  var año = d.getFullYear();
-  
-	  dia = ("0" + dia).slice(-2);
-	  mes = ("0" + mes).slice(-2);
-  
-	  var fechaInicial = año + "-" + mes + "-" + dia;
-	  var fechaFinal = año + "-" + mes + "-" + dia;
-  
-	  localStorage.setItem("capturarRango10", "Hoy");
-	  localStorage.setItem("fechaInicial", fechaInicial);
-	  localStorage.setItem("fechaFinal", fechaFinal);
-	// Recargamos la tabla con la información para ser mostrada en la tabla
-	  $(".tablaDetalleIngresoTotal").DataTable().destroy();
-	  cargarTablaDetalleIngresos(fechaInicial, fechaFinal);
-	}
+	var ruta = $("#rutaAcceso").val();
+	if(ruta == "ingresos"){
+		if (textoHoy == "Hoy") {
+		var d = new Date();
+	
+		var dia = d.getDate();
+		var mes = d.getMonth() + 1;
+		var año = d.getFullYear();
+	
+		dia = ("0" + dia).slice(-2);
+		mes = ("0" + mes).slice(-2);
+	
+		var fechaInicial = año + "-" + mes + "-" + dia;
+		var fechaFinal = año + "-" + mes + "-" + dia;
+	
+		localStorage.setItem("capturarRango10", "Hoy");
+		localStorage.setItem("fechaInicial", fechaInicial);
+		localStorage.setItem("fechaFinal", fechaFinal);
+		// Recargamos la tabla con la información para ser mostrada en la tabla
+		$(".tablaDetalleIngresoTotal").DataTable().destroy();
+		cargarTablaDetalleIngresos(fechaInicial, fechaFinal);
+		}
+	}	
   });
 
   //ver tabla de cada ingreso registrado

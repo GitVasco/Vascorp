@@ -10,7 +10,7 @@ class ModeloProveedores{
 
 	static public function mdlIngresarProveedor($tabla,$datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(Cod_Local,Cod_Entidad,CodRuc,TipPro,RucPro,RazPro,DirPro,UbiPro,TelPro1,TelPro2,TelPro3,FaxPro,ConPro, EmaPro,EmaPro2,WebPro,TieEnt,ForPag,Dia,Banco,Moneda,NroCta,Banco1,Moneda1,NroCta1,EstPro,Observa, FecReg,UsuReg,PcReg) VALUES (:Cod_Local,:Cod_Entidad,:CodRuc,:TipPro,:RucPro,:RazPro,:DirPro,:UbiPro,:TelPro1,:TelPro2,:TelPro3,:FaxPro,:ConPro, :EmaPro,:EmaPro2,:WebPro,:TieEnt,:ForPag,:Dia,:Banco,:Moneda,:NroCta,:Banco1,:Moneda1,:NroCta1,:EstPro,:Observa,:FecReg,:UsuReg,:PcReg)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(Cod_Local,Cod_Entidad,CodRuc,TipPro,RucPro,RazPro,DirPro,UbiPro,TelPro1,TelPro2,TelPro3,FaxPro,ConPro, EmaPro,EmaPro2,WebPro,TieEnt,ForPag,Dia,Banco,Moneda,NroCta,Banco1,Moneda1,NroCta1,EstPro,Observa, FecReg,UsuReg,PcReg) VALUES (:Cod_Local,:Cod_Entidad,:CodRuc,:TipPro,:RucPro,UPPER(:RazPro),UPPER(:DirPro),:UbiPro,:TelPro1,:TelPro2,:TelPro3,:FaxPro,UPPER(:ConPro),UPPER(:EmaPro),UPPER(:EmaPro2),UPPER(:WebPro),:TieEnt,:ForPag,UPPER(:Dia),:Banco,:Moneda,:NroCta,:Banco1,:Moneda1,:NroCta1,:EstPro,UPPER(:Observa),:FecReg,UPPER(:UsuReg),UPPER(:PcReg))");
 
 		$stmt->bindParam(":Cod_Local", $datos["Cod_Local"], PDO::PARAM_STR);
 		$stmt->bindParam(":Cod_Entidad", $datos["Cod_Entidad"], PDO::PARAM_STR);
@@ -116,7 +116,7 @@ class ModeloProveedores{
 
 	static public function mdlEditarProveedor($tabla,$datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET CodRuc = :CodRuc,TipPro  = :TipPro,RucPro  = :RucPro,RazPro  = :RazPro,DirPro  = :DirPro,UbiPro = :UbiPro,TelPro1 = :TelPro1,TelPro2 = :TelPro2,TelPro3 = :TelPro3,FaxPro = :FaxPro,ConPro = :ConPro, EmaPro = :EmaPro,EmaPro2 = :EmaPro2,WebPro = :WebPro,TieEnt = :TieEnt,ForPag = :ForPag,Dia = :Dia,Banco = :Banco,Moneda = :Moneda,NroCta = :NroCta,Banco1 = :Banco1,Moneda1 = :Moneda1,NroCta1 = :NroCta1 WHERE CodRuc = :CodRuc");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET CodRuc = :CodRuc,TipPro  = :TipPro,RucPro  = :RucPro,RazPro  = UPPER(:RazPro),DirPro  = UPPER(:DirPro),UbiPro = :UbiPro,TelPro1 = :TelPro1,TelPro2 = :TelPro2,TelPro3 = :TelPro3,FaxPro = :FaxPro,ConPro = UPPER(:ConPro), EmaPro = UPPER(:EmaPro),EmaPro2 = UPPER(:EmaPro2),WebPro = UPPER(:WebPro),TieEnt = :TieEnt,ForPag = :ForPag,Dia = UPPER(:Dia),Banco = :Banco,Moneda = :Moneda,NroCta = :NroCta,Banco1 = :Banco1,Moneda1 = :Moneda1,NroCta1 = :NroCta1 WHERE CodRuc = :CodRuc");
 
 		$stmt->bindParam(":CodRuc", $datos["CodRuc"], PDO::PARAM_STR);
 		$stmt->bindParam(":TipPro", $datos["TipPro"], PDO::PARAM_STR);
@@ -164,7 +164,7 @@ class ModeloProveedores{
 
 	static public function mdlEliminarProveedor($tabla,$datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET UsuAnu = :UsuAnu, PcAnu = :PcAnu ,FecAnu = :FecAnu,EstPro='0' WHERE CodRuc = :CodRuc");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET UsuAnu = UPPER(:UsuAnu), PcAnu = UPPER(:PcAnu) ,FecAnu = :FecAnu,EstPro='0' WHERE CodRuc = :CodRuc");
 
 		$stmt -> bindParam(":CodRuc", $datos["CodRuc"], PDO::PARAM_STR);
         $stmt -> bindParam(":UsuAnu", $datos["UsuAnu"], PDO::PARAM_STR);
