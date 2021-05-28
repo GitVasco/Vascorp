@@ -1,5 +1,5 @@
 $('.tablaMateriaPrima').DataTable( {
-    "ajax": "ajax/maestros/tabla-materiaprima.ajax.php",
+    "ajax": "ajax/materiaprima/tabla-materiaprima.ajax.php",
     "deferRender": true,
 	"retrieve": true,
 	"processing": true,

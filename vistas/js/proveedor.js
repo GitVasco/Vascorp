@@ -1,5 +1,5 @@
 $('.tablaProveedores').DataTable({
-    "ajax": "ajax/maestros/tabla-proveedores.ajax.php?perfil="+$("#perfilOculto").val(),
+    "ajax": "ajax/materiaprima/tabla-proveedores.ajax.php?perfil="+$("#perfilOculto").val(),
     "deferRender": true,
     "retrieve": true,
     "processing": true,
