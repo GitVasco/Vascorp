@@ -31,6 +31,7 @@ function cargarTablaServicios(fechaInicial,fechaFinal) {
     deferRender: true,
     retrieve: true,
     processing: true,
+    "order": [[5, "desc"]],
     "pageLength": 20,
 	  "lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
     language: {
