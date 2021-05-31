@@ -70,7 +70,7 @@ class TablaVerOrdenCorteCantidad{
                    
           
                 $datosJson .= '[
-                "'.$ordencorte[$i]["ordencorte"].'",
+                "OC-'.$ordencorte[$i]["ordencorte"].'",
                 "'.$ordencorte[$i]["fechas"].'",
                 "'.$ordencorte[$i]["modelo"].'",
                 "'.$ordencorte[$i]["nombre"].'",

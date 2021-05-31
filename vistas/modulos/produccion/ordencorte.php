@@ -600,7 +600,7 @@ MODAL VISUALIZAR INFORMACION
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title">Detalle de la Orden de Corte General</h4>
+          <h4 class="modal-title">Detalle de saldo de Ordenes de Corte</h4>
 
         </div>
 
@@ -756,7 +756,7 @@ MODAL VISUALIZAR INFORMACION
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title">Detalle de la Orden de Corte Cantidad</h4>
+          <h4 class="modal-title">Detalle de la Orden de Corte Original</h4>
 
         </div>
 

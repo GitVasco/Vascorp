@@ -944,6 +944,7 @@ class ModeloOrdenCorte{
 			ON doc.articulo = a.articulo 
 			LEFT JOIN ordencortejf oc 
    			ON doc.ordencorte = oc.codigo 
+			   WHERE doc.saldo > 0 
 		GROUP BY doc.ordencorte,
 			a.modelo,
 			a.nombre,
@@ -1025,7 +1026,7 @@ class ModeloOrdenCorte{
 			ON doc.articulo = a.articulo 
 			LEFT JOIN ordencortejf oc 
    			ON doc.ordencorte = oc.codigo 
-			WHERE DATE(oc.fecha) like '%$fechaFinal%
+			WHERE DATE(oc.fecha) like '%$fechaFinal% and doc.saldo > 0 
 		GROUP BY doc.ordencorte,
 			a.modelo,
 			a.nombre,
@@ -1118,7 +1119,7 @@ class ModeloOrdenCorte{
 				ON doc.articulo = a.articulo 
 				LEFT JOIN ordencortejf oc 
    				ON doc.ordencorte = oc.codigo 
-				WHERE DATE(oc.fecha) BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'
+				WHERE DATE(oc.fecha) BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'  and doc.saldo > 0
 			GROUP BY doc.ordencorte,
 				a.modelo,
 				a.nombre,
@@ -1196,7 +1197,7 @@ class ModeloOrdenCorte{
 				ON doc.articulo = a.articulo 
 				LEFT JOIN ordencortejf oc 
    				ON doc.ordencorte = oc.codigo 
-			WHERE DATE(oc.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'
+			WHERE DATE(oc.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'  and doc.saldo > 0
 			GROUP BY doc.ordencorte,
 				a.modelo,
 				a.nombre,

@@ -217,7 +217,7 @@ class controladorArticulos{
 										  }).then(function(result){
 													if (result.value) {
 			
-													window.location = "articulos";
+													window.location = "modelosjf";
 			
 													}
 												})
@@ -235,7 +235,7 @@ class controladorArticulos{
 									}).then(function(result){
 										if (result.value) {
 
-										window.location = "articulos";
+										window.location = "modelosjf";
 
 										}
 									})
