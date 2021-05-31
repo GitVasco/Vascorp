@@ -425,6 +425,8 @@ CUERPO DOCUMENTO
   <script src="vistas/js/salidas.js"></script>
   <script src="vistas/js/proveedor.js"></script>
   <script src="vistas/js/tablamaestra.js"></script>
+  <script src="vistas/js/notas-ingresos.js"></script>
+  <script src="vistas/js/notas-salidas.js"></script>
 
 </body>
 

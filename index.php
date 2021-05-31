@@ -54,6 +54,10 @@ require_once "controladores/proveedor.controlador.php";
 
 require_once "controladores/maestras.controlador.php";
 
+require_once "controladores/notas-ingresos.controlador.php";
+
+require_once "controladores/notas-salidas.controlador.php";
+
 /* 
 * MODELOS
 */
@@ -152,6 +156,10 @@ require_once "modelos/salidas.modelo.php";
 require_once "modelos/proveedor.modelo.php";
 
 require_once "modelos/maestras.modelo.php";
+
+require_once "modelos/notas-ingresos.modelo.php";
+
+require_once "modelos/notas-salidas.modelo.php";
 
 require_once "extensiones/vendor/autoload.php";
 
