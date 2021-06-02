@@ -2192,7 +2192,69 @@ class ControladorTalleres{
                 echo'<script>
                     swal({
 						  type: "success",
-						  title: "El ticket ha sido creado correctamente",
+						  title: "El surtido ha sido creado correctamente",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+									if (result.value) {
+
+									window.location = "en-taller";
+
+									}
+								})
+
+					</script>';
+
+            }
+
+        }
+    }
+
+    static public function ctrCrearCompensacion(){
+
+		if(isset($_POST["verCantidad2"])){
+            $datosCab=array("articulo" => $_POST["verArti"], 
+                             "usuario" => $_POST["verUser"],
+                             "cantidad" => $_POST["verCantidad2"]);
+            $respuestaCab=ModeloCortes::mdlMandarTallerCab($datosCab);
+            
+            
+
+            $ultId=ModeloCortes::mdlUltCodigo();
+
+            $datos = array("codigo" => $ultId["ult_codigo"], 
+                    "usuario" => $_POST["verUser"],
+                    "articulo" => $_POST["verArti"],
+                    "operacion" => $_POST["verCodOP"],
+                    "cantidad" => $_POST["verCantidad2"],
+                    "editarBarra" => $ultId["ult_codigo"].$_POST["verCodOP"]);
+
+            $respuesta=ModeloTalleres::mdlIngresarTaller($datos);
+            
+            if($respuesta == "ok"){
+                $ultimo = $ultId["ult_codigo"].$_POST["verCodOP"];
+                $valor=$_POST["verArti"];
+                $rpt_articulo=ModeloArticulos::mdlMostrarArticulos($valor);
+                $modelo = $rpt_articulo["modelo"];
+                $nombre = $rpt_articulo["nombre"];
+                $color = $rpt_articulo["color"];
+                $talla = $rpt_articulo["talla"];
+                $cantidad = $_POST["verCantidad2"];
+                $cod_ope = $_POST["verCodOP"];
+                $tablaop="operacionesjf";
+                $itemop="codigo";
+                $rpt_operacion=ModeloOperaciones::mdlMostrarOperaciones($tablaop,$itemop,$cod_ope);
+                $nom_ope = $rpt_operacion["nombre"];
+
+                echo '<script>
+
+                window.open("vistas/reportes_ticket/produccion_ticket_detalle.php?ultimo='.$ultimo.'&modelo='.$modelo.'&nombre='.$nombre.'&color='.$color.'&talla='.$talla.'&cant_taller='.$cantidad.'&cod_operacion='.$cod_ope.'&nom_operacion='.$nom_ope.'","_blank");
+                </script>';
+
+                echo'<script>
+                    swal({
+						  type: "success",
+						  title: "La compensacion ha sido creada correctamente",
 						  showConfirmButton: true,
 						  confirmButtonText: "Cerrar"
 						  }).then(function(result){

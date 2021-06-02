@@ -24,11 +24,11 @@ class TablaUsuarios{
 
         if($usuarios[$i]["estado"] != 0){
 
-            $estado = "<button class='btn btn-success btn-xs btnActivar' idUsuario='".$usuarios[$i]["id"]."' estadoUsuario='0'>Activado</button>";
+            $estado = "<button class='btn btn-success btn-xs btnActivarUS' idUsuario='".$usuarios[$i]["id"]."' estadoUsuario='0'>Activado</button>";
 
         }else{
 
-            $estado = "<button class='btn btn-danger btn-xs btnActivar' idUsuario='".$usuarios[$i]["id"]."' estadoUsuario='1'>Desactivado</button>";
+            $estado = "<button class='btn btn-danger btn-xs btnActivarUS' idUsuario='".$usuarios[$i]["id"]."' estadoUsuario='1'>Desactivado</button>";
 
         }
 
