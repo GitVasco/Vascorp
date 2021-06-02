@@ -228,7 +228,7 @@ CUERPO DOCUMENTO
 
         }else if( $_GET["ruta"] == "materiaprima" ||
                   $_GET["ruta"] == "notas-ingresos" ||
-                  $_GET["ruta"] == "crea-nota-ingreso" ||
+                  $_GET["ruta"] == "crear-nota-ingreso" ||
                   $_GET["ruta"] == "notas-salidas" ||
                   $_GET["ruta"] == "crear-nota-salida" ||
                   $_GET["ruta"] == "proveedor" ){

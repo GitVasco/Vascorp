@@ -162,7 +162,7 @@ $(".TablaMaestraCabecera").on("click", ".btnCrearSubLinea", function () {
 $("#nuevaDescCortaSelect").change(function(){
 
 	var des_corta = $(this).val();
-	console.log("des_corta", des_corta);
+	//console.log("des_corta", des_corta);
 
     var datos = new FormData();
     datos.append("des_corta", des_corta);

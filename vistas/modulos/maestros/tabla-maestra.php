@@ -473,3 +473,7 @@ MODAL AGREGAR EDITAR SUB LINEA
   </div>
 
 </div>
+
+<script>
+window.document.title = "Tabla Maestra-MP"
+</script>
