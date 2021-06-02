@@ -17,6 +17,8 @@ class AjaxTablaMpIng{
 
 					for($i=0;$i<count($movimientos);$i++){
 
+						$descripcion = str_replace('"','',$movimientos[$i]["descripcion"]);
+
                         /* 
 						TODO: TOTALES
 						*/
@@ -30,27 +32,150 @@ class AjaxTablaMpIng{
 							$total = $movimientos[$i]["codigofabrica"];
 			
 						}
+
+						/* 
+						*eliminar ceros
+						*/
+						if($movimientos[$i]["1"] == "0"){
+
+							$m1 = "";
+
+						}else{
+
+							$m1 = number_format($movimientos[$i]["1"],0);
+
+						}
+
+						if($movimientos[$i]["2"] == "0"){
+
+							$m2 = "";
+
+						}else{
+
+							$m2 = number_format($movimientos[$i]["2"],0);
+
+						}
+
+						if($movimientos[$i]["3"] == "0"){
+
+							$m3 = "";
+
+						}else{
+
+							$m3 = number_format($movimientos[$i]["3"],0);
+
+						}
+
+						if($movimientos[$i]["4"] == "0"){
+
+							$m4 = "";
+
+						}else{
+
+							$m4 = number_format($movimientos[$i]["4"],0);
+
+						}
+
+						if($movimientos[$i]["5"] == "0"){
+
+							$m5 = "";
+
+						}else{
+
+							$m5 = number_format($movimientos[$i]["5"],0);
+
+						}
+
+						if($movimientos[$i]["6"] == "0"){
+
+							$m6 = "";
+
+						}else{
+
+							$m6 = number_format($movimientos[$i]["6"],0);
+
+						}
+
+						if($movimientos[$i]["7"] == "0"){
+
+							$m7 = "";
+
+						}else{
+
+							$m7 = number_format($movimientos[$i]["7"],0);
+
+						}
+
+						if($movimientos[$i]["8"] == "0"){
+
+							$m8 = "";
+
+						}else{
+
+							$m8 = number_format($movimientos[$i]["8"],0);
+
+						}
+
+						if($movimientos[$i]["9"] == "0"){
+
+							$m9 = "";
+
+						}else{
+
+							$m9 = number_format($movimientos[$i]["9"],0);
+
+						}
+
+						if($movimientos[$i]["10"] == "0"){
+
+							$m10 = "";
+
+						}else{
+
+							$m10 = number_format($movimientos[$i]["10"],0);
+
+						}
+
+						if($movimientos[$i]["11"] == "0"){
+
+							$m11 = "";
+
+						}else{
+
+							$m11 = number_format($movimientos[$i]["11"],0);
+
+						}
+
+						if($movimientos[$i]["12"] == "0"){
+
+							$m12 = "";
+
+						}else{
+
+							$m12 = number_format($movimientos[$i]["12"],0);
+
+						}						
 					
 						$datosJson.='[
 
                                         "'.$movimientos[$i]["codsublinea"].'",
 										"'.$total.'",
 										"'.$movimientos[$i]["codpro"].'",
-										"'.$movimientos[$i]["descripcion"].'",
+										"'.$descripcion.'",
 										"'.$movimientos[$i]["color"].'",
 										"'.$movimientos[$i]["unidad"].'",
-										"'.number_format($movimientos[$i]["1"],2).'",
-										"'.number_format($movimientos[$i]["2"],2).'",
-										"'.number_format($movimientos[$i]["3"],2).'",
-										"'.number_format($movimientos[$i]["4"],2).'",
-                                        "'.number_format($movimientos[$i]["5"],2).'",
-                                        "'.number_format($movimientos[$i]["6"],2).'",
-                                        "'.number_format($movimientos[$i]["7"],2).'",
-                                        "'.number_format($movimientos[$i]["8"],2).'",
-                                        "'.number_format($movimientos[$i]["9"],2).'",
-                                        "'.number_format($movimientos[$i]["10"],2).'",
-                                        "'.number_format($movimientos[$i]["11"],2).'",
-                                        "'.number_format($movimientos[$i]["12"],2).'",
+										"'.$m1.'",
+										"'.$m2.'",
+										"'.$m3.'",
+										"'.$m4.'",
+                                        "'.$m5.'",
+                                        "'.$m6.'",
+                                        "'.$m7.'",
+                                        "'.$m8.'",
+                                        "'.$m9.'",
+                                        "'.$m10.'",
+                                        "'.$m11.'",
+                                        "'.$m12.'",
                                         "'.number_format($movimientos[$i]["total"],2).'"
                                         
 

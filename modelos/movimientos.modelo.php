@@ -391,7 +391,7 @@ class ModeloMovimientos{
                      ) AS '12',
                      ROUND(SUM(m.cantidad)) AS total 
                   FROM
-                     movimientosjf m 
+                  movimientosjf_2021 m 
                      LEFT JOIN articulojf a1 
                      ON m.articulo = a1.articulo 
                   WHERE YEAR(m.fecha) = YEAR(NOW()) 
@@ -498,7 +498,7 @@ class ModeloMovimientos{
                      ) AS '12',
                      ROUND(SUM(m.cantidad)) AS total 
                   FROM
-                     movimientosjf m 
+                  movimientosjf_2021 m 
                      LEFT JOIN articulojf a2 
                      ON m.articulo = a2.articulo 
                      LEFT JOIN modelojf mo 
@@ -613,7 +613,7 @@ class ModeloMovimientos{
                      ) AS '12',
                      ROUND(SUM(m.cantidad)) AS total 
                   FROM
-                     movimientosjf m 
+                  movimientosjf_2021 m 
                      LEFT JOIN articulojf a1 
                      ON m.articulo = a1.articulo 
                   WHERE YEAR(m.fecha) = YEAR(NOW()) 
@@ -721,7 +721,7 @@ class ModeloMovimientos{
                      ) AS '12',
                      ROUND(SUM(m.cantidad)) AS total 
                   FROM
-                     movimientosjf m 
+                  movimientosjf_2021 m 
                      LEFT JOIN articulojf a2 
                      ON m.articulo = a2.articulo 
                      LEFT JOIN modelojf mo 
@@ -848,7 +848,7 @@ class ModeloMovimientos{
                   ) AS '12',
                   ROUND(SUM(m.cantidad)) AS total 
                FROM
-                  movimientosjf m 
+               movimientosjf_2021 m 
                   LEFT JOIN articulojf a1 
                   ON m.articulo = a1.articulo 
                WHERE YEAR(m.fecha) = YEAR(NOW()) 
@@ -955,7 +955,7 @@ class ModeloMovimientos{
                   ) AS '12',
                   ROUND(SUM(m.cantidad)) AS total 
                FROM
-                  movimientosjf m 
+               movimientosjf_2021 m 
                   LEFT JOIN articulojf a2 
                   ON m.articulo = a2.articulo 
                WHERE YEAR(m.fecha) = YEAR(NOW()) 
@@ -1067,7 +1067,7 @@ class ModeloMovimientos{
                ) AS '12',
                ROUND(SUM(m.cantidad)) AS total 
             FROM
-               movimientosjf m 
+            movimientosjf_2021 m 
                LEFT JOIN articulojf a1 
                ON m.articulo = a1.articulo 
             WHERE YEAR(m.fecha) = YEAR(NOW()) 
@@ -1175,7 +1175,7 @@ class ModeloMovimientos{
                ) AS '12',
                ROUND(SUM(m.cantidad)) AS total 
             FROM
-               movimientosjf m 
+            movimientosjf_2021 m 
                LEFT JOIN articulojf a2 
                ON m.articulo = a2.articulo 
             WHERE YEAR(m.fecha) = YEAR(NOW()) 

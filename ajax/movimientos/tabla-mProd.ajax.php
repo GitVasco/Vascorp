@@ -182,6 +182,128 @@ class AjaxTablaMProd{
 			
 						}
 
+						/* 
+						*eliminar ceros
+						*/
+						if($movimientos[$i]["1"] == "0"){
+
+							$m1 = "";
+
+						}else{
+
+							$m1 = number_format($movimientos[$i]["1"],0);
+
+						}
+
+						if($movimientos[$i]["2"] == "0"){
+
+							$m2 = "";
+
+						}else{
+
+							$m2 = number_format($movimientos[$i]["2"],0);
+
+						}
+
+						if($movimientos[$i]["3"] == "0"){
+
+							$m3 = "";
+
+						}else{
+
+							$m3 = number_format($movimientos[$i]["3"],0);
+
+						}
+
+						if($movimientos[$i]["4"] == "0"){
+
+							$m4 = "";
+
+						}else{
+
+							$m4 = number_format($movimientos[$i]["4"],0);
+
+						}
+
+						if($movimientos[$i]["5"] == "0"){
+
+							$m5 = "";
+
+						}else{
+
+							$m5 = number_format($movimientos[$i]["5"],0);
+
+						}
+
+						if($movimientos[$i]["6"] == "0"){
+
+							$m6 = "";
+
+						}else{
+
+							$m6 = number_format($movimientos[$i]["6"],0);
+
+						}
+
+						if($movimientos[$i]["7"] == "0"){
+
+							$m7 = "";
+
+						}else{
+
+							$m7 = number_format($movimientos[$i]["7"],0);
+
+						}
+
+						if($movimientos[$i]["8"] == "0"){
+
+							$m8 = "";
+
+						}else{
+
+							$m8 = number_format($movimientos[$i]["8"],0);
+
+						}
+
+						if($movimientos[$i]["9"] == "0"){
+
+							$m9 = "";
+
+						}else{
+
+							$m9 = number_format($movimientos[$i]["9"],0);
+
+						}
+
+						if($movimientos[$i]["10"] == "0"){
+
+							$m10 = "";
+
+						}else{
+
+							$m10 = number_format($movimientos[$i]["10"],0);
+
+						}
+
+						if($movimientos[$i]["11"] == "0"){
+
+							$m11 = "";
+
+						}else{
+
+							$m11 = number_format($movimientos[$i]["11"],0);
+
+						}
+
+						if($movimientos[$i]["12"] == "0"){
+
+							$m12 = "";
+
+						}else{
+
+							$m12 = number_format($movimientos[$i]["12"],0);
+
+						}
 
 						
 						$datosJson.='[
@@ -192,18 +314,18 @@ class AjaxTablaMProd{
 										"'.$colores.'",
 										"T'.$movimientos[$i]["talla"].'",
 										"'.$estado.'",
-										"<center>'.number_format($movimientos[$i]["1"],0).'</center>",
-										"<center>'.number_format($movimientos[$i]["2"],0).'</center>",
-										"<center>'.number_format($movimientos[$i]["3"],0).'</center>",
-                                        "<center>'.number_format($movimientos[$i]["4"],0).'</center>",
-                                        "<center>'.number_format($movimientos[$i]["5"],0).'</center>",
-                                        "<center>'.number_format($movimientos[$i]["6"],0).'</center>",
-                                        "<center>'.number_format($movimientos[$i]["7"],0).'</center>",
-                                        "<center>'.number_format($movimientos[$i]["8"],0).'</center>",
-                                        "<center>'.number_format($movimientos[$i]["9"],0).'</center>",
-                                        "<center>'.number_format($movimientos[$i]["10"],0).'</center>",
-                                        "<center>'.number_format($movimientos[$i]["11"],0).'</center>",
-                                        "<center>'.number_format($movimientos[$i]["12"],0).'</center>",
+										"<center>'.$m1.'</center>",
+										"<center>'.$m2.'</center>",
+										"<center>'.$m3.'</center>",
+                                        "<center>'.$m4.'</center>",
+                                        "<center>'.$m5.'</center>",
+                                        "<center>'.$m6.'</center>",
+                                        "<center>'.$m7.'</center>",
+                                        "<center>'.$m8.'</center>",
+                                        "<center>'.$m9.'</center>",
+                                        "<center>'.$m10.'</center>",
+                                        "<center>'.$m11.'</center>",
+                                        "<center>'.$m12.'</center>",
                                         "<b><center>'.number_format($movimientos[$i]["total"],0).'</center></b>"
                                         
 

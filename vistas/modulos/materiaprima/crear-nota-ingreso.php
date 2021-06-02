@@ -1,0 +1,359 @@
+<div class="content-wrapper">
+
+    <section class="content-header">
+
+        <h1>
+
+            Crear venta
+
+        </h1>
+
+        <ol class="breadcrumb">
+
+            <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
+
+            <li class="active">Crear venta</li>
+
+        </ol>
+
+    </section>
+
+    <section class="content">
+
+        <div class="row">
+
+            <!--=====================================
+            LA TABLA DE PRODUCTOS
+            ======================================-->
+            <div class="col-lg-12">
+                <div class="box box-warning collapsed-box tablaCollapsada" id="tablaCollapsada" name="tablaCollapsada" >
+                    <div class="box-header with-border">
+                    <h3 class="box-title">Materia Prima</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+
+                    </div>
+                        <div class="box-body">
+
+                            <table class="table table-bordered table-striped dt-responsive TablaMpSOc" width="100%">
+
+                                <thead>
+
+                                    <tr>
+                                        <th style="width: 10px">CodPro</th>
+                                        <th>Cod. Fabrica</th>
+                                        <th>Descripción</th>
+                                        <th>Und</th>
+                                        <th>Cod. Color</th>
+                                        <th>Color</th>
+                                        <th>Sin IGV</th>
+                                        <th>Inc. IGV</th>
+                                        <th>Stock Actual</th>
+                                        <th>Saldo Oc</th>
+                                        <th>Nro. OC</th>
+                                        <th>Proveedor</th>
+                                        <th>#</th>
+                                    </tr>
+
+                                </thead>
+
+                            </table>
+
+                        </div>
+
+                </div>
+
+            </div>
+     
+
+            <!--=====================================
+            EL FORMULARIO
+            ======================================-->
+
+            <div class="col-lg-12 col-xs-12">
+
+                <div class="box box-success">
+
+                    <div class="box-header with-border"></div>
+
+                    <form role="form" metohd="post">
+
+                        <div class="box-body">
+
+                            <div class="box">
+
+                            <?php 
+                                date_default_timezone_set('America/Lima');
+                                $fecha = new DateTime();
+                            ?>
+
+                                <div class="form-group" style="padding-top:5px">
+
+                                    <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Doc. Principal</label>
+                                    <div class="col-lg-2">
+                                        <select  class="form-control input-sm" name="tipDocP" id="tipDocP">
+                                        <option value="">Doc. Principal</option>
+                                        <?php
+                                            $documentos = ControladorNotasIngresos::ctrDocNI();
+                                            #var_dump("ubigeo", $documentos);
+
+                                            foreach ($documentos as $key => $value) {
+                        
+                                            echo '<option value="' . $value["cod_argumento"] . '">' . $value["cod_argumento"] . ' - ' . $value["des_larga"] . '</option>';
+                        
+                                            }                        
+
+                                        ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <input type="text" class="form-control input-sm" id="nuevaSerieP" name="nuevaSerieP" placeholder="Serie">
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <input type="text" class="form-control input-sm" id="nuevoNroP" name="nuevoNroP" placeholder="Número">
+                                    </div>
+
+                                    <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Fec. Emision</label>
+                                    <div class="col-lg-2">
+                                        <input type="date" class="form-control input-sm" id="fecP" name="fecP"
+                                        value="<?php echo $fecha->format("Y-m-d"); ?>">
+                                    </div>
+
+                                    <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Proveedor</label>
+                                    <div class="col-lg-3">
+                                        <select  class="form-control input-sm selectpicker" data-live-search="true" name="nuevoProveedor" id="nuevoProveedor">
+
+                                        <option value="">SELECCIONAR PROVEEDOR</option>
+                                        
+                                        <?php
+                                            $item = null;
+                                            $valor = null;
+
+                                            $proveedores = ControladorProveedores::ctrMostrarProveedores($item, $valor);
+
+                                            foreach ($proveedores as $key => $value) {
+
+                                                echo '<option value="'.$value["CodRuc"].'">'.$value["CodRuc"].' - '.$value["RazPro"].'</option>';
+
+                                            }
+
+                                        ?>
+                                        </select>
+                                    </div>                                    
+                                    
+                                </div>
+
+                                <div class="form-group" style="padding-top:25px">
+
+                                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Doc. Secundario</label>
+                                    <div class="col-lg-2">
+                                        <select  class="form-control input-sm" name="tipDocS" id="tipDocS">
+                                        <option value="">Doc. Secundario</option>
+                                        <?php
+                                            $documentos = ControladorNotasIngresos::ctrDocNI();
+                                            #var_dump("ubigeo", $documentos);
+
+                                            foreach ($documentos as $key => $value) {
+                        
+                                            echo '<option value="' . $value["cod_argumento"] . '">' . $value["cod_argumento"] . ' - ' . $value["des_larga"] . '</option>';
+                        
+                                            }                        
+
+                                        ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <input type="text" class="form-control input-sm" id="nuevaSerieS" name="nuevaSerieS" placeholder="Serie">
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <input type="text" class="form-control input-sm" id="nuevoNroS" name="nuevoNroS" placeholder="Número">
+                                    </div>
+
+                                    <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Moneda</label>
+                                    <div class="col-lg-2">
+                                        <select  class="form-control input-md selectpicker"  name="nuevaOc"  id="nuevaOc" data-live-search="true" >
+                                        <option value="">Seleccionar OC</option>
+
+                                        </select>
+                                    </div>                                   
+                                    
+                                </div>         
+
+                                <!--=====================================
+                                        TITULOS
+                                ======================================-->
+                                <div class="col-lg-12"  style="padding-top:25px">                
+
+                                    <div class="row box box-primary">
+
+                                        <div class="col-lg-1">
+
+                                        <label>CodPro</label>
+
+                                        </div>
+
+                                        <div class="col-lg-1">
+
+                                        <label for="">CodFab</label>
+
+                                        </div>
+
+                                        <div class="col-lg-2">
+
+                                        <label for="">Descripción / Color / Und</label>
+
+                                        </div>
+
+                                        <div class="col-lg-1">
+
+                                        <label for="">Cantidad</label>
+
+                                        </div>   
+                                        
+                                        <div class="col-lg-1">
+
+                                        <label for="">C. Recibida</label>
+
+                                        </div>
+
+                                        <div class="col-lg-1">
+
+                                        <label for="">Saldo</label>
+
+                                        </div>  
+
+                                        <div class="col-lg-1">
+
+                                        <label for="">Exceso</label>
+
+                                        </div>
+
+                                        <div class="col-lg-1">
+
+                                        <label for="">P.S. IGV</label>
+
+                                        </div>
+
+                                        <div class="col-lg-1">
+
+                                        <label for="">Total</label>
+
+                                        </div>
+
+                                        <div class="col-lg-1">
+
+                                        <label for="">OC</label>
+
+                                        </div>
+
+                                        <div class="col-lg-1">
+
+                                        <label for="">Cerrar</label>
+
+                                        </div> 
+
+                                    </div>
+
+                                </div>
+
+                                <!--=====================================
+                                ENTRADA PARA AGREGAR PRODUCTO
+                                ======================================-->
+
+                                <div class="form-group row nuevoProducto">
+
+
+                                </div>
+
+                                <hr>
+
+                                <input type="hidden" id="listaNI" name="listaNI">
+
+                                <div class="row">
+
+                                    <!--=====================================
+                                    ENTRADA IMPUESTOS Y TOTAL
+                                    ======================================-->
+
+                                    <div class="col-xs-8 pull-right">
+
+                                        <table class="table">
+
+                                            <thead>
+
+                                                <tr>
+                                                    <th>Impuesto</th>
+                                                    <th>Total</th>
+                                                </tr>
+
+                                            </thead>
+
+                                            <tbody>
+
+                                                <tr>
+
+                                                    <td style="width: 50%">
+
+                                                        <div class="input-group">
+
+                                                            <input type="number" class="form-control" min="0" id="nuevoImpuestoVenta" name="nuevoImpuestoVenta" placeholder="0" required>
+                                                            <span class="input-group-addon"><i class="fa fa-percent"></i></span>
+
+                                                        </div>
+
+                                                    </td>
+
+                                                    <td style="width: 50%">
+
+                                                        <div class="input-group">
+
+                                                            <span class="input-group-addon"><i class="fa fa-money"></i></span>
+
+                                                            <input type="number" min="1" class="form-control" id="nuevoTotalVenta" name="nuevoTotalVenta" placeholder="00000" readonly required>
+
+                                                        </div>
+
+                                                    </td>
+
+                                                </tr>
+
+                                            </tbody>
+
+                                        </table>
+
+                                    </div>
+
+                                </div>
+
+                                <hr>
+
+                                <br>
+
+                            </div>
+
+                        </div>
+
+                        <div class="box-footer">
+
+                            <button type="submit" class="btn btn-primary pull-right">Guardar Nota de Ingreso</button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+<script>
+window.document.title = "Crear nota ingreso"
+</script>
