@@ -32,6 +32,10 @@
         <i class="fa fa-plus-square"></i> Crear surtido
         </button>
 
+        <button class="btn btn-primary btnCrearCompensacion" data-toggle="modal" data-target="#modalCrearCompensacion" idTaller="2021493731"> 
+        <i class="fa fa-plus-square"></i> Crear compensacion
+        </button>
+
         <button class="btn btn-success btnCrearTicketOriginal" data-toggle="modal" data-target="#modalCrearTicketOriginal" > 
         <i class="fa fa-plus-square"></i> Crear ticket
         </button>
@@ -595,7 +599,7 @@ MODAL ELIMINAR ARTICULO
 
           <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" class="btn btn-primary">Crear Surtida</button>
+          <button type="submit" class="btn btn-primary">Crear Surtido</button>
 
         </div>
 
@@ -712,6 +716,135 @@ MODAL ELIMINAR ARTICULO
 
           $crearTicketOriginal = new ControladorTalleres();
           $crearTicketOriginal -> ctrCrearTicketOriginal();
+
+        ?>  
+
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<div id="modalCrearCompensacion" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form role="form" method="post">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Crear Compensación</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <div class="form-group col-lg-6">
+              <label for="">Modelo</label>
+              <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+                  <input type="text" class="form-control input-lg" id="verMod2" name="verMod" value="C001" readonly>
+                  
+              </div>
+            </div>  
+
+            <div class="form-group col-lg-6">
+              <label for="">Color</label>
+              <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+                  <input type="text" class="form-control input-lg" id="verCol2" name="verCol" value="SURTIDO" readonly>
+                  
+              </div>
+            </div>  
+
+            <div class="form-group col-lg-6">
+              <label for="">Talla</label>
+              <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+                  <input type="text" class="form-control input-lg" id="verTal2" name="verTal" value="SURTIDO"readonly>
+                  <input type="hidden" id="verArti2" name="verArti" value="C001251">
+                  <input type="hidden" id="verCab2" name="verCab" value="2021493">
+                  <input type="hidden"  name="verUser" value="<?php echo $_SESSION["id"]?>">
+                  
+              </div>
+            </div>  
+
+
+            <div class="form-group col-lg-6">
+            <label for="">Cod. Operacion</label>
+              <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+
+                  <input type="text" class="form-control input-lg" id="verCodOP2" name="verCodOP" value="828" readonly>
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-6">
+            <label for="">Operacion</label>
+              <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+
+                  <input type="text" class="form-control input-lg" id="verOP2" name="verOP" value="COMPENSACION" readonly>
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-6">
+            <label for="">Cantidad</label>
+              <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+
+                  <input type="text" class="form-control input-lg" name="verCantidad2" id="verCantidad2" required>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Crear Compensacion</button>
+
+        </div>
+
+      </form>
+
+        <?php
+
+          $crearCompensacion = new ControladorTalleres();
+          $crearCompensacion -> ctrCrearCompensacion();
 
         ?>  
 

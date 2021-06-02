@@ -26,30 +26,33 @@
       ======================================-->
 
       <div class="col-lg-12 hidden-md hidden-sm hidden-xs">
-
-        <div class="box box-warning">
+      
+        <div class="box box-warning collapsed-box">
 
           <div class="box-header with-border">
             <h3 class="box-title">Materia Prima</h3>
             <div class="box-tools pull-right">
-              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                </button>
             </div>
 
           </div>
           <div class="box-body">
 
-            <table class="table table-bordered table-striped dt-responsive tablaOrdenNotaSalida">
+            <table class="table table-bordered table-striped dt-responsive tablaMateriaNotaSalida" width="100%">
 
               <thead>
 
                 <tr>
                   <th>Codigo</th>
-                  <th>Articulo</th>
-                  <th>Modelo</th>
-                  <th>Nombre</th>
+                  <th>Cod. Fabrica</th>
+                  <th>Descripcion</th>
+                  <th>Unidad</th>
+                  <th>Cod Color</th>
                   <th>Color</th>
-                  <th>Talla</th>
-                  <th>Saldo</th>
+                  <th>Costo</th>
+                  <th>Stock Minimo</th>
+                  <th>Stock MateriaPrima</th>
                   <th>Acciones</th>
                 </tr>
 
@@ -86,117 +89,143 @@
               ?>
 
                 <!--=====================================
-                ENTRADA DEL VENDEDOR
+                FILA FECHA ALMACEN y CLIENTE
                 ======================================-->
 
                 <div class="form-group" style="padding-top:15px">
                   <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">FECHA</label>
                   <div class="col-lg-2">
-                    <input type="date" class="form-control" id="nuevaFecha" name="nuevaFecha"
+                    <input type="date" class="form-control input-sm"  name="nuevaFecha"
                       value="<?php echo $fecha->format("Y-m-d"); ?>" readonly>
                   </div>
+
                   <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">ALMACEN</label>
                   <div class="col-lg-2">
-                    <input type="date" class="form-control" id="nuevaFecha" name="nuevaFecha"
-                      value="<?php echo $fecha->format("Y-m-d"); ?>" readonly>
+                    <select  class="form-control selectpicker" name="nuevoTipoAlmacen" data-live-search="true" required>
+                      <option value="">SELECCIONAR TIPO DE ALMACEN</option>
+                        <?php
+
+                        $almacen = ControladorNotasSalidas::ctrMostrarTipoAlmacen();
+
+                        foreach ($almacen as $key => $value) {
+
+                          echo '<option value="'.$value["id_almacen"].'">'.$value["id_almacen"]." - ".$value["almacen"].'</option>';
+
+                        }
+
+                        ?>
+                    </select>
                   </div>
                     
-                </div>
+                  <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">RAZON SOCIAL</label>
+                  <div class="col-lg-2">
+                    <select  class="form-control  selectpicker" name="nuevoClienteNota" id="nuevoClienteNota" data-live-search="true" required>
+                      <option value="">SELECCIONAR CLIENTE</option>
+                        <?php
 
-                <!--=====================================
-                ENTRADA DE GUIA
-                ======================================-->
+                        $cliente = ControladorNotasSalidas::ctrMostrarClientesNotas();
 
-                <div class="form-group">
+                        foreach ($cliente as $key => $value) {
 
-                  <div class="input-group">
+                          echo '<option value="'.$value["Ruc"].'">'.$value["CodCli"]." - ".$value["RazCli"].'</option>';
 
-                    <span class="input-group-addon"><i class="fa fa-file-text-o"></i></span>
-                    <input type="text" class="form-control" id="nuevaGuia" name="nuevaGuia"  >
+                        }
 
-                  </div>
-
-                </div>
-
-                <!--=====================================
-                ENTRADA DEL CODIGO
-                ======================================-->
-
-                <div class="form-group">
-
-                  <div class="input-group">
-
-                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                    <input type="text" class="form-control" id="nuevoCierre" name="nuevoCierre"  readonly>
-
-                  </div>
-
-                </div>
-
-                
-                <!--=====================================
-                ENTRADA DEL CLIENTE
-                ======================================-->
-
-                <div class="form-group">
-
-                  <div class="input-group">
-
-                    <span class="input-group-addon"><i class="fa fa-users"></i></span>
-
-                    <select class="form-control selectpicker" id="seleccionarSector" name="seleccionarSector" data-live-search="true" required>
-
-                      <option value="">Seleccionar sector</option>
-
-                      <?php
-
-                      $item = null;
-                      $valor = null;
-
-                      $categorias = ControladorSectores::ctrMostrarSectores($item, $valor);
-
-                      foreach ($categorias as $key => $value) {
-
-                        echo '<option value="'.$value["cod_sector"].'">'.$value["cod_sector"]." - ".$value["nom_sector"].'</option>';
-
-                      }
-
-                      ?>
-
+                        ?>
                     </select>
-
-                    <span class="input-group-addon"><button type="button" class="btn btn-default btn-xs btnLimpiarSectorCierre">Limpiar
-                        sector</button></span>
-
                   </div>
 
+                  <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">RUC</label>
+                  <div class="col-lg-2">
+                    <input type="text" class="form-control input-sm"  id ="nuevoRuc" name="nuevoRuc" readonly>
+                    <input type="hidden"   id ="codigoCli" name="nuevocodigoCli" readonly>
+                  </div>
                 </div>
-                <div class="box box-primary">
+
+                <!--=====================================
+                FILA TIPO MOTIVO
+                ======================================-->
+
+                <div class="form-group" style="padding-top:25px;padding-bottom:35px">
+                  <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">MOTIVO</label>
+
+                  <div class="col-lg-3">
+                  
+                    <select  class="form-control  selectpicker" name="nuevoMotivoNota" id="nuevoMotivoNota" data-live-search="true" >
+                      <option value="">SELECCIONAR MOTIVO</option>
+                        <?php
+
+                        $motivo = ControladorNotasSalidas::ctrMostrarMotivoNota();
+
+                        foreach ($motivo as $key => $value) {
+
+                          echo '<option value="'.$value["Cod_Argumento"].'">'.$value["Des_Larga"].'</option>';
+
+                        }
+
+                        ?>
+                    </select>
+                    <input type="hidden" id="desMotivo" name="nuevoDesMotivo">
+                    
+                  </div>
+
+                  <div class="col-lg-2">
+                    <input type="text" class="form-control input-sm"  name ="nuevaDescripcionMotivo" >
+                  </div>
+
+                  <div class="col-lg-12"></div>
+
+                </div>
+
+                <div class="box box-primary" >
 
                   <div class="row">
-                    <div class="col-xs-3">
+                    <div class="col-xs-1">
 
-                      <label for="">Codigo</label>
+                      <label for="">COD PRODUCTO</label>
 
                     </div>
-                    <div class="col-xs-5">
+                    <div class="col-xs-1">
 
-                      <label >Articulo</label>
+                      <label >COD FABRICA</label>
+
+                    </div>
+
+                    <div class="col-xs-4">
+
+                      <label for="" >DESCRIPCION</label>
+
+                    </div>
+
+                    <div class="col-xs-1">
+
+                      <label for="" >COD COLOR</label>
+
+                    </div>
+
+                    <div class="col-xs-1">
+
+                      <label for="" >COLOR</label>
+
+                    </div>
+
+                    <div class="col-xs-1">
+
+                      <label for="" >COSTO</label>
 
                     </div>
 
                     <div class="col-xs-2">
 
-                      <label for="" >Cantidad</label>
+                      <label for="" >DESTINO</label>
 
                     </div>
 
-                    <div class="col-xs-2">
+                    <div class="col-xs-1">
 
-                      <label for="" >Servicio</label>
+                      <label for="" >CANTIDAD</label>
 
                     </div>
-
                   </div>
 
                 </div>
@@ -204,68 +233,16 @@
                 ENTRADA PARA AGREGAR PRODUCTO
                 ======================================-->
 
-                <div class="form-group row nuevaNotasSalidas">
+                <div class="form-group row nuevaMateriaNota">
 
 
 
                 </div>
 
-                <input type="hidden" id="listaProductos" name="listaProductos">
+                <input type="hidden" id="listarMateriaNotas" name="listarMateriaNotas">
 
-                <!--=====================================
-                BOTÓN PARA AGREGAR PRODUCTO
-                ======================================-->
-
-                <button type="button" class="btn btn-default hidden-lg btnAgregarProducto">Agregar producto</button>
 
                 <hr>
-
-                <div class="row">
-
-                  <!--=====================================
-                  ENTRADA IMPUESTOS Y TOTAL
-                  ======================================-->
-
-                  <div class="col-xs-6 pull-right">
-
-                    <table class="table">
-
-                      <thead>
-
-                        <tr>
-                          <th>Total</th>
-                        </tr>
-
-                      </thead>
-
-                      <tbody>
-
-                        <tr>
-
-                          <td style="width: 50%">
-
-                            <div class="input-group">
-
-                              <span class="input-group-addon"><i class="fa fa-money"></i></span>
-
-                              <input type="text" min="1" class="form-control input-lg" id="nuevoTotalVenta" name="nuevoTotalVenta" total="" placeholder="00000" readonly required>
-
-                              <input type="hidden" name="totalVenta" id="totalVenta">
-
-
-                            </div>
-
-                          </td>
-
-                        </tr>
-
-                      </tbody>
-
-                    </table>
-
-                  </div>
-
-                </div>
 
               </div>
 
@@ -282,8 +259,8 @@
 
           <?php
 
-            $guardarCierre = new ControladorCierres();
-            $guardarCierre -> ctrCrearCierre();
+            $guardarNotaSalida = new ControladorNotasSalidas();
+            $guardarNotaSalida -> ctrCrearNotaSalida();
 
           ?>          
 
