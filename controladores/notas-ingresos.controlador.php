@@ -46,6 +46,18 @@ class ControladorNotasIngresos{
 
 		return $respuesta;
 		
+	}
+	
+
+	/* 
+	* MP EN OC O SUELTA
+	*/
+	static public function ctrTraerMpOC($codpro, $orden, $codruc){
+
+		$respuesta = ModeloNotasIngresos::mdlTraerMpOC($codpro, $orden, $codruc);
+
+		return $respuesta;
+		
 	}	
 
 }
