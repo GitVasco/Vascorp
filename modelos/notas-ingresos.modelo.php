@@ -251,229 +251,186 @@ class ModeloNotasIngresos{
 		if ($oc == "null" || $oc == "") {
 
 			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
-                                            pro.CodPro,
-                                            pro.CodFab,
-                                            DesPro,
-                                            Stk_Act,
-                                            CodAlm01,
-                                            Tabla_M_Detalle_2.Des_Corta AS Unidad,
-                                            Tabla_M_Detalle_4.Des_Larga AS Color,
-                                            pro.ColPro,
-                                            IFNULL(pmp1.PreProv1, 0.000000) AS precio,
-                                            IFNULL(pmp1.ConPreProv1, 0.000000) preciocigv,
-                                            NULL AS CanNI,
-                                            NULL AS estac,
-                                            NULL AS Nro,
-                                            pmp1.RazPro1 AS Proveedor 
-                                        FROM
-                                            Producto AS pro 
-                                            LEFT JOIN 
-                                            (SELECT 
-                                                Pro1.CodRuc AS CodRuc1,
-                                                Pro1.RazPro AS RazPro1,
-                                                pmp.PreProv1 AS PreProv1,
-                                                (
-                                                CASE
-                                                    WHEN MonProv1 = 'NUEVOS SOLES' 
-                                                    THEN '1' 
-                                                    WHEN MonProv1 = 'DOLARES AMERICANOS' 
-                                                    THEN '2' 
-                                                    ELSE '' 
-                                                END
-                                                ) AS MonedaProv1,
-                                                MonProv1,
-                                                (pmp.PreProv1 + pmp.PreProv1 * 0.18) AS ConPreProv1,
-                                                pmp.CodPro 
-                                            FROM
-                                                preciomp pmp 
-                                                LEFT JOIN Proveedor AS Pro1 
-                                                ON Pro1.CodRuc = pmp.CodProv1) AS pmp1 
-                                            ON pmp1.CodPro = pro.CodPro 
-                                            INNER JOIN Tabla_M_Detalle AS Tabla_M_Detalle_2 
-                                            ON pro.UndPro = Tabla_M_Detalle_2.Cod_Argumento 
-                                            AND (
-                                                Tabla_M_Detalle_2.Cod_Tabla = 'TUND'
-                                            ) 
-                                            INNER JOIN Tabla_M_Detalle AS Tabla_M_Detalle_4 
-                                            ON pro.ColPro = Tabla_M_Detalle_4.Cod_Argumento 
-                                            AND (
-                                                Tabla_M_Detalle_4.Cod_Tabla = 'TCOL'
-                                            ) 
-                                        WHERE pro.EstPro = '1' 
-                                            AND pmp1.RazPro1 != '' 
-                                            AND pmp1.CodRuc1 = $empresa 
-                                        UNION
-                                        ALL 
-                                        SELECT DISTINCT 
-                                            pro.CodPro,
-                                            pro.CodFab,
-                                            DesPro,
-                                            Stk_Act,
-                                            CodAlm01,
-                                            Tabla_M_Detalle_2.Des_Corta AS Unidad,
-                                            Tabla_M_Detalle_4.Des_Larga AS Color,
-                                            pro.ColPro,
-                                            IFNULL(pmp2.PreProv2, 0.000000) AS precio,
-                                            IFNULL(pmp2.ConPreProv2, 0.000000) preciocigv,
-                                            NULL AS CanNI,
-                                            NULL AS estac,
-                                            NULL AS Nro,
-                                            pmp2.RazPro2 AS Proveedor 
-                                        FROM
-                                            Producto AS pro 
-                                            LEFT JOIN 
-                                            (SELECT 
-                                                Pro2.CodRuc AS CodRuc2,
-                                                Pro2.RazPro AS RazPro2,
-                                                pmp.PreProv2 AS PreProv2,
-                                                (
-                                                CASE
-                                                    WHEN MonProv2 = 'NUEVOS SOLES' 
-                                                    THEN '1' 
-                                                    WHEN MonProv2 = 'DOLARES AMERICANOS' 
-                                                    THEN '2' 
-                                                    ELSE '' 
-                                                END
-                                                ) AS MonedaProv2,
-                                                MonProv2,
-                                                (pmp.PreProv2 + pmp.PreProv2 * 0.18) AS ConPreProv2,
-                                                pmp.CodPro 
-                                            FROM
-                                                preciomp pmp 
-                                                LEFT JOIN Proveedor AS Pro2 
-                                                ON Pro2.CodRuc = pmp.CodProv2) AS pmp2 
-                                            ON pmp2.CodPro = pro.CodPro 
-                                            INNER JOIN Tabla_M_Detalle AS Tabla_M_Detalle_2 
-                                            ON pro.UndPro = Tabla_M_Detalle_2.Cod_Argumento 
-                                            AND (
-                                                Tabla_M_Detalle_2.Cod_Tabla = 'TUND'
-                                            ) 
-                                            INNER JOIN Tabla_M_Detalle AS Tabla_M_Detalle_4 
-                                            ON pro.ColPro = Tabla_M_Detalle_4.Cod_Argumento 
-                                            AND (
-                                                Tabla_M_Detalle_4.Cod_Tabla = 'TCOL'
-                                            ) 
-                                        WHERE pro.EstPro = '1' 
-                                            AND pmp2.RazPro2 != '' 
-                                            AND pmp2.CodRuc2 = $empresa 
-                                        UNION
-                                        ALL 
-                                        SELECT DISTINCT 
-                                            pro.CodPro,
-                                            pro.CodFab,
-                                            DesPro,
-                                            Stk_Act,
-                                            CodAlm01,
-                                            Tabla_M_Detalle_2.Des_Corta AS Unidad,
-                                            Tabla_M_Detalle_4.Des_Larga AS Color,
-                                            pro.ColPro,
-                                            IFNULL(pmp3.PreProv3, 0.000000) AS precio,
-                                            IFNULL(pmp3.ConPreProv3, 0.000000) preciocigv,
-                                            NULL AS CanNI,
-                                            NULL AS estac,
-                                            NULL AS Nro,
-                                            pmp3.RazPro3 AS Proveedor 
-                                        FROM
-                                            Producto AS pro 
-                                            LEFT JOIN 
-                                            (SELECT 
-                                                Pro3.CodRuc AS CodRuc3,
-                                                Pro3.RazPro AS RazPro3,
-                                                pmp.PreProv3 AS PreProv3,
-                                                (
-                                                CASE
-                                                    WHEN MonProv3 = 'NUEVOS SOLES' 
-                                                    THEN '1' 
-                                                    WHEN MonProv3 = 'DOLARES AMERICANOS' 
-                                                    THEN '2' 
-                                                    ELSE '' 
-                                                END
-                                                ) AS MonedaProv3,
-                                                MonProv3,
-                                                (pmp.PreProv3 + pmp.PreProv3 * 0.18) AS ConPreProv3,
-                                                pmp.CodPro 
-                                            FROM
-                                                preciomp pmp 
-                                                LEFT JOIN Proveedor AS Pro3 
-                                                ON Pro3.CodRuc = pmp.CodProv3) AS pmp3 
-                                            ON pmp3.CodPro = pro.CodPro 
-                                            INNER JOIN Tabla_M_Detalle AS Tabla_M_Detalle_2 
-                                            ON pro.UndPro = Tabla_M_Detalle_2.Cod_Argumento 
-                                            AND (
-                                                Tabla_M_Detalle_2.Cod_Tabla = 'TUND'
-                                            ) 
-                                            INNER JOIN Tabla_M_Detalle AS Tabla_M_Detalle_4 
-                                            ON pro.ColPro = Tabla_M_Detalle_4.Cod_Argumento 
-                                            AND (
-                                                Tabla_M_Detalle_4.Cod_Tabla = 'TCOL'
-                                            ) 
-                                        WHERE pro.EstPro = '1' 
-                                            AND pmp3.RazPro3 != '' 
-                                            AND pmp3.CodRuc3 = $empresa 
-                                        UNION
-                                        ALL 
-                                        SELECT 
-                                            ocd.CodPro,
-                                            pro.CodFab,
-                                            pro.DesPro,
-                                            NULL AS StkAct,
-                                            NULL AS CodAlm01,
-                                            pro.Unidad,
-                                            pro.Color,
-                                            pro.ColPro,
-                                            ocd.PrePro AS precio,
-                                            '0.000000' AS preciocigv,
-                                            ocd.CantNI,
-                                            estac,
-                                            ocd.Nro,
-                                            prov.RazPro AS Proveedor 
-                                        FROM
-                                            ocomdet ocd 
-                                            LEFT JOIN 
-                                            (SELECT 
-                                                pro.CodPro,
-                                                pro.CodFab,
-                                                pro.DesPro,
-                                                TbUnd.Des_Corta AS Unidad,
-                                                TbCol.Des_Larga AS Color,
-                                                pro.ColPro 
-                                            FROM
-                                                producto pro 
-                                                INNER JOIN Tabla_M_Detalle AS TbUnd 
-                                                ON pro.UndPro = TbUnd.Cod_Argumento 
-                                                AND (TbUnd.Cod_Tabla = 'TUND') 
-                                                INNER JOIN Tabla_M_Detalle AS TbCol 
-                                                ON pro.ColPro = TbCol.Cod_Argumento 
-                                                AND (TbCol.Cod_Tabla = 'TCOL') 
-                                            WHERE pro.EstPro = '1') AS pro 
-                                            ON pro.CodPro = ocd.CodPro 
-                                            LEFT JOIN Proveedor AS prov 
-                                            ON prov.CodRuc = ocd.CodRuc 
-                                        WHERE estac IN ('ABI', 'PAR') 
-                                            AND ocd.EstOco = '03' 
-                                            AND ocd.CodRuc = $empresa");
-
-			$stmt->bindParam(":empresa", $empresa, PDO::PARAM_STR);
-
-			$stmt->execute();
-
-			return $stmt->fetchAll();
-		} else {
-
-			$stmt = Conexion::conectar()->prepare("SELECT 
+            pro.CodPro,
+            pro.CodFab,
+            DesPro,
+            Stk_Act,
+            CodAlm01,
+            Tabla_M_Detalle_2.Des_Corta AS Unidad,
+            Tabla_M_Detalle_4.Des_Larga AS Color,
+            pro.ColPro,
+            IFNULL(pmp1.PreProv1, 0.000000) AS precio,
+            IFNULL(pmp1.ConPreProv1, 0.000000) preciocigv,
+            NULL AS CanNI,
+            NULL AS estac,
+            NULL AS Nro,
+            pmp1.RazPro1 AS Proveedor,
+            pmp1.CodRuc1 AS codruc
+          FROM
+            Producto AS pro 
+            LEFT JOIN 
+              (SELECT 
+                Pro1.CodRuc AS CodRuc1,
+                Pro1.RazPro AS RazPro1,
+                pmp.PreProv1 AS PreProv1,
+                (
+                  CASE
+                    WHEN MonProv1 = 'NUEVOS SOLES' 
+                    THEN '1' 
+                    WHEN MonProv1 = 'DOLARES AMERICANOS' 
+                    THEN '2' 
+                    ELSE '' 
+                  END
+                ) AS MonedaProv1,
+                MonProv1,
+                (pmp.PreProv1 + pmp.PreProv1 * 0.18) AS ConPreProv1,
+                pmp.CodPro 
+              FROM
+                preciomp pmp 
+                LEFT JOIN Proveedor AS Pro1 
+                  ON Pro1.CodRuc = pmp.CodProv1) AS pmp1 
+              ON pmp1.CodPro = pro.CodPro 
+            INNER JOIN Tabla_M_Detalle AS Tabla_M_Detalle_2 
+              ON pro.UndPro = Tabla_M_Detalle_2.Cod_Argumento 
+              AND (
+                Tabla_M_Detalle_2.Cod_Tabla = 'TUND'
+              ) 
+            INNER JOIN Tabla_M_Detalle AS Tabla_M_Detalle_4 
+              ON pro.ColPro = Tabla_M_Detalle_4.Cod_Argumento 
+              AND (
+                Tabla_M_Detalle_4.Cod_Tabla = 'TCOL'
+              ) 
+          WHERE pro.EstPro = '1' 
+            AND pmp1.RazPro1 != '' 
+            AND pmp1.CodRuc1 = $empresa 
+          UNION
+          ALL 
+          SELECT DISTINCT 
+            pro.CodPro,
+            pro.CodFab,
+            DesPro,
+            Stk_Act,
+            CodAlm01,
+            Tabla_M_Detalle_2.Des_Corta AS Unidad,
+            Tabla_M_Detalle_4.Des_Larga AS Color,
+            pro.ColPro,
+            IFNULL(pmp2.PreProv2, 0.000000) AS precio,
+            IFNULL(pmp2.ConPreProv2, 0.000000) preciocigv,
+            NULL AS CanNI,
+            NULL AS estac,
+            NULL AS Nro,
+            pmp2.RazPro2 AS Proveedor,
+            pmp2.CodRuc2 AS codruc
+          FROM
+            Producto AS pro 
+            LEFT JOIN 
+              (SELECT 
+                Pro2.CodRuc AS CodRuc2,
+                Pro2.RazPro AS RazPro2,
+                pmp.PreProv2 AS PreProv2,
+                (
+                  CASE
+                    WHEN MonProv2 = 'NUEVOS SOLES' 
+                    THEN '1' 
+                    WHEN MonProv2 = 'DOLARES AMERICANOS' 
+                    THEN '2' 
+                    ELSE '' 
+                  END
+                ) AS MonedaProv2,
+                MonProv2,
+                (pmp.PreProv2 + pmp.PreProv2 * 0.18) AS ConPreProv2,
+                pmp.CodPro 
+              FROM
+                preciomp pmp 
+                LEFT JOIN Proveedor AS Pro2 
+                  ON Pro2.CodRuc = pmp.CodProv2) AS pmp2 
+              ON pmp2.CodPro = pro.CodPro 
+            INNER JOIN Tabla_M_Detalle AS Tabla_M_Detalle_2 
+              ON pro.UndPro = Tabla_M_Detalle_2.Cod_Argumento 
+              AND (
+                Tabla_M_Detalle_2.Cod_Tabla = 'TUND'
+              ) 
+            INNER JOIN Tabla_M_Detalle AS Tabla_M_Detalle_4 
+              ON pro.ColPro = Tabla_M_Detalle_4.Cod_Argumento 
+              AND (
+                Tabla_M_Detalle_4.Cod_Tabla = 'TCOL'
+              ) 
+          WHERE pro.EstPro = '1' 
+            AND pmp2.RazPro2 != '' 
+            AND pmp2.CodRuc2 = $empresa 
+          UNION
+          ALL 
+          SELECT DISTINCT 
+            pro.CodPro,
+            pro.CodFab,
+            DesPro,
+            Stk_Act,
+            CodAlm01,
+            Tabla_M_Detalle_2.Des_Corta AS Unidad,
+            Tabla_M_Detalle_4.Des_Larga AS Color,
+            pro.ColPro,
+            IFNULL(pmp3.PreProv3, 0.000000) AS precio,
+            IFNULL(pmp3.ConPreProv3, 0.000000) preciocigv,
+            NULL AS CanNI,
+            NULL AS estac,
+            NULL AS Nro,
+            pmp3.RazPro3 AS Proveedor,
+            pmp3.CodRuc3 AS codruc
+          FROM
+            Producto AS pro 
+            LEFT JOIN 
+              (SELECT 
+                Pro3.CodRuc AS CodRuc3,
+                Pro3.RazPro AS RazPro3,
+                pmp.PreProv3 AS PreProv3,
+                (
+                  CASE
+                    WHEN MonProv3 = 'NUEVOS SOLES' 
+                    THEN '1' 
+                    WHEN MonProv3 = 'DOLARES AMERICANOS' 
+                    THEN '2' 
+                    ELSE '' 
+                  END
+                ) AS MonedaProv3,
+                MonProv3,
+                (pmp.PreProv3 + pmp.PreProv3 * 0.18) AS ConPreProv3,
+                pmp.CodPro 
+              FROM
+                preciomp pmp 
+                LEFT JOIN Proveedor AS Pro3 
+                  ON Pro3.CodRuc = pmp.CodProv3) AS pmp3 
+              ON pmp3.CodPro = pro.CodPro 
+            INNER JOIN Tabla_M_Detalle AS Tabla_M_Detalle_2 
+              ON pro.UndPro = Tabla_M_Detalle_2.Cod_Argumento 
+              AND (
+                Tabla_M_Detalle_2.Cod_Tabla = 'TUND'
+              ) 
+            INNER JOIN Tabla_M_Detalle AS Tabla_M_Detalle_4 
+              ON pro.ColPro = Tabla_M_Detalle_4.Cod_Argumento 
+              AND (
+                Tabla_M_Detalle_4.Cod_Tabla = 'TCOL'
+              ) 
+          WHERE pro.EstPro = '1' 
+            AND pmp3.RazPro3 != '' 
+            AND pmp3.CodRuc3 = $empresa 
+          UNION
+          ALL 
+          SELECT 
             ocd.CodPro,
             pro.CodFab,
             pro.DesPro,
-            Stk_Act,
+            NULL AS StkAct,
+            NULL AS CodAlm01,
             pro.Unidad,
             pro.Color,
             pro.ColPro,
             ocd.PrePro AS precio,
             '0.000000' AS preciocigv,
-            ocd.CantNI AS CanNI,
+            ocd.CantNI,
             estac,
             ocd.Nro,
-            prov.RazPro AS Proveedor 
+            prov.RazPro AS Proveedor,
+            ocd.CodRuc AS codruc
           FROM
             ocomdet ocd 
             LEFT JOIN 
@@ -481,7 +438,6 @@ class ModeloNotasIngresos{
                 pro.CodPro,
                 pro.CodFab,
                 pro.DesPro,
-                pro.codalm01 AS Stk_Act,
                 TbUnd.Des_Corta AS Unidad,
                 TbCol.Des_Larga AS Color,
                 pro.ColPro 
@@ -499,6 +455,54 @@ class ModeloNotasIngresos{
               ON prov.CodRuc = ocd.CodRuc 
           WHERE estac IN ('ABI', 'PAR') 
             AND ocd.EstOco = '03' 
+            AND ocd.CodRuc = $empresa");
+
+			$stmt->bindParam(":empresa", $empresa, PDO::PARAM_STR);
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		} else {
+
+                                                $stmt = Conexion::conectar()->prepare("SELECT 
+                                                ocd.CodPro,
+                                                pro.CodFab,
+                                                pro.DesPro,
+                                                Stk_Act,
+                                                pro.Unidad,
+                                                pro.Color,
+                                                pro.ColPro,
+                                                ocd.PrePro AS precio,
+                                                '0.000000' AS preciocigv,
+                                                ocd.CantNI AS CanNI,
+                                                estac,
+                                                ocd.Nro,
+                                                prov.RazPro AS Proveedor 
+                                            FROM
+                                                ocomdet ocd 
+                                                LEFT JOIN 
+                                                (SELECT 
+                                                    pro.CodPro,
+                                                    pro.CodFab,
+                                                    pro.DesPro,
+                                                    pro.codalm01 AS Stk_Act,
+                                                    TbUnd.Des_Corta AS Unidad,
+                                                    TbCol.Des_Larga AS Color,
+                                                    pro.ColPro 
+                                                FROM
+                                                    producto pro 
+                                                    INNER JOIN Tabla_M_Detalle AS TbUnd 
+                                                    ON pro.UndPro = TbUnd.Cod_Argumento 
+                                                    AND (TbUnd.Cod_Tabla = 'TUND') 
+                                                    INNER JOIN Tabla_M_Detalle AS TbCol 
+                                                    ON pro.ColPro = TbCol.Cod_Argumento 
+                                                    AND (TbCol.Cod_Tabla = 'TCOL') 
+                                                WHERE pro.EstPro = '1') AS pro 
+                                                ON pro.CodPro = ocd.CodPro 
+                                                LEFT JOIN Proveedor AS prov 
+                                                ON prov.CodRuc = ocd.CodRuc 
+                                            WHERE estac IN ('ABI', 'PAR') 
+                                                AND ocd.EstOco = '03' 
                                                 AND ocd.CodRuc = :empresa 
                                                 AND ocd.Nro= :oc");
 
@@ -565,5 +569,273 @@ class ModeloNotasIngresos{
 
 		$stmt = null;
 	}     
+
+	/* 
+	* MP EN OC O SUELTA
+	*/
+	static public function mdlTraerMpOC($codpro, $orden, $codruc){
+
+		if ($orden == "null" || $orden == "") {
+
+			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+                                                        pro.codpro,
+                                                        pro.codfab,
+                                                        despro,
+                                                        CONCAT(
+                                                            despro,
+                                                            ' - ',
+                                                            Tabla_M_Detalle_4.Des_Larga,
+                                                            ' / ',
+                                                            Tabla_M_Detalle_2.Des_Corta
+                                                        ) AS descripcion,
+                                                        stk_act,
+                                                        codalm01,
+                                                        Tabla_M_Detalle_2.Des_Corta AS unidad,
+                                                        Tabla_M_Detalle_4.Des_Larga AS color,
+                                                        pro.colpro,
+                                                        IFNULL(pmp1.PreProv1, 0.000000) AS precio,
+                                                        IFNULL(pmp1.ConPreProv1, 0.000000) preciocigv,
+                                                        '0' AS canni,
+                                                        NULL AS estac,
+                                                        NULL AS nro,
+                                                        pmp1.RazPro1 AS proveedor,
+                                                        pmp1.CodRuc1 AS codruc 
+                                                    FROM
+                                                        Producto AS pro 
+                                                        LEFT JOIN 
+                                                        (SELECT 
+                                                            Pro1.CodRuc AS CodRuc1,
+                                                            Pro1.RazPro AS RazPro1,
+                                                            pmp.PreProv1 AS PreProv1,
+                                                            (
+                                                            CASE
+                                                                WHEN MonProv1 = 'NUEVOS SOLES' 
+                                                                THEN '1' 
+                                                                WHEN MonProv1 = 'DOLARES AMERICANOS' 
+                                                                THEN '2' 
+                                                                ELSE '' 
+                                                            END
+                                                            ) AS MonedaProv1,
+                                                            MonProv1,
+                                                            (pmp.PreProv1 + pmp.PreProv1 * 0.18) AS ConPreProv1,
+                                                            pmp.CodPro 
+                                                        FROM
+                                                            preciomp pmp 
+                                                            LEFT JOIN Proveedor AS Pro1 
+                                                            ON Pro1.CodRuc = pmp.CodProv1) AS pmp1 
+                                                        ON pmp1.CodPro = pro.CodPro 
+                                                        INNER JOIN Tabla_M_Detalle AS Tabla_M_Detalle_2 
+                                                        ON pro.UndPro = Tabla_M_Detalle_2.Cod_Argumento 
+                                                        AND (
+                                                            Tabla_M_Detalle_2.Cod_Tabla = 'TUND'
+                                                        ) 
+                                                        INNER JOIN Tabla_M_Detalle AS Tabla_M_Detalle_4 
+                                                        ON pro.ColPro = Tabla_M_Detalle_4.Cod_Argumento 
+                                                        AND (
+                                                            Tabla_M_Detalle_4.Cod_Tabla = 'TCOL'
+                                                        ) 
+                                                    WHERE pro.EstPro = '1' 
+                                                        AND pmp1.RazPro1 != '' 
+                                                        AND pmp1.CodRuc1 = :codruc 
+                                                        AND pro.codpro = :codpro 
+                                                    UNION
+                                                    ALL 
+                                                    SELECT DISTINCT 
+                                                        pro.CodPro,
+                                                        pro.CodFab,
+                                                        DesPro,
+                                                        CONCAT(
+                                                            despro,
+                                                            ' - ',
+                                                            Tabla_M_Detalle_4.Des_Larga,
+                                                            ' / ',
+                                                            Tabla_M_Detalle_2.Des_Corta
+                                                        ) AS descripcion,                                                        
+                                                        Stk_Act,
+                                                        CodAlm01,
+                                                        Tabla_M_Detalle_2.Des_Corta AS Unidad,
+                                                        Tabla_M_Detalle_4.Des_Larga AS Color,
+                                                        pro.ColPro,
+                                                        IFNULL(pmp2.PreProv2, 0.000000) AS precio,
+                                                        IFNULL(pmp2.ConPreProv2, 0.000000) preciocigv,
+                                                        '0' AS CanNI,
+                                                        NULL AS estac,
+                                                        NULL AS Nro,
+                                                        pmp2.RazPro2 AS Proveedor,
+                                                        pmp2.CodRuc2 AS codruc 
+                                                    FROM
+                                                        Producto AS pro 
+                                                        LEFT JOIN 
+                                                        (SELECT 
+                                                            Pro2.CodRuc AS CodRuc2,
+                                                            Pro2.RazPro AS RazPro2,
+                                                            pmp.PreProv2 AS PreProv2,
+                                                            (
+                                                            CASE
+                                                                WHEN MonProv2 = 'NUEVOS SOLES' 
+                                                                THEN '1' 
+                                                                WHEN MonProv2 = 'DOLARES AMERICANOS' 
+                                                                THEN '2' 
+                                                                ELSE '' 
+                                                            END
+                                                            ) AS MonedaProv2,
+                                                            MonProv2,
+                                                            (pmp.PreProv2 + pmp.PreProv2 * 0.18) AS ConPreProv2,
+                                                            pmp.CodPro 
+                                                        FROM
+                                                            preciomp pmp 
+                                                            LEFT JOIN Proveedor AS Pro2 
+                                                            ON Pro2.CodRuc = pmp.CodProv2) AS pmp2 
+                                                        ON pmp2.CodPro = pro.CodPro 
+                                                        INNER JOIN Tabla_M_Detalle AS Tabla_M_Detalle_2 
+                                                        ON pro.UndPro = Tabla_M_Detalle_2.Cod_Argumento 
+                                                        AND (
+                                                            Tabla_M_Detalle_2.Cod_Tabla = 'TUND'
+                                                        ) 
+                                                        INNER JOIN Tabla_M_Detalle AS Tabla_M_Detalle_4 
+                                                        ON pro.ColPro = Tabla_M_Detalle_4.Cod_Argumento 
+                                                        AND (
+                                                            Tabla_M_Detalle_4.Cod_Tabla = 'TCOL'
+                                                        ) 
+                                                    WHERE pro.EstPro = '1' 
+                                                        AND pmp2.RazPro2 != '' 
+                                                        AND pmp2.CodRuc2 = :codruc 
+                                                        AND pro.codpro = :codpro 
+                                                    UNION
+                                                    ALL 
+                                                    SELECT DISTINCT 
+                                                        pro.CodPro,
+                                                        pro.CodFab,
+                                                        DesPro,
+                                                        CONCAT(
+                                                            despro,
+                                                            ' - ',
+                                                            Tabla_M_Detalle_4.Des_Larga,
+                                                            ' / ',
+                                                            Tabla_M_Detalle_2.Des_Corta
+                                                        ) AS descripcion,                                                        
+                                                        Stk_Act,
+                                                        CodAlm01,
+                                                        Tabla_M_Detalle_2.Des_Corta AS Unidad,
+                                                        Tabla_M_Detalle_4.Des_Larga AS Color,
+                                                        pro.ColPro,
+                                                        IFNULL(pmp3.PreProv3, 0.000000) AS precio,
+                                                        IFNULL(pmp3.ConPreProv3, 0.000000) preciocigv,
+                                                        '0' AS CanNI,
+                                                        NULL AS estac,
+                                                        NULL AS Nro,
+                                                        pmp3.RazPro3 AS Proveedor,
+                                                        pmp3.CodRuc3 AS codruc 
+                                                    FROM
+                                                        Producto AS pro 
+                                                        LEFT JOIN 
+                                                        (SELECT 
+                                                            Pro3.CodRuc AS CodRuc3,
+                                                            Pro3.RazPro AS RazPro3,
+                                                            pmp.PreProv3 AS PreProv3,
+                                                            (
+                                                            CASE
+                                                                WHEN MonProv3 = 'NUEVOS SOLES' 
+                                                                THEN '1' 
+                                                                WHEN MonProv3 = 'DOLARES AMERICANOS' 
+                                                                THEN '2' 
+                                                                ELSE '' 
+                                                            END
+                                                            ) AS MonedaProv3,
+                                                            MonProv3,
+                                                            (pmp.PreProv3 + pmp.PreProv3 * 0.18) AS ConPreProv3,
+                                                            pmp.CodPro 
+                                                        FROM
+                                                            preciomp pmp 
+                                                            LEFT JOIN Proveedor AS Pro3 
+                                                            ON Pro3.CodRuc = pmp.CodProv3) AS pmp3 
+                                                        ON pmp3.CodPro = pro.CodPro 
+                                                        INNER JOIN Tabla_M_Detalle AS Tabla_M_Detalle_2 
+                                                        ON pro.UndPro = Tabla_M_Detalle_2.Cod_Argumento 
+                                                        AND (
+                                                            Tabla_M_Detalle_2.Cod_Tabla = 'TUND'
+                                                        ) 
+                                                        INNER JOIN Tabla_M_Detalle AS Tabla_M_Detalle_4 
+                                                        ON pro.ColPro = Tabla_M_Detalle_4.Cod_Argumento 
+                                                        AND (
+                                                            Tabla_M_Detalle_4.Cod_Tabla = 'TCOL'
+                                                        ) 
+                                                    WHERE pro.EstPro = '1' 
+                                                        AND pmp3.RazPro3 != '' 
+                                                        AND pmp3.CodRuc3 = :codruc 
+                                                        AND pro.codpro = :codpro");
+
+			$stmt->bindParam(":codruc", $codruc, PDO::PARAM_STR);
+            $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
+
+			$stmt->execute();
+
+			return $stmt->fetch();
+
+		} else {
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+          ocd.codpro,
+          pro.codfab AS codfab,
+          pro.despro AS despro,
+          CONCAT(
+            pro.despro,
+            ' - ',
+            pro.color,
+            ' / ',
+            pro.unidad
+          ) AS descripcion,
+          stk_act AS stk_act,
+          pro.unidad AS unidad,
+          pro.color AS color,
+          pro.colpro AS colpro,
+          ocd.prepro AS precio,
+          '0.000000' AS preciocigv,
+          ocd.CantNI AS canni,
+          estac,
+          ocd.nro,
+          prov.RazPro AS proveedor 
+          FROM
+            ocomdet ocd 
+            LEFT JOIN 
+              (SELECT 
+                pro.CodPro,
+                pro.CodFab,
+                pro.DesPro,
+                pro.codalm01 AS Stk_Act,
+                TbUnd.Des_Corta AS Unidad,
+                TbCol.Des_Larga AS Color,
+                pro.ColPro 
+              FROM
+                producto pro 
+                INNER JOIN Tabla_M_Detalle AS TbUnd 
+                  ON pro.UndPro = TbUnd.Cod_Argumento 
+                  AND (TbUnd.Cod_Tabla = 'TUND') 
+                INNER JOIN Tabla_M_Detalle AS TbCol 
+                  ON pro.ColPro = TbCol.Cod_Argumento 
+                  AND (TbCol.Cod_Tabla = 'TCOL') 
+              WHERE pro.EstPro = '1') AS pro 
+              ON pro.CodPro = ocd.CodPro 
+            LEFT JOIN Proveedor AS prov 
+              ON prov.CodRuc = ocd.CodRuc 
+          WHERE estac IN ('ABI', 'PAR') 
+            AND ocd.EstOco = '03' 
+            AND ocd.CodRuc = :codruc 
+            AND ocd.Nro = :orden 
+            AND ocd.codpro = :codpro");
+
+$stmt->bindParam(":codruc", $codruc, PDO::PARAM_STR);
+$stmt->bindParam(":orden", $orden, PDO::PARAM_STR);
+$stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
+
+			$stmt->execute();
+
+			return $stmt->fetch();
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+	}    
 
 }

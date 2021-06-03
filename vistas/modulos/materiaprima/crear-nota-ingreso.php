@@ -4,7 +4,7 @@
 
         <h1>
 
-            Crear venta
+            Crear Nota de Ingreso
 
         </h1>
 
@@ -12,7 +12,7 @@
 
             <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-            <li class="active">Crear venta</li>
+            <li class="active">Crear Nota de Ingreso</li>
 
         </ol>
 
@@ -28,7 +28,7 @@
             <div class="col-lg-12">
                 <div class="box box-warning collapsed-box tablaCollapsada" id="tablaCollapsada" name="tablaCollapsada" >
                     <div class="box-header with-border">
-                    <h3 class="box-title">Materia Prima</h3>
+                    <h3 class="box-title">Seleccionar Materia Prima</h3>
 
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
@@ -38,12 +38,12 @@
                     </div>
                         <div class="box-body">
 
-                            <table class="table table-bordered table-striped dt-responsive TablaMpSOc" width="100%">
+                            <table class="table table-bordered table-striped dt-responsive tablaMpSOc" width="100%">
 
                                 <thead>
 
                                     <tr>
-                                        <th style="width: 10px">CodPro</th>
+                                        <th>CodPro</th>
                                         <th>Cod. Fabrica</th>
                                         <th>Descripción</th>
                                         <th>Und</th>
@@ -79,7 +79,7 @@
 
                     <div class="box-header with-border"></div>
 
-                    <form role="form" metohd="post">
+                    <form role="form" method="post" class="formularioNotaIngreso">
 
                         <div class="box-body">
 
@@ -146,7 +146,7 @@
                                     
                                 </div>
 
-                                <div class="form-group" style="padding-top:25px">
+                                <div class="form-group" style="padding-top:25px;;padding-bottom:35px">
 
                                 <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Doc. Secundario</label>
                                     <div class="col-lg-2">
@@ -178,92 +178,93 @@
                                         <option value="">Seleccionar OC</option>
 
                                         </select>
-                                    </div>                                   
-                                    
+                                    </div>       
+
+                                    <div class="col-lg-12"></div>
+
                                 </div>         
 
                                 <!--=====================================
                                         TITULOS
                                 ======================================-->
-                                <div class="col-lg-12"  style="padding-top:25px">                
 
-                                    <div class="row box box-primary">
+                                <div class="box box-primary">
 
-                                        <div class="col-lg-1">
+                                    <div class="row">
+                                            <div class="col-lg-1">
 
-                                        <label>CodPro</label>
+                                            <label>CodPro</label>
 
-                                        </div>
+                                            </div>
 
-                                        <div class="col-lg-1">
+                                            <div class="col-lg-1">
 
-                                        <label for="">CodFab</label>
+                                            <label for="">CodFab</label>
 
-                                        </div>
+                                            </div>
 
-                                        <div class="col-lg-2">
+                                            <div class="col-lg-2">
 
-                                        <label for="">Descripción / Color / Und</label>
+                                            <label for="">Descripción / Color / Und</label>
 
-                                        </div>
+                                            </div>
 
-                                        <div class="col-lg-1">
+                                            <div class="col-lg-1">
 
-                                        <label for="">Cantidad</label>
+                                            <label for="">Cantidad</label>
 
-                                        </div>   
-                                        
-                                        <div class="col-lg-1">
+                                            </div>   
+                                            
+                                            <div class="col-lg-1">
 
-                                        <label for="">C. Recibida</label>
+                                            <label for="">C. Recibida</label>
 
-                                        </div>
+                                            </div>
 
-                                        <div class="col-lg-1">
+                                            <div class="col-lg-1">
 
-                                        <label for="">Saldo</label>
+                                            <label for="">Saldo</label>
 
-                                        </div>  
+                                            </div>  
 
-                                        <div class="col-lg-1">
+                                            <div class="col-lg-1">
 
-                                        <label for="">Exceso</label>
+                                            <label for="">Exceso</label>
 
-                                        </div>
+                                            </div>
 
-                                        <div class="col-lg-1">
+                                            <div class="col-lg-1">
 
-                                        <label for="">P.S. IGV</label>
+                                            <label for="">P.S. IGV</label>
 
-                                        </div>
+                                            </div>
 
-                                        <div class="col-lg-1">
+                                            <div class="col-lg-1">
 
-                                        <label for="">Total</label>
+                                            <label for="">Total</label>
 
-                                        </div>
+                                            </div>
 
-                                        <div class="col-lg-1">
+                                            <div class="col-lg-1">
 
-                                        <label for="">OC</label>
+                                            <label for="">OC</label>
 
-                                        </div>
+                                            </div>
 
-                                        <div class="col-lg-1">
+                                            <div class="col-lg-1">
 
-                                        <label for="">Cerrar</label>
+                                            <label for="">Cerrar</label>
 
-                                        </div> 
-
+                                            </div>
                                     </div>
 
-                                </div>
+                                </div>                                
 
                                 <!--=====================================
                                 ENTRADA PARA AGREGAR PRODUCTO
                                 ======================================-->
 
-                                <div class="form-group row nuevoProducto">
+                                <div class="form-group row nuevaMPNI">
 
 
                                 </div>

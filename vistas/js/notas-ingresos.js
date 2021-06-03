@@ -174,7 +174,7 @@ $("#daterange-btnNotasIngresos").daterangepicker(
 */
 function cargarTablaSinOc(empresa, oc){
 
-  $(".TablaMpSOc").DataTable({
+  $(".tablaMpSOc").DataTable({
     ajax: "ajax/materiaprima/tabla-mp-soc.ajax.php?empresa=" + empresa+ "&oc=" + oc,
     deferRender: true,
     retrieve: true,
@@ -239,7 +239,7 @@ $("#nuevoProveedor").change(function(){
 
   localStorage.setItem("empresa", empresa);
   localStorage.setItem("oc", oc);
-  $(".TablaMpSOc").DataTable().destroy();
+  $(".tablaMpSOc").DataTable().destroy();
 	cargarTablaSinOc(localStorage.getItem("empresa"),localStorage.getItem("oc"));
 
   var nuevaOc = $("#nuevaOc");
@@ -286,14 +286,255 @@ $("#nuevoProveedor").change(function(){
 $("#nuevaOc").change(function(){
 
   var empresa = $("#nuevoProveedor").val();
-  console.log(empresa);
+  //console.log(empresa);
 
   var oc = $(this).val();
-  console.log(oc);
+  //console.log(oc);
 
   localStorage.setItem("empresa", empresa);
   localStorage.setItem("oc", oc);
-  $(".TablaMpSOc").DataTable().destroy();
+  $(".tablaMpSOc").DataTable().destroy();
 	cargarTablaSinOc(localStorage.getItem("empresa"),localStorage.getItem("oc"));
 
-})
+});
+
+/* 
+*AGREGANDO MATERIA PRIMA
+*/
+$(".tablaMpSOc").on("click", ".agregarMPNI", function() {
+
+  var idboton = $(this).attr("idboton");
+  var codpro = $(this).attr("codpro");
+  var orden =$(this).attr("orden");
+  var codruc =$(this).attr("empresa");
+  
+
+  if(orden == ""){
+
+    var orden = null;
+
+  }else{
+    
+    var orden =$(this).attr("orden");
+
+
+  }
+  //console.log(idboton, codpro, orden, codruc);
+
+  $(this).removeClass("btn-primary agregarMPNI");
+  $(this).addClass("btn-default");
+
+  var datos = new FormData();
+  datos.append("codpro", codpro);
+  datos.append("orden", orden);
+  datos.append("codruc", codruc);
+
+  $.ajax({
+    url: "ajax/notas-ingresos.ajax.php",
+    method: "POST",
+    data: datos,
+    cache: false,
+    contentType: false,
+    processData: false,
+    dataType: "json",
+    success: function(respuesta) {
+
+      console.log(respuesta);
+      var codpro = respuesta["codpro"];
+      var codfab = respuesta["codfab"];
+      var descripcion = respuesta["descripcion"];
+      var cantidad = respuesta["canni"];
+      var precio = respuesta["precio"];
+
+      if(respuesta["nro"] == null){
+
+        var nroorden = "";
+
+      }else{
+
+        var nroorden = respuesta["nro"];
+
+      }
+      
+
+      $(".nuevaMPNI").append(
+
+        '<div class="row" style="padding:1px">' +
+
+          "<!-- CODPRO -->" +
+
+          '<div class="col-xs-1" style="padding-right:0px">' +
+
+              '<input type="text" class="form-control input-sm nuevoCodPro" codpro="' + codpro + '" name="codpro" id="codpro" value="' + codpro + '"  readonly>' +
+
+          "</div>" +
+
+          "<!-- CODFAB -->" +
+
+          '<div class="col-xs-1" >' +
+
+              '<input type="text" class="form-control input-sm nuevoCodFab"  name="codfab" id ="codfab" value="' + codfab + '"  readonly>' +
+
+          "</div>" +
+
+          "<!-- DESCRIPCION -->" +
+
+          '<div class="col-xs-2" >' +
+
+              '<input type="text" class="form-control input-sm nuevaDescripcion" style="width: 280px;  font-size: 12px;padding: 2px;" name="descripcion" id ="descripcion" value="' + descripcion + '"  readonly>' +
+
+          "</div>" +
+
+          "<!-- CANTIDAD -->" +
+
+          '<div class="col-xs-1" >' +
+
+              '<input type="number" step="any" class="form-control input-sm nuevaCantidad"  name="cantidad" id="cantidad" value="' + cantidad + '"  readonly>' +
+
+          "</div>" +
+
+          "<!-- CANTIDAD RECIBIDA -->" +
+
+          '<div class="col-xs-1" >' +
+
+              '<input type="number" step="any" class="form-control input-sm nuevaCantidadRecibida"  name="cantidadRecibida" id="cantidadRecibida" value="0" min="1">' +
+
+          "</div>" +
+
+          "<!-- SALDO -->" +
+
+          '<div class="col-xs-1" >' +
+
+              '<input type="number" step="any" class="form-control input-sm nuevoSaldo"  name="saldo" id="saldo" value="0" readonly>' +
+
+          "</div>" +
+
+          "<!-- EXCESO -->" +
+
+          '<div class="col-xs-1" >' +
+
+              '<input type="number" step="any" class="form-control input-sm nuevoExceso"  name="exceso" id="exceso" value="0" readonly>' +
+
+          "</div>" + 
+          
+          "<!-- PRECIO SIN IGV -->" +
+
+          '<div class="col-xs-1" >' +
+
+              '<input type="number" step="any" class="form-control input-sm nuevoPrecio"  name="precio" id="precio" value="'+ precio +'">' +
+
+          "</div>" +
+
+          "<!-- TOTAL SIN IGV -->" +
+
+          '<div class="col-xs-1" >' +
+
+              '<input type="number" step="any" class="form-control input-sm nuevoTotal"  name="total" id="total" value="0" readonly>' +
+
+          "</div>" +   
+          
+          "<!-- ORDEN DE COMPRA -->" +
+
+          '<div class="col-xs-1" >' +
+
+              '<input type="number" step="any" class="form-control input-sm nuevaOC"  name="ordencompra" id="ordencompra" value="'+ nroorden +'" readonly>' +
+
+          "</div>" +          
+
+
+          "<!-- CERRAR Y BORRAR LINEA -->" +
+
+          '<div class="col-xs-1">' +
+
+            '<div class="input-group">' +
+
+            '<input type="text" class="form-control input-sm nuevoCerrar" name="cerrar" id="cerrar">' +
+            
+            '<span class="input-group-addon" style="padding: 3px 6px"><button type="button" class="btn btn-danger btn-xs quitarMPNI" idMpNI="' + idboton + '"><i class="fa fa-times"></i></button></span>' +
+
+            "</div>" +
+
+          "</div>" +
+
+
+        "</div>"
+
+
+      );      
+
+    }
+
+  });  
+  
+});
+
+/*=============================================
+CUANDO CARGUE LA TABLA CADA VEZ QUE NAVEGUE EN ELLA
+=============================================*/
+
+$(".tablaMpSOc").on("draw.dt", function() {
+  /* console.log("tabla"); */
+
+  if (localStorage.getItem("quitarMPNI") != null) {
+    var listaIdMPNI = JSON.parse(localStorage.getItem("quitarMPNI"));
+
+    for (var i = 0; i < listaIdMPNI.length; i++) {
+      $(
+        "button.recuperarBoton[quitarMPNI='" +
+        listaIdMPNI[i]["quitarMPNI"] +
+          "']"
+      ).removeClass("btn-default");
+      $(
+        "button.recuperarBoton[quitarMPNI='" +
+        listaIdMPNI[i]["quitarMPNI"] +
+          "']"
+      ).addClass("btn-primary agregarMateriaNota");
+    }
+  }
+});
+
+/*=============================================
+QUITAR PRODUCTOS DE LA VENTA Y RECUPERAR BOTÓN
+=============================================*/
+
+var idQuitarMPNI = [];
+
+localStorage.removeItem("quitarMPNI");
+
+$(".formularioNotaSalida").on("click", "button.quitarMPNI", function() {
+  console.log("boton");
+
+  $(this)
+    .parent()
+    .parent()
+    .parent()
+    .parent()
+    .remove();
+
+  var idMpNI = $(this).attr("idMpNI");
+
+  /*=============================================
+  ALMACENAR EN EL LOCALSTORAGE EL ID DEL PRODUCTO A QUITAR
+  =============================================*/
+
+  if (localStorage.getItem("quitarMPNI") == null) {
+    idQuitarMPNI = [];
+  } else {
+    idQuitarMPNI.concat(localStorage.getItem("quitarMPNI"));
+  }
+
+  idQuitarMPNI.push({
+    idMpNI: idMpNI
+  });
+
+  localStorage.setItem("quitarMPNI", JSON.stringify(idQuitarMPNI));
+
+  $("button.recuperarBoton[idMpNI='" + idMpNI + "']").removeClass(
+    "btn-default"
+  );
+
+  $("button.recuperarBoton[idMpNI='" + idMpNI + "']").addClass(
+    "btn-primary agregarMPNI"
+  );
+  
+});
