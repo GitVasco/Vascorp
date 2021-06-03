@@ -189,10 +189,10 @@ class ControladorProveedores{
 
 			date_default_timezone_set('America/Lima');
 			$fecha = new DateTime();
-			$bancos=ControladorProveedores::ctrMostrarProveedores("CodRuc",$datos);
+			$proveedor=ControladorProveedores::ctrMostrarProveedores("CodRuc",$datos);
 			$usuario= $_SESSION["nombre"];
 			$para      = 'notificacionesvascorp@gmail.com';
-			$proveedor    = 'Se anulo un proveedor';
+			$asunto    = 'Se anulo un proveedor';
 			$descripcion   = 'El usuario '.$usuario.' anulo el proveedor '.$proveedor["CodRuc"].' - '.$proveedor["RazPro"];
 			$de = 'From: notificacionesvascorp@gmail.com';
 			if($_SESSION["correo"] == 1){
@@ -205,7 +205,7 @@ class ControladorProveedores{
 				$auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
 			}
 			$datosAnulado = array("CodRuc" => $_GET["CodRuc"],
-								  "UsuAnu" => $_SESSION["id"],
+								  "UsuAnu" => $_SESSION["nombre"],
 								  "PcAnu" => $PcAnu,
 								  "FecAnu" => $fecha->format("Y-m-d H:i:s"));
 			$respuesta = ModeloProveedores::mdlEliminarProveedor($tabla,$datosAnulado);

@@ -47,7 +47,7 @@ class TablaListarDocumentos{
 
             }
 
-            
+            $botones="<div class='btn-group'><button class='btn btn-sm btn-primary  btnVisualizarDocumento' title='Visualizar Documento' data-toggle='modal' data-target='#modalVisualizarDocumentos' documento='".$salidas[$i]["documento"]."'><i class='fa fa-eye'></i></button></div>";
             
             $datosJson .= '[
             "'.($i+1).'",
@@ -58,7 +58,8 @@ class TablaListarDocumentos{
             "'.$salidas[$i]["total"].'</b>",
             "'.$estado.'",
             "'.$salidas[$i]["nombre"].'",
-            "'.$salidas[$i]["fecha"].'"
+            "'.$salidas[$i]["fecha"].'",
+            "'.$botones.'"
             ],';
             }
 

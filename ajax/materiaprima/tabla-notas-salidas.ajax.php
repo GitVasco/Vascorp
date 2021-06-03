@@ -25,7 +25,7 @@ class TablaNotasSalidas{
         /*=============================================
         TRAEMOS LAS ACCIONES
         =============================================*/    
-        $botones =  "<div class='btn-group' ><button class='btn btn-xs btn-primary btnVisualizarNotaSalida' title='Visualizar Nota de Salida' idNotaSalida='".$notasSalidas[$i]["nro"]."' data-toggle='modal' data-target='#modalVizualizarNotaSalida'><i class='fa fa-eye'></i></button><button class='btn btn-xs btn-danger btnAnularNotaSalida' title='Anular Nota de Salida' idNotaSalida='".$notasSalidas[$i]["nro"]."'><i class='fa fa-times'></i></button><button class='btn btn-xs btn-outline-success pull-right btnDetalleReporteNotaSalida' idNotaSalida='".$notasSalidas[$i]["nro"]."' style='border:green 1px solid'><img src='vistas/img/plantilla/excel.png' width='15px'></button></div>"; 
+        $botones =  "<div class='btn-group' ><button class='btn btn-xs btn-primary btnVisualizarNotaSalida' title='Visualizar Nota de Salida' idNotaSalida='".$notasSalidas[$i]["nro"]."' data-toggle='modal' data-target='#modalVizualizarNotaSalida'><i class='fa fa-eye'></i></button><button class='btn btn-xs btn-danger btnAnularNotaSalida' title='Anular Nota de Salida' idNotaSalida='".$notasSalidas[$i]["nro"]."'><i class='fa fa-times'></i></button><button class='btn btn-xs btn-outline-success pull-right btnDetalleReporteNotaSalida' idNotaSalida='".$notasSalidas[$i]["nro"]."' title='Reporte Nota de Salida' style='border:green 1px solid'><img src='vistas/img/plantilla/excel.png' width='15px'></button></div>"; 
 
             $datosJson .= '[
             "'.$notasSalidas[$i]["tip"].'",

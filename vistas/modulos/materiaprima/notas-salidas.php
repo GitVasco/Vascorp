@@ -304,8 +304,8 @@ MODAL VIZUALIZAR NOTA DE SALIDA
 
 </div>
 <?php 
-  $eliminarIngreso = new ControladorIngresos();
-  $eliminarIngreso -> ctrEliminarIngreso();
+  $anularNotaSalida = new ControladorNotasSalidas();
+  $anularNotaSalida -> ctrAnularNotaSalida();
 ?>
 
 <script>

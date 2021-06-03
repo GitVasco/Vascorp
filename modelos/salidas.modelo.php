@@ -972,7 +972,7 @@ class ModeloSalidas{
 		* 
 		FROM
 		doc_ing_sal  
-		AND documento = $valor";
+		WHERE documento = '".$valor."' ";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 

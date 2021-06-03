@@ -275,4 +275,66 @@ class ControladorNotasSalidas{
 	}	
 
 
+	/*=============================================
+	ANULAR PROVEEDOR
+	=============================================*/
+
+	static public function ctrAnularNotaSalida(){
+
+		if(isset($_GET["idNotaSalida"])){
+
+			$datos = $_GET["idNotaSalida"];
+			$tabla="ventas_cab";
+			$PcAnu= gethostbyaddr($_SERVER['REMOTE_ADDR']);
+
+			date_default_timezone_set('America/Lima');
+			$fecha = new DateTime();
+			$notaSalida=ControladorNotasSalidas::ctrMostrarNotaSalida("Nro",$datos);
+			$usuario= $_SESSION["nombre"];
+			$para      = 'notificacionesvascorp@gmail.com';
+			$asunto    = 'Se anulo una nota de salida';
+			$descripcion   = 'El usuario '.$usuario.' anulo la nota de salida '.$notaSalida["Nro"].' - '.$notaSalida["RazPro"];
+			$de = 'From: notificacionesvascorp@gmail.com';
+			if($_SESSION["correo"] == 1){
+				mail($para, $asunto, $descripcion, $de);
+			}
+			if($_SESSION["datos"] == 1){
+				$datos2= array( "usuario" => $usuario,
+								"concepto" => $descripcion,
+								"fecha" => $fecha->format("Y-m-d H:i:s"));
+				$auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
+			}
+			$datosAnulado = array("Nro" => $_GET["idNotaSalida"],
+								  "UsuAnu" => $_SESSION["nombre"],
+								  "PcAnu" => $PcAnu,
+								  "FecAnu" => $fecha->format("Y-m-d H:i:s"));
+			$respuesta = ModeloNotasSalidas::mdlAnularNotaSalida($tabla,$datosAnulado);
+			if($respuesta == "ok"){
+				
+				
+				echo'<script>
+
+				swal({
+					  type: "success",
+					  title: "La nota de salida ha sido anulada correctamente",
+					  showConfirmButton: true,
+					  confirmButtonText: "Cerrar",
+					  closeOnConfirm: false
+					  }).then(function(result){
+								if (result.value) {
+
+								window.location = "notas-salidas";
+
+								}
+							})
+
+				</script>';
+
+			}		
+
+		}
+
+	} 
+
+
 }

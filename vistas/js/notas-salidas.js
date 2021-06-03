@@ -531,7 +531,7 @@ function listarMateriaNotas() {
     });
   }
 
-  console.log("listarMateriaNotas", JSON.stringify(listarMateriaNotas)); 
+  // console.log("listarMateriaNotas", JSON.stringify(listarMateriaNotas)); 
 
   $("#listarMateriaNotas").val(JSON.stringify(listarMateriaNotas));
 }
@@ -670,3 +670,30 @@ $(".tablaNotasSalidas").on("click", ".btnVisualizarNotaSalida", function () {
 	})
   
 });
+
+
+/*=============================================
+ANULAR PROVEEDOR
+=============================================*/
+$(".tablaNotasSalidas").on("click", ".btnAnularNotaSalida", function(){
+
+	var idNotaSalida = $(this).attr("idNotaSalida");
+	
+	swal({
+        title: '¿Está seguro de anular la nota de salida?',
+        text: "¡Si no lo está puede cancelar la acción!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si, anular nota de salida!'
+      }).then(function(result){
+        if (result.value) {
+          
+            window.location = "index.php?ruta=notas-salidas&idNotaSalida="+idNotaSalida;
+        }
+
+  })
+
+})
