@@ -1128,3 +1128,147 @@ $(".tablaArticulosSalidas").on("click", ".modificarArtSal", function () {
     })
 
 })
+
+/* 
+* VISUALIZAR DETALLE DEL LISTAR DOCUMENTO
+*/ 
+$(".tablaListarDocumentos").on("click", ".btnVisualizarDocumento", function () {
+
+	var documento2 = $(this).attr("documento");
+    // console.log(documento2);
+    
+    var datos = new FormData();
+	datos.append("documento2", documento2);
+
+	$.ajax({
+
+		url:"ajax/salidas.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType:"json",
+		success:function(respuesta){
+
+			// console.log(respuesta);
+
+            $("#tipo").val(respuesta["tipo"]);
+            $("#origen").val(respuesta["doc_origen"]);
+            $("#documento").val(respuesta["documento"]);
+            $("#descripcion").val(respuesta["tipo_documento"]);
+            $("#total").val(respuesta["total"]);
+            $("#fecha").val(respuesta["fecha"]);
+            $("#cantidad").val(respuesta["total"]);
+            $("#estado").val(respuesta["estado"]);
+
+			
+		}
+
+    })
+    
+    var detalleDocumento = $(this).attr("documento");	
+    //console.log("codigoDAC", codigoDAC);
+
+    var datosDOC = new FormData();
+    datosDOC.append("documentoDIngreso", detalleDocumento);
+    
+    $.ajax({
+
+		url:"ajax/ingresos.ajax.php",
+		method: "POST",
+		data: datosDOC,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType:"json",
+		success:function(respuestaDetalle){
+
+			// console.log(respuestaDetalle);
+
+            $(".detalleDoc").remove();
+            
+			for(var id of respuestaDetalle){
+                if(id.t1 > 0){
+
+                    var t1 = id.t1;
+                }else
+
+                    var t1 = "";
+
+                if(id.t2 > 0){
+
+                    var t2 = id.t2;
+                }else
+
+                    var t2 = "";
+                    
+                if(id.t3 > 0){
+
+                    var t3 = id.t3;
+                }else
+
+                    var t3 = "";
+                    
+                if(id.t4 > 0){
+
+                    var t4 = id.t4;
+                }else
+
+                    var t4 = "";    
+                    
+                if(id.t5 > 0){
+
+                    var t5 = id.t5;
+                }else
+
+                    var t5 = "";
+                    
+                if(id.t6 > 0){
+
+                    var t6 = id.t6;
+                }else
+
+                    var t6 = "";
+                    
+                if(id.t7 > 0){
+
+                    var t7 = id.t7;
+                }else
+
+                    var t7 = "";
+                    
+                if(id.t8 > 0){
+
+                    var t8 = id.t8;
+                }else
+
+                    var t8 = "";       
+
+				$('.tablaDetalleDocumento').append(
+
+					'<tr class="detalleDoc">' +
+                        '<td>' + id.documento + ' </td>' +
+                        '<td><b>' + id.modelo + ' </b></td>' +
+                        '<td>' + id.nombre + ' </td>' +
+                        '<td>' + id.color + ' </td>' +
+                        '<td><b>' + t1 + ' </b></td>' +
+                        '<td><b>' + t2 + ' </b></td>' +
+                        '<td><b>' + t3 + ' </b></td>' +
+                        '<td><b>' + t4 + ' </b></td>' +
+                        '<td><b>' + t5 + ' </b></td>' +
+                        '<td><b>' + t6 + ' </b></td>' +
+                        '<td><b>' + t7 + ' </b></td>' +
+                        '<td><b>' + t8 + ' </b></td>' +
+                        '<td><b>' + id.total + ' </b></td>' +
+					'</tr>'
+
+				)
+
+			}            
+
+		}
+
+	})
+  
+});

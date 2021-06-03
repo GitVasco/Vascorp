@@ -37,7 +37,7 @@ class ModeloNotasSalidas{
 				tabla_m_detalle 
 			  WHERE cod_tabla = 'talm') a 
 			  ON vc.codalm = a.cod_argumento 
-		  WHERE YEAR(fecemi) IN ('2020', '2021')");
+		  WHERE YEAR(fecemi) IN ('2020', '2021') AND vc.EstVta NOT LIKE 'A' ORDER BY Nro DESC");
 
 			$stmt -> execute();
 
@@ -70,7 +70,7 @@ class ModeloNotasSalidas{
 				tabla_m_detalle 
 			  WHERE cod_tabla = 'talm') a 
 			  ON vc.codalm = a.cod_argumento 
-		  WHERE DATE(fecemi) like '%$fechaFinal%'");
+		  WHERE DATE(fecemi) like '%$fechaFinal%' AND vc.EstVta NOT LIKE 'A' ORDER BY Nro DESC");
 
 			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 
@@ -114,7 +114,8 @@ class ModeloNotasSalidas{
 					tabla_m_detalle 
 				  WHERE cod_tabla = 'talm') a 
 				  ON vc.codalm = a.cod_argumento 
-			  WHERE DATE(fecemi) BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'");
+			  WHERE DATE(fecemi) BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'   
+			  AND vc.EstVta NOT LIKE 'A' ORDER BY Nro DESC");
 
 			}else{
 
@@ -143,7 +144,8 @@ class ModeloNotasSalidas{
 					tabla_m_detalle 
 				  WHERE cod_tabla = 'talm') a 
 				  ON vc.codalm = a.cod_argumento 
-			  WHERE DATE(fecemi) BETWEEN '$fechaInicial' AND '$fechaFinal'");
+			  WHERE DATE(fecemi) BETWEEN '$fechaInicial' AND '$fechaFinal'
+			  AND vc.EstVta NOT LIKE 'A' ORDER BY Nro DESC");
 
 			}
 		
@@ -469,7 +471,7 @@ class ModeloNotasSalidas{
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM  $tabla  ORDER BY Nro ASC");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM  $tabla WHERE EstVta not like 'A' ORDER BY Nro DESC");
 
 			$stmt -> execute();
 
@@ -515,5 +517,35 @@ class ModeloNotasSalidas{
 		$stmt=null;
 
 	}
+
+		
+	/*=============================================
+	ANULA NOTA DE SALIDA
+	=============================================*/
+
+	static public function mdlAnularNotaSalida($tabla,$datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET UsuAnu = UPPER(:UsuAnu), PcAnu = UPPER(:PcAnu) ,FecAnu = :FecAnu,EstVta='A' WHERE Nro = :Nro");
+
+		$stmt -> bindParam(":Nro", $datos["Nro"], PDO::PARAM_STR);
+        $stmt -> bindParam(":UsuAnu", $datos["UsuAnu"], PDO::PARAM_STR);
+        $stmt -> bindParam(":PcAnu", $datos["PcAnu"], PDO::PARAM_STR);
+        $stmt -> bindParam(":FecAnu", $datos["FecAnu"], PDO::PARAM_STR);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}    
 
 }

@@ -23,9 +23,9 @@ class AjaxSalidas{
     
       }
 
-      /* 
-      * VISUALIZAR COLORES
-      */
+      /*=============================================
+      VISUALIZAR COLORES
+      =============================================*/ 
       public function ajaxVerColoresCantidades2(){
 
         $salida = $this->salida;
@@ -35,6 +35,21 @@ class AjaxSalidas{
       
         echo json_encode($respuesta);
       }    
+
+      /*=============================================
+      LISTAR DOCUMENTOS PARA VISUALIZAR
+      =============================================*/ 
+    
+      public $documento2;
+    
+      public function ajaxVisualizarListaDocumento(){
+        $valor = $this->documento2;
+    
+        $respuesta = ControladorSalidas::ctrListarDocumentos($valor);
+    
+        echo json_encode($respuesta);
+    
+      }
     
     }
     
@@ -49,9 +64,9 @@ if(isset($_POST["documento"])){
     $selectDocumento -> ajaxSelectDocumento();
 }
 
-/* 
- * VISUALIZAR COLORES Y MODIFICAR
-*/
+/*=============================================
+VISUALIZAR COLORES
+=============================================*/ 
 if(isset($_POST["salida"])){
 
   $verColoresyCantidades = new AjaxSalidas();
@@ -59,4 +74,14 @@ if(isset($_POST["salida"])){
   $verColoresyCantidades -> modeloA = $_POST["modeloA"];
   $verColoresyCantidades -> ajaxVerColoresCantidades2();
 
+}
+
+/*=============================================
+VISUALIZAR LISTA DOCUMENTO
+=============================================*/	
+if(isset($_POST["documento2"])){
+
+  $listarDocumento = new AjaxSalidas();
+  $listarDocumento -> documento2 = $_POST["documento2"];
+  $listarDocumento -> ajaxVisualizarListaDocumento();
 }

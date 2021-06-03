@@ -481,7 +481,7 @@
             if($_SESSION["produccion"] == 1){
             ?>
 
-            <li class="treeview <?php if($_GET["ruta"] == "ordencorte" || $_GET["ruta"] == "crear-ordencorte" || $_GET["ruta"] == "almacencorte" || $_GET["ruta"] == "crear-almacencorte" || $_GET["ruta"] == "en-cortes" || $_GET["ruta"] == "en-taller" || $_GET["ruta"] == "marcar-taller" || $_GET["ruta"] == "en-tallert" || $_GET["ruta"] == "en-tallerp" || $_GET["ruta"] == "ingresos" ||  $_GET["ruta"] == "crear-ingresos" ||  $_GET["ruta"] == "crear-segunda" || $_GET["ruta"] == "asistencia" || $_GET["ruta"] == "quincena" || $_GET["ruta"] == "produccion-trusas" || $_GET["ruta"] == "produccion-brasier" || $_GET["ruta"] == "produccion-vasco" || $_GET["ruta"] == "urgencias" || $_GET["ruta"] == "urgenciasamp" || $_GET["ruta"] == "proyeccion-mp" || $_GET["ruta"] == "servicios" || $_GET["ruta"] == "crear-servicio" || $_GET["ruta"] == "cierres" || $_GET["ruta"] == "crear-cierre" || $_GET["ruta"] == "precio-servicio" || $_GET["ruta"] == "pago-servicio" || $_GET["ruta"] == "salidas-varios" || $_GET["ruta"] == "crear-salidas-varios" || $_GET["ruta"] == "operacion-taller" || $_GET["ruta"] == "listar-documento") echo 'active';?>">
+            <li class="treeview <?php if($_GET["ruta"] == "ordencorte" || $_GET["ruta"] == "crear-ordencorte" || $_GET["ruta"] == "almacencorte" || $_GET["ruta"] == "crear-almacencorte" || $_GET["ruta"] == "en-cortes" || $_GET["ruta"] == "en-taller" || $_GET["ruta"] == "marcar-taller" || $_GET["ruta"] == "en-tallert" || $_GET["ruta"] == "en-tallerp" || $_GET["ruta"] == "ingresos" ||  $_GET["ruta"] == "crear-ingresos" ||  $_GET["ruta"] == "crear-segunda" || $_GET["ruta"] == "asistencia" || $_GET["ruta"] == "quincena" || $_GET["ruta"] == "produccion-trusas" || $_GET["ruta"] == "produccion-brasier" || $_GET["ruta"] == "produccion-vasco" || $_GET["ruta"] == "urgencias" || $_GET["ruta"] == "urgenciasamp" || $_GET["ruta"] == "proyeccion-mp" || $_GET["ruta"] == "servicios" || $_GET["ruta"] == "crear-servicio" || $_GET["ruta"] == "cierres" || $_GET["ruta"] == "crear-cierre" || $_GET["ruta"] == "precio-servicio" || $_GET["ruta"] == "pago-servicio" || $_GET["ruta"] == "salidas-varios" || $_GET["ruta"] == "crear-salidas-varios" || $_GET["ruta"] == "operacion-taller" || $_GET["ruta"] == "sublimados" || $_GET["ruta"] == "listar-documento") echo 'active';?>">
 
                 <a href="#">
 
@@ -933,7 +933,7 @@
             <?php
             if($_SESSION["materiaprima"] == 1){
             ?>
-            <li class="treeview <?php if($_GET["ruta"] == "materiaprima" || $_GET["ruta"] == "notas-ingresos" || $_GET["ruta"] == "notas-salidas" || $_GET["ruta"] == "proveedor") echo 'active';?>">
+            <li class="treeview <?php if($_GET["ruta"] == "materiaprima" || $_GET["ruta"] == "notas-ingresos" || $_GET["ruta"] == "notas-salidas" || $_GET["ruta"] == "tabla-maestra" ||  $_GET["ruta"] == "proveedor") echo 'active';?>">
 
             <a href="#">
 
@@ -951,7 +951,7 @@
 
                 <ul class="treeview-menu">
 
-                    <li class="<?php if($_GET["ruta"] == "materiaprima") echo 'active';?>">
+                    <li class="<?php if($_GET["ruta"] == "tabla-maestra") echo 'active';?>">
 
                     <a href="tabla-maestra ">
 
@@ -1137,7 +1137,7 @@
             }
             if($_SESSION["cuenta"] == 1){
             ?>
-            <li class="treeview <?php if($_GET["ruta"] == "cuentas" || $_GET["ruta"] == "cuentas-pendientes" || $_GET["ruta"] == "cuentas-canceladas" || $_GET["ruta"] == "abonos" || $_GET["ruta"] == "cancelar-abonos" || $_GET["ruta"] == "consultar-cuentas" || $_GET["ruta"] == "ver-envio-letras" || $_GET["ruta"] == "reportes-generales") echo 'active';?>">
+            <li class="treeview <?php if($_GET["ruta"] == "cuentas" || $_GET["ruta"] == "cuentas-pendientes" || $_GET["ruta"] == "cuentas-canceladas" || $_GET["ruta"] == "abonos" || $_GET["ruta"] == "cancelar-abonos" || $_GET["ruta"] == "consultar-cuentas" || $_GET["ruta"] == "ver-envio-letras" || $_GET["ruta"] =="envio-letras"|| $_GET["ruta"] == "reportes-generales") echo 'active';?>">
 
                 <a href="#">
 
