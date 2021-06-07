@@ -20,8 +20,14 @@ class TablaNotasSalidas{
 
         for($i = 0; $i < count($notasSalidas); $i++){
 
-       
-     
+            if($notasSalidas[$i]["EstNota"] == 0){
+
+                $estado = "<button class='btn btn-danger btn-xs btnActivarNotaSalida' idNotaSalida='".$notasSalidas[$i]["nro"]."' estadoNotaSalida='1'>PENDIENTE</button>";
+
+            }else {
+                $estado = "<button class='btn btn-success btn-xs'>APROBADO</button>";
+            }
+            
         /*=============================================
         TRAEMOS LAS ACCIONES
         =============================================*/    
@@ -34,6 +40,7 @@ class TablaNotasSalidas{
             "'.$notasSalidas[$i]["fecemi"].'",
             "'.$notasSalidas[$i]["razcli"].'",
             "'.$notasSalidas[$i]["almacen"].'",
+            "'.$estado.'",
             "'.$botones.'"
             ],';        
             }

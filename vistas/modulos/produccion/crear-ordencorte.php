@@ -139,24 +139,29 @@
                 ENTRADA PARA AGREGAR MATERIAPRIMA
                 ======================================-->
 
-                <div class="form-group row nuevoArticuloOC" style="height:500px; overflow: scroll;">
+                <div class="form-group row nuevoArticuloOC" style="height:500px;overflow: scroll; overflow-x:hidden">
 
                   <!--=====================================
                   ENTRADA BUSCADOR
                   ======================================-->
 
-                  <span class="buscadorOc" id="elidOc">
-                      <label>Buscar:</label>
-                      <i class="fa fa-search"></i>
-                      <input type="text" class="form-control input-sm" id="buscadorOc" name="buscadorOc">
-
-                  </span>
+                  <div class=" form-group buscador" id="elid" style="padding-bottom:25px">
+                    <label for="" class="col-form-label col-lg-1">Buscar:</label>
+                    <div class="col-lg-11">
+                        <div class="input-group">
+                            
+                            <input type="text" class="form-control " id="buscadorOc" name="buscadorOc"/>
+                            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                        </div>
+                    </div>
+                        
+                  </div>
 
                   <!--=====================================
                   TITULOS
                   ======================================-->
 
-                  <div class="box box-primary">
+                  <div class="box box-primary"   >
 
                     <div class="row">
 
@@ -192,7 +197,7 @@
 
                 <input type="hidden" id="listaArticulosOC" name="listaArticulosOC">                
 
-                <div class="row">
+                <div class="row" >
 
                   <!--=====================================
                   ENTRADA IMPUESTOS Y TOTAL

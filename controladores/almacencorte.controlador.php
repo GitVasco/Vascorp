@@ -319,6 +319,11 @@ class ControladorAlmacenCorte{
 		if(isset($_POST["almacencorteMP"])){
             $telasInput=$_POST["telas"];
             for ($i=0; $i <count($telasInput) ; $i++) { 
+                $datosNotaSalida = array("SalVta"=>$_POST["cantidadMP".$i],
+                                        "Nro"=>$_POST["notaSalidaMP".$i],
+                                        "CodPro"=>$_POST["materia".$i]);
+
+                $actualizarSaldo= ModeloNotasSalidas::mdlActualizarSaldoNotaSalida("venta_det",$datosNotaSalida);
 					
                 $datos = array("codigo"=>$_POST["almacencorteMP"],
                 "cantidad"=>$_POST["cantidadMP".$i],

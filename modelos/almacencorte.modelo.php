@@ -461,7 +461,8 @@ class ModeloAlmacenCorte{
 			AND p.estpro = '1' 
 		  ORDER BY SUBSTRING(CodFab, 1, 6) ASC) AS mp 
 		  ON adm.mat_pri = mp.codpro 
-	  WHERE adm.almacencorte = :codigo");
+	  WHERE adm.almacencorte = :codigo 
+	  ORDER BY mp.descripcion");
 
 		$stmt -> bindParam(":codigo", $valor, PDO::PARAM_STR);
 
@@ -550,6 +551,7 @@ class ModeloAlmacenCorte{
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			dac.almacencorte,
 			DATE(da.fecha) as fechas,
+			da.guia,
 			a.modelo,
 			a.nombre,
 			a.color,
@@ -631,6 +633,7 @@ class ModeloAlmacenCorte{
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			dac.almacencorte,
 			DATE(da.fecha) as fechas,
+			da.guia,
 			a.modelo,
 			a.nombre,
 			a.color,
@@ -724,6 +727,7 @@ class ModeloAlmacenCorte{
 				$stmt = Conexion::conectar()->prepare("SELECT 
 				dac.almacencorte,
 				DATE(da.fecha) as fechas,
+				da.guia,
 				a.modelo,
 				a.nombre,
 				a.color,
@@ -802,6 +806,7 @@ class ModeloAlmacenCorte{
 				$stmt = Conexion::conectar()->prepare("SELECT 
 				dac.almacencorte,
 				DATE(da.fecha) as fechas,
+				da.guia,
 				a.modelo,
 				a.nombre,
 				a.color,
@@ -883,4 +888,350 @@ class ModeloAlmacenCorte{
 		}
 
 	}	
+
+	
+	static public function mdlRangoFechasConsumoTelas($fechaInicial, $fechaFinal){
+
+		if($fechaInicial == "null"){
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			dac.almacencorte,
+			DATE(da.fecha) as fechas,
+			da.guia,
+			a.modelo,
+			a.nombre,
+			a.color,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '1' 
+				THEN dac.cantidad 
+				ELSE 0 
+			  END
+			) AS t1,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '2' 
+				THEN dac.cantidad 
+				ELSE 0 
+			  END
+			) AS t2,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '3' 
+				THEN dac.cantidad 
+				ELSE 0 
+			  END
+			) AS t3,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '4' 
+				THEN dac.cantidad 
+				ELSE 0 
+			  END
+			) AS t4,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '5' 
+				THEN dac.cantidad 
+				ELSE 0 
+			  END
+			) AS t5,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '6' 
+				THEN dac.cantidad 
+				ELSE 0 
+			  END
+			) AS t6,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '7' 
+				THEN dac.cantidad 
+				ELSE 0 
+			  END
+			) AS t7,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '8' 
+				THEN dac.cantidad 
+				ELSE 0 
+			  END
+			) AS t8,
+			SUM(dac.cantidad) AS subtotal 
+		  FROM
+			almacencorte_detallejf dac 
+			LEFT JOIN articulojf a 
+			  ON dac.articulo = a.articulo
+			LEFT JOIN almacencortejf da
+ 			  ON dac.almacencorte=da.codigo
+		  GROUP BY dac.almacencorte,
+			a.modelo,
+			a.nombre,
+			a.color  ORDER BY dac.id ASC");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();	
+
+
+		}else if($fechaInicial == $fechaFinal){
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			dac.almacencorte,
+			DATE(da.fecha) as fechas,
+			da.guia,
+			a.modelo,
+			a.nombre,
+			a.color,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '1' 
+				THEN dac.cantidad 
+				ELSE 0 
+			  END
+			) AS t1,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '2' 
+				THEN dac.cantidad 
+				ELSE 0 
+			  END
+			) AS t2,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '3' 
+				THEN dac.cantidad 
+				ELSE 0 
+			  END
+			) AS t3,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '4' 
+				THEN dac.cantidad 
+				ELSE 0 
+			  END
+			) AS t4,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '5' 
+				THEN dac.cantidad 
+				ELSE 0 
+			  END
+			) AS t5,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '6' 
+				THEN dac.cantidad 
+				ELSE 0 
+			  END
+			) AS t6,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '7' 
+				THEN dac.cantidad 
+				ELSE 0 
+			  END
+			) AS t7,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '8' 
+				THEN dac.cantidad 
+				ELSE 0 
+			  END
+			) AS t8,
+			SUM(dac.cantidad) AS subtotal 
+		  FROM
+			almacencorte_detallejf dac 
+			LEFT JOIN articulojf a 
+			  ON dac.articulo = a.articulo 
+			LEFT JOIN almacencortejf da
+ 			  ON dac.almacencorte=da.codigo
+			WHERE DATE(da.fecha) like '%$fechaFinal%'
+		  GROUP BY dac.almacencorte,
+			a.modelo,
+			a.nombre,
+			a.color  ");
+
+			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}else{
+
+			$fechaActual = new DateTime();
+			$fechaActual ->add(new DateInterval("P1D"));
+			$fechaActualMasUno = $fechaActual->format("Y-m-d");
+
+			$fechaFinal2 = new DateTime($fechaFinal);
+			$fechaFinal2 ->add(new DateInterval("P1D"));
+			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+
+			if($fechaFinalMasUno == $fechaActualMasUno){
+
+				$stmt = Conexion::conectar()->prepare("SELECT 
+				dac.almacencorte,
+				DATE(da.fecha) as fechas,
+				da.guia,
+				a.modelo,
+				a.nombre,
+				a.color,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '1' 
+					THEN dac.cantidad 
+					ELSE 0 
+				  END
+				) AS t1,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '2' 
+					THEN dac.cantidad 
+					ELSE 0 
+				  END
+				) AS t2,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '3' 
+					THEN dac.cantidad 
+					ELSE 0 
+				  END
+				) AS t3,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '4' 
+					THEN dac.cantidad 
+					ELSE 0 
+				  END
+				) AS t4,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '5' 
+					THEN dac.cantidad 
+					ELSE 0 
+				  END
+				) AS t5,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '6' 
+					THEN dac.cantidad 
+					ELSE 0 
+				  END
+				) AS t6,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '7' 
+					THEN dac.cantidad 
+					ELSE 0 
+				  END
+				) AS t7,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '8' 
+					THEN dac.cantidad 
+					ELSE 0 
+				  END
+				) AS t8,
+				SUM(dac.cantidad) AS subtotal 
+			  FROM
+				almacencorte_detallejf dac 
+				LEFT JOIN articulojf a 
+				  ON dac.articulo = a.articulo
+				LEFT JOIN almacencortejf da
+ 			  	  ON dac.almacencorte=da.codigo
+				WHERE DATE(da.fecha) BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'
+			  GROUP BY dac.almacencorte,
+				a.modelo,
+				a.nombre,
+				a.color ");
+
+			}else{
+
+
+				$stmt = Conexion::conectar()->prepare("SELECT 
+				dac.almacencorte,
+				DATE(da.fecha) as fechas,
+				da.guia,
+				a.modelo,
+				a.nombre,
+				a.color,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '1' 
+					THEN dac.cantidad 
+					ELSE 0 
+				  END
+				) AS t1,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '2' 
+					THEN dac.cantidad 
+					ELSE 0 
+				  END
+				) AS t2,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '3' 
+					THEN dac.cantidad 
+					ELSE 0 
+				  END
+				) AS t3,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '4' 
+					THEN dac.cantidad 
+					ELSE 0 
+				  END
+				) AS t4,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '5' 
+					THEN dac.cantidad 
+					ELSE 0 
+				  END
+				) AS t5,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '6' 
+					THEN dac.cantidad 
+					ELSE 0 
+				  END
+				) AS t6,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '7' 
+					THEN dac.cantidad 
+					ELSE 0 
+				  END
+				) AS t7,
+				SUM(
+				  CASE
+					WHEN a.cod_talla = '8' 
+					THEN dac.cantidad 
+					ELSE 0 
+				  END
+				) AS t8,
+				SUM(dac.cantidad) AS subtotal 
+			  FROM
+				almacencorte_detallejf dac 
+				LEFT JOIN articulojf a 
+				  ON dac.articulo = a.articulo 
+				LEFT JOIN almacencortejf da
+ 				  ON dac.almacencorte=da.codigo
+				WHERE DATE(da.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'
+			  GROUP BY dac.almacencorte,
+				a.modelo,
+				a.nombre,
+				a.color  ");
+
+			}
+		
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+	}
 }

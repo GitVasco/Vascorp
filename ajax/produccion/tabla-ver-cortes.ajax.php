@@ -71,6 +71,7 @@ class TablaVerCortes{
     
             $datosJson .= '[
             "'.$cortes[$i]["almacencorte"].'",
+            "'.$cortes[$i]["guia"].'",
             "'.$cortes[$i]["fechas"].'",
             "'.$cortes[$i]["modelo"].'",
             "'.$cortes[$i]["nombre"].'",
