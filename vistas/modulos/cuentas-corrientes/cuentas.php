@@ -71,7 +71,7 @@
         
       <div class="box-body">
         
-       <table class="table table-bordered table-striped dt-responsive tablaCuentas">
+       <table class="table table-bordered table-striped dt-responsive tablaCuentas" width="100%">
          
         <thead>
          

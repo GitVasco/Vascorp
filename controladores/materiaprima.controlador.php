@@ -14,6 +14,18 @@ class ControladorMateriaPrima{
     }
 
 	/* 
+	* MOSTRAR DATOS DE LA MATERIA PRIMA
+	*/
+	static public function ctrMostrarMateriaPrima2($valor){
+
+		$respuesta = ModeloMateriaPrima::mdlMostrarMateriaPrima2($valor);
+
+		return $respuesta;
+
+    }
+
+
+	/* 
 	* VALIDAR CODIGO DE FABRICA EN MATERIA PRIMA
 	*/
 	static public function ctrMostrarMateriaFabrica($valor){

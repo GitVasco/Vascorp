@@ -46,7 +46,7 @@
 
       <div class="box-body">
         
-       <table class="table table-bordered table-striped dt-responsive tablaOperaciones">
+       <table class="table table-bordered table-striped dt-responsive tablaOperaciones" width="100%">
          
         <thead>
          

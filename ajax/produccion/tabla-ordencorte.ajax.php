@@ -59,15 +59,20 @@ class TablaOrdenCorte{
             todo: Traemos las acciones
             */
 
-            if($ordencorte[$i]["saldo"] < $ordencorte[$i]["total"]){
+            if($ordencorte[$i]["estado"] == "Cerrado"){
 
                 $botones =  "<div class='btn-group'><button class='btn btn-sm btn-info btnVisualizarOC' title='Visualizar Orden Corte Saldo' data-toggle='modal' data-target='#modalVisualizarOC' codigo='".$ordencorte[$i]["codigo"]."'><i class='fa fa-eye'></i></button><button class='btn btn-sm btn-success btnVisualizarOCCantidad' title='Visualizar Orden Corte Cantidad' data-toggle='modal' data-target='#modalVisualizarOCCantidad' codigo='".$ordencorte[$i]["codigo"]."'><i class='fa fa-eye'></i></button><button class='btn btn-sm btn-outline-success  btnReporteOC' title='Reporte Orden de Corte' codigo='".$ordencorte[$i]["codigo"]."'style='border:green 1px solid'><img src='vistas/img/plantilla/excel.png' width='17px'></button></div>";
 
+            }else if($ordencorte[$i]["estado"] == "Pendiente"){
+
+                $botones =  "<div class='btn-group'><button class='btn btn-sm btn-info btnVisualizarOC' title='Visualizar Orden Corte' data-toggle='modal' data-target='#modalVisualizarOC' codigo='".$ordencorte[$i]["codigo"]."'><i class='fa fa-eye'></i></button><button class='btn btn-sm btn-success btnVisualizarOCCantidad' title='Visualizar Orden Corte Cantidad' data-toggle='modal' data-target='#modalVisualizarOCCantidad' codigo='".$ordencorte[$i]["codigo"]."'><i class='fa fa-eye'></i></button><button class='btn btn-sm btn-warning  btnEditarOC' title='Editar Orden de Corte' codigo='".$ordencorte[$i]["codigo"]."'><i class='fa fa-pencil'></i></button><button class='btn btn-sm btn-danger  btnEliminarOC' title='Eliminar Orden de Corte' codigo='".$ordencorte[$i]["codigo"]."'><i class='fa fa-times'></i></button><button class='btn btn-sm btn-outline-success  btnReporteOC' title='Reporte Orden de Corte' codigo='".$ordencorte[$i]["codigo"]."' style='border:green 1px solid'><img src='vistas/img/plantilla/excel.png' width='17px'></button></div>";
+
             }else{
-                
-                $botones =  "<div class='btn-group'><button class='btn btn-sm btn-info btnVisualizarOC' title='Visualizar Orden Corte' data-toggle='modal' data-target='#modalVisualizarOC' codigo='".$ordencorte[$i]["codigo"]."'><i class='fa fa-eye'></i></button><button class='btn btn-sm btn-success btnVisualizarOCCantidad' title='Visualizar Orden Corte Cantidad' data-toggle='modal' data-target='#modalVisualizarOCCantidad' codigo='".$ordencorte[$i]["codigo"]."'><i class='fa fa-eye'></i></button><button class='btn btn-sm btn-warning  btnEditarOC' title='Editar Orden de Corte' codigo='".$ordencorte[$i]["codigo"]."'><i class='fa fa-pencil'></i></button><button class='btn btn-sm btn-danger  btnEliminarOC' title='Eliminar Orden de Corte' codigo='".$ordencorte[$i]["codigo"]."'><i class='fa fa-times'></i><button class='btn btn-sm btn-outline-success  btnReporteOC' title='Reporte Orden de Corte' codigo='".$ordencorte[$i]["codigo"]."' style='border:green 1px solid'><img src='vistas/img/plantilla/excel.png' width='17px'></button></div>";
+
+                $botones =  "<div class='btn-group'><button class='btn btn-sm btn-info btnVisualizarOC' title='Visualizar Orden Corte' data-toggle='modal' data-target='#modalVisualizarOC' codigo='".$ordencorte[$i]["codigo"]."'><i class='fa fa-eye'></i></button><button class='btn btn-sm btn-success btnVisualizarOCCantidad' title='Visualizar Orden Corte Cantidad' data-toggle='modal' data-target='#modalVisualizarOCCantidad' codigo='".$ordencorte[$i]["codigo"]."'><i class='fa fa-eye'></i></button><button class='btn btn-sm btn-warning  btnEditarOC' title='Editar Orden de Corte' codigo='".$ordencorte[$i]["codigo"]."'><i class='fa fa-pencil'></i></button><button class='btn btn-sm btn-outline-success  btnReporteOC' title='Reporte Orden de Corte' codigo='".$ordencorte[$i]["codigo"]."' style='border:green 1px solid'><img src='vistas/img/plantilla/excel.png' width='17px'></button></div>";
 
             }
+
 
 
                 $datosJson .= '[

@@ -319,7 +319,7 @@
 
           <div class="box-body">
 
-            <table class="table table-bordered table-striped dt-responsive tablaArticuloCierre">
+            <table class="table table-bordered table-striped dt-responsive tablaArticuloCierre" width="100%">
 
               <thead>
 

@@ -108,7 +108,7 @@
     <div class=" col-lg-7">
       <div class="box box-warning">
         <div class="box-body">
-         <table class="table table-bordered table-striped dt-responsive tablaVerCuentas">
+         <table class="table table-bordered table-striped dt-responsive tablaVerCuentas" width="100%">
          
           <thead>
          

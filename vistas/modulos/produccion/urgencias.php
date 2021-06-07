@@ -460,7 +460,7 @@ MODAL VISUALIZAR MP URGENCIA
 
             <div class="box-body">
 
-              <table class="table table-bordered table-striped dt-responsive tablaDetalleUrgencia">
+              <table class="table table-bordered table-striped dt-responsive tablaDetalleUrgencia" width="100%">
 
                 <thead>
 

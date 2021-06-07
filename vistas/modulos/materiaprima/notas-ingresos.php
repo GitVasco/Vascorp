@@ -65,7 +65,7 @@
 
             <div class="box-body">
 
-                <table class="table table-bordered table-striped dt-responsive tablaNotasIngresos">
+                <table class="table table-bordered table-striped dt-responsive tablaNotasIngresos" width="100%">
 
                     <thead>
 

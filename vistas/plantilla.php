@@ -153,7 +153,7 @@
 CUERPO DOCUMENTO
 ======================================-->
 
-<body class="hold-transition skin-blue sidebar-collapse sidebar-mini login-page">
+<body class="hold-transition skin-black sidebar-collapse sidebar-mini login-page">
 
   <?php
 
@@ -231,6 +231,9 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "crear-nota-ingreso" ||
                   $_GET["ruta"] == "notas-salidas" ||
                   $_GET["ruta"] == "crear-nota-salida" ||
+                  $_GET["ruta"] == "orden-compra" ||
+                  $_GET["ruta"] == "crear-orden-compra" ||
+                  $_GET["ruta"] == "editar-orden-compra" ||
                   $_GET["ruta"] == "proveedor" ){
         
               include "modulos/materiaprima/".$_GET["ruta"].".php";
@@ -427,6 +430,7 @@ CUERPO DOCUMENTO
   <script src="vistas/js/tablamaestra.js"></script>
   <script src="vistas/js/notas-ingresos.js"></script>
   <script src="vistas/js/notas-salidas.js"></script>
+  <script src="vistas/js/orden-compra.js"></script>
 
 </body>
 

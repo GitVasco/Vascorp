@@ -916,7 +916,7 @@ $("#daterange-btnCorte").daterangepicker(
   });
 
   // EDITAR OPERACIÓN
-$(".tablas tbody").on("click","button.btnEditarDetalleCorte",function(){
+$(".tablaEditarDetalleOrdenCorte ").on("click","button.btnEditarDetalleCorte",function(){
     var idDetalle =$(this).attr("idDetalle");
 	var datos= new FormData();
 	datos.append("idDetalle",idDetalle);
@@ -942,7 +942,7 @@ $(".tablas tbody").on("click","button.btnEditarDetalleCorte",function(){
 
 
 // ELIMINAR OPERACIÓN
-$(".tablas tbody").on("click","button.btnEliminarDetalleCorte",function(){
+$(".tablaEditarDetalleOrdenCorte ").on("click","button.btnEliminarDetalleCorte",function(){
     var idDetalle =$(this).attr("idDetalle");
     var codigo =$(this).attr("codigo");
     var cantidad = $(this).attr("cantidad");
@@ -1311,3 +1311,42 @@ function cargarTablaCantidadCortes(fechaInicial, fechaFinal){
         }
       }
     });
+
+/* 
+* tabla de articulos con urgencia para orden de corte
+*/
+$('.tablaEditarDetalleOrdenCorte').DataTable( {
+  "ajax": "ajax/produccion/tabla-editar-detalleordencorte.ajax.php?perfil=" + $("#perfilOculto").val()+"&codigo=" + $("#codigoOrdenCorte").val(),
+  "deferRender": true,
+  "retrieve": true,
+  "processing": true,
+  "pageLength": 20,
+ "language": {
+
+    "sProcessing":     "Procesando...",
+    "sLengthMenu":     "Mostrar _MENU_ registros",
+    "sZeroRecords":    "No se encontraron resultados",
+    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+    "sInfo":           "Mostrando del _START_ al _END_ de un total de _TOTAL_",
+    "sInfoEmpty":      "Mostrando del 0 al 0 de un total de 0",
+    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+    "sInfoPostFix":    "",
+    "sSearch":         "Buscar:",
+    "sUrl":            "",
+    "sInfoThousands":  ",",
+    "sLoadingRecords": "Cargando...",
+    "oPaginate": {
+    "sFirst":    "Primero",
+    "sLast":     "Último",
+    "sNext":     "Siguiente",
+    "sPrevious": "Anterior"
+    },
+    "oAria": {
+      "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+      "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+    }
+
+}
+} );
+
+

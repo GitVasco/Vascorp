@@ -69,7 +69,7 @@
 
         <input type="hidden" value="<?=$_SESSION["perfil"];?>" id="perfilOculto">
         <input type="hidden" value="<?= $_GET["ruta"]; ?>" id="rutaAcceso">
-       <table class="table table-bordered table-striped dt-responsive tablaOrdenCorte">
+       <table class="table table-bordered table-striped dt-responsive tablaOrdenCorte" width="100%">
          
         <thead>
          
@@ -253,7 +253,7 @@ MODAL VISUALIZAR INFORMACION
 
             <div class="box-body">
 
-              <table class="table table-bordered table-striped dt-responsive tablaVerOrdenCorte">
+              <table class="table table-bordered table-striped dt-responsive tablaVerOrdenCorte" width="100%"> 
 
               <thead>
 
@@ -492,7 +492,7 @@ MODAL VISUALIZAR INFORMACION
 
             <div class="box-body">
 
-              <table class="table table-bordered table-striped dt-responsive tablaVerOrdenCorteCantidad">
+              <table class="table table-bordered table-striped dt-responsive tablaVerOrdenCorteCantidad" width="100%">
 
               <thead>
 

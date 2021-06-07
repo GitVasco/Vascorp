@@ -38,7 +38,7 @@
         
       <div class="box-body">
         
-       <table class="table table-bordered table-striped dt-responsive tablaPrecioServicios">
+       <table class="table table-bordered table-striped dt-responsive tablaPrecioServicios" width="100%">
          
         <thead>
          

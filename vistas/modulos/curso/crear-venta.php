@@ -291,7 +291,7 @@
 
           <div class="box-body">
 
-            <table class="table table-bordered table-striped dt-responsive tablaVentas">
+            <table class="table table-bordered table-striped dt-responsive tablaVentas" width="100%">
 
               <thead>
 

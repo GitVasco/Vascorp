@@ -107,7 +107,7 @@
 
       <div class="box-body">
 
-        <table class="table table-bordered table-striped dt-responsive tablaPedidosAprobados">
+        <table class="table table-bordered table-striped dt-responsive tablaPedidosAprobados" width="100%">
 
           <thead>
 

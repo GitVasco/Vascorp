@@ -1053,15 +1053,14 @@ class ModeloArticulos
 			) AS packing 
 		  FROM
 			articulojf a 
-			LEFT JOIN 
-			  (SELECT 
-				* 
-			  FROM
-				detalles_ordencortejf 
-			  WHERE ordencorte = :orden) AS doc 
-			  ON a.articulo = doc.articulo 
-		  WHERE doc.articulo IS NULL 
-		  ORDER BY a.articulo ");
+		  WHERE a.articulo NOT IN 
+			(SELECT 
+			  articulo 
+			FROM
+			  detalles_ordencortejf o 
+			WHERE o.ordencorte = :orden) 
+			AND a.estado = 'Activo' 
+			AND id_marca IN ('1', '2', '3') ");
 
 			$stmt->bindParam(":orden", $orden, PDO::PARAM_STR);
 

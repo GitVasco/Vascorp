@@ -36,8 +36,10 @@
       <div class="box-body">
 
         <input type="hidden" value="<?=$_SESSION["perfil"];?>" id="perfilOculto">
+
+        <input type="hidden" value="<?=$_GET["codigo"];?>" id="codigoOrdenCorte">
         
-       <table class="table table-bordered table-striped dt-responsive tablas">
+       <table class="table table-bordered table-striped dt-responsive tablaEditarDetalleOrdenCorte" width="100%">
          
         <thead>
          
@@ -55,65 +57,7 @@
          </tr> 
 
         </thead>
-        <tbody> 
-        <?php
-            $item = "ordencorte";
-            $valor = $_GET["codigo"];
-    
-            $respuestaDetalle = ControladorOrdenCorte::ctrMostrarDetallesOrdenCorte($item, $valor);
-            foreach ($respuestaDetalle as $key => $value) {
-                echo '<tr>
-
-                    <td>'.($key+1).'</td>
-
-                    <td class="text-center">'.$value["articulo"].'</td>
-                    <td class="text-center">'.$value["nombre"].'</td>
-                    <td class="text-center">'.$value["color"].'</td>
-                    <td class="text-center">'.$value["talla"].'</td>
-                    <td class="text-center">'.$value["marca"].'</td>
-
-                    <td class="text-center">'.$value["cantidad"].'</td>
-
-                    <td class="text-center">'.$value["saldo"].'</td>';
-
-                    // if( $_SESSION["perfil"] == "Supervisores" ||
-                    //     $_SESSION["perfil"] == "Sistemas"){
-
-                          echo '<td>
-
-                                <div class="btn-group">
-                                    
-                                  <button type="button" class="btn btn-warning btnEditarDetalleCorte" data-toggle="modal" data-target="#modalEditarDetalleCorte" idDetalle="'.$value["id"].'"><i class="fa fa-pencil"></i></button>
-          
-                                  <button  type="button" class="btn btn-danger btnEliminarDetalleCorte" codigo= "'.$_GET["codigo"].'" idDetalle="'.$value["articulo"].'" cantidad="'.$value["cantidad"].'"><i class="fa fa-times"></i></button>
-          
-                                </div>  
-          
-                              </td>';
-
-                    // }else{
-
-                    //   echo '<td>
-
-                    //           <div class="btn-group">
-                                  
-                    //             <button  type="button" class="btn btn-warning btnEditarDetalleCorte" data-toggle="modal" data-target="#modalEditarDetalleCorte" idDetalle="'.$value["id"].'"><i class="fa fa-pencil"></i></button>
-
-                    //           </div>  
-
-                    //         </td>';
-
-                      
-                    // }
-
-
-
-
-                  echo '</tr>';
-          
-            }
-        ?>
-        </tbody>
+        
        </table>
 
       </div>

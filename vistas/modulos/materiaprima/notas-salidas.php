@@ -34,9 +34,6 @@
 
         </a>
 
-        
-        <button class="btn btn-outline-success "  style="border:green 1px solid">
-                      <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Notas de Salida </button> 
         <button type="button" class="btn btn-default pull-right" id="daterange-btnNotasSalidas">
           <span>
             <i class="fa fa-calendar"></i>
@@ -70,7 +67,7 @@
 
         <input type="hidden" value="<?=$_SESSION["perfil"];?>" id="perfilOculto">
         <input type="hidden" value="<?= $_GET["ruta"]; ?>" id="rutaAcceso">
-       <table class="table table-bordered table-striped dt-responsive tablaNotasSalidas">
+       <table class="table table-bordered table-striped dt-responsive tablaNotasSalidas" width="100%">
          
         <thead>
          

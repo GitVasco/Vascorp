@@ -34,7 +34,7 @@
 
                     <div class="box-body">
 
-                        <table class="table table-bordered table-striped dt-responsive TablaMaestraCabecera">
+                        <table class="table table-bordered table-striped dt-responsive TablaMaestraCabecera" width="100%">
 
                             <thead>
 
@@ -68,7 +68,7 @@
 
                     <div class="box-body">
 
-                        <table class="table table-bordered table-striped dt-responsive TablaMaestraDetalle">
+                        <table class="table table-bordered table-striped dt-responsive TablaMaestraDetalle" width="100%">
 
                             <thead>
 

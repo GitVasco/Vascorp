@@ -38,7 +38,7 @@
         
       <div class="box-body">
         
-       <table class="table table-bordered table-striped dt-responsive tablaUnidadesMedida">
+       <table class="table table-bordered table-striped dt-responsive tablaUnidadesMedida" width="100%">
          
         <thead>
          

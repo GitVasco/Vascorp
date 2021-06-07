@@ -59,7 +59,7 @@
         <input type="hidden" value="<?= $_SESSION["perfil"]; ?>" id="perfilOculto">
         <input type="hidden" value="<?= $_GET["ruta"]; ?>" id="rutaAcceso">
 
-        <table class="table table-bordered table-striped dt-responsive tablaServicios">
+        <table class="table table-bordered table-striped dt-responsive tablaServicios" width="100%">
 
           <thead>
 

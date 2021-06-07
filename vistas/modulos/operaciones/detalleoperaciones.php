@@ -40,7 +40,7 @@
 
       <div class="box-body">
         
-       <table class="table table-bordered table-striped dt-responsive tablaDetalleOperaciones">
+       <table class="table table-bordered table-striped dt-responsive tablaDetalleOperaciones" width="100%">
          
         <thead>
          
@@ -352,7 +352,7 @@ MODAL DETALLE OPERACION
             </div>
             <div class="box-body" > 
               <div id="scroll3">
-                <table class="table table-bordered table-striped dt-responsive tablaOperacionModelo" >
+                <table class="table table-bordered table-striped dt-responsive tablaOperacionModelo" width="100%">
                   <thead>
                     <tr>
                       <th style="width:100px">CodOpe</th>

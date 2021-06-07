@@ -61,7 +61,7 @@
 
         <input type="hidden" value="<?= $_SESSION["perfil"]; ?>" id="perfilOculto">
 
-        <table class="table table-bordered table-striped dt-responsive tablaTarjetas">
+        <table class="table table-bordered table-striped dt-responsive tablaTarjetas" width="100%">
 
           <thead>
 
@@ -255,7 +255,7 @@ MODAL VISUALIZAR INFORMACION
 
             <div class="box-body">
 
-              <table class="table table-bordered table-striped dt-responsive tablaDetalle">
+              <table class="table table-bordered table-striped dt-responsive tablaDetalle" width="100%">
 
                 <thead>
 

@@ -287,7 +287,7 @@
 
           <div class="box-body">
 
-            <table class="table table-bordered table-striped table-condensed tablaArticulosTalleres">
+            <table class="table table-bordered table-striped table-condensed tablaArticulosTalleres" width="100%">
 
               <thead>
 

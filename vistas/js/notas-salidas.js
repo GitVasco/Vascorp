@@ -290,49 +290,49 @@ $(".tablaMateriaNotaSalida tbody").on("click", "button.agregarMateriaNota", func
 
       $(".nuevaMateriaNota").append(
 
-        '<div class="row" style="padding:5px 15px">' +
+        '<div class="row" style="padding:1px 15px">' +
 
           "<!-- Descripción del producto -->" +
 
           '<div class="col-xs-1" style="padding-right:0px">' +
 
-              '<input type="text" class="form-control nuevoCodigoPro" idMateriaNota="' + codpro + '" name="agregarProducto" value="' + codpro + '"  readonly>' +
+              '<input type="text" class="form-control input-sm nuevoCodigoPro" idMateriaNota="' + codpro + '" name="agregarProducto" value="' + codpro + '"  readonly>' +
 
           "</div>" +
 
           '<div class="col-xs-1" >' +
 
-              '<input type="text" class="form-control nuevoCodigoFabrica"  name="nuevoCodigoFabrica" value="' + codfab + '"  readonly>' +
+              '<input type="text" class="form-control input-sm nuevoCodigoFabrica"  name="nuevoCodigoFabrica" value="' + codfab + '"  readonly>' +
 
           "</div>" +
 
           '<div class="col-xs-4" >' +
 
-              '<input type="text" class="form-control nuevaDescripcionMateria"  name="nuevaDescripcionMateria" value="' + descripcion + '"  readonly>' +
+              '<input type="text" class="form-control input-sm nuevaDescripcionMateria"  name="nuevaDescripcionMateria" value="' + descripcion + '"  readonly>' +
 
           "</div>" +
 
           '<div class="col-xs-1" >' +
 
-              '<input type="text" class="form-control nuevoCodigoColor"  name="nuevoCodigoColor" value="' + codcolor + '"  readonly>' +
+              '<input type="text" class="form-control input-sm nuevoCodigoColor"  name="nuevoCodigoColor" value="' + codcolor + '"  readonly>' +
 
           "</div>" +
 
           '<div class="col-xs-1" >' +
 
-              '<input type="text" class="form-control nuevoColor"  name="nuevoColor" value="' + color + '"  readonly>' +
+              '<input type="text" class="form-control input-sm nuevoColor"  name="nuevoColor" value="' + color + '"  readonly>' +
 
           "</div>" +
 
           '<div class="col-xs-1" >' +
 
-              '<input type="text" class="form-control nuevoCosto"  name="nuevoCosto" value="' + precio + '"  readonly required>' +
+              '<input type="text" class="form-control input-sm nuevoCosto"  name="nuevoCosto" value="' + precio + '"  readonly required>' +
 
           "</div>" +
 
           '<div class="col-xs-2" >' +
 
-              '<select class="form-control  nuevoDestinoNota" name="nuevoDestinoNota" required>' +
+              '<select class="form-control input-sm nuevoDestinoNota" name="nuevoDestinoNota" required>' +
               '<option value="">Seleccionar destino</option>' +
 
               '</select>'+
@@ -345,9 +345,9 @@ $(".tablaMateriaNotaSalida tbody").on("click", "button.agregarMateriaNota", func
 
             '<div class="input-group">' +
 
-            '<input type="number" step="any" class="form-control nuevaCantidadMateria" name="nuevaCantidadMateria" min="1" value="1" stock="' + stock + '" nuevoStock="' + Number(stock - 1) + '" required>' +
+            '<input type="number" step="any" class="form-control input-sm nuevaCantidadMateria" name="nuevaCantidadMateria" min="1" value="1" stock="' + stock + '" nuevoStock="' + Number(stock - 1) + '" required>' +
             
-            '<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarMateriaNota" idMateriaNota="' + idMateriaNota + '"><i class="fa fa-times"></i></button></span>' +
+            '<span class="input-group-addon"  style="padding: 3px 6px"><button type="button" class="btn btn-danger btn-xs quitarMateriaNota" idMateriaNota="' + idMateriaNota + '"><i class="fa fa-times"></i></button></span>' +
 
             "</div>" +
 
@@ -695,5 +695,17 @@ $(".tablaNotasSalidas").on("click", ".btnAnularNotaSalida", function(){
         }
 
   })
+
+})
+
+/* 
+* BOTON REPORTE DE ORDEN DE CORTE
+*/
+$(".tablaNotasSalidas").on("click", ".btnDetalleReporteNotaSalida", function () {
+
+  var idNotaSalida = $(this).attr("idNotaSalida");
+  //console.log("codigo", codigo);
+
+  window.location = "vistas/reportes_excel/rpt_notasalida.php?idNotaSalida=" + idNotaSalida;
 
 })
