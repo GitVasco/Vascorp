@@ -133,7 +133,7 @@ class ControladorNotasIngresos{
 
 				#var_dump($datosCab);
 				$respuestaCab = ModeloNotasIngresos::mdlGuardarNotaIngresoCab($datosCab);
-				#var_dump($respuestaCab);
+				#var_dump("guardocabecera: ", $respuestaCab);
 				#$respuestaCab = "ok";
 
 				#2. Creamos el detalle
@@ -148,7 +148,7 @@ class ControladorNotasIngresos{
 											"tnea"			=> 'NE',
 											"snea" 			=> '001',
 											"nnea"			=> $ultimoNro["correlativo"],
-											"ndoc"			=> $_POST["nuevaOc"],
+											"ndoc"			=> $value["oc"],
 											"cansol"		=> $value["cantidadRe"],
 											"presol"		=> $value["precio"],
 											"codpro"		=> $value["codpro"],
@@ -167,15 +167,82 @@ class ControladorNotasIngresos{
 
 						#var_dump($datosDet);
 						$respuestaDet = ModeloNotasIngresos::mdlGuardarNotaIngresoDet($datosDet);
-						var_dump($respuestaDet);
-
+						#var_dump("guardo detalle: ",$respuestaDet);
+						#$respuestaDet = "ok";
 
 					}
+
+					#3. Aumentamos el stock
+					if($respuestaDet == "ok"){
+
+						foreach($listaNotaIngreso as $key=>$value){
+							
+							$codpro = $value["codpro"];
+							$infoMp = ModeloMateriaPrima::mdlMostrarMateriaPrima($codpro);
+
+							$stock = $infoMp["stock"] + $value["cantidadRe"];
+							//var_dump($value["codpro"],$stock);
+							$respuestaStock = ModeloNotasIngresos::mdlActualizarStock($codpro,$stock);
+							#var_dump("sumo stock: ",$respuestaStock);
+							#$respuestaStock = "ok";
+													
+							#4. Bajar saldo en Oc
+							if($respuestaStock == "ok" && $value["oc"] != ""){
+
+								$oc = $value["oc"];
+								$codpro = $value["codpro"];
+								$estado = $value["cerrar"];
+								$cantidadRe =$value["cantidadRe"];
+								#var_dump($oc, $codpro,$estado, $cantidadRe);
+								$respuestaOc = ModeloNotasIngresos::mdlActualizarCantOc($oc,$codpro, $estado, $cantidadRe);
+								#var_dump("desconto del stock: ",$respuestaOc);
+
+								#5. Actualizamos estado de la cabecera
+								if($respuestaOc == "ok"){
+
+									$oc = $value["oc"];
+
+									$respuestaOcCab = ModeloNotasIngresos::mdlActualizarEstCab($oc);
+									#var_dump("actualizo cab oc: ",$respuestaOcCab);
+
+
+								}									
+
+							}
+
+						}
+
+						# Mostramos una alerta suave
+						echo '<script>
+								swal({
+									type: "success",
+									title: "Felicitaciones",
+									text: "¡La nota de ingreso fue registrada con éxito!",
+									showConfirmButton: true,
+									confirmButtonText: "Cerrar"
+								}).then((result)=>{
+									if(result.value){
+										window.location="notas-ingresos";}
+								});
+							</script>';
+
+					}		
 
 				}else{
 
 					# Mostramos una alerta suave
-				
+					echo '<script>
+							swal({
+								type: "error",
+								title: "Error",
+								text: "¡La información presento problemas y no se registro adecuadamente. Por favor, intenteló de nuevo!",
+								showConfirmButton: true,
+								confirmButtonText: "Cerrar"
+							}).then((result)=>{
+								if(result.value){
+									window.location="crear-nota-ingreso";}
+							});
+						</script>';
 
 				}
 

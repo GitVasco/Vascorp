@@ -744,3 +744,15 @@ function listarMpNi(){
     $("#listaNI").val(JSON.stringify(listaMpNi));
 
 }
+
+/* 
+* BOTON REPORTE DE ORDEN DE CORTE
+*/
+$(".tablaMpSOc").on("click", ".btnDetalleReporteNotaIngreso", function () {
+
+  var idNotaIngreso = $(this).attr("idNotaIngreso");
+  //console.log("codigo", codigo);
+
+  window.location = "vistas/reportes_excel/rpt_notaingreso.php?idNotaIngreso=" + idNotaIngreso;
+
+})
