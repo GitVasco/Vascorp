@@ -41,7 +41,7 @@ class TablaMPSinOC{
                 "'.$sinOC[$i]["Color"].'",
                 "'.$sinOC[$i]["precio"].'",
                 "'.$sinOC[$i]["preciocigv"].'",
-                "'.$sinOC[$i]["Stk_Act"].'",
+                "'.$sinOC[$i]["CodAlm01"].'",
                 "'.$sinOC[$i]["CanNI"].'",
                 "'.$sinOC[$i]["Nro"].'",
                 "'.$sinOC[$i]["Proveedor"].'",

@@ -468,7 +468,7 @@ class ModeloNotasIngresos{
                                                 ocd.CodPro,
                                                 pro.CodFab,
                                                 pro.DesPro,
-                                                Stk_Act,
+                                                Stk_Act as CodAlm01,
                                                 pro.Unidad,
                                                 pro.Color,
                                                 pro.ColPro,
@@ -1068,5 +1068,107 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
 		$stmt=null;
     
 	}	  
+
+	// Método para actualizar EL STOCK DE MP
+	static public function mdlActualizarStock($codpro ,$stock){
+
+		$sql="UPDATE 
+            producto 
+          SET
+            codalm01 = :stock 
+          WHERE codpro = :codpro";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":codpro",$codpro,PDO::PARAM_STR);
+		$stmt->bindParam(":stock",$stock,PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+
+		}
+
+		$stmt=null;
+
+	}  
+
+	// Método para actualizar EL SALDO Y ESTADO EN OC
+	static public function mdlActualizarCantOc($oc,$codpro, $estado, $cantidadRe){
+
+		$sql="UPDATE 
+                ocomdet 
+              SET
+                cantni = 
+                CASE
+                  WHEN canpro = cantni 
+                  THEN canpro - :cantidadRe 
+                  ELSE cantni - :cantidadRe 
+                END,
+                ceroc = :estado,
+                estac = 
+                CASE
+                  WHEN :estado = 'si' 
+                  THEN 'CER' 
+                  WHEN :estado = '' 
+                  AND canpro - :cantidadRe > 0 
+                  THEN 'PAR' 
+                  ELSE estac 
+                END 
+              WHERE nro = :oc 
+                AND codpro = :codpro";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+    $stmt->bindParam(":oc",$oc,PDO::PARAM_STR);
+		$stmt->bindParam(":codpro",$codpro,PDO::PARAM_STR);
+    $stmt->bindParam(":estado",$estado,PDO::PARAM_STR);
+    $stmt->bindParam(":cantidadRe",$cantidadRe,PDO::PARAM_STR);
+		
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+
+		}
+
+		$stmt=null;
+
+	}    
+
+	// Método para actualizar CABECERAS DE OC
+	static public function mdlActualizarEstCab($oc){
+
+		$sql="UPDATE 
+              ocompra 
+            SET
+              estac = 'PAR' 
+            WHERE nro = :oc";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+    $stmt->bindParam(":oc",$oc,PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+
+	}    
 
 }

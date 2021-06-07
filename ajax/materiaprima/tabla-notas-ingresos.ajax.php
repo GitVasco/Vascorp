@@ -25,7 +25,7 @@ class TablaNotasIngresos{
         /*=============================================
         TRAEMOS LAS ACCIONES
         =============================================*/    
-        $botones =  ""; 
+        $botones =  "<div class='btn-group' ><button class='btn btn-xs btn-primary btnVisualizarNotaIngreso' title='Visualizar Nota de Ingreso' idNotaIngreso='".$notasIngresos[$i]["nnea"]."' data-toggle='modal' data-target='#modalVizualizarNotaIngreso'><i class='fa fa-eye'></i></button><button class='btn btn-xs btn-outline-success pull-right btnDetalleReporteNotaIngreso' idNotaIngreso='".$notasIngresos[$i]["nnea"]."' title='Reporte Nota de Ingreso' style='border:green 1px solid'><img src='vistas/img/plantilla/excel.png' width='15px'></button></div>"; 
 
             $datosJson .= '[
             "'.$notasIngresos[$i]["tnea"].'",
@@ -36,7 +36,7 @@ class TablaNotasIngresos{
             "'.$notasIngresos[$i]["nrdcto"].'",
             "'.$notasIngresos[$i]["nroguiaasociada"].'",
             "'.$notasIngresos[$i]["nrooc"].'",
-            "'.$notasIngresos[$i]["tnea"].'" 
+            "'.$botones.'" 
             ],';        
             }
 

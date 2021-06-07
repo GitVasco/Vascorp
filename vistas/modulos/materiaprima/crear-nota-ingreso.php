@@ -192,7 +192,7 @@
 
                                 <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Moneda</label>
                                     <div class="col-lg-2">
-                                        <select  class="form-control input-md selectpicker"  name="nuevaMoneda"  id="nuevaMoneda" data-live-search="true" >
+                                        <select  class="form-control input-md selectpicker"  name="nuevaMoneda"  id="nuevaMoneda" data-live-search="true" required>
                                         <option value="">Seleccionar Moneda</option>
                                         <?php
                                             $monedas = ControladorProveedores::ctrMostrarMonedas();
