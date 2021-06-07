@@ -339,7 +339,7 @@ $(".tablaMpSOc").on("click", ".agregarMPNI", function() {
     dataType: "json",
     success: function(respuesta) {
 
-      console.log(respuesta);
+      //console.log(respuesta);
       var codpro = respuesta["codpro"];
       var codfab = respuesta["codfab"];
       var descripcion = respuesta["descripcion"];
@@ -359,7 +359,7 @@ $(".tablaMpSOc").on("click", ".agregarMPNI", function() {
 
       $(".nuevaMPNI").append(
 
-        '<div class="row" style="padding:1px">' +
+        '<div class="row" style="padding:1px 15px">' +
 
           "<!-- CODPRO -->" +
 
@@ -387,7 +387,7 @@ $(".tablaMpSOc").on("click", ".agregarMPNI", function() {
 
           "<!-- CANTIDAD -->" +
 
-          '<div class="col-xs-1" >' +
+          '<div class="col-xs-1 ingresoCantidadOC">' +
 
               '<input type="number" step="any" class="form-control input-sm nuevaCantidad"  name="cantidad" id="cantidad" value="' + cantidad + '"  readonly>' +
 
@@ -395,41 +395,41 @@ $(".tablaMpSOc").on("click", ".agregarMPNI", function() {
 
           "<!-- CANTIDAD RECIBIDA -->" +
 
-          '<div class="col-xs-1" >' +
+          '<div class="col-xs-1 ingresoCantidad">' +
 
-              '<input type="number" step="any" class="form-control input-sm nuevaCantidadRecibida"  name="cantidadRecibida" id="cantidadRecibida" value="0" min="1">' +
+              '<input type="number" step="any" class="form-control input-sm nuevaCantidadRecibida"  name="cantidadRecibida" id="cantidadRecibida" cantidadReal="0" value="1" min="1">' +
 
           "</div>" +
 
           "<!-- SALDO -->" +
 
-          '<div class="col-xs-1" >' +
+          '<div class="col-xs-1 ingresoSaldo">' +
 
-              '<input type="number" step="any" class="form-control input-sm nuevoSaldo"  name="saldo" id="saldo" value="0" readonly>' +
+              '<input type="number" step="any" class="form-control input-sm nuevoSaldo"  name="saldo" id="saldo"  readonly>' +
 
           "</div>" +
 
           "<!-- EXCESO -->" +
 
-          '<div class="col-xs-1" >' +
+          '<div class="col-xs-1 ingresoExceso">' +
 
-              '<input type="number" step="any" class="form-control input-sm nuevoExceso"  name="exceso" id="exceso" value="0" readonly>' +
+              '<input type="number" step="any" class="form-control input-sm nuevoExceso"  name="exceso" id="exceso"  readonly>' +
 
           "</div>" + 
           
           "<!-- PRECIO SIN IGV -->" +
 
-          '<div class="col-xs-1" >' +
+          '<div class="col-xs-1 ingresoPrecio" >' +
 
-              '<input type="number" step="any" class="form-control input-sm nuevoPrecio"  name="precio" id="precio" value="'+ precio +'">' +
+              '<input type="number" step="any" class="form-control input-sm nuevoPrecio"  name="precio" id="precio" value="'+ precio +'" precioReal="'+ precio +'">' +
 
           "</div>" +
 
           "<!-- TOTAL SIN IGV -->" +
 
-          '<div class="col-xs-1" >' +
+          '<div class="col-xs-1 ingresoTotal" >' +
 
-              '<input type="number" step="any" class="form-control input-sm nuevoTotal"  name="total" id="total" value="0" readonly>' +
+              '<input type="number" step="any" class="form-control input-sm nuevoTotal"  name="nuevoTotal" id="nuevoTotal" value="'+ precio +'" readonly>' +
 
           "</div>" +   
           
@@ -450,7 +450,7 @@ $(".tablaMpSOc").on("click", ".agregarMPNI", function() {
 
             '<input type="text" class="form-control input-sm nuevoCerrar" name="cerrar" id="cerrar">' +
             
-            '<span class="input-group-addon" style="padding: 3px 6px"><button type="button" class="btn btn-danger btn-xs quitarMPNI" idMpNI="' + idboton + '"><i class="fa fa-times"></i></button></span>' +
+            '<span class="input-group-addon" style="padding: 3px 6px"><button type="button" class="btn btn-danger btn-xs quitarMPNI" idBoton="' + idboton + '"><i class="fa fa-times"></i></button></span>' +
 
             "</div>" +
 
@@ -460,7 +460,10 @@ $(".tablaMpSOc").on("click", ".agregarMPNI", function() {
         "</div>"
 
 
-      );      
+      );     
+      sumarTotalPreciosNI();
+      agregarImpustoNI();
+      listarMpNi();
 
     }
 
@@ -478,17 +481,19 @@ $(".tablaMpSOc").on("draw.dt", function() {
   if (localStorage.getItem("quitarMPNI") != null) {
     var listaIdMPNI = JSON.parse(localStorage.getItem("quitarMPNI"));
 
+    //console.log(listaIdMPNI);
+
     for (var i = 0; i < listaIdMPNI.length; i++) {
       $(
-        "button.recuperarBoton[quitarMPNI='" +
-        listaIdMPNI[i]["quitarMPNI"] +
+        "button.recuperarBoton[idBoton='" +
+        listaIdMPNI[i]["idBoton"] +
           "']"
       ).removeClass("btn-default");
       $(
-        "button.recuperarBoton[quitarMPNI='" +
-        listaIdMPNI[i]["quitarMPNI"] +
+        "button.recuperarBoton[idBoton='" +
+        listaIdMPNI[i]["idBoton"] +
           "']"
-      ).addClass("btn-primary agregarMateriaNota");
+      ).addClass("btn-primary agregarMPNI");
     }
   }
 });
@@ -501,8 +506,8 @@ var idQuitarMPNI = [];
 
 localStorage.removeItem("quitarMPNI");
 
-$(".formularioNotaSalida").on("click", "button.quitarMPNI", function() {
-  console.log("boton");
+$(".formularioNotaIngreso").on("click", "button.quitarMPNI", function() {
+  /* console.log("boton"); */
 
   $(this)
     .parent()
@@ -511,7 +516,8 @@ $(".formularioNotaSalida").on("click", "button.quitarMPNI", function() {
     .parent()
     .remove();
 
-  var idMpNI = $(this).attr("idMpNI");
+  var idBoton = $(this).attr("idBoton");
+  //console.log(idBoton);
 
   /*=============================================
   ALMACENAR EN EL LOCALSTORAGE EL ID DEL PRODUCTO A QUITAR
@@ -524,17 +530,217 @@ $(".formularioNotaSalida").on("click", "button.quitarMPNI", function() {
   }
 
   idQuitarMPNI.push({
-    idMpNI: idMpNI
+    idBoton: idBoton
   });
+
+  //console.log(idQuitarMPNI);
 
   localStorage.setItem("quitarMPNI", JSON.stringify(idQuitarMPNI));
 
-  $("button.recuperarBoton[idMpNI='" + idMpNI + "']").removeClass(
+  $(".recuperarBoton[idBoton='" + idBoton + "']").removeClass(
     "btn-default"
   );
 
-  $("button.recuperarBoton[idMpNI='" + idMpNI + "']").addClass(
+  $(".recuperarBoton[idBoton='" + idBoton + "']").addClass(
     "btn-primary agregarMPNI"
   );
   
 });
+
+/*=============================================
+MODIFICAR EL TOTAL AL CAMBIAR LA CANTIDAD
+=============================================*/
+$(".formularioNotaIngreso").on("keyup", "input.nuevaCantidadRecibida", function() {
+
+  var precio = $(this)
+              .parent()
+              .parent()
+              .children(".ingresoPrecio")
+              .children(".nuevoPrecio");  
+
+  var cantRecibida = Number($(this).val());
+  //console.log(cantRecibida)
+
+  precioFinal = precio.val() * cantRecibida
+  //console.log(precioFinal);
+
+  var total = $(this)
+              .parent()
+              .parent()
+              .children(".ingresoTotal")
+              .children(".nuevoTotal"); 
+
+  total.val(precioFinal.toFixed(6));
+
+  var cantidad = $(this)
+                .parent()
+                .parent()
+                .children(".ingresoCantidadOC")
+                .children(".nuevaCantidad");
+
+  var cant = Number(cantidad.val());
+  //console.log(cant);
+
+  var saldo = $(this)
+                .parent()
+                .parent()
+                .children(".ingresoSaldo")
+                .children(".nuevoSaldo");
+
+  var exceso = $(this)
+      .parent()
+      .parent()
+      .children(".ingresoExceso")
+      .children(".nuevoExceso");
+
+   if(cant <= 0){
+
+    saldoNI = 0;
+
+    excesoNI = cantRecibida;
+
+  }else{
+
+    if(cantRecibida > cant){
+
+      excesoNI = cantRecibida - cant;
+      saldoNI = 0;
+
+
+    }else{
+
+      saldoNI = cant - cantRecibida;
+      excesoNI = 0; 
+
+    }    
+
+  }
+  
+  //console.log('exceso: ',excesoNI,' saldo: ', saldoNI);
+
+  exceso.val(excesoNI);
+  saldo.val(saldoNI);
+
+  sumarTotalPreciosNI();
+  agregarImpustoNI()
+  listarMpNi();
+
+});
+
+$(".formularioNotaIngreso").on("keyup", "input.nuevoPrecio", function() {
+
+  var cantidadRecibida = $(this)
+                        .parent()
+                        .parent()
+                        .children(".ingresoCantidad")
+                        .children(".nuevaCantidadRecibida");  
+
+  var precio = Number($(this).val());
+  //console.log(precio)
+
+  var precioFinal = cantidadRecibida.val() * precio;
+  //console.log(precioFinal);
+
+  var total = $(this)
+  .parent()
+  .parent()
+  .children(".ingresoTotal")
+  .children(".nuevoTotal"); 
+
+  total.val(precioFinal.toFixed(6));
+
+  sumarTotalPreciosNI();
+  agregarImpustoNI()
+  listarMpNi();
+
+});
+
+$(".formularioNotaIngreso").on("keyup", "input.nuevoCerrar", function() {
+
+  sumarTotalPreciosNI();
+  agregarImpustoNI()
+  listarMpNi();
+
+});
+
+function sumarTotalPreciosNI() {
+
+  var precioItem = $(".nuevoTotal");
+ // console.log("precioitem", precioItem);
+
+  var arraySumaPrecio = [];
+
+  for (var i = 0; i < precioItem.length; i++) {
+    arraySumaPrecio.push(Number($(precioItem[i]).val()));
+  }
+  //console.log("arraySumaPrecio", arraySumaPrecio);  
+
+  function sumaArrayPrecios(total, numero) {
+    return total + numero;
+  }
+
+  var sumaTotalPrecio = arraySumaPrecio.reduce(sumaArrayPrecios);
+  //console.log("sumaTotalPrecio", sumaTotalPrecio);  
+
+  $("#nuevoSubTotalNi").val(sumaTotalPrecio.toFixed(4));
+  $("#subTotalNi").val(sumaTotalPrecio);
+  $("#nuevoSubTotalNi").attr("subTotal", sumaTotalPrecio);
+
+}
+
+function agregarImpustoNI(){
+
+  subTotal = $("#nuevoSubTotalNi").attr("subTotal");
+  //console.log(subTotal);
+
+  impuesto= Number(subTotal) * 0.18;
+  //console.log(impuesto);
+
+  $("#nuevoImpuestoNi").val(impuesto.toFixed(4));
+  $("#impuestoNi").val(impuesto);
+  $("#nuevoImpuestoNi").attr("impuesto", impuesto);
+
+  total = Number(subTotal) + Number(impuesto);
+  //console.log(total);
+
+  $("#nuevoTotalNi").val(total.toFixed(4));
+  $("#totalNi").val(total);
+  $("#nuevoTotalNi").attr("total", total);
+
+}
+
+function listarMpNi(){
+
+  listaMpNi = [];
+
+  var codpro=       $(".nuevoCodPro");
+  var descripcion = $(".nuevaDescripcion");
+  var cantidadOc =  $(".nuevaCantidad");
+  var cantidadRe =  $(".nuevaCantidadRecibida");
+  var saldo =       $(".nuevoSaldo");
+  var exceso =      $(".nuevoExceso");
+  var precio =      $(".nuevoPrecio");
+  var total =       $(".nuevoTotal");
+  var oc =          $(".nuevaOC");
+  var cerrar =      $(".nuevoCerrar");
+
+  for (var i = 0; i < descripcion.length; i++) {
+
+    listaMpNi.push({
+      codpro:  $(codpro[i]).val(),
+      cantidadOc:  $(cantidadOc[i]).val(),
+      cantidadRe: $(cantidadRe[i]).val(),
+      saldo: $(saldo[i]).val(),
+      exceso: $(exceso[i]).val(),
+      precio: $(precio[i]).val(),
+      total: $(total[i]).val(),
+      oc: $(oc[i]).val(),
+      cerrar: $(cerrar[i]).val()
+    });
+  }
+
+    //console.log("listaMpNi", JSON.stringify(listaMpNi)); 
+
+    $("#listaNI").val(JSON.stringify(listaMpNi));
+
+}

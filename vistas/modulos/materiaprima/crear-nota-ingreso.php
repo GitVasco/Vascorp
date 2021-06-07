@@ -124,7 +124,7 @@
 
                                     <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Proveedor</label>
                                     <div class="col-lg-3">
-                                        <select  class="form-control input-sm selectpicker" data-live-search="true" name="nuevoProveedor" id="nuevoProveedor">
+                                        <select  class="form-control input-sm selectpicker" data-live-search="true" name="nuevoProveedor" id="nuevoProveedor" required>
 
                                         <option value="">SELECCIONAR PROVEEDOR</option>
                                         
@@ -146,7 +146,7 @@
                                     
                                 </div>
 
-                                <div class="form-group" style="padding-top:25px;;padding-bottom:35px">
+                                <div class="form-group" style="padding-top:25px;">
 
                                 <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Doc. Secundario</label>
                                     <div class="col-lg-2">
@@ -172,17 +172,44 @@
                                         <input type="text" class="form-control input-sm" id="nuevoNroS" name="nuevoNroS" placeholder="Número">
                                     </div>
 
-                                    <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Moneda</label>
+                                    <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Fec. Emision</label>
                                     <div class="col-lg-2">
+                                        <input type="date" class="form-control input-sm" id="fecS" name="fecS"
+                                        value="<?php echo $fecha->format("Y-m-d"); ?>">
+                                    </div>                                    
+
+                                    <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Orden Compra</label>
+                                    <div class="col-lg-3">
                                         <select  class="form-control input-md selectpicker"  name="nuevaOc"  id="nuevaOc" data-live-search="true" >
                                         <option value="">Seleccionar OC</option>
 
                                         </select>
-                                    </div>       
+                                    </div>  
+   
+                                </div>       
+                                
+                                <div class="form-group" style="padding-top:25px;padding-bottom:25px">
 
-                                    <div class="col-lg-12"></div>
+                                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Moneda</label>
+                                    <div class="col-lg-2">
+                                        <select  class="form-control input-md selectpicker"  name="nuevaMoneda"  id="nuevaMoneda" data-live-search="true" >
+                                        <option value="">Seleccionar Moneda</option>
+                                        <?php
+                                            $monedas = ControladorProveedores::ctrMostrarMonedas();
+                                            foreach ($monedas as $key => $value) {
+                                            echo '<option value="' . $value["Cod_Argumento"] . '">' .$value["Cod_Argumento"]. " - " . $value["Des_Larga"] . '</option>';
+                                            }
+                                        ?>                                        
 
-                                </div>         
+                                        </select>
+                                    </div> 
+
+                                    <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Observaciones</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control input-sm" id="nuevaObservacion" name="nuevaObservacion">
+                                    </div> 
+
+                                </div>  
 
                                 <!--=====================================
                                         TITULOS
@@ -279,13 +306,14 @@
                                     ENTRADA IMPUESTOS Y TOTAL
                                     ======================================-->
 
-                                    <div class="col-xs-8 pull-right">
+                                    <div class="col-xs-6 pull-right">
 
                                         <table class="table">
 
                                             <thead>
 
                                                 <tr>
+                                                    <th>SubTotal</th>
                                                     <th>Impuesto</th>
                                                     <th>Total</th>
                                                 </tr>
@@ -296,24 +324,41 @@
 
                                                 <tr>
 
-                                                    <td style="width: 50%">
+                                                    <td style="width: 30%">
 
                                                         <div class="input-group">
 
-                                                            <input type="number" class="form-control" min="0" id="nuevoImpuestoVenta" name="nuevoImpuestoVenta" placeholder="0" required>
+                                                            <input type="number" step="any" class="form-control" min="0" id="nuevoSubTotalNi" name="nuevoSubTotalNi" placeholder="0" required readonly>
+                                                            <span class="input-group-addon"><i class="fa fa-money"></i></span>
+
+                                                            <input type="hidden" name="subTotalNi" id="subTotalNi">                                                            
+
+                                                        </div>
+
+                                                    </td>                                                
+
+                                                    <td style="width: 30%">
+
+                                                        <div class="input-group">
+
+                                                            <input type="number" step="any" class="form-control" min="0" id="nuevoImpuestoNi" name="nuevoImpuestoNi" placeholder="0" required readonly>
                                                             <span class="input-group-addon"><i class="fa fa-percent"></i></span>
+
+                                                            <input type="hidden" name="impuestoNi" id="impuestoNi">
 
                                                         </div>
 
                                                     </td>
 
-                                                    <td style="width: 50%">
+                                                    <td style="width: 40%">
 
                                                         <div class="input-group">
 
                                                             <span class="input-group-addon"><i class="fa fa-money"></i></span>
 
-                                                            <input type="number" min="1" class="form-control" id="nuevoTotalVenta" name="nuevoTotalVenta" placeholder="00000" readonly required>
+                                                            <input type="number" step="any" min="1" class="form-control" id="nuevoTotalNi" name="nuevoTotalNi" readonly required>
+
+                                                            <input type="hidden" name="totalNi" id="totalNi">
 
                                                         </div>
 
@@ -341,9 +386,18 @@
 
                             <button type="submit" class="btn btn-primary pull-right">Guardar Nota de Ingreso</button>
 
+                            <a href="notas-ingresos"  class="btn btn-danger"><i class="fa fa-times-circle"></i> Cancelar</a>
+
                         </div>
 
                     </form>
+
+                    <?php
+
+                    $crearNotaIngreso = new ControladorNotasIngresos();
+                    $crearNotaIngreso -> ctrCrearNotaIngreso();
+
+                    ?>                     
 
                 </div>
 
