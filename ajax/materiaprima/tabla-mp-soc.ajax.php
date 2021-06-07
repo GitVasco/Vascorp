@@ -30,7 +30,7 @@ class TablaMPSinOC{
             TRAEMOS LAS ACCIONES
             =============================================*/         
 
-                $botones = "<div class='btn-group'><button class='btn btn-xs btn-primary agregarMPNI recuperarBoton' codpro='".$sinOC[$i]["CodPro"]."' orden='".$sinOC[$i]["Nro"]."' idboton='".$sinOC[$i]["CodPro"].$sinOC[$i]["Nro"]."' empresa='".$sinOC[$i]["codruc"]."'><i class='fa fa-plus'></i></button></div>";
+                $botones = "<div class='btn-group'><button class='btn btn-xs btn-primary agregarMPNI recuperarBoton' codpro='".$sinOC[$i]["CodPro"]."' orden='".$sinOC[$i]["Nro"]."' idBoton='".$sinOC[$i]["CodPro"].$sinOC[$i]["Nro"]."' empresa='".$sinOC[$i]["codruc"]."'><i class='fa fa-plus'></i></button></div>";
     
                 $datosJson .= '[
                 "'.$sinOC[$i]["CodPro"].'",

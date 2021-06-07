@@ -477,7 +477,8 @@ class ModeloNotasIngresos{
                                                 ocd.CantNI AS CanNI,
                                                 estac,
                                                 ocd.Nro,
-                                                prov.RazPro AS Proveedor 
+                                                prov.RazPro AS Proveedor,
+                                                ocd.codruc 
                                             FROM
                                                 ocomdet ocd 
                                                 LEFT JOIN 
@@ -794,7 +795,7 @@ class ModeloNotasIngresos{
           ocd.CantNI AS canni,
           estac,
           ocd.nro,
-          prov.RazPro AS proveedor 
+          prov.RazPro AS proveedor
           FROM
             ocomdet ocd 
             LEFT JOIN 
@@ -837,5 +838,235 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
 
 		$stmt = null;
 	}    
+
+    /* 
+    *MOSTRAR CORRELATIVO SUBLINEA
+    */
+    static public function mdlMostrarCorrelativoNotaIngreso(){
+
+      $stmt = Conexion::conectar()->prepare("SELECT 
+                    LPAD(MAX(nnea) + 1, 6, '0') AS correlativo 
+                  FROM
+                    nea");
+
+      $stmt -> execute();
+
+      return $stmt -> Fetch();
+
+      $stmt -> close();
+
+      $stmt = null;
+
+  }
+  
+  /* 
+  * CREAR NOTA DE INGRESO - CABECERA
+  */
+  static public function mdlGuardarNotaIngresoCab($datos){
+
+		$sql="INSERT INTO nea (
+      cod_local,
+      cod_entidad,
+      codruc,
+      tnea,
+      snea,
+      nnea,
+      trguia,
+      serguia,
+      nroguia,
+      fecemi,
+      mo,
+      obser,
+      pigv,
+      subtotal,
+      igv,
+      total,
+      trdcto,
+      srdcto,
+      nrdcto,
+      fecven,
+      tipoc,
+      seroc,
+      nrooc,
+      codalm,
+      estreg,
+      fecreg,
+      usureg,
+      pcreg
+    ) 
+    VALUES
+      (
+        :cod_local,
+        :cod_entidad,
+        :codruc,
+        :tnea,
+        :snea,
+        :nnea,
+        :trguia,
+        :serguia,
+        :nroguia,
+        :fecemi,
+        :mo,
+        :obser,
+        :pigv,
+        :subtotal,
+        :igv,
+        :total,
+        :trdcto,
+        :srdcto,
+        :nrdcto,
+        :fecven,
+        :tipoc,
+        :seroc,
+        :nrooc,
+        :codalm,
+        :estreg,
+        :fecreg,
+        :usureg,
+        :pcreg
+      )";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":cod_local",$datos["cod_local"],PDO::PARAM_STR);
+    $stmt->bindParam(":cod_entidad",$datos["cod_entidad"],PDO::PARAM_STR);
+    $stmt->bindParam(":codruc",$datos["codruc"],PDO::PARAM_STR);
+    $stmt->bindParam(":tnea",$datos["tnea"],PDO::PARAM_STR);
+    $stmt->bindParam(":snea",$datos["snea"],PDO::PARAM_STR);
+    $stmt->bindParam(":nnea",$datos["nnea"],PDO::PARAM_STR);
+    $stmt->bindParam(":trguia",$datos["trguia"],PDO::PARAM_STR);
+    $stmt->bindParam(":serguia",$datos["serguia"],PDO::PARAM_STR);
+    $stmt->bindParam(":nroguia",$datos["nroguia"],PDO::PARAM_STR);
+    $stmt->bindParam(":fecemi",$datos["fecemi"],PDO::PARAM_STR);
+    $stmt->bindParam(":mo",$datos["mo"],PDO::PARAM_STR);
+    $stmt->bindParam(":obser",$datos["obser"],PDO::PARAM_STR);
+    $stmt->bindParam(":pigv",$datos["pigv"],PDO::PARAM_STR);
+    $stmt->bindParam(":subtotal",$datos["subtotal"],PDO::PARAM_STR);
+    $stmt->bindParam(":igv",$datos["igv"],PDO::PARAM_STR);
+    $stmt->bindParam(":total",$datos["total"],PDO::PARAM_STR);
+    $stmt->bindParam(":trdcto",$datos["trdcto"],PDO::PARAM_STR);
+    $stmt->bindParam(":srdcto",$datos["srdcto"],PDO::PARAM_STR);
+    $stmt->bindParam(":nrdcto",$datos["nrdcto"],PDO::PARAM_STR);
+    $stmt->bindParam(":fecven",$datos["fecven"],PDO::PARAM_STR);
+    $stmt->bindParam(":tipoc",$datos["tipoc"],PDO::PARAM_STR);
+    $stmt->bindParam(":seroc",$datos["seroc"],PDO::PARAM_STR);
+    $stmt->bindParam(":nrooc",$datos["nrooc"],PDO::PARAM_STR);
+    $stmt->bindParam(":codalm",$datos["codalm"],PDO::PARAM_STR);
+    $stmt->bindParam(":estreg",$datos["estreg"],PDO::PARAM_STR);
+    $stmt->bindParam(":codalm",$datos["codalm"],PDO::PARAM_STR);
+    $stmt->bindParam(":fecreg",$datos["fecreg"],PDO::PARAM_STR);
+    $stmt->bindParam(":usureg",$datos["usureg"],PDO::PARAM_STR);
+    $stmt->bindParam(":pcreg",$datos["pcreg"],PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+
+		}
+
+		$stmt=null;
+
+	}	
+
+  /* 
+  * CREAR NOTA DE INGRESO - CABECERA
+  */
+  static public function mdlGuardarNotaIngresoDet($datos){
+
+		$sql="INSERT INTO neadet (
+      cod_local,
+      cod_entidad,
+      item,
+      codruc,
+      tnea,
+      snea,
+      nnea,
+      ndoc,
+      cansol,
+      presol,
+      codpro,
+      codalm,
+      p_unitario,
+      coscompra,
+      total,
+      estreg,
+      fecreg,
+      usureg,
+      pcreg,
+      salpro,
+      excpro,
+      cantni,
+      fecemi
+    ) 
+    VALUES
+      (
+        :cod_local,
+        :cod_entidad,
+        :item,
+        :codruc,
+        :tnea,
+        :snea,
+        :nnea,
+        :ndoc,
+        :cansol,
+        :presol,
+        :codpro,
+        :codalm,
+        :p_unitario,
+        :coscompra,
+        :total,
+        :estreg,
+        :fecreg,
+        :usureg,
+        :pcreg,
+        :salpro,
+        :excpro,
+        :cantni,
+        :fecemi
+      )";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":cod_local",$datos["cod_local"],PDO::PARAM_STR);
+    $stmt->bindParam(":cod_entidad",$datos["cod_entidad"],PDO::PARAM_STR);
+    $stmt->bindParam(":item",$datos["item"],PDO::PARAM_STR);
+    $stmt->bindParam(":codruc",$datos["codruc"],PDO::PARAM_STR);
+    $stmt->bindParam(":tnea",$datos["tnea"],PDO::PARAM_STR);
+    $stmt->bindParam(":snea",$datos["snea"],PDO::PARAM_STR);
+    $stmt->bindParam(":nnea",$datos["nnea"],PDO::PARAM_STR);    
+    $stmt->bindParam(":ndoc",$datos["ndoc"],PDO::PARAM_STR);
+    $stmt->bindParam(":cansol",$datos["cansol"],PDO::PARAM_STR);
+    $stmt->bindParam(":presol",$datos["presol"],PDO::PARAM_STR);
+    $stmt->bindParam(":codpro",$datos["codpro"],PDO::PARAM_STR);
+    $stmt->bindParam(":codalm",$datos["codalm"],PDO::PARAM_STR);
+    $stmt->bindParam(":p_unitario",$datos["p_unitario"],PDO::PARAM_STR);
+    $stmt->bindParam(":coscompra",$datos["coscompra"],PDO::PARAM_STR);
+    $stmt->bindParam(":total",$datos["total"],PDO::PARAM_STR);
+    $stmt->bindParam(":estreg",$datos["estreg"],PDO::PARAM_STR);
+    $stmt->bindParam(":fecreg",$datos["fecreg"],PDO::PARAM_STR);
+    $stmt->bindParam(":usureg",$datos["usureg"],PDO::PARAM_STR);
+    $stmt->bindParam(":pcreg",$datos["pcreg"],PDO::PARAM_STR);
+    $stmt->bindParam(":salpro",$datos["salpro"],PDO::PARAM_STR);
+    $stmt->bindParam(":excpro",$datos["excpro"],PDO::PARAM_STR);
+    $stmt->bindParam(":cantni",$datos["cantni"],PDO::PARAM_STR);
+    $stmt->bindParam(":fecemi",$datos["fecemi"],PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+
+		}
+
+		$stmt=null;
+    
+	}	  
 
 }
