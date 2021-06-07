@@ -24,20 +24,12 @@ class ModeloNotasSalidas{
 			ventas_cab vc 
 			LEFT JOIN clientes c 
 			  ON vc.ruc = c.ruc 
-			LEFT JOIN 
-			  (SELECT 
-				cod_argumento,
-				cod_tabla,
-				des_larga,
-				des_corta,
-				valor_1,
-				valor_2,
-				valor_3 
-			  FROM
-				tabla_m_detalle 
-			  WHERE cod_tabla = 'talm') a 
+			LEFT JOIN tabla_m_detalle a 
 			  ON vc.codalm = a.cod_argumento 
-		  WHERE YEAR(fecemi) IN ('2020', '2021') AND vc.EstVta NOT LIKE 'A' ORDER BY Nro DESC");
+		  WHERE YEAR(fecemi) IN ('2020', '2021') 
+			AND vc.EstVta NOT LIKE 'A' 
+			AND cod_tabla = 'talm' 
+		  ORDER BY Nro DESC ");
 
 			$stmt -> execute();
 
@@ -61,11 +53,7 @@ class ModeloNotasSalidas{
 			  (SELECT 
 				cod_argumento,
 				cod_tabla,
-				des_larga,
-				des_corta,
-				valor_1,
-				valor_2,
-				valor_3 
+				des_larga
 			  FROM
 				tabla_m_detalle 
 			  WHERE cod_tabla = 'talm') a 
@@ -105,11 +93,7 @@ class ModeloNotasSalidas{
 				  (SELECT 
 					cod_argumento,
 					cod_tabla,
-					des_larga,
-					des_corta,
-					valor_1,
-					valor_2,
-					valor_3 
+					des_larga
 				  FROM
 					tabla_m_detalle 
 				  WHERE cod_tabla = 'talm') a 
@@ -135,11 +119,7 @@ class ModeloNotasSalidas{
 				  (SELECT 
 					cod_argumento,
 					cod_tabla,
-					des_larga,
-					des_corta,
-					valor_1,
-					valor_2,
-					valor_3 
+					des_larga
 				  FROM
 					tabla_m_detalle 
 				  WHERE cod_tabla = 'talm') a 
@@ -387,7 +367,7 @@ class ModeloNotasSalidas{
 	// Método para guardar las ventas
 	static public function mdlGuardarDetalleNotaSalida($tabla,$datos){
 
-		$sql="INSERT INTO $tabla(Item,CanVta,PreVta,FecEmi,DscVta,Tip,Ser,Nro,Cod_Local,Cod_Entidad,Ruc,CodPro,SugVta,EstVta,pcosto,CenCosto,FecReg,PcReg,UsuReg) VALUES (:Item,:CanVta,:PreVta,:FecEmi,:DscVta,:Tip,:Ser,:Nro,:Cod_Local,:Cod_Entidad,:Ruc,:CodPro,:SugVta,:EstVta,:pcosto,:CenCosto,:FecReg,:PcReg,:UsuReg)";
+		$sql="INSERT INTO $tabla(Item,CanVta,PreVta,FecEmi,DscVta,Tip,Ser,Nro,Cod_Local,Cod_Entidad,Ruc,CodPro,SugVta,EstVta,pcosto,CenCosto,FecReg,PcReg,UsuReg,SalVta) VALUES (:Item,:CanVta,:PreVta,:FecEmi,:DscVta,:Tip,:Ser,:Nro,:Cod_Local,:Cod_Entidad,:Ruc,:CodPro,:SugVta,:EstVta,:pcosto,:CenCosto,:FecReg,:PcReg,:UsuReg,:CanVta)";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 
@@ -547,5 +527,30 @@ class ModeloNotasSalidas{
 		$stmt = null;
 
 	}    
+
+
+	/*=============================================
+	MOSTRAR NOTAS DE SALIDA CABECERA
+	=============================================*/
+
+	static public function mdlMostrarDetalleNotaSalida2($tabla, $item, $valor , $item2, $valor2){
+
+
+			$stmt = Conexion::conectar()->prepare("SELECT CanVta FROM  $tabla  WHERE $item = :$item AND $item2 = :$item2");
+
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt -> bindParam(":".$item2, $valor2, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();
+
+		
+		
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
 
 }

@@ -38,7 +38,7 @@
         
       <div class="box-body">
        <input type="hidden" value="<?=$_SESSION["perfil"];?>" id="perfilOculto"> 
-       <table class="table table-bordered table-striped dt-responsive tablaColores">
+       <table class="table table-bordered table-striped dt-responsive tablaColores" width="100%">
          
         <thead>
          

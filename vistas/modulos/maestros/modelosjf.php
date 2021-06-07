@@ -114,7 +114,7 @@ MODAL VER MODELO
 
             </div>
             <div id="scroll">
-              <table class="table tablaDetalleModelo">
+              <table class="table tablaDetalleModelo" width="100%">
                 <thead>
                 
                   <th class="text-center">Modelo</th>
@@ -534,7 +534,7 @@ MODAL AGREGAR MODELO
               </div>
             </div>
             <!-- ENTRADA PARA LISTAR PRECIOS -->
-              <table class="tablaDetallePrecio">
+              <table class="tablaDetallePrecio" width="100%">
                 <thead>
                 <tr>
                   <th></th>

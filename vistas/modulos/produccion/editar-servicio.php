@@ -295,7 +295,7 @@
 
           <div class="box-body">
 
-            <table class="table table-bordered table-striped dt-responsive tablaArticuloServicio">
+            <table class="table table-bordered table-striped dt-responsive tablaArticuloServicio" width="100%">
 
               <thead>
 

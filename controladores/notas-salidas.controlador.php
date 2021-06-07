@@ -105,6 +105,19 @@ class ControladorNotasSalidas{
 		return $respuesta;
 		
 	}
+
+	/*=============================================
+	MOSTRAR MATERIA PRIMA PARA NOTA DE SALIDA
+	=============================================*/	
+
+	static public function ctrMostrarDetalleNotaSalida2($item,$valor,$item2,$valor2){
+
+		$tabla = "venta_det";
+		$respuesta = ModeloNotasSalidas::mdlMostrarDetalleNotaSalida2($tabla,$item,$valor,$item2,$valor2);
+
+		return $respuesta;
+		
+	}
 	/*=============================================
 	CREAR VENTA
 	=============================================*/
@@ -142,11 +155,16 @@ class ControladorNotasSalidas{
 
 				foreach($listaMateriaNotas as $key=>$value){
 
+					# Traemos las materia prima por CodPro en cada interacción
+					
+					$valor=$value["id"];
+
+					$infoMateria=ModeloMateriaPrima::mdlMostrarMateriaPrima($valor);
+
 					# Actualizamos el stock en la tabla materia prima
 					$tabla="producto";
-					$valor=$value["id"];
 					$item1="CodAlm01";
-					$valor1=$value["stock"];
+					$valor1=$infoMateria["CodAlm01"]-$value["cantidad"];
 					ModeloNotasSalidas::mdlActualizarUnDatoMateria($tabla,$item1,$valor1,$valor);
 
 				}
@@ -287,13 +305,30 @@ class ControladorNotasSalidas{
 			$tabla="ventas_cab";
 			$PcAnu= gethostbyaddr($_SERVER['REMOTE_ADDR']);
 
+			$detalleNotaSalida=ModeloNotasSalidas::mdlMostrarDetalleNotaSalida("venta_det","Nro",$datos);
+
+			foreach($detalleNotaSalida as $key=>$value){
+
+				# Traemos las materia prima por CodPro en cada interacción
+				$valor=$value["CodPro"];
+				$infoMateria=ModeloMateriaPrima::mdlMostrarMateriaPrima($valor);
+
+				# Sumamos el stock de la materia prima con la cantidad venta del detalle nota salida
+				$tabla="producto";
+				$item1="CodAlm01";
+				$valor1=$value["CanVta"]+$infoMateria["CodAlm01"];
+				ModeloNotasSalidas::mdlActualizarUnDatoMateria($tabla,$item1,$valor1,$valor);
+	
+	
+			}
+
 			date_default_timezone_set('America/Lima');
 			$fecha = new DateTime();
 			$notaSalida=ControladorNotasSalidas::ctrMostrarNotaSalida("Nro",$datos);
 			$usuario= $_SESSION["nombre"];
 			$para      = 'notificacionesvascorp@gmail.com';
 			$asunto    = 'Se anulo una nota de salida';
-			$descripcion   = 'El usuario '.$usuario.' anulo la nota de salida '.$notaSalida["Nro"].' - '.$notaSalida["RazPro"];
+			$descripcion   = 'El usuario '.$usuario.' anulo la nota de salida '.$notaSalida["Nro"].' - '.$notaSalida["Ruc"];
 			$de = 'From: notificacionesvascorp@gmail.com';
 			if($_SESSION["correo"] == 1){
 				mail($para, $asunto, $descripcion, $de);

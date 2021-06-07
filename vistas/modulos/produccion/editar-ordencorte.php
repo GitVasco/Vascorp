@@ -343,7 +343,7 @@
 
           <div class="box-body">
 
-            <table class="table table-bordered table-striped table-condensed tablaArticulosOrdenCorte">
+            <table class="table table-bordered table-striped table-condensed tablaArticulosOrdenCorte" width="100%">
 
               <thead>
 

@@ -13,7 +13,7 @@ class TablaMateriaPrima{
 
         $valor = null;
 
-        $materiaprima = ControladorMateriaPrima::ctrMostrarMateriaPrima($valor);	
+        $materiaprima = ControladorMateriaPrima::ctrMostrarMateriaPrima2($valor);	
         if(count($materiaprima)>0){
 
         $datosJson = '{

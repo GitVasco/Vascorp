@@ -26,7 +26,7 @@
                 </div>
                 
                 <div class="box-body">
-                    <table class="table table-bordered table-striped dt-responsive tablaCuentasCancelar">
+                    <table class="table table-bordered table-striped dt-responsive tablaCuentasCancelar" width="100%">
                         
                         <thead>
                         
@@ -63,7 +63,7 @@
                 </div>
                 <div class="box-body">
 
-                    <table class="table table-bordered table-striped dt-responsive tablaAbonosCancelar">
+                    <table class="table table-bordered table-striped dt-responsive tablaAbonosCancelar" width="100%">
 
                         <thead>
 

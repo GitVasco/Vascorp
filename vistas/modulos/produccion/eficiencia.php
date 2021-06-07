@@ -58,7 +58,7 @@
 
         <input type="hidden" value="<?=$_SESSION["perfil"];?>" id="perfilOculto">
         
-       <table class="table table-bordered table-striped dt-responsive tablaEficiencia">
+       <table class="table table-bordered table-striped dt-responsive tablaEficiencia" width="100%">
          
         <thead>
          

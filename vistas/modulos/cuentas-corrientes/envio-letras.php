@@ -223,7 +223,7 @@
             <div class="col-lg-7 col-xs-12">
                 <div class="box box-warning">
                     <div class="box-body">
-                        <table class="table table-bordered table-striped dt-responsive tablaEnvioLetras">
+                        <table class="table table-bordered table-striped dt-responsive tablaEnvioLetras" width="100%">
                             
                             <thead>
                             

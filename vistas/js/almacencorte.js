@@ -865,10 +865,11 @@ $(".tablaAlmacenCorte").on("click", ".btnEditarAC", function () {
 		processData: false,
 		dataType:"json",
 		success:function(respuesta){
+      // console.log(respuesta);
             $(".telaMP").remove();
 			for (let i = 0; i < respuesta.length; i++) {
                 $("#almacencorteMP").val(respuesta[0]["almacencorte"]);
-                $("#telas").append("<div class='telaMP col-lg-12' style='padding:0px'><div class='col-lg-5 col-md-5'><label><b>Tela "+(i+1)+"</b></label><input type='text' class='form-control' name='telas[]' value='"+respuesta[i]["descripcion"]+"' readonly></div><div class='col-lg-1 col-md-1 col-lg-offset-1'><label><b>C. usada "+(i+1)+"</b></label><input type='number' min='0' step='any' class='form-control input-sm' name='cantidadMP"+i+"' id='cantidadMP"+i+"' value='"+respuesta[i]["cons_real"]+"' required></div><div class='col-lg-1 col-md-1'><label><b>C. estimad "+(i+1)+"</b></label><input type='hidden' step='any' value='"+respuesta[i]["mat_pri"]+"' name='materia"+i+"' ><input type='number' class='form-control' value='"+respuesta[i]["cons_total"]+"' name='resta"+i+"' id='resta"+i+"' readonly></div><div class='col-lg-1'><label><b>Diferencia "+(i+1)+"</b></label><input type='number'  step='any'class='form-control input-sm' step='any' name='diferenciaMP"+i+"' id='diferenciaMP"+i+"' value='"+respuesta[i]["diferencia"]+"' readonly></div><div class='col-lg-1 col-md-1'><label><b>C. recibida "+(i+1)+"</b></label><input type='number'step='any' class='form-control input-sm' name='entregaMP"+i+"' min='0' id='entregaMP"+i+"' value='"+respuesta[i]["can_entregada"]+"' required></div><div class='col-lg-1 col-md-1'><label><b>Merma "+(i+1)+"</b></label><input type='number' class='form-control input-sm' step='any' min='0' name='mermaMP"+i+"' id='mermaMP"+i+"' value='"+respuesta[i]["merma"]+"' required></div><div class='col-lg-1 col-md-1'><label><b>MP sin uso "+(i+1)+"</b></label><input type='number'step='any' class='form-control input-sm' name='sinusoMP"+i+"' id='sinusoMP"+i+"' value='"+respuesta[i]["mp_sinuso"]+"' readonly></div></div>");
+                $("#telas").append("<div class='telaMP col-lg-12' style='padding:0px'><div class='col-lg-2 col-md-2 '><label><b>Nota salida "+(i+1)+"</b></label><input type='text'  class='form-control input-sm' name='notaSalidaMP"+i+"' id='notaSalidaMP"+i+"'  required></div><div class='col-lg-4 col-md-4'><label><b>Tela "+(i+1)+"</b></label><input type='text' class='form-control input-sm' name='telas[]' value='"+respuesta[i]["descripcion"]+"' readonly></div><div class='col-lg-1 col-md-1 '><label><b>C. usada "+(i+1)+"</b></label><input type='number' min='0' step='any' class='form-control input-sm' name='cantidadMP"+i+"' id='cantidadMP"+i+"' value='"+respuesta[i]["cons_real"]+"' required></div><div class='col-lg-1 col-md-1'><label><b>C. estimad "+(i+1)+"</b></label><input type='hidden' step='any' value='"+respuesta[i]["mat_pri"]+"' name='materia"+i+"' id='materia"+i+"' ><input type='number' class='form-control input-sm' value='"+respuesta[i]["cons_total"]+"' name='resta"+i+"' id='resta"+i+"' readonly></div><div class='col-lg-1'><label><b>Diferencia "+(i+1)+"</b></label><input type='number'  step='any'class='form-control input-sm' step='any' name='diferenciaMP"+i+"' id='diferenciaMP"+i+"' value='"+respuesta[i]["diferencia"]+"' readonly></div><div class='col-lg-1 col-md-1'><label><b>C. recibida "+(i+1)+"</b></label><input type='number'step='any' class='form-control input-sm' name='entregaMP"+i+"' min='0' id='entregaMP"+i+"' value='"+respuesta[i]["can_entregada"]+"' readonly></div><div class='col-lg-1 col-md-1'><label><b>Merma "+(i+1)+"</b></label><input type='number' class='form-control input-sm' step='any' min='0' name='mermaMP"+i+"' id='mermaMP"+i+"' value='"+respuesta[i]["merma"]+"' required></div><div class='col-lg-1 col-md-1'><label><b>MP sin uso "+(i+1)+"</b></label><input type='number'step='any' class='form-control input-sm' name='sinusoMP"+i+"' id='sinusoMP"+i+"' value='"+respuesta[i]["mp_sinuso"]+"' readonly></div></div>");
                
                 $("#cantidadMP"+i+"").change(function(){
                     $("#diferenciaMP"+i+"").val(Number($("#cantidadMP"+i+"").val())-Number($("#resta"+i+"").val()));
@@ -880,12 +881,104 @@ $(".tablaAlmacenCorte").on("click", ".btnEditarAC", function () {
                 $("#mermaMP"+i+"").change(function(){
                     $("#sinusoMP"+i+"").val(Number($("#entregaMP"+i+"").val())-Number($("#cantidadMP"+i+"").val())-Number($("#mermaMP"+i+"").val()));  
                 })
-            }
-            
-			
-		}
 
+                $("#notaSalidaMP"+i+"").keyup(function(){
+                  var notaSalida = $(this).val();
+                  var codPro = $("#materia"+i).val();
+                  // console.log(codPro);
+                  var datosNotaSalida = new FormData();
+                  datosNotaSalida.append("notaSalida", notaSalida);
+                  datosNotaSalida.append("codPro", codPro);
+                  $.ajax({
+
+                    url:"ajax/notas-salidas.ajax.php",
+                    method: "POST",
+                    data: datosNotaSalida,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    dataType:"json",
+                    success:function(respuestaSalida){
+                      // console.log(respuestaSalida);
+                      $("#entregaMP"+i+"").val(respuestaSalida["CanVta"]);
+                    }
+                  })
+                  
+                })
+
+            }
+
+
+            var datos2 = new FormData();
+            datos2.append("codigoAC", cod);
+          
+            $.ajax({
+          
+              url:"ajax/almacencorte.ajax.php",
+              method: "POST",
+              data: datos2,
+              cache: false,
+              contentType: false,
+              processData: false,
+              dataType:"json",
+              success:function(respuesta2){
+          
+                // console.log( respuesta2);
+    
+                $("#almacencorte2").val(respuesta2["codigo"]);
+                $("#guia2").val(respuesta2["guia"]);
+                $("#fecha2").val(respuesta2["fecha"]);
+                $("#nombre2").val(respuesta2["nombre"]);
+                $("#cantidad2").val(respuesta2["total"]);
+                $("#estado2").val(respuesta2["estado"]);
+    
+                $("#cantidad2").number(true, 0);
+          
+                
+              }
+          
+            })
+	
+	    }
     })
+
+    var codigoDAC = $(this).attr("codigoAC");
+            
+    $(".tablaVerACDetalle").DataTable().destroy();
+    $('.tablaVerACDetalle').DataTable({
+        "ajax": "ajax/produccion/tabla-ver-almacencorte.ajax.php?perfil=" + $("#perfilOculto").val()+"&codigo="+ codigoDAC,
+        "deferRender": true,
+        "retrieve": true,
+        "processing": true,
+        "order": [[0, "desc"]],
+        "language": {
+    
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+    
+        }
+    
+    });
 })
 
 

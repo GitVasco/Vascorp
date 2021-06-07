@@ -395,7 +395,7 @@
 
           <div class="box-body">
 
-            <table class="table table-bordered table-striped table-condensed tablaMateriaPrimaTarjetas">
+            <table class="table table-bordered table-striped table-condensed tablaMateriaPrimaTarjetas" width="100%">
 
               <thead>
 

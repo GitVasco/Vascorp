@@ -8,7 +8,7 @@
 
  
 //ajuntar la libreria excel
-include "Classes/PHPExcel.php";
+include "../reportes_excel/Classes/PHPExcel.php";
 require_once "../../controladores/usuarios.controlador.php";
 require_once "../../modelos/usuarios.modelo.php";
 /* 

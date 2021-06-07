@@ -855,7 +855,7 @@
 
                     <div class="box-body">
 
-                        <table class="table table-bordered table-striped dt-responsive tablaArticulosPedidos">
+                        <table class="table table-bordered table-striped dt-responsive tablaArticulosPedidos" width="100%">
 
                             <thead>
 

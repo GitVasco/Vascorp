@@ -28,7 +28,7 @@
             </div>
             <div class="box-body">
 
-                <table class="table table-bordered table-striped dt-responsive tablaAbonos">
+                <table class="table table-bordered table-striped dt-responsive tablaAbonos" width="100%">
 
                     <thead>
 

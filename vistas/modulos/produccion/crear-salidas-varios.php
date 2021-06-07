@@ -776,7 +776,7 @@
 
                     <div class="box-body">
 
-                        <table class="table table-bordered table-striped dt-responsive tablaArticulosSalidas">
+                        <table class="table table-bordered table-striped dt-responsive tablaArticulosSalidas" width="100%">
 
                             <thead>
 

@@ -27,7 +27,7 @@
 
       <div class="box-body">
 
-        <table class="table table-bordered table-striped dt-responsive tablaListarDocumentos">
+        <table class="table table-bordered table-striped dt-responsive tablaListarDocumentos" width="100%">
 
           <thead>
 

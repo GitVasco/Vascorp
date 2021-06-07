@@ -1810,7 +1810,7 @@ MODAL VISUALIZAR INFORMACION
 
             <div class="box-body">
               <div id="scroll2">
-                <table class="table table-bordered table-striped dt-responsive tablaDetalleArticulo">
+                <table class="table table-bordered table-striped dt-responsive tablaDetalleArticulo" width="100%">
 
                   <thead>
 

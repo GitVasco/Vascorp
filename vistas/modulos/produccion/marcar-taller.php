@@ -36,7 +36,7 @@
 
                     <h3 class="box-title">En Proceso</h3>
 
-                        <table class="table table-bordered table-striped dt-responsive tablaTallerPB">
+                        <table class="table table-bordered table-striped dt-responsive tablaTallerPB" width="100%">
 
                             <thead>
 
@@ -66,7 +66,7 @@
 
                     <h3 class="box-title">Terminado</h3>
 
-                        <table class="table table-bordered table-striped dt-responsive tablaTallerTB">
+                        <table class="table table-bordered table-striped dt-responsive tablaTallerTB" width="100%">
 
                             <thead>
 

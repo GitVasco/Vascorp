@@ -63,7 +63,7 @@
 
         <input type="hidden" value="<?=$_SESSION["perfil"];?>" id="perfilOculto">
         <input type="hidden" value="<?= $_GET["ruta"]; ?>" id="rutaAcceso">
-       <table class="table table-bordered table-striped dt-responsive tablaAlmacenCorte">
+       <table class="table table-bordered table-striped dt-responsive tablaAlmacenCorte" width="100%">
          
         <thead>
          
@@ -505,7 +505,7 @@ MODAL EDITAR TELA
 
             <!-- ENTRADA PARA CODIGO DEL OC-->
             
-            <div class="form-group col-lg-1">
+            <div class="form-group col-lg-2">
               
               <label>Corte</label>
 
@@ -513,11 +513,169 @@ MODAL EDITAR TELA
 
               <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
 
-                <strong><input type="text" class="form-control input-sm" name="almacencorteMP" id="almacencorteMP"  readonly></strong>
+                <strong><input type="text" class="form-control input-sm" name="almacencorte2" id="almacencorte2" required readonly></strong>
 
               </div>
 
             </div>
+
+            
+            <!-- ENTRADA PARA LA FECHA-->
+            
+            <div class="form-group col-lg-2">
+
+              <label>Creación</label>
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+
+                <strong><input type="text" class="form-control input-sm" name="fecha2" id="fecha2" required readonly></strong>
+
+              </div>
+
+            </div>   
+
+            <!-- ENTRADA PARA LA GUIA-->
+                        
+            <div class="form-group col-lg-2">
+
+              <label>N° Guia</label>
+
+              <div class="input-group">
+
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+
+                <strong><input type="text" class="form-control input-sm" name="guia2" id="guia2"  readonly></strong>
+
+              </div>
+
+            </div>    
+
+            <!-- ENTRADA PARA LA RESPONSABLE-->
+            
+            <div class="form-group col-lg-2">
+
+              <label>Responsable</label>
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+
+                <strong><input type="text" class="form-control input-sm" name="nombre2" id="nombre2" required readonly></strong>
+
+              </div>
+
+            </div>            
+   
+            
+            <!-- ENTRADA PARA LA CANTIDAD-->
+            
+            <div class="form-group col-lg-2">
+
+              <label>Cantidad Total</label>
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+
+                <strong><input type="text" class="form-control input-sm" name="cantidad2" id="cantidad2" required readonly></strong>
+
+              </div>
+
+            </div>
+            
+            <!-- ENTRADA PARA EL ESTADO-->
+            
+            <div class="form-group col-lg-2">
+
+              <label>Estado</label>
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+
+                <strong><input type="text" class="form-control input-sm" name="estado2" id="estado2" required readonly></strong>
+
+              </div>
+
+            </div>
+                       
+            <!-- TABLA DE DETALLES -->
+
+            <div class="form-group col-lg-12">
+            <label>TABLA DETALLES</label>
+            </div>
+
+            <div class="box-body">
+
+              <table class="table table-bordered table-striped dt-responsive tablaVerACDetalle" width="100%">
+
+              <thead>
+
+                <tr>
+                  <th></th>
+                  <th style="width:100px"></th>
+                  <th></th>
+                  <th style="width:250px"></th>
+                  <th></th>
+                  <th>S</th>
+                  <th>M</th>
+                  <th>L</th>
+                  <th>XL</th>
+                  <th>XXL</th>
+                  <th>XS</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                </tr>
+
+                <tr>
+                  <th></th>
+                  <th style="width:100px"></th>
+                  <th></th>
+                  <th style="width:250px"></th>
+                  <th></th>
+                  <th>28</th>
+                  <th>30</th>
+                  <th>32</th>
+                  <th>34</th>
+                  <th>36</th>
+                  <th>38</th>
+                  <th>40</th>
+                  <th>42</th>
+                  <th></th>
+                </tr>
+
+                <tr>
+                  <th>Corte</th>
+                  <th style="width:100px">Fecha</th>
+                  <th>Modelo</th>
+                  <th style="width:250px">Nombre</th>
+                  <th>Color</th>
+                  <th>3</th>
+                  <th>4</th>
+                  <th>6</th>
+                  <th>8</th>
+                  <th>10</th>
+                  <th>12</th>
+                  <th>14</th>
+                  <th>16</th>
+                  <th>Total</th>
+                </tr>
+
+                </thead>
+
+                <tbody>
+
+
+
+                </tbody>
+
+              </table>
+
+            </div>
+
             <div class="col-lg-12"></div>
             <div id="telas" >
             </div>

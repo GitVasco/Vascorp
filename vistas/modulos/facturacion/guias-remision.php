@@ -24,7 +24,7 @@
 
             <div class="box-body">
 
-                <table class="table table-bordered table-striped dt-responsive tablaGuiasRemision">
+                <table class="table table-bordered table-striped dt-responsive tablaGuiasRemision" width="100%">
 
                     <thead>
 

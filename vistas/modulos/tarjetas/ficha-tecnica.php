@@ -50,7 +50,7 @@
       <div class="box-body">
       <input type="hidden" value="<?= $_SESSION["perfil"]; ?>" id="perfilOculto">
       <input type="hidden" value="<?= $_GET["ruta"]; ?>" id="rutaAcceso">
-       <table class="table table-bordered table-striped dt-responsive tablaFichaTecnica">
+       <table class="table table-bordered table-striped dt-responsive tablaFichaTecnica" width="100%">
          
         <thead>
          

@@ -59,7 +59,7 @@
         
       <div class="box-body">
         
-       <table class="table table-bordered table-striped dt-responsive tablaCuentasConsultar">
+       <table class="table table-bordered table-striped dt-responsive tablaCuentasConsultar" width="100%">
          
         <thead>
          

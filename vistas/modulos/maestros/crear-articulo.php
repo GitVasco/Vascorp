@@ -222,7 +222,7 @@
 
           <div class="box-body">
 
-            <table class="table table-bordered table-striped dt-responsive tablaArticuloColores">
+            <table class="table table-bordered table-striped dt-responsive tablaArticuloColores" width="100%">
 
               <thead>
 

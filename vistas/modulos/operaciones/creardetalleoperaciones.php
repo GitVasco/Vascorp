@@ -238,7 +238,7 @@
 
           <div class="box-body">
 
-            <table class="table table-bordered table-striped dt-responsive tablaArticuloOperaciones">
+            <table class="table table-bordered table-striped dt-responsive tablaArticuloOperaciones" width="100%">
 
               <thead>
 

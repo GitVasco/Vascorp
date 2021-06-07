@@ -55,7 +55,7 @@
 
         <input type="hidden" value="<?=$_SESSION["perfil"];?>" id="perfilOculto">
         
-       <table class="table table-bordered table-striped dt-responsive tablaPagos" id="totalPagos">
+       <table class="table table-bordered table-striped dt-responsive tablaPagos" id="totalPagos" width="100%">
          
         <thead>
          
