@@ -17,6 +17,7 @@ class ModeloNotasSalidas{
 			vc.tip,
 			vc.ser,
 			vc.nro,
+			vc.EstNota,
 			DATE(fecemi) AS fecemi,
 			c.razcli,
 			a.des_larga AS almacen 
@@ -42,6 +43,7 @@ class ModeloNotasSalidas{
 			vc.tip,
 			vc.ser,
 			vc.nro,
+			vc.EstNota,
 			DATE(fecemi) AS fecemi,
 			c.razcli,
 			a.des_larga AS almacen 
@@ -82,6 +84,7 @@ class ModeloNotasSalidas{
 				vc.tip,
 				vc.ser,
 				vc.nro,
+				vc.EstNota,
 				DATE(fecemi) AS fecemi,
 				c.razcli,
 				a.des_larga AS almacen 
@@ -108,6 +111,7 @@ class ModeloNotasSalidas{
 				vc.tip,
 				vc.ser,
 				vc.nro,
+				vc.EstNota,
 				DATE(fecemi) AS fecemi,
 				c.razcli,
 				a.des_larga AS almacen 
@@ -536,7 +540,7 @@ class ModeloNotasSalidas{
 	static public function mdlMostrarDetalleNotaSalida2($tabla, $item, $valor , $item2, $valor2){
 
 
-			$stmt = Conexion::conectar()->prepare("SELECT CanVta FROM  $tabla  WHERE $item = :$item AND $item2 = :$item2");
+			$stmt = Conexion::conectar()->prepare("SELECT SalVta FROM  $tabla  WHERE $item = :$item AND $item2 = :$item2");
 
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 			$stmt -> bindParam(":".$item2, $valor2, PDO::PARAM_STR);
@@ -552,5 +556,64 @@ class ModeloNotasSalidas{
 		$stmt = null;
 
 	}
+
+	/*=============================================
+	ACTUALIZAR SALDO DE NOTA DE SALIDA
+	=============================================*/
+
+	static public function mdlActualizarSaldoNotaSalida($tabla,$datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET SalVta = SalVta - :SalVta WHERE Nro = :Nro AND CodPro = :CodPro");
+
+		$stmt -> bindParam(":Nro", $datos["Nro"], PDO::PARAM_STR);
+		$stmt -> bindParam(":CodPro", $datos["CodPro"], PDO::PARAM_STR);
+        $stmt -> bindParam(":SalVta", $datos["SalVta"], PDO::PARAM_STR);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}    
+
+	/*=============================================
+	APROBAR NOTA DE SALIDA
+	=============================================*/
+
+	static public function mdlAprobarNotaSalida($datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE ventas_cab SET EstNota = :EstNota , UsuMod = :UsuMod, PcMod = :PcMod, FecMod = :FecMod WHERE Nro = :Nro");
+
+		$stmt -> bindParam(":EstNota", $datos["EstNota"], PDO::PARAM_STR);
+		$stmt -> bindParam(":Nro", $datos["Nro"], PDO::PARAM_STR);
+		$stmt -> bindParam(":UsuMod", $datos["UsuMod"], PDO::PARAM_STR);
+		$stmt -> bindParam(":PcMod", $datos["PcMod"], PDO::PARAM_STR);
+		$stmt -> bindParam(":FecMod", $datos["FecMod"], PDO::PARAM_STR);
+		
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
 
 }

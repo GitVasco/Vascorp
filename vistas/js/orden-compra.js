@@ -322,10 +322,10 @@ $(".tablaMateriaOrdenCompra").on("click", "button.agregarMateriaCompra", functio
         return;
       }
       var datos2 = new FormData();
-      datos2.append("idMateriaNota", idMateriaCompra);
+      datos2.append("ColorCompra", "");
 
       $.ajax({
-        url: "ajax/notas-salidas.ajax.php",
+        url: "ajax/orden-compra.ajax.php",
         method: "POST",
         data: datos2,
         cache: false,
@@ -333,12 +333,12 @@ $(".tablaMateriaOrdenCompra").on("click", "button.agregarMateriaCompra", functio
         processData: false,
         dataType: "json",
         success: function(respuesta2) {
-          $(".nuevoDestinoNota").find('option').remove();
+          $(".nuevoColorProv").find('option').remove();
                 
-            $(".nuevoDestinoNota").append("<option value=''>SELECCIONAR DESTINO</option>");
+            $(".nuevoColorProv").append("<option value=''>COLOR</option>");
             for (let i = 0; i < respuesta2.length; i++) {
               
-              $(".nuevoDestinoNota").append("<option value='"+respuesta2[i]["Cod_Argumento"]+"'>"+respuesta2[i]["Cod_Argumento"]+" - "+respuesta2[i]["Des_Larga"]+"</option>");
+              $(".nuevoColorProv").append("<option value='"+respuesta2[i]["cod_argumento"]+"'>"+respuesta2[i]["cod_argumento"]+" - "+respuesta2[i]["des_larga"]+"</option>");
               
             }
         }
@@ -377,8 +377,8 @@ $(".tablaMateriaOrdenCompra").on("click", "button.agregarMateriaCompra", functio
 
           '<div class="col-xs-1" >' +
 
-              '<select class="form-control input-sm nuevoDestinoNota" name="nuevoDestinoNota" required>' +
-              '<option value="">Seleccionar color prov</option>' +
+              '<select class="form-control input-sm nuevoColorProv" name="nuevoColorProv" required>' +
+              '<option value="">Seleccionar color</option>' +
 
               '</select>'+
 
@@ -552,6 +552,10 @@ $(".formularioOrdenCompra").on("keyup", "input.nuevaCantidadMateria", function()
 });
 
 
+$(".formularioOrdenCompra").on("keyup", "input.nuevoPrecio, input.nuevoDscto, select.nuevoColorProv", function() {
+  listarMateriaCompras();
+});
+
 
 /*=============================================
 LISTAR TODAS LAS MATERIA PRIMA
@@ -568,13 +572,15 @@ function listarMateriaCompras() {
 
   var codfab = $(".nuevoCodigoFab");
   
-  var destino = $(".nuevoDestinoNota");
+  var colorprov = $(".nuevoColorPro");
 
-  var codcolor = $(".nuevoCodigoColor");
+  var descuento = $(".nuevoDscto");
 
   var color = $(".nuevoColor");
 
-  var precio = $(".nuevoCosto");
+  var precio = $(".nuevoPrecio");
+
+  var total = $(".nuevoTotal");
 
   for (var i = 0; i < descripcion.length; i++) {
     listarMateriaCompras.push({
@@ -582,11 +588,12 @@ function listarMateriaCompras() {
       codfab:  $(codfab[i]).val(),
       descripcion: $(descripcion[i]).val(),
       cantidad: $(cantidad[i]).val(),
-      destino: $(destino[i]).val(),
-      codcolor: $(codcolor[i]).val(),
+      colorprov: $(colorprov[i]).val(),
+      descuento: $(descuento[i]).val(),
       color: $(color[i]).val(),
       stock : $(cantidad[i]).attr("nuevoStock"),
-      precio: $(precio[i]).val()
+      precio: $(precio[i]).val(),
+      total: $(total[i]).val(),
     });
   }
 

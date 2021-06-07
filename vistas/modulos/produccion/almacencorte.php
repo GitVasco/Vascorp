@@ -387,6 +387,7 @@ MODAL VISUALIZAR INFORMACION
 
                 <tr>
                   <th></th>
+                  <th></th>
                   <th  style="width:100px"></th>
                   <th ></th>
                   <th style="width:250px"></th>
@@ -403,6 +404,7 @@ MODAL VISUALIZAR INFORMACION
                 </tr>
 
                 <tr>
+                  <th></th>
                   <th></th>
                   <th style="width:100px"></th>
                   <th ></th>
@@ -421,6 +423,7 @@ MODAL VISUALIZAR INFORMACION
 
                 <tr>
                   <th>Corte</th>
+                  <th>Guia</th>
                   <th style="width:100px">Fecha</th>
                   <th>Modelo</th>
                   <th style="width:250px">Nombre</th>
@@ -513,7 +516,7 @@ MODAL EDITAR TELA
 
               <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
 
-                <strong><input type="text" class="form-control input-sm" name="almacencorte2" id="almacencorte2" required readonly></strong>
+                <strong><input type="text" class="form-control input-sm" name="almacencorteMP" id="almacencorteMP" required readonly></strong>
 
               </div>
 
@@ -604,8 +607,16 @@ MODAL EDITAR TELA
             <!-- TABLA DE DETALLES -->
 
             <div class="form-group col-lg-12">
-            <label>TABLA DETALLES</label>
-            </div>
+
+            <div class="box box-warning collapsed-box">
+              <div class="box-header with-border">
+                <h3 class="box-title">Tabla Detalle</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                    </button>
+                </div>
+
+              </div>
 
             <div class="box-body">
 
@@ -674,13 +685,16 @@ MODAL EDITAR TELA
 
               </table>
 
+              </div>
+
             </div>
 
             <div class="col-lg-12"></div>
-            <div id="telas" >
+            <div><h2 class="text-center"><ins>INSUMO DE TELAS</ins></h2></div>
+            <div id="telas"  style="height:500px; overflow: scroll; overflow-x:hidden">
             </div>
 
-            
+            </div>
           </div>
 
         </div>

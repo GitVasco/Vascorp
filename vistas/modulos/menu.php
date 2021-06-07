@@ -526,7 +526,7 @@
 
                     </li>
 
-                    <li class="treeview  <?php if($_GET["ruta"] == "almacencorte" || $_GET["ruta"] == "crear-almacencorte") echo 'active';?>">
+                    <li class="treeview  <?php if($_GET["ruta"] == "almacencorte" || $_GET["ruta"] == "crear-almacencorte" || $_GET["ruta"] == "consumo-telas") echo 'active';?>">
 
                         <a href="#"><i class="fa fa-scissors"></i> Corte
 
@@ -550,6 +550,14 @@
 
                                 <a href="crear-almacencorte">
                                 <i class="fa fa-circle-o"></i> Crear Corte
+                                </a>
+
+                            </li>
+
+                            <li class="<?php if($_GET["ruta"] == "consumo-telas") echo 'active';?>">
+
+                                <a href="consumo-telas">
+                                <i class="fa fa-circle-o"></i> Consumo telas
                                 </a>
 
                             </li>

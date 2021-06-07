@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require_once "../controladores/notas-salidas.controlador.php";
 require_once "../modelos/notas-salidas.modelo.php";
 
@@ -55,6 +55,31 @@ class AjaxNotasSalidas{
 
   }
 
+
+  /* 
+	* Activar-Desactivar Articulo
+	*/
+	public $activarId;
+	public $activarEstado;
+
+	public function ajaxAprobarNotaSalida(){
+
+		$valor1=$this->activarEstado;
+		date_default_timezone_set('America/Lima');
+		$fecha = new DateTime();
+		$valor2=$this->activarId;
+		$usuario= $_SESSION["nombre"];
+    $PcMod= gethostbyaddr($_SERVER['REMOTE_ADDR']);
+    $datos = array ("EstNota" => $valor1,
+                    "Nro" => $valor2,
+                    "UsuMod" => $usuario,
+                    "PcMod" => $PcMod,
+                    "FecMod" => $fecha->format("Y-m-d H:i:s"));
+		$respuesta=ModeloNotasSalidas::mdlAprobarNotaSalida($datos);
+
+		echo $respuesta;
+	}
+
 }
 
 
@@ -100,3 +125,12 @@ if(isset($_POST["codPro"])){
 	$detalle2 -> ajaxVisualizarDetalle2();
 }
 
+/*=============================================
+ACTIVAR Y DESACTIVAR ARTICULO
+=============================================*/ 
+if(isset($_POST["activarId"])){
+	$activar=new AjaxNotasSalidas();
+	$activar->activarId=$_POST["activarId"];
+	$activar->activarEstado=$_POST["activarEstado"];
+	$activar->ajaxAprobarNotaSalida();
+}

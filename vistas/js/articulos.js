@@ -121,7 +121,7 @@ function cargarTablaUrgencias(articuloUrgencia){
 
 
 // ACTIVANDO-DESACTIVANDO ARTICULO
-$(document).on("click",".btnActivarArt",function(){
+$(".tablaArticulos").on("click",".btnActivarArt",function(){
 	// Capturamos el id del usuario y el estado
 	var idArticulo=$(this).attr("idArticulo");
 	var estadoArticulo=$(this).attr("estadoArticulo");

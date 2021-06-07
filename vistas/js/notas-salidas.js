@@ -709,3 +709,37 @@ $(".tablaNotasSalidas").on("click", ".btnDetalleReporteNotaSalida", function () 
   window.location = "vistas/reportes_excel/rpt_notasalida.php?idNotaSalida=" + idNotaSalida;
 
 })
+
+// ACTIVANDO- NOTA DE SALIDA
+$(".tablaNotasSalidas").on("click",".btnActivarNotaSalida",function(){
+	// Capturamos el id del usuario y el estado
+  
+	var idNotaSalida=$(this).attr("idNotaSalida");
+	var estadoNotaSalida=$(this).attr("estadoNotaSalida");
+
+	var datos=new FormData();
+	datos.append("activarId",idNotaSalida);
+	datos.append("activarEstado",estadoNotaSalida);
+	$.ajax({
+    url:"ajax/notas-salidas.ajax.php",
+    type:"POST",
+    data:datos,
+    cache:false,
+    contentType:false,
+    processData:false,
+    success:function(respuesta){
+      console.log(respuesta);
+      if(estadoNotaSalida == "1"){
+
+        Command: toastr["success"]("Nota de salida aprobada correctamente!");
+      }
+    }
+	});
+	//Cambiamos el estado del botón físicamente
+	if(estadoNotaSalida=='1'){
+	$(this).addClass("btn-success");
+	$(this).removeClass("btn-danger");
+  $(this).removeClass("btnActivarNotaSalida");
+	$(this).html("APROBADO");}
+});
+
