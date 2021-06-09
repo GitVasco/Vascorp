@@ -29,7 +29,32 @@ class AjaxTablaNotaIngresa{
 		$respuesta = ControladorNotasIngresos::ctrTraerMpOC($codpro, $orden, $codruc);
 
 		echo json_encode($respuesta);
+	}
+	
+   /* 
+    * Traer cabecera nota ingreso
+    */
+    public function ajaxTraerNiCab(){
+
+		$valor = $this->idNotaIngreso;
+
+		$respuesta = ControladorNotasIngresos::ctrTraerNiCab($valor);
+
+		echo json_encode($respuesta);
+	}
+
+   /* 
+    * Traer detalle nota ingreso
+    */
+    public function ajaxTraerNiDet(){
+
+		$valor = $this->idNotaIngresoDet;
+
+		$respuesta = ControladorNotasIngresos::ctrTraerNiDet($valor);
+
+		echo json_encode($respuesta);
 	}	
+
 }
 
 /* 
@@ -53,5 +78,27 @@ if(isset($_POST["codpro"])){
 	$traerMP -> orden = $_POST["orden"];
 	$traerMP -> codruc = $_POST["codruc"];
 	$traerMP -> ajaxTraerMpOc();
+
+}
+
+/* 
+* Traer cabecera nota ingreso
+*/
+if(isset($_POST["idNotaIngreso"])){
+
+	$editarSubLinea = new AjaxTablaNotaIngresa();
+	$editarSubLinea -> idNotaIngreso = $_POST["idNotaIngreso"];
+	$editarSubLinea -> ajaxTraerNiCab();
+
+}
+
+/* 
+* Traer detalle nota ingreso
+*/
+if(isset($_POST["idNotaIngresoDet"])){
+
+	$editarSubLinea = new AjaxTablaNotaIngresa();
+	$editarSubLinea -> idNotaIngresoDet = $_POST["idNotaIngresoDet"];
+	$editarSubLinea -> ajaxTraerNiDet();
 
 }

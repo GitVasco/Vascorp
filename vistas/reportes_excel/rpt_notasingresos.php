@@ -8,22 +8,24 @@
 
 header('Content-Type: text/html; charset=ISO-8859-1');
 
-$id = $_GET["id"];
+$id = $_GET["idNotaIngreso"];
 
- 
+
 //ajuntar la libreria excel
-include "Classes/PHPExcel.php";
-include "../library/consulSQL.php";
+include "../reportes_excel/Classes/PHPExcel.php";
+require_once "../../controladores/usuarios.controlador.php";
+require_once "../../modelos/usuarios.modelo.php";
  
- $conexion=mysql_connect("localhost","root","");
-    mysql_select_db("vasco",$conexion);   
+/* 
+* LLAMAMOS A LA CONEXION
+*/
+$con=ControladorUsuarios::ctrMostrarConexiones("id",1);
 
+$conexion = mysql_connect($con["ip"], $con["user"], $con["pwd"]) or die("No se pudo conectar: " . mysql_error());
+mysql_select_db($con["db"], $conexion);
    
-         $fecha=date("d/m/Y");
-
-        $UsuReg=$_SESSION['usuario']['Login'];
-
-
+  date_default_timezone_set('America/Lima');
+  $fecha=date("d/m/Y");
 
 $objPHPExcel = new PHPExcel(); //nueva instancia
  
