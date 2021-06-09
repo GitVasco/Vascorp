@@ -165,7 +165,9 @@ class ControladorNotasSalidas{
 					$tabla="producto";
 					$item1="CodAlm01";
 					$valor1=$infoMateria["CodAlm01"]-$value["cantidad"];
-					ModeloNotasSalidas::mdlActualizarUnDatoMateria($tabla,$item1,$valor1,$valor);
+					// var_dump($infoMateria);
+					// var_dump($valor1);
+					// ModeloNotasSalidas::mdlActualizarUnDatoMateria($tabla,$item1,$valor1,$valor);
 
 				}
 				//TRAEMOS LA FECHA Y LA PC QUE SE REGISTRO

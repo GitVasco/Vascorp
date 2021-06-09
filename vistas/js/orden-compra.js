@@ -377,8 +377,8 @@ $(".tablaMateriaOrdenCompra").on("click", "button.agregarMateriaCompra", functio
 
           '<div class="col-xs-1" >' +
 
-              '<select class="form-control input-sm nuevoColorProv" name="nuevoColorProv" required>' +
-              '<option value="">Seleccionar color</option>' +
+              '<select class="form-control input-sm select2 nuevoColorProv" name="nuevoColorProv" >' +
+              '<option value="">COLOR</option>' +
 
               '</select>'+
 
@@ -552,10 +552,13 @@ $(".formularioOrdenCompra").on("keyup", "input.nuevaCantidadMateria", function()
 });
 
 
-$(".formularioOrdenCompra").on("keyup", "input.nuevoPrecio, input.nuevoDscto, select.nuevoColorProv", function() {
+$(".formularioOrdenCompra").on("keyup", "input.nuevoPrecio, input.nuevoDscto", function() {
   listarMateriaCompras();
 });
 
+$(".formularioOrdenCompra").on("change", "select.nuevoColorProv", function() {
+  listarMateriaCompras();
+});
 
 /*=============================================
 LISTAR TODAS LAS MATERIA PRIMA
@@ -572,7 +575,7 @@ function listarMateriaCompras() {
 
   var codfab = $(".nuevoCodigoFab");
   
-  var colorprov = $(".nuevoColorPro");
+  var colorprov = $(".nuevoColorProv");
 
   var descuento = $(".nuevoDscto");
 

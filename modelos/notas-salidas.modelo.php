@@ -616,4 +616,33 @@ class ModeloNotasSalidas{
 
 	}	
 
+
+	/*=============================================
+	ACTUALIZAR CANTIDAD SALDO
+	=============================================*/
+
+	static public function mdlActualizarCantidadSaldo($datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE venta_det SET SalVta = CanVta WHERE Nro = :Nro and CodPro = :CodPro");
+
+		$stmt -> bindParam(":Nro", $datos["Nro"], PDO::PARAM_STR);
+		$stmt -> bindParam(":CodPro", $datos["CodPro"], PDO::PARAM_STR);
+		
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
+
 }

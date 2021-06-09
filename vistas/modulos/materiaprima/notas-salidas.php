@@ -129,7 +129,21 @@ MODAL VIZUALIZAR NOTA DE SALIDA
 
           <div class="box-body">
 
-          <div class="form-group col-lg-3">
+            <div class="form-group col-lg-3">
+              
+              <label>CODIGO</label>
+
+              <div class="input-group">
+
+              <span class="input-group-addon"><i class="fa fa-key"></i></span> 
+
+                <input type="text" class="form-control input-sm" name="codigo" id="codigo"  readonly>
+
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-3">
               
               <label>FECHA</label>
 
@@ -268,11 +282,11 @@ MODAL VIZUALIZAR NOTA DE SALIDA
                   <th class="text-center">Item</th>
                   <th class="text-center">Cod.Producto</th>
                   <th class="text-center">Cod.Fabrica</th>
-                  <th class="text-center">Cantidad</th>
                   <th class="text-center">Descripcion</th>
                   <th class="text-center">Color</th>
                   <th class="text-center">Costo</th>
                   <th class="text-center">Destino</th>
+                  <th class="text-center">Cantidad</th>
                 </thead>
                 <tbody>
                 </tbody>

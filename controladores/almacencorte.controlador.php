@@ -297,6 +297,19 @@ class ControladorAlmacenCorte{
 		
 	}
 
+    /*=============================================
+	RANGO FECHAS DE CONSUMO DE TELAS
+	=============================================*/	
+
+	static public function ctrRangoFechasConsumoTelas($fechaInicial, $fechaFinal){
+
+
+		$respuesta = ModeloAlmacenCorte::mdlRangoFechasConsumoTelas($fechaInicial, $fechaFinal);
+
+		return $respuesta;
+		
+    }
+
 
     /*
     * MOSTRAR DATOS DE ALMACEN DE CORTE
@@ -331,7 +344,8 @@ class ControladorAlmacenCorte{
                 "entrega"=>$_POST["entregaMP".$i],
                 "merma"=>$_POST["mermaMP".$i],
                 "mp_sinuso"=>$_POST["sinusoMP".$i],
-                "materia" => $_POST["materia".$i]);
+                "materia" => $_POST["materia".$i],
+                "nota_salida"=>$_POST["notaSalidaMP".$i]);
                 
                 $respuesta = ModeloAlmacenCorte::mdlIngresarTelaCorte($datos);
             }

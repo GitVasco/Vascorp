@@ -869,20 +869,71 @@ $(".tablaAlmacenCorte").on("click", ".btnEditarAC", function () {
             $(".telaMP").remove();
 			for (let i = 0; i < respuesta.length; i++) {
                 $("#almacencorteMP").val(respuesta[0]["almacencorte"]);
-                $("#telas").append("<div class='telaMP col-lg-12' style='padding:0px'><div class='col-lg-2 col-md-2 '><label><b>Nota salida "+(i+1)+"</b></label><input type='text'  class='form-control input-sm' name='notaSalidaMP"+i+"' id='notaSalidaMP"+i+"'  required></div><div class='col-lg-4 col-md-4'><label><b>Tela "+(i+1)+"</b></label><input type='text' class='form-control input-sm' name='telas[]' value='"+respuesta[i]["mat_pri"]+" - "+respuesta[i]["descripcion"]+"' readonly></div><div class='col-lg-1 col-md-1 '><label><b>C. usada "+(i+1)+"</b></label><input type='number' min='0' step='any' class='form-control input-sm' name='cantidadMP"+i+"' id='cantidadMP"+i+"' value='"+respuesta[i]["cons_real"]+"' required></div><div class='col-lg-1 col-md-1'><label><b>C. estimad "+(i+1)+"</b></label><input type='hidden' step='any' value='"+respuesta[i]["mat_pri"]+"' name='materia"+i+"' id='materia"+i+"' ><input type='number' class='form-control input-sm' value='"+respuesta[i]["cons_total"]+"' name='resta"+i+"' id='resta"+i+"' readonly></div><div class='col-lg-1'><label><b>Diferencia "+(i+1)+"</b></label><input type='number'  step='any'class='form-control input-sm' step='any' name='diferenciaMP"+i+"' id='diferenciaMP"+i+"' value='"+respuesta[i]["diferencia"]+"' readonly></div><div class='col-lg-1 col-md-1'><label><b>C. recibida "+(i+1)+"</b></label><input type='number'step='any' class='form-control input-sm' name='entregaMP"+i+"' min='0' id='entregaMP"+i+"' value='"+respuesta[i]["can_entregada"]+"' readonly></div><div class='col-lg-1 col-md-1'><label><b>Merma "+(i+1)+"</b></label><input type='number' class='form-control input-sm' step='any' min='0' name='mermaMP"+i+"' id='mermaMP"+i+"' value='"+respuesta[i]["merma"]+"' required></div><div class='col-lg-1 col-md-1'><label><b>MP sin uso "+(i+1)+"</b></label><input type='number'step='any' class='form-control input-sm' name='sinusoMP"+i+"' id='sinusoMP"+i+"' value='"+respuesta[i]["mp_sinuso"]+"' readonly></div></div>");
-               
+                
+                $("#telas").append("<div class='telaMP col-lg-12' style='padding:0px'><div class='col-lg-2 col-md-2 '><label><b>Nota salida "+(i+1)+"</b></label><div class='input-group'><span class='input-group-addon' style='padding:0px !important;border: 0px !important'><button type='button' class='btn btn-sm btn-primary' title='Reiniciar Consumo' id='reiniciarConsumo"+i+"'><i class='fa fa-refresh'></i></button></span><input type='number'  class='form-control input-sm' name='notaSalidaMP"+i+"' id='notaSalidaMP"+i+"'  value='"+respuesta[i]["nota_salida"]+"'></div></div><div class='col-lg-4 col-md-4'><label><b>Tela "+(i+1)+"</b></label><input type='text' class='form-control input-sm' name='telas[]' value='"+respuesta[i]["mat_pri"]+" - "+respuesta[i]["descripcion"]+"' readonly></div><div class='col-lg-1 col-md-1 '><label><b>C. usada "+(i+1)+"</b></label><input type='number' min='0' step='any' class='form-control input-sm' name='cantidadMP"+i+"' id='cantidadMP"+i+"' value='"+respuesta[i]["cons_real"]+"'  readonly></div><div class='col-lg-1 col-md-1'><label><b>C. estimad "+(i+1)+"</b></label><input type='hidden'  value='"+respuesta[i]["mat_pri"]+"' name='materia"+i+"' id='materia"+i+"' ><input type='number' class='form-control input-sm' value='"+respuesta[i]["cons_total"]+"' name='resta"+i+"' id='resta"+i+"' readonly></div><div class='col-lg-1'><label><b>Diferencia "+(i+1)+"</b></label><input type='number' class='form-control input-sm' step='any' min='0' name='diferenciaMP"+i+"' id='diferenciaMP"+i+"' value='"+respuesta[i]["diferencia"]+"' readonly></div><div class='col-lg-1 col-md-1'><label><b>C. recibida "+(i+1)+"</b></label><input type='number'step='any' class='form-control input-sm' name='entregaMP"+i+"' min='0' id='entregaMP"+i+"' value='"+respuesta[i]["can_entregada"]+"' readonly></div><div class='col-lg-1 col-md-1'><label><b>Merma "+(i+1)+"</b></label><input type='number' class='form-control input-sm' step='any' min='0' name='mermaMP"+i+"' id='mermaMP"+i+"' value='"+respuesta[i]["merma"]+"' readonly></div><div class='col-lg-1 col-md-1'><label><b>MP sin uso "+(i+1)+"</b></label><input type='number' min ='0' step='any' class='form-control input-sm' name='sinusoMP"+i+"' id='sinusoMP"+i+"' value='"+respuesta[i]["mp_sinuso"]+"' readonly></div></div>");
+                if(respuesta[i]["nota_salida"] != ""){
+                  $("#notaSalidaMP"+i+"").attr("readonly",true);
+                }
                 $("#cantidadMP"+i+"").change(function(){
-                    $("#diferenciaMP"+i+"").val(Number($("#cantidadMP"+i+"").val())-Number($("#resta"+i+"").val()));
-                    $("#sinusoMP"+i+"").val(Number($("#entregaMP"+i+"").val())-Number($("#cantidadMP"+i+"").val())-Number($("#mermaMP"+i+"").val()));
+                    if (Number($(this).val()) > Number($("#entregaMP"+i+"").val())) {
+                      /*=============================================
+                      SI LA CANTIDAD ES SUPERIOR AL SERVICIO REGRESAR VALORES INICIALES
+                      =============================================*/
+                  
+                      $(this).val(0);
+                  
+                  
+                      Command: toastr["error"]("La cantidad ingresada supera a la recibida");
+                    }
+                    $("#diferenciaMP"+i+"").val(Number($("#resta"+i+"").val())-Number($("#cantidadMP"+i+"").val()));
+                    $("#mermaMP"+i+"").val(Number($("#entregaMP"+i+"").val())-Number($("#cantidadMP"+i+"").val())-Number($("#sinusoMP"+i+"").val()));
                 })
                 $("#entregaMP"+i+"").change(function(){
-                    $("#sinusoMP"+i+"").val(Number($("#entregaMP"+i+"").val())-Number($("#cantidadMP"+i+"").val())-Number($("#mermaMP"+i+"").val()));
+                    $("#mermaMP"+i+"").val(Number($("#entregaMP"+i+"").val())-Number($("#cantidadMP"+i+"").val())-Number($("#sinusoMP"+i+"").val()));
                 })
-                $("#mermaMP"+i+"").change(function(){
-                    $("#sinusoMP"+i+"").val(Number($("#entregaMP"+i+"").val())-Number($("#cantidadMP"+i+"").val())-Number($("#mermaMP"+i+"").val()));  
+                $("#sinusoMP"+i+"").keyup(function(){
+                    $("#mermaMP"+i+"").val(Number($("#entregaMP"+i+"").val())-Number($("#cantidadMP"+i+"").val())-Number($("#sinusoMP"+i+"").val()));  
                 })
 
-                $("#notaSalidaMP"+i+"").keyup(function(){
+                $("#reiniciarConsumo"+i+"").click(function(){
+                  var notaSalida = $("#notaSalidaMP"+i+"").val();
+                  var codPro = $("#materia"+i).val();
+                  // console.log(codPro);
+                  var datosReinicio = new FormData();
+                  datosReinicio.append("reiniciarNotaSalida", notaSalida);
+                  datosReinicio.append("codPro", codPro);
+                  $.ajax({
+
+                    url:"ajax/notas-salidas.ajax.php",
+                    method: "POST",
+                    data: datosReinicio,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    dataType:"json",
+                    success:function(respuestaReinicio){
+                      console.log(respuestaReinicio);
+                      if(respuestaReinicio != false){
+                        $("#notaSalidaMP"+i+"").val("");
+                        $("#entregaMP"+i+"").val("0.0000");
+                        $("#diferenciaMP"+i+"").val("0.0000");
+                        $("#cantidadMP"+i+"").val("0.0000");
+                        $("#mermaMP"+i+"").val("0.0000");
+                        $("#sinusoMP"+i+"").val("0.0000");
+                        $("#notaSalidaMP"+i+"").attr("readonly",false);
+                      }
+                      
+                    }
+                    
+                  })
+
+                  
+                })
+
+                // var merma = $("#mermaMP"+i+"").val();
+                // merma.toFixed(2);
+                $("#notaSalidaMP"+i+"").change(function(){
+                  
                   var notaSalida = $(this).val();
                   var codPro = $("#materia"+i).val();
                   // console.log(codPro);
@@ -899,8 +950,17 @@ $(".tablaAlmacenCorte").on("click", ".btnEditarAC", function () {
                     processData: false,
                     dataType:"json",
                     success:function(respuestaSalida){
-                      // console.log(respuestaSalida);
-                      $("#entregaMP"+i+"").val(respuestaSalida["SalVta"]);
+                      if(respuestaSalida != false){
+                        $("#cantidadMP"+i+"").attr("readonly",false);
+                        $("#sinusoMP"+i+"").attr("readonly",false);
+                        $("#entregaMP"+i+"").val(respuestaSalida["SalVta"]);
+                      }else{
+                        $("#cantidadMP"+i+"").attr("readonly",true);
+                        $("#sinusoMP"+i+"").attr("readonly",true);
+                        $("#entregaMP"+i+"").val("0.0000");
+                      }
+                      
+                      
                     }
                   })
                   
@@ -1212,3 +1272,56 @@ $("#daterange-btnVerCortes").daterangepicker(
       }
     }
   });
+
+
+  /* 
+* CARGAR TABLA CONSUMO DE TELAS
+*/
+// Validamos que venga la variable capturaRango en el localStorage
+if (localStorage.getItem("capturarRango31") != null) {
+	$("#daterange-btnConsumoTela span").html(localStorage.getItem("capturarRango31"));
+	cargarTablaConsumoTelas(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
+} else {
+	$("#daterange-btnConsumoTela span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
+	cargarTablaConsumoTelas(null, null);
+}
+
+
+function cargarTablaConsumoTelas(fechaInicial, fechaFinal){
+$('.tablaConsumoTelas').DataTable({
+	"ajax": "ajax/produccion/tabla-consumo-telas.ajax.php?perfil=" + $("#perfilOculto").val()+"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal,
+	"deferRender": true,
+	"retrieve": true,
+	"processing": true,
+	"order": [[0, "desc"]],
+  "pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+	"language": {
+
+		"sProcessing": "Procesando...",
+		"sLengthMenu": "Mostrar _MENU_ registros",
+		"sZeroRecords": "No se encontraron resultados",
+		"sEmptyTable": "Ningún dato disponible en esta tabla",
+		"sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+		"sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0",
+		"sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+		"sInfoPostFix": "",
+		"sSearch": "Buscar:",
+		"sUrl": "",
+		"sInfoThousands": ",",
+		"sLoadingRecords": "Cargando...",
+		"oPaginate": {
+			"sFirst": "Primero",
+			"sLast": "Último",
+			"sNext": "Siguiente",
+			"sPrevious": "Anterior"
+		},
+		"oAria": {
+			"sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+			"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+		}
+
+	}
+
+    });
+}

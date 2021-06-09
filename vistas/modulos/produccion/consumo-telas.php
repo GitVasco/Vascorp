@@ -64,7 +64,6 @@
            <th>Color</th>
            <th>Unidad</th>
            <th>Stock</th>
-           <th>Acciones</th>
 
          </tr> 
 

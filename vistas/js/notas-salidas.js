@@ -615,6 +615,7 @@ $(".tablaNotasSalidas").on("click", ".btnVisualizarNotaSalida", function () {
       // console.log(respuesta);
       var fecha = respuesta["FecReg"];
       var fechaNueva = fecha.substr(0,10);
+      $("#codigo").val(idNotaSalida);
       $("#fecha").val(fechaNueva);
       $("#almacen").val(respuesta["AlmDes"]);
       $("#ruc").val(respuesta["Ruc"]);
@@ -654,11 +655,11 @@ $(".tablaNotasSalidas").on("click", ".btnVisualizarNotaSalida", function () {
             '<td class="text-center">' + id.Item + ' </td>' +
             '<td class="text-center">' + id.CodPro + ' </td>' +
             '<td class="text-center">' + id.CodFab + ' </td>' +
-						'<td class="text-center">' + id.CanVta + '</td>' +
 						'<td >' + id.DesPro + ' </td>' +
             '<td class="text-center">' + id.Des_Larga + ' </td>' +
             '<td class="text-center">' + id.pcosto + ' </td>' +
             '<td class="text-center">' + id.CenCosto + ' </td>' +
+            '<td class="text-center">' + id.CanVta + '</td>' +
 					'</tr>'
 
 				)
