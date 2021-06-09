@@ -36,7 +36,7 @@
 
                 
                 <button class="btn btn-outline-success "  style="border:green 1px solid">
-                            <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Notas de Ingreso </button> 
+                <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Notas de Ingreso </button> 
                 <button type="button" class="btn btn-default pull-right" id="daterange-btnNotasIngresos">
                 <span>
                     <i class="fa fa-calendar"></i>
@@ -92,6 +92,198 @@
         </div>
 
     </section>
+
+</div>
+
+<!--=====================================
+MODAL VIZUALIZAR NOTA DE INGRESO
+======================================-->
+
+<div id="modalVizualizarNotaIngreso" class="modal fade" role="dialog">
+
+  <div class="modal-dialog" style="width: 80% !important;">
+
+    <div class="modal-content">
+
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">VISUALIZAR NOTA DE INGRESO</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <?php 
+            date_default_timezone_set('America/Lima');
+            $fecha = new DateTime();
+            ?>
+
+            <div class="form-group" style="padding-top:5px">
+
+                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">N. Ingreso</label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control input-sm" id="NotaIngreso" name="NotaIngreso" readonly>
+                </div>
+
+                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Fec. Emision</label>
+                <div class="col-lg-3">
+                    <input type="date" class="form-control input-sm" id="fecNi" name="fecNi" readonly>
+                </div>
+
+                
+                
+            </div> 
+
+            <div class="form-group" style="padding-top:25px">
+
+                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Doc. Principal</label>
+                <div class="col-lg-2">
+                    <select  class="form-control input-sm" name="tipDocP" id="tipDocP">
+                    <option value="">Doc. Principal</option>
+                    <?php
+                        $documentos = ControladorNotasIngresos::ctrDocNI();
+                        #var_dump("ubigeo", $documentos);
+
+                        foreach ($documentos as $key => $value) {
+    
+                        echo '<option value="' . $value["cod_argumento"] . '">' . $value["cod_argumento"] . ' - ' . $value["des_larga"] . '</option>';
+    
+                        }                        
+
+                    ?>
+                    </select>
+                </div>
+
+                <div class="col-lg-1">
+                    <input type="text" class="form-control input-sm" id="nuevaSerieP" name="nuevaSerieP" placeholder="Serie">
+                </div>
+                <div class="col-lg-1">
+                    <input type="text" class="form-control input-sm" id="nuevoNroP" name="nuevoNroP" placeholder="Número">
+                </div>
+
+                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Fec. Emision</label>
+                <div class="col-lg-2">
+                    <input type="date" class="form-control input-sm" id="fecP" name="fecP" value="<?php echo $fecha->format("Y-m-d"); ?>">
+                </div>
+
+                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Proveedor</label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control input-sm" id="proveedor" name="proveedor" readonly>
+                </div>                                    
+                
+            </div>   
+            
+            <div class="form-group" style="padding-top:25px;">
+
+                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Doc. Secun.</label>
+                <div class="col-lg-2">
+                    <select  class="form-control input-sm" name="tipDocS" id="tipDocS">
+                    <option value="">Doc. Secundario</option>
+                    <?php
+                        $documentos = ControladorNotasIngresos::ctrDocNI();
+                        #var_dump("ubigeo", $documentos);
+
+                        foreach ($documentos as $key => $value) {
+
+                        echo '<option value="' . $value["cod_argumento"] . '">' . $value["cod_argumento"] . ' - ' . $value["des_larga"] . '</option>';
+
+                        }                        
+
+                    ?>
+                    </select>
+                </div>
+                
+                <div class="col-lg-1">
+                    <input type="text" class="form-control input-sm" id="nuevaSerieS" name="nuevaSerieS" placeholder="Serie">
+                </div>
+                <div class="col-lg-1">
+                    <input type="text" class="form-control input-sm" id="nuevoNroS" name="nuevoNroS" placeholder="Número">
+                </div>
+
+                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Fec. Emision</label>
+                <div class="col-lg-2">
+                    <input type="date" class="form-control input-sm" id="fecS" name="fecS" value="<?php echo $fecha->format("Y-m-d"); ?>">
+                </div>                                    
+
+                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Orden Compra</label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control input-sm" id="oc" name="oc" readonly>
+                </div>  
+
+            </div> 
+            
+            <div class="form-group" style="padding-top:25px;padding-bottom:25px">
+
+                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Moneda</label>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control input-sm" id="moneda" name="moneda" readonly>
+                </div> 
+
+                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Observaciones</label>
+                <div class="col-lg-8">
+                    <input type="text" class="form-control input-sm" id="nuevaObservacion" name="nuevaObservacion">
+                </div> 
+
+            </div> 
+
+            <div class="form-group col-lg-12">
+              <table class="table table-hover table-striped tablaDetalleNotaIngreso" width="100%">
+                <thead>
+                
+                    <th class="text-center">Item</th>
+                    <th class="text-center">Cod.Producto</th>
+                    <th class="text-center">Cod.Fabrica</th>
+                    <th class="text-center">Descripcion</th>
+                    <th class="text-center">Color</th>
+                    <th class="text-center">Und</th>
+                    <th class="text-center">Cant. Recibida</th>
+                    <th class="text-center">Saldo</th>
+                    <th class="text-center">Exceso</th>
+                    <th class="text-center">P.S. IGV</th>
+                    <th class="text-center">Total</th>
+                    <th class="text-center">O.C</th>
+
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>                                          
+            
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary pull-right">Actualizar Nota de Ingreso</button>
+
+
+        </div>
+
+
+
+    </div>
+
+  </div>
 
 </div>
 

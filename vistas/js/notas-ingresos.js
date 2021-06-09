@@ -748,11 +748,107 @@ function listarMpNi(){
 /* 
 * BOTON REPORTE DE ORDEN DE CORTE
 */
-$(".tablaMpSOc").on("click", ".btnDetalleReporteNotaIngreso", function () {
+$(".tablaNotasIngresos").on("click", ".btnDetalleReporteNotaIngreso", function () {
 
   var idNotaIngreso = $(this).attr("idNotaIngreso");
-  //console.log("codigo", codigo);
+  console.log("idNotaIngreso", idNotaIngreso);
 
-  window.location = "vistas/reportes_excel/rpt_notaingreso.php?idNotaIngreso=" + idNotaIngreso;
+  window.location = "vistas/reportes_excel/rpt_notasingresos.php?idNotaIngreso=" + idNotaIngreso;
+
+})
+
+/* 
+* VISUALIZAR DETALLE DEL CORTE
+*/ 
+$(".tablaNotasIngresos").on("click", ".btnVisualizarNotaIngreso", function () {
+
+  var idNotaIngreso = $(this).attr("idNotaIngreso");
+  //console.log(idNotaIngreso);
+
+  var datos = new FormData();
+	datos.append("idNotaIngreso", idNotaIngreso);
+
+	$.ajax({
+
+		url:"ajax/notas-ingresos.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType:"json",
+		success:function(respuesta){
+      //console.log(respuesta);
+
+      $("#NotaIngreso").val(respuesta["ni"]);
+      $("#fecNi").val(respuesta["emi_ni"]);
+      $("#tipDocP").val(respuesta["cod_doc_pri"]);
+      $("#tipDocP").selectpicker("refresh");
+      $("#nuevaSerieP").val(respuesta["ser_pri"]);
+      $("#nuevoNroP").val(respuesta["num_pri"]);
+      $("#fecP").val(respuesta["emi_pri"]);
+
+      $("#tipDocS").val(respuesta["cod_doc_sec"]);
+      $("#tipDocS").selectpicker("refresh");
+      $("#nuevaSerieS").val(respuesta["ser_sec"]);
+      $("#nuevoNroS").val(respuesta["num_sec"]);
+      $("#fecS").val(respuesta["emi_sec"]);      
+      
+      $("#proveedor").val(respuesta["nom_prov"]);
+      $("#oc").val(respuesta["oc"]);
+      $("#moneda").val(respuesta["moneda"]);
+      $("#nuevaObservacion").val(respuesta["obser"]);
+      
+		  }
+
+  })  
+
+  var idNotaIngresoDet = $(this).attr("idNotaIngreso");
+  //console.log(idNotaIngresoDet);
+
+  var datosDOC = new FormData();
+  datosDOC.append("idNotaIngresoDet", idNotaIngresoDet);
+  
+  $.ajax({
+
+  url:"ajax/notas-ingresos.ajax.php",
+  method: "POST",
+  data: datosDOC,
+  cache: false,
+  contentType: false,
+  processData: false,
+  dataType:"json",
+  success:function(respuestaDetalle){
+
+    console.log(respuestaDetalle);
+
+    $(".detalleNI").remove();
+     
+    for(var id of respuestaDetalle){
+          
+      $('.tablaDetalleNotaIngreso').append(
+
+        '<tr class="detalleNI">' +
+          '<td class="text-center">' + id.item + ' </td>' +
+          '<td class="text-center">' + id.codpro + ' </td>' +
+          '<td class="text-left">' + id.codfab + ' </td>' +
+          '<td>' + id.despro + '</td>' +
+          '<td >' + id.color + ' </td>' +
+          '<td class="text-center">' + id.unidad + ' </td>' +
+          '<td class="text-right">' + id.cansol + ' </td>' +
+          '<td class="text-right">' + id.salpro + ' </td>' +
+          '<td class="text-right">' + id.excpro + ' </td>' +
+          '<td class="text-right">' + id.p_unitario + ' </td>' +
+          '<td class="text-right">' + id.total + ' </td>' +
+          '<td class="text-center">' + id.ndoc + ' </td>' +
+        '</tr>'
+
+      )
+
+    }            
+
+  }
+
+})
 
 })

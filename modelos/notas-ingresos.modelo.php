@@ -1171,4 +1171,113 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
 
 	}    
 
+	/*
+	*Traer cabecera nota ingreso
+	*/
+	static public function mdlTraerNiCab($valor){
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+                      n.nnea AS ni,
+                      DATE(n.fecreg) AS emi_ni,
+                      n.codruc AS cod_prov,
+                      p.razpro AS nom_prov,
+                      n.nrooc AS oc,
+                      n.trdcto AS cod_doc_pri,
+                      d2.des_larga AS tip_doc_pri,
+                      n.srdcto AS ser_pri,
+                      n.nrdcto AS num_pri,
+                      DATE(n.fecven) AS emi_pri,
+                      n.trguia AS cod_doc_sec,
+                      d1.des_larga AS tip_doc_sec,
+                      n.serguia AS ser_sec,
+                      n.nroguia AS num_sec,
+                      DATE(n.fecemi) AS emi_sec,
+                      n.mo AS cod_mon,
+                      m.des_larga AS moneda,
+                      n.obser
+                    FROM
+                      nea n 
+                      LEFT JOIN proveedor p 
+                        ON n.codruc = p.codruc 
+                      LEFT JOIN 
+                        (SELECT 
+                          * 
+                        FROM
+                          tabla_m_detalle 
+                        WHERE cod_tabla = 'temi') AS d1 
+                        ON n.trguia = d1.cod_argumento 
+                      LEFT JOIN 
+                        (SELECT 
+                          * 
+                        FROM
+                          tabla_m_detalle 
+                        WHERE cod_tabla = 'temi') AS d2 
+                        ON n.trdcto = d2.cod_argumento 
+                      LEFT JOIN 
+                        (SELECT 
+                          * 
+                        FROM
+                          tabla_m_detalle 
+                        WHERE cod_tabla = 'tmon') AS m 
+                        ON n.mo = m.cod_argumento 
+                    WHERE n.nnea = :valor");
+
+    $stmt->bindParam(":valor",$valor,PDO::PARAM_STR);                    
+
+		$stmt->execute();
+
+		return $stmt->fetch();
+
+		$stmt->close();
+
+		$stmt = null;
+	}   
+
+	/*
+	*Traer cabecera nota ingreso
+	*/
+	static public function mdlTraerNiDet($valor){
+
+		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+    nd.item,
+    nd.codpro,
+    pro.despro,
+    pro.codfab,
+    TbCol.Des_Larga AS color,
+    tbund.des_larga AS unidad,
+    nd.cansol,
+    nd.p_unitario,
+    nd.total,
+    nd.ndoc,
+    nd.salpro,
+    nd.excpro 
+  FROM
+    NeaDet nd 
+    INNER JOIN Producto AS pro 
+      ON nd.CodPro = pro.CodPro 
+    LEFT JOIN Tabla_M_Detalle AS TbUnd 
+      ON pro.UndPro = TbUnd.Cod_Argumento 
+      AND TbUnd.Cod_Tabla = 'TUND' 
+    LEFT JOIN Tabla_M_Detalle AS TbCol 
+      ON pro.ColPro = TbCol.Cod_Argumento 
+      AND TbCol.Cod_Tabla = 'TCOL' 
+    LEFT JOIN ocomdet AS ocd 
+      ON ocd.Nro = nd.NDoc 
+      AND ocd.CodPro = pro.CodPro 
+    LEFT JOIN nea ne 
+      ON ne.nNea = nd.nNea 
+  WHERE nd.nNea = :valor 
+  ORDER BY Item ASC");
+
+    $stmt->bindParam(":valor",$valor,PDO::PARAM_STR);                    
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt->close();
+
+		$stmt = null;
+	}   
+
 }

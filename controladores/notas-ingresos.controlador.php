@@ -246,15 +246,32 @@ class ControladorNotasIngresos{
 
 				}
 
-
-
-
 			}
-
 
 		}
 
-
 	}
+
+	/* 
+	*Traer cabecera nota ingreso
+	*/
+	static public function ctrTraerNiCab($valor){
+
+		$respuesta = ModeloNotasIngresos::mdlTraerNiCab($valor);
+
+		return $respuesta;
+		
+	}	
+
+	/* 
+	*Traer detalle nota ingreso
+	*/
+	static public function ctrTraerNiDet($valor){
+
+		$respuesta = ModeloNotasIngresos::mdlTraerNiDet($valor);
+
+		return $respuesta;
+		
+	}	
 
 }

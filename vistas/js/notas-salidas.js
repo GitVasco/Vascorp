@@ -597,7 +597,7 @@ $(".formularioNotaSalida").on("change", "select#nuevoClienteNota", function() {
 $(".tablaNotasSalidas").on("click", ".btnVisualizarNotaSalida", function () {
 
 	var idNotaSalida = $(this).attr("idNotaSalida");
-    console.log(idNotaSalida);
+  //console.log(idNotaSalida);
     
   var datos = new FormData();
 	datos.append("idNotaSalida", idNotaSalida);
