@@ -49,8 +49,10 @@
 
   <!-- iCheck for checkboxes and radio inputs -->
   <link rel="stylesheet" href="vistas/plugins/iCheck/all.css"> 
+  <!-- SELECT 2 -->
+  <!-- <link rel="stylesheet" href="vistas/bower_components/select2/dist/css/select2.min.css"> -->
 
-  <!-- SELECT2 -->
+  <!-- SELECT bootstrap -->
   <link rel="stylesheet" href="vistas/bower_components/bootstrap-select/dist/css/bootstrap-select.min.css">
 
   <!-- Daterange picker -->
@@ -86,6 +88,10 @@
 
   <!-- SweetAlert 2 -->
   <script src="vistas/plugins/sweetalert2/sweetalert2.all.js"></script>
+
+   <!-- Select2 -->
+   <!-- <script src="vistas/bower_components/select2/dist/js/select2.full.min.js"></script> -->
+
   <!-- By default SweetAlert2 doesn't support IE. To enable IE 11 support, include Promise polyfill:-->
   <script src="vistas/plugins/sweetalert2/core.js"></script>
 

@@ -95,3 +95,4 @@ toastr.options = {
 	"hideMethod": "fadeOut"
   }
  
+ 

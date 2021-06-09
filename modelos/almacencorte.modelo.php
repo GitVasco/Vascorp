@@ -439,6 +439,7 @@ class ModeloAlmacenCorte{
 		adm.id,
 		adm.almacencorte,
 		adm.mat_pri,
+		adm.nota_salida,
 		mp.descripcion,
 		adm.cons_total,
 		adm.diferencia,
@@ -486,7 +487,8 @@ class ModeloAlmacenCorte{
 														diferencia= :diferencia,
 														can_entregada = :entrega,
 														merma = :merma,
-														mp_sinuso = :mp_sinuso
+														mp_sinuso = :mp_sinuso,
+														nota_salida = :nota_salida
 													WHERE
 														almacencorte = :codigo AND mat_pri= :materia");
 
@@ -497,6 +499,7 @@ class ModeloAlmacenCorte{
 		$stmt->bindParam(":merma", $datos["merma"], PDO::PARAM_INT);
 		$stmt->bindParam(":mp_sinuso", $datos["mp_sinuso"], PDO::PARAM_INT);
 		$stmt->bindParam(":materia", $datos["materia"], PDO::PARAM_STR);
+		$stmt->bindParam(":nota_salida", $datos["nota_salida"], PDO::PARAM_STR);
 
 		if($stmt->execute()){
 
@@ -895,79 +898,45 @@ class ModeloAlmacenCorte{
 		if($fechaInicial == "null"){
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
-			dac.almacencorte,
-			DATE(da.fecha) as fechas,
-			da.guia,
-			a.modelo,
-			a.nombre,
-			a.color,
-			SUM(
-			  CASE
-				WHEN a.cod_talla = '1' 
-				THEN dac.cantidad 
-				ELSE 0 
-			  END
-			) AS t1,
-			SUM(
-			  CASE
-				WHEN a.cod_talla = '2' 
-				THEN dac.cantidad 
-				ELSE 0 
-			  END
-			) AS t2,
-			SUM(
-			  CASE
-				WHEN a.cod_talla = '3' 
-				THEN dac.cantidad 
-				ELSE 0 
-			  END
-			) AS t3,
-			SUM(
-			  CASE
-				WHEN a.cod_talla = '4' 
-				THEN dac.cantidad 
-				ELSE 0 
-			  END
-			) AS t4,
-			SUM(
-			  CASE
-				WHEN a.cod_talla = '5' 
-				THEN dac.cantidad 
-				ELSE 0 
-			  END
-			) AS t5,
-			SUM(
-			  CASE
-				WHEN a.cod_talla = '6' 
-				THEN dac.cantidad 
-				ELSE 0 
-			  END
-			) AS t6,
-			SUM(
-			  CASE
-				WHEN a.cod_talla = '7' 
-				THEN dac.cantidad 
-				ELSE 0 
-			  END
-			) AS t7,
-			SUM(
-			  CASE
-				WHEN a.cod_talla = '8' 
-				THEN dac.cantidad 
-				ELSE 0 
-			  END
-			) AS t8,
-			SUM(dac.cantidad) AS subtotal 
+			adm.id,
+			adm.almacencorte,
+			a.guia,
+			DATE(a.fecha) AS fechas,
+			Stk_Act,
+			adm.mat_pri,
+			mp.despro,
+			mp.color,
+			mp.unidad,
+			adm.cons_total,
+			adm.diferencia,
+			adm.cons_real,
+			adm.can_entregada,
+			adm.merma,
+			adm.mp_sinuso,
+			adm.notificacion 
 		  FROM
-			almacencorte_detallejf dac 
-			LEFT JOIN articulojf a 
-			  ON dac.articulo = a.articulo
-			LEFT JOIN almacencortejf da
- 			  ON dac.almacencorte=da.codigo
-		  GROUP BY dac.almacencorte,
-			a.modelo,
-			a.nombre,
-			a.color  ORDER BY dac.id ASC");
+			almacencorte_detalle_mpjf adm 
+			LEFT JOIN 
+			  (SELECT 
+				pro.CodPro,
+				pro.CodFab,
+				pro.DesPro,
+				pro.codalm01 AS Stk_Act,
+				TbUnd.Des_Corta AS Unidad,
+				TbCol.Des_Larga AS Color,
+				pro.ColPro 
+			  FROM
+				producto pro 
+				INNER JOIN Tabla_M_Detalle AS TbUnd 
+				  ON pro.UndPro = TbUnd.Cod_Argumento 
+				  AND (TbUnd.Cod_Tabla = 'TUND') 
+				INNER JOIN Tabla_M_Detalle AS TbCol 
+				  ON pro.ColPro = TbCol.Cod_Argumento 
+				  AND (TbCol.Cod_Tabla = 'TCOL') 
+			  WHERE pro.EstPro = '1') AS mp 
+			  ON adm.mat_pri = mp.codpro 
+			  LEFT JOIN almacencortejf a
+			  ON adm.almacencorte=a.codigo");
 
 			$stmt -> execute();
 
@@ -977,80 +946,46 @@ class ModeloAlmacenCorte{
 		}else if($fechaInicial == $fechaFinal){
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
-			dac.almacencorte,
-			DATE(da.fecha) as fechas,
-			da.guia,
-			a.modelo,
-			a.nombre,
-			a.color,
-			SUM(
-			  CASE
-				WHEN a.cod_talla = '1' 
-				THEN dac.cantidad 
-				ELSE 0 
-			  END
-			) AS t1,
-			SUM(
-			  CASE
-				WHEN a.cod_talla = '2' 
-				THEN dac.cantidad 
-				ELSE 0 
-			  END
-			) AS t2,
-			SUM(
-			  CASE
-				WHEN a.cod_talla = '3' 
-				THEN dac.cantidad 
-				ELSE 0 
-			  END
-			) AS t3,
-			SUM(
-			  CASE
-				WHEN a.cod_talla = '4' 
-				THEN dac.cantidad 
-				ELSE 0 
-			  END
-			) AS t4,
-			SUM(
-			  CASE
-				WHEN a.cod_talla = '5' 
-				THEN dac.cantidad 
-				ELSE 0 
-			  END
-			) AS t5,
-			SUM(
-			  CASE
-				WHEN a.cod_talla = '6' 
-				THEN dac.cantidad 
-				ELSE 0 
-			  END
-			) AS t6,
-			SUM(
-			  CASE
-				WHEN a.cod_talla = '7' 
-				THEN dac.cantidad 
-				ELSE 0 
-			  END
-			) AS t7,
-			SUM(
-			  CASE
-				WHEN a.cod_talla = '8' 
-				THEN dac.cantidad 
-				ELSE 0 
-			  END
-			) AS t8,
-			SUM(dac.cantidad) AS subtotal 
+			adm.id,
+			adm.almacencorte,
+			a.guia,
+			Stk_Act,
+			DATE(a.fecha) AS fechas,
+			adm.mat_pri,
+			mp.despro,
+			mp.color,
+			mp.unidad,
+			adm.cons_total,
+			adm.diferencia,
+			adm.cons_real,
+			adm.can_entregada,
+			adm.merma,
+			adm.mp_sinuso,
+			adm.notificacion 
 		  FROM
-			almacencorte_detallejf dac 
-			LEFT JOIN articulojf a 
-			  ON dac.articulo = a.articulo 
-			LEFT JOIN almacencortejf da
- 			  ON dac.almacencorte=da.codigo
-			WHERE DATE(da.fecha) like '%$fechaFinal%'
-		  GROUP BY dac.almacencorte,
-			a.modelo,
-			a.nombre,
-			a.color  ");
+			almacencorte_detalle_mpjf adm 
+			LEFT JOIN 
+			  (SELECT 
+				pro.CodPro,
+				pro.CodFab,
+				pro.DesPro,
+				pro.codalm01 AS Stk_Act,
+				TbUnd.Des_Corta AS Unidad,
+				TbCol.Des_Larga AS Color,
+				pro.ColPro 
+			  FROM
+				producto pro 
+				INNER JOIN Tabla_M_Detalle AS TbUnd 
+				  ON pro.UndPro = TbUnd.Cod_Argumento 
+				  AND (TbUnd.Cod_Tabla = 'TUND') 
+				INNER JOIN Tabla_M_Detalle AS TbCol 
+				  ON pro.ColPro = TbCol.Cod_Argumento 
+				  AND (TbCol.Cod_Tabla = 'TCOL') 
+			  WHERE pro.EstPro = '1') AS mp 
+			  ON adm.mat_pri = mp.codpro 
+			  LEFT JOIN almacencortejf a
+			  ON adm.almacencorte=a.codigo
+			WHERE DATE(fechas) like '%$fechaFinal%' ");
 
 			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 
@@ -1071,159 +1006,91 @@ class ModeloAlmacenCorte{
 			if($fechaFinalMasUno == $fechaActualMasUno){
 
 				$stmt = Conexion::conectar()->prepare("SELECT 
-				dac.almacencorte,
-				DATE(da.fecha) as fechas,
-				da.guia,
-				a.modelo,
-				a.nombre,
-				a.color,
-				SUM(
-				  CASE
-					WHEN a.cod_talla = '1' 
-					THEN dac.cantidad 
-					ELSE 0 
-				  END
-				) AS t1,
-				SUM(
-				  CASE
-					WHEN a.cod_talla = '2' 
-					THEN dac.cantidad 
-					ELSE 0 
-				  END
-				) AS t2,
-				SUM(
-				  CASE
-					WHEN a.cod_talla = '3' 
-					THEN dac.cantidad 
-					ELSE 0 
-				  END
-				) AS t3,
-				SUM(
-				  CASE
-					WHEN a.cod_talla = '4' 
-					THEN dac.cantidad 
-					ELSE 0 
-				  END
-				) AS t4,
-				SUM(
-				  CASE
-					WHEN a.cod_talla = '5' 
-					THEN dac.cantidad 
-					ELSE 0 
-				  END
-				) AS t5,
-				SUM(
-				  CASE
-					WHEN a.cod_talla = '6' 
-					THEN dac.cantidad 
-					ELSE 0 
-				  END
-				) AS t6,
-				SUM(
-				  CASE
-					WHEN a.cod_talla = '7' 
-					THEN dac.cantidad 
-					ELSE 0 
-				  END
-				) AS t7,
-				SUM(
-				  CASE
-					WHEN a.cod_talla = '8' 
-					THEN dac.cantidad 
-					ELSE 0 
-				  END
-				) AS t8,
-				SUM(dac.cantidad) AS subtotal 
+				adm.id,
+				adm.almacencorte,
+				a.guia,
+				Stk_Act,
+				DATE(a.fecha) AS fechas,
+				adm.mat_pri,
+				mp.despro,
+				mp.color,
+				mp.unidad,
+				adm.cons_total,
+				adm.diferencia,
+				adm.cons_real,
+				adm.can_entregada,
+				adm.merma,
+				adm.mp_sinuso,
+				adm.notificacion 
 			  FROM
-				almacencorte_detallejf dac 
-				LEFT JOIN articulojf a 
-				  ON dac.articulo = a.articulo
-				LEFT JOIN almacencortejf da
- 			  	  ON dac.almacencorte=da.codigo
-				WHERE DATE(da.fecha) BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'
-			  GROUP BY dac.almacencorte,
-				a.modelo,
-				a.nombre,
-				a.color ");
+				almacencorte_detalle_mpjf adm 
+				LEFT JOIN 
+				  (SELECT 
+					pro.CodPro,
+					pro.CodFab,
+					pro.DesPro,
+					pro.codalm01 AS Stk_Act,
+					TbUnd.Des_Corta AS Unidad,
+					TbCol.Des_Larga AS Color,
+					pro.ColPro 
+				  FROM
+					producto pro 
+					INNER JOIN Tabla_M_Detalle AS TbUnd 
+					  ON pro.UndPro = TbUnd.Cod_Argumento 
+					  AND (TbUnd.Cod_Tabla = 'TUND') 
+					INNER JOIN Tabla_M_Detalle AS TbCol 
+					  ON pro.ColPro = TbCol.Cod_Argumento 
+					  AND (TbCol.Cod_Tabla = 'TCOL') 
+				  WHERE pro.EstPro = '1') AS mp 
+				  ON adm.mat_pri = mp.codpro 
+				  LEFT JOIN almacencortejf a
+				  ON adm.almacencorte=a.codigo
+				WHERE DATE(fechas) BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'");
 
 			}else{
 
 
 				$stmt = Conexion::conectar()->prepare("SELECT 
-				dac.almacencorte,
-				DATE(da.fecha) as fechas,
-				da.guia,
-				a.modelo,
-				a.nombre,
-				a.color,
-				SUM(
-				  CASE
-					WHEN a.cod_talla = '1' 
-					THEN dac.cantidad 
-					ELSE 0 
-				  END
-				) AS t1,
-				SUM(
-				  CASE
-					WHEN a.cod_talla = '2' 
-					THEN dac.cantidad 
-					ELSE 0 
-				  END
-				) AS t2,
-				SUM(
-				  CASE
-					WHEN a.cod_talla = '3' 
-					THEN dac.cantidad 
-					ELSE 0 
-				  END
-				) AS t3,
-				SUM(
-				  CASE
-					WHEN a.cod_talla = '4' 
-					THEN dac.cantidad 
-					ELSE 0 
-				  END
-				) AS t4,
-				SUM(
-				  CASE
-					WHEN a.cod_talla = '5' 
-					THEN dac.cantidad 
-					ELSE 0 
-				  END
-				) AS t5,
-				SUM(
-				  CASE
-					WHEN a.cod_talla = '6' 
-					THEN dac.cantidad 
-					ELSE 0 
-				  END
-				) AS t6,
-				SUM(
-				  CASE
-					WHEN a.cod_talla = '7' 
-					THEN dac.cantidad 
-					ELSE 0 
-				  END
-				) AS t7,
-				SUM(
-				  CASE
-					WHEN a.cod_talla = '8' 
-					THEN dac.cantidad 
-					ELSE 0 
-				  END
-				) AS t8,
-				SUM(dac.cantidad) AS subtotal 
+				adm.id,
+				adm.almacencorte,
+				a.guia,
+				Stk_Act,
+				DATE(a.fecha) AS fechas,
+				adm.mat_pri,
+				mp.despro,
+				mp.color,
+				mp.unidad,
+				adm.cons_total,
+				adm.diferencia,
+				adm.cons_real,
+				adm.can_entregada,
+				adm.merma,
+				adm.mp_sinuso,
+				adm.notificacion 
 			  FROM
-				almacencorte_detallejf dac 
-				LEFT JOIN articulojf a 
-				  ON dac.articulo = a.articulo 
-				LEFT JOIN almacencortejf da
- 				  ON dac.almacencorte=da.codigo
-				WHERE DATE(da.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'
-			  GROUP BY dac.almacencorte,
-				a.modelo,
-				a.nombre,
-				a.color  ");
+				almacencorte_detalle_mpjf adm 
+				LEFT JOIN 
+				  (SELECT 
+					pro.CodPro,
+					pro.CodFab,
+					pro.DesPro,
+					pro.codalm01 AS Stk_Act,
+					TbUnd.Des_Corta AS Unidad,
+					TbCol.Des_Larga AS Color,
+					pro.ColPro 
+				  FROM
+					producto pro 
+					INNER JOIN Tabla_M_Detalle AS TbUnd 
+					  ON pro.UndPro = TbUnd.Cod_Argumento 
+					  AND (TbUnd.Cod_Tabla = 'TUND') 
+					INNER JOIN Tabla_M_Detalle AS TbCol 
+					  ON pro.ColPro = TbCol.Cod_Argumento 
+					  AND (TbCol.Cod_Tabla = 'TCOL') 
+				  WHERE pro.EstPro = '1') AS mp 
+				  ON adm.mat_pri = mp.codpro 
+				  LEFT JOIN almacencortejf a
+				  ON adm.almacencorte=a.codigo
+				WHERE DATE(fechas) BETWEEN '$fechaInicial' AND '$fechaFinal'");
 
 			}
 		

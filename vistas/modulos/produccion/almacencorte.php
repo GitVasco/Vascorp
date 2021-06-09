@@ -690,7 +690,7 @@ MODAL EDITAR TELA
             </div>
 
             <div class="col-lg-12"></div>
-            <div><h2 class="text-center"><ins>INSUMO DE TELAS</ins></h2></div>
+            <div><h2 class="text-center"><ins>CONSUMO DE TELAS</ins></h2></div>
             <div id="telas"  style="height:500px; overflow: scroll; overflow-x:hidden">
             </div>
 

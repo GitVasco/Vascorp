@@ -55,6 +55,20 @@ class AjaxNotasSalidas{
 
   }
 
+  /*=============================================
+  VISUALIZAR NOTA SALIDA DETALLE CON 2 PARAMETROS
+  =============================================*/ 
+  public function ajaxReiniciarSaldoCantidad(){
+		$nota = $this->notaSalida;
+		$materia = $this->codPro;
+    $datos = array("Nro" => $nota,
+                    "CodPro" => $materia);
+    $respuesta = ModeloNotasSalidas::mdlActualizarCantidadSaldo($datos);
+
+    echo json_encode($respuesta);
+
+  }
+
 
   /* 
 	* Activar-Desactivar Articulo
@@ -133,4 +147,15 @@ if(isset($_POST["activarId"])){
 	$activar->activarId=$_POST["activarId"];
 	$activar->activarEstado=$_POST["activarEstado"];
 	$activar->ajaxAprobarNotaSalida();
+}
+
+/*=============================================
+REINICIAR NOTA DE SALIDA SALDO A CANTIDAD
+=============================================*/	
+if(isset($_POST["reiniciarNotaSalida"])){
+
+	$reiniciar = new AjaxNotasSalidas();
+	$reiniciar -> codPro = $_POST["codPro"];
+  $reiniciar -> notaSalida = $_POST["reiniciarNotaSalida"];
+	$reiniciar -> ajaxVisualizarDetalle2();
 }
