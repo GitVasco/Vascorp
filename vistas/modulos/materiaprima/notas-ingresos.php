@@ -43,15 +43,15 @@
 
                     <?php
 
-                    if(isset($_GET["fechaInicial"])){
+                        if(isset($_GET["fechaInicial"])){
 
-                        echo $_GET["fechaInicial"]." - ".$_GET["fechaFinal"];
+                            echo $_GET["fechaInicial"]." - ".$_GET["fechaFinal"];
 
-                    }else{
-                    
-                        echo 'Rango de fecha';
+                        }else{
+                        
+                            echo 'Rango de fecha';
 
-                    }
+                        }
 
                     ?>
 
@@ -105,6 +105,7 @@ MODAL VIZUALIZAR NOTA DE INGRESO
 
     <div class="modal-content">
 
+        <form role="form" method="post">
 
         <!--=====================================
         CABEZA DEL MODAL
@@ -279,7 +280,14 @@ MODAL VIZUALIZAR NOTA DE INGRESO
 
         </div>
 
+        </form>
 
+        <?php
+
+        $editarNotaIngreso = new ControladorNotasIngresos();
+        $editarNotaIngreso -> ctrEditarNotaIngreso();
+
+        ?>  
 
     </div>
 

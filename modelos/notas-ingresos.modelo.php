@@ -26,6 +26,7 @@ class ModeloNotasIngresos{
                                             snea,
                                             nnea,
                                             DATE(FecEmi) AS fecemi,
+                                            DATE(nea.fecreg) AS fecreg,
                                             tcambio,
                                             mo,
                                             obser,
@@ -81,6 +82,7 @@ class ModeloNotasIngresos{
             snea,
             nnea,
             DATE(FecEmi) AS fecemi,
+            DATE(nea.fecreg) AS fecreg,
             tcambio,
             mo,
             obser,
@@ -147,6 +149,7 @@ class ModeloNotasIngresos{
                 snea,
                 nnea,
                 DATE(FecEmi) AS fecemi,
+                DATE(nea.fecreg) AS fecreg,
                 tcambio,
                 mo,
                 obser,
@@ -198,6 +201,7 @@ class ModeloNotasIngresos{
                 snea,
                 nnea,
                 DATE(FecEmi) AS fecemi,
+                DATE(nea.fecreg) AS fecreg,
                 tcambio,
                 mo,
                 obser,
@@ -1279,5 +1283,49 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
 
 		$stmt = null;
 	}   
+
+  /* 
+  * CREAR NOTA DE INGRESO - CABECERA
+  */
+  static public function mdlEditarNotaIngreso($datos){
+
+		$sql="UPDATE 
+              nea 
+            SET
+              trdcto = :trdcto,
+              srdcto = :srdcto,
+              nrdcto = :nrdcto,
+              fecven = :fecven,
+              trguia = :trguia,
+              serguia = :serguia,
+              nroguia = :nroguia,
+              fecemi = :fecemi,
+              obser = :obser 
+            WHERE nnea = :nnea";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+    $stmt->bindParam(":nnea",$datos["nnea"],PDO::PARAM_STR);
+    $stmt->bindParam(":trguia",$datos["trguia"],PDO::PARAM_STR);
+    $stmt->bindParam(":serguia",$datos["serguia"],PDO::PARAM_STR);
+    $stmt->bindParam(":nroguia",$datos["nroguia"],PDO::PARAM_STR);
+    $stmt->bindParam(":fecemi",$datos["fecemi"],PDO::PARAM_STR);
+    $stmt->bindParam(":obser",$datos["obser"],PDO::PARAM_STR);   
+    $stmt->bindParam(":trdcto",$datos["trdcto"],PDO::PARAM_STR);
+    $stmt->bindParam(":srdcto",$datos["srdcto"],PDO::PARAM_STR);
+    $stmt->bindParam(":nrdcto",$datos["nrdcto"],PDO::PARAM_STR);
+    $stmt->bindParam(":fecven",$datos["fecven"],PDO::PARAM_STR);
+
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+
+		}
+  }
 
 }

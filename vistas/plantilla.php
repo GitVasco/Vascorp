@@ -240,7 +240,8 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "orden-compra" ||
                   $_GET["ruta"] == "crear-orden-compra" ||
                   $_GET["ruta"] == "editar-orden-compra" ||
-                  $_GET["ruta"] == "proveedor" ){
+                  $_GET["ruta"] == "proveedor" ||
+                  $_GET["ruta"] == "notas-ingresos-os" ){
         
               include "modulos/materiaprima/".$_GET["ruta"].".php";
 

@@ -274,4 +274,71 @@ class ControladorNotasIngresos{
 		
 	}	
 
+	/* 
+	* Actualizar documentos de nota de ingreso
+	*/
+	static public function ctrEditarNotaIngreso(){
+
+		/* 
+		* Revisamos si viene el codigo de la nota de ingreso
+		*/
+		if(isset($_POST["NotaIngreso"])){
+			
+			$datos= array( 	"nnea" 		=> $_POST["NotaIngreso"],
+							"trdcto"	=> $_POST["tipDocP"],
+							"srdcto"	=> $_POST["nuevaSerieP"],
+							"nrdcto"	=> $_POST["nuevoNroP"],
+							"fecven" 	=> $_POST["fecP"],
+							"trguia"	=> $_POST["tipDocS"],
+							"serguia"	=> $_POST["nuevaSerieS"],
+							"nroguia"	=> $_POST["nuevoNroS"],
+							"fecemi" 	=> $_POST["fecS"],
+							"obser"		=> $_POST["nuevaObservacion"]);
+			var_dump($datos);
+
+			$respuesta = ModeloNotasIngresos::mdlEditarNotaIngreso($datos);
+			var_dump($respuesta);
+
+			if($respuesta == "ok"){
+
+				# Mostramos una alerta suave
+				echo '<script>
+						swal({
+							type: "success",
+							title: "Felicitaciones",
+							text: "¡La nota de ingreso fue actualizada con éxito!",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar"
+						}).then((result)=>{
+							if(result.value){
+								window.location="notas-ingresos";}
+						});
+					</script>';				
+
+
+			}else{
+
+				# Mostramos una alerta suave
+				echo '<script>
+				swal({
+					type: "error",
+					title: "Error",
+					text: "¡La información presento problemas y no se registro adecuadamente. Por favor, intenteló de nuevo!",
+					showConfirmButton: true,
+					confirmButtonText: "Cerrar"
+				}).then((result)=>{
+					if(result.value){
+						window.location="notas-ingresos";}
+				});
+			</script>';
+
+
+			}
+			
+
+		}
+
+
+	}
+
 }
