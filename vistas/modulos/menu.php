@@ -1002,6 +1002,17 @@
                     </a>
 
                     </li>
+
+                    <li class="<?php if($_GET["ruta"] == "notas-ingresos") echo 'active';?>">
+
+                    <a href="notas-ingresos-os">
+
+                        <i class="fa fa-file-o text-gray"></i>
+                        <span>Ingresos Servicios</span>
+
+                    </a>
+
+                    </li>                    
                     
                     <li class="<?php if($_GET["ruta"] == "notas-salidas") echo 'active';?>">
 

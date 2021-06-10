@@ -45,16 +45,16 @@
                                     <tr>
                                         <th>CodPro</th>
                                         <th>Cod. Fabrica</th>
-                                        <th>Descripción</th>
+                                        <th style="min-width: 400px;">Descripción</th>
                                         <th>Und</th>
                                         <th>Cod. Color</th>
-                                        <th>Color</th>
-                                        <th>Sin IGV</th>
-                                        <th>Inc. IGV</th>
-                                        <th>Stock Actual</th>
-                                        <th>Saldo Oc</th>
-                                        <th>Nro. OC</th>
-                                        <th>Proveedor</th>
+                                        <th style="min-width: 150px;">Color</th>
+                                        <th style="min-width: 100px;">Sin IGV</th>
+                                        <th style="min-width: 100px;">Inc. IGV</th>
+                                        <th style="min-width: 100px;">Stock Actual</th>
+                                        <th style="min-width: 80px;">Saldo Oc</th>
+                                        <th style="min-width: 80px;">Nro. OC</th>
+                                        <th style="min-width: 400px;">Proveedor</th>
                                         <th>#</th>
                                     </tr>
 

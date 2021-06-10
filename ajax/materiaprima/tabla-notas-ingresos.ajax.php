@@ -29,7 +29,7 @@ class TablaNotasIngresos{
 
             $datosJson .= '[
             "'.$notasIngresos[$i]["tnea"].'",
-            "'.$notasIngresos[$i]["fecemi"].'",
+            "'.$notasIngresos[$i]["fecreg"].'",
             "'.$notasIngresos[$i]["nnea"].'",
             "'.$notasIngresos[$i]["razpro"].'",
             "'.$notasIngresos[$i]["tipodoc"].'",
