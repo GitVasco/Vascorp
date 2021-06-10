@@ -59,13 +59,13 @@ class AjaxNotasSalidas{
   VISUALIZAR NOTA SALIDA DETALLE CON 2 PARAMETROS
   =============================================*/ 
   public function ajaxReiniciarSaldoCantidad(){
-		$nota = $this->notaSalida;
-		$materia = $this->codPro;
+		$nota = $this->notaSalida2;
+		$materia = $this->codPro2;
     $datos = array("Nro" => $nota,
                     "CodPro" => $materia);
-    $respuesta = ModeloNotasSalidas::mdlActualizarCantidadSaldo($datos);
+    $respuestaReinicio = ModeloNotasSalidas::mdlActualizarCantidadSaldo($datos);
 
-    echo json_encode($respuesta);
+    echo $respuestaReinicio;
 
   }
 
@@ -155,7 +155,7 @@ REINICIAR NOTA DE SALIDA SALDO A CANTIDAD
 if(isset($_POST["reiniciarNotaSalida"])){
 
 	$reiniciar = new AjaxNotasSalidas();
-	$reiniciar -> codPro = $_POST["codPro"];
-  $reiniciar -> notaSalida = $_POST["reiniciarNotaSalida"];
-	$reiniciar -> ajaxVisualizarDetalle2();
+	$reiniciar -> codPro2 = $_POST["reiniciarCodPro"];
+  $reiniciar -> notaSalida2 = $_POST["reiniciarNotaSalida"];
+	$reiniciar -> ajaxReiniciarSaldoCantidad();
 }

@@ -27,6 +27,7 @@ class TablaConsumoTelas{
 
             $datosJson .= '[
             "'.$consumoTelas[$i]["almacencorte"].'",
+            "'.$consumoTelas[$i]["nota_salida"].'",
             "'.$consumoTelas[$i]["guia"].'",
             "'.$consumoTelas[$i]["fechas"].'",
             "'.$consumoTelas[$i]["mat_pri"]." - ".$consumoTelas[$i]["DesPro"].'",

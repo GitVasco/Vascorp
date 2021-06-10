@@ -386,9 +386,9 @@ $(".tablaMateriaOrdenCompra").on("click", "button.agregarMateriaCompra", functio
 
           "<!-- Cantidad del producto -->" +
 
-          '<div class="col-xs-1">' +
+          '<div class="col-xs-1 ingresoCantidad">' +
 
-            '<input type="number" step="any" class="form-control input-sm nuevaCantidadMateria" name="nuevaCantidadMateria" min="1" value="1" stock="' + stock + '" nuevoStock="' + Number(stock - 1) + '" required>' +
+            '<input type="number" step="any" class="form-control input-sm nuevaCantidadMateria" name="nuevaCantidadMateria" min="1" value="1" stock="' + stock + '" nuevoStock="' + Number(stock - 1) + '"   required>' +
             
           "</div>" +
 
@@ -398,21 +398,21 @@ $(".tablaMateriaOrdenCompra").on("click", "button.agregarMateriaCompra", functio
 
           "</div>" +
 
-          '<div class="col-xs-1" >' +
+          '<div class="col-xs-1 ingresoPrecio" >' +
 
               '<input type="number" min="0" step="any"  class="form-control input-sm nuevoPrecio"  name="nuevoPrecio" value="' + precio + '"   required>' +
 
           "</div>" +
 
-          '<div class="col-xs-1" >' +
+          '<div class="col-xs-1 ingresoDscto" >' +
 
               '<input type="number" min="0"  step="any" class="form-control input-sm nuevoDscto"  name="nuevoDscto" value="0.00"   >' +
 
           "</div>" +
 
-          '<div class="col-xs-1" >' +
+          '<div class="col-xs-1 ingresoTotal" >' +
             '<div class="input-group">' +
-              '<input type="number" step="any" class="form-control input-sm nuevoTotal"  name="nuevoTotal" value="0.00"  readonly required>' +
+              '<input type="number" step="any" class="form-control input-sm nuevoTotal"  name="nuevoTotal" value="'+precio+'"  readonly required>' +
               '<span class="input-group-addon"  style="padding: 3px 6px"><button type="button" class="btn btn-danger btn-xs quitarMateriaCompra" idMateriaCompra="' + idMateriaCompra + '"><i class="fa fa-times"></i></button></span>' +
             "</div>" +
           "</div>" +
@@ -519,6 +519,43 @@ MODIFICAR LA CANTIDAD
 =============================================*/
 
 $(".formularioOrdenCompra").on("keyup", "input.nuevaCantidadMateria", function() {
+
+  //entramos al input de precio para obtener su valor
+  var precio = $(this)
+  .parent()
+  .parent()
+  .children(".ingresoPrecio")
+  .children(".nuevoPrecio");  
+  // console.log(precio);
+
+  var cantRecibida = Number($(this).val());
+  //console.log(cantRecibida)
+
+  
+  //entramos al input del total par asignar el valor
+  var total = $(this)
+              .parent()
+              .parent()
+              .children(".ingresoTotal")
+              .children()
+              .children(".nuevoTotal"); 
+  // console.log(total);
+
+  //entramos al input del descuento para obtener su valor
+  var descuento = $(this)
+  .parent()
+  .parent()
+  .children(".ingresoDscto")
+  .children(".nuevoDscto");  
+  
+  //Obtenemos el descuento lo dividimos entre 100 como porcentaje
+  var descuentoTotal = (precio.val() * cantRecibida) * (descuento.val()/100);
+
+  //le restamos el descuento al total
+  precioFinal = (precio.val() * cantRecibida) - descuentoTotal;
+
+  total.val(precioFinal.toFixed(6));
+
   
 
   var nuevoStock = Number($(this).attr("stock")) - $(this).val();
@@ -552,13 +589,93 @@ $(".formularioOrdenCompra").on("keyup", "input.nuevaCantidadMateria", function()
 });
 
 
-$(".formularioOrdenCompra").on("keyup", "input.nuevoPrecio, input.nuevoDscto", function() {
+$(".formularioOrdenCompra").on("keyup", "input.nuevoPrecio", function() {
+
+  //entramos al input de cantidad para obtener su valor
+  var cantidad = $(this)
+  .parent()
+  .parent()
+  .children(".ingresoCantidad")
+  .children(".nuevaCantidadMateria");  
+  // console.log(precio);
+
+  var precio = Number($(this).val());
+  //console.log(cantRecibida)
+
+  
+
+  //entramos al input de total para asignar su valor
+  var total = $(this)
+              .parent()
+              .parent()
+              .children(".ingresoTotal")
+              .children()
+              .children(".nuevoTotal"); 
+  // console.log(total);
+
+  //entramos al input de descuento para obtener su valor
+  var descuento = $(this)
+  .parent()
+  .parent()
+  .children(".ingresoDscto")
+  .children(".nuevoDscto");  
+  
+  //Obtenemos el descuento lo dividimos entre 100 como porcentaje
+  var descuentoTotal = (precio * cantidad.val()) * (descuento.val()/100);
+
+  //le restamos el descuento al total
+  precioFinal = (precio * cantidad.val()) - descuentoTotal;
+
+  total.val(precioFinal.toFixed(6));
+
   listarMateriaCompras();
 });
+
 
 $(".formularioOrdenCompra").on("change", "select.nuevoColorProv", function() {
   listarMateriaCompras();
 });
+
+
+/*=============================================
+MODIFICAR LA CANTIDAD
+=============================================*/
+
+$(".formularioOrdenCompra").on("change", "input.nuevoDscto", function() {
+
+  //entramos al input de cantidad para obtener su valor
+  var cantidad = $(this)
+  .parent()
+  .parent()
+  .children(".ingresoCantidad")
+  .children(".nuevaCantidadMateria");  
+
+  //entramos al input de precio para obtener su valor
+  var precio = $(this)
+  .parent()
+  .parent()
+  .children(".ingresoPrecio")
+  .children(".nuevoPrecio");  
+
+  //entramos al input de total para asignar su valor
+  var total = $(this)
+  .parent()
+  .parent()
+  .children(".ingresoTotal")
+  .children()
+  .children(".nuevoTotal"); 
+
+  //Obtenemos el descuento lo dividimos entre 100 como porcentaje
+  var nuevoDscto = (precio.val() * cantidad.val()) * ($(this).val()/100);
+  // console.log(nuevoDscto);
+
+  //le restamos el descuento al total
+  var nuevoTotal = (precio.val() * cantidad.val())- nuevoDscto;
+
+  total.val(nuevoTotal.toFixed(6));
+
+  listarMateriaCompras();
+})
 
 /*=============================================
 LISTAR TODAS LAS MATERIA PRIMA

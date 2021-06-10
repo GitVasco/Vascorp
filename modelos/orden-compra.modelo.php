@@ -176,4 +176,86 @@ class ModeloOrdenCompra{
 		$stmt = null;
 
 	}
+
+  // Método para guardar las ventas
+	static public function mdlGuardarOrdenCompra($datos){
+
+		$sql="INSERT INTO ocompra(Tip,Ser,Nro,Cod_Local,Cod_Entidad,CodRuc,FecEmi,tCambio,Mo,Obser,pIgv,SubTotal,Igv,Total,mtopago,Centcosto,Cantidad,NroProforma,FecLlegada,TipPago,Dia,EstOco,EstReg,FecReg,UsuReg,PcReg,estac) VALUES (:Tip,:Ser,:Nro,:Cod_Local,:Cod_Entidad,:CodRuc,:FecEmi,:tCambio,:Mo,:Obser,:pIgv,:SubTotal,:Igv,:Total,:mtopago,:Centcosto,:Cantidad,:NroProforma,:FecLlegada,:TipPago,:Dia,:EstOco,:EstReg,:FecReg,:UsuReg,:PcReg,:estac)";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":Tip",$datos["Tip"],PDO::PARAM_STR);
+		$stmt->bindParam(":Ser",$datos["Ser"],PDO::PARAM_STR);
+		$stmt->bindParam(":Nro",$datos["Nro"],PDO::PARAM_STR);
+		$stmt->bindParam(":Cod_Local",$datos["Cod_Local"],PDO::PARAM_STR);
+		$stmt->bindParam(":Cod_Entidad",$datos["Cod_Entidad"],PDO::PARAM_STR);
+		$stmt->bindParam(":CodRuc",$datos["CodRuc"],PDO::PARAM_STR);
+		$stmt->bindParam(":FecEmi",$datos["FecEmi"],PDO::PARAM_STR);
+		$stmt->bindParam(":tCambio",$datos["tCambio"],PDO::PARAM_STR);
+		$stmt->bindParam(":Mo",$datos["Mo"],PDO::PARAM_STR);
+		$stmt->bindParam(":Obser",$datos["Obser"],PDO::PARAM_STR);
+		$stmt->bindParam(":pIgv",$datos["pIgv"],PDO::PARAM_STR);
+		$stmt->bindParam(":SubTotal",$datos["SubTotal"],PDO::PARAM_STR);
+		$stmt->bindParam(":Igv",$datos["Igv"],PDO::PARAM_STR);
+		$stmt->bindParam(":Total",$datos["Total"],PDO::PARAM_STR);
+		$stmt->bindParam(":mtopago",$datos["mtopago"],PDO::PARAM_STR);
+		$stmt->bindParam(":Centcosto",$datos["Centcosto"],PDO::PARAM_STR);
+		$stmt->bindParam(":Cantidad",$datos["Cantidad"],PDO::PARAM_STR);
+		$stmt->bindParam(":NroProforma",$datos["NroProforma"],PDO::PARAM_STR);
+		$stmt->bindParam(":FecLlegada",$datos["FecLlegada"],PDO::PARAM_STR);
+		$stmt->bindParam(":TipPago",$datos["TipPago"],PDO::PARAM_STR);
+		$stmt->bindParam(":Dia",$datos["Dia"],PDO::PARAM_STR);
+		$stmt->bindParam(":EstOco",$datos["EstOco"],PDO::PARAM_STR);
+		$stmt->bindParam(":EstReg",$datos["EstReg"],PDO::PARAM_STR);
+		$stmt->bindParam(":FecReg",$datos["FecReg"],PDO::PARAM_STR);
+		$stmt->bindParam(":UsuReg",$datos["UsuReg"],PDO::PARAM_STR);
+    $stmt->bindParam(":PcReg",$datos["PcReg"],PDO::PARAM_STR);
+    $stmt->bindParam(":estac",$datos["estac"],PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+
+		}
+
+		$stmt=null;
+	}	
+	
+	// Método para guardar las ventas
+	static public function mdlGuardarDetalleOrdenCompra($datos){
+
+		$sql="INSERT INTO ocomdet(Item,Tip,Ser,Nro,ColProv,Cod_Local,Cod_Entidad,CodRuc,CodPro,CodFab,UndPro,CanPro,CanPro_Ant,SugVta,EstVta,pcosto,CenCosto,FecReg,PcReg,UsuReg,SalVta) VALUES (:Item,:Tip,:Ser,:Nro,:ColProv,:Cod_Local,:Cod_Entidad,:CodRuc,:CodPro,:CodFab,:UndPro,:CanPro,:CanPro_Ant,:SugVta,:EstVta,:pcosto,:CenCosto,:FecReg,:PcReg,:UsuReg,:CanVta)";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":Item",$datos["Item"],PDO::PARAM_STR);
+		$stmt->bindParam(":CanVta",$datos["CanVta"],PDO::PARAM_STR);
+		$stmt->bindParam(":PreVta",$datos["PreVta"],PDO::PARAM_STR);
+		$stmt->bindParam(":FecEmi",$datos["FecEmi"],PDO::PARAM_STR);
+		$stmt->bindParam(":DscVta",$datos["DscVta"],PDO::PARAM_STR);
+		$stmt->bindParam(":Tip",$datos["Tip"],PDO::PARAM_STR);
+		$stmt->bindParam(":Ser",$datos["Ser"],PDO::PARAM_STR);
+		$stmt->bindParam(":Nro",$datos["Nro"],PDO::PARAM_STR);
+		$stmt->bindParam(":Cod_Local",$datos["Cod_Local"],PDO::PARAM_STR);
+		$stmt->bindParam(":Cod_Entidad",$datos["Cod_Entidad"],PDO::PARAM_STR);
+		$stmt->bindParam(":Ruc",$datos["Ruc"],PDO::PARAM_STR);
+		$stmt->bindParam(":CodPro",$datos["CodPro"],PDO::PARAM_STR);
+		$stmt->bindParam(":SugVta",$datos["SugVta"],PDO::PARAM_STR);
+		$stmt->bindParam(":EstVta",$datos["EstVta"],PDO::PARAM_STR);
+		$stmt->bindParam(":pcosto",$datos["pcosto"],PDO::PARAM_STR);
+		$stmt->bindParam(":CenCosto",$datos["CenCosto"],PDO::PARAM_STR);
+		$stmt->bindParam(":FecReg",$datos["FecReg"],PDO::PARAM_STR);
+		$stmt->bindParam(":PcReg",$datos["PcReg"],PDO::PARAM_STR);
+		$stmt->bindParam(":UsuReg",$datos["UsuReg"],PDO::PARAM_STR);
+		
+
+		$stmt->execute();
+
+		$stmt=null;
+	}
+
 }

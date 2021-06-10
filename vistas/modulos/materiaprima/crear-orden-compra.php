@@ -335,8 +335,8 @@
 
           <?php
 
-            $guardarNotaSalida = new ControladorNotasSalidas();
-            $guardarNotaSalida -> ctrCrearNotaSalida();
+            $guardarOrdenCompra = new ControladorOrdenCompra();
+            $guardarOrdenCompra-> ctrCrearOrdenCompra();
 
           ?>          
 

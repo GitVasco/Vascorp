@@ -645,4 +645,56 @@ class ModeloNotasSalidas{
 
 	}	
 
+	/*=============================================
+	MOSTRAR SELECT DE NOTA DE SALIDA
+	=============================================*/
+	static public function mdlSelectNotaSalida($tabla,$item,$valor){
+
+		$sql="SELECT 
+		Nro,
+		DATE(FecEmi) as fecha
+	  FROM
+		$tabla 
+	  WHERE $item = :$item 
+	  ORDER BY Nro ASC ";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":".$item,$valor,PDO::PARAM_STR);
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt=null;
+
+	}
+
+
+	/*=============================================
+	MOSTRAR SELECT DEPENDIENTE DE NOTA DE SALIDA
+	=============================================*/
+	static public function mdlSelectDependienteNotaSalida($valor1,$valor2){
+
+		$sql="SELECT 
+		Nro,
+		DATE(FecEmi) as fecha,
+	  FROM
+		ventas_cab
+	  WHERE Nro = '".$valor1."' 
+	  AND CodPro = '".$valor2."'
+	  ORDER BY Nro ASC ";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt=null;
+
+	}
+
+
 }

@@ -885,14 +885,14 @@ $(".tablaAlmacenCorte").on("click", ".btnEditarAC", function () {
                   
                       Command: toastr["error"]("La cantidad ingresada supera a la recibida");
                     }
-                    $("#diferenciaMP"+i+"").val(Number($("#resta"+i+"").val())-Number($("#cantidadMP"+i+"").val()));
-                    $("#mermaMP"+i+"").val(Number($("#entregaMP"+i+"").val())-Number($("#cantidadMP"+i+"").val())-Number($("#sinusoMP"+i+"").val()));
-                })
-                $("#entregaMP"+i+"").change(function(){
-                    $("#mermaMP"+i+"").val(Number($("#entregaMP"+i+"").val())-Number($("#cantidadMP"+i+"").val())-Number($("#sinusoMP"+i+"").val()));
+                    var diferencia = Number($("#resta"+i+"").val())-Number($("#cantidadMP"+i+"").val());
+                    $("#diferenciaMP"+i+"").val(diferencia.toFixed(6));
+                    var merma = Number($("#entregaMP"+i+"").val())-Number($("#cantidadMP"+i+"").val())-Number($("#sinusoMP"+i+"").val());
+                    $("#mermaMP"+i+"").val(merma.toFixed(6));
                 })
                 $("#sinusoMP"+i+"").keyup(function(){
-                    $("#mermaMP"+i+"").val(Number($("#entregaMP"+i+"").val())-Number($("#cantidadMP"+i+"").val())-Number($("#sinusoMP"+i+"").val()));  
+                    var merma = Number($("#entregaMP"+i+"").val())-Number($("#cantidadMP"+i+"").val())-Number($("#sinusoMP"+i+"").val());
+                    $("#mermaMP"+i+"").val(merma.toFixed(6));  
                 })
 
                 $("#reiniciarConsumo"+i+"").click(function(){
@@ -901,7 +901,7 @@ $(".tablaAlmacenCorte").on("click", ".btnEditarAC", function () {
                   // console.log(codPro);
                   var datosReinicio = new FormData();
                   datosReinicio.append("reiniciarNotaSalida", notaSalida);
-                  datosReinicio.append("codPro", codPro);
+                  datosReinicio.append("reiniciarCodPro", codPro);
                   $.ajax({
 
                     url:"ajax/notas-salidas.ajax.php",
@@ -910,18 +910,20 @@ $(".tablaAlmacenCorte").on("click", ".btnEditarAC", function () {
                     cache: false,
                     contentType: false,
                     processData: false,
-                    dataType:"json",
                     success:function(respuestaReinicio){
-                      console.log(respuestaReinicio);
-                      if(respuestaReinicio != false){
-                        $("#notaSalidaMP"+i+"").val("");
-                        $("#entregaMP"+i+"").val("0.0000");
-                        $("#diferenciaMP"+i+"").val("0.0000");
-                        $("#cantidadMP"+i+"").val("0.0000");
-                        $("#mermaMP"+i+"").val("0.0000");
-                        $("#sinusoMP"+i+"").val("0.0000");
+                      if(respuestaReinicio =="ok"){
+                        
                         $("#notaSalidaMP"+i+"").attr("readonly",false);
+                        $("#notaSalidaMP"+i+"").val("");
+                        $("#entregaMP"+i+"").val("0.000000");
+                        $("#diferenciaMP"+i+"").val("0.000000");
+                        $("#cantidadMP"+i+"").val("0.000000");
+                        $("#mermaMP"+i+"").val("0.000000");
+                        $("#sinusoMP"+i+"").val("0.000000");
+                        
                       }
+                        
+                      
                       
                     }
                     
@@ -951,13 +953,14 @@ $(".tablaAlmacenCorte").on("click", ".btnEditarAC", function () {
                     dataType:"json",
                     success:function(respuestaSalida){
                       if(respuestaSalida != false){
+                        var saldo = Number(respuestaSalida["SalVta"]);
                         $("#cantidadMP"+i+"").attr("readonly",false);
                         $("#sinusoMP"+i+"").attr("readonly",false);
-                        $("#entregaMP"+i+"").val(respuestaSalida["SalVta"]);
+                        $("#entregaMP"+i+"").val(saldo.toFixed(6));
                       }else{
                         $("#cantidadMP"+i+"").attr("readonly",true);
                         $("#sinusoMP"+i+"").attr("readonly",true);
-                        $("#entregaMP"+i+"").val("0.0000");
+                        $("#entregaMP"+i+"").val("0.000000");
                       }
                       
                       

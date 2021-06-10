@@ -900,6 +900,7 @@ class ModeloAlmacenCorte{
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			adm.id,
 			adm.almacencorte,
+			adm.nota_salida,
 			a.guia,
 			DATE(a.fecha) AS fechas,
 			Stk_Act,
@@ -948,6 +949,7 @@ class ModeloAlmacenCorte{
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			adm.id,
 			adm.almacencorte,
+			adm.nota_salida,
 			a.guia,
 			Stk_Act,
 			DATE(a.fecha) AS fechas,
@@ -1008,6 +1010,7 @@ class ModeloAlmacenCorte{
 				$stmt = Conexion::conectar()->prepare("SELECT 
 				adm.id,
 				adm.almacencorte,
+				adm.nota_salida,
 				a.guia,
 				Stk_Act,
 				DATE(a.fecha) AS fechas,
@@ -1053,6 +1056,7 @@ class ModeloAlmacenCorte{
 				$stmt = Conexion::conectar()->prepare("SELECT 
 				adm.id,
 				adm.almacencorte,
+				adm.nota_salida,
 				a.guia,
 				Stk_Act,
 				DATE(a.fecha) AS fechas,
