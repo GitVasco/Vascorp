@@ -58,6 +58,7 @@
          <tr>
            
            <th>Corte</th>
+           <th>Nota salida</th>
            <th>Guia</th>
            <th>Fecha</th>
            <th>Materia Prima</th>

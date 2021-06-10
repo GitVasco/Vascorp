@@ -729,7 +729,7 @@ $(".tablaNotasSalidas").on("click",".btnActivarNotaSalida",function(){
     contentType:false,
     processData:false,
     success:function(respuesta){
-      console.log(respuesta);
+      // console.log(respuesta);
       if(estadoNotaSalida == "1"){
 
         Command: toastr["success"]("Nota de salida aprobada correctamente!");

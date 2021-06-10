@@ -694,7 +694,11 @@ MODAL EDITAR TELA
             <div id="telas"  style="height:500px; overflow: scroll; overflow-x:hidden">
             </div>
 
+            
+
             </div>
+
+            <label class="control-label">* Recordar siempre "GUARDAR CAMBIOS"</label>
           </div>
 
         </div>

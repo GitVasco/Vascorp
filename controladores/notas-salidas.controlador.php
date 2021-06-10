@@ -107,6 +107,33 @@ class ControladorNotasSalidas{
 	}
 
 	/*=============================================
+	SELECT NOTA DE SALIDA
+	=============================================*/	
+
+	static public function ctrSelectNotaSalida($item,$valor){
+
+		$tabla = "ventas_cab";
+		$respuesta = ModeloNotasSalidas::mdlSelectNotaSalida($tabla,$item,$valor);
+
+		return $respuesta;
+		
+	}
+
+	/*=============================================
+	SELECT DEPENDIENTE DE NOTA DE SALIDA
+	=============================================*/	
+
+	static public function ctrSelectDependienteNotaSalida($valor1,$valor2){
+
+		$respuesta = ModeloNotasSalidas::mdlSelectDependienteNotaSalida($valor1,$valor2);
+
+		return $respuesta;
+		
+	}
+
+
+
+	/*=============================================
 	MOSTRAR MATERIA PRIMA PARA NOTA DE SALIDA
 	=============================================*/	
 
@@ -119,7 +146,7 @@ class ControladorNotasSalidas{
 		
 	}
 	/*=============================================
-	CREAR VENTA
+	CREAR NOTA DE SALIDA
 	=============================================*/
 
 	static public function ctrCrearNotaSalida(){
@@ -167,7 +194,7 @@ class ControladorNotasSalidas{
 					$valor1=$infoMateria["CodAlm01"]-$value["cantidad"];
 					// var_dump($infoMateria);
 					// var_dump($valor1);
-					// ModeloNotasSalidas::mdlActualizarUnDatoMateria($tabla,$item1,$valor1,$valor);
+					ModeloNotasSalidas::mdlActualizarUnDatoMateria($tabla,$item1,$valor1,$valor);
 
 				}
 				//TRAEMOS LA FECHA Y LA PC QUE SE REGISTRO

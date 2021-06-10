@@ -34,6 +34,12 @@
 
         </a>
 
+        <button class="btn btn-info btnUnirNotaSalida" data-toggle='modal' data-target='#modalUnirNotaSalida'><i class="fa fa-random"></i>
+
+            Unir Saldo
+
+          </button>
+
         <button type="button" class="btn btn-default pull-right" id="daterange-btnNotasSalidas">
           <span>
             <i class="fa fa-calendar"></i>
@@ -315,6 +321,150 @@ MODAL VIZUALIZAR NOTA DE SALIDA
   </div>
 
 </div>
+
+<!--=====================================
+MODAL UNIR NOTA DE SALIDA
+======================================-->
+
+<div id="modalUnirNotaSalida" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form role="form" method="post">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Unir nota de salida</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <!-- ENTRADA PARA LA NOTA DE SALIDA -->
+            
+            <div class="form-group">
+              <label for="">NOTA DE SALIDA</label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
+
+                <select  class="form-control selectpicker" name="selectNotaSalida" id="selectNotaSalida" data-live-search="true" required>
+                  <option value="">SELECCIONAR NOTA DE SALIDA</option>
+
+                  <?php 
+                    $item="EstNota";
+                    $valor="1";
+
+                    $notaSalida= ControladorNotasSalidas::ctrSelectNotaSalida($item,$valor);
+
+                    foreach ($notaSalida as $key => $value) {
+
+                      echo '<option value="'.$value["Nro"].'">'.$value["Nro"].'</option>';
+
+                    }
+
+                  ?>
+
+                </select>
+
+              </div>
+
+            </div>          
+
+            <!-- ENTRADA PARA LA MATERIA PRIMA -->
+            
+            <div class="form-group">
+              <label for="">MATERIA PRIMA</label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+
+                <select  class="form-control selectpicker" name="selectCodPro" id="selectCodPro" data-live-search="true" required>
+                <option value="">SELECCIONAR MATERIA PRIMA</option>
+                </select>
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA LA NOTA DE SALIDA A SALDAR -->
+            
+            <div class="form-group">
+              <label for="">NOTA DE SALIDA A SALDAR </label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+
+                <select  class="form-control selectpicker" name="selectDependienteNotaSalida" id="selectDependienteNotaSalida" data-live-search="true" required>
+                <option value="">SELECCIONAR NOTA DE SALIDA</option>
+                </select>
+
+              </div>
+
+            </div>
+
+             <!-- ENTRADA PARA LA CANTIDAD -->
+            
+             <div class="form-group">
+              <label for="">CANTIDAD </label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+
+                <input type="text" class="form-control input-md" name="nuevaCantidadSaldar"  required>
+
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Unir saldo</button>
+
+        </div>
+
+      </form>
+
+
+      <?php
+
+        $unirNotaSalida = new ControladorBancos();
+        $unirNotaSalida -> ctrCrearBanco();
+
+      ?>
+
+
+    </div>
+
+  </div>
+
+</div>
+
 <?php 
   $anularNotaSalida = new ControladorNotasSalidas();
   $anularNotaSalida -> ctrAnularNotaSalida();
