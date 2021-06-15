@@ -96,7 +96,7 @@
 
                   <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">PROVEEDOR</label>
                   <div class="col-lg-2">
-                    <select  class="form-control selectpicker" name="nuevoProveedor" id="nuevoProveedorCompra" data-live-search="true" required>
+                    <select  class="form-control selectpicker" name="nuevoProveedorCompra" id="nuevoProveedorCompra" data-live-search="true" required>
                       <option value="">SELECCIONAR PROVEEDOR</option>
                         <?php
                             $item = null;
@@ -113,6 +113,7 @@
                         ?>
 
                     </select>
+                    <input type="hidden" name="nuevoCodRuc" id="nuevoCodRuc">
                   </div>
                     
                   <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">RAZON SOCIAL</label>
@@ -140,7 +141,7 @@
 
                     <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">MONEDA</label>
                     <div class="col-lg-2">
-                    <select  class="form-control selectpicker" name="nuevaMoneda" id="nuevaMonedaCompra" data-live-search="true" required>
+                    <select  class="form-control selectpicker" name="nuevaMoneda" id="nuevaMonedaCompra" data-live-search="true" >
                       <option value="">SELECCIONAR MONEDA</option>
                         <?php
                             $valor = null;
@@ -149,7 +150,7 @@
 
                             foreach ($sublineas as $key => $value) {
 
-                                echo '<option value="'.$value["Des_Larga"].'">'.$value["Des_Larga"].'</option>';
+                                echo '<option value="'.$value["Cod_Argumento"].'">'.$value["Des_Larga"].'</option>';
 
                             }
 
@@ -320,6 +321,78 @@
 
                 <hr>
 
+                <!--=====================================
+                  ENTRADA IMPUESTOS Y TOTAL
+                  ======================================-->
+
+                <div class="col-xs-5 pull-right">
+
+                  <table class="table">
+
+                    <thead>
+
+                      <tr>
+                        <th>SubTotal</th>
+                        <th>Impuesto</th>
+                        <th>Total</th>
+                      </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                      <tr>
+                        <td style="width: 35%">
+
+                          <div class="input-group">
+
+                            <input type="number" class="form-control input-sm" min="0" id="nuevoSubTotalCompra" step="any"
+                              name="nuevoSubTotalCompra" placeholder="0.00000" readonly>
+                            <span class="input-group-addon"><i class="fa fa-money"></i></span>
+
+                          </div>
+
+                        </td>
+
+                        <td style="width: 30%">
+
+                          <div class="input-group">
+
+                            <input type="number" class="form-control input-sm" min="0" step="any" id="nuevoImpuestoCompra"
+                              name="nuevoImpuestoCompra" placeholder="0.00000" readonly>
+
+
+
+                            <span class="input-group-addon"><i class="fa fa-percent"></i></span>
+
+                          </div>
+
+                        </td>
+
+                        <td style="width: 35%">
+
+                          <div class="input-group">
+
+                            
+
+                            <input type="text" min="0" class="form-control input-sm" id="nuevoTotalCompra" name="nuevoTotalCompra"  step="any" total="" placeholder="0.00000" readonly required>
+
+                            <span class="input-group-addon"><i class="fa fa-money"></i></span>
+
+                            </div>
+
+                          </td>
+
+                        </tr>
+
+                      </tbody>
+
+                    </table>
+
+                  </div>
+
+                </div>
+
               </div>
 
             </div>
@@ -336,7 +409,7 @@
           <?php
 
             $guardarOrdenCompra = new ControladorOrdenCompra();
-            $guardarOrdenCompra-> ctrCrearOrdenCompra();
+            $guardarOrdenCompra -> ctrCrearOrdenCompra();
 
           ?>          
 

@@ -15,7 +15,7 @@ class AjaxOrdenCompra{
 	public function ajaxConsultarTipoCambio(){
 
 
-		$ws = file_get_contents("https://dni.optimizeperu.com/api/tipo-cambio");
+		$ws = file_get_contents("https://api.apis.net.pe/v1/tipo-cambio-sunat");
 
 
 		echo $ws;

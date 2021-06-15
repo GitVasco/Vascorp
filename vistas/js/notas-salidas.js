@@ -276,12 +276,12 @@ $(".tablaMateriaNotaSalida tbody").on("click", "button.agregarMateriaNota", func
         processData: false,
         dataType: "json",
         success: function(respuesta2) {
-          $(".nuevoDestinoNota").find('option').remove();
+          $("#nuevoDestinoNota"+codpro).find('option').remove();
                 
-            $(".nuevoDestinoNota").append("<option value=''>SELECCIONAR DESTINO</option>");
+            $("#nuevoDestinoNota"+codpro).append("<option value=''>SELECCIONAR DESTINO</option>");
             for (let i = 0; i < respuesta2.length; i++) {
               
-              $(".nuevoDestinoNota").append("<option value='"+respuesta2[i]["Cod_Argumento"]+"'>"+respuesta2[i]["Cod_Argumento"]+" - "+respuesta2[i]["Des_Larga"]+"</option>");
+              $("#nuevoDestinoNota"+codpro).append("<option value='"+respuesta2[i]["Cod_Argumento"]+"'>"+respuesta2[i]["Cod_Argumento"]+" - "+respuesta2[i]["Des_Larga"]+"</option>");
               
             }
         }
@@ -332,7 +332,7 @@ $(".tablaMateriaNotaSalida tbody").on("click", "button.agregarMateriaNota", func
 
           '<div class="col-xs-2" >' +
 
-              '<select class="form-control input-sm nuevoDestinoNota" name="nuevoDestinoNota" required>' +
+              '<select class="form-control input-sm nuevoDestinoNota" name="nuevoDestinoNota" id="nuevoDestinoNota'+codpro+'" required>' +
               '<option value="">Seleccionar destino</option>' +
 
               '</select>'+
@@ -620,7 +620,8 @@ $(".tablaNotasSalidas").on("click", ".btnVisualizarNotaSalida", function () {
       $("#almacen").val(respuesta["AlmDes"]);
       $("#ruc").val(respuesta["Ruc"]);
       $("#cliente").val(respuesta["Ruc"]);
-      $("#motivo").val(respuesta["DocSal"])
+      $("#motivo").val(respuesta["DocSal"]);
+      $("#observacion").val(respuesta["observacion"]);
 
 		  }
 
@@ -744,3 +745,127 @@ $(".tablaNotasSalidas").on("click",".btnActivarNotaSalida",function(){
 	$(this).html("APROBADO");}
 });
 
+
+$(".formularioUnirNotaSalida").on("change","select#selectNotaSalida",function(){
+  var idNotaSalida = $(this).val();
+
+  var datosDOC = new FormData();
+    datosDOC.append("idNotaSalidaDetalle", idNotaSalida);
+    
+    $.ajax({
+
+		url:"ajax/notas-salidas.ajax.php",
+		method: "POST",
+		data: datosDOC,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType:"json",
+		success:function(respuestaDetalle){
+
+      var materiaprima = $("#selectCodPro");
+
+      materiaprima.find('option').remove();
+
+      materiaprima.append('<option value="">SELECCIONAR MATERIA PRIMA</option>');
+
+      for(var id of respuestaDetalle){
+          if(!id.union_ns){
+            
+            materiaprima.append('<option value="' + id.CodPro + '">' +id.CodPro +" - "+ id.DesPro + " - "+id.Des_Larga+'</option>');
+          }
+          
+          //console.log(serieSeparadoB);
+      }
+
+      materiaprima.selectpicker("refresh");
+
+      var notaSaldar = $("#selectDependienteNotaSalida");
+
+      notaSaldar.val("");
+
+      notaSaldar.selectpicker("refresh");
+      $("#nuevaCantidadSaldar").val("");
+      
+    }
+
+  })
+ 
+})
+
+$(".formularioUnirNotaSalida").on("change","select#selectCodPro",function(){
+  var unirNota = $("#selectNotaSalida").val();
+  var unirCodPro  = $(this).val();
+
+  var datosUnir = new FormData();
+  datosUnir.append("unirNota", unirNota);
+  datosUnir.append("unirCodPro", unirCodPro);
+  $.ajax({
+
+    url:"ajax/notas-salidas.ajax.php",
+    method: "POST",
+    data: datosUnir,
+    cache: false,
+    contentType: false,
+    processData: false,
+    dataType:"json",
+    success:function(respuesta){
+      var notaSaldar = $("#selectDependienteNotaSalida");
+
+      notaSaldar.find('option').remove();
+
+      notaSaldar.append('<option value="">SELECCIONAR NOTA DE SALIDA</option>');
+
+      for(var id of respuesta){
+          notaSaldar.append('<option value="' + id.Nro + '">' +id.Nro +" / "+id.fecha+'</option>');
+          //console.log(serieSeparadoB);
+      }
+
+      notaSaldar.selectpicker("refresh");
+      
+    }
+  })
+})
+
+$(".formularioUnirNotaSalida").on("change","select#selectDependienteNotaSalida",function(){
+  
+  var notaSalida = $(this).val();
+
+  var codPro = $("#selectCodPro").val();
+
+  var datosNotaSalida = new FormData();
+  datosNotaSalida.append("notaSalida", notaSalida);
+  datosNotaSalida.append("codPro", codPro);
+  $.ajax({
+
+    url:"ajax/notas-salidas.ajax.php",
+    method: "POST",
+    data: datosNotaSalida,
+    cache: false,
+    contentType: false,
+    processData: false,
+    dataType:"json",
+    success:function(respuestaSalida){
+      // console.log(respuestaSalida);
+      var saldo = Number(respuestaSalida["SalVta"]);
+      $("#nuevaCantidadSaldar").val(saldo.toFixed(6));
+      $("#nuevaCantidadSaldar").attr("saldo",saldo.toFixed(6));
+
+    }
+
+  })
+})
+
+$(".formularioUnirNotaSalida").on("keyup","input#nuevaCantidadSaldar",function(){
+
+  if (Number($(this).val()) >  Number($(this).attr("saldo"))) {
+    /*=============================================
+    SI LA CANTIDAD ES SUPERIOR AL SERVICIO REGRESAR VALORES INICIALES
+    =============================================*/
+
+    $(this).val($(this).attr("saldo"));
+
+
+    Command: toastr["error"]("Solo hay "+$(this).attr("saldo")+" de saldo disponible");
+  }
+})

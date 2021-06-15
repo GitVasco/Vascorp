@@ -191,8 +191,9 @@ $(".formularioOrdenCompra").on("change","select#nuevoProveedorCompra",function()
 		processData: false,
 		dataType:"json",
 		success:function(respuesta){
-			// console.log(respuesta);
-			$("#nuevaMonedaCompra").val(respuesta["Des_Larga"]);
+			//console.log(respuesta);
+			$("#nuevoCodRuc").val(CodRuc);
+      $("#nuevaMonedaCompra").val(respuesta["Cod_Argumento"]);
 			$("#nuevaMonedaCompra").selectpicker("refresh");
       $("#nuevoRuc").val(respuesta["RucPro"]);
       $("#nuevoDia").val(respuesta["Dia"]);
@@ -217,9 +218,10 @@ $(".formularioOrdenCompra").on("change","select#nuevoProveedorCompra",function()
 		contentType: false,
 		processData: false,
 		dataType:"json",
-		success:function(respuesta){
+		success:function(respuesta2){
+      //console.log(respuesta2);
 
-			$("#nuevoTipoCambio").val(respuesta["cambio_actual"]["venta"]);
+			$("#nuevoTipoCambio").val(respuesta2["venta"]);
 		}
   
 	})
@@ -333,12 +335,11 @@ $(".tablaMateriaOrdenCompra").on("click", "button.agregarMateriaCompra", functio
         processData: false,
         dataType: "json",
         success: function(respuesta2) {
-          $(".nuevoColorProv").find('option').remove();
+          $("#nuevoColorProv"+codpro).find('option').remove();
                 
-            $(".nuevoColorProv").append("<option value=''>COLOR</option>");
+            $("#nuevoColorProv"+codpro).append("<option value=''>COLOR</option>");
             for (let i = 0; i < respuesta2.length; i++) {
-              
-              $(".nuevoColorProv").append("<option value='"+respuesta2[i]["cod_argumento"]+"'>"+respuesta2[i]["cod_argumento"]+" - "+respuesta2[i]["des_larga"]+"</option>");
+              $("#nuevoColorProv"+codpro).append("<option value='"+respuesta2[i]["cod_argumento"]+"'>"+respuesta2[i]["cod_argumento"]+" - "+respuesta2[i]["des_larga"]+"</option>");
               
             }
         }
@@ -377,7 +378,7 @@ $(".tablaMateriaOrdenCompra").on("click", "button.agregarMateriaCompra", functio
 
           '<div class="col-xs-1" >' +
 
-              '<select class="form-control input-sm select2 nuevoColorProv" name="nuevoColorProv" >' +
+              '<select class="form-control input-sm  nuevoColorProv" name="nuevoColorProv" id="nuevoColorProv'+codpro+'">' +
               '<option value="">COLOR</option>' +
 
               '</select>'+
@@ -424,7 +425,7 @@ $(".tablaMateriaOrdenCompra").on("click", "button.agregarMateriaCompra", functio
 
 
       );
-
+      sumarTotalCompra();
 
       // AGRUPAR MATERIAS EN FORMATO JSON
 
@@ -508,6 +509,7 @@ $(".formularioOrdenCompra").on("click", "button.quitarMateriaCompra", function()
 
    
     // AGRUPAR MATERIAS EN FORMATO JSON
+    sumarTotalCompra();
 
     listarMateriaCompras();
   
@@ -582,7 +584,7 @@ $(".formularioOrdenCompra").on("keyup", "input.nuevaCantidadMateria", function()
   }
 
   
-
+  sumarTotalCompra();
   // AGRUPAR MATERIAS EN FORMATO JSON
 
   listarMateriaCompras();
@@ -628,11 +630,14 @@ $(".formularioOrdenCompra").on("keyup", "input.nuevoPrecio", function() {
 
   total.val(precioFinal.toFixed(6));
 
+  sumarTotalCompra();
+
   listarMateriaCompras();
 });
 
 
 $(".formularioOrdenCompra").on("change", "select.nuevoColorProv", function() {
+
   listarMateriaCompras();
 });
 
@@ -674,8 +679,44 @@ $(".formularioOrdenCompra").on("change", "input.nuevoDscto", function() {
 
   total.val(nuevoTotal.toFixed(6));
 
+  sumarTotalCompra();
+
   listarMateriaCompras();
 })
+
+/*=============================================
+SUMAR TODOS LOS PRECIOS
+=============================================*/
+
+function sumarTotalCompra() {
+  var precioItem = $(".nuevoTotal");
+
+ /*  console.log("precioitem", precioItem); */
+
+  var arraySumaPrecio = [];
+
+  for (var i = 0; i < precioItem.length; i++) {
+    arraySumaPrecio.push(Number($(precioItem[i]).val()));
+  }
+
+  /* console.log("arraySumaPrecio", arraySumaPrecio); */
+
+  function sumaArrayCompras(total, numero) {
+    return total + numero;
+  }
+
+  var sumaTotalCompra = arraySumaPrecio.reduce(sumaArrayCompras);
+
+  /*     console.log("sumaTotalPrecio", sumaTotalPrecio); */
+  var impuesto = sumaTotalCompra * 0.18;
+
+  var totalCompra= sumaTotalCompra + impuesto ;
+
+  $("#nuevoSubTotalCompra").val(sumaTotalCompra.toFixed(4));
+  $("#nuevoTotalCompra").val(totalCompra.toFixed(4));
+  $("#nuevoImpuestoCompra").val(impuesto.toFixed(4));
+  $("#nuevoTotalCompra").attr("total", totalCompra.toFixed(4));
+}
 
 /*=============================================
 LISTAR TODAS LAS MATERIA PRIMA
@@ -690,7 +731,9 @@ function listarMateriaCompras() {
 
   var codpro = $(".nuevoCodigoPro");
 
-  var codfab = $(".nuevoCodigoFab");
+  var codfab = $(".nuevoCodigoFabrica");
+
+  var und = $(".nuevaUnidad");
   
   var colorprov = $(".nuevoColorProv");
 
@@ -707,6 +750,7 @@ function listarMateriaCompras() {
       id:  $(codpro[i]).val(),
       codfab:  $(codfab[i]).val(),
       descripcion: $(descripcion[i]).val(),
+      unidad : $(und[i]).val(),
       cantidad: $(cantidad[i]).val(),
       colorprov: $(colorprov[i]).val(),
       descuento: $(descuento[i]).val(),
@@ -758,3 +802,4 @@ CADA VEZ QUE CARGUE LA TABLA CUANDO NAVEGAMOS EN ELLA EJECUTAR LA FUNCIÓN:
 $(".tablaMateriaOrdenCompra").on("draw.dt", function() {
   quitarAgregarMateriaCompra();
 });
+

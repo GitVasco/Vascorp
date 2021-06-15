@@ -209,8 +209,8 @@ class ModeloOrdenCompra{
 		$stmt->bindParam(":EstReg",$datos["EstReg"],PDO::PARAM_STR);
 		$stmt->bindParam(":FecReg",$datos["FecReg"],PDO::PARAM_STR);
 		$stmt->bindParam(":UsuReg",$datos["UsuReg"],PDO::PARAM_STR);
-    $stmt->bindParam(":PcReg",$datos["PcReg"],PDO::PARAM_STR);
-    $stmt->bindParam(":estac",$datos["estac"],PDO::PARAM_STR);
+		$stmt->bindParam(":PcReg",$datos["PcReg"],PDO::PARAM_STR);
+		$stmt->bindParam(":estac",$datos["estac"],PDO::PARAM_STR);
 
 		if($stmt->execute()){
 
@@ -228,34 +228,67 @@ class ModeloOrdenCompra{
 	// Método para guardar las ventas
 	static public function mdlGuardarDetalleOrdenCompra($datos){
 
-		$sql="INSERT INTO ocomdet(Item,Tip,Ser,Nro,ColProv,Cod_Local,Cod_Entidad,CodRuc,CodPro,CodFab,UndPro,CanPro,CanPro_Ant,SugVta,EstVta,pcosto,CenCosto,FecReg,PcReg,UsuReg,SalVta) VALUES (:Item,:Tip,:Ser,:Nro,:ColProv,:Cod_Local,:Cod_Entidad,:CodRuc,:CodPro,:CodFab,:UndPro,:CanPro,:CanPro_Ant,:SugVta,:EstVta,:pcosto,:CenCosto,:FecReg,:PcReg,:UsuReg,:CanVta)";
+		$sql="INSERT INTO ocomdet(Item,Tip,Ser,Nro,ColProv,Cod_Local,Cod_Entidad,CodRuc,CodPro,CodFab,UndPro,CanPro,CanPro_Ant,PrePro,PrePro_Ant,DscPro,ImpPro,EstOco,CantNI,SalCan,FecEmi,estac,FecReg,UsuReg,PcReg) VALUES (:Item,:Tip,:Ser,:Nro,:ColProv,:Cod_Local,:Cod_Entidad,:CodRuc,:CodPro,:CodFab,:UndPro,:CanPro,:CanPro_Ant,:PrePro,:PrePro_Ant,:DscPro,:ImpPro,:EstOco,:CantNI,:Salcan,:FecEmi,:estac,:FecReg,:UsuReg,:PcReg)";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 
 		$stmt->bindParam(":Item",$datos["Item"],PDO::PARAM_STR);
-		$stmt->bindParam(":CanVta",$datos["CanVta"],PDO::PARAM_STR);
-		$stmt->bindParam(":PreVta",$datos["PreVta"],PDO::PARAM_STR);
-		$stmt->bindParam(":FecEmi",$datos["FecEmi"],PDO::PARAM_STR);
-		$stmt->bindParam(":DscVta",$datos["DscVta"],PDO::PARAM_STR);
 		$stmt->bindParam(":Tip",$datos["Tip"],PDO::PARAM_STR);
 		$stmt->bindParam(":Ser",$datos["Ser"],PDO::PARAM_STR);
 		$stmt->bindParam(":Nro",$datos["Nro"],PDO::PARAM_STR);
+		$stmt->bindParam(":ColProv",$datos["ColProv"],PDO::PARAM_STR);
 		$stmt->bindParam(":Cod_Local",$datos["Cod_Local"],PDO::PARAM_STR);
 		$stmt->bindParam(":Cod_Entidad",$datos["Cod_Entidad"],PDO::PARAM_STR);
-		$stmt->bindParam(":Ruc",$datos["Ruc"],PDO::PARAM_STR);
+		$stmt->bindParam(":CodRuc",$datos["CodRuc"],PDO::PARAM_STR);
 		$stmt->bindParam(":CodPro",$datos["CodPro"],PDO::PARAM_STR);
-		$stmt->bindParam(":SugVta",$datos["SugVta"],PDO::PARAM_STR);
-		$stmt->bindParam(":EstVta",$datos["EstVta"],PDO::PARAM_STR);
-		$stmt->bindParam(":pcosto",$datos["pcosto"],PDO::PARAM_STR);
-		$stmt->bindParam(":CenCosto",$datos["CenCosto"],PDO::PARAM_STR);
+		$stmt->bindParam(":CodFab",$datos["CodFab"],PDO::PARAM_STR);
+		$stmt->bindParam(":UndPro",$datos["UndPro"],PDO::PARAM_STR);
+		$stmt->bindParam(":CanPro",$datos["CanPro"],PDO::PARAM_STR);
+		$stmt->bindParam(":CanPro_Ant",$datos["CanPro_Ant"],PDO::PARAM_STR);
+		$stmt->bindParam(":PrePro",$datos["PrePro"],PDO::PARAM_STR);
+		$stmt->bindParam(":PrePro_Ant",$datos["PrePro_Ant"],PDO::PARAM_STR);
+		$stmt->bindParam(":DscPro",$datos["DscPro"],PDO::PARAM_STR);
+		$stmt->bindParam(":ImpPro",$datos["ImpPro"],PDO::PARAM_STR);
+		$stmt->bindParam(":EstOco",$datos["EstOco"],PDO::PARAM_STR);
+		$stmt->bindParam(":CantNI",$datos["CantNI"],PDO::PARAM_STR);
+		$stmt->bindParam(":SalCan",$datos["SalCan"],PDO::PARAM_STR);
+		$stmt->bindParam(":FecEmi",$datos["FecEmi"],PDO::PARAM_STR);
+		$stmt->bindParam(":estac",$datos["estac"],PDO::PARAM_STR);
 		$stmt->bindParam(":FecReg",$datos["FecReg"],PDO::PARAM_STR);
-		$stmt->bindParam(":PcReg",$datos["PcReg"],PDO::PARAM_STR);
 		$stmt->bindParam(":UsuReg",$datos["UsuReg"],PDO::PARAM_STR);
+		$stmt->bindParam(":PcReg",$datos["PcReg"],PDO::PARAM_STR);
 		
 
-		$stmt->execute();
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+
+		}
 
 		$stmt=null;
 	}
+
+	/*=============================================
+	MOSTRAR ULTIMO NRO DE ORDEN DE COMPRA
+	=============================================*/
+
+	static public function mdlMostrarUltimoNro(){
+
+
+		$stmt = Conexion::conectar()->prepare("SELECT IFNULL(MAX(Nro),'000001') AS Nro FROM ocompra");
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }
 
 }

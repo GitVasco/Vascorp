@@ -268,15 +268,15 @@ MODAL VIZUALIZAR NOTA DE SALIDA
             
             <!-- ENTRADA PARA EL ESTADO-->
             
-            <div class="form-group col-lg-3">
+            <div class="form-group col-lg-6">
 
-              <div style="padding-top:25px"></div>
+              <label for="">OBSERVACION</label>
               
               <div class="input-group">
               
                 <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
 
-                <input type="text" class="form-control input-sm" name="estado" id="estado"  readonly>
+                <input type="text" class="form-control input-sm" name="observacion" id="observacion"  readonly>
 
               </div>
 
@@ -332,7 +332,7 @@ MODAL UNIR NOTA DE SALIDA
 
     <div class="modal-content">
 
-      <form role="form" method="post">
+      <form role="form" method="post" class="formularioUnirNotaSalida">
 
         <!--=====================================
         CABEZA DEL MODAL
@@ -373,7 +373,7 @@ MODAL UNIR NOTA DE SALIDA
 
                     foreach ($notaSalida as $key => $value) {
 
-                      echo '<option value="'.$value["Nro"].'">'.$value["Nro"].'</option>';
+                      echo '<option value="'.$value["Nro"].'">'.$value["Nro"]." / ".$value["fecha"].'</option>';
 
                     }
 
@@ -407,7 +407,7 @@ MODAL UNIR NOTA DE SALIDA
               <label for="">NOTA DE SALIDA A SALDAR </label>
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
                 <select  class="form-control selectpicker" name="selectDependienteNotaSalida" id="selectDependienteNotaSalida" data-live-search="true" required>
                 <option value="">SELECCIONAR NOTA DE SALIDA</option>
@@ -423,9 +423,9 @@ MODAL UNIR NOTA DE SALIDA
               <label for="">CANTIDAD </label>
               <div class="input-group">
               
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
 
-                <input type="text" class="form-control input-md" name="nuevaCantidadSaldar"  required>
+                <input type="number" step="any" min="0" class="form-control input-md" name="nuevaCantidadSaldar" id="nuevaCantidadSaldar"  saldo = "" required>
 
 
               </div>
@@ -453,8 +453,8 @@ MODAL UNIR NOTA DE SALIDA
 
       <?php
 
-        $unirNotaSalida = new ControladorBancos();
-        $unirNotaSalida -> ctrCrearBanco();
+        $unirNotaSalida = new ControladorNotasSalidas();
+        $unirNotaSalida -> ctrUnirNotaSalida();
 
       ?>
 

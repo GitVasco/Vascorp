@@ -67,7 +67,7 @@
           <div class="box-body">
             <input type="hidden" value="<?= $_SESSION["perfil"]; ?>" id="perfilOculto">
             <input type="hidden" value="<?= $_GET["ruta"]; ?>" id="rutaAcceso">
-            <table class="table table-bordered table-striped dt-responsive tablaTalleresT" width ="100%">
+            <table class="table table-bordered table-striped dt-responsive tablaTalleresT" width="100%">
 
               <thead>
 
@@ -85,7 +85,7 @@
                   <th>Fecha Terminado</th>
                   <th>Estado</th>
                   <th>Tiempo real</th>
-                  <th>Acciones</th>
+                  <th style="width:100px">Acciones</th>
                 </tr>
 
               </thead>

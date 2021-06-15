@@ -470,7 +470,7 @@ $("#nuevaTallaMateria").change(function(){
 		processData: false,
 		dataType: "json",
 		success: function (respuesta) {
-			// console.log(respuesta);
+			console.log(respuesta.length);
 			if (respuesta) {
 				if ($(".msgError").length == 0) {
 					$("#alertaCodigoFab").parent().after('<div class="alert alert-danger alert-dismissable msgError" id="mensajeError">' +
@@ -478,8 +478,9 @@ $("#nuevaTallaMateria").change(function(){
 						'<strong>Error!</strong> El Cod. Fab. ya existe en la Base de Datos, por favor verifique.' +
 						'</div>');
 				}
-				$("#nuevoCodigoFab").val("");
+				$("#nuevoCodigoFab").val(linea+sublinea+color);
 				$("#nuevoCodigoFab").focus();
+				$(this).val("");
 			} else {
 				$(".msgError").remove();
 			}

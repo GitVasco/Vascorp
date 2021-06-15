@@ -152,6 +152,12 @@
     .table > thead > tr > th{
       padding: 5px !important;
     }
+
+    div.dataTables_wrapper div.dataTables_filter input {
+     
+      width: 600px;
+    }
+
   </style>
 </head>
 

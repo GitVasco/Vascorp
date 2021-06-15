@@ -69,6 +69,19 @@ class AjaxNotasSalidas{
 
   }
 
+  /*=============================================
+  VISUALIZAR NOTA SALIDA DETALLE CON 2 PARAMETROS
+  =============================================*/ 
+  public function ajaxSelectDependienteNotaSalida(){
+		$nota = $this->notaSalida3;
+		$materia = $this->codPro3;
+    $respuesta = ModeloNotasSalidas::mdlSelectDependienteNotaSalida($nota,$materia);
+
+    echo json_encode($respuesta);
+
+  }
+
+
 
   /* 
 	* Activar-Desactivar Articulo
@@ -158,4 +171,16 @@ if(isset($_POST["reiniciarNotaSalida"])){
 	$reiniciar -> codPro2 = $_POST["reiniciarCodPro"];
   $reiniciar -> notaSalida2 = $_POST["reiniciarNotaSalida"];
 	$reiniciar -> ajaxReiniciarSaldoCantidad();
+}
+
+
+/*=============================================
+REINICIAR NOTA DE SALIDA SALDO A CANTIDAD
+=============================================*/	
+if(isset($_POST["unirNota"])){
+
+	$unirNota = new AjaxNotasSalidas();
+	$unirNota -> codPro3 = $_POST["unirCodPro"];
+  $unirNota -> notaSalida3 = $_POST["unirNota"];
+	$unirNota -> ajaxSelectDependienteNotaSalida();
 }
