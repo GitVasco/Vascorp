@@ -4,7 +4,7 @@
 
         <h1>
 
-            Crear Nota de Ingreso
+            Crear Ingreso de Servicio
 
         </h1>
 
@@ -12,7 +12,7 @@
 
             <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-            <li class="active">Crear Nota de Ingreso</li>
+            <li class="active">Crear Ingreso de Servicio</li>
 
         </ol>
 
@@ -38,23 +38,18 @@
                     </div>
                         <div class="box-body">
 
-                            <table class="table table-bordered table-striped dt-responsive tablaMpSOc" width="100%">
+                            <table class="table table-bordered table-striped dt-responsive tablaMpSO" width="100%">
 
                                 <thead>
 
                                     <tr>
-                                        <th>CodPro</th>
-                                        <th>Cod. Fabrica</th>
-                                        <th style="min-width: 300px;">Descripción</th>
-                                        <th>Und</th>
-                                        <th>Cod. Color</th>
-                                        <th style="min-width: 120px;">Color</th>
-                                        <th style="min-width: 80px;">Sin IGV</th>
-                                        <th style="min-width: 80px;">Inc. IGV</th>
-                                        <th style="min-width: 80px;">Stock Actual</th>
-                                        <th style="min-width: 80px;">Saldo Oc</th>
-                                        <th style="min-width: 80px;">Nro. OC</th>
-                                        <th style="min-width: 300px;">Proveedor</th>
+                                        <th>Nro</th>
+                                        <th>Descripción</th>
+                                        <th>Cod. Ori.</th>                                        
+                                        <th>Color Ori</th>
+                                        <th>Cod. Dest.</th>
+                                        <th>Color Dest.</th>
+                                        <th>Cantidad</th>
                                         <th>#</th>
                                     </tr>
 
@@ -90,53 +85,24 @@
                                 $fecha = new DateTime();
                             ?>
 
-                                <div class="form-group" style="padding-top:5px">
+                                <div class="form-group" style="padding-top:5px;padding-bottom:30px">
 
                                     <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Proveedor</label>
                                     <div class="col-lg-3">
-                                        <select  class="form-control input-sm selectpicker" data-live-search="true" name="nuevoProveedor" id="nuevoProveedor" required>
 
-                                        <option value="">SELECCIONAR PROVEEDOR</option>
-                                        
                                         <?php
-                                            $item = null;
-                                            $valor = null;
+                                            $item = "codruc";
+                                            $valor = '000097';
 
                                             $proveedores = ControladorProveedores::ctrMostrarProveedores($item, $valor);
 
-                                            foreach ($proveedores as $key => $value) {
-
-                                                echo '<option value="'.$value["CodRuc"].'">'.$value["CodRuc"].' - '.$value["RazPro"].'</option>';
-
-                                            }
+                                            //var_dump($proveedores["RazPro"]);
+                                            echo '<input type="text" class="form-control input-sm" id="NomProv" name="NomProv"
+                                            value="'.$proveedores["RazPro"].'">';
 
                                         ?>
-                                        </select>
+                                        
                                     </div>                                
-
-                                    <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Doc. Principal</label>
-                                    <div class="col-lg-2">
-                                        <select  class="form-control input-sm" name="tipDocP" id="tipDocP">
-                                        <option value="">Doc. Principal</option>
-                                        <?php
-                                            $documentos = ControladorNotasIngresos::ctrDocNI();
-                                            #var_dump("ubigeo", $documentos);
-
-                                            foreach ($documentos as $key => $value) {
-                        
-                                            echo '<option value="' . $value["cod_argumento"] . '">' . $value["cod_argumento"] . ' - ' . $value["des_larga"] . '</option>';
-                        
-                                            }                        
-
-                                        ?>
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-1">
-                                        <input type="text" class="form-control input-sm" id="nuevaSerieP" name="nuevaSerieP" placeholder="Serie">
-                                    </div>
-                                    <div class="col-lg-1">
-                                        <input type="text" class="form-control input-sm" id="nuevoNroP" name="nuevoNroP" placeholder="Número">
-                                    </div>
 
                                     <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Fec. Emision</label>
                                     <div class="col-lg-2">
@@ -145,71 +111,6 @@
                                     </div>
                                     
                                 </div>
-
-                                <div class="form-group" style="padding-top:25px;">
-
-                                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Orden Compra</label>
-                                    <div class="col-lg-3">
-                                        <select  class="form-control input-md selectpicker"  name="nuevaOc"  id="nuevaOc" data-live-search="true" >
-                                        <option value="">Seleccionar OC</option>
-
-                                        </select>
-                                    </div>                                  
-
-                                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Doc. Sec.</label>
-                                    <div class="col-lg-2">
-                                        <select  class="form-control input-sm" name="tipDocS" id="tipDocS">
-                                        <option value="">Doc. Secundario</option>
-                                        <?php
-                                            $documentos = ControladorNotasIngresos::ctrDocNI();
-                                            #var_dump("ubigeo", $documentos);
-
-                                            foreach ($documentos as $key => $value) {
-                        
-                                            echo '<option value="' . $value["cod_argumento"] . '">' . $value["cod_argumento"] . ' - ' . $value["des_larga"] . '</option>';
-                        
-                                            }                        
-
-                                        ?>
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-1">
-                                        <input type="text" class="form-control input-sm" id="nuevaSerieS" name="nuevaSerieS" placeholder="Serie">
-                                    </div>
-                                    <div class="col-lg-1">
-                                        <input type="text" class="form-control input-sm" id="nuevoNroS" name="nuevoNroS" placeholder="Número">
-                                    </div>
-
-                                    <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Fec. Emision</label>
-                                    <div class="col-lg-2">
-                                        <input type="date" class="form-control input-sm" id="fecS" name="fecS"
-                                        value="<?php echo $fecha->format("Y-m-d"); ?>">
-                                    </div>                                    
-   
-                                </div>       
-                                
-                                <div class="form-group" style="padding-top:25px;padding-bottom:25px">
-
-                                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Moneda</label>
-                                    <div class="col-lg-2">
-                                        <select  class="form-control input-md selectpicker"  name="nuevaMoneda"  id="nuevaMoneda" data-live-search="true" required>
-                                        <option value="">Seleccionar Moneda</option>
-                                        <?php
-                                            $monedas = ControladorProveedores::ctrMostrarMonedas();
-                                            foreach ($monedas as $key => $value) {
-                                            echo '<option value="' . $value["Cod_Argumento"] . '">' .$value["Cod_Argumento"]. " - " . $value["Des_Larga"] . '</option>';
-                                            }
-                                        ?>                                        
-
-                                        </select>
-                                    </div> 
-
-                                    <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Observaciones</label>
-                                    <div class="col-lg-8">
-                                        <input type="text" class="form-control input-sm" id="nuevaObservacion" name="nuevaObservacion">
-                                    </div> 
-
-                                </div>  
 
                                 <!--=====================================
                                         TITULOS
@@ -394,8 +295,8 @@
 
                     <?php
 
-                    $crearNotaIngreso = new ControladorNotasIngresos();
-                    $crearNotaIngreso -> ctrCrearNotaIngreso();
+                    /* $crearNotaIngreso = new ControladorNotasIngresos();
+                    $crearNotaIngreso -> ctrCrearNotaIngreso(); */
 
                     ?>                     
 

@@ -332,13 +332,34 @@ class ControladorNotasIngresos{
 				});
 			</script>';
 
-
-			}
-			
+			}			
 
 		}
 
-
 	}
+
+	/* 
+	* AQUI INICIA NOTA DE INGRESO POR SERVICIO
+	! AQUI INICIA NOTA DE INGRESO POR SERVICIO
+	? AQUI INICIA NOTA DE INGRESO POR SERVICIO
+	*/
+	static public function ctrRangoFechasNotasIngresosOS($fechaInicial, $fechaFinal){
+
+		$respuesta = ModeloNotasIngresos::mdlRangoFechasNotasIngresosOS($fechaInicial, $fechaFinal);
+
+		return $respuesta;
+		
+	}
+	
+	/* 
+	*MOSTRAR MP PARA NOTA DE INGRESO CON O SIN OC
+	*/
+	static public function ctrMostrarMPOS(){
+
+		$respuesta = ModeloNotasIngresos::mdlMostrarMPOS();
+
+		return $respuesta;
+		
+	}	
 
 }
