@@ -303,71 +303,72 @@ class ModeloOrdenCorte{
 			a.nombre,
 			a.color,
 			SUM(
-			CASE
+			  CASE
 				WHEN a.cod_talla = '1' 
 				THEN doc.saldo 
 				ELSE 0 
-			END
+			  END
 			) AS t1,
 			SUM(
-			CASE
+			  CASE
 				WHEN a.cod_talla = '2' 
 				THEN doc.saldo 
 				ELSE 0 
-			END
+			  END
 			) AS t2,
 			SUM(
-			CASE
+			  CASE
 				WHEN a.cod_talla = '3' 
 				THEN doc.saldo 
 				ELSE 0 
-			END
+			  END
 			) AS t3,
 			SUM(
-			CASE
+			  CASE
 				WHEN a.cod_talla = '4' 
 				THEN doc.saldo 
 				ELSE 0 
-			END
+			  END
 			) AS t4,
 			SUM(
-			CASE
+			  CASE
 				WHEN a.cod_talla = '5' 
 				THEN doc.saldo 
 				ELSE 0 
-			END
+			  END
 			) AS t5,
 			SUM(
-			CASE
+			  CASE
 				WHEN a.cod_talla = '6' 
 				THEN doc.saldo 
 				ELSE 0 
-			END
+			  END
 			) AS t6,
 			SUM(
-			CASE
+			  CASE
 				WHEN a.cod_talla = '7' 
 				THEN doc.saldo 
 				ELSE 0 
-			END
+			  END
 			) AS t7,
 			SUM(
-			CASE
+			  CASE
 				WHEN a.cod_talla = '8' 
 				THEN doc.saldo 
 				ELSE 0 
-			END
+			  END
 			) AS t8,
 			SUM(doc.saldo) AS subtotal 
-		FROM
+		  FROM
 			$tabla doc 
 			LEFT JOIN articulojf a 
-			ON doc.articulo = a.articulo 
-		WHERE doc.$item = $valor
-		GROUP BY doc.ordencorte,
+			  ON doc.articulo = a.articulo 
+		  WHERE doc.$item = $valor
+			AND doc.saldo > 0 
+		  GROUP BY doc.ordencorte,
 			a.modelo,
 			a.nombre,
-			a.color";
+			a.color ";
 
 			$stmt=Conexion::conectar()->prepare($sql);
 

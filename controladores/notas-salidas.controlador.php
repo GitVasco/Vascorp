@@ -249,7 +249,8 @@ class ControladorNotasSalidas{
 							 "DetDocSal"=>$_POST["nuevoDesMotivo"],
 							 "FecReg"=>$fecha->format("Y-m-d H:i:s"),
 							 "PcReg"=>$PcReg,
-							 "UsuReg"=>$_SESSION["nombre"]);
+							 "UsuReg"=>$_SESSION["nombre"],
+							 "observacion"=>$_POST["nuevaObservacion"]);
 
 				$respuesta=ModeloNotasSalidas::mdlGuardarNotaSalida("ventas_cab",$datos);
 
@@ -323,7 +324,7 @@ class ControladorNotasSalidas{
 
 
 	/*=============================================
-	ANULAR PROVEEDOR
+	ANULAR NOTA DE SALIDA
 	=============================================*/
 
 	static public function ctrAnularNotaSalida(){
@@ -381,6 +382,56 @@ class ControladorNotasSalidas{
 				swal({
 					  type: "success",
 					  title: "La nota de salida ha sido anulada correctamente",
+					  showConfirmButton: true,
+					  confirmButtonText: "Cerrar",
+					  closeOnConfirm: false
+					  }).then(function(result){
+								if (result.value) {
+
+								window.location = "notas-salidas";
+
+								}
+							})
+
+				</script>';
+
+			}		
+
+		}
+
+	} 
+
+	/*=============================================
+	UNIR NOTA DE SALIDA
+	=============================================*/
+
+	static public function ctrUnirNotaSalida(){
+
+		if(isset($_POST["selectNotaSalida"])){
+
+
+			$datosSumar = array("Nro" => $_POST["selectNotaSalida"],
+								 "CodPro" => $_POST["selectCodPro"],
+								 "cantidad" => $_POST["nuevaCantidadSaldar"],
+								 "union_ns"=> $_POST["selectNotaSalida"]." / ".$_POST["selectDependienteNotaSalida"]);
+			$respuesta = ModeloNotasSalidas::mdlAumentarCantidadSaldo($datosSumar);
+			
+			$datosRestar = array("Nro" => $_POST["selectDependienteNotaSalida"],
+								 "CodPro" => $_POST["selectCodPro"],
+								 "cantidad" => $_POST["nuevaCantidadSaldar"],
+								 "union_ns" => $_POST["selectDependienteNotaSalida"]." / ".$_POST["selectNotaSalida"]);
+			
+			
+			$respuesta2 = ModeloNotasSalidas::mdlRestarCantidadSaldo($datosRestar);
+			
+			if($respuesta == "ok" ){
+				
+				
+				echo'<script>
+
+				swal({
+					  type: "success",
+					  title: "La nota de salida ha sido unida correctamente",
 					  showConfirmButton: true,
 					  confirmButtonText: "Cerrar",
 					  closeOnConfirm: false

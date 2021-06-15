@@ -30,16 +30,14 @@ class ControladorOrdenCompra{
 
 
 	/*=============================================
-	CREAR NOTA ORDEN DE COMPRA
+	CREAR  ORDEN DE COMPRA
 	=============================================*/
 
 	static public function ctrCrearOrdenCompra(){
 
 		/* veriaficamos que venta traiga datos */
 
-		if(isset($_POST["nuevoProveedor"]) && 
-		   isset($_POST["nuevoNroCotizacion"]) && 
-		   isset($_POST["listarMateriaCompras"])){
+		if(isset($_POST["listarMateriaCompras"]) && isset($_POST["nuevoCodRuc"])){
 
 			/* alerta  si la lista de productos viene vacia  */
 
@@ -61,7 +59,7 @@ class ControladorOrdenCompra{
 
 				# Modificamos la información de los productos comprados en un array
 
-				$listaMateriaNotas=json_decode($_POST["listarMateriaCompras"],true);
+				$listaMateriaCompras=json_decode($_POST["listarMateriaCompras"],true);
 				
 				//TRAEMOS LA FECHA Y LA PC QUE SE REGISTRO
 				date_default_timezone_set('America/Lima');
@@ -70,10 +68,11 @@ class ControladorOrdenCompra{
 
 				//TRAEMOS EL ULTIMO NRO DE LA NOTA DE SALIDA Y LO SUMAMOS Y CONCATENAMOS LOS 0'S
 
-				$ultimoNro=ModeloNotasSalidas::mdlMostrarUltimoNro();
+				$ultimoNro=ModeloOrdenCompra::mdlMostrarUltimoNro();
+				
 
 				$suma = $ultimoNro["Nro"]+1;
-				$notaNro = str_pad($suma,strlen($ultimoNro["Nro"]),'0',STR_PAD_LEFT);
+				$compraNro = str_pad($suma,strlen($ultimoNro["Nro"]),'0',STR_PAD_LEFT);
 
 
 				
@@ -81,44 +80,38 @@ class ControladorOrdenCompra{
 				GUARDAMOS LA NOTA DE SALIDA CABECERA
 				============================================== */
 
-				$datos=array("Tip"=>'NS',
+				$datos=array("Tip"=>'OC',
 							 "Ser"=>'001',
-							 "Nro"=>$notaNro,
+							 "Nro"=>$compraNro,
 							 "Cod_Local"=>'01',
 							 "Cod_Entidad"=>'01',
-							 "Ruc"=>$_POST["nuevoRuc"],
+							 "CodRuc"=>$_POST["nuevoCodRuc"],
 							 "FecEmi"=>$fecha->format("Y-m-d H:i:s"),
-							 "FecVto"=>$fecha->format("Y-m-d H:i:s"),
-							 "MdaVta"=>'1',
-							 "ForVta"=>'11',
-							 "TcVta"=>'0.000000',
-							 "ImpVta"=>'0.000000',
-							 "brutot"=>'',
-							 "totdct"=>'0.00',
-							 "SubVta"=>'',
-							 "IgvVta"=>'0.00',
-							 "TotVta"=>'',
-							 "EstVta"=>'P',
-							 "Abono"=>'0.000000',
-							 "ValVta"=>'0',
-							 "ObsGer"=>'',
-							 "EstExp"=>'.',
-							 "EstGuia"=>'P',
-							 "CodAlm"=>$_POST["nuevoTipoAlmacen"],
-							 "AlmDes"=>$_POST["nuevoTipoAlmacen"],
-							 "CodCli"=>$_POST["nuevocodigoCli"],
-							 "EstAte"=>'.',
-							 "Dia"=>'0',
-							 "ObsCre"=>'',
-							 "EstPri"=>'.',
-							 "DocSal"=>$_POST["nuevoMotivoNota"],
-							 "DetDocSal"=>$_POST["nuevoDesMotivo"],
+							 "tCambio"=>$_POST["nuevoTipoCambio"],
+							 "Mo"=>$_POST["nuevaMoneda"],
+							 "Obser"=>$_POST["nuevaObservacion"],
+							 "pIgv"=>'18',
+							 "SubTotal"=>$_POST["nuevoSubTotalCompra"],
+							 "Igv"=>$_POST["nuevoImpuestoCompra"],
+							 "Total"=>$_POST["nuevoTotalCompra"],
+							 "mtopago"=>'0.000000',
+							 "Centcosto"=>$_POST["nuevoCentroCosto"],
+							 "Cantidad"=>'0.000000',
+							 "NroProforma"=>$_POST["nuevoNroCotizacion"],
+							 "FecLlegada"=>$_POST["nuevaFechaEntrega"],
+							 "TipPago"=>$_POST["nuevaFormaPago"],
+							 "Dia"=>$_POST["nuevoDia"],
+							 "EstOco"=>'03',
+							 "EstReg"=>'1',
 							 "FecReg"=>$fecha->format("Y-m-d H:i:s"),
 							 "PcReg"=>$PcReg,
-							 "UsuReg"=>$_SESSION["nombre"]);
+							 "UsuReg"=>$_SESSION["nombre"],
+							 "estac"=>'ABI');
 
-				$respuesta=ModeloNotasSalidas::mdlGuardarNotaSalida("ventas_cab",$datos);
+							 
 
+				$respuesta=ModeloOrdenCompra::mdlGuardarOrdenCompra($datos);
+				var_dump($respuesta);
 				/* ==============================================
 				GUARDAMOS LA NOTA DE SALIDA DETALLE
 				============================================== */
@@ -127,29 +120,36 @@ class ControladorOrdenCompra{
 
 					
 
-					foreach($listaMateriaNotas as $key=>$value){
+					foreach($listaMateriaCompras as $key=>$value){
 
 						$datos2=array("Item"=>($key+1),
-									 "CanVta"=>$value["cantidad"],
-									 "PreVta"=>'0',
-									 "FecEmi"=>$fecha->format("Y-m-d H:i:s"),
-									 "DscVta"=>'0',
-									 "Tip"=>'NS',
+									 "Tip"=>'OC',
 									 "Ser"=>'001',
-									 "Nro"=>$notaNro,
+									 "Nro"=>$compraNro,
+									 "ColProv"=>$value["colorprov"],
 									 "Cod_Local"=>'01',
 									 "Cod_Entidad"=>'01',
-									 "Ruc"=>$_POST["nuevoRuc"],
+									 "CodRuc"=>$_POST["nuevoCodRuc"],
 									 "CodPro"=>$value["id"],
-									 "SugVta"=>'0',
-									 "EstVta"=>'P',
-									 "pcosto"=>$value["precio"],
-									 "CenCosto"=>$value["destino"],
+									 "CodFab"=>$value["codfab"],
+									 "UndPro"=>$value["unidad"],
+									 "CanPro"=>$value["cantidad"],
+									 "CanPro_Ant"=>$value["cantidad"],
+									 "PrePro"=>$value["precio"],
+									 "PrePro_Ant"=>$value["precio"],
+									 "DscPro"=>$value["descuento"],
+									 "ImpPro"=>$value["total"],
+									 "EstOco"=>'03',
+									 "CantNI"=>$value["cantidad"],
+									 "SalCan"=>'0.000000',
+									 "FecEmi"=>$fecha->format("Y-m-d H:i:s"),
+									 "estac"=>'ABI',
 									 "FecReg"=>$fecha->format("Y-m-d H:i:s"),
 									 "PcReg"=>$PcReg,
 									 "UsuReg"=>$_SESSION["nombre"]);
 
-					ModeloNotasSalidas::mdlGuardarDetalleNotaSalida("venta_det",$datos2);
+					$respuesta2 = ModeloOrdenCompra::mdlGuardarDetalleOrdenCompra($datos2);
+					var_dump($respuesta2);
 					
 					}
 

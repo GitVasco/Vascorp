@@ -315,7 +315,7 @@ class ModeloNotasSalidas{
 	// Método para guardar las ventas
 	static public function mdlGuardarNotaSalida($tabla,$datos){
 
-		$sql="INSERT INTO $tabla(Tip,Ser,Nro,Cod_Local,Cod_Entidad,Ruc,FecEmi,FecVto,MdaVta,ForVta,TcVta,ImpVta,brutot,totdct,SubVta,IgvVta,TotVta,EstVta,Abono,ValVta,ObsGer,EstExp,EstGuia,CodAlm,AlmDes,CodCli,EstAte,Dia,ObsCre,EstPri,DocSal,DetDocSal,FecReg,PcReg,UsuReg) VALUES (:Tip,:Ser,:Nro,:Cod_Local,:Cod_Entidad,:Ruc,:FecEmi,:FecVto,:MdaVta,:ForVta,:TcVta,:ImpVta,:brutot,:totdct,:SubVta,:IgvVta,:TotVta,:EstVta,:Abono,:ValVta,:ObsGer,:EstExp,:EstGuia,:CodAlm,:AlmDes,:CodCli,:EstAte,:Dia,:ObsCre,:EstPri,:DocSal,:DetDocSal,:FecReg,:PcReg,:UsuReg)";
+		$sql="INSERT INTO $tabla(Tip,Ser,Nro,Cod_Local,Cod_Entidad,Ruc,FecEmi,FecVto,MdaVta,ForVta,TcVta,ImpVta,brutot,totdct,SubVta,IgvVta,TotVta,EstVta,Abono,ValVta,ObsGer,EstExp,EstGuia,CodAlm,AlmDes,CodCli,EstAte,Dia,ObsCre,EstPri,DocSal,DetDocSal,FecReg,PcReg,UsuReg,observacion) VALUES (:Tip,:Ser,:Nro,:Cod_Local,:Cod_Entidad,:Ruc,:FecEmi,:FecVto,:MdaVta,:ForVta,:TcVta,:ImpVta,:brutot,:totdct,:SubVta,:IgvVta,:TotVta,:EstVta,:Abono,:ValVta,:ObsGer,:EstExp,:EstGuia,:CodAlm,:AlmDes,:CodCli,:EstAte,:Dia,:ObsCre,:EstPri,:DocSal,:DetDocSal,:FecReg,:PcReg,:UsuReg,:observacion)";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 
@@ -354,6 +354,7 @@ class ModeloNotasSalidas{
 		$stmt->bindParam(":FecReg",$datos["FecReg"],PDO::PARAM_STR);
 		$stmt->bindParam(":PcReg",$datos["PcReg"],PDO::PARAM_STR);
 		$stmt->bindParam(":UsuReg",$datos["UsuReg"],PDO::PARAM_STR);
+		$stmt->bindParam(":observacion",$datos["observacion"],PDO::PARAM_STR);
 
 		if($stmt->execute()){
 
@@ -652,11 +653,13 @@ class ModeloNotasSalidas{
 
 		$sql="SELECT 
 		Nro,
-		DATE(FecEmi) as fecha
+		DATE(FecEmi) AS fecha
 	  FROM
-		$tabla 
-	  WHERE $item = :$item 
-	  ORDER BY Nro ASC ";
+		ventas_cab 
+	  WHERE $item = :$item
+		AND fecemi BETWEEN CURDATE() - INTERVAL 30 DAY 
+		AND CURDATE() 
+	  ORDER BY Nro ASC";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 
@@ -678,15 +681,20 @@ class ModeloNotasSalidas{
 
 		$sql="SELECT 
 		Nro,
-		DATE(FecEmi) as fecha,
+		DATE(FecEmi) as fecha
 	  FROM
-		ventas_cab
-	  WHERE Nro = '".$valor1."' 
-	  AND CodPro = '".$valor2."'
+		venta_det
+	  WHERE CodPro = :CodPro
+	  AND Nro NOT IN (:Nro) 
+	  AND FecEmi BETWEEN CURDATE() - INTERVAL 30 DAY 
+	  AND CURDATE()
+	  AND SalVta >0
+	  AND union_ns IS NULL
 	  ORDER BY Nro ASC ";
 
 		$stmt=Conexion::conectar()->prepare($sql);
-
+		$stmt -> bindParam(":Nro", $valor1, PDO::PARAM_STR);
+		$stmt -> bindParam(":CodPro", $valor2, PDO::PARAM_STR);
 
 		$stmt->execute();
 
@@ -695,6 +703,67 @@ class ModeloNotasSalidas{
 		$stmt=null;
 
 	}
+
+	/*=============================================
+	AUMENTAR CANTIDAD SALDO
+	=============================================*/
+
+	static public function mdlAumentarCantidadSaldo($datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE venta_det SET SalVta = SalVta + :cantidad , union_ns = :union_ns WHERE Nro = :Nro AND CodPro = :CodPro");
+
+		$stmt -> bindParam(":Nro", $datos["Nro"], PDO::PARAM_STR);
+		$stmt -> bindParam(":CodPro", $datos["CodPro"], PDO::PARAM_STR);
+		$stmt -> bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_STR);
+		$stmt -> bindParam(":union_ns", $datos["union_ns"], PDO::PARAM_STR);
+		
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
+
+
+	/*=============================================
+	RESTAR CANTIDAD SALDO
+	=============================================*/
+
+	static public function mdlRestarCantidadSaldo($datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE venta_det SET SalVta = SalVta - :cantidad, union_ns = :union_ns WHERE Nro = :Nro AND CodPro = :CodPro");
+
+		$stmt -> bindParam(":Nro", $datos["Nro"], PDO::PARAM_STR);
+		$stmt -> bindParam(":CodPro", $datos["CodPro"], PDO::PARAM_STR);
+		$stmt -> bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_STR);
+		$stmt -> bindParam(":union_ns", $datos["union_ns"], PDO::PARAM_STR);
+		
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
 
 
 }

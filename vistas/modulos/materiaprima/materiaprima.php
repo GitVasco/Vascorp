@@ -123,7 +123,7 @@ MODAL AGREGAR MATERIA PRIMA
               <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">COD ALTERNO</label>
               <div class="col-lg-2">
               
-                <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="nuevoCodigoAlt"  id ="nuevoCodigoAlt" placeholder="Ingresar código"  required>
+                <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="nuevoCodigoAlt"  id ="nuevoCodigoAlt" placeholder="Ingresar código"  >
               </div>
 
               <!-- ENTRADA PARA LA FECHA DE EMISION -->
@@ -587,7 +587,7 @@ MODAL EDITAR MATERIA PRIMA
               <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">COD ALTERNO</label>
               <div class="col-lg-2">
               
-                <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="editarCodigoAlt"  id ="editarCodigoAlt"  required>
+                <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="editarCodigoAlt"  id ="editarCodigoAlt"  >
               </div>
 
               <!-- ENTRADA PARA LA FECHA DE EMISION -->
@@ -1121,7 +1121,7 @@ MODAL DUPLICAR MATERIA PRIMA
               <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">COD ALTERNO</label>
               <div class="col-lg-2">
               
-                <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="duplicarCodigoAlt"  id ="duplicarCodigoAlt"  required>
+                <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="duplicarCodigoAlt"  id ="duplicarCodigoAlt"  >
               </div>
 
               <!-- ENTRADA PARA LA FECHA DE EMISION -->

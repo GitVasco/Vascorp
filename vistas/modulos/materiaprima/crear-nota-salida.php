@@ -169,8 +169,8 @@
                     
                   </div>
 
-                  <div class="col-lg-2">
-                    <input type="text" class="form-control input-sm"  name ="nuevaDescripcionMotivo" >
+                  <div class="col-lg-8">
+                    <input type="text" class="form-control input-sm"  name ="nuevaObservacion" >
                   </div>
 
                   <div class="col-lg-12"></div>
