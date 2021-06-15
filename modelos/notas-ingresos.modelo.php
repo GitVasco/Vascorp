@@ -8,7 +8,6 @@ class ModeloNotasIngresos{
 	/*=============================================
 	RANGO FECHAS
 	=============================================*/	
-
 	static public function mdlRangoFechasNotasIngresos($fechaInicial, $fechaFinal){
 
 		if($fechaInicial == "null"){
@@ -1327,5 +1326,220 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
 
 		}
   }
+
+  /* 
+	* AQUI INICIA NOTA DE INGRESO POR SERVICIO
+	! AQUI INICIA NOTA DE INGRESO POR SERVICIO
+	? AQUI INICIA NOTA DE INGRESO POR SERVICIO
+	*/
+
+	/*=============================================
+	RANGO FECHAS
+	=============================================*/	
+	static public function mdlRangoFechasNotasIngresosOS($fechaInicial, $fechaFinal){
+
+		if($fechaInicial == "null"){
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+                                              neo.tNeaOs AS tneaos,
+                                              neo.CodRuc AS codruc,
+                                              prov.RazPro AS proveedor,
+                                              nNeaOs AS nneaos,
+                                              DATE(neo.FecEmi) AS fecemi,
+                                              NroOs AS nroos,
+                                              NroDcto AS nrodcto 
+                                            FROM
+                                              nea_os neo 
+                                              LEFT JOIN proveedor prov 
+                                                ON prov.CodRuc = neo.CodRuc 
+                                            WHERE neo.EstReg = 'P'");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();	
+
+
+		}else if($fechaInicial == $fechaFinal){
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+                                            neo.tNeaOs AS tneaos,
+                                            neo.CodRuc AS codruc,
+                                            prov.RazPro AS proveedor,
+                                            nNeaOs AS nneaos,
+                                            DATE(neo.FecEmi) AS fecemi,
+                                            NroOs AS nroos,
+                                            NroDcto AS nrodcto 
+                                          FROM
+                                            nea_os neo 
+                                            LEFT JOIN proveedor prov 
+                                              ON prov.CodRuc = neo.CodRuc 
+                                          WHERE neo.EstReg = 'P' 
+                                            AND DATE(fecemi) LIKE '%$fechaFinal%'");
+
+			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}else{
+
+			$fechaActual = new DateTime();
+			$fechaActual ->add(new DateInterval("P1D"));
+			$fechaActualMasUno = $fechaActual->format("Y-m-d");
+
+			$fechaFinal2 = new DateTime($fechaFinal);
+			$fechaFinal2 ->add(new DateInterval("P1D"));
+			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+
+			if($fechaFinalMasUno == $fechaActualMasUno){
+
+				$stmt = Conexion::conectar()->prepare("SELECT 
+                                            neo.tNeaOs AS tneaos,
+                                            neo.CodRuc AS codruc,
+                                            prov.RazPro AS proveedor,
+                                            nNeaOs AS nneaos,
+                                            DATE(neo.FecEmi) AS fecemi,
+                                            NroOs AS nroos,
+                                            NroDcto AS nrodcto 
+                                          FROM
+                                            nea_os neo 
+                                            LEFT JOIN proveedor prov 
+                                              ON prov.CodRuc = neo.CodRuc 
+                                          WHERE neo.EstReg = 'P'
+                                                    AND DATE(fecemi) BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'");
+
+			}else{
+
+
+				$stmt = Conexion::conectar()->prepare("SELECT 
+                                        neo.tNeaOs AS tneaos,
+                                        neo.CodRuc AS codruc,
+                                        prov.RazPro AS proveedor,
+                                        nNeaOs AS nneaos,
+                                        DATE(neo.FecEmi) AS fecemi,
+                                        NroOs AS nroos,
+                                        NroDcto AS nrodcto 
+                                      FROM
+                                        nea_os neo 
+                                        LEFT JOIN proveedor prov 
+                                          ON prov.CodRuc = neo.CodRuc 
+                                      WHERE neo.EstReg = 'P'
+                AND DATE(fecemi) BETWEEN '$fechaInicial' AND '$fechaFinal'");
+
+			}
+		
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+	}  
+
+	/* 
+	* MOSTRAR MP PARA NOTA DE INGRESO CON O SIN OC
+	*/
+	static public function mdlMostrarMPOS(){
+
+
+      $stmt = Conexion::conectar()->prepare("SELECT 
+                                            osd.Nro AS nro,
+                                            CodProOrigen AS codproorigen,
+                                            p1.DesPro AS desori,
+                                            tcol.Des_Larga AS colorori,
+                                            tund.Des_Corta AS undori,
+                                            CodProDestino AS codprodestino,
+                                            p2.DesPro AS desdes,
+                                            tcol2.Des_Larga AS colordes,
+                                            tund.Des_Corta AS unddes,
+                                            Saldo AS saldo 
+                                          FROM
+                                            oserviciodet osd 
+                                            INNER JOIN Producto p1 
+                                              ON p1.CodPro = osd.CodProOrigen 
+                                            INNER JOIN Producto p2 
+                                              ON p2.CodPro = osd.CodProDestino 
+                                            LEFT JOIN tabla_m_detalle tcol 
+                                              ON tcol.Cod_Argumento = p1.ColPro 
+                                            LEFT JOIN tabla_m_detalle tcol2 
+                                              ON tcol2.Cod_Argumento = p2.ColPro 
+                                            LEFT JOIN tabla_m_detalle tund 
+                                              ON tund.Cod_Argumento = p1.UndPro 
+                                            LEFT JOIN tabla_m_detalle tund2 
+                                              ON tund2.Cod_Argumento = p2.UndPro 
+                                          WHERE (
+                                              tcol.Cod_Tabla = 'TCOL' 
+                                              OR tcol.Cod_Tabla IS NULL
+                                            ) 
+                                            AND (
+                                              tund.Cod_Tabla = 'TUND' 
+                                              OR tund.Cod_Tabla IS NULL
+                                            ) 
+                                            AND (
+                                              tcol2.Cod_Tabla = 'TCOL' 
+                                              OR tcol2.Cod_Tabla IS NULL
+                                            ) 
+                                            AND (
+                                              tund2.Cod_Tabla = 'TUND' 
+                                              OR tund2.Cod_Tabla IS NULL
+                                            ) 
+                                            AND osd.EstReg = '1' 
+                                            AND osd.EstOS IN ('ABI', 'PAR') 
+                                          UNION
+                                          ALL 
+                                          SELECT 
+                                            osd.Nro,
+                                            CodProOrigen,
+                                            p1.DesPro AS DesOri,
+                                            tcol.Des_Larga AS ColorOri,
+                                            tund.Des_Corta AS UndOri,
+                                            CodProDestino,
+                                            p2.DesPro AS DesDes,
+                                            tcol2.Des_Larga AS ColorDes,
+                                            tund.Des_Corta AS UndDes,
+                                            Saldo 
+                                          FROM
+                                            corp18_oserviciodet osd 
+                                            INNER JOIN corp18_Producto p1 
+                                              ON p1.CodPro = osd.CodProOrigen 
+                                            INNER JOIN corp18_Producto p2 
+                                              ON p2.CodPro = osd.CodProDestino 
+                                            LEFT JOIN corp18_tabla_m_detalle tcol 
+                                              ON tcol.Cod_Argumento = p1.ColPro 
+                                            LEFT JOIN corp18_tabla_m_detalle tcol2 
+                                              ON tcol2.Cod_Argumento = p2.ColPro 
+                                            LEFT JOIN corp18_tabla_m_detalle tund 
+                                              ON tund.Cod_Argumento = p1.UndPro 
+                                            LEFT JOIN corp18_tabla_m_detalle tund2 
+                                              ON tund2.Cod_Argumento = p2.UndPro 
+                                          WHERE (
+                                              tcol.Cod_Tabla = 'TCOL' 
+                                              OR tcol.Cod_Tabla IS NULL
+                                            ) 
+                                            AND (
+                                              tund.Cod_Tabla = 'TUND' 
+                                              OR tund.Cod_Tabla IS NULL
+                                            ) 
+                                            AND (
+                                              tcol2.Cod_Tabla = 'TCOL' 
+                                              OR tcol2.Cod_Tabla IS NULL
+                                            ) 
+                                            AND (
+                                              tund2.Cod_Tabla = 'TUND' 
+                                              OR tund2.Cod_Tabla IS NULL
+                                            ) 
+                                            AND osd.EstReg = '1' 
+                                            AND osd.EstOS IN ('ABI', 'PAR') 
+                                          ORDER BY Nro DESC");
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+
+      $stmt->close();
+
+      $stmt = null;
+	}  
 
 }

@@ -706,15 +706,18 @@ class ModeloArticulos
 			* 
 		  FROM
 			detalle_temporal t 
-		  WHERE codigo = $pedido) AS t 
+		  WHERE codigo = :pedido) AS t 
 		  ON a.articulo = t.articulo 
-	  WHERE a.modelo = $modelo 
+	  WHERE a.modelo = :modelo 
 		AND a.estado = 'activo' 
 	  GROUP BY a.modelo,
 		a.cod_color,
 		a.color";
 
 		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":pedido",$pedido,PDO::PARAM_STR);
+		$stmt->bindParam(":modelo",$modelo,PDO::PARAM_STR);
 
 		$stmt->execute();
 
@@ -840,13 +843,15 @@ class ModeloArticulos
 			) AS v8 
 		  FROM
 			articulojf a 
-		  WHERE a.modelo = '10010' 
+		  WHERE a.modelo = :modelo
 			AND a.estado = 'activo' 
 		  GROUP BY a.modelo,
 			a.cod_color,
 			a.color";
 
 			$stmt=Conexion::conectar()->prepare($sql);
+
+			$stmt->bindParam(":modelo",$modelo,PDO::PARAM_STR);
 
 			$stmt->execute();
 	
