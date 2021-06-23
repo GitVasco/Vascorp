@@ -614,6 +614,7 @@ class ControladorFacturacion{
                     //var_dump($datos);
 
                     $respuestaProforma = ModeloArticulos::mdlActualizarStock($datos);
+                    $respuestaGuia = ModeloArticulos::mdlActualizarPedido($datos);
                     //var_dump($respuestaProforma);
 
                 }

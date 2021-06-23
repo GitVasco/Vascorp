@@ -51,7 +51,7 @@ class TablaPedidosCV{
             TRAEMOS LAS ACCIONES
             =============================================*/
 
-            $botones =  "<div class='btn-group'><button title='Editar Pedido' class='btn btn-sm btn-warning btnEditarPedidoCV' codigo='".$pedidos[$i]["codigo"]."'><i class='fa fa-pencil-square-o'></i></button><button title='Imprimir Pedido' class='btn btn-sm btn-success btnImprimirPedido' codigo='".$pedidos[$i]["codigo"]."'><i class='fa fa-print'></i></button><button title='Facturar Pedido' class='btn btn-sm btn-primary btnFacturar' codigo='".$pedidos[$i]["codigo"]."' cod_cli='".$pedidos[$i]["cod_cli"]."'  nom_cli='".$pedidos[$i]["nombre"]."' tip_doc='".$pedidos[$i]["tipo_documento"]."' nro_doc='".$pedidos[$i]["documento"]."' dscto='".$pedidos[$i]["dscto"]."' cod_ven='".$pedidos[$i]["vendedor"]."' data-toggle='modal' data-target='#modalFacturar'><i class='fa fa-paper-plane'></i></button></div>";
+            $botones =  "<div class='btn-group'><button title='Editar Pedido' class='btn btn-sm btn-warning btnEditarPedidoCV' codigo='".$pedidos[$i]["codigo"]."'><i class='fa fa-pencil-square-o'></i></button><button title='Imprimir Pedido' class='btn btn-sm btn-success btnImprimirPedido' codigo='".$pedidos[$i]["codigo"]."'><i class='fa fa-print'></i></button></div>";
 
             $datosJson .= '[
             "'.($i+1).'",

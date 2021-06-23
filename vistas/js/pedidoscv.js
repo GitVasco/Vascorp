@@ -416,7 +416,7 @@ $(".box").on("click", ".btnEditarPedidoCV", function () {
 /* 
 * BOTON  IMPRIMIR TICKET
 */
-$(".tablaPedidosCV").on("click", ".btnImprimirPedido", function () {
+$(".tablaPedidosCV, .tablaPedidosGenerados, .tablaPedidosAprobados").on("click", ".btnImprimirPedido", function () {
 
     var codigo = $(this).attr("codigo");
     //console.log(codigo);

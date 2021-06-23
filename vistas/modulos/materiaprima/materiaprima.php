@@ -243,7 +243,7 @@ MODAL AGREGAR MATERIA PRIMA
               <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">DESCRIPCION</label>
               <div class="col-lg-11">
 
-                <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="nuevaDescripcion" placeholder="Ingresar descripción"  required>
+                <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="nuevaDescripcion"  id="nuevaDescripcionMat" placeholder="Ingresar descripción"  required>
 
               </div>
 
@@ -548,7 +548,7 @@ MODAL EDITAR MATERIA PRIMA
 
     <div class="modal-content">
 
-      <form role="form" method="post" enctype="multipart/form-data">
+      <form role="form" method="post" enctype="multipart/form-data" id="formularioEditarMateria">
 
         <!--=====================================
         CABEZA DEL MODAL
@@ -823,7 +823,7 @@ MODAL EDITAR MATERIA PRIMA
 
               <!-- ENTRADA PARA EL CÓDIGO FABRICA -->
               <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">PROVEEDOR</label>
-              <div class="col-lg-4">
+              <div class="col-lg-4 col-md-3">
 
                 <select  class="form-control input-md selectpicker" data-live-search="true" name="editarProveedor" id="editarProveedor" >
                   
@@ -867,7 +867,7 @@ MODAL EDITAR MATERIA PRIMA
               </div>
 
               <!-- ENTRADA PARA LA FECHA DE EMISION -->
-              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">PRECIO S/IGV</label>
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">P S/IGV</label>
               <div class="col-lg-2">
               
                 <input type="number" min = "0" step="any" class="form-control input-md" name="editarPrecioSIGV" id="editarPrecioSIGV" >
@@ -885,7 +885,7 @@ MODAL EDITAR MATERIA PRIMA
 
               <!-- ENTRADA PARA EL CÓDIGO FABRICA -->
               <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">PROVEEDOR</label>
-              <div class="col-lg-4">
+              <div class="col-lg-4 col-md-3">
 
                 <select  class="form-control input-md selectpicker" data-live-search="true" name="editarProveedor1" id="editarProveedor1">
                   
@@ -929,7 +929,7 @@ MODAL EDITAR MATERIA PRIMA
               </div>
 
               <!-- ENTRADA PARA LA FECHA DE EMISION -->
-              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">PRECIO S/IGV</label>
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">P S/IGV</label>
               <div class="col-lg-2">
               
                 <input type="number" min = "0" step="any" class="form-control input-md" name="editarPrecioSIGV1" id="editarPrecioSIGV1" >
@@ -946,7 +946,7 @@ MODAL EDITAR MATERIA PRIMA
 
               <!-- ENTRADA PARA EL CÓDIGO FABRICA -->
               <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">PROVEEDOR</label>
-              <div class="col-lg-4">
+              <div class="col-lg-4 col-md-3">
 
                 <select  class="form-control input-md selectpicker" data-live-search="true" name="editarProveedor2" id="editarProveedor2" >
                   
@@ -990,7 +990,7 @@ MODAL EDITAR MATERIA PRIMA
               </div>
 
               <!-- ENTRADA PARA LA FECHA DE EMISION -->
-              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">PRECIO S/IGV</label>
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">P S/IGV</label>
               <div class="col-lg-2">
               
                 <input type="number" min = "0" step="any" class="form-control input-md" name="editarPrecioSIGV2"  id="editarPrecioSIGV2">
@@ -1053,7 +1053,7 @@ MODAL EDITAR MATERIA PRIMA
 
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" class="btn btn-primary">Guardar cambios</button>
+          <button type="button" class="btn btn-primary btnEditarCambiosMateria">Guardar cambios</button>
 
         </div>
 

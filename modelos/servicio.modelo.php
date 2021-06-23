@@ -1077,7 +1077,10 @@ class ModeloServicios{
 		a.nombre,
 		a.cod_color,
 		a.color 
-		ORDER BY c.fecha");
+		ORDER BY c.guia,
+  c.fecha,
+  a.modelo,
+  a.color ");
 
 
 		$stmt->execute();

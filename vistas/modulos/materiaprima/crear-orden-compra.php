@@ -160,7 +160,7 @@
 
                     <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">FEC ENTREGA</label>
                     <div class="col-lg-2">
-                        <input type="date" class="form-control input-sm"  name ="nuevaFechaEntrega" >
+                        <input type="date" class="form-control input-sm"  name ="nuevaFechaEntrega" value="<?php echo $fecha->format("Y-m-d"); ?>">
                     </div>
 
                     <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">FOR PAGO</label>
@@ -173,12 +173,12 @@
                             $item = null;
                             $valor = null;
 
-                            $condiciones = ControladorCondicionVentas::ctrMostrarCondicionVentas($item, $valor);
+                            $condiciones = ControladorMaestras::ctrMostrarMaestrasDetalle("TFOR");
 
 
                             foreach ($condiciones as $key => $value) {
 
-                                echo '<option value="'.$value["codigo"].'">'.$value["codigo"].' - '.$value["descripcion"].'</option>';
+                                echo '<option value="'.$value["cod_argumento"].'">'.$value["cod_argumento"].'-'.$value["des_larga"].'</option>';
 
                             }
 
@@ -212,7 +212,7 @@
 
                 <div class="col-lg-2">
                 
-                    <select  class="form-control  selectpicker" name="nuevoCentroCosto" data-live-search="true" >
+                    <select  class="form-control  selectpicker" name="nuevoCentroCosto" data-live-search="true" required>
                     <option value="">SELECCIONAR CENTRO COSTO</option>
                         <?php
 
@@ -221,7 +221,7 @@
 
                         foreach ($centro as $key => $value) {
 
-                        echo '<option value="'.$value["cod_argumento"].'">'.$value["cod_argumento"]." - ".$value["des_larga"].'</option>';
+                        echo '<option value="'.$value["des_corta"].'">'.$value["des_corta"]." - ".$value["des_larga"].'</option>';
 
                         }
 

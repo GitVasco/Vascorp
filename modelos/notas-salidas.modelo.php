@@ -18,6 +18,7 @@ class ModeloNotasSalidas{
 			vc.ser,
 			vc.nro,
 			vc.EstNota,
+			vc.UsuReg,
 			DATE(fecemi) AS fecemi,
 			c.razcli,
 			a.des_larga AS almacen 
@@ -44,6 +45,7 @@ class ModeloNotasSalidas{
 			vc.ser,
 			vc.nro,
 			vc.EstNota,
+			vc.UsuReg,
 			DATE(fecemi) AS fecemi,
 			c.razcli,
 			a.des_larga AS almacen 
@@ -85,6 +87,7 @@ class ModeloNotasSalidas{
 				vc.ser,
 				vc.nro,
 				vc.EstNota,
+				vs.UsuReg,
 				DATE(fecemi) AS fecemi,
 				c.razcli,
 				a.des_larga AS almacen 
@@ -112,6 +115,7 @@ class ModeloNotasSalidas{
 				vc.ser,
 				vc.nro,
 				vc.EstNota,
+				vs.UsuReg,
 				DATE(fecemi) AS fecemi,
 				c.razcli,
 				a.des_larga AS almacen 

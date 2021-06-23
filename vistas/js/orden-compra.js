@@ -117,6 +117,14 @@ $("#daterange-btnOrdenCompra").daterangepicker(
     localStorage.setItem("capturarRango30", capturarRango30);
     localStorage.setItem("fechaInicial", fechaInicial);
     localStorage.setItem("fechaFinal", fechaFinal);
+    $(".btnReporteOCompraEmitida").attr("inicio",fechaInicial);
+    $(".btnReporteOCompraEmitida").attr("fin",fechaFinal);
+    $(".btnReporteOCompraCerrada").attr("inicio",fechaInicial);
+    $(".btnReporteOCompraCerrada").attr("fin",fechaFinal);
+    $(".btnReporteOCompraParcial").attr("inicio",fechaInicial);
+    $(".btnReporteOCompraParcial").attr("fin",fechaFinal);
+    $(".btnReporteOCompraGeneral").attr("inicio",fechaInicial);
+    $(".btnReporteOCompraGeneral").attr("fin",fechaFinal);
 
     // Recargamos la tabla con la información para ser mostrada en la tabla
     $(".tablaOrdenesCompras").DataTable().destroy();
@@ -162,6 +170,14 @@ $(".daterangepicker.opensleft .ranges li").on("click", function() {
       localStorage.setItem("capturarRango30", "Hoy");
       localStorage.setItem("fechaInicial", fechaInicial);
       localStorage.setItem("fechaFinal", fechaFinal);
+      $(".btnReporteOCompraEmitida").attr("inicio",fechaInicial);
+      $(".btnReporteOCompraEmitida").attr("fin",fechaFinal);
+      $(".btnReporteOCompraCerrada").attr("inicio",fechaInicial);
+      $(".btnReporteOCompraCerrada").attr("fin",fechaFinal);
+      $(".btnReporteOCompraParcial").attr("inicio",fechaInicial);
+      $(".btnReporteOCompraParcial").attr("fin",fechaFinal);
+      $(".btnReporteOCompraGeneral").attr("inicio",fechaInicial);
+      $(".btnReporteOCompraGeneral").attr("fin",fechaFinal);
     // Recargamos la tabla con la información para ser mostrada en la tabla
       $(".tablaOrdenesCompras").DataTable().destroy();
       cargarTablaOrdenCompra(fechaInicial, fechaFinal);
@@ -286,7 +302,7 @@ $(".tablaMateriaOrdenCompra").on("click", "button.agregarMateriaCompra", functio
   $(this).addClass("btn-default");
 
   var datos = new FormData();
-  datos.append("idMateriaPrima", idMateriaCompra);
+  datos.append("idMateriaPrima2", idMateriaCompra);
 
   $.ajax({
     url: "ajax/materiaprima.ajax.php",
@@ -310,19 +326,6 @@ $(".tablaMateriaOrdenCompra").on("click", "button.agregarMateriaCompra", functio
       EVITAR AGREGAR PRODUTO CUANDO EL STOCK ESTÁ EN CERO
       =============================================*/
 
-      if (stock == 0) {
-        swal({
-          title: "No hay stock disponible",
-          type: "error",
-          confirmButtonText: "¡Cerrar!"
-        });
-
-        $("button[idMateriaCompra='" + idMateriaCompra + "']").addClass(
-          "btn-primary agregarMateriaNota"
-        );
-
-        return;
-      }
       var datos2 = new FormData();
       datos2.append("ColorCompra", "");
 
@@ -339,7 +342,7 @@ $(".tablaMateriaOrdenCompra").on("click", "button.agregarMateriaCompra", functio
                 
             $("#nuevoColorProv"+codpro).append("<option value=''>COLOR</option>");
             for (let i = 0; i < respuesta2.length; i++) {
-              $("#nuevoColorProv"+codpro).append("<option value='"+respuesta2[i]["cod_argumento"]+"'>"+respuesta2[i]["cod_argumento"]+" - "+respuesta2[i]["des_larga"]+"</option>");
+              $("#nuevoColorProv"+codpro).append("<option value='"+respuesta2[i]["cod_argumento"]+"'>"+respuesta2[i]["cod_argumento"]+"-"+respuesta2[i]["des_larga"]+"</option>");
               
             }
         }
@@ -507,11 +510,20 @@ $(".formularioOrdenCompra").on("click", "button.quitarMateriaCompra", function()
     "btn-primary agregarMateriaCompra"
   );
 
-   
-    // AGRUPAR MATERIAS EN FORMATO JSON
-    sumarTotalCompra();
-
+  if ($(".nuevaMateriaCompra").children().length == 0) {
+		$("#nuevoTotalCompra").val('0.0000');
+		$("#nuevoSubTotalCompra").val('0.0000');
+    $("#nuevoImpuestoCompra").val('0.0000');
+    $("#nuevoTotalCompra").attr("total", '0.0000');
     listarMateriaCompras();
+
+	}else{
+		sumarTotalCompra();
+    // AGRUPAR MATERIAS EN FORMATO JSON
+    listarMateriaCompras();
+	}
+    
+    
   
 });
 
@@ -564,24 +576,7 @@ $(".formularioOrdenCompra").on("keyup", "input.nuevaCantidadMateria", function()
 
   $(this).attr("nuevoStock", nuevoStock);
 
-  if (Number($(this).val()) > Number($(this).attr("stock"))) {
-    /*=============================================
-    SI LA CANTIDAD ES SUPERIOR AL STOCK REGRESAR VALORES INICIALES
-    =============================================*/
 
-    $(this).val(1);
-
-    
-
-    swal({
-      title: "La cantidad supera el Stock",
-      text: "¡Sólo hay " + $(this).attr("stock") + " unidades!",
-      type: "error",
-      confirmButtonText: "¡Cerrar!"
-    });
-
-    return;
-  }
 
   
   sumarTotalCompra();
@@ -803,3 +798,125 @@ $(".tablaMateriaOrdenCompra").on("draw.dt", function() {
   quitarAgregarMateriaCompra();
 });
 
+$(".tablaOrdenesCompras").on("click",".btnCerrarOCompra",function(){
+	var idCerrar = $(this).attr("idOrdenCompra");
+ 
+	// Capturamos el id de la orden de compra
+	swal({
+        title: '¿Está seguro de cerrar la orden de compra '+idCerrar+'?',
+        text: "¡Si no lo está puede cancelar la acción!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si, cerrar orden de compra!'
+    }).then(function (result) {
+
+        if (result.value) {
+          
+			
+			var datos=new FormData();
+			datos.append("cerrarId",idCerrar);
+			$.ajax({
+				url:"ajax/orden-compra.ajax.php",
+				type:"POST",
+				data:datos,
+				cache:false,
+				contentType:false,
+				processData:false,
+				success:function(respuesta){
+					// console.log(respuesta);
+					swal({
+						type: "success",
+						title: "¡Ok!",
+						text: "¡La orden de compra fue cerrada con éxito!",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar",
+						closeOnConfirm: false
+					}).then((result)=>{
+						if(result.value){
+							window.location="orden-compra";
+              
+            }
+					});}
+			});
+
+		}
+	})
+
+});
+
+$(".tablaOrdenesCompras").on("click",".btnAnularOrdenCompra",function(){
+	var idOrdenCompra = $(this).attr("idOrdenCompra");
+ 
+	// Capturamos el id de la orden de compra
+	swal({
+        title: '¿Está seguro de anular la orden de compra '+idOrdenCompra+'?',
+        text: "¡Si no lo está puede cancelar la acción!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si, anular orden de compra!'
+    }).then(function (result) {
+
+      if (result.value) {
+
+        window.location = "index.php?ruta=orden-compra&idOrdenCompra="+idOrdenCompra;
+
+		  }
+	})
+
+});
+
+//REPORTE DE ORDEN DE COMPRA DE CADA UNO
+$(".tablaOrdenesCompras").on("click", ".btnDetalleReporteOrdenCompra", function () {
+  var idOrdenCompra = $(this).attr("idOrdenCompra");
+  // console.log(idOrdenCompra);
+  window.location = "vistas/reportes_excel/rpt_orden_compra.php?idOrdenCompra="+idOrdenCompra;
+
+})
+
+//ORDEN DE COMPRA EMITIDA
+$(".box").on("click", ".btnReporteOCompraEmitida", function () {
+  var inicio = $(this).attr("inicio");
+	var fin = $(this).attr("fin");
+  window.location = "vistas/reportes_excel/rpt_orden_compra_emitida.php?inicio="+inicio+"&fin="+fin;
+
+})
+
+//ORDEN DE COMPRA CERRADA
+$(".box").on("click", ".btnReporteOCompraCerrada", function () {
+  var inicio = $(this).attr("inicio");
+	var fin = $(this).attr("fin");
+  window.location = "vistas/reportes_excel/rpt_orden_compra_cerrada.php?inicio="+inicio+"&fin="+fin;
+
+})
+
+//ORDEN DE COMPRA PARCIAL
+$(".box").on("click", ".btnReporteOCompraParcial", function () {
+  var inicio = $(this).attr("inicio");
+	var fin = $(this).attr("fin");
+  window.location = "vistas/reportes_excel/rpt_orden_compra_parcial.php?inicio="+inicio+"&fin="+fin;
+
+})
+
+//ORDEN DE COMPRA GENERAL
+$(".box").on("click", ".btnReporteOCompraGeneral", function () {
+  var inicio = $(this).attr("inicio");
+	var fin = $(this).attr("fin");
+  window.location = "vistas/reportes_excel/rpt_orden_compra_general.php?inicio="+inicio+"&fin="+fin;
+
+})
+
+//EDITAR ORDEN DE COMPRA DE CADA UNO
+$(".tablaOrdenesCompras").on("click", ".btnEditarOrdenCompra", function () {
+  var idOrdenCompra = $(this).attr("idOrdenCompra");
+  
+  window.location = "index.php?ruta=editar-orden-compra&idOrdenCompra="+idOrdenCompra;
+  
+
+
+})

@@ -20,7 +20,21 @@ require_once "controladores/marcas.controlador.php";
 
 require_once "controladores/colores.controlador.php";
 
+require_once "controladores/abonos.controlador.php";
+
+require_once "controladores/agencia.controlador.php";
+
 require_once "controladores/articulos.controlador.php";
+
+require_once "controladores/asistencia.controlador.php";
+
+require_once "controladores/bancos.controlador.php";
+
+require_once "controladores/cierres.controlador.php";
+
+require_once "controladores/condicionventa.controlador.php";
+
+require_once "controladores/cuentas.controlador.php";
 
 require_once "controladores/materiaprima.controlador.php";
 
@@ -34,9 +48,15 @@ require_once "controladores/contactos.controlador.php";
 
 require_once "controladores/mensajes.controlador.php";
 
+require_once "controladores/ingresos.controlador.php";
+
+require_once "controladores/modelos.controlador.php";
+
 require_once "controladores/pedidos.controlador.php";
 
 require_once "controladores/operaciones.controlador.php";
+
+require_once "controladores/paras.controlador.php";
 
 require_once "controladores/tipodocumento.controlador.php";
 
@@ -71,6 +91,18 @@ require_once "controladores/notas-ingresos.controlador.php";
 require_once "controladores/notas-salidas.controlador.php";
 
 require_once "controladores/orden-compra.controlador.php";
+
+require_once "controladores/orden-servicio.controlador.php";
+
+require_once "controladores/servicio.controlador.php";
+
+require_once "controladores/tipomovimiento.controlador.php";
+
+require_once "controladores/tipopago.controlador.php";
+
+require_once "controladores/unidadmedida.controlador.php";
+
+require_once "controladores/vendedor.controlador.php";
 
 /* 
 * MODELOS
@@ -117,8 +149,6 @@ require_once "modelos/trabajador.modelo.php";
 
 require_once "modelos/modelos.modelo.php";
 
-require_once "controladores/modelos.controlador.php";
-
 require_once "modelos/cortes.modelo.php";
 
 require_once "modelos/talleres.modelo.php";
@@ -127,59 +157,31 @@ require_once "modelos/sectores.modelo.php";
 
 require_once "modelos/paras.modelo.php";
 
-require_once "controladores/paras.controlador.php";
-
 require_once "modelos/asistencia.modelo.php";
-
-require_once "controladores/asistencia.controlador.php";
 
 require_once "modelos/ingresos.modelo.php";
 
-require_once "controladores/ingresos.controlador.php";
-
 require_once "modelos/agencia.modelo.php";
-
-require_once "controladores/agencia.controlador.php";
 
 require_once "modelos/tipomovimiento.modelo.php";
 
-require_once "controladores/tipomovimiento.controlador.php";
-
 require_once "modelos/tipopago.modelo.php";
-
-require_once "controladores/tipopago.controlador.php";
 
 require_once "modelos/unidadmedida.modelo.php";
 
-require_once "controladores/unidadmedida.controlador.php";
-
 require_once "modelos/condicionventa.modelo.php";
-
-require_once "controladores/condicionventa.controlador.php";
 
 require_once "modelos/servicio.modelo.php";
 
-require_once "controladores/servicio.controlador.php";
-
 require_once "modelos/bancos.modelo.php";
-
-require_once "controladores/bancos.controlador.php";
 
 require_once "modelos/cuentas.modelo.php";
 
-require_once "controladores/cuentas.controlador.php";
-
 require_once "modelos/vendedor.modelo.php";
-
-require_once "controladores/vendedor.controlador.php";
 
 require_once "modelos/abonos.modelo.php";
 
-require_once "controladores/abonos.controlador.php";
-
 require_once "modelos/cierres.modelo.php";
-
-require_once "controladores/cierres.controlador.php";
 
 require_once "modelos/produccion.modelo.php";
 
@@ -200,6 +202,8 @@ require_once "modelos/notas-ingresos.modelo.php";
 require_once "modelos/notas-salidas.modelo.php";
 
 require_once "modelos/orden-compra.modelo.php";
+
+require_once "modelos/orden-servicio.modelo.php";
 
 require_once "extensiones/vendor/autoload.php";
 

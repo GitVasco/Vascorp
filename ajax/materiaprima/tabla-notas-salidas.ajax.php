@@ -40,6 +40,7 @@ class TablaNotasSalidas{
             "'.$notasSalidas[$i]["fecemi"].'",
             "'.$notasSalidas[$i]["razcli"].'",
             "'.$notasSalidas[$i]["almacen"].'",
+            "'.$notasSalidas[$i]["UsuReg"].'",
             "'.$estado.'",
             "'.$botones.'"
             ],';        

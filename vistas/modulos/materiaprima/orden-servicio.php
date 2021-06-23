@@ -4,7 +4,7 @@
 
     <h1>
 
-      Orden de compra
+      Orden de servicio
 
     </h1>
 
@@ -12,7 +12,7 @@
 
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-      <li class="active">Orden de compra</li>
+      <li class="active">Orden de servicio</li>
 
     </ol>
 
@@ -24,33 +24,21 @@
 
       <div class="box-header with-border">
 
-        <a href="crear-orden-compra">
+        <a href="crear-orden-servicio">
 
           <button class="btn btn-primary">
 
-            Agregar Orden de compra
+            Agregar Orden de Servicio
 
           </button>
 
         </a>
 
-        <button class="btn btn-outline-success btnReporteOCompraEmitida" style="border:green 1px solid" inicio="" fin="">
-          <img src="vistas/img/plantilla/excel.png" width="20px"> OCompra Emitidas  
+        <button class="btn btn-outline-success btnReporte" style="border:green 1px solid" inicio="" fin="">
+          <img src="vistas/img/plantilla/excel.png" width="20px"> OServicio General Detallado
         </button>
 
-        <button class="btn btn-outline-success btnReporteOCompraCerrada" style="border:green 1px solid" inicio="" fin="">
-          <img src="vistas/img/plantilla/excel.png" width="20px"> OCompra Cerradas  
-        </button>
-
-        <button class="btn btn-outline-success btnReporteOCompraParcial" style="border:green 1px solid" inicio="" fin="">
-          <img src="vistas/img/plantilla/excel.png" width="20px"> OCompra Parciales 
-        </button>
-
-        <button class="btn btn-outline-success btnReporteOCompraGeneral" style="border:green 1px solid" inicio="" fin="">
-          <img src="vistas/img/plantilla/excel.png" width="20px"> OCompra General Detallado  
-        </button>
-
-        <button type="button" class="btn btn-default pull-right" id="daterange-btnOrdenCompra">
+        <button type="button" class="btn btn-default pull-right" id="daterange-btnOrdenServicio">
           <span>
             <i class="fa fa-calendar"></i>
 
@@ -83,7 +71,7 @@
 
         <input type="hidden" value="<?=$_SESSION["perfil"];?>" id="perfilOculto">
         <input type="hidden" value="<?= $_GET["ruta"]; ?>" id="rutaAcceso">
-       <table class="table table-bordered table-striped dt-responsive tablaOrdenesCompras" width="100%">
+       <table class="table table-bordered table-striped dt-responsive tablaOrdenesServicios" width="100%">
          
         <thead>
          
@@ -121,5 +109,5 @@
 ?>
 
 <script>
-window.document.title = "Orden de compra"
+window.document.title = "Orden de servicio"
 </script>

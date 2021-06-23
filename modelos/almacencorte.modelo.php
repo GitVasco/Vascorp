@@ -447,9 +447,13 @@ class ModeloAlmacenCorte{
 		adm.can_entregada,
 		adm.merma,
 		adm.mp_sinuso,
-		adm.notificacion  
+		adm.notificacion,
+		det.union_ns  
 	  FROM
-		almacencorte_detalle_mpjf adm 
+		almacencorte_detalle_mpjf adm
+		LEFT JOIN venta_det det
+		ON det.Nro = adm.nota_salida
+  		AND det.CodPro = adm.mat_pri
 		LEFT JOIN 
 		  (SELECT DISTINCT 
 			p.codpro,
