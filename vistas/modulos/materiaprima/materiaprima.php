@@ -1876,7 +1876,7 @@ MODAL EDITAR COSTOS
 
     <div class="modal-content">
 
-      <form role="form" method="post" enctype="multipart/form-data">
+      <form role="form" method="post" onsubmit="return false">
 
         <!--=====================================
         CABEZA DEL MODAL
@@ -1996,5 +1996,6 @@ MODAL EDITAR COSTOS
 ?>
 
 <script>
-window.document.title = "Materia Prima"
+  window.document.title = "Materia Prima";
+
 </script>

@@ -203,3 +203,257 @@ $(".tablaMpSO").DataTable({
     }
   }
 });
+
+
+$(".tablaMpSO").on("click", ".agregarMPOS", function() {
+
+  var idboton = $(this).attr("idboton");
+  var ordser = $(this).attr("ordser");
+  var codori = $(this).attr("codori");
+  var coddes = $(this).attr("coddes");
+  //console.log(idboton,ordser,codori,coddes)
+
+  $(this).removeClass("btn-primary agregarMPNI");
+  $(this).addClass("btn-default");
+
+  var datos = new FormData();
+  datos.append("ordser", ordser);
+  datos.append("codori", codori);
+  datos.append("coddes", coddes);  
+
+  $.ajax({
+    url: "ajax/notas-ingresos-os.ajax.php",
+    method: "POST",
+    data: datos,
+    cache: false,
+    contentType: false,
+    processData: false,
+    dataType: "json",
+    success: function(respuesta) {
+
+      //console.log(respuesta);
+
+      //var codori = respuesta["codproorigen"];
+      var descripcion = respuesta["desori"];
+      var colOri = respuesta["colorori"];
+      var colDes = respuesta["colordes"];
+      var saldo = respuesta["saldo"];
+      var descontar = respuesta["descontar"];
+
+      $(".nuevaMPOS").append(
+
+        '<div class="row" style="padding:1px 15px">' +
+
+          "<!-- CODORI -->" +
+
+          '<div class="col-xs-1" style="padding-right:0px">' +
+
+              '<input type="text" class="form-control input-sm nuevoCodOri" codori="' + codori + '" name="codori" id="codori" value="' + codori + '"  readonly>' +
+
+          "</div>" +
+          
+          "<!-- DESCRIPCION -->" +
+
+          '<div class="col-xs-4" >' +
+
+              '<input type="text" class="form-control input-sm nuevaDescripcion" name="descripcion" id ="descripcion" value="' + descripcion + '"  readonly>' +
+
+          "</div>" +
+          
+          "<!-- COLOR ORIGEN -->" +
+
+          '<div class="col-xs-1 ingresoColOri">' +
+
+              '<input type="text" class="form-control input-sm nuevoColOri" style="width:120px;font-size: 12px;padding: 2px;" name="colOri" id="colOri" value="'+ colOri +'" readonly>' +
+
+          "</div>" +   
+          
+          "<!-- CODDES -->" +
+
+          '<div class="col-xs-1" style="padding-right:0px">' +
+
+              '<input type="text" class="form-control input-sm nuevoCodDes" coddes="' + coddes + '" name="coddes" id="coddes" value="' + coddes + '"  readonly>' +
+
+          "</div>" + 
+          
+          "<!-- COLOR DESTINO -->" +
+
+          '<div class="col-xs-1 ingresoColDes">' +
+
+              '<input type="text" class="form-control input-sm nuevoColDes" style="width:120px;font-size: 12px;padding: 2px;" name="colDes" id="colDes" value="'+ colDes +'" readonly>' +
+
+          "</div>" +   
+          
+          "<!-- SALDO -->" +
+
+          '<div class="col-xs-1 ingresoSaldo">' +
+
+              '<input type="number" step="any" class="form-control input-sm nuevoSaldo"  name="saldo" id="saldo" value="'+ saldo +'" readonly>' +
+
+          "</div>" +     
+          
+          "<!-- CANTIDAD RECIBIDA -->" +
+
+          '<div class="col-xs-1 ingresoCantidad">' +
+
+              '<input type="number" step="any" class="form-control input-sm nuevaCantidadRecibida"  name="cantidadRecibida" id="cantidadRecibida" descontar="'+ descontar +'" cantidadReal="0" value="0" min="1">' +
+
+          "</div>" +   
+          
+          "<!-- ORDEN DE SERVICIO -->" +
+
+          '<div class="col-xs-1" >' +
+
+              '<input type="number" step="any" class="form-control input-sm nuevaOS"  name="ordenservicio" id="ordenservicio" value="'+ ordser +'" readonly>' +
+
+          "</div>" +      
+          
+          "<!-- CERRAR Y BORRAR LINEA -->" +
+
+          '<div class="col-xs-1">' +
+
+            '<div class="input-group">' +
+
+            '<input type="text" class="form-control input-sm nuevoCerrar" name="cerrar" id="cerrar">' +
+            
+            '<span class="input-group-addon" style="padding: 3px 6px"><button type="button" class="btn btn-danger btn-xs quitarMPNIS" idBoton="' + idboton + '"><i class="fa fa-times"></i></button></span>' +
+
+            "</div>" +
+
+          "</div>" +          
+
+        "</div>"
+
+      );     
+      listarMpNiS();
+
+    }
+
+  });   
+
+})
+
+/*=============================================
+CUANDO CARGUE LA TABLA CADA VEZ QUE NAVEGUE EN ELLA
+=============================================*/
+$(".tablaMpSO").on("draw.dt", function() {
+  /* console.log("tabla"); */
+
+  if (localStorage.getItem("quitarMPNIS") != null) {
+    var listaIdMPNIS = JSON.parse(localStorage.getItem("quitarMPNIS"));
+
+    //console.log(listaIdMPNIS);
+
+    for (var i = 0; i < listaIdMPNIS.length; i++) {
+      $(
+        "button.recuperarBoton[idBoton='" +
+        listaIdMPNIS[i]["idBoton"] +
+          "']"
+      ).removeClass("btn-default");
+      $(
+        "button.recuperarBoton[idBoton='" +
+        listaIdMPNIS[i]["idBoton"] +
+          "']"
+      ).addClass("btn-primary agregarMPNI");
+    }
+  }
+});
+
+/*=============================================
+QUITAR PRODUCTOS DE LA VENTA Y RECUPERAR BOTÓN
+=============================================*/
+var idQuitarMPNIS = [];
+
+localStorage.removeItem("quitarMPNIS");
+
+$(".formularioNotaIngresoServ").on("click", "button.quitarMPNIS", function() {
+  /* console.log("boton"); */
+
+  $(this)
+    .parent()
+    .parent()
+    .parent()
+    .parent()
+    .remove();
+
+  var idBoton = $(this).attr("idBoton");
+  //console.log(idBoton);
+
+    /*=============================================
+  ALMACENAR EN EL LOCALSTORAGE EL ID DEL PRODUCTO A QUITAR
+  =============================================*/
+
+  if (localStorage.getItem("quitarMPNIS") == null) {
+    idQuitarMPNIS = [];
+  } else {
+    idQuitarMPNIS.concat(localStorage.getItem("quitarMPNIS"));
+  }
+
+  idQuitarMPNIS.push({
+    idBoton: idBoton
+  });
+
+  //console.log(idQuitarMPNIS);
+
+  localStorage.setItem("quitarMPNIS", JSON.stringify(idQuitarMPNIS));
+
+  $(".recuperarBoton[idBoton='" + idBoton + "']").removeClass(
+    "btn-default"
+  );
+
+  $(".recuperarBoton[idBoton='" + idBoton + "']").addClass(
+    "btn-primary agregarMPNI"
+  );
+
+  if ($(".nuevaMPOS").children().length == 0) {
+
+    $("#listaOS").val("");
+    
+  } else {
+
+    listarMpNiS();
+  }
+  
+});
+
+$(".formularioNotaIngresoServ").on("keyup", "input.nuevaCantidadRecibida", function() {
+
+  listarMpNiS();
+
+});
+
+
+$(".formularioNotaIngresoServ").on("keyup", "input.nuevoCerrar", function() {
+
+  listarMpNiS();
+
+});
+
+function listarMpNiS(){
+
+  listaMpNiS = [];
+
+  var codori=       $(".nuevoCodOri");
+  var descripcion = $(".nuevaDescripcion");
+  var coddes =      $(".nuevoCodDes");
+  var cantidadRe =  $(".nuevaCantidadRecibida");
+  var ordser =      $(".nuevaOS");
+  var cerrar =      $(".nuevoCerrar");
+
+
+  for (var i = 0; i < descripcion.length; i++) {
+
+    listaMpNiS.push({
+      codori:  $(codori[i]).val(),
+      coddes:  $(coddes[i]).val(),
+      cantidadRe: $(cantidadRe[i]).val(),
+      ordser: $(ordser[i]).val(),
+      cerrar: $(cerrar[i]).val()
+    });
+  }
+
+    //console.log("listaMpNiS", JSON.stringify(listaMpNiS)); 
+
+    $("#listaOS").val(JSON.stringify(listaMpNiS));
+
+}

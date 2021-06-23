@@ -39,7 +39,8 @@ class ModeloNotasIngresos{
                                             tipoc,
                                             seroc,
                                             nrooc,
-                                            codalm 
+                                            codalm,
+                                            nea.usureg 
                                         FROM
                                             Nea,
                                             Tabla_M_Detalle,
@@ -58,7 +59,7 @@ class ModeloNotasIngresos{
                                             Nea 
                                             WHERE Nea.EstReg = 'P' 
                                             AND Nea.`NroGuiaAsociada` != '') 
-                                            AND YEAR(fecemi) IN ('2020', '2021') 
+                                            AND YEAR(nea.fecreg) IN ('2020', '2021') 
                                         ORDER BY nNea DESC");
 
 			$stmt -> execute();
@@ -95,7 +96,8 @@ class ModeloNotasIngresos{
             tipoc,
             seroc,
             nrooc,
-            codalm 
+            codalm,
+            nea.usureg 
         FROM
             Nea,
             Tabla_M_Detalle,
@@ -114,7 +116,7 @@ class ModeloNotasIngresos{
             Nea 
             WHERE Nea.EstReg = 'P' 
             AND Nea.`NroGuiaAsociada` != '') 
-            AND DATE(fecemi) like '%$fechaFinal%'
+            AND DATE(nea.fecreg) like '%$fechaFinal%'
         ORDER BY nNea DESC");
 
 			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
@@ -162,7 +164,8 @@ class ModeloNotasIngresos{
                 tipoc,
                 seroc,
                 nrooc,
-                codalm 
+                codalm,
+                nea.usureg  
             FROM
                 Nea,
                 Tabla_M_Detalle,
@@ -181,7 +184,7 @@ class ModeloNotasIngresos{
                 Nea 
                 WHERE Nea.EstReg = 'P' 
                 AND Nea.`NroGuiaAsociada` != '') 
-                AND DATE(fecemi) BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'
+                AND DATE(nea.fecreg) BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'
             ORDER BY nNea DESC");
 
 			}else{
@@ -214,7 +217,8 @@ class ModeloNotasIngresos{
                 tipoc,
                 seroc,
                 nrooc,
-                codalm 
+                codalm,
+                nea.usureg  
             FROM
                 Nea,
                 Tabla_M_Detalle,
@@ -233,7 +237,7 @@ class ModeloNotasIngresos{
                 Nea 
                 WHERE Nea.EstReg = 'P' 
                 AND Nea.`NroGuiaAsociada` != '') 
-                AND DATE(fecemi) BETWEEN '$fechaInicial' AND '$fechaFinal'
+                AND DATE(nea.fecreg) BETWEEN '$fechaInicial' AND '$fechaFinal'
             ORDER BY nNea DESC");
 
 			}
@@ -1327,6 +1331,41 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
 		}
   }
 
+	// Método para actualizar EL STOCK DE MP
+	static public function mdlCerrarOC($datos){
+
+		$sql="UPDATE 
+            ocompra 
+          SET
+            estac = 'CER',
+            ceroc = 'SI',
+            feccer = :feccer,
+            usucer = :usucer,
+            pccer = :pccer 
+          WHERE nro = :oc";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":oc",$datos["oc"],PDO::PARAM_STR);
+    $stmt->bindParam(":feccer",$datos["feccer"],PDO::PARAM_STR);
+    $stmt->bindParam(":usucer",$datos["usucer"],PDO::PARAM_STR);
+    $stmt->bindParam(":pccer",$datos["pccer"],PDO::PARAM_STR);
+
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+
+		}
+
+		$stmt=null;
+
+	}    
+
   /* 
 	* AQUI INICIA NOTA DE INGRESO POR SERVICIO
 	! AQUI INICIA NOTA DE INGRESO POR SERVICIO
@@ -1438,7 +1477,7 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
 	}  
 
 	/* 
-	* MOSTRAR MP PARA NOTA DE INGRESO CON O SIN OC
+	* MOSTRAR MP PARA NOTA DE INGRESO CON O SIN OS
 	*/
 	static public function mdlMostrarMPOS(){
 
@@ -1485,53 +1524,7 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
                                               OR tund2.Cod_Tabla IS NULL
                                             ) 
                                             AND osd.EstReg = '1' 
-                                            AND osd.EstOS IN ('ABI', 'PAR') 
-                                          UNION
-                                          ALL 
-                                          SELECT 
-                                            osd.Nro,
-                                            CodProOrigen,
-                                            p1.DesPro AS DesOri,
-                                            tcol.Des_Larga AS ColorOri,
-                                            tund.Des_Corta AS UndOri,
-                                            CodProDestino,
-                                            p2.DesPro AS DesDes,
-                                            tcol2.Des_Larga AS ColorDes,
-                                            tund.Des_Corta AS UndDes,
-                                            Saldo 
-                                          FROM
-                                            corp18_oserviciodet osd 
-                                            INNER JOIN corp18_Producto p1 
-                                              ON p1.CodPro = osd.CodProOrigen 
-                                            INNER JOIN corp18_Producto p2 
-                                              ON p2.CodPro = osd.CodProDestino 
-                                            LEFT JOIN corp18_tabla_m_detalle tcol 
-                                              ON tcol.Cod_Argumento = p1.ColPro 
-                                            LEFT JOIN corp18_tabla_m_detalle tcol2 
-                                              ON tcol2.Cod_Argumento = p2.ColPro 
-                                            LEFT JOIN corp18_tabla_m_detalle tund 
-                                              ON tund.Cod_Argumento = p1.UndPro 
-                                            LEFT JOIN corp18_tabla_m_detalle tund2 
-                                              ON tund2.Cod_Argumento = p2.UndPro 
-                                          WHERE (
-                                              tcol.Cod_Tabla = 'TCOL' 
-                                              OR tcol.Cod_Tabla IS NULL
-                                            ) 
-                                            AND (
-                                              tund.Cod_Tabla = 'TUND' 
-                                              OR tund.Cod_Tabla IS NULL
-                                            ) 
-                                            AND (
-                                              tcol2.Cod_Tabla = 'TCOL' 
-                                              OR tcol2.Cod_Tabla IS NULL
-                                            ) 
-                                            AND (
-                                              tund2.Cod_Tabla = 'TUND' 
-                                              OR tund2.Cod_Tabla IS NULL
-                                            ) 
-                                            AND osd.EstReg = '1' 
-                                            AND osd.EstOS IN ('ABI', 'PAR') 
-                                          ORDER BY Nro DESC");
+                                            AND osd.EstOS IN ('ABI', 'PAR')");
 
 			$stmt->execute();
 
@@ -1541,5 +1534,342 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
 
       $stmt = null;
 	}  
+
+	/* 
+	* MOSTRAR MP PARA NOTA DE INGRESO EN OS AL HACER CLICK
+	*/
+	static public function mdlTraerMPOS($ordser, $codori, $coddes){
+
+
+    $stmt = Conexion::conectar()->prepare("SELECT 
+                                              osd.Nro AS nro,
+                                              CodProOrigen AS codproorigen,
+                                              p1.DesPro AS desori,
+                                              tcol.Des_Larga AS colorori,
+                                              tund.Des_Corta AS undori,
+                                              CodProDestino AS codprodestino,
+                                              p2.DesPro AS desdes,
+                                              tcol2.Des_Larga AS colordes,
+                                              tund.Des_Corta AS unddes,
+                                              Saldo AS saldo,
+                                              desstk AS descontar  
+                                            FROM
+                                              oserviciodet osd 
+                                              INNER JOIN Producto p1 
+                                                ON p1.CodPro = osd.CodProOrigen 
+                                              INNER JOIN Producto p2 
+                                                ON p2.CodPro = osd.CodProDestino 
+                                              LEFT JOIN tabla_m_detalle tcol 
+                                                ON tcol.Cod_Argumento = p1.ColPro 
+                                              LEFT JOIN tabla_m_detalle tcol2 
+                                                ON tcol2.Cod_Argumento = p2.ColPro 
+                                              LEFT JOIN tabla_m_detalle tund 
+                                                ON tund.Cod_Argumento = p1.UndPro 
+                                              LEFT JOIN tabla_m_detalle tund2 
+                                                ON tund2.Cod_Argumento = p2.UndPro 
+                                            WHERE (
+                                                tcol.Cod_Tabla = 'TCOL' 
+                                                OR tcol.Cod_Tabla IS NULL
+                                              ) 
+                                              AND (
+                                                tund.Cod_Tabla = 'TUND' 
+                                                OR tund.Cod_Tabla IS NULL
+                                              ) 
+                                              AND (
+                                                tcol2.Cod_Tabla = 'TCOL' 
+                                                OR tcol2.Cod_Tabla IS NULL
+                                              ) 
+                                              AND (
+                                                tund2.Cod_Tabla = 'TUND' 
+                                                OR tund2.Cod_Tabla IS NULL
+                                              ) 
+                                              AND osd.EstReg = '1' 
+                                              AND osd.EstOS IN ('ABI', 'PAR') 
+                                              AND nro = :ordser 
+                                              AND codproorigen = :codori
+                                              AND codprodestino = :coddes");
+
+    $stmt -> bindParam(":ordser", $ordser, PDO::PARAM_STR);
+    $stmt -> bindParam(":codori", $codori, PDO::PARAM_STR);
+    $stmt -> bindParam(":coddes", $coddes, PDO::PARAM_STR);
+
+    $stmt->execute();
+
+    return $stmt->fetch();
+
+    $stmt->close();
+
+    $stmt = null;
+
+  } 
+  
+    /* 
+    *MOSTRAR CORRELATIVO SUBLINEA
+    */
+    static public function mdlMostrarCorrelativoNotaIngresoServicio(){
+
+      $stmt = Conexion::conectar()->prepare("SELECT 
+                LPAD(MAX(nneaos) + 1, 6, '0') AS correlativo 
+              FROM
+                nea_os");
+
+      $stmt -> execute();
+
+      return $stmt -> Fetch();
+
+      $stmt -> close();
+
+      $stmt = null;
+
+  }  
+
+    /* 
+  * CREAR NOTA DE INGRESO - CABECERA OS
+  */
+  static public function mdlGuardarNotaIngresoCabServicio($datos){
+
+		$sql="INSERT INTO nea_os (
+      cod_local,
+      cod_entidad,
+      codruc,
+      tneaos,
+      sneaos,
+      nneaos,
+      fecemi,
+      serdcto,
+      nrodcto,
+      estreg,
+      fecreg,
+      usureg,
+      pcreg
+    ) 
+    VALUES
+      (
+        :cod_local,
+        :cod_entidad,
+        :codruc,
+        :tneaos,
+        :sneaos,
+        :nneaos,
+        :fecemi,
+        :serdcto,
+        :nrodcto,
+        :estreg,
+        :fecreg,
+        :usureg,
+        :pcreg
+      )";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":cod_local",$datos["cod_local"],PDO::PARAM_STR);
+    $stmt->bindParam(":cod_entidad",$datos["cod_entidad"],PDO::PARAM_STR);
+    $stmt->bindParam(":codruc",$datos["codruc"],PDO::PARAM_STR);
+    $stmt->bindParam(":tneaos",$datos["tneaos"],PDO::PARAM_STR);
+    $stmt->bindParam(":sneaos",$datos["sneaos"],PDO::PARAM_STR);
+    $stmt->bindParam(":nneaos",$datos["nneaos"],PDO::PARAM_STR);    
+    $stmt->bindParam(":fecemi",$datos["fecemi"],PDO::PARAM_STR);
+    $stmt->bindParam(":serdcto",$datos["serdcto"],PDO::PARAM_STR);
+    $stmt->bindParam(":nrodcto",$datos["nrodcto"],PDO::PARAM_STR);
+    $stmt->bindParam(":estreg",$datos["estreg"],PDO::PARAM_STR);
+    $stmt->bindParam(":fecreg",$datos["fecreg"],PDO::PARAM_STR);
+    $stmt->bindParam(":usureg",$datos["usureg"],PDO::PARAM_STR);
+    $stmt->bindParam(":pcreg",$datos["pcreg"],PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+
+		}
+
+		$stmt=null;
+
+	}	
+
+  /* 
+  * CREAR NOTA DE INGRESO - DETALLE SERVICIO
+  */
+  static public function mdlGuardarNotaIngresoDetServicio($datos){
+
+		$sql="INSERT INTO nea_os_det (
+      cod_local,
+      cod_entidad,
+      tneaos,
+      sneaos,
+      nneaos,
+      nroos,
+      fecemi,
+      item,
+      codruc,
+      codproorigen,
+      codprodestino,
+      cansol,
+      estreg,
+      fecreg,
+      usureg,
+      pcreg
+    ) 
+    VALUES
+      (
+        :cod_local,
+        :cod_entidad,
+        :tneaos,
+        :sneaos,
+        :nneaos,
+        :nroos,
+        :fecemi,
+        :item,
+        :codruc,
+        :codproorigen,
+        :codprodestino,
+        :cansol,
+        :estreg,
+        :fecreg,
+        :usureg,
+        :pcreg
+      )";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":cod_local",$datos["cod_local"],PDO::PARAM_STR);
+    $stmt->bindParam(":cod_entidad",$datos["cod_entidad"],PDO::PARAM_STR);
+    $stmt->bindParam(":tneaos",$datos["tneaos"],PDO::PARAM_STR);
+    $stmt->bindParam(":sneaos",$datos["sneaos"],PDO::PARAM_STR);
+    $stmt->bindParam(":nneaos",$datos["nneaos"],PDO::PARAM_STR); 
+    $stmt->bindParam(":nroos",$datos["nroos"],PDO::PARAM_STR);
+    $stmt->bindParam(":fecemi",$datos["fecemi"],PDO::PARAM_STR);
+    $stmt->bindParam(":item",$datos["item"],PDO::PARAM_STR);
+    $stmt->bindParam(":codruc",$datos["codruc"],PDO::PARAM_STR);
+    $stmt->bindParam(":codproorigen",$datos["codproorigen"],PDO::PARAM_STR);
+    $stmt->bindParam(":codprodestino",$datos["codprodestino"],PDO::PARAM_STR);
+    $stmt->bindParam(":cansol",$datos["cansol"],PDO::PARAM_STR);
+    $stmt->bindParam(":estreg",$datos["estreg"],PDO::PARAM_STR);
+    $stmt->bindParam(":fecreg",$datos["fecreg"],PDO::PARAM_STR);
+    $stmt->bindParam(":usureg",$datos["usureg"],PDO::PARAM_STR);
+    $stmt->bindParam(":pcreg",$datos["pcreg"],PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return $stmt->errorInfo();
+
+		}
+
+		$stmt=null;
+    
+	}	   
+
+    /* 
+    *MOSTRAR MP EN ORDEN DE SERVICIO
+    */
+    static public function mdlMpServicio($nro, $codori, $coddes){
+
+      $stmt = Conexion::conectar()->prepare("SELECT 
+      nro,
+      fecemi,
+      item,
+      codproorigen,
+      codprodestino,
+      cantidadini,
+      saldo,
+      despacho,
+      estos,
+      desstk 
+    FROM
+      oserviciodet 
+    WHERE nro = :nro 
+      AND codproorigen = :codproorigen
+      AND codprodestino = :codprodestino");
+
+      $stmt->bindParam(":nro",$nro,PDO::PARAM_STR);
+      $stmt->bindParam(":codproorigen",$codori,PDO::PARAM_STR);
+      $stmt->bindParam(":codprodestino",$coddes,PDO::PARAM_STR);
+
+      $stmt -> execute();
+
+      return $stmt -> fetch();
+
+      $stmt -> close();
+
+      $stmt = null;
+
+  }  
+
+	// Método para actualizar saldo, despacho y estado
+	static public function mdlActualizarServicio($nro, $codori, $coddes, $saldo, $despacho, $cerrar){
+
+		$sql="UPDATE 
+                oserviciodet 
+              SET
+                saldo = :saldo,
+                despacho = :despacho,
+                estos = 
+                CASE
+                  WHEN :cerrar = 'SI' 
+                  THEN 'CER' 
+                  ELSE estos 
+                END
+              WHERE nro = :nro 
+                AND codproorigen = :codproorigen 
+                AND codprodestino = :codprodestino";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+    $stmt->bindParam(":nro",$nro,PDO::PARAM_STR);
+    $stmt->bindParam(":codproorigen",$codori,PDO::PARAM_STR);
+    $stmt->bindParam(":codprodestino",$coddes,PDO::PARAM_STR);
+    $stmt->bindParam(":saldo",$saldo,PDO::PARAM_STR);
+    $stmt->bindParam(":despacho",$despacho,PDO::PARAM_STR);
+    $stmt->bindParam(":cerrar",$cerrar,PDO::PARAM_STR);
+		
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return $stmt->errorInfo();
+
+		}
+
+		$stmt=null;
+
+	}   
+
+	// Método para actualizar saldo, despacho y estado
+	static public function mdlActualizarCabOrdServicio($nro){
+
+		$sql="UPDATE 
+              oservicio 
+            SET
+              estos = 'PAR' 
+            WHERE nro = :nro ";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+    $stmt->bindParam(":nro",$nro,PDO::PARAM_STR);
+		
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return $stmt->errorInfo();
+
+		}
+
+		$stmt=null;
+
+	}   
 
 }

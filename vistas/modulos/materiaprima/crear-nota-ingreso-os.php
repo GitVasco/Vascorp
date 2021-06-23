@@ -74,7 +74,7 @@
 
                     <div class="box-header with-border"></div>
 
-                    <form role="form" method="post" class="formularioNotaIngreso">
+                    <form role="form" method="post" class="formularioNotaIngresoServ">
 
                         <div class="box-body">
 
@@ -88,7 +88,7 @@
                                 <div class="form-group" style="padding-top:5px;padding-bottom:30px">
 
                                     <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Proveedor</label>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-2">
 
                                         <?php
                                             $item = "codruc";
@@ -109,6 +109,15 @@
                                         <input type="date" class="form-control input-sm" id="fecP" name="fecP"
                                         value="<?php echo $fecha->format("Y-m-d"); ?>">
                                     </div>
+
+                                    <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Serie</label>
+                                    <div class="col-lg-1">
+                                        <input type="text" class="form-control input-sm" id="nuevaSerieP" name="nuevaSerieP" placeholder="Serie">
+                                    </div>
+                                    <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Nro</label>                                    
+                                    <div class="col-lg-1">
+                                        <input type="text" class="form-control input-sm" id="nuevoNroP" name="nuevoNroP" placeholder="Número">
+                                    </div>                                    
                                     
                                 </div>
 
@@ -121,28 +130,40 @@
                                     <div class="row">
                                             <div class="col-lg-1">
 
-                                            <label>CodPro</label>
+                                            <label>CodOri</label>
+
+                                            </div>
+
+                                            <div class="col-lg-4">
+
+                                            <label for="">Descripción Origen</label>
 
                                             </div>
 
                                             <div class="col-lg-1">
 
-                                            <label for="">CodFab</label>
-
-                                            </div>
-
-                                            <div class="col-lg-2">
-
-                                            <label for="">Descripción / Color / Und</label>
-
-                                            </div>
-
-                                            <div class="col-lg-1">
-
-                                            <label for="">Cantidad</label>
+                                            <label for="">Color</label>
 
                                             </div>   
                                             
+                                            <div class="col-lg-1">
+
+                                            <label for="">CodDest</label>
+
+                                            </div>
+
+                                            <div class="col-lg-1">
+
+                                            <label for="">Color</label>
+
+                                            </div>  
+
+                                            <div class="col-lg-1">
+
+                                            <label for="">Saldo</label>
+
+                                            </div>
+
                                             <div class="col-lg-1">
 
                                             <label for="">C. Recibida</label>
@@ -151,31 +172,7 @@
 
                                             <div class="col-lg-1">
 
-                                            <label for="">Saldo</label>
-
-                                            </div>  
-
-                                            <div class="col-lg-1">
-
-                                            <label for="">Exceso</label>
-
-                                            </div>
-
-                                            <div class="col-lg-1">
-
-                                            <label for="">P.S. IGV</label>
-
-                                            </div>
-
-                                            <div class="col-lg-1">
-
-                                            <label for="">Total</label>
-
-                                            </div>
-
-                                            <div class="col-lg-1">
-
-                                            <label for="">OC</label>
+                                            <label for="">Nro OS</label>
 
                                             </div>
 
@@ -192,88 +189,14 @@
                                 ENTRADA PARA AGREGAR PRODUCTO
                                 ======================================-->
 
-                                <div class="form-group row nuevaMPNI">
+                                <div class="form-group row nuevaMPOS">
 
 
                                 </div>
 
                                 <hr>
 
-                                <input type="hidden" id="listaNI" name="listaNI">
-
-                                <div class="row">
-
-                                    <!--=====================================
-                                    ENTRADA IMPUESTOS Y TOTAL
-                                    ======================================-->
-
-                                    <div class="col-xs-6 pull-right">
-
-                                        <table class="table">
-
-                                            <thead>
-
-                                                <tr>
-                                                    <th>SubTotal</th>
-                                                    <th>Impuesto</th>
-                                                    <th>Total</th>
-                                                </tr>
-
-                                            </thead>
-
-                                            <tbody>
-
-                                                <tr>
-
-                                                    <td style="width: 30%">
-
-                                                        <div class="input-group">
-
-                                                            <input type="number" step="any" class="form-control" min="0" id="nuevoSubTotalNi" name="nuevoSubTotalNi" placeholder="0" required readonly>
-                                                            <span class="input-group-addon"><i class="fa fa-money"></i></span>
-
-                                                            <input type="hidden" name="subTotalNi" id="subTotalNi">                                                            
-
-                                                        </div>
-
-                                                    </td>                                                
-
-                                                    <td style="width: 30%">
-
-                                                        <div class="input-group">
-
-                                                            <input type="number" step="any" class="form-control" min="0" id="nuevoImpuestoNi" name="nuevoImpuestoNi" placeholder="0" required readonly>
-                                                            <span class="input-group-addon"><i class="fa fa-percent"></i></span>
-
-                                                            <input type="hidden" name="impuestoNi" id="impuestoNi">
-
-                                                        </div>
-
-                                                    </td>
-
-                                                    <td style="width: 40%">
-
-                                                        <div class="input-group">
-
-                                                            <span class="input-group-addon"><i class="fa fa-money"></i></span>
-
-                                                            <input type="number" step="any" min="1" class="form-control" id="nuevoTotalNi" name="nuevoTotalNi" readonly required>
-
-                                                            <input type="hidden" name="totalNi" id="totalNi">
-
-                                                        </div>
-
-                                                    </td>
-
-                                                </tr>
-
-                                            </tbody>
-
-                                        </table>
-
-                                    </div>
-
-                                </div>
+                                <input type="hidden" id="listaOS" name="listaOS">
 
                                 <hr>
 
@@ -287,7 +210,7 @@
 
                             <button type="submit" class="btn btn-primary pull-right">Guardar Nota de Ingreso</button>
 
-                            <a href="notas-ingresos"  class="btn btn-danger"><i class="fa fa-times-circle"></i> Cancelar</a>
+                            <a href="notas-ingresos-os"  class="btn btn-danger"><i class="fa fa-times-circle"></i> Cancelar</a>
 
                         </div>
 
@@ -295,8 +218,8 @@
 
                     <?php
 
-                    /* $crearNotaIngreso = new ControladorNotasIngresos();
-                    $crearNotaIngreso -> ctrCrearNotaIngreso(); */
+                    $crearNotaIngreso = new ControladorNotasIngresos();
+                    $crearNotaIngreso -> ctrCrearNotaIngresoServicio();
 
                     ?>                     
 
@@ -311,5 +234,5 @@
 </div>
 
 <script>
-window.document.title = "Crear nota ingreso"
+window.document.title = "Crear Ing. x Serv."
 </script>

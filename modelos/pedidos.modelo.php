@@ -195,7 +195,6 @@ class ModeloPedidos{
 					total = :total,
 					condicion_venta = :condicion_venta,
 					agencia = :agencia,
-					estado = 'GENERADO',
 					usuario = :usuario
 				WHERE codigo = :codigo";
 
