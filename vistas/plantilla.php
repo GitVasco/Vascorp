@@ -155,7 +155,7 @@
 
     div.dataTables_wrapper div.dataTables_filter input {
      
-      width: 600px;
+      width: 500px;
     }
 
   </style>
@@ -232,7 +232,6 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "condicionesventa" ||
                   $_GET["ruta"] == "unidadesmedida" ||
                   $_GET["ruta"] == "bancos" ||
-                  
                   $_GET["ruta"] == "vendedor" ||
                   $_GET["ruta"] == "tabla-maestra"){
 
@@ -246,6 +245,8 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "orden-compra" ||
                   $_GET["ruta"] == "crear-orden-compra" ||
                   $_GET["ruta"] == "editar-orden-compra" ||
+                  $_GET["ruta"] == "orden-servicio" ||
+                  $_GET["ruta"] == "crear-orden-servicio" ||
                   $_GET["ruta"] == "proveedor" ||
                   $_GET["ruta"] == "notas-ingresos-os" ||
                   $_GET["ruta"] == "crear-nota-ingreso-os" ){
@@ -447,6 +448,7 @@ CUERPO DOCUMENTO
   <script src="vistas/js/notas-salidas.js"></script>
   <script src="vistas/js/orden-compra.js"></script>
   <script src="vistas/js/notas-ingresos-os.js"></script>
+  <script src="vistas/js/orden-servicio.js"></script>
 
 </body>
 

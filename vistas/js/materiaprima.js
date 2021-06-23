@@ -434,6 +434,9 @@ $("#nuevaSubLinea").change(function(){
 	var talla = $("#nuevaTallaMateria").val();
 	var color = $("#nuevoColorMateria").val();
 	$("#nuevoCodigoFab").val(linea+sublinea+color+talla);
+	var texto = $(this).find('option:selected').text();
+	var descripcion = texto.substr(6);
+	$("#nuevaDescripcionMat").val(descripcion);
 
 });
 
@@ -480,6 +483,7 @@ $("#nuevaTallaMateria").change(function(){
 				}
 				$("#nuevoCodigoFab").val(linea+sublinea+color);
 				$("#nuevoCodigoFab").focus();
+				$("#nuevaDescripcionMat").val("");
 				$(this).val("");
 			} else {
 				$(".msgError").remove();
@@ -889,3 +893,79 @@ $(".tablaMateriaPrima").on("click", ".btnAnularMateriaPrima", function(){
     })
 
 })
+
+/*=============================================
+ANULAR MATERIA PRIMA
+=============================================*/
+$("#formularioEditarMateria").on("click", ".btnEditarCambiosMateria", function(){
+	//datos de materia prima
+	var codpro =$("#tipoNotaDocumento").val();
+	var codalt=$("#selectNotaCliente").val();
+	var despro=$("#selectNotaVendedor").val();
+	var undpro = $("#notaSubTotal").val();
+	var padval = $("#notaIGV").val();
+	var pseg=$("#notaTotal").val();
+	var pespro=$("#notaFecha").val();
+	var stkmin=$("#notaUsuario").val();
+	var stkmax=$("#notaUsuario").val();
+
+
+	//datos de precio mp
+	var codprov1 = $("#notaNroFactura").val();
+	var preprov1 = $("#selectNotaDocumento").val();
+	var monprov1=$("#notaFechaFactura").val();
+	var obsprov1=$("#notaFechaFactura").val();
+	var codprov2=$("#notaMotivo").val();
+	var preprov2=$("#notaTipoCont").val();
+	var monprov2=$("#notaTexto").val();
+	var obsprov2=$("#notaFechaFactura").val();
+	var codprov3=$("#notaMotivo").val();
+	var preprov3=$("#notaTipoCont").val();
+	var monprov3=$("#notaTexto").val();
+	var obsprov3=$("#notaFechaFactura").val();
+	
+	var datos = new Array();
+	
+	
+	datos.push({
+		'codpro':codpro,
+		'codalt':codalt,
+		'despro':despro,
+		'undpro':undpro,
+		'padval':padval,
+		'pseg':pseg,
+		'pespro':pespro,
+		'stkmin':stkmin,
+		'stkmax':stkmax,
+		'codprov1':codprov1,
+		'preprov1':preprov1,
+		'monprov1':monprov1,
+		'obsprov1':obsprov1,
+		'codprov2':codprov2,
+		'preprov2':preprov2,
+		'monprov2':monprov2,
+		'obsprov2':obsprov2,
+		'codprov3':codprov3,
+		'preprov3':preprov3,
+		'monprov3':monprov3,
+		'obsprov3':obsprov3
+	});
+	var materiaprima = {"datosMateria" : datos}
+	
+	var jsonMateria= {"jsonMateria":JSON.stringify(materiaprima)};
+	console.log(jsonMateria);
+	$.ajax({
+		url:"ajax/materiaprima.ajax.php",
+		method: "POST",
+		data: jsonMateria,
+		cache: false,
+		success:function(respuesta){
+			if(respuesta== "ok"){
+				// Command:toastr["success"]("Editado de materia prima exitosamente!");
+			}	
+			
+		}
+
+	})
+});
+

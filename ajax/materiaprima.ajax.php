@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 // Requerimos el controlador y el modelo
 require_once '../controladores/materiaprima.controlador.php';
 require_once '../modelos/materiaprima.modelo.php';
@@ -107,6 +107,73 @@ class AjaxMateriaPrima{
 
 	}
 
+	/* 
+	* EDITAR NOMBRE DE LA MATERIA PRIMA
+	*/
+
+	public $idMateriaPrima2;
+
+	public function ajaxAgregarMateriaPrima2(){
+
+		$valor = $this->idMateriaPrima2;
+
+		$respuesta = ControladorMateriaPrima::ctrMostrarMateriaPrima2($valor);
+
+		echo json_encode($respuesta);
+
+	}
+
+
+	 /*=============================================
+      EDITAR DOCUMENTO DE VENTA
+      =============================================*/	
+      public $datosMateria;
+      public function ajaxCambiosMateria(){
+        $valor = $this->datosMateria;
+        $datos = json_decode($valor);
+        foreach ($datos->{"datosMateria"} as  $value) {
+          $codpro = $value->{"codpro"};
+          $codalt = $value->{"codalt"};
+          $despro = $value->{"despro"};
+          $undpro = $value->{"vendedor"};
+          $padval = $value->{"neto"};
+          $pseg = $value->{"igv"};
+          $pespro = $value->{"monto"};
+          $stkmin = $value->{"fecha"};
+          $stkmax = $value->{"origen_venta"};
+          $codprov1 = $value->{"tip_nota"};
+          $preprov1 = $value->{"motivo"};
+          $monprov1 = $value->{"tip_cont"};
+          $obsprov1 = $value->{"fecha_origen"};
+          $codprov2 = $value->{"observacion"};
+          $preprov2 = $value->{"usuario"};
+		  $monprov2 = $value->{"tip_cont"};
+          $obsprov2 = $value->{"fecha_origen"};
+		  $codprov3 = $value->{"observacion"};
+          $preprov3 = $value->{"usuario"};
+		  $monprov3 = $value->{"tip_cont"};
+          $obsprov3 = $value->{"fecha_origen"};
+
+        //   $arregloVenta = array("tipo"=>$doc,
+        //                         "documento"=>$cta,
+        //                         "neto"=>$neto2,
+        //                         "igv"=>$igv2,
+        //                         "total"=>$total,
+        //                         "cliente"=>$cli,
+        //                         "vendedor"=>$vend,
+        //                         "fecha"=>$fecha,
+        //                         "doc_origen"=>$origen_venta,
+        //                         "usuario"=>$user);
+          
+        // $respuesta = ModeloMateriaPrima::mdlEditarMateriaPrima($arregloVenta);
+
+        }
+        
+    
+        echo $respuesta;
+    
+      }
+
 }
 
 
@@ -189,4 +256,26 @@ if(isset($_POST["CodigoFab"])){
 	$validarMateriaPrima -> CodigoFab = $_POST["CodigoFab"];
 	$validarMateriaPrima -> ajaxValidarCodFab();
   
+}
+
+/* 
+* AGREGAR NOMBRE DE MATERIA PRIMA PARA OCOMPRA Y NS
+*/
+
+if(isset($_POST["idMateriaPrima2"])){
+
+	$agregarMateriaPrima = new AjaxMateriaPrima();
+	$agregarMateriaPrima -> idMateriaPrima2 = $_POST["idMateriaPrima2"];
+	$agregarMateriaPrima -> ajaxAgregarMateriaPrima2();
+  
+}
+
+/*=============================================
+GUARDAR CAMBIOS DE MATERIA PRIMA
+=============================================*/	
+if(isset($_POST["jsonMateria"])){
+	
+	$editarVentaCambios = new AjaxMateriaPrima();
+	$editarVentaCambios -> datosMateria = $_POST["jsonMateria"];
+	$editarVentaCambios -> ajaxCambiosMateria();
 }

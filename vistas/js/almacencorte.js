@@ -262,6 +262,8 @@ $(".formularioAlmacenCorte").on("click", "button.quitarAC", function () {
         $("#nuevoTotalAlmacenCorte").val(0);
         $("#totalAlmacenCorte").val(0);
         $("#nuevoTotalAlmacenCorte").attr("total", 0);
+        listarArticulosAC();
+        listArticulo();
 
     } else {
 
@@ -871,9 +873,21 @@ $(".tablaAlmacenCorte").on("click", ".btnEditarAC", function () {
                 $("#almacencorteMP").val(respuesta[0]["almacencorte"]);
                 
                 $("#telas").append("<div class='telaMP col-lg-12' style='padding:0px'><div class='col-lg-2 col-md-2 '><label><b>Nota salida "+(i+1)+"</b></label><div class='input-group'><span class='input-group-addon' style='padding:0px !important;border: 0px !important'><button type='button' class='btn btn-sm btn-primary' title='Reiniciar Consumo' id='reiniciarConsumo"+i+"'><i class='fa fa-refresh'></i></button></span><input type='number'  class='form-control input-sm' name='notaSalidaMP"+i+"' id='notaSalidaMP"+i+"'  value='"+respuesta[i]["nota_salida"]+"'></div></div><div class='col-lg-4 col-md-4'><label><b>Tela "+(i+1)+"</b></label><input type='text' class='form-control input-sm' name='telas[]' value='"+respuesta[i]["mat_pri"]+" - "+respuesta[i]["descripcion"]+"' readonly></div><div class='col-lg-1 col-md-1 '><label><b>C. usada "+(i+1)+"</b></label><input type='number' min='0' step='any' class='form-control input-sm' name='cantidadMP"+i+"' id='cantidadMP"+i+"' value='"+respuesta[i]["cons_real"]+"'  readonly></div><div class='col-lg-1 col-md-1'><label><b>C. estimad "+(i+1)+"</b></label><input type='hidden'  value='"+respuesta[i]["mat_pri"]+"' name='materia"+i+"' id='materia"+i+"' ><input type='number' class='form-control input-sm' value='"+respuesta[i]["cons_total"]+"' name='resta"+i+"' id='resta"+i+"' readonly></div><div class='col-lg-1'><label><b>Diferencia "+(i+1)+"</b></label><input type='number' class='form-control input-sm' step='any' min='0' name='diferenciaMP"+i+"' id='diferenciaMP"+i+"' value='"+respuesta[i]["diferencia"]+"' readonly></div><div class='col-lg-1 col-md-1'><label><b>C. recibida "+(i+1)+"</b></label><input type='number'step='any' class='form-control input-sm' name='entregaMP"+i+"' min='0' id='entregaMP"+i+"' value='"+respuesta[i]["can_entregada"]+"' readonly></div><div class='col-lg-1 col-md-1'><label><b>Merma "+(i+1)+"</b></label><input type='number' class='form-control input-sm' step='any' min='0' name='mermaMP"+i+"' id='mermaMP"+i+"' value='"+respuesta[i]["merma"]+"' readonly></div><div class='col-lg-1 col-md-1'><label><b>MP sin uso "+(i+1)+"</b></label><input type='number' min ='0' step='any' class='form-control input-sm' name='sinusoMP"+i+"' id='sinusoMP"+i+"' value='"+respuesta[i]["mp_sinuso"]+"' readonly></div></div>");
-                if(respuesta[i]["nota_salida"] != ""){
+                if(respuesta[i]["nota_salida"] ){
                   $("#notaSalidaMP"+i+"").attr("readonly",true);
+
+                  if(respuesta[i]["union_ns"] ){
+                    $("#reiniciarConsumo"+i+"").attr("disabled",true);
+                  }else{
+                    $("#reiniciarConsumo"+i+"").attr("disabled",false);
+                  }
+                  
+                }else{
+                  $("#reiniciarConsumo"+i+"").attr("disabled",true);
                 }
+
+                
+
                 $("#cantidadMP"+i+"").change(function(){
                     if (Number($(this).val()) > Number($("#entregaMP"+i+"").val())) {
                       /*=============================================

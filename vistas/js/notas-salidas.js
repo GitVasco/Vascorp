@@ -227,7 +227,7 @@ $(".tablaMateriaNotaSalida tbody").on("click", "button.agregarMateriaNota", func
   $(this).addClass("btn-default");
 
   var datos = new FormData();
-  datos.append("idMateriaPrima", idMateriaNota);
+  datos.append("idMateriaPrima2", idMateriaNota);
 
   $.ajax({
     url: "ajax/materiaprima.ajax.php",

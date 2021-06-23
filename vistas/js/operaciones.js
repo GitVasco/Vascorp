@@ -302,6 +302,7 @@ $(".tablaArticuloOperaciones").on("draw.dt", function() {
 	if ($(".nuevaOperacion").children().length == 0) {
 		$("#nuevoTotalDocena").val(0);
 		$("#nuevoTotalStandar").val(0);
+		listarOperaciones();
 	}else{
 		sumarTotalPrecios();
 		sumarTotalTiempos();

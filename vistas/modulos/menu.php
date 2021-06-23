@@ -941,7 +941,7 @@
             <?php
             if($_SESSION["materiaprima"] == 1){
             ?>
-            <li class="treeview <?php if($_GET["ruta"] == "materiaprima" || $_GET["ruta"] == "notas-ingresos" || $_GET["ruta"] == "crear-nota-ingreso" || $_GET["ruta"] == "notas-salidas" || $_GET["ruta"] == "crear-nota-salida" || $_GET["ruta"] == "tabla-maestra" || $_GET["ruta"] == "orden-compra" ||  $_GET["ruta"] == "crear-orden-compra" ||  $_GET["ruta"] == "editar-orden-compra" ||  $_GET["ruta"] == "proveedor") echo 'active';?>">
+            <li class="treeview <?php if($_GET["ruta"] == "materiaprima" || $_GET["ruta"] == "notas-ingresos" || $_GET["ruta"] == "crear-nota-ingreso" || $_GET["ruta"] == "notas-salidas" || $_GET["ruta"] == "crear-nota-salida" || $_GET["ruta"] == "tabla-maestra" || $_GET["ruta"] == "orden-compra" ||  $_GET["ruta"] == "crear-orden-compra" ||  $_GET["ruta"] == "editar-orden-compra" ||  $_GET["ruta"] == "proveedor" ||  $_GET["ruta"] == "orden-servicio" ||  $_GET["ruta"] == "crear-orden-servicio" ) echo 'active';?>">
 
             <a href="#">
 
@@ -987,6 +987,17 @@
 
                         <i class="fa fa-shopping-basket text-yellow"></i>
                         <span> Orden Compra</span>
+
+                    </a>
+
+                    </li>
+
+                    <li class="<?php if($_GET["ruta"] == "orden-servicio") echo 'active';?>">
+
+                    <a href="orden-servicio">
+
+                        <i class="fa fa-paint-brush text-red"></i>
+                        <span> Orden Servicio</span>
 
                     </a>
 

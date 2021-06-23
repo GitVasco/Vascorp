@@ -697,7 +697,7 @@ MODAL EDITAR TELA
             
 
             </div>
-
+            <label class="control-label">* No se puede reiniciar un consumo si existe union de nota de salida</label><br>
             <label class="control-label">* Recordar siempre "GUARDAR CAMBIOS"</label>
           </div>
 

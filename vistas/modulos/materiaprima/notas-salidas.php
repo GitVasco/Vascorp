@@ -85,6 +85,7 @@
            <th>Fec. Emisión</th> 
            <th>Razon Social</th>
            <th>Almacen de Salida</th>
+           <th>Responsable</th>
            <th>Estado</th>
            <th style="width:120px">Acciones</th>
 

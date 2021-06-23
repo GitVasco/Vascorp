@@ -2786,3 +2786,20 @@ $(".box").on("click",".btnActualizarFecha",function(){
 	})
 
 });
+
+$("#editarCantidades").keyup(function(){
+	var nuevaCantidad = $(this).val();
+	var cantidad = $("#cantidades").val();
+
+	if (Number(nuevaCantidad) > Number(cantidad)) {
+		/*=============================================
+		SI LA CANTIDAD ES SUPERIOR AL STOCK REGRESAR VALORES INICIALES
+		=============================================*/
+	
+		$(this).val(cantidad);
+	
+		Command: toastr["error"]("La cantidad supera al origen solo hay "+cantidad+" UND!");
+	  }
+	
+	
+})

@@ -271,18 +271,7 @@ class ControladorMateriaPrima{
 
 				echo'<script>
 
-					swal({
-						type: "success",
-						title: "La materia prima ha sido editada correctamente",
-						showConfirmButton: true,
-						confirmButtonText: "Cerrar"
-						}).then(function(result){
-									if (result.value) {
-
-									window.location = "materiaprima";
-
-									}
-								})
+					Command: toastr["success"]("Se edito exitosamente la materia prima!");
 
 					</script>';
 
