@@ -36,6 +36,8 @@ class TablaNotasIngresos{
             "'.$notasIngresos[$i]["nrdcto"].'",
             "'.$notasIngresos[$i]["nroguiaasociada"].'",
             "'.$notasIngresos[$i]["nrooc"].'",
+            "'.$notasIngresos[$i]["usureg"].'",
+
             "'.$botones.'" 
             ],';        
             }

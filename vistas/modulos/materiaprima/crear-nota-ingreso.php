@@ -190,6 +190,15 @@
                                 
                                 <div class="form-group" style="padding-top:25px;padding-bottom:25px">
 
+                                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Cerrar OC</label>
+                                    <div class="col-lg-3">
+                                        <select  class="form-control input-md"  name="nuevoCerrar"  id="nuevoCerrar">
+                                            <option value="">Seleccionar</option>
+                                            <option value="SI">SI</option>
+                                            <option value="NO">NO</option>
+                                        </select>
+                                    </div>
+
                                 <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Moneda</label>
                                     <div class="col-lg-2">
                                         <select  class="form-control input-md selectpicker"  name="nuevaMoneda"  id="nuevaMoneda" data-live-search="true" required>
@@ -205,7 +214,7 @@
                                     </div> 
 
                                     <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Observaciones</label>
-                                    <div class="col-lg-8">
+                                    <div class="col-lg-4">
                                         <input type="text" class="form-control input-sm" id="nuevaObservacion" name="nuevaObservacion">
                                     </div> 
 

@@ -30,13 +30,15 @@ class AjaxTablaMpSal{
 							$total = $movimientos[$i]["codigofabrica"];
 			
 						}
+
+						$descripcion = str_replace('"','',$movimientos[$i]["descripcion"]);
 					
 						$datosJson.='[
 
                                         "'.$movimientos[$i]["codsublinea"].'",
 										"'.$total.'",
 										"'.$movimientos[$i]["codpro"].'",
-										"'.$movimientos[$i]["descripcion"].'",
+										"'.$descripcion.'",
 										"'.$movimientos[$i]["color"].'",
 										"'.$movimientos[$i]["unidad"].'",
 										"'.number_format($movimientos[$i]["1"],2).'",

@@ -79,6 +79,7 @@
                             <th>Nro. Doc</th>
                             <th>Guia Asociada</th>
                             <th>Oc. Asociada</th>
+                            <th>Responsable</th>
                             <th style="width:120px">Acciones</th>
 
                         </tr>
@@ -139,7 +140,7 @@ MODAL VIZUALIZAR NOTA DE INGRESO
                     <input type="text" class="form-control input-sm" id="NotaIngreso" name="NotaIngreso" readonly>
                 </div>
 
-                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Fec. Emision</label>
+                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Fec. Emi.</label>
                 <div class="col-lg-3">
                     <input type="date" class="form-control input-sm" id="fecNi" name="fecNi" readonly>
                 </div>
@@ -150,7 +151,7 @@ MODAL VIZUALIZAR NOTA DE INGRESO
 
             <div class="form-group" style="padding-top:25px">
 
-                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Doc. Principal</label>
+                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Doc. Pri.</label>
                 <div class="col-lg-2">
                     <select  class="form-control input-sm" name="tipDocP" id="tipDocP">
                     <option value="">Doc. Principal</option>
@@ -175,7 +176,7 @@ MODAL VIZUALIZAR NOTA DE INGRESO
                     <input type="text" class="form-control input-sm" id="nuevoNroP" name="nuevoNroP" placeholder="Número">
                 </div>
 
-                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Fec. Emision</label>
+                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Fec. Emi.</label>
                 <div class="col-lg-2">
                     <input type="date" class="form-control input-sm" id="fecP" name="fecP" value="<?php echo $fecha->format("Y-m-d"); ?>">
                 </div>
@@ -189,7 +190,7 @@ MODAL VIZUALIZAR NOTA DE INGRESO
             
             <div class="form-group" style="padding-top:25px;">
 
-                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Doc. Secun.</label>
+                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Doc. Sec.</label>
                 <div class="col-lg-2">
                     <select  class="form-control input-sm" name="tipDocS" id="tipDocS">
                     <option value="">Doc. Secundario</option>
@@ -214,12 +215,12 @@ MODAL VIZUALIZAR NOTA DE INGRESO
                     <input type="text" class="form-control input-sm" id="nuevoNroS" name="nuevoNroS" placeholder="Número">
                 </div>
 
-                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Fec. Emision</label>
+                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Fec. Emi.</label>
                 <div class="col-lg-2">
                     <input type="date" class="form-control input-sm" id="fecS" name="fecS" value="<?php echo $fecha->format("Y-m-d"); ?>">
                 </div>                                    
 
-                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Orden Compra</label>
+                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">O. Compra</label>
                 <div class="col-lg-3">
                     <input type="text" class="form-control input-sm" id="oc" name="oc" readonly>
                 </div>  

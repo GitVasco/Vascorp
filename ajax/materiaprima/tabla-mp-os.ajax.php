@@ -27,7 +27,7 @@ class TablaMPOS{
             TRAEMOS LAS ACCIONES
             =============================================*/         
 
-                $botones = "";
+                $botones = "<div class='btn-group'><button class='btn btn-xs btn-primary agregarMPOS recuperarBoton' ordser='".$enos[$i]["nro"]."' codori='".$enos[$i]["codproorigen"]."' coddes='".$enos[$i]["codprodestino"]."' idBoton='".$enos[$i]["nro"].$enos[$i]["codproorigen"].$enos[$i]["codprodestino"]."'><i class='fa fa-plus'></i></button></div>";
     
                 $datosJson .= '[
                 "'.$enos[$i]["nro"].'",
@@ -37,7 +37,7 @@ class TablaMPOS{
                 "'.$enos[$i]["codprodestino"].'",
                 "'.$enos[$i]["colordes"].'",
                 "'.$enos[$i]["saldo"].'",
-                "'.$enos[$i]["nro"].'"
+                "'.$botones.'"
                 ],';        
                 }
     

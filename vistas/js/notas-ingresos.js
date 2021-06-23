@@ -544,6 +544,24 @@ $(".formularioNotaIngreso").on("click", "button.quitarMPNI", function() {
   $(".recuperarBoton[idBoton='" + idBoton + "']").addClass(
     "btn-primary agregarMPNI"
   );
+
+  if ($(".nuevaMPNI").children().length == 0) {
+    $("#nuevoSubTotalNi").val(0);
+    $("#nuevoImpuestoNi").val(0);
+    $("#nuevoTotalNi").val(0);
+
+    $("#subTotalNi").val(0);
+    $("#impuestoNi").val(0);
+    $("#totalNi").attr("total", 0);
+
+    $("#listaNI").val("");
+
+  } else {
+
+    sumarTotalPreciosNI();
+    agregarImpustoNI();
+    listarMpNi();
+  }  
   
 });
 
@@ -622,7 +640,7 @@ $(".formularioNotaIngreso").on("keyup", "input.nuevaCantidadRecibida", function(
   saldo.val(saldoNI);
 
   sumarTotalPreciosNI();
-  agregarImpustoNI()
+  agregarImpustoNI();
   listarMpNi();
 
 });
@@ -650,7 +668,7 @@ $(".formularioNotaIngreso").on("keyup", "input.nuevoPrecio", function() {
   total.val(precioFinal.toFixed(6));
 
   sumarTotalPreciosNI();
-  agregarImpustoNI()
+  agregarImpustoNI();
   listarMpNi();
 
 });
@@ -658,7 +676,7 @@ $(".formularioNotaIngreso").on("keyup", "input.nuevoPrecio", function() {
 $(".formularioNotaIngreso").on("keyup", "input.nuevoCerrar", function() {
 
   sumarTotalPreciosNI();
-  agregarImpustoNI()
+  agregarImpustoNI();
   listarMpNi();
 
 });

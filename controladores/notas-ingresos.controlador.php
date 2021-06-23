@@ -212,19 +212,33 @@ class ControladorNotasIngresos{
 
 						}
 
+						if($_POST["nuevaOc"] != "" and $_POST["nuevoCerrar"] == "SI"){
+
+							#var_dump("se cumplio", $_POST["nuevaOc"] );
+							$datosOc = array( 	"oc"		=> $_POST["nuevaOc"],
+												"feccer" 	=> $fecha->format("Y-m-d H:i:s"),
+												"usucer" 	=> $_SESSION["nombre"],
+												"pccer"		=> $PcReg	);
+
+							$respuestaOc= ModeloNotasIngresos::mdlCerrarOC($datosOc);
+							#var_dump($respuestaOc);
+
+						}
+
 						# Mostramos una alerta suave
 						echo '<script>
 								swal({
 									type: "success",
 									title: "Felicitaciones",
-									text: "¡La nota de ingreso fue registrada con éxito!",
+									text: "¡La nota de ingreso fue actualizada con éxito!",
 									showConfirmButton: true,
 									confirmButtonText: "Cerrar"
 								}).then((result)=>{
 									if(result.value){
 										window.location="notas-ingresos";}
 								});
-							</script>';
+							</script>';	
+
 
 					}		
 
@@ -360,6 +374,200 @@ class ControladorNotasIngresos{
 
 		return $respuesta;
 		
+	}
+
+	/* 
+	*MOSTRAR MP PARA NOTA DE INGRESO CON O SIN OS
+	*/
+	static public function ctrTraerMPOS($ordser, $codori, $coddes){
+
+		$respuesta = ModeloNotasIngresos::mdlTraerMPOS($ordser, $codori, $coddes);
+
+		return $respuesta;
+		
+	}
+	
+	static public function ctrCrearNotaIngresoServicio(){
+
+		#revisamos q vengan datos
+		if(isset($_POST["listaOS"])){
+
+			if($_POST["listaOS"] == ""){
+
+				echo '<script>
+						swal({
+							type: "error",
+							title: "Error",
+							text: "¡No se seleccionó ninguna materia prima. Por favor, intenteló de nuevo!",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar"
+						}).then((result)=>{
+							if(result.value){
+								window.location="crear-nota-ingreso-os";}
+						});
+					</script>';					
+
+			}else{
+
+				# Modificamos la lista en un array
+				$listaNotaIngreso = json_decode($_POST["listaOS"],true);
+				#var_dump($listaNotaIngreso);
+				# traemos la fecha y la pc
+				date_default_timezone_set('America/Lima');
+				$fecha = new DateTime();
+				$PcReg= gethostbyaddr($_SERVER['REMOTE_ADDR']);
+				
+				$ultimoNro = ModeloNotasIngresos::mdlMostrarCorrelativoNotaIngresoServicio();
+				//var_dump($ultimoNro);
+
+				$datosCab = array(	"cod_local" 	=> '01',
+									"cod_entidad" 	=> '01',
+									"codruc" 		=> '000097',
+									"tneaos"		=> 'NE',
+									"sneaos"		=> '001',
+									"nneaos"		=> $ultimoNro["correlativo"],
+									"fecemi"		=> $_POST["fecP"],
+									"serdcto"		=> $_POST["nuevaSerieP"],
+									"nrodcto"		=> $_POST["nuevoNroP"],
+									"estreg"		=> 'P',
+									"fecreg"		=> $fecha->format("Y-m-d H:i:s"),
+									"usureg"		=> $_SESSION["nombre"],
+									"pcreg" 		=> $PcReg);
+			
+				#var_dump($datosCab);
+				$respuestaCab = ModeloNotasIngresos::mdlGuardarNotaIngresoCabServicio($datosCab);
+				#var_dump("guardocabecera: ", $respuestaCab);
+				#$respuestaCab = "ok";
+
+				#2. Creamos el detalle
+				if($respuestaCab == "ok"){
+
+					foreach($listaNotaIngreso as $key=>$value){
+
+						$datosDet = array(	"cod_local" 	=> '01',
+											"cod_entidad" 	=> '01',
+											"tneaos"		=> 'NE',
+											"sneaos" 		=> '001',
+											"nneaos"		=> $ultimoNro["correlativo"],
+											"nroos"			=> $value["ordser"],
+											"fecemi"		=> $_POST["fecP"],
+											"item"			=> $key+1,
+											"codruc" 		=> '000097',
+											"codproorigen"	=> $value["codori"],
+											"codprodestino"	=> $value["coddes"],
+											"cansol" 		=> $value["cantidadRe"],
+											"estreg"		=> 'P',
+											"fecreg"		=> $fecha->format("Y-m-d H:i:s"),
+											"usureg"		=> $_SESSION["nombre"],
+											"pcreg" 		=> $PcReg);
+
+						#var_dump($datosDet);
+						$respuestaDet = ModeloNotasIngresos::mdlGuardarNotaIngresoDetServicio($datosDet);
+						#var_dump("guardo detalle: ",$respuestaDet);
+						#$respuestaDet = "ok";
+
+					}
+
+				}
+
+				#3. Bajamos el stock de ORIGEN y subimos el stock de DESTINO
+				if($respuestaDet == "ok"){
+
+					foreach($listaNotaIngreso as $key=>$value){
+
+						$nro = $value["ordser"];
+						$codori = $value["codori"];
+						$coddes = $value["coddes"];
+
+						$mpos = ModeloNotasIngresos::mdlMpServicio($nro, $codori, $coddes);
+						#var_dump($mpos);
+
+						if($mpos["desstk"] == "NO"){
+
+							#bajar stock origen 
+							$codpro = $value["codori"];
+							$infoMp = ModeloMateriaPrima::mdlMostrarMateriaPrima($codpro);
+							#var_dump("subir ",$infoMp);
+							$stock = $infoMp["stock"] - $value["cantidadRe"];
+							#var_dump($value["codori"],$infoMp["stock"],$stock);
+							$respuestaStockO = ModeloNotasIngresos::mdlActualizarStock($codpro,$stock);
+							#var_dump("sumo stock: ",$respuestaStock);
+							#$respuestaStockO = "ok";	
+
+							#subimos el stock al coddestino
+							$codpro = $value["coddes"];
+							$infoMp = ModeloMateriaPrima::mdlMostrarMateriaPrima($codpro);
+							#var_dump("subir ",$infoMp);
+							$stock = $infoMp["stock"] + $value["cantidadRe"];
+							#var_dump($value["codori"],$infoMp["stock"],$stock);
+							$respuestaStockD = ModeloNotasIngresos::mdlActualizarStock($codpro,$stock);
+							#var_dump("sumo stock: ",$respuestaStock);
+							#$respuestaStockD = "ok";							
+
+						}else{
+
+							#subimos el stock al coddestino
+							$codpro = $value["coddes"];
+							$infoMp = ModeloMateriaPrima::mdlMostrarMateriaPrima($codpro);
+							#var_dump("subir ",$infoMp);
+							$stock = $infoMp["stock"] + $value["cantidadRe"];
+							#var_dump($value["codori"],$infoMp["stock"],$stock);
+							$respuestaStockD = ModeloNotasIngresos::mdlActualizarStock($codpro,$stock);
+							#var_dump("sumo stock: ",$respuestaStock);
+							#$respuestaStockD = "ok";
+
+						}
+
+					}
+
+				}
+
+				#bajamos el saldo a la orden de servicio
+				if($respuestaStockD == "ok"){
+
+					foreach($listaNotaIngreso as $key=>$value){
+
+						$nro = $value["ordser"];
+						$codori = $value["codori"];
+						$coddes = $value["coddes"];
+						$cantidad = $value["cantidadRe"];
+						$cerrar = $value["cerrar"];
+
+						$mpos = ModeloNotasIngresos::mdlMpServicio($nro, $codori, $coddes);
+						#var_dump($mpos);
+
+						$saldo = $mpos["saldo"] - $cantidad;
+						#var_dump($saldo);
+						$despacho = $mpos["despacho"] + $cantidad;
+						#var_dump($despacho);
+
+						$respuestaOS = ModeloNotasIngresos::mdlActualizarServicio($nro, $codori, $coddes, $saldo, $despacho, $cerrar);
+						#var_dump($respuestaOS);
+
+						ModeloNotasIngresos::mdlActualizarCabOrdServicio($nro);
+
+					}
+
+						# Mostramos una alerta suave
+						echo '<script>
+								swal({
+									type: "success",
+									title: "Felicitaciones",
+									text: "¡La nota de ingreso fue actualizada con éxito!",
+									showConfirmButton: true,
+									confirmButtonText: "Cerrar"
+								}).then((result)=>{
+									if(result.value){
+										window.location="notas-ingresos-os";}
+								});
+							</script>';						
+
+				}				
+
+			}
+
+
+		}
 	}	
 
 }

@@ -392,18 +392,25 @@ $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", $resTot["Total"]);
   $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(15);
 
 
-
+  $sqlRes=mysql_query("SELECT 
+                    nnea,
+                    usureg 
+                  FROM
+                    nea 
+                  WHERE nnea = $id" );
+                  
+  $resres=mysql_fetch_array($sqlRes);
 
 
 $fila+=1;
 $fila+=1;
 $fila+=1;
-$objPHPExcel->getActiveSheet()->SetCellValue("C$fila", "Logistica");    
+$objPHPExcel->getActiveSheet()->SetCellValue("C$fila", "Responsable");    
 $objPHPExcel->getActiveSheet()->SetCellValue("E$fila", " V°B° Gerencia");
 $objPHPExcel->getActiveSheet() ->getStyle("C$fila")  ->getAlignment()  ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); 
 $objPHPExcel->getActiveSheet() ->getStyle("E$fila")  ->getAlignment()  ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); 
 $fila+=1;
-$objPHPExcel->getActiveSheet()->SetCellValue("C$fila", "Elvis Huaman S.");
+$objPHPExcel->getActiveSheet()->SetCellValue("C$fila", $resres["usureg"]);
 $objPHPExcel->getActiveSheet() ->getStyle("C$fila")  ->getAlignment()  ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 $objPHPExcel->getActiveSheet() ->getStyle("E$fila")  ->getAlignment()  ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);    
 
