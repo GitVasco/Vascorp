@@ -249,7 +249,8 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "crear-orden-servicio" ||
                   $_GET["ruta"] == "proveedor" ||
                   $_GET["ruta"] == "notas-ingresos-os" ||
-                  $_GET["ruta"] == "crear-nota-ingreso-os" ){
+                  $_GET["ruta"] == "crear-nota-ingreso-os" ||
+                  $_GET["ruta"] == "kardex" ){
         
               include "modulos/materiaprima/".$_GET["ruta"].".php";
 
@@ -449,6 +450,7 @@ CUERPO DOCUMENTO
   <script src="vistas/js/orden-compra.js"></script>
   <script src="vistas/js/notas-ingresos-os.js"></script>
   <script src="vistas/js/orden-servicio.js"></script>
+  <script src="vistas/js/kardex.js"></script>
 
 </body>
 

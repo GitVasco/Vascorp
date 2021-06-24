@@ -457,3 +457,15 @@ function listarMpNiS(){
     $("#listaOS").val(JSON.stringify(listaMpNiS));
 
 }
+
+/* 
+* BOTON REPORTE DE ORDEN DE CORTE
+*/
+$(".tablaNotasIngresosOS").on("click", ".btnDetalleReporteNotaIngresoServicio", function () {
+
+  var idNotaIngresoServicio = $(this).attr("idNotaIngresoServicio");
+  console.log("idNotaIngresoServicio", idNotaIngresoServicio);
+
+  window.location = "vistas/reportes_excel/rpt_notaingresoservicio.php?idNotaIngresoServicio=" + idNotaIngresoServicio;
+
+})

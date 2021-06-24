@@ -1014,7 +1014,7 @@
 
                     </li>
 
-                    <li class="<?php if($_GET["ruta"] == "notas-ingresos") echo 'active';?>">
+                    <li class="<?php if($_GET["ruta"] == "notas-ingresos-os") echo 'active';?>">
 
                     <a href="notas-ingresos-os">
 
@@ -1035,6 +1035,17 @@
                     </a>
 
                     </li>
+
+                    <li class="<?php if($_GET["ruta"] == "kardex") echo 'active';?>">
+
+                    <a href="kardex">
+
+                        <i class="fa fa-random text-purple"></i>
+                        <span> Kardex</span>
+
+                    </a>
+
+                    </li>                    
 
                     <li class="<?php if($_GET["ruta"] == "proveedor") echo 'active';?>">
                         <a href="proveedor">
