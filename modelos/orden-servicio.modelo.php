@@ -254,20 +254,21 @@ class ModeloOrdenServicio{
     // Método para guardar las ordenes de servicios
 	static public function mdlGuardarOrdenServicio($datos){
 
-		$sql="INSERT INTO ocompra(Tip,Ser,Nro,Cod_Local,Cod_Entidad,CodRuc,FecEmi,Obser,FecLlegada,EstOS,EstReg,FecReg,UsuReg,PcReg) VALUES (:Tip,:Ser,:Nro,:Cod_Local,:Cod_Entidad,:CodRuc,:FecEmi,:Obser,:FecLlegada,:EstOS,:EstReg,:FecReg,:UsuReg,:PcReg)";
+		$sql="INSERT INTO oservicio(Cod_Local,Cod_Entidad,Tip,Ser,Nro,FecEmi,CodRuc,FecEnt,EstOS,DesStk,ObsOs,EstReg,FecReg,UsuReg,PcReg) VALUES (:Cod_Local,:Cod_Entidad,:Tip,:Ser,:Nro,:FecEmi,:CodRuc,:FecEnt,:EstOS,:DesStk,:ObsOs,:EstReg,:FecReg,:UsuReg,:PcReg)";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 
+		$stmt->bindParam(":Cod_Local",$datos["Cod_Local"],PDO::PARAM_STR);
+		$stmt->bindParam(":Cod_Entidad",$datos["Cod_Entidad"],PDO::PARAM_STR);
 		$stmt->bindParam(":Tip",$datos["Tip"],PDO::PARAM_STR);
 		$stmt->bindParam(":Ser",$datos["Ser"],PDO::PARAM_STR);
 		$stmt->bindParam(":Nro",$datos["Nro"],PDO::PARAM_STR);
-		$stmt->bindParam(":Cod_Local",$datos["Cod_Local"],PDO::PARAM_STR);
-		$stmt->bindParam(":Cod_Entidad",$datos["Cod_Entidad"],PDO::PARAM_STR);
-		$stmt->bindParam(":CodRuc",$datos["CodRuc"],PDO::PARAM_STR);
 		$stmt->bindParam(":FecEmi",$datos["FecEmi"],PDO::PARAM_STR);
-		$stmt->bindParam(":Obser",$datos["Obser"],PDO::PARAM_STR);
-		$stmt->bindParam(":FecLlegada",$datos["FecLlegada"],PDO::PARAM_STR);
+		$stmt->bindParam(":CodRuc",$datos["CodRuc"],PDO::PARAM_STR);
+		$stmt->bindParam(":FecEnt",$datos["FecEnt"],PDO::PARAM_STR);
 		$stmt->bindParam(":EstOS",$datos["EstOS"],PDO::PARAM_STR);
+		$stmt->bindParam(":DesStk",$datos["DesStk"],PDO::PARAM_STR);
+		$stmt->bindParam(":ObsOs",$datos["ObsOs"],PDO::PARAM_STR);
 		$stmt->bindParam(":EstReg",$datos["EstReg"],PDO::PARAM_STR);
 		$stmt->bindParam(":FecReg",$datos["FecReg"],PDO::PARAM_STR);
 		$stmt->bindParam(":UsuReg",$datos["UsuReg"],PDO::PARAM_STR);
@@ -289,32 +290,26 @@ class ModeloOrdenServicio{
 	// Método para guardar el detalle de orden de servicio
 	static public function mdlGuardarDetalleOrdenServicio($datos){
 
-		$sql="INSERT INTO ocomdet(Item,Tip,Ser,Nro,ColProv,Cod_Local,Cod_Entidad,CodRuc,CodPro,CodFab,UndPro,CanPro,CanPro_Ant,PrePro,PrePro_Ant,DscPro,ImpPro,EstOco,CantNI,SalCan,FecEmi,estac,FecReg,UsuReg,PcReg) VALUES (:Item,:Tip,:Ser,:Nro,:ColProv,:Cod_Local,:Cod_Entidad,:CodRuc,:CodPro,:CodFab,:UndPro,:CanPro,:CanPro_Ant,:PrePro,:PrePro_Ant,:DscPro,:ImpPro,:EstOco,:CantNI,:SalCan,:FecEmi,:estac,:FecReg,:UsuReg,:PcReg)";
+		$sql="INSERT INTO oserviciodet(Cod_Local,Cod_Entidad,Item,Tip,Ser,Nro,FecEmi,CodRuc,CodProOrigen,CantidadIni,CodProDestino,Saldo,Despacho,EstOS,DesStk,EstReg,FecReg,UsuReg,PcReg) VALUES (:Cod_Local,:Cod_Entidad,:Item,:Tip,:Ser,:Nro,:FecEmi,:CodRuc,:CodProOrigen,:CantidadIni,:CodProDestino,:Saldo,:Despacho,:EstOS,:DesStk,:EstReg,:FecReg,:UsuReg,:PcReg)";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 
+		$stmt->bindParam(":Cod_Local",$datos["Cod_Local"],PDO::PARAM_STR);
+		$stmt->bindParam(":Cod_Entidad",$datos["Cod_Entidad"],PDO::PARAM_STR);
 		$stmt->bindParam(":Item",$datos["Item"],PDO::PARAM_STR);
 		$stmt->bindParam(":Tip",$datos["Tip"],PDO::PARAM_STR);
 		$stmt->bindParam(":Ser",$datos["Ser"],PDO::PARAM_STR);
 		$stmt->bindParam(":Nro",$datos["Nro"],PDO::PARAM_STR);
-		$stmt->bindParam(":ColProv",$datos["ColProv"],PDO::PARAM_STR);
-		$stmt->bindParam(":Cod_Local",$datos["Cod_Local"],PDO::PARAM_STR);
-		$stmt->bindParam(":Cod_Entidad",$datos["Cod_Entidad"],PDO::PARAM_STR);
-		$stmt->bindParam(":CodRuc",$datos["CodRuc"],PDO::PARAM_STR);
-		$stmt->bindParam(":CodPro",$datos["CodPro"],PDO::PARAM_STR);
-		$stmt->bindParam(":CodFab",$datos["CodFab"],PDO::PARAM_STR);
-		$stmt->bindParam(":UndPro",$datos["UndPro"],PDO::PARAM_STR);
-		$stmt->bindParam(":CanPro",$datos["CanPro"],PDO::PARAM_STR);
-		$stmt->bindParam(":CanPro_Ant",$datos["CanPro_Ant"],PDO::PARAM_STR);
-		$stmt->bindParam(":PrePro",$datos["PrePro"],PDO::PARAM_STR);
-		$stmt->bindParam(":PrePro_Ant",$datos["PrePro_Ant"],PDO::PARAM_STR);
-		$stmt->bindParam(":DscPro",$datos["DscPro"],PDO::PARAM_STR);
-		$stmt->bindParam(":ImpPro",$datos["ImpPro"],PDO::PARAM_STR);
-		$stmt->bindParam(":EstOco",$datos["EstOco"],PDO::PARAM_STR);
-		$stmt->bindParam(":CantNI",$datos["CantNI"],PDO::PARAM_STR);
-		$stmt->bindParam(":SalCan",$datos["SalCan"],PDO::PARAM_STR);
 		$stmt->bindParam(":FecEmi",$datos["FecEmi"],PDO::PARAM_STR);
-		$stmt->bindParam(":estac",$datos["estac"],PDO::PARAM_STR);
+		$stmt->bindParam(":CodRuc",$datos["CodRuc"],PDO::PARAM_STR);
+		$stmt->bindParam(":CodProOrigen",$datos["CodProOrigen"],PDO::PARAM_STR);
+		$stmt->bindParam(":CantidadIni",$datos["CantidadIni"],PDO::PARAM_STR);
+		$stmt->bindParam(":CodProDestino",$datos["CodProDestino"],PDO::PARAM_STR);
+		$stmt->bindParam(":Saldo",$datos["Saldo"],PDO::PARAM_STR);
+		$stmt->bindParam(":Despacho",$datos["Despacho"],PDO::PARAM_STR);
+		$stmt->bindParam(":EstOS",$datos["EstOS"],PDO::PARAM_STR);
+		$stmt->bindParam(":DesStk",$datos["DesStk"],PDO::PARAM_STR);
+		$stmt->bindParam(":EstReg",$datos["EstReg"],PDO::PARAM_STR);
 		$stmt->bindParam(":FecReg",$datos["FecReg"],PDO::PARAM_STR);
 		$stmt->bindParam(":UsuReg",$datos["UsuReg"],PDO::PARAM_STR);
 		$stmt->bindParam(":PcReg",$datos["PcReg"],PDO::PARAM_STR);
@@ -332,4 +327,114 @@ class ModeloOrdenServicio{
 
 		$stmt=null;
 	}
+
+	/*=============================================
+	MOSTRAR ULTIMO NRO DE ORDEN DE COMPRA
+	=============================================*/
+
+	static public function mdlMostrarUltimoNro(){
+
+
+		$stmt = Conexion::conectar()->prepare("SELECT IFNULL(MAX(Nro),'000001') AS Nro FROM oservicio");
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }
+
+	/*=============================================
+	CERRAR ORDEN DE COMPRA
+	=============================================*/
+
+	static public function mdlCerrarOrdenServicio($datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE oservicio SET EstReg = :EstReg , UsuCer = :UsuCer, FecCer = :FecCer , PcCer = :PcCer WHERE Nro = :Nro");
+
+		$stmt -> bindParam(":EstReg", $datos["EstReg"], PDO::PARAM_STR);
+		$stmt -> bindParam(":Nro", $datos["Nro"], PDO::PARAM_STR);
+		$stmt -> bindParam(":UsuCer", $datos["UsuCer"], PDO::PARAM_STR);
+		$stmt -> bindParam(":FecCer", $datos["FecCer"], PDO::PARAM_STR);
+		$stmt -> bindParam(":PcCer", $datos["PcCer"], PDO::PARAM_STR);
+		
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
+
+	/*=============================================
+	CERRAR DETALLE ORDEN DE COMPRA
+	=============================================*/
+
+	static public function mdlCerrarDetalleOrdenServicio($datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE oserviciodet SET EstReg = :EstReg WHERE Nro = :Nro");
+
+		$stmt -> bindParam(":EstReg", $datos["EstReg"], PDO::PARAM_STR);
+		$stmt -> bindParam(":Nro", $datos["Nro"], PDO::PARAM_STR);
+		
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
+
+	/*=============================================
+	ANULAR ORDEN DE SERVICIO
+	=============================================*/
+
+	static public function mdlAnularOrdenServicio($tabla,$datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET EstOco = :EstOco , FecAnulacion = :FecAnulacion,FecAnu = :FecAnu, UsuAnu = :UsuAnu, PcAnu = :PcAnu WHERE Nro = :Nro");
+
+		$stmt -> bindParam(":EstOco", $datos["EstOco"], PDO::PARAM_STR);
+		$stmt -> bindParam(":FecAnulacion", $datos["FecAnulacion"], PDO::PARAM_STR);
+		$stmt -> bindParam(":Nro", $datos["Nro"], PDO::PARAM_STR);
+		$stmt -> bindParam(":FecAnu", $datos["FecAnu"], PDO::PARAM_STR);
+		$stmt -> bindParam(":UsuAnu", $datos["UsuAnu"], PDO::PARAM_STR);
+		$stmt -> bindParam(":PcAnu", $datos["PcAnu"], PDO::PARAM_STR);
+		
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
 }

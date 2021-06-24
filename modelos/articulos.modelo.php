@@ -1302,7 +1302,8 @@ class ModeloArticulos
 												entallerjf et 
 												LEFT JOIN articulojf a 
 												ON et.articulo = a.articulo 
-											WHERE et.estado = 1 
+											WHERE et.estado = 1
+											AND et.total_precio > 0 
 											GROUP BY et.articulo");
 
 		$stmt->execute();

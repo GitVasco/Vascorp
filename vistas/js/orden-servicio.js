@@ -170,7 +170,7 @@ $(".daterangepicker.opensleft .ranges li").on("click", function() {
 
 });
 
-  // TABLA MATERIA NOTAS SALIDAS
+  // TABLA MATERIA ORDENES SERVICIOS
 
   $(".tablaMateriaOrdenesServicios").DataTable({
     ajax: "ajax/materiaprima/tabla-materia-orden-servicio.ajax.php?perfil="+$("#perfilOculto").val(),
@@ -204,6 +204,43 @@ $(".daterangepicker.opensleft .ranges li").on("click", function() {
     }
   });
 
+
+    // TABLA MATERIA ORDENES SERVICIOS DESTINO
+
+    $(".tablaMateriaServicioDestino").DataTable({
+      ajax: "ajax/materiaprima/tabla-materiadestino-orden-servicio.ajax.php?perfil="+$("#perfilOculto").val(),
+      deferRender: true,
+      retrieve: true,
+      processing: true,
+      order: [[0, "asc"]],
+      "pageLength": 20,
+	    "lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+      language: {
+        sProcessing: "Procesando...",
+        sLengthMenu: "Mostrar _MENU_ registros",
+        sZeroRecords: "No se encontraron resultados",
+        sEmptyTable: "Ningún dato disponible en esta tabla",
+        sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+        sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
+        sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+        sInfoPostFix: "",
+        sSearch: "Buscar:",
+        sUrl: "",
+        sInfoThousands: ",",
+        sLoadingRecords: "Cargando...",
+        oPaginate: {
+          sFirst: "Primero",
+          sLast: "Último",
+          sNext: "Siguiente",
+          sPrevious: "Anterior"
+        },
+        oAria: {
+          sSortAscending: ": Activar para ordenar la columna de manera ascendente",
+          sSortDescending: ": Activar para ordenar la columna de manera descendente"
+        }
+      }
+    });
+  
    
 /*=============================================
 AGREGANDO PRODUCTOS A LA VENTA DESDE LA TABLA
@@ -280,27 +317,27 @@ $(".tablaMateriaOrdenesServicios tbody").on("click", "button.agregarMateriaServi
 
           "</div>" +
 
-          '<div class="col-xs-1">' +
+          '<div class="col-xs-1 destinoCodigo">' +
 
-              '<input type="text" class="form-control input-sm nuevoCodigoPro2 modmpOSDestino"  name="nuevoCodigoPro2"  >' +
+              '<input type="text" class="form-control input-sm nuevoCodigoPro2 modmpOSDestino"  name="nuevoCodigoPro2"  id="codigo'+codpro+'" origen = "'+codpro+'">' +
 
           "</div>" +
 
-          '<div class="col-xs-3" >' +
+          '<div class="col-xs-3 destinoDescripcion" >' +
 
-              '<input type="text" class="form-control input-sm nuevaDescripcionMateria2"  name="nuevaDescripcionMateria2"  readonly>' +
+              '<input type="text" class="form-control input-sm nuevaDescripcionMateria2"  name="nuevaDescripcionMateria2"  id="descripcion'+codpro+'" readonly>' +
+
+          "</div>" +
+
+          '<div class="col-xs-1 destinoColor" >' +
+
+              '<input type="text" class="form-control input-sm nuevoColor2"  name="nuevoColor2"  id="color'+codpro+'"readonly>' +
 
           "</div>" +
 
           '<div class="col-xs-1" >' +
 
-              '<input type="text" class="form-control input-sm nuevoColor2"  name="nuevoColor2"  readonly>' +
-
-          "</div>" +
-
-          '<div class="col-xs-1" >' +
-
-              '<input type="text" class="form-control input-sm nuevaUnidad"  name="nuevaUnidad" value="' + unidad + '"  readonly>' +
+              '<input type="text" class="form-control input-sm nuevaUnidad"  name="nuevaUnidad" value="' + unidad + '" readonly>' +
 
           "</div>" +
 
@@ -454,43 +491,34 @@ $(".formularioOrdenServicio").on("keyup", "input.nuevaCantidadMateria", function
 MODIFICAR MATERIA DESTINO
 =============================================*/
 $(".formularioOrdenServicio").on("click", "input.nuevoCodigoPro2", function() {
-  var $element;
-  var encontrado=0;
+  var origen = $(this).attr("origen");
+  $("#codigoOrigen").val(origen);
   $("#ModalMPOrdenServicioDestino").modal('show');
-  $element=$(this);
-
-  $("#ModalMPOrdenServicioDestino").on('click','tr .boton',function(){
-    var data = [];
-    var i=0;
-    //Recorrido de.boton'l array
-    $(this).parents("tr").find("td").each(function(){
-      data.push($(this).html());
-    });
-
-    
-
-
-
-    if(encontrado!=-1){
-    $element.parents("tr").find("input").each(function(){
-      if(i==4){
-        $(this).val(data[1]);
-      }else if(i==5){
-        $(this).val(data[2]);
-      }else if(i==6){
-        $(this).val(data[3]);
-      }else if(i==7){
-        $(this).val(data[4]);
-      }
-        i++;
-      });
-      i=0;
-    }
-    encontrado=0;
-    $("#ModalMPOrdenServicioDestino").modal('hide');
-  });
+  // $("#ModalMPOrdenServicioDestino").modal('hide');
+ 
 });
 
+/*=============================================
+MODIFICAR MATERIA DESTINO
+=============================================*/
+$(".tablaMateriaServicioDestino").on("click", "button.agregarMateriaDestinoServicio", function() {
+  
+
+  var origen = $("#codigoOrigen").val();
+
+  
+  var codigo = $(this).attr("codigo");
+  var descripcion = $(this).attr("descripcion");
+  var color = $(this).attr("color");
+
+  $("#codigo"+origen).val(codigo);
+  $("#descripcion"+origen).val(descripcion);
+  $("#color"+origen).val(color);
+  $("#ModalMPOrdenServicioDestino").modal('hide');
+
+  listarMateriaServicios();
+ 
+});
 
 
 /*=============================================
@@ -528,7 +556,7 @@ function listarMateriaServicios() {
     });
   }
 
-  console.log("listarMateriaServicios", JSON.stringify(listarMateriaServicios)); 
+  // console.log("listarMateriaServicios", JSON.stringify(listarMateriaServicios)); 
 
   $("#listarMateriaServicios").val(JSON.stringify(listarMateriaServicios));
 }
@@ -571,43 +599,3 @@ $(".tablaMateriaOrdenesServicios").on("draw.dt", function() {
 });
 
 
-//  // Modal para entrar ingresar la data de materia prima destino
-//  function dataMateriaPrimaOrdenServicioDestino(input,modal){
-//   var $element;
-//   var encontrado=0;
-//   $('.add-table').on('click',input,function(){
-//     $(modal).modal('show');
-//     $element=$(this);
-//   });
-
-//   $(modal).on('click','tr .boton',function(){
-//     var data = [];
-//     var i=0;
-//     //Recorrido de.boton'l array
-//     $(this).parents("tr").find("td").each(function(){
-//       data.push($(this).html());
-//     });
-
-    
-
-
-
-//     if(encontrado!=-1){
-//     $element.parents("tr").find("input").each(function(){
-//       if(i==4){
-//         $(this).val(data[1]);
-//       }else if(i==5){
-//         $(this).val(data[2]);
-//       }else if(i==6){
-//         $(this).val(data[3]);
-//       }else if(i==7){
-//         $(this).val(data[4]);
-//       }
-//         i++;
-//       });
-//       i=0;
-//     }
-//     encontrado=0;
-//     $(modal).modal('hide');
-//   });
-//  }
