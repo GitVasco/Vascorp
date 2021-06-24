@@ -26,7 +26,7 @@ class TablaTalleresG{
             if($talleres[$i]["estado"] == "1"){
 
 
-                $estado = "<span style='font-size:85%' class='label label-info'>Generado</span>";
+                $estado = "<button class='btn btn-info btn-xs btnCerrarTaller' codigoTallerG='".$talleres[$i]["codigo"]."' estadoTaller='4'>Generado</button>";
     
             }elseif($talleres[$i]["estado"] == "2"){
     
@@ -38,7 +38,7 @@ class TablaTalleresG{
     
             }else{
 
-                $estado = "<span style='font-size:85%' class='label label-danger'>Cerrado</span>";
+                $estado = "<button class='btn btn-danger btn-xs btnCerrarTaller' codigoTallerG='".$talleres[$i]["codigo"]."' estadoTaller='1'>Cerrado</button>";
 
             }
             $dividir=substr($talleres[$i]["codigo"],-1);

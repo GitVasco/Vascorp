@@ -135,37 +135,63 @@ class AjaxMateriaPrima{
           $codpro = $value->{"codpro"};
           $codalt = $value->{"codalt"};
           $despro = $value->{"despro"};
-          $undpro = $value->{"vendedor"};
-          $padval = $value->{"neto"};
-          $pseg = $value->{"igv"};
-          $pespro = $value->{"monto"};
-          $stkmin = $value->{"fecha"};
-          $stkmax = $value->{"origen_venta"};
-          $codprov1 = $value->{"tip_nota"};
-          $preprov1 = $value->{"motivo"};
-          $monprov1 = $value->{"tip_cont"};
-          $obsprov1 = $value->{"fecha_origen"};
-          $codprov2 = $value->{"observacion"};
-          $preprov2 = $value->{"usuario"};
-		  $monprov2 = $value->{"tip_cont"};
-          $obsprov2 = $value->{"fecha_origen"};
-		  $codprov3 = $value->{"observacion"};
-          $preprov3 = $value->{"usuario"};
-		  $monprov3 = $value->{"tip_cont"};
-          $obsprov3 = $value->{"fecha_origen"};
+          $undpro = $value->{"undpro"};
+          $padval = $value->{"padval"};
+          $pseg = $value->{"pseg"};
+          $pespro = $value->{"pespro"};
+          $stkmin = $value->{"stkmin"};
+          $stkmax = $value->{"stkmax"};
+          $codprov1 = $value->{"codprov1"};
+          $preprov1 = $value->{"preprov1"};
+          $monprov1 = $value->{"monprov1"};
+          $obsprov1 = $value->{"obsprov1"};
+          $codprov2 = $value->{"codprov2"};
+          $preprov2 = $value->{"preprov2"};
+		  $monprov2 = $value->{"monprov2"};
+          $obsprov2 = $value->{"obsprov2"};
+		  $codprov3 = $value->{"codprov3"};
+          $preprov3 = $value->{"preprov3"};
+		  $monprov3 = $value->{"monprov3"};
+          $obsprov3 = $value->{"obsprov3"};
+		  date_default_timezone_set('America/Lima');
+		  $fecha = new DateTime();
+		  $PcMod= gethostbyaddr($_SERVER['REMOTE_ADDR']);
 
-        //   $arregloVenta = array("tipo"=>$doc,
-        //                         "documento"=>$cta,
-        //                         "neto"=>$neto2,
-        //                         "igv"=>$igv2,
-        //                         "total"=>$total,
-        //                         "cliente"=>$cli,
-        //                         "vendedor"=>$vend,
-        //                         "fecha"=>$fecha,
-        //                         "doc_origen"=>$origen_venta,
-        //                         "usuario"=>$user);
-          
-        // $respuesta = ModeloMateriaPrima::mdlEditarMateriaPrima($arregloVenta);
+		  $datos1 = array("CodPro"=>$codpro,
+						  "CodProv1"=>$codprov1,
+						  "PreProv1"=>$preprov1,
+						  "MonProv1"=>$monprov1,
+						  "ObsProv1"=>$obsprov1,
+						  "CodProv2"=>$codprov2,
+						  "PreProv2"=>$preprov2,
+						  "MonProv2"=>$monprov2,
+						  "ObsProv2"=>$obsprov2,
+						  "CodProv3"=>$codprov3,
+						  "PreProv3"=>$preprov3,
+						  "MonProv3"=>$monprov3,
+						  "ObsProv3"=>$obsprov3,
+						  "FecMod"=>$fecha->format("Y-m-d H:i:s"),
+						  "PcMod"=>$PcMod,
+						  "UsuMod"=>$_SESSION["nombre"]);
+
+		  $respuesta = ModeloMateriaPrima::mdlEditarPrecioMP("preciomp",$datos1);
+
+
+		  $datos2 = array("CodAlt"=>$codalt,
+						  "CodPro"=>$codpro,
+						  "DesPro"=>$despro,
+						  "UndPro"=>$undpro,
+						  "Por_AdVal"=>$padval,
+						  "Por_Seg"=>$pseg,
+						  "PesPro"=>$pespro,
+						  "Stk_Min"=>$stkmin,
+						  "Stk_Max"=>$stkmax,
+						  "FecMod"=>$fecha->format("Y-m-d H:i:s"),
+						  "PcMod"=>$PcMod,
+						  "UsuMod"=>$_SESSION["nombre"]);
+
+
+		  $respuesta2 = ModeloMateriaPrima::mdlEditarMateriaPrima($datos2);
 
         }
         

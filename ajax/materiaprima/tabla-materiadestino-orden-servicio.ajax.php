@@ -28,7 +28,7 @@ class TablaMateriaPrima{
             =============================================*/         
 
                 
-        $botones =  "<div class='btn-group'><button class='btn btn-primary btn-xs agregarMateriaServicio recuperarBoton' idMateriaServicio='".$materiaprima[$i]["CodPro"]."'><i class='fa fa-plus-square'></i> Agregar</button></div>"; 
+        $botones =  "<div class='btn-group'><button class='btn btn-primary btn-xs agregarMateriaDestinoServicio ' codigo='".$materiaprima[$i]["CodPro"]."' descripcion = '".$descripcion."' color='".$materiaprima[$i]["Color"]."'><i class='fa fa-plus-square'></i> Agregar</button></div>"; 
     
                 $datosJson .= '[
                 "'.$materiaprima[$i]["CodPro"].'",

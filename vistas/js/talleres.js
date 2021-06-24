@@ -2701,7 +2701,7 @@ $(".tablaIngresoM").on("click", ".btnVisualizarIngreso", function () {
 });
 
 
-$(".tablaTalleresGenerado").on("click",".btnCerrarTaller",function(){
+$(".tablaTalleresGenerado , .tablaTalleresG").on("click",".btnCerrarTaller",function(){
 	var codigo = $(this).attr("codigoTallerG");
 	var estadoTaller=$(this).attr("estadoTaller");
 	//Realizamos la activación-desactivación por una petición AJAX

@@ -47,11 +47,9 @@
                   <th>Codigo</th>
                   <th>Cod. Fabrica</th>
                   <th>Descripcion</th>
-                  <th>Unidad</th>
-                  <th>Cod Color</th>
                   <th>Color</th>
+                  <th>Unidad</th>
                   <th>Costo</th>
-                  <th>Stock Minimo</th>
                   <th>Stock MateriaPrima</th>
                   <th>Acciones</th>
                 </tr>
@@ -136,8 +134,8 @@
 
                     <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">DESCONTAR STOCK</label>
                     <div class="col-lg-2">
-                        <select  class="form-control selectpicker" name="nuevoDsctoStock" id="nuevoDsctoStock" data-live-search="true" required>
-                        <option value="">SELECCIONAR DESCUENTO</option>
+                        <select  class="form-control input-sm" name="nuevoDsctoStock" id="nuevoDsctoStock" required>
+                        
                         <option value="SI">SI</option>
                         <option value="NO">NO </option>
                         </select>
@@ -256,43 +254,28 @@
    <!-- Start -->
 
    <div class="modal fade" id="ModalMPOrdenServicioDestino" tabindex="-1" role="dialog" aria-labelledby="ModalProvlLabel">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
+			<div class="modal-dialog " role="document" style="width:75%">
+				<div class="modal-content " >
+					<div class="modal-header" style="background:#3c8dbc; color:white">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						<h4 class="modal-title" id="ModalProvlLabel">Materia Prima destino</h4>
 					</div>
 					<div class="modal-body">
+          <input type="hidden" id="codigoOrigen" >
 					<div class="table-responsive">
-						<table class="table table-hover tablaServicioDestino">
+						<table class="table table-hover tablaMateriaServicioDestino" width="100%">
 							<thead>
 								<tr>
+                  <th>Codigo</th>
 									<th>Cod.Fabrica</th> 
-									<th>Codigo</th>
-									<th>Descripcion</th>
+									<th style="min-width:240px">Descripcion</th>
 									<th>Color</th>
 									<th>Unidad</th>
-									<th>Precio Unitario</th>
-									<th>Proveedor</th>
+									<th>Precio </th>
 									<th>Stock MateriaPrima</th>
-									<th>Accion</th>
+									<th>Acciones</th>
 								</tr>
 							</thead>
-							<tbody>
-							<?php foreach($productos as $proveedor):?>
-								<tr>
-									<td class="boton"><?=$proveedor->CodFab?></td>
-									<td class="boton"><?=$proveedor->CodPro?></td>
-									<td class="boton"><?=$proveedor->DesPro?></td>
-									<td class="boton"><?=$proveedor->Color?></td>
-									<td class="boton"><?=$proveedor->Unidad?></td>
-									<td class="boton"><?=$proveedor->PrePro?></td>
-									<td class="boton"><?=$proveedor->RazPro?></td>
-									<td class="boton"><?=$proveedor->CodAlm01?></td>
-									<td><button type="button" class="btn btn-info boton">Seleccionar</button></td>
-								</tr>
-							<?php endforeach;?>
-							</tbody>
 						</table>
 					</div>
 						
