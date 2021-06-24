@@ -1386,7 +1386,8 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
                                               nNeaOs AS nneaos,
                                               DATE(neo.FecEmi) AS fecemi,
                                               NroOs AS nroos,
-                                              NroDcto AS nrodcto 
+                                              NroDcto AS nrodcto,
+                                              neo.usureg  
                                             FROM
                                               nea_os neo 
                                               LEFT JOIN proveedor prov 
@@ -1407,7 +1408,8 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
                                             nNeaOs AS nneaos,
                                             DATE(neo.FecEmi) AS fecemi,
                                             NroOs AS nroos,
-                                            NroDcto AS nrodcto 
+                                            NroDcto AS nrodcto,
+                                            neo.usureg  
                                           FROM
                                             nea_os neo 
                                             LEFT JOIN proveedor prov 
@@ -1440,7 +1442,8 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
                                             nNeaOs AS nneaos,
                                             DATE(neo.FecEmi) AS fecemi,
                                             NroOs AS nroos,
-                                            NroDcto AS nrodcto 
+                                            NroDcto AS nrodcto,
+                                            neo.usureg  
                                           FROM
                                             nea_os neo 
                                             LEFT JOIN proveedor prov 
@@ -1458,7 +1461,8 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
                                         nNeaOs AS nneaos,
                                         DATE(neo.FecEmi) AS fecemi,
                                         NroOs AS nroos,
-                                        NroDcto AS nrodcto 
+                                        NroDcto AS nrodcto,
+                                        neo.usureg  
                                       FROM
                                         nea_os neo 
                                         LEFT JOIN proveedor prov 

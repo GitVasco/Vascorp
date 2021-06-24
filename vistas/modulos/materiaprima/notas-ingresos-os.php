@@ -77,6 +77,7 @@
                             <th>Proveedor</th>
                             <th>OS Asociada</th>
                             <th>Nro. OS</th>
+                            <th>Responsable</th>
                             <th style="width:120px">Acciones</th>
 
                         </tr>

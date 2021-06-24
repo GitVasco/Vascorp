@@ -24,6 +24,17 @@ class ControladorMateriaPrima{
 
     }
 
+	/* 
+	* MOSTRAR DATOS DE LA MATERIA PRIMA
+	*/
+	static public function ctrMostrarMateriaPrima3(){
+
+		$respuesta = ModeloMateriaPrima::mdlMostrarMateriaPrima3();
+
+		return $respuesta;
+
+    }	
+
 
 	/* 
 	* VALIDAR CODIGO DE FABRICA EN MATERIA PRIMA
@@ -585,4 +596,16 @@ class ControladorMateriaPrima{
 		}
 
 	}
+
+	/* 
+	*ANULAR MATERIA PRIMA
+	*/
+	static public function ctrMostrarKardexMP($codigo, $ano, $ano_ant){
+
+		$respuesta = ModeloMateriaPrima::mdlMostrarKardexMP($codigo, $ano, $ano_ant);
+
+		return $respuesta;
+
+	}
+
 }

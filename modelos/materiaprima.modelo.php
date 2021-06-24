@@ -148,6 +148,41 @@ class ModeloMateriaPrima{
 
     }    
     
+	/* 
+	* MOSTRAR DATOS DE LA MATERIA PRIMA
+	*/
+	static public function mdlMostrarMateriaPrima3(){
+
+		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+		CodPro AS codpro,
+		CodFab AS codfab,
+		DesPro AS despro,
+		Stk_Act,
+		CodAlm01 AS stock,
+		Stk_Min,
+		Stk_Max,
+		CosPro,
+		TbUnd.Des_Corta AS unidad,
+		TbCol.Des_Larga AS color 
+	  FROM
+		Producto AS Pro 
+		INNER JOIN Tabla_M_Detalle AS TbUnd 
+		  ON Pro.UndPro = TbUnd.Cod_Argumento 
+		  AND (TbUnd.Cod_Tabla = 'TUND') 
+		INNER JOIN Tabla_M_Detalle AS TbCol 
+		  ON Pro.ColPro = TbCol.Cod_Argumento 
+		  AND (TbCol.Cod_Tabla = 'TCOL') 
+	  WHERE Pro.EstPro = '1'");
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    } 	
 	
 	/* 
 	* Método para vizualizar detalle de la materia prima
@@ -945,6 +980,211 @@ class ModeloMateriaPrima{
 		$stmt->close();
 		$stmt = null;
 
-	}    
+	} 
+	
+	/* 
+	* MOSTRAR DATOS DE LA MATERIA PRIMA
+	*/
+	static public function mdlMostrarKardexMP($codigo, $ano, $ano_ant){
+
+		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+		DATE_FORMAT(FecReg, '%d/%m/%Y') AS FecEmi,
+		DATE_FORMAT(FecReg, '%m') AS Fecha,
+		NULL AS nDoc,
+		NULL AS Razon,
+		Valor_1 AS StkInicial,
+		NULL AS CanIng,
+		NULL AS CanSal 
+	  FROM
+		Tabla_M_Detalle 
+	  WHERE Cod_Tabla = 'INVI' 
+		AND Des_Corta = $ano_ant 
+		AND Cod_Argumento = $codigo 
+	  UNION
+	  ALL 
+	  SELECT 
+		DATE_FORMAT(vc.FecEmi, '%d/%m/%Y') AS FecEmi,
+		DATE_FORMAT(vc.FecEmi, '%m') AS Fecha,
+		CONCAT(vc.Tip, '-', vc.Ser, '-', vc.Nro) AS nDoc,
+		Clientes.RazCli AS Razon,
+		NULL AS StkInicial,
+		'0.00' AS CanIng,
+		vd.CanVta AS CanSal 
+	  FROM
+		Ventas_Cab vc,
+		Venta_Det vd,
+		Clientes 
+	  WHERE vc.Nro = vd.Nro 
+		AND vd.CodPro = $codigo 
+		AND Clientes.Ruc = vc.Ruc 
+		AND vd.FecEmi LIKE '%$ano%' 
+		AND vc.EstVta = 'P' 
+	  UNION
+	  ALL 
+	  SELECT 
+		DATE_FORMAT(os.FecEmi, '%d/%m/%Y') AS FecEmi,
+		DATE_FORMAT(os.FecEmi, '%m') AS Fecha,
+		CONCAT(os.Tip, '-', os.Ser, '-', os.Nro) AS nDoc,
+		pro.RazPro AS Razon,
+		NULL AS StkInicial,
+		'0.00' AS CanIng,
+		od.CantidadIni AS CanSal 
+	  FROM
+		oservicio os,
+		oserviciodet od,
+		Proveedor pro 
+	  WHERE os.Nro = od.Nro 
+		AND od.CodProOrigen = $codigo 
+		AND pro.CodRuc = os.CodRuc 
+		AND od.FecEmi LIKE '%$ano%' 
+		AND od.DesStk = 'SI' 
+		AND os.EstReg = '1' 
+	  UNION
+	  ALL 
+	  SELECT 
+		DATE_FORMAT(nod.FecEmi, '%d/%m/%Y') AS FecEmi,
+		DATE_FORMAT(nod.FecEmi, '%m') AS Fecha,
+		CONCAT(
+		  'NExOS',
+		  '-',
+		  nod.sNeaOs,
+		  '-',
+		  nod.NroOs
+		) AS nDoc,
+		'ELASTICOS VASCO' AS Razon,
+		NULL AS StkInicial,
+		nod.CanSol AS CanIng,
+		'0.00' AS CanSal 
+	  FROM
+		nea_os_det nod 
+	  WHERE nod.estReg = 'P' 
+		AND nod.FecEmi LIKE '%$ano%' 
+		AND nod.CodProDestino = $codigo 
+		AND nod.CanSol > 0 
+	  UNION
+	  ALL 
+	  SELECT 
+		DATE_FORMAT(Nea.FecEmi, '%d/%m/%Y') AS FecEmi,
+		DATE_FORMAT(Nea.FecEmi, '%m') AS Fecha,
+		CONCAT(
+		  Nea.tNea,
+		  '-',
+		  Nea.sNea,
+		  '-',
+		  Nea.nNea
+		) AS nDoc,
+		Proveedor.RazPro AS Razon,
+		NULL AS StkInicial,
+		NeaDet.CanSol AS CanIng,
+		'0.00' AS CanSal 
+	  FROM
+		Nea,
+		NeaDet,
+		Proveedor 
+	  WHERE Nea.nNea = NeaDet.nNea 
+		AND NeaDet.CodPro = $codigo 
+		AND Proveedor.CodRuc = Nea.CodRuc 
+		AND Nea.FecEmi LIKE '%$ano%' 
+		AND NeaDet.CanSol > 0 
+		AND Nea.EstReg = 'P' 
+		AND Nea.nNea NOT IN 
+		(SELECT 
+		  NIGuiaAsociada 
+		FROM
+		  Nea 
+		WHERE Nea.EstReg = 'P' 
+		  AND Nea.`NroGuiaAsociada` != '') 
+		UNION
+		ALL 
+		SELECT DISTINCT 
+		  NULL AS FecEmi,
+		  NULL AS Fecha,
+		  NULL AS nDoc,
+		  NULL AS Razon,
+		  'TOTALES:' AS StkInicial,
+		  IFNULL(
+			(SELECT 
+			  SUM(NeaDet.CanSol) 
+			FROM
+			  Nea,
+			  NeaDet 
+			WHERE Nea.nNea = NeaDet.nNea 
+			  AND NeaDet.CodPro = $codigo 
+			  AND Nea.FecEmi LIKE '%$ano%' 
+			  AND Nea.EstReg = 'P'),
+			0
+		  ) + IFNULL(
+			(SELECT 
+			  SUM(nod.CanSol) 
+			FROM
+			  nea_os_det nod 
+			WHERE nod.estReg = 'P' 
+			  AND nod.FecEmi LIKE '%$ano%' 
+			  AND nod.CodProDestino = $codigo 
+			  AND nod.CanSol > 0),
+			0
+		  ) AS CanIng,
+		  IFNULL(
+			(SELECT 
+			  SUM(vd.CanVta) 
+			FROM
+			  Ventas_Cab vc,
+			  Venta_Det vd 
+			WHERE vc.Nro = vd.Nro 
+			  AND vd.CodPro = $codigo 
+			  AND vc.FecEmi LIKE '%$ano%' 
+			  AND vc.EstVta = 'P' 
+			  AND vd.CanVta > 0),
+			0
+		  ) + IFNULL(
+			(SELECT 
+			  SUM(od.CantidadIni) 
+			FROM
+			  oserviciodet od,
+			  oservicio os 
+			WHERE os.Nro = od.Nro 
+			  AND od.CodProOrigen = $codigo 
+			  AND os.FecEmi LIKE '%$ano%' 
+			  AND os.EstReg = '1' 
+			  AND od.DesStk = 'SI'),
+			0
+		  ) AS CanSal 
+		FROM
+		  Nea,
+		  NeaDet,
+		  Ventas_Cab vc,
+		  Venta_Det vd,
+		  oserviciodet od,
+		  oservicio os 
+		WHERE Nea.nNea = NeaDet.nNea 
+		  AND Nea.nNea NOT IN 
+		  (SELECT 
+			NIGuiaAsociada 
+		  FROM
+			Nea 
+		  WHERE Nea.EstReg = 'P' 
+			AND Nea.`NroGuiaAsociada` != '') 
+		  AND NeaDet.CodPro = $codigo 
+		  AND vc.Nro = vd.Nro 
+		  AND vd.CodPro = $codigo 
+		  AND os.Nro = od.Nro 
+		  AND od.CodProOrigen = $codigo 
+		  AND Nea.FecEmi LIKE '%$ano%' 
+		  AND Nea.EstReg = 'P' 
+		  AND vc.FecEmi LIKE '%$ano%' 
+		  AND vc.EstVta = 'P' 
+		  AND os.FecEmi LIKE '%$ano%' 
+		  AND os.EstReg = '1' 
+		ORDER BY Fecha DESC ");
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    } 	
 
 }
