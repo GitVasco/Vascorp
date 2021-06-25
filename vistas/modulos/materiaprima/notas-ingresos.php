@@ -34,9 +34,6 @@
 
                 </a>
 
-                
-                <button class="btn btn-outline-success "  style="border:green 1px solid">
-                <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Notas de Ingreso </button> 
                 <button type="button" class="btn btn-default pull-right" id="daterange-btnNotasIngresos">
                 <span>
                     <i class="fa fa-calendar"></i>

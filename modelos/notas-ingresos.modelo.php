@@ -1876,4 +1876,90 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
 
 	}   
 
+/*
+	*Traer cabecera nota ingreso
+	*/
+	static public function mdlTraerNiSCab($valor){
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+    neo.tNeaOs AS tneaos,
+    neo.CodRuc AS codruc,
+    prov.RazPro AS proveedor,
+    nNeaOs AS nneaos,
+    DATE(neo.FecEmi) AS fecemi,
+    NroOs AS nroos,
+    NroDcto AS nrodcto,
+    neo.usureg 
+  FROM
+    nea_os neo 
+    LEFT JOIN proveedor prov 
+      ON prov.CodRuc = neo.CodRuc 
+  WHERE neo.EstReg = 'P' 
+    AND nNeaOs = :valor");
+
+    $stmt->bindParam(":valor",$valor,PDO::PARAM_STR);                    
+
+		$stmt->execute();
+
+		return $stmt->fetch();
+
+		$stmt->close();
+
+		$stmt = null;
+	}
+  
+	/*
+	*Traer cabecera nota ingreso
+	*/
+	static public function mdlTraerNiSDet($valor){
+
+		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+    Item,
+    CodProOrigen,
+    pro.DesPro AS DesProOrigen,
+    CodProDestino,
+    pro1.DesPro AS Descripcion,
+    CanSol,
+    tb1.Des_Larga AS Color,
+    tb3.Des_Larga AS Color2,
+    tb2.Des_Corta AS Unidad,
+    nod.nroos 
+  FROM
+    nea_os_det nod 
+    INNER JOIN Producto pro 
+      ON nod.CodProOrigen = pro.CodPro 
+    INNER JOIN Producto pro1 
+      ON nod.CodProDestino = pro1.CodPro 
+    INNER JOIN Tabla_M_Detalle AS tb1 
+      ON pro.ColPro = tb1.Cod_Argumento 
+    INNER JOIN Tabla_M_Detalle AS tb3 
+      ON pro1.ColPro = tb3.Cod_Argumento 
+    INNER JOIN Tabla_M_Detalle AS tb2 
+      ON pro.UndPro = tb2.Cod_Argumento 
+  WHERE (
+      tb1.Cod_Tabla = 'TCOL' 
+      OR tb1.Cod_Tabla IS NULL
+    ) 
+    AND (
+      tb2.Cod_Tabla = 'TUND' 
+      OR tb2.Cod_Tabla IS NULL
+    ) 
+    AND (
+      tb3.Cod_Tabla = 'TCOL' 
+      OR tb3.Cod_Tabla IS NULL
+    ) 
+    AND nod.nNeaOs = :valor
+  ORDER BY nod.Item ASC");
+
+    $stmt->bindParam(":valor",$valor,PDO::PARAM_STR);                    
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt->close();
+
+		$stmt = null;
+	}    
+
 }

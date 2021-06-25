@@ -438,5 +438,18 @@ class ControladorOrdenCompra{
 
 	}   
 
+	/*=============================================
+	MOSTRAR MATERIA PRIMA PARA ORDEN DE COMPRA PENDINETE
+	=============================================*/	
+
+	static public function ctrMpOcPendiente(){
+
+
+		$respuesta = ModeloOrdenCompra::mdlMpOcPendiente();
+
+		return $respuesta;
+		
+	}
+
 
 }
