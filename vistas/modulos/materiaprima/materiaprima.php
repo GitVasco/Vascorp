@@ -370,7 +370,7 @@ MODAL AGREGAR MATERIA PRIMA
               </div>
 
               <!-- ENTRADA PARA LA FECHA DE EMISION -->
-              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">PRECIO S/IGV</label>
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">P S/IGV</label>
               <div class="col-lg-2">
               
                 <input type="number" min = "0" step="any" class="form-control input-md" name="nuevoPrecioSIGV"  >
@@ -414,7 +414,7 @@ MODAL AGREGAR MATERIA PRIMA
               </div>
 
               <!-- ENTRADA PARA LA FECHA DE EMISION -->
-              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">PRECIO S/IGV</label>
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">P S/IGV</label>
               <div class="col-lg-2">
               
                 <input type="number" min = "0" step="any" class="form-control input-md" name="nuevoPrecioSIGV1"  >
@@ -457,7 +457,7 @@ MODAL AGREGAR MATERIA PRIMA
               </div>
 
               <!-- ENTRADA PARA LA FECHA DE EMISION -->
-              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">PRECIO S/IGV</label>
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">P S/IGV</label>
               <div class="col-lg-2">
               
                 <input type="number" min = "0" step="any" class="form-control input-md" name="nuevoPrecioSIGV2"  >

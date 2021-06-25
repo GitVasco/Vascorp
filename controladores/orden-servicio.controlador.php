@@ -53,6 +53,20 @@ class ControladorOrdenServicio{
 		return $respuesta;
 		
 	}
+
+	/*=============================================
+	MOSTRAR MATERIA PRIMA PENDIENTE DE ORDEN DE SERVICIO
+	=============================================*/	
+
+	static public function ctrMpOsPendiente(){
+
+
+		$respuesta = ModeloOrdenServicio::mdlMpOsPendiente();
+
+		return $respuesta;
+		
+	}
+
 	/*=============================================
 	CREAR ORDEN DE SERVICIO
 	=============================================*/

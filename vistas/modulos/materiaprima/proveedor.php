@@ -158,7 +158,7 @@ MODAL AGREGAR TIPO PAGO
             <!-- ENTRADA PARA RAZON SOCIAL -->
             
             <div class="form-group" style="padding-top:25px">
-              <label for="" class="col-form-label col-lg-1 col-md-2 col-sm-3">RAZ SOCIAL</label>
+              <label for="" class="col-form-label col-lg-1 col-md-2 col-sm-3">R SOCIAL</label>
               <div class="col-lg-11 col-md-10 col-sm-9">
 
                 <input type="text" style="text-transform:uppercase;" class="form-control input-md" name="nuevaRazPro" id="nuevaRazPro" placeholder="Ingresar razon social" required readonly>
@@ -170,7 +170,7 @@ MODAL AGREGAR TIPO PAGO
             <!-- ENTRADA PARA DIRECCION -->
             
             <div class="form-group " style="padding-top:25px">
-              <label for="" class="col-form-label col-lg-1 col-md-2 col-sm-3">DIRECCION</label>
+              <label for="" class="col-form-label col-lg-1 col-md-2 col-sm-3">DIR.</label>
               <div class="col-lg-11 col-md-10 col-sm-9">
               
                 <input type="text" style="text-transform:uppercase;" class="form-control input-md" name="nuevaDireccion" id="nuevaDireccion" placeholder="Ingresar direccion" required>
@@ -207,7 +207,7 @@ MODAL AGREGAR TIPO PAGO
             <!-- ENTRADA PARA TELEFONO -->
             
             <div class="form-group " style="padding-top:25px">
-              <label for="" class="col-form-label col-lg-1 col-md-2">TELEFONOS</label>
+              <label for="" class="col-form-label col-lg-1 col-md-2">TELEFONO</label>
               <div class="col-lg-2 col-md-2">
             
                 <input type="text" style="text-transform:uppercase;" class="form-control input-md" name="nuevoTlf1" placeholder="Ingresar telefono 1" >
@@ -266,7 +266,7 @@ MODAL AGREGAR TIPO PAGO
             <!-- ENTRADA PARA PAGINA -->
            
             <div class="form-group " style="padding-top:25px">
-              <label for=""  class="col-form-label col-lg-1 col-md-2 col-sm-3">PAGINA WEB</label>
+              <label for=""  class="col-form-label col-lg-1 col-md-2 col-sm-3">WEB</label>
               <div class="col-lg-5 col-md-5 col-sm-5">
               
                 <input type="text" style="text-transform:uppercase;" class="form-control input-md" name="nuevaWeb" placeholder="Ingresar pagina web" >
@@ -277,7 +277,7 @@ MODAL AGREGAR TIPO PAGO
             <div class="col-lg-12"></div>
 
             <div class="form-group"  style="padding-top:25px">
-              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">T. ENTREGA</label>
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">ENTREGA</label>
               <div class="col-lg-3 col-md-3 col-sm-3">
 
                 <input type="number" style="text-transform:uppercase;" class="form-control input-md" name="nuevoTipoEntr" placeholder="Ingresar tiempo entrega dias" >
@@ -359,7 +359,7 @@ MODAL AGREGAR TIPO PAGO
 
               </div>
 
-              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">N° CUENTA</label>
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">N° CTA</label>
               <div class="col-lg-3 col-md-3 col-sm-3">
               
 
@@ -411,7 +411,7 @@ MODAL AGREGAR TIPO PAGO
 
               </div>
 
-              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">N° CUENTA1</label>
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">N° CTA1</label>
               <div class="col-lg-3 col-md-3 col-sm-3">
               
 
@@ -546,7 +546,7 @@ MODAL EDITAR PROVEEDOR
             <!-- ENTRADA PARA RAZON SOCIAL -->
             
             <div class="form-group" style="padding-top:25px">
-              <label for="" class="col-form-label col-lg-1 col-md-2 col-sm-3">RAZ SOCIAL</label>
+              <label for="" class="col-form-label col-lg-1 col-md-2 col-sm-3">R SOCIAL</label>
               <div class="col-lg-11 col-md-10 col-sm-9">
 
                 <input type="text" style="text-transform:uppercase;" class="form-control input-md" name="editarRazPro"  id="editarRazPro" required>
@@ -558,7 +558,7 @@ MODAL EDITAR PROVEEDOR
             <!-- ENTRADA PARA DIRECCION -->
             
             <div class="form-group " style="padding-top:25px">
-              <label for="" class="col-form-label col-lg-1 col-md-2 col-sm-3">DIRECCION</label>
+              <label for="" class="col-form-label col-lg-1 col-md-2 col-sm-3">DIR.</label>
               <div class="col-lg-11 col-md-10 col-sm-9">
               
                 <input type="text" style="text-transform:uppercase;" class="form-control input-md" name="editarDireccion" id="editarDireccion"  required>
@@ -595,7 +595,7 @@ MODAL EDITAR PROVEEDOR
             <!-- ENTRADA PARA TELEFONO -->
             
             <div class="form-group " style="padding-top:25px">
-              <label for="" class="col-form-label col-lg-1 col-md-2">TELEFONOS</label>
+              <label for="" class="col-form-label col-lg-1 col-md-2">TELEFONO</label>
               <div class="col-lg-2 col-md-2">
             
                 <input type="text" style="text-transform:uppercase;" class="form-control input-md" name="editarTlf1" id="editarTlf1" >
@@ -654,7 +654,7 @@ MODAL EDITAR PROVEEDOR
             <!-- ENTRADA PARA PAGINA -->
            
             <div class="form-group " style="padding-top:25px">
-              <label for=""  class="col-form-label col-lg-1 col-md-2 col-sm-3">PAGINA WEB</label>
+              <label for=""  class="col-form-label col-lg-1 col-md-2 col-sm-3">WEB</label>
               <div class="col-lg-5 col-md-5 col-sm-5">
               
                 <input type="text" style="text-transform:uppercase;" class="form-control input-md" name="editarWeb" id="editarWeb" >
@@ -665,7 +665,7 @@ MODAL EDITAR PROVEEDOR
             <div class="col-lg-12"></div>
 
             <div class="form-group"  style="padding-top:25px">
-              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">T. ENTREGA</label>
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">ENTREGA</label>
               <div class="col-lg-3 col-md-3 col-sm-3">
 
                 <input type="number" class="form-control input-md" name="editarTipoEntr"  id="editarTipoEntr" >
@@ -746,7 +746,7 @@ MODAL EDITAR PROVEEDOR
 
               </div>
 
-              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">N° CUENTA</label>
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">N° CTA</label>
               <div class="col-lg-3 col-md-3 col-sm-3">
               
 
@@ -797,7 +797,7 @@ MODAL EDITAR PROVEEDOR
 
               </div>
 
-              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">N° CUENTA1</label>
+              <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">N° CTA1</label>
               <div class="col-lg-3 col-md-3 col-sm-3">
               
 
