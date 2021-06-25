@@ -319,7 +319,7 @@ class ModeloNotasSalidas{
 	// Método para guardar las ventas
 	static public function mdlGuardarNotaSalida($tabla,$datos){
 
-		$sql="INSERT INTO $tabla(Tip,Ser,Nro,Cod_Local,Cod_Entidad,Ruc,FecEmi,FecVto,MdaVta,ForVta,TcVta,ImpVta,brutot,totdct,SubVta,IgvVta,TotVta,EstVta,Abono,ValVta,ObsGer,EstExp,EstGuia,CodAlm,AlmDes,CodCli,EstAte,Dia,ObsCre,EstPri,DocSal,DetDocSal,FecReg,PcReg,UsuReg,observacion) VALUES (:Tip,:Ser,:Nro,:Cod_Local,:Cod_Entidad,:Ruc,:FecEmi,:FecVto,:MdaVta,:ForVta,:TcVta,:ImpVta,:brutot,:totdct,:SubVta,:IgvVta,:TotVta,:EstVta,:Abono,:ValVta,:ObsGer,:EstExp,:EstGuia,:CodAlm,:AlmDes,:CodCli,:EstAte,:Dia,:ObsCre,:EstPri,:DocSal,:DetDocSal,:FecReg,:PcReg,:UsuReg,:observacion)";
+		$sql="INSERT INTO $tabla(Tip,Ser,Nro,Cod_Local,Cod_Entidad,Ruc,FecEmi,FecVto,MdaVta,ForVta,TcVta,ImpVta,brutot,totdct,SubVta,IgvVta,TotVta,EstVta,Abono,ValVta,ObsGer,EstExp,EstGuia,CodAlm,AlmDes,CodCli,EstAte,Dia,ObsCre,EstPri,DocSal,DetDocSal,FecReg,PcReg,UsuReg,observacion) VALUES (:Tip,:Ser,:Nro,:Cod_Local,:Cod_Entidad,:Ruc,:FecEmi,:FecVto,:MdaVta,:ForVta,:TcVta,:ImpVta,:brutot,:totdct,:SubVta,:IgvVta,:TotVta,:EstVta,:Abono,:ValVta,:ObsGer,:EstExp,:EstGuia,:CodAlm,:AlmDes,:CodCli,:EstAte,:Dia,:ObsCre,:EstPri,:DocSal,:DetDocSal,:FecReg,:PcReg,:UsuReg,UPPER(:observacion))";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 

@@ -26,7 +26,7 @@ class TablaOrdenServicio{
         if($ordenservicio[$i]["EstOS"] == 'EMITIDO'){
 
             $estado ="<span class ='label label-success'>".$ordenservicio[$i]["EstOS"]."</span>";
-            $cerrar ="<button class ='btn btn-default btn-xs btn  btnCerrarOCompra' idordenservicio='".$ordenservicio[$i]["Nro"]."'>CERRAR</button>";
+            $cerrar ="<button class ='btn btn-default btn-xs btn  btnCerrarOServicio' idOrdenServicio='".$ordenservicio[$i]["Nro"]."'>CERRAR</button>";
             
 
         }else if($ordenservicio[$i]["EstOS"] == 'CERRADA'){
@@ -37,13 +37,13 @@ class TablaOrdenServicio{
         }else{
 
             $estado ="<span class ='label label-warning'>".$ordenservicio[$i]["EstOS"]."</span>";
-            $cerrar ="<button class ='btn btn-default btn-xs btn  btnCerrarOCompra' idordenservicio='".$ordenservicio[$i]["Nro"]."'>CERRAR</button>";
+            $cerrar ="<button class ='btn btn-default btn-xs btn  btnCerrarOServicio' idOrdenServicio='".$ordenservicio[$i]["Nro"]."'>CERRAR</button>";
 
         }
             /*=============================================
             TRAEMOS LAS ACCIONES
             =============================================*/    
-            $botones =  "<div class='btn-group' ><button class='btn btn-xs btn-primary btnEditarordenservicio' title='Editar Orden de compra' idordenservicio='".$ordenservicio[$i]["Nro"]."' ><i class='fa fa-eye'></i></button><button class='btn btn-xs btn-outline-success pull-right btnDetalleReporteordenservicio' idordenservicio='".$ordenservicio[$i]["Nro"]."' title='Reporte Orden de compra' style='border:green 1px solid'><img src='vistas/img/plantilla/excel.png' width='15px'></button></div>"; 
+            $botones =  "<div class='btn-group' ><button class='btn btn-xs btn-primary btnVisualizarOrdenServicio' title='Visualizar Orden de servicio' idOrdenServicio='".$ordenservicio[$i]["Nro"]."' data-toggle='modal' data-target='#modalVizualizarOrdenServicio'><i class='fa fa-eye'></i></button><button class='btn btn-xs btn-outline-success pull-right btnDetalleReporteOrdenServicio' idOrdenServicio='".$ordenservicio[$i]["Nro"]."' title='Reporte Orden de servicio' style='border:green 1px solid'><img src='vistas/img/plantilla/excel.png' width='15px'></button></div>"; 
 
         
 

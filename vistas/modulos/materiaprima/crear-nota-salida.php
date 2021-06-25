@@ -46,7 +46,7 @@
                 <tr>
                   <th>Codigo</th>
                   <th>Cod. Fabrica</th>
-                  <th>Descripcion</th>
+                  <th style="min-width:240px">Descripcion</th>
                   <th>Unidad</th>
                   <th>Cod Color</th>
                   <th>Color</th>
@@ -170,7 +170,7 @@
                   </div>
 
                   <div class="col-lg-8">
-                    <input type="text" class="form-control input-sm"  name ="nuevaObservacion" >
+                    <input type="text" class="form-control input-sm info-box-text"  name ="nuevaObservacion" >
                   </div>
 
                   <div class="col-lg-12"></div>

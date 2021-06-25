@@ -40,6 +40,9 @@ class ModeloOrdenServicio{
             oservicio.UsuReg,
             oservicio.CodRuc,
             Proveedor.RazPro,
+			DesStk,
+			ObsOs,
+			DATE(FecEnt) AS FecEnt, 
             DATE(FecEmi) AS FecEmi 
           FROM
             oservicio,
@@ -67,15 +70,57 @@ class ModeloOrdenServicio{
 	static public function mdlMostrarDetallesOrdenServicio($item, $valor){
 		if($valor == null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT 
-			odet.CodPro,
-			odet.ColProv,
-			odet.UndPro,
-			odet.CanPro,
-			odet.PrePro,
-			odet.DscPro,
-			odet.ImpPro, FROM ocomdet 
-			ORDER BY Item DESC");
+			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+			DATE_FORMAT(os.FecEmi, '%d/%m/%Y') AS FecEmi,
+			DATE_FORMAT(os.FecEnt, '%d/%m/%Y') AS Fecllegada,
+			osd.Nro,
+			Item,
+			CodProOrigen,
+			pro.DesPro AS DesProOrigen,
+			CantidadIni,
+			CodProDestino,
+			pro1.DesPro AS Descripcion,
+			Saldo,
+			Despacho,
+			tb1.Des_Larga AS Color,
+			tb3.Des_Larga AS Color2,
+			tb2.Des_Corta AS Unidad,
+			tb4.Des_Larga AS EstadoDet 
+		  FROM
+			oServicioDet osd 
+			INNER JOIN Producto pro 
+			  ON osd.CodProOrigen = pro.CodPro 
+			INNER JOIN Producto pro1 
+			  ON osd.CodProDestino = pro1.CodPro 
+			INNER JOIN Tabla_M_Detalle AS tb1 
+			  ON pro.ColPro = tb1.Cod_Argumento 
+			INNER JOIN Tabla_M_Detalle AS tb3 
+			  ON pro1.ColPro = tb3.Cod_Argumento 
+			INNER JOIN Tabla_M_Detalle AS tb2 
+			  ON pro.UndPro = tb2.Cod_Argumento 
+			LEFT JOIN oServicio os 
+			  ON os.Nro = osd.Nro 
+			LEFT JOIN Tabla_M_Detalle AS tb4 
+			  ON osd.Estos = tb4.Des_Corta 
+		  WHERE (
+			  tb1.Cod_Tabla = 'TCOL' 
+			  OR tb1.Cod_Tabla IS NULL
+			) 
+			AND (
+			  tb2.Cod_Tabla = 'TUND' 
+			  OR tb2.Cod_Tabla IS NULL
+			) 
+			AND (
+			  tb3.Cod_Tabla = 'TCOL' 
+			  OR tb3.Cod_Tabla IS NULL
+			) 
+			AND (
+			  tb4.Cod_Tabla = 'EOC1' 
+			  OR tb3.Cod_Tabla IS NULL
+			) 
+			AND osd.EstReg = '1' 
+		  ORDER BY osd.Nro DESC,
+			osd.Item ASC ");
 
 			$stmt -> execute();
 
@@ -83,34 +128,58 @@ class ModeloOrdenServicio{
 
 
 		}else{
-			$stmt = Conexion::conectar()->prepare("SELECT 
-			odet.CodPro AS id,
-			odet.ColProv AS colorprov,
-			odet.UndPro AS unidad,
-			odet.CanPro AS cantidad,
-			odet.PrePro AS precio,
-			odet.DscPro AS descuento,
-			odet.ImpPro AS total, 
-			tbcol.des_larga AS color,
-			p.codfab,
-			CONCAT(
-				(SUBSTRING(p.CodFab, 1, 6)),
-				' - ',
-				p.DesPro,
-				' - ',
-				tbcol.des_larga,
-				' - ',
-				odet.UndPro
-			  ) AS descripcion
+			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+			DATE_FORMAT(os.FecEmi, '%d/%m/%Y') AS FecEmi,
+			DATE_FORMAT(os.FecEnt, '%d/%m/%Y') AS Fecllegada,
+			osd.Nro,
+			osd.EstOS,
+			Item,
+			CodProOrigen,
+			pro.DesPro AS DesProOrigen,
+			CantidadIni,
+			CodProDestino,
+			pro1.DesPro AS Descripcion,
+			Saldo,
+			Despacho,
+			tb1.Des_Larga AS Color,
+			tb3.Des_Larga AS Color2,
+			tb2.Des_Corta AS Unidad,
+			tb4.Des_Larga AS EstadoDet 
 		  FROM
-			ocomdet odet 
-			LEFT JOIN producto p 
-			  ON p.CodPro = odet.CodPro 
-			INNER JOIN tabla_m_detalle AS tbcol 
-			  ON p.ColPro = tbcol.cod_argumento 
-			  AND (tbcol.Cod_Tabla = 'TCOL') 
-		  WHERE odet.$item = :$item 
-		  ORDER BY odet.Item ASC");
+			oServicioDet osd 
+			INNER JOIN Producto pro 
+			  ON osd.CodProOrigen = pro.CodPro 
+			INNER JOIN Producto pro1 
+			  ON osd.CodProDestino = pro1.CodPro 
+			INNER JOIN Tabla_M_Detalle AS tb1 
+			  ON pro.ColPro = tb1.Cod_Argumento 
+			INNER JOIN Tabla_M_Detalle AS tb3 
+			  ON pro1.ColPro = tb3.Cod_Argumento 
+			INNER JOIN Tabla_M_Detalle AS tb2 
+			  ON pro.UndPro = tb2.Cod_Argumento 
+			LEFT JOIN oServicio os 
+			  ON os.Nro = osd.Nro 
+			LEFT JOIN Tabla_M_Detalle AS tb4 
+			  ON osd.Estos = tb4.Des_Corta 
+		  WHERE (
+			  tb1.Cod_Tabla = 'TCOL' 
+			  OR tb1.Cod_Tabla IS NULL
+			) 
+			AND (
+			  tb2.Cod_Tabla = 'TUND' 
+			  OR tb2.Cod_Tabla IS NULL
+			) 
+			AND (
+			  tb3.Cod_Tabla = 'TCOL' 
+			  OR tb3.Cod_Tabla IS NULL
+			) 
+			AND (
+			  tb4.Cod_Tabla = 'EOC1' 
+			  OR tb3.Cod_Tabla IS NULL
+			) 
+			AND osd.EstReg = '1' 
+		  AND osd.$item = :$item 
+		  ORDER BY osd.Item ASC ");
 
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 
@@ -254,7 +323,7 @@ class ModeloOrdenServicio{
     // Método para guardar las ordenes de servicios
 	static public function mdlGuardarOrdenServicio($datos){
 
-		$sql="INSERT INTO oservicio(Cod_Local,Cod_Entidad,Tip,Ser,Nro,FecEmi,CodRuc,FecEnt,EstOS,DesStk,ObsOs,EstReg,FecReg,UsuReg,PcReg) VALUES (:Cod_Local,:Cod_Entidad,:Tip,:Ser,:Nro,:FecEmi,:CodRuc,:FecEnt,:EstOS,:DesStk,:ObsOs,:EstReg,:FecReg,:UsuReg,:PcReg)";
+		$sql="INSERT INTO oservicio(Cod_Local,Cod_Entidad,Tip,Ser,Nro,FecEmi,CodRuc,FecEnt,EstOS,DesStk,ObsOs,EstReg,FecReg,UsuReg,PcReg) VALUES (:Cod_Local,:Cod_Entidad,:Tip,:Ser,:Nro,:FecEmi,:CodRuc,:FecEnt,:EstOS,:DesStk,UPPER(:ObsOs),:EstReg,:FecReg,:UsuReg,:PcReg)";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 
@@ -348,18 +417,18 @@ class ModeloOrdenServicio{
     }
 
 	/*=============================================
-	CERRAR ORDEN DE COMPRA
+	CERRAR ORDEN DE SERVICIO
 	=============================================*/
 
-	static public function mdlCerrarOrdenServicio($datos){
+	static public function mdlCerrarOrdenServicio($tabla,$datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE oservicio SET EstReg = :EstReg , UsuCer = :UsuCer, FecCer = :FecCer , PcCer = :PcCer WHERE Nro = :Nro");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET EstOS = :EstOS , FecMod = :FecMod , UsuMod = :UsuMod, PcMod = :PcMod WHERE Nro = :Nro");
 
-		$stmt -> bindParam(":EstReg", $datos["EstReg"], PDO::PARAM_STR);
+		$stmt -> bindParam(":EstOS", $datos["EstOS"], PDO::PARAM_STR);
 		$stmt -> bindParam(":Nro", $datos["Nro"], PDO::PARAM_STR);
-		$stmt -> bindParam(":UsuCer", $datos["UsuCer"], PDO::PARAM_STR);
-		$stmt -> bindParam(":FecCer", $datos["FecCer"], PDO::PARAM_STR);
-		$stmt -> bindParam(":PcCer", $datos["PcCer"], PDO::PARAM_STR);
+		$stmt -> bindParam(":FecMod", $datos["FecMod"], PDO::PARAM_STR);
+		$stmt -> bindParam(":UsuMod", $datos["UsuMod"], PDO::PARAM_STR);
+		$stmt -> bindParam(":PcMod", $datos["PcMod"], PDO::PARAM_STR);
 		
 
 		if($stmt -> execute()){
@@ -368,7 +437,7 @@ class ModeloOrdenServicio{
 		
 		}else{
 
-			return "error";	
+			return $stmt->errorInfo();
 
 		}
 
@@ -377,64 +446,265 @@ class ModeloOrdenServicio{
 		$stmt = null;
 
 	}	
+
 
 	/*=============================================
-	CERRAR DETALLE ORDEN DE COMPRA
-	=============================================*/
+	REPORTE FECHAS
+	=============================================*/	
 
-	static public function mdlCerrarDetalleOrdenServicio($datos){
+	static public function mdlReporteFechasOrdenServicioGeneral($fechaInicial, $fechaFinal){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE oserviciodet SET EstReg = :EstReg WHERE Nro = :Nro");
+		if($fechaInicial == "null"){
 
-		$stmt -> bindParam(":EstReg", $datos["EstReg"], PDO::PARAM_STR);
-		$stmt -> bindParam(":Nro", $datos["Nro"], PDO::PARAM_STR);
-		
+			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+			DATE_FORMAT(os.FecEmi, '%d/%m/%Y') AS FecEmi,
+			DATE_FORMAT(os.FecEnt, '%d/%m/%Y') AS Fecllegada,
+			osd.Nro,
+			Item,
+			CodProOrigen,
+			pro.DesPro AS DesProOrigen,
+			CantidadIni,
+			CodProDestino,
+			pro1.DesPro AS Descripcion,
+			Saldo,
+			Despacho,
+			tb1.Des_Larga AS Color,
+			tb3.Des_Larga AS Color2,
+			tb2.Des_Corta AS Unidad,
+			tb4.Des_Larga AS EstadoDet 
+		  FROM
+			oServicioDet osd 
+			INNER JOIN Producto pro 
+			  ON osd.CodProOrigen = pro.CodPro 
+			INNER JOIN Producto pro1 
+			  ON osd.CodProDestino = pro1.CodPro 
+			INNER JOIN Tabla_M_Detalle AS tb1 
+			  ON pro.ColPro = tb1.Cod_Argumento 
+			INNER JOIN Tabla_M_Detalle AS tb3 
+			  ON pro1.ColPro = tb3.Cod_Argumento 
+			INNER JOIN Tabla_M_Detalle AS tb2 
+			  ON pro.UndPro = tb2.Cod_Argumento 
+			LEFT JOIN oServicio os 
+			  ON os.Nro = osd.Nro 
+			LEFT JOIN Tabla_M_Detalle AS tb4 
+			  ON osd.Estos = tb4.Des_Corta 
+		  WHERE (
+			  tb1.Cod_Tabla = 'TCOL' 
+			  OR tb1.Cod_Tabla IS NULL
+			) 
+			AND (
+			  tb2.Cod_Tabla = 'TUND' 
+			  OR tb2.Cod_Tabla IS NULL
+			) 
+			AND (
+			  tb3.Cod_Tabla = 'TCOL' 
+			  OR tb3.Cod_Tabla IS NULL
+			) 
+			AND (
+			  tb4.Cod_Tabla = 'EOC1' 
+			  OR tb3.Cod_Tabla IS NULL
+			) 
+			AND osd.EstReg = '1' 
+		  ORDER BY osd.Nro DESC,
+			osd.Item ASC ");
 
-		if($stmt -> execute()){
+			$stmt -> execute();
 
-			return "ok";
-		
+			return $stmt -> fetchAll();	
+
+
+		}else if($fechaInicial == $fechaFinal){
+
+			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+			DATE_FORMAT(os.FecEmi, '%d/%m/%Y') AS FecEmi,
+			DATE_FORMAT(os.FecEnt, '%d/%m/%Y') AS Fecllegada,
+			osd.Nro,
+			Item,
+			CodProOrigen,
+			pro.DesPro AS DesProOrigen,
+			CantidadIni,
+			CodProDestino,
+			pro1.DesPro AS Descripcion,
+			Saldo,
+			Despacho,
+			tb1.Des_Larga AS Color,
+			tb3.Des_Larga AS Color2,
+			tb2.Des_Corta AS Unidad,
+			tb4.Des_Larga AS EstadoDet 
+		  FROM
+			oServicioDet osd 
+			INNER JOIN Producto pro 
+			  ON osd.CodProOrigen = pro.CodPro 
+			INNER JOIN Producto pro1 
+			  ON osd.CodProDestino = pro1.CodPro 
+			INNER JOIN Tabla_M_Detalle AS tb1 
+			  ON pro.ColPro = tb1.Cod_Argumento 
+			INNER JOIN Tabla_M_Detalle AS tb3 
+			  ON pro1.ColPro = tb3.Cod_Argumento 
+			INNER JOIN Tabla_M_Detalle AS tb2 
+			  ON pro.UndPro = tb2.Cod_Argumento 
+			LEFT JOIN oServicio os 
+			  ON os.Nro = osd.Nro 
+			LEFT JOIN Tabla_M_Detalle AS tb4 
+			  ON osd.Estos = tb4.Des_Corta 
+		  WHERE (
+			  tb1.Cod_Tabla = 'TCOL' 
+			  OR tb1.Cod_Tabla IS NULL
+			) 
+			AND (
+			  tb2.Cod_Tabla = 'TUND' 
+			  OR tb2.Cod_Tabla IS NULL
+			) 
+			AND (
+			  tb3.Cod_Tabla = 'TCOL' 
+			  OR tb3.Cod_Tabla IS NULL
+			) 
+			AND (
+			  tb4.Cod_Tabla = 'EOC1' 
+			  OR tb3.Cod_Tabla IS NULL
+			) 
+			AND osd.EstReg = '1'
+            AND DATE(os.FecEmi) like '%$fechaFinal%'  
+			ORDER BY osd.Nro DESC,
+			osd.Item ASC ");
+
+			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
 		}else{
 
-			return "error";	
+			$fechaActual = new DateTime();
+			$fechaActual ->add(new DateInterval("P1D"));
+			$fechaActualMasUno = $fechaActual->format("Y-m-d");
+
+			$fechaFinal2 = new DateTime($fechaFinal);
+			$fechaFinal2 ->add(new DateInterval("P1D"));
+			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+
+			if($fechaFinalMasUno == $fechaActualMasUno){
+
+				$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+				DATE_FORMAT(os.FecEmi, '%d/%m/%Y') AS FecEmi,
+				DATE_FORMAT(os.FecEnt, '%d/%m/%Y') AS Fecllegada,
+				osd.Nro,
+				Item,
+				CodProOrigen,
+				pro.DesPro AS DesProOrigen,
+				CantidadIni,
+				CodProDestino,
+				pro1.DesPro AS Descripcion,
+				Saldo,
+				Despacho,
+				tb1.Des_Larga AS Color,
+				tb3.Des_Larga AS Color2,
+				tb2.Des_Corta AS Unidad,
+				tb4.Des_Larga AS EstadoDet 
+			  FROM
+				oServicioDet osd 
+				INNER JOIN Producto pro 
+				  ON osd.CodProOrigen = pro.CodPro 
+				INNER JOIN Producto pro1 
+				  ON osd.CodProDestino = pro1.CodPro 
+				INNER JOIN Tabla_M_Detalle AS tb1 
+				  ON pro.ColPro = tb1.Cod_Argumento 
+				INNER JOIN Tabla_M_Detalle AS tb3 
+				  ON pro1.ColPro = tb3.Cod_Argumento 
+				INNER JOIN Tabla_M_Detalle AS tb2 
+				  ON pro.UndPro = tb2.Cod_Argumento 
+				LEFT JOIN oServicio os 
+				  ON os.Nro = osd.Nro 
+				LEFT JOIN Tabla_M_Detalle AS tb4 
+				  ON osd.Estos = tb4.Des_Corta 
+			  WHERE (
+				  tb1.Cod_Tabla = 'TCOL' 
+				  OR tb1.Cod_Tabla IS NULL
+				) 
+				AND (
+				  tb2.Cod_Tabla = 'TUND' 
+				  OR tb2.Cod_Tabla IS NULL
+				) 
+				AND (
+				  tb3.Cod_Tabla = 'TCOL' 
+				  OR tb3.Cod_Tabla IS NULL
+				) 
+				AND (
+				  tb4.Cod_Tabla = 'EOC1' 
+				  OR tb3.Cod_Tabla IS NULL
+				) 
+				AND osd.EstReg = '1' 
+                AND DATE(os.FecEmi) BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'   
+				ORDER BY osd.Nro DESC,
+				osd.Item ASC ");
+
+			}else{
+
+
+				$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+				DATE_FORMAT(os.FecEmi, '%d/%m/%Y') AS FecEmi,
+				DATE_FORMAT(os.FecEnt, '%d/%m/%Y') AS Fecllegada,
+				osd.Nro,
+				Item,
+				CodProOrigen,
+				pro.DesPro AS DesProOrigen,
+				CantidadIni,
+				CodProDestino,
+				pro1.DesPro AS Descripcion,
+				Saldo,
+				Despacho,
+				tb1.Des_Larga AS Color,
+				tb3.Des_Larga AS Color2,
+				tb2.Des_Corta AS Unidad,
+				tb4.Des_Larga AS EstadoDet 
+			  FROM
+				oServicioDet osd 
+				INNER JOIN Producto pro 
+				  ON osd.CodProOrigen = pro.CodPro 
+				INNER JOIN Producto pro1 
+				  ON osd.CodProDestino = pro1.CodPro 
+				INNER JOIN Tabla_M_Detalle AS tb1 
+				  ON pro.ColPro = tb1.Cod_Argumento 
+				INNER JOIN Tabla_M_Detalle AS tb3 
+				  ON pro1.ColPro = tb3.Cod_Argumento 
+				INNER JOIN Tabla_M_Detalle AS tb2 
+				  ON pro.UndPro = tb2.Cod_Argumento 
+				LEFT JOIN oServicio os 
+				  ON os.Nro = osd.Nro 
+				LEFT JOIN Tabla_M_Detalle AS tb4 
+				  ON osd.Estos = tb4.Des_Corta 
+			  WHERE (
+				  tb1.Cod_Tabla = 'TCOL' 
+				  OR tb1.Cod_Tabla IS NULL
+				) 
+				AND (
+				  tb2.Cod_Tabla = 'TUND' 
+				  OR tb2.Cod_Tabla IS NULL
+				) 
+				AND (
+				  tb3.Cod_Tabla = 'TCOL' 
+				  OR tb3.Cod_Tabla IS NULL
+				) 
+				AND (
+				  tb4.Cod_Tabla = 'EOC1' 
+				  OR tb3.Cod_Tabla IS NULL
+				) 
+				AND osd.EstReg = '1' 
+                AND DATE(os.FecEmi) BETWEEN '$fechaInicial' AND '$fechaFinal'
+				ORDER BY osd.Nro DESC,
+				osd.Item ASC ");
+
+			}
+		
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
 
 		}
 
-		$stmt -> close();
+	}
 
-		$stmt = null;
 
-	}	
 
-	/*=============================================
-	ANULAR ORDEN DE SERVICIO
-	=============================================*/
-
-	static public function mdlAnularOrdenServicio($tabla,$datos){
-
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET EstOco = :EstOco , FecAnulacion = :FecAnulacion,FecAnu = :FecAnu, UsuAnu = :UsuAnu, PcAnu = :PcAnu WHERE Nro = :Nro");
-
-		$stmt -> bindParam(":EstOco", $datos["EstOco"], PDO::PARAM_STR);
-		$stmt -> bindParam(":FecAnulacion", $datos["FecAnulacion"], PDO::PARAM_STR);
-		$stmt -> bindParam(":Nro", $datos["Nro"], PDO::PARAM_STR);
-		$stmt -> bindParam(":FecAnu", $datos["FecAnu"], PDO::PARAM_STR);
-		$stmt -> bindParam(":UsuAnu", $datos["UsuAnu"], PDO::PARAM_STR);
-		$stmt -> bindParam(":PcAnu", $datos["PcAnu"], PDO::PARAM_STR);
-		
-
-		if($stmt -> execute()){
-
-			return "ok";
-		
-		}else{
-
-			return "error";	
-
-		}
-
-		$stmt -> close();
-
-		$stmt = null;
-
-	}	
 }

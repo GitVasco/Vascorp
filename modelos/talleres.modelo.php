@@ -503,7 +503,6 @@ class ModeloTalleres{
 
 			$stmt = Conexion::conectar()->prepare("SELECT et.id,
       et.sector,
-      CONCAT(et.sector, '-', s.nom_sector) AS nom_sector,
       et.articulo,
       a.modelo,
       a.nombre,
@@ -532,8 +531,8 @@ class ModeloTalleres{
       ON et.articulo = a.articulo 
       LEFT JOIN operacionesjf o 
       ON et.cod_operacion = o.codigo 
-      LEFT JOIN sectorjf s 
-      ON et.sector = s.cod_sector ORDER BY et.id ASC");
+      WHERE MONTH(et.fecha) = MONTH(NOW())
+       ORDER BY et.id ASC");
 
 			$stmt -> execute();
 
@@ -544,7 +543,6 @@ class ModeloTalleres{
 
 			$stmt = Conexion::conectar()->prepare("SELECT et.id,
       et.sector,
-      CONCAT(et.sector, '-', s.nom_sector) AS nom_sector,
       et.articulo,
       a.modelo,
       a.nombre,
@@ -573,8 +571,7 @@ class ModeloTalleres{
       ON et.articulo = a.articulo 
       LEFT JOIN operacionesjf o 
       ON et.cod_operacion = o.codigo 
-      LEFT JOIN sectorjf s 
-      ON et.sector = s.cod_sector  WHERE et.fecha like '%$fechaFinal%'");
+      WHERE et.fecha like '%$fechaFinal%'");
 
 			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 
@@ -596,7 +593,6 @@ class ModeloTalleres{
 
 				$stmt = Conexion::conectar()->prepare("SELECT et.id,
         et.sector,
-        CONCAT(et.sector, '-', s.nom_sector) AS nom_sector,
         et.articulo,
         a.modelo,
         a.nombre,
@@ -624,16 +620,14 @@ class ModeloTalleres{
         LEFT JOIN articulojf a 
         ON et.articulo = a.articulo 
         LEFT JOIN operacionesjf o 
-        ON et.cod_operacion = o.codigo 
-        LEFT JOIN sectorjf s 
-        ON et.sector = s.cod_sector WHERE et.fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'");
+        ON et.cod_operacion = o.codigo
+        WHERE et.fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'");
 
 			}else{
 
 
 				$stmt = Conexion::conectar()->prepare("SELECT et.id,
         et.sector,
-        CONCAT(et.sector, '-', s.nom_sector) AS nom_sector,
         et.articulo,
         a.modelo,
         a.nombre,
@@ -662,8 +656,7 @@ class ModeloTalleres{
         ON et.articulo = a.articulo 
         LEFT JOIN operacionesjf o 
         ON et.cod_operacion = o.codigo 
-        LEFT JOIN sectorjf s 
-        ON et.sector = s.cod_sector WHERE et.fecha BETWEEN '$fechaInicial' AND '$fechaFinal'");
+        WHERE et.fecha BETWEEN '$fechaInicial' AND '$fechaFinal'");
 
 			}
 		
