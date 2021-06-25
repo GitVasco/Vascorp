@@ -920,3 +920,40 @@ $(".tablaOrdenesCompras").on("click", ".btnEditarOrdenCompra", function () {
 
 
 })
+
+/* 
+* MATERIA PRIMA EN OC PENDIENTES DE ENTREGA
+*/
+$(".tablaMpPendiente").DataTable({
+  ajax: "ajax/materiaprima/tabla-mp-oc-pendiente.ajax.php?perfil="+$("#perfilOculto").val(),
+  deferRender: true,
+  retrieve: true,
+  processing: true,
+  order: [[1, "desc"]],
+  "pageLength": 20,
+  "lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+  language: {
+    sProcessing: "Procesando...",
+    sLengthMenu: "Mostrar _MENU_ registros",
+    sZeroRecords: "No se encontraron resultados",
+    sEmptyTable: "Ningún dato disponible en esta tabla",
+    sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+    sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
+    sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+    sInfoPostFix: "",
+    sSearch: "Buscar:",
+    sUrl: "",
+    sInfoThousands: ",",
+    sLoadingRecords: "Cargando...",
+    oPaginate: {
+      sFirst: "Primero",
+      sLast: "Último",
+      sNext: "Siguiente",
+      sPrevious: "Anterior"
+    },
+    oAria: {
+      sSortAscending: ": Activar para ordenar la columna de manera ascendente",
+      sSortDescending: ": Activar para ordenar la columna de manera descendente"
+    }
+  }
+});

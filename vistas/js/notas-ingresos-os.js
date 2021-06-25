@@ -469,3 +469,83 @@ $(".tablaNotasIngresosOS").on("click", ".btnDetalleReporteNotaIngresoServicio", 
   window.location = "vistas/reportes_excel/rpt_notaingresoservicio.php?idNotaIngresoServicio=" + idNotaIngresoServicio;
 
 })
+
+/* 
+* VISUALIZAR DETALLE DEL CORTE
+*/ 
+$(".tablaNotasIngresosOS").on("click", ".btnVisualizarNotaIngresoServicio", function () {
+
+  var idNotaIngresoServicio = $(this).attr("idNotaIngresoServicio");
+  //console.log(idNotaIngresoServicio)
+
+  var datos = new FormData();
+	datos.append("idNotaIngresoServicio", idNotaIngresoServicio);
+
+	$.ajax({
+
+		url:"ajax/notas-ingresos-os.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType:"json",
+		success:function(respuesta){
+      //console.log(respuesta);
+
+      $("#NotaIngreso").val(respuesta["nneaos"]);      
+      $("#fecNi").val(respuesta["fecemi"]);
+      $("#proveedor").val(respuesta["proveedor"]);
+      $("#nuevoNroP").val(respuesta["nrodcto"]);
+
+		  }
+
+  })  
+
+  var idNotaIngresoServicioDet = $(this).attr("idNotaIngresoServicio");
+  console.log(idNotaIngresoServicioDet);
+
+  var datosDOC = new FormData();
+  datosDOC.append("idNotaIngresoServicioDet", idNotaIngresoServicioDet);
+  
+  $.ajax({
+
+  url:"ajax/notas-ingresos-os.ajax.php",
+  method: "POST",
+  data: datosDOC,
+  cache: false,
+  contentType: false,
+  processData: false,
+  dataType:"json",
+  success:function(respuestaDetalle){
+
+    //console.log(respuestaDetalle);
+
+    $(".detalleNI").remove();
+     
+    for(var id of respuestaDetalle){
+          
+      $('.tablaDetalleNotaIngreso').append(
+
+        '<tr class="detalleNI">' +
+          '<td class="text-center">' + id.Item + ' </td>' +
+          '<td class="text-center">' + id.CodProOrigen + ' </td>' +
+          '<td class="text-left">' + id.DesProOrigen + ' </td>' +
+          '<td class="text-left">' + id.Color + '</td>' +
+          '<td class="text-left">' + id.Unidad + ' </td>' +
+          '<td class="text-center">' + id.CodProDestino + ' </td>' +
+          '<td class="text-left">' + id.Descripcion + ' </td>' +
+          '<td class="text-left">' + id.Color2 + ' </td>' +
+          '<td class="text-right">' + id.CanSol + ' </td>' +
+          '<td class="text-right">' + id.nroos + ' </td>' +
+        '</tr>'
+
+      )
+
+    }            
+
+  }
+
+})  
+
+})

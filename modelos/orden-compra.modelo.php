@@ -1153,5 +1153,67 @@ class ModeloOrdenCompra{
 		$stmt=null;
 	}
 
+  /*=============================================
+	MOSTRAR DESTINO PARA LA MATERIA EN LA NOTA DE SALIDA
+	=============================================*/
+
+	static public function mdlMpOcPendiente(){
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+		ocd.codpro,
+		p.codfab AS codfab,
+  		p.despro AS despro,
+		p.undpro,
+		p.colpro,
+		(SELECT 
+		  des_corta 
+		FROM
+		  tabla_m_detalle td 
+		WHERE cod_tabla = 'TUND' 
+		  AND p.undpro = td.cod_argumento) AS unidad,
+		(SELECT 
+		  des_larga 
+		FROM
+		  tabla_m_detalle td 
+		WHERE cod_tabla = 'TCOL' 
+		  AND p.colpro = td.cod_argumento) AS color,
+		ocd.PrePro AS precio,
+		ocd.cantni,
+		ocd.estac,
+		ocd.nro,
+		prov.RazPro AS proveedor,
+		DATE(oc.FecEmi) AS fecemi,
+		DATE(oc.Fecllegada) AS fecllegada 
+	  FROM
+		ocompra oc 
+		LEFT JOIN ocomdet ocd 
+		  ON oc.nro = ocd.nro 
+		LEFT JOIN 
+		  (SELECT 
+			pro.CodPro,
+			pro.CodFab,
+			pro.DesPro,
+			pro.undpro,
+			pro.ColPro 
+		  FROM
+			producto pro 
+		  WHERE pro.estpro = '1') AS p 
+		  ON ocd.codpro = p.codpro 
+		LEFT JOIN proveedor AS prov 
+		  ON prov.codruc = ocd.codruc 
+	  WHERE ocd.estac IN ('ABI', 'PAR') 
+		AND ocd.estoco = '03'");
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
+
 
 }

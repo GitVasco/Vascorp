@@ -18,7 +18,31 @@ class AjaxTablaNotaIngresaOS{
 
 		echo json_encode($respuesta);
 
+	}
+	
+   /* 
+    * Traer cabecera nota ingreso
+    */
+    public function ajaxTraerNiCab(){
+
+		$valor = $this->idNotaIngresoServicio;
+
+		$respuesta = ControladorNotasIngresos::ctrTraerNiSCab($valor);
+
+		echo json_encode($respuesta);
 	}	
+
+   /* 
+    * Traer detalle nota ingreso
+    */
+    public function ajaxTraerNiSDet(){
+
+		$valor = $this->idNotaIngresoServicioDet;
+
+		$respuesta = ControladorNotasIngresos::ctrTraerNiSDet($valor);
+
+		echo json_encode($respuesta);
+	}		
 
 }
 
@@ -35,3 +59,24 @@ if(isset($_POST["ordser"])){
 
 }
 
+/* 
+* Traer cabecera nota ingreso
+*/
+if(isset($_POST["idNotaIngresoServicio"])){
+
+	$editarSubLinea = new AjaxTablaNotaIngresaOS();
+	$editarSubLinea -> idNotaIngresoServicio = $_POST["idNotaIngresoServicio"];
+	$editarSubLinea -> ajaxTraerNiCab();
+
+}
+
+/* 
+* Traer detalle nota ingreso
+*/
+if(isset($_POST["idNotaIngresoServicioDet"])){
+
+	$editarSubLinea = new AjaxTablaNotaIngresaOS();
+	$editarSubLinea -> idNotaIngresoServicioDet = $_POST["idNotaIngresoServicioDet"];
+	$editarSubLinea -> ajaxTraerNiSDet();
+
+}

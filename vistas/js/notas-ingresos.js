@@ -769,7 +769,7 @@ function listarMpNi(){
 $(".tablaNotasIngresos").on("click", ".btnDetalleReporteNotaIngreso", function () {
 
   var idNotaIngreso = $(this).attr("idNotaIngreso");
-  console.log("idNotaIngreso", idNotaIngreso);
+  //console.log("idNotaIngreso", idNotaIngreso);
 
   window.location = "vistas/reportes_excel/rpt_notasingresos.php?idNotaIngreso=" + idNotaIngreso;
 
