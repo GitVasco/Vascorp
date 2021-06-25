@@ -67,7 +67,7 @@ class ModeloProveedores{
 
 		if($item != null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT p.*,m.Cod_Argumento,m.Des_Larga FROM $tabla p LEFT JOIN tabla_m_detalle m  ON p.Moneda = m.Cod_Argumento WHERE m.Cod_Tabla = 'TMON' AND p.$item = :$item");
+			$stmt = Conexion::conectar()->prepare("SELECT p.*,m.Cod_Argumento,m.Des_Larga FROM $tabla p LEFT JOIN tabla_m_detalle m  ON p.Moneda = m.Cod_Argumento AND m.Cod_Tabla = 'TMON' WHERE p.$item = :$item");
 
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 

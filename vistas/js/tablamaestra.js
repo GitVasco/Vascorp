@@ -179,8 +179,19 @@ $("#nuevaDescCortaSelect").change(function(){
         success: function (respuesta) {
 			//console.log(respuesta);
 
-            $("#nuevoVal3").val(respuesta["correlativo"]);
-			document.getElementById("nuevoVal3").readOnly = true;
+			if(respuesta["correlativo"] == null){
+
+				$("#nuevoVal3").val('001');
+				document.getElementById("nuevoVal3").readOnly = true;
+
+			}else{
+
+				$("#nuevoVal3").val(respuesta["correlativo"]);
+				document.getElementById("nuevoVal3").readOnly = true;
+
+			}
+
+				
 
         }
 

@@ -155,12 +155,12 @@ MODAL VISUALIZAR INFORMACION
 
                     <tr>
 
-                        <th>Código</th>
-                        <th>Cod. Fab</th>
-                        <th>Descripcion</th>
-                        <th>Color</th>
-                        <th>Stock</th>
-                        <th>Accion</th>
+                        <th style="min-width:50px">Código</th>
+                        <th style="min-width:50px">Cod. Fab</th>
+                        <th style="min-width:350px">Descripcion</th>
+                        <th style="min-width:200px">Color</th>
+                        <th style="min-width:10px">Stock</th>
+                        <th>#</th>
 
                     </tr>
 
