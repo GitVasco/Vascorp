@@ -117,6 +117,8 @@ $("#daterange-btnOrdenServicio").daterangepicker(
     localStorage.setItem("capturarRango33", capturarRango33);
     localStorage.setItem("fechaInicial", fechaInicial);
     localStorage.setItem("fechaFinal", fechaFinal);
+    $(".btnReporteOServicioGeneral").attr("inicio",fechaInicial);
+    $(".btnReporteOServicioGeneral").attr("fin",fechaFinal);
 
     // Recargamos la tabla con la información para ser mostrada en la tabla
     $(".tablaOrdenesServicios").DataTable().destroy();
@@ -162,6 +164,8 @@ $(".daterangepicker.opensleft .ranges li").on("click", function() {
       localStorage.setItem("capturarRango33", "Hoy");
       localStorage.setItem("fechaInicial", fechaInicial);
       localStorage.setItem("fechaFinal", fechaFinal);
+      $(".btnReporteOServicioGeneral").attr("inicio",fechaInicial);
+      $(".btnReporteOServicioGeneral").attr("fin",fechaFinal);
     // Recargamos la tabla con la información para ser mostrada en la tabla
       $(".tablaOrdenesServicios").DataTable().destroy();
       cargarTablaOrdenServicio(fechaInicial, fechaFinal);
@@ -319,7 +323,7 @@ $(".tablaMateriaOrdenesServicios tbody").on("click", "button.agregarMateriaServi
 
           '<div class="col-xs-1 destinoCodigo">' +
 
-              '<input type="text" class="form-control input-sm nuevoCodigoPro2 modmpOSDestino"  name="nuevoCodigoPro2"  id="codigo'+codpro+'" origen = "'+codpro+'">' +
+              '<input type="text" class="form-control input-sm nuevoCodigoPro2 modmpOSDestino"  name="nuevoCodigoPro2"  id="codigo'+codpro+'" origen = "'+codpro+'" autocomplete="off">' +
 
           "</div>" +
 
@@ -598,4 +602,153 @@ $(".tablaMateriaOrdenesServicios").on("draw.dt", function() {
   quitarAgregarMateriaServicio();
 });
 
+/* 
+* VISUALIZAR DETALLE DEL CORTE
+*/ 
+$(".tablaOrdenesServicios").on("click", ".btnVisualizarOrdenServicio", function () {
 
+	var idOrdenServicio = $(this).attr("idOrdenServicio");
+  // console.log(idOrdenServicio);
+    
+  var datos = new FormData();
+	datos.append("idOrdenServicio", idOrdenServicio);
+
+	$.ajax({
+
+		url:"ajax/orden-servicio.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType:"json",
+		success:function(respuesta){
+      // console.log(respuesta);
+      $("#codigo").val(idOrdenServicio);
+      $("#emision").val(respuesta["FecEmi"]);
+      $("#entrega").val(respuesta["FecEnt"]);
+      $("#proveedor").val("000097");
+      $("#razonsocial").val("ELASTICOS VASCO");
+      $("#ruc").val("20551240356");
+      $("#estado").val(respuesta["EstOS"]);
+      $("#descontado").val(respuesta["DesStk"]);
+      $("#observacion").val(respuesta["ObsOs"]);
+
+		  }
+
+    })
+    
+    var idOrdenServicioDetalle = $(this).attr("idOrdenServicio");	
+    //console.log("codigoDAC", codigoDAC);
+
+    var datosDOC = new FormData();
+    datosDOC.append("idOrdenServicioDetalle", idOrdenServicioDetalle);
+    
+    $.ajax({
+
+		url:"ajax/orden-servicio.ajax.php",
+		method: "POST",
+		data: datosDOC,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType:"json",
+		success:function(respuestaDetalle){
+
+			// console.log(respuestaDetalle);
+
+      $(".detalleOS").remove();
+       
+			for(var id of respuestaDetalle){
+            
+				$('.tablaDetalleOrdenServicio').append(
+
+					'<tr class="detalleOS">' +
+            '<td >' + id.Item + ' </td>' +
+            '<td >' + id.CodProOrigen + ' </td>' +
+            '<td >' + id.DesProOrigen + ' </td>' +
+						'<td >' + id.CodProDestino + ' </td>' +
+            '<td >' + id.Descripcion + ' </td>' +
+            '<td >' + id.Color2 + ' </td>' +
+            '<td >' + id.Unidad + ' </td>' +
+            '<td >' + id.CantidadIni + '</td>' +
+            '<td >' + id.Despacho + '</td>' +
+            '<td >' + id.Saldo + '</td>' +
+            '<td >' + id.EstOS + '</td>' +
+            '<td >' + id.EstadoDet + '</td>' +
+					'</tr>'
+
+				)
+
+			}            
+
+		}
+
+	})
+  
+});
+
+$(".tablaOrdenesServicios").on("click",".btnCerrarOServicio",function(){
+	var idCerrar = $(this).attr("idOrdenServicio");
+ 
+	// Capturamos el id de la orden de servicio
+	swal({
+        title: '¿Está seguro de cerrar la orden de servicio '+idCerrar+'?',
+        text: "¡Si no lo está puede cancelar la acción!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si, cerrar orden de servicio!'
+    }).then(function (result) {
+
+        if (result.value) {
+          
+			
+			var datos=new FormData();
+			datos.append("cerrarId",idCerrar);
+			$.ajax({
+				url:"ajax/orden-servicio.ajax.php",
+				type:"POST",
+				data:datos,
+				cache:false,
+				contentType:false,
+				processData:false,
+				success:function(respuesta){
+					console.log(respuesta);
+					swal({
+						type: "success",
+						title: "¡Ok!",
+						text: "¡La orden de servicio fue cerrada con éxito!",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar",
+						closeOnConfirm: false
+					}).then((result)=>{
+						if(result.value){
+							window.location="orden-servicio";
+              
+            }
+					});}
+			});
+
+		}
+	})
+
+});
+
+//REPORTE DE ORDEN DE SERVICIO DE CADA UNO
+$(".tablaOrdenesServicios").on("click", ".btnDetalleReporteOrdenServicio", function () {
+  var idOrdenServicio = $(this).attr("idOrdenServicio");
+  // console.log(idOrdenCompra);
+  window.location = "vistas/reportes_excel/rpt_orden_servicio.php?idOrdenServicio="+idOrdenServicio;
+
+})
+
+//ORDEN DE COMPRA GENERAL
+$(".box").on("click", ".btnReporteOServicioGeneral", function () {
+  var inicio = $(this).attr("inicio");
+	var fin = $(this).attr("fin");
+  window.location = "vistas/reportes_excel/rpt_orden_servicio_general.php?inicio="+inicio+"&fin="+fin;
+
+})

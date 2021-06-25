@@ -129,7 +129,7 @@
 
                     <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">OBSERVACION</label>
                     <div class="col-lg-5">
-                    <input type="text" class="form-control input-sm"  name ="nuevaObservacion" >
+                    <input type="text" class="form-control input-sm info-box-text"  name ="nuevaObservacion" >
                     </div>
 
                     <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">DESCONTAR STOCK</label>
@@ -231,8 +231,8 @@
 
           <?php
 
-            $guardarOrdenServicio = new ControladorOrdenCompra();
-            $guardarOrdenServicio -> ctrCrearOrdenCompra();
+            $guardarOrdenServicio = new ControladorOrdenServicio();
+            $guardarOrdenServicio -> ctrCrearOrdenServicio();
 
           ?>          
 

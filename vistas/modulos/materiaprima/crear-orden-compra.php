@@ -46,11 +46,11 @@
                 <tr>
                   <th>Codigo</th>
                   <th>Cod. Fabrica</th>
-                  <th>Descripcion</th>
+                  <th style="min-width:240px">Descripcion</th>
                   <th>Color</th>
                   <th>Unidad</th>
                   <th>Precio Unitario</th>
-                  <th>Proveedor</th>
+                  <th style="min-width:180px">Proveedor</th>
                   <th>Stock MateriaPrima</th>
                   <th>Acciones</th>
                 </tr>
@@ -188,7 +188,7 @@
 
                     <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">DIAS</label>
                     <div class="col-lg-2">
-                        <input type="text" class="form-control input-sm"  name ="nuevoDia" id="nuevoDia">
+                        <input type="text" class="form-control input-sm info-box-text"  name ="nuevoDia" id="nuevoDia">
                     </div>
 
                     
@@ -200,7 +200,7 @@
 
                 <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">N° COTIZACION</label>
                 <div class="col-lg-2">
-                    <input type="text" class="form-control input-sm"  name ="nuevoNroCotizacion" >
+                    <input type="text" class="form-control input-sm info-box-text"  name ="nuevoNroCotizacion" >
                 </div>
 
                 <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">TIPO CAMBIO</label>
@@ -233,7 +233,7 @@
 
                 <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">OBSERVACION</label>
                 <div class="col-lg-2">
-                <input type="text" class="form-control input-sm"  name ="nuevaObservacion" >
+                <input type="text" class="form-control input-sm info-box-text"  name ="nuevaObservacion" >
                 </div>
 
                 <div class="col-lg-12"></div>

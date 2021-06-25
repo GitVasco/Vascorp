@@ -845,7 +845,7 @@ class ModeloOrdenCompra{
   // Método para guardar la orden de compra
 	static public function mdlGuardarOrdenCompra($datos){
 
-		$sql="INSERT INTO ocompra(Tip,Ser,Nro,Cod_Local,Cod_Entidad,CodRuc,FecEmi,tCambio,Mo,Obser,pIgv,SubTotal,Igv,Total,mtopago,Centcosto,Cantidad,NroProforma,FecLlegada,TipPago,Dia,EstOco,EstReg,FecReg,UsuReg,PcReg,estac) VALUES (:Tip,:Ser,:Nro,:Cod_Local,:Cod_Entidad,:CodRuc,:FecEmi,:tCambio,:Mo,:Obser,:pIgv,:SubTotal,:Igv,:Total,:mtopago,:Centcosto,:Cantidad,:NroProforma,:FecLlegada,:TipPago,:Dia,:EstOco,:EstReg,:FecReg,:UsuReg,:PcReg,:estac)";
+		$sql="INSERT INTO ocompra(Tip,Ser,Nro,Cod_Local,Cod_Entidad,CodRuc,FecEmi,tCambio,Mo,Obser,pIgv,SubTotal,Igv,Total,mtopago,Centcosto,Cantidad,NroProforma,FecLlegada,TipPago,Dia,EstOco,EstReg,FecReg,UsuReg,PcReg,estac) VALUES (:Tip,:Ser,:Nro,:Cod_Local,:Cod_Entidad,:CodRuc,:FecEmi,:tCambio,:Mo,UPPER(:Obser),:pIgv,:SubTotal,:Igv,:Total,:mtopago,:Centcosto,:Cantidad,UPPER(:NroProforma),:FecLlegada,:TipPago,UPPER(:Dia),:EstOco,:EstReg,:FecReg,:UsuReg,:PcReg,:estac)";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 
@@ -1050,7 +1050,7 @@ class ModeloOrdenCompra{
 	// Método para guardar las ventas
 	static public function mdlEditarOrdenCompra($datos){
 
-		$sql="UPDATE ocompra SET Nro = :Nro,CodRuc = :CodRuc,FecEmi = :FecEmi,Mo = :Mo,Obser = :Obser,SubTotal = :SubTotal,Igv = :Igv,Total = :Total,Centcosto = :Centcosto,NroProforma = :NroProforma,FecLlegada = :FecLlegada,TipPago = :TipPago,Dia = :Dia,FecMod = :FecMod,UsuMod = :UsuMod,PcMod = :PcMod WHERE Nro = :Nro";
+		$sql="UPDATE ocompra SET Nro = :Nro,CodRuc = :CodRuc,FecEmi = :FecEmi,Mo = :Mo,Obser = UPPER(:Obser),SubTotal = :SubTotal,Igv = :Igv,Total = :Total,Centcosto = :Centcosto,NroProforma = UPPER(:NroProforma),FecLlegada = :FecLlegada,TipPago = :TipPago,Dia = UPPER(:Dia),FecMod = :FecMod,UsuMod = :UsuMod,PcMod = :PcMod WHERE Nro = :Nro";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 

@@ -186,12 +186,12 @@ class ControladorNotasSalidas{
 					
 					$valor=$value["id"];
 
-					$infoMateria=ModeloMateriaPrima::mdlMostrarMateriaPrima($valor);
+					$infoMateria=ModeloMateriaPrima::mdlMostrarMateriaPrima2($valor);
 
 					# Actualizamos el stock en la tabla materia prima
 					$tabla="producto";
 					$item1="CodAlm01";
-					$valor1=$infoMateria["CodAlm01"]-$value["cantidad"];
+					$valor1=$infoMateria["stock"]-$value["cantidad"];
 					// var_dump($infoMateria);
 					// var_dump($valor1);
 					ModeloNotasSalidas::mdlActualizarUnDatoMateria($tabla,$item1,$valor1,$valor);
@@ -341,12 +341,12 @@ class ControladorNotasSalidas{
 
 				# Traemos las materia prima por CodPro en cada interacción
 				$valor=$value["CodPro"];
-				$infoMateria=ModeloMateriaPrima::mdlMostrarMateriaPrima($valor);
+				$infoMateria=ModeloMateriaPrima::mdlMostrarMateriaPrima2($valor);
 
 				# Sumamos el stock de la materia prima con la cantidad venta del detalle nota salida
 				$tabla="producto";
 				$item1="CodAlm01";
-				$valor1=$value["CanVta"]+$infoMateria["CodAlm01"];
+				$valor1=$value["CanVta"]+$infoMateria["stock"];
 				ModeloNotasSalidas::mdlActualizarUnDatoMateria($tabla,$item1,$valor1,$valor);
 	
 	

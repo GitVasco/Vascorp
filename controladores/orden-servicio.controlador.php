@@ -16,6 +16,19 @@ class ControladorOrdenServicio{
 	}
 
 	/*=============================================
+	REPORTE FECHAS
+	=============================================*/	
+
+	static public function ctrReporteFechasOrdenServicioGeneral($fechaInicial, $fechaFinal){
+
+
+		$respuesta = ModeloOrdenServicio::mdlReporteFechasOrdenServicioGeneral($fechaInicial, $fechaFinal);
+
+		return $respuesta;
+		
+	}
+
+	/*=============================================
 	MOSTRAR ORDEN DE SERVICIO
 	=============================================*/	
 
@@ -41,7 +54,7 @@ class ControladorOrdenServicio{
 		
 	}
 	/*=============================================
-	CREAR NOTA DE SALIDA
+	CREAR ORDEN DE SERVICIO
 	=============================================*/
 
 	static public function ctrCrearOrdenServicio(){
@@ -72,41 +85,45 @@ class ControladorOrdenServicio{
 				# Modificamos la información de los productos comprados en un array
 
 				$listaMateriaServicios=json_decode($_POST["listarMateriaServicios"],true);
+
+				if($_POST["nuevoDsctoStock"] == "SI"){
+					foreach($listaMateriaServicios as $key=>$value){
+
+						# Traemos las materia prima por CodPro en cada interacción
+						
+						$valor=$value["id"];
+	
+						$infoMateria=ModeloMateriaPrima::mdlMostrarMateriaPrima2($valor);
+	
+						# Actualizamos el stock en la tabla materia prima
+						$tabla="producto";
+						$item1="CodAlm01";
+						$valor1=$infoMateria["stock"]-$value["cantidad"];
+						// var_dump($infoMateria);
+						// var_dump($valor1);
+						ModeloNotasSalidas::mdlActualizarUnDatoMateria($tabla,$item1,$valor1,$valor);
+	
+					}
+				}
 				
 
-				foreach($listaMateriaServicios as $key=>$value){
-
-					# Traemos las materia prima por CodPro en cada interacción
-					
-					$valor=$value["id"];
-
-					$infoMateria=ModeloMateriaPrima::mdlMostrarMateriaPrima($valor);
-
-					# Actualizamos el stock en la tabla materia prima
-					$tabla="producto";
-					$item1="CodAlm01";
-					$valor1=$infoMateria["CodAlm01"]-$value["cantidad"];
-					// var_dump($infoMateria);
-					var_dump($valor1);
-					// ModeloNotasSalidas::mdlActualizarUnDatoMateria($tabla,$item1,$valor1,$valor);
-
-				}
+				
 				//TRAEMOS LA FECHA Y LA PC QUE SE REGISTRO
 				date_default_timezone_set('America/Lima');
 				$fecha = new DateTime();
 				$PcReg= gethostbyaddr($_SERVER['REMOTE_ADDR']);
 
-				//TRAEMOS EL ULTIMO NRO DE LA NOTA DE SALIDA Y LO SUMAMOS Y CONCATENAMOS LOS 0'S
+				//TRAEMOS EL ULTIMO NRO DE ORDEN DE SERVICIO Y LO SUMAMOS Y CONCATENAMOS LOS 0'S
 
 				$ultimoNro=ModeloOrdenServicio::mdlMostrarUltimoNro();
 
 				$suma = $ultimoNro["Nro"]+1;
 				$notaNro = str_pad($suma,strlen($ultimoNro["Nro"]),'0',STR_PAD_LEFT);
 
-
+				// var_dump($notaNro);
 				
 				/* ==============================================
-				GUARDAMOS LA NOTA DE SALIDA CABECERA
+				GUARDAMOS EL ORDEN DE SERVICIO CABECERA
 				============================================== */
 
 				$datos=array("Cod_Local"=>'01',
@@ -125,13 +142,15 @@ class ControladorOrdenServicio{
 							 "PcReg"=>$PcReg,
 							 "UsuReg"=>$_SESSION["nombre"]);
 
-				// $respuesta=ModeloOrdenServicio::mdlGuardarOrdenServicio($datos);
+							//  var_dump($datos);
+
+				$respuesta=ModeloOrdenServicio::mdlGuardarOrdenServicio($datos);
 
 				/* ==============================================
 				GUARDAMOS LA ORDEN DE SERVICIO DETALLE
 				============================================== */
 
-				// if($respuesta=="ok"){
+				if($respuesta=="ok"){
 
 					
 
@@ -157,39 +176,41 @@ class ControladorOrdenServicio{
 									 "PcReg"=>$PcReg,
 									 "UsuReg"=>$_SESSION["nombre"]);
 
-					// ModeloOrdenServicio::mdlGuardarDetalleOrdenServicio($datos2);
+									//  var_dump($datos2);
+
+					ModeloOrdenServicio::mdlGuardarDetalleOrdenServicio($datos2);
 					
 					}
 
 					# Mostramos una alerta suave
-					// echo '<script>
-					// 		swal({
-					// 			type: "success",
-					// 			title: "Felicitaciones",
-					// 			text: "¡El orden de servicio fue registrado con éxito!",
-					// 			showConfirmButton: true,
-					// 			confirmButtonText: "Cerrar"
-					// 		}).then((result)=>{
-					// 			if(result.value){
-					// 				window.location="orden-servicio";}
-					// 		});
-					// 	</script>';
-					// }else{
+					echo '<script>
+							swal({
+								type: "success",
+								title: "Felicitaciones",
+								text: "¡El orden de servicio fue registrado con éxito!",
+								showConfirmButton: true,
+								confirmButtonText: "Cerrar"
+							}).then((result)=>{
+								if(result.value){
+									window.location="orden-servicio";}
+							});
+						</script>';
+					}else{
 
-					// # Mostramos una alerta suave
-					// echo '<script>
-					// 		swal({
-					// 			type: "error",
-					// 			title: "Error",
-					// 			text: "¡La información presento problemas y no se registro adecuadamente. Por favor, intenteló de nuevo!",
-					// 			showConfirmButton: true,
-					// 			confirmButtonText: "Cerrar"
-					// 		}).then((result)=>{
-					// 			if(result.value){
-					// 				window.location="crear-orden-servicio";}
-					// 		});
-					// 	</script>';
-					// }				
+					# Mostramos una alerta suave
+					echo '<script>
+							swal({
+								type: "error",
+								title: "Error",
+								text: "¡La información presento problemas y no se registro adecuadamente. Por favor, intenteló de nuevo!",
+								showConfirmButton: true,
+								confirmButtonText: "Cerrar"
+							}).then((result)=>{
+								if(result.value){
+									window.location="crear-orden-servicio";}
+							});
+						</script>';
+					}				
 			}			
 		}
 

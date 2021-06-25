@@ -76,7 +76,7 @@ if(isset($_POST["ColorCompra"])){
 }
 
 /*=============================================
-CONSULTAR RUC PROVEEDOR O CLIENTE
+CERRAR ORDEN DE COMPRA
 =============================================*/	
 
 if(isset($_POST["cerrarId"])){
