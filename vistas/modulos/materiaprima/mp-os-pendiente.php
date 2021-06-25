@@ -4,7 +4,7 @@
 
         <h1>
 
-            Ordenes de compra pendientes
+            Ordenes de servicio pendientes
 
         </h1>
 
@@ -12,7 +12,8 @@
 
             <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-            <li class="active">Ordenes de compra pendientes</li>
+            <li class="active">Ordenes de servicio pendientes</li>
+            
 
         </ol>
 
@@ -22,28 +23,28 @@
 
         <div class="box">
             <div class="box-header">
-                <button class="btn btn-outline-success btnReporteOCompraPendiente" style="border:green 1px solid" >
-                    <img src="vistas/img/plantilla/excel.png" width="20px"> OCompra Pendiente
+                <button class="btn btn-outline-success btnReporteOServicioPendiente" style="border:green 1px solid" >
+                    <img src="vistas/img/plantilla/excel.png" width="20px"> OServicio Pendiente
                 </button>
             </div>
 
             <div class="box-body">
 
-                <table class="table table-bordered table-striped dt-responsive tablaMpPendiente" width="100%">
+                <table class="table table-bordered table-striped dt-responsive tablaMpPendienteOS" width="100%">
 
                     <thead>
 
                         <tr>
 
-                            <th>Nro OC</th>
+                            <th>Nro OS</th>
                             <th>Fec. Emisión</th>
                             <th>Fec. Entrega</th>
-                            <th>Proveedor</th>
-                            <th>Código</th>
-                            <th>CodFab</th>
+                            <th>Cod.Origen</th>
                             <th>Descripcion</th>
                             <th>Color</th>
-                            <th>Unidad</th>
+                            <th>Cod.Destino</th>
+                            <th>Descripcion</th>
+                            <th>Color</th>
                             <th>Cantidad</th>
 
                         </tr>
@@ -61,5 +62,5 @@
 </div>
 
 <script>
-    window.document.title = "Mp - OC Pendientes"
+    window.document.title = "Mp - OS Pendientes"
 </script>

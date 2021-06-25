@@ -431,7 +431,8 @@ class ModeloPedidos{
 			LEFT JOIN modelojf m
 			ON a.modelo = m.modelo
 		WHERE dt.codigo = $valor
-		GROUP BY m.id_modelo";
+		GROUP BY m.id_modelo
+		ORDER BY m.modelo";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 

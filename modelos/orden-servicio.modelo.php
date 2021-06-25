@@ -705,6 +705,73 @@ class ModeloOrdenServicio{
 
 	}
 
+	/*=============================================
+	MOSTRAR DESTINO PARA LA MATERIA EN LA ORDEN DE SERVICIO
+	=============================================*/
+
+	static public function mdlMpOsPendiente(){
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+		osd.Nro,
+		CodProOrigen,
+		p1.DesPro AS DesOri,
+		tcol.Des_Larga AS ColorOri,
+		tund.Des_Corta AS UndOri,
+		CodProDestino,
+		p2.DesPro AS DesDes,
+		tcol2.Des_Larga AS ColorDes,
+		tund.Des_Corta AS UndDes,
+		Saldo,
+		DATE_FORMAT(os.FecEmi, '%d/%m/%Y') AS FecEmi,
+		DATE_FORMAT(os.FecEnt, '%d/%m/%Y') AS FecEnt 
+	  FROM
+		oserviciodet osd 
+		INNER JOIN Producto p1 
+		  ON p1.CodPro = osd.CodProOrigen 
+		INNER JOIN Producto p2 
+		  ON p2.CodPro = osd.CodProDestino 
+		LEFT JOIN tabla_m_detalle tcol 
+		  ON tcol.Cod_Argumento = p1.ColPro 
+		LEFT JOIN tabla_m_detalle tcol2 
+		  ON tcol2.Cod_Argumento = p2.ColPro 
+		LEFT JOIN tabla_m_detalle tund 
+		  ON tund.Cod_Argumento = p1.UndPro 
+		LEFT JOIN tabla_m_detalle tund2 
+		  ON tund2.Cod_Argumento = p2.UndPro 
+		LEFT JOIN oservicio os 
+		  ON os.Nro = osd.Nro 
+	  WHERE (
+		  tcol.Cod_Tabla = 'TCOL' 
+		  OR tcol.Cod_Tabla IS NULL
+		) 
+		AND (
+		  tund.Cod_Tabla = 'TUND' 
+		  OR tund.Cod_Tabla IS NULL
+		) 
+		AND (
+		  tcol2.Cod_Tabla = 'TCOL' 
+		  OR tcol2.Cod_Tabla IS NULL
+		) 
+		AND (
+		  tund2.Cod_Tabla = 'TUND' 
+		  OR tund2.Cod_Tabla IS NULL
+		) 
+		AND osd.EstReg = '1' 
+		AND osd.EstOS IN ('ABI', 'PAR') 
+	  ORDER BY Nro DESC ");
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
+
+
 
 
 }

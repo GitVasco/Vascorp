@@ -957,3 +957,8 @@ $(".tablaMpPendiente").DataTable({
     }
   }
 });
+
+$(".box").on("click", ".btnReporteOCompraPendiente", function () {
+  window.location = "vistas/reportes_excel/rpt_orden_compra_pendiente.php";
+
+})

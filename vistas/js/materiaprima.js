@@ -415,7 +415,7 @@ $("#nuevaLinea").change(function(){
 			$("#nuevaSubLinea").append("<option value='' > SELECCIONAR SUBLINEA </option>");
 			for (let i = 0; i < respuesta.length; i++) {
 				
-				$("#nuevaSubLinea").append("<option value='"+respuesta[i]["Valor_3"]+"'>"+respuesta[i]["Valor_3"]+" - "+respuesta[i]["Des_Larga"]+" - "+respuesta[i]["Des_Corta"]+"</option>");
+				$("#nuevaSubLinea").append("<option value='"+respuesta[i]["Valor_3"]+"'>"+respuesta[i]["Valor_3"]+" - "+respuesta[i]["Des_Larga"]+"</option>");
 				
 			}
 			$("#nuevaSubLinea").selectpicker("refresh");

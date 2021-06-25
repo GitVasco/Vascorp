@@ -1029,7 +1029,8 @@
                                             $_GET["ruta"] == "crear-nota-ingreso-os" ||
                                             $_GET["ruta"] == "notas-ingresos-os" ||
                                             $_GET["ruta"] == "kardex" ||
-                                            $_GET["ruta"] == "mp-oc-pendiente") echo 'active';?>">
+                                            $_GET["ruta"] == "mp-oc-pendiente" ||
+                                            $_GET["ruta"] == "mp-os-pendiente" ) echo 'active';?>">
 
             <a href="#">
 
@@ -1119,6 +1120,17 @@
 
                         <i class="fa fa-file-o text-green"></i>
                         <span> Mp Pendiente - OC</span>
+
+                    </a>
+
+                    </li>       
+
+                    <li class="<?php if($_GET["ruta"] == "mp-os-pendiente") echo 'active';?>">
+
+                    <a href="mp-os-pendiente">
+
+                        <i class="fa fa-file-o text-green"></i>
+                        <span> Mp Pendiente - OS</span>
 
                     </a>
 
