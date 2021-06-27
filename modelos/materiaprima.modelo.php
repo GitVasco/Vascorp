@@ -646,7 +646,7 @@ class ModeloMateriaPrima{
 			return $stmt -> fetchAll();
 
 		}else{
-			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT * FROM Tabla_M_Detalle WHERE Cod_Tabla = 'TSUB' AND Des_Corta = '".$valor."' ");
+			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT * FROM Tabla_M_Detalle WHERE Cod_Tabla = 'TSUB' AND Des_Corta = '".$valor."' ORDER BY Valor_3 ASC");
 
 			$stmt -> execute();
 	

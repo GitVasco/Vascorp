@@ -43,10 +43,8 @@
 
           <tr>
            
-           <th style="width:10px">#</th>
            <th>Código</th>
            <th>Cod. Fab.</th>
-           <th>Cod. Alt</th>
            <th>Descripcion</th>
            <th>Color</th>
            <th>Unidad</th>

@@ -142,7 +142,7 @@ MODAL AGREGAR TIPO PAGO
                     $modelos = ControladorModelos::ctrMostrarModelos($item,$valor);
                     
                     foreach ($modelos as $key => $value) {
-                      if($value["estado"] == 'Activo' ){
+                      if($value["estado"] == 'ACTIVO' ){
                         echo '<option value="'.$value["modelo"].'">'.$value["modelo"]."-".$value["nombre"].'</option>';
                       }
                     }

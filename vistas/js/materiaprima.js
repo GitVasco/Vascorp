@@ -3,6 +3,7 @@ $('.tablaMateriaPrima').DataTable( {
     "deferRender": true,
 	"retrieve": true,
 	"processing": true,
+	"order": [[0, "desc"]],
 	"pageLength": 20,
 	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
 	"language": {
@@ -480,11 +481,12 @@ $("#nuevaTallaMateria").change(function(){
 						'<a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>' +
 						'<strong>Error!</strong> El Cod. Fab. ya existe en la Base de Datos, por favor verifique.' +
 						'</div>');
+					$("#nuevoCodigoFab").val(linea+sublinea+color);
+					$("#nuevaTallaMateria").val("");
+					$("#nuevaTallaMateria").focus("");
+					$("#nuevaTallaMateria").selectpicker("refresh");
 				}
-				$("#nuevoCodigoFab").val(linea+sublinea+color);
-				$("#nuevoCodigoFab").focus();
-				$("#nuevaDescripcionMat").val("");
-				$(this).val("");
+				
 			} else {
 				$(".msgError").remove();
 			}
@@ -780,9 +782,13 @@ $("#duplicarTallaMateria").change(function(){
 						'<a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>' +
 						'<strong>Error!</strong> El Cod. Fab. ya existe en la Base de Datos, por favor verifique.' +
 						'</div>');
+
+					$("#duplicarCodigoFab").val(linea+sublinea+color);
+					$("#duplicarTallaMateria").val("");
+					$("#duplicarTallaMateria").focus("");
+					$("#duplicarTallaMateria").selectpicker("refresh");
 				}
-				$("#duplicarCodigoFab").val("");
-				$("#duplicarCodigoFab").focus();
+				
 			} else {
 				$(".msgError").remove();
 			}
