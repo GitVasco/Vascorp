@@ -771,7 +771,67 @@ class ModeloOrdenServicio{
 
 	}	
 
+	/*=============================================
+	MOSTRAR DESTINO PARA LA MATERIA ORDEN DE SERVICIO
+	=============================================*/
 
+	static public function mdlMostrarMateriasDestino(){
+
+		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+												'MP' AS Mp,
+												pro.CodAlt,
+												pro.CodFab,
+												pro.DesPro,
+												pro.CodPro,
+												pro.CodAlm01,
+												pro.Stk_Min,
+												TbUnd.Des_Corta AS Unidad,
+												TbCol.Cod_Argumento AS CodigoColor,
+												TbCol.Des_Larga AS Color,
+												pmp.Proveedores,
+												IFNULL( pmp.precio , 0.000000) AS precio  
+											FROM
+												Producto pro 
+												LEFT JOIN 
+												(SELECT 
+													CodPro,
+													CONCAT_WS(
+													'   -   ',
+													prov1.RazPro,
+													prov2.RazPro,
+													prov3.RazPro
+													) AS Proveedores,
+													GREATEST(PreProv1, PreProv2, PreProv3) AS precio  
+												FROM
+													preciomp pmp 
+													LEFT JOIN Proveedor prov1 
+													ON pmp.CodProv1 = prov1.CodRuc 
+													LEFT JOIN Proveedor prov2 
+													ON pmp.CodProv2 = prov2.CodRuc 
+													LEFT JOIN Proveedor prov3 
+													ON pmp.CodProv3 = prov3.CodRuc 
+												GROUP BY pmp.CodPro) AS pmp 
+												ON pmp.CodPro = pro.CodPro 
+												INNER JOIN Tabla_M_Detalle AS TbUnd 
+												ON pro.UndPro = TbUnd.Cod_Argumento 
+												AND (TbUnd.Cod_Tabla = 'TUND') 
+												INNER JOIN Tabla_M_Detalle AS TbCol 
+												ON pro.ColPro = TbCol.Cod_Argumento 
+												AND (TbCol.Cod_Tabla = 'TCOL') 
+											WHERE pro.estpro = '1' 
+											GROUP BY pro.CodPro 
+											ORDER BY pro.CodPro DESC ;");
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
 
 
 }

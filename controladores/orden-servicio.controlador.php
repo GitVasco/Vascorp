@@ -68,6 +68,19 @@ class ControladorOrdenServicio{
 	}
 
 	/*=============================================
+	MOSTRAR MATERIA PRIMA DESTINO PARA LA ORDEN DE SERVICIO
+	=============================================*/	
+
+	static public function ctrMostrarMateriasDestino(){
+
+
+		$respuesta = ModeloOrdenServicio::mdlMostrarMateriasDestino();
+
+		return $respuesta;
+		
+	}
+
+	/*=============================================
 	CREAR ORDEN DE SERVICIO
 	=============================================*/
 

@@ -170,7 +170,7 @@ class ModeloOrdenCorte{
 	*/
 	static public function mdlMostraDetallesOrdenCorte($tabla,$item,$valor){
 
-		$sql="SELECT do.*,a.articulo,a.nombre,a.marca,a.talla,a.color FROM $tabla do LEFT JOIN articulojf a ON do.articulo=a.articulo WHERE $item=:$item  ORDER BY do.id ASC";
+		$sql="SELECT do.*,a.articulo,a.nombre,a.marca,a.talla,a.color FROM $tabla do LEFT JOIN articulojf a ON do.articulo=a.articulo WHERE $item=:$item  ORDER BY do.id DESC";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 

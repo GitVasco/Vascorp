@@ -1,7 +1,7 @@
 <?php
 
-require_once "../../controladores/notas-salidas.controlador.php";
-require_once "../../modelos/notas-salidas.modelo.php";
+require_once "../../controladores/orden-servicio.controlador.php";
+require_once "../../modelos/orden-servicio.modelo.php";
 
 class TablaMateriaPrima{
 
@@ -12,7 +12,7 @@ class TablaMateriaPrima{
     public function mostrarTablaMateriaPrima(){
 
 
-        $materiaprima = ControladorNotasSalidas::ctrMostrarMateriasNotas();	
+        $materiaprima = ControladorOrdenServicio::ctrMostrarMateriasDestino();	
         if(count($materiaprima)>0){
 
         $datosJson = '{
