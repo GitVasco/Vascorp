@@ -1005,7 +1005,7 @@ $("#formularioEditarMateria").on("click", ".btnEditarCambiosMateria", function()
 		success:function(respuesta){
 			console.log(respuesta);
 			if(respuesta== "ok"){
-		
+				$(".tablaMateriaPrima").DataTable().ajax.reload(null,false);
 				$("#modalEditarMateriaPrima").modal('hide');
 				Command:toastr["success"]("Editado de materia prima exitosamente!");
 			}	
@@ -1013,5 +1013,11 @@ $("#formularioEditarMateria").on("click", ".btnEditarCambiosMateria", function()
 		}
 
 	})
+});
+
+$('#formDuplicarMateriaPrima').submit(function(e){                         
+    e.preventDefault(); 
+
+
 });
 
