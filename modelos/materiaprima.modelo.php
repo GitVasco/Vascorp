@@ -1231,4 +1231,47 @@ class ModeloMateriaPrima{
 
     } 	
 
+	/* 
+	* MOSTRAR DATOS DE LA MATERIA PRIMA ALMACEN 01
+	*/
+	static public function mdlMostrarAlmacen01(){
+
+		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+		pro.codpro,
+		pro.codfab,
+		pro.despro,
+		pro.CodAlm01 AS stock,
+		TbUnd.Des_Corta AS unidad,
+		pro.colpro,
+		TbCol.Des_Larga AS color,
+		pro.talpro,
+		TbTal.Des_larga AS talla,
+		pro.cuadro,
+		pro.usureg,
+		LEFT(pro.fampro, 3) AS fam 
+	  FROM
+		Producto pro 
+		INNER JOIN Tabla_M_Detalle AS TbUnd 
+		  ON pro.UndPro = TbUnd.Cod_Argumento 
+		  AND (TbUnd.Cod_Tabla = 'TUND') 
+		INNER JOIN Tabla_M_Detalle AS TbCol 
+		  ON pro.ColPro = TbCol.Cod_Argumento 
+		  AND (TbCol.Cod_Tabla = 'TCOL') 
+		INNER JOIN Tabla_M_Detalle AS TbTal 
+		  ON pro.TalPro = TbTal.Cod_Argumento 
+		  AND (TbTal.Cod_Tabla = 'TTAL') 
+	  WHERE pro.estpro = '1' 
+		AND LEFT(pro.fampro, 3) IN ('CUA', 'COP') 
+	  ORDER BY pro.codfab ASC");
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    } 	
+
 }

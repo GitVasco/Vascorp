@@ -252,7 +252,8 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "crear-nota-ingreso-os" ||
                   $_GET["ruta"] == "kardex" ||
                   $_GET["ruta"] == "mp-oc-pendiente" ||
-                  $_GET["ruta"] == "mp-os-pendiente" ){
+                  $_GET["ruta"] == "mp-os-pendiente" ||
+                  $_GET["ruta"] == "almacen-01"){
         
               include "modulos/materiaprima/".$_GET["ruta"].".php";
 

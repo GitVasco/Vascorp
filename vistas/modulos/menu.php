@@ -1032,25 +1032,20 @@
                                             $_GET["ruta"] == "mp-oc-pendiente" ||
                                             $_GET["ruta"] == "mp-os-pendiente" ) echo 'active';?>">
 
-            <a href="#">
+                <a href="#">
 
-                <i class="fa fa-cut text-orange"></i>
-
-                <span>Materia Prima</span>
-
-                <span class="pull-right-container">
-
+                    <i class="fa fa-scissors text-orange"></i> <span>Materia Prima</span>
+                    <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
+                    </span>
 
-                </span>
-
-            </a>
+                </a>
 
                 <ul class="treeview-menu">
 
                     <li class="<?php if($_GET["ruta"] == "tabla-maestra") echo 'active';?>">
 
-                    <a href="tabla-maestra ">
+                    <a href="tabla-maestra">
 
                         <i class="fa fa-database text-blue"></i>
                         <span> Maestras Mp</span>
@@ -1091,17 +1086,6 @@
                         </ul>
 
                     </li>                    
-
-                    <li class="<?php if($_GET["ruta"] == "materiaprima") echo 'active';?>">
-
-                    <a href="materiaprima ">
-
-                        <i class="fa fa-cut text-orange"></i>
-                        <span> Materia Prima</span>
-
-                    </a>
-
-                    </li>
 
                     <li class="<?php if($_GET["ruta"] == "orden-servicio") echo 'active';?>">
 

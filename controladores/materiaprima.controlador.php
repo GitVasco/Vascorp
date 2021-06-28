@@ -620,4 +620,15 @@ class ControladorMateriaPrima{
 
 	}
 
+	/* 
+	* MOSTRAR DATOS DE LA MATERIA PRIMA ALMACEN 01
+	*/
+	static public function ctrMostrarAlmacen01(){
+
+		$respuesta = ModeloMateriaPrima::mdlMostrarAlmacen01();
+
+		return $respuesta;
+
+    }
+
 }
