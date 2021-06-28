@@ -1069,7 +1069,7 @@ MODAL DUPLICAR MATERIA PRIMA
 
     <div class="modal-content">
 
-      <form role="form" method="post" enctype="multipart/form-data">
+      <form role="form" method="post" enctype="multipart/form-data" id="formDuplicarMateriaPrima">
 
         <!--=====================================
         CABEZA DEL MODAL
