@@ -1059,6 +1059,39 @@
 
                     </li>
 
+                    <li class="treeview <?php if(   $_GET["ruta"] == "materiaprima" || 
+                                                    $_GET["ruta"] == "almacen-01") echo 'active';?>">
+
+                        <a href="#"><i class="fa fa-scissors text-orange"></i> Materia Prima
+
+                            <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+
+                        </a>
+
+                        <ul class="treeview-menu">
+
+                            <li class="<?php if($_GET["ruta"] == "materiaprima") echo 'active';?>">
+
+                                <a href="materiaprima">
+                                <i class="fa fa-circle-o"></i> Materia Prima
+                                </a>
+
+                            </li>
+
+                            <li class="<?php if($_GET["ruta"] == "almacen-01") echo 'active';?>">
+
+                                <a href="almacen-01">
+                                <i class="fa fa-circle-o"></i> Almacén 01
+                                </a>
+
+                            </li>
+
+                        </ul>
+
+                    </li>                    
+
                     <li class="<?php if($_GET["ruta"] == "materiaprima") echo 'active';?>">
 
                     <a href="materiaprima ">
