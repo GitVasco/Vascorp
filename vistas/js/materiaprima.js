@@ -100,6 +100,28 @@ $(".tablaMateriaPrima tbody").on("click", "button.btnEditarMateriaPrima", functi
 			var linea = respuesta["FamPro"].substr(0,3);
 			var sublinea = respuesta["FamPro"].substr(3,6);
 			var fecha = respuesta["FecReg"].substr(0,10);
+			// console.log(linea);
+			// console.log(sublinea);
+
+			var datos2 = new FormData();
+			datos2.append("linea2", linea);
+			datos2.append("sublinea", sublinea);
+			
+			$.ajax({
+
+				url:"ajax/materiaprima.ajax.php",
+				method: "POST",
+				data: datos2,
+				cache: false,
+				contentType: false,
+				processData: false,
+				dataType:"json",
+				success:function(respuesta2){
+					
+					$("#editarSubLinea2").val(respuesta2["Valor_3"] +" - " + respuesta2["Des_Larga"]);
+					$("#editarSubLinea").val(respuesta2["Valor_3"]);
+					}
+				})
 			$("#editarCodigoPro").val(respuesta["codpro"]);
 			$("#editarCodigoFab").val(respuesta["codfab"]);
 			$("#editarCodigoAlt").val(respuesta["CodAlt"]);
@@ -107,8 +129,6 @@ $(".tablaMateriaPrima tbody").on("click", "button.btnEditarMateriaPrima", functi
 			$("#editarLinea").val(linea);
 			$("#editarUsuarioReg").val(respuesta["UsuReg"]);
 			$("#editarLinea").selectpicker("refresh");
-			$("#editarSubLinea").val(sublinea);
-			$("#editarSubLinea").selectpicker("refresh");
 			$("#editarColorMateria").val(respuesta["ColPro"]);
 			$("#editarColorMateria").selectpicker("refresh");
 			$("#editarTallaMateria").val(respuesta["TalPro"]);
@@ -695,13 +715,30 @@ $(".tablaMateriaPrima tbody").on("click", "button.btnDuplicarMateriaPrima", func
 			// console.log(respuesta);
 			var linea = respuesta["FamPro"].substr(0,3);
 			var sublinea = respuesta["FamPro"].substr(3,6);
+			var datos2 = new FormData();
+			datos2.append("linea2", linea);
+			datos2.append("sublinea", sublinea);
+
+			$.ajax({
+
+				url:"ajax/materiaprima.ajax.php",
+				method: "POST",
+				data: datos2,
+				cache: false,
+				contentType: false,
+				processData: false,
+				dataType:"json",
+				success:function(respuesta2){
+					
+					$("#duplicarSubLinea2").val(respuesta2["Valor_3"] +" - " + respuesta2["Des_Larga"]);
+					$("#duplicarSubLinea").val(respuesta2["Valor_3"]);
+					}
+				})
 			$("#duplicarCodigoPro").val(respuesta["codpro"]);
 			$("#duplicarCodigoFab").val(respuesta["codfab"]);
 			$("#duplicarCodigoAlt").val(respuesta["CodAlt"]);
 			$("#duplicarLinea").val(linea);
 			$("#duplicarLinea").selectpicker("refresh");
-			$("#duplicarSubLinea").val(sublinea);
-			$("#duplicarSubLinea").selectpicker("refresh");
 			$("#duplicarColorMateria").val(respuesta["ColPro"]);
 			$("#duplicarFamPro").val(respuesta["FamPro"]);
 			$("#duplicarColorMateria").selectpicker("refresh");

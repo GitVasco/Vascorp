@@ -47,6 +47,7 @@
            <th>Cod. Fab.</th>
            <th>Descripcion</th>
            <th>Color</th>
+           <th>Talla</th>
            <th>Unidad</th>
            <th>Proveedor</th>
            <th>Stock</th>
@@ -641,21 +642,8 @@ MODAL EDITAR MATERIA PRIMA
               <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">SUB LINEA</label>
               <div class="col-lg-5">
 
-                <select  class="form-control input-md selectpicker" data-live-search="true" name="editarSubLinea" id="editarSubLinea" disabled>
-                  <option value="">SELECCIONAR SUBLINEAS</option>
-                  <?php
-                    $valor = null;
-                    $sublineas = ControladorMateriaPrima::ctrMostrarSubLineas($valor);
-
-
-                    foreach ($sublineas as $key => $value) {
-
-                        echo '<option value="'.$value["Cod_Argumento"].'">'.$value["Cod_Argumento"].' - '.$value["Des_Larga"].'</option>';
-
-                    }
-
-                  ?>
-                </select>
+                <input type="text" class="form-control input-md" id="editarSubLinea2" name="editarSubLinea2" readonly>
+                <input type="hidden" id="editarSubLinea" name="editarSubLinea" >
 
               </div>
 
@@ -1175,22 +1163,9 @@ MODAL DUPLICAR MATERIA PRIMA
               <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">SUB LINEA</label>
               <div class="col-lg-5">
 
-                <select  class="form-control input-md selectpicker" data-live-search="true" name="duplicarSubLinea" id="duplicarSubLinea" disabled>
-                  <option value="">SELECCIONAR SUBLINEAS</option>
-                  <?php
-                    $valor = null;
-                    $sublineas = ControladorMateriaPrima::ctrMostrarSubLineas($valor);
+                <input type="text" class="form-control input-md" id="duplicarSubLinea2" name="duplicarSubLinea2" readonly>
 
-
-                    foreach ($sublineas as $key => $value) {
-
-                        echo '<option value="'.$value["Cod_Argumento"].'">'.$value["Cod_Argumento"].' - '.$value["Des_Larga"].'</option>';
-
-                    }
-
-                  ?>
-                </select>
-
+                <input type="hidden"  id="duplicarSubLinea" name="duplicarSubLinea" >
               </div>
 
             </div>
