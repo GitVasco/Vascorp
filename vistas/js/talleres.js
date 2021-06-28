@@ -47,7 +47,7 @@ $('.tablaTalleresG').DataTable({
 
 	},
 	"createdRow":function(row,data,index){
-		if(data[10] == "<span style='font-size:85%' class='label label-info'>Generado</span>"){
+		if(data[10] == "<button class='btn btn-info btn-xs btnCerrarTaller' codigoTallerG='"+data[1]+"' estadoTaller='4'>Generado</button>"){
 			$('td',row).css({
 				'background-color':'#E4F7F7',
 				'color':'black'

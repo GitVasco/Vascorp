@@ -200,6 +200,19 @@ class AjaxMateriaPrima{
     
       }
 
+	/* 
+	* SELECT SUBLINEA 2 PARA UNO PARA CREAR MATERIA PRIMA
+	*/
+	public function ajaxSelectSubLineas2(){
+
+		$valor = $this->linea2;
+		$valor2 = $this->sublinea;
+
+		$respuesta2 = ControladorMateriaPrima::ctrMostrarSubLineas2($valor,$valor2);
+
+		echo json_encode($respuesta2);
+	}	
+
 }
 
 
@@ -304,4 +317,17 @@ if(isset($_POST["jsonMateria"])){
 	$editarVentaCambios = new AjaxMateriaPrima();
 	$editarVentaCambios -> datosMateria = $_POST["jsonMateria"];
 	$editarVentaCambios -> ajaxCambiosMateria();
+}
+
+/* 
+* SELECT PARA MOSTRAR LAS SUBLINEAS AL CREAR MATERIAPRIMA
+*/
+
+if(isset($_POST["sublinea"])){
+
+	$selectSubLineas2 = new AjaxMateriaPrima();
+	$selectSubLineas2 -> linea2 = $_POST["linea2"];
+	$selectSubLineas2 -> sublinea = $_POST["sublinea"];
+	$selectSubLineas2 -> ajaxSelectSubLineas2();
+  
 }

@@ -59,7 +59,7 @@ class ControladorMateriaPrima{
     }
 
 	/* 
-	* MOSTRAR DATOS DE LA MATERIA PRIMA
+	* MOSTRAR SUBLINEAS SEGUN LINEA DE LA MATERIA PRIMA
 	*/
 	static public function ctrMostrarSubLineas($valor){
 
@@ -68,6 +68,18 @@ class ControladorMateriaPrima{
 		return $respuesta;
 
     }
+
+	/* 
+	* MOSTRAR SUBLINEAS DE UNO DE LA MATERIA PRIMA
+	*/
+	static public function ctrMostrarSubLineas2($valor,$valor2){
+
+		$respuesta = ModeloMateriaPrima::mdlMostrarSubLineas2($valor,$valor2);
+
+		return $respuesta;
+
+    }
+
 
 	/* 
 	* MOSTRAR DATOS DE LA MATERIA PRIMA
@@ -198,7 +210,7 @@ class ControladorMateriaPrima{
 							}).then(function(result){
 										if (result.value) {
 
-										window.location = "materiaprima";
+										
 
 										}
 									})

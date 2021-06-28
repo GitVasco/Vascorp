@@ -102,29 +102,49 @@ class ModeloMateriaPrima{
 			TbUnd.Des_Corta AS Unidad,
 			TbCol.Cod_Argumento AS CodigoColor,
 			TbCol.Des_Larga AS Color,
+			pro.TalPro,
+			TbTal.Des_larga AS Talla,
 			pmp.Proveedores,
-			IFNULL( pmp.precio , 0.000000) AS precio  
+			IFNULL(pmp.precio, 0.000000) AS precio 
 		  FROM
 			Producto pro 
 			LEFT JOIN 
-			  (SELECT 
-				CodPro,
+			  (SELECT DISTINCT 
+				p.codpro,
 				CONCAT_WS(
-				  '   -   ',
-				  prov1.RazPro,
-				  prov2.RazPro,
-				  prov3.RazPro
-				) AS Proveedores,
-				GREATEST(PreProv1, PreProv2, PreProv3) AS precio  
+				  ' - ',
+				  IFNULL(p1.razpro, ''),
+				  IFNULL(p2.razpro, ''),
+				  IFNULL(p3.razpro, '')
+				) AS proveedores,
+				GREATEST(
+				  p.preprov1,
+				  p.preprov2,
+				  p.preprov2
+				) AS precio 
 			  FROM
-				preciomp pmp 
-				LEFT JOIN Proveedor prov1 
-				  ON pmp.CodProv1 = prov1.CodRuc 
-				LEFT JOIN Proveedor prov2 
-				  ON pmp.CodProv2 = prov2.CodRuc 
-				LEFT JOIN Proveedor prov3 
-				  ON pmp.CodProv3 = prov3.CodRuc 
-			  GROUP BY pmp.CodPro) AS pmp 
+				preciomp p 
+				LEFT JOIN 
+				  (SELECT DISTINCT 
+					codruc,
+					razpro 
+				  FROM
+					proveedor prov) AS p1 
+				  ON p.codprov1 = p1.codruc 
+				LEFT JOIN 
+				  (SELECT DISTINCT 
+					codruc,
+					razpro 
+				  FROM
+					proveedor prov) AS p2 
+				  ON p.codprov2 = p2.codruc 
+				LEFT JOIN 
+				  (SELECT DISTINCT 
+					codruc,
+					razpro 
+				  FROM
+					proveedor prov) AS p3 
+				  ON p.codprov3 = p3.codruc) AS pmp 
 			  ON pmp.CodPro = pro.CodPro 
 			INNER JOIN Tabla_M_Detalle AS TbUnd 
 			  ON pro.UndPro = TbUnd.Cod_Argumento 
@@ -132,9 +152,12 @@ class ModeloMateriaPrima{
 			INNER JOIN Tabla_M_Detalle AS TbCol 
 			  ON pro.ColPro = TbCol.Cod_Argumento 
 			  AND (TbCol.Cod_Tabla = 'TCOL') 
+			INNER JOIN Tabla_M_Detalle AS TbTal 
+			  ON pro.TalPro = TbTal.Cod_Argumento 
+			  AND (TbTal.Cod_Tabla = 'TTAL') 
 		  WHERE pro.estpro = '1' 
 		  GROUP BY pro.CodPro 
-		  ORDER BY pro.CodPro DESC ;");
+		  ORDER BY pro.CodPro DESC");
 
 			$stmt -> execute();
 
@@ -652,6 +675,27 @@ class ModeloMateriaPrima{
 	
 			return $stmt -> fetchAll();
 		}
+
+		
+
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }
+
+	/*=============================================
+	MOSTRAR SUBLINEAS 2
+	=============================================*/
+
+	static public function mdlMostrarSubLineas2($valor,$valor2){
+		
+		$stmt = Conexion::conectar()->prepare("SELECT  Valor_3, Des_Larga FROM Tabla_M_Detalle WHERE Cod_Tabla = 'TSUB' AND Des_Corta = '".$valor."' AND Valor_3 = '".$valor2."'  ");
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();
 
 		
 
