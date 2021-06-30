@@ -1003,7 +1003,7 @@ $("#formularioEditarMateria").on("click", ".btnEditarCambiosMateria", function()
 		data: jsonMateria,
 		cache: false,
 		success:function(respuesta){
-			console.log(respuesta);
+			// console.log(respuesta);
 			if(respuesta== "ok"){
 				$(".tablaMateriaPrima").DataTable().ajax.reload(null,false);
 				$("#modalEditarMateriaPrima").modal('hide');
@@ -1017,7 +1017,86 @@ $("#formularioEditarMateria").on("click", ".btnEditarCambiosMateria", function()
 
 $('#formDuplicarMateriaPrima').submit(function(e){                         
     e.preventDefault(); 
+	//datos de materia prima
+	var codfab = $("#duplicarCodigoFab").val();
+	var codalt = $("#duplicarCodigoAlt").val();
+	var fampro = $("#duplicarFamPro").val();
+	var color = $("#duplicarColorMateria").val();
+	var talla = $("#duplicarTallaMateria").val();
+	var despro = $("#duplicarDescripcion").val();
+	var undpro = $("#duplicarUnidadMedida").val();
+	var pespro = $("#duplicarPeso").val();
+	var padval = $("#duplicarAdVal").val();
+	var pseg = $("#duplicarSeguro").val();
+	var stkactual = $("#duplicarStockActual").val();
+	var stkmin = $("#duplicarStockMinimo").val();
+	var stkmax = $("#duplicarStockMaximo").val();
 
+
+	//datos de precio mp
+	var codprov1 = $("#duplicarProveedor").val();
+	var preprov1 = $("#duplicarPrecioSIGV").val();
+	var monprov1 = $("#duplicarMoneda").val();
+	var obsprov1 = $("#duplicarObservacion1").val();
+	var codprov2 = $("#duplicarProveedor1").val();
+	var preprov2 = $("#duplicarPrecioSIGV1").val();
+	var monprov2 = $("#duplicarMoneda1").val();
+	var obsprov2 = $("#duplicarObservacion2").val();
+	var codprov3 = $("#duplicarProveedor2").val();
+	var preprov3 = $("#duplicarPrecioSIGV2").val();
+	var monprov3 = $("#duplicarMoneda2").val();
+	var obsprov3 = $("#duplicarObservacion3").val();
+	
+	var datos = new Array();
+	
+	
+	datos.push({
+		'codfab':codfab,
+		'codalt':codalt,
+		'fampro':fampro,
+		'color':color,
+		'talla':talla,
+		'despro':despro,
+		'undpro':undpro,
+		'padval':padval,
+		'pseg':pseg,
+		'pespro':pespro,
+		'stkactual':stkactual,
+		'stkmin':stkmin,
+		'stkmax':stkmax,
+		'codprov1':codprov1,
+		'preprov1':preprov1,
+		'monprov1':monprov1,
+		'obsprov1':obsprov1,
+		'codprov2':codprov2,
+		'preprov2':preprov2,
+		'monprov2':monprov2,
+		'obsprov2':obsprov2,
+		'codprov3':codprov3,
+		'preprov3':preprov3,
+		'monprov3':monprov3,
+		'obsprov3':obsprov3
+	});
+	var materiaprima = {"datosMateria" : datos}
+	
+	var jsonMateriaDuplicar= {"jsonMateriaDuplicar":JSON.stringify(materiaprima)};
+	
+	$.ajax({
+		url:"ajax/materiaprima.ajax.php",
+		method: "POST",
+		data: jsonMateriaDuplicar,
+		cache: false,
+		success:function(respuesta){
+			console.log(respuesta);
+			if(respuesta== "ok"){
+				$(".tablaMateriaPrima").DataTable().ajax.reload(null,false);
+				$("#modalDuplicarMateriaPrima").modal('hide');
+				Command:toastr["success"]("Se creo nuevo color de materia prima exitosamente!");
+			}	
+			
+		}
+
+	})
 
 });
 

@@ -1557,8 +1557,8 @@ MODAL DUPLICAR MATERIA PRIMA
 
       <?php
 
-      $duplicarMateriaPrima = new ControladorMateriaPrima();
-      $duplicarMateriaPrima -> ctrDuplicarMateriaPrima();
+      // $duplicarMateriaPrima = new ControladorMateriaPrima();
+      // $duplicarMateriaPrima -> ctrDuplicarMateriaPrima();
 
       ?>    
 

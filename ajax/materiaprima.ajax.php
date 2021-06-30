@@ -124,11 +124,11 @@ class AjaxMateriaPrima{
 	}
 
 
-	 /*=============================================
-      EDITAR DOCUMENTO DE VENTA
-      =============================================*/	
-      public $datosMateria;
-      public function ajaxCambiosMateria(){
+	/*=============================================
+	EDITAR DOCUMENTO DE VENTA
+	=============================================*/	
+	public $datosMateria;
+	public function ajaxCambiosMateria(){
         $valor = $this->datosMateria;
         $datos = json_decode($valor);
         foreach ($datos->{"datosMateria"} as  $value) {
@@ -211,7 +211,87 @@ class AjaxMateriaPrima{
 		$respuesta2 = ControladorMateriaPrima::ctrMostrarSubLineas2($valor,$valor2);
 
 		echo json_encode($respuesta2);
-	}	
+	}
+	
+	/*=============================================
+	EDITAR DOCUMENTO DE VENTA
+	=============================================*/	
+	public $datosMateriaDuplicar;
+	public function ajaxDuplicarMateria(){
+        $valor = $this->datosMateriaDuplicar;
+        $datos = json_decode($valor);
+        foreach ($datos->{"datosMateria"} as  $value) {
+          $codfab = $value->{"codfab"};
+          $codalt = $value->{"codalt"};
+		  $fampro = $value->{"fampro"};
+		  $color = $value->{"color"};
+		  $talla = $value->{"talla"};
+          $despro = $value->{"despro"};
+          $undpro = $value->{"undpro"};
+          $padval = $value->{"padval"};
+          $pseg = $value->{"pseg"};
+          $pespro = $value->{"pespro"};
+		  $stkactual = $value->{"stkactual"}; 
+		  $stkmin = $value->{"stkmin"};
+          $stkmax = $value->{"stkmax"};
+          $codprov1 = $value->{"codprov1"};
+          $preprov1 = $value->{"preprov1"};
+          $monprov1 = $value->{"monprov1"};
+          $obsprov1 = $value->{"obsprov1"};
+          $codprov2 = $value->{"codprov2"};
+          $preprov2 = $value->{"preprov2"};
+		  $monprov2 = $value->{"monprov2"};
+          $obsprov2 = $value->{"obsprov2"};
+		  $codprov3 = $value->{"codprov3"};
+          $preprov3 = $value->{"preprov3"};
+		  $monprov3 = $value->{"monprov3"};
+          $obsprov3 = $value->{"obsprov3"};
+		  date_default_timezone_set('America/Lima');
+		  $fecha = new DateTime();
+		  $PcMod= gethostbyaddr($_SERVER['REMOTE_ADDR']);
+
+		  $datos1 = array("CodPro"=>$codpro,
+						  "CodProv1"=>$codprov1,
+						  "PreProv1"=>$preprov1,
+						  "MonProv1"=>$monprov1,
+						  "ObsProv1"=>$obsprov1,
+						  "CodProv2"=>$codprov2,
+						  "PreProv2"=>$preprov2,
+						  "MonProv2"=>$monprov2,
+						  "ObsProv2"=>$obsprov2,
+						  "CodProv3"=>$codprov3,
+						  "PreProv3"=>$preprov3,
+						  "MonProv3"=>$monprov3,
+						  "ObsProv3"=>$obsprov3,
+						  "FecMod"=>$fecha->format("Y-m-d H:i:s"),
+						  "PcMod"=>$PcMod,
+						  "UsuMod"=>$_SESSION["nombre"]);
+
+		  $respuesta = ModeloMateriaPrima::mdlEditarPrecioMP("preciomp",$datos1);
+
+
+		  $datos2 = array("CodAlt"=>$codalt,
+						  "CodPro"=>$codpro,
+						  "DesPro"=>$despro,
+						  "UndPro"=>$undpro,
+						  "Por_AdVal"=>$padval,
+						  "Por_Seg"=>$pseg,
+						  "PesPro"=>$pespro,
+						  "Stk_Min"=>$stkmin,
+						  "Stk_Max"=>$stkmax,
+						  "FecMod"=>$fecha->format("Y-m-d H:i:s"),
+						  "PcMod"=>$PcMod,
+						  "UsuMod"=>$_SESSION["nombre"]);
+
+
+		  $respuesta2 = ModeloMateriaPrima::mdlEditarMateriaPrima($datos2);
+
+        }
+        
+    
+        echo $respuesta;
+    
+      }
 
 }
 
@@ -330,4 +410,15 @@ if(isset($_POST["sublinea"])){
 	$selectSubLineas2 -> sublinea = $_POST["sublinea"];
 	$selectSubLineas2 -> ajaxSelectSubLineas2();
   
+}
+
+
+/*=============================================
+GUARDAR CAMBIOS DE MATERIA PRIMA
+=============================================*/	
+if(isset($_POST["jsonMateriaDuplicar"])){
+	
+	$duplicarNuevoColor = new AjaxMateriaPrima();
+	$duplicarNuevoColor -> datosMateriaDuplicar = $_POST["jsonMateriaDuplicar"];
+	$duplicarNuevoColor -> ajaxDuplicarMateria();
 }
