@@ -93,51 +93,59 @@ MODAL VIZUALIZAR NOTA DE INGRESO
             <div class="box-body">
 
   
+              <div class="form-group" style="padding-top:5px;padding-bottom:20px">
+  
+                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">CodPro</label>
+                <div class="col-lg-1">
+                    <input type="text" class="form-control input-sm" id="codpro" name="codpro" readonly>
+                </div>
+
+                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">CodFab</label>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control input-sm" id="codfab" name="codfab" readonly>
+                </div>
+
+                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Descripción</label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control input-sm" id="despro" name="despro" readonly>
+                </div>
+
+                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Color</label>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control input-sm" id="color" name="color" readonly>
+                </div>               
+
+              </div>
+
               <div class="form-group" style="padding-top:5px;padding-bottom:25px">
   
-                  <label class="col-form-label col-lg-1 col-md-3 col-sm-3">CodPro</label>
-                  <div class="col-lg-1">
-                      <input type="text" class="form-control input-sm" id="codpro" name="codpro" readonly>
-                  </div>
-  
-                  <label class="col-form-label col-lg-1 col-md-3 col-sm-3">CodFab</label>
-                  <div class="col-lg-2">
-                      <input type="text" class="form-control input-sm" id="codfab" name="codfab" readonly>
-                  </div>
+                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Unidad</label>
+                <div class="col-lg-1">
+                    <input type="text" class="form-control input-sm" id="unidad" name="unidad" readonly>
+                </div>
 
-                  <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Descripción</label>
-                  <div class="col-lg-3">
-                      <input type="text" class="form-control input-sm" id="despro" name="despro" readonly>
-                  </div>
+                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Stock</label>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control input-sm" id="stock" name="stock" readonly>
+                </div>
 
-                  <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Color</label>
-                  <div class="col-lg-2">
-                      <input type="text" class="form-control input-sm" id="color" name="color" readonly>
-                  </div>                  
-  
-                  
-                  
-              </div> 
+              </div>                
   
 
 
   
               <div class="form-group col-lg-12">
-                <table class="table table-hover table-striped tablaDetalleNotaIngreso" width="100%">
+                <table class="table table-hover table-striped tablaAlm01Add" width="100%">
                   <thead>
                   
-                      <th class="text-center">Item</th>
-                      <th class="text-center">Cod.Producto</th>
-                      <th class="text-center">Cod.Fabrica</th>
-                      <th class="text-center">Descripcion</th>
-                      <th class="text-center">Color</th>
-                      <th class="text-center">Und</th>
-                      <th class="text-center">Cant. Recibida</th>
-                      <th class="text-center">Saldo</th>
-                      <th class="text-center">Exceso</th>
-                      <th class="text-center">P.S. IGV</th>
-                      <th class="text-center">Total</th>
-                      <th class="text-center">O.C</th>
+                    <th>CodPro</th>
+                    <th>CodFab</th>
+                    <th>Descripcion</th>
+                    <th>Color</th>
+                    <th>Talla</th>
+                    <th>Und</th>
+                    <th>Stock</th>
+                    <th>Acciones</th>
   
                   </thead>
                   <tbody>

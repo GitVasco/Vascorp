@@ -631,4 +631,15 @@ class ControladorMateriaPrima{
 
     }
 
+	/* 
+	* MOSTRAR DATOS DE LA MATERIA PRIMA ALMACEN 01 PARA AGREGAR
+	*/
+	static public function ctrAlmacen01Agregar($codpro){
+
+		$respuesta = ModeloMateriaPrima::mdlAlmacen01Agregar($codpro);
+
+		return $respuesta;
+
+    }	
+
 }

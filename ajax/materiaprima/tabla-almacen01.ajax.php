@@ -28,7 +28,7 @@ class TablaMateriaPrima{
             
                 if($materiaprima[$i]["fam"] == "CUA" ){
 
-                    $botones = "<div class='btn-group'><button class='btn btn-xs btn-primary btnAgregarCopas' codpro='".$materiaprima[$i]["codpro"]."' codfab='".$materiaprima[$i]["codfab"]."' despro='".$materiaprima[$i]["despro"]."' color='".$materiaprima[$i]["color"]."' stock='".$materiaprima[$i]["stock"]."' data-toggle='modal' data-target='#modalAgrearCopas' title='Agregar Copas'><i class='fa fa-plus'></i></button></div>";
+                    $botones = "<div class='btn-group'><button class='btn btn-xs btn-primary btnAgregarCopas' codpro='".$materiaprima[$i]["codpro"]."' codfab='".$materiaprima[$i]["codfab"]."' despro='".$materiaprima[$i]["despro"]."' color='".$materiaprima[$i]["color"]."' unidad='".$materiaprima[$i]["unidad"]."' stock='".$materiaprima[$i]["stock"]."' data-toggle='modal' data-target='#modalAgrearCopas' title='Agregar Copas'><i class='fa fa-plus'></i></button></div>";
 
                 }else{
 

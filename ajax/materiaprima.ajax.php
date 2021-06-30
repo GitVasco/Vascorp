@@ -123,6 +123,20 @@ class AjaxMateriaPrima{
 
 	}
 
+	/* 
+	* EDITAR NOMBRE DE LA MATERIA PRIMA
+	*/
+	public function ajaxAgregarCuadro(){
+
+		$cuadro = $this->cuadro;
+		$codpro = $this->codpro;
+
+		$respuesta = ModeloMateriaPrima::mdlAgregarCuadro($cuadro, $codpro);
+
+		echo json_encode($respuesta);
+
+	}	
+
 
 	/*=============================================
 	EDITAR DOCUMENTO DE VENTA
@@ -452,4 +466,17 @@ if(isset($_POST["jsonMateriaDuplicar"])){
 	$duplicarNuevoColor = new AjaxMateriaPrima();
 	$duplicarNuevoColor -> datosMateriaDuplicar = $_POST["jsonMateriaDuplicar"];
 	$duplicarNuevoColor -> ajaxDuplicarMateria();
+}
+
+/* 
+* AGREMAR LA COPA AL CUADRO
+*/
+
+if(isset($_POST["cuadro"])){
+
+	$agregarCuadro = new AjaxMateriaPrima();
+	$agregarCuadro -> cuadro = $_POST["cuadro"];
+	$agregarCuadro -> codpro = $_POST["codpro"];
+	$agregarCuadro -> ajaxAgregarCuadro();
+  
 }

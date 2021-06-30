@@ -1147,12 +1147,79 @@ $(".tablaAlmacen01 tbody").on("click", "button.btnAgregarCopas", function(){
 	var codfab = $(this).attr("codfab");
 	var despro = $(this).attr("despro");
 	var color = $(this).attr("color");
-	console.log("codpro", codpro);
+	var unidad = $(this).attr("unidad");
+	var stock = $(this).attr("stock");
 
 	$("#codpro").val(codpro);
 	$("#codfab").val(codfab);
 	$("#despro").val(despro);
 	$("#color").val(color);
+	$("#unidad").val(unidad);
+	$("#stock").val(stock);
+
+    $(".tablaAlm01Add").DataTable().destroy();
+    $('.tablaAlm01Add').DataTable({
+        "ajax": "ajax/materiaprima/tabla-almacen01-add.ajax.php?codpro=" + codpro,
+        "deferRender": true,
+        "retrieve": true,
+        "processing": true,
+        "order": [[1, "asc"]],
+        "language": {
+    
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+    
+        }
+    
+    });	
 
 })
 
+/* 
+*AGREGANDO MATERIA PRIMA
+*/
+$(".tablaAlm01Add").on("click", ".btnAddAlm01", function() {
+
+	var cuadro = $(this).attr("cuadro");
+	var codpro = $(this).attr("codpro");
+	//console.log(cuadro,codpro);
+
+	var datos=new FormData();
+	datos.append("cuadro",cuadro);
+	datos.append("codpro",codpro);
+	$.ajax({
+		url:"ajax/materiaprima.ajax.php",
+		type:"POST",
+		data:datos,
+		cache:false,
+		contentType:false,
+		processData:false,
+		success:function(respuesta){
+
+			console.log(respuesta);
+
+		}
+
+	});
+
+})
