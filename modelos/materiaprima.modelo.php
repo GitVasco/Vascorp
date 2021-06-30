@@ -1274,4 +1274,76 @@ class ModeloMateriaPrima{
 
     } 	
 
+	/* 
+	* MOSTRAR DATOS DE LA MATERIA PRIMA
+	*/
+	static public function mdlAlmacen01Agregar($codpro){
+
+		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+							CodPro AS codpro,
+							CodFab AS codfab,
+							DesPro AS despro,
+							TbCol.Des_Larga AS color,
+							TbTal.Des_Larga AS talla,
+							TbUnd.Des_Corta AS unidad,
+							CodAlm01 AS stock,
+							pro.cuadro 
+						FROM
+							Producto AS Pro 
+							INNER JOIN Tabla_M_Detalle AS TbUnd 
+							ON Pro.UndPro = TbUnd.Cod_Argumento 
+							AND (TbUnd.Cod_Tabla = 'TUND') 
+							INNER JOIN Tabla_M_Detalle AS TbCol 
+							ON Pro.ColPro = TbCol.Cod_Argumento 
+							AND (TbCol.Cod_Tabla = 'TCOL') 
+							INNER JOIN Tabla_M_Detalle AS TbTal 
+							ON Pro.TalPro = TbTal.Cod_Argumento 
+							AND (TbTal.Cod_Tabla = 'TTAL') 
+						WHERE Pro.EstPro = '1' 
+							AND LEFT(pro.fampro, 3) = 'COP' 
+							AND pro.codpro NOT IN (':codpro')");
+
+		$stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    } 	
+	
+	/*=============================================
+	ANULAR MATERIA PRIMA
+	=============================================*/
+
+	static public function mdlAgregarCuadro($cuadro, $codpro){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE 
+							producto 
+						SET
+							cuadro = :cuadro 
+						WHERE codpro = :codpro ");
+
+        $stmt->bindParam(":cuadro", $cuadro, PDO::PARAM_STR);
+		$stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	} 
+	
+
 }

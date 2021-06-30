@@ -63,7 +63,6 @@ class TablaArticulos{
 
         if($articulos[$i]["estado"] == "Descontinuado"){
 
-            /* $estado = "<button class='btn btn-danger btn-xs btnActivar'>".$articulos[$i]["id"]."</button>"; */
             $estado = "<button class='btn btn-danger btn-xs btnActivarArt' idArticulo='".$articulos[$i]["articulo"]."' estadoArticulo='Activo'>Inactivo</button>";
 
         }else if($articulos[$i]["estado"] == "CampañaD"){
