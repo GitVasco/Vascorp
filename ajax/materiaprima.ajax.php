@@ -247,47 +247,78 @@ class AjaxMateriaPrima{
 		  $monprov3 = $value->{"monprov3"};
           $obsprov3 = $value->{"obsprov3"};
 		  date_default_timezone_set('America/Lima');
-		  $fecha = new DateTime();
-		  $PcMod= gethostbyaddr($_SERVER['REMOTE_ADDR']);
 
-		  $datos1 = array("CodPro"=>$codpro,
-						  "CodProv1"=>$codprov1,
-						  "PreProv1"=>$preprov1,
-						  "MonProv1"=>$monprov1,
-						  "ObsProv1"=>$obsprov1,
-						  "CodProv2"=>$codprov2,
-						  "PreProv2"=>$preprov2,
-						  "MonProv2"=>$monprov2,
-						  "ObsProv2"=>$obsprov2,
-						  "CodProv3"=>$codprov3,
-						  "PreProv3"=>$preprov3,
-						  "MonProv3"=>$monprov3,
-						  "ObsProv3"=>$obsprov3,
-						  "FecMod"=>$fecha->format("Y-m-d H:i:s"),
-						  "PcMod"=>$PcMod,
-						  "UsuMod"=>$_SESSION["nombre"]);
+		$existe= ModeloMateriaPrima::mdlMostrarExisteMateria($codfab);
 
-		  $respuesta = ModeloMateriaPrima::mdlEditarPrecioMP("preciomp",$datos1);
+		if ($existe){
+			$respuesta = "error";
+		}else{
+			$fecha = new DateTime();
+			$PcReg= gethostbyaddr($_SERVER['REMOTE_ADDR']);
+
+			$ultimoCod = ModeloMateriaPrima::mdlMostrarUltimoCodPro();
+
+            $suma = $ultimoCod["CodPro"]+1;
+            $codigoPro = str_pad($suma,strlen($ultimoCod["CodPro"]),'0',STR_PAD_LEFT);
 
 
-		  $datos2 = array("CodAlt"=>$codalt,
-						  "CodPro"=>$codpro,
-						  "DesPro"=>$despro,
-						  "UndPro"=>$undpro,
-						  "Por_AdVal"=>$padval,
-						  "Por_Seg"=>$pseg,
-						  "PesPro"=>$pespro,
-						  "Stk_Min"=>$stkmin,
-						  "Stk_Max"=>$stkmax,
-						  "FecMod"=>$fecha->format("Y-m-d H:i:s"),
-						  "PcMod"=>$PcMod,
-						  "UsuMod"=>$_SESSION["nombre"]);
+
+			$datos = array(	"Cod_Local"=>'01',
+							"Cod_Entidad"=>'01',
+							"CodPro"=>$codigoPro,
+							"CodProv1"=>$codprov1,
+							"PreProv1"=>$preprov1,
+							"MonProv1"=>$monprov1,
+							"ObsProv1"=>$obsprov1,
+							"CodProv2"=>$codprov2,
+							"PreProv2"=>$preprov2,
+							"MonProv2"=>$monprov2,
+							"ObsProv2"=>$obsprov2,
+							"CodProv3"=>$codprov3,
+							"PreProv3"=>$preprov3,
+							"MonProv3"=>$monprov3,
+							"ObsProv3"=>$obsprov3,
+							"FecReg"=>$fecha->format("Y-m-d H:i:s"),
+							"PcReg"=>$PcReg,
+							"UsuReg"=>$_SESSION["nombre"]);
+
+			$respuesta = ModeloMateriaPrima::mdlIngresarPrecioMP("preciomp",$datos);
+			
 
 
-		  $respuesta2 = ModeloMateriaPrima::mdlEditarMateriaPrima($datos2);
+			$datos2 = array("CodAlt"=>$codalt,
+							"Cod_Local"=>'01',
+							"Cod_Entidad"=>'01',
+							"CodPro"=>$codigoPro,
+							"CodFab"=>$codfab,
+							"DesPro"=>$despro,
+							"ColPro"=>$color,
+							"UndPro"=>$undpro,
+							"Mo"=>'',
+							"PaiPro"=>'',
+							"PrePro"=>'',
+							"PreFob"=>'',
+							"CosPro"=>'',
+							"Por_AdVal"=>$padval,
+							"Por_Seg"=>$pseg,
+							"PesPro"=>$pespro,
+							"Stk_Act"=>$stkactual,
+							"Stk_Min"=>$stkmin,
+							"Stk_Max"=>$stkmax,
+							"EstPro"=>'1',
+							"TalPro"=>$talla,
+							"FamPro"=>$fampro,
+							"Proveedor"=>'',
+							"CodAlm01"=>'0',
+							"FecReg"=>$fecha->format("Y-m-d H:i:s"),
+							"PcReg"=>$PcReg,
+							"UsuReg"=>$_SESSION["nombre"]);
 
-        }
-        
+				$respuesta2 = ModeloMateriaPrima::mdlIngresarMateriaPrima("producto",$datos2);
+
+			}
+		}
+			
     
         echo $respuesta;
     
