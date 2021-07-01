@@ -1234,39 +1234,92 @@ class ModeloMateriaPrima{
 	/* 
 	* MOSTRAR DATOS DE LA MATERIA PRIMA ALMACEN 01
 	*/
-	static public function mdlMostrarAlmacen01(){
+	static public function mdlMostrarAlmacen01($tipo){
 
-		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
-		pro.codpro,
-		pro.codfab,
-		pro.despro,
-		pro.CodAlm01 AS stock,
-		TbUnd.Des_Corta AS unidad,
-		pro.colpro,
-		TbCol.Des_Larga AS color,
-		pro.talpro,
-		TbTal.Des_larga AS talla,
-		pro.cuadro,
-		pro.usureg,
-		LEFT(pro.fampro, 3) AS fam 
-	  FROM
-		Producto pro 
-		INNER JOIN Tabla_M_Detalle AS TbUnd 
-		  ON pro.UndPro = TbUnd.Cod_Argumento 
-		  AND (TbUnd.Cod_Tabla = 'TUND') 
-		INNER JOIN Tabla_M_Detalle AS TbCol 
-		  ON pro.ColPro = TbCol.Cod_Argumento 
-		  AND (TbCol.Cod_Tabla = 'TCOL') 
-		INNER JOIN Tabla_M_Detalle AS TbTal 
-		  ON pro.TalPro = TbTal.Cod_Argumento 
-		  AND (TbTal.Cod_Tabla = 'TTAL') 
-	  WHERE pro.estpro = '1' 
-		AND LEFT(pro.fampro, 3) IN ('CUA', 'COP') 
-	  ORDER BY pro.codfab ASC");
+		if($tipo == "CUA" || $tipo== "COP"){
+
+			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+			pro.codpro,
+			pro.codfab,
+			pro.despro,
+			pro.CodAlm01 AS stock,
+			TbUnd.Des_Corta AS unidad,
+			pro.colpro,
+			TbCol.Des_Larga AS color,
+			pro.talpro,
+			TbTal.Des_larga AS talla,
+			pro.cuadro,
+			(SELECT 
+				despro 
+			FROM
+				producto 
+			WHERE codpro = pro.cuadro) AS cuadro_nom,
+			pro.usureg,
+			LEFT(pro.fampro, 3) AS fam 
+		FROM
+			Producto pro 
+			INNER JOIN Tabla_M_Detalle AS TbUnd 
+			ON pro.UndPro = TbUnd.Cod_Argumento 
+			AND (TbUnd.Cod_Tabla = 'TUND') 
+			INNER JOIN Tabla_M_Detalle AS TbCol 
+			ON pro.ColPro = TbCol.Cod_Argumento 
+			AND (TbCol.Cod_Tabla = 'TCOL') 
+			INNER JOIN Tabla_M_Detalle AS TbTal 
+			ON pro.TalPro = TbTal.Cod_Argumento 
+			AND (TbTal.Cod_Tabla = 'TTAL') 
+		WHERE pro.estpro = '1' 
+			AND LEFT(pro.fampro, 3) = :tipo
+		ORDER BY pro.codfab ASC");
+
+		$stmt->bindParam(":tipo", $tipo, PDO::PARAM_STR);
 
 		$stmt -> execute();
 
 		return $stmt -> fetchAll();
+
+		}else{
+
+			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+			pro.codpro,
+			pro.codfab,
+			pro.despro,
+			pro.CodAlm01 AS stock,
+			TbUnd.Des_Corta AS unidad,
+			pro.colpro,
+			TbCol.Des_Larga AS color,
+			pro.talpro,
+			TbTal.Des_larga AS talla,
+			pro.cuadro,
+			(SELECT 
+				despro 
+			FROM
+				producto 
+			WHERE codpro = pro.cuadro) AS cuadro_nom,
+			pro.usureg,
+			LEFT(pro.fampro, 3) AS fam 
+			FROM
+				Producto pro 
+				INNER JOIN Tabla_M_Detalle AS TbUnd 
+				ON pro.UndPro = TbUnd.Cod_Argumento 
+				AND (TbUnd.Cod_Tabla = 'TUND') 
+				INNER JOIN Tabla_M_Detalle AS TbCol 
+				ON pro.ColPro = TbCol.Cod_Argumento 
+				AND (TbCol.Cod_Tabla = 'TCOL') 
+				INNER JOIN Tabla_M_Detalle AS TbTal 
+				ON pro.TalPro = TbTal.Cod_Argumento 
+				AND (TbTal.Cod_Tabla = 'TTAL') 
+			WHERE pro.estpro = '1' 
+				AND LEFT(pro.fampro, 3) IN ('CUA','COP')
+			ORDER BY pro.codfab ASC");
+
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+
 
 		$stmt -> close();
 
@@ -1300,8 +1353,11 @@ class ModeloMateriaPrima{
 							ON Pro.TalPro = TbTal.Cod_Argumento 
 							AND (TbTal.Cod_Tabla = 'TTAL') 
 						WHERE Pro.EstPro = '1' 
-							AND LEFT(pro.fampro, 3) = 'COP' 
-							AND pro.codpro NOT IN (':codpro')");
+						AND LEFT(pro.fampro, 3) = 'COP' 
+						AND (
+							pro.cuadro = '' 
+							OR pro.cuadro IS NULL
+						)");
 
 		$stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
 
@@ -1344,6 +1400,148 @@ class ModeloMateriaPrima{
 		$stmt = null;
 
 	} 
+
+	/* 
+	* MOSTRAR DATOS DE LA MATERIA PRIMA
+	*/
+	static public function mdlAlmacen01Quitar($codpro){
+
+		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+							CodPro AS codpro,
+							CodFab AS codfab,
+							DesPro AS despro,
+							TbCol.Des_Larga AS color,
+							TbTal.Des_Larga AS talla,
+							TbUnd.Des_Corta AS unidad,
+							CodAlm01 AS stock,
+							pro.cuadro 
+						FROM
+							Producto AS Pro 
+							INNER JOIN Tabla_M_Detalle AS TbUnd 
+							ON Pro.UndPro = TbUnd.Cod_Argumento 
+							AND (TbUnd.Cod_Tabla = 'TUND') 
+							INNER JOIN Tabla_M_Detalle AS TbCol 
+							ON Pro.ColPro = TbCol.Cod_Argumento 
+							AND (TbCol.Cod_Tabla = 'TCOL') 
+							INNER JOIN Tabla_M_Detalle AS TbTal 
+							ON Pro.TalPro = TbTal.Cod_Argumento 
+							AND (TbTal.Cod_Tabla = 'TTAL') 
+						WHERE Pro.EstPro = '1' 
+						AND LEFT(pro.fampro, 3) = 'COP' 
+						AND pro.cuadro=:codpro");
+
+		$stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }	
 	
+	/*=============================================
+	ANULAR MATERIA PRIMA
+	=============================================*/
+
+	static public function mdlQuitarCuadro($codpro){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE 
+							producto 
+						SET
+							cuadro = '' 
+						WHERE codpro = :codpro ");
+
+		$stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	} 	
+
+	/* 
+	* MOSTRAR DATOS DE LA MATERIA PRIMA
+	*/
+	static public function mdlCorrelativoNuevo($tipo){
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+							LPAD(IFNULL(MAX(documento), 0) + 1, 6, '0') AS correlativo 
+						FROM
+							maestra_prod_cab 
+						WHERE tipo = :tipo");
+
+		$stmt->bindParam(":tipo", $tipo, PDO::PARAM_STR);
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }	
+
+	/* 
+	* MOSTAR MP DE ALMACEN01 
+	*/
+	static public function mdlSelectAlmacen01($valor){
+
+		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+		pro.codpro,
+		pro.codfab,
+		pro.despro,
+		pro.CodAlm01 AS stock,
+		TbUnd.Des_Corta AS unidad,
+		pro.colpro,
+		TbCol.Des_Larga AS color,
+		pro.talpro,
+		TbTal.Des_larga AS talla,
+		pro.cuadro,
+		(SELECT 
+		  despro 
+		FROM
+		  producto 
+		WHERE codpro = pro.cuadro) AS cuadro_nom,
+		pro.usureg,
+		LEFT(pro.fampro, 3) AS fam 
+	  FROM
+		Producto pro 
+		INNER JOIN Tabla_M_Detalle AS TbUnd 
+		  ON pro.UndPro = TbUnd.Cod_Argumento 
+		  AND (TbUnd.Cod_Tabla = 'TUND') 
+		INNER JOIN Tabla_M_Detalle AS TbCol 
+		  ON pro.ColPro = TbCol.Cod_Argumento 
+		  AND (TbCol.Cod_Tabla = 'TCOL') 
+		INNER JOIN Tabla_M_Detalle AS TbTal 
+		  ON pro.TalPro = TbTal.Cod_Argumento 
+		  AND (TbTal.Cod_Tabla = 'TTAL') 
+	  WHERE pro.estpro = '1' 
+		AND pro.codpro = :codpro 
+	  ORDER BY pro.codfab ASC");
+
+		$stmt->bindParam(":codpro", $valor, PDO::PARAM_STR);
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }	
 
 }

@@ -137,6 +137,19 @@ class AjaxMateriaPrima{
 
 	}	
 
+	/* 
+	* EDITAR NOMBRE DE LA MATERIA PRIMA
+	*/
+	public function ajaxQuitarCuadro(){
+
+		$codpro = $this->codproQ;
+
+		$respuesta = ModeloMateriaPrima::mdlQuitarCuadro($codpro);
+
+		echo json_encode($respuesta);
+
+	}		
+
 
 	/*=============================================
 	EDITAR DOCUMENTO DE VENTA
@@ -338,6 +351,19 @@ class AjaxMateriaPrima{
     
       }
 
+	  /* 
+	 * MOSTAR MP DE ALMACEN01 
+	  */
+	  public function ajaxSelectAlmacen01(){
+
+		$valor = $this->codproCua;
+
+		$respuesta = ControladorMateriaPrima::ctrSelectAlmacen01($valor);
+
+		echo json_encode($respuesta);
+
+	}	  
+
 }
 
 
@@ -478,5 +504,29 @@ if(isset($_POST["cuadro"])){
 	$agregarCuadro -> cuadro = $_POST["cuadro"];
 	$agregarCuadro -> codpro = $_POST["codpro"];
 	$agregarCuadro -> ajaxAgregarCuadro();
+  
+}
+
+/* 
+* QUITAR LA COPA AL CUADRO
+*/
+
+if(isset($_POST["codproQ"])){
+
+	$agregarCuadro = new AjaxMateriaPrima();
+	$agregarCuadro -> codproQ = $_POST["codproQ"];
+	$agregarCuadro -> ajaxQuitarCuadro();
+  
+}
+
+/* 
+* QUITAR LA COPA AL CUADRO
+*/
+
+if(isset($_POST["codproCua"])){
+
+	$agregarCuadro = new AjaxMateriaPrima();
+	$agregarCuadro -> codproCua = $_POST["codproCua"];
+	$agregarCuadro -> ajaxSelectAlmacen01();
   
 }

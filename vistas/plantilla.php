@@ -253,7 +253,8 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "kardex" ||
                   $_GET["ruta"] == "mp-oc-pendiente" ||
                   $_GET["ruta"] == "mp-os-pendiente" ||
-                  $_GET["ruta"] == "almacen-01"){
+                  $_GET["ruta"] == "almacen-01" ||
+                  $_GET["ruta"] == "crear-cuadros-prod"){
         
               include "modulos/materiaprima/".$_GET["ruta"].".php";
 
