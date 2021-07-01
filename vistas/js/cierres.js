@@ -264,7 +264,7 @@ function cargarTablaArticuloCierres(sectorCierre){
   
         $(".nuevoCierres").append(
   
-          '<div class="row" style="padding:5px 15px">' +
+          '<div class="row munditoCierre" style="padding:5px 15px">' +
   
             "<!-- Descripción del producto -->" +
   

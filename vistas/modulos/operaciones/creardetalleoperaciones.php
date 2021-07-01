@@ -96,6 +96,23 @@
                 </div>
 
                 <!--=====================================
+                ENTRADA BUSCADOR
+                ======================================-->
+
+                <div class=" form-group buscador" id="elid" style="padding-bottom:25px">
+                  <label for="" class="col-form-label col-lg-1">Buscar:</label>
+                  <div class="col-lg-11">
+                      <div class="input-group">
+                          
+                          <input type="text" class="form-control " id="buscadorOperacion" name="buscadorOperacion"/>
+                          <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                      </div>
+                  </div>
+                      
+                </div>         
+
+
+                <!--=====================================
                 ENTRADA PARA AGREGAR OPERACION
                 ======================================-->
                 <table>
@@ -109,7 +126,7 @@
 
                 </table>
 
-                <div class="form-group row nuevaOperacion">
+                <div class="form-group row nuevaOperacion" style="height:400px;overflow: scroll; overflow-x:hidden">
 
 
 
@@ -361,4 +378,46 @@ MODAL AGREGAR OPERACION
 
 <script>
 window.document.title = "Crear operaciones modelo"
+</script>
+
+<script>
+$('.nuevaOperacion').ready(function(){
+    $('#buscadorOperacion').keyup(function(){
+
+
+    var nombres = $('.nuevaDescripcionOperacion2');
+    //console.log(nombres.val())
+    //console.log(nombres.length())
+
+    var buscando = $(this).val();
+    //console.log(buscando.length);
+
+    var item='';
+
+       for( var i = 0; i < nombres.length; i++ ){
+
+        item = $(nombres[i]).val();
+        item2 = $(nombres[i]).val().toLowerCase();
+        // console.log(item);
+
+            for(var x = 0; x < item.length; x++ ){
+
+                if( buscando.length == 0 || item.indexOf( buscando ) > -1 || item2.indexOf( buscando ) > -1 ){
+
+                    $(nombres[i]).parents('.munditoOperacion').show(); 
+
+                }else{
+
+                    $(nombres[i]).parents('.munditoOperacion').hide();
+
+                }
+            }
+
+          
+       }
+
+       
+    });
+  });
+
 </script>

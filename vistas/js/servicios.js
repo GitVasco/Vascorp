@@ -299,7 +299,7 @@ $(".tablaPrecioServicios").DataTable({
   
         $(".nuevoProducto").append(
   
-          '<div class="row" style="padding:5px 15px">' +
+          '<div class="row munditoServicio" style="padding:5px 15px">' +
   
             "<!-- Descripción del producto -->" +
   

@@ -180,7 +180,7 @@ $(".tablaArticuloOperaciones tbody").on("click", "button.agregarOperacion", func
 		
 		$(".nuevaOperacion").append(
   
-		  '<div class="row" style="padding:5px 15px">' +
+		  '<div class="row munditoOperacion" style="padding:5px 15px">' +
   
 			"<!-- Descripción del producto -->" +
   

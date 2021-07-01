@@ -27,23 +27,23 @@ class TablaListarDocumentos{
             */
             if($salidas[$i]["estado"] == "GENERADO"){
 
-                $estado = "<button class='btn btn-basic btn-xs btnAprobarPedido' codigo='".$salidas[$i]["codigo"]."' estadoPedido='APROBADO'>GENERADO</button>";
+                $estado = "<button class='btn btn-basic btn-xs ' codigo='".$salidas[$i]["documento"]."' estadoPedido='APROBADO'>GENERADO</button>";
 
             }else if($salidas[$i]["estado"] == "APROBADO"){
 
-                $estado = "<button class='btn btn-warning btn-xs btnAptear' codigo='".$salidas[$i]["codigo"]."' estadoPedido='APT'>APROBADO</button>";
+                $estado = "<button class='btn btn-warning btn-xs ' codigo='".$salidas[$i]["documento"]."' estadoPedido='APT'>APROBADO</button>";
 
             }else if($salidas[$i]["estado"] == "APT"){
 
-                $estado = "<button class='btn btn-default btn-xs btn  btnConfirmar' codigo='".$salidas[$i]["codigo"]."' estadoPedido='CONFIRMADO'>APT</button>";
+                $estado = "<button class='btn btn-default btn-xs btn  ' codigo='".$salidas[$i]["documento"]."' estadoPedido='CONFIRMADO'>APT</button>";
 
             }else if($salidas[$i]["estado"] == "CONFIRMADO"){
 
-                $estado = "<button class='btn btn-info btn-xs btn btnFacturar' codigo='".$salidas[$i]["codigo"]."' estadoPedido='FACTURADO'>CONFIRMADO</button>";
+                $estado = "<button class='btn btn-info btn-xs btn ' codigo='".$salidas[$i]["documento"]."' estadoPedido='FACTURADO'>CONFIRMADO</button>";
 
             }else{
 
-                $estado = "<button class='btn btn-success btn-xs btn' codigo='".$salidas[$i]["codigo"]."' estadoPedido='FACTURADO'>FACTURADO</button>";
+                $estado = "<button class='btn btn-success btn-xs btn' codigo='".$salidas[$i]["documento"]."' estadoPedido='FACTURADO'>FACTURADO</button>";
 
             }
 

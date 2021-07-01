@@ -586,26 +586,46 @@ class ModeloCuentas{
 
 		if($saldo != "null" ){
 			$stmt = Conexion::conectar()->prepare("SELECT 
-													* 
-												FROM
-													$tabla 
-												WHERE saldo > 0 
-												AND tip_mov ='+'
-												ORDER BY saldo BETWEEN ($saldo - 10) 
-													AND ($saldo + 10) DESC,
-													saldo ASC ");
+			c.id,
+			c.tipo_doc,
+			c.num_cta,
+			c.cliente,
+			c.fecha,
+			c.fecha_ven,
+			c.monto,
+			c.saldo,
+			cli.nombre 
+		  FROM
+			cuenta_ctejf  c
+		  LEFT JOIN clientesjf cli
+		  ON c.cliente = cli.codigo
+			WHERE saldo > 0 
+			AND tip_mov ='+'
+			ORDER BY saldo BETWEEN ($saldo - 10) 
+			AND ($saldo + 10) DESC,
+			saldo ASC ");
 	
 			$stmt -> execute();
 	
 			return $stmt -> fetchAll();
 		}else{
-			$stmt = Conexion::conectar()->prepare("SELECT 
-														* 
-													FROM
-														$tabla 
-													WHERE saldo > 0 
-														AND tip_mov ='+' 
-													ORDER BY saldo ASC ");
+			$stmt = Conexion::conectar()->prepare("SELECT
+			c.id, 
+			c.tipo_doc,
+			c.num_cta,
+			c.cliente,
+			c.fecha,
+			c.fecha_ven,
+			c.monto,
+			c.saldo,
+			cli.nombre 
+		  FROM
+			cuenta_ctejf  c
+		  LEFT JOIN clientesjf cli
+		  ON c.cliente = cli.codigo
+		WHERE saldo > 0 
+			AND tip_mov ='+' 
+		ORDER BY saldo ASC ");
 
 			$stmt -> execute();
 	
