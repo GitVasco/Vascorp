@@ -623,9 +623,9 @@ class ControladorMateriaPrima{
 	/* 
 	* MOSTRAR DATOS DE LA MATERIA PRIMA ALMACEN 01
 	*/
-	static public function ctrMostrarAlmacen01(){
+	static public function ctrMostrarAlmacen01($tipo){
 
-		$respuesta = ModeloMateriaPrima::mdlMostrarAlmacen01();
+		$respuesta = ModeloMateriaPrima::mdlMostrarAlmacen01($tipo);
 
 		return $respuesta;
 
@@ -637,6 +637,39 @@ class ControladorMateriaPrima{
 	static public function ctrAlmacen01Agregar($codpro){
 
 		$respuesta = ModeloMateriaPrima::mdlAlmacen01Agregar($codpro);
+
+		return $respuesta;
+
+    }	
+
+	/* 
+	* MOSTRAR DATOS DE LA MATERIA PRIMA ALMACEN 01 PARA QUITAR
+	*/
+	static public function ctrAlmacen01Quitar($codpro){
+
+		$respuesta = ModeloMateriaPrima::mdlAlmacen01Quitar($codpro);
+
+		return $respuesta;
+
+    }
+	
+	/* 
+	* MOSTRAR CORRELATIVO DEPENDE DEL TIPO
+	*/
+	static public function ctrCorrelativoNuevo($tipo){
+
+		$respuesta = ModeloMateriaPrima::mdlCorrelativoNuevo($tipo);
+
+		return $respuesta;
+
+    }
+
+	/* 
+	* MOSTAR MP DE ALMACEN01 
+	*/
+	static public function ctrSelectAlmacen01($valor){
+
+		$respuesta = ModeloMateriaPrima::mdlSelectAlmacen01($valor);
 
 		return $respuesta;
 

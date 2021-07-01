@@ -1105,42 +1105,59 @@ $('#formDuplicarMateriaPrima').submit(function(e){
 ! ALMACEN 01 - CUADROS Y COPAS
 ? ALMACEN 01 - CUADROS Y COPAS
 */
-$('.tablaAlmacen01').DataTable( {
-    "ajax": "ajax/materiaprima/tabla-almacen01.ajax.php",
-    "deferRender": true,
-	"retrieve": true,
-	"processing": true,
-	"order": [[0, "desc"]],
-	"pageLength": 20,
-	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
-	"language": {
+/*
+*CARGAR LA TABLA DINÁMICA DE almacen01
+**/
+if (localStorage.getItem("tipo") != null) {
+	cargarAlmacen01Tipo(localStorage.getItem("tipo"));
+} else {
 
-			"sProcessing":     "Procesando...",
-			"sLengthMenu":     "Mostrar _MENU_ registros",
-			"sZeroRecords":    "No se encontraron resultados",
-			"sEmptyTable":     "Ningún dato disponible en esta tabla",
-			"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
-			"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0",
-			"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-			"sInfoPostFix":    "",
-			"sSearch":         "Buscar:",
-			"sUrl":            "",
-			"sInfoThousands":  ",",
-			"sLoadingRecords": "Cargando...",
-			"oPaginate": {
-			"sFirst":    "Primero",
-			"sLast":     "Último",
-			"sNext":     "Siguiente",
-			"sPrevious": "Anterior"
-			},
-			"oAria": {
-				"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-				"sSortDescending": ": Activar para ordenar la columna de manera descendente"
-			}
+	cargarAlmacen01Tipo(null);
+}
 
-	}    
-} );
+function cargarAlmacen01Tipo(tipo){
+	
+	$('.tablaAlmacen01').DataTable( {
+		"ajax": "ajax/materiaprima/tabla-almacen01.ajax.php?tipo=" + tipo,
+		"deferRender": true,
+		"retrieve": true,
+		"processing": true,
+		"order": [[1, "asc"]],
+		"pageLength": 20,
+		"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+		"language": {
+	
+				"sProcessing":     "Procesando...",
+				"sLengthMenu":     "Mostrar _MENU_ registros",
+				"sZeroRecords":    "No se encontraron resultados",
+				"sEmptyTable":     "Ningún dato disponible en esta tabla",
+				"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+				"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0",
+				"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+				"sInfoPostFix":    "",
+				"sSearch":         "Buscar:",
+				"sUrl":            "",
+				"sInfoThousands":  ",",
+				"sLoadingRecords": "Cargando...",
+				"oPaginate": {
+				"sFirst":    "Primero",
+				"sLast":     "Último",
+				"sNext":     "Siguiente",
+				"sPrevious": "Anterior"
+				},
+				"oAria": {
+					"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+				}
+	
+		}    
+	} );
 
+}
+
+/* 
+*AGREGAR COPA
+*/
 $(".tablaAlmacen01 tbody").on("click", "button.btnAgregarCopas", function(){
 
 	var codpro = $(this).attr("codpro");
@@ -1196,7 +1213,7 @@ $(".tablaAlmacen01 tbody").on("click", "button.btnAgregarCopas", function(){
 })
 
 /* 
-*AGREGANDO MATERIA PRIMA
+*AGREGANDO COPAS
 */
 $(".tablaAlm01Add").on("click", ".btnAddAlm01", function() {
 
@@ -1216,10 +1233,381 @@ $(".tablaAlm01Add").on("click", ".btnAddAlm01", function() {
 		processData:false,
 		success:function(respuesta){
 
-			console.log(respuesta);
+			//console.log(respuesta);
+
+			if(respuesta == '"ok"'){
+
+				Command: toastr["info"]("Copa agregada correctamente!");
+
+			}else{
+
+				Command: toastr["error"]("No se pudo agregar");
+
+			}
+
 
 		}
 
 	});
 
+	$(this).removeClass("btn-primary");
+	$(this).removeClass("btnAddAlm01");
+
 })
+
+$("#selectAlmacen01").change(function(){
+
+	var tipo = $(this).val();
+
+	if( tipo == ''){
+
+		localStorage.setItem("tipo", null);
+
+	}else{
+
+		localStorage.setItem("tipo", tipo);
+
+	}
+
+	//console.log(tipo);	
+	$(".tablaAlmacen01").DataTable().destroy();
+	cargarAlmacen01Tipo(localStorage.getItem("tipo"));
+
+})
+
+/* 
+*QUITAR COPAS
+*/
+$(".tablaAlmacen01 tbody").on("click", "button.btnQuitarCopas", function(){
+
+	var codpro = $(this).attr("codpro");
+	var codfab = $(this).attr("codfab");
+	var despro = $(this).attr("despro");
+	var color = $(this).attr("color");
+	var unidad = $(this).attr("unidad");
+	var stock = $(this).attr("stock");
+	//console.log(codpro);
+
+	$("#codproQ").val(codpro);
+	$("#codfabQ").val(codfab);
+	$("#desproQ").val(despro);
+	$("#colorQ").val(color);
+	$("#unidadQ").val(unidad);
+	$("#stockQ").val(stock);
+
+    $(".tablaAlm01Off").DataTable().destroy();
+    $('.tablaAlm01Off').DataTable({
+        "ajax": "ajax/materiaprima/tabla-almacen01-off.ajax.php?codpro=" + codpro,
+        "deferRender": true,
+        "retrieve": true,
+        "processing": true,
+        "order": [[1, "asc"]],
+        "language": {
+    
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+    
+        }
+    
+    });	
+
+})
+
+/* 
+*AGREGANDO COPAS
+*/
+$(".tablaAlm01Off").on("click", ".btnOffAlm01", function() {
+
+	var codproQ = $(this).attr("codpro");
+	console.log(codproQ);
+
+	var datos=new FormData();
+	datos.append("codproQ",codproQ);
+	$.ajax({
+		url:"ajax/materiaprima.ajax.php",
+		type:"POST",
+		data:datos,
+		cache:false,
+		contentType:false,
+		processData:false,
+		success:function(respuesta){
+
+			//console.log(respuesta);
+
+			if(respuesta == '"ok"'){
+
+				Command: toastr["error"]("¡Se quito correctamente!");
+
+			}else{
+
+				Command: toastr["info"]("No se pudo quitar");
+
+			}
+
+
+		}
+
+	});
+
+	$(this).removeClass("btn-danger");
+	$(this).removeClass("btnOffAlm01");
+
+})
+
+/* 
+* BOTON AGREGAR PRODUCCION CUADROS
+*/
+$(".tablaAlmacen01").on("click", ".btnagregarCuadrosProd", function () {
+
+	var codpro = $(this).attr("codpro");
+	console.log(codpro);
+
+  	//window.location = "index.php?ruta=editar-tarjeta&idTarjeta=" + idTarjeta;
+  
+})
+
+$('.tablaAlmacen01CUA').DataTable( {
+		"ajax": "ajax/materiaprima/tabla-almacen01-cua-prod.ajax.php",
+		"deferRender": true,
+		"retrieve": true,
+		"processing": true,
+		"order": [[1, "asc"]],
+		"pageLength": 20,
+		"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+		"language": {
+	
+				"sProcessing":     "Procesando...",
+				"sLengthMenu":     "Mostrar _MENU_ registros",
+				"sZeroRecords":    "No se encontraron resultados",
+				"sEmptyTable":     "Ningún dato disponible en esta tabla",
+				"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+				"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0",
+				"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+				"sInfoPostFix":    "",
+				"sSearch":         "Buscar:",
+				"sUrl":            "",
+				"sInfoThousands":  ",",
+				"sLoadingRecords": "Cargando...",
+				"oPaginate": {
+				"sFirst":    "Primero",
+				"sLast":     "Último",
+				"sNext":     "Siguiente",
+				"sPrevious": "Anterior"
+				},
+				"oAria": {
+					"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+				}
+	
+		}    
+} );
+
+/* 
+*AGREGANDO MATERIA PRIMA - CUADROS
+*/
+$(".tablaAlmacen01CUA").on("click", ".agregarCuadros", function() {
+
+	var idBoton = $(this).attr("idBoton");
+	var codpro = $(this).attr("codpro");
+	//console.log(codpro);
+
+	$(this).removeClass("btn-primary agregarCuadros");
+	$(this).addClass("btn-default");
+
+	var datos = new FormData();
+	datos.append("codproCua", codpro);
+
+	$.ajax({
+		url: "ajax/materiaprima.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(respuesta) {
+	
+		  //console.log(respuesta);
+		  var descripcion = respuesta["despro"];
+		  var color = respuesta["color"]; 
+
+		  $(".nuevoCuadro").append(
+
+			'<div class="row" style="padding:1px 15px">' +
+
+				"<!-- CODPRO -->" +
+
+				'<div class="col-xs-2">' +
+
+					'<div class="input-group">' +
+
+						'<span class="input-group-addon" style="padding: 3px 6px"><button type="button" class="btn btn-danger btn-xs quitarCuadro" idBoton="' + idBoton + '"><i class="fa fa-times"></i></button></span>' +
+
+						'<input type="text" class="form-control nuevoCodPro" codpro="' + codpro + '" id="codpro" name="codpro" value="' + codpro + '" codigoP="' + codpro + '" readonly required>' +
+
+					"</div>" +
+
+				"</div>" +
+
+				"<!-- DESCRIPCION -->" +
+
+				'<div class="col-xs-4" >' +
+	  
+					'<input type="text" class="form-control input-sm nuevaDescripcion" name="descripcion" id ="descripcion" value="' + descripcion + '"  readonly>' +
+	  
+				"</div>" +
+
+				"<!-- COLOR -->" +
+				
+				'<div class="col-xs-4" >' +
+	  
+					'<input type="text" class="form-control input-sm nuevColor" name="color" id ="color" value="' + color + '"  readonly>' +
+	  
+				"</div>" +		
+				
+				"<!-- CANTIDAD RECIBIDA -->" +
+
+				'<div class="col-xs-2 ingresoCantidad">' +
+	  
+					'<input type="number" step="any" class="form-control input-sm nuevaCantidadRecibida"  name="cantidadRecibida" id="cantidadRecibida" cantidadReal="0" value="0" min="1">' +
+	  
+				"</div>" +				
+
+			"</div>"
+
+		  );		  
+
+	
+		}
+	
+	  });  	
+	
+})
+
+/*=============================================
+CUANDO CARGUE LA TABLA CADA VEZ QUE NAVEGUE EN ELLA
+=============================================*/
+$(".tablaAlmacen01CUA").on("draw.dt", function() {
+	/* console.log("tabla"); */
+  
+	if (localStorage.getItem("quitarCuadro") != null) {
+	  var listaCuadros = JSON.parse(localStorage.getItem("quitarCuadro"));
+  
+	  //console.log(listaCuadros);
+  
+	  for (var i = 0; i < listaCuadros.length; i++) {
+		$(
+		  "button.recuperarBoton[idBoton='" +
+		  listaCuadros[i]["idBoton"] +
+			"']"
+		).removeClass("btn-default");
+		$(
+		  "button.recuperarBoton[idBoton='" +
+		  listaCuadros[i]["idBoton"] +
+			"']"
+		).addClass("btn-primary agregarCuadros");
+	  }
+	}
+  });
+  
+  /*=============================================
+  QUITAR PRODUCTOS DE LA VENTA Y RECUPERAR BOTÓN
+  =============================================*/
+  var idQuitarCuadro = [];
+  
+  localStorage.removeItem("quitarCuadro");
+  
+  $(".formularioCuadros").on("click", "button.quitarCuadro", function() {
+	/* console.log("boton"); */
+  
+	$(this)
+	  .parent()
+	  .parent()
+	  .parent()
+	  .parent()
+	  .remove();
+  
+	var idBoton = $(this).attr("idBoton");
+	//console.log(idBoton);
+  
+	  /*=============================================
+	ALMACENAR EN EL LOCALSTORAGE EL ID DEL PRODUCTO A QUITAR
+	=============================================*/
+  
+	if (localStorage.getItem("quitarCuadro") == null) {
+	  idQuitarCuadro = [];
+	} else {
+	  idQuitarCuadro.concat(localStorage.getItem("quitarCuadro"));
+	}
+  
+	idQuitarCuadro.push({
+	  idBoton: idBoton
+	});
+  
+	//console.log(idQuitarCuadro);
+  
+	localStorage.setItem("quitarCuadro", JSON.stringify(idQuitarCuadro));
+  
+	$(".recuperarBoton[idBoton='" + idBoton + "']").removeClass(
+	  "btn-default"
+	);
+	console.log(".recuperarBoton[idBoton='" + idBoton + "']");
+  
+	$(".recuperarBoton[idBoton='" + idBoton + "']").addClass(
+	  "btn-primary agregarCuadros"
+	);
+	
+  });
+
+  /*=============================================
+MODIFICAR EL TOTAL AL CAMBIAR LA CANTIDAD
+=============================================*/
+$(".formularioCuadros").on("keyup", "input.nuevaCantidadRecibida", function() {
+
+	sumarTotalCantidadCua();
+
+
+})
+
+  function sumarTotalCantidadCua() {
+
+	var cantidad = $(".nuevaCantidadRecibida");
+   	//console.log("cantidad", cantidad);
+  
+	var arraySumaCantidad = [];
+  
+	for (var i = 0; i < cantidad.length; i++) {
+	  arraySumaCantidad.push(Number($(cantidad[i]).val()));
+	}
+	//console.log("arraySumaCantidad", arraySumaCantidad);  
+  
+	function sumaArrayCantidad(total, numero) {
+	  return total + numero;
+	}
+  
+	var sumaTotalCantidad = arraySumaCantidad.reduce(sumaArrayCantidad);
+	console.log("sumaTotalCantidad", sumaTotalCantidad);  
+  
+
+  
+  }

@@ -1030,7 +1030,9 @@
                                             $_GET["ruta"] == "notas-ingresos-os" ||
                                             $_GET["ruta"] == "kardex" ||
                                             $_GET["ruta"] == "mp-oc-pendiente" ||
-                                            $_GET["ruta"] == "mp-os-pendiente" ) echo 'active';?>">
+                                            $_GET["ruta"] == "mp-os-pendiente" ||
+                                            $_GET["ruta"] == "almacen-01" ||
+                                            $_GET["ruta"] == "crear-cuadros-prod") echo 'active';?>">
 
                 <a href="#">
 
@@ -1055,7 +1057,8 @@
                     </li>
 
                     <li class="treeview <?php if(   $_GET["ruta"] == "materiaprima" || 
-                                                    $_GET["ruta"] == "almacen-01") echo 'active';?>">
+                                                    $_GET["ruta"] == "almacen-01" || 
+                                                    $_GET["ruta"] == "crear-cuadros-prod") echo 'active';?>">
 
                         <a href="#"><i class="fa fa-scissors text-orange"></i> Materia Prima
 
@@ -1082,6 +1085,14 @@
                                 </a>
 
                             </li>
+
+                            <li class="<?php if($_GET["ruta"] == "crear-cuadros-prod") echo 'active';?>">
+
+                                <a href="crear-cuadros-prod">
+                                <i class="fa fa-circle-o"></i> Produccion Cuadros
+                                </a>
+
+                            </li>                            
 
                         </ul>
 
