@@ -43,7 +43,7 @@ class TablaTrabajador2{
         TRAEMOS LAS ACCIONES
         =============================================*/         
         
-        $botones =  "<div class='btn-group'><button class='btn btn-sm btn-info  btnPaseLaboral' title='Pase laboral de trabajador' codigo='".$trabajador[$i]["id"]."'><i class='fa fa-file-text' ></i></button><button class='btn btn-sm btn-success  btnCarnetID' title='Carnet  de trabajador' codigo='".$trabajador[$i]["id"]."' ><i class='fa fa-id-card-o' ></i></button><button class='btn btn-sm btn-warning  btnCarnetIDReves' title='Carnet  de trabajador reversa' codigo='".$trabajador[$i]["id"]."' ><i class='fa fa-id-card-o' ></i></button></div>"; 
+        $botones =  "<div class='btn-group'><button class='btn btn-xs btn-info  btnPaseLaboral' title='Pase laboral de trabajador' codigo='".$trabajador[$i]["id"]."'><i class='fa fa-file-text' ></i></button><button class='btn btn-xs btn-success  btnCarnetID' title='Carnet  de trabajador' codigo='".$trabajador[$i]["id"]."' ><i class='fa fa-id-card-o' ></i></button><button class='btn btn-xs btn-warning  btnCarnetIDReves' title='Carnet  de trabajador reversa' codigo='".$trabajador[$i]["id"]."' ><i class='fa fa-id-card-o' ></i></button></div>"; 
 
             $datosJson .= '[
             "'.($i+1).'",

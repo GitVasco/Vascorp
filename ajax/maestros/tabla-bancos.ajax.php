@@ -26,7 +26,7 @@ class TablaBancos{
         TRAEMOS LAS ACCIONES
         =============================================*/         
         
-        $botones =  "<div class='btn-group'><button class='btn btn-sm btn-warning btnEditarBanco' idBanco='".$banco[$i]["id"]."' data-toggle='modal' data-target='#modalEditarBanco'><i class='fa fa-pencil'></i></button><button class='btn btn-sm btn-danger btnEliminarBanco' idBanco='".$banco[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
+        $botones =  "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarBanco' idBanco='".$banco[$i]["id"]."' data-toggle='modal' data-target='#modalEditarBanco'><i class='fa fa-pencil'></i></button><button class='btn btn-xs btn-danger btnEliminarBanco' idBanco='".$banco[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
 
             $datosJson .= '[
             "'.$banco[$i]["codigo"].'",
