@@ -30,7 +30,7 @@ class TablaMovimientos{
             todo: TRAEMOS LOS BOTONES
             */       
             
-            $botones =  "<div class='btn-group'><button class='btn btn-sm btn-success btnActualizarMes' año='".$movimientos[$i]["año"]."' mes='".$movimientos[$i]["mes"]."'><i class='fa fa-refresh'></i></button></div>"; 
+            $botones =  "<div class='btn-group'><button class='btn btn-xs btn-success btnActualizarMes' año='".$movimientos[$i]["año"]."' mes='".$movimientos[$i]["mes"]."'><i class='fa fa-refresh'></i></button></div>"; 
 
                 $datosJson .= '[
                 "'.($i+1).'",

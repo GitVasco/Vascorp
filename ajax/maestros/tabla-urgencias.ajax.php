@@ -150,7 +150,7 @@ class TablaUrgencias{
             /*
             todo: BOTONES
             */
-            $botones =  "<div class='btn-group'><button class='btn btn-sm btn-info btnVerUrgencias' codigo='".$articulos[$i]["articulo"]."' data-toggle='modal' data-target='#modalVisualizarUrgencias'><i class='fa fa-eye'></i></button><button class='btn btn-sm btn-primary btnMpFaltante' codigo='".$articulos[$i]["articulo"]."' data-toggle='modal' data-target='#modalMpFaltante'><i class='fa fa-fire'></i></button></div>"; 
+            $botones =  "<div class='btn-group'><button class='btn btn-xs btn-info btnVerUrgencias' codigo='".$articulos[$i]["articulo"]."' data-toggle='modal' data-target='#modalVisualizarUrgencias'><i class='fa fa-eye'></i></button><button class='btn btn-xs btn-primary btnMpFaltante' codigo='".$articulos[$i]["articulo"]."' data-toggle='modal' data-target='#modalMpFaltante'><i class='fa fa-fire'></i></button></div>"; 
 
                 $datosJson .= '[
                 "'.$modelo.'",

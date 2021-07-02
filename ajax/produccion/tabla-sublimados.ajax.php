@@ -23,7 +23,7 @@ class TablaSublimados{
         TRAEMOS LAS ACCIONES
         =============================================*/         
         
-        $botones =  "<div class='btn-group'><button class='btn btn-sm btn-warning btnEditarSublimado' idSublimado='".$sublimado[$i]["id"]."' data-toggle='modal' data-target='#modalEditarSublimado'><i class='fa fa-pencil'></i></button><button class='btn btn-sm btn-danger btnEliminarSublimado' idSublimado='".$sublimado[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
+        $botones =  "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarSublimado' idSublimado='".$sublimado[$i]["id"]."' data-toggle='modal' data-target='#modalEditarSublimado'><i class='fa fa-pencil'></i></button><button class='btn btn-xs btn-danger btnEliminarSublimado' idSublimado='".$sublimado[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
 
             $datosJson .= '[
             "'.($i+1).'",

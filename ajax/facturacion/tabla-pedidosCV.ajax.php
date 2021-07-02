@@ -28,27 +28,27 @@ class TablaPedidosCV{
             if($pedidos[$i]["estado"] == "GENERADO"){
 
                 $estado = "<button class='btn btn-basic btn-xs btnAprobarPedido' codigo='".$pedidos[$i]["codigo"]."' estadoPedido='APROBADO'>GENERADO</button>";
-                $botones =  "<div class='btn-group'><button title='Editar Pedido' class='btn btn-sm btn-warning btnEditarPedidoCV' codigo='".$pedidos[$i]["codigo"]."'><i class='fa fa-pencil-square-o'></i></button><button title='Imprimir Pedido' class='btn btn-sm btn-success btnImprimirPedido' codigo='".$pedidos[$i]["codigo"]."'><i class='fa fa-print'></i></button></div>";
+                $botones =  "<div class='btn-group'><button title='Editar Pedido' class='btn btn-xs btn-warning btnEditarPedidoCV' codigo='".$pedidos[$i]["codigo"]."'><i class='fa fa-pencil-square-o'></i></button><button title='Imprimir Pedido' class='btn btn-xs btn-success btnImprimirPedido' codigo='".$pedidos[$i]["codigo"]."'><i class='fa fa-print'></i></button></div>";
 
             }else if($pedidos[$i]["estado"] == "APROBADO"){
 
                 $estado = "<button class='btn btn-warning btn-xs btnAptear' codigo='".$pedidos[$i]["codigo"]."' estadoPedido='APT'>APROBADO</button>";
-                $botones =  "<div class='btn-group'><button title='Editar Pedido' class='btn btn-sm btn-warning btnEditarPedidoCV' codigo='".$pedidos[$i]["codigo"]."'><i class='fa fa-pencil-square-o'></i></button><button title='Imprimir Pedido' class='btn btn-sm btn-success btnImprimirPedido' codigo='".$pedidos[$i]["codigo"]."'><i class='fa fa-print'></i></button></div>";
+                $botones =  "<div class='btn-group'><button title='Editar Pedido' class='btn btn-xs btn-warning btnEditarPedidoCV' codigo='".$pedidos[$i]["codigo"]."'><i class='fa fa-pencil-square-o'></i></button><button title='Imprimir Pedido' class='btn btn-xs btn-success btnImprimirPedido' codigo='".$pedidos[$i]["codigo"]."'><i class='fa fa-print'></i></button></div>";
 
             }else if($pedidos[$i]["estado"] == "APT"){
 
                 $estado = "<button class='btn btn-default btn-xs btn  btnConfirmar' codigo='".$pedidos[$i]["codigo"]."' estadoPedido='CONFIRMADO'>APT</button>";
-                $botones =  "<div class='btn-group'><button title='Editar Pedido' class='btn btn-sm btn-warning btnEditarPedidoCV' codigo='".$pedidos[$i]["codigo"]."'><i class='fa fa-pencil-square-o'></i></button><button title='Imprimir Pedido' class='btn btn-sm btn-success btnImprimirPedido' codigo='".$pedidos[$i]["codigo"]."'><i class='fa fa-print'></i></button></div>";
+                $botones =  "<div class='btn-group'><button title='Editar Pedido' class='btn btn-xs btn-warning btnEditarPedidoCV' codigo='".$pedidos[$i]["codigo"]."'><i class='fa fa-pencil-square-o'></i></button><button title='Imprimir Pedido' class='btn btn-xs btn-success btnImprimirPedido' codigo='".$pedidos[$i]["codigo"]."'><i class='fa fa-print'></i></button></div>";
 
             }else if($pedidos[$i]["estado"] == "CONFIRMADO"){
 
                 $estado = "<button class='btn btn-info btn-xs btn btnFacturar' codigo='".$pedidos[$i]["codigo"]."' estadoPedido='FACTURADO'>CONFIRMADO</button>";
-                $botones =  "<div class='btn-group'><button title='Editar Pedido' class='btn btn-sm btn-warning btnEditarPedidoCV' codigo='".$pedidos[$i]["codigo"]."'><i class='fa fa-pencil-square-o'></i></button><button title='Imprimir Pedido' class='btn btn-sm btn-success btnImprimirPedido' codigo='".$pedidos[$i]["codigo"]."'><i class='fa fa-print'></i></button></div>";
+                $botones =  "<div class='btn-group'><button title='Editar Pedido' class='btn btn-xs btn-warning btnEditarPedidoCV' codigo='".$pedidos[$i]["codigo"]."'><i class='fa fa-pencil-square-o'></i></button><button title='Imprimir Pedido' class='btn btn-xs btn-success btnImprimirPedido' codigo='".$pedidos[$i]["codigo"]."'><i class='fa fa-print'></i></button></div>";
 
             }else{
 
                 $estado = "<button class='btn btn-success btn-xs btn' codigo='".$pedidos[$i]["codigo"]."' estadoPedido='FACTURADO'>FACTURADO</button>";
-                $botones =  "<div class='btn-group'><button title='Imprimir Pedido' class='btn btn-sm btn-success btnImprimirPedido' codigo='".$pedidos[$i]["codigo"]."'><i class='fa fa-print'></i></button></div>";
+                $botones =  "<div class='btn-group'><button title='Imprimir Pedido' class='btn btn-xs btn-success btnImprimirPedido' codigo='".$pedidos[$i]["codigo"]."'><i class='fa fa-print'></i></button></div>";
 
             }
 

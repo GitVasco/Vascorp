@@ -26,7 +26,7 @@ class TablaTipoMovimientos{
         TRAEMOS LAS ACCIONES
         =============================================*/         
         
-        $botones =  "<div class='btn-group'><button class='btn btn-sm btn-warning btnEditarTipoMovimiento' idTipoMovimiento='".$tipomovimiento[$i]["id"]."' data-toggle='modal' data-target='#modalEditarTipoMovimiento'><i class='fa fa-pencil'></i></button><button class='btn btn-sm btn-danger btnEliminarTipoMovimiento' idTipoMovimiento='".$tipomovimiento[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
+        $botones =  "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarTipoMovimiento' idTipoMovimiento='".$tipomovimiento[$i]["id"]."' data-toggle='modal' data-target='#modalEditarTipoMovimiento'><i class='fa fa-pencil'></i></button><button class='btn btn-xs btn-danger btnEliminarTipoMovimiento' idTipoMovimiento='".$tipomovimiento[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
 
             $datosJson .= '[
             "'.($i+1).'",

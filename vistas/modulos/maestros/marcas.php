@@ -90,9 +90,9 @@
 
                                     <div class="btn-group">
                                         
-                                    <button class="btn btn-sm btn-warning btnEditarMarca" idMarca="'.$value["id"].'" data-toggle="modal" data-target="#modalEditarMarca"><i class="fa fa-pencil"></i></button>
+                                    <button class="btn btn-xs btn-warning btnEditarMarca" idMarca="'.$value["id"].'" data-toggle="modal" data-target="#modalEditarMarca"><i class="fa fa-pencil"></i></button>
                                     
-                                    <button class="btn btn-sm btn-danger btnEliminarMarca" idMarca="'.$value["id"].'"><i class="fa fa-times"></i></button>
+                                    <button class="btn btn-xs btn-danger btnEliminarMarca" idMarca="'.$value["id"].'"><i class="fa fa-times"></i></button>
             
                                     </div>  
             

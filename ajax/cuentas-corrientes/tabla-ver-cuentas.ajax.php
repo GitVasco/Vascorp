@@ -22,7 +22,7 @@ class TablaVerCuentas2{
         /*=============================================
         TRAEMOS LAS ACCIONES
         =============================================*/         
-       $botones="<div class='btn-group'><button class='btn btn-sm btn-warning btnEditarCancelacion' idCancelacion='".$Cuenta[$i]["id"]."' data-toggle='modal' data-target='#modalEditarCancelacion'><i class='fa fa-pencil'></i></button><button class='btn btn-sm btn-danger btnEliminarCancelacion' idCancelacion='".$Cuenta[$i]["id"]."' ><i class='fa fa-times'></i></button></div>";
+       $botones="<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarCancelacion' idCancelacion='".$Cuenta[$i]["id"]."' data-toggle='modal' data-target='#modalEditarCancelacion'><i class='fa fa-pencil'></i></button><button class='btn btn-xs btn-danger btnEliminarCancelacion' idCancelacion='".$Cuenta[$i]["id"]."' ><i class='fa fa-times'></i></button></div>";
 
             $datosJson .= '[
             "'.$Cuenta[$i]["cod_pago"].'",

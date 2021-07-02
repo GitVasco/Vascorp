@@ -26,7 +26,7 @@ class TablaSectores{
         TRAEMOS LAS ACCIONES
         =============================================*/         
         
-        $botones =  "<div class='btn-group'><button class='btn btn-sm btn-warning btnEditarSector' idSector='".$sector[$i]["cod_sector"]."' data-toggle='modal' data-target='#modalEditarSector'><i class='fa fa-pencil'></i></button><button class='btn btn-sm btn-danger btnEliminarSector' idSector='".$sector[$i]["cod_sector"]."'><i class='fa fa-times'></i></button></div>"; 
+        $botones =  "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarSector' idSector='".$sector[$i]["cod_sector"]."' data-toggle='modal' data-target='#modalEditarSector'><i class='fa fa-pencil'></i></button><button class='btn btn-xs btn-danger btnEliminarSector' idSector='".$sector[$i]["cod_sector"]."'><i class='fa fa-times'></i></button></div>"; 
 
             $datosJson .= '[
             "'.$sector[$i]["cod_sector"].'",
