@@ -60,11 +60,11 @@ class TablaContactos{
         
             if($contactos[$i]["id"] == $id){
 
-                $botones =  "<div class='btn-group'><button class='btn btn-sm btn-warning btnEditarPerfil' title='Editar Foto' idUsuario='".$contactos[$i]["id"]."' data-toggle='modal' data-target='#modalEditarPerfil'><i class='fa fa-picture-o'></i></button></div>"; 
+                $botones =  "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarPerfil' title='Editar Foto' idUsuario='".$contactos[$i]["id"]."' data-toggle='modal' data-target='#modalEditarPerfil'><i class='fa fa-picture-o'></i></button></div>"; 
 
             }else{
                 
-                $botones =  "<div class='btn-group'><button class='btn btn-sm btn-primary  btnChat' title='Enviar Mensaje' de='".$contactos[$i]["id"]."' para='".$_SESSION["id"]."'><i class='fa fa-envelope-o'></i></button></div>"; 
+                $botones =  "<div class='btn-group'><button class='btn btn-xs btn-primary  btnChat' title='Enviar Mensaje' de='".$contactos[$i]["id"]."' para='".$_SESSION["id"]."'><i class='fa fa-envelope-o'></i></button></div>"; 
 
             }
 

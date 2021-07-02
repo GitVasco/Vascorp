@@ -26,7 +26,7 @@ class TablaPrecioServicios{
         TRAEMOS LAS ACCIONES
         =============================================*/         
         
-        $botones =  "<div class='btn-group'><button class='btn btn-sm btn-warning btnEditarPrecioServicio' idPrecioServicio='".$precio[$i]["id"]."' data-toggle='modal' data-target='#modalEditarPrecioServicio'><i class='fa fa-pencil'></i></button><button class='btn btn-sm btn-danger btnEliminarPrecioServicio' idPrecioServicio='".$precio[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
+        $botones =  "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarPrecioServicio' idPrecioServicio='".$precio[$i]["id"]."' data-toggle='modal' data-target='#modalEditarPrecioServicio'><i class='fa fa-pencil'></i></button><button class='btn btn-xs btn-danger btnEliminarPrecioServicio' idPrecioServicio='".$precio[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
 
             $datosJson .= '[
             "'.$precio[$i]["taller"]." - ".$precio[$i]["nom_sector"].'",

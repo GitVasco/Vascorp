@@ -1492,7 +1492,7 @@ $(".tablaAlmacen01CUA").on("click", ".agregarCuadros", function() {
 
 				'<div class="col-xs-2 ingresoCantidad">' +
 	  
-					'<input type="number" step="any" class="form-control input-sm nuevaCantidadRecibida"  name="cantidadRecibida" id="cantidadRecibida" cantidadReal="0" value="0" min="1">' +
+					'<input type="number" step="any" class="form-control input-sm nuevaCantidadRecibida"  name="cantidadRecibida" id="cantidadRecibida" cantidadReal="0" value="1" min="1">' +
 	  
 				"</div>" +				
 
@@ -1500,7 +1500,9 @@ $(".tablaAlmacen01CUA").on("click", ".agregarCuadros", function() {
 
 		  );		  
 
-	
+		  sumarTotalCantidadCua();
+		  listarCuadros();
+
 		}
 	
 	  });  	
@@ -1579,6 +1581,22 @@ $(".tablaAlmacen01CUA").on("draw.dt", function() {
 	$(".recuperarBoton[idBoton='" + idBoton + "']").addClass(
 	  "btn-primary agregarCuadros"
 	);
+
+	if ($(".nuevoCuadro").children().length == 0) {
+		$("#nuevoTotal").val(0);
+	
+		$("#totalCua").val(0);
+		$("#totalCua").attr("total", 0);
+	
+		$("#listaCuaMp").val("");
+	
+	  } else {
+	
+		sumarTotalCantidadCua();
+		listarCuadros();
+
+	  }  
+
 	
   });
 
@@ -1588,29 +1606,53 @@ MODIFICAR EL TOTAL AL CAMBIAR LA CANTIDAD
 $(".formularioCuadros").on("keyup", "input.nuevaCantidadRecibida", function() {
 
 	sumarTotalCantidadCua();
+	listarCuadros();
 
 
 })
 
-  function sumarTotalCantidadCua() {
+function sumarTotalCantidadCua() {
 
 	var cantidad = $(".nuevaCantidadRecibida");
-   	//console.log("cantidad", cantidad);
-  
+	//console.log("cantidad", cantidad);
+
 	var arraySumaCantidad = [];
-  
+
 	for (var i = 0; i < cantidad.length; i++) {
-	  arraySumaCantidad.push(Number($(cantidad[i]).val()));
+		arraySumaCantidad.push(Number($(cantidad[i]).val()));
 	}
 	//console.log("arraySumaCantidad", arraySumaCantidad);  
-  
+
 	function sumaArrayCantidad(total, numero) {
-	  return total + numero;
+		return total + numero;
+	}
+
+	var sumaTotalCantidad = arraySumaCantidad.reduce(sumaArrayCantidad);
+	//console.log("sumaTotalCantidad", sumaTotalCantidad);  
+
+	$("#nuevoTotal").val(sumaTotalCantidad.toFixed(0));
+	$("#totalCua").val(sumaTotalCantidad);
+
+}
+
+function listarCuadros(){
+
+	listaCuadros = [];
+  
+	var codpro=       $(".nuevoCodPro");
+	var descripcion = $(".nuevaDescripcion");
+	var cantidadRe =  $(".nuevaCantidadRecibida");
+  
+	for (var i = 0; i < descripcion.length; i++) {
+  
+	  listaCuadros.push({
+		codpro:  $(codpro[i]).val(),
+		cantidadRe: $(cantidadRe[i]).val()
+	  });
 	}
   
-	var sumaTotalCantidad = arraySumaCantidad.reduce(sumaArrayCantidad);
-	console.log("sumaTotalCantidad", sumaTotalCantidad);  
+	  //console.log("listaCuadros", JSON.stringify(listaCuadros)); 
   
-
+	  $("#listaCuaMp").val(JSON.stringify(listaCuadros));
   
   }

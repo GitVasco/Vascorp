@@ -42,10 +42,10 @@ class TablaTalleresOperaciones{
             */
             if($talleres[$i]["estado"] == "3"){
 
-                $botones =  "<div class='btn-group'><button class='btn btn-sm btn-warning btnEditarTallerOperacion' idTaller='".$talleres[$i]["codigo"]."' data-toggle='modal' data-target='#modalEditarCantidadOperacion'><i class='fa fa-random'></i></button></div>";
+                $botones =  "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarTallerOperacion' idTaller='".$talleres[$i]["codigo"]."' data-toggle='modal' data-target='#modalEditarCantidadOperacion'><i class='fa fa-random'></i></button></div>";
 
             }else{
-                $botones =  "<div class='btn-group'><button class='btn btn-sm btn-warning btnEditarTallerOperacion' idTaller='".$talleres[$i]["codigo"]."' data-toggle='modal' data-target='#modalEditarCantidadOperacion'><i class='fa fa-random'></i></button><button class='btn btn-sm btn-success btnImprimirTicket' ultimo='".$talleres[$i]["codigo"]."'modelo='".$talleres[$i]["modelo"]."'nombre='".$talleres[$i]["nombre"]."'color='".$talleres[$i]["color"]."'talla='".$talleres[$i]["talla"]."'cant_taller='".$talleres[$i]["cantidad"]."'cod_operacion='".$talleres[$i]["cod_operacion"]."'nom_operacion='".$talleres[$i]["nom_operacion"]."'><i class='fa fa-print'></i></button></div>";
+                $botones =  "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarTallerOperacion' idTaller='".$talleres[$i]["codigo"]."' data-toggle='modal' data-target='#modalEditarCantidadOperacion'><i class='fa fa-random'></i></button><button class='btn btn-xs btn-success btnImprimirTicket' ultimo='".$talleres[$i]["codigo"]."'modelo='".$talleres[$i]["modelo"]."'nombre='".$talleres[$i]["nombre"]."'color='".$talleres[$i]["color"]."'talla='".$talleres[$i]["talla"]."'cant_taller='".$talleres[$i]["cantidad"]."'cod_operacion='".$talleres[$i]["cod_operacion"]."'nom_operacion='".$talleres[$i]["nom_operacion"]."'><i class='fa fa-print'></i></button></div>";
 
             }
 

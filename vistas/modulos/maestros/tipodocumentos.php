@@ -73,9 +73,9 @@
 
                         <div class="btn-group">
                             
-                        <button class="btn btn-warning btn-sm btnEditarTipoDocumento" idTipoDocumento="'.$value["cod_doc"].'" data-toggle="modal" data-target="#modalEditarTipoDocumento"><i class="fa fa-pencil"></i></button>
+                        <button class="btn btn-warning btn-xs btnEditarTipoDocumento" idTipoDocumento="'.$value["cod_doc"].'" data-toggle="modal" data-target="#modalEditarTipoDocumento"><i class="fa fa-pencil"></i></button>
                          
-                        <button class="btn btn-danger btn-sm btnEliminarTipoDocumento" idTipoDocumento="'.$value["cod_doc"].'"><i class="fa fa-times"></i></button>
+                        <button class="btn btn-danger btn-xs btnEliminarTipoDocumento" idTipoDocumento="'.$value["cod_doc"].'"><i class="fa fa-times"></i></button>
 
                         </div>  
 

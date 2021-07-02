@@ -26,7 +26,7 @@ class TablaColores{
         TRAEMOS LAS ACCIONES
         =============================================*/         
         
-        $botones =  "<div class='btn-group'><button class='btn btn-sm btn-warning btnEditarColor' idColor='".$color[$i]["cod_color"]."' data-toggle='modal' data-target='#modalEditarColor'><i class='fa fa-pencil'></i></button><button class='btn btn-sm btn-danger btnEliminarColor' idColor='".$color[$i]["cod_color"]."'><i class='fa fa-times'></i></button></div>"; 
+        $botones =  "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarColor' idColor='".$color[$i]["cod_color"]."' data-toggle='modal' data-target='#modalEditarColor'><i class='fa fa-pencil'></i></button><button class='btn btn-xs btn-danger btnEliminarColor' idColor='".$color[$i]["cod_color"]."'><i class='fa fa-times'></i></button></div>"; 
 
             $datosJson .= '[
             "'.$color[$i]["cod_color"].'",

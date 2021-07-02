@@ -673,6 +673,79 @@ class ControladorMateriaPrima{
 
 		return $respuesta;
 
-    }	
+    }
+	
+	/* 
+	! ESPACIO PARA CREAR CUADROS
+	* ESPACIO PARA CREAR CUADROS
+	? ESPACIO PARA CREAR CUADROS
+	*/
+	static public function ctrCrearCuadrosProd(){
 
+		if(	isset($_POST["correlativo"]) && 
+			isset($_POST["listaCuaMp"])){
+			#var_dump($_POST["correlativo"]);
+
+			if($_POST["listaCuaMp"] == ""){
+
+				#mostrar alerta suave
+				var_dump("no vino");
+
+			}else{
+
+				# Modificamos la lista en un array
+				$listaCuadros = json_decode($_POST["listaCuaMp"],true);
+				#var_dump($listaCuadros);
+				# traemos la fecha y la pc
+				date_default_timezone_set('America/Lima');
+				$fecha = new DateTime();
+				$PcReg= gethostbyaddr($_SERVER['REMOTE_ADDR']);
+
+				#1. Creamos la cabecera
+				$datosCab = array( 	"tipo" 		=> 'PCUA',
+									"documento"	=> $_POST["correlativo"],
+									"valor1"	=> $_POST["nuevoTotal"],
+									"valor2"	=> '0',
+									"valor3"	=> '0',
+									"valor4"	=> '0',
+									"valor5"	=> '0',
+									"fecreg"	=> $fecha->format("Y-m-d H:i:s"),
+									"usureg"	=> $_SESSION["nombre"],
+									"pcreg" 	=> $PcReg);
+				#var_dump($datosCab);
+				#$respuestaCab = ModeloMateriaPrima::mdlGuardarProduccionCab($datosCab);
+				#var_dump($respuestaCab);
+				$respuestaCab = "ok";
+
+				#2. Creamos el detalle
+				if($respuestaCab == "ok"){
+
+					foreach($listaCuadros as $key=>$value){
+
+						$datosDet = array(	"tipo" 		=> 'PCUA',
+											"documento"	=> $_POST["correlativo"],
+											"codigo"	=> $value["codpro"],
+											"valor1"	=> $value["cantidadRe"], 
+											"valor2"	=> '0',
+											"valor3"	=> '0',
+											"valor4"	=> '0',
+											"valor5"	=> '0',
+											"fecreg"	=> $fecha->format("Y-m-d H:i:s"),
+											"usureg"	=> $_SESSION["nombre"],
+											"pcreg" 	=> $PcReg);
+						var_dump($datosDet);
+						$respuestaDet = ModeloMateriaPrima::mdlGuardarProduccionDet($datosDet);
+						$respuestaStock = ModeloMateriaPrima::mdlActualizarStockMP($value["codpro"],$value["cantidadRe"]);
+						var_dump("guardo detalle: ",$respuestaDet);
+						var_dump("guardo stock: ",$respuestaStock);
+						#$respuestaDet = "ok";
+					}
+
+				}
+
+			}
+
+		}
+
+	}
 }

@@ -26,7 +26,7 @@ class TablaTipoPagos{
         TRAEMOS LAS ACCIONES
         =============================================*/         
         
-        $botones =  "<div class='btn-group'><button class='btn btn-sm btn-warning btnEditarTipoPago' idTipoPago='".$tipopago[$i]["id"]."' data-toggle='modal' data-target='#modalEditarTipoPago'><i class='fa fa-pencil'></i></button><button class='btn btn-sm btn-danger btnEliminarTipoPago' idTipoPago='".$tipopago[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
+        $botones =  "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarTipoPago' idTipoPago='".$tipopago[$i]["id"]."' data-toggle='modal' data-target='#modalEditarTipoPago'><i class='fa fa-pencil'></i></button><button class='btn btn-xs btn-danger btnEliminarTipoPago' idTipoPago='".$tipopago[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
 
             $datosJson .= '[
             "'.$tipopago[$i]["codigo"].'",

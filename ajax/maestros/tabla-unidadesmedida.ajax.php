@@ -26,7 +26,7 @@ class TablaUnidadMedidas{
         TRAEMOS LAS ACCIONES
         =============================================*/         
         
-        $botones =  "<div class='btn-group'><button class='btn btn-sm btn-warning btnEditarUnidadMedida' idUnidadMedida='".$unidadesmedida[$i]["id"]."' data-toggle='modal' data-target='#modalEditarUnidadMedida'><i class='fa fa-pencil'></i></button><button class='btn  btn-sm  btn-danger btnEliminarUnidadMedida' idUnidadMedida='".$unidadesmedida[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
+        $botones =  "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarUnidadMedida' idUnidadMedida='".$unidadesmedida[$i]["id"]."' data-toggle='modal' data-target='#modalEditarUnidadMedida'><i class='fa fa-pencil'></i></button><button class='btn  btn-xs  btn-danger btnEliminarUnidadMedida' idUnidadMedida='".$unidadesmedida[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
 
             $datosJson .= '[
             "'.($i+1).'",

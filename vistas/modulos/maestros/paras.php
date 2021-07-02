@@ -72,9 +72,9 @@
 
                         <div class="btn-group">
                             
-                        <button class="btn btn-sm btn-warning btnEditarPara" idPara="'.$value["id"].'" data-toggle="modal" data-target="#modalEditarPara"><i class="fa fa-pencil"></i></button>
+                        <button class="btn btn-xs btn-warning btnEditarPara" idPara="'.$value["id"].'" data-toggle="modal" data-target="#modalEditarPara"><i class="fa fa-pencil"></i></button>
                          
-                        <button class="btn btn-sm btn-danger btnEliminarPara" idPara="'.$value["id"].'"><i class="fa fa-times"></i></button>
+                        <button class="btn btn-xs btn-danger btnEliminarPara" idPara="'.$value["id"].'"><i class="fa fa-times"></i></button>
 
                         </div>  
 
