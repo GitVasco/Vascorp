@@ -733,10 +733,10 @@ class ControladorMateriaPrima{
 											"fecreg"	=> $fecha->format("Y-m-d H:i:s"),
 											"usureg"	=> $_SESSION["nombre"],
 											"pcreg" 	=> $PcReg);
-						var_dump($datosDet);
+						#var_dump($datosDet);
 						$respuestaDet = ModeloMateriaPrima::mdlGuardarProduccionDet($datosDet);
 						$respuestaStock = ModeloMateriaPrima::mdlActualizarStockMP($value["codpro"],$value["cantidadRe"]);
-						var_dump("guardo detalle: ",$respuestaDet);
+						#var_dump("guardo detalle: ",$respuestaDet);
 						var_dump("guardo stock: ",$respuestaStock);
 						#$respuestaDet = "ok";
 					}
