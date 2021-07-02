@@ -1544,4 +1544,121 @@ class ModeloMateriaPrima{
 
     }	
 
+	/*
+	* GUARDAR PRODUCCION EN MAESTRA
+	*/
+	static public function mdlGuardarProduccionCab($datos){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO maestra_prod_cab (
+			tipo,
+			documento,
+			valor1,
+			valor2,
+			valor3,
+			valor4,
+			valor5,
+			usureg,
+			fecreg,
+			pcreg
+		  ) 
+		  VALUES
+			(
+			  :tipo,
+			  :documento,
+			  :valor1,
+			  :valor2,
+			  :valor3,
+			  :valor4,
+			  :valor5,
+			  :usureg,
+			  :fecreg,
+			  :pcreg
+			)");
+
+		$stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
+        $stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
+        $stmt->bindParam(":valor1", $datos["valor1"], PDO::PARAM_STR);
+        $stmt->bindParam(":valor2", $datos["valor2"], PDO::PARAM_STR);
+        $stmt->bindParam(":valor3", $datos["valor3"], PDO::PARAM_STR);
+        $stmt->bindParam(":valor4", $datos["valor4"], PDO::PARAM_STR);
+        $stmt->bindParam(":valor5", $datos["valor5"], PDO::PARAM_STR);
+        $stmt->bindParam(":usureg", $datos["usureg"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecreg", $datos["fecreg"], PDO::PARAM_STR);
+        $stmt->bindParam(":pcreg", $datos["pcreg"], PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt -> close();
+		$stmt = null;
+
+	}	
+
+	/*
+	* GUARDAR PRODUCCION EN MAESTRA
+	*/
+	static public function mdlGuardarProduccionDet($datos){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO maestra_prod_det (
+						tipo,
+						documento,
+						codigo,
+						valor1,
+						valor2,
+						valor3,
+						valor4,
+						valor5,
+						usureg,
+						fecreg,
+						pcreg
+					) 
+					VALUES
+						(
+						:tipo,
+						:documento,
+						:codigo,
+						:valor1,
+						:valor2,
+						:valor3,
+						:valor4,
+						:valor5,
+						:usureg,
+						:fecreg,
+						:pcreg
+						)");
+
+		$stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
+        $stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
+		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
+        $stmt->bindParam(":valor1", $datos["valor1"], PDO::PARAM_STR);
+        $stmt->bindParam(":valor2", $datos["valor2"], PDO::PARAM_STR);
+        $stmt->bindParam(":valor3", $datos["valor3"], PDO::PARAM_STR);
+        $stmt->bindParam(":valor4", $datos["valor4"], PDO::PARAM_STR);
+        $stmt->bindParam(":valor5", $datos["valor5"], PDO::PARAM_STR);
+        $stmt->bindParam(":usureg", $datos["usureg"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecreg", $datos["fecreg"], PDO::PARAM_STR);
+        $stmt->bindParam(":pcreg", $datos["pcreg"], PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt -> close();
+		$stmt = null;
+
+	}		
+
 }

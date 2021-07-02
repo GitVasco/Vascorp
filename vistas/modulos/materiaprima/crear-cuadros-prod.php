@@ -87,7 +87,7 @@
 
                     <?php
 
-                        $tipo = "TCUA";
+                        $tipo = "PCUA";
 
                         $correlativo = ControladorMateriaPrima::ctrCorrelativoNuevo($tipo);
 
@@ -169,7 +169,7 @@
                   ENTRADA IMPUESTOS Y TOTAL
                   ======================================-->
 
-                  <div class="col-xs-8 pull-right">
+                  <div class="col-xs-4 pull-right">
 
                     <table class="table">
 
@@ -185,16 +185,14 @@
 
                         <tr>
 
-                          <td style="width: 50%">
+                          <td style="width: 10%">
 
                             <div class="input-group">
 
-                              <span class="input-group-addon"><i class="fa fa-rocket"></i></span>
+                                <input type="number" class="form-control" min="0" id="nuevoTotal" name="nuevoTotal" placeholder="0" required readonly>
+                                <span class="input-group-addon"><i class="fa fa-rocket"></i></span>
 
-                              <input type="text" min="1" class="form-control input-lg" id="nuevoTotalVenta" name="nuevoTotalVenta" total="" placeholder="00000" readonly required>
-
-                              <input type="hidden" name="totalVenta" id="totalVenta">
-
+                                <input type="hidden" name="totalCua" id="totalCua">                                                            
 
                             </div>
 
@@ -222,11 +220,18 @@
 
               <button type="submit" class="btn btn-primary pull-right">Guardar venta</button>
 
+              <a href="inicio"  class="btn btn-danger"><i class="fa fa-times-circle"></i> Cancelar</a>
+
             </div>
 
           </form>
 
-       
+            <?php
+
+            $crearCuadros = new ControladorMateriaPrima();
+            $crearCuadros -> ctrCrearCuadrosProd();
+
+            ?>        
 
         </div>
 
