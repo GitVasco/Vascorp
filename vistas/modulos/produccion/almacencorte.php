@@ -235,11 +235,11 @@ MODAL VISUALIZAR INFORMACION
               <thead>
 
                 <tr>
+                  <th ></th>
+                  <th style="width:45px"></th>
                   <th></th>
-                  <th style="width:100px"></th>
-                  <th></th>
-                  <th style="width:250px"></th>
-                  <th></th>
+                  <th style="width:200px"></th>
+                  <th style="width:78px"></th>
                   <th>S</th>
                   <th>M</th>
                   <th>L</th>
@@ -253,10 +253,10 @@ MODAL VISUALIZAR INFORMACION
 
                 <tr>
                   <th></th>
-                  <th style="width:100px"></th>
+                  <th style="width:45px"></th>
                   <th></th>
-                  <th style="width:250px"></th>
-                  <th></th>
+                  <th style="width:200px"></th>
+                  <th style="width:78px"></th>
                   <th>28</th>
                   <th>30</th>
                   <th>32</th>
@@ -270,10 +270,10 @@ MODAL VISUALIZAR INFORMACION
 
                 <tr>
                   <th>Corte</th>
-                  <th style="width:100px">Fecha</th>
+                  <th style="width:45px">Fecha</th>
                   <th>Modelo</th>
-                  <th style="width:250px">Nombre</th>
-                  <th>Color</th>
+                  <th style="width:200px">Nombre</th>
+                  <th style="width:78px">Color</th>
                   <th>3</th>
                   <th>4</th>
                   <th>6</th>
@@ -388,10 +388,10 @@ MODAL VISUALIZAR INFORMACION
                 <tr>
                   <th></th>
                   <th></th>
-                  <th  style="width:100px"></th>
+                  <th  style="width:45px"></th>
                   <th ></th>
-                  <th style="width:250px"></th>
-                  <th></th>
+                  <th style="width:200px"></th>
+                  <th style="width:78px"></th>
                   <th>S</th>
                   <th>M</th>
                   <th>L</th>
@@ -406,10 +406,10 @@ MODAL VISUALIZAR INFORMACION
                 <tr>
                   <th></th>
                   <th></th>
-                  <th style="width:100px"></th>
+                  <th style="width:45px"></th>
                   <th ></th>
-                  <th style="width:250px"></th>
-                  <th></th>
+                  <th style="width:200px"></th>
+                  <th style="width:78px"></th>
                   <th>28</th>
                   <th>30</th>
                   <th>32</th>
@@ -424,10 +424,10 @@ MODAL VISUALIZAR INFORMACION
                 <tr>
                   <th>Corte</th>
                   <th>Guia</th>
-                  <th style="width:100px">Fecha</th>
+                  <th style="width:45px">Fecha</th>
                   <th>Modelo</th>
-                  <th style="width:250px">Nombre</th>
-                  <th>Color</th>
+                  <th style="width:200px">Nombre</th>
+                  <th style="width:78px">Color</th>
                   <th>3</th>
                   <th>4</th>
                   <th>6</th>

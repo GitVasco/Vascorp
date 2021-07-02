@@ -134,14 +134,7 @@
 
                 </div>
 
-        
                 <!--=====================================
-                ENTRADA PARA AGREGAR MATERIAPRIMA
-                ======================================-->
-
-                <div class="form-group row nuevoArticuloOC" style="height:500px;overflow: scroll; overflow-x:hidden">
-
-                  <!--=====================================
                   ENTRADA BUSCADOR
                   ======================================-->
 
@@ -192,6 +185,13 @@
                     </div>
 
                   </div>
+
+        
+                <!--=====================================
+                ENTRADA PARA AGREGAR MATERIAPRIMA
+                ======================================-->
+
+                <div class="form-group row nuevoArticuloOC" style="height:400px;overflow: scroll; overflow-x:hidden">
 
                 </div>
 
@@ -459,12 +459,13 @@ $('.nuevoArticuloOC').ready(function(){
 
        for( var i = 0; i < nombres.length; i++ ){
 
-        item = $(nombres[i]).val().toLowerCase();
-        console.log(item);
+        item = $(nombres[i]).val();
+        item2 = $(nombres[i]).val().toLowerCase();
+        // console.log(item);
 
             for(var x = 0; x < item.length; x++ ){
 
-                if( buscando.length == 0 || item.indexOf( buscando ) > -1 ){
+                if( buscando.length == 0 || item.indexOf( buscando ) > -1 || item2.indexOf( buscando ) > -1 ){
 
                     $(nombres[i]).parents('.munditoOC').show(); 
 

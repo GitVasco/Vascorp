@@ -131,7 +131,7 @@ $(".tablaArticulosAlmacenCorte tbody").on("click", "button.agregarArtAC", functi
 
             $(".nuevoArticuloAC").append(
 
-                '<div class="row" style="padding:5px 15px">' +
+                '<div class="row munditoAC" style="padding:5px 15px">' +
 
                     "<!-- Numero de OC y quitar -->" +
 

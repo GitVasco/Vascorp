@@ -267,14 +267,6 @@
                                     }
 
                                     ?>
-
-                                
-                                <!--=====================================
-                                ENTRADA PARA AGREGAR PRODUCTO
-                                ======================================-->
-
-                                <div class="form-group row nuevoProductoPedido" style="height:500px; overflow: scroll;">
-
                                 <div class=" form-group buscador" id="elid" style="padding-bottom:25px">
                                     <label for="" class="col-form-label col-lg-1">Buscar:</label>
                                     <div class="col-lg-11">
@@ -316,6 +308,15 @@
                                     </div>
 
                                 </div>
+
+                                
+                                <!--=====================================
+                                ENTRADA PARA AGREGAR PRODUCTO
+                                ======================================-->
+
+                                <div class="form-group row nuevoProductoPedido" style="height:400px; overflow: scroll;">
+
+                                
 
                                     <?php
 
@@ -1282,12 +1283,13 @@ $('.nuevoProductoPedido').ready(function(){
 
        for( var i = 0; i < nombres.length; i++ ){
 
-        item = $(nombres[i]).val().toLowerCase();
-        console.log(item);
+        item = $(nombres[i]).val();
+        item2 = $(nombres[i]).val().toLowerCase();
+        // console.log(item);
 
             for(var x = 0; x < item.length; x++ ){
 
-                if( buscando.length == 0 || item.indexOf( buscando ) > -1 ){
+                if( buscando.length == 0 || item.indexOf( buscando ) > -1  || item2.indexOf( buscando ) > -1 ){
 
                     $(nombres[i]).parents('.mundito').show(); 
 

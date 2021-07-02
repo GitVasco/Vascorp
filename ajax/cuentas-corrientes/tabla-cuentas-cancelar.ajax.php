@@ -15,13 +15,13 @@ class TablaCancelarCuentas{
         $saldo = $_GET["saldo"]; 
 
         $cuenta = ControladorCuentas::ctrMostrarCuentasPendientes($saldo);	
+        // var_dump($cuenta);
         if(count($cuenta)>0){
 
         $datosJson = '{
         "data": [';
 
         for($i = 0; $i < count($cuenta); $i++){  
-        $clientes=ControladorClientes::ctrMostrarClientes("codigo",$cuenta[$i]["cliente"]);
         
             
             $botones =  "<input class='chkCancelar' type='checkbox' id='chkCancelar' name='chkCancelar' idCuenta='".$cuenta[$i]["id"]."'> Cancelar"; 
@@ -29,7 +29,7 @@ class TablaCancelarCuentas{
             $datosJson .= '[
             "'.$cuenta[$i]["tipo_doc"].'",
             "'.$cuenta[$i]["num_cta"].'",
-            "'.$clientes["codigo"]." - ".$clientes["nombre"].'",
+            "'.$cuenta[$i]["cliente"]." - ".$cuenta[$i]["nombre"].'",
             "'.$cuenta[$i]["fecha"].'",
             "'.$cuenta[$i]["fecha_ven"].'",
             "'.$cuenta[$i]["monto"].'",

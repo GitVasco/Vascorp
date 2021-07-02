@@ -268,13 +268,7 @@
 
                                     ?>
 
-                                <!--=====================================
-                                ENTRADA PARA AGREGAR PRODUCTO
-                                ======================================-->
-
-                                <div class="form-group row nuevoProductoPedido" style="height:500px; overflow: scroll; overflow-x:hidden">
-
-                                <div class=" form-group buscador" id="elid" style="padding-bottom:25px">
+<div class=" form-group buscador" id="elid" style="padding-bottom:25px">
                                     <label for="" class="col-form-label col-lg-1">Buscar:</label>
                                     <div class="col-lg-11">
                                         <div class="input-group">
@@ -315,6 +309,14 @@
                                     </div>
 
                                 </div>
+
+                                <!--=====================================
+                                ENTRADA PARA AGREGAR PRODUCTO
+                                ======================================-->
+
+                                <div class="form-group row nuevoProductoPedido" style="height:400px; overflow: scroll; overflow-x:hidden">
+
+                                
 
                                     <?php
 

@@ -34,7 +34,7 @@
   <link rel="stylesheet" href="vistas/bower_components/Ionicons/css/ionicons.min.css">
 
   <!-- Theme style -->
-  <link rel="stylesheet" href="vistas/dist/css/AdminLTE.css">
+  <link rel="stylesheet" href="vistas/dist/css/AdminLTE.css?v=<?php echo(rand()); ?>">
 
   <!-- AdminLTE Skins -->
   <link rel="stylesheet" href="vistas/dist/css/skins/_all-skins.min.css">
@@ -402,59 +402,59 @@ CUERPO DOCUMENTO
   ?>
 
 
-  <script src="vistas/js/plantilla.js"></script>
-  <script src="vistas/js/usuarios.js"></script>
-  <script src="vistas/js/categorias.js"></script>
-  <script src="vistas/js/productos.js"></script>
-  <script src="vistas/js/clientes.js"></script>
-  <script src="vistas/js/ventas.js"></script>
-  <script src="vistas/js/reportes.js"></script>
-  <script src="vistas/js/tipodocumento.js"></script>
-  <script src="vistas/js/tipotrabajador.js"></script>
+  <script src="vistas/js/plantilla.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/usuarios.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/categorias.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/productos.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/clientes.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/ventas.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/reportes.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/tipodocumento.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/tipotrabajador.js?v=<?php echo(rand()); ?>"></script>
 
-  <script src="vistas/js/articulos.js"></script>
-  <script src="vistas/js/marcas.js"></script>
-  <script src="vistas/js/colores.js"></script>
-  <script src="vistas/js/materiaprima.js"></script>
-  <script src="vistas/js/tarjetas.js"></script>
-  <script src="vistas/js/movimientos.js"></script>
-  <script src="vistas/js/ordencorte.js"></script>
-  <script src="vistas/js/urgencias.js"></script>
-  <script src="vistas/js/contactos.js"></script>
-  <script src="vistas/js/mensajes.js"></script>
-  <script src="vistas/js/pedidoscv.js"></script>
-  <script src="vistas/js/almacencorte.js"></script>
-  <script src="vistas/js/operaciones.js"></script>
-  <script src="vistas/js/trabajador.js"></script>
-  <script src="vistas/js/modelos.js"></script>
-  <script src="vistas/js/cortes.js"></script>
-  <script src="vistas/js/talleres.js"></script>
-  <script src="vistas/js/sectores.js"></script>
-  <script src="vistas/js/paras.js"></script>
-  <script src="vistas/js/asistencias.js"></script>
-  <script src="vistas/js/produccion.js"></script>
-  <script src="vistas/js/agencias.js"></script>
-  <script src="vistas/js/tipomovimientos.js"></script>
-  <script src="vistas/js/tipopagos.js"></script>
-  <script src="vistas/js/condicionesventa.js"></script>
-  <script src="vistas/js/unidadesmedida.js"></script>
-  <script src="vistas/js/servicios.js"></script>
-  <script src="vistas/js/bancos.js"></script>
-  <script src="vistas/js/cuentas.js"></script>
-  <script src="vistas/js/vendedor.js"></script>
-  <script src="vistas/js/facturacion.js"></script>
-  <script src="vistas/js/abonos.js"></script>
-  <script src="vistas/js/cierres.js"></script>
-  <script src="vistas/js/procedimientos.js"></script>
-  <script src="vistas/js/salidas.js"></script>
-  <script src="vistas/js/proveedor.js"></script>
-  <script src="vistas/js/tablamaestra.js"></script>
-  <script src="vistas/js/notas-ingresos.js"></script>
-  <script src="vistas/js/notas-salidas.js"></script>
-  <script src="vistas/js/orden-compra.js"></script>
-  <script src="vistas/js/notas-ingresos-os.js"></script>
-  <script src="vistas/js/orden-servicio.js"></script>
-  <script src="vistas/js/kardex.js"></script>
+  <script src="vistas/js/articulos.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/marcas.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/colores.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/materiaprima.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/tarjetas.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/movimientos.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/ordencorte.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/urgencias.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/contactos.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/mensajes.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/pedidoscv.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/almacencorte.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/operaciones.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/trabajador.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/modelos.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/cortes.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/talleres.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/sectores.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/paras.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/asistencias.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/produccion.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/agencias.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/tipomovimientos.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/tipopagos.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/condicionesventa.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/unidadesmedida.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/servicios.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/bancos.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/cuentas.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/vendedor.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/facturacion.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/abonos.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/cierres.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/procedimientos.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/salidas.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/proveedor.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/tablamaestra.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/notas-ingresos.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/notas-salidas.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/orden-compra.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/notas-ingresos-os.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/orden-servicio.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/kardex.js?v=<?php echo(rand()); ?>"></script>
 
 </body>
 
