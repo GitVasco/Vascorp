@@ -15,6 +15,7 @@ class TablaCancelarCuentas{
         $saldo = $_GET["saldo"]; 
 
         $cuenta = ControladorCuentas::ctrMostrarCuentasPendientes($saldo);	
+        // var_dump($cuenta);
         if(count($cuenta)>0){
 
         $datosJson = '{
