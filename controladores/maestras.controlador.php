@@ -226,6 +226,15 @@ class ControladorMaestras{
 
     }    
 
+    /* 
+    * LISTAR TABLA CABECERA
+    */
+    static public function ctrMostrarProdCabecera(){
 
+        $respuesta = ModeloMaestras::mdlMostrarProdCabecera();
+
+        return $respuesta;
+
+    }
 
 }

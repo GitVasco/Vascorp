@@ -298,4 +298,28 @@ class ModeloMaestras{
 
     }
 
+    /* 
+    * LISTAR TABLA CABECERA
+    */
+    static public function mdlMostrarProdCabecera(){
+
+        $stmt = Conexion::conectar()->prepare("SELECT 
+                                                c.tipo,
+                                                c.documento,
+                                                valor1 AS total,
+                                                DATE(fecreg) AS fecha 
+                                            FROM
+                                                maestra_prod_cab c 
+                                            ORDER BY c.documento DESC");
+
+        $stmt -> execute();
+
+        return $stmt -> fetchAll();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }    
+
 }

@@ -1057,8 +1057,7 @@
                     </li>
 
                     <li class="treeview <?php if(   $_GET["ruta"] == "materiaprima" || 
-                                                    $_GET["ruta"] == "almacen-01" || 
-                                                    $_GET["ruta"] == "crear-cuadros-prod") echo 'active';?>">
+                                                    $_GET["ruta"] == "almacen-01") echo 'active';?>">
 
                         <a href="#"><i class="fa fa-scissors text-orange"></i> Materia Prima
 
@@ -1086,17 +1085,18 @@
 
                             </li>
 
-                            <li class="<?php if($_GET["ruta"] == "crear-cuadros-prod") echo 'active';?>">
-
-                                <a href="crear-cuadros-prod">
-                                <i class="fa fa-circle-o"></i> Produccion Cuadros
-                                </a>
-
-                            </li>                            
-
                         </ul>
 
                     </li>                    
+
+                    <li class="<?php if($_GET["ruta"] == "crear-cuadros-prod") echo 'active';?>">
+
+                    <a href="crear-cuadros-prod">
+
+                        <i class="fa fa-cogs text-yellow"></i> Produccion Cuadros
+                        </a>
+
+                    </li>   
 
                     <li class="<?php if($_GET["ruta"] == "orden-servicio") echo 'active';?>">
 
