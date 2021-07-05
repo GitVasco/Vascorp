@@ -249,16 +249,17 @@ $(".daterangepicker.opensleft .ranges li").on("click", function() {
 /*=============================================
 AGREGANDO PRODUCTOS A LA VENTA DESDE LA TABLA
 =============================================*/
-
+var c = 0;
 $(".tablaMateriaOrdenesServicios tbody").on("click", "button.agregarMateriaServicio", function() {
 
   var idMateriaServicio = $(this).attr("idMateriaServicio");
-
+   
+ 
   /* console.log("idProducto", idProducto); */
 
-  $(this).removeClass("btn-primary agregarMateriaServicio");
+  // $(this).removeClass("btn-primary agregarMateriaServicio");
 
-  $(this).addClass("btn-default");
+  // $(this).addClass("btn-default");
 
   var datos = new FormData();
   datos.append("idMateriaPrima2", idMateriaServicio);
@@ -272,7 +273,8 @@ $(".tablaMateriaOrdenesServicios tbody").on("click", "button.agregarMateriaServi
     processData: false,
     dataType: "json",
     success: function(respuesta) {
-      console.log(respuesta);
+      // console.log(respuesta);
+      c= c+1;
       var codpro = respuesta["codpro"];
       var color = respuesta["color"];
       var unidad = respuesta["unidad"];
@@ -323,19 +325,19 @@ $(".tablaMateriaOrdenesServicios tbody").on("click", "button.agregarMateriaServi
 
           '<div class="col-xs-1 destinoCodigo">' +
 
-              '<input type="text" class="form-control input-sm nuevoCodigoPro2 modmpOSDestino"  name="nuevoCodigoPro2"  id="codigo'+codpro+'" origen = "'+codpro+'" autocomplete="off">' +
+              '<input type="text" class="form-control input-sm nuevoCodigoPro2 modmpOSDestino"  name="nuevoCodigoPro2"  id="codigo'+codpro+c+'" origen = "'+codpro+c+'" autocomplete="off">' +
 
           "</div>" +
 
           '<div class="col-xs-3 destinoDescripcion" >' +
 
-              '<input type="text" class="form-control input-sm nuevaDescripcionMateria2"  name="nuevaDescripcionMateria2"  id="descripcion'+codpro+'" readonly>' +
+              '<input type="text" class="form-control input-sm nuevaDescripcionMateria2"  name="nuevaDescripcionMateria2"  id="descripcion'+codpro+c+'" readonly>' +
 
           "</div>" +
 
           '<div class="col-xs-1 destinoColor" >' +
 
-              '<input type="text" class="form-control input-sm nuevoColor2"  name="nuevoColor2"  id="color'+codpro+'"readonly>' +
+              '<input type="text" class="form-control input-sm nuevoColor2"  name="nuevoColor2"  id="color'+codpro+c+'"readonly>' +
 
           "</div>" +
 
@@ -377,30 +379,7 @@ $(".tablaMateriaOrdenesServicios tbody").on("click", "button.agregarMateriaServi
   });
 });
 
-/*=============================================
-CUANDO CARGUE LA TABLA CADA VEZ QUE NAVEGUE EN ELLA
-=============================================*/
 
-$(".tablaMateriaOrdenesServicios").on("draw.dt", function() {
-  /* console.log("tabla"); */
-
-  if (localStorage.getItem("quitarMateriaServicio") != null) {
-    var listaIdMateriaServicio = JSON.parse(localStorage.getItem("quitarMateriaServicio"));
-
-    for (var i = 0; i < listaIdMateriaServicio.length; i++) {
-      $(
-        "button.recuperarBoton[idMateriaServicio='" +
-        listaIdMateriaServicio[i]["idMateriaServicio"] +
-          "']"
-      ).removeClass("btn-default");
-      $(
-        "button.recuperarBoton[idMateriaServicio='" +
-        listaIdMateriaServicio[i]["idMateriaServicio"] +
-          "']"
-      ).addClass("btn-primary agregarMateriaServicio");
-    }
-  }
-});
 
 /*=============================================
 QUITAR PRODUCTOS DE LA VENTA Y RECUPERAR BOTÓN
@@ -510,7 +489,7 @@ $(".tablaMateriaServicioDestino").on("click", "button.agregarMateriaDestinoServi
 
   var origen = $("#codigoOrigen").val();
 
-  
+  // console.log(origen);
   var codigo = $(this).attr("codigo");
   var descripcion = $(this).attr("descripcion");
   var color = $(this).attr("color");
@@ -565,42 +544,6 @@ function listarMateriaServicios() {
   $("#listarMateriaServicios").val(JSON.stringify(listarMateriaServicios));
 }
 
-
-/*=============================================
-FUNCIÓN PARA DESACTIVAR LOS BOTONES AGREGAR CUANDO EL PRODUCTO YA HABÍA SIDO SELECCIONADO EN LA CARPETA
-=============================================*/
-
-function quitarAgregarMateriaServicio() {
-  //Capturamos todos los id de productos que fueron elegidos en la venta
-  var idMateriaServicios = $(".quitarMateriaServicio");
-  //console.log("idProductos", idProductos);
-
-  //Capturamos todos los botones de agregar que aparecen en la tabla
-  var botonesTabla = $(".tablaMateriaOrdenesServicios tbody button.agregarMateriaServicio");
-
-
-  //Recorremos en un ciclo para obtener los diferentes idProductos que fueron agregados a la venta
-  for (var i = 0; i < idMateriaServicios.length; i++) {
-    //Capturamos los Id de los productos agregados a la venta
-    var boton = $(idMateriaServicios[i]).attr("idMateriaServicio");
-
-    //Hacemos un recorrido por la tabla que aparece para desactivar los botones de agregar
-    for (var j = 0; j < botonesTabla.length; j++) {
-      if ($(botonesTabla[j]).attr("idMateriaServicio") == boton) {
-        $(botonesTabla[j]).removeClass("btn-primary agregarMateriaServicio");
-        $(botonesTabla[j]).addClass("btn-default");
-      }
-    }
-  }
-}
-
-/*=============================================
-CADA VEZ QUE CARGUE LA TABLA CUANDO NAVEGAMOS EN ELLA EJECUTAR LA FUNCIÓN:
-=============================================*/
-
-$(".tablaMateriaOrdenesServicios").on("draw.dt", function() {
-  quitarAgregarMateriaServicio();
-});
 
 /* 
 * VISUALIZAR DETALLE DEL CORTE
