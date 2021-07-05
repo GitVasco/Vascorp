@@ -1659,6 +1659,36 @@ class ModeloMateriaPrima{
 		$stmt -> close();
 		$stmt = null;
 
-	}		
+	}
+	
+	/*
+	* GUARDAR PRODUCCION EN MAESTRA
+	*/
+	static public function mdlActualizarStockMP($codpro, $cantidad){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE 
+		producto 
+	  SET
+		codalm01 = codalm01 + :cantidad 
+	  WHERE codpro = :codpro");
+
+		$stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
+		$stmt->bindParam(":cantidad", $cantidad, PDO::PARAM_STR);
+
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt -> close();
+		$stmt = null;
+
+	}	
 
 }
