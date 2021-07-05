@@ -257,7 +257,8 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "mp-oc-pendiente" ||
                   $_GET["ruta"] == "mp-os-pendiente" ||
                   $_GET["ruta"] == "almacen-01" ||
-                  $_GET["ruta"] == "crear-cuadros-prod"){
+                  $_GET["ruta"] == "crear-cuadros-prod" ||
+                  $_GET["ruta"] == "tabla-produccion"){
         
               include "modulos/materiaprima/".$_GET["ruta"].".php";
 
@@ -458,7 +459,8 @@ CUERPO DOCUMENTO
   <script src="vistas/js/notas-ingresos-os.js?v=<?php echo(rand()); ?>"></script>
   <script src="vistas/js/orden-servicio.js?v=<?php echo(rand()); ?>"></script>
   <script src="vistas/js/kardex.js?v=<?php echo(rand()); ?>"></script>
-
+  <script src="vistas/js/kardex.js?v=<?php echo(rand()); ?>"></script>
+  <script src="vistas/js/produccion-mp.js?v=<?php echo(rand()); ?>"></script>
 </body>
 
 </html>
