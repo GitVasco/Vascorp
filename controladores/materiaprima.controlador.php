@@ -700,7 +700,18 @@ class ControladorMateriaPrima{
 			if($_POST["listaCuaMp"] == ""){
 
 				#mostrar alerta suave
-				var_dump("no vino");
+				echo '<script>
+				swal({
+					type: "error",
+					title: "Error",
+					text: "¡No se seleccionó ningun cuadro. Por favor, intenteló de nuevo!",
+					showConfirmButton: true,
+					confirmButtonText: "Cerrar"
+				}).then((result)=>{
+					if(result.value){
+						window.location="crear-cuadros-prod";}
+				});
+			</script>';
 
 			}else{
 
@@ -724,9 +735,9 @@ class ControladorMateriaPrima{
 									"usureg"	=> $_SESSION["nombre"],
 									"pcreg" 	=> $PcReg);
 				#var_dump($datosCab);
-				#$respuestaCab = ModeloMateriaPrima::mdlGuardarProduccionCab($datosCab);
+				$respuestaCab = ModeloMateriaPrima::mdlGuardarProduccionCab($datosCab);
 				#var_dump($respuestaCab);
-				$respuestaCab = "ok";
+				#$respuestaCab = "ok";
 
 				#2. Creamos el detalle
 				if($respuestaCab == "ok"){
@@ -744,15 +755,29 @@ class ControladorMateriaPrima{
 											"fecreg"	=> $fecha->format("Y-m-d H:i:s"),
 											"usureg"	=> $_SESSION["nombre"],
 											"pcreg" 	=> $PcReg);
-						var_dump($datosDet);
+						#var_dump($datosDet);
 						$respuestaDet = ModeloMateriaPrima::mdlGuardarProduccionDet($datosDet);
 						$respuestaStock = ModeloMateriaPrima::mdlActualizarStockMP($value["codpro"],$value["cantidadRe"]);
-						var_dump("guardo detalle: ",$respuestaDet);
-						var_dump("guardo stock: ",$respuestaStock);
+						#var_dump("guardo detalle: ",$respuestaDet);
+						#var_dump("guardo stock: ",$respuestaStock);
 						#$respuestaDet = "ok";
 					}
 
 				}
+
+				# Mostramos una alerta suave
+				echo '<script>
+						swal({
+							type: "success",
+							title: "Felicitaciones",
+							text: "¡La nota de ingreso fue actualizada con éxito!",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar"
+						}).then((result)=>{
+							if(result.value){
+								window.location="notas-ingresos";}
+						});
+					</script>';					
 
 			}
 
