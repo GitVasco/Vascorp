@@ -294,6 +294,7 @@ AGREGANDO PRODUCTOS A LA VENTA DESDE LA TABLA
 $(".tablaMateriaOrdenCompra").on("click", "button.agregarMateriaCompra", function() {
   
   var idMateriaCompra = $(this).attr("idMateriaCompra");
+  var CodRuc = $(this).attr("CodRuc");
 
   /* console.log("idProducto", idProducto); */
 
@@ -302,7 +303,8 @@ $(".tablaMateriaOrdenCompra").on("click", "button.agregarMateriaCompra", functio
   $(this).addClass("btn-default");
 
   var datos = new FormData();
-  datos.append("idMateriaPrima2", idMateriaCompra);
+  datos.append("idMateriaCompra", idMateriaCompra);
+  datos.append("CodRuc", CodRuc);
 
   $.ajax({
     url: "ajax/materiaprima.ajax.php",
@@ -313,7 +315,7 @@ $(".tablaMateriaOrdenCompra").on("click", "button.agregarMateriaCompra", functio
     processData: false,
     dataType: "json",
     success: function(respuesta) {
-      // console.log(respuesta);
+      console.log(respuesta);
       var codpro = respuesta["codpro"];
       var codfab = respuesta["codfab"];
       var color = respuesta["color"];
@@ -961,4 +963,111 @@ $(".tablaMpPendiente").DataTable({
 $(".box").on("click", ".btnReporteOCompraPendiente", function () {
   window.location = "vistas/reportes_excel/rpt_orden_compra_pendiente.php";
 
+})
+
+
+
+/* 
+* VISUALIZAR DETALLE DEL CORTE
+*/ 
+$(".tablaOrdenesCompras").on("click", ".btnVisualizarOrdenCompra", function () {
+
+	var idOrdenCompra = $(this).attr("idOrdenCompra");
+  // console.log(idOrdenCompra);
+    
+  var datos = new FormData();
+	datos.append("idOrdenCompra", idOrdenCompra);
+
+	$.ajax({
+
+		url:"ajax/orden-compra.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType:"json",
+		success:function(respuesta){
+      // console.log(respuesta);
+      $("#codigo").val(idOrdenCompra);
+      $("#emision").val(respuesta["FecEmi"]);
+      $("#entrega").val(respuesta["FecLlegada"]);
+      $("#proveedor").val(respuesta["CodRuc"]);
+      $("#razonsocial").val(respuesta["RazPro"]);
+      $("#ruc").val(respuesta["RucPro"]);
+      $("#estado").val(respuesta["Estac"]);
+      $("#observacion").val(respuesta["Obser"]);
+      $("#cencosto").val(respuesta["Centcosto"]);
+
+		  }
+
+    })
+    $(".tablaDetalleOrdenCompra").DataTable().destroy();
+    
+    /* 
+    * MATERIA PRIMA EN OC PENDIENTES DE ENTREGA
+    */
+    $(".tablaDetalleOrdenCompra").DataTable({
+      ajax: "ajax/materiaprima/tabla-mp-oc-detalle.ajax.php?perfil="+$("#perfilOculto").val()+"&idOrdenCompra="+idOrdenCompra,
+      deferRender: true,
+      retrieve: true,
+      processing: true,
+      "pageLength": 20,
+      "lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+      language: {
+        sProcessing: "Procesando...",
+        sLengthMenu: "Mostrar _MENU_ registros",
+        sZeroRecords: "No se encontraron resultados",
+        sEmptyTable: "Ningún dato disponible en esta tabla",
+        sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+        sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
+        sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+        sInfoPostFix: "",
+        sSearch: "Buscar:",
+        sUrl: "",
+        sInfoThousands: ",",
+        sLoadingRecords: "Cargando...",
+        oPaginate: {
+          sFirst: "Primero",
+          sLast: "Último",
+          sNext: "Siguiente",
+          sPrevious: "Anterior"
+        },
+        oAria: {
+          sSortAscending: ": Activar para ordenar la columna de manera ascendente",
+          sSortDescending: ": Activar para ordenar la columna de manera descendente"
+        }
+      }
+    });
+  
+});
+
+$(".tablaDetalleOrdenCompra").on("click",".btnCerrarDetalleCompra",function(){
+  codpro = $(this).attr("codpro");
+  nro = $(this).attr("nro");
+  var datos = new FormData();
+	datos.append("detalleCerrarCod", codpro);
+  datos.append("detalleCerrarNro", nro);
+
+	$.ajax({
+
+		url:"ajax/orden-compra.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		success:function(respuestaCerrado){
+      // console.log(respuestaCerrado);
+      if(respuestaCerrado == "ok"){
+        $(".tablaDetalleOrdenCompra").DataTable().ajax.reload(null,false);
+        Command: toastr["success"]("El item fue cerrado correctamente!");
+        
+      }else{
+        Command: toastr["error"]("Ocurrio un problema al cerrar el item!");
+      }
+      
+		  }
+
+    })
 })

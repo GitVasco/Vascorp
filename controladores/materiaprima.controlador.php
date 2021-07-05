@@ -35,6 +35,17 @@ class ControladorMateriaPrima{
 
     }	
 
+	/* 
+	* MOSTRAR DATOS DE LA MATERIA PRIMA PARA ORDEN DE COMPRA
+	*/
+	static public function ctrMostrarMateriaOrdenCompra($valor1,$valor2){
+
+		$respuesta = ModeloMateriaPrima::mdlMostrarMateriaOrdenCompra($valor1,$valor2);
+
+		return $respuesta;
+
+    }	
+
 
 	/* 
 	* VALIDAR CODIGO DE FABRICA EN MATERIA PRIMA

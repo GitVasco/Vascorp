@@ -36,6 +36,7 @@ class ModeloOrdenCompra{
 
 		}else{
 			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+			IFNULL(Tabla_M_Detalle.Des_Larga, '') AS Estac,
 			oCompra.CodRuc,
 			Mo,
 			DATE(FecLlegada) AS FecLlegada,
@@ -59,6 +60,7 @@ class ModeloOrdenCompra{
             Proveedor,
             Tabla_M_Detalle 
           WHERE Proveedor.CodRuc = oCompra.CodRuc 
+		  	AND Tabla_M_Detalle.Des_Corta = oCompra.Estac 
             AND Tabla_M_Detalle.Cod_tabla = 'EOC1' 
             AND EstOco = '03' 
             AND $item = :$item 
@@ -104,7 +106,16 @@ class ModeloOrdenCompra{
 			odet.DscPro AS descuento,
 			odet.ImpPro AS total, 
 			tbcol.des_larga AS color,
+			odet.Nro,
 			p.codfab,
+			p.despro,
+			CASE
+				WHEN odet.estac = 'ABI' 
+				THEN 'ABIERTA' 
+				WHEN odet.estac = 'CER' 
+				THEN 'CERRADA' 
+				ELSE 'PARCIAL' 
+			END AS estado,
 			CONCAT(
 				(SUBSTRING(p.CodFab, 1, 6)),
 				' - ',
@@ -794,7 +805,7 @@ class ModeloOrdenCompra{
 
 	static public function mdlMostrarMateriasCompras($valor){
 
-		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT   Producto.CodFab, Producto.DesPro, Producto.CodPro, preciomp.PreProv1 AS PrecioSinIgv, Producto.CodAlm01, Proveedor.RazPro, Tabla_M_Detalle_2.Des_Corta AS Unidad,Tabla_M_Detalle_4.Des_Larga AS Color
+		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT   Producto.CodFab, Producto.DesPro, Producto.CodPro, preciomp.PreProv1 AS PrecioSinIgv, Producto.CodAlm01, Proveedor.RazPro , Proveedor.CodRuc, Tabla_M_Detalle_2.Des_Corta AS Unidad,Tabla_M_Detalle_4.Des_Larga AS Color
     FROM Producto, Tabla_M_Detalle AS Tabla_M_Detalle_2,Tabla_M_Detalle AS Tabla_M_Detalle_4, proveedor, preciomp 
     WHERE Producto.UndPro = Tabla_M_Detalle_2.Cod_Argumento 
     AND Producto.ColPro = Tabla_M_Detalle_4.Cod_Argumento 
@@ -806,7 +817,7 @@ class ModeloOrdenCompra{
     AND Producto.estpro NOT LIKE '2'
     AND Proveedor.CodRuc='$valor'
     UNION ALL
-    SELECT DISTINCT  Producto.CodFab, Producto.DesPro, Producto.CodPro, preciomp.PreProv2 AS PrecioSinIgv,  Producto.CodAlm01, Proveedor.RazPro, Tabla_M_Detalle_2.Des_Corta AS Unidad,Tabla_M_Detalle_4.Des_Larga AS Color
+    SELECT DISTINCT  Producto.CodFab, Producto.DesPro, Producto.CodPro, preciomp.PreProv2 AS PrecioSinIgv,  Producto.CodAlm01, Proveedor.RazPro, Proveedor.CodRuc, Tabla_M_Detalle_2.Des_Corta AS Unidad,Tabla_M_Detalle_4.Des_Larga AS Color
     FROM Producto, Tabla_M_Detalle AS Tabla_M_Detalle_2,Tabla_M_Detalle AS Tabla_M_Detalle_4, proveedor, preciomp 
     WHERE Producto.UndPro = Tabla_M_Detalle_2.Cod_Argumento 
     AND Producto.ColPro = Tabla_M_Detalle_4.Cod_Argumento 
@@ -818,7 +829,7 @@ class ModeloOrdenCompra{
     AND Producto.estpro NOT LIKE '2'
     AND Proveedor.CodRuc='$valor'
     UNION ALL
-    SELECT DISTINCT  Producto.CodFab, Producto.DesPro, Producto.CodPro, preciomp.PreProv3 AS PrecioSinIgv ,  Producto.CodAlm01, Proveedor.RazPro, Tabla_M_Detalle_2.Des_Corta AS Unidad,Tabla_M_Detalle_4.Des_Larga AS Color
+    SELECT DISTINCT  Producto.CodFab, Producto.DesPro, Producto.CodPro, preciomp.PreProv3 AS PrecioSinIgv ,  Producto.CodAlm01, Proveedor.RazPro, Proveedor.CodRuc, Tabla_M_Detalle_2.Des_Corta AS Unidad,Tabla_M_Detalle_4.Des_Larga AS Color
     FROM Producto, Tabla_M_Detalle AS Tabla_M_Detalle_2,Tabla_M_Detalle AS Tabla_M_Detalle_4, proveedor, preciomp 
     WHERE Producto.UndPro = Tabla_M_Detalle_2.Cod_Argumento 
     AND Producto.ColPro = Tabla_M_Detalle_4.Cod_Argumento 
@@ -997,6 +1008,35 @@ class ModeloOrdenCompra{
 
 		$stmt -> bindParam(":estac", $datos["estac"], PDO::PARAM_STR);
 		$stmt -> bindParam(":Nro", $datos["Nro"], PDO::PARAM_STR);
+		
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
+
+	/*=============================================
+	CERRAR DETALLE ORDEN DE COMPRA
+	=============================================*/
+
+	static public function mdlCerrarDetalleOrdenCompra2($datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE ocomdet SET estac = :estac WHERE Nro = :Nro AND CodPro = :CodPro");
+
+		$stmt -> bindParam(":estac", $datos["estac"], PDO::PARAM_STR);
+		$stmt -> bindParam(":Nro", $datos["Nro"], PDO::PARAM_STR);
+		$stmt -> bindParam(":CodPro", $datos["CodPro"], PDO::PARAM_STR);
 		
 
 		if($stmt -> execute()){

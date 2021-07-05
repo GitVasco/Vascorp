@@ -124,6 +124,21 @@ class AjaxMateriaPrima{
 	}
 
 	/* 
+	* AGREGAR LA MATERIA PRIMA PARA ORDEN DE COMRPA
+	*/
+
+	public function ajaxAgregarMateriaCompra(){
+
+		$valor1 = $this->idMateriaCompra;
+		$valor2 = $this->CodRuc;
+
+		$respuesta = ControladorMateriaPrima::ctrMostrarMateriaOrdenCompra($valor1,$valor2);
+
+		echo json_encode($respuesta);
+
+	}
+
+	/* 
 	* EDITAR NOMBRE DE LA MATERIA PRIMA
 	*/
 	public function ajaxAgregarCuadro(){
@@ -528,5 +543,18 @@ if(isset($_POST["codproCua"])){
 	$agregarCuadro = new AjaxMateriaPrima();
 	$agregarCuadro -> codproCua = $_POST["codproCua"];
 	$agregarCuadro -> ajaxSelectAlmacen01();
+  
+}
+
+/* 
+* AGREGAR MATERIA PARA ORDEN DE COMPRA
+*/
+
+if(isset($_POST["idMateriaCompra"])){
+
+	$agregarMateriaCompra = new AjaxMateriaPrima();
+	$agregarMateriaCompra -> idMateriaCompra = $_POST["idMateriaCompra"];
+	$agregarMateriaCompra -> CodRuc = $_POST["CodRuc"];
+	$agregarMateriaCompra -> ajaxAgregarMateriaCompra();
   
 }

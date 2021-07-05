@@ -115,7 +115,7 @@
                 <!--=====================================
                 ENTRADA PARA AGREGAR OPERACION
                 ======================================-->
-                <table>
+                <table class=" box box-primary">
                   <thead>
                   <tr>
                       <th style="width:550px;margin-right:150px;">Codigo-Operaciones</th>

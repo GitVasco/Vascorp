@@ -77,7 +77,7 @@
               <th>Descripcion</th>
               <th>Color-Talla</th>
               <th>Estado Artículo</th>
-              <th style="width:180px">Acciones</th>
+              <th style="width:210px">Acciones</th>
 
             </tr>
 

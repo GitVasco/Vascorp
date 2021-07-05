@@ -27,7 +27,7 @@ class TablaEditarOrdenCorte{
             */
 
 
-                $botones =  "<div class='btn-group'><button type='button' class='btn btn-warning btnEditarDetalleCorte' data-toggle='modal' data-target='#modalEditarDetalleCorte' idDetalle='".$ordencorte[$i]["id"]."'><i class='fa fa-pencil'></i></button><button  type='button' class='btn btn-danger btnEliminarDetalleCorte' codigo= '".$_GET["codigo"]."' idDetalle='".$ordencorte[$i]["articulo"]."' cantidad='".$ordencorte[$i]["cantidad"]."'><i class='fa fa-times'></i></button></div> ";
+                $botones =  "<div class='btn-group'><button type='button' class='btn btn-xs btn-warning btnEditarDetalleCorte' data-toggle='modal' data-target='#modalEditarDetalleCorte' idDetalle='".$ordencorte[$i]["id"]."'><i class='fa fa-pencil'></i></button><button  type='button' class='btn btn-xs btn-danger btnEliminarDetalleCorte' codigo= '".$_GET["codigo"]."' idDetalle='".$ordencorte[$i]["articulo"]."' cantidad='".$ordencorte[$i]["cantidad"]."'><i class='fa fa-times'></i></button></div> ";
 
 
 

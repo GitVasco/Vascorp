@@ -30,6 +30,14 @@ class AjaxOrdenCompra{
 		echo json_encode($respuesta);
 	}
 
+	public function ajaxVisualizarOrdenCompra(){
+		$valor=$this->idOrdenCompra;
+
+		$respuesta = ControladorOrdenCompra::ctrMostrarOrdenCompra("Nro",$valor);
+		
+		echo json_encode($respuesta);
+	}
+
 	public function ajaxCerrarOrdenCompra(){
 		$idCerrar=$this->cerrarId;
 		date_default_timezone_set('America/Lima');
@@ -48,6 +56,18 @@ class AjaxOrdenCompra{
 		$respuesta2 = ModeloOrdenCompra::mdlCerrarDetalleOrdenCompra($datos2);
 		
 		echo $respuesta;
+	}
+
+	public function ajaxCerrarDetalleOrdenCompra2(){
+		$detalleCod=$this->detalleCerrarCod;
+		$detalleNro=$this->detalleCerrarNro;
+		$datos = array ("Nro" => $detalleNro,
+						 "CodPro" => $detalleCod,
+						 "estac"=>"CER");
+		
+		$respuestaCerrado = ModeloOrdenCompra::mdlCerrarDetalleOrdenCompra2($datos);
+		
+		echo $respuestaCerrado;
 	}
 
 }
@@ -84,5 +104,30 @@ if(isset($_POST["cerrarId"])){
 	$cerrarOrdenCompra = new AjaxOrdenCompra();
 	$cerrarOrdenCompra -> cerrarId = $_POST["cerrarId"];
 	$cerrarOrdenCompra -> ajaxCerrarOrdenCompra();
+
+}
+
+/*=============================================
+VISUALIZAR ORDEN DE COMPRA
+=============================================*/	
+
+if(isset($_POST["idOrdenCompra"])){
+
+	$visualizarOrdenCompra = new AjaxOrdenCompra();
+	$visualizarOrdenCompra -> idOrdenCompra = $_POST["idOrdenCompra"];
+	$visualizarOrdenCompra -> ajaxVisualizarOrdenCompra();
+
+}
+
+/*=============================================
+CERRAR DETALLE ORDEN COMPRA
+=============================================*/	
+
+if(isset($_POST["detalleCerrarCod"])){
+
+	$cerrarDetalleOrdenCompra = new AjaxOrdenCompra();
+	$cerrarDetalleOrdenCompra -> detalleCerrarCod = $_POST["detalleCerrarCod"];
+	$cerrarDetalleOrdenCompra -> detalleCerrarNro = $_POST["detalleCerrarNro"];
+	$cerrarDetalleOrdenCompra -> ajaxCerrarDetalleOrdenCompra2();
 
 }

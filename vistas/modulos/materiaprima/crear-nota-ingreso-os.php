@@ -90,17 +90,8 @@
                                     <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Proveedor</label>
                                     <div class="col-lg-2">
 
-                                        <?php
-                                            $item = "codruc";
-                                            $valor = '000097';
-
-                                            $proveedores = ControladorProveedores::ctrMostrarProveedores($item, $valor);
-
-                                            //var_dump($proveedores["RazPro"]);
-                                            echo '<input type="text" class="form-control input-sm" id="NomProv" name="NomProv"
-                                            value="'.$proveedores["RazPro"].'">';
-
-                                        ?>
+                                       <input type="text" class="form-control input-sm" id="NomProv" name="NomProv"
+                                            value="ELASTICOS VASCO" readonly>
                                         
                                     </div>                                
 

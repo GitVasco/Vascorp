@@ -25,7 +25,7 @@ class TablaTipoTrabajador{
         TRAEMOS LAS ACCIONES
         =============================================*/         
         
-        $botones =  "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarTipoTrabajador' idTipoTrabajador='".$tipotrabajador[$i]["cod_tip_tra"]."' data-toggle='modal' data-target='#modalEditarTipoTrabajador'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarTipoTrabajador' idTipoTrabajador='".$tipotrabajador[$i]["cod_tip_tra"]."'><i class='fa fa-times'></i></button></div>"; 
+        $botones =  "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarTipoTrabajador' idTipoTrabajador='".$tipotrabajador[$i]["cod_tip_tra"]."' data-toggle='modal' data-target='#modalEditarTipoTrabajador'><i class='fa fa-pencil'></i></button><button class='btn btn-xs btn-danger btnEliminarTipoTrabajador' idTipoTrabajador='".$tipotrabajador[$i]["cod_tip_tra"]."'><i class='fa fa-times'></i></button></div>"; 
 
             $datosJson .= '[
             "'.($i+1).'",

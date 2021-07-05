@@ -1342,3 +1342,10 @@ $('.tablaConsumoTelas').DataTable({
 
     });
 }
+
+$(".tablaAlmacenCorte").on("click", "button.btnReporteAC", function () {
+  var codigo =$(this).attr("codigo");
+  // console.log(codigo);
+  window.location = "vistas/reportes_excel/rpt_corte.php?codigo="+codigo;
+});
+
