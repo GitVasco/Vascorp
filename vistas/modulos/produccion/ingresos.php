@@ -93,7 +93,7 @@
            <th>Total</th>
            <th>Fecha</th>
            <th>Almacen</th>
-           <th style="width:150px">Acciones</th>
+           <th style="width:180px">Acciones</th>
 
          </tr> 
 

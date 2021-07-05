@@ -51,7 +51,7 @@
            <th>Unidad</th>
            <th>Proveedor</th>
            <th>Stock</th>
-           <th style="width:165px">Acciones</th>
+           <th style="width:220px">Acciones</th>
 
          </tr>
 

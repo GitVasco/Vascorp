@@ -30,7 +30,7 @@ class TablaOrdenCompra{
             /*=============================================
             TRAEMOS LAS ACCIONES
             =============================================*/    
-            $botones =  "<div class='btn-group' ><button class='btn btn-xs btn-warning btnEditarOrdenCompra' title='Editar Orden de compra' idOrdenCompra='".$ordencompra[$i]["Nro"]."' ><i class='fa fa-pencil'></i></button><button class='btn btn-xs btn-danger btnAnularOrdenCompra' title='Anular Orden de compra' idOrdenCompra='".$ordencompra[$i]["Nro"]."'><i class='fa fa-times'></i></button><button class='btn btn-xs btn-outline-success pull-right btnDetalleReporteOrdenCompra' idOrdenCompra='".$ordencompra[$i]["Nro"]."' title='Reporte Orden de compra' style='border:green 1px solid'><img src='vistas/img/plantilla/excel.png' width='15px'></button></div>"; 
+            $botones =  "<div class='btn-group' ><button class='btn btn-xs btn-primary btnVisualizarOrdenCompra' title='Visualizar Orden de compra' data-toggle='modal' data-target='#modalVisualizarOrdenCompra' idOrdenCompra='".$ordencompra[$i]["Nro"]."' ><i class='fa fa-eye'></i></button><button class='btn btn-xs btn-warning btnEditarOrdenCompra' title='Editar Orden de compra' idOrdenCompra='".$ordencompra[$i]["Nro"]."' ><i class='fa fa-pencil'></i></button><button class='btn btn-xs btn-danger btnAnularOrdenCompra' title='Anular Orden de compra' idOrdenCompra='".$ordencompra[$i]["Nro"]."'><i class='fa fa-times'></i></button><button class='btn btn-xs btn-outline-success pull-right btnDetalleReporteOrdenCompra' idOrdenCompra='".$ordencompra[$i]["Nro"]."' title='Reporte Orden de compra' style='border:green 1px solid'><img src='vistas/img/plantilla/excel.png' width='15px'></button></div>"; 
 
         }else if($ordencompra[$i]["Estac"] == 'CERRADA'){
 
@@ -39,7 +39,7 @@ class TablaOrdenCompra{
             /*=============================================
             TRAEMOS LAS ACCIONES
             =============================================*/    
-            $botones =  "<div class='btn-group' ><button class='btn btn-xs btn-outline-success pull-right btnDetalleReporteOrdenCompra' idOrdenCompra='".$ordencompra[$i]["Nro"]."' title='Reporte Orden de compra' style='border:green 1px solid'><img src='vistas/img/plantilla/excel.png' width='15px'></button></div>"; 
+            $botones =  "<div class='btn-group' ><button class='btn btn-xs btn-primary btnVisualizarOrdenCompra' title='Visualizar Orden de compra' data-toggle='modal' data-target='#modalVisualizarOrdenCompra' idOrdenCompra='".$ordencompra[$i]["Nro"]."' ><i class='fa fa-eye'></i></button><button class='btn btn-xs btn-outline-success pull-right btnDetalleReporteOrdenCompra' idOrdenCompra='".$ordencompra[$i]["Nro"]."' title='Reporte Orden de compra' style='border:green 1px solid'><img src='vistas/img/plantilla/excel.png' width='15px'></button></div>"; 
         }else{
 
             $estado ="<span class ='label label-warning'>".$ordencompra[$i]["Estac"]."</span>";
@@ -47,7 +47,7 @@ class TablaOrdenCompra{
             /*=============================================
             TRAEMOS LAS ACCIONES
             =============================================*/    
-            $botones =  "<div class='btn-group' ><button class='btn btn-xs btn-outline-success pull-right btnDetalleReporteOrdenCompra' idOrdenCompra='".$ordencompra[$i]["Nro"]."' title='Reporte Orden de compra' style='border:green 1px solid'><img src='vistas/img/plantilla/excel.png' width='15px'></button></div>"; 
+            $botones =  "<div class='btn-group' ><button class='btn btn-xs btn-primary btnVisualizarOrdenCompra' title='Visualizar Orden de compra' data-toggle='modal' data-target='#modalVisualizarOrdenCompra' idOrdenCompra='".$ordencompra[$i]["Nro"]."' ><i class='fa fa-eye'></i></button><button class='btn btn-xs btn-outline-success pull-right btnDetalleReporteOrdenCompra' idOrdenCompra='".$ordencompra[$i]["Nro"]."' title='Reporte Orden de compra' style='border:green 1px solid'><img src='vistas/img/plantilla/excel.png' width='15px'></button></div>"; 
 
         }
 

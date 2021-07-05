@@ -97,7 +97,7 @@
            <th>Responsable</th> 
            <th>Estado</th>
            <th>Cerrar</th>
-           <th style="width:120px">Acciones</th>
+           <th style="width:170px">Acciones</th>
 
          </tr> 
 
@@ -110,6 +110,232 @@
     </div>
 
   </section>
+
+</div>
+
+
+
+<!--=====================================
+MODAL VIZUALIZAR ORDEN DE COMPRA
+======================================-->
+
+<div id="modalVisualizarOrdenCompra" class="modal fade" role="dialog">
+
+  <div class="modal-dialog" style="width: 75% !important;">
+
+    <div class="modal-content">
+
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">VISUALIZAR ORDEN DE COMPRA</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <div class="form-group col-lg-2">
+              
+              <label>CODIGO</label>
+
+              <div class="input-group">
+
+              <span class="input-group-addon"><i class="fa fa-key"></i></span> 
+
+                <input type="text" class="form-control input-sm" name="codigo" id="codigo"  readonly>
+
+              </div>
+
+            </div>
+
+            <div class="form-group col-lg-2">
+              
+              <label>PROVEEDOR</label>
+
+              <div class="input-group">
+
+              <span class="input-group-addon"><i class="fa fa-truck"></i></span> 
+
+                <input type="text" class="form-control input-sm" name="proveedor" id="proveedor"  readonly>
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA LA GUIA-->
+            
+            <div class="form-group col-lg-4">
+
+              <label>RAZON SOCIAL</label>
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-truck"></i></span> 
+                <input type="text" class="form-control input-sm" name="razonsocial" id="razonsocial"  readonly>
+              </div>
+
+            </div> 
+
+            <!-- ENTRADA PARA LA FECHA-->
+            
+            <div class="form-group col-lg-2">
+
+              <label>RUC</label>
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-id-card-o"></i></span> 
+
+                <input type="number" class="form-control input-sm" name="ruc" id="ruc"   readonly >
+
+              </div>
+
+            </div>   
+
+            <!-- ENTRADA PARA LA FECHA-->
+            
+            <div class="form-group col-lg-2">
+
+              <label>ESTADO</label>
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+
+                <input type="text" class="form-control input-sm" name="estado" id="estado"   readonly >
+
+              </div>
+
+            </div>   
+ 
+ 
+            <!-- ENTRADA PARA LA RESPONSABLE-->
+            
+            <div class="form-group col-lg-2">
+
+              <label>FECHA EMISION</label>
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
+
+                <input type="text" class="form-control input-sm" name="emision" id="emision"  readonly>
+              </div>
+
+            </div>            
+   
+            
+            <!-- ENTRADA PARA LA CANTIDAD-->
+            
+            <div class="form-group col-lg-2">
+
+              <label>FECHA ENTREGA</label>
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
+
+                <input type="text" class="form-control input-sm" name="entrega" id="entrega"  readonly>
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA EL ESTADO-->
+            
+            <div class="form-group col-lg-6">
+
+              <label for="">OBSERVACION</label>
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+
+                <input type="text" class="form-control input-sm" name="observacion" id="observacion"  readonly>
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA LA CANTIDAD-->
+            
+            <div class="form-group col-lg-2">
+
+              <label>CENT COSTO</label>
+              
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+
+                <select class="form-control input-sm" name="centcosto" id="centcosto" disabled>
+                <?php
+
+                        $centro = ControladorMaestras::ctrMostrarMaestrasDetalle("TDET");
+                        
+
+                        foreach ($centro as $key => $value) {
+
+                        echo '<option value="'.$value["des_corta"].'">'.$value["des_larga"].'</option>';
+
+                        }
+                ?>
+                </select>
+
+              </div>
+
+            </div>
+            
+            
+            <div class="form-group col-lg-12">
+              <table class="table table-hover table-striped tablaDetalleOrdenCompra" width="100%">
+                <thead>
+                
+                  <th >Item</th>
+                  <th >Cod.Pro</th>
+                  <th style="min-width:240px">Descripcion</th>
+                  <th >Color</th>
+                  <th >Und</th>
+                  <th style="min-width:80px">Cantidad</th>
+                  <th >Estado</th>
+                  <th >Acciones</th>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+            
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
+
+
+        </div>
+
+
+
+    </div>
+
+  </div>
 
 </div>
 

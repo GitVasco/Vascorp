@@ -158,6 +158,9 @@
       width: 500px;
     }
 
+    .btn-group .btn  {
+      margin-left:20px !important;
+    }
   </style>
 </head>
 

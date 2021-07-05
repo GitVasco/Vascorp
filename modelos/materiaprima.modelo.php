@@ -1691,4 +1691,69 @@ class ModeloMateriaPrima{
 
 	}	
 
+	/* 
+	* MOSTRAR DATOS DE LA MATERIA PRIMA
+	*/
+	static public function mdlMostrarMateriaOrdenCompra($valor1,$valor2){
+
+		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+		p.codpro,
+		SUBSTRING(p.codfab, 1, 6) AS codlinea,
+		p.codfab,
+		p.ColPro,
+		p.despro AS despro,
+		CONCAT(
+		  (SUBSTRING(p.CodFab, 1, 6)),
+		  ' - ',
+		  p.DesPro,
+		  ' - ',
+		  tbcol.des_larga,
+		  ' - ',
+		  tbund.des_corta
+		) AS descripcion,
+		p.codalm01 AS stock,
+		tbund.des_corta AS unidad,
+		tbcol.des_larga AS color,
+		p.cospro,
+		IFNULL(pmp.precio, 0.000000) AS precio 
+	  FROM
+		producto p 
+		LEFT JOIN 
+		  (SELECT 
+			codpro,
+			CASE
+			  WHEN codprov1 = :codruc
+			  THEN preprov1 
+			  WHEN codprov2 = :codruc
+			  THEN preprov2 
+			  WHEN codprov3 = :codruc 
+			  THEN preprov3 
+			  ELSE 0 
+			END AS precio 
+		  FROM
+			preciomp 
+		  WHERE codpro = :codpro) AS pmp 
+		  ON pmp.codpro = p.codpro 
+		INNER JOIN tabla_m_detalle AS tbund 
+		  ON p.undpro = tbund.cod_argumento 
+		  AND (tbund.Cod_Tabla = 'TUND') 
+		INNER JOIN tabla_m_detalle AS tbcol 
+		  ON p.ColPro = tbcol.cod_argumento 
+		  AND (tbcol.Cod_Tabla = 'TCOL') 
+	  WHERE p.estpro = '1' 
+		AND p.CodPro = :codpro ");
+
+		$stmt->bindParam(":codpro", $valor1, PDO::PARAM_STR);
+        $stmt->bindParam(":codruc", $valor2, PDO::PARAM_STR);
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    } 	
+
 }

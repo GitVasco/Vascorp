@@ -115,8 +115,8 @@
                 <!--=====================================
                 ENTRADA PARA AGREGAR OPERACION
                 ======================================-->
-                <table>
-                  <thead>
+                <table class=" box box-primary" >
+                  <thead >
                   <tr>
                       <th style="width:550px;margin-right:150px;">Codigo-Operaciones</th>
                       <th style="width:250px">Precio x Docena</th>
