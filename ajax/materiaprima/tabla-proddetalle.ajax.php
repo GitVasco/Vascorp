@@ -3,18 +3,20 @@
 require_once "../../controladores/maestras.controlador.php";
 require_once "../../modelos/maestras.modelo.php";
 
-class TablaMaestraCabecera{
+class TablaMaestraDetalle{
 
     /*=============================================
     MOSTRAR LA TABLA DE PRODUCTOS
     =============================================*/ 
 
-    public function mostrarTablaMaestraCabecera(){
+    public function mostrarTablaMaestraDetalle(){
 
-        $tipPro = null;
-        $docPro = null;
+        $tipo = $_GET["tipPro"];
+        $documento = $_GET["docPro"];
 
-        $maestras = ControladorMaestras::ctrMostrarProdCabecera($tipPro, $docPro);	
+        $maestras = ControladorMaestras::ctrMostrarProdDetalle($tipo, $documento);	
+
+
         if(count($maestras)>0){
 
         $datosJson = '{
@@ -22,25 +24,25 @@ class TablaMaestraCabecera{
 
         for($i = 0; $i < count($maestras); $i++){  
 
-            /* 
-            * boton en el codigo de tabla
-            */
-
-            $documento = "<button class='btn btn-link btn-xs ActivarDetalle' documento='".$maestras[$i]["documento"]."' tipo='".$maestras[$i]["tipo"]."'>".$maestras[$i]["documento"]."</button>";
+        $despro = str_replace('"','',$maestras[$i]["despro"]);
 
 
         /*=============================================
         TRAEMOS LAS ACCIONES
         =============================================*/         
         
-        $botones =  "<div class='btn-group'><button class='btn btn-primary btn-xs btnAgregarProd' tipo='".$maestras[$i]["tipo"]."' documento='".$maestras[$i]["documento"]."' data-toggle='modal' data-target='#modalAgregarProd'><i class='fa fa-plus'></i></button></div>"; 
+        $botones =  "<div class='btn-group'><button class='btn btn-warning btn-xs btnEditarSubLinea' codigo='".$maestras[$i]["documento"]."' argumento='".$maestras[$i]["documento"]."' data-toggle='modal' data-target='#modalEditarSubLinea'><i class='fa fa-pencil'></i></button></div>"; 
 
             $datosJson .= '[
             "'.$maestras[$i]["tipo"].'",
-            "'.$documento.'",
-            "'.$maestras[$i]["total"].'",
-            "'.$maestras[$i]["fecha"].'",
-            "'.$botones.'"
+            "'.$maestras[$i]["documento"].'",
+            "'.$maestras[$i]["codigo"].'",
+            "'.$maestras[$i]["codfab"].'",
+            "'.$despro.'",
+            "'.$maestras[$i]["color"].'",
+            "'.$maestras[$i]["talla"].'",
+            "'.$maestras[$i]["unidad"].'",
+            "'.$maestras[$i]["cantidad"].'"
             ],';        
             }
 
@@ -68,6 +70,6 @@ class TablaMaestraCabecera{
 /*=============================================
 ACTIVAR TABLA DE AGENCIAS
 =============================================*/ 
-$activarTabla = new TablaMaestraCabecera();
-$activarTabla -> mostrarTablaMaestraCabecera();
+$activarTabla = new TablaMaestraDetalle();
+$activarTabla -> mostrarTablaMaestraDetalle();
 

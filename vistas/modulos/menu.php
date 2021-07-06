@@ -1089,9 +1089,9 @@
 
                     </li>                    
 
-                    <li class="<?php if($_GET["ruta"] == "crear-cuadros-prod") echo 'active';?>">
+                    <li class="<?php if($_GET["ruta"] == "tabla-produccion") echo 'active';?>">
 
-                    <a href="crear-cuadros-prod">
+                    <a href="tabla-produccion">
 
                         <i class="fa fa-cogs text-yellow"></i> Produccion Cuadros
                         </a>

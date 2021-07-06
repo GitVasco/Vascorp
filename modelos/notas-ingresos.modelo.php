@@ -1335,14 +1335,16 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
 	static public function mdlCerrarOC($datos){
 
 		$sql="UPDATE 
-            ocompra 
-          SET
-            estac = 'CER',
-            ceroc = 'SI',
-            feccer = :feccer,
-            usucer = :usucer,
-            pccer = :pccer 
-          WHERE nro = :oc";
+              ocompra oc 
+              LEFT JOIN ocomdet od 
+                ON oc.nro = od.nro SET oc.estac = 'CER',
+              oc.ceroc = 'SI',
+              oc.feccer = :feccer,
+              oc.usucer = :usucer,
+              oc.pccer = :pccer,
+              od.estac = 'CER',
+              od.ceroc = 'SI' 
+            WHERE oc.nro = :oc";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 

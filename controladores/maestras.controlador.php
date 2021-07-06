@@ -229,12 +229,23 @@ class ControladorMaestras{
     /* 
     * LISTAR TABLA CABECERA
     */
-    static public function ctrMostrarProdCabecera(){
+    static public function ctrMostrarProdCabecera($tipo, $documento){
 
-        $respuesta = ModeloMaestras::mdlMostrarProdCabecera();
+        $respuesta = ModeloMaestras::mdlMostrarProdCabecera($tipo, $documento);
 
         return $respuesta;
 
     }
+
+    /* 
+    * LISTAR TABLA DETALLE
+    */
+    static public function ctrMostrarProdDetalle($tipo, $documento){
+
+        $respuesta = ModeloMaestras::mdlMostrarProdDetalle($tipo, $documento);
+
+        return $respuesta;
+
+    }     
 
 }
