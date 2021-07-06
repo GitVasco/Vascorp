@@ -455,7 +455,7 @@ MODAL AGREGAR EDITAR SUB LINEA
 
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" class="btn btn-primary">Guardar agencia</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
 
         </div>
 

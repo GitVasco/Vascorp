@@ -775,7 +775,7 @@ class ControladorMateriaPrima{
 							confirmButtonText: "Cerrar"
 						}).then((result)=>{
 							if(result.value){
-								window.location="notas-ingresos";}
+								window.location="tabla-produccion";}
 						});
 					</script>';					
 

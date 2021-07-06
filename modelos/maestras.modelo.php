@@ -301,7 +301,9 @@ class ModeloMaestras{
     /* 
     * LISTAR TABLA CABECERA
     */
-    static public function mdlMostrarProdCabecera(){
+    static public function mdlMostrarProdCabecera($tipo, $documento){
+
+      if($documento == null){
 
         $stmt = Conexion::conectar()->prepare("SELECT 
                                                 c.tipo,
@@ -316,10 +318,89 @@ class ModeloMaestras{
 
         return $stmt -> fetchAll();
 
+      }else{
+        $stmt = Conexion::conectar()->prepare("SELECT 
+                                                c.tipo,
+                                                c.documento,
+                                                valor1 AS total,
+                                                DATE(fecreg) AS fecha 
+                                            FROM
+                                                maestra_prod_cab c 
+                                                WHERE c.tipo = 'PCUA' AND c.documento='000007'
+                                            ORDER BY c.documento DESC");
+
+        $stmt -> execute();
+
+        return $stmt -> fetch();
+
+      }
+
+
+
 		$stmt -> close();
 
 		$stmt = null;
 
     }    
+
+    /* 
+    * LISTAR TABLA CABECERA
+    */
+    static public function mdlMostrarProdDetalle($tipo, $documento){
+
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        d.tipo,
+        d.documento,
+        d.codigo,
+        p.codfab,
+        p.despro,
+        p.color,
+        p.talla,
+        p.unidad,
+        d.valor1 AS cantidad
+      FROM
+        maestra_prod_det d 
+        LEFT JOIN 
+          (SELECT DISTINCT 
+            CodPro AS codpro,
+            CodFab AS codfab,
+            DesPro AS despro,
+            Stk_Act,
+            CodAlm01 AS stock,
+            Stk_Min,
+            Stk_Max,
+            CosPro,
+            TbUnd.Des_Corta AS unidad,
+            TbTal.Des_Larga AS talla,
+            TbCol.Des_Larga AS color 
+          FROM
+            Producto AS Pro 
+            INNER JOIN Tabla_M_Detalle AS TbUnd 
+              ON Pro.UndPro = TbUnd.Cod_Argumento 
+              AND (TbUnd.Cod_Tabla = 'TUND') 
+            INNER JOIN Tabla_M_Detalle AS TbCol 
+              ON Pro.ColPro = TbCol.Cod_Argumento 
+              AND (TbCol.Cod_Tabla = 'TCOL') 
+            INNER JOIN Tabla_M_Detalle AS TbTal 
+              ON Pro.TalPro = TbTal.Cod_Argumento 
+              AND (TbTal.Cod_Tabla = 'TTAL') 
+          WHERE Pro.EstPro = '1' 
+            AND LEFT(pro.fampro, 3) = 'CUA') AS p 
+          ON d.codigo = p.codpro 
+      WHERE d.tipo = :tipo 
+        AND d.documento = :documento");
+
+        $stmt->bindParam(":tipo", $tipo, PDO::PARAM_STR);
+        $stmt->bindParam(":documento", $documento, PDO::PARAM_STR);
+
+        $stmt -> execute();
+
+        return $stmt -> fetchAll();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }      
 
 }
