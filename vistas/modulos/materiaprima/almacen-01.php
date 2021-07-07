@@ -31,6 +31,19 @@
                     <option value="CUA">CUADROS</option>
                 </select>
               </div>
+              <a href="crear-cuadros-prod">
+              <button class="btn btn-warning">
+              <i class="fa fa-object-ungroup"> </i> Crear Cuadro
+              
+              </button>
+              </a>
+
+              <a href="crear-copas-prod">
+              <button class="btn btn-info">
+              <i class="fa fa-eercast"> </i> Crear Copa
+              
+              </button>
+              </a>
 
           </div>        
 

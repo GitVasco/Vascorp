@@ -114,3 +114,22 @@ $(".TablaProdCabecera tbody").on("click", "button.btnEditarProd", function() {
   
     window.location = "index.php?ruta=editar-cuadros-prod&docPro=" + docPro+ "&tipPro="+ tipPro;
   });
+
+$(".TablaProdDetalle tbody").on("click", "button.btnEditarMP", function() {
+
+    var documento = $(this).attr("documento");
+    var tipo = $(this).attr("tipo");
+    var codpro = $(this).attr("codpro");
+    
+
+})
+
+$(".TablaProdDetalle tbody").on("click", "button.btnEliminarMP", function() {
+
+    var documento = $(this).attr("documento");
+    var tipo = $(this).attr("tipo");
+    var codpro = $(this).attr("codpro");
+    
+
+})
+

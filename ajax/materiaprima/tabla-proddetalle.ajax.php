@@ -31,7 +31,7 @@ class TablaMaestraDetalle{
         TRAEMOS LAS ACCIONES
         =============================================*/         
         
-        $botones =  "<div class='btn-group'><button class='btn btn-warning btn-xs btnEditarSubLinea' codigo='".$maestras[$i]["documento"]."' argumento='".$maestras[$i]["documento"]."' data-toggle='modal' data-target='#modalEditarSubLinea'><i class='fa fa-pencil'></i></button></div>"; 
+        $botones =  "<div class='btn-group'><button class='btn btn-warning btn-xs btnEditarMP' codpro='".$maestras[$i]["codigo"]."' documento='".$maestras[$i]["documento"]."'  tipo='".$maestras[$i]["tipo"]."'  data-toggle='modal' data-target='#modalEditarMP'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btn-xs btnEliminarMP' codigo='".$maestras[$i]["codigo"]."' documento='".$maestras[$i]["documento"]."' ><i class='fa fa-times'></i></button></div>"; 
 
             $datosJson .= '[
             "'.$maestras[$i]["tipo"].'",
@@ -42,7 +42,8 @@ class TablaMaestraDetalle{
             "'.$maestras[$i]["color"].'",
             "'.$maestras[$i]["talla"].'",
             "'.$maestras[$i]["unidad"].'",
-            "'.$maestras[$i]["cantidad"].'"
+            "'.$maestras[$i]["cantidad"].'",
+            "'.$botones.'"
             ],';        
             }
 
