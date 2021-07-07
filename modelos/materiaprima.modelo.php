@@ -1033,7 +1033,7 @@ class ModeloMateriaPrima{
 	static public function mdlMostrarKardexMP($codigo, $ano, $ano_ant){
 
 		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
-		DATE_FORMAT(FecReg, '%d/%m/%Y') AS FecEmi,
+		DATE(FecReg) AS FecEmi,
 		DATE_FORMAT(FecReg, '%m') AS Fecha,
 		NULL AS nDoc,
 		NULL AS Razon,
@@ -1048,7 +1048,7 @@ class ModeloMateriaPrima{
 	  UNION
 	  ALL 
 	  SELECT 
-		DATE_FORMAT(vc.FecEmi, '%d/%m/%Y') AS FecEmi,
+		DATE(vc.FecEmi) AS FecEmi,
 		DATE_FORMAT(vc.FecEmi, '%m') AS Fecha,
 		CONCAT(vc.Tip, '-', vc.Ser, '-', vc.Nro) AS nDoc,
 		Clientes.RazCli AS Razon,
@@ -1067,7 +1067,7 @@ class ModeloMateriaPrima{
 	  UNION
 	  ALL 
 	  SELECT 
-		DATE_FORMAT(os.FecEmi, '%d/%m/%Y') AS FecEmi,
+		DATE(os.FecEmi) AS FecEmi,
 		DATE_FORMAT(os.FecEmi, '%m') AS Fecha,
 		CONCAT(os.Tip, '-', os.Ser, '-', os.Nro) AS nDoc,
 		pro.RazPro AS Razon,
@@ -1087,7 +1087,7 @@ class ModeloMateriaPrima{
 	  UNION
 	  ALL 
 	  SELECT 
-		DATE_FORMAT(nod.FecEmi, '%d/%m/%Y') AS FecEmi,
+		DATE(nod.FecEmi) AS FecEmi,
 		DATE_FORMAT(nod.FecEmi, '%m') AS Fecha,
 		CONCAT(
 		  'NExOS',
@@ -1109,7 +1109,7 @@ class ModeloMateriaPrima{
 	  UNION
 	  ALL 
 	  SELECT 
-		DATE_FORMAT(Nea.FecEmi, '%d/%m/%Y') AS FecEmi,
+		DATE(Nea.FecEmi) AS FecEmi,
 		DATE_FORMAT(Nea.FecEmi, '%m') AS Fecha,
 		CONCAT(
 		  Nea.tNea,
@@ -1220,6 +1220,28 @@ class ModeloMateriaPrima{
 		  AND vc.EstVta = 'P' 
 		  AND os.FecEmi LIKE '%$ano%' 
 		  AND os.EstReg = '1' 
+		UNION
+		ALL
+		SELECT 
+		DATE(md.fecreg) AS FecEmi,
+		DATE_FORMAT(md.fecreg, '%m') AS Fecha,
+		CONCAT(md.tipo, '-', md.documento) AS nDoc,
+		'Corporacion Vasco SAC' AS Razon,
+		'' AS StkInicial,
+		CASE
+			WHEN md.condicion = '+' 
+			THEN md.valor1 
+			ELSE 0 
+		END AS CanIng,
+		CASE
+			WHEN md.condicion = '-' 
+			THEN md.valor1 
+			ELSE 0 
+		END AS CanSal 
+		FROM
+		maestra_prod_det md 
+		WHERE md.fecreg LIKE '%$ano%' 
+		AND md.codigo = $codigo
 		ORDER BY Fecha DESC ");
 
 		$stmt -> execute();
