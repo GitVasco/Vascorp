@@ -1618,7 +1618,8 @@ class ModeloMateriaPrima{
 						valor5,
 						usureg,
 						fecreg,
-						pcreg
+						pcreg,
+						condicion
 					) 
 					VALUES
 						(
@@ -1632,7 +1633,8 @@ class ModeloMateriaPrima{
 						:valor5,
 						:usureg,
 						:fecreg,
-						:pcreg
+						:pcreg,
+						:condicion
 						)");
 
 		$stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
@@ -1646,6 +1648,7 @@ class ModeloMateriaPrima{
         $stmt->bindParam(":usureg", $datos["usureg"], PDO::PARAM_STR);
         $stmt->bindParam(":fecreg", $datos["fecreg"], PDO::PARAM_STR);
         $stmt->bindParam(":pcreg", $datos["pcreg"], PDO::PARAM_STR);
+		$stmt->bindParam(":condicion", $datos["condicion"], PDO::PARAM_STR);
 
 		if($stmt->execute()){
 

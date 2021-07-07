@@ -754,7 +754,8 @@ class ControladorMateriaPrima{
 											"valor5"	=> '0',
 											"fecreg"	=> $fecha->format("Y-m-d H:i:s"),
 											"usureg"	=> $_SESSION["nombre"],
-											"pcreg" 	=> $PcReg);
+											"pcreg" 	=> $PcReg,
+											"condicion"	=> '+');
 						#var_dump($datosDet);
 						$respuestaDet = ModeloMateriaPrima::mdlGuardarProduccionDet($datosDet);
 						$respuestaStock = ModeloMateriaPrima::mdlActualizarStockMP($value["codpro"],$value["cantidadRe"]);
