@@ -195,7 +195,8 @@ class ModeloMateriaPrima{
 		INNER JOIN Tabla_M_Detalle AS TbCol 
 		  ON Pro.ColPro = TbCol.Cod_Argumento 
 		  AND (TbCol.Cod_Tabla = 'TCOL') 
-	  WHERE Pro.EstPro = '1'");
+	  WHERE Pro.EstPro = '1'
+	  ORDER BY pro.codfab ");
 
 		$stmt -> execute();
 

@@ -385,7 +385,7 @@ class ModeloMaestras{
               ON Pro.TalPro = TbTal.Cod_Argumento 
               AND (TbTal.Cod_Tabla = 'TTAL') 
           WHERE Pro.EstPro = '1' 
-            AND LEFT(pro.fampro, 3) = 'CUA') AS p 
+            AND LEFT(pro.fampro, 3) = RIGHT(:tipo,3)) AS p 
           ON d.codigo = p.codpro 
       WHERE d.tipo = :tipo 
         AND d.documento = :documento");

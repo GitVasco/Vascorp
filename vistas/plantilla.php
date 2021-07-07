@@ -459,7 +459,6 @@ CUERPO DOCUMENTO
   <script src="vistas/js/notas-ingresos-os.js?v=<?php echo(rand()); ?>"></script>
   <script src="vistas/js/orden-servicio.js?v=<?php echo(rand()); ?>"></script>
   <script src="vistas/js/kardex.js?v=<?php echo(rand()); ?>"></script>
-  <script src="vistas/js/kardex.js?v=<?php echo(rand()); ?>"></script>
   <script src="vistas/js/produccion-mp.js?v=<?php echo(rand()); ?>"></script>
 </body>
 
