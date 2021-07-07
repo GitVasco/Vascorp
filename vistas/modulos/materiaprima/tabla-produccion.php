@@ -205,6 +205,130 @@ MODAL AGREGAR ITEM A LA PRODUCCION
 
 </div>
 
+
+<!--=====================================
+MODAL AGREGAR ITEM A LA PRODUCCION
+======================================-->
+
+<div id="modalEditarMP" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form role="form" method="post">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Editar MP detalle</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+            <div class="box-body">
+
+                <div class="form-group">
+
+                    <!-- ENTRADA PARA EL CODIGO DE TABLA -->
+                    <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">Tipo</label>
+                    
+                    <div class="col-lg-4">
+
+                        <input type="text" class="form-control input-sm"  name="editarTipo"  id ="editarTipo" readonly>
+
+                    </div>
+
+
+
+                    <!-- ENTRADA PARA EL CORRELATIVO-->
+                    <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">Documento</label>
+                    
+                    <div class="col-lg-4">
+
+                        <input type="text" class="form-control input-sm"  name="editarDocumento"  id ="editarDocumento" readonly>
+
+                    </div>
+
+                </div> 
+
+                <div class="form-group" style="padding-top:25px">
+
+                    <!-- ENTRADA PARA LA DESCRIPCION CORTA-->
+                    <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">Codigo</label>
+                    
+                    <div class="col-lg-2">
+
+                        <input type="text" class="form-control input-md"  name="editarCodigo"  id ="editarCodigo" readonly>
+
+                    </div>
+
+                    <!-- ENTRADA PARA LA DESCRIPCION CORTA-->
+                    <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">Descripcion</label>
+                    
+                    <div class="col-lg-6">
+
+                        <input type="text" class="form-control input-md"  name="editarDescripcion"  id ="editarDescripcion" readonly>
+
+                    </div>
+
+                </div>  
+
+                <div class="form-group" style="padding-top:25px">
+
+                    <!-- ENTRADA PARA LA DESCRIPCION CORTA-->
+                    <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">Cantidad</label>
+                    
+                    <div class="col-lg-4">
+
+                        <input type="number" class="form-control input-md"  name="editarCantidadMP"  id ="editarCantidadMP" >
+                        <input type="hidden" name="editarCantidadAntigua" id="editarCantidadAntigua">
+
+                    </div>
+
+                </div>  
+
+            </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Guardar</button>
+
+        </div>
+
+      </form>
+
+      <?php
+
+      $editarDetalleMP = new ControladorMateriaPrima();
+      $editarDetalleMP -> ctrEditarDetalleMP(); 
+
+      ?>    
+
+    </div>
+
+  </div>
+
+</div>
+
 <script>
 window.document.title = "Maestra Produccion";
 var tamañoTabla = $(".TablaProdCabecera").width();

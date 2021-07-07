@@ -1698,7 +1698,7 @@ class ModeloMateriaPrima{
 	/*
 	* GUARDAR PRODUCCION EN MAESTRA
 	*/
-	static public function mdlDescontarCuadroMP($codpro, $cantidad){
+	static public function mdlDescontarStockMP($codpro, $cantidad){
 
 		$stmt = Conexion::conectar()->prepare("UPDATE 
 		producto 
@@ -1789,5 +1789,37 @@ class ModeloMateriaPrima{
 		$stmt = null;
 
     } 	
+
+	/*=============================================
+	EDITAR DETALLE DE MAESTRA MP
+	=============================================*/
+
+	static public function mdlEditarDetalleMP($datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE maestra_prod_det SET valor1=:cantidad,usumod=:usumod,fecmod=:fecmod,pcmod=:pcmod WHERE codigo = :codigo and documento = :documento" );
+
+        $stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
+		$stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
+		$stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecmod", $datos["fecmod"], PDO::PARAM_STR);
+        $stmt->bindParam(":pcmod", $datos["pcmod"], PDO::PARAM_STR);
+        $stmt->bindParam(":usumod", $datos["usumod"], PDO::PARAM_STR);
+
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	} 
+
 
 }

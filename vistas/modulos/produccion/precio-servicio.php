@@ -108,7 +108,7 @@ MODAL AGREGAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-text-height"></i></span> 
 
-                <select class="form-control input-lg selectpicker"name="nuevoTallerPrecio" id="nuevoTallerPrecio" data-live-search="true" required>
+                <select class="form-control input-md selectpicker"name="nuevoTallerPrecio" id="nuevoTallerPrecio" data-live-search="true" required>
                   <option value="">Seleccionar taller</option>
                   <?php 
                     $item=null;
@@ -134,7 +134,7 @@ MODAL AGREGAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span> 
 
-                <select class="form-control input-lg selectpicker"name="nuevoModeloPrecio" id="nuevoModeloPrecio" data-live-search="true" required>
+                <select class="form-control input-md selectpicker"name="nuevoModeloPrecio" id="nuevoModeloPrecio" data-live-search="true" required>
                   <option value="">Seleccionar modelo</option>
                   <?php 
                     $item=null;
@@ -163,7 +163,7 @@ MODAL AGREGAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-usd"></i></span> 
 
-                <input type="number" step ="any" min="0" class="form-control input-lg" name="nuevoPrecioDocenaServicio" placeholder="Ingresar precio docena" required>
+                <input type="number" step ="any" min="0" class="form-control input-md" name="nuevoPrecioDocenaServicio" placeholder="Ingresar precio docena" required>
 
               </div>
 
@@ -245,7 +245,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-text-height"></i></span> 
 
-                <select class="form-control input-lg selectpicker" name="editarTallerPrecio" id="editarTallerPrecio" data-live-search="true" required>
+                <select class="form-control input-md selectpicker" name="editarTallerPrecio" id="editarTallerPrecio" data-live-search="true" required>
                   <?php 
                     $item=null;
                     $valor=null;
@@ -270,14 +270,14 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span> 
 
-                <select class="form-control input-lg selectpicker" id="editarModeloPrecio" name="editarModeloPrecio"  data-live-search="true" required > 
+                <select class="form-control input-md selectpicker" id="editarModeloPrecio" name="editarModeloPrecio"  data-live-search="true" required > 
                   <?php 
                     $item=null;
                     $valor=null;
                     $modelos = ControladorModelos::ctrMostrarModelos($item,$valor);
 
                     foreach ($modelos as $key => $value) {
-                      if($value["estado"] == 'Activo' ){
+                      if($value["estado"] == 'ACTIVO' ){
                         echo '<option value="'.$value["modelo"].'">'.$value["modelo"]." - " . $value["nombre"]. '</option>';
                       }
                     }
@@ -297,7 +297,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-usd"></i></span> 
 
-                <input type="number"  step ="any" min="0" class="form-control input-lg" name="editarPrecioDocenaServicio" id="editarPrecioDocenaServicio" required>
+                <input type="number"  step ="any" min="0" class="form-control input-md" name="editarPrecioDocenaServicio" id="editarPrecioDocenaServicio" required>
                 <input type="hidden" id="idPrecioServicio" name="idPrecioServicio">
 
               </div>

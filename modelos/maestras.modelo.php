@@ -388,7 +388,8 @@ class ModeloMaestras{
             AND LEFT(pro.fampro, 3) = RIGHT(:tipo ,3)) AS p 
           ON d.codigo = p.codpro 
       WHERE d.tipo = :tipo 
-        AND d.documento = :documento");
+        AND d.documento = :documento
+        AND d.condicion = '+'");
 
         $stmt->bindParam(":tipo", $tipo, PDO::PARAM_STR);
         $stmt->bindParam(":documento", $documento, PDO::PARAM_STR);

@@ -120,8 +120,16 @@ $(".TablaProdDetalle tbody").on("click", "button.btnEditarMP", function() {
     var documento = $(this).attr("documento");
     var tipo = $(this).attr("tipo");
     var codpro = $(this).attr("codpro");
+    var despro = $(this).attr("despro");
+    var canpro = $(this).attr("canpro");
     
-
+    $("#editarTipo").val(tipo);
+    $("#editarDocumento").val(documento);
+    $("#editarCodigo").val(codpro);
+    $("#editarDescripcion").val(despro);
+    $("#editarCantidadMP").val(canpro);
+    $("#editarCantidadAntigua").val(canpro);
+    
 })
 
 $(".TablaProdDetalle tbody").on("click", "button.btnEliminarMP", function() {
@@ -129,6 +137,7 @@ $(".TablaProdDetalle tbody").on("click", "button.btnEliminarMP", function() {
     var documento = $(this).attr("documento");
     var tipo = $(this).attr("tipo");
     var codpro = $(this).attr("codpro");
+
     
 
 })
