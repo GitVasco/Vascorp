@@ -83,6 +83,7 @@
                                     <th>Talla</th>
                                     <th>Und</th>
                                     <th>Cantidad</th>
+                                    <th>Acciones</th>
                                 </tr>
 
                             </thead>
@@ -206,4 +207,18 @@ MODAL AGREGAR ITEM A LA PRODUCCION
 
 <script>
 window.document.title = "Maestra Produccion";
+var tamañoTabla = $(".TablaProdCabecera").width();
+if(tamañoTabla == "331.25"){
+    $(document).ready(function () {             
+        $('.dataTables_filter input[type="search"]').css(
+            {'width':'270px','display':'inline-block'}
+        );
+    });
+}else{
+    $(document).ready(function () {             
+        $('.dataTables_filter input[type="search"]').css(
+            {'width':'370px','display':'inline-block'}
+        );
+    });
+}
 </script>

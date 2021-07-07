@@ -153,9 +153,20 @@
       padding: 5px !important;
     }
 
-    div.dataTables_wrapper div.dataTables_filter input {
+    @media (min-width: 1600px ) {
+      div.dataTables_wrapper div.dataTables_filter input {
      
-      width: 500px;
+        width: 500px ;
+        /* background-color:red; */
+      }
+    }
+
+    @media (min-width: 1200px) and (max-width: 1600px) {
+      div.dataTables_wrapper div.dataTables_filter input {
+     
+        width: 500px ;
+        /* background-color:red; */
+      }
     }
 
     .btn-group .btn  {
@@ -258,6 +269,7 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "mp-os-pendiente" ||
                   $_GET["ruta"] == "almacen-01" ||
                   $_GET["ruta"] == "crear-cuadros-prod" ||
+                  $_GET["ruta"] == "crear-copas-prod" ||
                   $_GET["ruta"] == "tabla-produccion"){
         
               include "modulos/materiaprima/".$_GET["ruta"].".php";

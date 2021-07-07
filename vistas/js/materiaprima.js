@@ -1656,3 +1656,276 @@ function listarCuadros(){
 	  $("#listaCuaMp").val(JSON.stringify(listaCuadros));
   
   }
+
+
+  //COPAS
+
+  $('.tablaAlmacen01COP').DataTable( {
+	"ajax": "ajax/materiaprima/tabla-almacen01-cop-prod.ajax.php",
+	"deferRender": true,
+	"retrieve": true,
+	"processing": true,
+	"order": [[1, "asc"]],
+	"pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+	"language": {
+
+			"sProcessing":     "Procesando...",
+			"sLengthMenu":     "Mostrar _MENU_ registros",
+			"sZeroRecords":    "No se encontraron resultados",
+			"sEmptyTable":     "Ningún dato disponible en esta tabla",
+			"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+			"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0",
+			"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+			"sInfoPostFix":    "",
+			"sSearch":         "Buscar:",
+			"sUrl":            "",
+			"sInfoThousands":  ",",
+			"sLoadingRecords": "Cargando...",
+			"oPaginate": {
+			"sFirst":    "Primero",
+			"sLast":     "Último",
+			"sNext":     "Siguiente",
+			"sPrevious": "Anterior"
+			},
+			"oAria": {
+				"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+				"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+			}
+
+	}    
+} );
+
+/* 
+*AGREGANDO MATERIA PRIMA - COPAS
+*/
+$(".tablaAlmacen01COP").on("click", "button.agregarCopas", function() {
+
+	var idBoton = $(this).attr("idBoton");
+	var codpro = $(this).attr("codpro");
+	//console.log(codpro);
+
+	$(this).removeClass("btn-primary agregarCopas");
+	$(this).addClass("btn-default");
+
+	var datos = new FormData();
+	datos.append("codproCua", codpro);
+
+	$.ajax({
+		url: "ajax/materiaprima.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(respuesta) {
+	
+		  
+		  var descripcion = respuesta["despro"];
+		  var color = respuesta["color"]; 
+		  var cuadro = respuesta["cuadro"]; 
+
+		  $(".nuevaCopa").append(
+
+			'<div class="row" style="padding:1px 15px">' +
+
+				"<!-- CODPRO -->" +
+
+				'<div class="col-xs-2">' +
+
+					'<div class="input-group">' +
+
+						'<span class="input-group-addon" style="padding: 3px 6px"><button type="button" class="btn btn-danger btn-xs quitarCopa" idBoton="' + idBoton + '"><i class="fa fa-times"></i></button></span>' +
+
+						'<input type="text" class="form-control nuevoCodPro" codpro="' + codpro + '" id="codpro" name="codpro" value="' + codpro + '" codigoP="' + codpro + '" cuadro = "'+cuadro+'" readonly required>' +
+
+					"</div>" +
+
+				"</div>" +
+
+				"<!-- DESCRIPCION -->" +
+
+				'<div class="col-xs-4" >' +
+	  
+					'<input type="text" class="form-control input-sm nuevaDescripcion" name="descripcion" id ="descripcion" value="' + descripcion + '"  readonly>' +
+	  
+				"</div>" +
+
+				"<!-- COLOR -->" +
+				
+				'<div class="col-xs-4" >' +
+	  
+					'<input type="text" class="form-control input-sm nuevColor" name="color" id ="color" value="' + color + '"  readonly>' +
+	  
+				"</div>" +		
+				
+				"<!-- CANTIDAD RECIBIDA -->" +
+
+				'<div class="col-xs-2 ingresoCantidad">' +
+	  
+					'<input type="number" step="any" class="form-control input-sm nuevaCantidadRecibida"  name="cantidadRecibida" id="cantidadRecibida" cantidadReal="0" value="1" min="1">' +
+	  
+				"</div>" +				
+
+			"</div>"
+
+		  );		  
+
+		  sumarTotalCantidadCopa();
+		  listarCopas();
+
+		}
+	
+	  });  	
+	
+})
+
+/*=============================================
+CUANDO CARGUE LA TABLA CADA VEZ QUE NAVEGUE EN ELLA
+=============================================*/
+$(".tablaAlmacen01COP").on("draw.dt", function() {
+	//  console.log("tabla");
+  
+	if (localStorage.getItem("quitarCopa") != null) {
+	  var listaCopas = JSON.parse(localStorage.getItem("quitarCopa"));
+  
+	  //console.log(listaCuadros);
+  
+	  for (var i = 0; i < listaCopas.length; i++) {
+		$(
+		  "button.recuperarBoton[idBoton='" +
+		  listaCopas[i]["idBoton"] +
+			"']"
+		).removeClass("btn-default");
+		$(
+		  "button.recuperarBoton[idBoton='" +
+		  listaCopas[i]["idBoton"] +
+			"']"
+		).addClass("btn-primary agregarCopas");
+	  }
+	}
+  });
+  
+  /*=============================================
+  QUITAR PRODUCTOS DE LA VENTA Y RECUPERAR BOTÓN
+  =============================================*/
+  var idQuitarCopa = [];
+  
+  localStorage.removeItem("quitarCopa");
+  
+  $(".formularioCopas").on("click", "button.quitarCopa", function() {
+	/* console.log("boton"); */
+  
+	$(this)
+	  .parent()
+	  .parent()
+	  .parent()
+	  .parent()
+	  .remove();
+  
+	var idBoton = $(this).attr("idBoton");
+	//console.log(idBoton);
+  
+	  /*=============================================
+	ALMACENAR EN EL LOCALSTORAGE EL ID DEL PRODUCTO A QUITAR
+	=============================================*/
+  
+	if (localStorage.getItem("quitarCopa") == null) {
+		idQuitarCopa = [];
+	} else {
+		idQuitarCopa.concat(localStorage.getItem("quitarCopa"));
+	}
+  
+	idQuitarCopa.push({
+	  idBoton: idBoton
+	});
+  
+	//console.log(idQuitarCuadro);
+  
+	localStorage.setItem("quitarCopa", JSON.stringify(idQuitarCopa));
+  
+	$(".recuperarBoton[idBoton='" + idBoton + "']").removeClass(
+	  "btn-default"
+	);
+	// console.log(".recuperarBoton[idBoton='" + idBoton + "']");
+  
+	$(".recuperarBoton[idBoton='" + idBoton + "']").addClass(
+	  "btn-primary agregarCopas"
+	);
+
+	if ($(".nuevaCopa").children().length == 0) {
+		$("#nuevoTotal").val(0);
+	
+		$("#totalCopa").val(0);
+		$("#totalCopa").attr("total", 0);
+	
+		$("#listaCopaMp").val("");
+	
+	  } else {
+	
+		sumarTotalCantidadCopa();
+		listarCopas();
+
+	  }  
+
+	
+  });
+
+  /*=============================================
+MODIFICAR EL TOTAL AL CAMBIAR LA CANTIDAD
+=============================================*/
+$(".formularioCopas").on("keyup", "input.nuevaCantidadRecibida", function() {
+
+	sumarTotalCantidadCopa();
+	listarCopas();
+
+
+})
+
+function sumarTotalCantidadCopa() {
+
+	var cantidad = $(".nuevaCantidadRecibida");
+	//console.log("cantidad", cantidad);
+
+	var arraySumaCantidad = [];
+
+	for (var i = 0; i < cantidad.length; i++) {
+		arraySumaCantidad.push(Number($(cantidad[i]).val()));
+	}
+	//console.log("arraySumaCantidad", arraySumaCantidad);  
+
+	function sumaArrayCantidad(total, numero) {
+		return total + numero;
+	}
+
+	var sumaTotalCantidad = arraySumaCantidad.reduce(sumaArrayCantidad);
+	//console.log("sumaTotalCantidad", sumaTotalCantidad);  
+
+	$("#nuevoTotal").val(sumaTotalCantidad.toFixed(0));
+	$("#totalCopa").val(sumaTotalCantidad);
+
+}
+
+function listarCopas(){
+
+	listaCopas = [];
+  
+	var codpro=       $(".nuevoCodPro");
+	var descripcion = $(".nuevaDescripcion");
+	var cantidadRe =  $(".nuevaCantidadRecibida");
+  
+	for (var i = 0; i < descripcion.length; i++) {
+  
+		listaCopas.push({
+		codpro:  $(codpro[i]).val(),
+		cuadro : $(codpro[i]).attr("cuadro"),
+		cantidadRe: $(cantidadRe[i]).val()
+	  });
+	}
+  
+	//   console.log("listaCopas", JSON.stringify(listaCopas)); 
+  
+	  $("#listaCopaMp").val(JSON.stringify(listaCopas));
+  
+  }

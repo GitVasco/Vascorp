@@ -759,6 +759,7 @@ class ControladorMateriaPrima{
 						#var_dump($datosDet);
 						$respuestaDet = ModeloMateriaPrima::mdlGuardarProduccionDet($datosDet);
 						$respuestaStock = ModeloMateriaPrima::mdlActualizarStockMP($value["codpro"],$value["cantidadRe"]);
+						
 						#var_dump("guardo detalle: ",$respuestaDet);
 						#var_dump("guardo stock: ",$respuestaStock);
 						#$respuestaDet = "ok";
@@ -771,7 +772,111 @@ class ControladorMateriaPrima{
 						swal({
 							type: "success",
 							title: "Felicitaciones",
-							text: "¡La nota de ingreso fue actualizada con éxito!",
+							text: "¡La produccion de cuadros fue actualizada con éxito!",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar"
+						}).then((result)=>{
+							if(result.value){
+								window.location="tabla-produccion";}
+						});
+					</script>';					
+
+			}
+
+		}
+
+	}
+
+	/* 
+	! ESPACIO PARA CREAR COPAS
+	* ESPACIO PARA CREAR COPAS
+	? ESPACIO PARA CREAR COPAS
+	*/
+	static public function ctrCrearCopasProd(){
+
+		if(	isset($_POST["correlativo"]) && 
+			isset($_POST["listaCopaMp"])){
+			#var_dump($_POST["correlativo"]);
+
+			if($_POST["listaCopaMp"] == ""){
+
+				#mostrar alerta suave
+				echo '<script>
+				swal({
+					type: "error",
+					title: "Error",
+					text: "¡No se seleccionó ninguna copa. Por favor, intenteló de nuevo!",
+					showConfirmButton: true,
+					confirmButtonText: "Cerrar"
+				}).then((result)=>{
+					if(result.value){
+						window.location="crear-copas-prod";}
+				});
+			</script>';
+
+			}else{
+
+				# Modificamos la lista en un array
+				$listaCopas = json_decode($_POST["listaCopaMp"],true);
+				#var_dump($listaCopas);
+				# traemos la fecha y la pc
+				date_default_timezone_set('America/Lima');
+				$fecha = new DateTime();
+				$PcReg= gethostbyaddr($_SERVER['REMOTE_ADDR']);
+
+				#1. Creamos la cabecera
+				$datosCab = array( 	"tipo" 		=> 'PCOP',
+									"documento"	=> $_POST["correlativo"],
+									"valor1"	=> $_POST["nuevoTotal"],
+									"valor2"	=> '0',
+									"valor3"	=> '0',
+									"valor4"	=> '0',
+									"valor5"	=> '0',
+									"fecreg"	=> $fecha->format("Y-m-d H:i:s"),
+									"usureg"	=> $_SESSION["nombre"],
+									"pcreg" 	=> $PcReg);
+				#var_dump($datosCab);
+				$respuestaCab = ModeloMateriaPrima::mdlGuardarProduccionCab($datosCab);
+				// var_dump($respuestaCab);
+				// $respuestaCab = "ok";
+
+				#2. Creamos el detalle
+				if($respuestaCab == "ok"){
+
+					foreach($listaCopas as $key=>$value){
+
+						$datosDet = array(	"tipo" 		=> 'PCOP',
+											"documento"	=> $_POST["correlativo"],
+											"codigo"	=> $value["codpro"],
+											"valor1"	=> $value["cantidadRe"], 
+											"valor2"	=> '0',
+											"valor3"	=> '0',
+											"valor4"	=> '0',
+											"valor5"	=> '0',
+											"fecreg"	=> $fecha->format("Y-m-d H:i:s"),
+											"usureg"	=> $_SESSION["nombre"],
+											"pcreg" 	=> $PcReg);
+						// var_dump($value["cuadro"]);
+						$respuestaDet = ModeloMateriaPrima::mdlGuardarProduccionDet($datosDet);
+
+						//AUMENTO DE COPA
+						$respuestaStock = ModeloMateriaPrima::mdlActualizarStockMP($value["codpro"],$value["cantidadRe"]);
+						//DESCUENTO DE CUADRO
+						$respuestaStock2 = ModeloMateriaPrima::mdlDescontarCuadroMP($value["cuadro"],$value["cantidadRe"]);
+						// var_dump("guardo detalle: ",$respuestaDet);
+						// var_dump("guardo stock: ",$respuestaStock);
+						// var_dump("desconto cuadro: ",$respuestaStock2);
+						#$respuestaDet = "ok";
+					}
+
+				}
+
+				# Mostramos una alerta suave
+				echo '<script>
+						swal({
+							type: "success",
+							title: "Felicitaciones",
+							text: "¡La produccion de copa fue actualizada con éxito!",
 							showConfirmButton: true,
 							confirmButtonText: "Cerrar"
 						}).then((result)=>{
