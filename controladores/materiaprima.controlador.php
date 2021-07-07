@@ -843,6 +843,81 @@ class ControladorMateriaPrima{
 				#2. Creamos el detalle
 				if($respuestaCab == "ok"){
 
+					/*
+                    * array con los cuadros unicos sin repetir
+                    */
+                    $cuadros_array = [];
+                    foreach ($listaCopas as $valor) {
+
+                        $cuadro = $valor["cuadro"];
+
+                        if (! in_array($cuadro, $cuadros_array)) {
+
+                            $cuadros_array[] = $cuadro;
+
+                        }
+
+                    }
+                    #var_dump("articulos_array", $articulos_array);
+
+                    /*
+                    * crear un array con la lista unica
+                    */
+                    $resultado = [];
+                    foreach ($cuadros_array as $unico_id) {
+
+                        $temporal = [];
+                        $cantidad = 0;
+                        foreach ($listaCopas as $valor) {
+
+                            $id = $valor["cuadro"];
+
+                            if ($id === $unico_id) {
+
+                                $temporal[] = $valor;
+
+                            }
+
+                        }
+
+                        $producto = $temporal[0];
+
+                        $producto["cantidadRe"] = 0;
+                        foreach ($temporal as $producto_temporal) {
+
+                            $producto["cantidadRe"] = $producto["cantidadRe"] + $producto_temporal["cantidadRe"];
+
+                        }
+                        // dx($producto["cantidad"]); // trace
+
+                        // store unique productoo with updated quantity
+                        $resultado[] = $producto;
+
+                    }
+                    #var_dump("resultado", $resultado);
+
+                    /*
+                    todo: GUARDAMOS LOS TOTALES DEL MAESTRA PRODUCCION EN CUADROS
+                    */
+                    foreach($resultado as $value){
+
+                        //GUARDAR DETALLE DE CUADRO
+						$datosCuadro = array(	"tipo" 		=> 'PCOP',
+						"documento"	=> $_POST["correlativo"],
+						"codigo"	=> $value["cuadro"],
+						"valor1"	=> $value["cantidadRe"], 
+						"valor2"	=> '0',
+						"valor3"	=> '0',
+						"valor4"	=> '0',
+						"valor5"	=> '0',
+						"fecreg"	=> $fecha->format("Y-m-d H:i:s"),
+						"usureg"	=> $_SESSION["nombre"],
+						"pcreg" 	=> $PcReg,
+						"condicion"	=> '-');
+
+						$respuestaCuadro = ModeloMateriaPrima::mdlGuardarProduccionDet($datosCuadro);
+                    }
+
 					foreach($listaCopas as $key=>$value){
 
 						$datosDet = array(	"tipo" 		=> 'PCOP',
@@ -855,14 +930,16 @@ class ControladorMateriaPrima{
 											"valor5"	=> '0',
 											"fecreg"	=> $fecha->format("Y-m-d H:i:s"),
 											"usureg"	=> $_SESSION["nombre"],
-											"pcreg" 	=> $PcReg);
+											"pcreg" 	=> $PcReg,
+											"condicion"	=> '+');
 						// var_dump($value["cuadro"]);
+						//GUARDAR DETALLE DE COPA
 						$respuestaDet = ModeloMateriaPrima::mdlGuardarProduccionDet($datosDet);
-
+						
 						//AUMENTO DE COPA
 						$respuestaStock = ModeloMateriaPrima::mdlActualizarStockMP($value["codpro"],$value["cantidadRe"]);
 						//DESCUENTO DE CUADRO
-						$respuestaStock2 = ModeloMateriaPrima::mdlDescontarCuadroMP($value["cuadro"],$value["cantidadRe"]);
+						$respuestaStock2 = ModeloMateriaPrima::mdlDescontarStockMP($value["cuadro"],$value["cantidadRe"]);
 						// var_dump("guardo detalle: ",$respuestaDet);
 						// var_dump("guardo stock: ",$respuestaStock);
 						// var_dump("desconto cuadro: ",$respuestaStock2);
@@ -887,6 +964,63 @@ class ControladorMateriaPrima{
 
 			}
 
+		}
+
+	}
+
+
+	/* 
+	*EDITAR DETALLE MP
+	*/
+	static public function ctrEditarDetalleMP(){
+
+		if(isset($_POST["editarDocumento"])){
+			date_default_timezone_set('America/Lima');
+			$fecha = new DateTime();
+			$PcMod= gethostbyaddr($_SERVER['REMOTE_ADDR']);
+			$tipo = $_POST["editarTipo"];
+
+
+			$datos = array(	"cantidad"	=>	$_POST["editarCantidadMP"],
+							"documento"	=>	$_POST["editarDocumento"],
+							"codigo"	=>	$_POST["editarCodigo"],
+							"usumod"	=>	$_SESSION["nombre"],
+							"fecmod"	=>	$fecha->format("Y-m-d H:i:s"),
+							"pcmod"		=>	$PcMod);
+			
+			$respuesta = ModeloMateriaPrima::mdlEditarDetalleMP($datos);
+			
+			// if($tipo == 'PCOP'){
+
+			// }else{
+				
+			// }
+			
+
+
+			// if($respuesta == "ok"){
+
+			// 	echo'<script>
+
+			// 		swal({
+			// 			type: "success",
+			// 			title: "El detalle MP ha sido editado correctamente",
+			// 			showConfirmButton: true,
+			// 			confirmButtonText: "Cerrar"
+			// 			}).then(function(result){
+			// 						if (result.value) {
+
+			// 						window.location = "tabla-produccion";
+
+			// 						}
+			// 					})
+
+			// 		</script>';
+
+			// }
+
+
+			
 		}
 
 	}
