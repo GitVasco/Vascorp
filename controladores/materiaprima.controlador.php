@@ -731,7 +731,7 @@ class ControladorMateriaPrima{
 									"valor3"	=> '0',
 									"valor4"	=> '0',
 									"valor5"	=> '0',
-									"fecreg"	=> $fecha->format("Y-m-d H:i:s"),
+									"fecreg"	=> $_POST["fecha"],
 									"usureg"	=> $_SESSION["nombre"],
 									"pcreg" 	=> $PcReg);
 				#var_dump($datosCab);
@@ -832,7 +832,7 @@ class ControladorMateriaPrima{
 									"valor3"	=> '0',
 									"valor4"	=> '0',
 									"valor5"	=> '0',
-									"fecreg"	=> $fecha->format("Y-m-d H:i:s"),
+									"fecreg"	=> $_POST["fecha"],
 									"usureg"	=> $_SESSION["nombre"],
 									"pcreg" 	=> $PcReg);
 				#var_dump($datosCab);

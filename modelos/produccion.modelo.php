@@ -304,6 +304,13 @@ class ModeloProduccion
           ) AS d16,
           SUM(
             CASE
+              WHEN DAY(fecha_terminado) = '27' 
+              THEN et.total_tiempo / asi.minutos * 100 
+              ELSE 0 
+            END
+          ) AS d27,
+          SUM(
+            CASE
               WHEN DAY(fecha_terminado) = '28' 
               THEN et.total_tiempo / asi.minutos * 100 
               ELSE 0 
@@ -334,15 +341,18 @@ class ModeloProduccion
           entallerjf et 
           LEFT JOIN 
             (SELECT DISTINCT 
-              et.trabajador,
-              DATE(a.fecha) AS fecha,
-              a.minutos 
-            FROM
-              asistenciasjf a 
-              LEFT JOIN entallerjf et 
-                ON a.id_trabajador = et.trabajador 
-                AND DATE(a.fecha) = DATE(et.fecha_terminado) 
-            WHERE et.trabajador IS NOT NULL) AS asi 
+                    et.trabajador,
+                    DATE(a.fecha) AS fecha,
+                    a.minutos 
+                  FROM
+                    asistenciasjf a 
+                    LEFT JOIN entallerjf et 
+                      ON a.id_trabajador = et.trabajador 
+                      AND DATE(a.fecha) = DATE(et.fecha_terminado) 
+                  WHERE et.trabajador IS NOT NULL
+                  AND (a.fecha BETWEEN :inicio
+                  AND :fin
+                  )) AS asi 
             ON et.trabajador = asi.trabajador 
             AND DATE(fecha_terminado) = asi.fecha 
           LEFT JOIN trabajadorjf t 
@@ -380,6 +390,13 @@ class ModeloProduccion
               ELSE 0 
             END
           ) AS d1,
+          SUM(
+            CASE
+              WHEN DAY(fecha_terminado) = '12' 
+              THEN et.total_tiempo / asi.minutos * 100 
+              ELSE 0 
+            END
+          ) AS d12,
           SUM(
             CASE
               WHEN DAY(fecha_terminado) = '13' 
@@ -517,15 +534,18 @@ class ModeloProduccion
           entallerjf et 
           LEFT JOIN 
             (SELECT DISTINCT 
-              et.trabajador,
-              DATE(a.fecha) AS fecha,
-              a.minutos 
-            FROM
-              asistenciasjf a 
-              LEFT JOIN entallerjf et 
-                ON a.id_trabajador = et.trabajador 
-                AND DATE(a.fecha) = DATE(et.fecha_terminado) 
-            WHERE et.trabajador IS NOT NULL) AS asi 
+                    et.trabajador,
+                    DATE(a.fecha) AS fecha,
+                    a.minutos 
+                  FROM
+                    asistenciasjf a 
+                    LEFT JOIN entallerjf et 
+                      ON a.id_trabajador = et.trabajador 
+                      AND DATE(a.fecha) = DATE(et.fecha_terminado) 
+                  WHERE et.trabajador IS NOT NULL
+                  AND (a.fecha BETWEEN :inicio
+                  AND :fin
+                  )) AS asi 
             ON et.trabajador = asi.trabajador 
             AND DATE(fecha_terminado) = asi.fecha 
           LEFT JOIN trabajadorjf t 
@@ -673,6 +693,13 @@ class ModeloProduccion
           ) AS d16,
           SUM(
             CASE
+              WHEN DAY(fecha_terminado) = '27' 
+              THEN et.total_tiempo / asi.minutos * 100 
+              ELSE 0 
+            END
+          ) AS d27,
+          SUM(
+            CASE
               WHEN DAY(fecha_terminado) = '28' 
               THEN et.total_tiempo / asi.minutos * 100 
               ELSE 0 
@@ -703,15 +730,18 @@ class ModeloProduccion
           entallerjf et 
           LEFT JOIN 
             (SELECT DISTINCT 
-              et.trabajador,
-              DATE(a.fecha) AS fecha,
-              a.minutos 
-            FROM
-              asistenciasjf a 
-              LEFT JOIN entallerjf et 
-                ON a.id_trabajador = et.trabajador 
-                AND DATE(a.fecha) = DATE(et.fecha_terminado) 
-            WHERE et.trabajador IS NOT NULL) AS asi 
+                    et.trabajador,
+                    DATE(a.fecha) AS fecha,
+                    a.minutos 
+                  FROM
+                    asistenciasjf a 
+                    LEFT JOIN entallerjf et 
+                      ON a.id_trabajador = et.trabajador 
+                      AND DATE(a.fecha) = DATE(et.fecha_terminado) 
+                  WHERE et.trabajador IS NOT NULL
+                  AND (a.fecha BETWEEN :inicio
+                  AND :fin
+                  )) AS asi 
             ON et.trabajador = asi.trabajador 
             AND DATE(fecha_terminado) = asi.fecha 
           LEFT JOIN trabajadorjf t 
@@ -748,6 +778,13 @@ class ModeloProduccion
               ELSE 0 
             END
           ) AS d1,
+          SUM(
+            CASE
+              WHEN DAY(fecha_terminado) = '12' 
+              THEN et.total_tiempo / asi.minutos * 100 
+              ELSE 0 
+            END
+          ) AS d12,
           SUM(
             CASE
               WHEN DAY(fecha_terminado) = '13' 
@@ -885,15 +922,18 @@ class ModeloProduccion
           entallerjf et 
           LEFT JOIN 
             (SELECT DISTINCT 
-              et.trabajador,
-              DATE(a.fecha) AS fecha,
-              a.minutos 
-            FROM
-              asistenciasjf a 
-              LEFT JOIN entallerjf et 
-                ON a.id_trabajador = et.trabajador 
-                AND DATE(a.fecha) = DATE(et.fecha_terminado) 
-            WHERE et.trabajador IS NOT NULL) AS asi 
+                    et.trabajador,
+                    DATE(a.fecha) AS fecha,
+                    a.minutos 
+                  FROM
+                    asistenciasjf a 
+                    LEFT JOIN entallerjf et 
+                      ON a.id_trabajador = et.trabajador 
+                      AND DATE(a.fecha) = DATE(et.fecha_terminado) 
+                  WHERE et.trabajador IS NOT NULL
+                  AND (a.fecha BETWEEN :inicio
+                  AND :fin
+                  )) AS asi 
             ON et.trabajador = asi.trabajador 
             AND DATE(fecha_terminado) = asi.fecha 
           LEFT JOIN trabajadorjf t 
