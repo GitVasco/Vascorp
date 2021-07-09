@@ -1,12 +1,28 @@
 <div class="content-wrapper">
 
     <section class="content-header">
+        
 
-        <h1>
+        <h1 style="display:inline-block">
 
             Tabla Maestra - Producción
 
         </h1>
+
+        <a href="crear-cuadros-prod">
+            <button class="btn btn-warning">
+            <i class="fa fa-object-ungroup"> </i> Crear Cuadro
+            
+            </button>
+        </a>
+
+        <a href="crear-copas-prod">
+            <button class="btn btn-info">
+            <i class="fa fa-eercast"> </i> Crear Copa
+            
+            </button>
+        </a>
+
 
         <ol class="breadcrumb">
 
@@ -113,7 +129,7 @@ MODAL AGREGAR ITEM A LA PRODUCCION
 
     <div class="modal-content">
 
-      <form role="form" method="post">
+      <form role="form" method="post" id="formularioNuevoProdMP">
 
         <!--=====================================
         CABEZA DEL MODAL
@@ -140,38 +156,55 @@ MODAL AGREGAR ITEM A LA PRODUCCION
                     <!-- ENTRADA PARA EL CODIGO DE TABLA -->
                     <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">Tipo</label>
                     
-                    <div class="col-lg-4">
+                    <div class="col-lg-2">
 
-                        <input type="text" class="form-control input-sm"  name="tipo"  id ="tipo" readonly>
+                        <input type="text" class="form-control input-sm"  name="nuevoTipo"  id ="nuevoTipo" readonly>
 
                     </div>
-
-
 
                     <!-- ENTRADA PARA EL CORRELATIVO-->
-                    <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">Documentos</label>
+                    <label for="" class="col-form-label col-lg-2  col-lg-offset-4 col-md-3 col-sm-3">Documento</label>
                     
-                    <div class="col-lg-4">
+                    <div class="col-lg-2">
 
-                        <input type="text" class="form-control input-sm"  name="documento"  id ="documento" readonly>
+                        <input type="text" class="form-control input-sm"  name="nuevoDocumento"  id ="nuevoDocumento" readonly>
 
                     </div>
+
+                    
 
                 </div> 
 
                 <div class="form-group" style="padding-top:25px">
 
-                    <!-- ENTRADA PARA LA DESCRIPCION CORTA-->
-                    <label for="" class="col-form-label col-lg-3 col-md-3 col-sm-3">Descripcion Corta</label>
-                    
-                    <div class="col-lg-5">
 
-                        <input type="text" class="form-control input-md"  name="editarDescCorta"  id ="editarDescCorta">
+                    <!-- ENTRADA PARA LA DESCRIPCION CORTA-->
+                    <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">Materia P.</label>
+                    
+                    <div class="col-lg-10">
+                        <select  class="form-control selectpicker"  name="nuevaMateriaMP"  id ="nuevaMateriaMP" data-live-search="true" >
+
+                        </select>
+
+                        <input type="hidden" id="cuadroMP" name="cuadroMP">
 
                     </div>
 
                 </div>  
 
+                <div class="form-group" style="padding-top:25px">
+
+
+                    <!-- ENTRADA PARA LA DESCRIPCION CORTA-->
+                    <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">Cantidad</label>
+                    
+                    <div class="col-lg-3">
+
+                        <input type="number" class="form-control input-md"  name="nuevaCantidadMP"  id ="nuevaCantidadMP" >
+
+                    </div>
+
+                </div>  
 
 
             </div>
@@ -216,7 +249,7 @@ MODAL AGREGAR ITEM A LA PRODUCCION
 
     <div class="modal-content">
 
-      <form role="form" method="post">
+      <form role="form" method="post" id="formularioEditarDetalleMP">
 
         <!--=====================================
         CABEZA DEL MODAL
@@ -243,20 +276,27 @@ MODAL AGREGAR ITEM A LA PRODUCCION
                     <!-- ENTRADA PARA EL CODIGO DE TABLA -->
                     <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">Tipo</label>
                     
-                    <div class="col-lg-4">
+                    <div class="col-lg-2">
 
                         <input type="text" class="form-control input-sm"  name="editarTipo"  id ="editarTipo" readonly>
 
                     </div>
 
-
-
-                    <!-- ENTRADA PARA EL CORRELATIVO-->
-                    <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">Documento</label>
+                    <!-- ENTRADA PARA LA DESCRIPCION CORTA-->
+                    <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">Cod fab</label>
                     
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
 
-                        <input type="text" class="form-control input-sm"  name="editarDocumento"  id ="editarDocumento" readonly>
+                        <input type="text" class="form-control input-md"  name="editarCodFab"  id ="editarCodFab" readonly>
+
+                    </div>
+
+                    <!-- ENTRADA PARA LA DESCRIPCION CORTA-->
+                    <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">Codigo</label>
+                            
+                    <div class="col-lg-2">
+
+                        <input type="text" class="form-control input-md"  name="editarCodigo"  id ="editarCodigo" readonly>
 
                     </div>
 
@@ -265,13 +305,16 @@ MODAL AGREGAR ITEM A LA PRODUCCION
                 <div class="form-group" style="padding-top:25px">
 
                     <!-- ENTRADA PARA LA DESCRIPCION CORTA-->
-                    <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">Codigo</label>
+                    <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">Unidad</label>
                     
                     <div class="col-lg-2">
 
-                        <input type="text" class="form-control input-md"  name="editarCodigo"  id ="editarCodigo" readonly>
+                        <input type="text" class="form-control input-md"  name="editarUnidad"  id ="editarUnidad" readonly>
 
                     </div>
+
+                    
+                    
 
                     <!-- ENTRADA PARA LA DESCRIPCION CORTA-->
                     <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">Descripcion</label>
@@ -287,9 +330,47 @@ MODAL AGREGAR ITEM A LA PRODUCCION
                 <div class="form-group" style="padding-top:25px">
 
                     <!-- ENTRADA PARA LA DESCRIPCION CORTA-->
+                    <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">Talla</label>
+                    
+                    <div class="col-lg-2">
+
+                        <input type="text" class="form-control input-md"  name="editarTalla"  id ="editarTalla" readonly>
+
+                    </div>
+
+                    <!-- ENTRADA PARA LA DESCRIPCION CORTA-->
+                    <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">Color</label>
+                    
+                    <div class="col-lg-6">
+
+                        <input type="text" class="form-control input-md"  name="editarColor"  id ="editarColor" readonly>
+
+                    </div>
+
+                    
+
+                    
+
+                </div>  
+
+                <div class="form-group" style="padding-top:25px">
+
+                    
+
+
+                    <!-- ENTRADA PARA EL CORRELATIVO-->
+                    <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">Documento</label>
+                    
+                    <div class="col-lg-2">
+
+                        <input type="text" class="form-control input-sm"  name="editarDocumento"  id ="editarDocumento" readonly>
+
+                    </div>
+
+                    <!-- ENTRADA PARA LA DESCRIPCION CORTA-->
                     <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">Cantidad</label>
                     
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
 
                         <input type="number" class="form-control input-md"  name="editarCantidadMP"  id ="editarCantidadMP" >
                         <input type="hidden" name="editarCantidadAntigua" id="editarCantidadAntigua">
@@ -315,13 +396,7 @@ MODAL AGREGAR ITEM A LA PRODUCCION
         </div>
 
       </form>
-
-      <?php
-
-      $editarDetalleMP = new ControladorMateriaPrima();
-      $editarDetalleMP -> ctrEditarDetalleMP(); 
-
-      ?>    
+ 
 
     </div>
 

@@ -34,7 +34,7 @@ class TablaMateriaPrima{
 
                 }else{
 
-                    $botones = "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarMateriaPrima' idMateriaPrima='".$materiaprima[$i]["codpro"]."' data-toggle='modal' data-target='#modalEditarMateriaPrima' title='Editar Materia Prima'><i class='fa fa-pencil'></i></button></div>";
+                    $botones = "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarCopaCuadro' codigo='".$materiaprima[$i]["codpro"]."' descripcion='".$descripcion."' color='".$materiaprima[$i]["color"]."' talla='".$materiaprima[$i]["talla"]."' cuadro = '".$materiaprima[$i]["cuadro"]."' unidad='".$materiaprima[$i]["unidad"]."' data-toggle='modal' data-target='#modalEditarCopaCuadro' title='Editar Materia Prima'><i class='fa fa-pencil'></i></button></div>";
 
                 }
 

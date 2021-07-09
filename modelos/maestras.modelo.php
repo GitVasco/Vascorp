@@ -344,7 +344,7 @@ class ModeloMaestras{
     }    
 
     /* 
-    * LISTAR TABLA CABECERA
+    * LISTAR TABLA DETALLE
     */
     static public function mdlMostrarProdDetalle($tipo, $documento){
 
@@ -389,7 +389,9 @@ class ModeloMaestras{
           ON d.codigo = p.codpro 
       WHERE d.tipo = :tipo 
         AND d.documento = :documento
-        AND d.condicion = '+'");
+        AND d.condicion = '+'
+        AND d.estado = 1
+        AND d.visible= 1");
 
         $stmt->bindParam(":tipo", $tipo, PDO::PARAM_STR);
         $stmt->bindParam(":documento", $documento, PDO::PARAM_STR);
@@ -403,5 +405,35 @@ class ModeloMaestras{
 		$stmt = null;
 
     }      
+
+    /* 
+    * LISTAR TABLA DETALLE
+    */
+    static public function mdlMostrarProdDetalle2($codigo, $documento,$tipo){
+
+      $stmt = Conexion::conectar()->prepare("SELECT 
+      d.tipo,
+      d.documento,
+      d.codigo,
+      d.valor1 AS cantidad
+    FROM
+      maestra_prod_det d
+    WHERE d.codigo = :codigo 
+      AND d.documento = :documento
+      AND d.tipo = :tipo");
+
+      $stmt->bindParam(":codigo", $codigo, PDO::PARAM_STR);
+      $stmt->bindParam(":documento", $documento, PDO::PARAM_STR);
+      $stmt->bindParam(":tipo", $tipo, PDO::PARAM_STR);
+
+      $stmt -> execute();
+
+      return $stmt -> fetch();
+
+  $stmt -> close();
+
+  $stmt = null;
+
+  }      
 
 }

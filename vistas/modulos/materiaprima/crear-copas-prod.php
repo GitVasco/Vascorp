@@ -129,13 +129,13 @@
 
                     </div>
 
-                    <div class="col-xs-4">
+                    <div class="col-xs-5">
 
                       <label>Descripcion</label>
 
                     </div>
 
-                    <div class="col-xs-4">
+                    <div class="col-xs-3">
 
                       <label>Color</label>
 
@@ -220,7 +220,7 @@
 
               <button type="submit" class="btn btn-primary pull-right">Guardar copa</button>
 
-              <a href="inicio"  class="btn btn-danger"><i class="fa fa-times-circle"></i> Cancelar</a>
+              <a href="tabla-produccion"  class="btn btn-danger"><i class="fa fa-times-circle"></i> Cancelar</a>
 
             </div>
 
@@ -256,7 +256,9 @@
                 <tr>
                   <th style="width: 10px">CodPro</th>
                   <th>Descripcion</th>
+                  <th>Talla</th>
                   <th>Color</th>
+                  <th>Und</th>
                   <th>Stock</th>
                   <th>#</th>
                 </tr>

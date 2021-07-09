@@ -218,9 +218,9 @@
 
             <div class="box-footer">
 
-              <button type="submit" class="btn btn-primary pull-right">Guardar venta</button>
+              <button type="submit" class="btn btn-primary pull-right">Guardar cuadro</button>
 
-              <a href="inicio"  class="btn btn-danger"><i class="fa fa-times-circle"></i> Cancelar</a>
+              <a href="tabla-produccion"  class="btn btn-danger"><i class="fa fa-times-circle"></i> Cancelar</a>
 
             </div>
 

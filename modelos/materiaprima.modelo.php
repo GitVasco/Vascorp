@@ -1818,10 +1818,11 @@ class ModeloMateriaPrima{
 
 	static public function mdlEditarDetalleMP($datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE maestra_prod_det SET valor1=:cantidad,usumod=:usumod,fecmod=:fecmod,pcmod=:pcmod WHERE codigo = :codigo and documento = :documento" );
+		$stmt = Conexion::conectar()->prepare("UPDATE maestra_prod_det SET valor1=:cantidad,usumod=:usumod,fecmod=:fecmod,pcmod=:pcmod WHERE codigo = :codigo and documento = :documento and tipo=:tipo" );
 
         $stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
 		$stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
+		$stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
 		$stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_STR);
         $stmt->bindParam(":fecmod", $datos["fecmod"], PDO::PARAM_STR);
         $stmt->bindParam(":pcmod", $datos["pcmod"], PDO::PARAM_STR);
@@ -1842,6 +1843,102 @@ class ModeloMateriaPrima{
 		$stmt = null;
 
 	} 
+
+	/*=============================================
+	ANULAR DETALLE DE MAESTRA MP
+	=============================================*/
+
+	static public function mdlAnularDetalleMP($datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE maestra_prod_det SET estado=:estado,visible=:visible,usumod=:usumod,fecmod=:fecmod,pcmod=:pcmod WHERE codigo = :codigo and documento = :documento and tipo=:tipo" );
+
+        $stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
+		$stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
+		$stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
+		$stmt->bindParam(":estado", $datos["estado"], PDO::PARAM_STR);
+		$stmt->bindParam(":visible", $datos["visible"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecmod", $datos["fecmod"], PDO::PARAM_STR);
+        $stmt->bindParam(":pcmod", $datos["pcmod"], PDO::PARAM_STR);
+        $stmt->bindParam(":usumod", $datos["usumod"], PDO::PARAM_STR);
+
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	} 
+
+
+	/* 
+	* SELECT PARA AGREGAR ITEM DE DETALLE MP
+	*/
+	static public function mdlSelectMateriaTipo($tipo,$documento){
+
+
+			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+			pro.codpro,
+			pro.codfab,
+			pro.despro,
+			pro.CodAlm01 AS stock,
+			TbUnd.Des_Corta AS unidad,
+			pro.colpro,
+			TbCol.Des_Larga AS color,
+			pro.talpro,
+			TbTal.Des_larga AS talla,
+			pro.cuadro,
+			(SELECT 
+			  despro 
+			FROM
+			  producto 
+			WHERE codpro = pro.cuadro) AS cuadro_nom,
+			pro.usureg,
+			LEFT(pro.fampro, 3) AS fam 
+		  FROM
+			Producto pro 
+			INNER JOIN Tabla_M_Detalle AS TbUnd 
+			  ON pro.UndPro = TbUnd.Cod_Argumento 
+			  AND (TbUnd.Cod_Tabla = 'TUND') 
+			INNER JOIN Tabla_M_Detalle AS TbCol 
+			  ON pro.ColPro = TbCol.Cod_Argumento 
+			  AND (TbCol.Cod_Tabla = 'TCOL') 
+			INNER JOIN Tabla_M_Detalle AS TbTal 
+			  ON pro.TalPro = TbTal.Cod_Argumento 
+			  AND (TbTal.Cod_Tabla = 'TTAL') 
+		  WHERE pro.estpro = '1' 
+			AND LEFT(pro.fampro, 3) = RIGHT(:tipo,3)
+			AND pro.codpro NOT IN 
+			(SELECT 
+			  codigo 
+			FROM
+			  maestra_prod_det mt 
+			WHERE mt.tipo = :tipo
+			  AND mt.documento = :documento)
+		  ORDER BY pro.codfab ASC");
+
+		$stmt->bindParam(":tipo", $tipo, PDO::PARAM_STR);
+		$stmt->bindParam(":documento", $documento, PDO::PARAM_STR);
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+
+
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    } 	
 
 
 }

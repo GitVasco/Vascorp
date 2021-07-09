@@ -1724,6 +1724,8 @@ $(".tablaAlmacen01COP").on("click", "button.agregarCopas", function() {
 		  
 		  var descripcion = respuesta["despro"];
 		  var color = respuesta["color"]; 
+		  var talla = respuesta["talla"]; 
+		  var unidad = respuesta["unidad"]; 
 		  var cuadro = respuesta["cuadro"]; 
 
 		  $(".nuevaCopa").append(
@@ -1746,15 +1748,15 @@ $(".tablaAlmacen01COP").on("click", "button.agregarCopas", function() {
 
 				"<!-- DESCRIPCION -->" +
 
-				'<div class="col-xs-4" >' +
+				'<div class="col-xs-5" >' +
 	  
-					'<input type="text" class="form-control input-sm nuevaDescripcion" name="descripcion" id ="descripcion" value="' + descripcion + '"  readonly>' +
+					'<input type="text" class="form-control input-sm nuevaDescripcion" name="descripcion" id ="descripcion" value="' + descripcion +" - "+unidad+ " - T"+ talla  + '"  readonly>' +
 	  
 				"</div>" +
 
 				"<!-- COLOR -->" +
 				
-				'<div class="col-xs-4" >' +
+				'<div class="col-xs-3" >' +
 	  
 					'<input type="text" class="form-control input-sm nuevColor" name="color" id ="color" value="' + color + '"  readonly>' +
 	  

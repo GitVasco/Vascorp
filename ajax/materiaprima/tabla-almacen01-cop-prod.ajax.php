@@ -32,7 +32,9 @@ class TablaMateriaPrima{
                 $datosJson .= '[
                 "'.$materiaprima[$i]["codpro"].'",
                 "'.$descripcion.'",
+                "'.$materiaprima[$i]["talla"].'",
                 "'.$materiaprima[$i]["color"].'",
+                "'.$materiaprima[$i]["unidad"].'",
                 "'.$materiaprima[$i]["stock"].'",
                 "'.$botones.'"
                 ],';        
