@@ -153,20 +153,38 @@
 
                     <!-- Dropdown-toggle -->
 
-                    <ul class="dropdown-menu">
+					<ul class="dropdown-menu">
+						<!-- User image -->
+						<li class="user-header">
+						<?php
 
-                        <li class="user-body">
+							if($_SESSION["foto"] != ""){
 
-                            <div class="pull-right">
+								echo '<img src="'.$_SESSION["foto"].'" class="img-circle" alt="User Image">';
 
-                                <a href="salir" class="btn btn-default btn-flat">Salir</a>
+							}else{
 
-                            </div>
 
-                        </li>
+								echo '<img src="vistas/img/usuarios/default/anonymous.png" class="img-circle" alt="User Image">';
 
-                    </ul>
+							}
 
+
+						?>
+							
+							<p>
+							<?php  echo $_SESSION["nombre"]; ?>
+							</p>
+                            <small style="color:rgba(255, 255, 255, 0.8)">( <?php  echo $_SESSION["perfil"]; ?> )</small>
+						</li>
+						<!-- Menu Footer-->
+						<li class="user-footer " >
+							
+							<div class="pull-right">
+							<a href="salir" class="btn btn-default btn-flat">Salir</a>
+							</div>
+						</li>
+					</ul>
                 </li>
 
             </ul>

@@ -591,7 +591,7 @@ $(".box").on("click", ".btnCodigoCuenta", function () {
     processData: false,
     dataType: "json",
     success: function (respuesta) {
-      console.log(respuesta);
+      // console.log(respuesta);
       $("#nuevoClienteCuenta").find('option').remove();
 			$("#nuevoClienteCuenta").append('<option value="">Seleccionar cliente</option>');
       for (let i = 0; i < respuesta.length; i++) {

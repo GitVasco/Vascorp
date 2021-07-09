@@ -3,6 +3,7 @@ session_start();
 // Requerimos el controlador y el modelo
 require_once '../controladores/materiaprima.controlador.php';
 require_once '../modelos/materiaprima.modelo.php';
+require_once '../modelos/maestras.modelo.php';
 
 class AjaxMateriaPrima{
 
@@ -379,6 +380,262 @@ class AjaxMateriaPrima{
 
 	}	  
 
+	 /* 
+	 * MOSTAR MP DE ALMACEN01 
+	  */
+	  public function ajaxSelectMateriaTipo(){
+
+		$valor = $this->selectTipo;
+		$valor2 = $this->selectDocumento;
+
+		$respuesta = ModeloMateriaPrima::mdlSelectMateriaTipo($valor,$valor2);
+
+		echo json_encode($respuesta);
+
+	}	 
+	
+	/* 
+	 * MOSTAR MP DE ALMACEN01 
+	  */
+	  public function ajaxSelectTipoProdMP(){
+
+		$valor = $this->tipoAlmacen01;
+
+		$respuesta = ControladorMateriaPrima::ctrMostrarAlmacen01($valor);
+
+		echo json_encode($respuesta);
+
+	}	
+
+	/*=============================================
+	GUARDAR CAMBIOS DE DETALLE MP PRODUCCION
+	=============================================*/	
+	public $detalleMP;
+	public function ajaxEditarDetalleMP(){
+        $valor = $this->detalleMP;
+        $datos = json_decode($valor);
+        foreach ($datos->{"datosdetalleMP"} as  $value) {
+          $codigo = $value->{"codigo"};
+          $tipo = $value->{"tipo"};
+          $documento = $value->{"documento"};
+          $cantidad = $value->{"cantidad"};
+          $cantidadAnt = $value->{"cantidadAnt"};
+		  date_default_timezone_set('America/Lima');
+			$fecha = new DateTime();
+			$PcMod= gethostbyaddr($_SERVER['REMOTE_ADDR']);
+
+
+			$datos = array(	"cantidad"	=>	$cantidad,
+							"documento"	=>	$documento,
+							"tipo"		=>	$tipo,
+							"codigo"	=>	$codigo,
+							"usumod"	=>	$_SESSION["nombre"],
+							"fecmod"	=>	$fecha->format("Y-m-d H:i:s"),
+							"pcmod"		=>	$PcMod);
+			
+			$respuesta = ModeloMateriaPrima::mdlEditarDetalleMP($datos);
+			
+			if($tipo == 'PCOP'){
+				$infoMateria=ControladorMateriaPrima::ctrSelectAlmacen01($codigo);
+				//AUMENTO DE CUADRO CON CANTIDAD ANTIGUA
+				$sumaStock = ModeloMateriaPrima::mdlActualizarStockMP($infoMateria["cuadro"],$cantidadAnt);
+				
+				//DESCUENTO DE CUADRO CON CANTIDAD nueva
+				$restaStock = ModeloMateriaPrima::mdlDescontarStockMP($infoMateria["cuadro"],$cantidad);
+				
+
+				//DESCUENTO DE COPA CON CANTIDAD ANTIGUA
+				$restaStock = ModeloMateriaPrima::mdlDescontarStockMP($codigo,$cantidadAnt);
+				//AUMENTO DE COPA CON CANTIDAD NUEVA
+				$sumaStock = ModeloMateriaPrima::mdlActualizarStockMP($codigo,$cantidad);
+				
+				$infoDetalle = ModeloMaestras::mdlMostrarProdDetalle2($infoMateria["cuadro"],$documento,$tipo);
+				$nuevaCantidad =($infoDetalle["cantidad"] - $cantidadAnt)+$cantidad;
+
+				$datosCuadro = array(	"cantidad"	=>	$nuevaCantidad,
+										"documento"	=>	$documento,
+										"tipo"		=>	$tipo,
+										"codigo"	=>	$infoMateria["cuadro"],
+										"usumod"	=>	$_SESSION["nombre"],
+										"fecmod"	=>	$fecha->format("Y-m-d H:i:s"),
+										"pcmod"		=>	$PcMod);
+				
+			
+				$respuesta2 = ModeloMateriaPrima::mdlEditarDetalleMP($datosCuadro);
+				
+			}else{
+				//AUMENTO DE CUADRO CON CANTIDAD ANTIGUA
+				$sumaStock = ModeloMateriaPrima::mdlActualizarStockMP($codigo,$cantidadAnt);
+				//DESCUENTO DE CUADRO CON CANTIDAD NUEVA
+				$restaStock = ModeloMateriaPrima::mdlDescontarStockMP($codigo,$cantidad);
+			}
+
+		}
+
+			echo $respuesta;
+    
+      }
+
+	/*=============================================
+	OCULTAR Y CAMBIAR DE ESTADO DE DETALLE MP PRODUCCION
+	=============================================*/	
+	public $eliminarDoc;
+	public $eliminarTipo;
+	public $eliminarCod;
+	public function ajaxEliminarDetalleMP(){
+        $valor1 = $this->eliminarDoc;
+		$valor2 = $this->eliminarTipo;
+		$valor3 = $this->eliminarCod;
+		date_default_timezone_set('America/Lima');
+		$fecha = new DateTime();
+		$PcMod= gethostbyaddr($_SERVER['REMOTE_ADDR']);
+
+
+		$datos = array("documento"	=>	$valor1,
+						"tipo"		=>	$valor2,
+						"codigo"	=>	$valor3,
+						"estado"    =>  '0',
+						"visible"   =>  '0',
+						"usumod"	=>	$_SESSION["nombre"],
+						"fecmod"	=>	$fecha->format("Y-m-d H:i:s"),
+						"pcmod"		=>	$PcMod);
+		//ACTUALIZAMOS EL ESTADO DEL DETALLE Y LO OCULTAMOS CON 0
+		$respuesta = ModeloMateriaPrima::mdlAnularDetalleMP($datos);
+		
+		if($valor2 == 'PCOP'){
+			//TRAEMOS LA INFORMACION DE LA COPA
+			$infoMateria=ControladorMateriaPrima::ctrSelectAlmacen01($valor3);
+
+			//TRAEMOS EL DETALLE DE LA COPA
+			$infoDetalle = ModeloMaestras::mdlMostrarProdDetalle2($valor3,$valor1,$valor2);
+			
+			//DESCUENTO DE CUADRO CON CANTIDAD 
+			$restaStock = ModeloMateriaPrima::mdlActualizarStockMP($infoMateria["cuadro"],$infoDetalle["cantidad"]);
+			
+
+			//DESCUENTO DE COPA CON CANTIDAD 
+			$restaStock = ModeloMateriaPrima::mdlDescontarStockMP($valor3,$infoDetalle["cantidad"]);
+			
+			//TRAEMOS EL DETALLE DEL CUADRO DE LA COPA
+			$infoDetalle2 = ModeloMaestras::mdlMostrarProdDetalle2($infoMateria["cuadro"],$valor1,$valor2);
+
+			//NUEVA CANTIDAD DEL DETALLE CON LA RESTA DE LA COPA
+			$nuevaCantidad =$infoDetalle2["cantidad"]-$infoDetalle["cantidad"];
+
+			$datosCuadro = array(	"cantidad"	=>	$nuevaCantidad,
+									"documento"	=>	$valor1,
+									"tipo"		=>	$valor2,
+									"codigo"	=>	$infoMateria["cuadro"],
+									"usumod"	=>	$_SESSION["nombre"],
+									"fecmod"	=>	$fecha->format("Y-m-d H:i:s"),
+									"pcmod"		=>	$PcMod);
+			
+		
+			//ACTUALIZAMOS DATOS DEL DETALLE DEL CUADRO
+			$respuesta2 = ModeloMateriaPrima::mdlEditarDetalleMP($datosCuadro);
+			
+		}else{
+			//TRAEMOS EL DETALLE DEL CUADRO
+			$infoDetalle = ModeloMaestras::mdlMostrarProdDetalle2($valor3,$valor1,$valor2);
+			//DESCUENTO DE CUADRO CON CANTIDAD 
+			$restaStock = ModeloMateriaPrima::mdlDescontarStockMP($valor3,$infoDetalle["cantidad"]);
+		}
+
+
+		echo $respuesta;
+
+	}
+
+	/*=============================================
+	GUARDAR NUEVO DETALLE MP PRODUCCION
+	=============================================*/	
+	public $prodMP;
+	public function ajaxAgregarDetalleMP(){
+        $valor = $this->prodMP;
+        $datos = json_decode($valor);
+        foreach ($datos->{"datosProdMP"} as  $value) {
+			$codigo = $value->{"codigo"};
+			$tipo = $value->{"tipo"};
+			$documento = $value->{"documento"};
+			$cantidad = $value->{"cantidad"};
+			$cuadro = $value->{"cuadro"};
+			date_default_timezone_set('America/Lima');
+			$fecha = new DateTime();
+			$PcReg= gethostbyaddr($_SERVER['REMOTE_ADDR']);
+
+
+			
+			
+			if($tipo == 'PCOP'){
+				//AUMENTO DE COPA
+				$respuestaStock = ModeloMateriaPrima::mdlActualizarStockMP($codigo,$cantidad);
+				//DESCUENTO DE CUADRO
+				$respuestaStock2 = ModeloMateriaPrima::mdlDescontarStockMP($cuadro,$cantidad);
+				
+				$infoDetalle = ModeloMaestras::mdlMostrarProdDetalle2($cuadro,$documento,$tipo);
+				// var_dump($infoDetalle);
+				 if($infoDetalle){
+					
+					$nuevaCantidad = $infoDetalle["cantidad"] + $cantidad;
+					$datosCuadro = array(	"cantidad"	=>	$nuevaCantidad,
+											"documento"	=>	$documento,
+											"tipo"		=>	$tipo,
+											"codigo"	=>	$cuadro,
+											"usumod"	=>	$_SESSION["nombre"],
+											"fecmod"	=>	$fecha->format("Y-m-d H:i:s"),
+											"pcmod"		=>	$PcReg);
+					
+			
+					$respuestaCuadro = ModeloMateriaPrima::mdlEditarDetalleMP($datosCuadro);
+
+				 }else{
+					
+				//GUARDAR DETALLE DE CUADRO
+					$datosCuadro = array(	"tipo" 		=> $tipo,
+											"documento"	=> $documento,
+											"codigo"	=> $cuadro,
+											"valor1"	=> $cantidad, 
+											"valor2"	=> '0',
+											"valor3"	=> '0',
+											"valor4"	=> '0',
+											"valor5"	=> '0',
+											"fecreg"	=> $fecha->format("Y-m-d H:i:s"),
+											"usureg"	=> $_SESSION["nombre"],
+											"pcreg" 	=> $PcReg,
+											"condicion"	=> '-');
+
+					$respuestaCuadro = ModeloMateriaPrima::mdlGuardarProduccionDet($datosCuadro);
+				}
+				
+			
+				
+			}else{
+				//AUMENTO DE CUADRO CON CANTIDAD ANTIGUA
+				$sumaStock = ModeloMateriaPrima::mdlActualizarStockMP($codigo,$cantidad);
+				
+			}
+
+
+			$datos = array(	"tipo" 		=> $tipo,
+							"documento"	=> $documento,
+							"codigo"	=> $codigo,
+							"valor1"	=> $cantidad, 
+							"valor2"	=> '0',
+							"valor3"	=> '0',
+							"valor4"	=> '0',
+							"valor5"	=> '0',
+							"fecreg"	=> $fecha->format("Y-m-d H:i:s"),
+							"usureg"	=> $_SESSION["nombre"],
+							"pcreg" 	=> $PcReg,
+							"condicion"	=> '+');
+			
+			$respuesta = ModeloMateriaPrima::mdlGuardarProduccionDet($datos);
+
+		}
+
+			echo $respuesta;
+    
+      }
 }
 
 
@@ -557,4 +814,61 @@ if(isset($_POST["idMateriaCompra"])){
 	$agregarMateriaCompra -> CodRuc = $_POST["CodRuc"];
 	$agregarMateriaCompra -> ajaxAgregarMateriaCompra();
   
+}
+
+/*=============================================
+GUARDAR CAMBIOS DE DETALLE MP PRODUCCION
+=============================================*/	
+if(isset($_POST["jsonDetalleMP"])){
+	
+	$editarMP = new AjaxMateriaPrima();
+	$editarMP -> detalleMP = $_POST["jsonDetalleMP"];
+	$editarMP -> ajaxEditarDetalleMP();
+}
+
+/* 
+* OCULTAR DETALLE MP Y CAMBIAR ESTADO
+*/
+
+if(isset($_POST["eliminarDoc"])){
+
+	$eliminarDetalleMP = new AjaxMateriaPrima();
+	$eliminarDetalleMP -> eliminarDoc = $_POST["eliminarDoc"];
+	$eliminarDetalleMP -> eliminarTipo = $_POST["eliminarTipo"];
+	$eliminarDetalleMP -> eliminarCod = $_POST["eliminarCod"];
+	$eliminarDetalleMP -> ajaxEliminarDetalleMP();
+  
+}
+
+/* 
+* QUITAR LA COPA AL CUADRO
+*/
+
+if(isset($_POST["selectTipo"])){
+
+	$agregarCuadro = new AjaxMateriaPrima();
+	$agregarCuadro -> selectTipo = $_POST["selectTipo"];
+	$agregarCuadro -> selectDocumento = $_POST["selectDocumento"];
+	$agregarCuadro -> ajaxSelectMateriaTipo();
+  
+}
+
+/*=============================================
+GUARDAR NUEVO DETALLE MP PRODUCCION
+=============================================*/	
+if(isset($_POST["jsonProdMP"])){
+	
+	$agregarMP = new AjaxMateriaPrima();
+	$agregarMP -> prodMP = $_POST["jsonProdMP"];
+	$agregarMP -> ajaxAgregarDetalleMP();
+}
+
+/*=============================================
+SELECT PARA MOSTRAR ALMACEN SEGUN SU TIPO
+=============================================*/	
+if(isset($_POST["tipoAlmacen01"])){
+	
+	$selectTipoProdMP = new AjaxMateriaPrima();
+	$selectTipoProdMP -> tipoAlmacen01 = $_POST["tipoAlmacen01"];
+	$selectTipoProdMP -> ajaxSelectTipoProdMP();
 }

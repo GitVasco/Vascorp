@@ -323,6 +323,147 @@ MODAL QUITAR COPAS A CUADROS
   
   </div>  
 
+<!--=====================================
+MODAL EDITAR COPA CAMPO CUADRO
+======================================-->
+
+<div id="modalEditarCopaCuadro" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form role="form" method="post" id="formularioEditarCopaCuadro">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Editar Copa</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+            <div class="box-body">
+
+                <div class="form-group" >
+
+                    <!-- ENTRADA PARA LA DESCRIPCION CORTA-->
+                    <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">Codigo</label>
+                    
+                    <div class="col-lg-2">
+
+                        <input type="text" class="form-control input-md"  name="editarCodigo"  id ="editarCodigo" readonly>
+
+                    </div>
+
+                    
+                    
+
+                    <!-- ENTRADA PARA LA DESCRIPCION CORTA-->
+                    <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">Descripcion</label>
+                    
+                    <div class="col-lg-6">
+
+                        <input type="text" class="form-control input-md"  name="editarDescripcion"  id ="editarDescripcion" readonly>
+
+                    </div>
+
+                </div>  
+
+                <div class="form-group" style="padding-top:25px">
+
+                    
+
+                    <!-- ENTRADA PARA LA DESCRIPCION CORTA-->
+                    <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">Unidad</label>
+                    
+                    <div class="col-lg-2">
+
+                        <input type="text" class="form-control input-md"  name="editarUnidad"  id ="editarUnidad" readonly>
+
+                    </div>
+
+                    <!-- ENTRADA PARA LA DESCRIPCION CORTA-->
+                    <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">Talla</label>
+                    
+                    <div class="col-lg-2">
+
+                        <input type="text" class="form-control input-md"  name="editarTalla"  id ="editarTalla" readonly>
+
+                    </div>
+
+                    <!-- ENTRADA PARA LA DESCRIPCION CORTA-->
+                    <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">Color</label>
+                    
+                    <div class="col-lg-4">
+
+                        <input type="text" class="form-control input-md"  name="editarColor"  id ="editarColor" readonly>
+
+                    </div>
+
+                    
+
+                    
+
+                </div>  
+
+                <div class="form-group" style="padding-top:25px">
+
+
+                    <!-- ENTRADA PARA LA DESCRIPCION CORTA-->
+                    <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">Cuadro</label>
+                    
+                    <div class="col-lg-10">
+                        <select  class="form-control selectpicker"  name="editarCuadroMP"  id ="editarCuadroMP" data-live-search="true" >
+
+                        </select>
+
+                    </div>
+
+                </div>  
+
+
+            </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Guardar</button>
+
+        </div>
+
+      </form>
+
+      <?php
+
+      /* $editarSubLinea = new ControladorMaestras();
+      $editarSubLinea -> ctrEditarSubLinea(); */
+
+      ?>    
+
+    </div>
+
+  </div>
+
+</div>
+
 <script>
   
     window.document.title = "Almacén 01";
