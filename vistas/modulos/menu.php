@@ -1113,7 +1113,7 @@
 
                     <a href="notas-ingresos-os">
 
-                        <i class="fa fa-file-o text-gray"></i>
+                        <i class="fa fa-file-o text-red"></i>
                         <span> Ingresos x OS</span>
 
                     </a>
@@ -1135,7 +1135,7 @@
 
                     <a href="notas-ingresos">
 
-                        <i class="fa fa-file-o text-green"></i>
+                        <i class="fa fa-file-o text-yellow"></i>
                         <span> Ingresos x OC</span>
 
                     </a>
@@ -1238,9 +1238,40 @@
                 </a>
 
                 <ul class="treeview-menu">
+                    <li class="<?php if($_GET["ruta"] == "clientes") echo 'active';?>">
 
-                    <li class="treeview <?php if(   $_GET["ruta"] == "pedidoscv" || 
-                                                    $_GET["ruta"] == "guias-remision" || 
+                            <a href="clientes">
+
+                                <i class="fa fa-users"></i>
+                                <span>Clientes</span>
+
+                            </a>
+
+                    </li>
+
+                    <li class="<?php if($_GET["ruta"] == "pedidoscv") echo 'active';?>">
+
+                        <a href="pedidoscv">
+
+                            <i class="fa fa-paper-plane"></i>
+                            <span>Pedidos</span>
+
+                        </a>
+
+                    </li>
+
+                    <li class="<?php if($_GET["ruta"] == "reportes-ventas") echo 'active';?>">
+
+                        <a href="reportes-ventas">
+
+                            <i class="fa fa-file-text"></i>
+                            <span>Reportes Ventas</span>
+
+                        </a>
+
+                    </li>
+
+                    <li class="treeview <?php if(   $_GET["ruta"] == "guias-remision" || 
                                                     $_GET["ruta"] == "crear-pedidoscv" || 
                                                     $_GET["ruta"] == "pedidos-generados"  || 
                                                     $_GET["ruta"] == "pedidos-aprobados"  || 
@@ -1263,27 +1294,9 @@
 
                         <ul class="treeview-menu">
 
-                        <li class="<?php if($_GET["ruta"] == "clientes") echo 'active';?>">
+                        
 
-                            <a href="clientes">
-
-                                <i class="fa fa-users"></i>
-                                <span>Clientes</span>
-
-                            </a>
-
-                        </li>
-
-                    <li class="<?php if($_GET["ruta"] == "pedidoscv") echo 'active';?>">
-
-                        <a href="pedidoscv">
-
-                            <i class="fa fa-circle-o text-red"></i>
-                            <span>Pedidos</span>
-
-                        </a>
-
-                    </li>
+                    
 
                     <li class="<?php if($_GET["ruta"] == "guias-remision") echo 'active';?>">
 

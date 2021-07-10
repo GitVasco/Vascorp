@@ -1617,3 +1617,92 @@ $("#daterange-btnProforma").daterangepicker(
         }
     }
   });
+
+  // GENERAR REPORTE POR RADIO BUTTON DE TIPO VENTA
+  $(".box").on("change", ".radioTipoV", function () {
+    var optipo = $(this).val();
+    $(".btnGenerarReporteVenta").attr("optipo",optipo);
+  
+  })
+
+  //GENERAR REPORTE POR RADIO BUTTON DE DOCUMENTO DE VENTA
+  $(".box").on("change", ".radioDocumento", function () {
+    var opdocumento = $(this).val();
+    $(".btnGenerarReporteVenta").attr("opdocumento",opdocumento);
+  
+  })
+
+  //GENERAR REPORTE POR RADIO BUTTON DE IMPUESTO VENTA
+  $(".box").on("change", ".radioImpuesto", function () {
+    if(this.checked == false){
+		$(".btnGenerarReporteVenta").attr("impuesto",'0');
+	}else{
+		$(".btnGenerarReporteVenta").attr("impuesto",'1');
+	}
+    
+  })
+
+  //GENERAR REPORTE POR SELECT DE VENDEDOR VENTA
+  $(".box").on("change", "#tipoVendedorReporteVenta", function () {
+    var vend = $(this).val();
+    $(".btnGenerarReporteVenta").attr("vend",vend);
+  
+  })
+
+  //GENERAR REPORTE POR FECHA DE INICIO DE VENTA
+  $(".box").on("change", "#fechaVentaInicio", function () {
+    var inicio = $(this).val();
+    $(".btnGenerarReporteVenta").attr("inicio",inicio);
+  
+  })
+  
+  //GENERAR REPORTE POR FECHA FINAL DE VENTA
+  $(".box").on("change", "#fechaVentaFin", function () {
+    var fin = $(this).val();
+    $(".btnGenerarReporteVenta").attr("fin",fin);
+  
+  })
+
+  //GENERAR REPORTE POR RADIO BUTTON DE IMPRESION DE VENTA
+  $(".box").on("change", ".radioImpresionV", function () {
+    var impresion = $(this).val();
+    $(".btnGenerarReporteVenta").attr("impresion",impresion);
+  
+  })
+
+
+  $(".btnGenerarReporteVenta").click(function(){ 
+    var optipo = $(this).attr("orden1");
+    var opdocumento = $(this).attr("orden2");
+    var impuesto = $(this).attr("canc");
+    var vend = $(this).attr("vend");
+    var inicio = $(this).attr("inicio");
+    var fin = $(this).attr("fin");
+    var impresion = $(this).attr("impresion");
+    if(impresion == "pantalla"){
+
+       if(optipo == "resumen"){
+
+        // window.open("extensiones/tcpdf/pdf/reporte_pago_cuentas.php?optipo="+optipo+"&opdocumento="+opdocumento+"&impuesto="+impuesto+"&vend="+vend+"&inicio="+inicio+"&fin="+fin,"_blank");
+
+       }else if (optipo == "detallado"){
+
+
+       
+        }else if(optipo == "postalResumen"){
+        
+
+
+       }else if(optipo == "postalDetalle"){
+
+
+
+       }
+     
+    }else{
+
+     alert("hola");
+
+    }
+     
+   })

@@ -4,7 +4,7 @@
 
         <h1>
 
-            Notas de Ingreso
+            Notas de Ingreso por Orden de Compra
 
         </h1>
 
@@ -12,7 +12,7 @@
 
             <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-            <li class="active">Notas de Ingreso</li>
+            <li class="active">Notas de Ingreso por OC</li>
 
         </ol>
 

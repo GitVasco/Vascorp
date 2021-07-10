@@ -391,3 +391,43 @@ $(".tablaAlmacen01").on("click","button.btnEditarCopaCuadro",function(){
         }
     });
 })
+
+
+$('#formularioEditarCopaCuadro').submit(function(e){                         
+    e.preventDefault(); 
+    //datos de materia prima
+	var codigo = $("#editarCodigo").val();
+    var cuadro = $("#editarCuadroMP").val();
+
+	var datos = new Array();
+	
+	
+	datos.push({
+		'codigo':codigo,
+        'cuadro':cuadro
+	});
+    // console.log(datos);
+	var materiaprima = {"datosEditarCopa" : datos}
+	
+	var jsonEditarCopa= {"jsonEditarCopa":JSON.stringify(materiaprima)};
+	
+	$.ajax({
+		url:"ajax/materiaprima.ajax.php",
+		method: "POST",
+		data: jsonEditarCopa,
+		cache: false,
+		success:function(respuesta){
+			// console.log(respuesta);
+			if(respuesta== "ok"){
+                //reiniciamos por ajax la tabla cabecera
+                $(".tablaAlmacen01").DataTable().ajax.reload(null,false);
+
+				$("#modalEditarCopaCuadro").modal('hide');
+				Command:toastr["success"]("Se edito la copa exitosamente!");
+			}
+			
+		}
+
+	})
+
+});

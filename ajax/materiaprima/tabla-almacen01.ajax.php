@@ -48,7 +48,7 @@ class TablaMateriaPrima{
                 "'.$materiaprima[$i]["talla"].'",
                 "'.$materiaprima[$i]["unidad"].'",                
                 "'.$materiaprima[$i]["stock"].'",
-                "'.$materiaprima[$i]["cuadro_nom"].'",
+                "'.$materiaprima[$i]["cuadro"]." - ".$materiaprima[$i]["cuadro_nom"].'",
                 "'.$materiaprima[$i]["usureg"].'",
                 "'.$botones.'"
                 ],';        

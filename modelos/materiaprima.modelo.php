@@ -1940,5 +1940,35 @@ class ModeloMateriaPrima{
 
     } 	
 
+	/*=============================================
+	EDITAR COPA MP
+	=============================================*/
+
+	static public function mdlEditarCopaMP($datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE producto SET cuadro=:cuadro,UsuMod=:UsuMod,FecMod=:FecMod,PcMod=:PcMod WHERE CodPro = :codigo " );
+
+        $stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
+		$stmt->bindParam(":cuadro", $datos["cuadro"], PDO::PARAM_STR);
+        $stmt->bindParam(":FecMod", $datos["FecMod"], PDO::PARAM_STR);
+        $stmt->bindParam(":PcMod", $datos["PcMod"], PDO::PARAM_STR);
+        $stmt->bindParam(":UsuMod", $datos["UsuMod"], PDO::PARAM_STR);
+
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	} 
+
 
 }

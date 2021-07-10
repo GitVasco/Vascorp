@@ -636,6 +636,36 @@ class AjaxMateriaPrima{
 			echo $respuesta;
     
       }
+
+
+	/*=============================================
+	EDITAR COPA DE MP
+	=============================================*/	
+	public $editarCopaMP;
+	public function ajaxEditarCopaMP(){
+        $valor = $this->editarCopaMP;
+        $datos = json_decode($valor);
+        foreach ($datos->{"datosEditarCopa"} as  $value) {
+          $codigo = $value->{"codigo"};
+          $cuadro = $value->{"cuadro"};
+		  date_default_timezone_set('America/Lima');
+		  $fecha = new DateTime();
+		  $PcMod= gethostbyaddr($_SERVER['REMOTE_ADDR']);
+
+		  $datos = array("codigo"=>$codigo,
+						  "cuadro"=>$cuadro,
+						  "FecMod"=>$fecha->format("Y-m-d H:i:s"),
+						  "PcMod"=>$PcMod,
+						  "UsuMod"=>$_SESSION["nombre"]);
+
+			$respuesta = ModeloMateriaPrima::mdlEditarCopaMP($datos);
+
+        }
+        
+    
+        echo $respuesta;
+    
+      }
 }
 
 
@@ -871,4 +901,14 @@ if(isset($_POST["tipoAlmacen01"])){
 	$selectTipoProdMP = new AjaxMateriaPrima();
 	$selectTipoProdMP -> tipoAlmacen01 = $_POST["tipoAlmacen01"];
 	$selectTipoProdMP -> ajaxSelectTipoProdMP();
+}
+
+/*=============================================
+EDITAR COPA PARA EL CAMPO CUADRO
+=============================================*/	
+if(isset($_POST["jsonEditarCopa"])){
+	
+	$editarCopaMP = new AjaxMateriaPrima();
+	$editarCopaMP -> editarCopaMP = $_POST["jsonEditarCopa"];
+	$editarCopaMP -> ajaxEditarCopaMP();
 }
