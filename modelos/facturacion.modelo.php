@@ -1831,4 +1831,4776 @@ class ModeloFacturacion{
 		$stmt=null;
 
     }
+
+    static public function mdlMostrarVentaResumen($optipo,$opdocumento,$impuesto,$vend,$inicio,$fin){
+
+      if($optipo == 'resumen' && $opdocumento == 'todos' && $impuesto == '1' && $vend =='todos' && $inicio == 'todos' && $fin == 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        ve.descripcion,
+        SUM(total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW()) 
+      GROUP BY v.vendedor");
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+  
+      }else if($optipo == 'resumen' && $opdocumento == 'todos' && $impuesto == '0' && $vend == 'todos' && $inicio == 'todos' && $fin == 'todos'){
+  
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        ve.descripcion,
+        ROUND(SUM(total)/1.18,2) AS total
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW()) 
+      GROUP BY v.vendedor");
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+  
+      }else if ($optipo == 'resumen' && $opdocumento == 'todos' && $impuesto == '0' && $vend == 'todos' && $inicio != 'todos' && $fin != 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+          v.vendedor,
+          ve.descripcion,
+          ROUND(SUM(total) / 1.18, 2) AS total 
+        FROM
+          ventajf v 
+          LEFT JOIN 
+            (SELECT 
+              codigo,
+              descripcion 
+            FROM
+              maestrajf 
+            WHERE tipo_dato = 'TVEND') AS ve 
+            ON v.vendedor = ve.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+          AND :fin 
+        GROUP BY v.vendedor");
+
+        $stmt -> bindParam(":inicio",$inicio, PDO::PARAM_STR);
+        $stmt -> bindParam(":fin",$fin, PDO::PARAM_STR);
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+  
+      }else if ($optipo == 'resumen' && $opdocumento == 'todos' && $impuesto == '1' && $vend == 'todos' && $inicio !='todos' && $fin != 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+          v.vendedor,
+          ve.descripcion,
+          SUM(total) AS total 
+        FROM
+          ventajf v 
+          LEFT JOIN 
+            (SELECT 
+              codigo,
+              descripcion 
+            FROM
+              maestrajf 
+            WHERE tipo_dato = 'TVEND') AS ve 
+            ON v.vendedor = ve.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+          AND :fin
+        GROUP BY v.vendedor");
+
+        $stmt -> bindParam(":inicio" ,$inicio , PDO::PARAM_STR);
+        $stmt -> bindParam(":fin" , $fin, PDO::PARAM_STR);
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+
+      }else if ($optipo == 'resumen' && $opdocumento == 'todos' && $impuesto == '0' && $vend != 'todos' && $inicio != 'todos' && $fin != 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+          v.vendedor,
+          ve.descripcion,
+          ROUND(SUM(total) / 1.18, 2) AS total 
+        FROM
+          ventajf v 
+          LEFT JOIN 
+            (SELECT 
+              codigo,
+              descripcion 
+            FROM
+              maestrajf 
+            WHERE tipo_dato = 'TVEND') AS ve 
+            ON v.vendedor = ve.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+          AND :fin
+          AND v.vendedor = :vendedor
+        GROUP BY v.vendedor");
+
+        $stmt -> bindParam(":inicio",$inicio,PDO::PARAM_STR);
+        $stmt -> bindParam(":fin",$fin,PDO::PARAM_STR);
+        $stmt -> bindParam(":vendedor",$vend,PDO::PARAM_STR);
+
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+
+      }else if ($optipo == 'resumen' && $opdocumento == 'todos' && $impuesto == '1' && $vend != 'todos' && $inicio != 'todos' && $fin != 'todos' ){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+          v.vendedor,
+          ve.descripcion,
+          SUM(total) AS total 
+        FROM
+          ventajf v 
+          LEFT JOIN 
+            (SELECT 
+              codigo,
+              descripcion 
+            FROM
+              maestrajf 
+            WHERE tipo_dato = 'TVEND') AS ve 
+            ON v.vendedor = ve.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+          AND :fin
+          AND v.vendedor = :vendedor
+        GROUP BY v.vendedor");
+        
+        $stmt->bindParam(":inicio",$inicio,PDO::PARAM_STR);
+        $stmt->bindParam(":fin",$fin,PDO::PARAM_STR);
+        $stmt->bindParam(":vendedor",$vend,PDO::PARAM_STR);
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+        
+      }else if ($optipo == 'resumen' && $opdocumento == 'todos' && $impuesto == '1' && $vend != 'todos' && $inicio=='todos' && $fin == 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+          v.vendedor,
+          ve.descripcion,
+          SUM(total) AS total 
+        FROM
+          ventajf v 
+          LEFT JOIN 
+            (SELECT 
+              codigo,
+              descripcion 
+            FROM
+              maestrajf 
+            WHERE tipo_dato = 'TVEND') AS ve 
+            ON v.vendedor = ve.codigo 
+        WHERE v.vendedor = :vendedor
+        AND YEAR(v.fecha) = YEAR(NOW()) 
+        GROUP BY v.vendedor");
+
+        $stmt->bindParam(":vendedor",$vend,PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+
+      } else if($optipo == 'resumen' && $opdocumento == 'todos' && $impuesto == '0' && $vend != 'todos' && $inicio == 'todos' && $fin == 'todos'){
+
+        $stmt = Conexion::conectar()->prepare("SELECT 
+          v.vendedor,
+          ve.descripcion,
+          ROUND(SUM(total) / 1.18, 2) AS total 
+        FROM
+          ventajf v 
+          LEFT JOIN 
+            (SELECT 
+              codigo,
+              descripcion 
+            FROM
+              maestrajf 
+            WHERE tipo_dato = 'TVEND') AS ve 
+            ON v.vendedor = ve.codigo 
+        WHERE v.vendedor = :vendedor
+        AND YEAR(v.fecha) = YEAR(NOW()) 
+        GROUP BY v.vendedor");
+
+        $stmt->bindParam(":vendedor",$vend,PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+      }
+  
+      $stmt -> close();
+  
+      $stmt = null;
+  
+  
+      }
+
+    static public function mdlMostrarTipoVentaResumen($optipo,$opdocumento,$impuesto,$vend,$inicio,$fin){
+
+      if($optipo == 'resumen' && $opdocumento != 'todos' && $impuesto == '1' && $vend =='todos' && $inicio == 'todos' && $fin == 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+          v.vendedor,
+          ve.descripcion,
+          SUM(total) AS total 
+        FROM
+          ventajf v 
+          LEFT JOIN 
+            (SELECT 
+              codigo,
+              descripcion 
+            FROM
+              maestrajf 
+            WHERE tipo_dato = 'TVEND') AS ve 
+            ON v.vendedor = ve.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+        AND v.tipo = :documento
+        GROUP BY v.vendedor");
+
+        $stmt->bindParam(":documento",$opdocumento,PDO::PARAM_STR);
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+  
+      }else if($optipo == 'resumen' && $opdocumento != 'todos' && $impuesto == '0' && $vend == 'todos' && $inicio == 'todos' && $fin == 'todos'){
+  
+        $stmt = Conexion::conectar()->prepare("SELECT 
+          v.vendedor,
+          ve.descripcion,
+          ROUND(SUM(total)/1.18,2) AS total
+        FROM
+          ventajf v 
+          LEFT JOIN 
+            (SELECT 
+              codigo,
+              descripcion 
+            FROM
+              maestrajf 
+            WHERE tipo_dato = 'TVEND') AS ve 
+            ON v.vendedor = ve.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+        AND v.tipo = :documento
+        GROUP BY v.vendedor");
+
+        $stmt->bindParam(":documento",$opdocumento,PDO::PARAM_STR);
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+  
+      }else if ($optipo == 'resumen' && $opdocumento != 'todos' && $impuesto == '0' && $vend == 'todos' && $inicio != 'todos' && $fin != 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+          v.vendedor,
+          ve.descripcion,
+          ROUND(SUM(total) / 1.18, 2) AS total 
+        FROM
+          ventajf v 
+          LEFT JOIN 
+            (SELECT 
+              codigo,
+              descripcion 
+            FROM
+              maestrajf 
+            WHERE tipo_dato = 'TVEND') AS ve 
+            ON v.vendedor = ve.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+          AND :fin 
+        AND v.tipo = :documento
+        GROUP BY v.vendedor");
+
+        $stmt -> bindParam(":inicio",$inicio, PDO::PARAM_STR);
+        $stmt -> bindParam(":fin",$fin, PDO::PARAM_STR);
+        $stmt -> bindParam(":documento",$opdocumento,PDO::PARAM_STR);
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+  
+      }else if ($optipo == 'resumen' && $opdocumento != 'todos' && $impuesto == '1' && $vend == 'todos' && $inicio !='todos' && $fin != 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+          v.vendedor,
+          ve.descripcion,
+          SUM(total) AS total 
+        FROM
+          ventajf v 
+          LEFT JOIN 
+            (SELECT 
+              codigo,
+              descripcion 
+            FROM
+              maestrajf 
+            WHERE tipo_dato = 'TVEND') AS ve 
+            ON v.vendedor = ve.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+          AND :fin
+        AND v.tipo = :documento
+        GROUP BY v.vendedor");
+
+        $stmt -> bindParam(":inicio" ,$inicio , PDO::PARAM_STR);
+        $stmt -> bindParam(":fin" , $fin, PDO::PARAM_STR);
+        $stmt -> bindParam(":documento",$opdocumento,PDO::PARAM_STR);
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+
+      }else if ($optipo == 'resumen' && $opdocumento != 'todos' && $impuesto == '0' && $vend != 'todos' && $inicio != 'todos' && $fin != 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+          v.vendedor,
+          ve.descripcion,
+          ROUND(SUM(total) / 1.18, 2) AS total 
+        FROM
+          ventajf v 
+          LEFT JOIN 
+            (SELECT 
+              codigo,
+              descripcion 
+            FROM
+              maestrajf 
+            WHERE tipo_dato = 'TVEND') AS ve 
+            ON v.vendedor = ve.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+          AND :fin
+          AND v.vendedor = :vendedor
+          AND v.tipo = :documento
+        GROUP BY v.vendedor");
+
+        $stmt -> bindParam(":inicio",$inicio,PDO::PARAM_STR);
+        $stmt -> bindParam(":fin",$fin,PDO::PARAM_STR);
+        $stmt -> bindParam(":vendedor",$vend,PDO::PARAM_STR);
+        $stmt -> bindParam(":documento",$opdocumento,PDO::PARAM_STR);
+
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+
+      }else if ($optipo == 'resumen' && $opdocumento != 'todos' && $impuesto == '1' && $vend != 'todos' && $inicio != 'todos' && $fin != 'todos' ){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+          v.vendedor,
+          ve.descripcion,
+          SUM(total) AS total 
+        FROM
+          ventajf v 
+          LEFT JOIN 
+            (SELECT 
+              codigo,
+              descripcion 
+            FROM
+              maestrajf 
+            WHERE tipo_dato = 'TVEND') AS ve 
+            ON v.vendedor = ve.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+          AND :fin
+          AND v.vendedor = :vendedor
+          AND v.tipo = :documento
+        GROUP BY v.vendedor");
+        
+        $stmt->bindParam(":inicio",$inicio,PDO::PARAM_STR);
+        $stmt->bindParam(":fin",$fin,PDO::PARAM_STR);
+        $stmt->bindParam(":vendedor",$vend,PDO::PARAM_STR);
+        $stmt->bindParam(":documento",$opdocumento,PDO::PARAM_STR);
+
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+        
+      }else if ($optipo == 'resumen' && $opdocumento != 'todos' && $impuesto == '1' && $vend != 'todos' && $inicio=='todos' && $fin == 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+          v.vendedor,
+          ve.descripcion,
+          SUM(total) AS total 
+        FROM
+          ventajf v 
+          LEFT JOIN 
+            (SELECT 
+              codigo,
+              descripcion 
+            FROM
+              maestrajf 
+            WHERE tipo_dato = 'TVEND') AS ve 
+            ON v.vendedor = ve.codigo 
+        WHERE v.vendedor = :vendedor
+        AND v.tipo = :documento
+        AND YEAR(v.fecha) = YEAR(NOW()) 
+        GROUP BY v.vendedor");
+
+        $stmt->bindParam(":vendedor",$vend,PDO::PARAM_STR);
+        $stmt->bindParam(":documento",$opdocumento,PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+
+      } else if($optipo == 'resumen' && $opdocumento != 'todos' && $impuesto == '0' && $vend != 'todos' && $inicio == 'todos' && $fin == 'todos'){
+
+        $stmt = Conexion::conectar()->prepare("SELECT 
+          v.vendedor,
+          ve.descripcion,
+          ROUND(SUM(total) / 1.18, 2) AS total 
+        FROM
+          ventajf v 
+          LEFT JOIN 
+            (SELECT 
+              codigo,
+              descripcion 
+            FROM
+              maestrajf 
+            WHERE tipo_dato = 'TVEND') AS ve 
+            ON v.vendedor = ve.codigo 
+        WHERE v.vendedor = :vendedor
+        AND v.tipo = :documento
+        AND YEAR(v.fecha) = YEAR(NOW()) 
+        GROUP BY v.vendedor");
+
+        $stmt->bindParam(":vendedor",$vend,PDO::PARAM_STR);
+        $stmt->bindParam(":documento",$opdocumento,PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+      }
+  
+      $stmt -> close();
+  
+      $stmt = null;
+  
+  
+    }
+
+    static public function mdlMostrarVentaDetalle($optipo,$opdocumento,$impuesto,$vend,$inicio,$fin){
+
+      if($optipo == 'detallado' && $opdocumento == 'todos' && $impuesto == '1' && $vend =='todos' && $inicio == 'todos' && $fin == 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.fecha,
+        c.nombre,
+        v.total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+      UNION
+      SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        'subtotal' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+      GROUP BY v.tipo,
+        v.tipo_documento,
+        v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'S99' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+      GROUP BY v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'A00' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        ve.nom_ven AS nombre,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        tipo,
+        documento");
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+  
+      }else if($optipo == 'detallado' && $opdocumento == 'todos' && $impuesto == '0' && $vend == 'todos' && $inicio == 'todos' && $fin == 'todos'){
+  
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.fecha,
+        c.nombre,
+        ROUND(v.total/ 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+      UNION
+      SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        'subtotal' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+      GROUP BY v.tipo,
+        v.tipo_documento,
+        v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'S99' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+      GROUP BY v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'A00' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        ve.nom_ven AS nombre,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        tipo,
+        documento");
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+  
+      }else if ($optipo == 'detallado' && $opdocumento == 'todos' && $impuesto == '0' && $vend == 'todos' && $inicio != 'todos' && $fin != 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.fecha,
+        c.nombre,
+        ROUND(v.total/ 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin
+      UNION
+      SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        'subtotal' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin
+      GROUP BY v.tipo,
+        v.tipo_documento,
+        v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'S99' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin
+      GROUP BY v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'A00' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        ve.nom_ven AS nombre,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        tipo,
+        documento");
+
+        $stmt -> bindParam(":inicio",$inicio, PDO::PARAM_STR);
+        $stmt -> bindParam(":fin",$fin, PDO::PARAM_STR);
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+  
+      }else if ($optipo == 'detallado' && $opdocumento == 'todos' && $impuesto == '1' && $vend == 'todos' && $inicio !='todos' && $fin != 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.fecha,
+        c.nombre,
+        v.total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin 
+      UNION
+      SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        'subtotal' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin
+      GROUP BY v.tipo,
+        v.tipo_documento,
+        v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'S99' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin 
+      GROUP BY v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'A00' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        ve.nom_ven AS nombre,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        tipo,
+        documento");
+
+        $stmt -> bindParam(":inicio" ,$inicio , PDO::PARAM_STR);
+        $stmt -> bindParam(":fin" , $fin, PDO::PARAM_STR);
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+
+      }else if ($optipo == 'detallado' && $opdocumento == 'todos' && $impuesto == '0' && $vend != 'todos' && $inicio != 'todos' && $fin != 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.fecha,
+        c.nombre,
+        ROUND(v.total/ 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin
+        AND v.vendedor = :vendedor
+      UNION
+      SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        'subtotal' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin
+        AND v.vendedor = :vendedor
+      GROUP BY v.tipo,
+        v.tipo_documento,
+        v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'S99' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin
+        AND v.vendedor = :vendedor
+      GROUP BY v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'A00' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        ve.nom_ven AS nombre,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin
+        AND v.vendedor = :vendedor
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        tipo,
+        documento");
+
+        $stmt -> bindParam(":inicio",$inicio,PDO::PARAM_STR);
+        $stmt -> bindParam(":fin",$fin,PDO::PARAM_STR);
+        $stmt -> bindParam(":vendedor",$vend,PDO::PARAM_STR);
+
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+
+      }else if ($optipo == 'detallado' && $opdocumento == 'todos' && $impuesto == '1' && $vend != 'todos' && $inicio != 'todos' && $fin != 'todos' ){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.fecha,
+        c.nombre,
+        v.total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin 
+        AND v.vendedor = :vendedor
+      UNION
+      SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        'subtotal' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin
+        AND v.vendedor = :vendedor
+      GROUP BY v.tipo,
+        v.tipo_documento,
+        v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'S99' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin 
+        AND v.vendedor = :vendedor
+      GROUP BY v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'A00' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        ve.nom_ven AS nombre,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin
+        AND v.vendedor = :vendedor
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        tipo,
+        documento");
+        
+        $stmt->bindParam(":inicio",$inicio,PDO::PARAM_STR);
+        $stmt->bindParam(":fin",$fin,PDO::PARAM_STR);
+        $stmt->bindParam(":vendedor",$vend,PDO::PARAM_STR);
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+        
+      }else if ($optipo == 'detallado' && $opdocumento == 'todos' && $impuesto == '1' && $vend != 'todos' && $inicio=='todos' && $fin == 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.fecha,
+        c.nombre,
+        v.total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+        AND v.vendedor=:vendedor
+      UNION
+      SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        'subtotal' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+        AND v.vendedor = :vendedor
+      GROUP BY v.tipo,
+        v.tipo_documento,
+        v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'S99' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+        AND v.vendedor  = :vendedor
+      GROUP BY v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'A00' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        ve.nom_ven AS nombre,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+        AND v.vendedor = :vendedor
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        tipo,
+        documento");
+
+        $stmt->bindParam(":vendedor",$vend,PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+
+      } else if($optipo == 'detallado' && $opdocumento == 'todos' && $impuesto == '0' && $vend != 'todos' && $inicio == 'todos' && $fin == 'todos'){
+
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.fecha,
+        c.nombre,
+        ROUND(v.total/ 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+        AND v.vendedor = :vendedor
+      UNION
+      SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        'subtotal' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+        AND v.vendedor = :vendedor
+      GROUP BY v.tipo,
+        v.tipo_documento,
+        v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'S99' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+        AND v.vendedor = :vendedor
+      GROUP BY v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'A00' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        ve.nom_ven AS nombre,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+        AND v.vendedor = :vendedor
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        tipo,
+        documento");
+
+        $stmt->bindParam(":vendedor",$vend,PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+      }
+  
+      $stmt -> close();
+  
+      $stmt = null;
+  
+  
+    }
+
+    static public function mdlMostrarTipoVentaDetalle($optipo,$opdocumento,$impuesto,$vend,$inicio,$fin){
+
+      if($optipo == 'detallado' && $opdocumento != 'todos' && $impuesto == '1' && $vend =='todos' && $inicio == 'todos' && $fin == 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.fecha,
+        c.nombre,
+        v.total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+        AND v.tipo = :documento
+      UNION
+      SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        'subtotal' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+        AND v.tipo = :documento
+      GROUP BY v.tipo,
+        v.tipo_documento,
+        v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'S99' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+        AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'A00' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        ve.nom_ven AS nombre,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+        AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        tipo,
+        documento");
+
+        $stmt->bindParam(":documento",$opdocumento,PDO::PARAM_STR);
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+  
+      }else if($optipo == 'detallado' && $opdocumento != 'todos' && $impuesto == '0' && $vend == 'todos' && $inicio == 'todos' && $fin == 'todos'){
+  
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.fecha,
+        c.nombre,
+        ROUND(v.total/ 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+        AND v.tipo = :documento
+      UNION
+      SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        'subtotal' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+        AND v.tipo = :documento
+      GROUP BY v.tipo,
+        v.tipo_documento,
+        v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'S99' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+        AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'A00' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        ve.nom_ven AS nombre,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+        AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        tipo,
+        documento");
+        
+        $stmt->bindParam(":documento",$opdocumento,PDO::PARAM_STR);
+
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+  
+      }else if ($optipo == 'detallado' && $opdocumento != 'todos' && $impuesto == '0' && $vend == 'todos' && $inicio != 'todos' && $fin != 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.fecha,
+        c.nombre,
+        ROUND(v.total/ 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin
+        AND v.tipo = :documento
+      UNION
+      SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        'subtotal' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin
+        AND v.tipo = :documento
+      GROUP BY v.tipo,
+        v.tipo_documento,
+        v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'S99' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin
+        AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'A00' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        ve.nom_ven AS nombre,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin
+        AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        tipo,
+        documento");
+
+        $stmt -> bindParam(":inicio",$inicio, PDO::PARAM_STR);
+        $stmt -> bindParam(":fin",$fin, PDO::PARAM_STR);
+        $stmt -> bindParam(":documento",$opdocumento,PDO::PARAM_STR);
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+  
+      }else if ($optipo == 'detallado' && $opdocumento != 'todos' && $impuesto == '1' && $vend == 'todos' && $inicio !='todos' && $fin != 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.fecha,
+        c.nombre,
+        v.total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin 
+        AND v.tipo = :documento
+      UNION
+      SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        'subtotal' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin
+        AND v.tipo = :documento
+      GROUP BY v.tipo,
+        v.tipo_documento,
+        v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'S99' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin 
+        AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'A00' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        ve.nom_ven AS nombre,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin
+        AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        tipo,
+        documento");
+
+        $stmt -> bindParam(":inicio" ,$inicio , PDO::PARAM_STR);
+        $stmt -> bindParam(":fin" , $fin, PDO::PARAM_STR);
+        $stmt -> bindParam(":documento",$opdocumento,PDO::PARAM_STR);
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+
+      }else if ($optipo == 'detallado' && $opdocumento != 'todos' && $impuesto == '0' && $vend != 'todos' && $inicio != 'todos' && $fin != 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.fecha,
+        c.nombre,
+        ROUND(v.total/ 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin
+        AND v.vendedor = :vendedor
+        AND v.tipo = :documento
+      UNION
+      SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        'subtotal' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin
+        AND v.vendedor = :vendedor
+        AND v.tipo = :documento
+      GROUP BY v.tipo,
+        v.tipo_documento,
+        v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'S99' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin
+        AND v.vendedor = :vendedor
+        AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'A00' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        ve.nom_ven AS nombre,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin
+        AND v.vendedor = :vendedor
+        AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        tipo,
+        documento");
+
+        $stmt -> bindParam(":inicio",$inicio,PDO::PARAM_STR);
+        $stmt -> bindParam(":fin",$fin,PDO::PARAM_STR);
+        $stmt -> bindParam(":vendedor",$vend,PDO::PARAM_STR);
+        $stmt -> bindParam(":documento",$opdocumento,PDO::PARAM_STR);
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+
+      }else if ($optipo == 'detallado' && $opdocumento != 'todos' && $impuesto == '1' && $vend != 'todos' && $inicio != 'todos' && $fin != 'todos' ){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.fecha,
+        c.nombre,
+        v.total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin 
+        AND v.vendedor = :vendedor
+        AND v.tipo = :documento
+      UNION
+      SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        'subtotal' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin
+        AND v.vendedor = :vendedor
+        AND v.tipo = :documento
+      GROUP BY v.tipo,
+        v.tipo_documento,
+        v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'S99' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin 
+        AND v.vendedor = :vendedor
+        AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'A00' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        ve.nom_ven AS nombre,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+        WHERE v.fecha BETWEEN :inicio 
+        AND :fin
+        AND v.vendedor = :vendedor
+        AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        tipo,
+        documento");
+        
+        $stmt->bindParam(":inicio",$inicio,PDO::PARAM_STR);
+        $stmt->bindParam(":fin",$fin,PDO::PARAM_STR);
+        $stmt->bindParam(":vendedor",$vend,PDO::PARAM_STR);
+        $stmt->bindParam(":documento",$opdocumento,PDO::PARAM_STR);
+
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+        
+      }else if ($optipo == 'detallado' && $opdocumento != 'todos' && $impuesto == '1' && $vend != 'todos' && $inicio=='todos' && $fin == 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.fecha,
+        c.nombre,
+        v.total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+        AND v.vendedor=:vendedor
+        AND v.tipo = :documento
+      UNION
+      SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        'subtotal' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+        AND v.vendedor = :vendedor
+        AND v.tipo = :documento
+      GROUP BY v.tipo,
+        v.tipo_documento,
+        v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'S99' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+        AND v.vendedor  = :vendedor
+        AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'A00' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        ve.nom_ven AS nombre,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+        AND v.vendedor = :vendedor
+        AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        tipo,
+        documento");
+
+        $stmt->bindParam(":vendedor",$vend,PDO::PARAM_STR);
+        $stmt->bindParam(":documento",$opdocumento, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+
+      } else if($optipo == 'detallado' && $opdocumento != 'todos' && $impuesto == '0' && $vend != 'todos' && $inicio == 'todos' && $fin == 'todos'){
+
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.fecha,
+        c.nombre,
+        ROUND(v.total/ 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+        AND v.vendedor = :vendedor
+        AND v.tipo = :documento
+      UNION
+      SELECT 
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        'subtotal' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+        AND v.vendedor = :vendedor
+        AND v.tipo = :documento
+      GROUP BY v.tipo,
+        v.tipo_documento,
+        v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'S99' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        '' AS nombre,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+        AND v.vendedor = :vendedor
+        AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      UNION
+      SELECT 
+        v.vendedor,
+        'A00' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        ve.nom_ven AS nombre,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+        AND v.vendedor = :vendedor
+        AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        tipo,
+        documento");
+
+        $stmt->bindParam(":vendedor",$vend,PDO::PARAM_STR);
+        $stmt->bindParam(":documento",$opdocumento,PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+      }
+  
+      $stmt -> close();
+  
+      $stmt = null;
+  
+  
+    }
+
+    static public function mdlMostrarVentaPostalRsm($optipo,$opdocumento,$impuesto,$vend,$inicio,$fin){
+
+      if($optipo == 'postalResumen' && $opdocumento == 'todos' && $impuesto == '1' && $vend =='todos' && $inicio == 'todos' && $fin == 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        c.ubigeo,
+        CONCAT(
+          'Cod. Postal: ',
+          RPAD(c.ubigeo, 6, ' '),
+          ' ',
+          u.departamento,
+          ' / ',
+          u.provincia,
+          ' / ',
+          u.distrito
+        ) AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      GROUP BY v.vendedor,
+        c.ubigeo 
+      UNION
+      SELECT 
+        v.vendedor,
+        '000000' AS ubigeo,
+        ve.nom_ven AS ubicacion,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      UNION
+      SELECT 
+        v.vendedor,
+        'Z' AS ubigeo,
+        '' AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        ubigeo");
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+  
+      }else if($optipo == 'postalResumen' && $opdocumento == 'todos' && $impuesto == '0' && $vend == 'todos' && $inicio == 'todos' && $fin == 'todos'){
+  
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        c.ubigeo,
+        CONCAT(
+          'Cod. Postal: ',
+          RPAD(c.ubigeo, 6, ' '),
+          ' ',
+          u.departamento,
+          ' / ',
+          u.provincia,
+          ' / ',
+          u.distrito
+        ) AS ubicacion,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      GROUP BY v.vendedor,
+        c.ubigeo 
+      UNION
+      SELECT 
+        v.vendedor,
+        '000000' AS ubigeo,
+        ve.nom_ven AS ubicacion,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      UNION
+      SELECT 
+        v.vendedor,
+        'Z' AS ubigeo,
+        '' AS ubicacion,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        ubigeo");
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+  
+      }else if ($optipo == 'postalResumen' && $opdocumento == 'todos' && $impuesto == '0' && $vend == 'todos' && $inicio != 'todos' && $fin != 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        c.ubigeo,
+        CONCAT(
+          'Cod. Postal: ',
+          RPAD(c.ubigeo, 6, ' '),
+          ' ',
+          u.departamento,
+          ' / ',
+          u.provincia,
+          ' / ',
+          u.distrito
+        ) AS ubicacion,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio  
+      AND :fin
+      GROUP BY v.vendedor,
+        c.ubigeo 
+      UNION
+      SELECT 
+        v.vendedor,
+        '000000' AS ubigeo,
+        ve.nom_ven AS ubicacion,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      UNION
+      SELECT 
+        v.vendedor,
+        'Z' AS ubigeo,
+        '' AS ubicacion,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+        AND :fin 
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        ubigeo");
+
+        $stmt -> bindParam(":inicio",$inicio, PDO::PARAM_STR);
+        $stmt -> bindParam(":fin",$fin, PDO::PARAM_STR);
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+  
+      }else if ($optipo == 'postalResumen' && $opdocumento == 'todos' && $impuesto == '1' && $vend == 'todos' && $inicio !='todos' && $fin != 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        c.ubigeo,
+        CONCAT(
+          'Cod. Postal: ',
+          RPAD(c.ubigeo, 6, ' '),
+          ' ',
+          u.departamento,
+          ' / ',
+          u.provincia,
+          ' / ',
+          u.distrito
+        ) AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      GROUP BY v.vendedor,
+        c.ubigeo 
+      UNION
+      SELECT 
+        v.vendedor,
+        '000000' AS ubigeo,
+        ve.nom_ven AS ubicacion,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE v.fecha BETWEEN :inicio
+      AND :fin
+      UNION
+      SELECT 
+        v.vendedor,
+        'Z' AS ubigeo,
+        '' AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        ubigeo");
+
+        $stmt -> bindParam(":inicio" ,$inicio , PDO::PARAM_STR);
+        $stmt -> bindParam(":fin" , $fin, PDO::PARAM_STR);
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+
+      }else if ($optipo == 'postalResumen' && $opdocumento == 'todos' && $impuesto == '0' && $vend != 'todos' && $inicio != 'todos' && $fin != 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        c.ubigeo,
+        CONCAT(
+          'Cod. Postal: ',
+          RPAD(c.ubigeo, 6, ' '),
+          ' ',
+          u.departamento,
+          ' / ',
+          u.provincia,
+          ' / ',
+          u.distrito
+        ) AS ubicacion,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio  
+      AND :fin
+      AND v.vendedor= :vendedor
+      GROUP BY v.vendedor,
+        c.ubigeo 
+      UNION
+      SELECT 
+        v.vendedor,
+        '000000' AS ubigeo,
+        ve.nom_ven AS ubicacion,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      AND v.vendedor = :vendedor
+      UNION
+      SELECT 
+        v.vendedor,
+        'Z' AS ubigeo,
+        '' AS ubicacion,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+        AND :fin 
+      AND v.vendedor = :vendedor
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        ubigeo");
+
+        $stmt -> bindParam(":inicio",$inicio,PDO::PARAM_STR);
+        $stmt -> bindParam(":fin",$fin,PDO::PARAM_STR);
+        $stmt -> bindParam(":vendedor",$vend,PDO::PARAM_STR);
+
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+
+      }else if ($optipo == 'postalResumen' && $opdocumento == 'todos' && $impuesto == '1' && $vend != 'todos' && $inicio != 'todos' && $fin != 'todos' ){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        c.ubigeo,
+        CONCAT(
+          'Cod. Postal: ',
+          RPAD(c.ubigeo, 6, ' '),
+          ' ',
+          u.departamento,
+          ' / ',
+          u.provincia,
+          ' / ',
+          u.distrito
+        ) AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      AND v.vendedor = :vendedor
+      GROUP BY v.vendedor,
+        c.ubigeo 
+      UNION
+      SELECT 
+        v.vendedor,
+        '000000' AS ubigeo,
+        ve.nom_ven AS ubicacion,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE v.fecha BETWEEN :inicio
+      AND :fin
+      AND v.vendedor = :vendedor
+      UNION
+      SELECT 
+        v.vendedor,
+        'Z' AS ubigeo,
+        '' AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      AND v.vendedor = :vendedor
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        ubigeo");
+        
+        $stmt->bindParam(":inicio",$inicio,PDO::PARAM_STR);
+        $stmt->bindParam(":fin",$fin,PDO::PARAM_STR);
+        $stmt->bindParam(":vendedor",$vend,PDO::PARAM_STR);
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+        
+      }else if ($optipo == 'postalResumen' && $opdocumento == 'todos' && $impuesto == '1' && $vend != 'todos' && $inicio=='todos' && $fin == 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        c.ubigeo,
+        CONCAT(
+          'Cod. Postal: ',
+          RPAD(c.ubigeo, 6, ' '),
+          ' ',
+          u.departamento,
+          ' / ',
+          u.provincia,
+          ' / ',
+          u.distrito
+        ) AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.vendedor = :vendedor
+      GROUP BY v.vendedor,
+        c.ubigeo 
+      UNION
+      SELECT 
+        v.vendedor,
+        '000000' AS ubigeo,
+        ve.nom_ven AS ubicacion,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.vendedor = :vendedor
+      UNION
+      SELECT 
+        v.vendedor,
+        'Z' AS ubigeo,
+        '' AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.vendedor = :vendedor
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        ubigeo");
+
+        $stmt->bindParam(":vendedor",$vend,PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+
+      } else if($optipo == 'postalResumen' && $opdocumento == 'todos' && $impuesto == '0' && $vend != 'todos' && $inicio == 'todos' && $fin == 'todos'){
+
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        c.ubigeo,
+        CONCAT(
+          'Cod. Postal: ',
+          RPAD(c.ubigeo, 6, ' '),
+          ' ',
+          u.departamento,
+          ' / ',
+          u.provincia,
+          ' / ',
+          u.distrito
+        ) AS ubicacion,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.vendedor = :vendedor
+      GROUP BY v.vendedor,
+        c.ubigeo 
+      UNION
+      SELECT 
+        v.vendedor,
+        '000000' AS ubigeo,
+        ve.nom_ven AS ubicacion,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.vendedor = :vendedor
+      UNION
+      SELECT 
+        v.vendedor,
+        'Z' AS ubigeo,
+        '' AS ubicacion,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.vendedor = :vendedor
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        ubigeo");
+
+        $stmt->bindParam(":vendedor",$vend,PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+      }
+  
+      $stmt -> close();
+  
+      $stmt = null;
+  
+  
+    }
+
+    static public function mdlMostrarTipoVentaPostalRsm($optipo,$opdocumento,$impuesto,$vend,$inicio,$fin){
+
+      if($optipo == 'postalResumen' && $opdocumento != 'todos' && $impuesto == '1' && $vend =='todos' && $inicio == 'todos' && $fin == 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        c.ubigeo,
+        CONCAT(
+          'Cod. Postal: ',
+          RPAD(c.ubigeo, 6, ' '),
+          ' ',
+          u.departamento,
+          ' / ',
+          u.provincia,
+          ' / ',
+          u.distrito
+        ) AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.tipo = :documento
+      GROUP BY v.vendedor,
+        c.ubigeo 
+      UNION
+      SELECT 
+        v.vendedor,
+        '000000' AS ubigeo,
+        ve.nom_ven AS ubicacion,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.tipo = :documento
+      UNION
+      SELECT 
+        v.vendedor,
+        'Z' AS ubigeo,
+        '' AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        ubigeo");
+        
+        $stmt -> bindParam(":documento",$opdocumento,PDO::PARAM_STR);
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+  
+      }else if($optipo == 'postalResumen' && $opdocumento != 'todos' && $impuesto == '0' && $vend == 'todos' && $inicio == 'todos' && $fin == 'todos'){
+  
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        c.ubigeo,
+        CONCAT(
+          'Cod. Postal: ',
+          RPAD(c.ubigeo, 6, ' '),
+          ' ',
+          u.departamento,
+          ' / ',
+          u.provincia,
+          ' / ',
+          u.distrito
+        ) AS ubicacion,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.tipo = :documento
+      GROUP BY v.vendedor,
+        c.ubigeo 
+      UNION
+      SELECT 
+        v.vendedor,
+        '000000' AS ubigeo,
+        ve.nom_ven AS ubicacion,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.tipo = :documento
+      UNION
+      SELECT 
+        v.vendedor,
+        'Z' AS ubigeo,
+        '' AS ubicacion,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        ubigeo");
+        
+        $stmt->bindParam(":documento",$opdocumento,PDO::PARAM_STR);
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+  
+      }else if ($optipo == 'postalResumen' && $opdocumento != 'todos' && $impuesto == '0' && $vend == 'todos' && $inicio != 'todos' && $fin != 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        c.ubigeo,
+        CONCAT(
+          'Cod. Postal: ',
+          RPAD(c.ubigeo, 6, ' '),
+          ' ',
+          u.departamento,
+          ' / ',
+          u.provincia,
+          ' / ',
+          u.distrito
+        ) AS ubicacion,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio  
+      AND :fin
+      AND v.tipo = :documento
+      GROUP BY v.vendedor,
+        c.ubigeo 
+      UNION
+      SELECT 
+        v.vendedor,
+        '000000' AS ubigeo,
+        ve.nom_ven AS ubicacion,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      AND v.tipo = :documento
+      UNION
+      SELECT 
+        v.vendedor,
+        'Z' AS ubigeo,
+        '' AS ubicacion,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+        AND :fin 
+      AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        ubigeo");
+
+        $stmt -> bindParam(":inicio",$inicio, PDO::PARAM_STR);
+        $stmt -> bindParam(":fin",$fin, PDO::PARAM_STR);
+        $stmt -> bindParam(":documento",$opdocumento, PDO::PARAM_STR);
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+  
+      }else if ($optipo == 'postalResumen' && $opdocumento != 'todos' && $impuesto == '1' && $vend == 'todos' && $inicio !='todos' && $fin != 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        c.ubigeo,
+        CONCAT(
+          'Cod. Postal: ',
+          RPAD(c.ubigeo, 6, ' '),
+          ' ',
+          u.departamento,
+          ' / ',
+          u.provincia,
+          ' / ',
+          u.distrito
+        ) AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      AND v.tipo = :documento
+      GROUP BY v.vendedor,
+        c.ubigeo 
+      UNION
+      SELECT 
+        v.vendedor,
+        '000000' AS ubigeo,
+        ve.nom_ven AS ubicacion,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE v.fecha BETWEEN :inicio
+      AND :fin
+      AND v.tipo = :documento
+      UNION
+      SELECT 
+        v.vendedor,
+        'Z' AS ubigeo,
+        '' AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        ubigeo");
+
+        $stmt -> bindParam(":inicio" ,$inicio , PDO::PARAM_STR);
+        $stmt -> bindParam(":fin" , $fin, PDO::PARAM_STR);
+        $stmt -> bindParam(":documento",$opdocumento,PDO::PARAM_STR);
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+
+      }else if ($optipo == 'postalResumen' && $opdocumento != 'todos' && $impuesto == '0' && $vend != 'todos' && $inicio != 'todos' && $fin != 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        c.ubigeo,
+        CONCAT(
+          'Cod. Postal: ',
+          RPAD(c.ubigeo, 6, ' '),
+          ' ',
+          u.departamento,
+          ' / ',
+          u.provincia,
+          ' / ',
+          u.distrito
+        ) AS ubicacion,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio  
+      AND :fin
+      AND v.vendedor= :vendedor
+      AND v.tipo = :documento
+      GROUP BY v.vendedor,
+        c.ubigeo 
+      UNION
+      SELECT 
+        v.vendedor,
+        '000000' AS ubigeo,
+        ve.nom_ven AS ubicacion,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      AND v.vendedor = :vendedor
+      AND v.tipo = :documento
+      UNION
+      SELECT 
+        v.vendedor,
+        'Z' AS ubigeo,
+        '' AS ubicacion,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+        AND :fin 
+      AND v.vendedor = :vendedor
+      AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        ubigeo");
+
+        $stmt -> bindParam(":inicio",$inicio,PDO::PARAM_STR);
+        $stmt -> bindParam(":fin",$fin,PDO::PARAM_STR);
+        $stmt -> bindParam(":vendedor",$vend,PDO::PARAM_STR);
+        $stmt -> bindParam(":documento",$opdocumento,PDO::PARAM_STR);
+
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+
+      }else if ($optipo == 'postalResumen' && $opdocumento != 'todos' && $impuesto == '1' && $vend != 'todos' && $inicio != 'todos' && $fin != 'todos' ){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        c.ubigeo,
+        CONCAT(
+          'Cod. Postal: ',
+          RPAD(c.ubigeo, 6, ' '),
+          ' ',
+          u.departamento,
+          ' / ',
+          u.provincia,
+          ' / ',
+          u.distrito
+        ) AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      AND v.vendedor = :vendedor
+      AND v.tipo = :documento
+      GROUP BY v.vendedor,
+        c.ubigeo 
+      UNION
+      SELECT 
+        v.vendedor,
+        '000000' AS ubigeo,
+        ve.nom_ven AS ubicacion,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE v.fecha BETWEEN :inicio
+      AND :fin
+      AND v.vendedor = :vendedor
+      AND v.tipo = :documento
+      UNION
+      SELECT 
+        v.vendedor,
+        'Z' AS ubigeo,
+        '' AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      AND v.vendedor = :vendedor
+      AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        ubigeo");
+        
+        $stmt->bindParam(":inicio",$inicio,PDO::PARAM_STR);
+        $stmt->bindParam(":fin",$fin,PDO::PARAM_STR);
+        $stmt->bindParam(":vendedor",$vend,PDO::PARAM_STR);
+        $stmt->bindParam(":documento",$opdocumento,PDO::PARAM_STR);
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+        
+      }else if ($optipo == 'postalResumen' && $opdocumento != 'todos' && $impuesto == '1' && $vend != 'todos' && $inicio=='todos' && $fin == 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        c.ubigeo,
+        CONCAT(
+          'Cod. Postal: ',
+          RPAD(c.ubigeo, 6, ' '),
+          ' ',
+          u.departamento,
+          ' / ',
+          u.provincia,
+          ' / ',
+          u.distrito
+        ) AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.vendedor = :vendedor
+      AND v.tipo = :documento
+      GROUP BY v.vendedor,
+        c.ubigeo 
+      UNION
+      SELECT 
+        v.vendedor,
+        '000000' AS ubigeo,
+        ve.nom_ven AS ubicacion,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.vendedor = :vendedor
+      AND v.tipo = :documento
+      UNION
+      SELECT 
+        v.vendedor,
+        'Z' AS ubigeo,
+        '' AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.vendedor = :vendedor
+      AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        ubigeo");
+
+        $stmt->bindParam(":vendedor",$vend,PDO::PARAM_STR);
+        $stmt->bindParam(":documento",$opdocumento,PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+
+      } else if($optipo == 'postalResumen' && $opdocumento != 'todos' && $impuesto == '0' && $vend != 'todos' && $inicio == 'todos' && $fin == 'todos'){
+
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        v.vendedor,
+        c.ubigeo,
+        CONCAT(
+          'Cod. Postal: ',
+          RPAD(c.ubigeo, 6, ' '),
+          ' ',
+          u.departamento,
+          ' / ',
+          u.provincia,
+          ' / ',
+          u.distrito
+        ) AS ubicacion,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.vendedor = :vendedor
+      AND v.tipo = :documento
+      GROUP BY v.vendedor,
+        c.ubigeo 
+      UNION
+      SELECT 
+        v.vendedor,
+        '000000' AS ubigeo,
+        ve.nom_ven AS ubicacion,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.vendedor = :vendedor
+      AND v.tipo = :documento
+      UNION
+      SELECT 
+        v.vendedor,
+        'Z' AS ubigeo,
+        '' AS ubicacion,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.vendedor = :vendedor
+      AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        ubigeo");
+
+        $stmt->bindParam(":vendedor",$vend,PDO::PARAM_STR);
+        $stmt->bindParam(":documento",$opdocumento,PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+      }
+  
+      $stmt -> close();
+  
+      $stmt = null;
+  
+  
+    }
+
+  static public function mdlMostrarVentaPostalDet($optipo,$opdocumento,$impuesto,$vend,$inicio,$fin){
+
+      if($optipo == 'postalDetalle' && $opdocumento == 'todos' && $impuesto == '1' && $vend =='todos' && $inicio == 'todos' && $fin == 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        c.ubigeo,
+        v.vendedor,
+        'S98' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        CONCAT(
+          'Cod. Postal: ',
+          RPAD(c.ubigeo, 6, ' '),
+          ' ',
+          u.departamento,
+          ' / ',
+          u.provincia,
+          ' / ',
+          u.distrito
+        ) AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      GROUP BY v.vendedor,
+        c.ubigeo 
+      UNION
+      SELECT 
+        c.ubigeo,
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.fecha,
+        c.nombre,
+        v.total  AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      UNION
+      SELECT 
+        '' AS ubigeo,
+        v.vendedor,
+        'A00' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        ve.nom_ven AS ubicacion,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      GROUP BY v.vendedor 
+      UNION
+      SELECT 
+        'ZZZZZZ' AS ubigeo,
+        v.vendedor,
+        'S99' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        'TOTAL' AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        ubigeo,
+        tipo,
+        documento");
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+  
+      }else if($optipo == 'postalDetalle' && $opdocumento == 'todos' && $impuesto == '0' && $vend == 'todos' && $inicio == 'todos' && $fin == 'todos'){
+  
+        $stmt = Conexion::conectar()->prepare("SELECT 
+          c.ubigeo,
+          v.vendedor,
+          'S98' AS tipo,
+          '' AS tipo_documento,
+          '' AS documento,
+          '' AS fecha,
+          CONCAT(
+            'Cod. Postal: ',
+            RPAD(c.ubigeo, 6, ' '),
+            ' ',
+            u.departamento,
+            ' / ',
+            u.provincia,
+            ' / ',
+            u.distrito
+          ) AS ubicacion,
+          ROUND(SUM(v.total) / 1.18, 2) AS total 
+        FROM
+          ventajf v 
+          LEFT JOIN clientesjf c 
+            ON v.cliente = c.codigo 
+          LEFT JOIN ubigeo u 
+            ON c.ubigeo = u.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW())
+        GROUP BY v.vendedor,
+          c.ubigeo 
+        UNION
+        SELECT 
+          c.ubigeo,
+          v.vendedor,
+          v.tipo,
+          v.tipo_documento,
+          v.documento,
+          v.fecha,
+          c.nombre,
+          ROUND(v.total / 1.18, 2) AS total 
+        FROM
+          ventajf v 
+          LEFT JOIN clientesjf c 
+            ON v.cliente = c.codigo 
+          LEFT JOIN ubigeo u 
+            ON c.ubigeo = u.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW())
+        UNION
+        SELECT 
+          '' AS ubigeo,
+          v.vendedor,
+          'A00' AS tipo,
+          '' AS tipo_documento,
+          '' AS documento,
+          '' AS fecha,
+          ve.nom_ven AS ubicacion,
+          '' AS total 
+        FROM
+          ventajf v 
+          LEFT JOIN 
+            (SELECT 
+              codigo,
+              descripcion AS nom_ven 
+            FROM
+              maestrajf 
+            WHERE tipo_dato = 'TVEND') AS ve 
+            ON v.vendedor = ve.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW())
+        GROUP BY v.vendedor 
+        UNION
+        SELECT 
+          'ZZZZZZ' AS ubigeo,
+          v.vendedor,
+          'S99' AS tipo,
+          '' AS tipo_documento,
+          '' AS documento,
+          '' AS fecha,
+          'TOTAL' AS ubicacion,
+          ROUND(SUM(v.total) / 1.18, 2) AS total 
+        FROM
+          ventajf v 
+          LEFT JOIN clientesjf c 
+            ON v.cliente = c.codigo 
+          LEFT JOIN ubigeo u 
+            ON c.ubigeo = u.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW())
+        GROUP BY v.vendedor 
+        ORDER BY vendedor,
+          ubigeo,
+          tipo,
+          documento");
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+  
+      }else if ($optipo == 'postalDetalle' && $opdocumento == 'todos' && $impuesto == '0' && $vend == 'todos' && $inicio != 'todos' && $fin != 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        c.ubigeo,
+        v.vendedor,
+        'S98' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        CONCAT(
+          'Cod. Postal: ',
+          RPAD(c.ubigeo, 6, ' '),
+          ' ',
+          u.departamento,
+          ' / ',
+          u.provincia,
+          ' / ',
+          u.distrito
+        ) AS ubicacion,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      GROUP BY v.vendedor,
+        c.ubigeo 
+      UNION
+      SELECT 
+        c.ubigeo,
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.fecha,
+        c.nombre,
+        ROUND(v.total / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      UNION
+      SELECT 
+        '' AS ubigeo,
+        v.vendedor,
+        'A00' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        ve.nom_ven AS ubicacion,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE v.fecha BETWEEN :inicio
+      AND :fin
+      GROUP BY v.vendedor 
+      UNION
+      SELECT 
+        'ZZZZZZ' AS ubigeo,
+        v.vendedor,
+        'S99' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        'TOTAL' AS ubicacion,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        ubigeo,
+        tipo,
+        documento");
+
+        $stmt -> bindParam(":inicio",$inicio, PDO::PARAM_STR);
+        $stmt -> bindParam(":fin",$fin, PDO::PARAM_STR);
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+  
+      }else if ($optipo == 'postalDetalle' && $opdocumento == 'todos' && $impuesto == '1' && $vend == 'todos' && $inicio !='todos' && $fin != 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        c.ubigeo,
+        v.vendedor,
+        'S98' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        CONCAT(
+          'Cod. Postal: ',
+          RPAD(c.ubigeo, 6, ' '),
+          ' ',
+          u.departamento,
+          ' / ',
+          u.provincia,
+          ' / ',
+          u.distrito
+        ) AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      GROUP BY v.vendedor,
+        c.ubigeo 
+      UNION
+      SELECT 
+        c.ubigeo,
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.fecha,
+        c.nombre,
+        v.total  AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio
+      AND :fin
+      UNION
+      SELECT 
+        '' AS ubigeo,
+        v.vendedor,
+        'A00' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        ve.nom_ven AS ubicacion,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      GROUP BY v.vendedor 
+      UNION
+      SELECT 
+        'ZZZZZZ' AS ubigeo,
+        v.vendedor,
+        'S99' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        'TOTAL' AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        ubigeo,
+        tipo,
+        documento");
+
+        $stmt -> bindParam(":inicio" ,$inicio , PDO::PARAM_STR);
+        $stmt -> bindParam(":fin" , $fin, PDO::PARAM_STR);
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+
+      }else if ($optipo == 'postalDetalle' && $opdocumento == 'todos' && $impuesto == '0' && $vend != 'todos' && $inicio != 'todos' && $fin != 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        c.ubigeo,
+        v.vendedor,
+        'S98' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        CONCAT(
+          'Cod. Postal: ',
+          RPAD(c.ubigeo, 6, ' '),
+          ' ',
+          u.departamento,
+          ' / ',
+          u.provincia,
+          ' / ',
+          u.distrito
+        ) AS ubicacion,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      AND v.vendedor = :vendedor
+      GROUP BY v.vendedor,
+        c.ubigeo 
+      UNION
+      SELECT 
+        c.ubigeo,
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.fecha,
+        c.nombre,
+        ROUND(v.total / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      AND v.vendedor = :vendedor
+      UNION
+      SELECT 
+        '' AS ubigeo,
+        v.vendedor,
+        'A00' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        ve.nom_ven AS ubicacion,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE v.fecha BETWEEN :inicio
+      AND :fin
+      AND v.vendedor = :vendedor
+      GROUP BY v.vendedor 
+      UNION
+      SELECT 
+        'ZZZZZZ' AS ubigeo,
+        v.vendedor,
+        'S99' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        'TOTAL' AS ubicacion,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      AND v.vendedor = :vendedor
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        ubigeo,
+        tipo,
+        documento");
+
+        $stmt -> bindParam(":inicio",$inicio,PDO::PARAM_STR);
+        $stmt -> bindParam(":fin",$fin,PDO::PARAM_STR);
+        $stmt -> bindParam(":vendedor",$vend,PDO::PARAM_STR);
+
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+
+      }else if ($optipo == 'postalDetalle' && $opdocumento == 'todos' && $impuesto == '1' && $vend != 'todos' && $inicio != 'todos' && $fin != 'todos' ){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        c.ubigeo,
+        v.vendedor,
+        'S98' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        CONCAT(
+          'Cod. Postal: ',
+          RPAD(c.ubigeo, 6, ' '),
+          ' ',
+          u.departamento,
+          ' / ',
+          u.provincia,
+          ' / ',
+          u.distrito
+        ) AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      AND v.vendedor = :vendedor
+      GROUP BY v.vendedor,
+        c.ubigeo 
+      UNION
+      SELECT 
+        c.ubigeo,
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.fecha,
+        c.nombre,
+        v.total  AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio
+      AND :fin
+      AND v.vendedor = :vendedor
+      UNION
+      SELECT 
+        '' AS ubigeo,
+        v.vendedor,
+        'A00' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        ve.nom_ven AS ubicacion,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      AND v.vendedor = :vendedor
+      GROUP BY v.vendedor 
+      UNION
+      SELECT 
+        'ZZZZZZ' AS ubigeo,
+        v.vendedor,
+        'S99' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        'TOTAL' AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      AND v.vendedor = :vendedor
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        ubigeo,
+        tipo,
+        documento");
+        
+        $stmt->bindParam(":inicio",$inicio,PDO::PARAM_STR);
+        $stmt->bindParam(":fin",$fin,PDO::PARAM_STR);
+        $stmt->bindParam(":vendedor",$vend,PDO::PARAM_STR);
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+        
+      }else if ($optipo == 'postalDetalle' && $opdocumento == 'todos' && $impuesto == '1' && $vend != 'todos' && $inicio=='todos' && $fin == 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        c.ubigeo,
+        v.vendedor,
+        'S98' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        CONCAT(
+          'Cod. Postal: ',
+          RPAD(c.ubigeo, 6, ' '),
+          ' ',
+          u.departamento,
+          ' / ',
+          u.provincia,
+          ' / ',
+          u.distrito
+        ) AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.vendedor = :vendedor
+      GROUP BY v.vendedor,
+        c.ubigeo 
+      UNION
+      SELECT 
+        c.ubigeo,
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.fecha,
+        c.nombre,
+        v.total  AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.vendedor = :vendedor
+      UNION
+      SELECT 
+        '' AS ubigeo,
+        v.vendedor,
+        'A00' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        ve.nom_ven AS ubicacion,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.vendedor = :vendedor
+      GROUP BY v.vendedor 
+      UNION
+      SELECT 
+        'ZZZZZZ' AS ubigeo,
+        v.vendedor,
+        'S99' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        'TOTAL' AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.vendedor = :vendedor
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        ubigeo,
+        tipo,
+        documento");
+
+        $stmt->bindParam(":vendedor",$vend,PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+
+      } else if($optipo == 'postalDetalle' && $opdocumento == 'todos' && $impuesto == '0' && $vend != 'todos' && $inicio == 'todos' && $fin == 'todos'){
+
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        c.ubigeo,
+        v.vendedor,
+        'S98' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        CONCAT(
+          'Cod. Postal: ',
+          RPAD(c.ubigeo, 6, ' '),
+          ' ',
+          u.departamento,
+          ' / ',
+          u.provincia,
+          ' / ',
+          u.distrito
+        ) AS ubicacion,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.vendedor = :vendedor
+      GROUP BY v.vendedor,
+        c.ubigeo 
+      UNION
+      SELECT 
+        c.ubigeo,
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.fecha,
+        c.nombre,
+        ROUND(v.total / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.vendedor  = :vendedor
+      UNION
+      SELECT 
+        '' AS ubigeo,
+        v.vendedor,
+        'A00' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        ve.nom_ven AS ubicacion,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.vendedor = :vendedor
+      GROUP BY v.vendedor 
+      UNION
+      SELECT 
+        'ZZZZZZ' AS ubigeo,
+        v.vendedor,
+        'S99' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        'TOTAL' AS ubicacion,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.vendedor = :vendedor
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        ubigeo,
+        tipo,
+        documento");
+
+        $stmt->bindParam(":vendedor",$vend,PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+      }
+  
+      $stmt -> close();
+  
+      $stmt = null;
+  
+  
+    }
+
+    static public function mdlMostrarTipoVentaPostalDet($optipo,$opdocumento,$impuesto,$vend,$inicio,$fin){
+
+      if($optipo == 'postalDetalle' && $opdocumento != 'todos' && $impuesto == '1' && $vend =='todos' && $inicio == 'todos' && $fin == 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        c.ubigeo,
+        v.vendedor,
+        'S98' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        CONCAT(
+          'Cod. Postal: ',
+          RPAD(c.ubigeo, 6, ' '),
+          ' ',
+          u.departamento,
+          ' / ',
+          u.provincia,
+          ' / ',
+          u.distrito
+        ) AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.tipo = :documento
+      GROUP BY v.vendedor,
+        c.ubigeo 
+      UNION
+      SELECT 
+        c.ubigeo,
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.fecha,
+        c.nombre,
+        v.total  AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.tipo = :documento
+      UNION
+      SELECT 
+        '' AS ubigeo,
+        v.vendedor,
+        'A00' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        ve.nom_ven AS ubicacion,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      UNION
+      SELECT 
+        'ZZZZZZ' AS ubigeo,
+        v.vendedor,
+        'S99' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        'TOTAL' AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        ubigeo,
+        tipo,
+        documento");
+
+        $stmt->bindParam(":documento",$opdocumento,PDO::PARAM_STR);
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+  
+      }else if($optipo == 'postalDetalle' && $opdocumento != 'todos' && $impuesto == '0' && $vend == 'todos' && $inicio == 'todos' && $fin == 'todos'){
+  
+        $stmt = Conexion::conectar()->prepare("SELECT 
+          c.ubigeo,
+          v.vendedor,
+          'S98' AS tipo,
+          '' AS tipo_documento,
+          '' AS documento,
+          '' AS fecha,
+          CONCAT(
+            'Cod. Postal: ',
+            RPAD(c.ubigeo, 6, ' '),
+            ' ',
+            u.departamento,
+            ' / ',
+            u.provincia,
+            ' / ',
+            u.distrito
+          ) AS ubicacion,
+          ROUND(SUM(v.total) / 1.18, 2) AS total 
+        FROM
+          ventajf v 
+          LEFT JOIN clientesjf c 
+            ON v.cliente = c.codigo 
+          LEFT JOIN ubigeo u 
+            ON c.ubigeo = u.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW())
+        AND v.tipo = :documento
+        GROUP BY v.vendedor,
+          c.ubigeo 
+        UNION
+        SELECT 
+          c.ubigeo,
+          v.vendedor,
+          v.tipo,
+          v.tipo_documento,
+          v.documento,
+          v.fecha,
+          c.nombre,
+          ROUND(v.total / 1.18, 2) AS total 
+        FROM
+          ventajf v 
+          LEFT JOIN clientesjf c 
+            ON v.cliente = c.codigo 
+          LEFT JOIN ubigeo u 
+            ON c.ubigeo = u.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW())
+        AND v.tipo = :documento
+        UNION
+        SELECT 
+          '' AS ubigeo,
+          v.vendedor,
+          'A00' AS tipo,
+          '' AS tipo_documento,
+          '' AS documento,
+          '' AS fecha,
+          ve.nom_ven AS ubicacion,
+          '' AS total 
+        FROM
+          ventajf v 
+          LEFT JOIN 
+            (SELECT 
+              codigo,
+              descripcion AS nom_ven 
+            FROM
+              maestrajf 
+            WHERE tipo_dato = 'TVEND') AS ve 
+            ON v.vendedor = ve.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW())
+        AND v.tipo = :documento
+        GROUP BY v.vendedor 
+        UNION
+        SELECT 
+          'ZZZZZZ' AS ubigeo,
+          v.vendedor,
+          'S99' AS tipo,
+          '' AS tipo_documento,
+          '' AS documento,
+          '' AS fecha,
+          'TOTAL' AS ubicacion,
+          ROUND(SUM(v.total) / 1.18, 2) AS total 
+        FROM
+          ventajf v 
+          LEFT JOIN clientesjf c 
+            ON v.cliente = c.codigo 
+          LEFT JOIN ubigeo u 
+            ON c.ubigeo = u.codigo 
+        WHERE YEAR(v.fecha) = YEAR(NOW())
+        AND v.tipo = :documento
+        GROUP BY v.vendedor 
+        ORDER BY vendedor,
+          ubigeo,
+          tipo,
+          documento");
+        
+        $stmt->bindParam(":documento",$opdocumento,PDO::PARAM_STR);
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+  
+      }else if ($optipo == 'postalDetalle' && $opdocumento != 'todos' && $impuesto == '0' && $vend == 'todos' && $inicio != 'todos' && $fin != 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        c.ubigeo,
+        v.vendedor,
+        'S98' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        CONCAT(
+          'Cod. Postal: ',
+          RPAD(c.ubigeo, 6, ' '),
+          ' ',
+          u.departamento,
+          ' / ',
+          u.provincia,
+          ' / ',
+          u.distrito
+        ) AS ubicacion,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      AND v.tipo = :documento
+      GROUP BY v.vendedor,
+        c.ubigeo 
+      UNION
+      SELECT 
+        c.ubigeo,
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.fecha,
+        c.nombre,
+        ROUND(v.total / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      AND v.tipo = :documento
+      UNION
+      SELECT 
+        '' AS ubigeo,
+        v.vendedor,
+        'A00' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        ve.nom_ven AS ubicacion,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE v.fecha BETWEEN :inicio
+      AND :fin
+      AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      UNION
+      SELECT 
+        'ZZZZZZ' AS ubigeo,
+        v.vendedor,
+        'S99' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        'TOTAL' AS ubicacion,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        ubigeo,
+        tipo,
+        documento");
+
+        $stmt -> bindParam(":inicio",$inicio, PDO::PARAM_STR);
+        $stmt -> bindParam(":fin",$fin, PDO::PARAM_STR);
+        $stmt -> bindParam(":documento",$opdocumento,PDO::PARAM_STR);
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+  
+      }else if ($optipo == 'postalDetalle' && $opdocumento != 'todos' && $impuesto == '1' && $vend == 'todos' && $inicio !='todos' && $fin != 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        c.ubigeo,
+        v.vendedor,
+        'S98' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        CONCAT(
+          'Cod. Postal: ',
+          RPAD(c.ubigeo, 6, ' '),
+          ' ',
+          u.departamento,
+          ' / ',
+          u.provincia,
+          ' / ',
+          u.distrito
+        ) AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      AND v.tipo = :documento
+      GROUP BY v.vendedor,
+        c.ubigeo 
+      UNION
+      SELECT 
+        c.ubigeo,
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.fecha,
+        c.nombre,
+        v.total  AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio
+      AND :fin
+      AND v.tipo = :documento
+      UNION
+      SELECT 
+        '' AS ubigeo,
+        v.vendedor,
+        'A00' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        ve.nom_ven AS ubicacion,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      UNION
+      SELECT 
+        'ZZZZZZ' AS ubigeo,
+        v.vendedor,
+        'S99' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        'TOTAL' AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        ubigeo,
+        tipo,
+        documento");
+
+        $stmt -> bindParam(":inicio" ,$inicio , PDO::PARAM_STR);
+        $stmt -> bindParam(":fin" , $fin, PDO::PARAM_STR);
+        $stmt -> bindParam(":documento",$opdocumento,PDO::PARAM_STR);
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+
+      }else if ($optipo == 'postalDetalle' && $opdocumento != 'todos' && $impuesto == '0' && $vend != 'todos' && $inicio != 'todos' && $fin != 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        c.ubigeo,
+        v.vendedor,
+        'S98' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        CONCAT(
+          'Cod. Postal: ',
+          RPAD(c.ubigeo, 6, ' '),
+          ' ',
+          u.departamento,
+          ' / ',
+          u.provincia,
+          ' / ',
+          u.distrito
+        ) AS ubicacion,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      AND v.vendedor = :vendedor
+      AND v.tipo = :documento
+      GROUP BY v.vendedor,
+        c.ubigeo 
+      UNION
+      SELECT 
+        c.ubigeo,
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.fecha,
+        c.nombre,
+        ROUND(v.total / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      AND v.vendedor = :vendedor
+      AND v.tipo = :documento
+      UNION
+      SELECT 
+        '' AS ubigeo,
+        v.vendedor,
+        'A00' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        ve.nom_ven AS ubicacion,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE v.fecha BETWEEN :inicio
+      AND :fin
+      AND v.vendedor = :vendedor
+      AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      UNION
+      SELECT 
+        'ZZZZZZ' AS ubigeo,
+        v.vendedor,
+        'S99' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        'TOTAL' AS ubicacion,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      AND v.vendedor = :vendedor
+      AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        ubigeo,
+        tipo,
+        documento");
+
+        $stmt -> bindParam(":inicio",$inicio,PDO::PARAM_STR);
+        $stmt -> bindParam(":fin",$fin,PDO::PARAM_STR);
+        $stmt -> bindParam(":vendedor",$vend,PDO::PARAM_STR);
+        $stmt -> bindParam(":documento",$opdocumento,PDO::PARAM_STR);
+
+        
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+
+      }else if ($optipo == 'postalDetalle' && $opdocumento != 'todos' && $impuesto == '1' && $vend != 'todos' && $inicio != 'todos' && $fin != 'todos' ){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        c.ubigeo,
+        v.vendedor,
+        'S98' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        CONCAT(
+          'Cod. Postal: ',
+          RPAD(c.ubigeo, 6, ' '),
+          ' ',
+          u.departamento,
+          ' / ',
+          u.provincia,
+          ' / ',
+          u.distrito
+        ) AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      AND v.vendedor = :vendedor
+      AND v.tipo = :documento
+      GROUP BY v.vendedor,
+        c.ubigeo 
+      UNION
+      SELECT 
+        c.ubigeo,
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.fecha,
+        c.nombre,
+        v.total  AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio
+      AND :fin
+      AND v.vendedor = :vendedor
+      AND v.tipo = :documento
+      UNION
+      SELECT 
+        '' AS ubigeo,
+        v.vendedor,
+        'A00' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        ve.nom_ven AS ubicacion,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      AND v.vendedor = :vendedor
+      AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      UNION
+      SELECT 
+        'ZZZZZZ' AS ubigeo,
+        v.vendedor,
+        'S99' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        'TOTAL' AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE v.fecha BETWEEN :inicio 
+      AND :fin
+      AND v.vendedor = :vendedor
+      AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        ubigeo,
+        tipo,
+        documento");
+        
+        $stmt->bindParam(":inicio",$inicio,PDO::PARAM_STR);
+        $stmt->bindParam(":fin",$fin,PDO::PARAM_STR);
+        $stmt->bindParam(":vendedor",$vend,PDO::PARAM_STR);
+        $stmt->bindParam(":documento",$opdocumento,PDO::PARAM_STR);
+        $stmt -> execute();
+  
+        return $stmt -> fetchAll();
+        
+      }else if ($optipo == 'postalDetalle' && $opdocumento != 'todos' && $impuesto == '1' && $vend != 'todos' && $inicio=='todos' && $fin == 'todos'){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        c.ubigeo,
+        v.vendedor,
+        'S98' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        CONCAT(
+          'Cod. Postal: ',
+          RPAD(c.ubigeo, 6, ' '),
+          ' ',
+          u.departamento,
+          ' / ',
+          u.provincia,
+          ' / ',
+          u.distrito
+        ) AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.vendedor = :vendedor
+      AND v.tipo = :documento
+      GROUP BY v.vendedor,
+        c.ubigeo 
+      UNION
+      SELECT 
+        c.ubigeo,
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.fecha,
+        c.nombre,
+        v.total  AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.vendedor = :vendedor
+      AND v.tipo = :documento
+      UNION
+      SELECT 
+        '' AS ubigeo,
+        v.vendedor,
+        'A00' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        ve.nom_ven AS ubicacion,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.vendedor = :vendedor
+      AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      UNION
+      SELECT 
+        'ZZZZZZ' AS ubigeo,
+        v.vendedor,
+        'S99' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        'TOTAL' AS ubicacion,
+        SUM(v.total) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.vendedor = :vendedor
+      AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        ubigeo,
+        tipo,
+        documento");
+
+        $stmt->bindParam(":vendedor",$vend,PDO::PARAM_STR);
+        $stmt->bindParam(":documento",$opdocumento,PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+
+      } else if($optipo == 'postalDetalle' && $opdocumento != 'todos' && $impuesto == '0' && $vend != 'todos' && $inicio == 'todos' && $fin == 'todos'){
+
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        c.ubigeo,
+        v.vendedor,
+        'S98' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        CONCAT(
+          'Cod. Postal: ',
+          RPAD(c.ubigeo, 6, ' '),
+          ' ',
+          u.departamento,
+          ' / ',
+          u.provincia,
+          ' / ',
+          u.distrito
+        ) AS ubicacion,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.vendedor = :vendedor
+      AND v.tipo = :documento
+      GROUP BY v.vendedor,
+        c.ubigeo 
+      UNION
+      SELECT 
+        c.ubigeo,
+        v.vendedor,
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.fecha,
+        c.nombre,
+        ROUND(v.total / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.vendedor  = :vendedor
+      AND v.tipo = :documento
+      UNION
+      SELECT 
+        '' AS ubigeo,
+        v.vendedor,
+        'A00' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        ve.nom_ven AS ubicacion,
+        '' AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            codigo,
+            descripcion AS nom_ven 
+          FROM
+            maestrajf 
+          WHERE tipo_dato = 'TVEND') AS ve 
+          ON v.vendedor = ve.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.vendedor = :vendedor
+      AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      UNION
+      SELECT 
+        'ZZZZZZ' AS ubigeo,
+        v.vendedor,
+        'S99' AS tipo,
+        '' AS tipo_documento,
+        '' AS documento,
+        '' AS fecha,
+        'TOTAL' AS ubicacion,
+        ROUND(SUM(v.total) / 1.18, 2) AS total 
+      FROM
+        ventajf v 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      WHERE YEAR(v.fecha) = YEAR(NOW())
+      AND v.vendedor = :vendedor
+      AND v.tipo = :documento
+      GROUP BY v.vendedor 
+      ORDER BY vendedor,
+        ubigeo,
+        tipo,
+        documento");
+
+        $stmt->bindParam(":vendedor",$vend,PDO::PARAM_STR);
+        $stmt->bindParam(":documento",$opdocumento,PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+      }
+  
+      $stmt -> close();
+  
+      $stmt = null;
+  
+  
+    }
+
+          /*
+	* Método para mostrar produccion de trusas
+	*/
+	static public function mdlRangoFechasProcesarCE($fechaInicial,$fechaFinal,$tipo){
+
+    if($fechaInicial=="null"){
+
+      $sql="SELECT
+      v.tipo,
+      v.tipo_documento,
+      v.documento,
+      v.total,
+      v.cliente,
+      c.nombre,
+      c.tipo_documento AS tip_doc,
+      c.documento AS num_doc,
+      v.vendedor,
+      v.fecha,
+      cv.descripcion,
+      v.doc_destino,
+      LEFT(v.doc_destino,4) AS serie_dest,
+      SUBSTR(v.doc_destino,5,8) AS nro_dest,
+      v.estado,
+      IFNULL(a.nombre, '') AS agencia,
+      IFNULL(u.nom_ubi, '') AS ubigeo
+  FROM
+      ventajf v
+      LEFT JOIN clientesjf c
+      ON v.cliente = c.codigo
+      LEFT JOIN condiciones_ventajf cv
+      ON v.condicion_venta = cv.id
+      LEFT JOIN agenciasjf a
+      ON v.agencia = a.id
+      LEFT JOIN ubigeojf u
+      ON c.ubigeo = u.cod_ubi
+  WHERE v.tipo = :tipo
+      AND v.estado = 'GENERADO'
+      AND YEAR(v.fecha) = 2021";
+
+      $stmt=Conexion::conectar()->prepare($sql);
+      
+      $stmt->bindParam(":tipo",$tipo,PDO::PARAM_STR);
+      
+      $stmt->execute();
+
+      return $stmt->fetchAll();
+
+    }else if($fechaInicial == $fechaFinal){
+
+      $sql="SELECT
+      v.tipo,
+      v.tipo_documento,
+      v.documento,
+      v.total,
+      v.cliente,
+      c.nombre,
+      c.tipo_documento AS tip_doc,
+      c.documento AS num_doc,
+      v.vendedor,
+      v.fecha,
+      cv.descripcion,
+      v.doc_destino,
+      LEFT(v.doc_destino,4) AS serie_dest,
+      SUBSTR(v.doc_destino,5,8) AS nro_dest,
+      v.estado,
+      IFNULL(a.nombre, '') AS agencia,
+      IFNULL(u.nom_ubi, '') AS ubigeo
+  FROM
+      ventajf v
+      LEFT JOIN clientesjf c
+      ON v.cliente = c.codigo
+      LEFT JOIN condiciones_ventajf cv
+      ON v.condicion_venta = cv.id
+      LEFT JOIN agenciasjf a
+      ON v.agencia = a.id
+      LEFT JOIN ubigeojf u
+      ON c.ubigeo = u.cod_ubi
+  WHERE v.tipo = :tipo
+      AND v.estado = 'GENERADO'
+      AND DATE(v.fecha)  like '%$fechaFinal%' ";
+
+      $stmt=Conexion::conectar()->prepare($sql);
+
+      $stmt->bindParam(":tipo", $tipo, PDO::PARAM_STR);
+
+      $stmt->execute();
+      
+      return $stmt->fetchAll();
+
+    }else{
+      $fechaActual = new DateTime();
+            $fechaActual ->add(new DateInterval("P1D"));
+            $fechaActualMasUno = $fechaActual->format("Y-m-d");
+
+            $fechaFinal2 = new DateTime($fechaFinal);
+            $fechaFinal2 ->add(new DateInterval("P1D"));
+            $fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+
+            if($fechaFinalMasUno == $fechaActualMasUno){
+        $sql="SELECT
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.total,
+        v.cliente,
+        c.nombre,
+        c.tipo_documento AS tip_doc,
+        c.documento AS num_doc,
+        v.vendedor,
+        v.fecha,
+        cv.descripcion,
+        v.doc_destino,
+        LEFT(v.doc_destino,4) AS serie_dest,
+        SUBSTR(v.doc_destino,5,8) AS nro_dest,
+        v.estado,
+        IFNULL(a.nombre, '') AS agencia,
+        IFNULL(u.nom_ubi, '') AS ubigeo
+    FROM
+        ventajf v
+        LEFT JOIN clientesjf c
+        ON v.cliente = c.codigo
+        LEFT JOIN condiciones_ventajf cv
+        ON v.condicion_venta = cv.id
+        LEFT JOIN agenciasjf a
+        ON v.agencia = a.id
+        LEFT JOIN ubigeojf u
+        ON c.ubigeo = u.cod_ubi
+    WHERE v.tipo = :tipo
+        AND v.estado = 'GENERADO'
+        AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'";
+
+      $stmt=Conexion::conectar()->prepare($sql);
+
+      $stmt->bindParam(":tipo", $tipo, PDO::PARAM_STR);
+
+      $stmt->execute();
+
+      return $stmt->fetchAll();
+
+      }else{
+
+        $sql="SELECT
+        v.tipo,
+        v.tipo_documento,
+        v.documento,
+        v.total,
+        v.cliente,
+        c.nombre,
+        c.tipo_documento AS tip_doc,
+        c.documento AS num_doc,
+        v.vendedor,
+        v.fecha,
+        cv.descripcion,
+        v.doc_destino,
+        LEFT(v.doc_destino,4) AS serie_dest,
+        SUBSTR(v.doc_destino,5,8) AS nro_dest,
+        v.estado,
+        IFNULL(a.nombre, '') AS agencia,
+        IFNULL(u.nom_ubi, '') AS ubigeo
+    FROM
+        ventajf v
+        LEFT JOIN clientesjf c
+        ON v.cliente = c.codigo
+        LEFT JOIN condiciones_ventajf cv
+        ON v.condicion_venta = cv.id
+        LEFT JOIN agenciasjf a
+        ON v.agencia = a.id
+        LEFT JOIN ubigeojf u
+        ON c.ubigeo = u.cod_ubi
+    WHERE v.tipo = :tipo
+        AND v.estado = 'GENERADO'
+        AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'";
+
+        $stmt=Conexion::conectar()->prepare($sql);
+
+        $stmt->bindParam(":tipo", $tipo, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+      }
+
+    }
+
+      $stmt=null;
+
+  }
 }

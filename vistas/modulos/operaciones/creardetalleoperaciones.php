@@ -242,13 +242,8 @@
             <?php 
               $item=null;
               $valor=null;
-              $ultimovalor=0;
-              $operaciones=ControladorOperaciones::ctrMostrarOperaciones($item,$valor);
-              foreach($operaciones as $key => $value) {
-                $ultimovalor=$value["codigo"];
-              }
             ?>
-            <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarOperacion"><i class="fa fa-plus-square"></i>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarOperacion" id="btnAgregarOperacion2"><i class="fa fa-plus-square"></i>
               Nueva operacion
             </button>
           </div>
@@ -294,7 +289,7 @@ MODAL AGREGAR OPERACION
 
     <div class="modal-content">
 
-      <form role="form" method="post">
+      <form role="form" method="post" id="formularioAgregarOperacion2">
 
         <!--=====================================
         CABEZA DEL MODAL
@@ -318,12 +313,12 @@ MODAL AGREGAR OPERACION
             <!-- ENTRADA PARA EL CODIGO -->
             
             <div class="form-group">
-              
+              <label for="">Codigo operación</label>
               <div class="input-group">
               
                 <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
-                <input type="text" min="0" class="form-control input-lg" name="nuevoCodigo" value="<?php echo $ultimovalor+1 ?>" readonly>
+                <input type="text" min="0" class="form-control input-md" name="nuevoCodigo" id="nuevoCodigo" readonly>
 
               </div>
 
@@ -332,12 +327,12 @@ MODAL AGREGAR OPERACION
             <!-- ENTRADA PARA EL NOMBRE -->
             
             <div class="form-group">
-              
+              <label for="">Descripción</label>
               <div class="input-group">
               
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="nuevaOperacion" placeholder="Ingresar nombre" required>
+                <input type="text" class="form-control input-md" style="text-transform:uppercase" name="nuevaOperacion" id="nuevaDescOperacion" placeholder="Ingresar nombre" required>
 
               </div>
 
@@ -360,14 +355,6 @@ MODAL AGREGAR OPERACION
         </div>
 
       </form>
-
-
-      <?php
-
-        $crearOperacion = new ControladorOperaciones();
-        $crearOperacion -> ctrCrearOperacion2();
-
-      ?>
 
 
     </div>

@@ -10,7 +10,7 @@ class ModeloOperaciones{
 
 	static public function mdlIngresarOperacion($tabla,$datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(codigo,nombre) VALUES (:codigo,:nombre)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(codigo,nombre) VALUES (:codigo,UPPER(:nombre))");
 
 		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
 		$stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
@@ -236,7 +236,7 @@ class ModeloOperaciones{
 
 	static public function mdlEditarOperacion($tabla,$datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET codigo = :codigo , nombre = :nombre WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET codigo = :codigo , nombre = UPPER(:nombre) WHERE id = :id");
 
 		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
 		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
@@ -441,5 +441,25 @@ class ModeloOperaciones{
 		$stmt=null;
 
 	}
+
+	/* 
+	* MOSTRAR DATOS DE LA MATERIA PRIMA
+	*/
+	static public function mdlUltimoCodigo(){
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+													IFNULL(MAX(codigo), 0) + 1 AS ultimoCodigo 
+												FROM
+													operacionesjf ");
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }	
 
 }

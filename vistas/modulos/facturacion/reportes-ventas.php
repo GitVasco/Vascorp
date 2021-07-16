@@ -52,37 +52,32 @@
             <div class="box-body">
                 <div class="form-check">
                 <label  for="radioOrd1">
-                    <input type="radio" class="form-check-input radioDocumento " id="radioOrd1" name="radioDocumento" value="facturas" checked> Facturas
+                    <input type="radio" class="form-check-input radioDocumento " id="radioOrd1" name="radioDocumento" value="S03" > Facturas
                 </label>
                 </div>
 
                 <div class="form-check">
                 <label  for="radioOrd2">
-                    <input type="radio" class="form-check-input radioDocumento" id="radioOrd2" name="radioDocumento" value="notascreditos"> Notas de crédito
+                    <input type="radio" class="form-check-input radioDocumento" id="radioOrd2" name="radioDocumento" value="E05"> Notas de crédito
                 </label>
                 </div>
 
                 <div class="form-check">
                 <label  for="radioOrd3">
-                    <input type="radio" class="form-check-input radioDocumento" id="radioOrd3" name="radioDocumento"  value="guias"> Guias (*)
+                    <input type="radio" class="form-check-input radioDocumento" id="radioOrd3" name="radioDocumento"  value="S70"> Guias (*)
                 </label>
                 </div>
 
                 <div class="form-check">
                 <label  for="radioOrd4">
-                    <input type="radio" class="form-check-input radioDocumento" id="radioOrd4" name="radioDocumento" value="boletasventas"> Boletas de ventas
+                    <input type="radio" class="form-check-input radioDocumento" id="radioOrd4" name="radioDocumento" value="S02"> Boletas de ventas
                 </label>
                 </div>
+
 
                 <div class="form-check">
                 <label  for="radioOrd5">
-                    <input type="radio" class="form-check-input radioDocumento" id="radioOrd5" name="radioDocumento" value="tickets"> Ticket 
-                </label>
-                </div>
-
-                <div class="form-check">
-                <label  for="radioOrd6">
-                    <input type="radio" class="form-check-input radioDocumento" id="radioOrd6" name="radioDocumento" value="todos"> Todo lo Anterior 
+                    <input type="radio" class="form-check-input radioDocumento" id="radioOrd5" name="radioDocumento" value="todos" checked> Todo lo Anterior 
                 </label>
                 </div>
             </div>
@@ -96,7 +91,7 @@
             <div class="box-body">
                 <div class="form-check">
                 <label class="form-check-label" for="radioImpuesto1">
-                    <input type="checkbox" class="form-check-input radioImpuesto" id="radioImpuesto1" name="radioImpuesto" value="1" checked> Impuestos por otros
+                    <input type="checkbox" class="form-check-input radioImpuesto" id="radioImpuesto1" name="radioImpuesto" value="1" > Impuestos por otros
                 </label>
                 </div>
             </div>
@@ -160,7 +155,7 @@
         
         </div>
         <div align="center">
-            <button class="btn btn-success btnGenerarReporteVenta"  optipo="resumen" opdocumento="facturas" impuesto="1" vend=""  inicio="" fin="" impresion="pantalla"><i class="fa fa-check"></i> Aceptar</button>    
+            <button class="btn btn-success btnGenerarReporteVenta"  optipo="resumen" opdocumento="todos" impuesto="0" vend="todos"  inicio="todos" fin="todos" impresion="pantalla"><i class="fa fa-check"></i> Aceptar</button>    
 
         </div>
         

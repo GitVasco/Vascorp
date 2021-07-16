@@ -902,6 +902,16 @@ class ControladorFacturacion{
 
     }
 
+     /*
+    * MOSTRAR RANGO DE FECHA DE PROCESAR COMPROBANTES ELECTRONICOS
+    */
+	static public function ctrRangoFechasProcesarCE($fechaInicial, $fechaFinal,$tipo){
+		$respuesta = ModeloFacturacion::mdlRangoFechasProcesarCE( $fechaInicial, $fechaFinal,$tipo);
+
+		return $respuesta;
+
+    }
+
     /*
     * MOSTRAR VENTA DE NOTAS PARA IMPRESION
     */
@@ -943,6 +953,83 @@ class ControladorFacturacion{
 
     }
 
+
+    /*
+    * MOSTRAR REPORTE DE VENTA POR RESUMEN
+    */
+	static public function ctrMostrarVentaResumen($optipo, $opdocumento, $impuesto , $vend, $inicio, $fin){
+		$respuesta = ModeloFacturacion::mdlMostrarVentaResumen( $optipo, $opdocumento, $impuesto, $vend, $inicio, $fin);
+
+		return $respuesta;
+
+    }
+
+    /*
+    * MOSTRAR REPORTE POR TIPO DE VENTA POR RESUMEN
+    */
+	static public function ctrMostrarTipoVentaResumen($optipo, $opdocumento, $impuesto , $vend, $inicio, $fin){
+		$respuesta = ModeloFacturacion::mdlMostrarTipoVentaResumen( $optipo, $opdocumento, $impuesto, $vend, $inicio, $fin);
+
+		return $respuesta;
+
+    }
+
+    /*
+    * MOSTRAR REPORTE DE VENTA DETALLADO
+    */
+	static public function ctrMostrarVentaDetalle($optipo, $opdocumento, $impuesto , $vend, $inicio, $fin){
+		$respuesta = ModeloFacturacion::mdlMostrarVentaDetalle( $optipo, $opdocumento, $impuesto, $vend, $inicio, $fin);
+
+		return $respuesta;
+
+    }
+
+    /*
+    * MOSTRAR REPORTE POR TIPO DE VENTA DETALLADO
+    */
+	static public function ctrMostrarTipoVentaDetalle($optipo, $opdocumento, $impuesto , $vend, $inicio, $fin){
+		$respuesta = ModeloFacturacion::mdlMostrarTipoVentaDetalle( $optipo, $opdocumento, $impuesto, $vend, $inicio, $fin);
+
+		return $respuesta;
+
+    }
+
+
+    /*
+    * MOSTRAR REPORTE DE VENTA POR POSTAL RESUMEN
+    */
+	static public function ctrMostrarVentaPostalRsm($optipo, $opdocumento, $impuesto , $vend, $inicio, $fin){
+		$respuesta = ModeloFacturacion::mdlMostrarVentaPostalRsm( $optipo, $opdocumento, $impuesto, $vend, $inicio, $fin);
+
+		return $respuesta;
+
+    }
+    /*
+    * MOSTRAR REPORTE POR TIPO DE VENTA  POSTAL RESUMEN
+    */
+    static public function ctrMostrarTipoVentaPostalRsm($optipo, $opdocumento,$impuesto,$vend,$inicio,$fin){
+
+        $respuesta = ModeloFacturacion::mdlMostrarTipoVentaPostalRsm($optipo,$opdocumento,$impuesto,$vend,$inicio,$fin);
+
+        return $respuesta;
+    }
+
+    /*
+    * MOSTRAR REPORTE DE VENTA POR POSTAL DETALLE
+    */
+    static public function ctrMostrarVentaPostalDet($optipo,$opdocumento,$impuesto,$vend,$inicio,$fin){
+
+        $respuesta = ModeloFacturacion::mdlMostrarVentaPostalDet($optipo,$opdocumento,$impuesto,$vend,$inicio,$fin);
+
+        return $respuesta;
+    }
+
+    static public function ctrMostrarTipoVentaPostalDet($optipo,$opdocumento,$impuesto,$vend,$inicio,$fin){
+        
+        $respuesta = ModeloFacturacion::mdlMostrarTipoVentaPostalDet($optipo,$opdocumento,$impuesto,$vend,$inicio,$fin);
+
+        return $respuesta;
+    }
 
     static public function ctrFacturarGuia(){
 

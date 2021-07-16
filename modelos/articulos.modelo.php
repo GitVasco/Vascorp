@@ -1048,7 +1048,7 @@ class ModeloArticulos
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			a.articulo,
 			CONCAT(
-			  a.modelo,
+			  a.articulo,
 			  ' - ',
 			  a.nombre,
 			  ' - ',

@@ -25,15 +25,10 @@
     <?php 
       $item=null;
       $valor=null;
-      $ultimovalor="";
-      $operaciones=ControladorOperaciones::ctrMostrarOperaciones($item,$valor);
-      foreach($operaciones as $key => $value) {
-        $ultimovalor=$value["codigo"];
-      }
     ?>
       <div class="box-header with-border">
   
-        <button class="btn btn-primary btnOperacion" data-toggle="modal" data-target="#modalAgregarOperacion">
+        <button class="btn btn-primary btnAgregarCodOP" data-toggle="modal" data-target="#modalAgregarOperacion">
           <i class="fa fa-plus-square"></i>
            Agregar operaciones
 
@@ -108,12 +103,12 @@ MODAL AGREGAR OPERACION
             <!-- ENTRADA PARA EL CODIGO -->
             
             <div class="form-group">
-              
+              <label>Codigo</label>
               <div class="input-group">
               
                 <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
-                <input type="text" min="0" class="form-control input-lg" name="nuevoCodigo" id="codigoOpe" value="<?php echo $ultimovalor+1 ?>" readonly>
+                <input type="text" min="0" class="form-control input-md" name="nuevoCodigo" id="codigoOpe"  readonly>
 
               </div>
 
@@ -122,12 +117,12 @@ MODAL AGREGAR OPERACION
             <!-- ENTRADA PARA EL NOMBRE -->
             
             <div class="form-group">
-              
+              <label>Descripción</label>
               <div class="input-group">
               
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="nuevaOperacion" placeholder="Ingresar nombre" required>
+                <input type="text" class="form-control input-md" style="text-transform:uppercase" name="nuevaOperacion" id="nuevaOperacion" placeholder="Ingresar nombre" required>
 
               </div>
 
@@ -203,12 +198,12 @@ MODAL EDITAR OPERACION
             <!-- ENTRADA PARA EL CODIGO -->
             
             <div class="form-group">
-              
+              <label>Codigo</label>
               <div class="input-group">
               
                 <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
-                <input type="text" min="0" class="form-control input-lg" name="editarCodigo" id="editarCodigoOpe" required>
+                <input type="text" min="0" class="form-control input-md" name="editarCodigo" id="editarCodigoOpe" readonly>
 
               </div>
 
@@ -217,12 +212,12 @@ MODAL EDITAR OPERACION
             <!-- ENTRADA PARA EL NOMBRE -->
             
             <div class="form-group">
-              
+              <label>Descripción</label>
               <div class="input-group">
               
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="editarOperacion" id="editarOperacion" required>
+                <input type="text" class="form-control input-md" style="text-transform:uppercase" name="editarOperacion" id="editarOperacion" required>
                 <input type="hidden" id="idOperacion" name="idOperacion">
               </div>
 

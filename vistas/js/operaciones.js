@@ -657,3 +657,80 @@ $("#editarCodigoOpe").change(function () {
 		}
 	});
 });
+
+$(".btnAgregarCodOP").click(function(){
+	var ultimoCodigo = "ultimo";
+	var datos = new FormData();
+
+	datos.append("ultimoCodigo",ultimoCodigo);
+	$.ajax({
+		url: "ajax/operaciones.ajax.php",
+		type: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success:function(respuesta){
+			$("#codigoOpe").val(respuesta["ultimoCodigo"]);
+			$("#nuevaOperacion").val();
+		}
+	})
+})
+
+$("#btnAgregarOperacion2").click(function(){
+	var ultimoCodigo = "ultimo";
+	var datos = new FormData();
+	datos.append("ultimoCodigo",ultimoCodigo);
+	$.ajax({
+		url: "ajax/operaciones.ajax.php",
+		type: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+        processData: false,
+		dataType:"json",
+		success:function(respuesta){
+			$("#nuevoCodigo").val(respuesta["ultimoCodigo"]);
+			$("#nuevaDescOperacion").val("");
+		}
+	})
+
+});
+
+
+
+$('#formularioAgregarOperacion2').submit(function(e){                         
+    e.preventDefault(); 
+
+	//datos de operacion
+	
+	var codigo = $("#nuevoCodigo").val();
+	var nombre = $("#nuevaDescOperacion").val();
+	// console.log(nombre);
+	// console.log(codigo);
+	var datos = new FormData();
+	datos.append("agregarCodigo",codigo);
+	datos.append("agregarNombre",nombre);
+	
+	
+	$.ajax({
+		url: "ajax/operaciones.ajax.php",
+		type: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+        processData: false,
+		success:function(respuesta){
+			// console.log(respuesta);
+			if(respuesta== "ok"){
+				$(".tablaArticuloOperaciones").DataTable().ajax.reload(null,false);
+				$("#modalAgregarOperacion").modal('hide');
+				Command:toastr["success"]("Se agrego la operación exitosamente!");
+			}
+			
+		}
+
+	})
+
+});

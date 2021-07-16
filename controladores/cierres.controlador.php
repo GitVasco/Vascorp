@@ -103,7 +103,7 @@ class ControladorCierres{
 							 "taller"=>$_POST["seleccionarSector"],
 							 "usuario"=>$_POST["idVendedor"],
 							 "total"=>$_POST["totalVenta"],
-							 "fecha"=>$fecha->format("Y-m-d H:i:s"),
+							 "fecha"=>$_POST["nuevaFecha"],
 							 "estado"=>"ACTIVO");
 
 				$respuesta=ModeloCierres::mdlGuardarCierres("cierresjf",$datos);

@@ -357,6 +357,7 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "ver-nota-credito" ||
                   $_GET["ruta"] == "editar-nota-credito" ||
                   $_GET["ruta"] == "reportes-ventas" ||
+                  $_GET["ruta"] == "procesar-ce" ||
                   $_GET["ruta"] == "boletas" ){
                     
 
@@ -381,6 +382,10 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "editardetalleoperaciones") {
 
               include "modulos/operaciones/".$_GET["ruta"].".php";
+
+        }else if( $_GET["ruta"] == "costos" ) {
+
+              include "modulos/costos/".$_GET["ruta"].".php";
 
         }else if( $_GET["ruta"] == "salir" ||
                   $_GET["ruta"] == "reportes"){

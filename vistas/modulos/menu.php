@@ -26,6 +26,7 @@
             in_array(12,$valores)?$_SESSION['facturacion']=1:$_SESSION['facturacion']=0;
             in_array(13,$valores)?$_SESSION['ticket']=1:$_SESSION['ticket']=0;
             in_array(14,$valores)?$_SESSION['cuenta']=1:$_SESSION['cuenta']=0;
+            in_array(15,$valores)?$_SESSION['costos']=1:$_SESSION['costos']=0;
 
             ?>
 
@@ -1221,6 +1222,8 @@
                                             $_GET["ruta"] == "boletas" || 
                                             $_GET["ruta"] == "proformas"|| 
                                             $_GET["ruta"] == "ver-nota-credito" || 
+                                            $_GET["ruta"] == "procesar-ce" ||
+                                            $_GET["ruta"] == "reportes-ventas" ||
                                             $_GET["ruta"] == "notas-credito") echo 'active';?>">
 
                 <a href="#">
@@ -1266,6 +1269,17 @@
 
                             <i class="fa fa-file-text"></i>
                             <span>Reportes Ventas</span>
+
+                        </a>
+
+                    </li>
+
+                    <li class="<?php if($_GET["ruta"] == "procesar-ce") echo 'active';?>">
+
+                        <a href="procesar-ce">
+
+                            <i class="fa fa-plane"></i>
+                            <span>Procesar CE</span>
 
                         </a>
 
@@ -1537,6 +1551,48 @@
 
                             <i class="fa fa-envelope-o"></i>
                             <span>Mailbox</span>
+
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </li>
+
+            <?php
+            }
+            ?>
+
+            <!--  Costos-->
+            <?php
+            
+            if($_SESSION["costos"] == 1){
+            ?>
+            <li class="treeview <?php if(   $_GET["ruta"] == "contactos" ) echo 'active';?>">
+
+                <a href="#">
+
+                    <i class="fa fa-inbox text-blue"></i>
+
+                    <span>Costos</span>
+
+                    <span class="pull-right-container">
+
+                        <i class="fa fa-angle-left pull-right"></i>
+
+                    </span>
+
+                </a>
+
+                <ul class="treeview-menu">
+
+                    <li class="<?php if($_GET["ruta"] == "contactos") echo 'active';?>">
+
+                        <a href="contactos">
+
+                            <i class="fa fa-users"></i>
+                            <span>Contactos</span>
 
                         </a>
 

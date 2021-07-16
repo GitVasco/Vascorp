@@ -1672,9 +1672,9 @@ $("#daterange-btnProforma").daterangepicker(
 
 
   $(".btnGenerarReporteVenta").click(function(){ 
-    var optipo = $(this).attr("orden1");
-    var opdocumento = $(this).attr("orden2");
-    var impuesto = $(this).attr("canc");
+    var optipo = $(this).attr("optipo");
+    var opdocumento = $(this).attr("opdocumento");
+    var impuesto = $(this).attr("impuesto");
     var vend = $(this).attr("vend");
     var inicio = $(this).attr("inicio");
     var fin = $(this).attr("fin");
@@ -1683,26 +1683,260 @@ $("#daterange-btnProforma").daterangepicker(
 
        if(optipo == "resumen"){
 
-        // window.open("extensiones/tcpdf/pdf/reporte_pago_cuentas.php?optipo="+optipo+"&opdocumento="+opdocumento+"&impuesto="+impuesto+"&vend="+vend+"&inicio="+inicio+"&fin="+fin,"_blank");
+        window.open("extensiones/tcpdf/pdf/reporte_resumen_venta.php?optipo="+optipo+"&opdocumento="+opdocumento+"&impuesto="+impuesto+"&vend="+vend+"&inicio="+inicio+"&fin="+fin,"_blank");
 
        }else if (optipo == "detallado"){
 
-
+        window.open("extensiones/tcpdf/pdf/reporte_detalle_venta.php?optipo="+optipo+"&opdocumento="+opdocumento+"&impuesto="+impuesto+"&vend="+vend+"&inicio="+inicio+"&fin="+fin,"_blank");
        
         }else if(optipo == "postalResumen"){
         
-
+        window.open("extensiones/tcpdf/pdf/reporte_postalrsm_venta.php?optipo="+optipo+"&opdocumento="+opdocumento+"&impuesto="+impuesto+"&vend="+vend+"&inicio="+inicio+"&fin="+fin,"_blank")
 
        }else if(optipo == "postalDetalle"){
 
-
+        window.open("extensiones/tcpdf/pdf/reporte_postaldet_venta.php?optipo="+optipo+"&opdocumento="+opdocumento+"&impuesto="+impuesto+"&vend="+vend+"&inicio="+inicio+"&fin="+fin,"_blank");
 
        }
      
     }else{
 
-     alert("hola");
+        window.location = "vistas/reportes_excel/reporte_ventas.xlsx";
 
     }
      
-   })
+})
+
+//TABLA DE PROCESAR COMPROBANTES ELECTRONICOS
+
+/*
+* cargamos la tabla para PROFORMAS
+*/
+if (localStorage.getItem("capturarRango34") != null) {
+	$("#daterange-btnProcesarCE span").html(localStorage.getItem("capturarRango34"));
+    if(localStorage.getItem("tipoCE")  != null ){
+        cargarTablaProcesarCE(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"),localStorage.getItem("tipoCE"));
+    }else{
+        cargarTablaProcesarCE(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"),'S03');
+    }
+	
+} else {
+	$("#daterange-btnProcesarCE span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
+    if(localStorage.getItem("tipoCE") != null){
+        cargarTablaProcesarCE(null, null,localStorage.getItem("tipoCE"));
+    }else{
+        cargarTablaProcesarCE(null, null, 'S03');
+    }
+	
+}
+
+function cargarTablaProcesarCE(fechaInicial,fechaFinal,tipo) {
+$(".tablaProcesarCE").DataTable({
+    ajax: "ajax/facturacion/tabla-procesarce.ajax.php?perfil="+$("#perfilOculto").val() +"&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal+"&tipo="+tipo,
+    deferRender: true,
+    retrieve: true,
+    processing: true,
+    "order": [[6, "desc"]],
+    "pageLength": 20,
+	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+    language: {
+        sProcessing: "Procesando...",
+        sLengthMenu: "Mostrar _MENU_ registros",
+        sZeroRecords: "No se encontraron resultados",
+        sEmptyTable: "Ningún dato disponible en esta tabla",
+        sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+        sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
+        sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+        sInfoPostFix: "",
+        sSearch: "Buscar:",
+        sUrl: "",
+        sInfoThousands: ",",
+        sLoadingRecords: "Cargando...",
+        oPaginate: {
+            sFirst: "Primero",
+            sLast: "Último",
+            sNext: "Siguiente",
+            sPrevious: "Anterior"
+        },
+        oAria: {
+            sSortAscending: ": Activar para ordenar la columna de manera ascendente",
+            sSortDescending: ": Activar para ordenar la columna de manera descendente"
+        }
+    }
+});
+}
+
+$("#selectDocumentoCE").change(function(){
+	$(".tablaProcesarCE").DataTable().destroy();
+	var tipoCE=$(this).val();
+	localStorage.setItem("tipoCE", tipoCE);
+	cargarTablaProcesarCE(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"),localStorage.getItem("tipoCE"));
+	
+});
+
+/*=============================================
+RANGO DE FECHAS PROCESAR COMPROBANTE ELECTRONICO
+=============================================*/
+
+
+$("#daterange-btnProcesarCE").daterangepicker(
+    {
+      cancelClass: "CancelarProcesoCE",
+      locale:{
+		"daysOfWeek": [
+			"Dom",
+			"Lun",
+			"Mar",
+			"Mie",
+			"Jue",
+			"Vie",
+			"Sab"
+		],
+		"monthNames": [
+			"Enero",
+			"Febrero",
+			"Marzo",
+			"Abril",
+			"Mayo",
+			"Junio",
+			"Julio",
+			"Agosto",
+			"Septiembre",
+			"Octubre",
+			"Noviembre",
+			"Diciembre"
+		],
+	  },
+      ranges: {
+        Hoy: [moment(), moment()],
+        Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+        "Últimos 7 días": [moment().subtract(6, "days"), moment()],
+        "Últimos 30 días": [moment().subtract(29, "days"), moment()],
+        "Este mes": [moment().startOf("month"), moment().endOf("month")],
+        "Último mes": [
+          moment()
+            .subtract(1, "month")
+            .startOf("month"),
+          moment()
+            .subtract(1, "month")
+            .endOf("month")
+        ]
+      },
+      
+      startDate: moment(),
+      endDate: moment()
+    },
+    function(start, end) {
+      $("#daterange-btnProcesarCE span").html(
+        start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
+      );
+  
+      var fechaInicial = start.format("YYYY-MM-DD");
+  
+      var fechaFinal = end.format("YYYY-MM-DD");
+  
+      var capturarRango34 = $("#daterange-btnProcesarCE span").html();
+  
+	  localStorage.setItem("capturarRango34", capturarRango34);
+      localStorage.setItem("fechaInicial", fechaInicial);
+	  localStorage.setItem("fechaFinal", fechaFinal);
+	  
+      // Recargamos la tabla con la información para ser mostrada en la tabla
+      $(".tablaProcesarCE").DataTable().destroy();
+      if(localStorage.getItem("tipoCE") != null){
+
+        cargarTablaProcesarCE(fechaInicial,fechaFinal,localStorage.getItem("tipoCE"))
+
+      }else{
+
+        cargarTablaProcesarCE(fechaInicial, fechaFinal,'S03');
+
+      }
+      
+    });
+  
+  /*=============================================
+  CANCELAR RANGO DE FECHAS
+  =============================================*/
+  
+  $(".daterangepicker.opensleft .range_inputs .CancelarProcesoCE").on(
+    "click",
+    function() {
+      localStorage.removeItem("capturarRango34");
+      localStorage.removeItem("fechaInicial");
+      localStorage.removeItem("fechaFinal");
+      localStorage.clear();
+      window.location = "procesar-ce";
+    }
+  );
+  
+  /*=============================================
+  CAPTURAR HOY
+  =============================================*/
+  
+  $(".daterangepicker.opensleft .ranges li").on("click", function() {
+    var textoHoy = $(this).attr("data-range-key");
+    var ruta = $("#rutaAcceso").val();
+
+    if(ruta == "procesar-ce"){
+  
+        if (textoHoy == "Hoy") {
+        var d = new Date();
+    
+        var dia = d.getDate();
+        var mes = d.getMonth() + 1;
+        var año = d.getFullYear();
+    
+        dia = ("0" + dia).slice(-2);
+        mes = ("0" + mes).slice(-2);
+    
+        var fechaInicial = año + "-" + mes + "-" + dia;
+        var fechaFinal = año + "-" + mes + "-" + dia;
+        localStorage.setItem("capturarRango34", "Hoy");
+        localStorage.setItem("fechaInicial", fechaInicial);
+        localStorage.setItem("fechaFinal", fechaFinal);
+        // Recargamos la tabla con la información para ser mostrada en la tabla
+        $(".tablaProcesarCE").DataTable().destroy();
+        if(localStorage.getItem("tipoCE") != null){
+
+            cargarTablaProcesarCE(fechaInicial,fechaFinal,localStorage.getItem("tipoCE"))
+
+        }else{
+
+            cargarTablaProcesarCE(fechaInicial,fechaFinal,'S03')
+
+        }
+        
+        }
+    }
+  });
+
+  $(".tablaProcesarCE").on("click","button.btnGenerarXMLCE",function(){
+    var tipo = $(this).attr("tipo");
+    var documento = $(this).attr("documento");
+
+    // console.log(tipo);
+    // console.log(documento);
+
+    //VALIDAMOS SI ES FACTURA, BOLETA, NOTA DE CREDITO O DEBITO
+    if(tipo == 'S03'){
+
+        window.open("vistas/generar_xml/factura.php?tipo="+tipo+"&documento="+documento,"_blank");
+
+    }else if(tipo == 'S02'){
+
+
+
+    }else if(tipo == 'E05'){
+
+
+
+    }else{
+
+
+
+    }
+    
+
+    
+  });
