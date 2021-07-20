@@ -474,6 +474,147 @@ MODAL VISUALIZAR INFORMACION
 
 </div>
 
+
+<!--=====================================
+MODAL VER ETIQUETA POR TALLER
+======================================-->
+
+<div id="modalVerEtiqueta" class="modal fade" role="dialog">
+
+  <div class="modal-dialog modal-sm" >
+
+    <div class="modal-content" >
+
+      <form role="form"  method="post" enctype="multipart/form-data">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Lista de Talleres</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+          <div class="form-group">
+            <label for="">Mes</label>
+                <?php
+
+                  date_default_timezone_set('America/Lima');
+                  $año= date("Y");
+
+                  echo '<input type="hidden" id="editarAño" name="editarAño" value="'.$año.'">';
+
+                ?>
+
+                <input type="hidden" id="id" name="id">
+              
+                <input type="hidden" id="editarUsuario" name="editarUsuario" value="<?php echo $_SESSION["id"]; ?>">
+              
+                <select class="form-control selectpicker input-lg" id="editarMes" name="editarMes" data-live-search="true">
+
+                <option value="">Seleccione Mes</option>
+
+                    <?php
+
+                    $mes = ControladorTalleres::ctrMes();
+
+                    foreach ($mes as $key => $value) {
+                    
+                    echo '<option value="'.$value["codigo"].'">'.$value["codigo"].' - '.$value["descripcion"].'</option>';
+                    }
+
+                    ?>
+
+                </select>
+
+            </div>
+
+            <!-- ENTRADA PARA EL INICIO -->
+
+             <div class="form-group">
+             <label for="">Fecha inicio</label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
+
+                <input type="date" class="form-control input-lg" id="editarInicio" name="editarInicio" required>
+
+              </div>
+
+            </div>
+
+            <!-- ENTRADA PARA EL FIN -->
+
+            <div class="form-group">
+              <label for="">Fecha fin</label>
+              <div class="input-group">
+              
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
+
+                <input type="date" class="form-control input-lg" id="editarFin" name="editarFin" placeholder="Fecha de fin" required>
+
+              </div>
+
+            </div>            
+
+            <!-- ENTRADA PARA LISTAR PRECIOS -->
+              <table class="tablaDetallePrecio" width="100%">
+                <thead>
+                <tr>
+                  <th></th>
+                  <th class="text-center">S/</th>
+                  <th style="width:150px"></th>
+                </tr>
+                </thead>
+                <tbody>
+             
+                </tbody>
+              </table>
+
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Guardar Precio</button>
+
+        </div>
+
+      </form>
+      
+      <?php
+      
+        $editarPrecio= new ControladorModelos();
+        $editarPrecio->ctrEditarPrecio();
+     
+      ?>
+
+
+    </div>
+
+  </div>
+
+</div>
+
   <?php
 
   $eliminarPagoServicio = new ControladorServicios();
