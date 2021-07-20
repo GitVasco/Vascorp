@@ -383,7 +383,8 @@ CUERPO DOCUMENTO
 
               include "modulos/operaciones/".$_GET["ruta"].".php";
 
-        }else if( $_GET["ruta"] == "costos" ) {
+        }else if( $_GET["ruta"] == "centro-costos" ||
+                  $_GET["ruta"] == "gastos-caja") {
 
               include "modulos/costos/".$_GET["ruta"].".php";
 
@@ -479,6 +480,7 @@ CUERPO DOCUMENTO
   <script src="vistas/js/orden-servicio.js"></script>
   <script src="vistas/js/kardex.js"></script>
   <script src="vistas/js/produccion-mp.js"></script>
+  <script src="vistas/js/costos.js"></script>
 </body>
 
 </html>

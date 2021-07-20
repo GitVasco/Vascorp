@@ -1510,6 +1510,62 @@
                     </li>
                 </ul>
             </li>
+
+
+            <!--  Costos-->
+            <?php
+            
+            if($_SESSION["costos"] == 1){
+            ?>
+            <li class="treeview <?php if(   $_GET["ruta"] == "centro-costos" ||
+                                            $_GET["ruta"] == "gastos-caja" ) echo 'active';?>">
+
+                <a href="#">
+
+                    <i class="fa fa-rocket text-yellow"></i>
+
+                    <span>Costos</span>
+
+                    <span class="pull-right-container">
+
+                        <i class="fa fa-angle-left pull-right"></i>
+
+                    </span>
+
+                </a>
+
+                <ul class="treeview-menu">
+
+                    <li class="<?php if($_GET["ruta"] == "centro-costos") echo 'active';?>">
+
+                        <a href="centro-costos">
+
+                            <i class="fa fa-cc text-red"></i>
+                            <span>Centro de Costos</span>
+
+                        </a>
+
+                    </li>
+
+                    <li class="<?php if($_GET["ruta"] == "gastos-caja") echo 'active';?>">
+
+                        <a href="gastos-caja">
+
+                            <i class="fa fa-diamond text-green"></i>
+                            <span>Gastos Caja</span>
+
+                        </a>
+
+                    </li>                    
+
+                </ul>
+
+            </li>
+
+            <?php
+            }
+            ?>
+                        
             <!--  Ticket-->
             <?php
             }
@@ -1564,47 +1620,6 @@
             }
             ?>
 
-            <!--  Costos-->
-            <?php
-            
-            if($_SESSION["costos"] == 1){
-            ?>
-            <li class="treeview <?php if(   $_GET["ruta"] == "contactos" ) echo 'active';?>">
-
-                <a href="#">
-
-                    <i class="fa fa-inbox text-blue"></i>
-
-                    <span>Costos</span>
-
-                    <span class="pull-right-container">
-
-                        <i class="fa fa-angle-left pull-right"></i>
-
-                    </span>
-
-                </a>
-
-                <ul class="treeview-menu">
-
-                    <li class="<?php if($_GET["ruta"] == "contactos") echo 'active';?>">
-
-                        <a href="contactos">
-
-                            <i class="fa fa-users"></i>
-                            <span>Contactos</span>
-
-                        </a>
-
-                    </li>
-
-                </ul>
-
-            </li>
-
-            <?php
-            }
-            ?>
 
         </ul>
 
