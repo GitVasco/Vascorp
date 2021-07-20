@@ -22,7 +22,7 @@ $modelo = ControladorFacturacion::ctrMostrarModeloImpresion($documento,$tipo);
 $unidad= ControladorFacturacion::ctrMostrarUnidadesImpresion($documento,$tipo);
 // var_dump($modelo);
 
-
+$subtotal= $venta["neto"] - $venta["dscto"]; 
 
 class MYPDF extends TCPDF {
 
@@ -201,7 +201,7 @@ if( $tamaño>= 25){
     $pdf->Ln(5);
     $pdf->Cell(120, 10, '', 0, false, 'L', 0, '', 0, false, false, false );
     $pdf->Cell(20, 10, 'Sub Total', 0, false, 'L', 0, '', 0, false, false, false );
-    $pdf->Cell(42, 10, $venta["neto"], 0, false, 'R', 0, '', 0, false, false, false );
+    $pdf->Cell(42, 10, $subtotal, 0, false, 'R', 0, '', 0, false, false, false );
     $pdf->Ln(5);
     $pdf->Cell(120, 10, '', 0, false, 'L', 0, '', 0, false, false, false );
     $pdf->Cell(20, 10, 'ISC', 0, false, 'L', 0, '', 0, false, false, false );
@@ -247,7 +247,7 @@ if( $tamaño>= 25){
     $pdf->Ln(5);
     $pdf->Cell(125, 10, '', 0, false, 'L', 0, '', 0, false, false, false );
     $pdf->Cell(20, 10, 'Sub Total', 0, false, 'L', 0, '', 0, false, false, false );
-    $pdf->Cell(37, 10, $venta["neto"], 0, false, 'R', 0, '', 0, false, false, false );
+    $pdf->Cell(37, 10, $subtotal, 0, false, 'R', 0, '', 0, false, false, false );
     $pdf->Ln(5);
     $pdf->Cell(125, 10, '', 0, false, 'L', 0, '', 0, false, false, false );
     $pdf->Cell(20, 10, 'ISC', 0, false, 'L', 0, '', 0, false, false, false );

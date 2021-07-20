@@ -507,6 +507,7 @@
 
             <li class="treeview <?php if(   $_GET["ruta"] == "ordencorte" || 
                                             $_GET["ruta"] == "crear-ordencorte" || 
+                                            $_GET["ruta"] == "editar-detalle-ordencorte" ||
                                             $_GET["ruta"] == "almacencorte" || 
                                             $_GET["ruta"] == "crear-almacencorte" || 
                                             $_GET["ruta"] == "en-cortes" || 
