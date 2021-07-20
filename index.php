@@ -104,6 +104,8 @@ require_once "controladores/unidadmedida.controlador.php";
 
 require_once "controladores/vendedor.controlador.php";
 
+require_once "controladores/centro-costos.controlador.php";
+
 /* 
 * MODELOS
 */
@@ -204,6 +206,8 @@ require_once "modelos/notas-salidas.modelo.php";
 require_once "modelos/orden-compra.modelo.php";
 
 require_once "modelos/orden-servicio.modelo.php";
+
+require_once "modelos/centro-costos.modelo.php";
 
 require_once "extensiones/vendor/autoload.php";
 
