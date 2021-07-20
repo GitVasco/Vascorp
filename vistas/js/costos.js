@@ -251,3 +251,66 @@ $(".TablaGastosCaja").DataTable({
 	  }
 
   });
+
+  //OBTENER DATOS POR RUC MEDIANTE LA API 
+function ObtenerDatosRuc3(){
+	
+	var nuevoRuc = $("#nuevoRucPro").val();
+	var tamano = nuevoRuc.length;
+	// console.log(tamano);
+	if(tamano == 8){
+		var datos = new FormData();
+		datos.append("nuevoDni",nuevoRuc);
+		$.ajax({
+			type: "POST",
+			url: 'ajax/clientes.ajax.php',
+			data: datos,
+			cache: false,
+			contentType: false,
+			processData: false,
+			dataType: "json",
+			success:function( jsonx ) {
+				// console.log(jsonx);
+				if(jsonx["success"]==false){
+					$('#nuevaRazPro').attr('readonly',false);
+					$('#nuevaRazPro').val("");
+					
+				}else{
+					$('#nuevaRazPro').val(jsonx["nombres"]+" "+jsonx["apellidoPaterno"] +" "+jsonx["apellidoMaterno"] );
+					
+				}
+			  
+			}
+		})
+	}else if(tamano == 11){
+		var datos = new FormData();
+		datos.append("nuevoRuc",nuevoRuc);
+		$.ajax({
+			type: "POST",
+			url: 'ajax/proveedor.ajax.php',
+			data: datos,
+			cache: false,
+			contentType: false,
+			processData: false,
+			dataType: "json",
+			success:function( jsonx ) {
+				// console.log(jsonx);
+				if(jsonx["success"]==false){
+					$('#nuevaRazPro').attr('readonly',false);
+					$('#nuevaRazPro').val("");
+					
+				}else{
+					$('#nuevaRazPro').val(jsonx["razonSocial"]);
+				}
+			  
+			}
+		})
+	}else{
+		
+		Command: toastr["warning"]("DNI 8 digitos!");
+
+		
+		Command: toastr["warning"]("RUC 11 digitos!");
+	}
+	
+}

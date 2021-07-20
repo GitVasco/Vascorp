@@ -142,7 +142,7 @@ MODAL REGISTRAR GASTO
                     <div class="input-group">
                         <input type="number"  class="form-control input-sm" name="nuevoRUC" placeholder="Ingresar RUC" id = "nuevoRucPro" required>
                         <div class="input-group-addon" style="padding:0px !important;border: 0px !important">
-                            <button type="button" class="btn btn-default btn-sm" onclick="ObtenerDatosRuc()"><i class="fa fa-search "></i></button>	
+                            <button type="button" class="btn btn-default btn-sm" onclick="ObtenerDatosRuc3()"><i class="fa fa-search "></i></button>	
                         </div>
                     </div>
                 </div>
