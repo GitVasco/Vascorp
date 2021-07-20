@@ -23,6 +23,11 @@
     <div class="box">
 
       <div class="box-header with-border">
+          <a href="ordencorte">
+          <button class="btn btn-danger"> <i class="fa fa-arrow-left"></i> Volver</button>
+
+          </a>
+          
 
 
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarDetalleCorte">Agregar Orden de Corte</button>
