@@ -112,33 +112,12 @@ MODAL REGISTRAR GASTO
                 </div>
 
                 <label class="col-form-label col-lg-1 col-md-1">Recibo</label>
-                <div class="col-lg-1">
+                <div class="col-lg-2">
                     <input type="text" class="form-control input-sm" id="recibo" name="recibo">
                 </div>
 
-                <label class="col-form-label col-lg-1 col-md-1">Proveedor</label>
-                <div class="col-lg-2">
-                    <div class="input-group">
-                        <input type="number"  class="form-control input-sm" name="nuevoRUC" placeholder="Ingresar RUC" id = "nuevoRucPro" required>
-                        <div class="input-group-addon" style="padding:0px !important;border: 0px !important">
-                            <button type="button" class="btn btn-default btn-sm" onclick="ObtenerDatosRuc()"><i class="fa fa-search "></i></button>	
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-10 col-sm-9">
-
-                    <input type="text" style="text-transform:uppercase;" class="form-control input-md" name="nuevaRazPro" id="nuevaRazPro" placeholder="Ingresar razon social" required readonly>
-
-                </div>
-
-            </div>
-
-            <div class="form-group" style="padding-top:25px">
-
                 <label for=""  class="col-form-label col-lg-1 col-md-1">Sucursal</label>
-
-                <div class="col-lg-3 col-md-3">
+                <div class="col-lg-5 col-md-3">
                     <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevaSucursal" id="nuevaSucursal" required>
                         <option value="">Seleccionar Sucursal</option>
                         <?php
@@ -152,28 +131,27 @@ MODAL REGISTRAR GASTO
 
                         ?>
                     </select>
-                </div>
-
-                <label class="col-form-label col-lg-1 col-md-1">Cod. Caja</label>
-
-                <div class="col-lg-7 col-md-3">
-                    <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevoCodCaja" id="nuevoCodCaja" required>
-                        <option value="">Seleccionar Código Caja</option>
-                        <?php
-
-                        $sucursal = ControladorCentroCostos::ctrMostrarCentroCostosCaja();
-                        #var_dump($sucursal);
-                        foreach ($sucursal as $key => $value) {
-                            echo '<option value="' . $value["cod_caja"] . '">' .$value["nombre_gasto"]." - ".$value["nombre_area"]." - ".$value["descripcion"].'</option>';
-                        }
-
-                        ?>
-                    </select>
                 </div>                
 
             </div>
 
             <div class="form-group" style="padding-top:25px">
+
+                <label class="col-form-label col-lg-1 col-md-1">Proveedor</label>
+                <div class="col-lg-2">
+                    <div class="input-group">
+                        <input type="number"  class="form-control input-sm" name="nuevoRUC" placeholder="Ingresar RUC" id = "nuevoRucPro" required>
+                        <div class="input-group-addon" style="padding:0px !important;border: 0px !important">
+                            <button type="button" class="btn btn-default btn-sm" onclick="ObtenerDatosRuc()"><i class="fa fa-search "></i></button>	
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-10 col-sm-9">
+
+                    <input type="text" style="text-transform:uppercase;" class="form-control input-md" name="nuevaRazPro" id="nuevaRazPro" placeholder="Ingresar razon social" required readonly>
+
+                </div>            
 
                 <label class="col-form-label col-lg-1 col-md-1">Tipo Doc.</label>
                 <div class="col-lg-2 col-md-3">
@@ -197,6 +175,27 @@ MODAL REGISTRAR GASTO
                 </div>
 
             </div>
+
+            <div class="form-group" style="padding-top:25px">
+
+                <label class="col-form-label col-lg-1 col-md-1">Cod. Caja</label>
+
+                <div class="col-lg-8 col-md-3">
+                    <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevoCodCaja" id="nuevoCodCaja" required>
+                        <option value="">Seleccionar Código Caja</option>
+                        <?php
+
+                        $sucursal = ControladorCentroCostos::ctrMostrarCentroCostosCaja();
+                        #var_dump($sucursal);
+                        foreach ($sucursal as $key => $value) {
+                            echo '<option value="'.$value["cod_caja"].'">'.$value["cod_caja"]." - ".$value["nombre_gasto"]." - ".$value["nombre_area"]." - ".$value["descripcion"].'</option>';
+                        }
+
+                        ?>
+                    </select>
+                </div>                
+
+            </div>            
    
 
           </div>
