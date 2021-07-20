@@ -193,10 +193,33 @@ MODAL REGISTRAR GASTO
 
                         ?>
                     </select>
+                </div>   
+                
+                <label class="col-form-label col-lg-1 col-md-1">Total S/.</label>
+                <div class="col-lg-2">
+                    <input type="number" step="any" class="form-control input-sm" id="total" name="total">
                 </div>                
 
-            </div>            
-   
+            </div>  
+
+            <div class="form-group" style="padding-top:25px">          
+            
+                <label class="col-form-label col-lg-1 col-md-1">Gasto</label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control input-sm" id="gasto" name="gasto" readonly>
+                </div> 
+
+                <label class="col-form-label col-lg-1 col-md-1">Área</label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control input-sm" id="area" name="area" readonly>
+                </div> 
+
+                <label class="col-form-label col-lg-1 col-md-1">Caja</label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control input-sm" id="caja" name="caja" readonly>
+                </div> 
+
+            </div>
 
           </div>
 
