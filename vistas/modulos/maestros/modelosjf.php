@@ -537,9 +537,9 @@ MODAL AGREGAR MODELO
               <table class="tablaDetallePrecio" width="100%">
                 <thead>
                 <tr>
-                  <th></th>
-                  <th class="text-center">S/</th>
-                  <th style="width:150px"></th>
+                  <th style="width:40px;text-align:center">N°</th>
+                  <th style="width:100px">S/</th>
+                  <th style="width:120px"></th>
                 </tr>
                 </thead>
                 <tbody>

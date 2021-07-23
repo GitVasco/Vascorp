@@ -519,8 +519,8 @@ $(".tablaModelos tbody").on("click","button.btnVerPrecio",function(){
 			$('.tablaDetallePrecio').append(
 
 				'<tr class="detallePR">' +
-					'<td class="text-center">' + i + ' </td>' +
-					'<td class="text-center"><input type="number" min="0" step ="any" class="form-control input-md" name="precio'+i+'" id="precio'+i+'" value="'+ respuesta["precio"+i+""] +'" readonly > </td><td class="text-center"><a type="button"class="btn btn-sm btn-primary editarPrecio'+i+'">Editar Precio</a></td>' +
+					'<td style="background-color:#3c8dbc;border-radius:50px;width:30px;text-align:center;color:white">' + i + ' </td>' +
+					'<td style="width:120px"><input type="number" min="0" step ="any" class="form-control input-md" name="precio'+i+'" id="precio'+i+'" value="'+ respuesta["precio"+i+""] +'" readonly > </td><td class="text-center"><a type="button"class="btn btn-sm btn-primary editarPrecio'+i+'">Editar Precio</a></td>' +
 				'</tr>')
 
 			}

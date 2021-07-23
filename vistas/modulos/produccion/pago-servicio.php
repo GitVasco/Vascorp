@@ -485,7 +485,7 @@ MODAL VER ETIQUETA POR TALLER
 
     <div class="modal-content" >
 
-      <form role="form"  method="post" enctype="multipart/form-data">
+      <form role="form"  method="post">
 
         <!--=====================================
         CABEZA DEL MODAL
@@ -507,40 +507,8 @@ MODAL VER ETIQUETA POR TALLER
 
           <div class="box-body">
 
-          <div class="form-group">
-            <label for="">Mes</label>
-                <?php
-
-                  date_default_timezone_set('America/Lima');
-                  $año= date("Y");
-
-                  echo '<input type="hidden" id="editarAño" name="editarAño" value="'.$año.'">';
-
-                ?>
-
-                <input type="hidden" id="id" name="id">
+            <input type="hidden" id="id2" name="id2">
               
-                <input type="hidden" id="editarUsuario" name="editarUsuario" value="<?php echo $_SESSION["id"]; ?>">
-              
-                <select class="form-control selectpicker input-lg" id="editarMes" name="editarMes" data-live-search="true">
-
-                <option value="">Seleccione Mes</option>
-
-                    <?php
-
-                    $mes = ControladorTalleres::ctrMes();
-
-                    foreach ($mes as $key => $value) {
-                    
-                    echo '<option value="'.$value["codigo"].'">'.$value["codigo"].' - '.$value["descripcion"].'</option>';
-                    }
-
-                    ?>
-
-                </select>
-
-            </div>
-
             <!-- ENTRADA PARA EL INICIO -->
 
              <div class="form-group">
@@ -549,7 +517,7 @@ MODAL VER ETIQUETA POR TALLER
               
                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
 
-                <input type="date" class="form-control input-lg" id="editarInicio" name="editarInicio" required>
+                <input type="date" class="form-control input-md" id="editarInicio2" name="editarInicio2" readonly>
 
               </div>
 
@@ -563,20 +531,21 @@ MODAL VER ETIQUETA POR TALLER
               
                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
 
-                <input type="date" class="form-control input-lg" id="editarFin" name="editarFin" placeholder="Fecha de fin" required>
+                <input type="date" class="form-control input-md" id="editarFin2" name="editarFin2" readonly>
 
               </div>
 
             </div>            
 
-            <!-- ENTRADA PARA LISTAR PRECIOS -->
-              <table class="tablaDetallePrecio" width="100%">
-                <thead>
-                <tr>
-                  <th></th>
-                  <th class="text-center">S/</th>
+            <!-- ENTRADA PARA LISTAR DE ETIQUETAS -->
+              <table class="tablaDetalleEtiqueta" width="100%" >
+                <thead style="height:30px">
+                <tr >
+                  <th style="width:30px">N°</th>
+                  <th class="text-center"><i class="fa fa-ticket"></i> Etiqueta</th>
                   <th style="width:150px"></th>
                 </tr>
+                
                 </thead>
                 <tbody>
              
@@ -595,7 +564,7 @@ MODAL VER ETIQUETA POR TALLER
 
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" class="btn btn-primary">Guardar Precio</button>
+          <button type="submit" class="btn btn-primary">Guardar Etiqueta</button>
 
         </div>
 
@@ -603,8 +572,8 @@ MODAL VER ETIQUETA POR TALLER
       
       <?php
       
-        $editarPrecio= new ControladorModelos();
-        $editarPrecio->ctrEditarPrecio();
+        $editarEtiqueta= new ControladorServicios();
+        $editarEtiqueta->ctrEditarEtiqueta();
      
       ?>
 

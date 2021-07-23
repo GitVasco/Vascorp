@@ -1264,7 +1264,8 @@ $(".btnReportePagoServicios").click(function(){
 $(".tablaPagoServicios tbody").on("click", "button.btnReportePagoServicios2", function(){
   var inicio = $(this).attr("inicio");
   var fin = $(this).attr("fin");
-  window.location = "vistas/reportes_excel/rpt_pago_servicio.php?inicio="+inicio+"&fin="+fin;
+  var id = $(this).attr("id");
+  window.location = "vistas/reportes_excel/rpt_pago_servicio.php?inicio="+inicio+"&fin="+fin+"&id="+id;
 })
 
 $(".tablaPagoServicios").on("click",".btnPagarCierreServicio",function(){
@@ -1326,3 +1327,67 @@ $(".tablaPagoServicios").on("click",".btnPagarCierreServicio",function(){
     $(this).attr("estadoPago","PAGADO");}
   
 });
+
+/*
+* EDITAR PAGO SERVICIO
+*/
+$(".tablaPagoServicios").on("click",".btnVerEtiqueta",function(){
+
+	var idPagoServicio=$(this).attr("id");
+    var datos=new FormData();
+    // console.log(idPagoServicio);
+	datos.append("idPagoServicio",idPagoServicio);
+	$.ajax({
+		url:"ajax/servicios.ajax.php",
+		type:"POST",
+		data:datos,
+		cache:false,
+		contentType:false,
+		processData:false,
+		dataType:"json",
+		success:function(respuesta){
+            // console.log(respuesta);
+            $("#id2").val(respuesta["id"]);
+            $("#editarInicio2").val(respuesta["inicio"]);
+            $("#editarFin2").val(respuesta["fin"]);
+
+            $(".detalleEtq").remove();
+
+          for(var i=1; i <=15 ; i++){
+          
+         
+            if( i == 14 || i == 15){
+              $('.tablaDetalleEtiqueta').append(
+                '<tr class="detalleEtq">' +
+                  '<td style="background-color:#3c8dbc;border-radius:50px;width:30px;text-align:center;color:white">' + i + ' </td>' +
+                  '<td class="text-center" > <input type="number" min="0" class="form-control input-sm" name="taller'+i+'" id="etiqueta'+i+'" value="'+ respuesta["taller"+i+""] +'" disabled > </td><td class="text-center"><a type="button"class="btn btn-sm btn-primary editarEtiqueta'+i+'">Editar Etiqueta</a></td>' +
+                '</tr>')
+            }else{
+              $('.tablaDetalleEtiqueta').append(
+                '<tr class="detalleEtq">' +
+                  '<td style="background-color:#3c8dbc;border-radius:50px;width:30px;text-align:center;color:white">' + i + ' </td>' +
+                  '<td class="text-center" > <input type="number" min="0" class="form-control input-sm" name="taller'+i+'" id="etiqueta'+i+'" value="'+ respuesta["taller"+i+""] +'" readonly > </td><td class="text-center"><a type="button"class="btn btn-sm btn-primary editarEtiqueta'+i+'">Editar Etiqueta</a></td>' +
+                '</tr>')
+            }
+            
+
+          }
+            
+        }
+        
+    });
+    
+});
+
+//Ingresar readonly para precios 
+for (let index = 1; index <= 15; index++) {
+	$(".tablaDetalleEtiqueta").on("click","a.editarEtiqueta"+index,function(){
+		
+		if($('#etiqueta'+index).attr("readonly")){
+
+			$("#etiqueta"+index).attr("readonly",false);
+		}else{
+			$("#etiqueta"+index).attr("readonly",true);
+		}
+	})
+}

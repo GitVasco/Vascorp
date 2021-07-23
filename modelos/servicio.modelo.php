@@ -606,15 +606,10 @@ class ModeloServicios{
 		if ($valor != null) {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
-                                                            q.id,
-                                                            q.ano,
+                                                            q.*,
                                                             m.mes,
                                                             q.mes AS nmes,
-                                                            q.inicio,
-                                                            q.fin,
-                                                            u.nombre,
-                                                            q.fecha_creacion,
-															q.estado_pago
+                                                            u.nombre
                                                         FROM
                                                             pago_serviciosjf q 
                                                             LEFT JOIN usuariosjf u 
@@ -741,6 +736,60 @@ class ModeloServicios{
         $stmt->bindParam(":inicio", $datos["inicio"], PDO::PARAM_STR);
         $stmt->bindParam(":fin", $datos["fin"], PDO::PARAM_STR);
         $stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	}   
+
+	static public function mdlEditarEtiqueta($datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE 
+                                                    pago_serviciosjf 
+                                                SET
+                                                    taller1 = :taller1,
+													taller2 = :taller2,
+													taller3 = :taller3,
+													taller4 = :taller4,
+													taller5 = :taller5,
+													taller6 = :taller6,
+													taller7 = :taller7,
+													taller8 = :taller8,
+													taller9 = :taller9,
+													taller10 = :taller10,
+													taller11 = :taller11,
+													taller12 = :taller12,
+													taller13 = :taller13,
+													taller14 = :taller14,
+													taller15 = :taller15
+                                                WHERE id = :id");
+
+		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
+		$stmt->bindParam(":taller1", $datos["taller1"], PDO::PARAM_STR);
+        $stmt->bindParam(":taller2", $datos["taller2"], PDO::PARAM_STR);
+        $stmt->bindParam(":taller3", $datos["taller3"], PDO::PARAM_STR);
+        $stmt->bindParam(":taller4", $datos["taller4"], PDO::PARAM_STR);
+        $stmt->bindParam(":taller5", $datos["taller5"], PDO::PARAM_STR);
+		$stmt->bindParam(":taller6", $datos["taller6"], PDO::PARAM_STR);
+		$stmt->bindParam(":taller7", $datos["taller7"], PDO::PARAM_STR);
+		$stmt->bindParam(":taller8", $datos["taller8"], PDO::PARAM_STR);
+		$stmt->bindParam(":taller9", $datos["taller9"], PDO::PARAM_STR);
+		$stmt->bindParam(":taller10", $datos["taller10"], PDO::PARAM_STR);
+		$stmt->bindParam(":taller11", $datos["taller11"], PDO::PARAM_STR);
+		$stmt->bindParam(":taller12", $datos["taller12"], PDO::PARAM_STR);
+		$stmt->bindParam(":taller13", $datos["taller13"], PDO::PARAM_STR);
+		$stmt->bindParam(":taller14", $datos["taller14"], PDO::PARAM_STR);
+		$stmt->bindParam(":taller15", $datos["taller15"], PDO::PARAM_STR);
 
 		if($stmt->execute()){
 
@@ -1649,4 +1698,198 @@ class ModeloServicios{
 	}
 
 
+	 /* 
+	* MOSTRAR PRODUCCION
+	*/
+	static public function mdlMostrarEtiquetas($id,$sector){
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+		s.id AS id_sector,
+		s.cod_sector,
+		s.nom_sector,
+		s.pago,
+		p.unidades,
+		p.docenas,
+		p.precio,
+		p.total 
+	  FROM
+		sectorjf s 
+		LEFT JOIN 
+		  (SELECT 
+			p.id,
+			'taller1' AS taller,
+			p.taller1 AS unidades,
+			ROUND(p.taller1 / 12, 2) AS docenas,
+			'0.30' AS precio,
+			ROUND(p.taller1 / 12 * 0.3, 2) AS total 
+		  FROM
+			pago_serviciosjf p 
+		  WHERE id = :id 
+		  UNION
+		  SELECT 
+			p.id,
+			'taller2' AS taller,
+			p.taller2 AS unidades,
+			ROUND(p.taller2 / 12, 2) AS docenas,
+			'0.30' AS precio,
+			ROUND(p.taller2 / 12 * 0.3, 2) AS total 
+		  FROM
+			pago_serviciosjf p 
+		  WHERE id = :id 
+		  UNION
+		  SELECT 
+			p.id,
+			'taller3' AS taller,
+			p.taller3 AS unidades,
+			ROUND(p.taller3 / 12, 2) AS docenas,
+			'0.30' AS precio,
+			ROUND(p.taller3 / 12 * 0.3, 2) AS total 
+		  FROM
+			pago_serviciosjf p 
+		  WHERE id = :id
+		  UNION
+		  SELECT 
+			p.id,
+			'taller4' AS taller,
+			p.taller4 AS unidades,
+			ROUND(p.taller4 / 12, 2) AS docenas,
+			'0.30' AS precio,
+			ROUND(p.taller4 / 12 * 0.3, 2) AS total 
+		  FROM
+			pago_serviciosjf p 
+		  WHERE id = :id
+		  UNION
+		  SELECT 
+			p.id,
+			'taller5' AS taller,
+			p.taller5 AS unidades,
+			ROUND(p.taller5 / 12, 2) AS docenas,
+			'0.30' AS precio,
+			ROUND(p.taller5 / 12 * 0.3, 2) AS total 
+		  FROM
+			pago_serviciosjf p 
+		  WHERE id = :id
+		  UNION
+		  SELECT 
+			p.id,
+			'taller6' AS taller,
+			p.taller6 AS unidades,
+			ROUND(p.taller6 / 12, 2) AS docenas,
+			'0.30' AS precio,
+			ROUND(p.taller6 / 12 * 0.3, 2) AS total 
+		  FROM
+			pago_serviciosjf p 
+		  WHERE id = :id 
+		  UNION
+		  SELECT 
+			p.id,
+			'taller7' AS taller,
+			p.taller7 AS unidades,
+			ROUND(p.taller7 / 12, 2) AS docenas,
+			'0.30' AS precio,
+			ROUND(p.taller7 / 12 * 0.3, 2) AS total 
+		  FROM
+			pago_serviciosjf p 
+		  WHERE id = :id
+		  UNION
+		  SELECT 
+			p.id,
+			'taller8' AS taller,
+			p.taller8 AS unidades,
+			ROUND(p.taller8 / 12, 2) AS docenas,
+			'0.30' AS precio,
+			ROUND(p.taller8 / 12 * 0.3, 2) AS total 
+		  FROM
+			pago_serviciosjf p 
+		  WHERE id = :id 
+		  UNION
+		  SELECT 
+			p.id,
+			'taller9' AS taller,
+			p.taller9 AS unidades,
+			ROUND(p.taller9 / 12, 2) AS docenas,
+			'0.30' AS precio,
+			ROUND(p.taller9 / 12 * 0.3, 2) AS total 
+		  FROM
+			pago_serviciosjf p 
+		  WHERE id = :id
+		  UNION
+		  SELECT 
+			p.id,
+			'taller10' AS taller,
+			p.taller10 AS unidades,
+			ROUND(p.taller10 / 12, 2) AS docenas,
+			'0.30' AS precio,
+			ROUND(p.taller10 / 12 * 0.3, 2) AS total 
+		  FROM
+			pago_serviciosjf p 
+		  WHERE id = :id
+		  UNION
+		  SELECT 
+			p.id,
+			'taller11' AS taller,
+			p.taller11 AS unidades,
+			ROUND(p.taller11 / 12, 2) AS docenas,
+			'0.30' AS precio,
+			ROUND(p.taller11 / 12 * 0.3, 2) AS total 
+		  FROM
+			pago_serviciosjf p 
+		  WHERE id = :id 
+		  UNION
+		  SELECT 
+			p.id,
+			'taller12' AS taller,
+			p.taller12 AS unidades,
+			ROUND(p.taller12 / 12, 2) AS docenas,
+			'0.30' AS precio,
+			ROUND(p.taller12 / 12 * 0.3, 2) AS total 
+		  FROM
+			pago_serviciosjf p 
+		  WHERE id = :id
+		  UNION
+		  SELECT 
+			p.id,
+			'taller13' AS taller,
+			p.taller13 AS unidades,
+			ROUND(p.taller13 / 12, 2) AS docenas,
+			'0.30' AS precio,
+			ROUND(p.taller13 / 12 * 0.3, 2) AS total 
+		  FROM
+			pago_serviciosjf p 
+		  WHERE id = :id 
+		  UNION
+		  SELECT 
+			p.id,
+			'taller14' AS taller,
+			p.taller14 AS unidades,
+			ROUND(p.taller14 / 12, 2) AS docenas,
+			'0.30' AS precio,
+			ROUND(p.taller14 / 12 * 0.3, 2) AS total 
+		  FROM
+			pago_serviciosjf p 
+		  WHERE id = :id 
+		  UNION
+		  SELECT 
+			p.id,
+			'taller15' AS taller,
+			p.taller15 AS unidades,
+			ROUND(p.taller15 / 12, 2) AS docenas,
+			'0.30' AS precio,
+			ROUND(p.taller15 / 12 * 0.3, 2) AS total 
+		  FROM
+			pago_serviciosjf p 
+		  WHERE id = :id) AS p 
+		  ON s.pago = p.taller 
+		  WHERE s.cod_sector = :sector");
+
+		$stmt->bindParam(":id",$id,PDO::PARAM_STR);
+		$stmt->bindParam(":sector",$sector,PDO::PARAM_STR);
+		$stmt->execute();
+
+		return $stmt->fetch();
+
+		$stmt->close();
+
+		$stmt = null;
+	}
 }

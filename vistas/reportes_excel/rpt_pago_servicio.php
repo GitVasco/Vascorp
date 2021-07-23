@@ -27,6 +27,7 @@ date_default_timezone_set('America/Lima');
 $fechaactual = getdate();
 $inicio =$_GET["inicio"];
 $fin =$_GET["fin"];
+$id = $_GET["id"];
 
 $fecha = date("d-m-Y");
 
@@ -197,7 +198,7 @@ $borde6->applyFromArray(
       'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
     ),
     'borders' => array(
-      'bottom' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+      'bottom' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
       'right' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
       'left' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM)
     ),
@@ -245,10 +246,6 @@ $borde9->applyFromArray(
       'wrap' => false,
       'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
     ),
-    'fill' => array(
-      'type' => PHPExcel_Style_Fill::FILL_SOLID,
-      'color' => array('rgb' => 'D7DBDD')
-    ),
     'borders' => array(
       'bottom' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
       'top' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
@@ -257,7 +254,7 @@ $borde9->applyFromArray(
     ),
       'font' => array(
       'bold' => true,
-      'size' => 10
+      'size' => 11
     )
 ));
 
@@ -283,6 +280,26 @@ $borde10->applyFromArray(
     )
 ));
 
+#bordes grueso: izquierda-derecha, color  GRIS NEGRITA T11
+$borde11 = new PHPExcel_Style();
+$borde11->applyFromArray(
+  array('alignment' => array( 
+      'wrap' => false,
+      'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
+    ),
+    'fill' => array(
+      'type' => PHPExcel_Style_Fill::FILL_SOLID,
+      'color' => array('rgb' => 'D7DBDD')
+    ),
+    'borders' => array(
+      'right' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
+      'left' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM)
+    ),
+      'font' => array(
+      'bold' => true,
+      'size' => 11
+    )
+));
 
 /* 
 * FIN DE ESTILOS
@@ -404,31 +421,31 @@ $objPHPExcel->getActiveSheet()->setSharedStyle($borde1, "R$fila");
 
 $fila+=1;
 $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", 'N°');
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "A$fila");
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde11, "A$fila");
 $objPHPExcel->getActiveSheet()->getStyle("A$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", 'GUIA');
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "B$fila");
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde11, "B$fila");
 $objPHPExcel->getActiveSheet()->getStyle("B$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", 'FECHA');
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "C$fila");
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde11, "C$fila");
 $objPHPExcel->getActiveSheet()->getStyle("C$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 $objPHPExcel->getActiveSheet()->SetCellValue("D$fila", 'MODELO');
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "D$fila");
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde11, "D$fila");
 $objPHPExcel->getActiveSheet()->getStyle("D$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 $objPHPExcel->getActiveSheet()->SetCellValue("E$fila", 'NOMBRE');
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "E$fila");
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde11, "E$fila");
 $objPHPExcel->getActiveSheet()->getStyle("E$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 $objPHPExcel->getActiveSheet()->SetCellValue("F$fila", 'COLOR');
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "F$fila");
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde11, "F$fila");
 $objPHPExcel->getActiveSheet()->getStyle("F$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 $objPHPExcel->getActiveSheet()->SetCellValue("G$fila", 'COLOR');
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "G$fila");
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde11, "G$fila");
 $objPHPExcel->getActiveSheet()->getStyle("G$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", '28');
@@ -684,12 +701,12 @@ for ($i=0; $i < count($sqlCabecera) ; $i++) {
     $objPHPExcel->getActiveSheet()->SetCellValue("R$fila", $sqlCabecera[$i]["total_soles"]);
 
 
-    $objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "A$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "A$fila");
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "B$fila");
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "D$fila");
-    $objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-    $objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "E$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "E$fila");
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "F$fila");
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "G$fila");
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "H$fila");
@@ -697,23 +714,23 @@ for ($i=0; $i < count($sqlCabecera) ; $i++) {
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "J$fila");
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "K$fila");
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "L$fila");
-    $objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "M$fila");
-    $objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "N$fila");
-    $objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "O$fila");
-    $objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "P$fila");
-    $objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "Q$fila");
-    $objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "R$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "M$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "N$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "O$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "P$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "Q$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "R$fila");
     
     
     }
     for ($f=0; $f <5 ; $f++) { 
         $fila+=1;
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "A$fila");
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "A$fila");
         $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "B$fila");
         $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
         $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "D$fila");
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "E$fila");
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "E$fila");
         $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "F$fila");
         $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "G$fila");
         $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "H$fila");
@@ -721,12 +738,12 @@ for ($i=0; $i < count($sqlCabecera) ; $i++) {
         $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "J$fila");
         $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "K$fila");
         $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "L$fila");
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "M$fila");
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "N$fila");
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "O$fila");
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "P$fila");
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "Q$fila");
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "R$fila");
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "M$fila");
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "N$fila");
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "O$fila");
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "P$fila");
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "Q$fila");
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "R$fila");
       
 
      }
@@ -742,14 +759,14 @@ for ($i=0; $i < count($sqlCabecera) ; $i++) {
         $objPHPExcel->getActiveSheet()->setCellValue("N$fila", utf8_encode($sumatorias[$u]["t7"]));
         $objPHPExcel->getActiveSheet()->setCellValue("O$fila", utf8_encode($sumatorias[$u]["t8"]));
 
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "H$fila");
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "I$fila");
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "J$fila");
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "K$fila");
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "L$fila");
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "M$fila");
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "N$fila");
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "O$fila");
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "H$fila");
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "I$fila");
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "J$fila");
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "K$fila");
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "L$fila");
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "M$fila");
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "N$fila");
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "O$fila");
 
         $fila+=1;
 
@@ -775,32 +792,62 @@ for ($i=0; $i < count($sqlCabecera) ; $i++) {
      }
 
      $totales= ControladorServicios::ctrVerTotalPagar($inicio,$fin,$sectores[$s]["taller"]);
-
+     
      for ($t=0; $t <count($totales) ; $t++) { 
+
         $fila+=1;
-        $objPHPExcel->getActiveSheet()->SetCellValue("P$fila", "");
+        $objPHPExcel->getActiveSheet()->setCellValueExplicit("K$fila","UND", PHPExcel_Cell_DataType::TYPE_STRING);
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde9, "K$fila");
+
+        $objPHPExcel->getActiveSheet()->setCellValueExplicit("L$fila","DOC", PHPExcel_Cell_DataType::TYPE_STRING);
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde9, "L$fila");
+
+        $objPHPExcel->getActiveSheet()->setCellValueExplicit("M$fila","PRECIO", PHPExcel_Cell_DataType::TYPE_STRING);
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde9, "M$fila");
+
+        $objPHPExcel->getActiveSheet()->setCellValueExplicit("N$fila","TOTAL", PHPExcel_Cell_DataType::TYPE_STRING);
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde9, "N$fila");
+
+        $objPHPExcel->getActiveSheet()->mergeCells("O$fila:Q$fila");
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde9, "O$fila:Q$fila");
+
         $objPHPExcel->getActiveSheet()->setCellValueExplicit("R$fila", utf8_encode("S/.".$totales[$t]["total_soles"]), PHPExcel_Cell_DataType::TYPE_STRING);
-
+        
         $objPHPExcel->getActiveSheet()->setSharedStyle($borde1, "R$fila");
+        $objPHPExcel->getActiveSheet()->getStyle("R$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 
+        $etiqueta = ControladorServicios::ctrMostrarEtiquetas($id,$totales[$t]["taller"]);
+        // var_dump($sectores);
         $fila+=1;
-        $objPHPExcel->getActiveSheet()->SetCellValue("P$fila", "Dscto. Material");
-        $objPHPExcel->getActiveSheet()->setCellValueExplicit("R$fila", utf8_encode("S/.0.00"), PHPExcel_Cell_DataType::TYPE_STRING);
+        $objPHPExcel->getActiveSheet()->setCellValueExplicit("K$fila",utf8_encode($etiqueta["unidades"]), PHPExcel_Cell_DataType::TYPE_STRING);
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde9, "K$fila");
 
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "R$fila");
+        $objPHPExcel->getActiveSheet()->setCellValueExplicit("L$fila",utf8_encode($etiqueta["docenas"]), PHPExcel_Cell_DataType::TYPE_STRING);
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde9, "L$fila");
 
-        $fila+=1;
-        $objPHPExcel->getActiveSheet()->SetCellValue("P$fila", "");
-        $objPHPExcel->getActiveSheet()->setCellValueExplicit("R$fila", utf8_encode("S/.0.00"), PHPExcel_Cell_DataType::TYPE_STRING);
+        $objPHPExcel->getActiveSheet()->setCellValueExplicit("M$fila",utf8_encode($etiqueta["precio"]), PHPExcel_Cell_DataType::TYPE_STRING);
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde9, "M$fila");
 
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "R$fila");
+        $objPHPExcel->getActiveSheet()->setCellValueExplicit("N$fila",utf8_encode($etiqueta["total"]), PHPExcel_Cell_DataType::TYPE_STRING);
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde9, "N$fila");
 
+        $objPHPExcel->getActiveSheet()->mergeCells("O$fila:Q$fila");
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde9, "O$fila:Q$fila");
+
+
+        $objPHPExcel->getActiveSheet()->setCellValue("R$fila", utf8_encode("S/.".$etiqueta["total"]));
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde9, "R$fila");
+        $objPHPExcel->getActiveSheet()->getStyle("R$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+    
+
+        $total= $totales[$t]["total_soles"] - $etiqueta["total"];
         $fila+=1;
         $objPHPExcel->getActiveSheet()->SetCellValue("P$fila", "TOTAL A PAGAR");
-        $objPHPExcel->getActiveSheet()->setCellValueExplicit("R$fila", utf8_encode("S/.".$totales[$t]["total_soles"]), PHPExcel_Cell_DataType::TYPE_STRING);
+        $objPHPExcel->getActiveSheet()->setCellValueExplicit("R$fila", utf8_encode("S/.".$total), PHPExcel_Cell_DataType::TYPE_STRING);
 
         $objPHPExcel->getActiveSheet()->setSharedStyle($borde10, "R$fila");
-
+        $objPHPExcel->getActiveSheet()->getStyle("R$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 
     
      }
