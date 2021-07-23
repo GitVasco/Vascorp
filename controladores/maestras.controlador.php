@@ -248,4 +248,15 @@ class ControladorMaestras{
 
     }     
 
+    /* 
+    * MOSTRAR SALDOS
+    */
+    static public function ctrTraerSaldos($mesG){
+
+        $respuesta = ModeloMaestras::mdlTraerSaldos($mesG);
+
+        return $respuesta;
+
+    }     
+
 }
