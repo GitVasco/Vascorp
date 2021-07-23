@@ -581,6 +581,17 @@ class ControladorServicios{
 
 	}
 
+	/* 
+    *MOSTRAR PAGO SERVICIOS SEMANALES
+    */
+    static public function ctrMostrarEtiquetas($id,$sector){
+
+		$respuesta = ModeloServicios::mdlMostrarEtiquetas($id,$sector);
+
+		return $respuesta;
+
+	}
+
 	static public function ctrVerPagoServicios($inicio,$fin){
 
 		$respuesta = ModeloServicios::mdlVerPagoServicios($inicio,$fin);
@@ -788,5 +799,61 @@ class ControladorServicios{
 		return $respuesta;
 		
     }
+
+	/*=============================================
+	EDITAR ETIQUETA
+	=============================================*/
+
+	static public function ctrEditarEtiqueta(){
+
+		if(isset($_POST["id2"])){
+				
+			   	$datos = array("id"=>$_POST["id2"],
+							   "taller1"=>$_POST["taller1"],
+							   "taller2"=>$_POST["taller2"],
+							   "taller3"=>$_POST["taller3"],
+							   "taller4"=>$_POST["taller4"],
+							   "taller5"=>$_POST["taller5"],
+							   "taller6"=>$_POST["taller6"],
+							   "taller7"=>$_POST["taller7"],
+							   "taller8"=>$_POST["taller8"],
+							   "taller9"=>$_POST["taller9"],
+							   "taller10"=>$_POST["taller10"],
+							   "taller11"=>$_POST["taller11"],
+							   "taller12"=>$_POST["taller12"],
+							   "taller13"=>$_POST["taller13"],
+							   "taller14"=>$_POST["taller14"],
+							   "taller15"=>$_POST["taller15"]
+							);
+
+				   $respuesta = ModeloServicios::mdlEditarEtiqueta($datos);
+							
+			   	if($respuesta == "ok"){
+
+					echo'<script>
+
+					swal({
+						  type: "success",
+						  title: "La etiqueta del pago ha sido guardada correctamente",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+									if (result.value) {
+
+									window.location = "pago-servicio";
+
+									}
+								})
+
+					</script>';
+
+				}
+
+			
+
+		}
+
+	}
+	
 
 }
