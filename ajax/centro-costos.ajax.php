@@ -18,7 +18,7 @@ class AjaxTablaCentroCostos{
 
 	}	
 
-	    /* 
+	/* 
     * Traer correlativo
     */
     public function ajaxTraerCorrelativo(){
@@ -27,6 +27,32 @@ class AjaxTablaCentroCostos{
 		$area = $this->area;
 
 		$respuesta = ControladorCentroCostos::ctrMostrarCorrelativo($tipoGasto, $area);
+
+		echo json_encode($respuesta);
+
+	}
+	
+	/* 
+    * traer datos del centro de costos
+    */
+    public function ajaxTraerCentroCostos(){
+
+		$cod_caja = $this->cod_caja;
+
+		$respuesta = ControladorCentroCostos::ctrMostrarCentroCostos($cod_caja);
+
+		echo json_encode($respuesta);
+
+	}	
+
+	/* 
+    * traer datos del gasto
+    */
+    public function ajaxTraerGastos(){
+
+		$idGasto = $this->idGasto;
+
+		$respuesta = ControladorCentroCostos::ctrMostrarGastosCajaId($idGasto);
 
 		echo json_encode($respuesta);
 
@@ -54,5 +80,28 @@ if(isset($_POST["area"])){
 	$traerCorrelativo -> area = $_POST["area"];
 	$traerCorrelativo -> tipoGasto = $_POST["tipoGastoB"];
 	$traerCorrelativo -> ajaxTraerCorrelativo();
+
+}
+
+/* 
+* traer datos del centro de costos
+*/
+if(isset($_POST["cod_caja"])){
+
+	$traerCentroCostos = new AjaxTablaCentroCostos();
+	$traerCentroCostos -> cod_caja = $_POST["cod_caja"];
+	$traerCentroCostos -> ajaxTraerCentroCostos();
+
+}
+
+
+/* 
+* traer datos del gasto
+*/
+if(isset($_POST["idGasto"])){
+
+	$traerCentroCostos = new AjaxTablaCentroCostos();
+	$traerCentroCostos -> idGasto = $_POST["idGasto"];
+	$traerCentroCostos -> ajaxTraerGastos();
 
 }

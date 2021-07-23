@@ -434,6 +434,39 @@ class ModeloMaestras{
 
   $stmt = null;
 
-  }      
+  }    
+  
+  /* 
+  * LISTAR TABLA DETALLE
+  */
+  static public function mdlTraerSaldos($mesG){
+
+      $stmt = Conexion::conectar()->prepare("SELECT 
+                  t.cod_argumento AS correlativo,
+                  t.cod_tabla AS anno,
+                  t.des_corta AS cod_mes,
+                  t.des_larga AS nom_mes,
+                  FORMAT(valor_1, 2) AS saldo_inicial,
+                  FORMAT(valor_2, 2) AS ingresos,
+                  FORMAT(valor_3, 2) AS egresos,
+                  FORMAT(valor_4, 2) AS saldo_actual,
+                  valor_4 AS actual,
+                  valor_5 AS estado 
+                FROM
+                  tabla_m_detalle t 
+                WHERE t.cod_tabla = YEAR(NOW()) 
+                  AND t.des_corta = :mesG");
+
+      $stmt->bindParam(":mesG", $mesG, PDO::PARAM_STR);
+
+      $stmt -> execute();
+
+      return $stmt -> fetch();
+
+    $stmt -> close();
+
+    $stmt = null;
+
+  }    
 
 }

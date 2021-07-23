@@ -40,6 +40,18 @@ class AjaxTablaMaestra{
 		$respuesta = ControladorMaestras::ctrMostrarSubLineaEditar($valor,$valor1);
 
 		echo json_encode($respuesta);
+	}
+	
+    /* 
+    * Traer saldos
+    */
+    public function ajaxTraerSaldos(){
+
+		$mesG = $this->mesG;
+
+		$respuesta = ControladorMaestras::ctrTraerSaldos($mesG);
+
+		echo json_encode($respuesta);
 	}	
 
 }
@@ -75,5 +87,16 @@ if(isset($_POST["argumento"])){
 	$editarSubLinea -> argumento = $_POST["argumento"];
 	$editarSubLinea -> codigo = $_POST["codigo"];
 	$editarSubLinea -> ajaxTraerSubLinea();
+
+}
+
+/* 
+* Traer saldos del mes
+*/
+if(isset($_POST["mesG"])){
+
+	$traerSaldos = new AjaxTablaMaestra();
+	$traerSaldos -> mesG = $_POST["mesG"];
+	$traerSaldos -> ajaxTraerSaldos();
 
 }
