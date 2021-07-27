@@ -946,6 +946,7 @@ $(".tablaEditarDetalleOrdenCorte ").on("click","button.btnEliminarDetalleCorte",
     var idDetalle =$(this).attr("idDetalle");
     var codigo =$(this).attr("codigo");
     var cantidad = $(this).attr("cantidad");
+    var id=$(this).attr("idOrdenDetalle");
 
     var ncant = Number(cantidad) *-1;
     console.log(ncant);
@@ -961,7 +962,7 @@ $(".tablaEditarDetalleOrdenCorte ").on("click","button.btnEliminarDetalleCorte",
 		confirmButtonText: "Si, borrar orden de corte!" 
 	}).then((result)=>{
 		if(result.value){
-            window.location = "index.php?ruta=editar-detalle-ordencorte&codigo="+codigo+"&idDetalle="+idDetalle+"&cantidad="+ncant;
+            window.location = "index.php?ruta=editar-detalle-ordencorte&codigo="+codigo+"&idDetalle="+idDetalle+"&cantidad="+ncant+"&id="+id;
 		}
 	})
 	

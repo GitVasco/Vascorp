@@ -26,6 +26,7 @@
                         <input type="radio" class="form-check-input optNotas1" id="radio1" name="optNotas1" value="credito" > Notas de Crédito
                     </label>
                     </div>
+                    <br>
                     <div class="form-check">
                     <label class="form-check-label" for="radio2">
                         <input type="radio" class="form-check-input optNotas1" id="radio2" name="optNotas1" value="debido"> Notas de Débito
@@ -46,7 +47,7 @@
                 <div class="form-group">
                 <label for=""  class="col-form-label col-lg-4">N° Serie</label>
                 <div class="col-lg-8">
-                <select class="form-control input-lg selectpicker" id="tipoNotaSerie" name="tipoNotaSerie" data-live-search="true">
+                <select class="form-control input-md selectpicker" id="tipoNotaSerie" name="tipoNotaSerie" data-live-search="true">
                     <option value="">Seleccionar serie</option>
 
                     </select>
@@ -54,7 +55,7 @@
                     
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" style="padding-top:25px">
                     <label for="" class="col-form-label col-lg-4">N° Documento</label>
                     <div class="col-lg-8">
                     <input type="text" name="tipoNotaDocumento" id="tipoNotaDocumento"  class="form-control input-md" value="0" readonly>
@@ -72,7 +73,7 @@
     <section class="container-fluid col-lg-4 text-center">
         <div class="box">
             <div class="box-body">
-                <div class="form-group" style="border:3px solid darkred">
+                <div  style="border:2px solid darkred">
                 <img src="vistas/img/plantilla/jackyform_paloma.png" width="300px" height="80px">
                 </div>
             </div>
@@ -88,7 +89,7 @@
                 
                     <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                    <select class="form-control input-lg selectpicker" data-live-search="true" name="selectNotaCliente" id="selectNotaCliente">
+                    <select class="form-control input-md selectpicker" data-live-search="true" name="selectNotaCliente" id="selectNotaCliente">
                     <option value="">Seleccionar cliente</option>
 
                         <?php
@@ -113,30 +114,31 @@
             $fechaActual = $fecha->format("Y-m-d");
             
             ?>           
-            <div class="form-group col-lg-6">
-            <label for="">Fecha</label>
+            <div class="form-group  col-lg-offset-2 col-lg-4" style="margin-top:23px">
+            <label for="" class="col-form-label col-lg-3">Fecha</label>
                 <div class="input-group">
                 
                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
 
-                    <input type="date"  class="form-control input-lg" name="notaFecha" id="notaFecha" value="<?php echo $fechaActual?>" required>
+                    <input type="date"  class="form-control input-md" name="notaFecha" id="notaFecha" value="<?php echo $fechaActual?>" required>
 
                 </div>
             </div>
+            <div class="col-lg-12"></div>
 
-            <div class="form-check col-lg-3">
+            <div class="form-check col-lg-2">
                 <label class="form-check-label" for="radioCtaCte">
                     Genera cta. cte. <input type="checkbox" class="form-check-input generaCtaCte" id="radioCtaCte" name="generaCtaCte" value="generaCta" disabled> 
                 </label>
             </div>            
 
-            <div class="form-group col-lg-5">
-            <label for=" " class="col-form-label col-lg-2">Vendedor</label>
+            <div class="form-group col-lg-4">
+            <label for=" " class="col-form-label col-lg-3">Vendedor</label>
                 <div class="input-group">
                 
                     <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                    <select class="form-control input-lg selectpicker" data-live-search="true" name="selectNotaVendedor" id="selectNotaVendedor">
+                    <select class="form-control input-md selectpicker" data-live-search="true" name="selectNotaVendedor" id="selectNotaVendedor">
                     <option value="">Seleccionar vendedor</option>
                     <?php
 
@@ -154,13 +156,13 @@
                 </div>
             </div>
 
-            <div class="form-group col-lg-4">
-            <label for="" class="col-form-label col-lg-2">Tipo Doc</label>
+            <div class="form-group col-lg-4 col-lg-offset-2">
+            <label for="" class="col-form-label col-lg-3">Tipo Doc</label>
                 <div class="input-group">
                 
                     <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                    <select class="form-control input-lg selectpicker" data-live-search="true" name="selectNotaDocumento" id="selectNotaDocumento">
+                    <select class="form-control input-md selectpicker" data-live-search="true" name="selectNotaDocumento" id="selectNotaDocumento">
                     <option value="">Seleccionar documento</option>
 
                     <?php
@@ -180,15 +182,13 @@
             </div>
             
 
-            <div class="col-lg-12"></div>
-
             <div class="form-group col-lg-3">
             <label for="">N° Fact/Bol</label>
                 <div class="input-group">
                 
                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
 
-                    <input type="text"  class="form-control input-lg" name="notaNroFactura" id="notaNroFactura" required>
+                    <input type="text"  class="form-control input-md" name="notaNroFactura" id="notaNroFactura" required>
 
                 </div>
             </div>
@@ -199,7 +199,7 @@
                 
                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
 
-                    <input type="date"  class="form-control input-lg" name="notaFechaFactura" id="notaFechaFactura" required>
+                    <input type="date"  class="form-control input-md" name="notaFechaFactura" id="notaFechaFactura" required>
 
                 </div>
             </div>
@@ -208,7 +208,7 @@
             <label for="">Motivo</label>
                 
 
-                    <select  class="form-control input-lg selectpicker" name="notaMotivo" id="notaMotivo" data-live-search="true" style="width:200px !important" required>
+                    <select  class="form-control input-md selectpicker" name="notaMotivo" id="notaMotivo" data-live-search="true" style="width:200px !important" required>
                     <option value="">Seleccionar motivo</option>
                     <?php
                     //   $item= "tipo_dato";
@@ -230,7 +230,7 @@
             <label for="">Tipo cont.</label>
                 
 
-                    <select  class="form-control input-lg selectpicker" name="notaTipoCont" id="notaTipoCont" data-live-search="true" required>
+                    <select  class="form-control input-md selectpicker" name="notaTipoCont" id="notaTipoCont" data-live-search="true" required>
                     <option value="">Seleccionar tipo contable</option>
                     <?php
                       $item= "tipo_dato";
@@ -250,7 +250,7 @@
     <div class="col-lg-3">
         <div class="box col-lg-4 ">
 
-            <div class="form-group  col-lg-12" style="margin-top:23px">
+            <div class="  col-lg-12" style="margin-top:23px">
                 <label for="" class="col-form-label col-lg-6">Sub - Total: </label>
                 <div class="input-group">
                     <input type="number"  class="form-control input-sm " name="notaSubTotal" id="notaSubTotal" step ="any" min="0">
@@ -258,21 +258,21 @@
                 </div>
             </div>
 
-            <div class="form-group  col-lg-12">
+            <div class="  col-lg-12">
                 <label for="" class="col-form-label col-lg-6">Descuentos: </label>
                 <div class="input-group">
                     <input type="number"  class="form-control input-sm" name="notaDsctos" id="notaDsctos" step ="any" min="0" value="0.00">
 
                 </div>
             </div>
-            <div class="form-group   col-lg-12">
+            <div class=" col-lg-12">
                 <label for="" class="col-form-label col-lg-6">Flete: </label>
                 <div class="input-group">
                     <input type="number"  class="form-control input-sm" name="notaFlete" id="notaFlete" step ="any" min="0" value="0.00">
 
                 </div>
             </div>
-            <div class="form-group col-lg-12">
+            <div class="col-lg-12">
                 <label for="" class="col-form-label col-lg-6">Otros:</label>
                 <div class="input-group">
                     <input type="number"  class="form-control input-sm" name="notaOtros" id="notaOtros" step ="any" min="0" value="0.00">
@@ -280,10 +280,10 @@
                 </div>
             </div>
 
-            <div class="form-group col-lg-12">
+            <div class=" col-lg-12">
                 <label for="" class="col-form-label col-lg-4">IGV: </label>
                 <div class="input-group">
-                <div class="col-lg-4">
+                <div class="col-lg-5">
                   <input type="number"  class="form-control input-sm" name="IGV" id="IGV" value="18.00" step ="any" min="0" readonly>
                 </div>
 
@@ -293,7 +293,7 @@
                 </div>
             </div>
 
-            <div class="form-group col-lg-12">
+            <div class=" col-lg-12">
                 <label for="" class="col-form-label col-lg-6">No afecto: </label>
                 <div class="input-group">
                     <input type="number"  class="form-control input-sm" name="notaNoAfecto" id="notaNoAfecto" step ="any" min="0" value="0.00">
@@ -301,7 +301,7 @@
                 </div>
             </div>
             <hr>
-            <div class="form-group  col-lg-12">
+            <div class=" col-lg-12" style="margin-bottom:23px">
                 <label for="" class="col-form-label col-lg-6">Total:</label>
                 <div class="input-group">
                     <input type="number"  class="form-control input-sm" name="notaTotal" id="notaTotal" step ="any" min="0" value="0.00" readonly>
@@ -311,7 +311,7 @@
         </div>
     </div>
 
-    <div class="col-lg-9 ">
+    <div class="col-lg-9 " style="position:relative;bottom:70px">
         <div class="box col-lg-9 ">
 
             <div class="form-group">
@@ -322,7 +322,7 @@
     </div>
     <div class="col-lg-4">
     </div>
-    <div class="col-lg-12">
+    <div class="col-lg-12" style="position:relative;bottom:60px">
         <div class="col-lg-3"></div>
         <div class="form-group col-lg-1">
             <button class="btn btn-success btn-lg btnGuardarNotaCredito"><i class="fa fa-save"></i> Guardar</button>

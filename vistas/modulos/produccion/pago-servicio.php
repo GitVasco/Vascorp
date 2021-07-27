@@ -541,9 +541,9 @@ MODAL VER ETIQUETA POR TALLER
               <table class="tablaDetalleEtiqueta" width="100%" >
                 <thead style="height:30px">
                 <tr >
-                  <th style="width:30px">N°</th>
-                  <th class="text-center"><i class="fa fa-ticket"></i> Etiqueta</th>
-                  <th style="width:150px"></th>
+                  <th style="width:90px;text-align:center">Taller</th>
+                  <th style="width:20px"></th>
+                  <th style="width:10px"><i class="fa fa-ticket"></i> Etiqueta</th>
                 </tr>
                 
                 </thead>

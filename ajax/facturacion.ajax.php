@@ -72,9 +72,9 @@ class AjaxFacturacion{
           $respuesta2 = ModeloFacturacion::mdlIngresarNotaCD($arregloNota);
         
           if($tipo_doc == 'NC'){
-            $aumento = ModeloCuentas::mdlActualizarNotaSerie("nota_credito","serie_nc",substr($cta,0,4));
+            $aumento = ModeloFacturacion::mdlActualizarNotaSerie("nota_credito","serie_nc",substr($cta,0,4));
           }else{
-            $aumento = ModeloCuentas::mdlActualizarNotaSerie("nota_debito","serie_nd",substr($cta,0,4));
+            $aumento = ModeloFacturacion::mdlActualizarNotaSerie("nota_debito","serie_nd",substr($cta,0,4));
           }
           
         }
