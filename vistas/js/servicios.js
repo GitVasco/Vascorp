@@ -1352,21 +1352,56 @@ $(".tablaPagoServicios").on("click",".btnVerEtiqueta",function(){
             $("#editarFin2").val(respuesta["fin"]);
 
             $(".detalleEtq").remove();
+            
+            var nombre = '';
 
           for(var i=1; i <=15 ; i++){
+            if(i==1){
+              nombre = 'T0-IRMA';
+            }else if(i == 2){
+              nombre = 'T1-BRASIER';
+            }else if(i == 3){
+              nombre = 'T2-MEDRANO';
+            }else if(i == 4){
+              nombre = 'T3-TRUSAS';
+            }else if(i == 5){
+              nombre = 'T4-ADELA';
+            }else if(i == 6){
+              nombre = 'T5-VASCO';
+            }else if(i == 7){
+              nombre = 'T6-PABLO';
+            }else if(i == 8){
+              nombre = 'T7-GUSTAVO';
+            }else if(i == 9){
+              nombre = 'T8-MIGUEL';
+            }else if(i == 10){
+              nombre = 'T9-FRANCISCO';
+            }else if(i == 11){
+              nombre = 'T10-ANTIGUOS';
+            }else if(i == 12){
+              nombre  = 'TA-ELVIRA';
+            }else if(i == 13){
+              nombre = 'TB-IREANA';
+            }else if (i == 14){
+              nombre = 'NN';
+            }else {
+              nombre = 'NN';
+            }
           
          
             if( i == 14 || i == 15){
               $('.tablaDetalleEtiqueta').append(
-                '<tr class="detalleEtq">' +
-                  '<td style="background-color:#3c8dbc;border-radius:50px;width:30px;text-align:center;color:white">' + i + ' </td>' +
-                  '<td class="text-center" > <input type="number" min="0" class="form-control input-sm" name="taller'+i+'" id="etiqueta'+i+'" value="'+ respuesta["taller"+i+""] +'" disabled > </td><td class="text-center"><a type="button"class="btn btn-sm btn-primary editarEtiqueta'+i+'">Editar Etiqueta</a></td>' +
+                '<tr class="detalleEtq" >' +
+                  '<td style="background-color:#3c8dbc;border-radius:50px;width:80px;text-align:center;color:white">' + nombre + ' </td>' +
+                  '<th style="width:20px"></th>'+
+                  '<td style="width:10px" > <input type="number" min="0" class="form-control input-sm" name="taller'+i+'" id="etiqueta'+i+'" value="'+ respuesta["taller"+i+""] +'" disabled > </td>' +
                 '</tr>')
             }else{
               $('.tablaDetalleEtiqueta').append(
-                '<tr class="detalleEtq">' +
-                  '<td style="background-color:#3c8dbc;border-radius:50px;width:30px;text-align:center;color:white">' + i + ' </td>' +
-                  '<td class="text-center" > <input type="number" min="0" class="form-control input-sm" name="taller'+i+'" id="etiqueta'+i+'" value="'+ respuesta["taller"+i+""] +'" readonly > </td><td class="text-center"><a type="button"class="btn btn-sm btn-primary editarEtiqueta'+i+'">Editar Etiqueta</a></td>' +
+                '<tr class="detalleEtq"> ' +
+                  '<td style="background-color:#3c8dbc;border-radius:50px;width:80px;text-align:center;color:white">' + nombre + ' </td>' +
+                  '<th style="width:20px"></th>'+
+                  '<td style="width:10px" > <input type="number" min="0" class="form-control input-sm" name="taller'+i+'" id="etiqueta'+i+'" value="'+ respuesta["taller"+i+""] +'"  > </td>' +
                 '</tr>')
             }
             
@@ -1378,16 +1413,3 @@ $(".tablaPagoServicios").on("click",".btnVerEtiqueta",function(){
     });
     
 });
-
-//Ingresar readonly para precios 
-for (let index = 1; index <= 15; index++) {
-	$(".tablaDetalleEtiqueta").on("click","a.editarEtiqueta"+index,function(){
-		
-		if($('#etiqueta'+index).attr("readonly")){
-
-			$("#etiqueta"+index).attr("readonly",false);
-		}else{
-			$("#etiqueta"+index).attr("readonly",true);
-		}
-	})
-}

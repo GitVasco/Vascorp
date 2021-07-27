@@ -3058,33 +3058,7 @@ class ModeloCuentas{
 
     }
 	
-    /*
-    * ACTUALIZAR NOTA DE CREDITO O DEBITO + 1 POR SERIE
-    */
-    static public function mdlActualizarNotaSerie($item,$item2,$valor2){
-
-		$sql="UPDATE
-                    talonariosjf
-                SET
-                    $item = $item + 1
-                WHERE $item2 = :$item2";
-
-        $stmt=Conexion::conectar()->prepare($sql);
-
-        $stmt->bindParam(":".$item2, $valor2, PDO::PARAM_STR);
-
-		if ($stmt->execute()) {
-
-			return "ok";
-		} else {
-
-			return "error";
-		}
-
-		$stmt=null;
-
-    }
-
+   
 
 
 }
