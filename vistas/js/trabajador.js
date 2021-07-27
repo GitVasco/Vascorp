@@ -325,3 +325,12 @@ $(".tablaTrabajador2").on("click",".btnActivarTrabajador2",function(){
 		$(this).html("Activo");
 		$(this).attr("estadoTrabajador2","0");}
 });
+
+$(".tablasA").on("click", ".btnActTra", function () {
+
+	var idTrab = $(this).attr("idTrab");
+	//console.log(idTrab);
+
+	window.location = "index.php?ruta=marcar-taller&trabajadorSelect=" + idTrab;
+
+})

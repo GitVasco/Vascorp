@@ -273,17 +273,23 @@ class ControladorTrabajador{
 	*/
 	static public function ctrConfigurarTrabajador(){
 
-		if(isset($_POST["trabajadorSelect"])){
+		if(isset($_GET["trabajadorSelect"])){
 
-			$usuario = $_POST["usuario"];
-			//var_dump($trabajador);
+			#var_dump($_GET["trabajadorSelect"]);
 
-			$respuesta = ModeloTrabajador::mdlTrabajadorSet($usuario);
+			$usuario = $_SESSION["id"];
+			#var_dump($usuario);
+
+			$datos = ModeloTrabajador::mdlMostrarTrabajador("trabajadorjf","null",$_GET["trabajadorSelect"]);
+			#var_dump($datos["sector"]);
+
+			$respuesta = ModeloTrabajador::mdlTrabajadorSet($usuario,$datos["sector"]);
+			#var_dump($respuesta);
 			//$respuesta = "false";
 			
 			if($respuesta == "ok"){
 
-				$cod_tra = $_POST["trabajadorSelect"];
+				$cod_tra = $_GET["trabajadorSelect"];
 				ModeloTrabajador::ctrConfigurarTrabajador($cod_tra,$usuario);
 
 				echo'<script>
@@ -293,8 +299,6 @@ class ControladorTrabajador{
 				</script>';
 
 			}
-
-
 
 		}
 

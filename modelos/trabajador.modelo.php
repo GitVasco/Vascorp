@@ -222,16 +222,18 @@ class ModeloTrabajador{
 	/* 
 	* Método para poner a todos en CERO
 	*/
-	static public function mdlTrabajadorSet($usuario){
+	static public function mdlTrabajadorSet($usuario,$sector){
 
 		$sql = "UPDATE 
 					trabajadorjf 
 				SET
 					configuracion = 0,
 					usuario = 0
-					where usuario = $usuario";
+					where usuario = $usuario OR sector=:sector";
 
 		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":sector", $sector, PDO::PARAM_STR);
 
 		if ($stmt->execute()) {
 

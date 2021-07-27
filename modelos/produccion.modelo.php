@@ -1951,4 +1951,37 @@ class ModeloProduccion
 
 		$stmt = null;
     }
+
+  	/* 
+	* MOSTRAR PRODUCCION
+	*/
+	static public function mdlMostrarTrabTaller($taller){
+
+    $stmt = Conexion::conectar()->prepare("SELECT 
+              t.cod_tra,
+              CONCAT(
+                t.nom_tra,
+                ' ',
+                ape_pat_tra,
+                ' ',
+                ape_mat_tra
+              ) AS trabajador,
+              t.configuracion,
+              t.usuario 
+            FROM
+              trabajadorjf t 
+            WHERE t.sector = :taller
+              AND t.estado = 'Activo'");
+
+    $stmt->bindParam(":taller", $taller, PDO::PARAM_STR);
+
+    $stmt->execute();
+
+    return $stmt->fetchAll();
+
+    $stmt->close();
+
+    $stmt = null;
+  }
+
 }

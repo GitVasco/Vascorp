@@ -450,139 +450,139 @@ class ModeloCentroCostos{
 
   }   
 
-    /* 
-    * CREAR GASTOS DE CAJA
-    */
-    static public function mdlCrearGastosCaja($datos){
+  /* 
+  * CREAR GASTOS DE CAJA
+  */
+  static public function mdlCrearGastosCaja($datos){
 
-      $stmt = Conexion::conectar()->prepare("INSERT INTO gastos_caja (
-                            fecha,
-                            recibo,
-                            ruc_proveedor,
-                            proveedor,
-                            sucursal,
-                            cod_caja,
-                            total,
-                            tipo_documento,
-                            documento,
-                            solicitante,
-                            descripcion,
-                            rubro_cancelacion,
-                            observacion,
-                            usureg,
-                            fecreg,
-                            pcreg
-                          ) 
-                          VALUES
-                            (
-                              :fecha,
-                              :recibo,
-                              :ruc_proveedor,
-                              UPPER(:proveedor),
-                              :sucursal,
-                              :cod_caja,
-                              :total,
-                              :tipo_documento,
-                              UPPER(:documento),
-                              UPPER(:solicitante),
-                              UPPER(:descripcion),
-                              UPPER(:rubro_cancelacion),
-                              UPPER(:observacion),
-                              :usureg,
-                              :fecreg,
-                              :pcreg
-                            )");
-  
-      $stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
-      $stmt->bindParam(":recibo", $datos["recibo"], PDO::PARAM_STR);
-      $stmt->bindParam(":ruc_proveedor", $datos["ruc_proveedor"], PDO::PARAM_STR);
-      $stmt->bindParam(":proveedor", $datos["proveedor"], PDO::PARAM_STR);
-      $stmt->bindParam(":sucursal", $datos["sucursal"], PDO::PARAM_STR);
-      $stmt->bindParam(":cod_caja", $datos["cod_caja"], PDO::PARAM_STR);
-      $stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
-      $stmt->bindParam(":tipo_documento", $datos["tipo_documento"], PDO::PARAM_STR);
-      $stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
-      $stmt->bindParam(":solicitante", $datos["solicitante"], PDO::PARAM_STR);
-      $stmt->bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
-      $stmt->bindParam(":rubro_cancelacion", $datos["rubro_cancelacion"], PDO::PARAM_STR);
-      $stmt->bindParam(":observacion", $datos["observacion"], PDO::PARAM_STR);      
-      $stmt->bindParam(":usureg", $datos["usureg"], PDO::PARAM_STR);
-      $stmt->bindParam(":fecreg", $datos["fecreg"], PDO::PARAM_STR);
-      $stmt->bindParam(":pcreg", $datos["pcreg"], PDO::PARAM_STR);
-  
-      if($stmt->execute()){
-  
-        return "ok";
-  
-      }else{
-  
-        return "error";
-      
-      }
-  
-      $stmt->close();
-      $stmt = null;
-  
-    }
+    $stmt = Conexion::conectar()->prepare("INSERT INTO gastos_caja (
+                          fecha,
+                          recibo,
+                          ruc_proveedor,
+                          proveedor,
+                          sucursal,
+                          cod_caja,
+                          total,
+                          tipo_documento,
+                          documento,
+                          solicitante,
+                          descripcion,
+                          rubro_cancelacion,
+                          observacion,
+                          usureg,
+                          fecreg,
+                          pcreg
+                        ) 
+                        VALUES
+                          (
+                            :fecha,
+                            :recibo,
+                            :ruc_proveedor,
+                            UPPER(:proveedor),
+                            :sucursal,
+                            :cod_caja,
+                            :total,
+                            :tipo_documento,
+                            UPPER(:documento),
+                            UPPER(:solicitante),
+                            UPPER(:descripcion),
+                            UPPER(:rubro_cancelacion),
+                            UPPER(:observacion),
+                            :usureg,
+                            :fecreg,
+                            :pcreg
+                          )");
+
+    $stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+    $stmt->bindParam(":recibo", $datos["recibo"], PDO::PARAM_STR);
+    $stmt->bindParam(":ruc_proveedor", $datos["ruc_proveedor"], PDO::PARAM_STR);
+    $stmt->bindParam(":proveedor", $datos["proveedor"], PDO::PARAM_STR);
+    $stmt->bindParam(":sucursal", $datos["sucursal"], PDO::PARAM_STR);
+    $stmt->bindParam(":cod_caja", $datos["cod_caja"], PDO::PARAM_STR);
+    $stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
+    $stmt->bindParam(":tipo_documento", $datos["tipo_documento"], PDO::PARAM_STR);
+    $stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
+    $stmt->bindParam(":solicitante", $datos["solicitante"], PDO::PARAM_STR);
+    $stmt->bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
+    $stmt->bindParam(":rubro_cancelacion", $datos["rubro_cancelacion"], PDO::PARAM_STR);
+    $stmt->bindParam(":observacion", $datos["observacion"], PDO::PARAM_STR);      
+    $stmt->bindParam(":usureg", $datos["usureg"], PDO::PARAM_STR);
+    $stmt->bindParam(":fecreg", $datos["fecreg"], PDO::PARAM_STR);
+    $stmt->bindParam(":pcreg", $datos["pcreg"], PDO::PARAM_STR);
+
+    if($stmt->execute()){
+
+      return "ok";
+
+    }else{
+
+      return "error";
     
-    /* 
-    * CREAR GASTOS DE CAJA
-    */
-    static public function mdlEditarGastosCaja($datos){
+    }
 
-      $stmt = Conexion::conectar()->prepare("UPDATE 
-                                      gastos_caja 
-                                    SET
-                                      fecha = :fecha,
-                                      recibo = :recibo,
-                                      ruc_proveedor = :ruc_proveedor,
-                                      proveedor = UPPER(:proveedor),
-                                      sucursal = :sucursal,
-                                      cod_caja = :cod_caja,
-                                      total = :total,
-                                      tipo_documento = :tipo_documento,
-                                      documento = UPPER(:documento),
-                                      solicitante = UPPER(:solicitante),
-                                      descripcion = UPPER(:descripcion),
-                                      rubro_cancelacion = UPPER(:rubro_cancelacion),
-                                      observacion = UPPER(:observacion),
-                                      usumod = :usumod,
-                                      fecmod = :fecmod,
-                                      pcmod = :pcmod 
-                                    WHERE id = :id");
-  
-      $stmt->bindParam(":id", $datos["id"], PDO::PARAM_STR);  
-      $stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
-      $stmt->bindParam(":recibo", $datos["recibo"], PDO::PARAM_STR);
-      $stmt->bindParam(":ruc_proveedor", $datos["ruc_proveedor"], PDO::PARAM_STR);
-      $stmt->bindParam(":proveedor", $datos["proveedor"], PDO::PARAM_STR);
-      $stmt->bindParam(":sucursal", $datos["sucursal"], PDO::PARAM_STR);
-      $stmt->bindParam(":cod_caja", $datos["cod_caja"], PDO::PARAM_STR);
-      $stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
-      $stmt->bindParam(":tipo_documento", $datos["tipo_documento"], PDO::PARAM_STR);
-      $stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
-      $stmt->bindParam(":solicitante", $datos["solicitante"], PDO::PARAM_STR);
-      $stmt->bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
-      $stmt->bindParam(":rubro_cancelacion", $datos["rubro_cancelacion"], PDO::PARAM_STR);
-      $stmt->bindParam(":observacion", $datos["observacion"], PDO::PARAM_STR);      
-      $stmt->bindParam(":usumod", $datos["usumod"], PDO::PARAM_STR);
-      $stmt->bindParam(":fecmod", $datos["fecmod"], PDO::PARAM_STR);
-      $stmt->bindParam(":pcmod", $datos["pcmod"], PDO::PARAM_STR);
-  
-      if($stmt->execute()){
-  
-        return "ok";
-  
-      }else{
-  
-        return $stmt->errorInfo();
-      
-      }
-  
-      $stmt->close();
-      $stmt = null;
-  
-    }      
+    $stmt->close();
+    $stmt = null;
+
+  }
+    
+  /* 
+  * CREAR GASTOS DE CAJA
+  */
+  static public function mdlEditarGastosCaja($datos){
+
+    $stmt = Conexion::conectar()->prepare("UPDATE 
+                                    gastos_caja 
+                                  SET
+                                    fecha = :fecha,
+                                    recibo = :recibo,
+                                    ruc_proveedor = :ruc_proveedor,
+                                    proveedor = UPPER(:proveedor),
+                                    sucursal = :sucursal,
+                                    cod_caja = :cod_caja,
+                                    total = :total,
+                                    tipo_documento = :tipo_documento,
+                                    documento = UPPER(:documento),
+                                    solicitante = UPPER(:solicitante),
+                                    descripcion = UPPER(:descripcion),
+                                    rubro_cancelacion = UPPER(:rubro_cancelacion),
+                                    observacion = UPPER(:observacion),
+                                    usumod = :usumod,
+                                    fecmod = :fecmod,
+                                    pcmod = :pcmod 
+                                  WHERE id = :id");
+
+    $stmt->bindParam(":id", $datos["id"], PDO::PARAM_STR);  
+    $stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+    $stmt->bindParam(":recibo", $datos["recibo"], PDO::PARAM_STR);
+    $stmt->bindParam(":ruc_proveedor", $datos["ruc_proveedor"], PDO::PARAM_STR);
+    $stmt->bindParam(":proveedor", $datos["proveedor"], PDO::PARAM_STR);
+    $stmt->bindParam(":sucursal", $datos["sucursal"], PDO::PARAM_STR);
+    $stmt->bindParam(":cod_caja", $datos["cod_caja"], PDO::PARAM_STR);
+    $stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
+    $stmt->bindParam(":tipo_documento", $datos["tipo_documento"], PDO::PARAM_STR);
+    $stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
+    $stmt->bindParam(":solicitante", $datos["solicitante"], PDO::PARAM_STR);
+    $stmt->bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
+    $stmt->bindParam(":rubro_cancelacion", $datos["rubro_cancelacion"], PDO::PARAM_STR);
+    $stmt->bindParam(":observacion", $datos["observacion"], PDO::PARAM_STR);      
+    $stmt->bindParam(":usumod", $datos["usumod"], PDO::PARAM_STR);
+    $stmt->bindParam(":fecmod", $datos["fecmod"], PDO::PARAM_STR);
+    $stmt->bindParam(":pcmod", $datos["pcmod"], PDO::PARAM_STR);
+
+    if($stmt->execute()){
+
+      return "ok";
+
+    }else{
+
+      return $stmt->errorInfo();
+    
+    }
+
+    $stmt->close();
+    $stmt = null;
+
+  }      
 
     /* 
     * CREAR GASTOS DE CAJA
@@ -650,68 +650,68 @@ class ModeloCentroCostos{
   
     }  
     
-    /* 
-    * CREAR GASTOS DE CAJA
-    */
-    static public function mdlActualizarEgresosB($datos){
+  /* 
+  * CREAR GASTOS DE CAJA
+  */
+  static public function mdlActualizarEgresosB($datos){
 
-      $stmt = Conexion::conectar()->prepare("UPDATE 
-                                      tabla_m_detalle t 
-                                    SET
-                                      t.valor_3 = t.valor_3 - :antiguo + :nuevo,
-                                      t.valor_4 = t.valor_4 + :antiguo - :nuevo 
-                                    WHERE t.cod_tabla = YEAR(NOW()) 
-                                      AND t.des_corta = MONTH(:mes)");
-  
-      $stmt->bindParam(":mes", $datos["fecha"], PDO::PARAM_STR);  
-      $stmt->bindParam(":nuevo", $datos["nuevo"], PDO::PARAM_STR);
-      $stmt->bindParam(":antiguo", $datos["antiguo"], PDO::PARAM_STR);
-  
-      if($stmt->execute()){
-  
-        return "ok";
-  
-      }else{
-  
-        return $stmt->errorInfo();
-      
-      }
-  
-      $stmt->close();
-      $stmt = null;
-  
-    }    
-
-    /* 
-    * CREAR GASTOS DE CAJA
-    */
-    static public function mdlActualizarEgresosC($datos){
-
-      $stmt = Conexion::conectar()->prepare("UPDATE 
+    $stmt = Conexion::conectar()->prepare("UPDATE 
                                     tabla_m_detalle t 
                                   SET
-                                    t.valor_3 = t.valor_3 - :egreso,
-                                    t.valor_4 = t.valor_4 + :egreso 
+                                    t.valor_3 = t.valor_3 - :antiguo + :nuevo,
+                                    t.valor_4 = t.valor_4 + :antiguo - :nuevo 
                                   WHERE t.cod_tabla = YEAR(NOW()) 
                                     AND t.des_corta = MONTH(:mes)");
-  
-      $stmt->bindParam(":mes", $datos["fecha"], PDO::PARAM_STR);  
-      $stmt->bindParam(":egreso", $datos["egreso"], PDO::PARAM_STR);
-  
-      if($stmt->execute()){
-  
-        return "ok";
-  
-      }else{
-  
-        return $stmt->errorInfo();
-      
-      }
-  
-      $stmt->close();
-      $stmt = null;
-  
-    }    
+
+    $stmt->bindParam(":mes", $datos["fecha"], PDO::PARAM_STR);  
+    $stmt->bindParam(":nuevo", $datos["nuevo"], PDO::PARAM_STR);
+    $stmt->bindParam(":antiguo", $datos["antiguo"], PDO::PARAM_STR);
+
+    if($stmt->execute()){
+
+      return "ok";
+
+    }else{
+
+      return $stmt->errorInfo();
+    
+    }
+
+    $stmt->close();
+    $stmt = null;
+
+  }    
+
+  /* 
+  * CREAR GASTOS DE CAJA
+  */
+  static public function mdlActualizarEgresosC($datos){
+
+    $stmt = Conexion::conectar()->prepare("UPDATE 
+                                  tabla_m_detalle t 
+                                SET
+                                  t.valor_3 = t.valor_3 - :egreso,
+                                  t.valor_4 = t.valor_4 + :egreso 
+                                WHERE t.cod_tabla = YEAR(NOW()) 
+                                  AND t.des_corta = MONTH(:mes)");
+
+    $stmt->bindParam(":mes", $datos["fecha"], PDO::PARAM_STR);  
+    $stmt->bindParam(":egreso", $datos["egreso"], PDO::PARAM_STR);
+
+    if($stmt->execute()){
+
+      return "ok";
+
+    }else{
+
+      return $stmt->errorInfo();
+    
+    }
+
+    $stmt->close();
+    $stmt = null;
+
+  }    
 
   /*
 	* Mostrar Centro de Costos
@@ -781,6 +781,7 @@ class ModeloCentroCostos{
                       tabla_m_detalle 
                     SET
                       valor_1 = :saldo_actual,
+                      valor_4 = :saldo_actual,
                       valor_5 = 'ABI' 
                     WHERE cod_tabla = YEAR(NOW()) 
                       AND des_corta = :mes+1");
@@ -802,5 +803,378 @@ class ModeloCentroCostos{
     $stmt = null;
 
   }   
+
+  /*
+	* Mostrar Centro de Costos
+	*/
+	static public function mdlMostrarIngresosCaja($mes){
+
+    $stmt = Conexion::conectar()->prepare("SELECT 
+                            i.id,
+                            DATE(i.fecha) AS fecha,
+                            i.cod_ingreso,
+                            (SELECT 
+                              t.des_larga 
+                            FROM
+                              tabla_m_detalle t 
+                            WHERE t.cod_tabla = 'TING' 
+                              AND i.cod_ingreso = t.cod_argumento) AS nom_ingreso,
+                            i.cod_responsable,
+                            (SELECT 
+                              t.des_larga 
+                            FROM
+                              tabla_m_detalle t 
+                            WHERE t.cod_tabla = 'COBR' 
+                              AND i.cod_responsable = t.cod_argumento) AS nom_responsable,
+                            i.tipo_documento,
+                            (SELECT 
+                              descripcion 
+                            FROM
+                              maestrajf m 
+                            WHERE m.tipo_dato = 'tdoc' 
+                              AND i.tipo_documento = m.codigo) AS nom_documento,
+                            i.documento,
+                            i.total AS total,
+                            i.observacion,
+                            i.estado,
+                            i.visible 
+                          FROM
+                            ingresos_caja i 
+                          WHERE YEAR(i.fecha) = YEAR(NOW()) 
+                            AND MONTH(i.fecha)= :mes
+                            AND i.estado = 1 
+                            AND visible = 1");
+
+    $stmt->bindParam(":mes", $mes, PDO::PARAM_STR);                             
+
+    $stmt -> execute();
+
+    return $stmt -> fetchAll();
+
+    $stmt -> close();
+
+    $stmt = null;
+
+  }  
+
+  /*
+	* Mostrar Centro de Costos
+	*/
+	static public function mdlMostrarIngresosVendedor($mes){
+
+    $stmt = Conexion::conectar()->prepare("SELECT 
+            i.cod_responsable,
+            c.des_larga AS nom_responsable,
+            SUM(i.total) AS total 
+          FROM
+            ingresos_caja i 
+            LEFT JOIN 
+              (SELECT 
+                t.cod_argumento,
+                t.cod_tabla,
+                t.des_larga,
+                t.des_corta 
+              FROM
+                tabla_m_detalle t 
+              WHERE t.cod_tabla = 'COBR') c 
+              ON i.cod_responsable = c.cod_argumento 
+          WHERE YEAR(i.fecha) = YEAR(NOW()) 
+          AND MONTH(i.fecha)= :mes
+          AND i.estado = 1 
+          AND i.visible = 1 
+          GROUP BY i.cod_responsable");
+
+    $stmt->bindParam(":mes", $mes, PDO::PARAM_STR);           
+
+    $stmt -> execute();
+
+    return $stmt -> fetchAll();
+
+    $stmt -> close();
+
+    $stmt = null;
+
+  }   
+
+  /* 
+  * CREAR GASTOS DE CAJA
+  */
+  static public function mdlCrearIngresosCaja($datos){
+
+    $stmt = Conexion::conectar()->prepare("INSERT INTO ingresos_caja (
+                  fecha,
+                  cod_ingreso,
+                  cod_responsable,
+                  tipo_documento,
+                  documento,
+                  total,
+                  observacion,
+                  usureg,
+                  fecreg,
+                  pcreg
+                ) 
+                VALUES
+                  (
+                    :fecha,
+                    :cod_ingreso,
+                    :cod_responsable,
+                    :tipo_documento,
+                    :documento,
+                    :total,
+                    :observacion,
+                    :usureg,
+                    :fecreg,
+                    :pcreg
+                  )");
+
+    $stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+    $stmt->bindParam(":cod_ingreso", $datos["cod_ingreso"], PDO::PARAM_STR);
+    $stmt->bindParam(":cod_responsable", $datos["cod_responsable"], PDO::PARAM_STR);    
+    $stmt->bindParam(":tipo_documento", $datos["tipo_documento"], PDO::PARAM_STR);
+    $stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
+    $stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
+    $stmt->bindParam(":observacion", $datos["observacion"], PDO::PARAM_STR);      
+    $stmt->bindParam(":usureg", $datos["usureg"], PDO::PARAM_STR);
+    $stmt->bindParam(":fecreg", $datos["fecreg"], PDO::PARAM_STR);
+    $stmt->bindParam(":pcreg", $datos["pcreg"], PDO::PARAM_STR);
+
+    if($stmt->execute()){
+
+      return "ok";
+
+    }else{
+
+      return $stmt->errorInfo();
+    
+    }
+
+    $stmt->close();
+    $stmt = null;
+
+  }  
+
+  /* 
+  * CREAR GASTOS DE CAJA
+  */
+  static public function mdlActualizarIngresosA($datos){
+
+    $stmt = Conexion::conectar()->prepare("UPDATE 
+                                  tabla_m_detalle t 
+                                SET
+                                  t.valor_2 = t.valor_2 + :ingreso,
+                                  t.valor_4 = t.valor_4 + :ingreso 
+                                WHERE t.cod_tabla = YEAR(NOW()) 
+                                  AND t.des_corta = MONTH(:mes)");
+
+    $stmt->bindParam(":mes", $datos["fecha"], PDO::PARAM_STR);  
+    $stmt->bindParam(":ingreso", $datos["ingreso"], PDO::PARAM_STR);
+
+    if($stmt->execute()){
+
+      return "ok";
+
+    }else{
+
+      return $stmt->errorInfo();
+    
+    }
+
+    $stmt->close();
+    $stmt = null;
+
+  }   
+
+  /*
+	* Mostrar Centro de Costos
+	*/
+	static public function mdlMostrarIngresosCajaId($id){
+
+    $stmt = Conexion::conectar()->prepare("SELECT 
+                              i.id,
+                              DATE(i.fecha) AS fecha,
+                              i.cod_ingreso,
+                              (SELECT 
+                                t.des_larga 
+                              FROM
+                                tabla_m_detalle t 
+                              WHERE t.cod_tabla = 'TING' 
+                                AND i.cod_ingreso = t.cod_argumento) AS nom_ingreso,
+                              i.cod_responsable,
+                              (SELECT 
+                                t.des_larga 
+                              FROM
+                                tabla_m_detalle t 
+                              WHERE t.cod_tabla = 'COBR' 
+                                AND i.cod_responsable = t.cod_argumento) AS nom_responsable,
+                              i.tipo_documento,
+                              (SELECT 
+                                descripcion 
+                              FROM
+                                maestrajf m 
+                              WHERE m.tipo_dato = 'tdoc' 
+                                AND i.tipo_documento = m.codigo) AS nom_documento,
+                              i.documento,
+                              i.total AS total,
+                              i.observacion,
+                              i.estado,
+                              i.visible 
+                            FROM
+                              ingresos_caja i 
+                            WHERE i.id=$id");
+
+    $stmt -> execute();
+
+    return $stmt -> fetch();
+
+    $stmt -> close();
+
+    $stmt = null;
+
+  }   
+
+  /* 
+  * CREAR GASTOS DE CAJA
+  */
+  static public function mdlEditarIngresosCaja($datos){
+
+    $stmt = Conexion::conectar()->prepare("UPDATE 
+                                ingresos_caja 
+                              SET
+                                fecha = :fecha,
+                                cod_ingreso = :cod_ingreso,
+                                cod_responsable = :cod_responsable,
+                                tipo_documento = :tipo_documento,
+                                documento = :documento,
+                                total = :total,
+                                observacion = :observacion,
+                                usumod = :usumod,
+                                fecmod = :fecmod,
+                                pcmod = :pcmod 
+                              WHERE id = :id");
+
+    $stmt->bindParam(":id", $datos["id"], PDO::PARAM_STR);  
+    $stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+    $stmt->bindParam(":cod_ingreso", $datos["cod_ingreso"], PDO::PARAM_STR);
+    $stmt->bindParam(":cod_responsable", $datos["cod_responsable"], PDO::PARAM_STR);
+    $stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
+    $stmt->bindParam(":tipo_documento", $datos["tipo_documento"], PDO::PARAM_STR);
+    $stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
+    $stmt->bindParam(":observacion", $datos["observacion"], PDO::PARAM_STR);      
+    $stmt->bindParam(":usumod", $datos["usumod"], PDO::PARAM_STR);
+    $stmt->bindParam(":fecmod", $datos["fecmod"], PDO::PARAM_STR);
+    $stmt->bindParam(":pcmod", $datos["pcmod"], PDO::PARAM_STR);
+
+    if($stmt->execute()){
+
+      return "ok";
+
+    }else{
+
+      return $stmt->errorInfo();
+    
+    }
+
+    $stmt->close();
+    $stmt = null;
+
+  }  
+
+  /* 
+  * CREAR GASTOS DE CAJA
+  */
+  static public function mdlActualizarIngresosB($datos){
+
+    $stmt = Conexion::conectar()->prepare("UPDATE 
+                                    tabla_m_detalle t 
+                                  SET
+                                    t.valor_2 = t.valor_2 - :antiguo + :nuevo,
+                                    t.valor_4 = t.valor_4 - :antiguo + :nuevo 
+                                  WHERE t.cod_tabla = YEAR(NOW()) 
+                                    AND t.des_corta = MONTH(:mes)");
+
+    $stmt->bindParam(":mes", $datos["fecha"], PDO::PARAM_STR);  
+    $stmt->bindParam(":nuevo", $datos["nuevo"], PDO::PARAM_STR);
+    $stmt->bindParam(":antiguo", $datos["antiguo"], PDO::PARAM_STR);
+
+    if($stmt->execute()){
+
+      return "ok";
+
+    }else{
+
+      return $stmt->errorInfo();
+    
+    }
+
+    $stmt->close();
+    $stmt = null;
+
+  }  
+
+    /* 
+    * CREAR GASTOS DE CAJA
+    */
+    static public function mdlAnularIngresosCaja($datos){
+
+      $stmt = Conexion::conectar()->prepare("UPDATE 
+                ingresos_caja 
+              SET
+                estado = 0,
+                visible = 0,
+                usuanu = :usuanu,
+                fecanu = :fecanu,
+                pcanu = :pcanu 
+              WHERE id = :id");
+  
+      $stmt->bindParam(":id", $datos["id"], PDO::PARAM_STR);  
+      $stmt->bindParam(":usuanu", $datos["usuanu"], PDO::PARAM_STR);
+      $stmt->bindParam(":fecanu", $datos["fecanu"], PDO::PARAM_STR);
+      $stmt->bindParam(":pcanu", $datos["pcanu"], PDO::PARAM_STR);
+  
+      if($stmt->execute()){
+  
+        return "ok";
+  
+      }else{
+  
+        return $stmt->errorInfo();
+      
+      }
+  
+      $stmt->close();
+      $stmt = null;
+  
+    }  
+
+  /* 
+  * CREAR GASTOS DE CAJA
+  */
+  static public function mdlActualizarIngresosC($datos){
+
+    $stmt = Conexion::conectar()->prepare("UPDATE 
+                                  tabla_m_detalle t 
+                                SET
+                                  t.valor_2 = t.valor_2 - :ingreso,
+                                  t.valor_4 = t.valor_4 - :ingreso 
+                                WHERE t.cod_tabla = YEAR(NOW()) 
+                                  AND t.des_corta = MONTH(:mes)");
+
+    $stmt->bindParam(":mes", $datos["fecha"], PDO::PARAM_STR);  
+    $stmt->bindParam(":ingreso", $datos["ingreso"], PDO::PARAM_STR);
+
+    if($stmt->execute()){
+
+      return "ok";
+
+    }else{
+
+      return $stmt->errorInfo();
+    
+    }
+
+    $stmt->close();
+    $stmt = null;
+
+  }     
 
 }

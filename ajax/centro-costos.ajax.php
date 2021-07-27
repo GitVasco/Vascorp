@@ -56,6 +56,19 @@ class AjaxTablaCentroCostos{
 
 		echo json_encode($respuesta);
 
+	}
+	
+	/* 
+    * traer datos del gasto
+    */
+    public function ajaxTraerIngresos(){
+
+		$idIngreso = $this->idIngreso;
+
+		$respuesta = ControladorCentroCostos::ctrMostrarIngresosCajaId($idIngreso);
+
+		echo json_encode($respuesta);
+
 	}	
 	
 }
@@ -103,5 +116,17 @@ if(isset($_POST["idGasto"])){
 	$traerCentroCostos = new AjaxTablaCentroCostos();
 	$traerCentroCostos -> idGasto = $_POST["idGasto"];
 	$traerCentroCostos -> ajaxTraerGastos();
+
+}
+
+
+/* 
+* traer datos del gasto
+*/
+if(isset($_POST["idIngreso"])){
+
+	$traerCentroCostos = new AjaxTablaCentroCostos();
+	$traerCentroCostos -> idIngreso = $_POST["idIngreso"];
+	$traerCentroCostos -> ajaxTraerIngresos();
 
 }

@@ -2,6 +2,7 @@
 use Mike42\Escpos\Printer;
 use Mike42\Escpos\EscposImage;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+
 class ControladorProduccion{
 
     /* 
@@ -278,11 +279,19 @@ class ControladorProduccion{
                         })
 
             </script>';
-        }
+        }      
 
-        
-
-        
   }
+
+    /* 
+    *MOSTRAR TRABAJADORES POR TALLER
+    */
+    static public function ctrMostrarTrabTaller($taller){
+
+      $respuesta = ModeloProduccion::mdlMostrarTrabTaller($taller);
+  
+      return $respuesta;
+  
+    }
 
 }

@@ -1519,7 +1519,8 @@
             if($_SESSION["costos"] == 1){
             ?>
             <li class="treeview <?php if(   $_GET["ruta"] == "centro-costos" ||
-                                            $_GET["ruta"] == "gastos-caja" ) echo 'active';?>">
+                                            $_GET["ruta"] == "gastos-caja" ||
+                                            $_GET["ruta"] == "ingresos-caja") echo 'active';?>">
 
                 <a href="#">
 
@@ -1541,7 +1542,7 @@
 
                         <a href="centro-costos">
 
-                            <i class="fa fa-cc text-red"></i>
+                            <i class="fa fa-cc text-yellow"></i>
                             <span>Centro de Costos</span>
 
                         </a>
@@ -1552,12 +1553,23 @@
 
                         <a href="gastos-caja">
 
-                            <i class="fa fa-diamond text-green"></i>
-                            <span>Gastos Caja</span>
+                            <i class="fa fa-diamond text-red"></i>
+                            <span>Gastos Caja ( - )</span>
 
                         </a>
 
-                    </li>                    
+                    </li> 
+                    
+                    <li class="<?php if($_GET["ruta"] == "ingresos-caja") echo 'active';?>">
+
+                        <a href="ingresos-caja">
+
+                            <i class="fa fa-diamond text-blue"></i>
+                            <span>Ingresos Caja ( + )</span>
+
+                        </a>
+
+                    </li>                     
 
                 </ul>
 

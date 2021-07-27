@@ -74,6 +74,6 @@ class TablaGastosCaja{
 /*=============================================
 ACTIVAR TABLA DE AGENCIAS
 =============================================*/ 
-$activarAgencias = new TablaGastosCaja();
-$activarAgencias -> mostrarTablaGastosCaja();
+$activarTabla = new TablaGastosCaja();
+$activarTabla -> mostrarTablaGastosCaja();
 

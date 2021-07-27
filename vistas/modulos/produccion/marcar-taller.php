@@ -26,7 +26,7 @@
             LA TABLA DE EN PROCESO
             ======================================-->
 
-            <div class="col-lg-8 hidden-md hidden-sm hidden-xs">
+            <div class="col-lg-7 hidden-md hidden-sm hidden-xs">
 
                 <div class="box box-primary">
 
@@ -96,7 +96,7 @@
             EL FORMULARIO
             ======================================-->
 
-            <div class="col-lg-4 col-xs-12">
+            <div class="col-lg-5 col-xs-12">
 
                 <div class="box box-info">
 
@@ -108,13 +108,63 @@
 
                             <div class="box">
 
-                                <div class="form-group" align="center">
+                                <table class="table table-bordered table-striped dt-responsive tablasA" width="100%">
+                                    
+                                    <thead>
+                                    
+                                    <tr>
 
-                                    <img src="vistas/img/plantilla/jackyform_paloma.png" width="400px" height="400px">
+                                        <th>Trabajador</th>
 
-                                </div>
-                                
-                                <br>
+                                    </tr> 
+
+                                    </thead>
+
+                                    <tbody>
+
+                                    <?php
+
+                                        if($_SESSION["id"] == "26"){
+
+                                            $taller = "T1";
+
+                                        }else{
+
+                                            $taller = "T3";
+
+                                        }
+
+                                        $traList = ControladorProduccion::ctrMostrarTrabTaller($taller);
+                                        #var_dump($traList);
+
+                                        foreach($traList as $key => $value) {
+                                    
+                                        echo ' <tr>
+
+                                                    <td class="text-uppercase">                        <div class="btn-group">';
+
+                                                    if($value["configuracion"] == "1"){
+
+                                                        echo '<button type="button" class="btn btn-primary btn-sm btnActTra" idTrab="'.$value["cod_tra"].'"><i class="fa fa-user text-white"></i>   '.$value["cod_tra"].' - '.$value["trabajador"].'</button>';
+
+                                                    }else{
+
+                                                        echo '<button type="button" class="btn btn-default btn-xs btnActTra" idTrab="'.$value["cod_tra"].'"><i class="fa fa-user text-blue"></i> '.$value["cod_tra"].' - '.$value["trabajador"].'</button>';
+
+                                                    }
+                            
+                                                    echo '</div>
+                                                    </td>
+
+                                            </tr>';
+                                    }
+
+                                    ?>
+
+
+                                    </tbody>
+
+                                </table>                            
 
                                 <?php
 
@@ -125,40 +175,7 @@
 
                                 ?>
 
-                                    <!--=====================================
-                                    ENTRADA DEL TRABAJADOR
-                                    ======================================-->
 
-                                    <div class="box-header with-border">
-
-                                        <button type="button" class="btn btn-info" id="asddadad" name="asddadad" data-toggle="modal" data-target="#fsdfsfsd">Seleccionar Trabajador
-                                        </button>
-
-                                    </div>
-
-                                    <div class="form-group">
-
-                                        <div class="input-group">
-
-                                            <span class="input-group-addon"><i class="fa fa-users"></i></span>
-
-                                            <input type="hidden" id="cod_tra" name="cod_tra" value="<?php echo $trabajador["cod_tra"]; ?>">
-
-                                            </div>
-
-                                    </div>                                
-
-                                    <div class="box box-success">
-
-                                        <div class="box-header">
-
-                                            <h2 align="center"> Hola "<?php echo $trabajador["trabajador"];?>"</h2>
-
-                                        </div>
-
-                                    </div>
-
-                                <br>
 
                                 <!--=====================================
                                 ENTRADA DEL CODIGO
@@ -169,6 +186,8 @@
                                     <div class="input-group">
 
                                         <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
+
+                                        <input type="hidden" class="form-control" id="cod_tra" name="cod_tra" value="<?php echo $trabajador["cod_tra"];?>">
 
                                         <input type="text" class="form-control" id="codigoBarra" name="codigoBarra" placeholder="Ingresar Código" autofocus>
 
@@ -205,102 +224,13 @@
 
 </div>
 
-<!--=====================================
-MODAL CONFIGURAR Trabajador
-======================================-->
+<?php
 
-<div id="fsdfsfsd" class="modal fade" role="dialog">
-  
-  <div class="modal-dialog">
+$configurarTrabajador = new ControladorTrabajador();
+$configurarTrabajador -> ctrConfigurarTrabajador();
 
-    <div class="modal-content">
+?> 
 
-      <form role="form" method="post" enctype="multipart/form-data">
-
-        <!--=====================================
-        CABEZA DEL MODAL
-        ======================================-->
-
-        <div class="modal-header" style="background:#3c8dbc; color:white">
-
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-
-          <h4 class="modal-title">Configurar Trabajador</h4>
-
-        </div>
-
-        <!--=====================================
-        CUERPO DEL MODAL
-        ======================================-->
-
-        <div class="modal-body">
-
-          <div class="box-body">
-
-
-            <!-- ENTRADA PARA PORCENTAJE -->
-
-            <div class="form-group">
-              
-              <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-user-o"></i></span>
-
-                <input type="hidden" id="usuario" name="usuario" value = "<?php echo $_SESSION["id"]?>">
-
-                  <select class="form-control input-sm selectpicker" id="trabajadorSelect" name="trabajadorSelect" data-live-search="true" required>
-
-                    <option value="">Seleccionar Trabajador</option>
-
-                    <?php
-
-                    $trabajador = ControladorTrabajador::ctrMostrarTrabajadorActivo();
-                    #var_dump("trabajador", $trabajador);
-
-                    foreach ($trabajador as $key => $value) {
-
-                      echo '<option value="' . $value["cod_tra"] . '">' . $value["cod_tra"] . ' - ' . $value["nom_tra"] . ', ' . $value["ape_pat_tra"] . ' ' . $value["ape_mat_tra"] . '</option>';
-                    }
-
-                    ?>
-
-                  </select>
-
-              </div>
-
-            </div>       
-
-          </div>
-
-        </div>
-
-        <!--=====================================
-        PIE DEL MODAL
-        ======================================-->
-
-        <div class="modal-footer">
-
-          <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
-
-          <button type="submit" class="btn btn-primary">Configurar Trabajador</button>
-
-        </div>
-
-      </form>
-
-        <?php
-
-          $configurarTrabajador = new ControladorTrabajador();
-          $configurarTrabajador -> ctrConfigurarTrabajador();
-
-        ?>  
-
-
-    </div>
-
-  </div>
-
-</div>
 <script>
 window.document.title = "Registrar tareas"
 </script>

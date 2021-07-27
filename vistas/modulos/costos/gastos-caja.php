@@ -78,7 +78,7 @@
                 <div class="col-lg-1 text-center bg-yellow border-20">
 
                     <span class="info-box-text">Saldo Inicial</span>
-                    <span class="info-box-number" name="saldoInicial" id="saldoInicial">0</span>
+                    <span class="info-box-number saldoInicial" name="saldoInicial" id="saldoInicial">0</span>
 
                 </div>
 
@@ -660,7 +660,7 @@ MODAL CERRAR MES
         <?php
 
           $cerrarMEs = new ControladorCentroCostos();
-          $cerrarMEs -> ctrCerrarMes();
+          $cerrarMEs -> ctrCerrarMesG();
 
         ?>  
 
@@ -679,5 +679,420 @@ MODAL CERRAR MES
 ?>
 
 <script>
-    window.document.title = "Registro de Gastos"
+    window.document.title = "Egresos (-)";
+
+/*=============================================
+CARGAR LA TABLA DINÁMICA DE GASTOS
+=============================================*/
+if (localStorage.getItem("mesG") != null) {
+	cargarTablaGastosCaja(localStorage.getItem("mesG"));
+
+	if(localStorage.getItem("mesG") == "1"){
+
+		$(".btnEne").removeClass("btn-default");
+		$(".btnEne").addClass("btn-info");
+
+		var datos = new FormData();
+		datos.append("mesG", localStorage.getItem("mesG"));
+  
+			$.ajax({
+	  
+			  url:"ajax/tablamaestra.ajax.php",
+			  method: "POST",
+			  data: datos,
+			  cache: false,
+			  contentType: false,
+			  processData: false,
+			  dataType:"json",
+			  success:function(respuesta){
+				
+				  //console.log(respuesta);
+				  document.getElementById("saldoInicial").innerHTML=respuesta["saldo_inicial"];
+				  document.getElementById("saldoIngreso").innerHTML=respuesta["ingresos"];
+				  document.getElementById("saldoEgreso").innerHTML=respuesta["egresos"];
+				  document.getElementById("saldoActual").innerHTML=respuesta["saldo_actual"];
+  
+			  }
+		
+		  })		
+
+	}else if(localStorage.getItem("mesG") == "2"){
+
+		$(".btnFeb").removeClass("btn-default");
+		$(".btnFeb").addClass("btn-info");
+
+		var datos = new FormData();
+		datos.append("mesG", localStorage.getItem("mesG"));
+  
+			$.ajax({
+	  
+			  url:"ajax/tablamaestra.ajax.php",
+			  method: "POST",
+			  data: datos,
+			  cache: false,
+			  contentType: false,
+			  processData: false,
+			  dataType:"json",
+			  success:function(respuesta){
+				
+				  //console.log(respuesta);
+				  document.getElementById("saldoInicial").innerHTML=respuesta["saldo_inicial"];
+				  document.getElementById("saldoIngreso").innerHTML=respuesta["ingresos"];
+				  document.getElementById("saldoEgreso").innerHTML=respuesta["egresos"];
+				  document.getElementById("saldoActual").innerHTML=respuesta["saldo_actual"];
+  
+			  }
+		
+		  })	
+
+	}else if(localStorage.getItem("mesG") == "3"){
+
+		$(".btnMar").removeClass("btn-default");
+		$(".btnMar").addClass("btn-info");
+
+		var datos = new FormData();
+		datos.append("mesG", localStorage.getItem("mesG"));
+  
+			$.ajax({
+	  
+			  url:"ajax/tablamaestra.ajax.php",
+			  method: "POST",
+			  data: datos,
+			  cache: false,
+			  contentType: false,
+			  processData: false,
+			  dataType:"json",
+			  success:function(respuesta){
+				
+				  //console.log(respuesta);
+				  document.getElementById("saldoInicial").innerHTML=respuesta["saldo_inicial"];
+				  document.getElementById("saldoIngreso").innerHTML=respuesta["ingresos"];
+				  document.getElementById("saldoEgreso").innerHTML=respuesta["egresos"];
+				  document.getElementById("saldoActual").innerHTML=respuesta["saldo_actual"];
+  
+			  }
+		
+		  })	
+
+	}else if(localStorage.getItem("mesG") == "4"){
+
+		$(".btnAbr").removeClass("btn-default");
+		$(".btnAbr").addClass("btn-info");
+
+		var datos = new FormData();
+		datos.append("mesG", localStorage.getItem("mesG"));
+  
+			$.ajax({
+	  
+			  url:"ajax/tablamaestra.ajax.php",
+			  method: "POST",
+			  data: datos,
+			  cache: false,
+			  contentType: false,
+			  processData: false,
+			  dataType:"json",
+			  success:function(respuesta){
+				
+				  //console.log(respuesta);
+				  document.getElementById("saldoInicial").innerHTML=respuesta["saldo_inicial"];
+				  document.getElementById("saldoIngreso").innerHTML=respuesta["ingresos"];
+				  document.getElementById("saldoEgreso").innerHTML=respuesta["egresos"];
+				  document.getElementById("saldoActual").innerHTML=respuesta["saldo_actual"];
+  
+			  }
+		
+		  })		
+
+	}else if(localStorage.getItem("mesG") == "5"){
+
+		$(".btnMay").removeClass("btn-default");
+		$(".btnMay").addClass("btn-info");
+
+		var datos = new FormData();
+		datos.append("mesG", localStorage.getItem("mesG"));
+  
+			$.ajax({
+	  
+			  url:"ajax/tablamaestra.ajax.php",
+			  method: "POST",
+			  data: datos,
+			  cache: false,
+			  contentType: false,
+			  processData: false,
+			  dataType:"json",
+			  success:function(respuesta){
+				
+				  //console.log(respuesta);
+				  document.getElementById("saldoInicial").innerHTML=respuesta["saldo_inicial"];
+				  document.getElementById("saldoIngreso").innerHTML=respuesta["ingresos"];
+				  document.getElementById("saldoEgreso").innerHTML=respuesta["egresos"];
+				  document.getElementById("saldoActual").innerHTML=respuesta["saldo_actual"];
+  
+			  }
+		
+		  })
+
+	}else if(localStorage.getItem("mesG") == "6"){
+
+		$(".btnJun").removeClass("btn-default");
+		$(".btnJun").addClass("btn-info");
+
+		var datos = new FormData();
+		datos.append("mesG", localStorage.getItem("mesG"));
+  
+			$.ajax({
+	  
+			  url:"ajax/tablamaestra.ajax.php",
+			  method: "POST",
+			  data: datos,
+			  cache: false,
+			  contentType: false,
+			  processData: false,
+			  dataType:"json",
+			  success:function(respuesta){
+				
+				  //console.log(respuesta);
+				  document.getElementById("saldoInicial").innerHTML=respuesta["saldo_inicial"];
+				  document.getElementById("saldoIngreso").innerHTML=respuesta["ingresos"];
+				  document.getElementById("saldoEgreso").innerHTML=respuesta["egresos"];
+				  document.getElementById("saldoActual").innerHTML=respuesta["saldo_actual"];
+  
+			  }
+		
+		  })
+
+	}else if(localStorage.getItem("mesG") == "7"){
+
+		$(".btnJul").removeClass("btn-default");
+		$(".btnJul").addClass("btn-info");
+
+		var datos = new FormData();
+		datos.append("mesG", localStorage.getItem("mesG"));
+  
+			$.ajax({
+	  
+			  url:"ajax/tablamaestra.ajax.php",
+			  method: "POST",
+			  data: datos,
+			  cache: false,
+			  contentType: false,
+			  processData: false,
+			  dataType:"json",
+			  success:function(respuesta){
+				
+				  //console.log(respuesta);
+				  document.getElementById("saldoInicial").innerHTML=respuesta["saldo_inicial"];
+				  document.getElementById("saldoIngreso").innerHTML=respuesta["ingresos"];
+				  document.getElementById("saldoEgreso").innerHTML=respuesta["egresos"];
+				  document.getElementById("saldoActual").innerHTML=respuesta["saldo_actual"];
+  
+			  }
+		
+		  })
+
+	}else if(localStorage.getItem("mesG") == "8"){
+
+		$(".btnAgo").removeClass("btn-default");
+		$(".btnAgo").addClass("btn-info");
+
+		var datos = new FormData();
+		datos.append("mesG", localStorage.getItem("mesG"));
+  
+			$.ajax({
+	  
+			  url:"ajax/tablamaestra.ajax.php",
+			  method: "POST",
+			  data: datos,
+			  cache: false,
+			  contentType: false,
+			  processData: false,
+			  dataType:"json",
+			  success:function(respuesta){
+				
+				  //console.log(respuesta);
+				  document.getElementById("saldoInicial").innerHTML=respuesta["saldo_inicial"];
+				  document.getElementById("saldoIngreso").innerHTML=respuesta["ingresos"];
+				  document.getElementById("saldoEgreso").innerHTML=respuesta["egresos"];
+				  document.getElementById("saldoActual").innerHTML=respuesta["saldo_actual"];
+  
+			  }
+		
+		  })
+
+	}else if(localStorage.getItem("mesG") == "9"){
+
+		$(".btnSep").removeClass("btn-default");
+		$(".btnSep").addClass("btn-info");
+
+		var datos = new FormData();
+		datos.append("mesG", localStorage.getItem("mesG"));
+  
+			$.ajax({
+	  
+			  url:"ajax/tablamaestra.ajax.php",
+			  method: "POST",
+			  data: datos,
+			  cache: false,
+			  contentType: false,
+			  processData: false,
+			  dataType:"json",
+			  success:function(respuesta){
+				
+				  //console.log(respuesta);
+				  document.getElementById("saldoInicial").innerHTML=respuesta["saldo_inicial"];
+				  document.getElementById("saldoIngreso").innerHTML=respuesta["ingresos"];
+				  document.getElementById("saldoEgreso").innerHTML=respuesta["egresos"];
+				  document.getElementById("saldoActual").innerHTML=respuesta["saldo_actual"];
+  
+			  }
+		
+		  })
+
+	}else if(localStorage.getItem("mesG") == "10"){
+
+		$(".btnOct").removeClass("btn-default");
+		$(".btnOct").addClass("btn-info");
+
+		var datos = new FormData();
+		datos.append("mesG", localStorage.getItem("mesG"));
+  
+			$.ajax({
+	  
+			  url:"ajax/tablamaestra.ajax.php",
+			  method: "POST",
+			  data: datos,
+			  cache: false,
+			  contentType: false,
+			  processData: false,
+			  dataType:"json",
+			  success:function(respuesta){
+				
+				  //console.log(respuesta);
+				  document.getElementById("saldoInicial").innerHTML=respuesta["saldo_inicial"];
+				  document.getElementById("saldoIngreso").innerHTML=respuesta["ingresos"];
+				  document.getElementById("saldoEgreso").innerHTML=respuesta["egresos"];
+				  document.getElementById("saldoActual").innerHTML=respuesta["saldo_actual"];
+  
+			  }
+		
+		  })
+
+	}else if(localStorage.getItem("mesG") == "11"){
+
+		$(".btnNov").removeClass("btn-default");
+		$(".btnNov").addClass("btn-info");
+
+		var datos = new FormData();
+		datos.append("mesG", localStorage.getItem("mesG"));
+  
+			$.ajax({
+	  
+			  url:"ajax/tablamaestra.ajax.php",
+			  method: "POST",
+			  data: datos,
+			  cache: false,
+			  contentType: false,
+			  processData: false,
+			  dataType:"json",
+			  success:function(respuesta){
+				
+				  //console.log(respuesta);
+				  document.getElementById("saldoInicial").innerHTML=respuesta["saldo_inicial"];
+				  document.getElementById("saldoIngreso").innerHTML=respuesta["ingresos"];
+				  document.getElementById("saldoEgreso").innerHTML=respuesta["egresos"];
+				  document.getElementById("saldoActual").innerHTML=respuesta["saldo_actual"];
+  
+			  }
+		
+		  })
+
+	}else if(localStorage.getItem("mesG") == "12"){
+
+		$(".btnDic").removeClass("btn-default");
+		$(".btnDic").addClass("btn-info");
+
+		var datos = new FormData();
+		datos.append("mesG", localStorage.getItem("mesG"));
+  
+			$.ajax({
+	  
+			  url:"ajax/tablamaestra.ajax.php",
+			  method: "POST",
+			  data: datos,
+			  cache: false,
+			  contentType: false,
+			  processData: false,
+			  dataType:"json",
+			  success:function(respuesta){
+				
+				  //console.log(respuesta);
+				  document.getElementById("saldoInicial").innerHTML=respuesta["saldo_inicial"];
+				  document.getElementById("saldoIngreso").innerHTML=respuesta["ingresos"];
+				  document.getElementById("saldoEgreso").innerHTML=respuesta["egresos"];
+				  document.getElementById("saldoActual").innerHTML=respuesta["saldo_actual"];
+  
+			  }
+		
+		  })
+
+	}
+
+}else{
+	const fecha = new Date();
+	const mesG = fecha.getMonth() + 1; 
+
+	if(mesG == "1"){
+
+		$(".btnEne").removeClass("btn-default");
+		$(".btnEne").addClass("btn-info");
+	}else if(mesG == "2"){
+
+		$(".btnFeb").removeClass("btn-default");
+		$(".btnFeb").addClass("btn-info");
+	}else if(mesG == "3"){
+
+		$(".btnMar").removeClass("btn-default");
+		$(".btnMar").addClass("btn-info");
+	}else if(mesG == "4"){
+
+		$(".btnAbr").removeClass("btn-default");
+		$(".btnAbr").addClass("btn-info");
+	}else if(mesG == "5"){
+
+		$(".btnMay").removeClass("btn-default");
+		$(".btnMay").addClass("btn-info");
+	}else if(mesG == "6"){
+
+		$(".btnJun").removeClass("btn-default");
+		$(".btnJun").addClass("btn-info");
+	}else if(mesG == "7"){
+
+		$(".btnJul").removeClass("btn-default");
+		$(".btnJul").addClass("btn-info");
+	}else if(mesG == "8"){
+
+		$(".btnAgo").removeClass("btn-default");
+		$(".btnAgo").addClass("btn-info");
+	}else if(mesG == "9"){
+
+		$(".btnSep").removeClass("btn-default");
+		$(".btnSep").addClass("btn-info");
+	}else if(mesG == "10"){
+
+		$(".btnOct").removeClass("btn-default");
+		$(".btnOct").addClass("btn-info");
+	}else if(mesG == "11"){
+
+		$(".btnNov").removeClass("btn-default");
+		$(".btnNov").addClass("btn-info");
+	}else if(mesG == "12"){
+
+		$(".btnDic").removeClass("btn-default");
+		$(".btnDic").addClass("btn-info");
+	}
+
+	cargarTablaGastosCaja(mesG);
+}    
+
+
 </script>
