@@ -46,6 +46,7 @@
   <!-- DataTables -->
   <link rel="stylesheet" href="vistas/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   <link rel="stylesheet" href="vistas/bower_components/datatables.net-bs/css/responsive.bootstrap.min.css">
+  <link rel="stylesheet" href="vistas/bower_components/datatables.net-bs/css/fixedHeader.dataTables.min.css">
 
   <!-- iCheck for checkboxes and radio inputs -->
   <link rel="stylesheet" href="vistas/plugins/iCheck/all.css"> 
@@ -85,6 +86,7 @@
   <script src="vistas/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
   <script src="vistas/bower_components/datatables.net-bs/js/dataTables.responsive.min.js"></script>
   <script src="vistas/bower_components/datatables.net-bs/js/responsive.bootstrap.min.js"></script>
+  <script src="vistas/bower_components/datatables.net-bs/js/dataTables.fixedHeader.min.js"></script>
 
   <!-- SweetAlert 2 -->
   <script src="vistas/plugins/sweetalert2/sweetalert2.all.js"></script>
@@ -385,7 +387,8 @@ CUERPO DOCUMENTO
 
         }else if( $_GET["ruta"] == "centro-costos" ||
                   $_GET["ruta"] == "gastos-caja" ||
-                  $_GET["ruta"] == "ingresos-caja") {
+                  $_GET["ruta"] == "ingresos-caja" ||
+                  $_GET["ruta"] == "centro-costos-rsm") {
 
               include "modulos/costos/".$_GET["ruta"].".php";
 

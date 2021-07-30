@@ -4,7 +4,7 @@
 
         <h1>
 
-            Administrar operaciones modelos
+            Administrar CENTRO DE COSTOS
 
         </h1>
 
@@ -12,7 +12,7 @@
 
             <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-            <li class="active">Administrar operaciones modelos</li>
+            <li class="active">Administrar CENTRO DE COSTOS</li>
 
         </ol>
 

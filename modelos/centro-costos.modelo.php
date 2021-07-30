@@ -1177,4 +1177,172 @@ class ModeloCentroCostos{
 
   }     
 
+	/*
+	* Mostrar Centro de Costos
+	*/
+	static public function mdlMostrarCentroCostosResumen($valor){
+
+    if($valor != null){
+
+      $stmt = Conexion::conectar()->prepare("SELECT 
+      cc.id,
+      cc.tipo_gasto,
+      cc.nombre_gasto,
+      cc.key_gasto,
+      cc.cod_area,
+      cc.nombre_area,
+      IFNULL(cc.cod_caja, ' - ') AS cod_caja,
+      IFNULL(cc.descripcion, ' - ') AS descripcion,
+      cc.estado,
+      cc.visible,
+      cc.usureg,
+      cc.fecreg,
+      cc.pcreg,
+      cc.usumod,
+      cc.fecmod,
+      cc.pcmod 
+    FROM
+      centro_costos cc 
+    WHERE cc.cod_caja = :valor");
+
+    $stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
+
+      $stmt -> execute();
+
+      return $stmt -> fetch();
+
+    }else{
+
+      $stmt = Conexion::conectar()->prepare("SELECT 
+      cc.key_gasto,
+      cc.tipo_gasto,
+      cc.nombre_gasto,
+      cc.cod_area,
+      cc.nombre_area,
+      cc.cod_caja,
+      cc.descripcion,
+      IFNULL(g.m1, 0) AS m1,
+      IFNULL(g.m2, 0) AS m2,
+      IFNULL(g.m3, 0) AS m3,
+      IFNULL(g.m4, 0) AS m4,
+      IFNULL(g.m5, 0) AS m5,
+      IFNULL(g.m6, 0) AS m6,
+      IFNULL(g.m7, 0) AS m7,
+      IFNULL(g.m8, 0) AS m8,
+      IFNULL(g.m9, 0) AS m9,
+      IFNULL(g.m10, 0) AS m10,
+      IFNULL(g.m11, 0) AS m11,
+      IFNULL(g.m12, 0) AS m12,
+      IFNULL(g.total, 0) AS total
+    FROM
+      centro_costos cc 
+      LEFT JOIN 
+        (SELECT 
+          g.cod_caja,
+          SUM(
+            CASE
+              WHEN MONTH(g.fecha) = '1' 
+              THEN g.total 
+              ELSE 0 
+            END
+          ) AS 'm1',
+          SUM(
+            CASE
+              WHEN MONTH(g.fecha) = '2' 
+              THEN g.total 
+              ELSE 0 
+            END
+          ) AS 'm2',
+          SUM(
+            CASE
+              WHEN MONTH(g.fecha) = '3' 
+              THEN g.total 
+              ELSE 0 
+            END
+          ) AS 'm3',
+          SUM(
+            CASE
+              WHEN MONTH(g.fecha) = '4' 
+              THEN g.total 
+              ELSE 0 
+            END
+          ) AS 'm4',
+          SUM(
+            CASE
+              WHEN MONTH(g.fecha) = '5' 
+              THEN g.total 
+              ELSE 0 
+            END
+          ) AS 'm5',
+          SUM(
+            CASE
+              WHEN MONTH(g.fecha) = '6' 
+              THEN g.total 
+              ELSE 0 
+            END
+          ) AS 'm6',
+          SUM(
+            CASE
+              WHEN MONTH(g.fecha) = '7' 
+              THEN g.total 
+              ELSE 0 
+            END
+          ) AS 'm7',
+          SUM(
+            CASE
+              WHEN MONTH(g.fecha) = '8' 
+              THEN g.total 
+              ELSE 0 
+            END
+          ) AS 'm8',
+          SUM(
+            CASE
+              WHEN MONTH(g.fecha) = '9' 
+              THEN g.total 
+              ELSE 0 
+            END
+          ) AS 'm9',
+          SUM(
+            CASE
+              WHEN MONTH(g.fecha) = '10' 
+              THEN g.total 
+              ELSE 0 
+            END
+          ) AS 'm10',
+          SUM(
+            CASE
+              WHEN MONTH(g.fecha) = '11' 
+              THEN g.total 
+              ELSE 0 
+            END
+          ) AS 'm11',
+          SUM(
+            CASE
+              WHEN MONTH(g.fecha) = '12' 
+              THEN g.total 
+              ELSE 0 
+            END
+          ) AS 'm12',
+          SUM(g.total) AS total  
+        FROM
+          gastos_caja g 
+        WHERE g.estado = 1 
+          AND g.visible = 1 
+          AND YEAR(g.fecha) = YEAR(NOW()) 
+        GROUP BY g.cod_caja) g 
+        ON cc.cod_caja = g.cod_caja 
+    WHERE cc.cod_caja IS NOT NULL");
+
+      $stmt -> execute();
+
+      return $stmt -> fetchAll();
+
+    }
+
+    $stmt -> close();
+
+    $stmt = null;
+
+  }   
+
 }

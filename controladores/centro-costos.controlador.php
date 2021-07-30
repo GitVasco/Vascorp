@@ -25,6 +25,17 @@ class ControladorCentroCostos{
     }
 
     /* 
+    *Mostrar centro de costos
+    */
+	static public function ctrMostrarCentroCostosResumen($valor){
+
+		$respuesta = ModeloCentroCostos::mdlMostrarCentroCostosResumen($valor);
+
+		return $respuesta;
+
+    }    
+
+    /* 
     *Mostrar Correlativo
     */
 	static public function ctrMostrarCorrelativo($tipoGasto, $area){

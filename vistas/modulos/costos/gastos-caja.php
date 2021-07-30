@@ -1094,5 +1094,352 @@ if (localStorage.getItem("mesG") != null) {
 	cargarTablaGastosCaja(mesG);
 }    
 
+function cargarTablaGastosCaja(mesG){
+
+$(".TablaGastosCaja").DataTable({
+    ajax: "ajax/centrocostos/tabla-gastos-caja.ajax.php?mesG="+ mesG,
+    deferRender: true,
+    retrieve: true,
+    processing: true,
+    order: [[0, "desc"]],
+    "pageLength": 20,
+    "lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+    language: {
+      sProcessing: "Procesando...",
+      sLengthMenu: "Mostrar _MENU_ registros",
+      sZeroRecords: "No se encontraron resultados",
+      sEmptyTable: "Ningún dato disponible en esta tabla",
+      sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+      sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
+      sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+      sInfoPostFix: "",
+      sSearch: "Buscar:",
+      sUrl: "",
+      sInfoThousands: ",",
+      sLoadingRecords: "Cargando...",
+      oPaginate: {
+        sFirst: "Primero",
+        sLast: "Último",
+        sNext: "Siguiente",
+        sPrevious: "Anterior"
+      },
+      oAria: {
+        sSortAscending: ": Activar para ordenar la columna de manera ascendente",
+        sSortDescending: ": Activar para ordenar la columna de manera descendente"
+      }
+    },
+    "createdRow":function(row,data,index){
+        if(data[4] == "94"){
+            $('td',row).eq(4).css({
+                'background-color':'#52BE80',
+                'color':'black'
+            })
+            $('td',row).eq(5).css({
+                'background-color':'#52BE80',
+                'color':'black'
+            })
+            $('td',row).eq(6).css({
+                'background-color':'#52BE80',
+                'color':'black'
+            })
+        }else if (data[4] == "95"){
+            $('td',row).eq(4).css({
+                'background-color':'#52BEB4',
+                'color':'black'
+            })
+            $('td',row).eq(5).css({
+                'background-color':'#52BEB4',
+                'color':'black'
+            })
+            $('td',row).eq(6).css({
+                'background-color':'#52BEB4',
+                'color':'black'
+            })
+        }else if(data[4] == "92"){
+            $('td',row).eq(4).css({
+                'background-color':'#FF6868',
+                'color':'black'
+            })
+            $('td',row).eq(5).css({
+                'background-color':'#FF6868',
+                'color':'black'
+            })
+            $('td',row).eq(6).css({
+                'background-color':'#FF6868',
+                'color':'black'
+            })
+        }else if(data[4] == "97"){
+            $('td',row).eq(4).css({
+                'background-color':'#5F86F8',
+                'color':'black'
+            })
+            $('td',row).eq(5).css({
+                'background-color':'#5F86F8',
+                'color':'black'
+            })
+            $('td',row).eq(6).css({
+                'background-color':'#5F86F8',
+                'color':'black'
+            })
+        }else if(data[4] == "60"){
+            $('td',row).eq(4).css({
+                'background-color':'#CCF459',
+                'color':'black'
+            })
+            $('td',row).eq(5).css({
+                'background-color':'#CCF459',
+                'color':'black'
+            })
+            $('td',row).eq(6).css({
+                'background-color':'#CCF459',
+                'color':'black'
+            })
+        }else if(data[4] == "10"){
+            $('td',row).eq(4).css({
+                'background-color':'#AAE1FF',
+                'color':'black'
+            })
+            $('td',row).eq(5).css({
+                'background-color':'#AAE1FF',
+                'color':'black'
+            })
+            $('td',row).eq(6).css({
+                'background-color':'#AAE1FF',
+                'color':'black'
+            })
+        }else if(data[4] == "11"){
+            $('td',row).eq(4).css({
+                'background-color':'#DDDAD6',
+                'color':'black'
+            })
+            $('td',row).eq(5).css({
+                'background-color':'#DDDAD6',
+                'color':'black'
+            })
+            $('td',row).eq(6).css({
+                'background-color':'#DDDAD6',
+                'color':'black'
+            })
+        }else if(data[4] == "12"){
+            $('td',row).eq(4).css({
+                'background-color':'#FFCFE8',
+                'color':'black'
+            })
+            $('td',row).eq(5).css({
+                'background-color':'#FFCFE8',
+                'color':'black'
+            })
+            $('td',row).eq(6).css({
+                'background-color':'#FFCFE8',
+                'color':'black'
+            })
+        }else if(data[4] == "13"){
+            $('td',row).eq(4).css({
+                'background-color':'#F5FAA5',
+                'color':'black'
+            })
+            $('td',row).eq(5).css({
+                'background-color':'#F5FAA5',
+                'color':'black'
+            })
+            $('td',row).eq(6).css({
+                'background-color':'#F5FAA5',
+                'color':'black'
+            })
+        }else if(data[4] == "14"){
+            $('td',row).eq(4).css({
+                'background-color':'#DFB6F9',
+                'color':'black'
+            })
+            $('td',row).eq(5).css({
+                'background-color':'#DFB6F9',
+                'color':'black'
+            })
+            $('td',row).eq(6).css({
+                'background-color':'#DFB6F9',
+                'color':'black'
+            })
+        }
+
+        if(data[9] == "POR RENDIR"){
+            $('td',row).eq(9).css({
+              'background-color':'#F5F106',
+              'color':'black'
+            })
+        }
+
+        if(data[0].substr(-2,2) == "31"){
+            $('td',row).eq(0).css({
+              'background-color':'#C2E4FF',
+              'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "30"){
+            $('td',row).eq(0).css({
+                'background-color':'#E8C2FF',
+                'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "29"){
+            $('td',row).eq(0).css({
+                'background-color':'#C2E4FF',
+                'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "28"){
+            $('td',row).eq(0).css({
+                'background-color':'#C2FFD2',
+                'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "27"){
+            $('td',row).eq(0).css({
+                'background-color':'#E8C2FF',
+                'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "26"){
+            $('td',row).eq(0).css({
+                'background-color':'#C2E4FF',
+                'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "25"){
+            $('td',row).eq(0).css({
+                'background-color':'#C2FFD2',
+                'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "26"){
+            $('td',row).eq(0).css({
+                'background-color':'#E8C2FF',
+                'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "25"){
+            $('td',row).eq(0).css({
+                'background-color':'#C2E4FF',
+                'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "24"){
+            $('td',row).eq(0).css({
+                'background-color':'#C2FFD2',
+                'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "23"){
+            $('td',row).eq(0).css({
+                'background-color':'#E8C2FF',
+                'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "22"){
+            $('td',row).eq(0).css({
+                'background-color':'#C2E4FF',
+                'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "21"){
+            $('td',row).eq(0).css({
+                'background-color':'#C2FFD2',
+                'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "20"){
+            $('td',row).eq(0).css({
+                'background-color':'#E8C2FF',
+                'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "19"){
+            $('td',row).eq(0).css({
+                'background-color':'#C2E4FF',
+                'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "18"){
+            $('td',row).eq(0).css({
+                'background-color':'#C2FFD2',
+                'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "17"){
+            $('td',row).eq(0).css({
+                'background-color':'#E8C2FF',
+                'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "16"){
+            $('td',row).eq(0).css({
+                'background-color':'#C2E4FF',
+                'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "15"){
+            $('td',row).eq(0).css({
+                'background-color':'#C2FFD2',
+                'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "14"){
+            $('td',row).eq(0).css({
+                'background-color':'#E8C2FF',
+                'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "13"){
+            $('td',row).eq(0).css({
+                'background-color':'#C2E4FF',
+                'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "12"){
+            $('td',row).eq(0).css({
+                'background-color':'#C2FFD2',
+                'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "11"){
+            $('td',row).eq(0).css({
+                'background-color':'#E8C2FF',
+                'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "10"){
+            $('td',row).eq(0).css({
+                'background-color':'#C2E4FF',
+                'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "09"){
+            $('td',row).eq(0).css({
+                'background-color':'#C2FFD2',
+                'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "08"){
+            $('td',row).eq(0).css({
+                'background-color':'#E8C2FF',
+                'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "07"){
+            $('td',row).eq(0).css({
+                'background-color':'#C2E4FF',
+                'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "06"){
+            $('td',row).eq(0).css({
+                'background-color':'#C2FFD2',
+                'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "05"){
+            $('td',row).eq(0).css({
+                'background-color':'#E8C2FF',
+                'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "04"){
+            $('td',row).eq(0).css({
+                'background-color':'#C2E4FF',
+                'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "03"){
+            $('td',row).eq(0).css({
+                'background-color':'#C2FFD2',
+                'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "02"){
+            $('td',row).eq(0).css({
+                'background-color':'#E8C2FF',
+                'color':'black'
+            })
+        }else if(data[0].substr(-2,2) == "01"){
+            $('td',row).eq(0).css({
+                'background-color':'#C2E4FF',
+                'color':'black'
+            })
+        }
+
+
+      }
+
+});
+
+}
 
 </script>

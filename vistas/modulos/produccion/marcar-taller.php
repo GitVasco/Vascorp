@@ -172,10 +172,17 @@
                                 $trabajador = ControladorTrabajador::ctrMostrarTrabajadorConfigurado($usuario);
                                 //var_dump($trabajador);
 
-
                                 ?>
 
+                                <div class="box box-success">
 
+                                    <div class="box-header">
+
+                                        <h3 align="center"> Hola "<?php echo $trabajador["trabajador"];?>"</h3>
+
+                                    </div>
+
+                                </div>
 
                                 <!--=====================================
                                 ENTRADA DEL CODIGO
