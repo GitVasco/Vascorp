@@ -91,6 +91,7 @@ $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
 //Money Euro
 $('[data-mask]').inputmask()  
 
+$('.money').mask("#,##0.00", {reverse: true});
 
 /* SELECT2 */
 

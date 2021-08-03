@@ -272,7 +272,7 @@ MODAL REGISTRAR INGRESO
                 <label class="col-form-label col-lg-2 col-md-1">Total Soles</label>
                 <div class="col-lg-3 col-md-10 col-sm-9">
 
-                    <input type="number" step="any" class="form-control input-md" name="nuevoTotal" id="nuevoTotal">
+                    <input type="text" class="form-control input-md money" name="nuevoTotal" id="nuevoTotal">
 
                 </div>                  
 
@@ -428,7 +428,7 @@ MODAL EDITAR INGRESO
                 <label class="col-form-label col-lg-2 col-md-1">Total Soles</label>
                 <div class="col-lg-3 col-md-10 col-sm-9">
 
-                    <input type="number" step="any" class="form-control input-md" name="editarTotal" id="editarTotal">
+                    <input type="text" class="form-control input-md money" name="editarTotal" id="editarTotal">
                     <input type="hidden" step="any" class="form-control input-md" name="totalAntiguo" id="totalAntiguo">
                     <input type="hidden" step="any" class="form-control input-md" name="id" id="id">
 

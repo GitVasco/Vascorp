@@ -51,7 +51,7 @@ $(".TablaCentroCostos").DataTable({
 		  })
 		}else if(data[0] == "3"){
 		  $('td',row).css({
-			'background-color':'#5F86F8',
+			'background-color':'#7C9EFF',
 			'color':'black'
 		  })
 		}else if(data[0] == "4"){
@@ -193,52 +193,52 @@ $(".TablaCentroCostosResumen").DataTable({
         }
     },
     "createdRow":function(row,data,index){
-		if(data[0] == "0"){
+		if(data[0] == "K0"){
 		  $('td',row).css({
 			'background-color':'#52BE80',
 			'color':'black'
 		  })
-		}else if (data[0] == "1"){
+		}else if (data[0] == "K1"){
 		  $('td',row).css({
 			'background-color':'#52BEB4',
 			'color':'black'
 		  })
-		}else if(data[0] == "2"){
+		}else if(data[0] == "K2"){
 		  $('td',row).css({
 			'background-color':'#FF6868',
 			'color':'black'
 		  })
-		}else if(data[0] == "3"){
+		}else if(data[0] == "K3"){
 		  $('td',row).css({
-			'background-color':'#5F86F8',
+			'background-color':'#7C9EFF',
 			'color':'black'
 		  })
-		}else if(data[0] == "4"){
+		}else if(data[0] == "K4"){
 		  $('td',row).css({
 			'background-color':'#CCF459',
 			'color':'black'
 		  })
-		}else if(data[0] == "5"){
+		}else if(data[0] == "K5"){
 		  $('td',row).css({
 			'background-color':'#AAE1FF',
 			'color':'black'
 		  })
-		}else if(data[0] == "6"){
+		}else if(data[0] == "K6"){
 		  $('td',row).css({
 			'background-color':'#DDDAD6',
 			'color':'black'
 		  })
-		}else if(data[0] == "7"){
+		}else if(data[0] == "K7"){
 		  $('td',row).css({
 			'background-color':'#FFCFE8',
 			'color':'black'
 		  })
-		}else if(data[0] == "8"){
+		}else if(data[0] == "K8"){
 		  $('td',row).css({
 			'background-color':'#F5FAA5',
 			'color':'black'
 		  })
-		}else if(data[0] == "9"){
+		}else if(data[0] == "K9"){
 		  $('td',row).css({
 			'background-color':'#DFB6F9',
 			'color':'black'
@@ -249,43 +249,43 @@ $(".TablaCentroCostosResumen").DataTable({
 	"drawCallback":function(){
 		var api=this.api();
 		$(api.column(5).footer()).html(
-			api.column(5,{page:'current'}).data().sum().toFixed(2)
+			new Intl.NumberFormat("en-Us").format((api.column(5,{page:'current'}).data().sum().toFixed(2))*-1)
 		)
 		$(api.column(6).footer()).html(
-			api.column(6,{page:'current'}).data().sum().toFixed(2)
+			new Intl.NumberFormat("en-Us").format((api.column(6,{page:'current'}).data().sum().toFixed(2))*-1)
 		)
 		$(api.column(7).footer()).html(
-			api.column(7,{page:'current'}).data().sum().toFixed(2)
+			new Intl.NumberFormat("en-Us").format((api.column(7,{page:'current'}).data().sum().toFixed(2))*-1)
 		)
 		$(api.column(8).footer()).html(
-			api.column(8,{page:'current'}).data().sum().toFixed(2)
+			new Intl.NumberFormat("en-Us").format((api.column(8,{page:'current'}).data().sum().toFixed(2))*-1)
 		)
 		$(api.column(9).footer()).html(
-			api.column(9,{page:'current'}).data().sum().toFixed(2)
+			new Intl.NumberFormat("en-Us").format((api.column(9,{page:'current'}).data().sum().toFixed(2))*-1)
 		)
 		$(api.column(10).footer()).html(
-			api.column(10,{page:'current'}*-1).data().sum().toFixed(2)
+			new Intl.NumberFormat("en-Us").format((api.column(10,{page:'current'}).data().sum().toFixed(2))*-1)
 		)
 		$(api.column(11).footer()).html(
-			api.column(11,{page:'current'}).data().sum().toFixed(2)
+			new Intl.NumberFormat("en-Us").format((api.column(11,{page:'current'}).data().sum().toFixed(2))*-1)
 		)
 		$(api.column(12).footer()).html(
-			api.column(12,{page:'current'}).data().sum().toFixed(2)
+			new Intl.NumberFormat("en-Us").format((api.column(12,{page:'current'}).data().sum().toFixed(2))*-1)
 		)
 		$(api.column(13).footer()).html(
-			api.column(13,{page:'current'}).data().sum().toFixed(2)
+			new Intl.NumberFormat("en-Us").format((api.column(13,{page:'current'}).data().sum().toFixed(2))*-1)
 		)
 		$(api.column(14).footer()).html(
-			api.column(14,{page:'current'}).data().sum().toFixed(2)
+			new Intl.NumberFormat("en-Us").format((api.column(14,{page:'current'}).data().sum().toFixed(2))*-1)
 		)
 		$(api.column(15).footer()).html(
-			api.column(15,{page:'current'}).data().sum().toFixed(2)
+			new Intl.NumberFormat("en-Us").format((api.column(15,{page:'current'}).data().sum().toFixed(2))*-1)
 		)
 		$(api.column(16).footer()).html(
-			api.column(16,{page:'current'}).data().sum().toFixed(2)
+			new Intl.NumberFormat("en-Us").format((api.column(16,{page:'current'}).data().sum().toFixed(2))*-1)
 		)
 		$(api.column(17).footer()).html(
-			api.column(17,{page:'current'}).data().sum().toFixed(2)
+			new Intl.NumberFormat("en-Us").format((api.column(17,{page:'current'}).data().sum().toFixed(2))*-1)
 		)
 	}
 });

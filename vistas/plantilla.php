@@ -104,6 +104,7 @@
   <script src="vistas/plugins/input-mask/jquery.inputmask.js"></script>
   <script src="vistas/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
   <script src="vistas/plugins/input-mask/jquery.inputmask.extensions.js"></script>
+  <script src="vistas/plugins/input-mask/jquery.mask.min.js"></script>
   
   <!-- bootstrap-select -->
 
@@ -388,7 +389,8 @@ CUERPO DOCUMENTO
         }else if( $_GET["ruta"] == "centro-costos" ||
                   $_GET["ruta"] == "gastos-caja" ||
                   $_GET["ruta"] == "ingresos-caja" ||
-                  $_GET["ruta"] == "centro-costos-rsm") {
+                  $_GET["ruta"] == "centro-costos-rsm" ||
+                  $_GET["ruta"] == "solicitud") {
 
               include "modulos/costos/".$_GET["ruta"].".php";
 

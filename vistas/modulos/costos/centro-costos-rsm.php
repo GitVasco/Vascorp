@@ -64,19 +64,19 @@
                             <th>Área</th>
                             <th>Cod. Caja</th>
                             <th>Descripción</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>  
+                            <th style="text-align:right !important"></th>
+                            <th style="text-align:right !important"></th>
+                            <th style="text-align:right !important"></th>
+                            <th style="text-align:right !important"></th>
+                            <th style="text-align:right !important"></th>
+                            <th style="text-align:right !important"></th>
+                            <th style="text-align:right !important"></th>
+                            <th style="text-align:right !important"></th>
+                            <th style="text-align:right !important"></th>
+                            <th style="text-align:right !important"></th>
+                            <th style="text-align:right !important"></th>
+                            <th style="text-align:right !important"></th>
+                            <th style="text-align:right !important"></th>  
 
                         </tr>
 

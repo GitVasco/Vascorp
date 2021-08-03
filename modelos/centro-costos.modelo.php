@@ -136,6 +136,43 @@ class ModeloCentroCostos{
 
   }  
 
+	/*
+	* Mostrar Areas
+	*/
+	static public function mdlMostrarCorrelativoRecibo(){
+
+    $stmt = Conexion::conectar()->prepare("SELECT 
+    LPAD(MAX(cod_argumento) + 1, 6, '0') AS recibo 
+  FROM
+    tabla_m_detalle 
+  WHERE cod_tabla = 'TREC'");
+
+    $stmt -> execute();
+
+    return $stmt -> fetch();
+
+    $stmt -> close();
+
+    $stmt = null;
+
+  }  
+
+    /* 
+    * CREAR CENTRO COSTOS
+    */
+    static public function mdlActualizarCorrelativo(){
+
+      $stmt = Conexion::conectar()->prepare("UPDATE 
+      tabla_m_detalle 
+    SET
+      cod_argumento = LPAD(cod_argumento + 1, 6, '0') 
+    WHERE cod_tabla = 'TREC'");
+    
+      $stmt->execute();
+      $stmt = null;
+  
+    }  
+
     /* 
     * CREAR CENTRO COSTOS
     */
@@ -317,6 +354,7 @@ class ModeloCentroCostos{
                       WHERE YEAR(g.fecha) = YEAR(NOW()) 
                       AND MONTH(g.fecha) = $mes
                       and g.estado=1 AND g.visible=1");
+                      
 
     $stmt -> execute();
 
@@ -327,6 +365,131 @@ class ModeloCentroCostos{
     $stmt = null;
 
   }  
+
+  /*
+	* Mostrar Centro de Costos
+	*/
+	static public function mdlMostrarGastosCajaUsuario($usuario){
+
+    if($usuario == "Joel Medrano" || $usuario == "Johana Requelme" || $usuario == "Yudy Rosales" || $usuario == "Judith Condor"){
+
+      $stmt = Conexion::conectar()->prepare("SELECT 
+      g.id,
+      DATE(g.fecha) AS fecha,
+      g.recibo,
+      g.ruc_proveedor,
+      g.proveedor,
+      g.sucursal,
+      s.des_larga AS nom_sucursal,
+      g.cod_caja,
+      cc.descripcion AS nom_caja,
+      cc.tipo_gasto,
+      cc.nombre_gasto,
+      cc.cod_area,
+      cc.nombre_area,
+      g.total,
+      g.tipo_documento,
+      d.descripcion AS nombre_documento,
+      g.documento,
+      g.solicitante,
+      g.descripcion AS desc_salida,
+      g.rubro_cancelacion,
+      g.usureg,
+      g.estado,
+      g.visible
+    FROM
+      gastos_caja g 
+      LEFT JOIN 
+        (SELECT 
+          cod_argumento,
+          des_larga 
+        FROM
+          tabla_m_detalle 
+        WHERE cod_tabla = 'tsuc') s 
+        ON g.sucursal = s.cod_argumento 
+      LEFT JOIN centro_costos cc 
+        ON g.cod_caja = cc.cod_caja 
+      LEFT JOIN 
+        (SELECT 
+          codigo,
+          descripcion 
+        FROM
+          maestrajf 
+        WHERE tipo_dato = 'tdoc' 
+          AND codigo IN ('01', '03', '09', '99')) AS d 
+        ON g.tipo_documento = d.codigo 
+    WHERE YEAR(g.fecha) = YEAR(NOW()) 
+      AND g.estado = 2 
+      AND g.visible = 1");
+
+$stmt->bindParam(":usuario", $usuario, PDO::PARAM_STR);
+
+$stmt -> execute();
+
+return $stmt -> fetchAll();
+
+    }else{
+
+      $stmt = Conexion::conectar()->prepare("SELECT 
+            g.id,
+            DATE(g.fecha) AS fecha,
+            g.recibo,
+            g.ruc_proveedor,
+            g.proveedor,
+            g.sucursal,
+            s.des_larga AS nom_sucursal,
+            g.cod_caja,
+            cc.descripcion AS nom_caja,
+            cc.tipo_gasto,
+            cc.nombre_gasto,
+            cc.cod_area,
+            cc.nombre_area,
+            g.total,
+            g.tipo_documento,
+            d.descripcion AS nombre_documento,
+            g.documento,
+            g.solicitante,
+            g.descripcion AS desc_salida,
+            g.rubro_cancelacion 
+          FROM
+            gastos_caja g 
+            LEFT JOIN 
+              (SELECT 
+                cod_argumento,
+                des_larga 
+              FROM
+                tabla_m_detalle 
+              WHERE cod_tabla = 'tsuc') s 
+              ON g.sucursal = s.cod_argumento 
+            LEFT JOIN centro_costos cc 
+              ON g.cod_caja = cc.cod_caja 
+            LEFT JOIN 
+              (SELECT 
+                codigo,
+                descripcion 
+              FROM
+                maestrajf 
+              WHERE tipo_dato = 'tdoc' 
+                AND codigo IN ('01', '03', '09', '99')) AS d 
+              ON g.tipo_documento = d.codigo 
+          WHERE YEAR(g.fecha) = YEAR(NOW()) 
+            AND g.estado = 2 
+            AND g.visible = 1 
+            AND g.usureg = :usuario");
+  
+      $stmt->bindParam(":usuario", $usuario, PDO::PARAM_STR);
+  
+      $stmt -> execute();
+  
+      return $stmt -> fetchAll();
+
+    }
+
+    $stmt -> close();
+
+    $stmt = null;
+
+  }   
 
   /*
 	* Mostrar Centro de Costos
@@ -469,6 +632,7 @@ class ModeloCentroCostos{
                           descripcion,
                           rubro_cancelacion,
                           observacion,
+                          estado,
                           usureg,
                           fecreg,
                           pcreg
@@ -488,6 +652,7 @@ class ModeloCentroCostos{
                             UPPER(:descripcion),
                             UPPER(:rubro_cancelacion),
                             UPPER(:observacion),
+                            :estado,
                             :usureg,
                             :fecreg,
                             :pcreg
@@ -505,7 +670,8 @@ class ModeloCentroCostos{
     $stmt->bindParam(":solicitante", $datos["solicitante"], PDO::PARAM_STR);
     $stmt->bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
     $stmt->bindParam(":rubro_cancelacion", $datos["rubro_cancelacion"], PDO::PARAM_STR);
-    $stmt->bindParam(":observacion", $datos["observacion"], PDO::PARAM_STR);      
+    $stmt->bindParam(":observacion", $datos["observacion"], PDO::PARAM_STR);  
+    $stmt->bindParam(":estado", $datos["estado"], PDO::PARAM_STR);      
     $stmt->bindParam(":usureg", $datos["usureg"], PDO::PARAM_STR);
     $stmt->bindParam(":fecreg", $datos["fecreg"], PDO::PARAM_STR);
     $stmt->bindParam(":pcreg", $datos["pcreg"], PDO::PARAM_STR);

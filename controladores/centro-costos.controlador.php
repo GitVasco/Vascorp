@@ -36,6 +36,17 @@ class ControladorCentroCostos{
     }    
 
     /* 
+    *Mostrar centro de costos
+    */
+	static public function ctrMostrarCorrelativoRecibo(){
+
+		$respuesta = ModeloCentroCostos::mdlMostrarCorrelativoRecibo();
+
+		return $respuesta;
+
+    }     
+
+    /* 
     *Mostrar Correlativo
     */
 	static public function ctrMostrarCorrelativo($tipoGasto, $area){
@@ -180,6 +191,17 @@ class ControladorCentroCostos{
     /*
 	*MOSTRAR GASTOS DE CAJA
 	*/
+	static public function ctrMostrarGastosCajaUsuario($usuario){
+
+		$respuesta = ModeloCentroCostos::mdlMostrarGastosCajaUsuario($usuario);
+
+		return $respuesta;
+
+    }    
+
+    /*
+	*MOSTRAR GASTOS DE CAJA
+	*/
 	static public function ctrMostrarGastosCajaId($id){
 
 		$respuesta = ModeloCentroCostos::mdlMostrarGastosCajaId($id);
@@ -257,6 +279,7 @@ class ControladorCentroCostos{
                 date_default_timezone_set('America/Lima');
                 $fecha = new DateTime();
                 $PcReg= gethostbyaddr($_SERVER['REMOTE_ADDR']);
+                $total = str_replace(",","",$_POST["total"]);
 
                 $datos = array( "fecha"             =>  $_POST["fechaGasto"],
                                 "recibo"            =>  $_POST["recibo"],
@@ -264,13 +287,14 @@ class ControladorCentroCostos{
                                 "proveedor"         =>  $_POST["nuevaRazPro"],
                                 "sucursal"          =>  $_POST["nuevaSucursal"],
                                 "cod_caja"          =>  $_POST["nuevoCodCaja"],
-                                "total"             =>  $_POST["total"],
+                                "total"             =>  $total,
                                 "tipo_documento"    =>  $_POST["nuevoTipo"],
                                 "documento"         =>  $_POST["documento"],
                                 "solicitante"       =>  $_POST["solicitante"],
                                 "descripcion"       =>  $_POST["descripcion"],
                                 "rubro_cancelacion" =>  $_POST["rubro"],
                                 "observacion"       =>  $_POST["observacion"],
+                                "estado"            =>  '1',
                                 "fecreg"		    =>  $fecha->format("Y-m-d H:i:s"),
                                 "usureg"		    =>  $_SESSION["nombre"],
                                 "pcreg" 		    =>  $PcReg);
@@ -281,8 +305,9 @@ class ControladorCentroCostos{
 
                 if($respuesta == "ok"){
                     
+                    $total = str_replace(",","",$_POST["total"]);
                     $fecha = $_POST["fechaGasto"];
-                    $egreso = $_POST["total"];
+                    $egreso = $total;
 
                     $datosM = array("fecha"     => $fecha,
                                     "egreso"    => $egreso);
@@ -293,17 +318,17 @@ class ControladorCentroCostos{
 
                     # Mostramos una alerta suave
                     echo '<script>
-                            swal({
-                                type: "success",
-                                title: "Felicitaciones",
-                                text: "¡El gasto fue registrado con éxito!",
-                                showConfirmButton: true,
-                                confirmButtonText: "Cerrar"
-                            }).then((result)=>{
-                                if(result.value){
-                                    window.location="gastos-caja";}
-                            });
-                        </script>';	                             
+                    swal({
+                        type: "success",
+                        title: "Felicitaciones",
+                        text: "¡El gasto fue guardado con éxito!",
+                        showConfirmButton: true,
+                        confirmButtonText: "Cerrar"
+                    }).then((result)=>{
+                        if(result.value){
+                            window.location="gastos-caja";}
+                    });
+                </script>';	                             
 
 
                 }else{
@@ -366,6 +391,7 @@ class ControladorCentroCostos{
                 date_default_timezone_set('America/Lima');
                 $fecha = new DateTime();
                 $PcReg= gethostbyaddr($_SERVER['REMOTE_ADDR']);
+                $total = str_replace(",","",$_POST["editarTotal"]);
 
                 $datos = array( "id"                =>  $_POST["id"],
                                 "fecha"             =>  $_POST["editarFechaGasto"],
@@ -374,7 +400,7 @@ class ControladorCentroCostos{
                                 "proveedor"         =>  $_POST["editarRazPro"],
                                 "sucursal"          =>  $_POST["editarSucursal"],
                                 "cod_caja"          =>  $_POST["editarCodCaja"],
-                                "total"             =>  $_POST["editarTotal"],
+                                "total"             =>  $total,
                                 "tipo_documento"    =>  $_POST["editarTipo"],
                                 "documento"         =>  $_POST["editarDocumentoG"],
                                 "solicitante"       =>  $_POST["editarSolicitante"],
@@ -384,15 +410,16 @@ class ControladorCentroCostos{
                                 "fecmod"		    =>  $fecha->format("Y-m-d H:i:s"),
                                 "usumod"		    =>  $_SESSION["nombre"],
                                 "pcmod" 		    =>  $PcReg);
-                #var_dump($datos);
+                var_dump($datos);
 
                 $respuesta = ModeloCentroCostos::mdlEditarGastosCaja($datos);
                 #var_dump($respuesta);
 
                 if($respuesta == "ok"){
 
+                    $total = str_replace(",","",$_POST["editarTotal"]);
                     $fecha = $_POST["editarFechaGasto"];
-                    $nuevo = $_POST["editarTotal"];
+                    $nuevo = $total;
                     $antiguo = $_POST["totalAntiguo"];
 
                     $datosM = array("fecha"     => $fecha,
@@ -706,13 +733,14 @@ class ControladorCentroCostos{
                 date_default_timezone_set('America/Lima');
                 $fecha = new DateTime();
                 $PcReg= gethostbyaddr($_SERVER['REMOTE_ADDR']);
+                $total = str_replace(",","",$_POST["nuevoTotal"]);
                 
                 $datos = array( "fecha"             =>  $_POST["fechaIngreso"],
                                 "cod_ingreso"       =>  $_POST["nuevoCodIng"],
                                 "cod_responsable"   =>  $_POST["nuevoResp"],
                                 "tipo_documento"    =>  $_POST["nuevoTipo"],
                                 "documento"         =>  $_POST["documento"],
-                                "total"             =>  $_POST["nuevoTotal"],
+                                "total"             =>  $total,
                                 "observacion"       =>  $_POST["observacion"],
                                 "fecreg"		    =>  $fecha->format("Y-m-d H:i:s"),
                                 "usureg"		    =>  $_SESSION["nombre"],
@@ -724,8 +752,9 @@ class ControladorCentroCostos{
                 
                 if($respuesta == "ok"){
                     
+                    $total = str_replace(",","",$_POST["nuevoTotal"]);
                     $fecha = $_POST["fechaIngreso"];
-                    $ingreso = $_POST["nuevoTotal"];
+                    $ingreso = $total;
 
                     $datosM = array("fecha"     => $fecha,
                                     "ingreso"   => $ingreso);
@@ -810,6 +839,7 @@ class ControladorCentroCostos{
                 date_default_timezone_set('America/Lima');
                 $fecha = new DateTime();
                 $PcReg= gethostbyaddr($_SERVER['REMOTE_ADDR']);
+                $total = str_replace(",","",$_POST["editarTotal"]);
 
                 $datos = array( "id"                =>  $_POST["id"],
                                 "fecha"             =>  $_POST["editarFechaIngreso"],
@@ -817,7 +847,7 @@ class ControladorCentroCostos{
                                 "cod_responsable"   =>  $_POST["editarResp"],
                                 "tipo_documento"    =>  $_POST["editarTipo"],
                                 "documento"         =>  $_POST["editarDocumentoI"],
-                                "total"             =>  $_POST["editarTotal"],
+                                "total"             =>  $total,
                                 "observacion"       =>  $_POST["editarObservacion"],
                                 "fecmod"		    =>  $fecha->format("Y-m-d H:i:s"),
                                 "usumod"		    =>  $_SESSION["nombre"],
@@ -829,8 +859,9 @@ class ControladorCentroCostos{
 
                 if($respuesta == "ok"){
 
+                    $total = str_replace(",","",$_POST["editarTotal"]);
                     $fecha = $_POST["editarFechaIngreso"];
-                    $nuevo = $_POST["editarTotal"];
+                    $nuevo = $total;
                     $antiguo = $_POST["totalAntiguo"];
 
                     $datosM = array("fecha"     => $fecha,
@@ -968,5 +999,107 @@ class ControladorCentroCostos{
         }
 
     }     
+
+    /* 
+    *CREAR SOLICITUD
+    */
+	static public function ctrCrearGastosSolicitud(){
+        
+        if(isset($_POST["recibo"])){
+
+            $fechaSolicitud = $_POST["fechaSolicitud"];
+            $mesSolicitud = date("m", strtotime($fechaSolicitud));
+            #var_dump((int)$mesSolicitud);
+
+            $saldos = ModeloMaestras::mdlTraerSaldos((int)$mesSolicitud);
+            #var_dump($saldos["estado"]);
+
+            if($saldos["estado"] == "CER"){
+
+                # Mostramos una alerta suave
+                echo '<script>
+                        swal({
+                            type: "error",
+                            title: "Error",
+                            text: "¡No es posible registrar gastos en un mes cerrado!",
+                            showConfirmButton: true,
+                            confirmButtonText: "Cerrar"
+                        }).then((result)=>{
+                            if(result.value){
+                                window.location="solicitud";}
+                        });
+                    </script>';
+
+            }else{
+
+                # traemos la fecha y la pc
+                date_default_timezone_set('America/Lima');
+                $fecha = new DateTime();
+                $PcReg= gethostbyaddr($_SERVER['REMOTE_ADDR']);
+                $total = str_replace(",","",$_POST["totalSol"]);
+
+                $datos = array( "fecha"             =>  $_POST["fechaSolicitud"],
+                                "recibo"            =>  $_POST["recibo"],
+                                "ruc_proveedor"     =>  $_POST["nuevoRucProSol"],
+                                "proveedor"         =>  $_POST["nuevaRazPro"],
+                                "sucursal"          =>  $_POST["nuevaSucursal"],
+                                "cod_caja"          =>  $_POST["nuevoCodCajaSol"],
+                                "total"             =>  $total,
+                                "tipo_documento"    =>  '99',
+                                "documento"         =>  'POR RENDIR',
+                                "solicitante"       =>  $_POST["solicitante"],
+                                "descripcion"       =>  $_POST["descripcion"],
+                                "rubro_cancelacion" =>  $_POST["rubro"],
+                                "observacion"       =>  $_POST["observacion"],
+                                "estado"            =>  '2',
+                                "fecreg"		    =>  $fecha->format("Y-m-d H:i:s"),
+                                "usureg"		    =>  $_SESSION["nombre"],
+                                "pcreg" 		    =>  $PcReg);
+                var_dump($datos);     
+                
+                $respuesta = ModeloCentroCostos::mdlCrearGastosCaja($datos);
+                var_dump($respuesta);           
+                
+                if($respuesta == "ok"){
+
+                    ModeloCentroCostos::mdlActualizarCorrelativo();
+
+                    # Mostramos una alerta suave
+                    echo '<script>
+                            swal({
+                                type: "success",
+                                title: "Felicitaciones",
+                                text: "¡La solicitud fue guardada con éxito!",
+                                showConfirmButton: true,
+                                confirmButtonText: "Cerrar"
+                            }).then((result)=>{
+                                if(result.value){
+                                    window.location="solicitud";}
+                            });
+                        </script>';	                    
+                    
+                }else{
+
+                    # Mostramos una alerta suave
+                    echo '<script>
+                            swal({
+                                type: "error",
+                                title: "Error",
+                                text: "¡La información presento problemas y no se registro adecuadamente. Por favor, intenteló de nuevo!",
+                                showConfirmButton: true,
+                                confirmButtonText: "Cerrar"
+                            }).then((result)=>{
+                                if(result.value){
+                                    window.location="solicitud";}
+                            });
+                        </script>';
+        
+                }
+
+            }
+
+        }
+
+    }    
 
 }

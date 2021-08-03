@@ -277,7 +277,7 @@ MODAL REGISTRAR GASTO
                 
                 <label class="col-form-label col-lg-1 col-md-1">Total S/.</label>
                 <div class="col-lg-2">
-                    <input type="number" step="any" class="form-control input-sm" id="total" name="total" required>
+                    <input type="text" class="form-control input-sm money" id="total" name="total" required>
                 </div>                
 
             </div>  
@@ -490,7 +490,7 @@ MODAL EDITAR GASTO
                 
                 <label class="col-form-label col-lg-1 col-md-1">Total S/.</label>
                 <div class="col-lg-2">
-                    <input type="number" step="any" class="form-control input-sm" id="editarTotal" name="editarTotal" required>
+                    <input type="text" class="form-control input-sm money" id="editarTotal" name="editarTotal" required>
                     <input type="hidden" step="any" class="form-control input-sm" id="totalAntiguo" name="totalAntiguo" required>
                 </div>                
 
@@ -1170,15 +1170,15 @@ $(".TablaGastosCaja").DataTable({
             })
         }else if(data[4] == "97"){
             $('td',row).eq(4).css({
-                'background-color':'#5F86F8',
+                'background-color':'#7C9EFF',
                 'color':'black'
             })
             $('td',row).eq(5).css({
-                'background-color':'#5F86F8',
+                'background-color':'#7C9EFF',
                 'color':'black'
             })
             $('td',row).eq(6).css({
-                'background-color':'#5F86F8',
+                'background-color':'#7C9EFF',
                 'color':'black'
             })
         }else if(data[4] == "60"){

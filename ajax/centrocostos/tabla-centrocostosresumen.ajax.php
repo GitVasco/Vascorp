@@ -143,7 +143,7 @@ class TablaCentroCostosResumen{
 
             $datosJson .= '[
             
-            "'.$centros[$i]["key_gasto"].'",
+            "K'.$centros[$i]["key_gasto"].'",
             "'.$centros[$i]["nombre_gasto"].'",
             "'.$centros[$i]["nombre_area"].'",
             "'.$centros[$i]["cod_caja"].'",
@@ -160,7 +160,7 @@ class TablaCentroCostosResumen{
             "'.$m10.'",
             "'.$m11.'",
             "'.$m12.'",
-            "'.$total.'"
+            "<b>'.$total.'</b>"
             ],';        
             }
 
