@@ -520,6 +520,7 @@
                                             $_GET["ruta"] == "crear-segunda" || 
                                             $_GET["ruta"] == "asistencia" || 
                                             $_GET["ruta"] == "quincena" || 
+                                            $_GET["ruta"] == "eficiencia-global" || 
                                             $_GET["ruta"] == "produccion-trusas" || 
                                             $_GET["ruta"] == "produccion-brasier" || 
                                             $_GET["ruta"] == "produccion-vasco" || 
@@ -700,6 +701,7 @@
                     </li>
 
                     <li class="treeview <?php if(   $_GET["ruta"] == "quincena" || 
+                                                    $_GET["ruta"] == "eficiencia-global" || 
                                                     $_GET["ruta"] == "produccion-trusas" || 
                                                     $_GET["ruta"] == "produccion-brasier" || 
                                                     $_GET["ruta"] == "produccion-vasco") echo 'active';?>">
@@ -719,6 +721,14 @@
                                 </a>
 
                             </li>
+
+                            <li class="<?php if($_GET["ruta"] == "eficiencia-global") echo 'active';?>">
+
+                                <a href="eficiencia-global">
+                                <i class="fa fa-circle-o"></i>Eficiencia Global
+                                </a>
+
+                            </li>                            
 
                             <li class="<?php if($_GET["ruta"] == "produccion-trusas") echo 'active';?>">
 

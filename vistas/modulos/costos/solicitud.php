@@ -292,12 +292,228 @@ MODAL REGISTRAR GASTO
 
 </div>
 
+<!--=====================================
+MODAL EDITAR SOLICITUD
+======================================-->
+
+<div id="modalEditarSolicitud" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog" style="width: 70% !important">
+
+    <div class="modal-content">
+
+      <form role="form" method="post">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Editar solicitud</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+          <?php
+            date_default_timezone_set('America/Lima');
+            $fecha = new DateTime();
+          ?>
+
+            <div class="form-group">
+                <label class="col-form-label col-lg-1 col-md-1">Fecha</label>
+                <div class="col-lg-2">
+                    <input type="date" class="form-control input-sm" id="editarFechaSol" name="editarFechaSol" readonly>
+                    <input type="hidden" class="form-control input-sm" id="id" name="id">
+                </div>
+
+                <label class="col-form-label col-lg-1 col-md-1">Recibo</label>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control input-sm" id="editarRecibo" name="editarRecibo" readonly>
+                </div>
+
+                <label for=""  class="col-form-label col-lg-1 col-md-1">Sucursal</label>
+                <div class="col-lg-5 col-md-3">
+                    <select  class="form-control input-md selectpicker" data-live-search="true" name="editarSucursalSol" id="editarSucursalSol" required>
+                        <option value="">Seleccionar Sucursal</option>
+                        <?php
+                        $valor = "TSUC";
+
+                        $sucursal = ModeloMaestras::mdlMostrarMaestrasDetalle($valor);
+                        #var_dump($sucursal);
+                        foreach ($sucursal as $key => $value) {
+                            echo '<option value="' . $value["cod_argumento"] . '">' .$value["cod_argumento"]. " - " . $value["des_larga"] . '</option>';
+                        }
+
+                        ?>
+                    </select>
+                </div>                
+
+            </div>
+
+            <div class="form-group" style="padding-top:25px">
+
+                <label class="col-form-label col-lg-1 col-md-1">Proveedor</label>
+                <div class="col-lg-2">
+                    <div class="input-group">
+                        <input type="number"  class="form-control input-sm" name="editarRucProS" id="editarRucProS">
+                        <div class="input-group-addon" style="padding:0px !important;border: 0px !important">
+                            <button type="button" class="btn btn-default btn-sm" onclick="ObtenerDatosRuc3()"><i class="fa fa-search "></i></button>	
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-10 col-sm-9">
+
+                    <input type="text" style="text-transform:uppercase;" class="form-control input-md" name="editarRazProSol" id="editarRazProSol" placeholder="Ingresar razon social">
+
+                </div>            
+
+                <label class="col-form-label col-lg-1 col-md-1">Tipo Doc.</label>
+                <div class="col-lg-2 col-md-3">
+                    <select  class="form-control input-md selectpicker" data-live-search="true" name="editarTipoSol" id="editarTipoSol" required>
+                        <option value="">Seleccionar Tipo Doc.</option>
+                        <?php
+
+                        $tipoDoc = ControladorCentroCostos::ctrMostrarTipoDoc();
+                        #var_dump($tipoDoc);
+                        foreach ($tipoDoc as $key => $value) {
+                            echo '<option value="' . $value["codigo"] . '">' .$value["codigo"]." - ".$value["descripcion"].'</option>';
+                        }
+
+                        ?>
+                    </select>
+                </div> 
+
+                <label class="col-form-label col-lg-1 col-md-1">Número</label>
+                <div class="col-lg-2">
+                    <input type="text" style="text-transform:uppercase;" class="form-control input-sm" id="editarDocumentoS" name="editarDocumentoS">
+                </div>
+
+            </div>
+
+            <div class="form-group" style="padding-top:25px">
+
+                <label class="col-form-label col-lg-1 col-md-1">Cod. Caja</label>
+
+                <div class="col-lg-8 col-md-3">
+                    <select  class="form-control input-md selectpicker" data-live-search="true" name="editarCodCajaSol" id="editarCodCajaSol" required>
+                        <option value="">Seleccionar Código Caja</option>
+                        <?php
+
+                        $sucursal = ControladorCentroCostos::ctrMostrarCentroCostosCaja();
+                        #var_dump($sucursal);
+                        foreach ($sucursal as $key => $value) {
+                            echo '<option value="'.$value["cod_caja"].'">'.$value["cod_caja"]." - ".$value["nombre_gasto"]." - ".$value["nombre_area"]." - ".$value["descripcion"].'</option>';
+                        }
+
+                        ?>
+                    </select>
+                </div>   
+                
+                <label class="col-form-label col-lg-1 col-md-1">Total S/.</label>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control input-sm money" id="editarTotalS" name="editarTotalS" required>
+                    <input type="hidden" step="any" class="form-control input-sm" id="totalAntiguo" name="totalAntiguo" required>
+                </div>                
+
+            </div>  
+
+            <div class="form-group" style="padding-top:25px">          
+            
+                <label class="col-form-label col-lg-1 col-md-1">Gasto</label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control input-sm" id="editarGastoSol" name="editarGastoSol" readonly>
+                </div> 
+
+                <label class="col-form-label col-lg-1 col-md-1">Área</label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control input-sm" id="editarAreaSol" name="editarAreaSol" readonly>
+                </div> 
+
+                <label class="col-form-label col-lg-1 col-md-1">Caja</label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control input-sm" id="editarCajaSol" name="editarCajaSol" readonly>
+                </div> 
+
+            </div>
+
+            <div class="form-group" style="padding-top:25px">          
+            
+                <label class="col-form-label col-lg-1 col-md-1">Solicitante</label>
+                <div class="col-lg-2">
+                    <input type="text" style="text-transform:uppercase;" class="form-control input-sm" id="editarSolicitante" name="editarSolicitante">
+                </div> 
+
+                <label class="col-form-label col-lg-1 col-md-1">Descripción</label>
+                <div class="col-lg-4">
+                    <input type="text" style="text-transform:uppercase;" class="form-control input-sm" id="editarDescripcion" name="editarDescripcion">
+                </div> 
+
+                <label class="col-form-label col-lg-1 col-md-1">Canc.</label>
+                <div class="col-lg-3">
+                    <input type="text" style="text-transform:uppercase;" class="form-control input-sm" id="editarRubro" name="editarRubro">
+                </div> 
+
+            </div> 
+            
+            <div class="form-group" style="padding-top:25px">          
+            
+                <label class="col-form-label col-lg-1 col-md-1">Obs.</label>
+                <div class="col-lg-11">
+                    <input type="text" style="text-transform:uppercase;" class="form-control input-sm" id="editarObservacion" name="editarObservacion">
+                </div> 
+
+            </div>            
+
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Editar Gasto</button>
+
+        </div>
+
+        <?php
+
+          $editarGastosCaja = new ControladorCentroCostos();
+          $editarGastosCaja -> ctrEditarGastosCaja();
+
+        ?>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+
 <script>
+
     window.document.title = "Solicitud Gasto (-)";
 
 $("#nuevoCodCajaSol, #editarCodCajaSol").change(function(){
 
 	var cod_caja = $(this).val();
+	//console.log(cod_caja);
 
 	var datos = new FormData();
 
@@ -314,9 +530,9 @@ $("#nuevoCodCajaSol, #editarCodCajaSol").change(function(){
 		dataType:"json",
 		success:function(respuesta){
 
-			/* $("#editarGastoSol").val(respuesta["nombre_gasto"]);
+			$("#editarGastoSol").val(respuesta["nombre_gasto"]);
 			$("#editarAreaSol").val(respuesta["nombre_area"]);
-			$("#editarCajaSol").val(respuesta["descripcion"]); */
+			$("#editarCajaSol").val(respuesta["descripcion"]);
 
 			$("#gastoSol").val(respuesta["nombre_gasto"]);
 			$("#areaSol").val(respuesta["nombre_area"]);
@@ -336,7 +552,7 @@ $("#nuevoCodCajaSol, #editarCodCajaSol").change(function(){
 				document.getElementById("cajaSol").style.color = "black";
 				$("#cajaSol").css("font-weight","bold");
 
-				/* document.getElementById("editarGastoSol").style.background = "#52BE80";
+				document.getElementById("editarGastoSol").style.background = "#52BE80";
 				document.getElementById("editarGastoSol").style.color = "black";
 				$("#editarGastoSol").css("font-weight","bold");
 
@@ -346,7 +562,7 @@ $("#nuevoCodCajaSol, #editarCodCajaSol").change(function(){
 
 				document.getElementById("editarCajaSol").style.background = "#52BE80";
 				document.getElementById("editarCajaSol").style.color = "black";
-				$("#editarCajaSol").css("font-weight","bold"); */
+				$("#editarCajaSol").css("font-weight","bold");
 
 			}else if(respuesta["tipo_gasto"] == "95"){
 
@@ -362,7 +578,7 @@ $("#nuevoCodCajaSol, #editarCodCajaSol").change(function(){
 				document.getElementById("cajaSol").style.color = "black";
 				$("#cajaSol").css("font-weight","bold");
 
-				/* document.getElementById("editarGastoSol").style.background = "#52BEB4";
+				document.getElementById("editarGastoSol").style.background = "#52BEB4";
 				document.getElementById("editarGastoSol").style.color = "black";
 				$("#editarGastoSol").css("font-weight","bold");
 
@@ -372,7 +588,7 @@ $("#nuevoCodCajaSol, #editarCodCajaSol").change(function(){
 
 				document.getElementById("editarCajaSol").style.background = "#52BEB4";
 				document.getElementById("editarCajaSol").style.color = "black";
-				$("#editarCajaSol").css("font-weight","bold"); */
+				$("#editarCajaSol").css("font-weight","bold");
 
 			}else if(respuesta["tipo_gasto"] == "92"){
 
@@ -388,7 +604,7 @@ $("#nuevoCodCajaSol, #editarCodCajaSol").change(function(){
 				document.getElementById("cajaSol").style.color = "black";
 				$("#cajaSol").css("font-weight","bold");
 
-				/* document.getElementById("editarGastoSol").style.background = "#FF6868";
+				document.getElementById("editarGastoSol").style.background = "#FF6868";
 				document.getElementById("editarGastoSol").style.color = "black";
 				$("#editarGastoSol").css("font-weight","bold");
 
@@ -398,7 +614,7 @@ $("#nuevoCodCajaSol, #editarCodCajaSol").change(function(){
 
 				document.getElementById("editarCajaSol").style.background = "#FF6868";
 				document.getElementById("editarCajaSol").style.color = "black";
-				$("#editarCajaSol").css("font-weight","bold"); */				
+				$("#editarCajaSol").css("font-weight","bold");				
 
 			}else if(respuesta["tipo_gasto"] == "97"){
 
@@ -414,7 +630,7 @@ $("#nuevoCodCajaSol, #editarCodCajaSol").change(function(){
 				document.getElementById("cajaSol").style.color = "black";
 				$("#cajaSol").css("font-weight","bold");
 
-				/* document.getElementById("editarGastoSol").style.background = "#7C9EFF";
+				document.getElementById("editarGastoSol").style.background = "#7C9EFF";
 				document.getElementById("editarGastoSol").style.color = "black";
 				$("#editarGastoSol").css("font-weight","bold");
 
@@ -424,7 +640,7 @@ $("#nuevoCodCajaSol, #editarCodCajaSol").change(function(){
 
 				document.getElementById("editarCajaSol").style.background = "#7C9EFF";
 				document.getElementById("editarCajaSol").style.color = "black";
-				$("#editarCajaSol").css("font-weight","bold"); */				
+				$("#editarCajaSol").css("font-weight","bold");				
 
 			}else if(respuesta["tipo_gasto"] == "60"){
 
@@ -440,7 +656,7 @@ $("#nuevoCodCajaSol, #editarCodCajaSol").change(function(){
 				document.getElementById("cajaSol").style.color = "black";
 				$("#cajaSol").css("font-weight","bold");
 
-				/* document.getElementById("editarGastoSol").style.background = "#CCF459";
+				document.getElementById("editarGastoSol").style.background = "#CCF459";
 				document.getElementById("editarGastoSol").style.color = "black";
 				$("#editarGastoSol").css("font-weight","bold");
 
@@ -450,7 +666,7 @@ $("#nuevoCodCajaSol, #editarCodCajaSol").change(function(){
 
 				document.getElementById("editarCajaSol").style.background = "#CCF459";
 				document.getElementById("editarCajaSol").style.color = "black";
-				$("#editarCajaSol").css("font-weight","bold"); */				
+				$("#editarCajaSol").css("font-weight","bold");				
 
 			}else if(respuesta["tipo_gasto"] == "10"){
 
@@ -466,7 +682,7 @@ $("#nuevoCodCajaSol, #editarCodCajaSol").change(function(){
 				document.getElementById("cajaSol").style.color = "black";
 				$("#cajaSol").css("font-weight","bold");
 
-				/* document.getElementById("editarGastoSol").style.background = "#AAE1FF";
+				document.getElementById("editarGastoSol").style.background = "#AAE1FF";
 				document.getElementById("editarGastoSol").style.color = "black";
 				$("#editarGastoSol").css("font-weight","bold");
 
@@ -476,7 +692,7 @@ $("#nuevoCodCajaSol, #editarCodCajaSol").change(function(){
 
 				document.getElementById("editarCajaSol").style.background = "#AAE1FF";
 				document.getElementById("editarCajaSol").style.color = "black";
-				$("#editarCajaSol").css("font-weight","bold"); */				
+				$("#editarCajaSol").css("font-weight","bold");				
 
 			}else if(respuesta["tipo_gasto"] == "11"){
 
@@ -492,7 +708,7 @@ $("#nuevoCodCajaSol, #editarCodCajaSol").change(function(){
 				document.getElementById("cajaSol").style.color = "black";
 				$("#cajaSol").css("font-weight","bold");
 
-				/* document.getElementById("editarGastoSol").style.background = "#DDDAD6";
+				document.getElementById("editarGastoSol").style.background = "#DDDAD6";
 				document.getElementById("editarGastoSol").style.color = "black";
 				$("#editarGastoSol").css("font-weight","bold");
 
@@ -502,7 +718,7 @@ $("#nuevoCodCajaSol, #editarCodCajaSol").change(function(){
 
 				document.getElementById("editarCajaSol").style.background = "#DDDAD6";
 				document.getElementById("editarCajaSol").style.color = "black";
-				$("#editarCajaSol").css("font-weight","bold"); */				
+				$("#editarCajaSol").css("font-weight","bold");				
 
 			}else if(respuesta["tipo_gasto"] == "12"){
 
@@ -518,7 +734,7 @@ $("#nuevoCodCajaSol, #editarCodCajaSol").change(function(){
 				document.getElementById("cajaSol").style.color = "black";
 				$("#cajaSol").css("font-weight","bold");
 
-				/* document.getElementById("editarGastoSol").style.background = "#FFCFE8";
+				document.getElementById("editarGastoSol").style.background = "#FFCFE8";
 				document.getElementById("editarGastoSol").style.color = "black";
 				$("#editarGastoSol").css("font-weight","bold");
 
@@ -528,7 +744,7 @@ $("#nuevoCodCajaSol, #editarCodCajaSol").change(function(){
 
 				document.getElementById("editarCajaSol").style.background = "#FFCFE8";
 				document.getElementById("editarCajaSol").style.color = "black";
-				$("#editarCajaSol").css("font-weight","bold"); */				
+				$("#editarCajaSol").css("font-weight","bold");				
 
 			}else if(respuesta["tipo_gasto"] == "13"){
 
@@ -544,7 +760,7 @@ $("#nuevoCodCajaSol, #editarCodCajaSol").change(function(){
 				document.getElementById("cajaSol").style.color = "black";
 				$("#cajaSol").css("font-weight","bold");
 
-				/* document.getElementById("editarGastoSol").style.background = "#F5FAA5";
+				document.getElementById("editarGastoSol").style.background = "#F5FAA5";
 				document.getElementById("editarGastoSol").style.color = "black";
 				$("#editarGastoSol").css("font-weight","bold");
 
@@ -554,7 +770,7 @@ $("#nuevoCodCajaSol, #editarCodCajaSol").change(function(){
 
 				document.getElementById("editarCajaSol").style.background = "#F5FAA5";
 				document.getElementById("editarCajaSol").style.color = "black";
-				$("#editarCajaSol").css("font-weight","bold"); */				
+				$("#editarCajaSol").css("font-weight","bold");				
 
 			}else if(respuesta["tipo_gasto"] == "14"){
 
@@ -570,7 +786,7 @@ $("#nuevoCodCajaSol, #editarCodCajaSol").change(function(){
 				document.getElementById("cajaSol").style.color = "black";
 				$("#cajaSol").css("font-weight","bold");
 
-				/* document.getElementById("editarGastoSol").style.background = "#DFB6F9";
+				document.getElementById("editarGastoSol").style.background = "#DFB6F9";
 				document.getElementById("editarGastoSol").style.color = "black";
 				$("#editarGastoSol").css("font-weight","bold");
 
@@ -580,7 +796,7 @@ $("#nuevoCodCajaSol, #editarCodCajaSol").change(function(){
 
 				document.getElementById("editarCajaSol").style.background = "#DFB6F9";
 				document.getElementById("editarCajaSol").style.color = "black";
-				$("#editarCajaSol").css("font-weight","bold"); */				
+				$("#editarCajaSol").css("font-weight","bold");				
 
 			}
 

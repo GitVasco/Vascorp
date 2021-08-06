@@ -70,6 +70,40 @@ class AjaxTablaCentroCostos{
 		echo json_encode($respuesta);
 
 	}	
+
+	/* 
+    * traer datos del gasto
+    */
+    public function ajaxCambiarEstado(){
+
+		$idSolicitud = $this->idSolicitud;
+		$estadoSol = $this->estadoSol;
+
+		$datosE = array("id" 		=> $idSolicitud,
+						"estado" 	=> $estadoSol);
+
+		$respuesta = ModeloCentroCostos::mdlCambiarEstado($datosE);
+
+		echo json_encode($respuesta);
+
+	}	
+
+	/* 
+    * traer datos del gasto
+    */
+    public function ajaxActualizarEgresosA(){
+
+		$fecha = $this->fecha;
+		$egreso = $this->total;
+
+		$datosE = array("fecha" 		=> $fecha,
+						"egreso"	 	=> $egreso);
+
+		$respuesta = ModeloCentroCostos::mdlActualizarEgresosA($datosE);
+
+		//echo json_encode($respuesta);
+
+	}		
 	
 }
 
@@ -128,5 +162,30 @@ if(isset($_POST["idIngreso"])){
 	$traerCentroCostos = new AjaxTablaCentroCostos();
 	$traerCentroCostos -> idIngreso = $_POST["idIngreso"];
 	$traerCentroCostos -> ajaxTraerIngresos();
+
+}
+
+/* 
+* cambiar de estado
+*/
+if(isset($_POST["idSolicitud"])){
+
+	$traerCentroCostos = new AjaxTablaCentroCostos();
+	$traerCentroCostos -> idSolicitud = $_POST["idSolicitud"];
+	$traerCentroCostos -> estadoSol = $_POST["estadoSol"];
+	$traerCentroCostos -> ajaxCambiarEstado();
+
+}
+
+
+/* 
+* cambiar de estado
+*/
+if(isset($_POST["fecha"])){
+
+	$traerCentroCostos = new AjaxTablaCentroCostos();
+	$traerCentroCostos -> fecha = $_POST["fecha"];
+	$traerCentroCostos -> total = $_POST["total"];
+	$traerCentroCostos -> ajaxActualizarEgresosA();
 
 }

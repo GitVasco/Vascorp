@@ -33,18 +33,18 @@ class TablaGastosCaja{
             */
             if($gastos[$i]["estado"] == "2"){
 
-                $estado = "<button class='btn btn-warning btn-xs btnAprobar' idSolicitud='".$gastos[$i]["id"]."' estadoSolicitud='3'>Por Aprobar</button>";
+                $estado = "<button class='btn btn-warning btn-xs btnAprobarSol' idSolicitud='".$gastos[$i]["id"]."' estadoSol='3' total=".$gastos[$i]["total"]." fecha='".$gastos[$i]["fecha"]."'>Por Aprobar</button>";
 
-            }else{
+            }else if($gastos[$i]["estado"] == "3"){
 
-                $estado = "<button class='btn btn-primary btn-xs btnAprobar' idSolicitud='".$gastos[$i]["id"]."' estadoSolicitud='2'>Aprobado</button>";
+                $estado = "<button class='btn btn-primary btn-xs btnAprobarSol' idSolicitud='".$gastos[$i]["id"]."' estadoSol='1'>Por Rendir</button>";
 
             }
 
             /* 
             * Botones
             */
-            $botones =  "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarGasto' idGasto='".$gastos[$i]["id"]."' data-toggle='modal' data-target='#modalEditarGasto'><i class='fa fa-pencil'></i></button><button class='btn btn-xs btn-danger btnAnularGasto' title='Anular Gasto' idGasto='".$gastos[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
+            $botones =  "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarSolicitud' idGasto='".$gastos[$i]["id"]."' estado=".$gastos[$i]["estado"]." data-toggle='modal' data-target='#modalEditarSolicitud'><i class='fa fa-pencil'></i></button><button class='btn btn-xs btn-danger btnAnularGasto' title='Anular Gasto' idGasto='".$gastos[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
 
             $datosJson .= '[            
                 "'.$gastos[$i]["fecha"].'",

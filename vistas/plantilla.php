@@ -305,6 +305,7 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "produccion-vasco" ||
                   $_GET["ruta"] == "quincena" ||
                   $_GET["ruta"] == "eficiencia" ||
+                  $_GET["ruta"] == "eficiencia-global" ||
                   $_GET["ruta"] == "pagos" ||
                   $_GET["ruta"] == "servicios" ||
                   $_GET["ruta"] == "crear-servicio" ||

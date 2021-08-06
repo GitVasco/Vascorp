@@ -818,9 +818,9 @@ $(".btnDic").click(function(){
  //OBTENER DATOS POR RUC MEDIANTE LA API 
 function ObtenerDatosRuc3(){
 	
-	var nuevoRuc = $("#nuevoRucProC, #editarRucProC, #nuevoRucProSol").val();
+	var nuevoRuc = $("#nuevoRucProC, #editarRucProC, #nuevoRucProSol, #editarRucProS").val();
 	var tamano = nuevoRuc.length;
-	// console.log(tamano);
+	console.log(tamano);
 	if(tamano == 8){
 		var datos = new FormData();
 		datos.append("nuevoDni",nuevoRuc);
@@ -833,7 +833,7 @@ function ObtenerDatosRuc3(){
 			processData: false,
 			dataType: "json",
 			success:function( jsonx ) {
-				// console.log(jsonx);
+				console.log(jsonx);
 				if(jsonx["success"]==false){
 					$('#nuevaRazPro').attr('readonly',false);
 					$('#nuevaRazPro').val("");
@@ -862,7 +862,7 @@ function ObtenerDatosRuc3(){
 			processData: false,
 			dataType: "json",
 			success:function( jsonx ) {
-				// console.log(jsonx);
+				console.log(jsonx);
 				if(jsonx["success"]==false){
 					$('#nuevaRazPro').attr('readonly',false);
 					$('#nuevaRazPro').val("");
@@ -1187,7 +1187,6 @@ $("#nuevoCodCaja, #editarCodCaja").change(function(){
 
 })
 
-
 /* 
 *EDITAR GASTO
 */
@@ -1408,7 +1407,6 @@ $(".TablaGastosCaja").on("click",".btnAnularGasto",function(){
 	})
 
 });
-
 
 $(".TablaSolicitud").DataTable({
     ajax: "ajax/centrocostos/tabla-solicitud-gastos.ajax.php",
@@ -1712,3 +1710,269 @@ $(".TablaSolicitud").DataTable({
 
       }
 });
+
+/* 
+*AGREGANDO COPAS
+*/
+$(".TablaSolicitud").on("click", ".btnAprobarSol", function() {
+
+	var idSolicitud = $(this).attr("idSolicitud");
+	var total = $(this).attr("total");
+	var estadoSol = $(this).attr("estadoSol");
+	var fecha = $(this).attr("fecha");
+	//console.log(idSolicitud, total, estadoSol, fecha);
+
+	var datos=new FormData();
+	datos.append("idSolicitud",idSolicitud);
+	datos.append("estadoSol",estadoSol);
+	datos.append("fecha",fecha);
+	datos.append("total",total);
+
+	$.ajax({
+		url:"ajax/centro-costos.ajax.php",
+		type:"POST",
+		data:datos,
+		cache:false,
+		contentType:false,
+		processData:false,
+		success:function(respuesta){
+
+			console.log(respuesta);
+
+			if(respuesta == '"ok"'){
+
+				Command: toastr["info"]("Entregar el dinero");
+
+			}
+
+
+		}
+
+	});
+
+	if(estadoSol == "3"){
+
+		$(this).removeClass("btn-warning");
+		$(this).addClass("btn-primary");
+		$(this).html("Por Rendir");
+		$(this).attr("estadoSol","1");
+
+	}else if(estadoSol == "3"){
+
+		$(this).removeClass("btn-warning");
+		$(this).addClass("btn-primary");
+		$(this).html("Por Rendir");
+		$(this).attr("estadoSol","1");
+
+	}
+
+})
+
+$(".TablaSolicitud tbody").on("click", "button.btnEditarSolicitud", function(){
+
+	var idGasto = $(this).attr("idGasto");
+	//console.log(idGasto);
+	var estado = $(this).attr("estado");
+	console.log(estado);
+
+	var datos = new FormData();
+	datos.append("idGasto", idGasto);
+
+	$.ajax({
+
+		url:"ajax/centro-costos.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType:"json",
+		success:function(respuesta){
+			//console.log(respuesta);
+
+			if(estado == "3"){
+
+				$("#editarTotalS").val(respuesta["total"]);
+				$('#editarTotalS').attr('readonly',true);
+
+
+			}else{
+
+				$("#editarTotalS").val(respuesta["total"]);
+
+			}
+
+			$("#id").val(respuesta["id"]);
+
+			$("#editarFechaSol").val(respuesta["fecha"]);
+			$("#editarRecibo").val(respuesta["recibo"]);
+			$("#editarSucursalSol").val(respuesta["sucursal"]);
+			$("#editarSucursalSol").selectpicker("refresh");
+			$("#editarRucProS").val(respuesta["ruc_proveedor"]);
+			$("#editarRazProSol").val(respuesta["proveedor"]);
+			$("#editarTipoSol").val(respuesta["tipo_documento"]);
+			$("#editarTipoSol").selectpicker("refresh");
+			$("#editarDocumentoS").val(respuesta["documento"]);
+			$("#editarCodCajaSol").val(respuesta["cod_caja"]);
+			$("#editarCodCajaSol").selectpicker("refresh");
+			
+			$("#totalAntiguo").val(respuesta["total"]);
+
+			$("#editarGastoSol").val(respuesta["nombre_gasto"]);
+			$("#editarAreaSol").val(respuesta["nombre_area"]);
+			$("#editarCajaSol").val(respuesta["nom_caja"]);
+
+			if(respuesta["tipo_gasto"] == "94"){
+
+				document.getElementById("editarGastoSol").style.background = "#52BE80";
+				document.getElementById("editarGastoSol").style.color = "black";
+				$("#editarGastoSol").css("font-weight","bold");
+
+				document.getElementById("editarAreaSol").style.background = "#52BE80";
+				document.getElementById("editarAreaSol").style.color = "black";
+				$("#editarAreaSol").css("font-weight","bold");
+
+				document.getElementById("editarCajaSol").style.background = "#52BE80";
+				document.getElementById("editarCajaSol").style.color = "black";
+				$("#editarCajaSol").css("font-weight","bold");
+
+			}else if(respuesta["tipo_gasto"] == "95"){
+
+				document.getElementById("editarGastoSol").style.background = "#52BEB4";
+				document.getElementById("editarGastoSol").style.color = "black";
+				$("#editarGastoSol").css("font-weight","bold");
+
+				document.getElementById("editarAreaSol").style.background = "#52BEB4";
+				document.getElementById("editarAreaSol").style.color = "black";
+				$("#editarAreaSol").css("font-weight","bold");
+
+				document.getElementById("editarCajaSol").style.background = "#52BEB4";
+				document.getElementById("editarCajaSol").style.color = "black";
+				$("#editarCajaSol").css("font-weight","bold");
+
+			}else if(respuesta["tipo_gasto"] == "92"){
+
+				document.getElementById("editarGastoSol").style.background = "#FF6868";
+				document.getElementById("editarGastoSol").style.color = "black";
+				$("#editarGastoSol").css("font-weight","bold");
+
+				document.getElementById("editarAreaSol").style.background = "#FF6868";
+				document.getElementById("editarAreaSol").style.color = "black";
+				$("#editarAreaSol").css("font-weight","bold");
+
+				document.getElementById("editarCajaSol").style.background = "#FF6868";
+				document.getElementById("editarCajaSol").style.color = "black";
+				$("#editarCajaSol").css("font-weight","bold");
+
+			}else if(respuesta["tipo_gasto"] == "97"){
+
+				document.getElementById("editarGastoSol").style.background = "#7C9EFF";
+				document.getElementById("editarGastoSol").style.color = "black";
+				$("#editarGastoSol").css("font-weight","bold");
+
+				document.getElementById("editarAreaSol").style.background = "#7C9EFF";
+				document.getElementById("editarAreaSol").style.color = "black";
+				$("#editarAreaSol").css("font-weight","bold");
+
+				document.getElementById("editarCajaSol").style.background = "#7C9EFF";
+				document.getElementById("editarCajaSol").style.color = "black";
+				$("#editarCajaSol").css("font-weight","bold");
+
+			}else if(respuesta["tipo_gasto"] == "60"){
+
+				document.getElementById("editarGastoSol").style.background = "#CCF459";
+				document.getElementById("editarGastoSol").style.color = "black";
+				$("#editarGastoSol").css("font-weight","bold");
+
+				document.getElementById("editarAreaSol").style.background = "#CCF459";
+				document.getElementById("editarAreaSol").style.color = "black";
+				$("#editarAreaSol").css("font-weight","bold");
+
+				document.getElementById("editarCajaSol").style.background = "#CCF459";
+				document.getElementById("editarCajaSol").style.color = "black";
+				$("#editarCajaSol").css("font-weight","bold");
+
+			}else if(respuesta["tipo_gasto"] == "10"){
+
+				document.getElementById("editarGastoSol").style.background = "#AAE1FF";
+				document.getElementById("editarGastoSol").style.color = "black";
+				$("#editarGastoSol").css("font-weight","bold");
+
+				document.getElementById("editarAreaSol").style.background = "#AAE1FF";
+				document.getElementById("editarAreaSol").style.color = "black";
+				$("#editarAreaSol").css("font-weight","bold");
+
+				document.getElementById("editarCajaSol").style.background = "#AAE1FF";
+				document.getElementById("editarCajaSol").style.color = "black";
+				$("#editarCajaSol").css("font-weight","bold");
+
+			}else if(respuesta["tipo_gasto"] == "11"){
+
+				document.getElementById("editarGastoSol").style.background = "#DDDAD6";
+				document.getElementById("editarGastoSol").style.color = "black";
+				$("#editarGastoSol").css("font-weight","bold");
+
+				document.getElementById("editarAreaSol").style.background = "#DDDAD6";
+				document.getElementById("editarAreaSol").style.color = "black";
+				$("#editarAreaSol").css("font-weight","bold");
+
+				document.getElementById("editarCajaSol").style.background = "#DDDAD6";
+				document.getElementById("editarCajaSol").style.color = "black";
+				$("#editarCajaSol").css("font-weight","bold");
+
+			}else if(respuesta["tipo_gasto"] == "12"){
+
+				document.getElementById("editarGastoSol").style.background = "#FFCFE8";
+				document.getElementById("editarGastoSol").style.color = "black";
+				$("#editarGastoSol").css("font-weight","bold");
+
+				document.getElementById("editarAreaSol").style.background = "#FFCFE8";
+				document.getElementById("editarAreaSol").style.color = "black";
+				$("#editarAreaSol").css("font-weight","bold");
+
+				document.getElementById("editarCajaSol").style.background = "#FFCFE8";
+				document.getElementById("editarCajaSol").style.color = "black";
+				$("#editarCajaSol").css("font-weight","bold");
+
+			}else if(respuesta["tipo_gasto"] == "13"){
+
+				document.getElementById("editarGastoSol").style.background = "#F5FAA5";
+				document.getElementById("editarGastoSol").style.color = "black";
+				$("#editarGastoSol").css("font-weight","bold");
+
+				document.getElementById("editarAreaSol").style.background = "#F5FAA5";
+				document.getElementById("editarAreaSol").style.color = "black";
+				$("#editarAreaSol").css("font-weight","bold");
+
+				document.getElementById("editarCajaSol").style.background = "#F5FAA5";
+				document.getElementById("editarCajaSol").style.color = "black";
+				$("#editarCajaSol").css("font-weight","bold");
+
+			}else if(respuesta["tipo_gasto"] == "14"){
+
+				document.getElementById("editarGastoSol").style.background = "#DFB6F9";
+				document.getElementById("editarGastoSol").style.color = "black";
+				$("#editarGastoSol").css("font-weight","bold");
+
+				document.getElementById("editarAreaSol").style.background = "#DFB6F9";
+				document.getElementById("editarAreaSol").style.color = "black";
+				$("#editarAreaSol").css("font-weight","bold");
+
+				document.getElementById("editarCajaSol").style.background = "#DFB6F9";
+				document.getElementById("editarCajaSol").style.color = "black";
+				$("#editarCajaSol").css("font-weight","bold");
+
+			}
+			
+			$("#editarSolicitante").val(respuesta["solicitante"]);
+			$("#editarDescripcion").val(respuesta["desc_salida"]);
+			$("#editarRubro").val(respuesta["rubro_cancelacion"]);
+			$("#editarObservacion").val(respuesta["observacion"]);
+
+
+
+		}
+  
+	})	
+
+})

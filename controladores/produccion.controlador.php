@@ -124,6 +124,17 @@ class ControladorProduccion{
 		return $respuesta;
 
     } 
+
+    /* 
+    *MOSTRAR EFICIENCIA QUINCENAL
+    */
+    static public function ctrTablaEficienciaGlobal($taller){
+
+      $respuesta = ModeloProduccion::mdlTablaEficienciaGlobal($taller);
+  
+      return $respuesta;
+  
+      }     
     
     /* 
     *MOSTRAR PAGOS QUINCENAL
