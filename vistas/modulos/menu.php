@@ -1532,7 +1532,8 @@
                                             $_GET["ruta"] == "gastos-caja" ||
                                             $_GET["ruta"] == "ingresos-caja" ||
                                             $_GET["ruta"] == "centro-costos-rsm" ||
-                                            $_GET["ruta"] == "solicitud") echo 'active';?>">
+                                            $_GET["ruta"] == "solicitud-caja" ||
+                                            $_GET["ruta"] == "diario") echo 'active';?>">
 
                 <a href="#">
 
@@ -1561,6 +1562,18 @@
 
                     </li>
 
+                    <li class="<?php if($_GET["ruta"] == "diario") echo 'active';?>">
+
+                        <a href="diario">
+
+                            <i class="fa fa-book text-brown"></i>
+                            <span>Diario</span>
+
+                        </a>
+
+                    </li>
+
+
                     <li class="<?php if($_GET["ruta"] == "gastos-caja") echo 'active';?>">
 
                         <a href="gastos-caja">
@@ -1572,9 +1585,9 @@
 
                     </li> 
 
-                    <li class="<?php if($_GET["ruta"] == "solicitud") echo 'active';?>">
+                    <li class="<?php if($_GET["ruta"] == "solicitud-caja") echo 'active';?>">
 
-                        <a href="solicitud">
+                        <a href="solicitud-caja">
 
                             <i class="fa fa-diamond text-red"></i>
                             <span>Solicitud Gasto ( - )</span>

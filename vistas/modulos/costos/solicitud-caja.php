@@ -53,7 +53,7 @@
                             <th>Descripcion</th>
 							<th>Responsable</th>
 							<th>Estado</th>
-                            <th>#</th>
+                            <th width="80px">Acciones</th>
 
                         </tr>
 
@@ -154,7 +154,7 @@ MODAL REGISTRAR GASTO
                     <div class="input-group">
                         <input type="number"  class="form-control input-sm" name="nuevoRucProSol" id="nuevoRucProSol">
                         <div class="input-group-addon" style="padding:0px !important;border: 0px !important">
-                            <button type="button" class="btn btn-default btn-sm" onclick="ObtenerDatosRuc3()"><i class="fa fa-search "></i></button>	
+                            <button type="button" class="btn btn-default btn-sm" onclick="ObtenerDatosRuc3('nvo3')"><i class="fa fa-search "></i></button>	
                         </div>
                     </div>
                 </div>
@@ -193,7 +193,7 @@ MODAL REGISTRAR GASTO
                 <label class="col-form-label col-lg-1 col-md-1">Cod. Caja</label>
 
                 <div class="col-lg-8 col-md-3">
-                    <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevoCodCajaSol" id="nuevoCodCajaSol" required>
+                    <select  class="form-control input-md selectpicker" data-size="10" data-live-search="true" name="nuevoCodCajaSol" id="nuevoCodCajaSol" required>
                         <option value="">Seleccionar Código Caja</option>
                         <?php
 
@@ -334,6 +334,7 @@ MODAL EDITAR SOLICITUD
                 <div class="col-lg-2">
                     <input type="date" class="form-control input-sm" id="editarFechaSol" name="editarFechaSol" readonly>
                     <input type="hidden" class="form-control input-sm" id="id" name="id">
+                    <input type="hidden" class="form-control input-sm" id="estado" name="estado">
                 </div>
 
                 <label class="col-form-label col-lg-1 col-md-1">Recibo</label>
@@ -365,16 +366,16 @@ MODAL EDITAR SOLICITUD
                 <label class="col-form-label col-lg-1 col-md-1">Proveedor</label>
                 <div class="col-lg-2">
                     <div class="input-group">
-                        <input type="number"  class="form-control input-sm" name="editarRucProS" id="editarRucProS">
+                        <input type="number"  class="form-control input-sm" name="editarRucProSol" id="editarRucProSol">
                         <div class="input-group-addon" style="padding:0px !important;border: 0px !important">
-                            <button type="button" class="btn btn-default btn-sm" onclick="ObtenerDatosRuc3()"><i class="fa fa-search "></i></button>	
+                            <button type="button" class="btn btn-default btn-sm" onclick="ObtenerDatosRuc3('nvo4')"><i class="fa fa-search "></i></button>	
                         </div>
                     </div>
                 </div>
 
                 <div class="col-lg-3 col-md-10 col-sm-9">
 
-                    <input type="text" style="text-transform:uppercase;" class="form-control input-md" name="editarRazProSol" id="editarRazProSol" placeholder="Ingresar razon social">
+                    <input type="text" style="text-transform:uppercase;" class="form-control input-md" name="editarRazPro" id="editarRazPro" placeholder="Ingresar razon social">
 
                 </div>            
 
@@ -406,7 +407,7 @@ MODAL EDITAR SOLICITUD
                 <label class="col-form-label col-lg-1 col-md-1">Cod. Caja</label>
 
                 <div class="col-lg-8 col-md-3">
-                    <select  class="form-control input-md selectpicker" data-live-search="true" name="editarCodCajaSol" id="editarCodCajaSol" required>
+                    <select  class="form-control input-md selectpicker" data-size="10" data-live-search="true" name="editarCodCajaSol" id="editarCodCajaSol" required>
                         <option value="">Seleccionar Código Caja</option>
                         <?php
 
@@ -494,7 +495,7 @@ MODAL EDITAR SOLICITUD
         <?php
 
           $editarGastosCaja = new ControladorCentroCostos();
-          $editarGastosCaja -> ctrEditarGastosCaja();
+          $editarGastosCaja -> ctrEditarSolicitudCaja();
 
         ?>
 
@@ -505,6 +506,13 @@ MODAL EDITAR SOLICITUD
   </div>
 
 </div>
+
+<?php
+
+    $anularGasto = new ControladorCentroCostos();
+    $anularGasto -> ctrAnularSolicitud();
+
+?>
 
 <script>
 

@@ -198,7 +198,7 @@ MODAL REGISTRAR GASTO
 
                 <label for=""  class="col-form-label col-lg-1 col-md-1">Sucursal</label>
                 <div class="col-lg-5 col-md-3">
-                    <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevaSucursal" id="nuevaSucursal" required>
+                    <select  class="form-control input-md selectpicker" data-size="10" data-live-search="true" name="nuevaSucursal" id="nuevaSucursal" required>
                         <option value="">Seleccionar Sucursal</option>
                         <?php
                         $valor = "TSUC";
@@ -222,7 +222,7 @@ MODAL REGISTRAR GASTO
                     <div class="input-group">
                         <input type="number"  class="form-control input-sm" name="nuevoRucProC" id="nuevoRucProC">
                         <div class="input-group-addon" style="padding:0px !important;border: 0px !important">
-                            <button type="button" class="btn btn-default btn-sm" onclick="ObtenerDatosRuc3()"><i class="fa fa-search "></i></button>	
+                            <button type="button" class="btn btn-default btn-sm" onclick="ObtenerDatosRuc3('nvo1')"><i class="fa fa-search "></i></button>	
                         </div>
                     </div>
                 </div>
@@ -261,7 +261,7 @@ MODAL REGISTRAR GASTO
                 <label class="col-form-label col-lg-1 col-md-1">Cod. Caja</label>
 
                 <div class="col-lg-8 col-md-3">
-                    <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevoCodCaja" id="nuevoCodCaja" required>
+                    <select  class="form-control input-md selectpicker" data-size="10" data-live-search="true" name="nuevoCodCaja" id="nuevoCodCaja" required>
                         <option value="">Seleccionar Código Caja</option>
                         <?php
 
@@ -435,7 +435,7 @@ MODAL EDITAR GASTO
                     <div class="input-group">
                         <input type="number"  class="form-control input-sm" name="editarRucProC" id="editarRucProC">
                         <div class="input-group-addon" style="padding:0px !important;border: 0px !important">
-                            <button type="button" class="btn btn-default btn-sm" onclick="ObtenerDatosRuc3()"><i class="fa fa-search "></i></button>	
+                            <button type="button" class="btn btn-default btn-sm" onclick="ObtenerDatosRuc3('nvo2')"><i class="fa fa-search "></i></button>	
                         </div>
                     </div>
                 </div>
@@ -448,7 +448,7 @@ MODAL EDITAR GASTO
 
                 <label class="col-form-label col-lg-1 col-md-1">Tipo Doc.</label>
                 <div class="col-lg-2 col-md-3">
-                    <select  class="form-control input-md selectpicker" data-live-search="true" name="editarTipo" id="editarTipo" required>
+                    <select  class="form-control input-md selectpicker" data-size="10" data-live-search="true" name="editarTipo" id="editarTipo" required>
                         <option value="">Seleccionar Tipo Doc.</option>
                         <?php
 
@@ -474,7 +474,7 @@ MODAL EDITAR GASTO
                 <label class="col-form-label col-lg-1 col-md-1">Cod. Caja</label>
 
                 <div class="col-lg-8 col-md-3">
-                    <select  class="form-control input-md selectpicker" data-live-search="true" name="editarCodCaja" id="editarCodCaja" required>
+                    <select  class="form-control input-md selectpicker" data-size="10" data-live-search="true" name="editarCodCaja" id="editarCodCaja" required>
                         <option value="">Seleccionar Código Caja</option>
                         <?php
 

@@ -444,7 +444,6 @@ class ControladorCentroCostos{
                             });
                         </script>';                    
 
-
                 }else{
 
                     # Mostramos una alerta suave
@@ -1026,7 +1025,7 @@ class ControladorCentroCostos{
                             confirmButtonText: "Cerrar"
                         }).then((result)=>{
                             if(result.value){
-                                window.location="solicitud";}
+                                window.location="solicitud-caja";}
                         });
                     </script>';
 
@@ -1074,7 +1073,7 @@ class ControladorCentroCostos{
                                 confirmButtonText: "Cerrar"
                             }).then((result)=>{
                                 if(result.value){
-                                    window.location="solicitud";}
+                                    window.location="solicitud-caja";}
                             });
                         </script>';	                    
                     
@@ -1090,7 +1089,7 @@ class ControladorCentroCostos{
                                 confirmButtonText: "Cerrar"
                             }).then((result)=>{
                                 if(result.value){
-                                    window.location="solicitud";}
+                                    window.location="solicitud-caja";}
                             });
                         </script>';
         
@@ -1101,5 +1100,193 @@ class ControladorCentroCostos{
         }
 
     }    
+
+    static public function ctrEditarSolicitudCaja(){
+
+        if(isset($_POST["id"])){
+
+            $fechaSolicitud = $_POST["editarFechaSol"];
+            $mesSolicitud = date("m", strtotime($fechaSolicitud));
+            ##var_dump((int)$mesSolicitud);
+
+            $saldos = ModeloMaestras::mdlTraerSaldos((int)$mesSolicitud);
+            #var_dump($saldos["estado"]);
+
+            if($saldos["estado"] == "CER"){
+
+                # Mostramos una alerta suave
+                echo '<script>
+                        swal({
+                            type: "error",
+                            title: "Error",
+                            text: "¡No es posible editar gastos en un mes cerrado!",
+                            showConfirmButton: true,
+                            confirmButtonText: "Cerrar"
+                        }).then((result)=>{
+                            if(result.value){
+                                window.location="solicitud-caja";}
+                        });
+                    </script>';
+
+            }else{
+
+                # traemos la fecha y la pc
+                date_default_timezone_set('America/Lima');
+                $fecha = new DateTime();
+                $PcReg= gethostbyaddr($_SERVER['REMOTE_ADDR']);
+                
+                if($_POST["estado"] == "2"){
+
+                    $total = str_replace(",","",$_POST["editarTotalS"]);
+
+
+                }else{
+
+                    $total = $_POST["totalAntiguo"];
+
+                }
+                
+                $datos = array( "id"                =>  $_POST["id"],
+                                "fecha"             =>  $_POST["editarFechaSol"],
+                                "recibo"            =>  $_POST["editarRecibo"],
+                                "ruc_proveedor"     =>  $_POST["editarRucProSol"],
+                                "proveedor"         =>  $_POST["editarRazPro"],
+                                "sucursal"          =>  $_POST["editarSucursalSol"],
+                                "cod_caja"          =>  $_POST["editarCodCajaSol"],
+                                "total"             =>  $total,
+                                "tipo_documento"    =>  $_POST["editarTipoSol"],
+                                "documento"         =>  $_POST["editarDocumentoS"],
+                                "solicitante"       =>  $_POST["editarSolicitante"],
+                                "descripcion"       =>  $_POST["editarDescripcion"],
+                                "rubro_cancelacion" =>  $_POST["editarRubro"],
+                                "observacion"       =>  $_POST["editarObservacion"],
+                                "fecmod"		    =>  $fecha->format("Y-m-d H:i:s"),
+                                "usumod"		    =>  $_SESSION["nombre"],
+                                "pcmod" 		    =>  $PcReg);
+                #var_dump($datos);
+
+                $respuesta = ModeloCentroCostos::mdlEditarGastosCaja($datos);
+                #var_dump($respuesta);
+
+                if($respuesta == "ok"){
+
+                    # Mostramos una alerta suave
+                    echo '<script>
+                            swal({
+                                type: "success",
+                                title: "Felicitaciones",
+                                text: "¡El gasto fue editado con éxito!",
+                                showConfirmButton: true,
+                                confirmButtonText: "Cerrar"
+                            }).then((result)=>{
+                                if(result.value){
+                                    window.location="solicitud-caja";}
+                            });
+                        </script>';            
+
+                }else{
+
+                    # Mostramos una alerta suave
+                    echo '<script>
+                            swal({
+                                type: "error",
+                                title: "Error",
+                                text: "¡La información presento problemas y no se registro adecuadamente. Por favor, intenteló de nuevo!",
+                                showConfirmButton: true,
+                                confirmButtonText: "Cerrar"
+                            }).then((result)=>{
+                                if(result.value){
+                                    window.location="solicitud-caja";}
+                            });
+                        </script>';
+        
+                }
+
+            }
+
+        }
+
+    }    
+
+    /* 
+    *ANULAR GASTO - SOLICITUD
+    */
+	static public function ctrAnularSolicitud(){
+
+        if(isset($_GET["idGasto"])){
+
+            $id = $_GET["idGasto"];
+            #var_dump($id);
+
+            $gasto = ModeloCentroCostos::mdlMostrarGastosCajaId($id);
+            #var_dump($gasto["fecha"]);
+
+            $fechaGasto = $gasto["fecha"];
+            $mesGasto = date("m", strtotime($fechaGasto));
+            #var_dump((int)$mesGasto);
+
+            $saldos = ModeloMaestras::mdlTraerSaldos((int)$mesGasto);
+            #var_dump($saldos["estado"]); 
+
+            if($saldos["estado"] == "CER"){
+
+                # Mostramos una alerta suave
+                echo '<script>
+                    swal({
+                        type: "error",
+                        title: "Error",
+                        text: "¡No es posible eliminar gastos en un mes cerrado!",
+                        showConfirmButton: true,
+                        confirmButtonText: "Cerrar"
+                    }).then((result)=>{
+                        if(result.value){
+                            window.location="solicitud-caja";}
+                    });
+                </script>';
+
+            }else{
+
+                # traemos la fecha y la pc
+                date_default_timezone_set('America/Lima');
+                $fecha = new DateTime();
+                $PcReg= gethostbyaddr($_SERVER['REMOTE_ADDR']);
+
+                $datos = array( "id"        => $id, 
+                                "fecanu"    =>  $fecha->format("Y-m-d H:i:s"),
+                                "usuanu"	=>  $_SESSION["nombre"],
+                                "pcanu" 	=>  $PcReg);
+                #var_dump($datos);
+
+                $respuesta = ModeloCentroCostos::mdlAnularGastosCaja($datos);
+                #var_dump($respuesta);
+
+                if($respuesta == "ok"){
+                    
+                    echo'<script>
+
+                    swal({
+                        type: "success",
+                        title: "La solicitud ha sido anulada correctamente",
+                        showConfirmButton: true,
+                        confirmButtonText: "Cerrar",
+                        closeOnConfirm: false
+                        }).then(function(result){
+                                    if (result.value) {
+
+                                    window.location = "solicitud-caja";
+
+                                    }
+                                })
+
+                    </script>';
+
+                }                
+
+            }
+
+
+        }
+
+    }     
 
 }

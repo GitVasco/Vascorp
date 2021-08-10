@@ -391,7 +391,8 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "gastos-caja" ||
                   $_GET["ruta"] == "ingresos-caja" ||
                   $_GET["ruta"] == "centro-costos-rsm" ||
-                  $_GET["ruta"] == "solicitud") {
+                  $_GET["ruta"] == "solicitud-caja" ||
+                  $_GET["ruta"] == "diario") {
 
               include "modulos/costos/".$_GET["ruta"].".php";
 

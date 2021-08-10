@@ -816,11 +816,32 @@ $(".btnDic").click(function(){
 })
 
  //OBTENER DATOS POR RUC MEDIANTE LA API 
-function ObtenerDatosRuc3(){
-	
-	var nuevoRuc = $("#nuevoRucProC, #editarRucProC, #nuevoRucProSol, #editarRucProS").val();
+function ObtenerDatosRuc3(ruc){
+
+	if(ruc == "nvo1"){
+
+		var nuevoRuc = $("#nuevoRucProC").val();
+
+	}else if(ruc == "nvo2"){
+
+		var nuevoRuc = $("#editarRucProC").val();
+
+	}else if(ruc == "nvo3"){
+
+		var nuevoRuc = $("#nuevoRucProSol").val();
+
+	}else if(ruc == "nvo4"){
+
+		var nuevoRuc = $("#editarRucProSol").val();
+
+	}
+
+	//console.log(ruc);
+
+	//var nuevoRuc = $("#nuevoRucProC, #editarRucProC, #nuevoRucProSol, #editarRucProSol").val();
+
 	var tamano = nuevoRuc.length;
-	console.log(tamano);
+	//console.log(nuevoRuc);
 	if(tamano == 8){
 		var datos = new FormData();
 		datos.append("nuevoDni",nuevoRuc);
@@ -833,15 +854,18 @@ function ObtenerDatosRuc3(){
 			processData: false,
 			dataType: "json",
 			success:function( jsonx ) {
-				console.log(jsonx);
+				//console.log(jsonx);
 				if(jsonx["success"]==false){
+
 					$('#nuevaRazPro').attr('readonly',false);
 					$('#nuevaRazPro').val("");
 
 					$('#editarRazPro').attr('readonly',false);
 					$('#editarRazPro').val("");
+
 					
 				}else{
+
 					$('#nuevaRazPro').val(jsonx["apellidoPaterno"]+" "+jsonx["apellidoMaterno"]+" "+jsonx["nombres"] );
 
 					$('#editarRazPro').val(jsonx["apellidoPaterno"]+" "+jsonx["apellidoMaterno"]+" "+jsonx["nombres"] );
@@ -862,8 +886,9 @@ function ObtenerDatosRuc3(){
 			processData: false,
 			dataType: "json",
 			success:function( jsonx ) {
-				console.log(jsonx);
+				//console.log(jsonx);
 				if(jsonx["success"]==false){
+
 					$('#nuevaRazPro').attr('readonly',false);
 					$('#nuevaRazPro').val("");
 
@@ -871,6 +896,7 @@ function ObtenerDatosRuc3(){
 					$('#editarRazPro').val("");
 					
 				}else{
+
 					$('#nuevaRazPro').val(jsonx["razonSocial"]);
 
 					$('#editarRazPro').val(jsonx["razonSocial"]);
@@ -1714,7 +1740,7 @@ $(".TablaSolicitud").DataTable({
 /* 
 *AGREGANDO COPAS
 */
-$(".TablaSolicitud").on("click", ".btnAprobarSol", function() {
+$(".TablaSolicitud, .TablaGastosCaja").on("click", ".btnAprobarSol", function() {
 
 	var idSolicitud = $(this).attr("idSolicitud");
 	var total = $(this).attr("total");
@@ -1737,11 +1763,19 @@ $(".TablaSolicitud").on("click", ".btnAprobarSol", function() {
 		processData:false,
 		success:function(respuesta){
 
-			console.log(respuesta);
+			//console.log(respuesta);
 
-			if(respuesta == '"ok"'){
+			if(respuesta == '"ok"' && estadoSol == "3"){
 
 				Command: toastr["info"]("Entregar el dinero");
+
+			}else if(respuesta == '"ok"' && estadoSol == "4"){
+
+				Command: toastr["info"]("Por Aceptar");
+
+			}else if(respuesta == '"ok"' && estadoSol == "1"){
+
+				Command: toastr["success"]("Aprobado");
 
 			}
 
@@ -1750,19 +1784,32 @@ $(".TablaSolicitud").on("click", ".btnAprobarSol", function() {
 
 	});
 
+	var btnSol = "btnSol"+idSolicitud;
+	//console.log(btnSol);
+
+	document.getElementById(btnSol).disabled=true;
+
 	if(estadoSol == "3"){
 
 		$(this).removeClass("btn-warning");
-		$(this).addClass("btn-primary");
+		$(this).addClass("btn-info");
 		$(this).html("Por Rendir");
-		$(this).attr("estadoSol","1");
+		$(this).attr("estadoSol","4");
+		$(this).attr("total","0");
 
-	}else if(estadoSol == "3"){
+	}else if(estadoSol == "4"){
 
-		$(this).removeClass("btn-warning");
+		$(this).removeClass("btn-info");
 		$(this).addClass("btn-primary");
-		$(this).html("Por Rendir");
-		$(this).attr("estadoSol","1");
+		$(this).html("Por Aceptar");
+		
+
+	}else if(estadoSol == "1"){
+
+		$(this).removeClass("btn-primary");
+		$(this).addClass("btn-success");
+		$(this).html("Aprobado");
+		
 
 	}
 
@@ -1773,7 +1820,7 @@ $(".TablaSolicitud tbody").on("click", "button.btnEditarSolicitud", function(){
 	var idGasto = $(this).attr("idGasto");
 	//console.log(idGasto);
 	var estado = $(this).attr("estado");
-	console.log(estado);
+	//console.log(estado);
 
 	var datos = new FormData();
 	datos.append("idGasto", idGasto);
@@ -1790,17 +1837,18 @@ $(".TablaSolicitud tbody").on("click", "button.btnEditarSolicitud", function(){
 		success:function(respuesta){
 			//console.log(respuesta);
 
-			if(estado == "3"){
+			if(estado == "3" || estado == "4"){
 
 				$("#editarTotalS").val(respuesta["total"]);
 				$('#editarTotalS').attr('readonly',true);
 
-
 			}else{
 
 				$("#editarTotalS").val(respuesta["total"]);
+				$('#editarTotalS').attr('readonly',false);
 
 			}
+
 
 			$("#id").val(respuesta["id"]);
 
@@ -1808,7 +1856,7 @@ $(".TablaSolicitud tbody").on("click", "button.btnEditarSolicitud", function(){
 			$("#editarRecibo").val(respuesta["recibo"]);
 			$("#editarSucursalSol").val(respuesta["sucursal"]);
 			$("#editarSucursalSol").selectpicker("refresh");
-			$("#editarRucProS").val(respuesta["ruc_proveedor"]);
+			$("#editarRucProSol").val(respuesta["ruc_proveedor"]);
 			$("#editarRazProSol").val(respuesta["proveedor"]);
 			$("#editarTipoSol").val(respuesta["tipo_documento"]);
 			$("#editarTipoSol").selectpicker("refresh");
@@ -1816,6 +1864,7 @@ $(".TablaSolicitud tbody").on("click", "button.btnEditarSolicitud", function(){
 			$("#editarCodCajaSol").val(respuesta["cod_caja"]);
 			$("#editarCodCajaSol").selectpicker("refresh");
 			
+			$("#estado").val(estado);
 			$("#totalAntiguo").val(respuesta["total"]);
 
 			$("#editarGastoSol").val(respuesta["nombre_gasto"]);
@@ -1976,3 +2025,27 @@ $(".TablaSolicitud tbody").on("click", "button.btnEditarSolicitud", function(){
 	})	
 
 })
+
+$(".TablaSolicitud").on("click",".btnAnularGasto",function(){
+	var idGasto = $(this).attr("idGasto");
+ 
+	// Capturamos el id de la orden de compra
+	swal({
+        title: '¿Está seguro de anular la solicitud?',
+        text: "¡Si no lo está puede cancelar la acción!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si, anular gasto!'
+    }).then(function (result) {
+
+	if (result.value) {
+
+		window.location = "index.php?ruta=solicitud-caja&idGasto="+idGasto;
+
+	}
+	})
+
+});
