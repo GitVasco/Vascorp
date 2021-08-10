@@ -210,7 +210,7 @@
 
                 <div class="col-lg-2">
                 
-                    <select  class="form-control  " name="nuevoCentroCosto"  required>
+                    <select  class="form-control  selectpicker" name="nuevoCentroCosto" data-size="10" data-live-search="true"  required>
                     <option value="">SELECCIONAR CENTRO COSTO</option>
                         <?php
 

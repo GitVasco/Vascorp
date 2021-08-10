@@ -23,7 +23,7 @@
     <div class="box">
       <div class="box-header with-border">
         <div class="col-lg-2">
-          <select name="selectModeloCorte" id="selectModeloCorte" class="form-control input-lg selectpicker" data-live-search="true">
+          <select name="selectModeloCorte" id="selectModeloCorte" class="form-control input-lg selectpicker" data-live-search="true" data-size="10">
           <option value="">--------Seleccionar modelo-------</option>
           <?php 
             $item=null;

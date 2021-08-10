@@ -31,8 +31,23 @@ class AjaxAsistencias{
 		$tabla="asistenciasjf";
 		$valor1=$this->activarEstado;
 		$valor2=$this->activarId;
+		$valor3=$this->fechaAsistencia;
 
-		$respuesta=ModeloAsistencias::mdlActualizarAsistencia($tabla,$valor1, $valor2);
+		//VALIDAMOS SI ES SABADO O DIA DE SEMANA PARA RESTABLECER LOS MINUTOS UN DIA SABADO
+		$validar_fecha=date("l",strtotime($valor3));	
+
+		if($validar_fecha == "Saturday"){
+			$minutos = 255;
+		}else{
+			$minutos = 525;
+		}
+		if($valor1 == "FALTA"){
+			$respuesta=ModeloAsistencias::mdlActualizarFalta($tabla,$valor1, $valor2);
+			$eliminar=ModeloAsistencias::mdlEliminarAsistenciaPara($valor2);
+		}else{
+			$respuesta=ModeloAsistencias::mdlActualizarAsistencia($tabla,$valor1, $valor2,$minutos);
+		}
+		
 
 		echo $respuesta;
 	}
@@ -55,5 +70,6 @@ if(isset($_POST["activarId"])){
 	$activar=new AjaxAsistencias();
 	$activar->activarId=$_POST["activarId"];
 	$activar->activarEstado=$_POST["activarEstado"];
+	$activar->fechaAsistencia=$_POST["fechaAsistencia"];
 	$activar->ajaxActivarDesactivarAsistencia();
 }

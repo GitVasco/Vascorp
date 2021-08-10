@@ -24,7 +24,7 @@
     
       <div class="box-header width-border">
             <div class="col-lg-2">
-                <select name="selectArticuloTallerP" id="selectArticuloTallerP" class="form-control input-lg selectpicker" data-live-search="true">
+                <select name="selectArticuloTallerP" id="selectArticuloTallerP" class="form-control input-lg selectpicker" data-live-search="true" data-size="10">
                 <option value="">--------Seleccionar articulo-------</option>
                 <?php 
                     $articulos =controladorArticulos::ctrMostrarArticulosTallerP();

@@ -267,7 +267,7 @@ class ControladorAsistencias{
 	}
 
 	/*=============================================
-	AGREGAR TIEMPO 
+	RESTAR TIEMPO 
 	=============================================*/
 
 	static public function ctrQuitarTiempo(){
@@ -276,7 +276,20 @@ class ControladorAsistencias{
 						"minutos" => $_POST["quitarMinutos"]);
 			$respuesta=ModeloAsistencias::mdlQuitarTiempo("asistenciasjf",$datos);
 
-			if($respuesta == "ok"){
+			$asistenciasFecha = ModeloAsistencias::mdlMostrarAsistenciaFecha($_POST["quitarFecha"]);
+			
+			foreach ($asistenciasFecha as $key => $value) {
+				$tabla2 = "asistencia_parajf";
+
+				$datos2 = array("id_para"=>'4',
+								"tiempo_para"=>$_POST["quitarMinutos"],
+								"id_asistencia"=>$value["id"]);
+
+				$respuesta2=ModeloAsistencias::mdlIngresarAsistenciaPara($tabla2,$datos2);
+			}
+			
+
+			if($respuesta2 == "ok"){
 
 				echo'<script>
 

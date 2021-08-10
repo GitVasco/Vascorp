@@ -2,6 +2,8 @@
 * CARGAR TABLA ALMACEN DE CORTE
 */
 if (localStorage.getItem("modeloCorte") != null) {
+	$("#selectModeloCorte").val(localStorage.getItem("modeloCorte"));
+	$("#selectModeloCorte").selectpicker("refresh");
 
 	cargarTablaEnCortes(localStorage.getItem("modeloCorte"));
 	// console.log("lleno");

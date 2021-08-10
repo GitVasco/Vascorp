@@ -59,6 +59,8 @@ $(".box").on("click", ".btnLimpiarArticuloUrgencia", function () {
 * CARGAR TABLA URGENCIAS
 */
 if (localStorage.getItem("articuloUrgencia") != null ) {
+	$("#selectArticuloUrgencia").val(localStorage.getItem("articuloUrgencia"));
+	$("#selectArticuloUrgencia").selectpicker("refresh");
 
 	cargarTablaUrgencias(localStorage.getItem("articuloUrgencia"));
 	// console.log("lleno");

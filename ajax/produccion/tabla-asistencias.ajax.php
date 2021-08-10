@@ -27,32 +27,44 @@ class TablaAsistencia{
         =============================================*/ 
         if($asistencia[$i]["estado"] == "ASISTIO"){
 
-            $imagen = "<button class='btnAprobarAsistencia' idAsistencia='".$asistencia[$i]["id"]."' estadoAsistencia='FALTA'><img id='estadoImagen' src='vistas/img/plantilla/asistio.png'  width='20px'></button>";
+            $imagen = "<button class='btnAprobarAsistencia' idAsistencia='".$asistencia[$i]["id"]."' estadoAsistencia='FALTA' fecha = '".$asistencia[$i]["fecha2"]."'><img id='estadoImagen' src='vistas/img/plantilla/asistio.png'  width='20px'></button>";
             
-
+            /*=============================================
+            TRAEMOS LAS ACCIONES
+            =============================================*/      
+            if($asistencia[$i]["estado_para"] == 1) {
+                $botones =  "<div class='btn-group'><button class='btn btn-xs btn-info btnEditarAsistencia' idAsistencia='".$asistencia[$i]["id"]."' data-toggle='modal' data-target='#modalEditarAsistencia' title='Editar para'><i class='fa fa-exclamation-triangle'></i></button><button class='btn btn-xs btn-danger btnEditarPara' idAsistencia='".$asistencia[$i]["id"]."' data-toggle='modal' data-target='#modalEditarPara' title='Editar nueva para'><i class='fa fa-minus'></i></button><button class='btn btn-xs btn-success btnEditarExtras' idAsistencia='".$asistencia[$i]["id"]."' data-toggle='modal' data-target='#modalEditarExtras' title='Editar horas extras'><i class='fa fa-plus'></i></button></div>"; 
+            }else{
+                $botones =  "<div class='btn-group'><button class='btn btn-xs btn-danger btnEditarPara' idAsistencia='".$asistencia[$i]["id"]."' data-toggle='modal' data-target='#modalEditarPara' title='Editar nueva para'><i class='fa fa-minus'></i></button><button class='btn btn-xs btn-success btnEditarExtras' idAsistencia='".$asistencia[$i]["id"]."' data-toggle='modal' data-target='#modalEditarExtras' title='Editar horas extras'><i class='fa fa-plus'></i></button></div>"; 
+            }
+        
         }else{
 
-            $imagen = "<button class='btnAprobarAsistencia' idAsistencia='".$asistencia[$i]["id"]."' estadoAsistencia='ASISTIO'><img id='estadoImagen' src='vistas/img/plantilla/falto.png'  width='20px'></button>";
+            $imagen = "<button class='btnAprobarAsistencia' idAsistencia='".$asistencia[$i]["id"]."' estadoAsistencia='ASISTIO' fecha = '".$asistencia[$i]["fecha2"]."'><img id='estadoImagen' src='vistas/img/plantilla/falto.png'  width='20px'></button>";
+            /*=============================================
+            TRAEMOS LAS ACCIONES
+            =============================================*/      
+           
+            $botones =  "<div class='btn-group'></div>"; 
             
         }
-        /*=============================================
-        TRAEMOS LAS ACCIONES
-        =============================================*/      
-        if($asistencia[$i]["estado_para"] == 1) {
-            $botones =  "<div class='btn-group'><button class='btn btn-xs btn-danger btnEditarAsistencia' idAsistencia='".$asistencia[$i]["id"]."' data-toggle='modal' data-target='#modalEditarAsistencia' title='Editar para'><i class='fa fa-exclamation-triangle'></i></button><div class='btn-group'><button class='btn btn-xs btn-primary btnEditarPara' idAsistencia='".$asistencia[$i]["id"]."' data-toggle='modal' data-target='#modalEditarPara' title='Editar nueva para'><i class='fa fa-plus'></i></button><button class='btn btn-xs btn-success btnEditarExtras' idAsistencia='".$asistencia[$i]["id"]."' data-toggle='modal' data-target='#modalEditarExtras' title='Editar horas extras'><i class='fa fa-clock-o'></i></button></div>"; 
+
+        if($asistencia[$i]["estado_para"] == 1){
+            $para = "<span style='font-size:85%' class='label label-danger'>PARAS</span>";
         }else{
-            $botones =  "<div class='btn-group'><button class='btn btn-xs btn-primary btnEditarPara' idAsistencia='".$asistencia[$i]["id"]."' data-toggle='modal' data-target='#modalEditarPara' title='Editar nueva para'><i class='fa fa-plus'></i></button><button class='btn btn-xs btn-success btnEditarExtras' idAsistencia='".$asistencia[$i]["id"]."' data-toggle='modal' data-target='#modalEditarExtras' title='Editar horas extras'><i class='fa fa-clock-o'></i></button></div>"; 
+            $para = "<span style='font-size:85%' class='label label-warning'>NO PARAS</span>";
         }
         
         
 
             $datosJson .= '[
             "'.$asistencia[$i]["id_trabajador"].'",
-            "'.$asistencia[$i]["nom_tra"].$asistencia[$i]["ape_pat_tra"].$asistencia[$i]["ape_mat_tra"].'",
+            "'.$asistencia[$i]["nom_tra"]." ".$asistencia[$i]["ape_pat_tra"]." ".$asistencia[$i]["ape_mat_tra"].'",
             "'.$imagen.'",
-            "'.date("Y-m-d", strtotime($asistencia[$i]["fecha"])).'",
+            "'.$asistencia[$i]["fecha2"].'",
             "'.$asistencia[$i]["minutos"].'",
             "'.$asistencia[$i]["horas_extras"].'",
+            "'.$para.'",
             "'.$botones.'"
             ],';        
             }
@@ -76,7 +88,7 @@ class TablaAsistencia{
 
 }
 /*=============================================
-ACTIVAR TABLA DE OPERACIONES
+ACTIVAR TABLA DE ASISTENCIAS
 =============================================*/ 
 $activarAsistencia = new TablaAsistencia();
 $activarAsistencia -> mostrarTablaAsistencia();

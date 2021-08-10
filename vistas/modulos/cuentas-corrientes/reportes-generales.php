@@ -167,7 +167,7 @@
             <div class="box">
                 <div class="box-body">
                     <div class="form-group">
-                        <select class="form-control input-lg selectpicker" id="tipoDocumentoReporte" name="tipoDocumentoReporte" data-live-search="true">
+                        <select class="form-control input-lg selectpicker" id="tipoDocumentoReporte" name="tipoDocumentoReporte" data-live-search="true" data-size="10">
                             <option value="">Seleccionar tipo de documento</option>
                             <?php 
                             $item="tipo_dato";
@@ -213,7 +213,7 @@
             <div class="box">
                 <div class="box-body">
                     <div class="form-group">
-                        <select class="form-control input-lg selectpicker" id="tipoClienteReporte" name="tipoClienteReporte" data-live-search="true">
+                        <select class="form-control input-lg selectpicker" id="tipoClienteReporte" name="tipoClienteReporte" data-live-search="true" data-size="10">
                             <option value="">Seleccionar clientes</option>
                             <?php 
         
@@ -234,7 +234,7 @@
             <div class="box">
                 <div class="box-body">
                     <div class="form-group">
-                        <select class="form-control input-lg selectpicker" id="tipoVendedorReporte" name="tipoVendedorReporte" data-live-search="true">
+                        <select class="form-control input-lg selectpicker" id="tipoVendedorReporte" name="tipoVendedorReporte" data-live-search="true" data-size="10">
                             <option value="">Seleccionar vendedor</option>
                             <?php
                                 $item=null;
@@ -257,7 +257,7 @@
         <div class="box">
             <div class="box-body">
                 <div class="form-group">
-                    <select class="form-control input-lg selectpicker" id="tipoBancoReporte" name="tipoBancoReporte" data-live-search="true">
+                    <select class="form-control input-lg selectpicker" id="tipoBancoReporte" name="tipoBancoReporte" data-live-search="true" data-size="10">
                         <option value="">Seleccionar bancos</option>
                         <?php 
                         $item= null;

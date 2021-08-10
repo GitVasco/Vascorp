@@ -37,7 +37,6 @@ $('.tablaClientes').DataTable({
 	}
 
 });
-
 // VALIDACIÓN DE UN DOCUMENTO EXISTENTE EN LA BD AL REGISTRAR
 $("#documentoCliente").change(function () {
 	var documento = $(this).val();
@@ -53,14 +52,55 @@ $("#documentoCliente").change(function () {
 		dataType: "json",
 		success: function (respuesta) {
 			if (respuesta) {
-				if ($(".msgError").length == 0) {
-					$("#documentoCliente").parent().after('<div class="alert alert-danger alert-dismissable msgError" id="mensajeError">' +
-						'<a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>' +
-						'<strong>Error!</strong> El documento ya existe en la Base de Datos, por favor verifique.' +
-						'</div>');
-				}
+				Command: toastr["error"]("El DNI ya existe!, por favor ingresar otro");
 				$("#documentoCliente").val("");
 				$("#documentoCliente").focus();
+				$("#tipo_persona").val("");
+			} else {
+				
+			}
+		}
+	});
+})
+// VALIDACIÓN DE select tipo cliente AL REGISTRAR
+$("#documentoCliente").keyup(function () {
+	var documento = $(this).val();
+	if(documento.length == 8){
+		inicio = documento.substring(0,2);
+		if(inicio != "10" && inicio != "20"){
+			// console.log(inicio);
+			$("#tipo_persona").val("1");
+			
+		}
+	}else if(documento.length == 11){
+		inicio = documento.substring(0,2);
+		if(inicio == 20){
+			$("#tipo_persona").val("2");
+		}else{
+			$("#tipo_persona").val("1");
+		}
+	}
+	
+});
+
+// VALIDACIÓN DE UN CODIGO DE CLIENTE EXISTENTE EN LA BD AL REGISTRAR
+$("#codigoCliente").change(function () {
+	var codigo = $(this).val();
+	var datos = new FormData();
+	datos.append("codigo", codigo);
+	$.ajax({
+		url: "ajax/clientes.ajax.php",
+		type: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function (respuesta) {
+			if (respuesta) {
+				Command: toastr["error"]("El Codigo ya existe!, por favor ingresar otro");
+				$("#codigoCliente").val("");
+				$("#codigoCliente").focus();
 			} else {
 				$(".msgError").remove();
 			}
@@ -69,7 +109,7 @@ $("#documentoCliente").change(function () {
 });
 
 // VALIDACIÓN DE UN DOCUMENTO EXISTENTE EN LA BD AL EDITAR
-$("#editarDocumento").change(function () {
+$("#editarDocumento").keyup(function () {
 	var documento = $(this).val();
 	var datos = new FormData();
 	datos.append("documento", documento);
@@ -83,14 +123,56 @@ $("#editarDocumento").change(function () {
 		dataType: "json",
 		success: function (respuesta) {
 			if (respuesta) {
-				if ($(".msgError").length == 0) {
-					$("#editarDocumento").parent().after('<div class="alert alert-danger alert-dismissable msgError" id="mensajeError">' +
-						'<a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>' +
-						'<strong>Error!</strong> El documento ya existe en la Base de Datos, por favor verifique.' +
-						'</div>');
-				}
+				Command: toastr["error"]("El DNI ya existe!, por favor ingresar otro");
 				$("#editarDocumento").val("");
 				$("#editarDocumento").focus();
+			} else {
+				$(".msgError").remove();
+			}
+		}
+	});
+})
+// VALIDACIÓN DE tipo de cliente AL EDITAR
+$("#editarDocumento").keyup(function () {
+	var documento = $(this).val();
+	if(documento.length == 8){
+		inicio = documento.substring(0,2);
+		if(inicio != 20 && inicio != 10){
+
+			$("#editarTipo_persona").val("1");
+
+		}
+	}else if(documento.length == 11){
+		inicio = documento.substring(0,2);
+
+		if(inicio == 20){
+			$("#editarTipo_persona").val("2");
+		}else{
+			$("#editarTipo_persona").val("1");
+		}
+	
+	}
+	
+});
+
+// VALIDACIÓN DE UN DOCUMENTO EXISTENTE EN LA BD AL EDITAR
+$("#editarCodigoCliente").change(function () {
+	var codigo = $(this).val();
+	var datos = new FormData();
+	datos.append("codigo", codigo);
+	$.ajax({
+		url: "ajax/clientes.ajax.php",
+		type: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function (respuesta) {
+			if (respuesta) {
+				Command: toastr["error"]("El Codigo ya existe!, por favor ingresar otro");
+				$("#editarCodigoCliente").val("");
+				$("#editarCodigoCliente").focus();
 			} else {
 				$(".msgError").remove();
 			}
@@ -140,6 +222,7 @@ $(".tablaClientes").on("click", ".btnEditarCliente", function () {
             $("#editarEmail").val(respuesta["email"]);
             $("#editarContacto").val(respuesta["contacto"]);
             $("#editarVendedor").val(respuesta["vendedor"]);
+			$("#editarVendedor").selectpicker("refresh");
 			$("#editarGrupo").val(respuesta["grupo"]);
 			
 			$("#editarLista_precios").val(respuesta["lista_precios"]);
@@ -229,8 +312,8 @@ $(".tablaClientes").on("click", ".btnEditarAval", function () {
 
 //VALIDA SI ES RUC O DNI 
 function ObtenerDatosCliente(){
-	tipodoc = $("#tipo_documento").val();
-	console.log(tipodoc);
+	tipodoc = $("#tipo_documento").find('option:selected').text();
+	// console.log(tipodoc);
 	if(tipodoc == "DNI"){
 		ObtenerDatosDni();
 	}else if(tipodoc == "RUC"){

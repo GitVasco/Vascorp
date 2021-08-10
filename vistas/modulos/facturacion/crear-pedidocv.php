@@ -107,7 +107,7 @@
 
                                         <span class="input-group-addon"><i class="fa fa-users"></i></span>
 
-                                        <select class="form-control selectpicker" id="seleccionarCliente" name="seleccionarCliente" data-live-search="true"  required>
+                                        <select class="form-control selectpicker" id="seleccionarCliente" name="seleccionarCliente" data-live-search="true" data-size="10" required>
 
                                         <?php
 
@@ -198,7 +198,7 @@
 
                                         <span class="input-group-addon"><i class="fa fa-shopping-cart"></i></span>
 
-                                        <select class="form-control" id="seleccionarVendedor" name="seleccionarVendedor" required>
+                                        <select class="form-control selectpicker" id="seleccionarVendedor" name="seleccionarVendedor" data-live-search="true" data-size="10" required>
 
                                         <?php
 

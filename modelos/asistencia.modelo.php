@@ -142,7 +142,7 @@ class ModeloAsistencias{
 
 	}
 
-		/*=============================================
+	/*=============================================
 	EDITAR Asistencia y para
 	=============================================*/
 
@@ -200,9 +200,38 @@ class ModeloAsistencias{
 	APROBAR Asistencia
 	=============================================*/
 
-	static public function mdlActualizarAsistencia($tabla, $valor1,$valor2){
+	static public function mdlActualizarAsistencia($tabla, $valor1,$valor2,$minutos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET estado = :estado WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET estado = :estado, minutos = :minutos WHERE id = :id");
+
+		$stmt -> bindParam(":estado", $valor1, PDO::PARAM_STR);
+		$stmt -> bindParam(":minutos", $minutos, PDO::PARAM_INT);
+		$stmt -> bindParam(":id", $valor2, PDO::PARAM_INT);
+		
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
+
+	/*=============================================
+	MARCAR FALTA Asistencia
+	=============================================*/
+
+	static public function mdlActualizarFalta($tabla, $valor1,$valor2){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET estado = :estado, minutos = 0,horas_extras = 0, estado_para = 0 WHERE id = :id");
 
 		$stmt -> bindParam(":estado", $valor1, PDO::PARAM_STR);
 		$stmt -> bindParam(":id", $valor2, PDO::PARAM_INT);
@@ -225,6 +254,7 @@ class ModeloAsistencias{
 	}	
 
 
+
 	/*=============================================
 	MOSTRAR Presente
 	=============================================*/
@@ -243,7 +273,8 @@ class ModeloAsistencias{
 		$stmt = null;
 
 	}
-/*=============================================
+
+	/*=============================================
 	RANGO FECHAS
 	=============================================*/	
 
@@ -251,7 +282,7 @@ class ModeloAsistencias{
 
 		if($fechaInicial == "null"){
 
-			$stmt = Conexion::conectar()->prepare("SELECT a.*, t.nom_tra,t.ape_pat_tra,t.ape_mat_tra FROM $tabla a LEFT JOIN trabajadorjf t ON a.id_trabajador=t.cod_tra ORDER BY id DESC");
+			$stmt = Conexion::conectar()->prepare("SELECT a.*,DATE(a.fecha) as fecha2, t.nom_tra,t.ape_pat_tra,t.ape_mat_tra FROM $tabla a LEFT JOIN trabajadorjf t ON a.id_trabajador=t.cod_tra ORDER BY id DESC");
 
 			$stmt -> execute();
 
@@ -260,7 +291,7 @@ class ModeloAsistencias{
 
 		}else if($fechaInicial == $fechaFinal){
 
-			$stmt = Conexion::conectar()->prepare("SELECT a.*, t.nom_tra,t.ape_pat_tra,t.ape_mat_tra FROM $tabla a LEFT JOIN trabajadorjf t ON a.id_trabajador=t.cod_tra WHERE a.fecha like '%$fechaFinal%'");
+			$stmt = Conexion::conectar()->prepare("SELECT a.*,DATE(a.fecha) as fecha2, t.nom_tra,t.ape_pat_tra,t.ape_mat_tra FROM $tabla a LEFT JOIN trabajadorjf t ON a.id_trabajador=t.cod_tra WHERE a.fecha like '%$fechaFinal%'");
 
 			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 
@@ -280,12 +311,12 @@ class ModeloAsistencias{
 
 			if($fechaFinalMasUno == $fechaActualMasUno){
 
-				$stmt = Conexion::conectar()->prepare("SELECT a.*, t.nom_tra,t.ape_pat_tra,t.ape_mat_tra FROM $tabla a LEFT JOIN trabajadorjf t ON a.id_trabajador=t.cod_tra WHERE a.fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'");
+				$stmt = Conexion::conectar()->prepare("SELECT a.*,DATE(a.fecha) as fecha2, t.nom_tra,t.ape_pat_tra,t.ape_mat_tra FROM $tabla a LEFT JOIN trabajadorjf t ON a.id_trabajador=t.cod_tra WHERE a.fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'");
 
 			}else{
 
 
-				$stmt = Conexion::conectar()->prepare("SELECT a.*, t.nom_tra,t.ape_pat_tra,t.ape_mat_tra FROM $tabla a LEFT JOIN trabajadorjf t ON a.id_trabajador=t.cod_tra WHERE a.fecha BETWEEN '$fechaInicial' AND '$fechaFinal'");
+				$stmt = Conexion::conectar()->prepare("SELECT a.*,DATE(a.fecha) as fecha2, t.nom_tra,t.ape_pat_tra,t.ape_mat_tra FROM $tabla a LEFT JOIN trabajadorjf t ON a.id_trabajador=t.cod_tra WHERE a.fecha BETWEEN '$fechaInicial' AND '$fechaFinal'");
 
 			}
 		
@@ -297,13 +328,13 @@ class ModeloAsistencias{
 
 	}	
 
-		/*=============================================
+	/*=============================================
 	AGREGAR TIEMPO
 	=============================================*/
 
 	static public function mdlAgregarTiempo($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET minutos = minutos + :minutos WHERE DATE(fecha) = :fecha");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET minutos = minutos + :minutos, horas_extras = :minutos WHERE DATE(fecha) = :fecha");
 
 		$stmt -> bindParam(":minutos", $datos["minutos"], PDO::PARAM_INT);
 		$stmt -> bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
@@ -323,13 +354,13 @@ class ModeloAsistencias{
 
 	}
 
-			/*=============================================
+	/*=============================================
 	QUITAR TIEMPO
 	=============================================*/
 
 	static public function mdlQuitarTiempo($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET minutos = minutos - :minutos WHERE DATE(fecha) = :fecha");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET minutos = minutos - :minutos, estado_para = 1 WHERE DATE(fecha) = :fecha");
 
 		$stmt -> bindParam(":minutos", $datos["minutos"], PDO::PARAM_INT);
 		$stmt -> bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
@@ -348,6 +379,51 @@ class ModeloAsistencias{
 		$stmt = null;
 
 	}
-    
+
+	/*=============================================
+	MOSTRAR ASISTENCIA SEGUN FECHA
+	=============================================*/
+
+	static public function mdlMostrarAsistenciaFecha($valor){
+
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM asistenciasjf WHERE DATE(FECHA)= :fecha");
+
+		$stmt->bindParam(":fecha",$valor, PDO::PARAM_STR);
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+	/*=============================================
+	ELIMINAR ASISTENCIA PARA
+	=============================================*/
+    static public function mdlEliminarAsistenciaPara($valor){
+
+		$stmt = Conexion::conectar()->prepare("DELETE FROM asistencia_parajf WHERE id_asistencia = :id");
+
+		$stmt -> bindParam(":id", $valor, PDO::PARAM_INT);
+		
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
+
 }
     

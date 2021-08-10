@@ -652,6 +652,7 @@ class ModeloFacturacion{
       v.igv,
       v.dscto,
       v.total,
+      v.doc_origen as origen2,
       n.observacion,
       n.doc_origen,
       DATE_FORMAT(n.fecha_origen,'%d/%m/%Y') AS fecha_origen,
@@ -664,6 +665,7 @@ class ModeloFacturacion{
       c.ubigeo,
       v.agencia,
       DATE_FORMAT(v.fecha,'%d/%m/%Y') AS fecha,
+      v.fecha AS fecha_emision,
       v.tipo_documento,
       v.lista_precios,
       v.condicion_venta,
@@ -6436,11 +6438,12 @@ class ModeloFacturacion{
       v.fecha,
       cv.descripcion,
       v.doc_destino,
-      LEFT(v.doc_destino,4) AS serie_dest,
-      SUBSTR(v.doc_destino,5,8) AS nro_dest,
+      v.facturacion,
       v.estado,
+      v.doc_origen as origen2,
       IFNULL(a.nombre, '') AS agencia,
-      IFNULL(u.nom_ubi, '') AS ubigeo
+      IFNULL(u.nom_ubi, '') AS ubigeo,
+      n.doc_origen
   FROM
       ventajf v
       LEFT JOIN clientesjf c
@@ -6451,8 +6454,10 @@ class ModeloFacturacion{
       ON v.agencia = a.id
       LEFT JOIN ubigeojf u
       ON c.ubigeo = u.cod_ubi
+      LEFT JOIN notascd_jf n 
+      ON v.tipo = n.tipo 
+      AND v.documento = n.documento 
   WHERE v.tipo = :tipo
-      AND v.estado = 'GENERADO'
       AND YEAR(v.fecha) = 2021";
 
       $stmt=Conexion::conectar()->prepare($sql);
@@ -6478,11 +6483,12 @@ class ModeloFacturacion{
       v.fecha,
       cv.descripcion,
       v.doc_destino,
-      LEFT(v.doc_destino,4) AS serie_dest,
-      SUBSTR(v.doc_destino,5,8) AS nro_dest,
+      v.facturacion,
       v.estado,
+      v.doc_origen as origen2,
       IFNULL(a.nombre, '') AS agencia,
-      IFNULL(u.nom_ubi, '') AS ubigeo
+      IFNULL(u.nom_ubi, '') AS ubigeo,
+      n.doc_origen
   FROM
       ventajf v
       LEFT JOIN clientesjf c
@@ -6493,8 +6499,10 @@ class ModeloFacturacion{
       ON v.agencia = a.id
       LEFT JOIN ubigeojf u
       ON c.ubigeo = u.cod_ubi
+      LEFT JOIN notascd_jf n 
+      ON v.tipo = n.tipo 
+      AND v.documento = n.documento 
   WHERE v.tipo = :tipo
-      AND v.estado = 'GENERADO'
       AND DATE(v.fecha)  like '%$fechaFinal%' ";
 
       $stmt=Conexion::conectar()->prepare($sql);
@@ -6528,11 +6536,12 @@ class ModeloFacturacion{
         v.fecha,
         cv.descripcion,
         v.doc_destino,
-        LEFT(v.doc_destino,4) AS serie_dest,
-        SUBSTR(v.doc_destino,5,8) AS nro_dest,
+        v.facturacion,
         v.estado,
+        v.doc_origen as origen2,
         IFNULL(a.nombre, '') AS agencia,
-        IFNULL(u.nom_ubi, '') AS ubigeo
+        IFNULL(u.nom_ubi, '') AS ubigeo,
+        n.doc_origen
     FROM
         ventajf v
         LEFT JOIN clientesjf c
@@ -6543,8 +6552,10 @@ class ModeloFacturacion{
         ON v.agencia = a.id
         LEFT JOIN ubigeojf u
         ON c.ubigeo = u.cod_ubi
+        LEFT JOIN notascd_jf n 
+        ON v.tipo = n.tipo 
+        AND v.documento = n.documento 
     WHERE v.tipo = :tipo
-        AND v.estado = 'GENERADO'
         AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'";
 
       $stmt=Conexion::conectar()->prepare($sql);
@@ -6570,11 +6581,12 @@ class ModeloFacturacion{
         v.fecha,
         cv.descripcion,
         v.doc_destino,
-        LEFT(v.doc_destino,4) AS serie_dest,
-        SUBSTR(v.doc_destino,5,8) AS nro_dest,
+        v.facturacion,
         v.estado,
+        v.doc_origen as origen2,
         IFNULL(a.nombre, '') AS agencia,
-        IFNULL(u.nom_ubi, '') AS ubigeo
+        IFNULL(u.nom_ubi, '') AS ubigeo,
+        n.doc_origen
     FROM
         ventajf v
         LEFT JOIN clientesjf c
@@ -6585,8 +6597,10 @@ class ModeloFacturacion{
         ON v.agencia = a.id
         LEFT JOIN ubigeojf u
         ON c.ubigeo = u.cod_ubi
+        LEFT JOIN notascd_jf n 
+        ON v.tipo = n.tipo 
+        AND v.documento = n.documento 
     WHERE v.tipo = :tipo
-        AND v.estado = 'GENERADO'
         AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'";
 
         $stmt=Conexion::conectar()->prepare($sql);
@@ -6630,5 +6644,83 @@ class ModeloFacturacion{
       $stmt=null;
   
       }
+        /*
+    * ACTUALIZAR ESTADO DE FACTURACION ELECTRONICA 
+    */
+	static public function mdlActualizarProcesoFacturacion($estado,$tipo,$documento){
+
+		$sql="UPDATE 
+                ventajf 
+            SET
+                facturacion = :estado 
+            WHERE tipo = :tipo 
+                AND documento = :documento ";
+
+        $stmt=Conexion::conectar()->prepare($sql);
+
+        
+        $stmt->bindParam(":estado", $estado, PDO::PARAM_STR);
+        $stmt->bindParam(":tipo", $tipo, PDO::PARAM_STR);
+        $stmt->bindParam(":documento", $documento, PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt=null;
+
+  }
+
+     /*
+    * ACTUALIZAR TOKEN DE CONSULTA DE COMPROBANTES DE LA SUNAT
+    */
+    static public function mdlActualizarToken($valor,$valor2){
+
+      $sql="UPDATE 
+      maestrajf 
+    SET
+      descripcion = :descripcion,
+      token = :token 
+    WHERE tipo_dato = 'TOKEN' ";
   
+          $stmt=Conexion::conectar()->prepare($sql);
+          $stmt->bindParam(":descripcion", $valor2 ,PDO::PARAM_STR);
+          $stmt->bindParam(":token", $valor, PDO::PARAM_STR);
+  
+      if ($stmt->execute()) {
+  
+        return "ok";
+      } else {
+  
+        return "error";
+      }
+  
+      $stmt=null;
+  
+    }
+
+    /*
+    * CONSULTA DE TOKEN
+    */
+    static public function mdlConsultarToken(){
+
+      $sql="SELECT 
+      *
+      FROM maestrajf 
+    WHERE tipo_dato = 'TOKEN' ";
+  
+      $stmt=Conexion::conectar()->prepare($sql);
+
+      $stmt->execute();
+
+      return $stmt->fetch();
+  
+      $stmt=null;
+  
+    }
+
 }

@@ -102,7 +102,7 @@
         <div class="box">
             <div class="box-body">
                 <div class="form-group">
-                    <select class="form-control input-lg selectpicker" id="tipoVendedorReporteVenta" name="tipoVendedorReporteVenta" data-live-search="true">
+                    <select class="form-control input-lg selectpicker" id="tipoVendedorReporteVenta" name="tipoVendedorReporteVenta" data-live-search="true" data-size="10">
                         <option value="">Seleccionar vendedor</option>
                         <?php
                             $item=null;

@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once "../controladores/trabajador.controlador.php";
 require_once "../modelos/trabajador.modelo.php";
 
@@ -52,6 +53,25 @@ class AjaxTrabajador{
 
 		echo $respuesta;
 	}
+
+	public function ajaxAsignarTrabajador(){
+
+		$trabajador=$this->asignarTrab;
+
+		$usuario = $_SESSION["id"];
+
+		//traemos los datos del sector del trabajador
+		$datos = ModeloTrabajador::mdlMostrarTrabajador("trabajadorjf","null",$trabajador);
+
+		//reiniciar a 0 la configuracion anterior
+		$reiniciarConfiguracion = ModeloTrabajador::mdlTrabajadorSet($usuario,$datos["sector"]);
+	
+		
+		//actualizar a 1 la configuracion marcada de trabajador
+		$actualizarConfiguracion = ModeloTrabajador::ctrConfigurarTrabajador($trabajador,$usuario);
+
+		echo $reiniciarConfiguracion;
+	}
 }
 
 /*=============================================
@@ -79,4 +99,14 @@ if(isset($_POST["activarTrabajador2"])){
 	$activarTrabajador2->activarTrabajador2=$_POST["activarTrabajador2"];
 	$activarTrabajador2->activarEstadoTrabajador2=$_POST["activarEstadoTrabajador2"];
 	$activarTrabajador2->ajaxActivarDesactivarTrabajador2();
+}
+
+/*=============================================
+ASIGNAR TRABAJADOR PARA MARCAR TALLER
+=============================================*/	
+if(isset($_POST["asignarTrab"])){
+
+	$asignarTrabajador = new AjaxTrabajador();
+	$asignarTrabajador -> asignarTrab = $_POST["asignarTrab"];
+	$asignarTrabajador -> ajaxAsignartrabajador();
 }

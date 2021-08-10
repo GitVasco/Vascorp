@@ -45,7 +45,7 @@ class ModeloClientes{
 
 	static public function mdlIngresarCliente($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(codigo, nombre, tipo_documento, documento, tipo_persona, ape_paterno, ape_materno, nombres, direccion, ubigeo, telefono, telefono2, email, contacto, vendedor, grupo, lista_precios) VALUES (:codigoCliente, :nombre, :tipo_documento, :documento, :tipo_persona, :ape_paterno, :ape_materno, :nombres, :direccion, :ubigeo, :telefono, :telefono2, :email, :contacto, :vendedor, :grupo, :lista_precios)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(codigo, nombre, tipo_documento, documento, tipo_persona, ape_paterno, ape_materno, nombres, direccion, ubigeo, telefono, telefono2, email, contacto, vendedor, grupo, lista_precios) VALUES (UPPER(:codigoCliente), UPPER(:nombre), :tipo_documento, :documento, :tipo_persona, UPPER(:ape_paterno), UPPER(:ape_materno), UPPER(:nombres), UPPER(:direccion), :ubigeo, :telefono, :telefono2, :email, :contacto, :vendedor, :grupo, :lista_precios)");
 
 		$stmt->bindParam(":codigoCliente", $datos["codigoCliente"], PDO::PARAM_STR);
 		$stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
@@ -216,7 +216,7 @@ class ModeloClientes{
 
 	static public function mdlEditarCliente($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre, tipo_documento = :tipo_documento, documento = :documento, tipo_persona = :tipo_persona, ape_paterno = :ape_paterno, ape_materno = :ape_materno, nombres = :nombres, direccion = :direccion, ubigeo = :ubigeo, telefono = :telefono, telefono2 = :telefono2, email = :email, contacto = :contacto, vendedor = :vendedor, grupo = :grupo, lista_precios = :lista_precios WHERE codigo = :codigoCliente");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = UPPER(:nombre), tipo_documento = :tipo_documento, documento = :documento, tipo_persona = :tipo_persona, ape_paterno = UPPER(:ape_paterno), ape_materno = UPPER(:ape_materno), nombres = UPPER(:nombres), direccion = UPPER(:direccion), ubigeo = :ubigeo, telefono = :telefono, telefono2 = :telefono2, email = :email, contacto = :contacto, vendedor = :vendedor, grupo = :grupo, lista_precios = :lista_precios WHERE codigo = :codigoCliente");
 
 		$stmt->bindParam(":codigoCliente", $datos["codigoCliente"], PDO::PARAM_INT);
 		$stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);

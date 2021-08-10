@@ -21,7 +21,7 @@
             <div class="box-header with-border">
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 
-                    <select class="form-control selectpicker input-lg" id="proyMp" name="proyMp" data-live-search="true">
+                    <select class="form-control selectpicker input-lg" id="proyMp" name="proyMp" data-live-search="true" data-size="10">
 
                     <option value="">Seleccione Orden de Corte</option>
 

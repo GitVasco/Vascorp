@@ -347,6 +347,9 @@ $(".box").on("click", ".btnLimpiarProyMp", function () {
 */
 if (localStorage.getItem("proyMp") != null) {
 
+	$("#proyMp").val(localStorage.getItem("proyMp"));
+	$("#proyMp").selectpicker("refresh");
+
 	cargarTablaProyMp(localStorage.getItem("proyMp"));
 	//console.log("lleno");
 	
@@ -1112,6 +1115,7 @@ $('#formDuplicarMateriaPrima').submit(function(e){
 *CARGAR LA TABLA DINÁMICA DE almacen01
 **/
 if (localStorage.getItem("tipo") != null) {
+	$("#selectAlmacen01").val(localStorage.getItem("tipo"));
 	cargarAlmacen01Tipo(localStorage.getItem("tipo"));
 } else {
 

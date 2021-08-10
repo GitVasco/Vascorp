@@ -248,6 +248,112 @@ class AjaxFacturacion{
         echo $respuesta;
       }
 
+      /*=============================================
+      GENERAR TOKEN PARA HACER CONSULTAS SUNAT
+      =============================================*/	
+      
+      public function ajaxGenerarTokenSunat(){
+
+        
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => 'https://api-seguridad.sunat.gob.pe/v1/clientesextranet/af1e8535-d99a-4915-b515-91e36d9f71ae/oauth2/token/',
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'POST',
+          CURLOPT_POSTFIELDS => 'grant_type=client_credentials&scope=https%3A%2F%2Fapi.sunat.gob.pe%2Fv1%2Fcontribuyente%2Fcontribuyentes&client_id=af1e8535-d99a-4915-b515-91e36d9f71ae&client_secret=MepGYmNzOeZ6EMMr2i0t4A%3D%3D',
+          CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/x-www-form-urlencoded',
+            'Cookie: TS018412f9=019edc9eb834ae85d7ac809fca3c15c40ba0156fd2663004ad2f190436eb4c8324d48b0b054d4736900b03feb2b2905c6f44c1420f; TS019e7fc2=019edc9eb8f3cea6da929c599af337f8af0655e4e3a6f2eff26c162aff3187235d847ab4490f8a5525d82221ecc76edcc6a334f6eb'
+          ),
+        ));
+        curl_setopt($curl, CURLOPT_CAINFO, "C:/xampp/htdocs/rosalinda/vistas/generar_xml/cacert.pem"); 
+
+        $response = curl_exec($curl);
+        //$error = curl_error($curl);
+
+        curl_close($curl);
+        echo $response;
+        
+      }
+
+      /*=============================================
+      GUARDAR TOKEN PARA HACER CONSULTAS SUNAT
+      =============================================*/	
+      
+      public function ajaxGuardarTokenSunat(){
+      
+        $valor=$this->tokenSunat;
+        $valor2 = $this->tiempoToken;
+        $respuesta = ModeloFacturacion::mdlActualizarToken($valor,$valor2);
+
+        echo $respuesta;
+
+      }
+
+      /*=============================================
+      CONSULTAR SUNAT COMPROBANTES ELECTRONICOS
+      =============================================*/	
+      
+      public function ajaxConsultarSunat(){
+      
+        $tipo = $this->tipoConsulta;
+        $ruc = $this->rucConsulta;
+        $serie = $this->serieConsulta;
+        $correlativo = $this->correlativoConsulta;
+        $emision = $this->emisionConsulta;
+        $emisionFormato = date("d/m/Y", strtotime($emision));
+        $monto = $this->montoConsulta;
+
+        $respuesta = ModeloFacturacion::mdlConsultarToken();
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => 'https://api.sunat.gob.pe/v1/contribuyente/contribuyentes/10472810371/validarcomprobante',
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'POST',
+          CURLOPT_POSTFIELDS =>'{
+            "numRuc": "'.$ruc.'",
+            "codComp": "'.$tipo.'",
+            "numeroSerie": "'.$serie.'",
+            "numero": "'.$correlativo.'",
+            "fechaEmision": "'.$emisionFormato.'",
+            "monto": "'.$monto.'"
+        }',
+          CURLOPT_HTTPHEADER => array(
+            'Authorization: Bearer '.$respuesta["token"].'',
+            'Content-Type: application/json'
+          ),
+        ));
+        curl_setopt($curl, CURLOPT_CAINFO, "C:/xampp/htdocs/rosalinda/vistas/generar_xml/cacert.pem" );
+        $response = curl_exec($curl);
+        // $error = curl_error($curl);
+        curl_close($curl);
+        //demorar medio microsegundo
+        usleep(10000);
+        echo $response;
+
+      }
+
+      /*=============================================
+      VISUALIZAR TOKEN PARA HACER CONSULTAS SUNAT
+      =============================================*/	
+      
+      public function ajaxVisualizarTokenSunat(){
+        $respuesta = ModeloFacturacion::mdlConsultarToken();
+        echo json_encode($respuesta);
+      }
+
     }
     
 
@@ -298,4 +404,48 @@ class AjaxFacturacion{
       $activarPedido->activarEstado=$_POST["activarEstado"];
       $activarPedido->activarId=$_POST["activarId"];
       $activarPedido->ajaxActivarPedido();
+  }
+
+    /*=============================================
+    GENERAR TOKEN SUNAT
+    =============================================*/	
+    if(isset($_POST["envioToken"])){
+      
+      $generarToken = new AjaxFacturacion();
+      $generarToken -> ajaxGenerarTokenSunat();
+  }
+
+    /*=============================================
+    GUARDAR TOKEN SUNAT
+    =============================================*/	
+    if(isset($_POST["guardarToken"])){
+      
+      $guardadoToken = new AjaxFacturacion();
+      $guardadoToken -> tokenSunat = $_POST["guardarToken"];
+      $guardadoToken -> tiempoToken = $_POST["tiempoToken"];
+      $guardadoToken -> ajaxGuardarTokenSunat();
+  }
+
+    /*=============================================
+    CONSULTAR  SUNAT
+    =============================================*/	
+    if(isset($_POST["tipoConsulta"])){
+      
+      $consultaSunat = new AjaxFacturacion();
+      $consultaSunat -> tipoConsulta = $_POST["tipoConsulta"];
+      $consultaSunat -> rucConsulta = $_POST["rucConsulta"];
+      $consultaSunat -> serieConsulta = $_POST["serieConsulta"];
+      $consultaSunat -> correlativoConsulta = $_POST["correlativoConsulta"];
+      $consultaSunat -> emisionConsulta = $_POST["emisionConsulta"];
+      $consultaSunat -> montoConsulta = $_POST["montoConsulta"];
+      $consultaSunat -> ajaxConsultarSunat();
+  }
+
+    /*=============================================
+    VER TOKEN SUNAT
+    =============================================*/	
+    if(isset($_POST["verToken"])){
+      
+      $visualizarToken = new AjaxFacturacion();
+      $visualizarToken -> ajaxVisualizarTokenSunat();
   }

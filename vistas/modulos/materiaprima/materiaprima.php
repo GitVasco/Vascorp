@@ -143,7 +143,7 @@ MODAL AGREGAR MATERIA PRIMA
               <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">LINEA</label>
               <div class="col-lg-5">
 
-                <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevaLinea" id="nuevaLinea" required>
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevaLinea" id="nuevaLinea" data-size="10" required>
                   
                   <?php
 
@@ -170,7 +170,7 @@ MODAL AGREGAR MATERIA PRIMA
               <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">SUB LINEA</label>
               <div class="col-lg-5">
 
-                <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevaSubLinea" id="nuevaSubLinea" required>
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevaSubLinea" id="nuevaSubLinea" data-size="10" required>
                   <option value="">SELECCIONAR SUBLINEAS</option>
                   
                 </select>
@@ -185,7 +185,7 @@ MODAL AGREGAR MATERIA PRIMA
               <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">COLOR</label>
               <div class="col-lg-5">
 
-                <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevoColorMateria" id="nuevoColorMateria" required>
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevoColorMateria" id="nuevoColorMateria" data-size="10" required>
                   
                   <?php
 
@@ -212,7 +212,7 @@ MODAL AGREGAR MATERIA PRIMA
               <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">TALLA</label>
               <div class="col-lg-5">
 
-                <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevaTallaMateria" id="nuevaTallaMateria" required>
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevaTallaMateria" id="nuevaTallaMateria" data-size="10" required>
                   
                   <?php
 
@@ -254,7 +254,7 @@ MODAL AGREGAR MATERIA PRIMA
               <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">UNID. MEDIDA</label>
               <div class="col-lg-2">
 
-                <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevaUnidadMedida" required>
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevaUnidadMedida" data-size="10" required>
                   
                   <?php
                     $item = null;
@@ -341,7 +341,7 @@ MODAL AGREGAR MATERIA PRIMA
               <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">PROVEEDOR</label>
               <div class="col-lg-5">
 
-                <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevoProveedor" id="nuevoProveedor" >
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevoProveedor" id="nuevoProveedor" data-size="10">
                   
                   <?php
                     $item = null;
@@ -385,7 +385,7 @@ MODAL AGREGAR MATERIA PRIMA
               <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">PROVEEDOR</label>
               <div class="col-lg-5">
 
-                <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevoProveedor1" id="nuevoProveedor1">
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevoProveedor1" id="nuevoProveedor1" data-size="10">
                   
                   <?php
                     $item = null;
@@ -428,7 +428,7 @@ MODAL AGREGAR MATERIA PRIMA
               <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">PROVEEDOR</label>
               <div class="col-lg-5">
 
-                <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevoProveedor2" id="nuevoProveedor2" >
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevoProveedor2" id="nuevoProveedor2" data-size="10">
                   
                   <?php
                     $item = null;
@@ -724,7 +724,7 @@ MODAL EDITAR MATERIA PRIMA
               <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">UNID. MEDIDA</label>
               <div class="col-lg-2">
 
-                <select  class="form-control input-md selectpicker" data-live-search="true" name="editarUnidadMedida" id="editarUnidadMedida" required>
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="editarUnidadMedida" id="editarUnidadMedida" data-size="10" required>
                   
                   <?php
                     $item = null;
@@ -811,7 +811,7 @@ MODAL EDITAR MATERIA PRIMA
               <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">PROVEEDOR</label>
               <div class="col-lg-4 col-md-3">
 
-                <select  class="form-control input-md selectpicker" data-live-search="true" name="editarProveedor" id="editarProveedor" >
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="editarProveedor" id="editarProveedor" data-size="10">
                   
                   <?php
                     $item = null;
@@ -873,7 +873,7 @@ MODAL EDITAR MATERIA PRIMA
               <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">PROVEEDOR</label>
               <div class="col-lg-4 col-md-3">
 
-                <select  class="form-control input-md selectpicker" data-live-search="true" name="editarProveedor1" id="editarProveedor1">
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="editarProveedor1" id="editarProveedor1" data-size="10">
                   
                   <?php
                     $item = null;
@@ -934,7 +934,7 @@ MODAL EDITAR MATERIA PRIMA
               <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">PROVEEDOR</label>
               <div class="col-lg-4 col-md-3">
 
-                <select  class="form-control input-md selectpicker" data-live-search="true" name="editarProveedor2" id="editarProveedor2" >
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="editarProveedor2" id="editarProveedor2" data-size="10">
                   
                   <?php
                     $item = null;
@@ -1245,7 +1245,7 @@ MODAL DUPLICAR MATERIA PRIMA
               <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">UNID. MEDIDA</label>
               <div class="col-lg-2">
 
-                <select  class="form-control input-md selectpicker" data-live-search="true" name="duplicarUnidadMedida" id="duplicarUnidadMedida" required>
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="duplicarUnidadMedida" id="duplicarUnidadMedida" data-size="10" required>
                   
                   <?php
                     $item = null;
@@ -1332,7 +1332,7 @@ MODAL DUPLICAR MATERIA PRIMA
               <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">PROVEEDOR</label>
               <div class="col-lg-5">
 
-                <select  class="form-control input-md selectpicker" data-live-search="true" name="duplicarProveedor" id="duplicarProveedor" >
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="duplicarProveedor" id="duplicarProveedor" data-size="10">
                   
                   <?php
                     $item = null;
@@ -1391,7 +1391,7 @@ MODAL DUPLICAR MATERIA PRIMA
               <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">PROVEEDOR</label>
               <div class="col-lg-5">
 
-                <select  class="form-control input-md selectpicker" data-live-search="true" name="duplicarProveedor1" id="duplicarProveedor1">
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="duplicarProveedor1" id="duplicarProveedor1" data-size="10">
                   
                   <?php
                     $item = null;
@@ -1448,7 +1448,7 @@ MODAL DUPLICAR MATERIA PRIMA
               <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">PROVEEDOR</label>
               <div class="col-lg-5">
 
-                <select  class="form-control input-md selectpicker" data-live-search="true" name="duplicarProveedor2" id="duplicarProveedor2" >
+                <select  class="form-control input-md selectpicker" data-live-search="true" name="duplicarProveedor2" id="duplicarProveedor2" data-size="10">
                   
                   <?php
                     $item = null;

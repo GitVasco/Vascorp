@@ -350,7 +350,7 @@ MODAL EXPORTAR ARTICULO
               
                 <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
-                <select type="text" class="form-control input-lg selectpicker" name="nuevoCodigo" id="nuevoCodigo" data-live-search="true"  required>
+                <select type="text" class="form-control input-lg selectpicker" name="nuevoCodigo" id="nuevoCodigo" data-live-search="true" data-size="10" required>
                   <option value="">Seleccionar articulo</option>
                  </select>  
                 
@@ -444,7 +444,7 @@ MODAL ELIMINAR ARTICULO
               
                 <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
-                <select type="text" class="form-control input-lg selectpicker" name="nuevoCodigo2" id="nuevoCodigo2" data-live-search="true"  required>
+                <select type="text" class="form-control input-lg selectpicker" name="nuevoCodigo2" id="nuevoCodigo2" data-live-search="true" data-size="10" required>
                   <option value="">Seleccionar articulo</option>
 
                  </select>  
@@ -652,7 +652,7 @@ MODAL ELIMINAR ARTICULO
               <div class="input-group">
 
                   <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
-                  <select class="form-control input-lg selectpicker" id="ticketArticulo" name="ticketArticulo" data-live-search="true">
+                  <select class="form-control input-lg selectpicker" id="ticketArticulo" name="ticketArticulo" data-live-search="true" data-size="10" required>
                     <option value="">Seleccionar Articulo</option>
                     <?php 
 
@@ -675,7 +675,7 @@ MODAL ELIMINAR ARTICULO
 
                   <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
 
-                  <select type="text" class="form-control input-lg selectpicker" id="ticketOperacion" name="ticketOperacion" data-live-search="true">
+                  <select type="text" class="form-control input-lg selectpicker" id="ticketOperacion" name="ticketOperacion" data-live-search="true" data-size="10" required>
                   <option value="">Seleccionar Operación</option>
                   
                   </select>

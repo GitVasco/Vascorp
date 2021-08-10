@@ -1829,6 +1829,8 @@ $("#fechaCabecera2").change(function(){
 * CARGAR TABLA TALLER GENERADO
 */
 if (localStorage.getItem("articuloTallerP") != null ) {
+	$("#selectArticuloTallerP").val(localStorage.getItem("articuloTallerP"));
+	$("#selectArticuloTallerP").selectpicker("refresh");
 
 	cargarTablaTalleresGenerados(localStorage.getItem("articuloTallerP"));
 	// console.log("lleno");
