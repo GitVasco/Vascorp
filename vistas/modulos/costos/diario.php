@@ -107,7 +107,13 @@
                             <th>Fecha</th>
                             <th>Concepto</th>
                             <th>Ruc</th>
-                            <th></th>
+                            <th>Razón Social</th>
+                            <th>TD</th>
+                            <th>Documento</th>
+                            <th>F. Emi</th>
+                            <th>F. Ven</th>
+                            <th>Suc.</th>
+                            <th>CCC</th>
                             <th width="80px">Acciones</th>
 
                         </tr>
