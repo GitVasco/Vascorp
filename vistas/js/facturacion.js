@@ -1715,16 +1715,24 @@ $("#daterange-btnProforma").daterangepicker(
 if (localStorage.getItem("capturarRango34") != null) {
 	$("#daterange-btnProcesarCE span").html(localStorage.getItem("capturarRango34"));
     if(localStorage.getItem("tipoCE")  != null ){
+        $("#selectDocumentoCE").val(localStorage.getItem("tipoCE"));
+        $("#selectDocumentoCE").selectpicker("refresh");
         cargarTablaProcesarCE(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"),localStorage.getItem("tipoCE"));
     }else{
+        $("#selectDocumentoCE").val("S03");
+        $("#selectDocumentoCE").selectpicker("refresh");
         cargarTablaProcesarCE(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"),'S03');
     }
 	
 } else {
 	$("#daterange-btnProcesarCE span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
     if(localStorage.getItem("tipoCE") != null){
+        $("#selectDocumentoCE").val(localStorage.getItem("tipoCE"));
+        $("#selectDocumentoCE").selectpicker("refresh");
         cargarTablaProcesarCE(null, null,localStorage.getItem("tipoCE"));
     }else{
+        $("#selectDocumentoCE").val("S03");
+        $("#selectDocumentoCE").selectpicker("refresh");
         cargarTablaProcesarCE(null, null, 'S03');
     }
 	
@@ -1921,11 +1929,11 @@ $("#daterange-btnProcesarCE").daterangepicker(
     //VALIDAMOS SI ES FACTURA, BOLETA, NOTA DE CREDITO O DEBITO
     if(tipo == 'S03'){
 
-        window.open("vistas/generar_xml/factura.php?tipo="+tipo+"&documento="+documento,"_blank");
+        window.location = "index.php?ruta=procesar-ce&tipoFact="+tipo+"&documentoFact="+documento;
 
     }else if(tipo == 'S02'){
 
-
+        window.location = "index.php?ruta=procesar-ce&tipoFact="+tipo+"&documentoFact="+documento;
 
     }else if(tipo == 'E05'){
 
@@ -1940,3 +1948,218 @@ $("#daterange-btnProcesarCE").daterangepicker(
 
     
   });
+
+  $("#formularioToken").on("click","button.btnGenerarToken",function(){
+    var envio = "enviando";
+
+    var datos = new FormData();
+    datos.append("envioToken",envio);
+
+  
+    $.ajax({
+
+      url:"ajax/facturacion.ajax.php",
+      method: "POST",
+      data: datos,
+      cache: false,
+      contentType: false,
+      processData: false,
+      dataType:"json",
+      success:function(respuesta){
+        if(respuesta){
+          var token = respuesta["access_token"];
+          $("#nuevoCodigoToken").val(token);
+          var inicio = $("#nuevoInicio").val();
+          var fin = $("#nuevoFin").val();
+          var fecha = $("#nuevaFechaToken").val();
+          var datos2 = new FormData();
+          // console.log(token);
+          datos2.append("guardarToken",token);
+          datos2.append("tiempoToken",inicio+" "+fin+" "+fecha);
+          $.ajax({
+
+            url:"ajax/facturacion.ajax.php",
+            method: "POST",
+            data: datos2,
+            cache: false,
+            contentType:false,
+            processData:false,
+            success:function(respuesta2){
+              // console.log(respuesta2);
+              if(respuesta2 == "ok"){
+                Command: toastr["success"]("Token registrado exitosamente!");
+                //asignados el tiempo de duracion luego de generar el token
+                $("#nuevaDuracion").val(fecha +" desde "+ inicio + " hasta "+ fin);
+              }
+            }
+          })
+        }
+
+      }
+    })
+
+  })
+
+$("#formularioConsultaSunat").on("click","button.btnConsultarSunat",function(){
+  
+  var tipo = $("#selectDocumentoConsulta").val();
+  var ruc = $("#nuevoRucConsulta").val();
+  var serie = $("#nuevaSerieConsulta").val();
+  var correlativo = $("#nuevoCorrelativoConsulta").val();
+  var emision = $("#nuevaEmisionConsulta").val();
+  var monto = $("#nuevoMontoConsulta").val();
+
+  var datos = new FormData();
+  datos.append("tipoConsulta",tipo);
+  datos.append("rucConsulta",ruc);
+  datos.append("serieConsulta",serie.toUpperCase());
+  datos.append("correlativoConsulta",correlativo);
+  datos.append("emisionConsulta",emision);
+  datos.append("montoConsulta",monto);
+
+  $(".loadingSunat").html('<div class="alert" role="alert" style="background:#EAF2F8"><img src="vistas/img/gif/loader.gif" width="60px"/>Procesando, por favor espere...</div>');
+  $.ajax({
+
+    url:"ajax/facturacion.ajax.php",
+    method: "POST",
+    data: datos,
+    cache: false,
+    contentType: false,
+    processData: false,
+    dataType:"json",
+    success:function(respuesta){
+      $(".loadingSunat").addClass("hidden");
+      if(respuesta["success"] == true){
+          
+          if(respuesta["data"]["estadoCp"] == "1"){
+            $(".consultaActivo").removeClass("hidden");
+            $(".consultaError").addClass("hidden");
+          }else{
+            $(".consultaError").removeClass("hidden");
+            $(".consultaActivo").addClass("hidden");
+          }
+  
+      }else if(respuesta["message"] == "Unauthorized"){
+        Command: toastr["error"]("Por favor, generar token!");
+      }else{
+        Command: toastr["error"]("Error al ingresar los campos requeridos!");
+      }
+      
+    }
+  })
+  $(".loadingSunat").removeClass("hidden");
+
+  $(".consultaActivo").addClass("hidden");
+  $(".consultaError").addClass("hidden");
+})
+
+$("#formularioConsultaSunat").on("click","button.btnLimpiarConsultaSunat",function(){
+  $(".consultaActivo").addClass("hidden");
+  $(".consultaError").addClass("hidden");
+
+  $("#selectDocumentoConsulta").val("");
+  $("#selectDocumentoConsulta").selectpicker("refresh");
+
+  $("#nuevoRucConsulta").val("");
+  $("#nuevaSerieConsulta").val("");
+  $("#nuevoCorrelativoConsulta").val("");
+  $("#nuevaEmisionConsulta").val("");
+  $("#nuevoMontoConsulta").val("");
+})
+
+$(".btnNuevaConsultaSunat").click(function(){
+  $(".consultaActivo").addClass("hidden");
+  $(".consultaError").addClass("hidden");
+
+  $("#nuevoRucConsulta").val("");
+  $("#selectDocumentoConsulta").val("");
+  $("#selectDocumentoConsulta").selectpicker("refresh");
+
+  $("#nuevaSerieConsulta").val("");
+  $("#nuevoCorrelativoConsulta").val("");
+  $("#nuevaEmisionConsulta").val("");
+  $("#nuevoMontoConsulta").val("");
+})
+
+$(".btnVerToken").click(function(){
+  var verToken = "viendo";
+
+  var datos = new FormData();
+  datos.append("verToken",verToken);
+  
+  $.ajax({
+
+    url:"ajax/facturacion.ajax.php",
+    method: "POST",
+    data: datos,
+    cache: false,
+    contentType: false,
+    processData: false,
+    dataType:"json",
+    success:function(respuesta){
+      
+      $("#nuevoCodigoToken").val(respuesta["token"]);
+      var  descripcion = respuesta["descripcion"]
+      var inicio = descripcion.substring(0,8);
+      var fin = descripcion.substring(9,17);
+      var fecha = descripcion.substring(18,28);
+      $("#nuevaDuracion").val(fecha +" desde "+ inicio + " hasta "+ fin);
+    }
+
+  })
+
+})
+
+$(".tablaProcesarCE").on("click","button.btnConsultarEstado",function(){
+
+  var tipo = $(this).attr("tipo");
+  var ruc = "20513613939";
+  var documento = $(this).attr("documento");
+  var serie = documento.substring(0,4);
+  var correlativo = documento.substring(4,12);
+  var emision = $(this).attr("fecha");
+  var monto = $(this).attr("monto");
+  
+  var datos = new FormData();
+
+  datos.append("tipoConsulta",tipo);
+  datos.append("rucConsulta",ruc);
+  datos.append("serieConsulta",serie);
+  datos.append("correlativoConsulta",correlativo);
+  datos.append("emisionConsulta",emision);
+  datos.append("montoConsulta",monto);
+
+  $.ajax({
+
+    url:"ajax/facturacion.ajax.php",
+    method: "POST",
+    data: datos,
+    cache: false,
+    contentType: false,
+    processData: false,
+    dataType:"json",
+    success:function(respuesta){
+      // console.log(respuesta);
+      if(respuesta["success"] == true){
+          
+          if(respuesta["data"]["estadoCp"] == "1"){
+            
+            Command: toastr["success"]("Estado del comprobante : ACEPTADO");
+            Command: toastr["success"]("Estado del contribuyente : ACTIVO");
+            Command: toastr["success"]("Condicion de domicilio : HABIDO")
+          }else{
+            
+            Command: toastr["error"]("Estado del comprobante : NO EXISTE");
+            Command: toastr["error"]("Estado del contribuyente : -");
+            Command: toastr["error"]("Condicion de domicilio : -")
+          }
+  
+      }else if(respuesta["message"] == "Unauthorized"){
+        Command: toastr["error"]("Por favor, generar token!");
+      }else{
+        Command: toastr["error"]("Error al ingresar los campos requeridos!");
+      }
+      
+    }
+  })
+});

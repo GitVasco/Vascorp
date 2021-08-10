@@ -326,11 +326,34 @@ $(".tablaTrabajador2").on("click",".btnActivarTrabajador2",function(){
 		$(this).attr("estadoTrabajador2","0");}
 });
 
-$(".tablasA").on("click", ".btnActTra", function () {
+$(".marcarTaller").on("click", ".btnActTra", function () {
 
 	var idTrab = $(this).attr("idTrab");
-	//console.log(idTrab);
+	
+	var nomTrab = $(this).attr("nomTrab");
 
-	window.location = "index.php?ruta=marcar-taller&trabajadorSelect=" + idTrab;
+	
+	$(this).removeClass("btn-default");
+			$(".btnActivo").removeClass("btn-primary");
+			$(".btnActivo").addClass("btn-default");
+			$(this).addClass("btn-primary btnActivo");
+			$("#trabajadorInicio").html('Hola "'+idTrab+' - '+nomTrab+'"');
+			$("#cod_tra").val(idTrab);
+	var datos = new FormData();
+	datos.append("asignarTrab",idTrab);
+	$.ajax({
+		url:"ajax/trabajador.ajax.php",
+		type:"POST",
+		data:datos,
+		cache:false,
+		contentType:false,
+		processData:false,
+		success:function(respuesta){
+			// console.log(respuesta);
+			
+		}
+	});
+
+	// window.location = "index.php?ruta=marcar-taller&trabajadorSelect=" + idTrab;
 
 })

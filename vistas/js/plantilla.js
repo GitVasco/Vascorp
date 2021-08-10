@@ -101,7 +101,6 @@ $(document).ready(function(){
 }); */
 window.addEventListener("beforeunload", function (e) {
 	localStorage.removeItem("capturarRango");
-	localStorage.removeItem("capturarRango2");
 	localStorage.removeItem("capturarRango3");
 	localStorage.removeItem("capturarRango4");
 	localStorage.removeItem("capturarRango6");
@@ -110,23 +109,23 @@ window.addEventListener("beforeunload", function (e) {
 	localStorage.removeItem("capturarRango11");
 	localStorage.removeItem("capturarRango12");
 	localStorage.removeItem("envioLetras");
-	localStorage.removeItem("ano");
-	localStorage.removeItem("anoP");
-	localStorage.removeItem("anoC");
+	// localStorage.removeItem("ano");
+	// localStorage.removeItem("anoP");
+	// localStorage.removeItem("anoC");
 	// localStorage.removeItem("sectorIngreso");
 });
 //Libreria Toastr
 toastr.options = {
-	"closeButton": true,
+	"closeButton": false,
 	"debug": false,
 	"newestOnTop": false,
-	"progressBar": false,
+	"progressBar": true,
 	"positionClass": "toast-top-right",
 	"preventDuplicates": false,
 	"onclick": null,
 	"showDuration": "300",
 	"hideDuration": "1000",
-	"timeOut": "1000",
+	"timeOut": "2000",
 	"extendedTimeOut": "2000",
 	"showEasing": "swing",
 	"hideEasing": "linear",

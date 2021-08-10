@@ -1,5 +1,5 @@
 <?php
-//session_start();
+// session_start();
 use Mike42\Escpos\Printer;
 use Mike42\Escpos\EscposImage;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
@@ -107,6 +107,7 @@ class ControladorTalleres{
                 $codigo = $_POST["codigoBarra"];
                 $trabajador = $_POST["cod_tra"];
 
+
                 $respuesta = ModeloTalleres::mdlProceso($fecha,$codigo,$trabajador);
                 //var_dump($respuesta);
 
@@ -115,7 +116,6 @@ class ControladorTalleres{
                 if($respuesta == "ok"){
 
                 echo'<script>
-
                 Command: toastr["success"]("Registrado exitosamente!");
 
                 </script>';
@@ -123,7 +123,6 @@ class ControladorTalleres{
 
                 }else{
                     echo'<script>
-
                         Command: toastr["error"]("El ticket ya fue registrado antes!");
 
                         </script>';
@@ -149,14 +148,13 @@ class ControladorTalleres{
                 if($respuesta == "ok"){
                     echo'<script>
                         
-
                         Command: toastr["success"]("Registrado exitosamente!");
+                        
 
                         </script>';
 
                 }else{
                     echo'<script>
-
                         Command: toastr["error"]("El ticket ya fue registrado antes!");
 
                         </script>';

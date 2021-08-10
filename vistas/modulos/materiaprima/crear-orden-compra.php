@@ -96,7 +96,7 @@
 
                   <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">PROVEEDOR</label>
                   <div class="col-lg-2">
-                    <select  class="form-control selectpicker" name="nuevoProveedorCompra" id="nuevoProveedorCompra" data-live-search="true" required>
+                    <select  class="form-control selectpicker" name="nuevoProveedorCompra" id="nuevoProveedorCompra" data-size="10" data-live-search="true" required>
                       <option value="">SELECCIONAR PROVEEDOR</option>
                         <?php
                             $item = null;
@@ -212,7 +212,7 @@
 
                 <div class="col-lg-2">
                 
-                    <select  class="form-control  selectpicker" name="nuevoCentroCosto" data-live-search="true" required>
+                    <select  class="form-control  selectpicker" name="nuevoCentroCosto" data-live-search="true" data-size="10" required>
                     <option value="">SELECCIONAR CENTRO COSTO</option>
                         <?php
 

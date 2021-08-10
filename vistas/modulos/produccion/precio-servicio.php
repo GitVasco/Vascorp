@@ -108,7 +108,7 @@ MODAL AGREGAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-text-height"></i></span> 
 
-                <select class="form-control input-md selectpicker"name="nuevoTallerPrecio" id="nuevoTallerPrecio" data-live-search="true" required>
+                <select class="form-control input-md selectpicker"name="nuevoTallerPrecio" id="nuevoTallerPrecio" data-live-search="true" data-size="10" required>
                   <option value="">Seleccionar taller</option>
                   <?php 
                     $item=null;
@@ -134,7 +134,7 @@ MODAL AGREGAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span> 
 
-                <select class="form-control input-md selectpicker"name="nuevoModeloPrecio" id="nuevoModeloPrecio" data-live-search="true" required>
+                <select class="form-control input-md selectpicker"name="nuevoModeloPrecio" id="nuevoModeloPrecio" data-live-search="true" data-size="10" required>
                   <option value="">Seleccionar modelo</option>
                   <?php 
                     $item=null;
@@ -245,7 +245,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-text-height"></i></span> 
 
-                <select class="form-control input-md selectpicker" name="editarTallerPrecio" id="editarTallerPrecio" data-live-search="true" required>
+                <select class="form-control input-md selectpicker" name="editarTallerPrecio" id="editarTallerPrecio" data-live-search="true" data-size="10" required>
                   <?php 
                     $item=null;
                     $valor=null;
@@ -270,7 +270,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span> 
 
-                <select class="form-control input-md selectpicker" id="editarModeloPrecio" name="editarModeloPrecio"  data-live-search="true" required > 
+                <select class="form-control input-md selectpicker" id="editarModeloPrecio" name="editarModeloPrecio"  data-live-search="true" data-size="10" required > 
                   <?php 
                     $item=null;
                     $valor=null;

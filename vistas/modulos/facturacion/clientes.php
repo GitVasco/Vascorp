@@ -122,14 +122,14 @@ MODAL AGREGAR CLIENTE
 
                   <select class="form-control input-sm" id="tipo_documento" name="tipo_documento" required>
 
-                    <option value="">Tipo Documento</option>
+                    <option value="">TIPO DOCUMENTO</option>
 
-                    <option value="SD">SIN DOCUMENTO</option>
-                    <option value="DNI">DNI</option>
-                    <option value="C. Extra.">C. Extra.</option>
-                    <option value="RUC">RUC</option>
-                    <option value="PASAPORTE">PASAPORTE</option>
-                    <option value="C. Diplom.">C. Diplom.</option>
+                    <option value="0">SIN DOCUMENTO</option>
+                    <option value="1">DNI</option>
+                    <option value="4">C. Extra.</option>
+                    <option value="6">RUC</option>
+                    <option value="7">PASAPORTE</option>
+                    <option value="A">C. Diplom.</option>
 
                   </select>
 
@@ -145,7 +145,7 @@ MODAL AGREGAR CLIENTE
 
                   
 
-                  <input type="text" class="form-control input-sm" name="documento" id="documentoCliente" placeholder="Nro. Documento" required>
+                  <input type="number" class="form-control input-sm" name="documento" id="documentoCliente" placeholder="NRO. DOCUMENTO" required>
                   <span class="input-group-addon" style="padding:0px !important;border: 0px !important"><button type="button" class="btn btn-sm btn-default" onclick="ObtenerDatosCliente()"><i class="fa fa-search "></i></button>	</span>
                 </div>
 
@@ -160,7 +160,7 @@ MODAL AGREGAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <input type="text" class="form-control input-sm" name="codigoCliente" placeholder="Código" required>
+                  <input type="text" class="form-control input-sm info-box-text" name="codigoCliente" id="codigoCliente" placeholder="Código" required>
 
                 </div>
 
@@ -174,7 +174,7 @@ MODAL AGREGAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <input type="text" class="form-control input-sm" name="nombre" id="nuevaRazPro" placeholder="Razón Social o Nombre Completo" required>
+                  <input type="text" class="form-control input-sm info-box-text" name="nombre" id="nuevaRazPro" placeholder="Razón Social o Nombre Completo" required>
 
                 </div>
 
@@ -191,10 +191,10 @@ MODAL AGREGAR CLIENTE
 
                   <select class="form-control input-sm" id="tipo_persona" name="tipo_persona" required>
 
-                    <option value="">Tipo Persona</option>
+                    <option value="">TIPO PERSONA</option>
 
-                    <option value="NATURAL">Natural</option>
-                    <option value="JURÍDICA">Jurídica</option>
+                    <option value="1">NATURAL</option>
+                    <option value="2">JURÍDICA</option>
 
                   </select>
 
@@ -210,7 +210,7 @@ MODAL AGREGAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <input type="text" class="form-control input-sm" name="ape_paterno" id="ape_paterno" placeholder="Apellido Paterno" >
+                  <input type="text" class="form-control input-sm info-box-text" name="ape_paterno" id="ape_paterno" placeholder="Apellido Paterno" >
 
                 </div>
 
@@ -224,7 +224,7 @@ MODAL AGREGAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <input type="text" class="form-control input-sm" name="ape_materno" id="ape_materno" placeholder="Apellido Materno" >
+                  <input type="text" class="form-control input-sm info-box-text" name="ape_materno" id="ape_materno" placeholder="Apellido Materno" >
 
                 </div>
 
@@ -238,7 +238,7 @@ MODAL AGREGAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <input type="text" class="form-control input-sm" name="nombres" id="nombres" placeholder="Nombres" >
+                  <input type="text" class="form-control input-sm info-box-text" name="nombres" id="nombres" placeholder="Nombres" >
 
                 </div>
 
@@ -267,7 +267,7 @@ MODAL AGREGAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <input type="text" class="form-control input-sm" name="direccion" id="nuevaDireccion" placeholder="Direccion de Facturación" required>
+                  <input type="text" class="form-control input-sm info-box-text" name="direccion" id="nuevaDireccion" placeholder="Direccion de Facturación" required>
 
                 </div>
 
@@ -281,9 +281,9 @@ MODAL AGREGAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <select class="form-control input-sm selectpicker" id="nuevoUbiPro" name="ubigeo" data-live-search="true" required>
+                  <select class="form-control input-sm selectpicker" id="nuevoUbiPro" name="ubigeo" data-live-search="true" data-size="10" required>
 
-                    <option value="">Ubigeo</option>
+                    <option value="">UBIGEO</option>
 
                     <?php
                     
@@ -384,15 +384,17 @@ MODAL AGREGAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <select class="form-control input-sm" id="vendedor" name="vendedor" >
+                  <select class="form-control input-sm selectpicker" id="vendedor" name="vendedor" data-size="5" data-live-search="true">
 
-                    <option value="">Vendedor</option>
-                    <option value="00">00   - Oficina</option>
-                    <option value="02">02   - Manuel Vasquez</option>
-                    <option value="07">07   - Antonio Diaz</option>
-                    <option value="18A">18A - Oscar Ponce</option>
-                    <option value="19">19   - Juan Carlos Diaz</option>
-                    <option value="20">20   - Amelia Portal</option>
+                    <option value="">Seleccionar Vendedor</option>
+                    <?php 
+                      $item = null;
+                      $valor = null;
+                      $vendedor = ControladorVendedores::ctrMostrarVendedores($item,$valor);
+                      foreach ($vendedor as $key => $value) {
+                        echo "<option value='".$value["codigo"]."'>".$value["codigo"]." - ".$value["descripcion"]."</option>";
+                      }
+                    ?>
 
                   </select>
 
@@ -551,7 +553,7 @@ MODAL EDITAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <input type="text" class="form-control input-sm" name="editarNombre" id="editarNombre" placeholder="Razón Social o Nombre Completo" required>
+                  <input type="text" class="form-control input-sm info-box-text" name="editarNombre" id="editarNombre" placeholder="Razón Social o Nombre Completo" required>
 
                 </div>
 
@@ -567,7 +569,7 @@ MODAL EDITAR CLIENTE
 
                   <select class="form-control input-sm" id="editarTipo_documento" name="editarTipo_documento" required>
 
-                    <option value="">Tipo Documento</option>
+                    <option value="">TIPO DOCUMENTO</option>
 
                     <option value="0">SIN DOCUMENTO</option>
                     <option value="1">DNI</option>
@@ -590,7 +592,7 @@ MODAL EDITAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <input type="text" class="form-control input-sm" id="editarDocumento" name="editarDocumento" placeholder="Nro. Documento" required>
+                  <input type="number" class="form-control input-sm" id="editarDocumento" name="editarDocumento" placeholder="NRO. DOCUMENTO" required>
 
                 </div>
 
@@ -606,10 +608,10 @@ MODAL EDITAR CLIENTE
 
                   <select class="form-control input-sm" id="editarTipo_persona" name="editarTipo_persona" required>
 
-                    <option value="">Tipo Persona</option>
+                    <option value="">TIPO PERSONA</option>
 
-                    <option value="1">Natural</option>
-                    <option value="2">Jurídica</option>
+                    <option value="1">NATURAL</option>
+                    <option value="2">JURIDICA</option>
 
                   </select>
 
@@ -625,7 +627,7 @@ MODAL EDITAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <input type="text" class="form-control input-sm" name="editarApe_paterno" id="editarApe_paterno" placeholder="Apellido Paterno">
+                  <input type="text" class="form-control input-sm info-box-text" name="editarApe_paterno" id="editarApe_paterno" placeholder="Apellido Paterno">
 
                 </div>
 
@@ -639,7 +641,7 @@ MODAL EDITAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <input type="text" class="form-control input-sm" name="editarApe_materno" id="editarApe_materno" placeholder="Apellido Materno">
+                  <input type="text" class="form-control input-sm info-box-text" name="editarApe_materno" id="editarApe_materno" placeholder="Apellido Materno">
 
                 </div>
 
@@ -653,7 +655,7 @@ MODAL EDITAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <input type="text" class="form-control input-sm" name="editarNombres" id="editarNombres" placeholder="Nombres">
+                  <input type="text" class="form-control input-sm info-box-text" name="editarNombres" id="editarNombres" placeholder="Nombres">
 
                 </div>
 
@@ -682,7 +684,7 @@ MODAL EDITAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <input type="text" class="form-control input-sm" name="editarDireccion" id="editarDireccion" placeholder="Direccion de Facturación" required>
+                  <input type="text" class="form-control input-sm info-box-text" name="editarDireccion" id="editarDireccion" placeholder="Direccion de Facturación" required>
 
                 </div>
 
@@ -696,7 +698,7 @@ MODAL EDITAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <select class="form-control input-sm selectpicker" id="editarUbigeo" name="editarUbigeo" data-live-search="true" required>
+                  <select class="form-control input-sm selectpicker" id="editarUbigeo" name="editarUbigeo" data-live-search="true" data-size="10" required>
 
                     <?php
                     
@@ -798,15 +800,18 @@ MODAL EDITAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <select class="form-control input-sm" id="editarVendedor" name="editarVendedor"  data-live-search="true" >
+                  <select class="form-control input-sm selectpicker" id="editarVendedor" name="editarVendedor"  data-live-search="true" data-size="5">
 
-                    <option value="">Vendedor</option>
-                    <option value="00">00   - Oficina</option>
-                    <option value="02">02   - Manuel Vasquez</option>
-                    <option value="07">07   - Antonio Diaz</option>
-                    <option value="18A">18A - Oscar Ponce</option>
-                    <option value="19">19   - Juan Carlos Diaz</option>
-                    <option value="20">20   - Amelia Portal</option>
+                    <option value="">Seleccionar Vendedor</option>
+                    <?php 
+                      $item = null;
+                      $valor = null;
+
+                      $vendedor = ControladorVendedores::ctrMostrarVendedores($item,$valor);
+                      foreach ($vendedor as $key => $value) {
+                        echo "<option value='".$value["codigo"]."'>".$value["codigo"]." - ".$value["descripcion"]."</option>";
+                      }
+                    ?>
 
                   </select>
 
@@ -970,7 +975,7 @@ MODAL EDITAR AVAL DE CLIENTE
               
                 <span class="input-group-addon"><i class="fa fa-map-marker"></i></span> 
 
-                <select  class="form-control input-lg selectpicker" data-live-search="true" name="editarAvalPostal" id="editarAvalPostal" required>
+                <select  class="form-control input-lg selectpicker" data-live-search="true" name="editarAvalPostal" id="editarAvalPostal" data-size="10" required>
                   <option value="">Seleccionar codigo postal</option>
                   <?php
                     

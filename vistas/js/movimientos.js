@@ -121,7 +121,8 @@ $(".box").on("click", ".btnLimpiarModP", function () {
 * VEMOS SI LOCAL STORAGE TRAE ALGO
 */
 if (localStorage.getItem("modeloP") != null) {
-
+	$("#modeloP").val(localStorage.getItem("modeloP"));
+	$("#modeloP").selectpicker("refresh");
 	cargarTablaMProd(localStorage.getItem("modeloP"));
 	//console.log("lleno");
 	
@@ -208,7 +209,8 @@ $(".box").on("click", ".btnLimpiarModV", function () {
 * VEMOS SI LOCAL STORAGE TRAE ALGO
 */
 if (localStorage.getItem("modeloV") != null) {
-
+	$("#modeloV").val(localStorage.getItem("modeloV"));
+	$("#modeloV").selectpicker("refresh");
 	cargarTablaMVta(localStorage.getItem("modeloV"));
 	//console.log("lleno");
 	
@@ -296,7 +298,8 @@ $(".box").on("click", ".btnLimpiarMpIng", function () {
 * VEMOS SI LOCAL STORAGE TRAE ALGO
 */
 if (localStorage.getItem("lineaMpIng") != null) {
-
+	$("#lineaMPIng").val(localStorage.getItem("lineaMpIng"));
+	$("#lineaMPIng").selectpicker("refresh");
 	cargarTablaMpIng(localStorage.getItem("lineaMpIng"));
 	//console.log("lleno");
 	
@@ -384,7 +387,8 @@ $(".box").on("click", ".btnLimpiarMpSal", function () {
 * VEMOS SI LOCAL STORAGE TRAE ALGO
 */
 if (localStorage.getItem("lineaMpSal") != null) {
-
+	$("#lineaMPSal").val(localStorage.getItem("lineaMpSal"));
+	$("#lineaMPSal").selectpicker("refresh");
 	cargarTablaMpSal(localStorage.getItem("lineaMpSal"));
 	//console.log("lleno");
 	

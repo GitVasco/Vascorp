@@ -22,7 +22,6 @@
 
     <div class="box">
       <div class="box-header with-border">
-        <div class="pull-left" >
         <?php
         date_default_timezone_set('America/Lima');
         $hoy= date("Y-m-d");
@@ -50,10 +49,11 @@
         <button type="button" class="btn btn-info " data-toggle='modal' data-target='#modalAsistenciaFecha'><i class="fa fa-calendar"></i> Asistencia x fecha</button>
         <button type="button" class="btn btn-success btnAumentarMin" data-toggle='modal' data-target='#modalAgregarTiempo'><i class="fa fa-plus-circle"></i> Aumentar tiempo</button>
         <button type="button" class="btn btn-danger btnRestarMin" data-toggle='modal' data-target='#modalQuitarTiempo'><i class="fa fa-minus-circle"></i> Restar tiempo</button>
-      </div>
-      <button class="btn btn-outline-success pull-right btnReporteAsistencia"  style="border:green 1px solid">
+    
+      
+      <button class="btn btn-outline-success  btnReporteAsistencia"  style="border:green 1px solid" >
                       <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Asistencias  </button>
-      <br><br><br>
+
       <button type="button" class="btn btn-default pull-right" id="daterange-btnes">
 
           <span>
@@ -78,6 +78,8 @@
           <i class="fa fa-caret-down"></i>
 
         </button>
+
+        
       </div>
 
       <div class="box-body">
@@ -88,12 +90,13 @@
         <thead>
          <tr>
            
-           <th>Codigo trabajador</th>
+           <th style="width:60px;">Cod trab</th>
            <th>Trabajador</th>
            <th>Estado</th>
            <th>Fecha</th>
            <th>Minutos</th>
            <th>Horas extras</th>
+           <th>Paras</th>
            <th style="width:120px;">Acciones</th>
 
          </tr> 
@@ -564,6 +567,7 @@ MODAL EDITAR HORAS EXTRAS
   </div>
 
 </div>
+
 
 <!--=====================================
 MODAL AGREGAR TIEMPO

@@ -27,7 +27,7 @@
           <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Talleres Operacion Servicio</button>
         </div>
         <div class="col-lg-2">
-              <select name="selectModeloTallerOp" id="selectModeloTallerOp" class="form-control input-lg selectpicker" data-live-search="true">
+              <select name="selectModeloTallerOp" id="selectModeloTallerOp" class="form-control input-lg selectpicker" data-live-search="true" data-size="10">
               <option value="">--------Seleccionar modelo-------</option>
               <?php 
                   $item=null;

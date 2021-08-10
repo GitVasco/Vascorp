@@ -141,7 +141,7 @@ MODAL AGREGAR SUBLIMADO
               
                 <span class="input-group-addon"><i class="fa fa-list"></i></span> 
 
-                <select class="form-control input-lg selectpicker" name="nuevoModeloSublimado" id="nuevoModeloSublimado" data-live-search="true" required>
+                <select class="form-control input-lg selectpicker" name="nuevoModeloSublimado" id="nuevoModeloSublimado" data-live-search="true" data-size="10" required>
                   <option value="">Seleccionar Modelo</option>
                   <?php
                     $item=null;
@@ -165,7 +165,7 @@ MODAL AGREGAR SUBLIMADO
               
                 <span class="input-group-addon"><i class="fa fa-list"></i></span> 
 
-                <select class="form-control input-lg selectpicker" name="nuevoColorModelo" id="nuevoColorModelo" data-live-search="true" required>
+                <select class="form-control input-lg selectpicker" name="nuevoColorModelo" id="nuevoColorModelo" data-live-search="true" data-size="10" required>
                   <option value="">Seleccionar Color Modelo</option>
                  
                 </select>
@@ -181,7 +181,7 @@ MODAL AGREGAR SUBLIMADO
               
                 <span class="input-group-addon"><i class="fa fa-list"></i></span> 
 
-                <select class="form-control input-lg selectpicker" name="nuevaMateriaSublimado"  id="nuevaMateriaSublimado" data-live-search="true" required>
+                <select class="form-control input-lg selectpicker" name="nuevaMateriaSublimado"  id="nuevaMateriaSublimado" data-live-search="true" data-size="10" required>
                   <option value="">Seleccionar Materia Prima</option>
                  
                 </select>
@@ -197,7 +197,7 @@ MODAL AGREGAR SUBLIMADO
               
                 <span class="input-group-addon"><i class="fa fa-list"></i></span> 
 
-                <select class="form-control input-lg selectpicker" name="nuevoCorteSublimado" id="nuevoCorteSublimado"  data-live-search="true" >
+                <select class="form-control input-lg selectpicker" name="nuevoCorteSublimado" id="nuevoCorteSublimado"  data-live-search="true" data-size="10">
                   <option value="">Seleccionar Orden de Corte</option>
                  
                 </select>

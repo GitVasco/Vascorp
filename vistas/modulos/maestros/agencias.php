@@ -153,7 +153,7 @@ MODAL AGREGAR COLOR
               
                 <span class="input-group-addon"><i class="fa fa-map"></i></span> 
 
-                <select  class="form-control input-lg selectpicker" data-live-search="true" name="nuevoUbigeo"  >
+                <select  class="form-control input-lg selectpicker" data-live-search="true" name="nuevoUbigeo"  data-size="10">
                   <option value="">Ubigeo</option>
 
                     <?php
@@ -320,7 +320,7 @@ MODAL EDITAR AGENCIA
               
                 <span class="input-group-addon"><i class="fa fa-map"></i></span> 
 
-                <select  class="form-control input-lg selectpicker" data-live-search="true" name="editarUbigeo" id="editarUbigeo" >
+                <select  class="form-control input-lg selectpicker" data-live-search="true" name="editarUbigeo" id="editarUbigeo" data-size="10">
                   <option value="">Ubigeo</option>
 
                     <?php

@@ -1593,7 +1593,7 @@ class ControladorFacturacion{
                         'tipodoc'		=> '01', //01->FACTURA, 03->BOLETA, 07->NC, 08->ND
                         'serie'			=> substr($venta["documento"],0,4),
                         'correlativo'	=> substr($venta["documento"],4,12),
-                        'fecha_emision' => $venta["fecha"],
+                        'fecha_emision' => $venta["fecha_emision"],
                         'moneda'		=> 'PEN', //PEN->SOLES; USD->DOLARES
                         'total_opgravadas'=> 0, //OP. GRAVADAS
                         'total_opexoneradas'=>0,
@@ -1617,24 +1617,38 @@ class ControladorFacturacion{
             $comprobante['total_texto'] = CantidadEnLetra($venta["total"]);
             $totalSinIGV= $venta["total"] - $venta["igv"];
 
+            $serieGuia=substr($venta["origen2"],0,4);
+            $correlativoGuia=substr($venta["origen2"],4,12);
+
             //RUC DEL EMISOR - TIPO DE COMPROBANTE - SERIE DEL DOCUMENTO - CORRELATIVO
             //01-> FACTURA, 03-> BOLETA, 07-> NOTA DE CREDITO, 08-> NOTA DE DEBITO, 09->GUIA DE REMISION
             $nombrexml = $emisor['ruc'].'-'.$comprobante['tipodoc'].'-'.$comprobante['serie'].'-'.$comprobante['correlativo'];
 
             $ruta = "vistas/generar_xml/archivos_xml/".$nombrexml;
 
+            $tipoCliente = $cliente["ruc"];
+
+            if(strlen($tipoCliente) == 8){
+                $tipodoc='1';
+            }else{
+                $tipodoc='6';
+            }
+
             $xml = '<?xml version="1.0" encoding="UTF-8"?>
             <Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"
             xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
             xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
             xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2">
-            <ext:UBLExtensions>
-                <ext:UBLExtension>
+            <ext:UBLExtensions>';
+                if($venta["dscto"] > 0){
+                    $xml.='<ext:UBLExtension>
                     <ext:ExtensionContent>
                         <cbc:TotalDiscount>'.$venta["dscto"].'</cbc:TotalDiscount>
                     </ext:ExtensionContent>
-                </ext:UBLExtension>
-                <ext:UBLExtension>
+                </ext:UBLExtension>';
+                }
+                
+            $xml.='<ext:UBLExtension>
                     <ext:ExtensionContent />
                 </ext:UBLExtension>
             </ext:UBLExtensions>
@@ -1646,7 +1660,7 @@ class ControladorFacturacion{
                 name="Tipo de Operacion">'.$comprobante["tipodoc"].'</cbc:InvoiceTypeCode>
             <cbc:Note languageLocaleID="1000"> '.$comprobante["total_texto"].'</cbc:Note>
             <cbc:Note>Nro.unidades: '.$unidad["cantidad"].'</cbc:Note>
-            <cbc:Note languageID="D">'.$comprobante["cliente"].'</cbc:Note>
+            <cbc:Note languageID="D">'.$cliente["cliente"].'</cbc:Note>
             <cbc:Note languageID="E">CONTADO .</cbc:Note>
             <cbc:Note languageID="F">'.$totalSinIGV.'</cbc:Note>
             <cbc:Note languageID="G">'.$vendedor["codigo"].' '.$vendedor["nombre"].'</cbc:Note>
@@ -1654,7 +1668,7 @@ class ControladorFacturacion{
                 listName="Currency">PEN</cbc:DocumentCurrencyCode>
             <cbc:LineCountNumeric>6</cbc:LineCountNumeric>
             <cac:DespatchDocumentReference>
-                <cbc:ID>0003-00027964</cbc:ID>
+                <cbc:ID>'.$serieGuia.'-'.$correlativoGuia.'</cbc:ID>
                 <cbc:DocumentTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Documento"
                     listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo01">09</cbc:DocumentTypeCode>
             </cac:DespatchDocumentReference>
@@ -1689,8 +1703,8 @@ class ControladorFacturacion{
                             <cbc:AddressTypeCode listAgencyName="PE:SUNAT" listName="Establecimientos anexos">0002
                             </cbc:AddressTypeCode>
                             <cbc:CitySubdivisionName>'.$emisor["referencia"].'</cbc:CitySubdivisionName>
-                            <cbc:CityName>'.$emisor["departamento"].'</cbc:CityName>
-                            <cbc:CountrySubentity>'.$emisor["provincia"].'</cbc:CountrySubentity>
+                            <cbc:CityName>'.$emisor["provincia"].'</cbc:CityName>
+                            <cbc:CountrySubentity>'.$emisor["departamento"].'</cbc:CountrySubentity>
                             <cbc:District>'.$emisor["distrito"].'</cbc:District>
                             <cac:AddressLine>
                                 <cbc:Line>'.$emisor["direccion"].'</cbc:Line>
@@ -1706,7 +1720,7 @@ class ControladorFacturacion{
             <cac:AccountingCustomerParty>
                 <cac:Party>
                     <cac:PartyIdentification>
-                        <cbc:ID schemeAgencyName="PE:SUNAT" schemeID="6" schemeName="Documento de Identidad"
+                        <cbc:ID schemeAgencyName="PE:SUNAT" schemeID="'.$tipodoc.'" schemeName="Documento de Identidad"
                             schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">'.$cliente["ruc"].'</cbc:ID>
                     </cac:PartyIdentification>
                     <cac:PartyName>
@@ -1718,7 +1732,7 @@ class ControladorFacturacion{
                             <cbc:ID schemeAgencyName="PE:INEI" schemeName="Ubigeos" />
                             <cbc:CitySubdivisionName>-</cbc:CitySubdivisionName>
                             <cbc:CityName />
-                            <cbc:CountrySubentity>TACNA</cbc:CountrySubentity>
+                            <cbc:CountrySubentity>'.$venta["departamento"].'</cbc:CountrySubentity>
                             <cbc:District />
                             <cac:AddressLine>
                                 <cbc:Line>'.$cliente["direccion"].'</cbc:Line>
@@ -1733,18 +1747,26 @@ class ControladorFacturacion{
                         <cbc:ElectronicMail />
                     </cac:Contact>
                 </cac:Party>
-            </cac:AccountingCustomerParty>
-            <cac:AllowanceCharge>
+            </cac:AccountingCustomerParty>';
+            if($venta["dscto"] > 0){
+                $flg_firma = 1; //Posicion del XML: 0 para firma
+                $valor_dscto= $comprobante["total_opgravadas"] - $venta["dscto"];
+                $xml.='<cac:AllowanceCharge>
                 <cbc:ChargeIndicator>false</cbc:ChargeIndicator>
                 <cbc:AllowanceChargeReasonCode listAgencyName="PE:SUNAT" listName="Cargo/descuento"
                     listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo53">02</cbc:AllowanceChargeReasonCode>
-                <cbc:Amount currencyID="PEN">84.24</cbc:Amount>
-            </cac:AllowanceCharge>
-            <cac:TaxTotal>
-                <cbc:TaxAmount currencyID="PEN">201.46</cbc:TaxAmount>
+                <cbc:Amount currencyID="PEN">'.$venta["dscto"].'</cbc:Amount>
+            </cac:AllowanceCharge>';
+            }else{
+                $flg_firma = 0; //Posicion del XML: 0 para firma
+                $valor_dscto= $comprobante["total_opgravadas"];
+            }
+       
+       $xml.='<cac:TaxTotal>
+                <cbc:TaxAmount currencyID="'.$comprobante["moneda"].'">'.$comprobante["igv"].'</cbc:TaxAmount>
                 <cac:TaxSubtotal>
-                    <cbc:TaxableAmount currencyID="PEN">1203.48</cbc:TaxableAmount>
-                    <cbc:TaxAmount currencyID="PEN">201.46</cbc:TaxAmount>
+                    <cbc:TaxableAmount currencyID="'.$comprobante["moneda"].'">'.$comprobante["total_opgravadas"].'</cbc:TaxableAmount>
+                    <cbc:TaxAmount currencyID="'.$comprobante["moneda"].'">'.$comprobante["igv"].'</cbc:TaxAmount>
                     <cac:TaxCategory>
                         <cac:TaxScheme>
                             <cbc:ID schemeAgencyID="6" schemeID="UN/ECE 5153">1000</cbc:ID>
@@ -1755,16 +1777,23 @@ class ControladorFacturacion{
                 </cac:TaxSubtotal>
             </cac:TaxTotal>
             <cac:LegalMonetaryTotal>
-                <cbc:LineExtensionAmount currencyID="PEN">1203.48</cbc:LineExtensionAmount>
-                <cbc:TaxInclusiveAmount currencyID="PEN">1320.70</cbc:TaxInclusiveAmount>
-                <cbc:PayableAmount currencyID="PEN">1320.70</cbc:PayableAmount>
-            </cac:LegalMonetaryTotal>
-            <cac:InvoiceLine>
-                <cbc:ID>1</cbc:ID>
-                <cbc:Note>C62</cbc:Note>
-                <cbc:InvoicedQuantity unitCode="C62" unitCodeListAgencyName="United Nations Economic Commission for Europe"
-                    unitCodeListID="UN/ECE rec 20">6.000</cbc:InvoicedQuantity>
-                <cbc:LineExtensionAmount currencyID="PEN">94.44</cbc:LineExtensionAmount>
+                <cbc:LineExtensionAmount currencyID="'.$comprobante["moneda"].'">'.$comprobante["total_opgravadas"].'</cbc:LineExtensionAmount>
+                <cbc:TaxInclusiveAmount currencyID="'.$comprobante["moneda"].'">'.$comprobante["total"].'</cbc:TaxInclusiveAmount>
+                <cbc:PayableAmount currencyID="'.$comprobante["moneda"].'">'.$comprobante["total"].'</cbc:PayableAmount>
+            </cac:LegalMonetaryTotal>';
+               
+            foreach($modelos as $k=>$v){
+              
+               $igv = 0.18 * $v["total"];
+               $totalIGV = $v["total"]+$igv;
+               $precioIGV  = $totalIGV/$v["cantidad"];
+
+        $xml.='<cac:InvoiceLine>
+                <cbc:ID>'.($k+1).'</cbc:ID>
+                <cbc:Note>'.$v["unidad"].'</cbc:Note>
+                <cbc:InvoicedQuantity unitCode="'.$v["unidad"].'" unitCodeListAgencyName="United Nations Economic Commission for Europe"
+                    unitCodeListID="UN/ECE rec 20">'.number_format($v["cantidad"],3,".","").'</cbc:InvoicedQuantity>
+                <cbc:LineExtensionAmount currencyID="'.$comprobante["moneda"].'">'.$v["total"].'</cbc:LineExtensionAmount>
                 <cac:BillingReference>
                     <cac:BillingReferenceLine>
                         <cbc:ID schemeID="AL">37.15</cbc:ID>
@@ -1772,16 +1801,16 @@ class ControladorFacturacion{
                 </cac:BillingReference>
                 <cac:PricingReference>
                     <cac:AlternativeConditionPrice>
-                        <cbc:PriceAmount currencyID="PEN">18.58</cbc:PriceAmount>
+                        <cbc:PriceAmount currencyID="'.$comprobante["moneda"].'">'.number_format($precioIGV,2,".","").'</cbc:PriceAmount>
                         <cbc:PriceTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Precio"
                             listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo16">01</cbc:PriceTypeCode>
                     </cac:AlternativeConditionPrice>
                 </cac:PricingReference>
                 <cac:TaxTotal>
-                    <cbc:TaxAmount currencyID="PEN">17.00</cbc:TaxAmount>
+                    <cbc:TaxAmount currencyID="'.$comprobante["moneda"].'">'.number_format($igv,2,".","").'</cbc:TaxAmount>
                     <cac:TaxSubtotal>
-                        <cbc:TaxableAmount currencyID="PEN">94.44</cbc:TaxableAmount>
-                        <cbc:TaxAmount currencyID="PEN">17.00</cbc:TaxAmount>
+                        <cbc:TaxableAmount currencyID="'.$comprobante["moneda"].'">'.$v["total"].'</cbc:TaxableAmount>
+                        <cbc:TaxAmount currencyID="'.$comprobante["moneda"].'">'.number_format($igv,2,".","").'</cbc:TaxAmount>
                         <cac:TaxCategory>
                             <cbc:Percent>18</cbc:Percent>
                             <cbc:TaxExemptionReasonCode listAgencyName="PE:SUNAT" listName="Afectacion del IGV"
@@ -1796,17 +1825,18 @@ class ControladorFacturacion{
                     </cac:TaxSubtotal>
                 </cac:TaxTotal>
                 <cac:Item>
-                    <cbc:Description>TRUZA MODELADORA FAJA</cbc:Description>
+                    <cbc:Description>'.$v["nombre"].'</cbc:Description>
                     <cac:SellersItemIdentification>
-                        <cbc:ID>10197</cbc:ID>
+                        <cbc:ID>'.$v["modelo"].'</cbc:ID>
                     </cac:SellersItemIdentification>
                 </cac:Item>
                 <cac:Price>
-                    <cbc:PriceAmount currencyID="PEN">15.74</cbc:PriceAmount>
+                    <cbc:PriceAmount currencyID="'.$comprobante["moneda"].'">'.$v["precio"].'</cbc:PriceAmount>
                 </cac:Price>
-            </cac:InvoiceLine>
-            
-        </Invoice>';
+            </cac:InvoiceLine>';  	
+        }
+
+        $xml.="</Invoice>";
 
         
 
@@ -1816,14 +1846,14 @@ class ControladorFacturacion{
         //CREAR XML FIRMA
 
         $objfirma = new Signature();
-        $flg_firma = 1; //Posicion del XML: 0 para firma
+       
         // $ruta_xml_firmar = $ruta . '.XML'; //es el archivo XML que se va a firmar
         $ruta = $ruta . '.XML';
         $rutacertificado = "vistas/generar_xml/";
 
         $ruta_firma = $rutacertificado. 'certificado_prueba.pfx'; //ruta del archivo del certicado para firmar
         $pass_firma = 'ceti';
-
+        $actualizadoEnvio = ModeloFacturacion::mdlActualizarProcesoFacturacion(2,$tipo,$documento);
         $resp = $objfirma->signature_xml($flg_firma, $ruta, $ruta_firma, $pass_firma);
 
                         echo'<script>

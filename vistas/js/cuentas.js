@@ -30,6 +30,8 @@ $("#selectAnoCuenta").change(function(){
 
  // Validamos que venga la variable capturaRango en el localStorage
 if (localStorage.getItem("ano") != null) {
+  $("#selectAnoCuenta").val(localStorage.getItem("ano"));
+  $("#selectAnoCuenta").selectpicker("refresh");
 	cargarTablaCuentas(localStorage.getItem("ano"));
   
 } else {
@@ -74,6 +76,8 @@ function cargarTablaCuentas(ano){
 }
 // Validamos que venga la variable capturaRango en el localStorage
 if (localStorage.getItem("anoP") != null) {
+  $("#selectAnoCuentaP").val(localStorage.getItem("anoP"));
+  $("#selectAnoCuentaP").selectpicker("refresh");
 	cargarTablaCuentasPendientes(localStorage.getItem("anoP"));
   
 } else {
@@ -119,6 +123,8 @@ function cargarTablaCuentasPendientes(ano){
 
 // Validamos que venga la variable capturaRango en el localStorage
 if (localStorage.getItem("anoC") != null) {
+  $("#selectAnoCuentaC").val(localStorage.getItem("anoC"));
+  $("#selectAnoCuentaC").selectpicker("refresh");
 	cargarTablaCuentasAprobadas(localStorage.getItem("anoC"));
   
 } else {
@@ -966,8 +972,10 @@ $("#cancelarMonto3").change(function(){
 });
 $("#tipoCliente").change(function(){
   var cliente = $(this).val();
+  var descripcion = $(this).find('option:selected').text();
   $(".tablaCuentasConsultar").DataTable().destroy();
   localStorage.setItem("cliente",cliente);
+  sessionStorage.setItem("desCliente",descripcion);
   /* console.log("codigo", codigo); */
   //traer nombre de cliente
   var datos = new FormData();
@@ -1070,6 +1078,9 @@ $("#tipoCliente").change(function(){
 
   // Validamos que venga la variable capturaRango en el localStorage
 if (localStorage.getItem("cliente") != null) {
+  $("#tipoCliente").find('option').remove();
+  $("#tipoCliente").append("<option value='' selected>"+sessionStorage.getItem("desCliente")+"</option>");
+  $("#tipoCliente").selectpicker("refresh");
 	cargarTablaCuentasConsultar(localStorage.getItem("cliente"));
 } else {
 	cargarTablaCuentasConsultar(null);

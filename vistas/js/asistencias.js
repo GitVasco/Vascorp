@@ -161,12 +161,14 @@ $("#editarTiempoPara3").change(function(){
 // ACTIVANDO-DESACTIVANDO ARTICULO
 $(".tablaAsistencias").on("click",".btnAprobarAsistencia",function(){
 	// Capturamos el id del usuario y el estado
-    var idAsistencia=$(this).attr("idAsistencia");
+  var idAsistencia=$(this).attr("idAsistencia");
 	var estadoAsistencia=$(this).attr("estadoAsistencia");
+  var fechaAsistencia = $(this).attr("fecha");
 	var datos=new FormData();
 	datos.append("activarId",idAsistencia);
-    datos.append("activarEstado",estadoAsistencia);
-    console.log(idAsistencia);
+  datos.append("activarEstado",estadoAsistencia);
+  datos.append("fechaAsistencia",fechaAsistencia);
+  // console.log(fechaAsistencia);
 	$.ajax({
 		url:"ajax/asistencias.ajax.php",
 		type:"POST",
@@ -175,23 +177,18 @@ $(".tablaAsistencias").on("click",".btnAprobarAsistencia",function(){
 		contentType:false,
 		processData:false,
 		success:function(respuesta){
-				swal({
-					type: "success",
-					title: "¡Ok!",
-					text: "¡La información fue actualizada con éxito!",
-					showConfirmButton: true,
-					confirmButtonText: "Cerrar",
-					closeOnConfirm: false
-				}).then((result)=>{
-					if(result.value){
-						window.location="asistencia";}
-				});}
+      // console.log(respuesta);
+      //reicicamos la tabla de asistencia
+      $(".tablaAsistencias").DataTable().ajax.reload(null,false);
+      if(estadoAsistencia == 'FALTA'){
+        Command:toastr["warning"]("Se marco la Falta exitosamente!");
+      }else{
+        Command:toastr["success"]("Se marco la Asistencia exitosamente!");
+      }
+      
+    }
 	});
-	// Cambiamos el estado del botón físicamente
-	if(estadoAsistencia="FALTA"){
-		$(this).attr("estadoAsistencia","ASISTIO");}
-	else{
-		$(this).attr("estadoAsistencia","FALTA");}
+	
 });
 
 /*=============================================

@@ -180,7 +180,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
-                <select type="text" class="form-control input-lg selectpicker" name="cancelarCodigo" id="cancelarCodigo" data-live-search="true"  required>
+                <select type="text" class="form-control input-lg selectpicker" name="cancelarCodigo" id="cancelarCodigo" data-live-search="true"  data-size="10" required>
                   <option value="">Seleccionar cancelacion</option>
 
                     <?php
@@ -479,7 +479,7 @@ MODAL CANCELAR CUENTA
               
                 <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
-                <select type="text" class="form-control input-md selectpicker" name="cancelarCodigo2" id="cancelarCodigo2" data-live-search="true"  required>
+                <select type="text" class="form-control input-md selectpicker" name="cancelarCodigo2" id="cancelarCodigo2" data-live-search="true" data-size="10" required>
                   <option value="">Seleccionar tipo de cancelacion</option>
 
                     <?php

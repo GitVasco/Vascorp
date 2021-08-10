@@ -42,7 +42,7 @@
 
         </button>
         <div class="col-lg-2 pull-right">
-          <select class="form-control input-lg selectpicker" name="selectAnoCuenta" id="selectAnoCuenta" data-live-search="true">
+          <select class="form-control input-lg selectpicker" name="selectAnoCuenta" id="selectAnoCuenta" data-live-search="true" data-size="10">
             <option value="">Seleccionar Año</option>
             <option value="2015">2015</option>
             <option value="2016">2016</option>
@@ -148,7 +148,7 @@ MODAL AGREGAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
-                <select type="text" class="form-control input-lg selectpicker" name="nuevoCodigo" data-live-search="true"  required>
+                <select type="text" class="form-control input-lg selectpicker" name="nuevoCodigo" data-live-search="true" data-size="10" required>
                   <option value="">Seleccionar tipo de documento</option>
 
                     <?php
@@ -208,7 +208,7 @@ MODAL AGREGAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <select type="text" class="form-control input-lg selectpicker"  data-live-search="true" name="nuevoCliente" id="nuevoClienteCuenta" required></select>
+                <select type="text" class="form-control input-lg selectpicker"  data-live-search="true" name="nuevoCliente" id="nuevoClienteCuenta" data-size="10" required></select>
 
               </div>
 
@@ -222,7 +222,7 @@ MODAL AGREGAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <select type="text" class="form-control input-lg selectpicker" name="nuevoVendedor" data-live-search="true"  required>
+                <select type="text" class="form-control input-lg selectpicker" name="nuevoVendedor" data-live-search="true" data-size="10"  required>
                   <option value="">Seleccionar vendedor</option>
 
                     <?php
@@ -273,7 +273,7 @@ MODAL AGREGAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <select type="text" class="form-control input-lg selectpicker" name="nuevoBanco" data-live-search="true"  >
+                <select type="text" class="form-control input-lg selectpicker" name="nuevoBanco" data-live-search="true" data-size="10" >
                   <option value="">Seleccionar banco</option>
 
                     <?php
@@ -299,7 +299,7 @@ MODAL AGREGAR TIPO PAGO
                     
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <select type="text" class="form-control input-lg selectpicker" name="nuevoTipoDocumento" data-live-search="true"  >
+                <select type="text" class="form-control input-lg selectpicker" name="nuevoTipoDocumento" data-live-search="true" data-size="10" >
                   <option value="">Seleccionar tipo de documento</option>
 
                     <?php
@@ -579,7 +579,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
-                <select type="text" class="form-control input-lg selectpicker" name="editarCodigo" id="editarCodigo" data-live-search="true"  required>
+                <select type="text" class="form-control input-lg selectpicker" name="editarCodigo" id="editarCodigo" data-live-search="true"  data-size="10" required>
                   <option value="">Seleccionar tipo de documento</option>
 
                     <?php
@@ -640,7 +640,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <select type="text" class="form-control input-lg selectpicker"  data-live-search="true" name="editarCliente" id="editarCliente"  required></select>
+                <select type="text" class="form-control input-lg selectpicker"  data-live-search="true" name="editarCliente" id="editarCliente"  data-size="10" required></select>
 
               </div>
 
@@ -654,7 +654,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <select type="text" class="form-control input-lg selectpicker" name="editarVendedor" id="editarVendedor" data-live-search="true"  required>
+                <select type="text" class="form-control input-lg selectpicker" name="editarVendedor" id="editarVendedor" data-live-search="true" data-size="10" required>
                   <option value="">Seleccionar vendedor</option>
 
                     <?php
@@ -705,7 +705,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <select type="text" class="form-control input-lg selectpicker" name="editarBanco" id="editarBanco" data-live-search="true"  >
+                <select type="text" class="form-control input-lg selectpicker" name="editarBanco" id="editarBanco" data-live-search="true"  data-size="10">
                   <option value="">Seleccionar banco</option>
 
                   <?php
@@ -731,7 +731,7 @@ MODAL EDITAR TIPO PAGO
                     
                 <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                <select type="text" class="form-control input-lg selectpicker" name="editarTipoDocumento" id="editarTipoDocumento" data-live-search="true"  >
+                <select type="text" class="form-control input-lg selectpicker" name="editarTipoDocumento" id="editarTipoDocumento" data-live-search="true"  data-size="10">
                   <option value="">Seleccionar tipo de documento</option>
 
                     <?php

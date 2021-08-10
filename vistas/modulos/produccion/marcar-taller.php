@@ -100,7 +100,7 @@
 
                 <div class="box box-info">
 
-                    <div class="box-header with-border"></div>
+                    <div class="box-header "></div>
 
                     <form role="form" method="post">
 
@@ -108,19 +108,15 @@
 
                             <div class="box">
 
-                                <table class="table table-bordered table-striped dt-responsive tablasA" width="100%">
-                                    
-                                    <thead>
-                                    
-                                    <tr>
+                                    <div class="box-header bg-primary" style="color:white">
+                                    <h3 align="center"><u>TRABAJADORES</u></h3>
+                                    </div>
+                                       
 
-                                        <th>Trabajador</th>
+                                   
+                                      
 
-                                    </tr> 
-
-                                    </thead>
-
-                                    <tbody>
+                                <ul class="marcarTaller" style="list-style:none;columns:2">
 
                                     <?php
 
@@ -139,32 +135,26 @@
 
                                         foreach($traList as $key => $value) {
                                     
-                                        echo ' <tr>
-
-                                                    <td class="text-uppercase">                        <div class="btn-group">';
+                                        echo '<li style="padding-top:8px">                       ';
 
                                                     if($value["configuracion"] == "1"){
 
-                                                        echo '<button type="button" class="btn btn-primary btn-sm btnActTra" idTrab="'.$value["cod_tra"].'"><i class="fa fa-user text-white"></i>   '.$value["cod_tra"].' - '.$value["trabajador"].'</button>';
+                                                        echo '<button type="button" class="btn btn-primary btn-xs btnActTra btnActivo" idTrab="'.$value["cod_tra"].'" nomTrab = "'.$value["trabajador"].'"><i class="fa fa-user "></i>   '.$value["cod_tra"].' - '.$value["trabajador"].'</button>';
 
                                                     }else{
 
-                                                        echo '<button type="button" class="btn btn-default btn-xs btnActTra" idTrab="'.$value["cod_tra"].'"><i class="fa fa-user text-blue"></i> '.$value["cod_tra"].' - '.$value["trabajador"].'</button>';
+                                                        echo '<button type="button" class="btn btn-default btn-xs btnActTra" idTrab="'.$value["cod_tra"].'" nomTrab = "'.$value["trabajador"].'"><i class="fa fa-user "></i> '.$value["cod_tra"].' - '.$value["trabajador"].'</button>';
 
                                                     }
                             
-                                                    echo '</div>
-                                                    </td>
-
-                                            </tr>';
+                                                    echo '</li>';
                                     }
 
                                     ?>
 
 
-                                    </tbody>
-
-                                </table>                            
+                                </ul>
+                         
 
                                 <?php
 
@@ -174,11 +164,11 @@
 
                                 ?>
 
-                                <div class="box box-success">
+                                <div class="box ">
 
-                                    <div class="box-header">
+                                    <div class="box-header bg-primary" style="color:white">
 
-                                        <h3 align="center"> Hola "<?php echo $trabajador["trabajador"];?>"</h3>
+                                        <h4 align="center" id="trabajadorInicio"> Hola "<?php echo $trabajador["trabajador"];?>"</h4>
 
                                     </div>
 
@@ -233,8 +223,8 @@
 
 <?php
 
-$configurarTrabajador = new ControladorTrabajador();
-$configurarTrabajador -> ctrConfigurarTrabajador();
+// $configurarTrabajador = new ControladorTrabajador();
+// $configurarTrabajador -> ctrConfigurarTrabajador();
 
 ?> 
 

@@ -25,7 +25,7 @@
       <div class="box-header with-border">
 
       <div class="col-lg-2">
-                <select name="selectArticuloUrgencia" id="selectArticuloUrgencia" class="form-control input-lg selectpicker" data-live-search="true">
+                <select name="selectArticuloUrgencia" id="selectArticuloUrgencia" class="form-control input-lg selectpicker" data-live-search="true" data-size="10">
                 <option value="">--------Seleccionar articulo-------</option>
                 <?php
                     $modelos =controladorModelos::ctrMostrarModelosActivos();
