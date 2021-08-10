@@ -305,6 +305,7 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "produccion-vasco" ||
                   $_GET["ruta"] == "quincena" ||
                   $_GET["ruta"] == "eficiencia" ||
+                  $_GET["ruta"] == "eficiencia-global" ||
                   $_GET["ruta"] == "pagos" ||
                   $_GET["ruta"] == "servicios" ||
                   $_GET["ruta"] == "crear-servicio" ||
@@ -390,7 +391,8 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "gastos-caja" ||
                   $_GET["ruta"] == "ingresos-caja" ||
                   $_GET["ruta"] == "centro-costos-rsm" ||
-                  $_GET["ruta"] == "solicitud") {
+                  $_GET["ruta"] == "solicitud-caja" ||
+                  $_GET["ruta"] == "diario") {
 
               include "modulos/costos/".$_GET["ruta"].".php";
 

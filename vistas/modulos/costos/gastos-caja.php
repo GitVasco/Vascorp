@@ -117,19 +117,19 @@
 
                         <tr>
 
-                            <th width="5%">Fecha</th>
-                            <th width="5%">Recibo</th>
-                            <th width="10%">Proveedor</th>
-                            <th width="10%">Sucursal</th>
-                            <th width="3%">Gasto</th>
-                            <th width="3%">Cod</th>
-                            <th width="12%">Detalle</th>
-                            <th width="5%">Total S/</th>
-                            <th width="5%">Tip Doc.</th>
-                            <th width="7%">Documento</th>
-                            <th width="13%">Solicitante</th>
-                            <th width="13%">Descripcion</th>
-                            <th width="9%">#</th>
+                            <th>Fecha</th>
+                            <th>Recibo</th>
+                            <th>Proveedor</th>
+                            <th>Sucursal</th>
+                            <th>Gasto</th>
+                            <th>Detalle</th>
+                            <th>Total S/</th>
+                            <th>Tip Doc.</th>
+                            <th>Documento</th>
+                            <th>Solicitante</th>
+                            <th>Descripcion</th>
+                            <th>Estado</th>
+                            <th width="80px">Acciones</th>
 
                         </tr>
 
@@ -198,7 +198,7 @@ MODAL REGISTRAR GASTO
 
                 <label for=""  class="col-form-label col-lg-1 col-md-1">Sucursal</label>
                 <div class="col-lg-5 col-md-3">
-                    <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevaSucursal" id="nuevaSucursal" required>
+                    <select  class="form-control input-md selectpicker" data-size="10" data-live-search="true" name="nuevaSucursal" id="nuevaSucursal" required>
                         <option value="">Seleccionar Sucursal</option>
                         <?php
                         $valor = "TSUC";
@@ -222,7 +222,7 @@ MODAL REGISTRAR GASTO
                     <div class="input-group">
                         <input type="number"  class="form-control input-sm" name="nuevoRucProC" id="nuevoRucProC">
                         <div class="input-group-addon" style="padding:0px !important;border: 0px !important">
-                            <button type="button" class="btn btn-default btn-sm" onclick="ObtenerDatosRuc3()"><i class="fa fa-search "></i></button>	
+                            <button type="button" class="btn btn-default btn-sm" onclick="ObtenerDatosRuc3('nvo1')"><i class="fa fa-search "></i></button>	
                         </div>
                     </div>
                 </div>
@@ -261,7 +261,7 @@ MODAL REGISTRAR GASTO
                 <label class="col-form-label col-lg-1 col-md-1">Cod. Caja</label>
 
                 <div class="col-lg-8 col-md-3">
-                    <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevoCodCaja" id="nuevoCodCaja" required>
+                    <select  class="form-control input-md selectpicker" data-size="10" data-live-search="true" name="nuevoCodCaja" id="nuevoCodCaja" required>
                         <option value="">Seleccionar Código Caja</option>
                         <?php
 
@@ -435,7 +435,7 @@ MODAL EDITAR GASTO
                     <div class="input-group">
                         <input type="number"  class="form-control input-sm" name="editarRucProC" id="editarRucProC">
                         <div class="input-group-addon" style="padding:0px !important;border: 0px !important">
-                            <button type="button" class="btn btn-default btn-sm" onclick="ObtenerDatosRuc3()"><i class="fa fa-search "></i></button>	
+                            <button type="button" class="btn btn-default btn-sm" onclick="ObtenerDatosRuc3('nvo2')"><i class="fa fa-search "></i></button>	
                         </div>
                     </div>
                 </div>
@@ -448,7 +448,7 @@ MODAL EDITAR GASTO
 
                 <label class="col-form-label col-lg-1 col-md-1">Tipo Doc.</label>
                 <div class="col-lg-2 col-md-3">
-                    <select  class="form-control input-md selectpicker" data-live-search="true" name="editarTipo" id="editarTipo" required>
+                    <select  class="form-control input-md selectpicker" data-size="10" data-live-search="true" name="editarTipo" id="editarTipo" required>
                         <option value="">Seleccionar Tipo Doc.</option>
                         <?php
 
@@ -474,7 +474,7 @@ MODAL EDITAR GASTO
                 <label class="col-form-label col-lg-1 col-md-1">Cod. Caja</label>
 
                 <div class="col-lg-8 col-md-3">
-                    <select  class="form-control input-md selectpicker" data-live-search="true" name="editarCodCaja" id="editarCodCaja" required>
+                    <select  class="form-control input-md selectpicker" data-size="10" data-live-search="true" name="editarCodCaja" id="editarCodCaja" required>
                         <option value="">Seleccionar Código Caja</option>
                         <?php
 
@@ -1138,20 +1138,12 @@ $(".TablaGastosCaja").DataTable({
                 'background-color':'#52BE80',
                 'color':'black'
             })
-            $('td',row).eq(6).css({
-                'background-color':'#52BE80',
-                'color':'black'
-            })
         }else if (data[4] == "95"){
             $('td',row).eq(4).css({
                 'background-color':'#52BEB4',
                 'color':'black'
             })
             $('td',row).eq(5).css({
-                'background-color':'#52BEB4',
-                'color':'black'
-            })
-            $('td',row).eq(6).css({
                 'background-color':'#52BEB4',
                 'color':'black'
             })
@@ -1164,20 +1156,12 @@ $(".TablaGastosCaja").DataTable({
                 'background-color':'#FF6868',
                 'color':'black'
             })
-            $('td',row).eq(6).css({
-                'background-color':'#FF6868',
-                'color':'black'
-            })
         }else if(data[4] == "97"){
             $('td',row).eq(4).css({
                 'background-color':'#7C9EFF',
                 'color':'black'
             })
             $('td',row).eq(5).css({
-                'background-color':'#7C9EFF',
-                'color':'black'
-            })
-            $('td',row).eq(6).css({
                 'background-color':'#7C9EFF',
                 'color':'black'
             })
@@ -1190,20 +1174,12 @@ $(".TablaGastosCaja").DataTable({
                 'background-color':'#CCF459',
                 'color':'black'
             })
-            $('td',row).eq(6).css({
-                'background-color':'#CCF459',
-                'color':'black'
-            })
         }else if(data[4] == "10"){
             $('td',row).eq(4).css({
                 'background-color':'#AAE1FF',
                 'color':'black'
             })
             $('td',row).eq(5).css({
-                'background-color':'#AAE1FF',
-                'color':'black'
-            })
-            $('td',row).eq(6).css({
                 'background-color':'#AAE1FF',
                 'color':'black'
             })
@@ -1216,20 +1192,12 @@ $(".TablaGastosCaja").DataTable({
                 'background-color':'#DDDAD6',
                 'color':'black'
             })
-            $('td',row).eq(6).css({
-                'background-color':'#DDDAD6',
-                'color':'black'
-            })
         }else if(data[4] == "12"){
             $('td',row).eq(4).css({
                 'background-color':'#FFCFE8',
                 'color':'black'
             })
             $('td',row).eq(5).css({
-                'background-color':'#FFCFE8',
-                'color':'black'
-            })
-            $('td',row).eq(6).css({
                 'background-color':'#FFCFE8',
                 'color':'black'
             })
@@ -1242,10 +1210,6 @@ $(".TablaGastosCaja").DataTable({
                 'background-color':'#F5FAA5',
                 'color':'black'
             })
-            $('td',row).eq(6).css({
-                'background-color':'#F5FAA5',
-                'color':'black'
-            })
         }else if(data[4] == "14"){
             $('td',row).eq(4).css({
                 'background-color':'#DFB6F9',
@@ -1255,14 +1219,10 @@ $(".TablaGastosCaja").DataTable({
                 'background-color':'#DFB6F9',
                 'color':'black'
             })
-            $('td',row).eq(6).css({
-                'background-color':'#DFB6F9',
-                'color':'black'
-            })
         }
 
-        if(data[9] == "POR RENDIR"){
-            $('td',row).eq(9).css({
+        if(data[8] == "POR RENDIR"){
+            $('td',row).eq(8).css({
               'background-color':'#F5F106',
               'color':'black'
             })

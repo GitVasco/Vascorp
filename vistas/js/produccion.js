@@ -451,3 +451,426 @@ $(".tablaQuincena tbody").on("click", "button.btnImprimirAvance", function(){
 
     
 })
+
+if (localStorage.getItem("tallerEG") != null) {
+
+	cargarTablaEficienciaGlobal(localStorage.getItem("tallerEG"));
+
+	if(localStorage.getItem("tallerEG") == "T1"){
+
+		$(".btnT1").removeClass("btn-default");
+		$(".btnT1").addClass("btn-info");
+
+	}else if(localStorage.getItem("tallerEG") == "T3"){
+
+		$(".btnT3").removeClass("btn-default");
+		$(".btnT3").addClass("btn-info");
+
+	}else{
+
+		$(".btnTotT").removeClass("btn-default");
+		$(".btnTotT").addClass("btn-info");
+
+	}
+
+}else{
+
+	var tallerEG = "null";
+
+	$(".btnTotT").removeClass("btn-default");
+	$(".btnTotT").addClass("btn-info");
+
+	cargarTablaEficienciaGlobal(tallerEG);
+
+}
+
+function cargarTablaEficienciaGlobal(tallerEG){
+
+	$('.tablaEficienciaGlobal').DataTable({
+		"ajax": "ajax/produccion/tabla-eficiencia-global.ajax.php?tallerEG=" + tallerEG,
+		"deferRender": true,
+		"retrieve": true,
+		"processing": true,
+		"order": [[15, "desc"]],
+		"pageLength": 40,
+		"lengthMenu": [[40, 80, 100, -1], [40, 80, 100, 'Todos']],
+		"language": {
+	
+			"sProcessing": "Procesando...",
+			"sLengthMenu": "Mostrar _MENU_ registros",
+			"sZeroRecords": "No se encontraron resultados",
+			"sEmptyTable": "Ningún dato disponible en esta tabla",
+			"sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+			"sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0",
+			"sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+			"sInfoPostFix": "",
+			"sSearch": "Buscar:",
+			"sUrl": "",
+			"sInfoThousands": ",",
+			"sLoadingRecords": "Cargando...",
+			"oPaginate": {
+				"sFirst": "Primero",
+				"sLast": "Último",
+				"sNext": "Siguiente",
+				"sPrevious": "Anterior"
+			},
+			"oAria": {
+				"sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+				"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+			}
+	
+		},
+		"createdRow":function(row,data,index){
+
+
+			if(data[3].substr(29,1) == "f"){
+				$('td',row).eq(3).css({
+					'background-color':'#DDFFDF',
+					'color':'black'
+				})
+			}else if (data[3].substr(29,1) == "h"){
+				$('td',row).eq(3).css({
+					'background-color':'#FFE7D8',
+					'color':'black'
+				})
+			}else if (data[3].substr(29,1) == "t"){
+				$('td',row).eq(3).css({
+					'background-color':'#FFFFC7',
+					'color':'black'
+				})
+			}else if (data[3].substr(29,1) == "q"){
+				$('td',row).eq(3).css({
+					'background-color':'#FFCECE',
+					'color':'black'
+				})
+			}
+
+			if(data[4].substr(29,1) == "f"){
+				$('td',row).eq(4).css({
+					'background-color':'#DDFFDF',
+					'color':'black'
+				})
+			}else if ( data[4].substr(29,1) == "h"){
+				$('td',row).eq(4).css({
+					'background-color':'#FFE7D8',
+					'color':'black'
+				})
+			}else if (data[4].substr(29,1) == "t"){
+				$('td',row).eq(4).css({
+					'background-color':'#FFFFC7',
+					'color':'black'
+				})
+			}else if (data[4].substr(29,1) == "q"){
+				$('td',row).eq(4).css({
+					'background-color':'#FFCECE',
+					'color':'black'
+				})
+			}
+
+			if(data[5].substr(29,1) == "f"){
+				$('td',row).eq(5).css({
+					'background-color':'#DDFFDF',
+					'color':'black'
+				})
+			}else if (data[5].substr(29,1) == "h"){
+				$('td',row).eq(5).css({
+					'background-color':'#FFE7D8',
+					'color':'black'
+				})
+			}else if (data[5].substr(29,1) == "t"){
+				$('td',row).eq(5).css({
+					'background-color':'#FFFFC7',
+					'color':'black'
+				})
+			}else if (data[5].substr(29,1) == "q"){
+				$('td',row).eq(5).css({
+					'background-color':'#FFCECE',
+					'color':'black'
+				})
+			}
+
+			if(data[6].substr(29,1) == "f"){
+				$('td',row).eq(6).css({
+					'background-color':'#DDFFDF',
+					'color':'black'
+				})
+			}else if (data[6].substr(29,1) == "h"){
+				$('td',row).eq(6).css({
+					'background-color':'#FFE7D8',
+					'color':'black'
+				})
+			}else if (data[6].substr(29,1) == "t"){
+				$('td',row).eq(6).css({
+					'background-color':'#FFFFC7',
+					'color':'black'
+				})
+			}else if (data[6].substr(29,1) == "q"){
+				$('td',row).eq(6).css({
+					'background-color':'#FFCECE',
+					'color':'black'
+				})
+			}
+
+			if(data[7].substr(29,1) == "f"){
+				$('td',row).eq(7).css({
+					'background-color':'#DDFFDF',
+					'color':'black'
+				})
+			}else if (data[7].substr(29,1) == "h"){
+				$('td',row).eq(7).css({
+					'background-color':'#FFE7D8',
+					'color':'black'
+				})
+			}else if (data[7].substr(29,1) == "t"){
+				$('td',row).eq(7).css({
+					'background-color':'#FFFFC7',
+					'color':'black'
+				})
+			}else if (data[7].substr(29,1) == "q"){
+				$('td',row).eq(7).css({
+					'background-color':'#FFCECE',
+					'color':'black'
+				})
+			}
+
+			if(data[8].substr(29,1) == "f"){
+				$('td',row).eq(8).css({
+					'background-color':'#DDFFDF',
+					'color':'black'
+				})
+			}else if (data[8].substr(29,1) == "h"){
+				$('td',row).eq(8).css({
+					'background-color':'#FFE7D8',
+					'color':'black'
+				})
+			}else if (data[8].substr(29,1) == "t"){
+				$('td',row).eq(8).css({
+					'background-color':'#FFFFC7',
+					'color':'black'
+				})
+			}else if (data[8].substr(29,1) == "q"){
+				$('td',row).eq(8).css({
+					'background-color':'#FFCECE',
+					'color':'black'
+				})
+			}
+
+			if(data[9].substr(29,1) == "f"){
+				$('td',row).eq(9).css({
+					'background-color':'#DDFFDF',
+					'color':'black'
+				})
+			}else if (data[9].substr(29,1) == "h"){
+				$('td',row).eq(9).css({
+					'background-color':'#FFE7D8',
+					'color':'black'
+				})
+			}else if (data[9].substr(29,1) == "t"){
+				$('td',row).eq(9).css({
+					'background-color':'#FFFFC7',
+					'color':'black'
+				})
+			}else if (data[9].substr(29,1) == "q"){
+				$('td',row).eq(9).css({
+					'background-color':'#FFCECE',
+					'color':'black'
+				})
+			}
+
+			if(data[10].substr(29,1) == "f"){
+				$('td',row).eq(10).css({
+					'background-color':'#DDFFDF',
+					'color':'black'
+				})
+			}else if (data[10].substr(29,1) == "h"){
+				$('td',row).eq(10).css({
+					'background-color':'#FFE7D8',
+					'color':'black'
+				})
+			}else if (data[10].substr(29,1) == "t"){
+				$('td',row).eq(10).css({
+					'background-color':'#FFFFC7',
+					'color':'black'
+				})
+			}else if (data[10].substr(29,1) == "q"){
+				$('td',row).eq(10).css({
+					'background-color':'#FFCECE',
+					'color':'black'
+				})
+			}
+
+			if(data[11].substr(29,1) == "f"){
+				$('td',row).eq(11).css({
+					'background-color':'#DDFFDF',
+					'color':'black'
+				})
+			}else if (data[11].substr(29,1) == "h"){
+				$('td',row).eq(11).css({
+					'background-color':'#FFE7D8',
+					'color':'black'
+				})
+			}else if (data[11].substr(29,1) == "t"){
+				$('td',row).eq(11).css({
+					'background-color':'#FFFFC7',
+					'color':'black'
+				})
+			}else if (data[11].substr(29,1) == "q"){
+				$('td',row).eq(11).css({
+					'background-color':'#FFCECE',
+					'color':'black'
+				})
+			}
+
+			if(data[12].substr(29,1) == "f"){
+				$('td',row).eq(12).css({
+					'background-color':'#DDFFDF',
+					'color':'black'
+				})
+			}else if (data[12].substr(29,1) == "h"){
+				$('td',row).eq(12).css({
+					'background-color':'#FFE7D8',
+					'color':'black'
+				})
+			}else if (data[12].substr(29,1) == "t"){
+				$('td',row).eq(12).css({
+					'background-color':'#FFFFC7',
+					'color':'black'
+				})
+			}else if (data[12].substr(29,1) == "q"){
+				$('td',row).eq(12).css({
+					'background-color':'#FFCECE',
+					'color':'black'
+				})
+			}
+
+			if(data[13].substr(29,1) == "f"){
+				$('td',row).eq(13).css({
+					'background-color':'#DDFFDF',
+					'color':'black'
+				})
+			}else if (data[13].substr(29,1) == "h"){
+				$('td',row).eq(13).css({
+					'background-color':'#FFE7D8',
+					'color':'black'
+				})
+			}else if (data[13].substr(29,1) == "t"){
+				$('td',row).eq(13).css({
+					'background-color':'#FFFFC7',
+					'color':'black'
+				})
+			}else if (data[13].substr(29,1) == "q"){
+				$('td',row).eq(13).css({
+					'background-color':'#FFCECE',
+					'color':'black'
+				})
+			}
+
+			if(data[14].substr(29,1) == "f"){
+				$('td',row).eq(14).css({
+					'background-color':'#DDFFDF',
+					'color':'black'
+				})
+			}else if (data[14].substr(29,1) == "h"){
+				$('td',row).eq(14).css({
+					'background-color':'#FFE7D8',
+					'color':'black'
+				})
+			}else if (data[14].substr(29,1) == "t"){
+				$('td',row).eq(14).css({
+					'background-color':'#FFFFC7',
+					'color':'black'
+				})
+			}else if (data[14].substr(29,1) == "q"){
+				$('td',row).eq(14).css({
+					'background-color':'#FFCECE',
+					'color':'black'
+				})
+			}
+
+			if(data[15].substr(29,1) == "f"){
+				$('td',row).eq(15).css({
+					'background-color':'#DDFFDF',
+					'color':'black'
+				})
+			}else if (data[15].substr(29,1) == "h"){
+				$('td',row).eq(15).css({
+					'background-color':'#FFE7D8',
+					'color':'black'
+				})
+			}else if (data[15].substr(29,1) == "t" ){
+				$('td',row).eq(15).css({
+					'background-color':'#FFFFC7',
+					'color':'black'
+				})
+			}else if (data[15].substr(29,1) == "q"){
+				$('td',row).eq(15).css({
+					'background-color':'#FFCECE',
+					'color':'black'
+				})
+			}			
+
+		}
+		
+	});
+
+}
+
+$(".btnT1").click(function(){
+
+	var tallerEG = document.getElementById("btnT1").value;
+	console.log(tallerEG);
+
+	localStorage.setItem("tallerEG", tallerEG);
+	$(".tablaEficienciaGlobal").DataTable().destroy();
+	cargarTablaEficienciaGlobal(localStorage.getItem("tallerEG"));
+
+	$(this).removeClass("btn-default");
+	$(this).addClass("btn-info");
+
+	$(".btnT3").removeClass("btn-info");
+	$(".btnT3").addClass("btn-default");
+
+	$(".btnTotT").removeClass("btn-info");
+	$(".btnTotT").addClass("btn-default");
+
+})
+
+$(".btnT3").click(function(){
+
+	var tallerEG = document.getElementById("btnT3").value;
+	console.log(tallerEG);
+
+	localStorage.setItem("tallerEG", tallerEG);
+	$(".tablaEficienciaGlobal").DataTable().destroy();
+	cargarTablaEficienciaGlobal(localStorage.getItem("tallerEG"));
+
+	$(this).removeClass("btn-default");
+	$(this).addClass("btn-info");
+
+	$(".btnT1").removeClass("btn-info");
+	$(".btnT1").addClass("btn-default");
+
+	$(".btnTotT").removeClass("btn-info");
+	$(".btnTotT").addClass("btn-default");
+
+})
+
+$(".btnTotT").click(function(){
+
+	var tallerEG = document.getElementById("btnTotT").value;
+	console.log(tallerEG);
+
+	localStorage.setItem("tallerEG", tallerEG);
+	$(".tablaEficienciaGlobal").DataTable().destroy();
+	cargarTablaEficienciaGlobal(localStorage.getItem("tallerEG"));
+
+	$(this).removeClass("btn-default");
+	$(this).addClass("btn-info");
+
+	$(".btnT3").removeClass("btn-info");
+	$(".btnT3").addClass("btn-default");
+
+	$(".btnT1").removeClass("btn-info");
+	$(".btnT1").addClass("btn-default");
+
+})

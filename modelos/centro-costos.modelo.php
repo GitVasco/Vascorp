@@ -329,7 +329,8 @@ class ModeloCentroCostos{
                     g.documento,
                     g.solicitante,
                     g.descripcion AS desc_salida,
-                    g.rubro_cancelacion 
+                    g.rubro_cancelacion,
+                    g.estado 
                   FROM
                     gastos_caja g 
                     LEFT JOIN 
@@ -353,7 +354,7 @@ class ModeloCentroCostos{
                       ON g.tipo_documento = d.codigo
                       WHERE YEAR(g.fecha) = YEAR(NOW()) 
                       AND MONTH(g.fecha) = $mes
-                      and g.estado=1 AND g.visible=1");
+                      and g.estado IN('1','3','4') AND g.visible=1");
                       
 
     $stmt -> execute();
@@ -396,7 +397,8 @@ class ModeloCentroCostos{
       g.rubro_cancelacion,
       g.usureg,
       g.estado,
-      g.visible
+      g.visible,
+      g.estado
     FROM
       gastos_caja g 
       LEFT JOIN 
@@ -419,7 +421,7 @@ class ModeloCentroCostos{
           AND codigo IN ('01', '03', '09', '99')) AS d 
         ON g.tipo_documento = d.codigo 
     WHERE YEAR(g.fecha) = YEAR(NOW()) 
-      AND g.estado = 2 
+      AND g.estado IN ('2','3','4')  
       AND g.visible = 1");
 
 $stmt->bindParam(":usuario", $usuario, PDO::PARAM_STR);
@@ -450,7 +452,9 @@ return $stmt -> fetchAll();
             g.documento,
             g.solicitante,
             g.descripcion AS desc_salida,
-            g.rubro_cancelacion 
+            g.rubro_cancelacion,
+            g.estado,
+            g.usureg
           FROM
             gastos_caja g 
             LEFT JOIN 
@@ -473,7 +477,7 @@ return $stmt -> fetchAll();
                 AND codigo IN ('01', '03', '09', '99')) AS d 
               ON g.tipo_documento = d.codigo 
           WHERE YEAR(g.fecha) = YEAR(NOW()) 
-            AND g.estado = 2 
+            AND g.estado IN ('2','3') 
             AND g.visible = 1 
             AND g.usureg = :usuario");
   
@@ -815,6 +819,35 @@ return $stmt -> fetchAll();
       $stmt = null;
   
     }  
+
+    /* 
+    * Cambiar estado
+    */
+    static public function mdlCambiarEstado($datosE){
+
+      $stmt = Conexion::conectar()->prepare("UPDATE 
+                                    gastos_caja 
+                                  SET
+                                    estado = :estado 
+                                  WHERE id = :id");
+  
+      $stmt->bindParam(":id", $datosE["id"], PDO::PARAM_STR);  
+      $stmt->bindParam(":estado", $datosE["estado"], PDO::PARAM_STR);
+  
+      if($stmt->execute()){
+  
+        return "ok";
+  
+      }else{
+  
+        return $stmt->errorInfo();
+      
+      }
+  
+      $stmt->close();
+      $stmt = null;
+  
+    }    
     
   /* 
   * CREAR GASTOS DE CAJA

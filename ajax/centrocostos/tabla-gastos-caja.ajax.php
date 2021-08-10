@@ -33,19 +33,40 @@ class TablaGastosCaja{
             */
             $botones =  "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarGasto' idGasto='".$gastos[$i]["id"]."' data-toggle='modal' data-target='#modalEditarGasto'><i class='fa fa-pencil'></i></button><button class='btn btn-xs btn-danger btnAnularGasto' title='Anular Gasto' idGasto='".$gastos[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
 
+            /* 
+            *estado
+            */
+            if($gastos[$i]["estado"] == "1"){
+
+                $estado = "<button class='btn btn-success btn-xs' idSolicitud='".$gastos[$i]["id"]."'>Aprobado</button>";
+
+            }else if($gastos[$i]["estado"] == "2"){
+
+                $estado = "<button class='btn btn-warning btn-xs btnAprobarSol' idSolicitud='".$gastos[$i]["id"]."' estadoSol='3' total=".$gastos[$i]["total"]." fecha='".$gastos[$i]["fecha"]."'>Por Aprobar</button>";
+
+            }else if($gastos[$i]["estado"] == "3"){
+
+                $estado = "<button class='btn btn-info btn-xs btnAprobarSol' idSolicitud='".$gastos[$i]["id"]."' estadoSol='4'>Por Rendir</button>";
+
+            }else if($gastos[$i]["estado"] == "4"){
+
+                $estado = "<button class='btn btn-primary btn-xs btnAprobarSol' idSolicitud='".$gastos[$i]["id"]."' estadoSol='1'>Por Aceptar</button>";
+
+            }
+
             $datosJson .= '[            
                 "'.$gastos[$i]["fecha"].'",
                 "'.$gastos[$i]["recibo"].'",
                 "'.$gastos[$i]["proveedor"].'",
                 "'.$gastos[$i]["nom_sucursal"].'",
                 "'.$gastos[$i]["tipo_gasto"].'",
-                "'.$gastos[$i]["cod_caja"].'",
                 "<b>'.$gastos[$i]["nom_caja"].'</b>",
                 "<b>'.$total.'</b>",
                 "'.$gastos[$i]["nombre_documento"].'",
                 "'.$gastos[$i]["documento"].'",
                 "'.$gastos[$i]["solicitante"].'",
                 "<b>'.$gastos[$i]["desc_salida"].'</b>",
+                "'.$estado.'",
                 "'.$botones.'"
             ],';        
             }

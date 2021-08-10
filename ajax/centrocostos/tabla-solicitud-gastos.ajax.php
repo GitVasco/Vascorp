@@ -31,20 +31,32 @@ class TablaGastosCaja{
             /* 
             * Estado
             */
-            if($gastos[$i]["estado"] == "2"){
+            if($gastos[$i]["estado"] == "2" && $_SESSION["nombre"] == $gastos[$i]["usureg"]){
 
-                $estado = "<button class='btn btn-warning btn-xs btnAprobar' idSolicitud='".$gastos[$i]["id"]."' estadoSolicitud='3'>Por Aprobar</button>";
+                $estado = "<button class='btn btn-warning btn-xs' idSolicitud='".$gastos[$i]["id"]."' estadoSol='3' total=".$gastos[$i]["total"]." fecha='".$gastos[$i]["fecha"]."'>Por Aprobar</button>";
 
-            }else{
+                $botones =  "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarSolicitud' idGasto='".$gastos[$i]["id"]."' estado=".$gastos[$i]["estado"]." data-toggle='modal' data-target='#modalEditarSolicitud'><i class='fa fa-pencil'></i></button><button class='btn btn-xs btn-danger btnAnularGasto' id='btnSol".$gastos[$i]["id"]."' name='btnSol".$gastos[$i]["id"]."' title='Anular Gasto' idGasto='".$gastos[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
 
-                $estado = "<button class='btn btn-primary btn-xs btnAprobar' idSolicitud='".$gastos[$i]["id"]."' estadoSolicitud='2'>Aprobado</button>";
+            }else if($gastos[$i]["estado"] == "2" && $_SESSION["nombre"] != $gastos[$i]["usureg"]){
+
+                $estado = "<button class='btn btn-warning btn-xs btnAprobarSol' idSolicitud='".$gastos[$i]["id"]."' estadoSol='3' total=".$gastos[$i]["total"]." fecha='".$gastos[$i]["fecha"]."'>Por Aprobar</button>";
+
+                $botones =  "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarSolicitud' idGasto='".$gastos[$i]["id"]."' estado=".$gastos[$i]["estado"]." data-toggle='modal' data-target='#modalEditarSolicitud'><i class='fa fa-pencil'></i></button><button class='btn btn-xs btn-danger btnAnularGasto' id='btnSol".$gastos[$i]["id"]."' name='btnSol".$gastos[$i]["id"]."' title='Anular Gasto' idGasto='".$gastos[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
+
+            }else if($gastos[$i]["estado"] == "3"){
+
+                $estado = "<button class='btn btn-info btn-xs btnAprobarSol' idSolicitud='".$gastos[$i]["id"]."' estadoSol='4'>Por Rendir</button>";
+
+                $botones =  "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarSolicitud' idGasto='".$gastos[$i]["id"]."' estado=".$gastos[$i]["estado"]." data-toggle='modal' data-target='#modalEditarSolicitud'><i class='fa fa-pencil'></i></button></div>"; 
+
+            }else if($gastos[$i]["estado"] == "4"){
+
+                $estado = "<button class='btn btn-primary btn-xs btnAprobarSol' idSolicitud='".$gastos[$i]["id"]."'>Por Aceptar</button>";
+
+                $botones =  "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarSolicitud' idGasto='".$gastos[$i]["id"]."' estado=".$gastos[$i]["estado"]." data-toggle='modal' data-target='#modalEditarSolicitud'><i class='fa fa-pencil'></i></button></div>"; 
 
             }
 
-            /* 
-            * Botones
-            */
-            $botones =  "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarGasto' idGasto='".$gastos[$i]["id"]."' data-toggle='modal' data-target='#modalEditarGasto'><i class='fa fa-pencil'></i></button><button class='btn btn-xs btn-danger btnAnularGasto' title='Anular Gasto' idGasto='".$gastos[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
 
             $datosJson .= '[            
                 "'.$gastos[$i]["fecha"].'",
