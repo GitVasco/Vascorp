@@ -27,7 +27,7 @@
             in_array(13,$valores)?$_SESSION['ticket']=1:$_SESSION['ticket']=0;
             in_array(14,$valores)?$_SESSION['cuenta']=1:$_SESSION['cuenta']=0;
             in_array(15,$valores)?$_SESSION['costos']=1:$_SESSION['costos']=0;
-
+            in_array(16,$valores)?$_SESSION['caja']=1:$_SESSION['caja']=0;
             ?>
 
         <!-- search form -->
@@ -1525,7 +1525,7 @@
 
             <!--  Costos-->
             <?php
-            
+            }
             if($_SESSION["costos"] == 1){
             ?>
             <li class="treeview <?php if(   $_GET["ruta"] == "centro-costos" ||
@@ -1622,10 +1622,56 @@
 
             </li>
 
+            <!--  Ticket-->
             <?php
             }
+            if($_SESSION["caja"] == 1){
             ?>
-                        
+            <li class="treeview <?php if(   $_GET["ruta"] == "contactos" || 
+                                            $_GET["ruta"] == "mailbox") echo 'active';?>">
+
+                <a href="#">
+
+                    <i class="fa fa-inbox text-blue"></i>
+
+                    <span>Ticket</span>
+
+                    <span class="pull-right-container">
+
+                        <i class="fa fa-angle-left pull-right"></i>
+
+                    </span>
+
+                </a>
+
+                <ul class="treeview-menu">
+
+                    <li class="<?php if($_GET["ruta"] == "contactos") echo 'active';?>">
+
+                        <a href="contactos">
+
+                            <i class="fa fa-users"></i>
+                            <span>Contactos</span>
+
+                        </a>
+
+                    </li>
+
+                    <li class="<?php if($_GET["ruta"] == "mailbox") echo 'active';?>">
+
+                        <a href="mailbox">
+
+                            <i class="fa fa-envelope-o"></i>
+                            <span>Mailbox</span>
+
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </li>
+ 
             <!--  Ticket-->
             <?php
             }
