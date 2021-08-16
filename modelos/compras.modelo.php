@@ -70,7 +70,7 @@ class ModeloCompras{
                 ORDER BY MONTH(r.fecha_emision),
                     r.origen,
                     r.voucher
-                LIMIT 100 OFFSET 1");
+                LIMIT 100 OFFSET 0");
 
             $stmt -> execute();
 
