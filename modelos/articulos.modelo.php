@@ -353,6 +353,7 @@ class ModeloArticulos
 	
 		}else{
 			$stmt = Conexion::conectar()->prepare("SELECT 
+			'' as id,
 			a.articulo, 
 			'' as guia,
 			a.modelo,

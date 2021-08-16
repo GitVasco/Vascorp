@@ -30,7 +30,7 @@
           </div>
           <div class="form-group col-lg-1 col-md-1 col-sm-1 col-xs-2">
             <br>
-            <button type="submit"  class="btn btn-success" name="import" ><i class="fa fa-refresh"></i> Cargar articulo</a>
+            <button type="submit"  class="btn btn-success" name="import" ><i class="fa fa-upload"></i> Cargar articulo</a>
           </div>
         </form>
 
@@ -48,7 +48,7 @@
           </div>
           <div class="form-group col-lg-1 col-md-1 col-sm-1 col-xs-2">
             <br>
-            <button type="submit"  class="btn btn-success" name="importmovimiento" ><i class="fa fa-refresh"></i> Cargar movimientos</a>
+            <button type="submit"  class="btn btn-success" name="importmovimiento" ><i class="fa fa-upload"></i> Cargar movimientos</a>
           </div>
         </form>
 
@@ -66,7 +66,7 @@
           </div>
           <div class="form-group col-lg-1 col-md-1 col-sm-1 col-xs-2">
             <br>
-            <button type="submit"  class="btn btn-success" name="importventa" ><i class="fa fa-refresh"></i> Cargar ventas</a>
+            <button type="submit"  class="btn btn-success" name="importventa" ><i class="fa fa-upload"></i> Cargar ventas</a>
           </div>
         </form>
 
@@ -84,7 +84,7 @@
           </div>
           <div class="form-group col-lg-1 col-md-1 col-sm-1 col-xs-2">
             <br>
-            <button type="submit"  class="btn btn-success" name="importpedido" ><i class="fa fa-refresh"></i> Cargar pedidos</a>
+            <button type="submit"  class="btn btn-success" name="importpedido" ><i class="fa fa-upload"></i> Cargar pedidos</a>
           </div>
         </form>
 
@@ -97,12 +97,12 @@
 
         <form role="form"  method="POST" enctype="multipart/form-data">
           <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-10">
-            <label for=""><strong>CARGAR ARTICULOS X PEDIDOS</strong></label>
+            <label for=""><strong>LEER ARTICULOS X PEDIDOS</strong></label>
             <input type="file" name="archivoxlsarticulopedido" id="archivoxlsarticulopedido" class="form-control" accept="application/vnd.ms-excel">
           </div>
           <div class="form-group col-lg-1 col-md-1 col-sm-1 col-xs-2">
             <br>
-            <button type="submit"  class="btn btn-success" name="importarticulopedido" ><i class="fa fa-refresh"></i> Cargar pedidos</a>
+            <button type="submit"  class="btn btn-success" name="importarticulopedido" ><i class="fa fa-upload"></i> Cargar pedidos</a>
           </div>
         </form>
 
@@ -110,6 +110,24 @@
 
         $actualizarArticuloPedido = new ControladorArticulos();
         $actualizarArticuloPedido->ctrCargarArticuloPedido();
+
+        ?>
+
+        <form role="form"  method="POST" enctype="multipart/form-data">
+          <div class="form-group col-lg-4 col-lg-offset-1 col-md-4 col-sm-4 col-xs-10">
+            <label for=""><strong>LEER DIARIOS</strong></label>
+            <input type="file" name="archivoxlsdiario" id="archivoxlsdiario" class="form-control" accept="application/vnd.ms-excel">
+          </div>
+          <div class="form-group col-lg-1 col-md-1 col-sm-1 col-xs-2">
+            <br>
+            <button type="submit"  class="btn btn-success" name="importdiario" ><i class="fa fa-upload"></i> Cargar diarios</a>
+          </div>
+        </form>
+
+        <?php
+
+        // $actualizarArticuloPedido = new ControladorArticulos();
+        // $actualizarArticuloPedido->ctrCargarArticuloPedido();
 
         ?>
 

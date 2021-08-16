@@ -452,6 +452,16 @@ $("#tdoc").change(function(){
 
     }
 
+    if(documento == "07"){
+        $(".campoTipOrigen").removeClass("hidden");
+        $(".campoDocOrigen").removeClass("hidden");
+        $(".campoFecOrigen").removeClass("hidden");
+    }else{
+        $(".campoTipOrigen").addClass("hidden");
+        $(".campoDocOrigen").addClass("hidden");
+        $(".campoFecOrigen").addClass("hidden");
+    }
+
     var serie = $("#serie");
     //console.log(serie);
 
@@ -610,7 +620,7 @@ $(".chkBoleta").change(function(){
 * ACTIVAR MODAL
 */
 
-$(".tablaPedidosCV tbody").on("click", "button.btnFacturar", function(){
+$(".tablaPedidosCV , .tablaPedidosAprobados").on("click", "button.btnFacturar", function(){
 
     var codigo = $(this).attr("codigo");
     var cod_cli = $(this).attr("cod_cli");

@@ -483,6 +483,16 @@ MODAL CONSULTAR SUNAT
     $enviarFacturaXML -> ctrCrearFacturaXML();
 ?>
 
+<?php
+    $enviarNotaCreditoXML = new ControladorFacturacion();
+    $enviarNotaCreditoXML -> ctrCrearNotaCreditoXML();
+?>
+
+<?php
+    $enviarNotaDebitoXML = new ControladorFacturacion();
+    $enviarNotaDebitoXML -> ctrCrearNotaDebitoXML();
+?>
+
 <script>
     window.document.title = "Procesar CE"
 

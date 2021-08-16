@@ -816,7 +816,188 @@ class ControladorFacturacion{
 
             }else{
 
-                var_dump("otro");
+               /*
+                todo: BAJAR EL STOCK
+                */
+                $tabla = "detalle_temporal";
+
+                $respuesta = ModeloPedidos::mdlMostraDetallesTemporal($tabla, $_POST["codPedido"]);
+                //var_dump($respuesta);
+
+                foreach($respuesta as $value){
+
+
+                    $respuestaNota = ModeloArticulos::mdlActualizarStockIngreso($value["articulo"],$value["cantidad"]);//sube
+                    // $respuestaGuia = ModeloArticulos::mdlActualizarPedido($datos);
+                    //var_dump($respuestaNota);
+
+                }
+
+                //var_dump($respuestaNota);
+
+                /*
+                todo: registrar en movimientos
+                */
+                if($respuestaNota == "ok"){
+
+                    foreach($respuesta as $value){
+
+                        $documento = $_POST["serie"];
+                        $doc = str_replace ( '-', '', $documento);
+                        //var_dump($doc);
+
+                        $cliente = $_POST["codCli"];
+                        //var_dump($cliente);
+
+                        $vendedor = $_POST["codVen"];
+                        //var_dump($vendedor);
+
+                        $dscto = $_POST["dscto"];
+                        //var_dump($dscto);
+
+                        $total = $value["cantidad"] * $value["precio"] * ((100 - $dscto)/100);
+                        //var_dump($total);
+
+                        $datosM = array("tipo" => "E05",
+                                        "documento" => $doc,
+                                        "articulo" => $value["articulo"],
+                                        "cliente" => $cliente,
+                                        "vendedor" => $vendedor,
+                                        "cantidad" => "-".$value["cantidad"],
+                                        "precio" => $value["precio"],
+                                        "dscto2" => $dscto,
+                                        "total" => "-".$total,
+                                        "nombre_tipo" => "NC");
+                        //var_dump($datosM);
+
+                        $respuestaMovimientos = ModeloFacturacion::mdlRegistrarMovimientos($datosM);
+
+                    }
+
+                    //var_dump($respuestaMovimientos);
+
+                    /*
+                    todo: registrar en ventajf
+                    */
+                    if($respuestaMovimientos == "ok"){
+
+                        $respuestaDoc = ModeloPedidos::mdlMostraPedidosCabecera($_POST["codPedido"]);
+                        //var_dump($respuestaDoc);
+
+                        $documento = $_POST["serie"];
+                        $doc = str_replace ( '-', '', $documento);
+                        //var_dump($doc);
+
+                        $usuario = $_POST["idUsuario"];
+                        //var_dump($usuario);
+
+                        $docOrigen = $_POST["codPedido"];
+                        //var_dump("$docOrigen");
+
+                        $docDest = "";
+                        //var_dump($docDest);
+
+                        $datosD = array("tipo" => "E05",
+                                        "documento" => $doc,
+                                        "neto" => "-".$respuestaDoc["op_gravada"],
+                                        "igv" => "-".$respuestaDoc["igv"],
+                                        "dscto" => "-".$respuestaDoc["descuento_total"],
+                                        "total" => "-".$respuestaDoc["total"],
+                                        "cliente" => $respuestaDoc["cod_cli"],
+                                        "vendedor" => $respuestaDoc["vendedor"],
+                                        "agencia" => $respuestaDoc["agencia"],
+                                        "lista_precios" => $respuestaDoc["lista"],
+                                        "condicion_venta" => $respuestaDoc["condicion_venta"],
+                                        "doc_destino" => $docDest,
+                                        "doc_origen" => $docOrigen,
+                                        "usuario" => $usuario,
+                                        "tipo_documento" => "NC");
+                        //var_dump($datosD);
+
+                        $respuestaDocumento = ModeloFacturacion::mdlRegistrarDocumento($datosD);
+
+                    }
+
+                    //var_dump($respuestaDocumento);
+
+                    /*
+                    todo: SUMAR 1 AL DOCUMENTO
+                    */
+                    if($respuestaDocumento == "ok"){
+
+                        $documento = $_POST["serie"];
+                        $serie = substr($documento,0,4);
+                        //var_dump($serie);
+
+                        $talonario = ModeloFacturacion::mdlActualizarNotaSerie("nota_credito","serie_nc",$serie);
+
+                    }
+
+                    //var_dump($talonario);
+
+                    /*
+                    todo: CAMBIAR EL ESTADO DEL PEDIDO
+                    */
+                    if($talonario == "ok"){
+
+                        $estado = ModeloFacturacion::mdlActualizarPedidoF($_POST["codPedido"]);
+
+                        //var_dump($estado);
+
+                        if($estado == "ok"){
+
+                            $documento = $_POST["serie"];
+                            $doc = str_replace ( '-', '', $documento);
+
+                            $tip_nota = $_POST["tdocorigen"];
+                            
+                            $origen_venta = $_POST["serieOrigen"];
+                            
+                            $fecha_origen = $_POST["fechaOrigen"];
+
+                            $usuario = $_POST["idUsuario"];
+                            //var_dump($usuario);
+
+                            $arregloNota = array("tipo"=>'E05',
+                                                "documento"=>$doc,
+                                                "tipo_doc"=>$tip_nota,
+                                                "doc_origen"=>$origen_venta,
+                                                "fecha_origen"=>$fecha_origen,
+                                                "motivo"=>'C5',
+                                                "tip_cont"=>'DE',
+                                                "observacion"=>'',
+                                                "usuario"=>$usuario);
+
+                            $notaCredito = ModeloFacturacion::mdlIngresarNotaCD($arregloNota);
+                            //var_dump($ctacte);
+
+                            if($notaCredito == "ok"){
+
+                                echo'<script>
+
+                                swal({
+                                        type: "success",
+                                        title: "Se Genero la Nota cred. '.$doc.'",
+                                        showConfirmButton: true,
+                                        confirmButtonText: "Cerrar"
+                                }).then(function(result){
+                                                if (result.value) {
+
+                                                window.location = "pedidoscv";
+
+                                                }
+                                            })
+
+                                </script>';
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
 
             }
 
@@ -907,6 +1088,16 @@ class ControladorFacturacion{
     */
 	static public function ctrRangoFechasProcesarCE($fechaInicial, $fechaFinal,$tipo){
 		$respuesta = ModeloFacturacion::mdlRangoFechasProcesarCE( $fechaInicial, $fechaFinal,$tipo);
+
+		return $respuesta;
+
+    }
+
+     /*
+    * MOSTRAR NOTAS DE DEBITO PARA IMPRESION
+    */
+	static public function ctrMostrarDebitoImpresion($documento, $tipo){
+		$respuesta = ModeloFacturacion::mdlMostrarDebitoImpresion( $documento, $tipo);
 
 		return $respuesta;
 
@@ -1561,6 +1752,13 @@ class ControladorFacturacion{
 
             $unidad= ControladorFacturacion::ctrMostrarUnidadesImpresion($documento,$tipo);
             // var_dump($modelos);
+
+            if($tipo == 'S03'){
+                $tipcomprobante = '01';
+            }else{
+                $tipcomprobante = '03';
+            }
+
             $emisor = 	array(
                         'tipodoc'		=> '6',
                         'ruc' 			=> '20513613939', 
@@ -1590,7 +1788,7 @@ class ControladorFacturacion{
                         );
 
             $comprobante =	array(
-                        'tipodoc'		=> '01', //01->FACTURA, 03->BOLETA, 07->NC, 08->ND
+                        'tipodoc'		=> $tipcomprobante, //01->FACTURA, 03->BOLETA, 07->NC, 08->ND
                         'serie'			=> substr($venta["documento"],0,4),
                         'correlativo'	=> substr($venta["documento"],4,12),
                         'fecha_emision' => $venta["fecha_emision"],
@@ -1628,12 +1826,13 @@ class ControladorFacturacion{
 
             $tipoCliente = $cliente["ruc"];
 
+
             if(strlen($tipoCliente) == 8){
                 $tipodoc='1';
             }else{
                 $tipodoc='6';
             }
-
+        
             $xml = '<?xml version="1.0" encoding="UTF-8"?>
             <Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"
             xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
@@ -1666,7 +1865,7 @@ class ControladorFacturacion{
             <cbc:Note languageID="G">'.$vendedor["codigo"].' '.$vendedor["nombre"].'</cbc:Note>
             <cbc:DocumentCurrencyCode listAgencyName="United Nations Economic Commission for Europe" listID="ISO 4217 Alpha"
                 listName="Currency">PEN</cbc:DocumentCurrencyCode>
-            <cbc:LineCountNumeric>6</cbc:LineCountNumeric>
+            <cbc:LineCountNumeric>'.count($modelo).'</cbc:LineCountNumeric>
             <cac:DespatchDocumentReference>
                 <cbc:ID>'.$serieGuia.'-'.$correlativoGuia.'</cbc:ID>
                 <cbc:DocumentTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Documento"
@@ -1744,7 +1943,7 @@ class ControladorFacturacion{
                         </cac:RegistrationAddress>
                     </cac:PartyLegalEntity>
                     <cac:Contact>
-                        <cbc:ElectronicMail />
+                        <cbc:ElectronicMail>'.$venta["email"].'</cbc:ElectronicMail>
                     </cac:Contact>
                 </cac:Party>
             </cac:AccountingCustomerParty>';
@@ -1838,6 +2037,7 @@ class ControladorFacturacion{
 
         $xml.="</Invoice>";
 
+            
         
 
 	    $doc->loadXML($xml);
@@ -1853,6 +2053,551 @@ class ControladorFacturacion{
 
         $ruta_firma = $rutacertificado. 'certificado_prueba.pfx'; //ruta del archivo del certicado para firmar
         $pass_firma = 'ceti';
+        // $actualizadoEnvio = ModeloFacturacion::mdlActualizarProcesoFacturacion(2,$tipo,$documento);
+        $resp = $objfirma->signature_xml($flg_firma, $ruta, $ruta_firma, $pass_firma);
+
+                        echo'<script>
+
+                            swal({
+                                    type: "success",
+                                    title: "Se Genero el  XML Invoice de '.$venta["documento"].'",
+                                    showConfirmButton: true,
+                                    confirmButtonText: "Cerrar"
+                            }).then(function(result){
+                                            if (result.value) {
+
+                                            window.location = "procesar-ce";
+
+                                            }
+                                        })
+
+                            </script>';
+
+        }
+
+    }
+
+    static public function ctrCrearNotaCreditoXML(){
+
+        if(isset($_GET["tipoNotaCred"]) && isset($_GET["documentoNotaCred"])){
+
+            $doc = new DOMDocument();
+            $doc->formatOutput = FALSE;
+            $doc->preserveWhiteSpace = TRUE;
+            $doc->encoding = 'utf-8';
+
+            require_once("/../extensiones/cantidad_en_letras.php");
+            require_once("/../vistas/generar_xml/signature.php"); // permite firmar xml
+
+            $tipo = $_GET["tipoNotaCred"];
+
+            $documento = $_GET["documentoNotaCred"];
+
+            $inicialOrigen = substr($venta["doc_origen"],0,1);
+
+            if($inicialOrigen == 'B'){
+                $tipoOrigen = '03';
+            }else{
+                $tipoOrigen = '01';
+            }
+
+            $venta = ControladorFacturacion::ctrMostrarVentaImpresion($documento,$tipo);
+
+            // var_dump($modelos);
+            $emisor = 	array(
+                        'tipodoc'		=> '6',
+                        'ruc' 			=> '20513613939', 
+                        'nombre_comercial'=> 'JACKY FORM',
+                        'razon_social'	=> 'Corporacion Vasco S.A.C.', 
+                        'referencia'	=> 'URB.SANTA LUISA 1RA ETAPA', 
+                        'direccion'		=> 'CAL.SANTO TORIBIO NRO. 259',
+                        'pais'			=> 'PE', 
+                        'departamento'  => 'LIMA',
+                        'provincia'		=> 'LIMA',
+                        'distrito'		=> 'SAN MARTIN DE PORRES'
+                        );
+
+
+            $cliente = array(
+                        'tipodoc'		=> '6',//6->ruc, 1-> dni 
+                        'ruc'			=> $venta["dni"], 
+                        'razon_social'  => $venta["nombre"], 
+                        'cliente'       => $venta["cliente"],
+                        'direccion'		=> $venta["direccion"],
+                        'pais'			=> 'PE'
+                        );	
+
+            $vendedor = array(
+                        "codigo"		=> $venta["vendedor"],
+                        "nombre"		=> $venta["nom_vendedor"]
+                        );
+
+            $comprobante =	array(
+                        'tipodoc'		=> '07', //01->FACTURA, 03->BOLETA, 07->NC, 08->ND
+                        'serie'			=> substr($venta["documento"],0,4),
+                        'correlativo'	=> substr($venta["documento"],4,12),
+                        'fecha_emision' => $venta["fecha_emision"],
+                        'moneda'		=> 'PEN', //PEN->SOLES; USD->DOLARES
+                        'total_opgravadas'=> 0, //OP. GRAVADAS
+                        'total_opexoneradas'=>0,
+                        'total_opinafectas'=>0,
+                        'igv'			=> 0,
+                        'total'			=> 0,
+                        'total_texto'	=> ''
+                    );
+
+
+
+            $op_gravadas = 0;
+            $op_inafectas = 0;
+            $op_exoneradas = 0;
+
+            $comprobante['total_opgravadas'] = ($venta["neto"]*-1);
+            $comprobante['total_opexoneradas'] = $op_exoneradas;
+            $comprobante['total_opinafectas'] = $op_inafectas;
+            $comprobante['igv'] = ($venta["igv"]*-1);
+            $comprobante['total'] = ($venta["total"]*-1);
+            $comprobante['total_texto'] = CantidadEnLetra($venta["total"]*-1);
+            $totalSinIGV= ($venta["total"]*-1 )-($venta["igv"]*-1);
+
+            $serieInvoice=substr($venta["doc_origen"],0,4);
+            $correlativoInvoice=substr($venta["doc_origen"],4,12);
+
+            //RUC DEL EMISOR - TIPO DE COMPROBANTE - SERIE DEL DOCUMENTO - CORRELATIVO
+            //01-> FACTURA, 03-> BOLETA, 07-> NOTA DE CREDITO, 08-> NOTA DE DEBITO, 09->GUIA DE REMISION
+            $nombrexml = $emisor['ruc'].'-'.$comprobante['tipodoc'].'-'.$comprobante['serie'].'-'.$comprobante['correlativo'];
+
+            $ruta = "vistas/generar_xml/archivos_xml/".$nombrexml;
+
+            $tipoCliente = $cliente["ruc"];
+
+            if(strlen($tipoCliente) == 8){
+                $tipodoc='1';
+            }else{
+                $tipodoc='6';
+            }
+
+            //TIPO DE MOTIVO SEGUN SUNAT
+            if($venta["motivo"] == "C1"){
+
+                $tipoMotivo = "01";
+
+            }else if($venta["motivo"] == "C2"){
+
+                $tipoMotivo = "02";
+
+            }else if($venta["motivo"] == "C3"){
+
+                $tipoMotivo = "03";
+
+            }else if($venta["motivo"] == "C4"){
+
+                $tipoMotivo = "04";
+
+            }else if($venta["motivo"] == "C5"){
+
+                $tipoMotivo = "05";
+
+            }else if($venta["motivo"] == "C6"){
+
+                $tipoMotivo = "06";
+
+            }else if($venta["motivo"] == "C7"){
+
+                $tipoMotivo = "07";
+
+            }else if($venta["motivo"] == "C8"){
+
+                $tipoMotivo = "08";
+
+            }else if($venta["motivo"] == "C9"){
+
+                $tipoMotivo = "09";
+
+            }else{
+
+                $tipoMotivo = "10";
+
+            }
+
+            if($comprobante["serie"] =="F002" || $comprobante["serie"] == "B002"){
+
+                $xml = '<?xml version="1.0" encoding="UTF-8"?>
+                <CreditNote xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2">
+                <ext:UBLExtensions>
+                    <ext:UBLExtension>
+                        <ext:ExtensionContent />
+                    </ext:UBLExtension>
+                </ext:UBLExtensions>
+                    <cbc:UBLVersionID>2.1</cbc:UBLVersionID>
+                    <cbc:CustomizationID>2.0</cbc:CustomizationID>
+                    <cbc:ID>'.$comprobante['serie'].'-'.$comprobante['correlativo'].'</cbc:ID>
+                    <cbc:IssueDate>'.$comprobante['fecha_emision'].'</cbc:IssueDate>
+                    <cbc:Note languageLocaleID="1000"> '.$comprobante["total_texto"].'</cbc:Note>
+                    <cbc:Note languageID="D">'.$cliente["cliente"].'</cbc:Note>
+                    <cbc:Note languageID="F">'.$totalSinIGV.'</cbc:Note>
+                    <cbc:Note languageID="G">'.$vendedor["codigo"].' '.$vendedor["nombre"].'</cbc:Note>
+                    <cbc:DocumentCurrencyCode listAgencyName="United Nations Economic Commission for Europe" listID="ISO 4217 Alpha" listName="Currency">PEN</cbc:DocumentCurrencyCode>
+                    <cbc:LineCountNumeric>1</cbc:LineCountNumeric>
+                    <cac:DiscrepancyResponse>
+                        <cbc:ReferenceID>'.$serieInvoice."-".$correlativoInvoice.'</cbc:ReferenceID>
+                        <cbc:ResponseCode listAgencyName="PE:SUNAT" listName="Tipo de nota de credito" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo09">'.$tipoMotivo.'</cbc:ResponseCode>
+                        <cbc:Description>'.ucfirst(strtolower($venta['nom_motivo'])).'</cbc:Description>
+                    </cac:DiscrepancyResponse>
+                    <cac:BillingReference>
+                        <cac:InvoiceDocumentReference>
+                            <cbc:ID>'.$serieInvoice."-".$correlativoInvoice.'</cbc:ID>
+                            <cbc:IssueDate>'.$venta["fecha_origen"].'</cbc:IssueDate>
+                            <cbc:DocumentTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Documento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo01">'.$tipoOrigen.'</cbc:DocumentTypeCode>
+                        </cac:InvoiceDocumentReference>
+                    </cac:BillingReference>
+                    <cac:Signature>
+                        <cbc:ID>IDSignKG</cbc:ID>
+                        <cac:SignatoryParty>
+                            <cac:PartyIdentification>
+                                <cbc:ID>'.$emisor["ruc"].'</cbc:ID>
+                            </cac:PartyIdentification>
+                            <cac:PartyName>
+                                <cbc:Name>'.$emisor["razon_social"].'</cbc:Name>
+                            </cac:PartyName>
+                        </cac:SignatoryParty>
+                        <cac:DigitalSignatureAttachment>
+                            <cac:ExternalReference>
+                                <cbc:URI>#SignST</cbc:URI>
+                            </cac:ExternalReference>
+                        </cac:DigitalSignatureAttachment>
+                    </cac:Signature>
+                    <cac:AccountingSupplierParty>
+                        <cac:Party>
+                            <cac:PartyIdentification>
+                                <cbc:ID schemeAgencyName="PE:SUNAT" schemeID="6" schemeName="Documento de Identidad" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">'.$emisor["ruc"].'</cbc:ID>
+                            </cac:PartyIdentification>
+                            <cac:PartyName>
+                                <cbc:Name>'.$emisor["nombre_comercial"].'</cbc:Name>
+                            </cac:PartyName>
+                            <cac:PartyLegalEntity>
+                                <cbc:RegistrationName>'.$emisor["razon_social"].'</cbc:RegistrationName>
+                                <cac:RegistrationAddress>
+                                    <cbc:AddressTypeCode listAgencyName="PE:SUNAT" listName="Establecimientos anexos">0002
+                                    </cbc:AddressTypeCode>
+                                    <cbc:CitySubdivisionName>'.$emisor["referencia"].'</cbc:CitySubdivisionName>
+                                    <cbc:CityName>'.$emisor["provincia"].'</cbc:CityName>
+                                    <cbc:CountrySubentity>'.$emisor["departamento"].'</cbc:CountrySubentity>
+                                    <cbc:District>'.$emisor["distrito"].'</cbc:District>
+                                    <cac:AddressLine>
+                                        <cbc:Line>'.$emisor["direccion"].'</cbc:Line>
+                                    </cac:AddressLine>
+                                    <cac:Country>
+                                        <cbc:IdentificationCode listAgencyName="United Nations Economic Commission for Europe" listID="ISO 3166-1" listName="Country">'.$emisor["pais"].'</cbc:IdentificationCode>
+                                    </cac:Country>
+                                </cac:RegistrationAddress>
+                            </cac:PartyLegalEntity>
+                        </cac:Party>
+                    </cac:AccountingSupplierParty>
+                    <cac:AccountingCustomerParty>
+                        <cac:Party>
+                        <cac:PartyIdentification>
+                            <cbc:ID schemeAgencyName="PE:SUNAT" schemeID="'.$tipodoc.'" schemeName="Documento de Identidad"
+                            schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">'.$cliente["ruc"].'</cbc:ID>
+                        </cac:PartyIdentification>
+                        <cac:PartyLegalEntity>
+                        <cbc:RegistrationName>'.$cliente["razon_social"].'</cbc:RegistrationName>
+                        <cac:RegistrationAddress>
+                            <cbc:ID schemeAgencyName="PE:INEI" schemeName="Ubigeos" />
+                            <cbc:CitySubdivisionName>-</cbc:CitySubdivisionName>
+                            <cbc:CityName />
+                            <cbc:CountrySubentity>'.$venta["departamento"].'</cbc:CountrySubentity>
+                            <cbc:District />
+                            <cac:AddressLine>
+                                <cbc:Line>'.$cliente["direccion"].'</cbc:Line>
+                            </cac:AddressLine>
+                            <cac:Country>
+                                <cbc:IdentificationCode listAgencyName="United Nations Economic Commission for Europe" listID="ISO 3166-1" listName="Country">'.$cliente["pais"].'</cbc:IdentificationCode>
+                            </cac:Country>
+                        </cac:RegistrationAddress>
+                        </cac:PartyLegalEntity>
+                        <cac:Contact>
+                            <cbc:ElectronicMail>'.$venta["email"].'</cbc:ElectronicMail>
+                        </cac:Contact>
+                        </cac:Party>
+                    </cac:AccountingCustomerParty>
+                    <cac:TaxTotal>
+                        <cbc:TaxAmount currencyID="'.$comprobante['moneda'].'">'.$comprobante['igv'].'</cbc:TaxAmount>
+                        <cac:TaxSubtotal>
+                        <cbc:TaxableAmount currencyID="'.$comprobante['moneda'].'">'.$comprobante["total_opgravadas"].'</cbc:TaxableAmount>
+                        <cbc:TaxAmount currencyID="'.$comprobante['moneda'].'">'.$comprobante['igv'].'</cbc:TaxAmount>
+                        <cac:TaxCategory>
+                            <cac:TaxScheme>
+                                <cbc:ID schemeAgencyID="6" schemeID="UN/ECE 5153">1000</cbc:ID>
+                                <cbc:Name>IGV</cbc:Name>
+                                <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+                            </cac:TaxScheme>
+                        </cac:TaxCategory>
+                        </cac:TaxSubtotal>
+                    </cac:TaxTotal>
+                    <cac:LegalMonetaryTotal>
+                        <cbc:PayableAmount currencyID="'.$comprobante['moneda'].'">'.$comprobante['total'].'</cbc:PayableAmount>
+                    </cac:LegalMonetaryTotal>
+                    <cac:CreditNoteLine>
+                        <cbc:ID>1</cbc:ID>
+                        <cbc:Note>ZZ</cbc:Note>
+                        <cbc:CreditedQuantity unitCode="ZZ" unitCodeListAgencyName="United Nations Economic Commission for Europe" unitCodeListID="UN/ECE rec 20">1</cbc:CreditedQuantity>
+                        <cbc:LineExtensionAmount currencyID="PEN">'.$comprobante["total_opgravadas"].'</cbc:LineExtensionAmount>
+                        <cac:BillingReference>
+                            <cac:BillingReferenceLine>
+                                <cbc:ID schemeID="AF">'.$comprobante["total"].'</cbc:ID>
+                            </cac:BillingReferenceLine>
+                        </cac:BillingReference>
+                        <cac:PricingReference>
+                            <cac:AlternativeConditionPrice>
+                                <cbc:PriceAmount currencyID="PEN">'.$comprobante["total"].'</cbc:PriceAmount>
+                                <cbc:PriceTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Precio" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo16">01</cbc:PriceTypeCode>
+                            </cac:AlternativeConditionPrice>
+                        </cac:PricingReference>
+                        <cac:TaxTotal>
+                            <cbc:TaxAmount currencyID="PEN">'.$comprobante["igv"].'</cbc:TaxAmount>
+                            <cac:TaxSubtotal>
+                            <cbc:TaxableAmount currencyID="PEN">'.$comprobante["total_opgravadas"].'</cbc:TaxableAmount>
+                            <cbc:TaxAmount currencyID="PEN">'.$comprobante["igv"].'</cbc:TaxAmount>
+                            <cac:TaxCategory>
+                                <cbc:Percent>18.00</cbc:Percent>
+                                <cbc:TaxExemptionReasonCode listAgencyName="PE:SUNAT" listName="Afectacion del IGV" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo07">10</cbc:TaxExemptionReasonCode>
+                                <cac:TaxScheme>
+                                    <cbc:ID schemeAgencyName="PE:SUNAT" schemeName="Codigo de tributos" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo05">1000</cbc:ID>
+                                    <cbc:Name>IGV</cbc:Name>
+                                    <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+                                </cac:TaxScheme>
+                            </cac:TaxCategory>
+                            </cac:TaxSubtotal>
+                        </cac:TaxTotal>
+                        <cac:Item>
+                            <cbc:Description>'.$venta["observacion"].'</cbc:Description>
+                        </cac:Item>
+                        <cac:Price>
+                            <cbc:PriceAmount currencyID="PEN">'.$comprobante["total_opgravadas"].'</cbc:PriceAmount>
+                        </cac:Price>
+                    </cac:CreditNoteLine>
+                </CreditNote>';
+
+            }else{
+                $modelos = ControladorFacturacion::ctrMostrarModeloImpresion($documento,$tipo);
+
+                $unidad= ControladorFacturacion::ctrMostrarUnidadesImpresion($documento,$tipo);
+
+
+            $xml = '<?xml version="1.0" encoding="UTF-8"?>
+            <CreditNote xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2">
+            <ext:UBLExtensions>
+                <ext:UBLExtension>
+                    <ext:ExtensionContent />
+                </ext:UBLExtension>
+            </ext:UBLExtensions>
+            <cbc:UBLVersionID>2.1</cbc:UBLVersionID>
+            <cbc:CustomizationID>2.0</cbc:CustomizationID>
+            <cbc:ID>'.$comprobante["serie"].'-'.$comprobante["correlativo"].'</cbc:ID>
+            <cbc:IssueDate>'.$comprobante["fecha_emision"].'</cbc:IssueDate>
+            <cbc:Note languageLocaleID="1000"> '.$comprobante["total_texto"].'</cbc:Note>
+            <cbc:Note>Nro.unidades: '.($unidad["cantidad"]*-1).'</cbc:Note>
+            <cbc:Note languageID="D">'.$cliente["cliente"].'</cbc:Note>
+            <cbc:Note languageID="E">CONTADO .</cbc:Note>
+            <cbc:Note languageID="F">'.$totalSinIGV.'</cbc:Note>
+            <cbc:Note languageID="G">'.$vendedor["codigo"].' '.$vendedor["nombre"].'</cbc:Note>
+            <cbc:DocumentCurrencyCode listAgencyName="United Nations Economic Commission for Europe" listID="ISO 4217 Alpha"
+                listName="Currency">PEN</cbc:DocumentCurrencyCode>
+            <cbc:LineCountNumeric>'.count($modelos).'</cbc:LineCountNumeric>
+            <cac:DiscrepancyResponse>
+                <cbc:ReferenceID>'.$serieInvoice."-".$correlativoInvoice.'</cbc:ReferenceID>
+                <cbc:ResponseCode listAgencyName="PE:SUNAT" listName="Tipo de nota de credito" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo09">'.$tipoMotivo.'</cbc:ResponseCode>
+                <cbc:Description>'.ucfirst(strtolower($venta['nom_motivo'])).'</cbc:Description>
+            </cac:DiscrepancyResponse>
+            <cac:OrderReference>
+                <cbc:ID>'.$venta["origen2"].'</cbc:ID>
+            </cac:OrderReference>
+            <cac:BillingReference>
+                <cac:InvoiceDocumentReference>
+                    <cbc:ID>'.$serieInvoice."-".$correlativoInvoice.'</cbc:ID>
+                    <cbc:IssueDate>'.$venta["fecha_origen"].'</cbc:IssueDate>
+                    <cbc:DocumentTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Documento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo01">'.$tipoOrigen.'</cbc:DocumentTypeCode>
+                </cac:InvoiceDocumentReference>
+            </cac:BillingReference>
+            <cac:Signature>
+                <cbc:ID>IDSignKG</cbc:ID>
+                <cac:SignatoryParty>
+                    <cac:PartyIdentification>
+                        <cbc:ID>'.$emisor["ruc"].'</cbc:ID>
+                    </cac:PartyIdentification>
+                    <cac:PartyName>
+                        <cbc:Name>'.$emisor["razon_social"].'</cbc:Name>
+                    </cac:PartyName>
+                </cac:SignatoryParty>
+                <cac:DigitalSignatureAttachment>
+                    <cac:ExternalReference>
+                        <cbc:URI>#SignST</cbc:URI>
+                    </cac:ExternalReference>
+                </cac:DigitalSignatureAttachment>
+            </cac:Signature>
+            <cac:AccountingSupplierParty>
+                <cac:Party>
+                    <cac:PartyIdentification>
+                        <cbc:ID schemeAgencyName="PE:SUNAT" schemeID="6" schemeName="Documento de Identidad"
+                            schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">'.$emisor["ruc"].'</cbc:ID>
+                    </cac:PartyIdentification>
+                    <cac:PartyName>
+                        <cbc:Name>'.$emisor["nombre_comercial"].'</cbc:Name>
+                    </cac:PartyName>
+                    <cac:PartyLegalEntity>
+                        <cbc:RegistrationName>'.$emisor["razon_social"].'</cbc:RegistrationName>
+                        <cac:RegistrationAddress>
+                            <cbc:AddressTypeCode listAgencyName="PE:SUNAT" listName="Establecimientos anexos">0002
+                            </cbc:AddressTypeCode>
+                            <cbc:CitySubdivisionName>'.$emisor["referencia"].'</cbc:CitySubdivisionName>
+                            <cbc:CityName>'.$emisor["provincia"].'</cbc:CityName>
+                            <cbc:CountrySubentity>'.$emisor["departamento"].'</cbc:CountrySubentity>
+                            <cbc:District>'.$emisor["distrito"].'</cbc:District>
+                            <cac:AddressLine>
+                                <cbc:Line>'.$emisor["direccion"].'</cbc:Line>
+                            </cac:AddressLine>
+                            <cac:Country>
+                                <cbc:IdentificationCode listAgencyName="United Nations Economic Commission for Europe"
+                                    listID="ISO 3166-1" listName="Country">'.$emisor["pais"].'</cbc:IdentificationCode>
+                            </cac:Country>
+                        </cac:RegistrationAddress>
+                    </cac:PartyLegalEntity>
+                </cac:Party>
+            </cac:AccountingSupplierParty>
+            <cac:AccountingCustomerParty>
+                <cac:Party>
+                    <cac:PartyIdentification>
+                        <cbc:ID schemeAgencyName="PE:SUNAT" schemeID="'.$tipodoc.'" schemeName="Documento de Identidad"
+                            schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">'.$cliente["ruc"].'</cbc:ID>
+                    </cac:PartyIdentification>
+                    <cac:PartyName>
+                        <cbc:Name />
+                    </cac:PartyName>
+                    <cac:PartyLegalEntity>
+                        <cbc:RegistrationName>'.$cliente["razon_social"].'</cbc:RegistrationName>
+                        <cac:RegistrationAddress>
+                            <cbc:ID schemeAgencyName="PE:INEI" schemeName="Ubigeos" />
+                            <cbc:CitySubdivisionName>-</cbc:CitySubdivisionName>
+                            <cbc:CityName />
+                            <cbc:CountrySubentity>'.$venta["departamento"].'</cbc:CountrySubentity>
+                            <cbc:District />
+                            <cac:AddressLine>
+                                <cbc:Line>'.$cliente["direccion"].'</cbc:Line>
+                            </cac:AddressLine>
+                            <cac:Country>
+                                <cbc:IdentificationCode listAgencyName="United Nations Economic Commission for Europe"
+                                    listID="ISO 3166-1" listName="Country">'.$cliente["pais"].'</cbc:IdentificationCode>
+                            </cac:Country>
+                        </cac:RegistrationAddress>
+                    </cac:PartyLegalEntity>
+                    <cac:Contact>
+                    <cbc:ElectronicMail>'.$venta["email"].'</cbc:ElectronicMail>
+                    </cac:Contact>
+                </cac:Party>
+            </cac:AccountingCustomerParty>
+            <cac:TaxTotal>
+                <cbc:TaxAmount currencyID="'.$comprobante["moneda"].'">'.$comprobante["igv"].'</cbc:TaxAmount>
+                <cac:TaxSubtotal>
+                    <cbc:TaxableAmount currencyID="'.$comprobante["moneda"].'">'.$comprobante["total_opgravadas"].'</cbc:TaxableAmount>
+                    <cbc:TaxAmount currencyID="'.$comprobante["moneda"].'">'.$comprobante["igv"].'</cbc:TaxAmount>
+                    <cac:TaxCategory>
+                        <cac:TaxScheme>
+                            <cbc:ID schemeAgencyID="6" schemeID="UN/ECE 5153">1000</cbc:ID>
+                            <cbc:Name>IGV</cbc:Name>
+                            <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+                        </cac:TaxScheme>
+                    </cac:TaxCategory>
+                </cac:TaxSubtotal>';
+                if($venta["dscto"] < 0){
+                    $xml.='<cac:TaxSubtotal>
+                        <cbc:TaxAmount currencyID="PEN">'.($venta["dscto"]*-1).'</cbc:TaxAmount>
+                        <cac:TaxCategory>
+                            <cac:TaxScheme>
+                                <cbc:ID schemeAgencyID="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo05" schemeAgencyName="PE:SUNAT" schemeName="Codigo de tributos">7152</cbc:ID>
+                                <cbc:Name>ICBPER</cbc:Name>
+                                <cbc:TaxTypeCode>OTH</cbc:TaxTypeCode>
+                            </cac:TaxScheme>
+                        </cac:TaxCategory>
+                    </cac:TaxSubtotal>';
+                }
+            $xml.='</cac:TaxTotal>
+            <cac:LegalMonetaryTotal>
+                <cbc:PayableAmount currencyID="'.$comprobante["moneda"].'">'.$comprobante["total"].'</cbc:PayableAmount>
+            </cac:LegalMonetaryTotal>';
+               
+            foreach($modelos as $k=>$v){
+              
+               $igv = 0.18 * ($v["total"]*-1);
+               $totalIGV = ($v["total"]*-1)+$igv;
+               $precioIGV  = $totalIGV/($v["cantidad"]*-1);
+
+        $xml.='<cac:CreditNoteLine>
+                <cbc:ID>'.($k+1).'</cbc:ID>
+                <cbc:Note>'.$v["unidad"].'</cbc:Note>
+                <cbc:InvoicedQuantity unitCode="'.$v["unidad"].'" unitCodeListAgencyName="United Nations Economic Commission for Europe"
+                    unitCodeListID="UN/ECE rec 20">'.number_format(($v["cantidad"]*-1),3,".","").'</cbc:InvoicedQuantity>
+                <cbc:LineExtensionAmount currencyID="'.$comprobante["moneda"].'">'.($v["total"]*-1).'</cbc:LineExtensionAmount>
+                <cac:BillingReference>
+                    <cac:BillingReferenceLine>
+                        <cbc:ID schemeID="AL">37.15</cbc:ID>
+                    </cac:BillingReferenceLine>
+                </cac:BillingReference>
+                <cac:PricingReference>
+                    <cac:AlternativeConditionPrice>
+                        <cbc:PriceAmount currencyID="'.$comprobante["moneda"].'">'.number_format($precioIGV,2,".","").'</cbc:PriceAmount>
+                        <cbc:PriceTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Precio"
+                            listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo16">01</cbc:PriceTypeCode>
+                    </cac:AlternativeConditionPrice>
+                </cac:PricingReference>
+                <cac:TaxTotal>
+                    <cbc:TaxAmount currencyID="'.$comprobante["moneda"].'">'.number_format($igv,2,".","").'</cbc:TaxAmount>
+                    <cac:TaxSubtotal>
+                        <cbc:TaxableAmount currencyID="'.$comprobante["moneda"].'">'.($v["total"]*-1).'</cbc:TaxableAmount>
+                        <cbc:TaxAmount currencyID="'.$comprobante["moneda"].'">'.number_format($igv,2,".","").'</cbc:TaxAmount>
+                        <cac:TaxCategory>
+                            <cbc:Percent>18</cbc:Percent>
+                            <cbc:TaxExemptionReasonCode listAgencyName="PE:SUNAT" listName="Afectacion del IGV"
+                                listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo07">10</cbc:TaxExemptionReasonCode>
+                            <cac:TaxScheme>
+                                <cbc:ID schemeAgencyName="PE:SUNAT" schemeName="Codigo de tributos"
+                                    schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo05">1000</cbc:ID>
+                                <cbc:Name>IGV</cbc:Name>
+                                <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+                            </cac:TaxScheme>
+                        </cac:TaxCategory>
+                    </cac:TaxSubtotal>
+                </cac:TaxTotal>
+                <cac:Item>
+                    <cbc:Description>'.$v["nombre"].'</cbc:Description>
+                    <cac:SellersItemIdentification>
+                        <cbc:ID>'.$v["modelo"].'</cbc:ID>
+                    </cac:SellersItemIdentification>
+                </cac:Item>
+                <cac:Price>
+                    <cbc:PriceAmount currencyID="'.$comprobante["moneda"].'">'.$v["precio"].'</cbc:PriceAmount>
+                </cac:Price>
+            </cac:CreditNoteLine>';  	
+        }
+    
+
+        $xml.="</CreditNote>";
+
+    }
+
+	    $doc->loadXML($xml);
+	    $doc->save($ruta.'.XML');
+
+        //CREAR XML FIRMA
+
+        $objfirma = new Signature();
+       
+        // $ruta_xml_firmar = $ruta . '.XML'; //es el archivo XML que se va a firmar
+        $ruta = $ruta . '.XML';
+        $rutacertificado = "vistas/generar_xml/";
+        $flg_firma = 0; //Posicion del XML: 0 para firma
+        $ruta_firma = $rutacertificado. 'certificado_prueba.pfx'; //ruta del archivo del certicado para firmar
+        $pass_firma = 'ceti';
         $actualizadoEnvio = ModeloFacturacion::mdlActualizarProcesoFacturacion(2,$tipo,$documento);
         $resp = $objfirma->signature_xml($flg_firma, $ruta, $ruta_firma, $pass_firma);
 
@@ -1860,7 +2605,320 @@ class ControladorFacturacion{
 
                             swal({
                                     type: "success",
-                                    title: "Se Genero el archivo XML de '.$venta["documento"].'",
+                                    title: "Se Genero el XML Nota de Credito de '.$venta["documento"].'",
+                                    showConfirmButton: true,
+                                    confirmButtonText: "Cerrar"
+                            }).then(function(result){
+                                            if (result.value) {
+
+                                            window.location = "procesar-ce";
+
+                                            }
+                                        })
+
+                            </script>';
+
+        }
+
+    }
+
+    static public function ctrCrearNotaDebitoXML(){
+
+        if(isset($_GET["tipoNotaDeb"]) && isset($_GET["documentoNotaDeb"])){
+
+            $doc = new DOMDocument();
+            $doc->formatOutput = FALSE;
+            $doc->preserveWhiteSpace = TRUE;
+            $doc->encoding = 'utf-8';
+
+            require_once("/../extensiones/cantidad_en_letras.php");
+            require_once("/../vistas/generar_xml/signature.php"); // permite firmar xml
+
+            $tipo = $_GET["tipoNotaDeb"];
+
+            $documento = $_GET["documentoNotaDeb"];
+
+            $inicialOrigen = substr($venta["doc_origen"],0,1);
+
+            if($inicialOrigen == 'B'){
+                $tipoOrigen = '03';
+            }else{
+                $tipoOrigen = '01';
+            }
+
+            $venta = ControladorFacturacion::ctrMostrarDebitoImpresion($documento,$tipo);
+
+            // var_dump($modelos);
+            $emisor = 	array(
+                        'tipodoc'		=> '6',
+                        'ruc' 			=> '20513613939', 
+                        'nombre_comercial'=> 'JACKY FORM',
+                        'razon_social'	=> 'Corporacion Vasco S.A.C.', 
+                        'referencia'	=> 'URB.SANTA LUISA 1RA ETAPA', 
+                        'direccion'		=> 'CAL.SANTO TORIBIO NRO. 259',
+                        'pais'			=> 'PE', 
+                        'departamento'  => 'LIMA',
+                        'provincia'		=> 'LIMA',
+                        'distrito'		=> 'SAN MARTIN DE PORRES'
+                        );
+
+
+            $cliente = array(
+                        'tipodoc'		=> '6',//6->ruc, 1-> dni 
+                        'ruc'			=> $venta["dni"], 
+                        'razon_social'  => $venta["nombre"], 
+                        'cliente'       => $venta["cliente"],
+                        'direccion'		=> $venta["direccion"],
+                        'pais'			=> 'PE'
+                        );	
+
+            $vendedor = array(
+                        "codigo"		=> $venta["vendedor"],
+                        "nombre"		=> $venta["nom_vendedor"]
+                        );
+
+            $comprobante =	array(
+                        'tipodoc'		=> '08', //01->FACTURA, 03->BOLETA, 07->NC, 08->ND
+                        'serie'			=> substr($venta["documento"],0,4),
+                        'correlativo'	=> substr($venta["documento"],4,12),
+                        'fecha_emision' => $venta["fecha_emision"],
+                        'moneda'		=> 'PEN', //PEN->SOLES; USD->DOLARES
+                        'total_opgravadas'=> 0, //OP. GRAVADAS
+                        'total_opexoneradas'=>0,
+                        'total_opinafectas'=>0,
+                        'igv'			=> 0,
+                        'total'			=> 0,
+                        'total_texto'	=> ''
+                    );
+
+
+
+            $op_gravadas = 0;
+            $op_inafectas = 0;
+            $op_exoneradas = 0;
+
+            $comprobante['total_opgravadas'] = $venta["neto"];
+            $comprobante['total_opexoneradas'] = $op_exoneradas;
+            $comprobante['total_opinafectas'] = $op_inafectas;
+            $comprobante['igv'] = $venta["igv"];
+            $comprobante['total'] = $venta["total"];
+            $comprobante['total_texto'] = CantidadEnLetra($venta["total"]);
+            $totalSinIGV= $venta["total"]-$venta["igv"];
+
+            $serieInvoice=substr($venta["doc_origen"],0,4);
+            $correlativoInvoice=substr($venta["doc_origen"],4,12);
+
+            //RUC DEL EMISOR - TIPO DE COMPROBANTE - SERIE DEL DOCUMENTO - CORRELATIVO
+            //01-> FACTURA, 03-> BOLETA, 07-> NOTA DE CREDITO, 08-> NOTA DE DEBITO, 09->GUIA DE REMISION
+            $nombrexml = $emisor['ruc'].'-'.$comprobante['tipodoc'].'-'.$comprobante['serie'].'-'.$comprobante['correlativo'];
+
+            $ruta = "vistas/generar_xml/archivos_xml/".$nombrexml;
+
+            $tipoCliente = $cliente["ruc"];
+
+            if(strlen($tipoCliente) == 8){
+                $tipodoc='1';
+            }else{
+                $tipodoc='6';
+            }
+
+            //TIPO DE MOTIVO SEGUN SUNAT
+            if($venta["motivo"] == "D1"){
+
+                $tipoMotivo = "01";
+
+            }else if($venta["motivo"] == "D2"){
+
+                $tipoMotivo = "02";
+
+            }else{
+
+                $tipoMotivo = "03";
+
+            }
+
+            
+
+            $xml = '<?xml version="1.0" encoding="UTF-8"?>
+            <DebitNote xmlns="urn:oasis:names:specification:ubl:schema:xsd:DebitNote-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2">
+            <ext:UBLExtensions>
+                <ext:UBLExtension>
+                    <ext:ExtensionContent />
+                </ext:UBLExtension>
+            </ext:UBLExtensions>
+                <cbc:UBLVersionID>2.1</cbc:UBLVersionID>
+                <cbc:CustomizationID>2.0</cbc:CustomizationID>
+                <cbc:ID>'.$comprobante['serie'].'-'.$comprobante['correlativo'].'</cbc:ID>
+                <cbc:IssueDate>'.$comprobante['fecha_emision'].'</cbc:IssueDate>
+                <cbc:Note languageLocaleID="1000"> '.$comprobante["total_texto"].'</cbc:Note>
+                <cbc:Note languageID="D">'.$cliente["cliente"].'</cbc:Note>
+                <cbc:Note languageID="F">'.$totalSinIGV.'</cbc:Note>
+                <cbc:Note languageID="G">'.$vendedor["codigo"].' '.$vendedor["nombre"].'</cbc:Note>
+                <cbc:DocumentCurrencyCode listAgencyName="United Nations Economic Commission for Europe" listID="ISO 4217 Alpha" listName="Currency">PEN</cbc:DocumentCurrencyCode>
+                <cbc:LineCountNumeric>1</cbc:LineCountNumeric>
+                <cac:DiscrepancyResponse>
+                    <cbc:ReferenceID>'.$serieInvoice."-".$correlativoInvoice.'</cbc:ReferenceID>
+                    <cbc:ResponseCode listAgencyName="PE:SUNAT" listName="Tipo de nota de credito" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo09">'.$tipoMotivo.'</cbc:ResponseCode>
+                    <cbc:Description>'.ucfirst(strtolower($venta['nom_motivo'])).'</cbc:Description>
+                </cac:DiscrepancyResponse>
+                <cac:BillingReference>
+                    <cac:InvoiceDocumentReference>
+                        <cbc:ID>'.$serieInvoice."-".$correlativoInvoice.'</cbc:ID>
+                        <cbc:IssueDate>'.$venta["fecha_origen"].'</cbc:IssueDate>
+                        <cbc:DocumentTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Documento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo01">'.$tipoOrigen.'</cbc:DocumentTypeCode>
+                    </cac:InvoiceDocumentReference>
+                </cac:BillingReference>
+                <cac:Signature>
+                    <cbc:ID>IDSignKG</cbc:ID>
+                    <cac:SignatoryParty>
+                        <cac:PartyIdentification>
+                            <cbc:ID>'.$emisor["ruc"].'</cbc:ID>
+                        </cac:PartyIdentification>
+                        <cac:PartyName>
+                            <cbc:Name>'.$emisor["razon_social"].'</cbc:Name>
+                        </cac:PartyName>
+                    </cac:SignatoryParty>
+                    <cac:DigitalSignatureAttachment>
+                        <cac:ExternalReference>
+                            <cbc:URI>#SignST</cbc:URI>
+                        </cac:ExternalReference>
+                    </cac:DigitalSignatureAttachment>
+                </cac:Signature>
+                <cac:AccountingSupplierParty>
+                    <cac:Party>
+                        <cac:PartyIdentification>
+                            <cbc:ID schemeAgencyName="PE:SUNAT" schemeID="6" schemeName="Documento de Identidad" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">'.$emisor["ruc"].'</cbc:ID>
+                        </cac:PartyIdentification>
+                        <cac:PartyName>
+                            <cbc:Name>'.$emisor["nombre_comercial"].'</cbc:Name>
+                        </cac:PartyName>
+                        <cac:PartyLegalEntity>
+                            <cbc:RegistrationName>'.$emisor["razon_social"].'</cbc:RegistrationName>
+                            <cac:RegistrationAddress>
+                                <cbc:AddressTypeCode listAgencyName="PE:SUNAT" listName="Establecimientos anexos">0002
+                                </cbc:AddressTypeCode>
+                                <cbc:CitySubdivisionName>'.$emisor["referencia"].'</cbc:CitySubdivisionName>
+                                <cbc:CityName>'.$emisor["provincia"].'</cbc:CityName>
+                                <cbc:CountrySubentity>'.$emisor["departamento"].'</cbc:CountrySubentity>
+                                <cbc:District>'.$emisor["distrito"].'</cbc:District>
+                                <cac:AddressLine>
+                                    <cbc:Line>'.$emisor["direccion"].'</cbc:Line>
+                                </cac:AddressLine>
+                                <cac:Country>
+                                    <cbc:IdentificationCode listAgencyName="United Nations Economic Commission for Europe" listID="ISO 3166-1" listName="Country">'.$emisor["pais"].'</cbc:IdentificationCode>
+                                </cac:Country>
+                            </cac:RegistrationAddress>
+                        </cac:PartyLegalEntity>
+                    </cac:Party>
+                </cac:AccountingSupplierParty>
+                <cac:AccountingCustomerParty>
+                    <cac:Party>
+                    <cac:PartyIdentification>
+                        <cbc:ID schemeAgencyName="PE:SUNAT" schemeID="'.$tipodoc.'" schemeName="Documento de Identidad"
+                        schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">'.$cliente["ruc"].'</cbc:ID>
+                    </cac:PartyIdentification>
+                    <cac:PartyLegalEntity>
+                    <cbc:RegistrationName>'.$cliente["razon_social"].'</cbc:RegistrationName>
+                    <cac:RegistrationAddress>
+                        <cbc:ID schemeAgencyName="PE:INEI" schemeName="Ubigeos" />
+                        <cbc:CitySubdivisionName>-</cbc:CitySubdivisionName>
+                        <cbc:CityName />
+                        <cbc:CountrySubentity>'.$venta["departamento"].'</cbc:CountrySubentity>
+                        <cbc:District />
+                        <cac:AddressLine>
+                            <cbc:Line>'.$cliente["direccion"].'</cbc:Line>
+                        </cac:AddressLine>
+                        <cac:Country>
+                            <cbc:IdentificationCode listAgencyName="United Nations Economic Commission for Europe" listID="ISO 3166-1" listName="Country">'.$cliente["pais"].'</cbc:IdentificationCode>
+                        </cac:Country>
+                    </cac:RegistrationAddress>
+                    </cac:PartyLegalEntity>
+                    <cac:Contact>
+                        <cbc:ElectronicMail>'.$venta["email"].'</cbc:ElectronicMail>
+                    </cac:Contact>
+                    </cac:Party>
+                </cac:AccountingCustomerParty>
+                <cac:TaxTotal>
+                    <cbc:TaxAmount currencyID="'.$comprobante['moneda'].'">'.$comprobante['igv'].'</cbc:TaxAmount>
+                    <cac:TaxSubtotal>
+                    <cbc:TaxableAmount currencyID="'.$comprobante['moneda'].'">'.$comprobante["total_opgravadas"].'</cbc:TaxableAmount>
+                    <cbc:TaxAmount currencyID="'.$comprobante['moneda'].'">'.$comprobante['igv'].'</cbc:TaxAmount>
+                    <cac:TaxCategory>
+                        <cac:TaxScheme>
+                            <cbc:ID schemeAgencyID="6" schemeID="UN/ECE 5153">1000</cbc:ID>
+                            <cbc:Name>IGV</cbc:Name>
+                            <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+                        </cac:TaxScheme>
+                    </cac:TaxCategory>
+                    </cac:TaxSubtotal>
+                </cac:TaxTotal>
+                <cac:RequestedMonetaryTotal>
+                    <cbc:PayableAmount currencyID="'.$comprobante['moneda'].'">'.$comprobante['total'].'</cbc:PayableAmount>
+                </cac:RequestedMonetaryTotal>
+                <cac:DebitNoteLine>
+                    <cbc:ID>1</cbc:ID>
+                    <cbc:Note>ZZ</cbc:Note>
+                    <cbc:DebitedQuantity unitCode="ZZ" unitCodeListAgencyName="United Nations Economic Commission for Europe" unitCodeListID="UN/ECE rec 20">1</cbc:DebitedQuantity>
+                    <cbc:LineExtensionAmount currencyID="PEN">'.$comprobante["total_opgravadas"].'</cbc:LineExtensionAmount>
+                    <cac:BillingReference>
+                        <cac:BillingReferenceLine>
+                            <cbc:ID schemeID="AF">'.$comprobante["total"].'</cbc:ID>
+                        </cac:BillingReferenceLine>
+                    </cac:BillingReference>
+                    <cac:PricingReference>
+                        <cac:AlternativeConditionPrice>
+                            <cbc:PriceAmount currencyID="PEN">'.$comprobante["total"].'</cbc:PriceAmount>
+                            <cbc:PriceTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Precio" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo16">01</cbc:PriceTypeCode>
+                        </cac:AlternativeConditionPrice>
+                    </cac:PricingReference>
+                    <cac:TaxTotal>
+                        <cbc:TaxAmount currencyID="PEN">'.$comprobante["igv"].'</cbc:TaxAmount>
+                        <cac:TaxSubtotal>
+                        <cbc:TaxableAmount currencyID="PEN">'.$comprobante["total_opgravadas"].'</cbc:TaxableAmount>
+                        <cbc:TaxAmount currencyID="PEN">'.$comprobante["igv"].'</cbc:TaxAmount>
+                        <cac:TaxCategory>
+                            <cbc:Percent>18.00</cbc:Percent>
+                            <cbc:TaxExemptionReasonCode listAgencyName="PE:SUNAT" listName="Afectacion del IGV" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo07">10</cbc:TaxExemptionReasonCode>
+                            <cac:TaxScheme>
+                                <cbc:ID schemeAgencyName="PE:SUNAT" schemeName="Codigo de tributos" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo05">1000</cbc:ID>
+                                <cbc:Name>IGV</cbc:Name>
+                                <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+                            </cac:TaxScheme>
+                        </cac:TaxCategory>
+                        </cac:TaxSubtotal>
+                    </cac:TaxTotal>
+                    <cac:Item>
+                        <cbc:Description>'.$venta["observacion"].'</cbc:Description>
+                    </cac:Item>
+                    <cac:Price>
+                        <cbc:PriceAmount currencyID="PEN">'.$comprobante["total_opgravadas"].'</cbc:PriceAmount>
+                    </cac:Price>
+                </cac:DebitNoteLine>
+            </DebitNote>';
+
+            
+
+	    $doc->loadXML($xml);
+	    $doc->save($ruta.'.XML');
+
+        //CREAR XML FIRMA
+
+        $objfirma = new Signature();
+       
+        // $ruta_xml_firmar = $ruta . '.XML'; //es el archivo XML que se va a firmar
+        $ruta = $ruta . '.XML';
+        $rutacertificado = "vistas/generar_xml/";
+        $flg_firma = 0; //Posicion del XML: 0 para firma
+        $ruta_firma = $rutacertificado. 'certificado_prueba.pfx'; //ruta del archivo del certicado para firmar
+        $pass_firma = 'ceti';
+        // $actualizadoEnvio = ModeloFacturacion::mdlActualizarProcesoFacturacion(2,$tipo,$documento);
+        $resp = $objfirma->signature_xml($flg_firma, $ruta, $ruta_firma, $pass_firma);
+
+                        echo'<script>
+
+                            swal({
+                                    type: "success",
+                                    title: "Se Genero el XML Nota de Debito de '.$venta["documento"].'",
                                     showConfirmButton: true,
                                     confirmButtonText: "Cerrar"
                             }).then(function(result){
