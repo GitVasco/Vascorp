@@ -78,6 +78,8 @@ class ModeloCentroCostos{
           IFNULL(cc.descripcion, ' - ') AS descripcion,
           cc.estado,
           cc.visible,
+          cc.cc1,
+          cc.cc2,
           cc.usureg,
           cc.fecreg,
           cc.pcreg,
@@ -95,8 +97,6 @@ class ModeloCentroCostos{
       return $stmt -> fetchAll();
 
     }
-
-
 
     $stmt -> close();
 
@@ -804,6 +804,37 @@ return $stmt -> fetchAll();
   
       $stmt->bindParam(":mes", $datos["fecha"], PDO::PARAM_STR);  
       $stmt->bindParam(":egreso", $datos["egreso"], PDO::PARAM_STR);
+  
+      if($stmt->execute()){
+  
+        return "ok";
+  
+      }else{
+  
+        return $stmt->errorInfo();
+      
+      }
+  
+      $stmt->close();
+      $stmt = null;
+  
+    }  
+
+        /* 
+    * CREAR GASTOS DE CAJA
+    */
+    static public function mdlActualizarAlertaD($datos){
+
+      $stmt = Conexion::conectar()->prepare("UPDATE 
+                                              diario 
+                                            SET
+                                              alerta = :alerta 
+                                            WHERE ruc = :ruc 
+                                              AND documento = :documento");
+  
+      $stmt->bindParam(":alerta", $datos["alerta"], PDO::PARAM_STR);  
+      $stmt->bindParam(":ruc", $datos["ruc"], PDO::PARAM_STR);
+      $stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
   
       if($stmt->execute()){
   
@@ -1543,5 +1574,256 @@ return $stmt -> fetchAll();
     $stmt = null;
 
   }   
+
+	/*
+	* Mostrar Centro de Costos
+	*/
+	static public function mdlMostrarDiario($valor){
+
+    if($valor != null){
+
+      $stmt = Conexion::conectar()->prepare("SELECT 
+                  d.id,
+                  d.tipo_gasto,
+                  d.origen,
+                  d.voucher,
+                  d.cuenta,
+                  d.descripcion,
+                  d.debito,
+                  d.credito,
+                  d.moneda,
+                  d.tipo_cambio,
+                  d.fecha,
+                  d.concepto,
+                  d.ruc,
+                  d.razon_social,
+                  d.tipo_documento,
+                  d.documento,
+                  d.serie_doc,
+                  d.num_doc,
+                  d.fecha_emision,
+                  d.fecha_vencimiento,
+                  d.sucursal,
+                  d.comprobante,
+                  d.contribuyente,
+                  d.condicion,
+                  d.alerta 
+                FROM
+                  diario d 
+                WHERE YEAR(d.fecha) = YEAR(NOW()) 
+                  AND MONTH(d.fecha) = :valor
+                  AND d.tipo_gasto IN ('60','92','94','95','97')
+                ORDER BY d.origen,
+                  d.voucher ");
+
+    $stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
+
+      $stmt -> execute();
+
+      return $stmt -> fetchAll();
+
+    }else{
+
+      $stmt = Conexion::conectar()->prepare("SELECT 
+                                              d.id,
+                                              d.tipo_gasto,
+                                              d.origen,
+                                              d.voucher,
+                                              d.cuenta,
+                                              d.descripcion,
+                                              d.debito,
+                                              d.credito,
+                                              d.moneda,
+                                              d.tipo_cambio,
+                                              d.fecha,
+                                              d.concepto,
+                                              d.ruc,
+                                              d.razon_social,
+                                              d.tipo_documento,
+                                              d.documento,
+                                              d.serie_doc,
+                                              d.num_doc,
+                                              d.fecha_emision,
+                                              d.fecha_vencimiento,
+                                              d.sucursal,
+                                              d.comprobante,
+                                              d.contribuyente,
+                                              d.condicion,
+                                              d.alerta 
+                                            FROM
+                                              diario d
+                                              where d.tipo_gasto IN ('60','92','94','95','97')
+                                            ORDER BY d.origen,
+                                              d.voucher");
+
+      $stmt -> execute();
+
+      return $stmt -> fetchAll();
+
+    }
+
+    $stmt -> close();
+
+    $stmt = null;
+
+  }  
+
+	/*
+	* Mostrar Centro de Costos
+	*/
+	static public function mdlMostrarDiarioAlerta(){
+
+
+      $stmt = Conexion::conectar()->prepare("SELECT 
+                                                  CASE
+                                                    WHEN MONTH(d.fecha) = '1' 
+                                                    THEN 'Ene' 
+                                                    WHEN MONTH(d.fecha) = '2' 
+                                                    THEN 'Feb' 
+                                                    WHEN MONTH(d.fecha) = '3' 
+                                                    THEN 'Mar' 
+                                                    WHEN MONTH(d.fecha) = '4' 
+                                                    THEN 'Abr' 
+                                                    WHEN MONTH(d.fecha) = '5' 
+                                                    THEN 'May' 
+                                                    WHEN MONTH(d.fecha) = '6' 
+                                                    THEN 'Jun' 
+                                                    WHEN MONTH(d.fecha) = '7' 
+                                                    THEN 'Jul' 
+                                                    WHEN MONTH(d.fecha) = '8' 
+                                                    THEN 'Ago' 
+                                                    WHEN MONTH(d.fecha) = '9' 
+                                                    THEN 'Sep' 
+                                                    WHEN MONTH(d.fecha) = '10' 
+                                                    THEN 'Oct' 
+                                                    WHEN MONTH(d.fecha) = '11' 
+                                                    THEN 'Nov' 
+                                                    ELSE 'Dic' 
+                                                  END AS mes,
+                                                  d.id,
+                                                  d.tipo_gasto,
+                                                  d.origen,
+                                                  d.voucher,
+                                                  d.cuenta,
+                                                  d.descripcion,
+                                                  d.debito,
+                                                  d.credito,
+                                                  (d.debito - d.credito) AS total,
+                                                  d.moneda,
+                                                  d.tipo_cambio,
+                                                  d.fecha,
+                                                  d.concepto,
+                                                  d.ruc,
+                                                  d.razon_social,
+                                                  d.tipo_documento,
+                                                  d.documento,
+                                                  d.serie_doc,
+                                                  d.num_doc,
+                                                  d.fecha_emision,
+                                                  d.fecha_vencimiento,
+                                                  d.sucursal,
+                                                  d.comprobante,
+                                                  d.contribuyente,
+                                                  d.condicion,
+                                                  d.alerta 
+                                                FROM
+                                                  diario d 
+                                                WHERE d.tipo_gasto IN ('60', '92', '94', '95', '97') 
+                                                  AND (
+                                                    d.alerta = '1' 
+                                                    OR d.comprobante = '1' 
+                                                    OR d.contribuyente = '1' 
+                                                    OR condicion = '1'
+                                                  ) 
+                                                ORDER BY d.origen,
+                                                  d.voucher");
+
+    $stmt -> execute();
+
+    return $stmt -> fetchAll();
+
+    $stmt -> close();
+
+    $stmt = null;
+
+  }  
+
+	/*
+	* Mostrar Centro de Costos
+	*/
+	static public function mdlMostrarRegCompras(){
+
+
+    $stmt = Conexion::conectar()->prepare("SELECT 
+                                                CASE
+                                                  WHEN MONTH(r.fecha_emision) = '1' 
+                                                  THEN 'Ene' 
+                                                  WHEN MONTH(r.fecha_emision) = '2' 
+                                                  THEN 'Feb' 
+                                                  WHEN MONTH(r.fecha_emision) = '3' 
+                                                  THEN 'Mar' 
+                                                  WHEN MONTH(r.fecha_emision) = '4' 
+                                                  THEN 'Abr' 
+                                                  WHEN MONTH(r.fecha_emision) = '5' 
+                                                  THEN 'May' 
+                                                  WHEN MONTH(r.fecha_emision) = '6' 
+                                                  THEN 'Jun' 
+                                                  WHEN MONTH(r.fecha_emision) = '7' 
+                                                  THEN 'Jul' 
+                                                  WHEN MONTH(r.fecha_emision) = '8' 
+                                                  THEN 'Ago' 
+                                                  WHEN MONTH(r.fecha_emision) = '9' 
+                                                  THEN 'Sep' 
+                                                  WHEN MONTH(r.fecha_emision) = '10' 
+                                                  THEN 'Oct' 
+                                                  WHEN MONTH(r.fecha_emision) = '11' 
+                                                  THEN 'Nov' 
+                                                  ELSE 'Dic' 
+                                                END AS mes,
+                                                r.origen,
+                                                r.voucher,
+                                                r.fecha_emision,
+                                                r.fecha_vencimiento,
+                                                r.tipo_documento,
+                                                r.serie_doc,
+                                                r.num_doc,
+                                                r.ruc,
+                                                r.razon_social,
+                                                CASE
+                                                  WHEN r.tipo_documento = '07' 
+                                                  THEN (
+                                                    CASE
+                                                      WHEN r.moneda = 'D' 
+                                                      THEN ROUND(r.total / r.tipo_cambio * - 1, 2) 
+                                                      ELSE ROUND(r.total * - 1, 2) 
+                                                    END
+                                                  ) 
+                                                  ELSE (
+                                                    CASE
+                                                      WHEN r.moneda = 'D' 
+                                                      THEN ROUND(r.total / r.tipo_cambio, 2) 
+                                                      ELSE ROUND(r.total, 2) 
+                                                    END
+                                                  ) 
+                                                END AS total,
+                                                r.moneda,
+                                                r.tipo_cambio,
+                                                r.comprobante,
+                                                r.contribuyente,
+                                                r.condicion,
+                                                r.alerta,
+                                                r.estado 
+                                              FROM
+                                                reg_compras r WHERE r.tipo_documento IN ('01', '03', '07', '08') ");
+
+  $stmt -> execute();
+
+  return $stmt -> fetchAll();
+
+  $stmt -> close();
+
+  $stmt = null;
+
+}  
 
 }

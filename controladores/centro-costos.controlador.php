@@ -1289,4 +1289,37 @@ class ControladorCentroCostos{
 
     }     
 
+    /* 
+    *Mostrar diarios
+    */
+	static public function ctrMostrarDiario($valor){
+
+		$respuesta = ModeloCentroCostos::mdlMostrarDiario($valor);
+
+		return $respuesta;
+
+    }    
+
+    /* 
+    *Mostrar diarios - Alerta
+    */
+	static public function ctrMostrarDiarioAlerta(){
+
+		$respuesta = ModeloCentroCostos::mdlMostrarDiarioAlerta();
+
+		return $respuesta;
+
+    }       
+
+    /* 
+    *Mostrar diarios - Alerta
+    */
+	static public function ctrMostrarRegCompras(){
+
+		$respuesta = ModeloCentroCostos::mdlMostrarRegCompras();
+
+		return $respuesta;
+
+    }     
+
 }

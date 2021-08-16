@@ -71,7 +71,7 @@
 
   <!-- jQuery 3 -->
   <script src="vistas/bower_components/jquery/dist/jquery.min.js"></script>
-
+  
   <!-- Bootstrap 3.3.7 -->
   <script src="vistas/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
@@ -392,7 +392,9 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "ingresos-caja" ||
                   $_GET["ruta"] == "centro-costos-rsm" ||
                   $_GET["ruta"] == "solicitud-caja" ||
-                  $_GET["ruta"] == "diario") {
+                  $_GET["ruta"] == "diario" ||
+                  $_GET["ruta"] == "diario-alerta" ||
+                  $_GET["ruta"] == "compras-reg") {
 
               include "modulos/costos/".$_GET["ruta"].".php";
 
@@ -491,6 +493,8 @@ CUERPO DOCUMENTO
   <script src="vistas/js/costos.js"></script>
   <script src="vistas/js/gastoscaja.js"></script>
   <script src="vistas/js/ingresoscaja.js"></script>
+  <script src="vistas/js/compras.js"></script>
+
 
 </body>
 </body>

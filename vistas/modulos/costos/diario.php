@@ -89,6 +89,30 @@
 
             <div class="box-body">
 
+                <div class="box-header with-border">
+                    Mostrar/Ocultar:  
+                    <!-- <a class="toggle-vis" data-column="0">Cta</a> - --> 
+                    <!-- <a class="toggle-vis" data-column="1">O.</a> - --> 
+                    <!-- <a class="toggle-vis" data-column="0">Cta</a> - --> 
+                    <!-- <a class="toggle-vis" data-column="2">Voucher</a> - --> 
+                    <!-- <a class="toggle-vis" data-column="3">Cuenta</a> - --> 
+                    <!-- <a class="toggle-vis" data-column="4">Descripción</a> - --> 
+                    <!-- <a class="toggle-vis" data-column="5">Débito</a> - -->
+                    <!-- <a class="toggle-vis" data-column="6">Crédito</a> - -->
+                    <a class="toggle-vis" data-column="8">M</a> -
+                    <a class="toggle-vis" data-column="9">T/C</a> -
+                    <!-- <a class="toggle-vis" data-column="9">Fecha</a> - -->
+                    <a class="toggle-vis" data-column="11">Concepto</a> -
+                    <!-- <a class="toggle-vis" data-column="11">Ruc</a> - -->
+                    <!-- <a class="toggle-vis" data-column="12">Razón Social</a> - -->
+                    <!-- <a class="toggle-vis" data-column="13">TD</a> - -->
+                    <!-- <a class="toggle-vis" data-column="14">Documento</a> - -->
+                    <!-- <a class="toggle-vis" data-column="15">F. Emi</a> - -->
+                    <!-- <a class="toggle-vis" data-column="16">F. Ven</a> - -->
+                    <!-- <a class="toggle-vis" data-column="17">Suc</a> - -->
+                    <!-- <a class="toggle-vis" data-column="18">CCC</a> -->
+                </div>
+
                 <table class="table table-bordered table-striped dt-responsive TablaDiario" width="100%">
 
                     <thead>
@@ -96,25 +120,25 @@
                         <tr>
 
                             <th>Cta</th>
+                            <th>Cód</th>
                             <th>O.</th>
-                            <th>Voucher</th>
+                            <th>V.</th>
                             <th>Cuenta</th>
                             <th>Descripción</th>
-                            <th>Débito</th>
-                            <th>Crédito</th>
+                            <th>Debito</th>
+                            <th>Credito</th>
                             <th>M</th>
                             <th>T/C</th>
-                            <th>Fecha</th>
-                            <th>Concepto</th>
+                            <th width="60px">Fecha</th>
+                            <th width="300px">Concepto</th>
                             <th>Ruc</th>
-                            <th>Razón Social</th>
+                            <th width="300px">Razón Social</th>
                             <th>TD</th>
                             <th>Documento</th>
-                            <th>F. Emi</th>
-                            <th>F. Ven</th>
+                            <th width="60px">F. Emi</th>
+                            <th width="60px">F. Ven</th>
                             <th>Suc.</th>
-                            <th>CCC</th>
-                            <th width="80px">Acciones</th>
+                            <th>#</th>
 
                         </tr>
 

@@ -45,6 +45,8 @@
                             <th>Área</th>
                             <th>Cod. Caja</th>
                             <th>Descripción</th>
+                            <th>CC1</th>
+                            <th>CC2</th>
 
                         </tr>
 

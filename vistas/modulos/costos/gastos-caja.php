@@ -1395,8 +1395,7 @@ $(".TablaGastosCaja").DataTable({
             })
         }
 
-
-      }
+    }
 
 });
 

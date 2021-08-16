@@ -103,7 +103,26 @@ class AjaxTablaCentroCostos{
 
 		//echo json_encode($respuesta);
 
-	}		
+	}
+	
+	/* 
+    * traer datos del gasto
+    */
+    public function ajaxActualizarAlertaD(){
+
+		$ruc = $this->ruc;
+		$documento = $this->documento;
+		$estadoAlerta = $this->estadoAlerta;
+
+		$datosE = array("ruc" 			=> $ruc,
+						"documento"	 	=> $documento,
+						"alerta"	=> $estadoAlerta);
+
+		$respuesta = ModeloCentroCostos::mdlActualizarAlertaD($datosE);
+
+		echo json_encode($respuesta);
+
+	}	
 	
 }
 
@@ -187,5 +206,18 @@ if(isset($_POST["fecha"])){
 	$traerCentroCostos -> fecha = $_POST["fecha"];
 	$traerCentroCostos -> total = $_POST["total"];
 	$traerCentroCostos -> ajaxActualizarEgresosA();
+
+}
+
+/* 
+* cambiar de estado alerta
+*/
+if(isset($_POST["ruc"])){
+
+	$traerCentroCostos = new AjaxTablaCentroCostos();
+	$traerCentroCostos -> ruc = $_POST["ruc"];
+	$traerCentroCostos -> documento = $_POST["documento"];
+	$traerCentroCostos -> estadoAlerta = $_POST["estadoAlerta"];
+	$traerCentroCostos -> ajaxActualizarAlertaD();
 
 }

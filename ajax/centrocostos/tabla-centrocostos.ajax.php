@@ -30,7 +30,9 @@ class TablaCentroCostos{
             "'.$centros[$i]["cod_area"].'",
             "<b>'.$centros[$i]["nombre_area"].'</b>",
             "'.$centros[$i]["cod_caja"].'",
-            "<b>'.$centros[$i]["descripcion"].'</b>"
+            "<b>'.$centros[$i]["descripcion"].'</b>",
+            "'.$centros[$i]["cc1"].'",
+            "'.$centros[$i]["cc2"].'"
             ],';        
             }
 

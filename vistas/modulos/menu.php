@@ -1532,8 +1532,7 @@
                                             $_GET["ruta"] == "gastos-caja" ||
                                             $_GET["ruta"] == "ingresos-caja" ||
                                             $_GET["ruta"] == "centro-costos-rsm" ||
-                                            $_GET["ruta"] == "solicitud-caja" ||
-                                            $_GET["ruta"] == "diario") echo 'active';?>">
+                                            $_GET["ruta"] == "solicitud-caja") echo 'active';?>">
 
                 <a href="#">
 
@@ -1561,18 +1560,6 @@
                         </a>
 
                     </li>
-
-                    <li class="<?php if($_GET["ruta"] == "diario") echo 'active';?>">
-
-                        <a href="diario">
-
-                            <i class="fa fa-book text-brown"></i>
-                            <span>Diario</span>
-
-                        </a>
-
-                    </li>
-
 
                     <li class="<?php if($_GET["ruta"] == "gastos-caja") echo 'active';?>">
 
@@ -1627,14 +1614,16 @@
             }
             if($_SESSION["caja"] == 1){
             ?>
-            <li class="treeview <?php if(   $_GET["ruta"] == "contactos" || 
-                                            $_GET["ruta"] == "mailbox") echo 'active';?>">
+            <li class="treeview <?php if(   $_GET["ruta"] == "centro-costos" || 
+                                            $_GET["ruta"] == "diario" ||
+                                            $_GET["ruta"] == "diario-alerta" ||
+                                            $_GET["ruta"] == "compras-reg") echo 'active';?>">
 
                 <a href="#">
 
-                    <i class="fa fa-inbox text-blue"></i>
+                    <i class="fa fa-cc text-red"></i>
 
-                    <span>Ticket</span>
+                    <span>Centro de Costos</span>
 
                     <span class="pull-right-container">
 
@@ -1646,23 +1635,45 @@
 
                 <ul class="treeview-menu">
 
-                    <li class="<?php if($_GET["ruta"] == "contactos") echo 'active';?>">
+                    <li class="<?php if($_GET["ruta"] == "centro-costos") echo 'active';?>">
 
-                        <a href="contactos">
+                        <a href="centro-costos">
 
-                            <i class="fa fa-users"></i>
-                            <span>Contactos</span>
+                            <i class="fa fa-cc text-yellow"></i>
+                            <span>Centro de Costos</span>
 
                         </a>
 
                     </li>
 
-                    <li class="<?php if($_GET["ruta"] == "mailbox") echo 'active';?>">
+                    <li class="<?php if($_GET["ruta"] == "diario") echo 'active';?>">
 
-                        <a href="mailbox">
+                        <a href="diario">
 
-                            <i class="fa fa-envelope-o"></i>
-                            <span>Mailbox</span>
+                            <i class="fa fa-book text-blue"></i>
+                            <span>Diario</span>
+
+                        </a>
+
+                    </li>
+
+                    <li class="<?php if($_GET["ruta"] == "diario-alerta") echo 'active';?>">
+
+                        <a href="diario-alerta">
+
+                            <i class="fa fa-book text-red"></i>
+                            <span>Diario-Alerta</span>
+
+                        </a>
+
+                    </li>
+
+                    <li class="<?php if($_GET["ruta"] == "compras-reg") echo 'active';?>">
+
+                        <a href="compras-reg">
+
+                            <i class="fa fa-cart-arrow-down text-red"></i>
+                            <span>Compras</span>
 
                         </a>
 
