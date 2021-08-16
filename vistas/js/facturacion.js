@@ -763,7 +763,7 @@ $(".btnGuardarNotaCredito").click(function(){
                         datos.push({
                             'id':respuesta["id"],
                             'tipo_doc':'08',
-                            'tipo_venta':'E23',
+                            'tipo_venta':'S99',
                             'num_cta' : documento,
                             'cliente':cliente,
                             'vendedor':vendedor,
@@ -854,7 +854,7 @@ $(".btnGuardarNotaCredito").click(function(){
                     }else{
                         datos.push({
                             'tipo_doc':'08',
-                            'tipo_venta':'E23',
+                            'tipo_venta':'S99',
                             'num_cta' : documento,
                             'cliente':cliente,
                             'vendedor':vendedor,
@@ -971,7 +971,7 @@ $(".btnGuardarNotaCredito").click(function(){
             var datos = new Array();
             datos.push({
                 'tipo_doc':'08',
-                'tipo_venta':'E23',
+                'tipo_venta':'S99',
                 'num_cta' : documento,
                 'cliente':cliente,
                 'vendedor':vendedor,
@@ -1937,11 +1937,11 @@ $("#daterange-btnProcesarCE").daterangepicker(
 
     }else if(tipo == 'E05'){
 
-
+        window.location = "index.php?ruta=procesar-ce&tipoNotaCred="+tipo+"&documentoNotaCred="+documento;
 
     }else{
 
-
+      window.location = "index.php?ruta=procesar-ce&tipoNotaDeb="+tipo+"&documentoNotaDeb="+documento;
 
     }
     
@@ -2000,6 +2000,24 @@ $("#daterange-btnProcesarCE").daterangepicker(
 
   })
 
+$("#formularioConsultaSunat").on("keyup","input#nuevaSerieConsulta",function(){
+  var serie = $(this).val();
+  // console.log(serie);
+  var primer = serie.substring(0,1);
+
+  // console.log(serie.length);
+  if(serie.length == 0){
+    $("#nuevoMontoConsulta").attr("readonly",false);
+  }else{
+    if(primer == 0 || primer == 1){
+      $("#nuevoMontoConsulta").attr("readonly",true);
+    }else {
+      $("#nuevoMontoConsulta").attr("readonly",false);
+    }
+  }
+  
+})
+
 $("#formularioConsultaSunat").on("click","button.btnConsultarSunat",function(){
   
   var tipo = $("#selectDocumentoConsulta").val();
@@ -2032,6 +2050,9 @@ $("#formularioConsultaSunat").on("click","button.btnConsultarSunat",function(){
       if(respuesta["success"] == true){
           
           if(respuesta["data"]["estadoCp"] == "1"){
+            $(".consultaActivo").removeClass("hidden");
+            $(".consultaError").addClass("hidden");
+          }else if(respuesta["data"]["estadoCp"] == "3"){
             $(".consultaActivo").removeClass("hidden");
             $(".consultaError").addClass("hidden");
           }else{
@@ -2146,12 +2167,19 @@ $(".tablaProcesarCE").on("click","button.btnConsultarEstado",function(){
             
             Command: toastr["success"]("Estado del comprobante : ACEPTADO");
             Command: toastr["success"]("Estado del contribuyente : ACTIVO");
-            Command: toastr["success"]("Condicion de domicilio : HABIDO")
+            Command: toastr["success"]("Condicion de domicilio : HABIDO");
+
+          }else if(respuesta["data"]["estadoCp"] == "3"){
+
+            Command: toastr["success"]("Estado del comprobante : ACEPTADO");
+            Command: toastr["success"]("Estado del contribuyente : ACTIVO");
+            Command: toastr["success"]("Condicion de domicilio : HABIDO");
+
           }else{
             
             Command: toastr["error"]("Estado del comprobante : NO EXISTE");
             Command: toastr["error"]("Estado del contribuyente : -");
-            Command: toastr["error"]("Condicion de domicilio : -")
+            Command: toastr["error"]("Condicion de domicilio : -");
           }
   
       }else if(respuesta["message"] == "Unauthorized"){

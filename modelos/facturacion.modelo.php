@@ -641,6 +641,83 @@ class ModeloFacturacion{
 	}
 
   /*
+    * MOSTRAR IMPRESION DE NOTA DE DEBITO
+    */
+    static public function mdlMostrarDebitoImpresion($valor, $tipoDoc){
+
+			$sql="SELECT 
+      v.tipo,
+      v.documento,
+      v.neto,
+      v.igv,
+      v.dscto,
+      v.total,
+      v.doc_origen as origen2,
+      n.observacion,
+      n.doc_origen,
+      n.motivo,
+      (SELECT 
+        descripcion 
+      FROM
+        maestrajf m 
+      WHERE m.tipo_dato = 'TMOTD' 
+        AND n.motivo = m.codigo) AS nom_motivo,
+      DATE_FORMAT(n.fecha_origen,'%Y-%m-%d') AS fecha_origen,
+      v.cliente,
+      c.nombre,
+      c.documento as dni,
+      c.direccion,
+      c.email,
+      CONCAT(u.distrito, ' / ', u.provincia) AS nom_ubigeo,
+      u.departamento,
+      c.ubigeo,
+      v.agencia,
+      DATE_FORMAT(v.fecha,'%d/%m/%Y') AS fecha,
+      v.fecha AS fecha_emision,
+      v.tipo_documento,
+      v.lista_precios,
+      v.condicion_venta,
+      cv.descripcion,
+      v.vendedor,
+      ven.descripcion AS nom_vendedor,
+      cv.dias,
+      v.doc_destino
+    FROM
+      ventajf v 
+      LEFT JOIN condiciones_ventajf cv 
+        ON v.condicion_venta = cv.id 
+      LEFT JOIN clientesjf c 
+        ON v.cliente = c.codigo 
+      LEFT JOIN ubigeo u 
+        ON c.ubigeo = u.codigo 
+        LEFT JOIN notascd_jf n
+        ON v.documento=n.documento AND v.tipo=n.tipo
+      LEFT JOIN 
+        (SELECT 
+          codigo,
+          descripcion 
+        FROM
+          maestrajf m 
+        WHERE m.tipo_dato = 'TVEND') ven 
+        ON v.vendedor = ven.codigo 
+    WHERE v.documento = :codigo
+    AND v.tipo = :tipo_doc";
+
+        $stmt=Conexion::conectar()->prepare($sql);
+
+        $stmt -> bindParam(":codigo", $valor, PDO::PARAM_INT);
+        $stmt -> bindParam(":tipo_doc", $tipoDoc, PDO::PARAM_INT);
+
+		$stmt->execute();
+
+		return $stmt->fetch();
+
+
+		$stmt=null;
+
+	}
+
+  /*
     * MOSTRAR IMPRESION DE FACTURA
     */
 	static public function mdlMostrarVentaImpresion($valor, $tipoDoc){
@@ -655,11 +732,19 @@ class ModeloFacturacion{
       v.doc_origen as origen2,
       n.observacion,
       n.doc_origen,
-      DATE_FORMAT(n.fecha_origen,'%d/%m/%Y') AS fecha_origen,
+      n.motivo,
+      (SELECT 
+        descripcion 
+      FROM
+        maestrajf m 
+      WHERE m.tipo_dato = 'TMOT' 
+        AND n.motivo = m.codigo) AS nom_motivo,
+      DATE_FORMAT(n.fecha_origen,'%Y-%m-%d') AS fecha_origen,
       v.cliente,
       c.nombre,
       c.documento as dni,
       c.direccion,
+      c.email,
       CONCAT(u.distrito, ' / ', u.provincia) AS nom_ubigeo,
       u.departamento,
       c.ubigeo,
@@ -673,8 +758,7 @@ class ModeloFacturacion{
       v.vendedor,
       ven.descripcion AS nom_vendedor,
       cv.dias,
-      v.doc_destino,
-      v.doc_origen 
+      v.doc_destino
     FROM
       ventajf v 
       LEFT JOIN condiciones_ventajf cv 

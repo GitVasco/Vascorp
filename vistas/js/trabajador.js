@@ -350,7 +350,7 @@ $(".marcarTaller").on("click", ".btnActTra", function () {
 		processData:false,
 		success:function(respuesta){
 			// console.log(respuesta);
-			
+			$("#codigoBarra").focus();
 		}
 	});
 

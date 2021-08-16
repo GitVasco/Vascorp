@@ -54,7 +54,7 @@ class AjaxFacturacion{
                                 "vendedor"=>$vend,
                                 "fecha"=>$fecha,
                                 "tipo_documento"=>$tipo_doc,
-                                "doc_origen"=>$origen_venta,
+                                "doc_origen"=>'',
                                 "usuario"=>$user);
           
           $respuesta = ModeloFacturacion::mdlRegistrarVentaNota($arregloVenta);
@@ -79,7 +79,7 @@ class AjaxFacturacion{
           
         }
     
-        echo $respuesta;
+        echo $respuesta2;
     
       }
 
