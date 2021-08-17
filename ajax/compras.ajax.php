@@ -12,14 +12,16 @@ class AjaxCompras{
     $ruc = $this->ruc;
     $serie = $this->serie;
     $correlativo = $this->correlativo;
-    $estado = $this->estado;
+    $comprobante = $this->comprobante;
+    $contribuyente = $this->contribuyente;
+    $domicilio = $this->domicilio;
 
     $datos = array( "ruc"           =>  $ruc,
                     "serie_doc"     =>  $serie,
                     "num_doc"       =>  $correlativo,
-                    "comprobante"   =>  $estado,
-                    "contribuyente" =>  $estado,
-                    "condicion"     =>  $estado,
+                    "comprobante"   =>  $comprobante,
+                    "contribuyente" =>  $contribuyente,
+                    "condicion"     =>  $domicilio,
                     "estado"        =>  '1');
     #var_dump($datos);
 
@@ -48,13 +50,15 @@ class AjaxCompras{
 /*=============================================
     VALIDAR ESTADO DE COMPRA
 =============================================*/	
-if(isset($_POST["estado"])){
+if(isset($_POST["comprobante"])){
 
 	$aprobarCompra = new AjaxCompras();
 	$aprobarCompra -> ruc = $_POST["ruc"];
-    $aprobarCompra -> serie = $_POST["serie"];
-    $aprobarCompra -> correlativo = $_POST["correlativo"];
-    $aprobarCompra -> estado = $_POST["estado"];
+  $aprobarCompra -> serie = $_POST["serie"];
+  $aprobarCompra -> correlativo = $_POST["correlativo"];
+  $aprobarCompra -> comprobante = $_POST["comprobante"];
+  $aprobarCompra -> contribuyente = $_POST["contribuyente"];
+  $aprobarCompra -> domicilio = $_POST["domicilio"];
 	$aprobarCompra -> ajaxValidarCompra();
 }
 

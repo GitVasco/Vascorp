@@ -93,118 +93,62 @@ $(".TablaRegCompras").on("click","button.btnConsultarEstadoCompra",function(){
 	  processData: false,
 	  dataType:"json",
 	  success:function(respuesta){
-		console.log(respuesta);
+		// console.log(respuesta);
 		if(respuesta["success"] == true){
 			
-			if(respuesta["data"]["estadoCp"] == "1"){
-
 				var datos2=new FormData();
 				datos2.append("ruc",ruc);
 				datos2.append("serie",serie);
 				datos2.append("correlativo",correlativo);
-				datos2.append("comprobante","2");
+				
+				if(respuesta["data"]["estadoCp"] == "1"){
+				
+					var msjComp = "ACEPTADO";
+					var tipoMsjComp = "success";
 
-				if(respuesta["data"]["estadoRuc"] == "00"){
-					var contribuyente = "2";
-					var msjcontri = "ACTIVO";
+				}else if(respuesta["data"]["estadoCp"] == "3"){
+
+					var msjComp = "AUTORIZADO";
+					var tipoMsjComp = "success";
+				
+				}else if(respuesta["data"]["estadoCp"] == "2"){
+			
+					var msjComp = "ANULADO";
+					var tipoMsjComp = "error";
+
 				}else{
-					var contribuyente = "1";
-					var msjcontri = "-"
+					
+					var msjComp = "NO EXISTE";
+					var tipoMsjComp = "error";
 				}
 
-				if(respuesta["data"]["condDomiRuc"] == "00"){
-					var domicilio = "2";
-					var msjdomi = "HABIDO";
-				}else{
-					var domicilio = "1";
-					var msjdomi = "-";
-				}
-				datos2.append("contribuyente",contribuyente);
-				datos2.append("domicilio",domicilio);
-				$.ajax({
-					url:"ajax/compras.ajax.php",
-					type:"POST",
-					data:datos2,
-					cache:false,
-					contentType:false,
-					processData:false,
-					success:function(respuesta2){
-						$(".TablaRegCompras").DataTable().ajax.reload(null,false);
-					}
-
-				})
-			  
-			  Command: toastr["success"]("Estado del comprobante : ACEPTADO");
-			  Command: toastr["success"]("Estado del contribuyente : "+msjcontri);
-			  Command: toastr["success"]("Condicion de domicilio : "+msjdomi);
-  
-			}else if(respuesta["data"]["estadoCp"] == "3"){
-				var datos2=new FormData();
-				datos2.append("ruc",ruc);
-				datos2.append("serie",serie);
-				datos2.append("correlativo",correlativo);
-				datos2.append("comprobante","2");
-
 				if(respuesta["data"]["estadoRuc"] == "00"){
-					var contribuyente = "2";
+				
 					var msjcontri = "ACTIVO";
+					var tipoMsjCont = "success";
+
 				}else{
-					var contribuyente = "1";
+				
 					var msjcontri = "-";
+					var tipoMsjCont = "error";
+
 				}
 
 				if(respuesta["data"]["condDomiRuc"] == "00"){
-					var domicilio = "2";
+					
 					var msjdomi = "HABIDO";
+					var tipoMsjDomi = "success";
+				
 				}else{
-					var domicilio = "1";
+					
 					var msjdomi = "-";
-				}
-				datos2.append("contribuyente",contribuyente);
-				datos2.append("domicilio",domicilio);
-				$.ajax({
-					url:"ajax/compras.ajax.php",
-					type:"POST",
-					data:datos2,
-					cache:false,
-					contentType:false,
-					processData:false,
-					success:function(respuesta2){
-						$(".TablaRegCompras").DataTable().ajax.reload(null,false);
-					}
+					var tipoMsjDomi = "error";
 
-				})
-  
-			  Command: toastr["success"]("Estado del comprobante : ACEPTADO");
-			  Command: toastr["success"]("Estado del contribuyente : "+msjcontri);
-			  Command: toastr["success"]("Condicion de domicilio : "+msjdomi);
-  
-			}else{
-
-				var datos2=new FormData();
-				datos2.append("ruc",ruc);
-				datos2.append("serie",serie);
-				datos2.append("correlativo",correlativo);
-				datos2.append("comprobante","1");
-
-				if(respuesta["data"]["estadoRuc"] == "00"){
-					var contribuyente = "2";
-					var msjcontri = "ACTIVO";
-				}else{
-					var contribuyente = "1";
-					var  msjcontri = "-";
 				}
 
-				if(respuesta["data"]["condDomiRuc"] == "00"){
-					var domicilio = "2";
-					var msjdomi = "HABIDO";
-				}else{
-					var domicilio = "1";
-					var msjdomi = "-";
-				}
-
-				datos2.append("contribuyente",contribuyente);
-				datos2.append("domicilio",domicilio);
+				datos2.append("comprobante",msjComp);
+				datos2.append("contribuyente",msjcontri);
+				datos2.append("domicilio",msjdomi);
 				$.ajax({
 					url:"ajax/compras.ajax.php",
 					type:"POST",
@@ -218,10 +162,11 @@ $(".TablaRegCompras").on("click","button.btnConsultarEstadoCompra",function(){
 
 				})
 			  
-			  Command: toastr["error"]("Estado del comprobante : NO EXISTE");
-			  Command: toastr["error"]("Estado del contribuyente : "+msjcontri);
-			  Command: toastr["error"]("Condicion de domicilio : "+msjdomi);
-			}
+			  Command: toastr[tipoMsjComp]("Estado del comprobante : "+msjComp);
+			  Command: toastr[tipoMsjCont]("Estado del contribuyente : "+msjcontri);
+			  Command: toastr[tipoMsjDomi]("Condicion de domicilio : "+msjdomi);
+  
+			
 	
 		}else if(respuesta["message"] == "Unauthorized"){
 		  Command: toastr["error"]("Por favor, generar token!");
