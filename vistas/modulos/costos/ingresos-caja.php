@@ -971,54 +971,393 @@ if(localStorage.getItem("mesI") != null) {
     const fecha = new Date();
 	const mesI = fecha.getMonth() + 1; 
 
+    console.log(mesI);
+
 	if(mesI == "1"){
 
 		$(".btnEneI").removeClass("btn-default");
 		$(".btnEneI").addClass("btn-info");
+
+        cargarTablaIngresosCaja(mesI);
+        cargarTablaIngresosVendedor(mesI);
+
+        var datos = new FormData();
+		datos.append("mesG", mesI);
+  
+            $.ajax({
+        
+                url:"ajax/tablamaestra.ajax.php",
+                method: "POST",
+                data: datos,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType:"json",
+                success:function(respuesta){
+                
+                    //console.log(respuesta);
+                    document.getElementById("saldoInicial").innerHTML=respuesta["saldo_inicial"];
+                    document.getElementById("saldoIngreso").innerHTML=respuesta["ingresos"];
+                    document.getElementById("saldoEgreso").innerHTML=respuesta["egresos"];
+                    document.getElementById("saldoActual").innerHTML=respuesta["saldo_actual"];
+
+                }
+        
+            })
+
 	}else if(mesI == "2"){
 
 		$(".btnFebI").removeClass("btn-default");
 		$(".btnFebI").addClass("btn-info");
+
+        cargarTablaIngresosCaja(mesI);
+        cargarTablaIngresosVendedor(mesI);
+
+        var datos = new FormData();
+		datos.append("mesG", mesI);
+  
+            $.ajax({
+        
+                url:"ajax/tablamaestra.ajax.php",
+                method: "POST",
+                data: datos,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType:"json",
+                success:function(respuesta){
+                
+                    //console.log(respuesta);
+                    document.getElementById("saldoInicial").innerHTML=respuesta["saldo_inicial"];
+                    document.getElementById("saldoIngreso").innerHTML=respuesta["ingresos"];
+                    document.getElementById("saldoEgreso").innerHTML=respuesta["egresos"];
+                    document.getElementById("saldoActual").innerHTML=respuesta["saldo_actual"];
+
+                }
+        
+            })
+
 	}else if(mesI == "3"){
 
 		$(".btnMarI").removeClass("btn-default");
 		$(".btnMarI").addClass("btn-info");
+
+        cargarTablaIngresosCaja(mesI);
+        cargarTablaIngresosVendedor(mesI);
+
+        var datos = new FormData();
+		datos.append("mesG", mesI);
+  
+            $.ajax({
+        
+                url:"ajax/tablamaestra.ajax.php",
+                method: "POST",
+                data: datos,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType:"json",
+                success:function(respuesta){
+                
+                    //console.log(respuesta);
+                    document.getElementById("saldoInicial").innerHTML=respuesta["saldo_inicial"];
+                    document.getElementById("saldoIngreso").innerHTML=respuesta["ingresos"];
+                    document.getElementById("saldoEgreso").innerHTML=respuesta["egresos"];
+                    document.getElementById("saldoActual").innerHTML=respuesta["saldo_actual"];
+
+                }
+        
+            })
+
 	}else if(mesI == "4"){
 
 		$(".btnAbrI").removeClass("btn-default");
 		$(".btnAbrI").addClass("btn-info");
+
+        cargarTablaIngresosCaja(mesI);
+        cargarTablaIngresosVendedor(mesI);
+
+        var datos = new FormData();
+		datos.append("mesG", mesI);
+  
+            $.ajax({
+        
+                url:"ajax/tablamaestra.ajax.php",
+                method: "POST",
+                data: datos,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType:"json",
+                success:function(respuesta){
+                
+                    //console.log(respuesta);
+                    document.getElementById("saldoInicial").innerHTML=respuesta["saldo_inicial"];
+                    document.getElementById("saldoIngreso").innerHTML=respuesta["ingresos"];
+                    document.getElementById("saldoEgreso").innerHTML=respuesta["egresos"];
+                    document.getElementById("saldoActual").innerHTML=respuesta["saldo_actual"];
+
+                }
+        
+            })
+
 	}else if(mesI == "5"){
 
 		$(".btnMayI").removeClass("btn-default");
 		$(".btnMayI").addClass("btn-info");
+
+        cargarTablaIngresosCaja(mesI);
+        cargarTablaIngresosVendedor(mesI);
+
+        var datos = new FormData();
+		datos.append("mesG", mesI);
+  
+            $.ajax({
+        
+                url:"ajax/tablamaestra.ajax.php",
+                method: "POST",
+                data: datos,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType:"json",
+                success:function(respuesta){
+                
+                    //console.log(respuesta);
+                    document.getElementById("saldoInicial").innerHTML=respuesta["saldo_inicial"];
+                    document.getElementById("saldoIngreso").innerHTML=respuesta["ingresos"];
+                    document.getElementById("saldoEgreso").innerHTML=respuesta["egresos"];
+                    document.getElementById("saldoActual").innerHTML=respuesta["saldo_actual"];
+
+                }
+        
+            })
+
 	}else if(mesI == "6"){
 
 		$(".btnJunI").removeClass("btn-default");
 		$(".btnJunI").addClass("btn-info");
+
+        cargarTablaIngresosCaja(mesI);
+        cargarTablaIngresosVendedor(mesI);
+
+        var datos = new FormData();
+		datos.append("mesG", mesI);
+  
+            $.ajax({
+        
+                url:"ajax/tablamaestra.ajax.php",
+                method: "POST",
+                data: datos,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType:"json",
+                success:function(respuesta){
+                
+                    //console.log(respuesta);
+                    document.getElementById("saldoInicial").innerHTML=respuesta["saldo_inicial"];
+                    document.getElementById("saldoIngreso").innerHTML=respuesta["ingresos"];
+                    document.getElementById("saldoEgreso").innerHTML=respuesta["egresos"];
+                    document.getElementById("saldoActual").innerHTML=respuesta["saldo_actual"];
+
+                }
+        
+            })
+
 	}else if(mesI == "7"){
 
 		$(".btnJulI").removeClass("btn-default");
 		$(".btnJulI").addClass("btn-info");
+
+        cargarTablaIngresosCaja(mesI);
+        cargarTablaIngresosVendedor(mesI);
+
+        var datos = new FormData();
+		datos.append("mesG", mesI);
+  
+            $.ajax({
+        
+                url:"ajax/tablamaestra.ajax.php",
+                method: "POST",
+                data: datos,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType:"json",
+                success:function(respuesta){
+                
+                    //console.log(respuesta);
+                    document.getElementById("saldoInicial").innerHTML=respuesta["saldo_inicial"];
+                    document.getElementById("saldoIngreso").innerHTML=respuesta["ingresos"];
+                    document.getElementById("saldoEgreso").innerHTML=respuesta["egresos"];
+                    document.getElementById("saldoActual").innerHTML=respuesta["saldo_actual"];
+
+                }
+        
+            })
+            
+            
 	}else if(mesI == "8"){
 
 		$(".btnAgoI").removeClass("btn-default");
 		$(".btnAgoI").addClass("btn-info");
+
+        cargarTablaIngresosCaja(mesI);
+        cargarTablaIngresosVendedor(mesI);
+
+        var datos = new FormData();
+		datos.append("mesG", mesI);
+  
+            $.ajax({
+        
+                url:"ajax/tablamaestra.ajax.php",
+                method: "POST",
+                data: datos,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType:"json",
+                success:function(respuesta){
+                
+                    //console.log(respuesta);
+                    document.getElementById("saldoInicial").innerHTML=respuesta["saldo_inicial"];
+                    document.getElementById("saldoIngreso").innerHTML=respuesta["ingresos"];
+                    document.getElementById("saldoEgreso").innerHTML=respuesta["egresos"];
+                    document.getElementById("saldoActual").innerHTML=respuesta["saldo_actual"];
+
+                }
+        
+            })
+
 	}else if(mesI == "9"){
 
 		$(".btnSepI").removeClass("btn-default");
 		$(".btnSepI").addClass("btn-info");
+
+        cargarTablaIngresosCaja(mesI);
+        cargarTablaIngresosVendedor(mesI);
+
+        var datos = new FormData();
+		datos.append("mesG", mesI);
+  
+            $.ajax({
+        
+                url:"ajax/tablamaestra.ajax.php",
+                method: "POST",
+                data: datos,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType:"json",
+                success:function(respuesta){
+                
+                    //console.log(respuesta);
+                    document.getElementById("saldoInicial").innerHTML=respuesta["saldo_inicial"];
+                    document.getElementById("saldoIngreso").innerHTML=respuesta["ingresos"];
+                    document.getElementById("saldoEgreso").innerHTML=respuesta["egresos"];
+                    document.getElementById("saldoActual").innerHTML=respuesta["saldo_actual"];
+
+                }
+        
+            })
+            
 	}else if(mesI == "10"){
 
 		$(".btnOctI").removeClass("btn-default");
 		$(".btnOctI").addClass("btn-info");
+
+        cargarTablaIngresosCaja(mesI);
+        cargarTablaIngresosVendedor(mesI);
+
+        var datos = new FormData();
+		datos.append("mesG", mesI);
+  
+            $.ajax({
+        
+                url:"ajax/tablamaestra.ajax.php",
+                method: "POST",
+                data: datos,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType:"json",
+                success:function(respuesta){
+                
+                    //console.log(respuesta);
+                    document.getElementById("saldoInicial").innerHTML=respuesta["saldo_inicial"];
+                    document.getElementById("saldoIngreso").innerHTML=respuesta["ingresos"];
+                    document.getElementById("saldoEgreso").innerHTML=respuesta["egresos"];
+                    document.getElementById("saldoActual").innerHTML=respuesta["saldo_actual"];
+
+                }
+        
+            })
+
 	}else if(mesI == "11"){
 
 		$(".btnNovI").removeClass("btn-default");
 		$(".btnNovI").addClass("btn-info");
+
+        cargarTablaIngresosCaja(mesI);
+        cargarTablaIngresosVendedor(mesI);
+
+        var datos = new FormData();
+		datos.append("mesG", mesI);
+  
+            $.ajax({
+        
+                url:"ajax/tablamaestra.ajax.php",
+                method: "POST",
+                data: datos,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType:"json",
+                success:function(respuesta){
+                
+                    //console.log(respuesta);
+                    document.getElementById("saldoInicial").innerHTML=respuesta["saldo_inicial"];
+                    document.getElementById("saldoIngreso").innerHTML=respuesta["ingresos"];
+                    document.getElementById("saldoEgreso").innerHTML=respuesta["egresos"];
+                    document.getElementById("saldoActual").innerHTML=respuesta["saldo_actual"];
+
+                }
+        
+            })
+
 	}else if(mesI == "12"){
 
 		$(".btnDicI").removeClass("btn-default");
 		$(".btnDicI").addClass("btn-info");
+
+        cargarTablaIngresosCaja(mesI);
+        cargarTablaIngresosVendedor(mesI);
+
+        var datos = new FormData();
+		datos.append("mesG", mesI);
+  
+            $.ajax({
+        
+                url:"ajax/tablamaestra.ajax.php",
+                method: "POST",
+                data: datos,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType:"json",
+                success:function(respuesta){
+                
+                    //console.log(respuesta);
+                    document.getElementById("saldoInicial").innerHTML=respuesta["saldo_inicial"];
+                    document.getElementById("saldoIngreso").innerHTML=respuesta["ingresos"];
+                    document.getElementById("saldoEgreso").innerHTML=respuesta["egresos"];
+                    document.getElementById("saldoActual").innerHTML=respuesta["saldo_actual"];
+
+                }
+        
+            })
+                    
 	}
 
 }

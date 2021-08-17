@@ -1526,7 +1526,7 @@
             <!--  Costos-->
             <?php
             }
-            if($_SESSION["costos"] == 1){
+            if($_SESSION["caja"] == 1){
             ?>
             <li class="treeview <?php if(   $_GET["ruta"] == "centro-costos" ||
                                             $_GET["ruta"] == "gastos-caja" ||
@@ -1612,7 +1612,7 @@
             <!--  Ticket-->
             <?php
             }
-            if($_SESSION["caja"] == 1){
+            if($_SESSION["costos"] == 1){
             ?>
             <li class="treeview <?php if(   $_GET["ruta"] == "centro-costos" || 
                                             $_GET["ruta"] == "diario" ||
@@ -1678,6 +1678,17 @@
                         </a>
 
                     </li>
+
+                    <li class="<?php if($_GET["ruta"] == "validar-documento") echo 'active';?>">
+
+                        <a href="validar-documento">
+
+                            <i class="fa fa-search text-white"></i>
+                            <span>Validar</span>
+
+                        </a>
+
+                    </li>                    
 
                 </ul>
 
