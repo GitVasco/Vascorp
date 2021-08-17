@@ -280,6 +280,108 @@ class ModeloCompras{
 
             return $stmt -> fetchAll();             
 
+        }else if($i == "6"){
+
+            $stmt = Conexion::conectar()->prepare("SELECT 
+                    CONCAT(
+                    r.ruc,
+                    '|',
+                    r.tipo_documento,
+                    '|',
+                    r.serie_doc,
+                    '|',
+                    r.num_doc,
+                    '|',
+                    DATE_FORMAT(r.fecha_emision, '%d/%m/%Y'),
+                    '|',
+                    CASE
+                        WHEN LEFT(r.serie_doc, 1) = '0' 
+                        THEN '' 
+                        ELSE (
+                        CASE
+                            WHEN r.tipo_documento = '07' 
+                            THEN (
+                            CASE
+                                WHEN r.moneda = 'D' 
+                                THEN ROUND(r.total / r.tipo_cambio * - 1, 2) 
+                                ELSE ROUND(r.total * - 1, 2) 
+                            END
+                            ) 
+                            ELSE (
+                            CASE
+                                WHEN r.moneda = 'D' 
+                                THEN ROUND(r.total / r.tipo_cambio, 2) 
+                                ELSE ROUND(r.total, 2) 
+                            END
+                            ) 
+                        END
+                        ) 
+                    END
+                    ) AS sunat 
+                FROM
+                    reg_compras r 
+                WHERE r.tipo_documento IN ('01', '03', '07', '08') 
+                    AND r.estado = '0' 
+                ORDER BY MONTH(r.fecha_emision),
+                    r.origen,
+                    r.voucher
+                LIMIT 100 OFFSET 500");
+
+            $stmt -> execute();
+
+            return $stmt -> fetchAll();             
+
+        }else if($i == "7"){
+
+            $stmt = Conexion::conectar()->prepare("SELECT 
+                    CONCAT(
+                    r.ruc,
+                    '|',
+                    r.tipo_documento,
+                    '|',
+                    r.serie_doc,
+                    '|',
+                    r.num_doc,
+                    '|',
+                    DATE_FORMAT(r.fecha_emision, '%d/%m/%Y'),
+                    '|',
+                    CASE
+                        WHEN LEFT(r.serie_doc, 1) = '0' 
+                        THEN '' 
+                        ELSE (
+                        CASE
+                            WHEN r.tipo_documento = '07' 
+                            THEN (
+                            CASE
+                                WHEN r.moneda = 'D' 
+                                THEN ROUND(r.total / r.tipo_cambio * - 1, 2) 
+                                ELSE ROUND(r.total * - 1, 2) 
+                            END
+                            ) 
+                            ELSE (
+                            CASE
+                                WHEN r.moneda = 'D' 
+                                THEN ROUND(r.total / r.tipo_cambio, 2) 
+                                ELSE ROUND(r.total, 2) 
+                            END
+                            ) 
+                        END
+                        ) 
+                    END
+                    ) AS sunat 
+                FROM
+                    reg_compras r 
+                WHERE r.tipo_documento IN ('01', '03', '07', '08') 
+                    AND r.estado = '0' 
+                ORDER BY MONTH(r.fecha_emision),
+                    r.origen,
+                    r.voucher
+                LIMIT 100 OFFSET 600");
+
+            $stmt -> execute();
+
+            return $stmt -> fetchAll();             
+
         }
 
 		$stmt -> close();
