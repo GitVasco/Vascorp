@@ -28,32 +28,32 @@ class TablaRegCompras{
             /* 
             *comprobante
             */
-            if($compras[$i]["comprobante"] == "0"){
+            if($compras[$i]["comprobante"] == ""){
 
                 $comprobante = "<button class='btn btn-warning btn-xs fa fa-exclamation-triangle' title='Comprobante'></button>";
 
-            }else if($compras[$i]["comprobante"] == "1"){
-
-                $comprobante = "<button class='btn btn-danger btn-xs fa fa-window-close' title='Comprobante'></button>";
-
-            }else if($compras[$i]["comprobante"] == "2"){
+            }else if($compras[$i]["comprobante"] == "AUTORIZADO" || $compras[$i]["comprobante"] == "ACEPTADO"){
 
                 $comprobante = "<button class='btn btn-success btn-xs fa fa-check-square' title='Comprobante'></button>";
+
+            }else{
+
+                $comprobante = "<button class='btn btn-danger btn-xs fa fa-window-close' title='Comprobante'></button>";
 
             }
 
             /* 
             *contribuyente
             */
-            if($compras[$i]["contribuyente"] == "0"){
+            if($compras[$i]["contribuyente"] == ""){
 
                 $contribuyente = "<button class='btn btn-warning btn-xs fa fa-exclamation-triangle' title='Contribuyente'></button>";
 
-            }else if($compras[$i]["contribuyente"] == "1"){
+            }else if($compras[$i]["contribuyente"] == "-"){
 
                 $contribuyente = "<button class='btn btn-danger btn-xs fa fa-window-close' title='Contribuyente'></button>";
 
-            }else if($compras[$i]["contribuyente"] == "2"){
+            }else if($compras[$i]["contribuyente"] == "ACTIVO"){
 
                 $contribuyente = "<button class='btn btn-success btn-xs fa fa-check-square' title='Contribuyente'></button>";
 
@@ -62,15 +62,15 @@ class TablaRegCompras{
             /* 
             *condicion
             */
-            if($compras[$i]["condicion"] == "0"){
+            if($compras[$i]["condicion"] == ""){
 
                 $condicion = "<button class='btn btn-warning btn-xs fa fa-exclamation-triangle' title='Condición'></button>";
 
-            }else if($compras[$i]["condicion"] == "1"){
+            }else if($compras[$i]["condicion"] == "-"){
 
                 $condicion = "<button class='btn btn-danger btn-xs fa fa-window-close' title='Condición'></button>";
 
-            }else if($compras[$i]["condicion"] == "2"){
+            }else if($compras[$i]["condicion"] == "HABIDO"){
 
                 $condicion = "<button class='btn btn-success btn-xs fa fa-check-square' title='Condición'></button>";
 

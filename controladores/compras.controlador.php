@@ -84,7 +84,7 @@ class ControladorCompras{
         if(isset($_POST["imporTxt"])){
 
             #var_dump($_POST["imporTxt"]);
-        if(empty($_FILES['archivotxt'])){
+        if($_FILES['archivotxt']['name'] != null){
 
             $ruta = "vistas/sunat/leer/";
             $subir_archivo = $ruta.basename($_FILES['archivotxt']['name']);
@@ -99,42 +99,12 @@ class ControladorCompras{
                 $linea = fgets($archivo);
                 $partes = explode("|",$linea);
 
-                if($partes[6] == "ACEPTADO" || $partes[6] == "AUTORIZADO"){
-
-                    $comprobante = "2";
-
-                }else{
-
-                    $comprobante = "1";
-
-                }
-
-                if($partes[7] == "ACTIVO"){
-
-                    $contribuyente = "2";
-
-                }else{
-
-                    $contribuyente = "1";
-
-                }      
-                
-                if($partes[8] == "HABIDO"){
-
-                    $condicion = "2";
-
-                }else{
-
-                    $condicion = "1";
-
-                }   
-
                 $datos = array( "ruc"           =>  $partes[0],
                                 "serie_doc"     =>  $partes[2],
                                 "num_doc"       =>  $partes[3],
-                                "comprobante"   =>  $comprobante,
-                                "contribuyente" =>  $contribuyente,
-                                "condicion"     =>  $condicion,
+                                "comprobante"   =>  $partes[6],
+                                "contribuyente" =>  $partes[7],
+                                "condicion"     =>  $partes[8],
                                 "estado"        =>  '1');
                 #var_dump($datos);
 

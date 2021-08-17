@@ -211,10 +211,10 @@
 
         }
 
-        var emision = ano+'/'+mes+'/'+dia;
-        //console.log(emision);
+        var emision = ano+'-'+mes+'-'+dia;
+        console.log(emision);
 
-        console.log(rucS,'|',tipo,'|',serie,'|',numero,'|',igv,'|',total,'|',emision);
+        //console.log(rucS,'|',tipo,'|',serie,'|',numero,'|',igv,'|',total,'|',emision);
 
         var datos = new FormData();
 
@@ -239,7 +239,7 @@
 
                 }else{
 
-                    console.log(respuesta);
+                    //console.log(respuesta);
                     $("#tipo").val(respuesta["tipo"]);
                     $("#serie").val(respuesta["serie_doc"]);
                     $("#numero").val(respuesta["num_doc"]);
@@ -251,6 +251,9 @@
                     $("#emision").val(respuesta["fecha_emision"]);
                     $("#vencimiento").val(respuesta["fecha_vencimiento"]);
                     $("#total").val(respuesta["total"]);
+                    $("#comprobante").val(respuesta["comprobante"]);
+                    $("#contribuyente").val(respuesta["contribuyente"]);
+                    $("#condicion").val(respuesta["condicion"]);
 
                 }
 
