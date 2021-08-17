@@ -356,6 +356,66 @@ class ModeloCompras{
 		$stmt->close();
 		$stmt = null;
 
-	}     
+	}  
+    
+	static public function mdlTraerCompra($ruc, $serie, $numero){
+
+        $stmt = Conexion::conectar()->prepare("SELECT 
+                                                    r.id,
+                                                    r.origen,
+                                                    r.voucher,
+                                                    r.fecha_emision,
+                                                    r.fecha_vencimiento,
+                                                    r.tipo_documento,
+                                                    CASE
+                                                    WHEN r.tipo_documento = '01' 
+                                                    THEN CONCAT(r.tipo_documento, ' - FACTURA') 
+                                                    WHEN r.tipo_documento = '03' 
+                                                    THEN CONCAT(r.tipo_documento, ' - BOLETA') 
+                                                    WHEN r.tipo_documento = '07' 
+                                                    THEN CONCAT(
+                                                        r.tipo_documento,
+                                                        ' - NOTA CREDITO'
+                                                    ) 
+                                                    WHEN r.tipo_documento = '08' 
+                                                    THEN CONCAT(
+                                                        r.tipo_documento,
+                                                        ' - NOTA DEBITO'
+                                                    ) 
+                                                    ELSE 'REVISAR' 
+                                                    END AS tipo,
+                                                    r.serie_doc,
+                                                    r.num_doc,
+                                                    r.ruc,
+                                                    r.razon_social,
+                                                    r.base,
+                                                    r.igv,
+                                                    r.total,
+                                                    r.moneda,
+                                                    r.concepto,
+                                                    r.comprobante,
+                                                    r.contribuyente,
+                                                    r.condicion,
+                                                    r.alerta,
+                                                    r.estado 
+                                                FROM
+                                                    reg_compras r
+                                                WHERE r.ruc = :ruc 
+                                                    AND r.serie_doc = :serie 
+                                                    AND r.num_doc = :numero");
+
+        $stmt->bindParam(":ruc", $ruc, PDO::PARAM_STR);
+        $stmt->bindParam(":serie", $serie, PDO::PARAM_STR);
+        $stmt->bindParam(":numero", $numero, PDO::PARAM_STR);                                                    
+
+        $stmt -> execute();
+
+        return $stmt -> fetch();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}    
 
 }
