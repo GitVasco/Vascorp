@@ -500,13 +500,15 @@ MODAL CONSULTAR SUNAT
     function showTime(){
         myDate = new Date();
         hours = myDate.getHours();
+        hours2 = hours+1;
         minutes = myDate.getMinutes();
         seconds = myDate.getSeconds();
-        if (hours < 10) hours = 0 + hours;
+        if (hours < 10) hours = "0" + hours;
+        if (hours2 < 10) hours2 = "0" + hours2;
         if (minutes < 10) minutes = "0" + minutes;
         if (seconds < 10) seconds = "0" + seconds;
         $("#nuevoInicio").val(hours+ ":" +minutes+ ":" +seconds);
-        $("#nuevoFin").val((hours+1)+ ":" +minutes+ ":" +seconds);
+        $("#nuevoFin").val(hours2+ ":" +minutes+ ":" +seconds);
         t = setTimeout("showTime()", 1000);
 
     }
