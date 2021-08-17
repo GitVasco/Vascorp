@@ -84,6 +84,7 @@ class ControladorCompras{
         if(isset($_POST["imporTxt"])){
 
             #var_dump($_POST["imporTxt"]);
+        if(empty($_FILES['archivotxt'])){
 
             $ruta = "vistas/sunat/leer/";
             $subir_archivo = $ruta.basename($_FILES['archivotxt']['name']);
@@ -185,6 +186,25 @@ class ControladorCompras{
                 </script>';
 
             }
+        }else{
+            echo'<script>
+
+            swal({
+
+                type: "error",
+                title: "¡Error, debe seleccionar un archivo!",
+                showConfirmButton: true,
+                confirmButtonText: "Cerrar"
+                }).then(function(result){
+                    if (result.value) {
+
+                    window.location = "compras-reg";
+
+                    }
+                })
+
+            </script>';
+        }
 
         }
 

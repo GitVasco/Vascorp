@@ -61,3 +61,120 @@ $(".generarTxt").click(function(){
 })
 
 
+$(".TablaRegCompras").on("click","button.btnConsultarEstadoCompra",function(){
+
+	var tipo = $(this).attr("tipo");
+	var ruc = $(this).attr("ruc");
+	var serie = $(this).attr("serie");
+	var correlativo = $(this).attr("correlativo");
+	var emision = $(this).attr("fecha");
+	var monto = $(this).attr("monto");
+	var tipoEmision = serie.substring(0,1);
+	if(tipoEmision == "0" || tipoEmision == "1"){
+		monto="";
+	}
+	
+	var datos = new FormData();
+  
+	datos.append("tipoConsulta",tipo);
+	datos.append("rucConsulta",ruc);
+	datos.append("serieConsulta",serie);
+	datos.append("correlativoConsulta",correlativo);
+	datos.append("emisionConsulta",emision);
+	datos.append("montoConsulta",monto);
+  
+	$.ajax({
+  
+	  url:"ajax/facturacion.ajax.php",
+	  method: "POST",
+	  data: datos,
+	  cache: false,
+	  contentType: false,
+	  processData: false,
+	  dataType:"json",
+	  success:function(respuesta){
+		console.log(respuesta);
+		if(respuesta["success"] == true){
+			
+			if(respuesta["data"]["estadoCp"] == "1"){
+
+				var datos2=new FormData();
+				datos2.append("ruc",ruc);
+				datos2.append("serie",serie);
+				datos2.append("correlativo",correlativo);
+				datos2.append("estado","2");
+				$.ajax({
+					url:"ajax/compras.ajax.php",
+					type:"POST",
+					data:datos2,
+					cache:false,
+					contentType:false,
+					processData:false,
+					success:function(respuesta2){
+						$(".TablaRegCompras").DataTable().ajax.reload(null,false);
+					}
+
+				})
+			  
+			  Command: toastr["success"]("Estado del comprobante : ACEPTADO");
+			  Command: toastr["success"]("Estado del contribuyente : ACTIVO");
+			  Command: toastr["success"]("Condicion de domicilio : HABIDO");
+  
+			}else if(respuesta["data"]["estadoCp"] == "3"){
+				var datos2=new FormData();
+				datos2.append("ruc",ruc);
+				datos2.append("serie",serie);
+				datos2.append("correlativo",correlativo);
+				datos2.append("estado","2");
+				$.ajax({
+					url:"ajax/compras.ajax.php",
+					type:"POST",
+					data:datos2,
+					cache:false,
+					contentType:false,
+					processData:false,
+					success:function(respuesta2){
+						$(".TablaRegCompras").DataTable().ajax.reload(null,false);
+					}
+
+				})
+  
+			  Command: toastr["success"]("Estado del comprobante : ACEPTADO");
+			  Command: toastr["success"]("Estado del contribuyente : ACTIVO");
+			  Command: toastr["success"]("Condicion de domicilio : HABIDO");
+  
+			}else{
+
+				var datos2=new FormData();
+				datos2.append("ruc",ruc);
+				datos2.append("serie",serie);
+				datos2.append("correlativo",correlativo);
+				datos2.append("estado","1");
+				$.ajax({
+					url:"ajax/compras.ajax.php",
+					type:"POST",
+					data:datos2,
+					cache:false,
+					contentType:false,
+					processData:false,
+					success:function(respuesta2){
+						$(".TablaRegCompras").DataTable().ajax.reload(null,false);
+					}
+
+				})
+			  
+			  Command: toastr["error"]("Estado del comprobante : NO EXISTE");
+			  Command: toastr["error"]("Estado del contribuyente : -");
+			  Command: toastr["error"]("Condicion de domicilio : -");
+			}
+	
+		}else if(respuesta["message"] == "Unauthorized"){
+		  Command: toastr["error"]("Por favor, generar token!");
+		}else{
+		  Command: toastr["error"]("Error al ingresar los campos requeridos!");
+		}
+		
+	  }
+	})
+  });
+  

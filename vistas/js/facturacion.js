@@ -2118,7 +2118,7 @@ $(".btnVerToken").click(function(){
     processData: false,
     dataType:"json",
     success:function(respuesta){
-      
+      // console.log(respuesta);
       $("#nuevoCodigoToken").val(respuesta["token"]);
       var  descripcion = respuesta["descripcion"]
       var inicio = descripcion.substring(0,8);

@@ -272,7 +272,7 @@ class AjaxFacturacion{
             'Cookie: TS018412f9=019edc9eb834ae85d7ac809fca3c15c40ba0156fd2663004ad2f190436eb4c8324d48b0b054d4736900b03feb2b2905c6f44c1420f; TS019e7fc2=019edc9eb8f3cea6da929c599af337f8af0655e4e3a6f2eff26c162aff3187235d847ab4490f8a5525d82221ecc76edcc6a334f6eb'
           ),
         ));
-        curl_setopt($curl, CURLOPT_CAINFO, "C:/xampp/htdocs/rosalinda/vistas/generar_xml/cacert.pem"); 
+        curl_setopt($curl, CURLOPT_CAINFO, "C:/xampp/htdocs/vascorp/vistas/generar_xml/cacert.pem"); 
 
         $response = curl_exec($curl);
         //$error = curl_error($curl);
@@ -335,7 +335,7 @@ class AjaxFacturacion{
             'Content-Type: application/json'
           ),
         ));
-        curl_setopt($curl, CURLOPT_CAINFO, "C:/xampp/htdocs/rosalinda/vistas/generar_xml/cacert.pem" );
+        curl_setopt($curl, CURLOPT_CAINFO, "C:/xampp/htdocs/vascorp/vistas/generar_xml/cacert.pem" );
         $response = curl_exec($curl);
         // $error = curl_error($curl);
         curl_close($curl);

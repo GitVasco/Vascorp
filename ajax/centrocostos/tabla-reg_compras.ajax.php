@@ -89,7 +89,7 @@ class TablaRegCompras{
 
             }
 
-
+            $botones =  "<div class='btn-group'><button title='Consultar Estado' class='btn btn-xs btn-warning btnConsultarEstadoCompra' ruc='".$compras[$i]["ruc"]."' tipo = '".$compras[$i]["tipo_documento"]."' serie='".$compras[$i]["serie_doc"]."' correlativo = '".$compras[$i]["num_doc"]."' fecha='".$compras[$i]["fecha_emision"]."' monto='".number_format($compras[$i]["total"],2,".","")."'><i class='fa fa-search'></i></button></div>";
 
             $datosJson .= '[
             
@@ -105,7 +105,8 @@ class TablaRegCompras{
                 "'.$compras[$i]["fecha_emision"].'",
                 "'.$compras[$i]["fecha_vencimiento"].'",
                 "<center>'.$comprobante.$contribuyente.$condicion.'</center>",
-                "'.$estado.'"
+                "'.$estado.'",
+                "'.$botones.'"
 
             ],';        
 
