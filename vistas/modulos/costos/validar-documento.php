@@ -52,8 +52,8 @@
 
                             <div class="col-lg-4">
 
-                                <label>Doc</label>
-                                <input type="text" class="form-control" id="documento" name="documento" placeholder="Documento" readonly>
+                                <label>Documento</label>
+                                <input type="text" class="form-control" id="numero" name="numero" placeholder="Documento" readonly>
 
                             </div>
 
@@ -71,14 +71,7 @@
 
                             </div>              
                             
-                            <div class="col-lg-2">
-
-                                <label>Cuenta</label>
-                                <input type="text" class="form-control" id="cuenta" name="cuenta" placeholder="Cuenta" readonly>
-
-                            </div>                            
-                            
-                            <div class="col-lg-6">
+                            <div class="col-lg-8">
 
                                 <label>Descripcion</label>
                                 <input type="text" class="form-control" id="concepto" name="concepto" placeholder="Descripcion" readonly>
@@ -182,7 +175,7 @@
             var num = vc.split('-');
             var numero = num[1].replace(/^(0+)/g, '');
 
-            var ruc = va;
+            var rucS = va;
             var tipo = vb;
             var igv = vd;
             var total = ve;
@@ -194,7 +187,7 @@
 
             var numero = vd.replace(/^(0+)/g, '');;
 
-            var ruc = va;
+            var rucS = va;
             var tipo = vb;
             var igv = ve;
             var total = vf;
@@ -221,7 +214,52 @@
         var emision = ano+'/'+mes+'/'+dia;
         //console.log(emision);
 
-        console.log(ruc,'|',tipo,'|',serie,'|',numero,'|',igv,'|',total,'|',emision);
+        console.log(rucS,'|',tipo,'|',serie,'|',numero,'|',igv,'|',total,'|',emision);
+
+        var datos = new FormData();
+
+        datos.append("rucS", rucS);
+        datos.append("serie", serie);
+        datos.append("numero", numero);
+
+        $.ajax({
+
+            url: "ajax/compras.ajax.php",
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success:function(respuesta){
+
+                if(respuesta === false){
+
+                    Command: toastr["error"]("Documento no registrado");
+
+                }else{
+
+                    console.log(respuesta);
+                    $("#tipo").val(respuesta["tipo"]);
+                    $("#serie").val(respuesta["serie_doc"]);
+                    $("#numero").val(respuesta["num_doc"]);
+                    $("#origen").val(respuesta["origen"]);
+                    $("#voucher").val(respuesta["voucher"]);
+                    $("#concepto").val(respuesta["concepto"]);
+                    $("#ruc").val(respuesta["ruc"]);
+                    $("#razon_social").val(respuesta["razon_social"]);
+                    $("#emision").val(respuesta["fecha_emision"]);
+                    $("#vencimiento").val(respuesta["fecha_vencimiento"]);
+                    $("#total").val(respuesta["total"]);
+
+                }
+
+                
+                
+
+            }
+
+        })
 
     }
 }

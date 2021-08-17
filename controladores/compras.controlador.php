@@ -208,6 +208,14 @@ class ControladorCompras{
 
         }
 
-    }    
+    }
+    
+	static public function ctrTraerCompra($ruc, $serie, $numero){
+
+		$respuesta = ModeloCompras::mdlTraerCompra($ruc, $serie, $numero);
+
+		return $respuesta;
+
+	}    
 
 }

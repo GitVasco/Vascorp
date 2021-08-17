@@ -1,5 +1,4 @@
 <?php
-
 require_once "../controladores/compras.controlador.php";
 require_once "../modelos/compras.modelo.php";
 
@@ -31,6 +30,18 @@ class AjaxCompras{
 
   }
 
+  public function ajaxTraerCompra(){
+
+    $ruc    = $this->ruc;
+    $serie  = $this->serie;
+    $numero = $this->numero;
+
+    $respuesta = ControladorCompras::ctrTraerCompra($ruc, $serie, $numero);
+
+    echo json_encode($respuesta);
+
+  }  
+
 }
 
 
@@ -45,4 +56,14 @@ if(isset($_POST["estado"])){
     $aprobarCompra -> correlativo = $_POST["correlativo"];
     $aprobarCompra -> estado = $_POST["estado"];
 	$aprobarCompra -> ajaxValidarCompra();
+}
+
+if(isset($_POST["rucS"])){
+
+	  $traerCompra = new AjaxCompras();
+	  $traerCompra -> ruc = $_POST["rucS"];
+    $traerCompra -> serie = $_POST["serie"];
+    $traerCompra -> numero = $_POST["numero"];
+    $traerCompra -> ajaxTraerCompra();
+
 }
