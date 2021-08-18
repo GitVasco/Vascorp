@@ -174,6 +174,7 @@
                     }else{
                       $infoArticulo = ControladorIngresos::ctrMostrarArticulosCierres($value["idcierre"]);
                     }
+                    var_dump($listaArticuloIng);
                     $tallerAntiguo = $infoArticulo["taller"] + $value["cantidad"];
                     $stockG = $infoArticulo["stockG"];
                     echo '<div class="row munditoIngreso" style="padding:5px 15px">

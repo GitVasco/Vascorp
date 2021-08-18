@@ -69,7 +69,8 @@ class TablaVerIngresos{
             }else{
                 $t8 = $ingresos[$i]["t8"];
             }  
-      
+            
+            
     
             $datosJson .= '[
             "'.$ingresos[$i]["cod_sector"]." - ".$ingresos[$i]["nom_sector"].'",
