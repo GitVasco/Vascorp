@@ -634,79 +634,107 @@ class ModeloIngresos{
 				DATE(m.fecha) AS fechas,
 				a.modelo,
 				a.nombre,
+				mc.guia,
 				a.cod_color,
 				a.color,
 				se.cod_sector,
 				se.nom_sector,
-				FORMAT(SUM(
-				  CASE
-					WHEN a.cod_talla = '1' 
-					THEN m.cantidad 
-					ELSE 0 
-				  END
-				),0) AS t1,
-				FORMAT(SUM(
-				  CASE
-					WHEN a.cod_talla = '2' 
-					THEN m.cantidad 
-					ELSE 0 
-				  END
-				),0) AS t2,
-				FORMAT(SUM(
-				  CASE
-					WHEN a.cod_talla = '3' 
-					THEN m.cantidad 
-					ELSE 0 
-				  END
-				),0) AS t3,
-				FORMAT(SUM(
-				  CASE
-					WHEN a.cod_talla = '4' 
-					THEN m.cantidad 
-					ELSE 0 
-				  END
-				),0) AS t4,
-				FORMAT(SUM(
-				  CASE
-					WHEN a.cod_talla = '5' 
-					THEN m.cantidad 
-					ELSE 0 
-				  END
-				),0) AS t5,
-				FORMAT(SUM(
-				  CASE
-					WHEN a.cod_talla = '6' 
-					THEN m.cantidad 
-					ELSE 0 
-				  END
-				),0) AS t6,
-				FORMAT(SUM(
-				  CASE
-					WHEN a.cod_talla = '7' 
-					THEN m.cantidad 
-					ELSE 0 
-				  END
-				),0) AS t7,
-				FORMAT(SUM(
-				  CASE
-					WHEN a.cod_talla = '8' 
-					THEN m.cantidad 
-					ELSE 0 
-				  END
-				),0) AS t8,
-				FORMAT(SUM(m.cantidad),0) AS total 
+				FORMAT(
+				  SUM(
+					CASE
+					  WHEN a.cod_talla = '1' 
+					  THEN m.cantidad 
+					  ELSE 0 
+					END
+				  ),
+				  0
+				) AS t1,
+				FORMAT(
+				  SUM(
+					CASE
+					  WHEN a.cod_talla = '2' 
+					  THEN m.cantidad 
+					  ELSE 0 
+					END
+				  ),
+				  0
+				) AS t2,
+				FORMAT(
+				  SUM(
+					CASE
+					  WHEN a.cod_talla = '3' 
+					  THEN m.cantidad 
+					  ELSE 0 
+					END
+				  ),
+				  0
+				) AS t3,
+				FORMAT(
+				  SUM(
+					CASE
+					  WHEN a.cod_talla = '4' 
+					  THEN m.cantidad 
+					  ELSE 0 
+					END
+				  ),
+				  0
+				) AS t4,
+				FORMAT(
+				  SUM(
+					CASE
+					  WHEN a.cod_talla = '5' 
+					  THEN m.cantidad 
+					  ELSE 0 
+					END
+				  ),
+				  0
+				) AS t5,
+				FORMAT(
+				  SUM(
+					CASE
+					  WHEN a.cod_talla = '6' 
+					  THEN m.cantidad 
+					  ELSE 0 
+					END
+				  ),
+				  0
+				) AS t6,
+				FORMAT(
+				  SUM(
+					CASE
+					  WHEN a.cod_talla = '7' 
+					  THEN m.cantidad 
+					  ELSE 0 
+					END
+				  ),
+				  0
+				) AS t7,
+				FORMAT(
+				  SUM(
+					CASE
+					  WHEN a.cod_talla = '8' 
+					  THEN m.cantidad 
+					  ELSE 0 
+					END
+				  ),
+				  0
+				) AS t8,
+				FORMAT(SUM(m.cantidad), 0) AS total 
 			  FROM
 				movimientosjf_2021 m 
 				LEFT JOIN articulojf a 
 				  ON m.articulo = a.articulo 
 				LEFT JOIN sectorjf se 
 				  ON LEFT(m.documento, 2) = se.cod_sector 
-			  WHERE m.tipo='E20'
+				LEFT JOIN movimientos_cabecerajf mc 
+				  ON m.tipo = mc.tipo 
+				  AND m.documento = mc.documento 
+			  WHERE m.tipo = 'E20' 
 			  GROUP BY m.documento,
 				a.modelo,
 				a.nombre,
 				a.cod_color,
-				a.color ");
+				a.color");
 	
 				$stmt -> execute();
 	
@@ -720,74 +748,103 @@ class ModeloIngresos{
 				DATE(m.fecha) AS fechas,
 				a.modelo,
 				a.nombre,
+				mc.guia,
 				a.cod_color,
 				a.color,
 				se.cod_sector,
 				se.nom_sector,
-				FORMAT(SUM(
-				  CASE
-					WHEN a.cod_talla = '1' 
-					THEN m.cantidad 
-					ELSE 0 
-				  END
-				),0) AS t1,
-				FORMAT(SUM(
-				  CASE
-					WHEN a.cod_talla = '2' 
-					THEN m.cantidad 
-					ELSE 0 
-				  END
-				),0) AS t2,
-				FORMAT(SUM(
-				  CASE
-					WHEN a.cod_talla = '3' 
-					THEN m.cantidad 
-					ELSE 0 
-				  END
-				),0) AS t3,
-				FORMAT(SUM(
-				  CASE
-					WHEN a.cod_talla = '4' 
-					THEN m.cantidad 
-					ELSE 0 
-				  END
-				),0) AS t4,
-				FORMAT(SUM(
-				  CASE
-					WHEN a.cod_talla = '5' 
-					THEN m.cantidad 
-					ELSE 0 
-				  END
-				),0) AS t5,
-				FORMAT(SUM(
-				  CASE
-					WHEN a.cod_talla = '6' 
-					THEN m.cantidad 
-					ELSE 0 
-				  END
-				),0) AS t6,
-				FORMAT(SUM(
-				  CASE
-					WHEN a.cod_talla = '7' 
-					THEN m.cantidad 
-					ELSE 0 
-				  END
-				),0) AS t7,
-				FORMAT(SUM(
-				  CASE
-					WHEN a.cod_talla = '8' 
-					THEN m.cantidad 
-					ELSE 0 
-				  END
-				),0) AS t8,
-				FORMAT(SUM(m.cantidad),0) AS total 
+				FORMAT(
+				  SUM(
+					CASE
+					  WHEN a.cod_talla = '1' 
+					  THEN m.cantidad 
+					  ELSE 0 
+					END
+				  ),
+				  0
+				) AS t1,
+				FORMAT(
+				  SUM(
+					CASE
+					  WHEN a.cod_talla = '2' 
+					  THEN m.cantidad 
+					  ELSE 0 
+					END
+				  ),
+				  0
+				) AS t2,
+				FORMAT(
+				  SUM(
+					CASE
+					  WHEN a.cod_talla = '3' 
+					  THEN m.cantidad 
+					  ELSE 0 
+					END
+				  ),
+				  0
+				) AS t3,
+				FORMAT(
+				  SUM(
+					CASE
+					  WHEN a.cod_talla = '4' 
+					  THEN m.cantidad 
+					  ELSE 0 
+					END
+				  ),
+				  0
+				) AS t4,
+				FORMAT(
+				  SUM(
+					CASE
+					  WHEN a.cod_talla = '5' 
+					  THEN m.cantidad 
+					  ELSE 0 
+					END
+				  ),
+				  0
+				) AS t5,
+				FORMAT(
+				  SUM(
+					CASE
+					  WHEN a.cod_talla = '6' 
+					  THEN m.cantidad 
+					  ELSE 0 
+					END
+				  ),
+				  0
+				) AS t6,
+				FORMAT(
+				  SUM(
+					CASE
+					  WHEN a.cod_talla = '7' 
+					  THEN m.cantidad 
+					  ELSE 0 
+					END
+				  ),
+				  0
+				) AS t7,
+				FORMAT(
+				  SUM(
+					CASE
+					  WHEN a.cod_talla = '8' 
+					  THEN m.cantidad 
+					  ELSE 0 
+					END
+				  ),
+				  0
+				) AS t8,
+				FORMAT(SUM(m.cantidad), 0) AS total 
 			  FROM
 				movimientosjf_2021 m 
 				LEFT JOIN articulojf a 
 				  ON m.articulo = a.articulo 
 				LEFT JOIN sectorjf se 
 				  ON LEFT(m.documento, 2) = se.cod_sector 
+				LEFT JOIN movimientos_cabecerajf mc 
+				  ON m.tipo = mc.tipo 
+				  AND m.documento = mc.documento 
 				WHERE DATE(m.fecha) like '%$fechaFinal%'
+				AND m.tipo = 'E20' 
 				GROUP BY m.documento,
 				a.modelo,
 				a.nombre,
@@ -817,74 +874,103 @@ class ModeloIngresos{
 					DATE(m.fecha) AS fechas,
 					a.modelo,
 					a.nombre,
+					mc.guia,
 					a.cod_color,
 					a.color,
 					se.cod_sector,
 					se.nom_sector,
-					FORMAT(SUM(
-					  CASE
-						WHEN a.cod_talla = '1' 
-						THEN m.cantidad 
-						ELSE 0 
-					  END
-					),0) AS t1,
-					FORMAT(SUM(
-					  CASE
-						WHEN a.cod_talla = '2' 
-						THEN m.cantidad 
-						ELSE 0 
-					  END
-					),0) AS t2,
-					FORMAT(SUM(
-					  CASE
-						WHEN a.cod_talla = '3' 
-						THEN m.cantidad 
-						ELSE 0 
-					  END
-					),0) AS t3,
-					FORMAT(SUM(
-					  CASE
-						WHEN a.cod_talla = '4' 
-						THEN m.cantidad 
-						ELSE 0 
-					  END
-					),0) AS t4,
-					FORMAT(SUM(
-					  CASE
-						WHEN a.cod_talla = '5' 
-						THEN m.cantidad 
-						ELSE 0 
-					  END
-					),0) AS t5,
-					FORMAT(SUM(
-					  CASE
-						WHEN a.cod_talla = '6' 
-						THEN m.cantidad 
-						ELSE 0 
-					  END
-					),0) AS t6,
-					FORMAT(SUM(
-					  CASE
-						WHEN a.cod_talla = '7' 
-						THEN m.cantidad 
-						ELSE 0 
-					  END
-					),0) AS t7,
-					FORMAT(SUM(
-					  CASE
-						WHEN a.cod_talla = '8' 
-						THEN m.cantidad 
-						ELSE 0 
-					  END
-					),0) AS t8,
-					FORMAT(SUM(m.cantidad),0) AS total 
+					FORMAT(
+					  SUM(
+						CASE
+						  WHEN a.cod_talla = '1' 
+						  THEN m.cantidad 
+						  ELSE 0 
+						END
+					  ),
+					  0
+					) AS t1,
+					FORMAT(
+					  SUM(
+						CASE
+						  WHEN a.cod_talla = '2' 
+						  THEN m.cantidad 
+						  ELSE 0 
+						END
+					  ),
+					  0
+					) AS t2,
+					FORMAT(
+					  SUM(
+						CASE
+						  WHEN a.cod_talla = '3' 
+						  THEN m.cantidad 
+						  ELSE 0 
+						END
+					  ),
+					  0
+					) AS t3,
+					FORMAT(
+					  SUM(
+						CASE
+						  WHEN a.cod_talla = '4' 
+						  THEN m.cantidad 
+						  ELSE 0 
+						END
+					  ),
+					  0
+					) AS t4,
+					FORMAT(
+					  SUM(
+						CASE
+						  WHEN a.cod_talla = '5' 
+						  THEN m.cantidad 
+						  ELSE 0 
+						END
+					  ),
+					  0
+					) AS t5,
+					FORMAT(
+					  SUM(
+						CASE
+						  WHEN a.cod_talla = '6' 
+						  THEN m.cantidad 
+						  ELSE 0 
+						END
+					  ),
+					  0
+					) AS t6,
+					FORMAT(
+					  SUM(
+						CASE
+						  WHEN a.cod_talla = '7' 
+						  THEN m.cantidad 
+						  ELSE 0 
+						END
+					  ),
+					  0
+					) AS t7,
+					FORMAT(
+					  SUM(
+						CASE
+						  WHEN a.cod_talla = '8' 
+						  THEN m.cantidad 
+						  ELSE 0 
+						END
+					  ),
+					  0
+					) AS t8,
+					FORMAT(SUM(m.cantidad), 0) AS total 
 				  FROM
 					movimientosjf_2021 m 
 					LEFT JOIN articulojf a 
 					  ON m.articulo = a.articulo 
 					LEFT JOIN sectorjf se 
 					  ON LEFT(m.documento, 2) = se.cod_sector 
+					LEFT JOIN movimientos_cabecerajf mc 
+					  ON m.tipo = mc.tipo 
+					  AND m.documento = mc.documento 
 					WHERE DATE(m.fecha) BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'
+					AND m.tipo = 'E20' 
 				  GROUP BY m.documento,
 					a.modelo,
 					a.nombre,
@@ -899,74 +985,103 @@ class ModeloIngresos{
 					DATE(m.fecha) AS fechas,
 					a.modelo,
 					a.nombre,
+					mc.guia,
 					a.cod_color,
 					a.color,
 					se.cod_sector,
 					se.nom_sector,
-					FORMAT(SUM(
-					  CASE
-						WHEN a.cod_talla = '1' 
-						THEN m.cantidad 
-						ELSE 0 
-					  END
-					),0) AS t1,
-					FORMAT(SUM(
-					  CASE
-						WHEN a.cod_talla = '2' 
-						THEN m.cantidad 
-						ELSE 0 
-					  END
-					),0) AS t2,
-					FORMAT(SUM(
-					  CASE
-						WHEN a.cod_talla = '3' 
-						THEN m.cantidad 
-						ELSE 0 
-					  END
-					),0) AS t3,
-					FORMAT(SUM(
-					  CASE
-						WHEN a.cod_talla = '4' 
-						THEN m.cantidad 
-						ELSE 0 
-					  END
-					),0) AS t4,
-					FORMAT(SUM(
-					  CASE
-						WHEN a.cod_talla = '5' 
-						THEN m.cantidad 
-						ELSE 0 
-					  END
-					),0) AS t5,
-					FORMAT(SUM(
-					  CASE
-						WHEN a.cod_talla = '6' 
-						THEN m.cantidad 
-						ELSE 0 
-					  END
-					),0) AS t6,
-					FORMAT(SUM(
-					  CASE
-						WHEN a.cod_talla = '7' 
-						THEN m.cantidad 
-						ELSE 0 
-					  END
-					),0) AS t7,
-					FORMAT(SUM(
-					  CASE
-						WHEN a.cod_talla = '8' 
-						THEN m.cantidad 
-						ELSE 0 
-					  END
-					),0) AS t8,
-					FORMAT(SUM(m.cantidad),0) AS total 
+					FORMAT(
+					  SUM(
+						CASE
+						  WHEN a.cod_talla = '1' 
+						  THEN m.cantidad 
+						  ELSE 0 
+						END
+					  ),
+					  0
+					) AS t1,
+					FORMAT(
+					  SUM(
+						CASE
+						  WHEN a.cod_talla = '2' 
+						  THEN m.cantidad 
+						  ELSE 0 
+						END
+					  ),
+					  0
+					) AS t2,
+					FORMAT(
+					  SUM(
+						CASE
+						  WHEN a.cod_talla = '3' 
+						  THEN m.cantidad 
+						  ELSE 0 
+						END
+					  ),
+					  0
+					) AS t3,
+					FORMAT(
+					  SUM(
+						CASE
+						  WHEN a.cod_talla = '4' 
+						  THEN m.cantidad 
+						  ELSE 0 
+						END
+					  ),
+					  0
+					) AS t4,
+					FORMAT(
+					  SUM(
+						CASE
+						  WHEN a.cod_talla = '5' 
+						  THEN m.cantidad 
+						  ELSE 0 
+						END
+					  ),
+					  0
+					) AS t5,
+					FORMAT(
+					  SUM(
+						CASE
+						  WHEN a.cod_talla = '6' 
+						  THEN m.cantidad 
+						  ELSE 0 
+						END
+					  ),
+					  0
+					) AS t6,
+					FORMAT(
+					  SUM(
+						CASE
+						  WHEN a.cod_talla = '7' 
+						  THEN m.cantidad 
+						  ELSE 0 
+						END
+					  ),
+					  0
+					) AS t7,
+					FORMAT(
+					  SUM(
+						CASE
+						  WHEN a.cod_talla = '8' 
+						  THEN m.cantidad 
+						  ELSE 0 
+						END
+					  ),
+					  0
+					) AS t8,
+					FORMAT(SUM(m.cantidad), 0) AS total 
 				  FROM
 					movimientosjf_2021 m 
 					LEFT JOIN articulojf a 
 					  ON m.articulo = a.articulo 
 					LEFT JOIN sectorjf se 
 					  ON LEFT(m.documento, 2) = se.cod_sector 
+					LEFT JOIN movimientos_cabecerajf mc 
+					  ON m.tipo = mc.tipo 
+					  AND m.documento = mc.documento 
 					WHERE DATE(m.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'
+					AND m.tipo = 'E20' 
 					GROUP BY m.documento,
 					a.modelo,
 					a.nombre,

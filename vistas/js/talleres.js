@@ -2355,15 +2355,18 @@ $(".tablaTalleresT").on("click",".btnReiniciarTallerT",function(){
 
 });
 
-//tabla dinamica de ver Ingresos General
-if (localStorage.getItem("capturarRango10") != null) {
-	$("#daterange-btnVerIngresos span").html(localStorage.getItem("capturarRango10"));
-	cargarTablaDetalleIngresos(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
-  } else {
-	$("#daterange-btnVerIngresos span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
-	cargarTablaDetalleIngresos(null, null);
+$(".btnIngresoDeta").click(function(){
+	//tabla dinamica de ver Ingresos General
+	if (localStorage.getItem("capturarRango10") != null) {
+		$("#daterange-btnVerIngresos span").html(localStorage.getItem("capturarRango10"));
+		cargarTablaDetalleIngresos(localStorage.getItem("fechaInicial"), localStorage.getItem("fechaFinal"));
+  	} else {
+		$("#daterange-btnVerIngresos span").html('<i class="fa fa-calendar"></i> Rango de Fecha ');
+		cargarTablaDetalleIngresos(null, null);
   }
   
+})
+
   
 	
 	function cargarTablaDetalleIngresos(fechaInicial,fechaFinal) {

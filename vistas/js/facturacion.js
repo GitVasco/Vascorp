@@ -2048,17 +2048,50 @@ $("#formularioConsultaSunat").on("click","button.btnConsultarSunat",function(){
     success:function(respuesta){
       $(".loadingSunat").addClass("hidden");
       if(respuesta["success"] == true){
+      
           
           if(respuesta["data"]["estadoCp"] == "1"){
-            $(".consultaActivo").removeClass("hidden");
-            $(".consultaError").addClass("hidden");
+
+            var msjComp = "ACEPTADO";  
+
           }else if(respuesta["data"]["estadoCp"] == "3"){
-            $(".consultaActivo").removeClass("hidden");
-            $(".consultaError").addClass("hidden");
+
+            var msjComp = "AUTORIZADO";
+            
+          }else if(respuesta["data"]["estadoCp"] == "2"){
+
+            var msjComp = "ANULADO";
+          
           }else{
-            $(".consultaError").removeClass("hidden");
-            $(".consultaActivo").addClass("hidden");
+            
+            var msjComp = "NO EXISTE";
+
           }
+
+          if(respuesta["data"]["estadoRuc"] == "00"){
+
+            var msjCont = "ACTIVO";
+
+          }else{
+
+            var msjCont = "-";
+
+          }
+
+          if(respuesta["data"]["condDomiRuc"] == "00"){
+
+            var msjDomi = "HABIDO";
+
+          }else{
+
+            var msjDomi = "-";
+
+          }
+
+          $(".consultaActivo").removeClass("hidden");
+          $(".estComp").html(msjComp);
+          $(".estContrib").html(msjCont);
+          $(".estDomicilio").html(msjDomi);
   
       }else if(respuesta["message"] == "Unauthorized"){
         Command: toastr["error"]("Por favor, generar token!");
@@ -2071,7 +2104,7 @@ $("#formularioConsultaSunat").on("click","button.btnConsultarSunat",function(){
   $(".loadingSunat").removeClass("hidden");
 
   $(".consultaActivo").addClass("hidden");
-  $(".consultaError").addClass("hidden");
+  // $(".consultaError").addClass("hidden");
 })
 
 $("#formularioConsultaSunat").on("click","button.btnLimpiarConsultaSunat",function(){
@@ -2163,24 +2196,54 @@ $(".tablaProcesarCE").on("click","button.btnConsultarEstado",function(){
       // console.log(respuesta);
       if(respuesta["success"] == true){
           
-          if(respuesta["data"]["estadoCp"] == "1"){
-            
-            Command: toastr["success"]("Estado del comprobante : ACEPTADO");
-            Command: toastr["success"]("Estado del contribuyente : ACTIVO");
-            Command: toastr["success"]("Condicion de domicilio : HABIDO");
+        if(respuesta["data"]["estadoCp"] == "1"){
+				
+					var msjComp = "ACEPTADO";
+					var tipoMsjComp = "success";
 
-          }else if(respuesta["data"]["estadoCp"] == "3"){
+				}else if(respuesta["data"]["estadoCp"] == "3"){
 
-            Command: toastr["success"]("Estado del comprobante : ACEPTADO");
-            Command: toastr["success"]("Estado del contribuyente : ACTIVO");
-            Command: toastr["success"]("Condicion de domicilio : HABIDO");
+					var msjComp = "AUTORIZADO";
+					var tipoMsjComp = "success";
+				
+				}else if(respuesta["data"]["estadoCp"] == "2"){
+			
+					var msjComp = "ANULADO";
+					var tipoMsjComp = "error";
 
-          }else{
-            
-            Command: toastr["error"]("Estado del comprobante : NO EXISTE");
-            Command: toastr["error"]("Estado del contribuyente : -");
-            Command: toastr["error"]("Condicion de domicilio : -");
-          }
+				}else{
+					
+					var msjComp = "NO EXISTE";
+					var tipoMsjComp = "error";
+				}
+
+				if(respuesta["data"]["estadoRuc"] == "00"){
+				
+					var msjCont = "ACTIVO";
+					var tipoMsjCont = "success";
+
+				}else{
+				
+					var msjCont = "-";
+					var tipoMsjCont = "error";
+
+				}
+
+				if(respuesta["data"]["condDomiRuc"] == "00"){
+					
+					var msjDomi = "HABIDO";
+					var tipoMsjDomi = "success";
+				
+				}else{
+					
+					var msjDomi = "-";
+					var tipoMsjDomi = "error";
+
+				}
+
+          Command: toastr[tipoMsjComp]("Estado del comprobante : "+msjComp);
+          Command: toastr[tipoMsjCont]("Estado del contribuyente : "+msjCont);
+          Command: toastr[tipoMsjDomi]("Condicion de domicilio : "+msjDomi);
   
       }else if(respuesta["message"] == "Unauthorized"){
         Command: toastr["error"]("Por favor, generar token!");

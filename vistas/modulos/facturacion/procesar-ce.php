@@ -412,49 +412,22 @@ MODAL CONSULTAR SUNAT
                     <tr>
                       <td><b>Estado del comprobante a la fecha de la consulta</b></td>
                       <td> : </td>
-                      <td>ACEPTADO</td>
+                      <td class="estComp"></td>
                     </tr>
                     <tr>
                       <td><b>Estado del contribuyente a la fecha de emision</b></td>
                       <td> : </td>
-                      <td>ACTIVO</td>
+                      <td class="estContrib"></td>
                     </tr>
                     <tr>
                       <td><b>Condición de domicilio a la fecha de emisión</b></td>
                       <td> : </td>
-                      <td>HABIDO</td>
+                      <td class="estDomicilio"></td>
                     </tr>
 
                 </tbody>
               </table>
-
-              <table class="table table-condensed table-bordered  consultaError hidden">
-                <thead style="background:#3c8dbc; color:white">
-                    <tr >
-                      <td colspan="3" rowspan="2"><h4>Resultado de la Búsqueda</h4></td>
-                    </tr>
-                </thead>
-                <tbody style="font-size:17px">
-                    <tr>
-                      <td><b>Estado del comprobante a la fecha de la consulta</b></td>
-                      <td> : </td>
-                      <td>NO EXISTE</td>
-                    </tr>
-                    <tr>
-                      <td><b>Estado del contribuyente a la fecha de emision</b></td>
-                      <td> : </td>
-                      <td>-</td>
-                    </tr>
-                    <tr>
-                      <td><b>Condición de domicilio a la fecha de emisión</b></td>
-                      <td> : </td>
-                      <td>-</td>
-                    </tr>
-
-                </tbody>
-              </table>
-            
-
+              
           </div>
 
         </div>
