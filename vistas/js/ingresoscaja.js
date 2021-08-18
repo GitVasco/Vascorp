@@ -850,11 +850,6 @@ $(".btnDicI").click(function(){
 
 })
 
-
-
-
-
-
 $("#nuevoCodIng, #editarCodIng").change(function(){
 
 	var cod_ingreso = $(this).val();
