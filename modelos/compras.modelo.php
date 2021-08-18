@@ -470,21 +470,21 @@ class ModeloCompras{
                                                     r.fecha_vencimiento,
                                                     r.tipo_documento,
                                                     CASE
-                                                    WHEN r.tipo_documento = '01' 
-                                                    THEN CONCAT(r.tipo_documento, ' - FACTURA') 
-                                                    WHEN r.tipo_documento = '03' 
-                                                    THEN CONCAT(r.tipo_documento, ' - BOLETA') 
-                                                    WHEN r.tipo_documento = '07' 
-                                                    THEN CONCAT(
+                                                        WHEN r.tipo_documento = '01' 
+                                                        THEN CONCAT(r.tipo_documento, ' - FACTURA') 
+                                                        WHEN r.tipo_documento = '03' 
+                                                        THEN CONCAT(r.tipo_documento, ' - BOLETA') 
+                                                        WHEN r.tipo_documento = '07' 
+                                                        THEN CONCAT(
                                                         r.tipo_documento,
                                                         ' - NOTA CREDITO'
-                                                    ) 
-                                                    WHEN r.tipo_documento = '08' 
-                                                    THEN CONCAT(
+                                                        ) 
+                                                        WHEN r.tipo_documento = '08' 
+                                                        THEN CONCAT(
                                                         r.tipo_documento,
                                                         ' - NOTA DEBITO'
-                                                    ) 
-                                                    ELSE 'REVISAR' 
+                                                        ) 
+                                                        ELSE 'REVISAR' 
                                                     END AS tipo,
                                                     r.serie_doc,
                                                     r.num_doc,
@@ -492,8 +492,33 @@ class ModeloCompras{
                                                     r.razon_social,
                                                     r.base,
                                                     r.igv,
-                                                    r.total,
-                                                    r.moneda,
+                                                    ROUND(
+                                                        CASE
+                                                        WHEN r.moneda = 'S' 
+                                                        THEN 0 
+                                                        ELSE r.total / r.tipo_cambio 
+                                                        END,
+                                                        2
+                                                    ) AS totalD,
+                                                    FORMAT(
+                                                        ROUND(
+                                                        CASE
+                                                            WHEN r.moneda = 'S' 
+                                                            THEN 0 
+                                                            ELSE r.total / r.tipo_cambio 
+                                                        END,
+                                                        2
+                                                        ),
+                                                        2
+                                                    ) AS totalFD,
+                                                    r.total AS totalS,
+                                                    FORMAT(r.total, 2) AS totalFS,
+                                                    CASE
+                                                        WHEN r.moneda = 'S' 
+                                                        THEN 'PEN' 
+                                                        ELSE 'USD' 
+                                                    END AS moneda,
+                                                    r.tipo_cambio,
                                                     r.concepto,
                                                     r.comprobante,
                                                     r.contribuyente,
