@@ -876,6 +876,27 @@ $("#nuevoTalleres").change(function(){
 	$(".tablaArticulosTalleres").DataTable().destroy();
     localStorage.setItem("sectorIngreso", ingreso);
     cargarTablaArticuloTalleres(localStorage.getItem("sectorIngreso"));
+	var datos = new FormData();
+    datos.append("idSector", ingreso);
+
+    $.ajax({
+
+        url: "ajax/sectores.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuesta) {
+
+            //console.log("respuesta", respuesta);
+
+            $("#nuevoTipoSector").val(respuesta["tipo"]);
+
+        }
+
+    })
     var datos2 = new FormData();
     datos2.append("ingreso", ingreso);
     $.ajax({
@@ -886,12 +907,14 @@ $("#nuevoTalleres").change(function(){
       contentType: false,
       processData: false,
       dataType: "json",
-      success: function(respuesta) {
+      success: function(respuesta2) {
 		//   console.log(respuesta);
-        $("#nuevoCodigo").val(ingreso+("000"+respuesta["ultimo_codigo"]).slice(-4));
+        $("#nuevoCodigo").val(ingreso+("000"+respuesta2["ultimo_codigo"]).slice(-4));
       }
     })
 })
+
+
 $("#editarTalleres").change(function(){
 	var ingreso = $(this).val();
     var datos2 = new FormData();
@@ -905,7 +928,7 @@ $("#editarTalleres").change(function(){
       processData: false,
       dataType: "json",
       success: function(respuesta) {
-		  console.log(respuesta);
+		//   console.log(respuesta);
         $("#nuevoCodigo").val(ingreso+("000"+respuesta["ultimo_codigo"]).slice(-4));
       }
     })
@@ -1715,6 +1738,36 @@ $(".tablaIngresoM").on("click", ".btnEliminarIngStock", function () {
     })
 
 })
+
+/*=============================================
+ELIMINAR SEGUNDA
+=============================================*/
+$(".tablaIngresoM").on("click", ".btnEliminarSegunda", function () {
+
+	var idSegunda = $(this).attr("idSegunda");
+	var documento=$(this).attr("documento")
+
+    swal({
+        title: '¿Está seguro de borrar la segunda?',
+        text: "¡Si no lo está puede cancelar la acción!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si, borrar segunda!'
+    }).then(function (result) {
+
+        if (result.value) {
+
+            window.location = "index.php?ruta=ingresos&idSegunda=" + idSegunda + "&documento="+documento;
+
+        }
+
+    })
+
+})
+
 
 /* 
 * BOTON REPORTE DE ORDEN DE CORTE

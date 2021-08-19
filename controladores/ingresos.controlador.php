@@ -89,7 +89,7 @@ class ControladorIngresos{
 
                     #var_dump("listaArticulos", $listaArticulos);
 
-                    if($_POST["nuevoTalleres"] == "T1" || $_POST["nuevoTalleres"] == "T3" || $_POST["nuevoTalleres"] == "T5" || $_POST["nuevoTalleres"] == "T7" || $_POST["nuevoTalleres"] == "T10" ){
+                    if($_POST["nuevoTalleres"] == "T1" || $_POST["nuevoTalleres"] == "T3" || $_POST["nuevoTalleres"] == "T5" ){
                         foreach($listaArticulos as $value){
 
                             $tabla = "articulojf";
@@ -256,7 +256,7 @@ class ControladorIngresos{
 
                     #var_dump("listaArticulos", $listaArticulos);
 
-                    if($_POST["nuevoTalleres"] == "T1" || $_POST["nuevoTalleres"] == "T3" || $_POST["nuevoTalleres"] == "T5" || $_POST["nuevoTalleres"] == "T7" || $_POST["nuevoTalleres"] == "T10"){
+                    if($_POST["nuevoTalleres"] == "T1" || $_POST["nuevoTalleres"] == "T3" || $_POST["nuevoTalleres"] == "T5"){
                         foreach($listaArticulos as $value){
 
                             $tabla = "articulojf";
@@ -433,7 +433,7 @@ class ControladorIngresos{
                     /* 
                     todo: Actualizamos en articulos de ingresos
                     */
-                    if($_POST["editarTalleres"] == "T1" || $_POST["editarTalleres"] == "T3" || $_POST["editarTalleres"] == "T5" || $_POST["editarTalleres"] == "T7" || $_POST["editarTalleres"] == "T10"){
+                    if($_POST["editarTalleres"] == "T1" || $_POST["editarTalleres"] == "T3" || $_POST["editarTalleres"] == "T5"){
                         foreach($listaArticulosOC as $value){
 
                             $tabla = "articulojf";
@@ -640,7 +640,7 @@ class ControladorIngresos{
                     /* 
                     todo: Actualizamos en articulos  los ingresos
                     */
-                    if($_POST["editarTalleres"] == "T1" || $_POST["editarTalleres"] == "T3" || $_POST["editarTalleres"] == "T5" || $_POST["editarTalleres"] == "T7"  || $_POST["editarTalleres"] == "T10"){
+                    if($_POST["editarTalleres"] == "T1" || $_POST["editarTalleres"] == "T3" || $_POST["editarTalleres"] == "T5"){
                         foreach($listaArticulosOC as $value){
 
                             $tabla = "articulojf";
@@ -796,7 +796,7 @@ class ControladorIngresos{
         /* 
         todo: Actualizamos orden de corte en Articulojf
         */
-        if($cabeceraIngreso["taller"] == "T1" || $cabeceraIngreso["taller"] == "T3" || $cabeceraIngreso["taller"] == "T5" || $cabeceraIngreso["taller"] == "T7" || $cabeceraIngreso["taller"] == "T10" ){
+        if($cabeceraIngreso["taller"] == "T1" || $cabeceraIngreso["taller"] == "T3" || $cabeceraIngreso["taller"] == "T5"){
             foreach($detaOC as $value){
 
                 $tabla = "articulojf";
@@ -867,6 +867,91 @@ class ControladorIngresos{
                                     type: "success",
                                     title: "Felicitaciones",
                                     text: "¡La información fue eliminada con éxito!",
+                                    showConfirmButton: true,
+                                    confirmButtonText: "Cerrar"
+                                }).then((result)=>{
+                                    if(result.value){
+                                        window.location="ingresos";}
+                                });
+                            </script>';   
+           
+        }
+
+        return $respuesta;
+        }
+    }
+
+    /* 
+    *Método para eliminar las ordenes de corte
+    */
+    static public function ctrEliminarSegunda(){
+        if(isset($_GET["documento"]) && isset($_GET["idSegunda"]) ){
+        $item = "documento";
+        $codigo=$_GET["documento"];
+
+        $detaOC = ModeloIngresos::mdlMostarDetallesIngresos("movimientosjf_2021", "documento", $codigo);
+        #var_dump("detaOC", $detaOC);
+         
+        $cabeceraIngreso= ModeloIngresos::mdlMostarIngresos("movimientos_cabecerajf","id",$_GET["idSegunda"]);
+        /* 
+        todo: Actualizamos orden de corte en Articulojf
+        */
+        if($cabeceraIngreso["taller"] == "T5" ){
+            foreach($detaOC as $value){
+
+                $tabla = "articulojf";
+
+                $valor = $value["articulo"];
+                
+                //Actualizamos Taller
+                $item1 = "taller";
+                $valor1 = $value["cantidad"];
+
+                ModeloArticulos::mdlRecuperarTaller( $valor, $valor1);
+
+            }
+        }else{
+            foreach($detaOC as $value){
+
+                $tabla = "cierres_detallejf";
+
+                $valor = $value["idcierre"];
+                $articulo= $value["articulo"];
+                
+                //Actualizar Taller
+                $item1 = "cantidad";
+                $valor1 = $value["cantidad"];
+
+                ModeloArticulos::mdlRecuperarUnCierre($tabla, $item1, $valor1, $valor);
+
+                $valor2= $value["cantidad"];
+
+                //Actualizamos servicio
+                
+                ModeloArticulos::mdlRecuperarArticuloServicio( $articulo, $valor2);
+            }
+        }
+
+        /* 
+        todo: Eliminamos la cabecera de Orden de corte
+        */
+        $tablaOC = "movimientos_cabecerajf";
+        $itemOC = "id";
+        $valorOC = $_GET["idSegunda"];
+
+        $respuesta = ModeloIngresos::mdlEliminarDato($tablaOC, $itemOC, $valorOC);
+        $respuesta= ModeloIngresos::mdlEliminarDato("movimientosjf_2021","documento",$codigo);
+
+        if($respuesta == "ok"){
+
+            /* 
+            todo: Eliminamos el detalle de Orden de corte
+            */
+            echo '<script>
+                                swal({
+                                    type: "success",
+                                    title: "Felicitaciones",
+                                    text: "¡La segunda fue eliminada con éxito!",
                                     showConfirmButton: true,
                                     confirmButtonText: "Cerrar"
                                 }).then((result)=>{

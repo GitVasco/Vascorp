@@ -494,6 +494,9 @@ MODAL VISUALIZAR INFORMACION
 <?php 
   $eliminarIngreso = new ControladorIngresos();
   $eliminarIngreso -> ctrEliminarIngreso();
+
+  $eliminarSegunda = new ControladorIngresos();
+  $eliminarSegunda -> ctrEliminarSegunda();
 ?>
 
 <script>

@@ -45,6 +45,7 @@
            
            <th>Codigo</th>
            <th>Sector</th>
+           <th>Tipo</th>
            <th>Acciones</th>
 
          </tr> 

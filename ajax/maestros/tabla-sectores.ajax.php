@@ -22,6 +22,12 @@ class TablaSectores{
 
         for($i = 0; $i < count($sector); $i++){  
 
+            if($sector[$i]["tipo"] == 0){
+                $tipo = "TALLER";
+            }else{
+                $tipo = "SERVICIO";
+            }
+    
         /*=============================================
         TRAEMOS LAS ACCIONES
         =============================================*/         
@@ -31,6 +37,7 @@ class TablaSectores{
             $datosJson .= '[
             "'.$sector[$i]["cod_sector"].'",
             "'.$sector[$i]["nom_sector"].'",
+            "'.$tipo.'",
             "'.$botones.'"
             ],';        
             }
