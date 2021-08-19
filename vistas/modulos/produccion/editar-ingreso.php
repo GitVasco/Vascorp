@@ -58,7 +58,8 @@
                     <input type="text" class="form-control" id="usuario" name="usuario"
                       value="<?php echo $_SESSION["nombre"]; ?>" readonly>
 
-                    <input type="hidden" name="idUsuario" value="<?php echo $_SESSION["id"]; ?>">                      
+                    <input type="hidden" name="idUsuario" value="<?php echo $_SESSION["id"]; ?>">   
+                    <input type="hidden" name="idIngreso" value="<?php echo $_GET["idIngreso"]; ?>">                      
 
                   </div>
 
@@ -168,16 +169,18 @@
                   #var_dump("ordencorte", $ordencorte["codigo"]);
                   #var_dump("listaArticuloOC", $listaArticuloOC);
                   foreach($listaArticuloIng as $key=>$value){
-                    if($ingreso["taller"]=="T1" || $ingreso["taller"]=="T3" || $ingreso["taller"]=="T5" ){
+                    if($ingreso["taller"]=="T1" || $ingreso["taller"]=="T3" || $ingreso["taller"]=="T5" || $ingreso["taller"] == "T7" || $ingreso["taller"] == "T10"){
 
                       $infoArticulo = ControladorArticulos::ctrMostrarArticulos($value["articulo"]);
                     }else{
                       $infoArticulo = ControladorIngresos::ctrMostrarArticulosCierres($value["idcierre"]);
                     }
-                    var_dump($listaArticuloIng);
+                   
                     $tallerAntiguo = $infoArticulo["taller"] + $value["cantidad"];
+
                     $stockG = $infoArticulo["stockG"];
-                    echo '<div class="row munditoIngreso" style="padding:5px 15px">
+                    if($ingreso["taller"]=="T1" || $ingreso["taller"]=="T3" || $ingreso["taller"]=="T5" || $ingreso["taller"] == "T7" || $ingreso["taller"] == "T10"){
+                      echo '<div class="row munditoIngreso" style="padding:5px 15px">
 
                             <div class="col-xs-6" style="padding-right:0px">
                         
@@ -193,7 +196,7 @@
                         
                             <div class="col-xs-3">
                         
-                              <input type="number" class="form-control nuevaCantidadArticuloIngreso input-sm" name="nuevaCantidadArticuloIngreso" id="nuevaCantidadArticuloIngreso" min="1" value="'.$value["cantidad"].'" taller="'.$tallerAntiguo.'" articulo="'.$infoArticulo["articulo"].'" nuevotaller="'.$infoArticulo["taller"].'" required>
+                              <input type="number" class="form-control nuevaCantidadArticuloIngreso input-sm" name="nuevaCantidadArticuloIngreso" id="nuevaCantidadArticuloIngreso" min="1" value="'.$value["cantidad"].'" taller="'.$tallerAntiguo.'" articulo="'.$infoArticulo["articulo"].'" nuevotaller="'.$infoArticulo["taller"].'" nuevaCantidad ="'.$value["cantidad"].'" cantidad="" required>
                         
                             </div>
                             
@@ -203,6 +206,37 @@
                         
                             </div>';
                             echo '</div>';  
+                    }else{
+
+                      echo '<div class="row munditoIngreso" style="padding:5px 15px">
+
+                            <div class="col-xs-6" style="padding-right:0px">
+                        
+                              <div class="input-group">
+                        
+                                <span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarTaller" articuloIngreso="'.$value["idcierre"].'"><i class="fa fa-times"></i></button></span>
+                        
+                                <input type="text" class="form-control nuevaDescripcionProducto input-sm" articuloIngreso="'.$infoArticulo["articulo"].'" name="agregarT" value="'.$infoArticulo["packing"].'" codigoAC="'.$infoArticulo["articulo"].'" idCierre= "'.$value["idcierre"].'" readonly required>
+                        
+                              </div>
+                        
+                            </div>
+                        
+                            <div class="col-xs-3">
+                        
+                              <input type="number" class="form-control nuevaCantidadArticuloIngreso input-sm" name="nuevaCantidadArticuloIngreso" id="nuevaCantidadArticuloIngreso" min="1" value="'.$value["cantidad"].'" taller="'.$tallerAntiguo.'" articulo="'.$infoArticulo["articulo"].'" nuevotaller="'.$infoArticulo["taller"].'" nuevaCantidad="'.$value["cantidad"].'" cantidad="" required>
+                        
+                            </div>
+                            
+                            <div class="col-xs-3 divSaldoIngreso">
+                        
+                              <input type="number" class="form-control nuevoSaldoIngreso input-sm" name="nuevoSaldoIngreso" id="nuevoSaldoIngreso" min="1" value="'.$infoArticulo["taller"].'" readonly>
+                        
+                            </div>';
+                            echo '</div>';  
+                      
+                    }
+                    
                   }
                             ?>
                   
@@ -240,9 +274,9 @@
                             <span class="input-group-addon"><i class="fa fa-scissors"></i></span>
 
                             <input type="text" min="1" class="form-control input-lg" id="nuevoTotalTaller"
-                              name="nuevoTotalTaller" total="" placeholder="0" total="<?php echo $ingreso["total"]; ?>" value=<?php echo $ingreso["total"]?> readonly required>
+                              name="nuevoTotalTaller" total="" placeholder="0" total="<?php echo $ingreso["total"]; ?>" value="<?php echo $ingreso["total"]?>" readonly required>
 
-                            <input type="hidden" name="totalTaller" id="totalTaller" value=<?php echo $ingreso["total"]?>>
+                            <input type="hidden" name="totalTaller" id="totalTaller" value="<?php echo $ingreso["total"]?>">
 
 
                           </div>
@@ -391,4 +425,6 @@ $('.nuevoArticuloIngreso').ready(function(){
     });
   });
 
+
+  
 </script>

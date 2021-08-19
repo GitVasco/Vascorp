@@ -99,7 +99,7 @@
 
                         <span class="input-group-addon"><i class="fa fa-wrench"></i></span>
                         <select class="form-control  input-sm selectpicker" name="nuevoTalleres" id="nuevoTalleres" data-live-search="true" required>
-                        <option value="">Seleccionar un taller</option>
+                        <option value="">SIN TALLER</option>
                         <?php
 
                             $sector=ControladorSectores::ctrMostrarSectores(null);
@@ -326,7 +326,8 @@
 
 
 <script>
-window.document.title = "Crear segunda"
+window.document.title = "Crear segunda";
+localStorage.setItem("sectorIngreso",null);
 </script>
 
 <script>
