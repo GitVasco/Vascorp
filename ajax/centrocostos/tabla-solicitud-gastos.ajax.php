@@ -51,7 +51,7 @@ class TablaGastosCaja{
 
             }else if($gastos[$i]["estado"] == "4"){
 
-                $estado = "<button class='btn btn-primary btn-xs btnAprobarSol' idSolicitud='".$gastos[$i]["id"]."'>Por Aceptar</button>";
+                $estado = "<button class='btn btn-primary btn-xs' idSolicitud='".$gastos[$i]["id"]."'>Por Aceptar</button>";
 
                 $botones =  "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarSolicitud' idGasto='".$gastos[$i]["id"]."' estado=".$gastos[$i]["estado"]." data-toggle='modal' data-target='#modalEditarSolicitud'><i class='fa fa-pencil'></i></button></div>"; 
 

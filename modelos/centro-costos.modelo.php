@@ -1731,9 +1731,9 @@ return $stmt -> fetchAll();
                                                 WHERE d.tipo_gasto IN ('60', '92', '94', '95', '97') 
                                                   AND (
                                                     d.alerta = '1' 
-                                                    OR d.comprobante = '1' 
-                                                    OR d.contribuyente = '1' 
-                                                    OR condicion = '1'
+                                                  OR d.comprobante IN ('NO EXISTE', 'ANULADO') 
+                                                  OR d.contribuyente IN ('-') 
+                                                  OR condicion IN ('-')
                                                   ) 
                                                 ORDER BY d.origen,
                                                   d.voucher");

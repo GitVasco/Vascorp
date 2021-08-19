@@ -40,15 +40,15 @@ class TablaDiario{
             /* 
             *comprobante
             */
-            if($centros[$i]["comprobante"] == "0"){
+            if($centros[$i]["comprobante"] == ""){
 
                 $comprobante = "<button class='btn btn-warning btn-xs fa fa-exclamation-triangle'></button>";
 
-            }else if($centros[$i]["comprobante"] == "1"){
+            }else if($centros[$i]["comprobante"] == "NO EXISTE" || $centros[$i]["comprobante"] == "ANULADO"){
 
                 $comprobante = "<button class='btn btn-danger btn-xs fa fa-window-close'></button>";
 
-            }else if($centros[$i]["comprobante"] == "2"){
+            }else{
 
                 $comprobante = "<button class='btn btn-success btn-xs fa fa-check-square'></button>";
 
@@ -57,15 +57,15 @@ class TablaDiario{
             /* 
             *contribuyente
             */
-            if($centros[$i]["contribuyente"] == "0"){
+            if($centros[$i]["contribuyente"] == ""){
 
                 $contribuyente = "<button class='btn btn-warning btn-xs fa fa-exclamation-triangle'></button>";
 
-            }else if($centros[$i]["contribuyente"] == "1"){
+            }else if($centros[$i]["contribuyente"] == "-"){
 
                 $contribuyente = "<button class='btn btn-danger btn-xs fa fa-window-close'></button>";
 
-            }else if($centros[$i]["contribuyente"] == "2"){
+            }else{
 
                 $contribuyente = "<button class='btn btn-success btn-xs fa fa-check-square'></button>";
 
@@ -74,15 +74,15 @@ class TablaDiario{
             /* 
             *condicion
             */
-            if($centros[$i]["condicion"] == "0"){
+            if($centros[$i]["condicion"] == ""){
 
                 $condicion = "<button class='btn btn-warning btn-xs fa fa-exclamation-triangle'></button>";
 
-            }else if($centros[$i]["condicion"] == "1"){
+            }else if($centros[$i]["condicion"] == "-"){
 
                 $condicion = "<button class='btn btn-danger btn-xs fa fa-window-close'></button>";
 
-            }else if($centros[$i]["condicion"] == "2"){
+            }else{
 
                 $condicion = "<button class='btn btn-success btn-xs fa fa-check-square'></button>";
 

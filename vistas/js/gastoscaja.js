@@ -1746,7 +1746,7 @@ $(".TablaSolicitud, .TablaGastosCaja").on("click", ".btnAprobarSol", function() 
 	var total = $(this).attr("total");
 	var estadoSol = $(this).attr("estadoSol");
 	var fecha = $(this).attr("fecha");
-	//console.log(idSolicitud, total, estadoSol, fecha);
+	//console.log(estadoSol);
 
 	var datos=new FormData();
 	datos.append("idSolicitud",idSolicitud);
@@ -1784,11 +1784,6 @@ $(".TablaSolicitud, .TablaGastosCaja").on("click", ".btnAprobarSol", function() 
 
 	});
 
-	var btnSol = "btnSol"+idSolicitud;
-	//console.log(btnSol);
-
-	document.getElementById(btnSol).disabled=true;
-
 	if(estadoSol == "3"){
 
 		$(this).removeClass("btn-warning");
@@ -1796,6 +1791,11 @@ $(".TablaSolicitud, .TablaGastosCaja").on("click", ".btnAprobarSol", function() 
 		$(this).html("Por Rendir");
 		$(this).attr("estadoSol","4");
 		$(this).attr("total","0");
+
+		var btnSol = "btnSol"+idSolicitud;
+		//console.log(btnSol);
+	
+		document.getElementById(btnSol).disabled=true;
 
 	}else if(estadoSol == "4"){
 
