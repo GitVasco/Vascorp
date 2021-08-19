@@ -89,7 +89,7 @@ class ControladorIngresos{
 
                     #var_dump("listaArticulos", $listaArticulos);
 
-                    if($_POST["nuevoTalleres"] == "T1" || $_POST["nuevoTalleres"] == "T3" || $_POST["nuevoTalleres"] == "T5" ){
+                    if($_POST["nuevoTalleres"] == "T1" || $_POST["nuevoTalleres"] == "T3" || $_POST["nuevoTalleres"] == "T5" || $_POST["nuevoTalleres"] == "T7" || $_POST["nuevoTalleres"] == "T10" ){
                         foreach($listaArticulos as $value){
 
                             $tabla = "articulojf";
@@ -256,7 +256,7 @@ class ControladorIngresos{
 
                     #var_dump("listaArticulos", $listaArticulos);
 
-                    if($_POST["nuevoTalleres"] == "T1" || $_POST["nuevoTalleres"] == "T3" || $_POST["nuevoTalleres"] == "T5" ){
+                    if($_POST["nuevoTalleres"] == "T1" || $_POST["nuevoTalleres"] == "T3" || $_POST["nuevoTalleres"] == "T5" || $_POST["nuevoTalleres"] == "T7" || $_POST["nuevoTalleres"] == "T10"){
                         foreach($listaArticulos as $value){
 
                             $tabla = "articulojf";
@@ -433,7 +433,7 @@ class ControladorIngresos{
                     /* 
                     todo: Actualizamos en articulos de ingresos
                     */
-                    if($_POST["editarTalleres"] == "T1" || $_POST["editarTalleres"] == "T3" || $_POST["editarTalleres"] == "T5" ){
+                    if($_POST["editarTalleres"] == "T1" || $_POST["editarTalleres"] == "T3" || $_POST["editarTalleres"] == "T5" || $_POST["editarTalleres"] == "T7" || $_POST["editarTalleres"] == "T10"){
                         foreach($listaArticulosOC as $value){
 
                             $tabla = "articulojf";
@@ -463,6 +463,7 @@ class ControladorIngresos{
                             
                             //Actualizar Taller
                             $item1 = "cantidad";
+                            
                             $valor1 = $value["taller"];
     
                             ModeloArticulos::mdlActualizarUnCierre($tabla, $item1, $valor1, $valor);
@@ -484,7 +485,8 @@ class ControladorIngresos{
                 /* 
                 todo: Editamos los cambios de la cabecera Orden de Corte
                 */
-                $datos = array( "documento"=>$_POST["editarCodigo"],
+                $datos = array( "id" => $_POST["idIngreso"],
+                                "documento"=>$_POST["editarCodigo"],
                                 "guia"=>$_POST["editarGuiaIng"],
                                 "taller"=>$_POST["editarTalleres"],
                                 "usuario"=>$_POST["idUsuario"],
@@ -515,7 +517,7 @@ class ControladorIngresos{
                                             "taller"=>$_POST["editarTalleres"],
                                             "fecha"=>$fecha->format("Y-m-d"),
                                             "articulo"=>$value["articulo"],
-                                            "cantidad"=>$value["cantidad"],
+                                            "cantidad"=>$value["nuevaCant"],
                                             "almacen" => "01",
                                             "idcierre"=>$value["idCierre"]);
                             #var_dump("datosD", $datosD);
@@ -638,7 +640,7 @@ class ControladorIngresos{
                     /* 
                     todo: Actualizamos en articulos  los ingresos
                     */
-                    if($_POST["editarTalleres"] == "T1" || $_POST["editarTalleres"] == "T3" || $_POST["editarTalleres"] == "T5" ){
+                    if($_POST["editarTalleres"] == "T1" || $_POST["editarTalleres"] == "T3" || $_POST["editarTalleres"] == "T5" || $_POST["editarTalleres"] == "T7"  || $_POST["editarTalleres"] == "T10"){
                         foreach($listaArticulosOC as $value){
 
                             $tabla = "articulojf";
@@ -678,7 +680,8 @@ class ControladorIngresos{
                 /* 
                 todo: Editamos los cambios de la cabecera Orden de Corte
                 */
-                $datos = array( "documento"=>$_POST["editarCodigo"],
+                $datos = array( "id" => $_POST["idIngreso"],
+                                "documento"=>$_POST["editarCodigo"],
                                 "guia"=>$_POST["editarGuiaIng"],
                                 "taller"=>$_POST["editarTalleres"],
                                 "usuario"=>$_POST["idUsuario"],
@@ -688,7 +691,7 @@ class ControladorIngresos{
                                 "trabajador" => $_POST["editarTrabajadores"]);
                 #var_dump("datos", $datos);
 
-                $respuesta = ModeloIngresos::mdlEditarIngreso("movimientos_cabecerajf", $datos);
+                $respuesta = ModeloIngresos::mdlEditarSegunda("movimientos_cabecerajf", $datos);
 
                 if($respuesta == "ok"){
 
@@ -712,7 +715,7 @@ class ControladorIngresos{
                                             "fecha"=>$fecha->format("Y-m-d"),
                                             "articulo"=>$value["articulo"],
                                             "cliente"=>$_POST["editarTrabajadores"],
-                                            "cantidad"=>$value["cantidad"],
+                                            "cantidad"=>$value["nuevaCant"],
                                             "almacen" => "02",
                                             "idcierre"=>$value["idCierre"]);
                             #var_dump("datosD", $datosD);
@@ -793,7 +796,7 @@ class ControladorIngresos{
         /* 
         todo: Actualizamos orden de corte en Articulojf
         */
-        if($cabeceraIngreso["taller"] == "T1" || $cabeceraIngreso["taller"] == "T3" || $cabeceraIngreso["taller"] == "T5" ){
+        if($cabeceraIngreso["taller"] == "T1" || $cabeceraIngreso["taller"] == "T3" || $cabeceraIngreso["taller"] == "T5" || $cabeceraIngreso["taller"] == "T7" || $cabeceraIngreso["taller"] == "T10" ){
             foreach($detaOC as $value){
 
                 $tabla = "articulojf";

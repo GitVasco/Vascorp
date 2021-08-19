@@ -10,8 +10,7 @@ class ControladorSectores{
 
 		if(isset($_POST["nuevoSector"])){
 
-			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevoSector"]) &&
-			   preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevoCodigo"])){
+			
 
 			   	$datos = array("sector"=>$_POST["nuevoSector"],
 					           "codigo"=>$_POST["nuevoCodigo"]);
@@ -39,28 +38,7 @@ class ControladorSectores{
 
 				}
 
-			}else{
-
-				echo'<script>
-
-					swal({
-						  type: "error",
-						  title: "¡El sector no puede ir vacío o llevar caracteres especiales!",
-						  showConfirmButton: true,
-						  confirmButtonText: "Cerrar"
-						  }).then(function(result){
-							if (result.value) {
-
-							window.location = "sectores";
-
-							}
-						})
-
-			  	</script>';
-
-
-
-			}
+			
 
 		}
 
@@ -87,8 +65,7 @@ class ControladorSectores{
 
 		if(isset($_POST["editarSector"])){
 
-			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["editarSector"]) &&
-			   preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["editarCodigo"])){
+			
 
 			   	$datos = array("id"=>$_POST["idSector"],
                                "sector"=>$_POST["editarSector"],
@@ -116,30 +93,6 @@ class ControladorSectores{
 					</script>';
 
 				}
-
-			}else{
-
-				echo'<script>
-
-					swal({
-						  type: "error",
-						  title: "¡El sector no puede ir vacío o llevar caracteres especiales!",
-						  showConfirmButton: true,
-						  confirmButtonText: "Cerrar"
-						  }).then(function(result){
-							if (result.value) {
-
-							window.location = "sectores";
-
-							}
-						})
-
-			  	</script>';
-
-
-
-			}
-
 		}
 
     }

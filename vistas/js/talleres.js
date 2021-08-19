@@ -1125,7 +1125,7 @@ $(".tablaArticulosTalleres tbody").on("click", "button.agregarArtiTaller", funct
 	
 						'<div class="col-xs-3">' +
 	
-							'<input type="number" class="form-control nuevaCantidadArticuloIngreso input-sm" name="nuevaCantidadArticuloIngreso" id="nuevaCantidadArticuloIngreso" min="1" value="0" taller="' + talleres + '" articulo="'+ articulo +'" nuevoTaller="' + Number(Number(talleres) - Number($("#nuevaCantidadArticuloIngreso").val)) + '" required>' +
+							'<input type="number" class="form-control nuevaCantidadArticuloIngreso input-sm" name="nuevaCantidadArticuloIngreso" id="nuevaCantidadArticuloIngreso" min="1" value="0" taller="' + talleres + '" articulo="'+ articulo +'" nuevoTaller="' + talleres + '" cantidad = "" nuevaCantidad = "0" required>' +
 	
 						"</div>" +
 						"<!-- saldo de la Orden de Corte -->" +
@@ -1142,7 +1142,7 @@ $(".tablaArticulosTalleres tbody").on("click", "button.agregarArtiTaller", funct
 			}else{
 				$(".nuevoArticuloIngreso").append(
 
-					'<div class="row" style="padding:5px 15px">' +
+					'<div class="row munditoIngreso" style="padding:5px 15px">' +
 	
 						"<!-- Descripción del Articulo -->" +
 	
@@ -1162,7 +1162,7 @@ $(".tablaArticulosTalleres tbody").on("click", "button.agregarArtiTaller", funct
 	
 						'<div class="col-xs-3">' +
 	
-							'<input type="number" class="form-control nuevaCantidadArticuloIngreso input-sm" name="nuevaCantidadArticuloIngreso" id="nuevaCantidadArticuloIngreso" min="1" value="0" taller="' + talleres + '" articulo="'+ articulo +'" nuevoTaller="' + Number(Number(talleres) - Number($("#nuevaCantidadArticuloIngreso").val)) + '" required>' +
+							'<input type="number" class="form-control nuevaCantidadArticuloIngreso input-sm" name="nuevaCantidadArticuloIngreso" id="nuevaCantidadArticuloIngreso" min="1" value="0" taller="' + talleres + '" articulo="'+ articulo +'" nuevoTaller="' + talleres + '" cantidad = "" nuevaCantidad="0"  required>' +
 	
 						"</div>" +
 						"<!-- saldo de la Orden de Corte -->" +
@@ -1233,7 +1233,7 @@ $(".formularioIngreso").on("click", "button.quitarTaller", function () {
 
     $(this).parent().parent().parent().parent().remove();
     var articuloIngreso = $(this).attr("articuloIngreso");
-	console.log(articuloIngreso);
+	// console.log(articuloIngreso);
     /*=============================================
     ALMACENAR EN EL LOCALSTORAGE EL ID DEL MATERIA PRIMA A QUITAR
     =============================================*/
@@ -1290,33 +1290,95 @@ $(".formularioIngreso").on("click", "button.quitarTaller", function () {
 $(".formularioIngreso").on("change", "input.nuevaCantidadArticuloIngreso", function() {
 
     var nuevoTaller = Number($(this).attr("taller")) - Number($(this).val());
-    var articulo = $(this).attr("articulo");
-    //console.log(articulo);
-	var inputTaller = $(this)
-    .parent()
-    .parent()
-    .children(".divSaldoIngreso")
-    .children(".nuevoSaldoIngreso");
-    //console.log(pendiente);
+	
+	if($(this).attr("nuevaCantidad") == "0"){
+		if (Number($(this).val()) > Number($(this).attr("taller"))) {
+			/*=============================================
+			SI LA CANTIDAD ES SUPERIOR AL STOCK REGRESAR VALORES INICIALES
+			=============================================*/
+		
+			$(this).val(0);
+			$(this).attr("cantidad", "");
+			sumarTotalIngreso();
+			$(this).attr("nuevoTaller",$(this).attr("taller"));
+			var inputTaller = $(this)
+			.parent()
+			.parent()
+			.children(".divSaldoIngreso")
+			.children(".nuevoSaldoIngreso");
+			// console.log(inputSer);
+			inputTaller.val($(this).attr("taller"));
+			swal({
+			  title: "La cantidad supera el Taller",
+			  text: "¡Sólo hay " + $(this).attr("taller") + " unidades!",
+			  type: "error",
+			  confirmButtonText: "¡Cerrar!"
+			});
+		
+			return;
+		  }else{
+			$(this).attr("cantidad", Number($(this).val()));
+			$(this).attr("nuevoTaller", Number(nuevoTaller));
+			var inputTaller = $(this)
+			.parent()
+			.parent()
+			.children(".divSaldoIngreso")
+			.children(".nuevoSaldoIngreso");
+			// console.log(inputSer);
+			inputTaller.val(nuevoTaller);
+			//console.log(articulo);
+		
+			
+		  }
+		
+		
+	}else{
+		if (Number($(this).val()) > Number($(this).attr("taller"))) {
+			/*=============================================
+			SI LA CANTIDAD ES SUPERIOR AL STOCK REGRESAR VALORES INICIALES
+			=============================================*/
+		
+			$(this).val($(this).attr("nuevaCantidad"));
+			$(this).attr("nuevoTaller",$(this).attr("taller") - $(this).attr("nuevaCantidad"));
+			$(this).attr("cantidad", Number($(this).val()));
+			var inputTaller = $(this)
+			.parent()
+			.parent()
+			.children(".divSaldoIngreso")
+			.children(".nuevoSaldoIngreso");
+			// console.log(inputSer);
+			inputTaller.val($(this).attr("taller") - $(this).attr("nuevaCantidad"));
+			sumarTotalIngreso();
+		
+			swal({
+			  title: "La cantidad supera el Taller",
+			  text: "¡Sólo hay " + $(this).attr("taller") + " unidades!",
+			  type: "error",
+			  confirmButtonText: "¡Cerrar!"
+			});
+		
+			return;
+		  }else{
+			var nuevaCantidad = Number($(this).val()) - Number($(this).attr("nuevaCantidad"));
+			$(this).attr("cantidad", Number(nuevaCantidad));
+			$(this).attr("nuevoTaller", Number(nuevoTaller));
+			var inputTaller = $(this)
+			.parent()
+			.parent()
+			.children(".divSaldoIngreso")
+			.children(".nuevoSaldoIngreso");
+			// console.log(inputSer);
+			inputTaller.val(nuevoTaller);
+			//console.log(articulo);
+		
+	
+		  }
+		
+	}
 
-	inputTaller.val(nuevoTaller);
-    var pendiente = $(this)
-    .parent()
-    .parent()
-    .children(".pendiente")
-    .children(".nuevoPendienteProy");
-    //console.log(pendiente);
-
-    var pendienteReal = pendiente.attr("pendienteReal");
-    //console.log(pendiente);
-    //console.log(pendienteReal);
-
-    var quedaPen = pendienteReal - Number($(this).val());
-    //console.log(quedaPen);
-
-    pendiente.val(quedaPen);
-
-    $(this).attr("nuevoTaller", Number(nuevoTaller));
+   
+	
+	
 
 
     // SUMAR TOTAL DE UNIDADES
@@ -1383,6 +1445,7 @@ function listarArticulosIngreso() {
     var descripcion = $(".nuevaDescripcionProducto");
   
     var cantidad = $(".nuevaCantidadArticuloIngreso");
+	
     
     for (var i = 0; i < descripcion.length; i++) {
 
@@ -1390,7 +1453,8 @@ function listarArticulosIngreso() {
 
         id: $(descripcion[i]).attr("articuloIngreso"),
         articulo: $(descripcion[i]).attr("codigoAC"),
-        cantidad: $(cantidad[i]).val(),
+        cantidad: $(cantidad[i]).attr("cantidad"),
+		nuevaCant: $(cantidad[i]).val(),
         taller: $(cantidad[i]).attr("nuevoTaller"),
 		idCierre: $(descripcion[i]).attr("idCierre")
 
