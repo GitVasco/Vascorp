@@ -47,6 +47,70 @@ class ModeloAlmacenCorte{
 
 	}
 
+		/*
+	* Método para recuperar el total del corte por articulo
+	*/
+	static public function mdlRecuperarAlmCorte($valor, $valor1){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE 
+			articulojf 
+		SET
+			alm_corte = alm_corte - :cantidad 
+		WHERE articulo = :articulo ");
+
+		$stmt->bindParam(":articulo", $valor, PDO::PARAM_STR);
+		$stmt->bindParam(":cantidad", $valor1, PDO::PARAM_STR);
+
+		$stmt->execute();
+
+		$stmt = null;
+
+	}
+
+		/*
+	* Método para recuperar el total del corte por articulo -ORD CORTE
+	*/
+	static public function mdlRecuperarOrdCorte($valor, $valor1){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE 
+		articulojf 
+	  SET
+		ord_corte = ord_corte + :cantidad 
+		
+	  WHERE articulo = :articulo");
+
+		$stmt->bindParam(":articulo", $valor, PDO::PARAM_STR);
+		$stmt->bindParam(":cantidad", $valor1, PDO::PARAM_STR);
+
+		$stmt->execute();
+
+		$stmt = null;
+
+	}
+
+		/*
+	* Método para recuperar los saldos de detalle de ordenes de corte
+	*/
+	static public function mdlRecuperarSaldoOrdCorte($valor, $valor1, $valor2){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE 
+		detalles_ordencortejf 
+	  SET
+		saldo = saldo + :cantidad,
+		estado = 0 
+	  WHERE ordencorte = :ordcorte
+		AND articulo = :articulo");
+
+		$stmt->bindParam(":articulo", $valor, PDO::PARAM_STR);
+		$stmt->bindParam(":ordcorte", $valor1, PDO::PARAM_STR);
+		$stmt->bindParam(":cantidad", $valor2, PDO::PARAM_STR);
+
+		$stmt->execute();
+
+		$stmt = null;
+
+	}
+
 	/*
 	* Método para actualizar los saldos de detalle de ordenes de corte
 	*/
@@ -104,6 +168,34 @@ class ModeloAlmacenCorte{
 		}
 
 		$stmt=null;
+	}
+
+	/* 
+	* Método para editar el almacen corte
+	*/
+	static public function mdlEditarAlmacenCorte($datos){
+
+		$sql="UPDATE almacencortejf SET  guia = :guia, usuario=:usuario, total=:total, estado=:estado WHERE codigo=:codigo";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":codigo",$datos["codigo"],PDO::PARAM_INT);
+		$stmt->bindParam(":guia",$datos["guia"],PDO::PARAM_STR);
+		$stmt->bindParam(":usuario",$datos["usuario"],PDO::PARAM_INT);
+		$stmt->bindParam(":total",$datos["total"],PDO::PARAM_INT);
+		$stmt->bindParam(":estado",$datos["estado"],PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		}
+
+		$stmt=null;
+		
 	}
 
 	/*
@@ -1109,4 +1201,65 @@ class ModeloAlmacenCorte{
 		}
 
 	}
+
+
+	static public function mdlMostarDetallesAlmacenCorte($tabla, $item, $valor){
+
+		if($item != null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT
+													a.*,d.saldo 
+													FROM
+													almacencorte_detallejf a 
+													LEFT JOIN detalles_ordencortejf AS d 
+													ON d.id = a.detordencorte  
+													WHERE a.$item = :$item ");
+
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}else{
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;		
+
+
+	}
+
+	/* 
+	* Método para eliminar los detalles de almacencorte
+	*/
+	static public function mdlEliminarDato($tabla,$item,$valor){
+
+		$sql="DELETE FROM $tabla WHERE $item=:$item";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":".$item,$valor,PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt=null;
+	}
+
 }

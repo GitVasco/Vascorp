@@ -605,6 +605,7 @@ $(".btnGuardarNotaCredito").click(function(){
     var nota = $('input[name=optNotas1]:checked').val();
     var chkCuenta = document.getElementById("radioCtaCte");
     if(nota == 'credito'){
+        var tipoImp = "E05";
         var documento =$("#tipoNotaDocumento").val();
             var existe = new FormData();
             existe.append("documentoCredito", documento);
@@ -728,6 +729,7 @@ $(".btnGuardarNotaCredito").click(function(){
             });
 
     }else{
+      var tipoImp = "S99";
         if(chkCuenta.checked == true){
 
             var documento =$("#tipoNotaDocumento").val();
@@ -1051,7 +1053,8 @@ $(".btnGuardarNotaCredito").click(function(){
         }
     }
     
-    $(".btnImprimirNotaCredito").attr("tipo", tipo);
+    $(".btnImprimirNotaCredito").prop("disabled", false);
+    $(".btnImprimirNotaCredito").attr("tipo", tipoImp);
     $(".btnImprimirNotaCredito").attr("documento", documento);
     
 });
@@ -1233,10 +1236,21 @@ $(".tablaNotaCredito").on("click", ".btnEditarNotaCD", function () {
     window.location = "index.php?ruta=editar-nota-credito&tipo="+tipo+"&documento="+documento;
 })
 
+$(".tablaNotaCredito").on("click", ".btnImprimirNotaCredito", function () {
+  var tipo = $(this).attr("tipo");
+  var documento = $(this).attr("documento");
+
+  window.open("extensiones/tcpdf/pdf/reporte_notascd.php?tipo="+tipo+"&documento="+documento,"_blank");
+})
+
 $(".btnImprimirNotaCredito").click(function(){
     var tipo = $(this).attr("tipo");
     var documento = $(this).attr("documento");
     window.open("extensiones/tcpdf/pdf/reporte_notascd.php?tipo="+tipo+"&documento="+documento,"_blank");
+})
+
+$(".btnTerminarNotaCredito").click(function(){
+  window.location = "ver-nota-credito";
 })
 
 $(".tablaFacturas").on("click", ".btnImprimirFactura", function () {

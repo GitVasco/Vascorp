@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2">
+            <ext:UBLExtensions><ext:UBLExtension>
+                    <ext:ExtensionContent><Signature xmlns="http://www.w3.org/2000/09/xmldsig#" Id="SignatureSP"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>vevGZuCFLLpI085e64U+S5LCU4A=</DigestValue></Reference></SignedInfo><SignatureValue>EIrp+7gt8H9seitNQJEBIqqwkQ60Rmx6o0AyqXz8pkVgSxhev/gllVIwDENQ4lFI57h/SL63rWl+ABfoqupphIevTVU0hV5qNGj2x9+emNch8Dsvaxf8N8uXR5Uoh4T9c/9TvIPLRUiqeudVKD73CoXphy2HqqKdk+c1QpR1uC/timmjl/vw/XCdD8/xkbwqYgMlhOmprs3gxy7pXT5WbAJotKpeaYyziaG0TPG2RUEZ4sL2nDascPCrQ2x4xWVuAch5bjNb6wn8lESnGikF5Wb9WcDjVXiEnHM2M5rh0AxWDHYokaSIDVOnDPvkTjOIelotXiaQ5PYLccH5hEhSfw==</SignatureValue><KeyInfo><X509Data><X509Certificate>MIIE+DCCA+CgAwIBAgIJANmJEZyxshk1MA0GCSqGSIb3DQEBBQUAMIIBDTEbMBkGCgmSJomT8ixkARkWC0xMQU1BLlBFIFNBMQswCQYDVQQGEwJQRTENMAsGA1UECAwETElNQTENMAsGA1UEBwwETElNQTEYMBYGA1UECgwPVFUgRU1QUkVTQSBTLkEuMUUwQwYDVQQLDDxETkkgOTk5OTk5OSBSVUMgMTA0MzUzNTAzNzggLSBDRVJUSUZJQ0FETyBQQVJBIERFTU9TVFJBQ0nDk04xRDBCBgNVBAMMO05PTUJSRSBSRVBSRVNFTlRBTlRFIExFR0FMIC0gQ0VSVElGSUNBRE8gUEFSQSBERU1PU1RSQUNJw5NOMRwwGgYJKoZIhvcNAQkBFg1kZW1vQGxsYW1hLnBlMB4XDTIxMDIwNTA0NTIzNloXDTIzMDIwNTA0NTIzNlowggENMRswGQYKCZImiZPyLGQBGRYLTExBTUEuUEUgU0ExCzAJBgNVBAYTAlBFMQ0wCwYDVQQIDARMSU1BMQ0wCwYDVQQHDARMSU1BMRgwFgYDVQQKDA9UVSBFTVBSRVNBIFMuQS4xRTBDBgNVBAsMPEROSSA5OTk5OTk5IFJVQyAxMDQzNTM1MDM3OCAtIENFUlRJRklDQURPIFBBUkEgREVNT1NUUkFDScOTTjFEMEIGA1UEAww7Tk9NQlJFIFJFUFJFU0VOVEFOVEUgTEVHQUwgLSBDRVJUSUZJQ0FETyBQQVJBIERFTU9TVFJBQ0nDk04xHDAaBgkqhkiG9w0BCQEWDWRlbW9AbGxhbWEucGUwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDJLu3vylHN1MtDLucLcailS+KRQU8qd0A6lkTYTaoX4J2Mp0bNp0VFGkFsyck2Ggs6EtHzUhft5u9COLE4i0sc/Hctnld7YFM9ouwGfQyjkn2d8WI2Q7xaNIIwoODU7GfShyyveRoYp7J4pJAabdJoYJt/lVcYAxrOwvZDrdLV+uoskmu1q9tZqzcqu+ynB9d7j/nUj4tXE53+EJ6hyTalIjwzEtBfS4m9SXw/OqFzwkJ5gyLh5DIcqDaotrWVQQ5I+BrT3Mluj7YJhn0L01MhsF6q+avpsEeEIdmP3afsEuDakY2BtfK1Nhx75jEfO9rR62tFHCUxHJCY1GwYXSV7AgMBAAGjVzBVMB0GA1UdDgQWBBRAFDSzAJbZ85dlA1q6TocCVchnOjAfBgNVHSMEGDAWgBRAFDSzAJbZ85dlA1q6TocCVchnOjATBgNVHSUEDDAKBggrBgEFBQcDATANBgkqhkiG9w0BAQUFAAOCAQEAFUC7Ci+Ic58M1z7ox0saxutFmKHayTGlahwsgt5U0Nfuz7Mon3heGZJoPX+2lztgdnNgAsK9BF+XS+8bIGVTMLoJfUegwaj+xo8uK1YhbvcbFTtYHFE5xQMNilbyCeZUlx3ARxwju5HMJuX2rOtnNuQtoa+iKY962PgWaJtJp/HVwRrCx72jOnP/GbOx1dktiUDMOJ8/s1oxUgXtIstEEs5tfDvQC8A07wUqKZhavVImSQcTnhAGTlmFiuJdko6Z6FcAkYKVgjtUFgxpml1wuQYTozw6uTdm722dU5V00DpWerkgYA/PzltfdARFsRLupX2aCoaof4iA9X3KrVEDtg==</X509Certificate></X509Data></KeyInfo></Signature></ext:ExtensionContent>
+                </ext:UBLExtension>
+            </ext:UBLExtensions>
+            <cbc:UBLVersionID>2.1</cbc:UBLVersionID>
+            <cbc:CustomizationID>2.0</cbc:CustomizationID>
+            <cbc:ID>F001-00006851</cbc:ID>
+            <cbc:IssueDate>2021-08-26</cbc:IssueDate>
+            <cbc:InvoiceTypeCode listID="0101" listSchemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo51" name="Tipo de Operacion">01</cbc:InvoiceTypeCode>
+            <cbc:Note languageLocaleID="1000"> CINCO MIL SETECIENTOS VEINTINUEVE  CON 47/100 SOLES</cbc:Note>
+            <cbc:Note>Nro.unidades: </cbc:Note>
+            <cbc:Note languageID="D">10120378</cbc:Note>
+            <cbc:Note languageID="E">CONTADO .</cbc:Note>
+            <cbc:Note languageID="F">4855.49</cbc:Note>
+            <cbc:Note languageID="G">04 JUAN CARLOS BRAVO</cbc:Note>
+            <cbc:DocumentCurrencyCode listAgencyName="United Nations Economic Commission for Europe" listID="ISO 4217 Alpha" listName="Currency">PEN</cbc:DocumentCurrencyCode>
+            <cbc:LineCountNumeric>0</cbc:LineCountNumeric>
+            <cac:DespatchDocumentReference>
+                <cbc:ID>0030-028523</cbc:ID>
+                <cbc:DocumentTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Documento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo01">09</cbc:DocumentTypeCode>
+            </cac:DespatchDocumentReference>
+            <cac:Signature>
+                <cbc:ID>IDSignKG</cbc:ID>
+                <cac:SignatoryParty>
+                    <cac:PartyIdentification>
+                        <cbc:ID>20513613939</cbc:ID>
+                    </cac:PartyIdentification>
+                    <cac:PartyName>
+                        <cbc:Name>Corporacion Vasco S.A.C.</cbc:Name>
+                    </cac:PartyName>
+                </cac:SignatoryParty>
+                <cac:DigitalSignatureAttachment>
+                    <cac:ExternalReference>
+                        <cbc:URI>#SignST</cbc:URI>
+                    </cac:ExternalReference>
+                </cac:DigitalSignatureAttachment>
+            </cac:Signature>
+            <cac:AccountingSupplierParty>
+                <cac:Party>
+                    <cac:PartyIdentification>
+                        <cbc:ID schemeAgencyName="PE:SUNAT" schemeID="6" schemeName="Documento de Identidad" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">20513613939</cbc:ID>
+                    </cac:PartyIdentification>
+                    <cac:PartyName>
+                        <cbc:Name>JACKY FORM</cbc:Name>
+                    </cac:PartyName>
+                    <cac:PartyLegalEntity>
+                        <cbc:RegistrationName>Corporacion Vasco S.A.C.</cbc:RegistrationName>
+                        <cac:RegistrationAddress>
+                            <cbc:AddressTypeCode listAgencyName="PE:SUNAT" listName="Establecimientos anexos">0002
+                            </cbc:AddressTypeCode>
+                            <cbc:CitySubdivisionName>URB.SANTA LUISA 1RA ETAPA</cbc:CitySubdivisionName>
+                            <cbc:CityName>LIMA</cbc:CityName>
+                            <cbc:CountrySubentity>LIMA</cbc:CountrySubentity>
+                            <cbc:District>SAN MARTIN DE PORRES</cbc:District>
+                            <cac:AddressLine>
+                                <cbc:Line>CAL.SANTO TORIBIO NRO. 259</cbc:Line>
+                            </cac:AddressLine>
+                            <cac:Country>
+                                <cbc:IdentificationCode listAgencyName="United Nations Economic Commission for Europe" listID="ISO 3166-1" listName="Country">PE</cbc:IdentificationCode>
+                            </cac:Country>
+                        </cac:RegistrationAddress>
+                    </cac:PartyLegalEntity>
+                </cac:Party>
+            </cac:AccountingSupplierParty>
+            <cac:AccountingCustomerParty>
+                <cac:Party>
+                    <cac:PartyIdentification>
+                        <cbc:ID schemeAgencyName="PE:SUNAT" schemeID="1" schemeName="Documento de Identidad" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">44550697</cbc:ID>
+                    </cac:PartyIdentification>
+                    <cac:PartyName>
+                        <cbc:Name/>
+                    </cac:PartyName>
+                    <cac:PartyLegalEntity>
+                        <cbc:RegistrationName>GLORIA GARCIA SANTAMARIA</cbc:RegistrationName>
+                        <cac:RegistrationAddress>
+                            <cbc:ID schemeAgencyName="PE:INEI" schemeName="Ubigeos"/>
+                            <cbc:CitySubdivisionName>-</cbc:CitySubdivisionName>
+                            <cbc:CityName/>
+                            <cbc:CountrySubentity>LAMBAYEQUE</cbc:CountrySubentity>
+                            <cbc:District/>
+                            <cac:AddressLine>
+                                <cbc:Line>PLATAFORMA BALTA PTO  20 MCDO MODELO</cbc:Line>
+                            </cac:AddressLine>
+                            <cac:Country>
+                                <cbc:IdentificationCode listAgencyName="United Nations Economic Commission for Europe" listID="ISO 3166-1" listName="Country">PE</cbc:IdentificationCode>
+                            </cac:Country>
+                        </cac:RegistrationAddress>
+                    </cac:PartyLegalEntity>
+                    <cac:Contact>
+                        <cbc:ElectronicMail/>
+                    </cac:Contact>
+                </cac:Party>
+            </cac:AccountingCustomerParty><cac:TaxTotal>
+                <cbc:TaxAmount currencyID="PEN">873.98</cbc:TaxAmount>
+                <cac:TaxSubtotal>
+                    <cbc:TaxableAmount currencyID="PEN">4855.49</cbc:TaxableAmount>
+                    <cbc:TaxAmount currencyID="PEN">873.98</cbc:TaxAmount>
+                    <cac:TaxCategory>
+                        <cac:TaxScheme>
+                            <cbc:ID schemeAgencyID="6" schemeID="UN/ECE 5153">1000</cbc:ID>
+                            <cbc:Name>IGV</cbc:Name>
+                            <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+                        </cac:TaxScheme>
+                    </cac:TaxCategory>
+                </cac:TaxSubtotal>
+            </cac:TaxTotal>
+            <cac:LegalMonetaryTotal>
+                <cbc:LineExtensionAmount currencyID="PEN">4855.49</cbc:LineExtensionAmount>
+                <cbc:TaxInclusiveAmount currencyID="PEN">5729.47</cbc:TaxInclusiveAmount>
+                <cbc:PayableAmount currencyID="PEN">5729.47</cbc:PayableAmount>
+            </cac:LegalMonetaryTotal></Invoice>

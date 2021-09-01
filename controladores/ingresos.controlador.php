@@ -3,7 +3,7 @@
 class ControladorIngresos{
 
     /* 
-    * MOSTRAR DATOS DE LAS ORDENES DE CORTE
+    * MOSTRAR DATOS DE INGRESO CABECERA
     */
     static public function ctrMostrarIngresos($item, $valor){
 
@@ -16,7 +16,7 @@ class ControladorIngresos{
     }
 
     /* 
-    * MOSTRAR DATOS DE LAS ORDENES DE CORTE
+    * MOSTRAR DETALLE DE INGRESO
     */
     static public function ctrMostrarDetallesIngresos($item, $valor){
 
@@ -29,7 +29,7 @@ class ControladorIngresos{
     }
 
     /* 
-    * MOSTRAR DATOS DE LAS ORDENES DE CORTE
+    * MOSTRAR DATOS DE LAS ARTICULOS O CIERRES PARA CREAR INGRESO
     */
     static public function ctrMostrarArticulosCierres($idCierre){
 
@@ -39,7 +39,7 @@ class ControladorIngresos{
 
     }
 
-    // VISUALIZAR CIERRE DETALLE
+    // VISUALIZAR INGRESO DETALLE
 	static public function ctrVisualizarIngresoDetalle($valor){
 
         $respuesta = ModeloIngresos::mdlVisualizarIngresoDetalle($valor);
@@ -89,7 +89,7 @@ class ControladorIngresos{
 
                     #var_dump("listaArticulos", $listaArticulos);
 
-                    if($_POST["nuevoTalleres"] == "T1" || $_POST["nuevoTalleres"] == "T3" || $_POST["nuevoTalleres"] == "T5" ){
+                    if($_POST["nuevoTipoSector"] == "0"){
                         foreach($listaArticulos as $value){
 
                             $tabla = "articulojf";
@@ -138,7 +138,7 @@ class ControladorIngresos{
                     
 
                     /* 
-                    * GUARDAR LA ORDEN DE CORTE
+                    * GUARDAR EL INGRESO
                     */
                     $fecha=new DateTime();
                     $datos = array( "tipo"=>"E20",
@@ -216,7 +216,7 @@ class ControladorIngresos{
     }
 
     /* 
-    * CREAR INGRESO
+    * CREAR SEGUNDA
     */
     static public function ctrCrearSegunda(){
 
@@ -249,14 +249,14 @@ class ControladorIngresos{
                 }else{
 
                     /* 
-                    ? Actualizamos la cantidad de la orden de corte
+                    ? Actualizamos la cantidad de taller en articulos
                     */
 
                     $listaArticulos = json_decode($_POST["listaArticulosIngreso"], true);
 
                     #var_dump("listaArticulos", $listaArticulos);
 
-                    if($_POST["nuevoTalleres"] == "T1" || $_POST["nuevoTalleres"] == "T3" || $_POST["nuevoTalleres"] == "T5"){
+                    if($_POST["nuevoTipoSector"] == "0"){
                         foreach($listaArticulos as $value){
 
                             $tabla = "articulojf";
@@ -294,7 +294,7 @@ class ControladorIngresos{
                         }
                     }
                     /* 
-                    * GUARDAR LA ORDEN DE CORTE
+                    * GUARDAR EL INGRESO
                     */
                     $fecha=new DateTime();
                     $datos = array( "tipo"=>"E20",
@@ -374,7 +374,7 @@ class ControladorIngresos{
     }
 
     /* 
-    * Editar Orden de Corte
+    * Editar Ingreso
     */
     static public function ctrEditarIngreso(){
 
@@ -400,7 +400,7 @@ class ControladorIngresos{
             }else{
 
                 /* 
-                todo: Traemos los datos del detalle de Orden de Corte
+                todo: Traemos los datos del detalle de ingreso
                 */
                 $detaOC = ModeloIngresos::mdlMostarDetallesIngresos("movimientosjf_2021", "documento", $_POST["editarCodigo"]);
                 #var_dump("detaOC", $detaOC);
@@ -433,7 +433,7 @@ class ControladorIngresos{
                     /* 
                     todo: Actualizamos en articulos de ingresos
                     */
-                    if($_POST["editarTalleres"] == "T1" || $_POST["editarTalleres"] == "T3" || $_POST["editarTalleres"] == "T5"){
+                    if($_POST["editarTipoSector"] == "0"){
                         foreach($listaArticulosOC as $value){
 
                             $tabla = "articulojf";
@@ -483,7 +483,7 @@ class ControladorIngresos{
                 }
                 $fecha=new DateTime();
                 /* 
-                todo: Editamos los cambios de la cabecera Orden de Corte
+                todo: Editamos los cambios de la cabecera ingreso
                 */
                 $datos = array( "id" => $_POST["idIngreso"],
                                 "documento"=>$_POST["editarCodigo"],
@@ -499,7 +499,7 @@ class ControladorIngresos{
                 if($respuesta == "ok"){
 
                     /* 
-                    todo: Editamos los cambios del detalle Ordenes de Corte, primero eliminamos los detalles
+                    todo: Editamos los cambios del detalle Ingreso, primero eliminamos los detalles
                     */
 
                     $eliminarDato = ModeloIngresos::mdlEliminarDato("movimientosjf_2021", "documento", $_POST["editarCodigo"]);
@@ -607,7 +607,7 @@ class ControladorIngresos{
             }else{
 
                 /* 
-                todo: Traemos los datos del detalle de Orden de Corte
+                todo: Traemos los datos del detalle de ingresos segunda
                 */
                 $detaOC = ModeloIngresos::mdlMostarDetallesIngresos("movimientosjf_2021", "documento", $_POST["editarCodigo"]);
                 #var_dump("detaOC", $detaOC);
@@ -640,7 +640,7 @@ class ControladorIngresos{
                     /* 
                     todo: Actualizamos en articulos  los ingresos
                     */
-                    if($_POST["editarTalleres"] == "T1" || $_POST["editarTalleres"] == "T3" || $_POST["editarTalleres"] == "T5"){
+                    if($_POST["editarTipoSector"] == "0"){
                         foreach($listaArticulosOC as $value){
 
                             $tabla = "articulojf";
@@ -678,7 +678,7 @@ class ControladorIngresos{
                 }
                 $fecha=new DateTime();
                 /* 
-                todo: Editamos los cambios de la cabecera Orden de Corte
+                todo: Editamos los cambios de la cabecera ingreso segunda
                 */
                 $datos = array( "id" => $_POST["idIngreso"],
                                 "documento"=>$_POST["editarCodigo"],
@@ -696,7 +696,7 @@ class ControladorIngresos{
                 if($respuesta == "ok"){
 
                     /* 
-                    todo: Editamos los cambios del detalle Ordenes de Corte, primero eliminamos los detalles
+                    todo: Editamos los cambios del detalle Ingreso Segunda, primero eliminamos los detalles
                     */
 
                     $eliminarDato = ModeloIngresos::mdlEliminarDato("movimientosjf_2021", "documento", $_POST["editarCodigo"]);
@@ -782,7 +782,7 @@ class ControladorIngresos{
     }
 
     /* 
-    *Método para eliminar las ordenes de corte
+    *Método para eliminar los ingresos
     */
     static public function ctrEliminarIngreso(){
         if(isset($_GET["documento"]) && isset($_GET["idIngreso"]) ){
@@ -848,7 +848,7 @@ class ControladorIngresos{
         }
 
         /* 
-        todo: Eliminamos la cabecera de Orden de corte
+        todo: Eliminamos la cabecera de Ingreso
         */
         $tablaOC = "movimientos_cabecerajf";
         $itemOC = "id";
@@ -882,7 +882,7 @@ class ControladorIngresos{
     }
 
     /* 
-    *Método para eliminar las ordenes de corte
+    *Método para eliminar las segundas
     */
     static public function ctrEliminarSegunda(){
         if(isset($_GET["documento"]) && isset($_GET["idSegunda"]) ){
@@ -894,9 +894,9 @@ class ControladorIngresos{
          
         $cabeceraIngreso= ModeloIngresos::mdlMostarIngresos("movimientos_cabecerajf","id",$_GET["idSegunda"]);
         /* 
-        todo: Actualizamos orden de corte en Articulojf
+        todo: Actualizamos cantidad de taller en articulojf
         */
-        if($cabeceraIngreso["taller"] == "T5" ){
+        if($cabeceraIngreso["taller"] == "T1" || $cabeceraIngreso["taller"] == "T3" || $cabeceraIngreso["taller"] == "T5"){
             foreach($detaOC as $value){
 
                 $tabla = "articulojf";
@@ -933,7 +933,7 @@ class ControladorIngresos{
         }
 
         /* 
-        todo: Eliminamos la cabecera de Orden de corte
+        todo: Eliminamos la cabecera de Ingreso Segunda
         */
         $tablaOC = "movimientos_cabecerajf";
         $itemOC = "id";
@@ -945,7 +945,7 @@ class ControladorIngresos{
         if($respuesta == "ok"){
 
             /* 
-            todo: Eliminamos el detalle de Orden de corte
+            todo: Eliminamos el detalle de ingreso segunda
             */
             echo '<script>
                                 swal({
@@ -980,6 +980,10 @@ class ControladorIngresos{
 		return $respuesta;
 		
     }
+
+    /*=============================================
+	RANGO FECHAS PARA VISUALIZAR INGRESOS
+	=============================================*/	
    
     static public function ctrRangoFechasVerIngresos($fechaInicial, $fechaFinal){
 

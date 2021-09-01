@@ -731,6 +731,8 @@ class ModeloFacturacion{
       v.total,
       v.doc_origen as origen2,
       n.observacion,
+      n.tipo_doc,
+      n.tip_cont,
       n.doc_origen,
       n.motivo,
       (SELECT 

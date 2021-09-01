@@ -22,8 +22,14 @@ class TablaNotasCD{
             /* 
             todo: formato de miles
             */
-                $estado = "<button class='btn btn-success btn-xs'>FACTURADO</button>";
-                $botones =  "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarNotaCD' title='Editar notas CD' tipo='".$notas[$i]["tipo"]."' documento='".$notas[$i]["documento"]."'><i class='fa fa-pencil'></i></button></div>";
+            $serie = substr($notas[$i]["documento"],0,4);
+            $estado = "<button class='btn btn-success btn-xs'>FACTURADO</button>";
+            if($serie == "B002" || $serie == "F002"){
+                $botones =  "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarNotaCD' title='Editar notas CD' tipo='".$notas[$i]["tipo"]."' documento='".$notas[$i]["documento"]."'><i class='fa fa-pencil'></i></button><button title='Imprimir Nota Credito' class='btn btn-xs btn-success btnImprimirNotaCredito' tipo='".$notas[$i]["tipo"]."' documento='".$notas[$i]["documento"]."'><i class='fa fa-print'></i></button></div>";
+            }else{
+                $botones =  "<div class='btn-group'><button title='Imprimir Nota Credito' class='btn btn-xs btn-success btnImprimirNotaCredito' tipo='".$notas[$i]["tipo"]."' documento='".$notas[$i]["documento"]."'><i class='fa fa-print'></i></button></div>";
+            }
+                
 
             
             

@@ -106,7 +106,7 @@
 
                         <span class="input-group-addon"><i class="fa fa-wrench"></i></span>
                         <input type="text" class="form-control  input-sm " name="editarTalleres" id="editarTalleres" readonly>
-                        
+                        <input type="hidden" id="editarTipoSector" name="editarTipoSector">
 
                     </div>
 
@@ -169,7 +169,7 @@
                   #var_dump("ordencorte", $ordencorte["codigo"]);
                   #var_dump("listaArticuloOC", $listaArticuloOC);
                   foreach($listaArticuloIng as $key=>$value){
-                    if($ingreso["taller"]=="T1" || $ingreso["taller"]=="T3" || $ingreso["taller"]=="T5" || $ingreso["taller"] == "T7" || $ingreso["taller"] == "T10"){
+                    if($ingreso["taller"]=="T1" || $ingreso["taller"]=="T3" || $ingreso["taller"]=="T5" ){
 
                       $infoArticulo = ControladorArticulos::ctrMostrarArticulos($value["articulo"]);
                     }else{
@@ -179,7 +179,7 @@
                     $tallerAntiguo = $infoArticulo["taller"] + $value["cantidad"];
 
                     $stockG = $infoArticulo["stockG"];
-                    if($ingreso["taller"]=="T1" || $ingreso["taller"]=="T3" || $ingreso["taller"]=="T5" || $ingreso["taller"] == "T7" || $ingreso["taller"] == "T10"){
+                    if($ingreso["taller"]=="T1" || $ingreso["taller"]=="T3" || $ingreso["taller"]=="T5"){
                       echo '<div class="row munditoIngreso" style="padding:5px 15px">
 
                             <div class="col-xs-6" style="padding-right:0px">
@@ -425,6 +425,28 @@ $('.nuevoArticuloIngreso').ready(function(){
     });
   });
 
+  $(document).ready(function(){
+    var ingreso = $("#editarTalleres").val();
+    var datos = new FormData();
+    datos.append("idSector", ingreso);
+    $.ajax({
 
+          url: "ajax/sectores.ajax.php",
+          method: "POST",
+          data: datos,
+          cache: false,
+          contentType: false,
+          processData: false,
+          dataType: "json",
+          success: function (respuesta) {
+
+              //console.log("respuesta", respuesta);
+
+              $("#editarTipoSector").val(respuesta["tipo"]);
+
+          }
+
+      })
+  })
   
 </script>

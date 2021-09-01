@@ -159,7 +159,7 @@ $(".tablaArticulosAlmacenCorte tbody").on("click", "button.agregarArtAC", functi
 
                     '<div class="col-xs-2">' +
 
-                        '<input type="number" class="form-control nuevaCantidadArticuloAC" name="nuevaCantidadArticuloAC" min="1" value="1" ordcorte="' + ordcorte + '" saldo="' + saldo + '" nuevoSaldo="' + (Number(saldo)-1) + '" alm_corte="' + alm_corte + '" nuevoAlmCorte="' + (Number(alm_corte)+1) + '" required>' +
+                        '<input type="number" class="form-control nuevaCantidadArticuloAC" name="nuevaCantidadArticuloAC" min="1" value="1" ordcorte="' + ordcorte + '" saldo="' + saldo + '" nuevoSaldo="' + (Number(saldo)-1) + '" alm_corte="' + alm_corte + '" nuevoAlmCorte="' + (Number(alm_corte)+1) + '" cantidad = "0" nuevaCantidad = "1" required>' +
 
                     "</div>" +
 
@@ -310,6 +310,8 @@ $(".formularioAlmacenCorte").on("change", "input.nuevaCantidadArticuloAC", funct
     $(this).attr("nuevoSaldo", Number(nuevoSaldo));
 
 
+    var nuevaCantidad = $(this).val() - $(this).attr("cantidad");
+    $(this).attr("nuevaCantidad",nuevaCantidad)
 /*     if (Number($(this).val()) > Number($(this).attr("saldo"))) {
 
 
@@ -410,6 +412,7 @@ function listarArticulosAC() {
         idocd: $(ordencorte[i]).attr("idCorte"),
         articulo: $(articulo[i]).attr("codigoAC"),
         cantidad: $(cantidad[i]).val(),
+        nuevaCantidad: $(cantidad[i]).val(),
         saldo: $(saldo[i]).val()
 
       });
@@ -468,12 +471,12 @@ function quitarAgregarArticuloAC() {
 	for (var i = 0; i < articuloAC.length; i++) {
 
 		//Capturamos los Id de los productos agregados a la venta
-		var boton = $(articuloAC[i]).attr("articuloAC");
+		var boton = $(articuloAC[i]).attr("idCorte");
 
 		//Hacemos un recorrido por la tabla que aparece para desactivar los botones de agregar
 		for (var j = 0; j < botonesTablaAC.length; j++) {
 
-			if ($(botonesTablaAC[j]).attr("articuloAC") == boton) {
+			if ($(botonesTablaAC[j]).attr("idCorte") == boton) {
 
 				$(botonesTablaAC[j]).removeClass("btn-primary agregarArtAC");
 				$(botonesTablaAC[j]).addClass("btn-default");
@@ -1348,4 +1351,11 @@ $(".tablaAlmacenCorte").on("click", "button.btnReporteAC", function () {
   // console.log(codigo);
   window.location = "vistas/reportes_excel/rpt_corte.php?codigo="+codigo;
 });
+
+$(".tablaAlmacenCorte").on("click", "button.btnEditarCorteP", function () {
+  var codigo =$(this).attr("codigoAC");
+  // console.log(codigo);
+  window.location = "index.php?ruta=editar-almacencorte&codigo="+codigo;
+});
+
 
