@@ -1941,7 +1941,7 @@ $("#daterange-btnProcesarCE").daterangepicker(
     // console.log(documento);
 
     //VALIDAMOS SI ES FACTURA, BOLETA, NOTA DE CREDITO O DEBITO
-    if(tipo == 'S03'){
+    /* if(tipo == 'S03'){
 
         window.location = "index.php?ruta=procesar-ce&tipoFact="+tipo+"&documentoFact="+documento;
 
@@ -1957,11 +1957,13 @@ $("#daterange-btnProcesarCE").daterangepicker(
 
       window.location = "index.php?ruta=procesar-ce&tipoNotaDeb="+tipo+"&documentoNotaDeb="+documento;
 
-    }
-    
+    } */
 
-    
+    window.location.href  = "vistas/reportes_excel/fe_factura.php?tipo=" + tipo +"&documento=" + documento;  
+
   });
+
+
 
   $("#formularioToken").on("click","button.btnGenerarToken",function(){
     var envio = "enviando";

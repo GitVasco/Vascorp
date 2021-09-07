@@ -6809,4 +6809,148 @@ class ModeloFacturacion{
   
     }
 
+
+    static public function mdlFEFacturaCab($tipo, $documento){
+
+    $sql="SELECT 
+                /*FILA 1 - GRAVADA*/
+                v.fecha AS a1,
+                CONCAT(
+                  LEFT(v.documento, 4),
+                  '-',
+                  RIGHT(v.documento, 8)
+                ) AS b1,
+                CASE
+                  WHEN v.tipo = 'S03' 
+                  THEN '01' 
+                  ELSE '03' 
+                END AS c1,
+                'PEN' AS d1,
+                v.neto - v.dscto AS e1,
+                v.igv AS f1,
+                'PEN' AS g1,
+                v.total AS n1,
+                '101' AS q1,
+                v.neto - v.dscto AS v1,
+                v.dscto AS ar1,
+                COUNT(m.modelo) AS al1,
+                v.igv AS bb1,
+                v.neto - v.dscto AS bc1,
+                v.total AS bd1,
+                v.dscto AS bh1,
+                /*FILA 1 - GRAVADA*/
+                /*EMISOR*/
+                'CORPORACION VASCO S.A.C' AS a5,
+                'JACKYFORM' AS b5,
+                '20513613939' AS c5,
+                '150135' AS d5,
+                'CAL. SANTO TORIBIO NRO. 259' AS e5,
+                'URB. SANTA LUISA 1RA ETAPA' AS f5,
+                'LIMA' AS g5,
+                'LIMA' AS h5,
+                'SAN MARTIN DE PORRES' AS i5,
+                'PE' AS j5,
+                '0' AS k5,
+                /*EMISOR*/
+                /*RECEPTOR*/
+                c.documento AS a6,
+                c.tipo_documento AS b6,
+                c.nombre AS c6,
+                c.nombre AS d6,
+                c.ubigeo AS e6,
+                c.direccion AS f6,
+                '' AS g6,
+                u.departamento AS h6,
+                u.provincia AS i6,
+                u.distrito AS j6,
+                'PE' AS k6,
+                c.email AS l6 
+                /*RECEPTOR*/
+                  FROM
+                    ventajf v 
+                    LEFT JOIN 
+                      (SELECT 
+                        m.tipo,
+                        m.documento,
+                        a.modelo 
+                      FROM
+                        movimientosjf_2021 m 
+                        LEFT JOIN articulojf a 
+                          ON m.articulo = a.articulo 
+                      WHERE m.tipo = :tipo 
+                        AND m.documento = :documento 
+                      GROUP BY m.tipo,
+                        m.documento,
+                        a.modelo) AS m 
+                      ON v.tipo = m.tipo 
+                      AND v.documento = m.documento 
+                    LEFT JOIN clientesjf c 
+                      ON v.cliente = c.codigo 
+                    LEFT JOIN ubigeo u 
+                      ON c.ubigeo = u.codigo 
+                  WHERE v.tipo = :tipo 
+                    AND v.documento = :documento";
+
+      $stmt=Conexion::conectar()->prepare($sql);
+
+      $stmt -> bindParam(":tipo", $tipo, PDO::PARAM_STR);
+      $stmt -> bindParam(":documento", $documento, PDO::PARAM_STR);
+
+    $stmt->execute();
+
+    return $stmt->fetch();
+
+
+    $stmt=null;
+
+    }
+
+    static public function mdlFEFacturaDet($tipo, $documento){
+
+      $sql="SELECT 
+      'C62' AS b9,
+      ROUND(SUM(m.cantidad), 2) AS c9,
+      REPLACE(a.nombre, 'Ñ', 'N') AS d9,
+      ROUND(m.precio * 1.18, 2) AS e9,
+      '1' AS f9,
+      ROUND(m.precio * SUM(m.cantidad), 2) AS i9,
+      ROUND(
+        ROUND(m.precio * SUM(m.cantidad), 2) * 0.18,
+        2
+      ) AS j9,
+      '10' AS k9,
+      '1000' AS l9,
+      '18' AS m9,
+      a.modelo AS s9,
+      ROUND(m.precio, 2) AS t9,
+     ROUND(m.precio * SUM(m.cantidad), 2) AS u9 ,
+       ROUND(
+        ROUND(m.precio * SUM(m.cantidad), 2) * 0.18,
+        2
+      ) AS ak9,
+      ROUND((m.precio * SUM(m.cantidad))*1.18, 2) AS al9
+    FROM
+      movimientosjf_2021 m 
+      LEFT JOIN articulojf a 
+        ON m.articulo = a.articulo 
+    WHERE m.tipo = :tipo 
+      AND m.documento = :documento
+    GROUP BY m.tipo,
+      m.documento,
+      a.modelo";
+  
+        $stmt=Conexion::conectar()->prepare($sql);
+  
+        $stmt -> bindParam(":tipo", $tipo, PDO::PARAM_STR);
+        $stmt -> bindParam(":documento", $documento, PDO::PARAM_STR);
+  
+      $stmt->execute();
+  
+      return $stmt->fetchAll();
+  
+  
+      $stmt=null;
+  
+      }
+
 }

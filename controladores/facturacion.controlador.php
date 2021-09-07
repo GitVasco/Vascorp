@@ -2935,4 +2935,26 @@ class ControladorFacturacion{
 
     }
 
+    /*
+    * MOSTRAR MODELO DE NOTAS PARA IMPRESION
+    */
+	static public function ctrFEFacturaCab($tipo, $documento){
+
+		$respuesta = ModeloFacturacion::mdlFEFacturaCab($tipo, $documento);
+
+		return $respuesta;
+
+    }    
+
+    /*
+    * MOSTRAR MODELO DE NOTAS PARA IMPRESION
+    */
+	static public function ctrFEFacturaDet($tipo, $documento){
+
+		$respuesta = ModeloFacturacion::mdlFEFacturaDet($tipo, $documento);
+
+		return $respuesta;
+
+    }    
+
 }
