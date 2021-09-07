@@ -147,11 +147,11 @@
 
     if($feFacturaCab["c1"] == "01"){
 
-        $destino = 'c:/prueba/invoice/'.$nombre.'';
+        $destino = 'c:/daemonOSE21/documents/in/invoice/'.$nombre.'';
 
     }else{
 
-        $destino = 'c:/prueba/boleta/'.$nombre.'';
+        $destino = 'c:/daemonOSE21/documents/in/boleta/'.$nombre.'';
 
     }
     
