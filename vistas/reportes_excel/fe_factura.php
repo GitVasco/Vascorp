@@ -56,7 +56,32 @@
 
     $fila = 3;
 
-    $fila = 4;
+    if(substr($feFacturaCab["a3"],0,4) == "0003"){
+
+        $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", $feFacturaCab["a3"]);
+        $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", $feFacturaCab["b3"]);
+    }
+
+    if($feFacturaCab["c1"] == "01"){
+
+        $objPHPExcel->getActiveSheet()->SetCellValue("E$fila", $feFacturaCab["e3"]);
+
+    }
+
+    $fila+= 1;
+    $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", $feFacturaCab["a4"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", $feFacturaCab["b4"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", $feFacturaCab["c4"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("D$fila", $feFacturaCab["d4"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("E$fila", $feFacturaCab["e4"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("F$fila", $feFacturaCab["f4"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("G$fila", $feFacturaCab["g4"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", $feFacturaCab["h4"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("I$fila", $feFacturaCab["i4"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", $feFacturaCab["j4"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", $feFacturaCab["k4"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("L$fila", $feFacturaCab["l4"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("M$fila", $feFacturaCab["m4"]);
 
     $fila+= 1;
     $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", $feFacturaCab["a5"]);
@@ -70,24 +95,18 @@
     $objPHPExcel->getActiveSheet()->SetCellValue("I$fila", $feFacturaCab["i5"]);
     $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", $feFacturaCab["j5"]);
     $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", $feFacturaCab["k5"]);
-
-    $fila+= 1;
-    $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", $feFacturaCab["a6"]);
-    $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", $feFacturaCab["b6"]);
-    $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", $feFacturaCab["c6"]);
-    $objPHPExcel->getActiveSheet()->SetCellValue("D$fila", $feFacturaCab["d6"]);
-    $objPHPExcel->getActiveSheet()->SetCellValue("E$fila", $feFacturaCab["e6"]);
-    $objPHPExcel->getActiveSheet()->SetCellValue("F$fila", $feFacturaCab["f6"]);
-    $objPHPExcel->getActiveSheet()->SetCellValue("G$fila", $feFacturaCab["g6"]);
-    $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", $feFacturaCab["h6"]);
-    $objPHPExcel->getActiveSheet()->SetCellValue("I$fila", $feFacturaCab["i6"]);
-    $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", $feFacturaCab["j6"]);
-    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", $feFacturaCab["k6"]);
-    $objPHPExcel->getActiveSheet()->SetCellValue("L$fila", $feFacturaCab["l6"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("L$fila", $feFacturaCab["l5"]);
 
     $fila+= 1;
     $monto_letras = convertir($feFacturaCab["n1"]);
     $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", $monto_letras);
+
+    $fila+= 1;
+    $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", $feFacturaCab["a7"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("D$fila", $feFacturaCab["d7"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("E$fila", $feFacturaCab["e7"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("F$fila", $feFacturaCab["f5"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("G$fila", $feFacturaCab["g5"]);
 
     $fila+= 1;
 

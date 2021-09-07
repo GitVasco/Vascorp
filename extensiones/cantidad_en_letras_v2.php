@@ -332,7 +332,7 @@ function convertir($numero){
  
 		     $numf = milmillon($num);
  
-		return "".$numf." CON ".$cents."/100". " SOLES";
+		return "".$numf." Y ".$cents."/100". " SOLES";
 }
  
 //echo convertir($numero);
