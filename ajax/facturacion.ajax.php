@@ -354,6 +354,16 @@ class AjaxFacturacion{
         echo json_encode($respuesta);
       }
 
+      //*GENERAR CSV
+      public function ajaxGenerarFEFacBol(){
+        
+        $tipo=$this->tipo;
+        $documento=$this->documento;
+
+        $respuesta=ControladorFacturacion::ctrGenerarFEFacBol($tipo, $documento);
+        echo $respuesta;
+      }      
+
     }
     
 
@@ -441,11 +451,23 @@ class AjaxFacturacion{
       $consultaSunat -> ajaxConsultarSunat();
   }
 
-    /*=============================================
-    VER TOKEN SUNAT
-    =============================================*/	
-    if(isset($_POST["verToken"])){
-      
-      $visualizarToken = new AjaxFacturacion();
-      $visualizarToken -> ajaxVisualizarTokenSunat();
+  /*=============================================
+  VER TOKEN SUNAT
+  =============================================*/	
+  if(isset($_POST["verToken"])){
+    
+    $visualizarToken = new AjaxFacturacion();
+    $visualizarToken -> ajaxVisualizarTokenSunat();
+  }
+
+  /*=============================================
+  GENERAR CSV
+  =============================================*/	
+  if(isset($_POST["tipo"])){
+    
+    $generarcsv = new AjaxFacturacion();
+    $generarcsv -> tipo = $_POST["tipo"];
+    $generarcsv -> documento = $_POST["documento"];
+    $generarcsv -> ajaxGenerarFEFacBol();
+    
   }

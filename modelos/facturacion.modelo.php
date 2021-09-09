@@ -6830,10 +6830,10 @@ class ModeloFacturacion{
     v.igv AS f1,
     'PEN' AS g1,
     v.total AS n1,
-    '101' AS q1,
+    '0101' AS q1,
     v.neto - v.dscto AS v1,
-    v.dscto AS ar1,
     COUNT(m.modelo) AS al1,
+    v.dscto AS ar1,  
     v.igv AS bb1,
     v.neto - v.dscto AS bc1,
     v.total AS bd1,
@@ -6845,7 +6845,7 @@ class ModeloFacturacion{
       '-0',
       RIGHT(v.doc_origen, 7)
     ) AS a3,
-    '9' AS b3,
+    '09' AS b3,
     'ATTACH_DOC' AS e3,
     /*FILA4*/
     'Corporacion Vasco S.A.C.' AS a4,
@@ -6860,7 +6860,7 @@ class ModeloFacturacion{
     'PE' AS j4,
     'FINANZCO' AS k4,
     'josecorpo' AS l4,
-    '2' AS m4,
+    '0002' AS m4,
     /*FILA 5*/
     c.documento AS a5,
     c.tipo_documento AS b5,

@@ -466,6 +466,13 @@ MODAL CONSULTAR SUNAT
     $enviarNotaDebitoXML -> ctrCrearNotaDebitoXML();
 ?>
 
+<?php
+
+  $generarFEacBol = new ControladorFacturacion();
+  $generarFEacBol -> ctrGenerarFEFacBol();
+
+?>
+
 <script>
     window.document.title = "Procesar CE"
 
