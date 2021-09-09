@@ -164,7 +164,7 @@
 
     $origen = 'csv_fe/'.$nombre.'';
 
-    if($feFacturaCab["c1"] == "01"){
+    if($feFacturaCab["c1"] == "1"){
 
         $destino = 'c:/daemonOSE21/documents/in/invoice/'.$nombre.'';
 
