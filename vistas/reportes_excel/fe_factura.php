@@ -31,9 +31,11 @@
     $fila = 1;
     $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", $feFacturaCab["a1"]);
     $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", $feFacturaCab["b1"]);
-    $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", $feFacturaCab["c1"]);
+    //$objPHPExcel->getActiveSheet()->SetCellValue("C$fila", $feFacturaCab["c1"]);
+    $objPHPExcel->getActiveSheet()->setCellValueExplicit("C$fila",$feFacturaCab["c1"], PHPExcel_Cell_DataType::TYPE_STRING);
     $objPHPExcel->getActiveSheet()->SetCellValue("D$fila", $feFacturaCab["d1"]);
-    $objPHPExcel->getActiveSheet()->SetCellValue("E$fila", $feFacturaCab["e1"]);
+    //$objPHPExcel->getActiveSheet()->SetCellValue("E$fila", $feFacturaCab["e1"]);
+    $objPHPExcel->getActiveSheet()->setCellValueExplicit("E$fila",$feFacturaCab["e1"], PHPExcel_Cell_DataType::TYPE_STRING);
     $objPHPExcel->getActiveSheet()->SetCellValue("F$fila", $feFacturaCab["f1"]);
     $objPHPExcel->getActiveSheet()->SetCellValue("G$fila", $feFacturaCab["g1"]);
     $objPHPExcel->getActiveSheet()->SetCellValue("N$fila", $feFacturaCab["n1"]);
@@ -105,10 +107,10 @@
     $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", $feFacturaCab["a7"]);
     $objPHPExcel->getActiveSheet()->SetCellValue("D$fila", $feFacturaCab["d7"]);
     $objPHPExcel->getActiveSheet()->SetCellValue("E$fila", $feFacturaCab["e7"]);
-    $objPHPExcel->getActiveSheet()->SetCellValue("F$fila", $feFacturaCab["f5"]);
-    $objPHPExcel->getActiveSheet()->SetCellValue("G$fila", $feFacturaCab["g5"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("F$fila", $feFacturaCab["f7"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("G$fila", $feFacturaCab["g7"]);
 
-    $fila+= 1;
+    //$fila+= 1;
 
     //*Query para el detalle
 
@@ -140,24 +142,14 @@
     }
 
     $fila+= 1;
-
     $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", "FF00FF");
-
-
-
-
-    //setting column heading
-    /* $objPHPExcel->getActiveSheet()->setCellValue('A1',$tipo); 
-    $objPHPExcel->getActiveSheet()->setCellValue('B1',$documento);  */
-    
-
     
     //*CREAMOS EL ARCHIVO
-    header('Content-type: text/csv');
+    header('Content-type: text/csv; charset=utf-8');
     header('Content-Disposition: attachment;filename="20513613939-'.$feFacturaCab["c1"].'-'.$feFacturaCab["b1"].'.csv"');
     header('Cache-Control: max-age=0');
     
-    $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV');
+    $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV')->setEnclosure('');
  
     $nombre = '20513613939-'.$feFacturaCab["c1"].'-'.$feFacturaCab["b1"].'.csv';
     $objWriter->save('csv_fe/'.$nombre.'');
@@ -175,7 +167,7 @@
     }
     
 
-    rename($origen, $destino);
+    //rename($origen, $destino);
 
     exit;
 

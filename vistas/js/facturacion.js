@@ -1959,7 +1959,32 @@ $("#daterange-btnProcesarCE").daterangepicker(
 
     } */
 
-    window.location.href  = "vistas/reportes_excel/fe_factura.php?tipo=" + tipo +"&documento=" + documento;  
+    //window.location.href  = "vistas/reportes_excel/fe_factura.php?tipo=" + tipo +"&documento=" + documento;
+    
+    var datos = new FormData();
+
+    datos.append("tipo",tipo);
+    datos.append("documento",documento);
+
+    $.ajax({
+
+      url:"ajax/facturacion.ajax.php",
+      method: "POST",
+      data: datos,
+      cache: false,
+      contentType:false,
+      processData:false,
+      success:function(respuesta){
+
+        //console.log(respuesta);
+
+        if(respuesta == "ok"){
+          Command: toastr["success"]("Se genero el CSV");
+        }
+      }
+    })
+
+    //window.location  = "index.php?ruta=procesar-ce&tipo=" + tipo +"&documento=" + documento;
 
   });
 
