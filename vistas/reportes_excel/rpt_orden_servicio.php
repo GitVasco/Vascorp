@@ -213,7 +213,7 @@ $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", utf8_encode($resPro["DirP
 
 $fila=8;
 $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", "Observaciones:");  
-$objPHPExcel->getActiveSheet()->SetCellValue("C$fila", utf8_encode($resPro["Obser"])); 
+$objPHPExcel->getActiveSheet()->SetCellValue("C$fila", utf8_encode($resPro["ObsOs"])); 
  
 
 
