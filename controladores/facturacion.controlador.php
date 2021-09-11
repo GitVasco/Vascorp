@@ -3109,18 +3109,18 @@ class ControladorFacturacion{
             if($datos["c1"] == "01"){
 
                 //?destino prueba
-                $destino = 'c:/prueba/invoice/'.$nombre.'.csv';
+                //$destino = 'c:/prueba/invoice/'.$nombre.'.csv';
 
                 //!destino produccion
-                //!$destino = 'c:/daemonOSE21/documents/in/invoice/'.$nombre.'.csv';
+                $destino = 'c:/daemonOSE21/documents/in/invoice/'.$nombre.'.csv';
 
             }else{
 
                 //?destino prueba
-                $destino = 'c:/prueba/boleta/'.$nombre.'.csv';
+                //$destino = 'c:/prueba/boleta/'.$nombre.'.csv';
 
                 //!destino produccion
-                //!$destino = 'c:/daemonOSE21/documents/in/boleta/'.$nombre.'.csv';
+                $destino = 'c:/daemonOSE21/documents/in/boleta/'.$nombre.'.csv';
 
             }
 
