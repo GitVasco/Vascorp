@@ -6809,7 +6809,7 @@ class ModeloFacturacion{
   
     }
 
-
+    //* METODO EFACT
     static public function mdlFEFacturaCab($tipo, $documento){
 
     $sql="SELECT 
@@ -6974,6 +6974,182 @@ class ModeloFacturacion{
   
       $stmt=null;
   
-      }
+    }
+
+    //* METODO NUBE
+    static public function mdlFEFacturaCabA($tipo, $documento){
+
+        $sql="SELECT 
+            /*FILA 1*/
+            DATE_FORMAT(v.fecha,'%d/%m/%Y') AS a1,
+            CONCAT(
+                LEFT(v.documento, 4),
+                '-',
+                RIGHT(v.documento, 8)
+            ) AS b1,
+            CASE
+                WHEN v.tipo = 'S03' 
+                THEN '01' 
+                ELSE '03' 
+            END AS c1,
+            'PEN' AS d1,
+            v.igv AS e1,
+            v.igv AS f1,
+            'PEN' AS g1,
+            v.total AS n1,
+            '0101' AS q1,
+            v.neto - v.dscto AS v1,
+            v.neto - v.dscto AS z1,
+            v.neto - v.dscto AS al1,
+            COUNT(m.modelo) AS as1,
+            '1' AS at1,
+            /*v.dscto AS ar1,*/
+            v.igv AS bh1,
+            v.neto - v.dscto AS bi1,
+            v.total AS bj1,
+            /*v.dscto AS bh1,*/
+            /*FILA 3*/
+            CONCAT(
+                '0',
+                LEFT(v.doc_origen, 3),
+                '-0',
+                RIGHT(v.doc_origen, 7)
+            ) AS a3,
+            '09' AS b3,
+            'ATTACH_DOC' AS e3,
+            /*FILA4*/
+            'Corporacion Vasco S.A.C.' AS a4,
+            'JACKY FORM' AS b4,
+            '20513613939' AS c4,
+            '' AS d4,
+            'CAL.SANTO TORIBIO NRO. 259' AS e4,
+            'URB.SANTA LUISA 1RA ETAPA' AS f4,
+            'LIMA' AS g4,
+            'LIMA' AS h4,
+            'SAN MARTIN DE PORRES' AS i4,
+            'PE' AS j4,
+            'FINANZCO' AS k4,
+            'josecorpo' AS l4,
+            '0002' AS m4,
+            /*FILA 5*/
+            c.documento AS a5,
+            c.tipo_documento AS b5,
+            c.nombre AS c5,
+            '' AS d5,
+            CASE
+                WHEN LENGTH(c.ubigeo) = 6 
+                THEN c.ubigeo 
+                ELSE '' 
+            END AS e5,
+            c.direccion AS f5,
+            '-' AS g5,
+            u.departamento AS h5,
+            u.provincia AS i5,
+            u.distrito AS j5,
+            'PE' AS k5,
+            c.email AS l5,
+            /*FILA 7*/
+            CONCAT(
+                'Nro.unidades: ',
+                ROUND(SUM(m.cantidad), 3)
+            ) AS a7,
+            v.cliente AS d7,
+            cv.descripcion AS e7,
+            v.neto AS f7,
+            CONCAT(ma.codigo, '   ', ma.descripcion) AS g7 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            m.tipo,
+            m.documento,
+            a.modelo,
+            SUM(m.cantidad) AS cantidad 
+          FROM
+            movimientosjf_2021 m 
+            LEFT JOIN articulojf a 
+              ON m.articulo = a.articulo 
+          WHERE m.tipo = :tipo
+            AND m.documento = :documento 
+          GROUP BY m.tipo,
+            m.documento,
+            a.modelo) AS m 
+          ON v.tipo = m.tipo 
+          AND v.documento = m.documento 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+        LEFT JOIN condiciones_ventajf cv 
+          ON v.condicion_venta = cv.codigo 
+        LEFT JOIN maestrajf ma 
+          ON ma.tipo_dato = 'TVEND' 
+          AND v.vendedor = ma.codigo 
+      WHERE v.tipo = :tipo
+        AND v.documento = :documento";
+    
+          $stmt=Conexion::conectar()->prepare($sql);
+    
+          $stmt -> bindParam(":tipo", $tipo, PDO::PARAM_STR);
+          $stmt -> bindParam(":documento", $documento, PDO::PARAM_STR);
+    
+        $stmt->execute();
+    
+        return $stmt->fetch();    
+    
+        $stmt=null;
+    
+    }  
+
+    //* MODELO SEGUN NUBE    
+    static public function mdlFEFacturaDetA($tipo, $documento){
+
+        $sql="SELECT 
+                'C62' AS b9,
+                ROUND(SUM(m.cantidad), 3) AS c9,
+                REPLACE(a.nombre, 'Ñ', 'N') AS d9,
+                ROUND(m.precio * 1.18, 2) AS e9,
+                '01' AS f9,
+                ROUND(
+                    ROUND(m.precio * SUM(m.cantidad), 2) * 0.18,
+                    2
+                ) AS i9,
+                ROUND(
+                    ROUND(m.precio * SUM(m.cantidad), 2) * 0.18,
+                    2
+                ) AS j9,
+                '10' AS k9,
+                '1000' AS l9,
+                '18' AS m9,
+                a.modelo AS s9,
+                ROUND(m.precio, 2) AS t9,
+                ROUND(ROUND(m.precio, 2) * SUM(m.cantidad), 2) AS u9,
+                ROUND(
+                    ROUND(m.precio * SUM(m.cantidad), 2) * 0.18,
+                    2
+                ) AS ap9 
+      FROM
+        movimientosjf_2021 m 
+        LEFT JOIN articulojf a 
+          ON m.articulo = a.articulo 
+      WHERE m.tipo = :tipo 
+        AND m.documento = :documento
+      GROUP BY m.tipo,
+        m.documento,
+        a.modelo";
+    
+          $stmt=Conexion::conectar()->prepare($sql);
+    
+          $stmt -> bindParam(":tipo", $tipo, PDO::PARAM_STR);
+          $stmt -> bindParam(":documento", $documento, PDO::PARAM_STR);
+    
+        $stmt->execute();
+    
+        return $stmt->fetchAll();
+    
+    
+        $stmt=null;
+    
+    }    
 
 }

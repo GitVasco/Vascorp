@@ -469,7 +469,7 @@ MODAL CONSULTAR SUNAT
 <?php
 
   $generarFEacBol = new ControladorFacturacion();
-  $generarFEacBol -> ctrGenerarFEFacBol();
+  $generarFEacBol -> ctrGenerarFEFacBolA();
 
 ?>
 

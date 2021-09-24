@@ -2957,7 +2957,7 @@ class ControladorFacturacion{
 
     }    
 
-    //*GENERAR SV
+    //*GENERAR EFACT
 	static public function ctrGenerarFEFacBol(){
 
         if(isset($_POST["tipo"])){
@@ -3133,5 +3133,184 @@ class ControladorFacturacion{
 		return $respuesta;
 
     }     
+
+    //*GENERAR NUBE
+	static public function ctrGenerarFEFacBolA(){
+
+        if(isset($_POST["tipo"])){
+
+            $datos = ModeloFacturacion::mdlFEFacturaCabA($_POST["tipo"], $_POST["documento"]);
+            //var_dump($datos);
+            
+            //todo: FILA 1
+            $fila1 =    $datos["a1"].','.
+                        $datos["b1"].','.
+                        $datos["c1"].','.  
+                        $datos["d1"].','.  
+                        $datos["e1"].','.  
+                        $datos["f1"].','. 
+                        $datos["g1"].',,,,,,,'.
+                        $datos["n1"].',,,'.
+                        $datos["q1"].',,,,,'.
+                        $datos["v1"].',,,,'.
+                        $datos["z1"].',,,,,,,,,,,,'.
+                        $datos["al1"].',,,,,,,'.
+                        $datos["as1"].','.
+                        $datos["at1"].',,,,,,,,,,,,,,'.
+                        $datos["bh1"].','. 
+                        $datos["bi1"].','. 
+                        $datos["bj1"].',,,,,,,,,,,,,,,,,,,,,';
+
+            //todo: FILA 2
+            $fila2 = ',,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,';   
+            
+            //todo: FILA 3
+            if(substr($datos["a3"],0,4) == "0003"){
+
+                $fila3 =    $datos["a3"].','.
+                            $datos["b3"].',,,'.
+                            $datos["e3"]; 
+
+
+            }else{
+
+                $fila3 =    ',,,,,'.
+                            $datos["e3"];  
+
+            }
+
+            $a4 = str_replace('\"','', $datos["a4"]);
+
+            //todo: FILA 4
+            $fila4 =    $datos["a4"].','.
+                        $datos["b4"].','. 
+                        $datos["c4"].','.
+                        $datos["d4"].','.
+                        $datos["e4"].','.
+                        $datos["f4"].','.
+                        $datos["g4"].','.
+                        $datos["h4"].','.
+                        $datos["i4"].','.
+                        $datos["j4"].','.
+                        $datos["k4"].','.
+                        $datos["l4"].','.
+                        '0002'.',';
+
+            //todo: FILA 5
+            $fila5 =    $datos["a5"].','.
+                        $datos["b5"].','. 
+                        $datos["c5"].','.
+                        $datos["d5"].','.
+                        $datos["e5"].','.
+                        $datos["f5"].','.
+                        $datos["g5"].','.
+                        $datos["h5"].','.
+                        $datos["i5"].','.
+                        $datos["j5"].','.
+                        $datos["k5"].','.
+                        $datos["l5"].',';
+
+            //todo: FILA 6
+            require_once("/../extensiones/cantidad_en_letras_v2.php");
+            $monto_letras = convertir($datos["n1"]);
+            $fila6 =    $monto_letras.',,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,';
+
+            //todo: FILA 7
+            $fila7 =    $datos["a7"].',,,'.
+                        $datos["d7"].','.
+                        $datos["e7"].','.
+                        $datos["f7"].','.
+                        $datos["g7"].',,,,,,';
+
+            $nombre = '20513613939-'.$datos["c1"].'-'.$datos["b1"];
+            
+            $fp = fopen('../vistas/reportes_excel/csv_fe/'.$nombre.'.txt', 'w'); 
+            
+            fwrite($fp, $fila1.PHP_EOL);
+            fwrite($fp, $fila2.PHP_EOL);
+            fwrite($fp, $fila3.PHP_EOL);
+            fwrite($fp, $fila4.PHP_EOL);
+            fwrite($fp, $fila5.PHP_EOL);
+            fwrite($fp, $fila6.PHP_EOL);
+            fwrite($fp, $fila7.PHP_EOL);
+
+            $datosD = ModeloFacturacion::mdlFEFacturaDetA($_POST["tipo"], $_POST["documento"]);
+            //var_dump($datosD);
+
+            foreach($datosD as $key=>$value){
+
+                if($key < count($datosD)-1){
+
+                    fwrite($fp,     ($key+1).','.
+                                    $value["b9"].','.
+                                    $value["c9"].','.
+                                    $value["d9"].','.
+                                    $value["e9"].','.
+                                    $value["f9"].',,,'.
+                                    $value["i9"].','.
+                                    $value["j9"].','.
+                                    $value["k9"].','.
+                                    $value["l9"].','.
+                                    $value["m9"].',,,,,,'.
+                                    $value["s9"].','.
+                                    $value["t9"].','.
+                                    $value["u9"].',,,,,,,,,,,,,,,,,,,,,'.
+                                    $value["ap9"].',,,,,,,,,,,,,,,,,,,,,'.
+                                    "\r\n");
+
+                }else{
+
+                    fwrite($fp, ($key+1).','.
+                                $value["b9"].','.
+                                $value["c9"].','.
+                                $value["d9"].','.
+                                $value["e9"].','.
+                                $value["f9"].',,,'.
+                                $value["i9"].','.
+                                $value["j9"].','.
+                                $value["k9"].','.
+                                $value["l9"].','.
+                                $value["m9"].',,,,,,'.
+                                $value["s9"].','.
+                                $value["t9"].','.
+                                $value["u9"].',,,,,,,,,,,,,,,,,,,,,'.
+                                $value["ap9"].',,,,,,,,,,,,,,,,,,,,,'.PHP_EOL);
+                    fwrite($fp, 'FF00FF');
+
+                }					
+
+            }
+            
+            fclose($fp); 
+
+            $origen = 'c:/xampp/htdocs/vascorp/vistas/reportes_excel/csv_fe/'.$nombre.'.txt';
+
+            if($datos["c1"] == "01"){
+
+                //?destino prueba
+                $destino = 'c:/prueba/invoice/'.$nombre.'.csv';
+
+                //!destino produccion
+                //!$destino = 'c:/daemonOSE21/documents/in/invoice/'.$nombre.'.csv';
+
+            }else{
+
+                //?destino prueba
+                $destino = 'c:/prueba/boleta/'.$nombre.'.csv';
+
+                //!destino produccion
+                //!$destino = 'c:/daemonOSE21/documents/in/boleta/'.$nombre.'.csv';
+
+            }
+
+            copy($origen,$destino);
+            //rename($origen, $destino);
+
+        }
+        
+        $respuesta = "okA";
+		return $respuesta;
+
+    }  
 
 }

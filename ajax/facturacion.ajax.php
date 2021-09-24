@@ -360,7 +360,7 @@ class AjaxFacturacion{
         $tipo=$this->tipo;
         $documento=$this->documento;
 
-        $respuesta=ControladorFacturacion::ctrGenerarFEFacBol($tipo, $documento);
+        $respuesta=ControladorFacturacion::ctrGenerarFEFacBolA($tipo, $documento);
         echo $respuesta;
       }      
 
