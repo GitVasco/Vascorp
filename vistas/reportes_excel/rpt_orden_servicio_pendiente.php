@@ -214,11 +214,11 @@ $objPHPExcel->getActiveSheet()->getStyle("B$fila:K$fila")->getFont()->setBold(tr
         
 while($res=mysql_fetch_array($sql)){    
 
-  $CodPro=$res["CodPro"]; 
+  //$CodPro=$res["CodPro"]; 
   
 
   $fila+=1;
-  $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", $res["CodPro"]);
+  //$objPHPExcel->getActiveSheet()->SetCellValue("B$fila", $res["CodPro"]);
  
   
 
