@@ -41,6 +41,7 @@ class AjaxTablaMpSal{
 										"'.$descripcion.'",
 										"'.$movimientos[$i]["color"].'",
 										"'.$movimientos[$i]["unidad"].'",
+										"'.$movimientos[$i]["Stk_Actual"].'",
 										"'.number_format($movimientos[$i]["1"],2).'",
 										"'.number_format($movimientos[$i]["2"],2).'",
 										"'.number_format($movimientos[$i]["3"],2).'",

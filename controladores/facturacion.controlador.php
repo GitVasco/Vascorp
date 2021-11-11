@@ -3254,7 +3254,8 @@ class ControladorFacturacion{
                                     $value["m9"].',,,,,,'.
                                     $value["s9"].','.
                                     $value["t9"].','.
-                                    $value["u9"].',,,,,,,,,,,,,,,,,,,,,'.
+                                    $value["u9"].',,,'.
+                                    $value["u9"].',,,,,,,,,,,,,,,,,,'.
                                     $value["ap9"].',,,,,,,,,,,,,,,,,,,,,'.
                                     "\r\n");
 
@@ -3273,7 +3274,8 @@ class ControladorFacturacion{
                                 $value["m9"].',,,,,,'.
                                 $value["s9"].','.
                                 $value["t9"].','.
-                                $value["u9"].',,,,,,,,,,,,,,,,,,,,,'.
+                                $value["u9"].',,,'.
+                                $value["u9"].',,,,,,,,,,,,,,,,,,'.
                                 $value["ap9"].',,,,,,,,,,,,,,,,,,,,,'.PHP_EOL);
                     fwrite($fp, 'FF00FF');
 

@@ -342,57 +342,61 @@ $objPHPExcel->getActiveSheet()->SetCellValue("G$fila", 'UNIDAD');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "G$fila");
 $objPHPExcel->getActiveSheet()->getStyle("G$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("H$fila", 'ENERO');
+$objPHPExcel->getActiveSheet()->SetCellValue("H$fila", 'STOCK');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "H$fila");
 $objPHPExcel->getActiveSheet()->getStyle("H$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("I$fila", 'FEBRERO');
+$objPHPExcel->getActiveSheet()->SetCellValue("I$fila", 'ENERO');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "I$fila");
 $objPHPExcel->getActiveSheet()->getStyle("I$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("J$fila", 'MARZO');
+$objPHPExcel->getActiveSheet()->SetCellValue("J$fila", 'FEBRERO');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "J$fila");
 $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("K$fila", 'ABRIL');
+$objPHPExcel->getActiveSheet()->SetCellValue("K$fila", 'MARZO');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "K$fila");
 $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("L$fila", 'MAYO');
+$objPHPExcel->getActiveSheet()->SetCellValue("L$fila", 'ABRIL');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "L$fila");
 $objPHPExcel->getActiveSheet()->getStyle("L$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("M$fila", 'JUNIO');
+$objPHPExcel->getActiveSheet()->SetCellValue("M$fila", 'MAYO');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "M$fila");
 $objPHPExcel->getActiveSheet()->getStyle("M$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("N$fila", 'JULIO');
+$objPHPExcel->getActiveSheet()->SetCellValue("N$fila", 'JUNIO');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "N$fila");
 $objPHPExcel->getActiveSheet()->getStyle("N$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("O$fila", 'AGOSTO');
+$objPHPExcel->getActiveSheet()->SetCellValue("O$fila", 'JULIO');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "O$fila");
 $objPHPExcel->getActiveSheet()->getStyle("O$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("P$fila", 'SEPTIEMBRE');
+$objPHPExcel->getActiveSheet()->SetCellValue("P$fila", 'AGOSTO');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "P$fila");
 $objPHPExcel->getActiveSheet()->getStyle("P$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("Q$fila", 'OCTUBRE');
+$objPHPExcel->getActiveSheet()->SetCellValue("Q$fila", 'SEPTIEMBRE');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "Q$fila");
 $objPHPExcel->getActiveSheet()->getStyle("Q$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("R$fila", 'NOVIEMBRE');
+$objPHPExcel->getActiveSheet()->SetCellValue("R$fila", 'OCTUBRE');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "R$fila");
 $objPHPExcel->getActiveSheet()->getStyle("R$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("S$fila", 'DICIEMBRE');
+$objPHPExcel->getActiveSheet()->SetCellValue("S$fila", 'NOVIEMBRE');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "S$fila");
 $objPHPExcel->getActiveSheet()->getStyle("S$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("T$fila", 'TOTAL');
+$objPHPExcel->getActiveSheet()->SetCellValue("T$fila", 'DICIEMBRE');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "T$fila");
 $objPHPExcel->getActiveSheet()->getStyle("T$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+$objPHPExcel->getActiveSheet()->SetCellValue("U$fila", 'TOTAL');
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "U$fila");
+$objPHPExcel->getActiveSheet()->getStyle("U$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 
 if($linea == null){
@@ -407,6 +411,7 @@ mp.linea,
 mp.descripcion,
 mp.color,
 mp.unidad,
+Stk_Actual,
 SUM(
 CASE
    WHEN MONTH(vd.fecemi) = '1' 
@@ -535,6 +540,7 @@ mp.codsublinea,
 '-',
 mp.codlinea,
 mp.linea,
+'-',
 '-',
 '-',
 '-',
@@ -682,31 +688,33 @@ while($respDetalle = mysql_fetch_array($sqlDetalle)){
 
     $objPHPExcel->getActiveSheet()->SetCellValue("G$fila", utf8_encode($respDetalle["unidad"]));
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", utf8_encode($respDetalle["1"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", utf8_encode($respDetalle["Stk_Actual"]));
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("I$fila", utf8_encode($respDetalle["2"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("I$fila", utf8_encode($respDetalle["1"]));
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", utf8_encode($respDetalle["3"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", utf8_encode($respDetalle["2"]));
+
+    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", utf8_encode($respDetalle["3"]));
     
-    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", utf8_encode($respDetalle["4"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("L$fila", utf8_encode($respDetalle["4"]));
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("L$fila", utf8_encode($respDetalle["5"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("M$fila", utf8_encode($respDetalle["5"]));
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("M$fila", utf8_encode($respDetalle["6"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("N$fila", utf8_encode($respDetalle["6"]));
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("N$fila", utf8_encode($respDetalle["7"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("O$fila", utf8_encode($respDetalle["7"]));
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("O$fila", utf8_encode($respDetalle["8"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("P$fila", utf8_encode($respDetalle["8"]));
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("P$fila", utf8_encode($respDetalle["9"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("Q$fila", utf8_encode($respDetalle["9"]));
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("Q$fila", utf8_encode($respDetalle["10"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("R$fila", utf8_encode($respDetalle["10"]));
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("R$fila", utf8_encode($respDetalle["11"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("S$fila", utf8_encode($respDetalle["11"]));
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("S$fila", utf8_encode($respDetalle["12"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("T$fila", utf8_encode($respDetalle["12"]));
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("T$fila", utf8_encode($respDetalle["total"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("U$fila", utf8_encode($respDetalle["total"]));
     
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "A$fila");
     $objPHPExcel->getActiveSheet()->getStyle("A$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
@@ -767,6 +775,9 @@ while($respDetalle = mysql_fetch_array($sqlDetalle)){
 
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "T$fila");
     $objPHPExcel->getActiveSheet()->getStyle("T$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "U$fila");
+    $objPHPExcel->getActiveSheet()->getStyle("U$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
   }
 }else{
   $sqlDetalle2 = mysql_query("SELECT 
@@ -778,6 +789,7 @@ while($respDetalle = mysql_fetch_array($sqlDetalle)){
   mp.descripcion,
   mp.color,
   mp.unidad,
+  Stk_Actual,
   SUM(
   CASE
      WHEN MONTH(vd.fecemi) = '1' 
@@ -907,6 +919,7 @@ SELECT
   '-',
   mp.codlinea,
   mp.linea,
+  '-',
   '-',
   '-',
   '-',
@@ -1054,31 +1067,33 @@ while($respDetalle = mysql_fetch_array($sqlDetalle2)){
 
     $objPHPExcel->getActiveSheet()->SetCellValue("G$fila", utf8_encode($respDetalle["unidad"]));
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", utf8_encode($respDetalle["1"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", utf8_encode($respDetalle["Stk_Actual"]));
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("I$fila", utf8_encode($respDetalle["2"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("I$fila", utf8_encode($respDetalle["1"]));
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", utf8_encode($respDetalle["3"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", utf8_encode($respDetalle["2"]));
+
+    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", utf8_encode($respDetalle["3"]));
     
-    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", utf8_encode($respDetalle["4"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("L$fila", utf8_encode($respDetalle["4"]));
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("L$fila", utf8_encode($respDetalle["5"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("M$fila", utf8_encode($respDetalle["5"]));
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("M$fila", utf8_encode($respDetalle["6"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("N$fila", utf8_encode($respDetalle["6"]));
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("N$fila", utf8_encode($respDetalle["7"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("O$fila", utf8_encode($respDetalle["7"]));
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("O$fila", utf8_encode($respDetalle["8"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("P$fila", utf8_encode($respDetalle["8"]));
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("P$fila", utf8_encode($respDetalle["9"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("Q$fila", utf8_encode($respDetalle["9"]));
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("Q$fila", utf8_encode($respDetalle["10"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("R$fila", utf8_encode($respDetalle["10"]));
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("R$fila", utf8_encode($respDetalle["11"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("S$fila", utf8_encode($respDetalle["11"]));
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("S$fila", utf8_encode($respDetalle["12"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("T$fila", utf8_encode($respDetalle["12"]));
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("T$fila", utf8_encode($respDetalle["total"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("U$fila", utf8_encode($respDetalle["total"]));
     
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "A$fila");
     $objPHPExcel->getActiveSheet()->getStyle("A$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
@@ -1139,6 +1154,9 @@ while($respDetalle = mysql_fetch_array($sqlDetalle2)){
 
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "T$fila");
     $objPHPExcel->getActiveSheet()->getStyle("T$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "U$fila");
+    $objPHPExcel->getActiveSheet()->getStyle("U$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 }
 }
 

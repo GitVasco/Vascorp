@@ -1978,7 +1978,7 @@ $("#daterange-btnProcesarCE").daterangepicker(
 
         //console.log(respuesta);
 
-        if(respuesta == "ok"){
+        if(respuesta == "okA"){
           Command: toastr["success"]("Se genero el CSV");
         }
       }

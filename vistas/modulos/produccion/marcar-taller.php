@@ -207,7 +207,7 @@
                     <?php
 
                     $registrarProceso = new ControladorTalleres();
-                    $registrarProceso -> ctrProceso();
+                    $registrarProceso -> ctrProcesoB();
 
                     ?> 
 

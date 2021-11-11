@@ -1789,6 +1789,7 @@ class ModeloMovimientos{
                   mp.descripcion,
                   mp.color,
                   mp.unidad,
+                  Stk_Actual,
                   SUM(
                   CASE
                      WHEN MONTH(vd.fecemi) = '1' 
@@ -1917,6 +1918,7 @@ class ModeloMovimientos{
                   '-',
                   mp.codlinea,
                   mp.linea,
+                  '-',
                   '-',
                   '-',
                   '-',
@@ -2061,6 +2063,7 @@ class ModeloMovimientos{
                   mp.descripcion,
                   mp.color,
                   mp.unidad,
+                  Stk_Actual,
                   SUM(
                   CASE
                      WHEN MONTH(vd.fecemi) = '1' 
@@ -2190,6 +2193,7 @@ class ModeloMovimientos{
                   '-',
                   mp.codlinea,
                   mp.linea,
+                  '-',
                   '-',
                   '-',
                   '-',

@@ -67,6 +67,7 @@
                             <th>Descripción</th>
                             <th>Color</th>
                             <th>Unidad</th>
+                            <th>Stock</th>
                             <th>Ene</th>
                             <th>Feb</th>
                             <th>Mar</th>

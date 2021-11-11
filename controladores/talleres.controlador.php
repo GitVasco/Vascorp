@@ -92,8 +92,8 @@ class ControladorTalleres{
             $cobar = $_POST["codigoBarra"];
 
             $validar = ModeloTalleres::mdlMostrarTalleresG($cobar);
-            //var_dump($validar);
-            //var_dump("fecha_proceso", $validar["fecha_proceso"]);
+            var_dump($validar);
+            var_dump("fecha_proceso", $validar["fecha_proceso"]);
 
             if($validar["fecha_proceso"] == null){
 
@@ -165,6 +165,50 @@ class ControladorTalleres{
         }
 
     }
+
+    static public function ctrProcesoB(){
+
+        if(isset($_POST["codigoBarra"])){
+
+            //var_dump($_POST["codigoBarra"]);
+
+            $cobar = $_POST["codigoBarra"];
+            $validar = ModeloTalleres::mdlMostrarTalleresG($cobar);
+            //var_dump("fecha_proceso", $validar["fecha_proceso"]);
+
+            if($validar["fecha_proceso"] == null){
+
+                date_default_timezone_set('America/Lima');
+
+                //$fecha = "2021-02-26";
+                $fecha = date('Y-m-d G:i:s');
+                //var_dump($fecha);
+
+                $codigo = $_POST["codigoBarra"];
+                $trabajador = $_POST["cod_tra"];
+
+                $respuesta = ModeloTalleres::mdlProceso($fecha,$codigo,$trabajador);
+                //var_dump($respuesta);
+
+                $respuesta2 = ModeloTalleres::mdlTerminado($fecha,$codigo,$trabajador);
+
+                    echo'<script>
+                    Command: toastr["success"]("Registrado exitosamente!");
+    
+                    </script>';
+
+
+            }else{
+
+                echo'<script>
+                Command: toastr["error"]("El ticket ya fue registrado antes!");
+
+                </script>';
+
+            }
+
+        }
+    }    
 
 
 	/* 
@@ -255,7 +299,7 @@ class ControladorTalleres{
                                 "cantidad" => $cantidad2,
                                 "editarBarra" => $codigoBarraNuevo);
                     $tabla="entallerjf";
-                    $id=$_POST["editarTaller"];
+                    $id=$_POST["editarTa ller"];
                     $eliminar=ModeloTalleres::mdlEliminarTaller($tabla,$id);
                     $respuesta = ModeloTalleres::mdlIngresarTaller($datos);
                     $respuesta2 = ModeloTalleres::mdlIngresarTaller($datos2);

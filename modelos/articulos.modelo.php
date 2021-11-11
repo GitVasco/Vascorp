@@ -10,6 +10,7 @@ class ModeloArticulos
 	*/
 	static public function mdlMostrarArticulos($valor){
 
+
 		if ($valor != null) {
 
 			$stmt = Conexion::conectar()->prepare("CALL sp_1036_consulta_articulos_p(:valor)");
