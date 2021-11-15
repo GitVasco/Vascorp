@@ -360,7 +360,20 @@ class AjaxFacturacion{
         $tipo=$this->tipo;
         $documento=$this->documento;
 
-        $respuesta=ControladorFacturacion::ctrGenerarFEFacBolA($tipo, $documento);
+        if($tipo == "S02"  || $tipo == "S03"){
+
+          $respuesta=ControladorFacturacion::ctrGenerarFEFacBolA($tipo, $documento);
+
+        }elseif ($tipo == "E05") {
+          
+          $respuesta=ControladorFacturacion::ctrGenerarFENCA($tipo, $documento);
+
+        }elseif ($tipo == "E23") {
+          
+          $respuesta=ControladorFacturacion::ctrGenerarFENDA($tipo, $documento);
+
+        }
+
         echo $respuesta;
       }      
 

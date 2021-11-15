@@ -67,6 +67,7 @@
          <tr>
            <th>N° </th>
            <th>Tipo doc.</th>
+           <th>NT</th>
            <th>documento</th>
            <th>Total</th>
            <th>Cliente</th>

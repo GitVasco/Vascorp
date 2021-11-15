@@ -30,7 +30,15 @@ class TablaNotasCD{
                 $botones =  "<div class='btn-group'><button title='Imprimir Nota Credito' class='btn btn-xs btn-success btnImprimirNotaCredito' tipo='".$notas[$i]["tipo"]."' documento='".$notas[$i]["documento"]."'><i class='fa fa-print'></i></button></div>";
             }
                 
+            if($notas[$i]["nombre_tipo"] == "ND"){
 
+                $nombre_tipo = "<span style='font-size:85%' class='label label-primary'>".$notas[$i]["nombre_tipo"]."</span>";
+
+            }else{
+
+                $nombre_tipo = "<span style='font-size:85%' class='label label-info'>".$notas[$i]["nombre_tipo"]."</span>";
+
+            }
             
             
 
@@ -38,6 +46,7 @@ class TablaNotasCD{
                 $datosJson .= '[
                 "'.($i+1).'",
                 "'.$notas[$i]["tipo_documento"].'",
+                "'.$nombre_tipo.'",
                 "'.$notas[$i]["documento"].'",
                 "'.$notas[$i]["total"].'",
                 "'.$notas[$i]["cliente"]." - ".$notas[$i]["nombre"].'",

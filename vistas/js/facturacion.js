@@ -1077,7 +1077,7 @@ function cargarTablaNotaCD(fechaInicial,fechaFinal) {
 		"deferRender": true,
 		"retrieve": true,
 		"processing": true,
-		"order": [[1, "desc"]],
+		"order": [[6, "desc"]],
 		"pageLength": 20,
 		"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
 		"language": {
@@ -1240,13 +1240,26 @@ $(".tablaNotaCredito").on("click", ".btnImprimirNotaCredito", function () {
   var tipo = $(this).attr("tipo");
   var documento = $(this).attr("documento");
 
-  window.open("extensiones/tcpdf/pdf/reporte_notascd.php?tipo="+tipo+"&documento="+documento,"_blank");
+  if(tipo == 'E05'){
+
+    window.open("extensiones/tcpdf/pdf/reporte_credito.php?tipo="+tipo+"&documento="+documento,"_blank");
+
+  }else{
+
+    window.open("extensiones/tcpdf/pdf/reporte_debito.php?tipo="+tipo+"&documento="+documento,"_blank");
+
+  }
+
+
+
+
+
 })
 
 $(".btnImprimirNotaCredito").click(function(){
     var tipo = $(this).attr("tipo");
     var documento = $(this).attr("documento");
-    window.open("extensiones/tcpdf/pdf/reporte_notascd.php?tipo="+tipo+"&documento="+documento,"_blank");
+    window.open("extensiones/tcpdf/pdf/reporte_credito.php?tipo="+tipo+"&documento="+documento,"_blank");
 })
 
 $(".btnTerminarNotaCredito").click(function(){
@@ -1936,30 +1949,6 @@ $("#daterange-btnProcesarCE").daterangepicker(
   $(".tablaProcesarCE").on("click","button.btnGenerarXMLCE",function(){
     var tipo = $(this).attr("tipo");
     var documento = $(this).attr("documento");
-
-    // console.log(tipo);
-    // console.log(documento);
-
-    //VALIDAMOS SI ES FACTURA, BOLETA, NOTA DE CREDITO O DEBITO
-    /* if(tipo == 'S03'){
-
-        window.location = "index.php?ruta=procesar-ce&tipoFact="+tipo+"&documentoFact="+documento;
-
-    }else if(tipo == 'S02'){
-
-        window.location = "index.php?ruta=procesar-ce&tipoFact="+tipo+"&documentoFact="+documento;
-
-    }else if(tipo == 'E05'){
-
-        window.location = "index.php?ruta=procesar-ce&tipoNotaCred="+tipo+"&documentoNotaCred="+documento;
-
-    }else{
-
-      window.location = "index.php?ruta=procesar-ce&tipoNotaDeb="+tipo+"&documentoNotaDeb="+documento;
-
-    } */
-
-    //window.location.href  = "vistas/reportes_excel/fe_factura.php?tipo=" + tipo +"&documento=" + documento;
     
     var datos = new FormData();
 
@@ -1980,11 +1969,14 @@ $("#daterange-btnProcesarCE").daterangepicker(
 
         if(respuesta == "okA"){
           Command: toastr["success"]("Se genero el CSV");
+        }else{
+
+          Command: toastr["error"]("No se genero el CSV");
+
         }
       }
     })
 
-    //window.location  = "index.php?ruta=procesar-ce&tipo=" + tipo +"&documento=" + documento;
 
   });
 

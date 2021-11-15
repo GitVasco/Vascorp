@@ -646,62 +646,67 @@ class ModeloFacturacion{
     static public function mdlMostrarDebitoImpresion($valor, $tipoDoc){
 
 			$sql="SELECT 
-      v.tipo,
-      v.documento,
-      v.neto,
-      v.igv,
-      v.dscto,
-      v.total,
-      v.doc_origen as origen2,
-      n.observacion,
-      n.doc_origen,
-      n.motivo,
-      (SELECT 
-        descripcion 
-      FROM
-        maestrajf m 
-      WHERE m.tipo_dato = 'TMOTD' 
-        AND n.motivo = m.codigo) AS nom_motivo,
-      DATE_FORMAT(n.fecha_origen,'%Y-%m-%d') AS fecha_origen,
-      v.cliente,
-      c.nombre,
-      c.documento as dni,
-      c.direccion,
-      c.email,
-      CONCAT(u.distrito, ' / ', u.provincia) AS nom_ubigeo,
-      u.departamento,
-      c.ubigeo,
-      v.agencia,
-      DATE_FORMAT(v.fecha,'%d/%m/%Y') AS fecha,
-      v.fecha AS fecha_emision,
-      v.tipo_documento,
-      v.lista_precios,
-      v.condicion_venta,
-      cv.descripcion,
-      v.vendedor,
-      ven.descripcion AS nom_vendedor,
-      cv.dias,
-      v.doc_destino
-    FROM
-      ventajf v 
-      LEFT JOIN condiciones_ventajf cv 
-        ON v.condicion_venta = cv.id 
-      LEFT JOIN clientesjf c 
-        ON v.cliente = c.codigo 
-      LEFT JOIN ubigeo u 
-        ON c.ubigeo = u.codigo 
-        LEFT JOIN notascd_jf n
-        ON v.documento=n.documento AND v.tipo=n.tipo
-      LEFT JOIN 
-        (SELECT 
-          codigo,
-          descripcion 
-        FROM
-          maestrajf m 
-        WHERE m.tipo_dato = 'TVEND') ven 
-        ON v.vendedor = ven.codigo 
-    WHERE v.documento = :codigo
-    AND v.tipo = :tipo_doc";
+            v.tipo,
+            v.documento,
+            v.neto,
+            v.igv,
+            v.dscto,
+            v.total,
+            n.observacion,
+            n.doc_origen,
+            n.motivo,
+            (SELECT 
+              descripcion 
+            FROM
+              maestrajf m 
+            WHERE m.tipo_dato = 'TMOTD' 
+              AND n.motivo = m.codigo) AS nom_motivo,
+            (SELECT 
+            descripcion 
+          FROM
+            maestrajf m 
+          WHERE m.tipo_dato = 'TCON' 
+            AND n.tip_cont = m.codigo) AS nom_tipo_con,
+            DATE_FORMAT(n.fecha_origen,'%Y-%m-%d') AS fecha_origen,
+            v.cliente,
+            c.nombre,
+            c.documento as dni,
+            c.direccion,
+            c.email,
+            CONCAT(u.distrito, ' / ', u.provincia) AS nom_ubigeo,
+            u.departamento,
+            c.ubigeo,
+            v.agencia,
+            DATE_FORMAT(v.fecha,'%d/%m/%Y') AS fecha,
+            v.fecha AS fecha_emision,
+            v.tipo_documento,
+            v.lista_precios,
+            v.condicion_venta,
+            cv.descripcion,
+            v.vendedor,
+            ven.descripcion AS nom_vendedor,
+            cv.dias,
+            v.doc_destino
+            FROM
+            ventajf v 
+            LEFT JOIN condiciones_ventajf cv 
+                ON v.condicion_venta = cv.id 
+            LEFT JOIN clientesjf c 
+                ON v.cliente = c.codigo 
+            LEFT JOIN ubigeo u 
+                ON c.ubigeo = u.codigo 
+                LEFT JOIN notascd_jf n
+                ON v.documento=n.documento AND v.tipo=n.tipo
+            LEFT JOIN 
+                (SELECT 
+                codigo,
+                descripcion 
+                FROM
+                maestrajf m 
+                WHERE m.tipo_dato = 'TVEND') ven 
+                ON v.vendedor = ven.codigo 
+            WHERE v.documento = :codigo
+            AND v.tipo = :tipo_doc";
 
         $stmt=Conexion::conectar()->prepare($sql);
 
@@ -723,64 +728,67 @@ class ModeloFacturacion{
 	static public function mdlMostrarVentaImpresion($valor, $tipoDoc){
 
 			$sql="SELECT 
-      v.tipo,
-      v.documento,
-      v.neto,
-      v.igv,
-      v.dscto,
-      v.total,
-      v.doc_origen as origen2,
-      n.observacion,
-      n.tipo_doc,
-      n.tip_cont,
-      n.doc_origen,
-      n.motivo,
-      (SELECT 
-        descripcion 
-      FROM
-        maestrajf m 
-      WHERE m.tipo_dato = 'TMOT' 
-        AND n.motivo = m.codigo) AS nom_motivo,
-      DATE_FORMAT(n.fecha_origen,'%Y-%m-%d') AS fecha_origen,
-      v.cliente,
-      c.nombre,
-      c.documento as dni,
-      c.direccion,
-      c.email,
-      CONCAT(u.distrito, ' / ', u.provincia) AS nom_ubigeo,
-      u.departamento,
-      c.ubigeo,
-      v.agencia,
-      DATE_FORMAT(v.fecha,'%d/%m/%Y') AS fecha,
-      v.fecha AS fecha_emision,
-      v.tipo_documento,
-      v.lista_precios,
-      v.condicion_venta,
-      cv.descripcion,
-      v.vendedor,
-      ven.descripcion AS nom_vendedor,
-      cv.dias,
-      v.doc_destino
-    FROM
-      ventajf v 
-      LEFT JOIN condiciones_ventajf cv 
-        ON v.condicion_venta = cv.id 
-      LEFT JOIN clientesjf c 
-        ON v.cliente = c.codigo 
-      LEFT JOIN ubigeo u 
-        ON c.ubigeo = u.codigo 
-        LEFT JOIN notascd_jf n
-        ON v.documento=n.documento AND v.tipo=n.tipo
-      LEFT JOIN 
-        (SELECT 
-          codigo,
-          descripcion 
-        FROM
-          maestrajf m 
-        WHERE m.tipo_dato = 'TVEND') ven 
-        ON v.vendedor = ven.codigo 
-    WHERE v.documento = :codigo
-    AND v.tipo = :tipo_doc";
+                        v.tipo,
+                        v.documento,
+                        v.neto,
+                        v.igv,
+                        v.dscto,
+                        v.total,
+                        n.observacion,
+                        n.tipo_doc,
+                        n.tip_cont,
+                        n.doc_origen,
+                        n.motivo,
+                        (SELECT 
+                        descripcion 
+                        FROM
+                        maestrajf m 
+                        WHERE m.tipo_dato = 'TMOT' 
+                        AND n.motivo = m.codigo) AS nom_motivo,
+                        DATE_FORMAT(n.fecha_origen,'%Y-%m-%d') AS fecha_origen,
+                        v.cliente,
+                        c.nombre,
+                        c.documento as dni,
+                        c.direccion,
+                        c.email,
+                        CONCAT(u.distrito, ' / ', u.provincia) AS nom_ubigeo,
+                        u.departamento,
+                        c.ubigeo,
+                        v.agencia,
+                        DATE_FORMAT(v.fecha,'%d/%m/%Y') AS fecha,
+                        v.fecha AS fecha_emision,
+                        v.tipo_documento,
+                        v.lista_precios,
+                        v.condicion_venta,
+                        cv.descripcion,
+                        v.vendedor,
+                        ven.descripcion AS nom_vendedor,
+                        cv.dias,
+                        DATE_FORMAT(
+                    DATE_ADD(v.fecha, INTERVAL cv.dias DAY),
+                    '%d/%m/%Y'
+                ) AS fecha_vencimiento,
+                        v.doc_destino
+                        FROM
+                        ventajf v 
+                        LEFT JOIN condiciones_ventajf cv 
+                            ON v.condicion_venta = cv.id 
+                        LEFT JOIN clientesjf c 
+                            ON v.cliente = c.codigo 
+                        LEFT JOIN ubigeo u 
+                            ON c.ubigeo = u.codigo 
+                            LEFT JOIN notascd_jf n
+                            ON v.documento=n.documento AND v.tipo=n.tipo
+                        LEFT JOIN 
+                            (SELECT 
+                            codigo,
+                            descripcion 
+                            FROM
+                            maestrajf m 
+                            WHERE m.tipo_dato = 'TVEND') ven 
+                            ON v.vendedor = ven.codigo 
+                        WHERE v.documento = :codigo
+                        AND v.tipo = :tipo_doc";
 
         $stmt=Conexion::conectar()->prepare($sql);
 
@@ -1185,7 +1193,12 @@ class ModeloFacturacion{
           v.usuario,
           u.nombre as nombres,
           v.estado,
-          v.fecha 
+          v.fecha,
+          CASE
+    WHEN v.tipo = 'E05' 
+    THEN 'NC' 
+    ELSE 'ND' 
+  END AS nombre_tipo  
         FROM
           ventajf v 
           LEFT JOIN clientesjf c 
@@ -1213,7 +1226,12 @@ class ModeloFacturacion{
           v.usuario,
           u.nombre as nombres,
           v.estado,
-          v.fecha 
+          v.fecha ,
+          CASE
+    WHEN v.tipo = 'E05' 
+    THEN 'NC' 
+    ELSE 'ND' 
+  END AS nombre_tipo 
         FROM
           ventajf v 
           LEFT JOIN clientesjf c 
@@ -1251,7 +1269,12 @@ class ModeloFacturacion{
             v.usuario,
             u.nombre as nombres,
             v.estado,
-            v.fecha 
+            v.fecha ,
+            CASE
+    WHEN v.tipo = 'E05' 
+    THEN 'NC' 
+    ELSE 'ND' 
+  END AS nombre_tipo 
           FROM
             ventajf v 
             LEFT JOIN clientesjf c 
@@ -1281,7 +1304,12 @@ class ModeloFacturacion{
             v.usuario,
             u.nombre as nombres,
             v.estado,
-            v.fecha 
+            v.fecha ,
+            CASE
+    WHEN v.tipo = 'E05' 
+    THEN 'NC' 
+    ELSE 'ND' 
+  END AS nombre_tipo 
           FROM
             ventajf v 
             LEFT JOIN clientesjf c 
@@ -7030,7 +7058,7 @@ class ModeloFacturacion{
             'PE' AS j4,
             'FINANZCO' AS k4,
             'josecorpo' AS l4,
-            '0002' AS m4,
+            '0000' AS m4,
             /*FILA 5*/
             c.documento AS a5,
             c.tipo_documento AS b5,
@@ -7124,6 +7152,7 @@ class ModeloFacturacion{
                 a.modelo AS s9,
                 ROUND(m.precio, 2) AS t9,
                 ROUND(ROUND(m.precio, 2) * SUM(m.cantidad), 2) AS u9,
+                ROUND(ROUND(m.precio, 2) * SUM(m.cantidad), 2) AS x9,
                 ROUND(
                     ROUND(m.precio * SUM(m.cantidad), 2) * 0.18,
                     2
@@ -7151,5 +7180,487 @@ class ModeloFacturacion{
         $stmt=null;
     
     }    
+
+    //* METODO NUBE CREDITO
+    static public function mdlFENCACabA($tipo, $documento){
+
+        $sql="SELECT 
+                  /*FILA 1*/
+                  DATE_FORMAT(v.fecha, '%d/%m/%Y') AS a1,
+                  CONCAT(
+                    LEFT(v.documento, 4),
+                    '-',
+                    RIGHT(v.documento, 8)
+                  ) AS b1,
+                  'PEN' AS c1,
+                  v.igv AS d1,
+                  v.igv AS e1,
+                  'PEN' AS f1,
+                  v.total * - 1 AS m1,
+                  v.neto - v.dscto AS p1,
+                  v.neto - v.dscto AS t1,
+                  v.neto - v.dscto AS ae1,
+                  '1' AS aj1,
+                  '1' AS ak1,
+                  v.igv AS an1,
+                  /*FILA 3*/
+                  'Corporacion Vasco S.A.C.' AS a3,
+                  'JACKY FORM' AS b3,
+                  '20513613939' AS c3,
+                  '' AS d3,
+                  'CAL.SANTO TORIBIO NRO. 259' AS e3,
+                  'URB.SANTA LUISA 1RA ETAPA' AS f3,
+                  'LIMA' AS g3,
+                  'LIMA' AS h3,
+                  'SAN MARTIN DE PORRES' AS i3,
+                  'PE' AS j3,
+                  'FINANZCO' AS k3,
+                  'josecorpo' AS l3,
+                  '0000' AS m3,
+                  /*FILA 5*/
+                  c.documento AS a4,
+                  c.tipo_documento AS b4,
+                  c.nombre AS c4,
+                  '' AS d4,
+                  CASE
+                    WHEN LENGTH(c.ubigeo) = 6 
+                    THEN c.ubigeo 
+                    ELSE '' 
+                  END AS e4,
+                  c.direccion AS f4,
+                  '-' AS g4,
+                  u.departamento AS h4,
+                  u.provincia AS i4,
+                  u.distrito AS j4,
+                  'PE' AS k4,
+                  c.email AS l4,
+                  /*FILA 6*/
+                  CONCAT(
+                    'Nro.unidades: ',
+                    ROUND(SUM(m.cantidad) * - 1, 0)
+                  ) AS a6,
+                  v.cliente AS d6,
+                  '' AS e6,
+                  v.neto AS f6,
+                  CONCAT(ma.codigo, '   ', ma.descripcion) AS g6,
+                  /*FILA 7*/
+                  CONCAT(
+                    LEFT(n.doc_origen, 4),
+                    '-',
+                    RIGHT(n.doc_origen, 8)
+                  ) AS a7,
+                  n.tipo_doc AS b7,
+                  (SELECT 
+                    argumento 
+                  FROM
+                    maestrajf m 
+                  WHERE m.tipo_dato = 'TMOT' 
+                    AND m.codigo = n.motivo) AS c7,
+                  (SELECT 
+                    descripcion 
+                  FROM
+                    maestrajf m 
+                  WHERE m.tipo_dato = 'TMOT' 
+                    AND m.codigo = n.motivo) AS d7,
+                  DATE_FORMAT(n.fecha_origen, '%d/%m/%Y') AS e7,
+                  'RELATED_DOC' AS f7 
+                FROM
+                  ventajf v 
+                  LEFT JOIN 
+                    (SELECT 
+                      m.tipo,
+                      m.documento,
+                      a.modelo,
+                      SUM(m.cantidad) AS cantidad 
+                    FROM
+                      movimientosjf_2021 m 
+                      LEFT JOIN articulojf a 
+                        ON m.articulo = a.articulo 
+                    WHERE m.tipo = :tipo 
+                      AND m.documento = :documento 
+                    GROUP BY m.tipo,
+                      m.documento,
+                      a.modelo) AS m 
+                    ON v.tipo = m.tipo 
+                    AND v.documento = m.documento 
+                  LEFT JOIN clientesjf c 
+                    ON v.cliente = c.codigo 
+                  LEFT JOIN ubigeo u 
+                    ON c.ubigeo = u.codigo 
+                  LEFT JOIN condiciones_ventajf cv 
+                    ON v.condicion_venta = cv.codigo 
+                  LEFT JOIN maestrajf ma 
+                    ON ma.tipo_dato = 'TVEND' 
+                    AND v.vendedor = ma.codigo 
+                  LEFT JOIN notascd_jf n 
+                    ON v.tipo = n.tipo 
+                    AND v.documento = n.documento 
+                WHERE v.tipo = :tipo 
+                  AND v.documento = :documento";
+
+        $stmt=Conexion::conectar()->prepare($sql);
+
+        $stmt -> bindParam(":tipo", $tipo, PDO::PARAM_STR);
+        $stmt -> bindParam(":documento", $documento, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetch();    
+
+        $stmt=null;
+
+    }    
+
+    //* MODELO SEGUN NUBE    
+    static public function mdlFENCDetA($tipo, $documento){
+
+      $sql="SELECT 
+                'C62' AS b9,
+                ROUND(SUM(m.cantidad)*-1, 3) AS c9,
+                REPLACE(a.nombre, 'Ñ', 'N') AS d9,
+                ROUND(m.precio * 1.18, 2) AS e9,
+                '01' AS f9,
+                ROUND(
+                    ROUND(m.precio * SUM(m.cantidad), 2) * 0.18*-1,
+                    2
+                ) AS i9,
+                ROUND(
+                    ROUND(m.precio * SUM(m.cantidad), 2) * 0.18*-1,
+                    2
+                ) AS j9,
+                '10' AS k9,
+                '1000' AS l9,
+                '18' AS m9,
+                a.modelo AS s9,
+                ROUND(m.precio, 2) AS t9,
+                ROUND(
+                    ROUND(m.precio, 2) * SUM(m.cantidad)*-1,
+                    2
+                ) AS u9,
+                    ROUND(
+                ROUND(m.precio, 2) * SUM(m.cantidad)*-1,
+                    2
+                ) AS x9,
+                ROUND(
+                    ROUND(m.precio * SUM(m.cantidad), 2) * 0.18*-1,
+                    2
+                ) AS ad9 
+                    FROM
+                    movimientosjf_2021 m 
+                    LEFT JOIN articulojf a 
+                        ON m.articulo = a.articulo 
+                    WHERE m.tipo = :tipo 
+                    AND m.documento = :documento
+                    GROUP BY m.tipo,
+                    m.documento,
+                    a.modelo";
+  
+        $stmt=Conexion::conectar()->prepare($sql);
+  
+        $stmt -> bindParam(":tipo", $tipo, PDO::PARAM_STR);
+        $stmt -> bindParam(":documento", $documento, PDO::PARAM_STR);
+  
+      $stmt->execute();
+  
+      return $stmt->fetchAll();
+  
+  
+      $stmt=null;
+  
+  }    
+  
+    //* MODELO SEGUN NUBE    
+    static public function mdlFENCDetB($tipo, $documento){
+
+        $sql="SELECT 
+                    'ZZ' AS b8,
+                    '1' AS c8,
+                    n.observacion AS d8,
+                    v.total * - 1 AS e8,
+                    '01' AS f8,
+                    v.igv AS i8,
+                    v.igv AS j8,
+                    '10' AS k8,
+                    '1000' AS l8,
+                    '18' AS m8,
+                    v.neto AS t8,
+                    v.neto AS u8,
+                    v.neto AS x8,
+                    v.igv AS ad8 
+                FROM
+                    notascd_jf n 
+                    LEFT JOIN ventajf v 
+                    ON n.tipo = v.tipo 
+                    AND n.documento = v.documento 
+                WHERE n.tipo = :tipo 
+                    AND n.documento = :documento";
+
+        $stmt=Conexion::conectar()->prepare($sql);
+
+        $stmt -> bindParam(":tipo", $tipo, PDO::PARAM_STR);
+        $stmt -> bindParam(":documento", $documento, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+
+
+        $stmt=null;
+  
+  }  
+
+  /*
+  * MOSTRAR IMPRESION DE NOTA DE CREDITO
+  */
+	static public function mdlMostrarCreditoImpresion($valor, $tipoDoc){
+
+        $sql="SELECT 
+              v.tipo,
+              v.documento,
+              v.neto,
+              v.igv,
+              v.dscto,
+              v.total,
+              n.observacion,
+              n.doc_origen,
+              n.motivo,
+              (SELECT 
+                descripcion 
+              FROM
+                maestrajf m 
+              WHERE m.tipo_dato = 'TMOT' 
+                AND n.motivo = m.codigo) AS nom_motivo,
+              (SELECT 
+              descripcion 
+            FROM
+              maestrajf m 
+            WHERE m.tipo_dato = 'TCON' 
+              AND n.tip_cont = m.codigo) AS nom_tipo_con,
+              DATE_FORMAT(n.fecha_origen,'%Y-%m-%d') AS fecha_origen,
+              v.cliente,
+              c.nombre,
+              c.documento as dni,
+              c.direccion,
+              c.email,
+              CONCAT(u.distrito, ' / ', u.provincia) AS nom_ubigeo,
+              u.departamento,
+              c.ubigeo,
+              v.agencia,
+              DATE_FORMAT(v.fecha,'%d/%m/%Y') AS fecha,
+              v.fecha AS fecha_emision,
+              v.tipo_documento,
+              v.lista_precios,
+              v.condicion_venta,
+              cv.descripcion,
+              v.vendedor,
+              ven.descripcion AS nom_vendedor,
+              cv.dias,
+              v.doc_destino
+              FROM
+              ventajf v 
+              LEFT JOIN condiciones_ventajf cv 
+                  ON v.condicion_venta = cv.id 
+              LEFT JOIN clientesjf c 
+                  ON v.cliente = c.codigo 
+              LEFT JOIN ubigeo u 
+                  ON c.ubigeo = u.codigo 
+                  LEFT JOIN notascd_jf n
+                  ON v.documento=n.documento AND v.tipo=n.tipo
+              LEFT JOIN 
+                  (SELECT 
+                  codigo,
+                  descripcion 
+                  FROM
+                  maestrajf m 
+                  WHERE m.tipo_dato = 'TVEND') ven 
+                  ON v.vendedor = ven.codigo 
+              WHERE v.documento = :codigo
+              AND v.tipo = :tipo_doc";
+    
+                  $stmt=Conexion::conectar()->prepare($sql);
+    
+                  $stmt -> bindParam(":codigo", $valor, PDO::PARAM_INT);
+                  $stmt -> bindParam(":tipo_doc", $tipoDoc, PDO::PARAM_INT);
+    
+                  $stmt->execute();
+    
+                  return $stmt->fetch();
+    
+    
+                  $stmt=null;
+    
+    }    
+
+
+    //* METODO NUBE DEBITP
+    static public function mdlFENDACabA($tipo, $documento){
+
+      $sql="SELECT 
+                /*FILA 1*/
+                DATE_FORMAT(v.fecha, '%d/%m/%Y') AS a1,
+                CONCAT(
+                  LEFT(v.documento, 4),
+                  '-',
+                  RIGHT(v.documento, 8)
+                ) AS b1,
+                'PEN' AS c1,
+                v.igv AS d1,
+                v.igv AS e1,
+                'PEN' AS f1,
+                v.total AS m1,
+                v.neto - v.dscto AS p1,
+                v.neto - v.dscto AS t1,
+                v.neto - v.dscto AS ae1,
+                '1' AS aj1,
+                '1' AS ak1,
+                v.igv AS an1,
+                /*FILA 3*/
+                'Corporacion Vasco S.A.C.' AS a3,
+                'JACKY FORM' AS b3,
+                '20513613939' AS c3,
+                '' AS d3,
+                'CAL.SANTO TORIBIO NRO. 259' AS e3,
+                'URB.SANTA LUISA 1RA ETAPA' AS f3,
+                'LIMA' AS g3,
+                'LIMA' AS h3,
+                'SAN MARTIN DE PORRES' AS i3,
+                'PE' AS j3,
+                'FINANZCO' AS k3,
+                'josecorpo' AS l3,
+                '0000' AS m3,
+                /*FILA 5*/
+                c.documento AS a4,
+                c.tipo_documento AS b4,
+                c.nombre AS c4,
+                '' AS d4,
+                CASE
+                  WHEN LENGTH(c.ubigeo) = 6 
+                  THEN c.ubigeo 
+                  ELSE '' 
+                END AS e4,
+                c.direccion AS f4,
+                '-' AS g4,
+                u.departamento AS h4,
+                u.provincia AS i4,
+                u.distrito AS j4,
+                'PE' AS k4,
+                c.email AS l4,
+                /*FILA 6*/
+                CONCAT(
+                  'Nro.unidades: ',
+                  ROUND(SUM(m.cantidad) * - 1, 0)
+                ) AS a6,
+                v.cliente AS d6,
+                '' AS e6,
+                v.neto AS f6,
+                CONCAT(ma.codigo, '   ', ma.descripcion) AS g6,
+                /*FILA 7*/
+                CONCAT(
+                  LEFT(n.doc_origen, 4),
+                  '-',
+                  RIGHT(n.doc_origen, 8)
+                ) AS a7,
+                n.tipo_doc AS b7,
+                (SELECT 
+                  argumento 
+                FROM
+                  maestrajf m 
+                WHERE m.tipo_dato = 'TMOTD' 
+                  AND m.codigo = n.motivo) AS c7,
+                (SELECT 
+                  descripcion 
+                FROM
+                  maestrajf m 
+                WHERE m.tipo_dato = 'TMOTD' 
+                  AND m.codigo = n.motivo) AS d7,
+                DATE_FORMAT(n.fecha_origen, '%d/%m/%Y') AS e7,
+                'RELATED_DOC' AS f7 
+              FROM
+                ventajf v 
+                LEFT JOIN 
+                  (SELECT 
+                    m.tipo,
+                    m.documento,
+                    a.modelo,
+                    SUM(m.cantidad) AS cantidad 
+                  FROM
+                    movimientosjf_2021 m 
+                    LEFT JOIN articulojf a 
+                      ON m.articulo = a.articulo 
+                  WHERE m.tipo = :tipo 
+                    AND m.documento = :documento 
+                  GROUP BY m.tipo,
+                    m.documento,
+                    a.modelo) AS m 
+                  ON v.tipo = m.tipo 
+                  AND v.documento = m.documento 
+                LEFT JOIN clientesjf c 
+                  ON v.cliente = c.codigo 
+                LEFT JOIN ubigeo u 
+                  ON c.ubigeo = u.codigo 
+                LEFT JOIN condiciones_ventajf cv 
+                  ON v.condicion_venta = cv.codigo 
+                LEFT JOIN maestrajf ma 
+                  ON ma.tipo_dato = 'TVEND' 
+                  AND v.vendedor = ma.codigo 
+                LEFT JOIN notascd_jf n 
+                  ON v.tipo = n.tipo 
+                  AND v.documento = n.documento 
+              WHERE v.tipo = :tipo 
+                AND v.documento = :documento";
+
+      $stmt=Conexion::conectar()->prepare($sql);
+
+      $stmt -> bindParam(":tipo", $tipo, PDO::PARAM_STR);
+      $stmt -> bindParam(":documento", $documento, PDO::PARAM_STR);
+
+      $stmt->execute();
+
+      return $stmt->fetch();    
+
+      $stmt=null;
+
+  }      
+
+    //* MODELO SEGUN NUBE    
+    static public function mdlFENDDetA($tipo, $documento){
+
+        $sql="SELECT 
+                'ZZ' AS b8,
+                '1' AS c8,
+                n.observacion AS d8,
+                v.total AS e8,
+                '01' AS f8,
+                v.igv AS i8,
+                v.igv AS j8,
+                '10' AS k8,
+                '1000' AS l8,
+                '18.00' AS m8,
+                v.neto AS t8,
+                v.neto AS u8,
+                v.neto AS x8,
+                v.igv AS ad8 
+            FROM
+                notascd_jf n 
+                LEFT JOIN ventajf v 
+                ON n.tipo = v.tipo 
+                AND n.documento = v.documento 
+            WHERE n.tipo = :tipo 
+                AND n.documento = :documento";
+    
+          $stmt=Conexion::conectar()->prepare($sql);
+    
+          $stmt -> bindParam(":tipo", $tipo, PDO::PARAM_STR);
+          $stmt -> bindParam(":documento", $documento, PDO::PARAM_STR);
+    
+        $stmt->execute();
+    
+        return $stmt->fetchAll();
+    
+    
+        $stmt=null;
+    
+    }  
+
 
 }
