@@ -168,7 +168,7 @@ class ControladorFacturacion{
             }else if($_POST["tdoc"] == "01"){
 
                 /*
-                todo: BAJAR EL STOCK
+                todo: BAJAR EL STOCK y CANT EN PEDIDO
                 */
                 $tabla = "detalle_temporal";
 
@@ -181,7 +181,7 @@ class ControladorFacturacion{
                                     "cantidad" => $value["cantidad"]);
                     //var_dump($datos);
 
-                    $respuestaFactura = ModeloArticulos::mdlActualizarStock($datos);
+                    $respuestaFactura = ModeloArticulos::mdlActualizarStockPedido($datos);
                     //var_dump($respuestaFactura);
 
                 }
@@ -193,7 +193,7 @@ class ControladorFacturacion{
                 */
                 if($respuestaFactura == "ok"){
 
-                    foreach($respuesta as $value){
+                    /* foreach($respuesta as $value){
 
                         $documento = $_POST["serie"];
                         $doc = str_replace ( '-', '', $documento);
@@ -225,14 +225,14 @@ class ControladorFacturacion{
 
                         $respuestaMovimientos = ModeloFacturacion::mdlRegistrarMovimientos($datosM);
 
-                    }
+                    } */
 
                     //var_dump($respuestaMovimientos);
 
                     /*
                     todo: registrar en ventajf
                     */
-                    if($respuestaMovimientos == "ok"){
+                    /* if($respuestaMovimientos == "ok"){
 
                         $respuestaDoc = ModeloPedidos::mdlMostraPedidosCabecera($_POST["codPedido"]);
                         //var_dump($respuestaDoc);
@@ -269,14 +269,14 @@ class ControladorFacturacion{
 
                         $respuestaDocumento = ModeloFacturacion::mdlRegistrarDocumento($datosD);
 
-                    }
+                    } */
 
                     //var_dump($respuestaDocumento);
 
                     /*
                     todo: SUMAR 1 AL DOCUMENTO
                     */
-                    if($respuestaDocumento == "ok"){
+                    /* if($respuestaDocumento == "ok"){
 
                         $documento = $_POST["serie"];
                         $serie = substr($documento,0,4);
@@ -284,7 +284,7 @@ class ControladorFacturacion{
 
                         $talonario = ModeloFacturacion::mdlActualizarTalonarioFactura($serie);
 
-                    }
+                    } */
 
                     //var_dump($talonario);
 
@@ -899,9 +899,9 @@ class ControladorFacturacion{
 
                         $datosD = array("tipo" => "E05",
                                         "documento" => $doc,
-                                        "neto" => "-".$respuestaDoc["op_gravada"],
-                                        "igv" => "-".$respuestaDoc["igv"],
-                                        "dscto" => "-".$respuestaDoc["descuento_total"],
+                                        "neto" => "".$respuestaDoc["op_gravada"],
+                                        "igv" => "".$respuestaDoc["igv"],
+                                        "dscto" => "".$respuestaDoc["descuento_total"],
                                         "total" => "-".$respuestaDoc["total"],
                                         "cliente" => $respuestaDoc["cod_cli"],
                                         "vendedor" => $respuestaDoc["vendedor"],
@@ -963,8 +963,8 @@ class ControladorFacturacion{
                                                 "tipo_doc"=>$tip_nota,
                                                 "doc_origen"=>$origen_venta,
                                                 "fecha_origen"=>$fecha_origen,
-                                                "motivo"=>'C5',
-                                                "tip_cont"=>'DE',
+                                                "motivo"=>'C6',
+                                                "tip_cont"=>'NC',
                                                 "observacion"=>'',
                                                 "usuario"=>$usuario);
 

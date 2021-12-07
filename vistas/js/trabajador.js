@@ -357,3 +357,42 @@ $(".marcarTaller").on("click", ".btnActTra", function () {
 	// window.location = "index.php?ruta=marcar-taller&trabajadorSelect=" + idTrab;
 
 })
+
+
+$("#codigoBarra").change(function(){
+
+	var codTrab = $("#cod_tra").val();
+	var barra = $(this).val();
+	//console.log(barra,codTrab);
+
+	var datos = new FormData();
+
+	datos.append("codTrab",codTrab);
+	datos.append("barra",barra);
+
+	$.ajax({
+		url:"ajax/trabajador.ajax.php",
+		type:"POST",
+		data:datos,
+		cache:false,
+		contentType:false,
+		processData:false,
+		success:function(mensaje){
+			//console.log(mensaje);
+
+			$("#codigoBarra").val("");
+			
+			if(mensaje == "ok"){
+
+				Command: toastr["success"]("Registrado exitosamente!");
+
+			}else{
+
+				Command: toastr["error"]("El ticket ya fue registrado antes!");
+
+			}
+
+		}
+	});
+
+});

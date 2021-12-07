@@ -172,12 +172,6 @@
 
                       <div class="col-xs-2">
 
-                        <label for="">SinProg</label>
-
-                      </div>
-
-                      <div class="col-xs-2">
-
                         <label for="">Mes</label>
 
                       </div>
@@ -296,7 +290,7 @@
 
                 <tr>
 
-                  <th style="width:10px">Add</th>
+                  <th style="width:10px">+</th>
                   <th>Modelo</th>
                   <th>Color</th>
                   <th>Talla</th>
@@ -305,11 +299,12 @@
                   <th>Avance</th>
                   <th>Stock</th>
                   <th>Ped.</th>
-                  <th>En Taller</th>
-                  <th>Alm. Corte</th>
-                  <th>Ord. Corte</th>
+                  <th>Taller</th>
+                  <th>Alm. Cor.</th>
+                  <th>Ord. Cor.</th>
                   <th>Vtas 30d</th>
-                  <th>Xprog</th>
+                  <th>Mes Dura</th>
+                  <th>Faltante</th>
                   
                 </tr>
 
@@ -373,33 +368,7 @@ MODAL CONFIGURAR % DE URGENCIAS
               
                 <span class="input-group-addon"><i class="fa fa-tag"></i></span> 
 
-                <select class="form-control input-lg" id="urgencia" name="urgencia" required>
-
-                  <option value="">Selecionar Porcentaje</option>
-
-                  <option value="100">100 %</option>
-
-                  <option value="90">90 %</option>
-
-                  <option value="80">80 %</option>
-
-                  <option value="70">70 %</option>
-
-                  <option value="60">60 %</option>
-
-                  <option value="50">50 %</option>
-
-                  <option value="40">40 %</option>
-
-                  <option value="30">30 %</option>
-
-                  <option value="20">20 %</option>
-
-                  <option value="10">10 %</option>
-
-                  <option value="0">0 %</option>
-                
-                </select>
+                <input type="text" class="form-control input-md" name="urgencia" id="urgencia" required>
 
               </div>
 

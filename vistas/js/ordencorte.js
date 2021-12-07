@@ -95,10 +95,12 @@ $('.tablaArticulosOrdenCorte').DataTable( {
 $(".tablaArticulosOrdenCorte tbody").on("click", "button.agregarArt", function () {
 
     var articuloOC = $(this).attr("articuloOC");
-    var proyeccion = $(this).attr("proyeccion");
-    var sumprog = $(this).attr("sumprog");
+    var arriba = $(this).attr("arriba");
+    var abajo = $(this).attr("abajo");
     var ventasG = $(this).attr("ventasG");
-    //console.log(stockG);
+    var faltantes = $(this).attr("faltantes");
+    var mes = $(this).attr("mes");
+    //console.log(mes);
 
     /* console.log("articuloOC", articuloOC); */
 
@@ -120,21 +122,21 @@ $(".tablaArticulosOrdenCorte tbody").on("click", "button.agregarArt", function (
         dataType: "json",
         success: function (respuesta) {
 
-            /* console.log("respuesta", respuesta); */
+            //console.log("respuesta", respuesta);
 
             var articulo = respuesta["articulo"];
             var packing = respuesta["packingB"];
             var ord_corte = respuesta["ord_corte"];
             var stockG = respuesta["stockG"];
             
-            var mes = (Number(stockG) + 50) / (Number(ventasG * 1.3)) ;
+            //var mes = (Number(stockG) + 50) / (Number(ventasG * 1.3)) ;
             //console.log(mes.toFixed(2));
 
 
             /* 
             !PENDIENTE DE PRPYECCION 
             */
-            if(Number(Number(proyeccion) - Number(sumprog)  - 50 ) > 0){
+            /* if(Number(Number(proyeccion) - Number(sumprog)  - 50 ) > 0){
 
                 var pen = '<input style="color:#008000; background-color:white;" type="text" class="form-control nuevoPendienteProy input-sm" name="'+ articulo +'" id="'+ articulo +'"  value="' + Number(Number(proyeccion) - Number(sumprog)  - 50 ) + '" pendienteReal="' + Number(Number(proyeccion) - Number(sumprog)) + '" readonly></input>';
 
@@ -143,19 +145,19 @@ $(".tablaArticulosOrdenCorte tbody").on("click", "button.agregarArt", function (
 
                 var pen = '<input style="color:#FF0000; background-color:pink;" type="text" class="form-control nuevoPendienteProy input-sm" name="'+ articulo +'" id="'+ articulo +'"  value="' + Number(Number(proyeccion) - Number(sumprog)  - 50 ) + '" pendienteReal="' + Number(Number(proyeccion) - Number(sumprog)) + '" readonly></input>';
 
-            }
+            } */
 
             /* 
             ! DURACION DEL MES
             */
 
-            if(mes.toFixed(2) < 2.1 ){
+            if(faltantes <= 0 ){
 
-                duracion = '<input style="color:#8B0000; background-color:pink;" type="text" class="form-control nuevoMes input-sm" name="'+ articulo +'" id="'+ articulo + 'M' +'" value="' + mes.toFixed(2) + '" mesReal="' + mes.toFixed(2) +'" stockG="' + stockG + '" ventasG="' + (Number(ventasG)) + '" readonly>';
+                faltas = '<input type="number" style="color:#8B0000; background-color:pink;" class="form-control nuevaCantidadArticuloOC input-sm" name="nuevaCantidadArticuloOC" id="nuevaCantidadArticuloOC" min="1" value="' + faltantes + '" ord_corte="' + ord_corte + '" articulo="'+ articulo +'" nuevoOrdCorte="' + (Number(ord_corte)+Number(faltantes)) + '" arriba="' + arriba + '" abajo="' + abajo + '" required>';
 
             }else{
 
-                duracion = '<input style="color:#8B0000; background-color:white;" type="text" class="form-control nuevoMes input-sm" name="'+ articulo +'" id="'+ articulo + 'M' +'" value="' + mes.toFixed(2) + '" mesReal="' + mes.toFixed(2) +'" stockG="' + stockG + '" ventasG="' + (Number(ventasG)) + '" readonly>';
+                faltas = '<input type="number" class="form-control nuevaCantidadArticuloOC input-sm" name="nuevaCantidadArticuloOC" id="nuevaCantidadArticuloOC" min="1" value="' + faltantes + '" ord_corte="' + ord_corte + '" articulo="'+ articulo +'" nuevoOrdCorte="' + (Number(ord_corte)+Number(faltantes)) + '" arriba="' + arriba + '" abajo="' + abajo + '" required>';
 
             }
 
@@ -186,15 +188,7 @@ $(".tablaArticulosOrdenCorte tbody").on("click", "button.agregarArt", function (
 
                     '<div class="col-xs-2">' +
 
-                        '<input type="number" class="form-control nuevaCantidadArticuloOC input-sm" name="nuevaCantidadArticuloOC" id="nuevaCantidadArticuloOC" min="1" value="50" ord_corte="' + ord_corte + '" articulo="'+ articulo +'" nuevoOrdCorte="' + Number(Number(ord_corte) + 50) + '" required>' +
-
-                    "</div>" +
-
-                    "<!-- Cantidad PENDIENTE DE PROYECCION -->" +
-
-                    '<div class="col-xs-2 pendiente">' +
-
-                         pen +
+                        faltas +
 
                     "</div>" +
 
@@ -202,7 +196,7 @@ $(".tablaArticulosOrdenCorte tbody").on("click", "button.agregarArt", function (
 
                     '<div class="col-xs-2 mes">' +
 
-                        duracion +
+                        '<input style="color:#8B0000; background-color:white;" type="text" class="form-control nuevoMes input-sm" name="'+ articulo +'" id="'+ articulo + 'M' +'" value="' + mes + '" mesReal="' + mes +'" stockG="' + stockG + '" ventasG="' + (Number(ventasG)) + '" readonly>' +
 
                     "</div>" +
                 
@@ -319,65 +313,26 @@ $(".formularioOrdenCorte").on("click", "button.quitarOC", function () {
 */
 $(".formularioOrdenCorte").on("change", "input.nuevaCantidadArticuloOC", function() {
 
-    var nuevoOrdCorte = Number($(this).attr("ord_corte")) + Number($(this).val());
-    var articulo = $(this).attr("articulo");
-    //console.log(articulo);
-    var articuloM = articulo+'M';
-    //console.log(articuloM);
 
-    var pendiente = $(this)
-    .parent()
-    .parent()
-    .children(".pendiente")
-    .children(".nuevoPendienteProy");
-    //console.log(pendiente);
+    var articuloM = $(this).attr("articulo")+'M';
 
-    var pendienteReal = pendiente.attr("pendienteReal");
-    //console.log(pendiente);
-    //console.log(pendienteReal);
+    var arriba = $(this).attr("arriba");
+    //console.log(arriba);
 
-    var quedaPen = pendienteReal - Number($(this).val());
-    //console.log(quedaPen);
+    var abajo = $(this).attr("abajo");
+    //console.log(abajo);
 
-    pendiente.val(quedaPen);
+    var ordCor = $(this).val();
+    //console.log(ordCor);
 
-    $(this).attr("nuevoOrdCorte", Number(nuevoOrdCorte));
+    var nuevoMes = (Number(ordCor) + Number(arriba)) / Number(abajo);
+    //console.log(nuevoMes);
 
+    //mes.val(nuevoMes.toFixed(2));
 
-    if (quedaPen > 0){
+    $("#"+articuloM).val(nuevoMes.toFixed(2));
 
-        inputPositivoPend(articulo);
-
-    }else{
-
-        inputNegativoPend(articulo);
-
-    }
-
-    var mes = $(this)
-    .parent()
-    .parent()
-    .children(".mes")
-    .children(".nuevoMes");
-    //console.log(mes);
-
-    var mesReal = mes.attr("mesReal");
-    //console.log(mesReal);
-
-    var stockG = mes.attr("stockG");
-    //console.log(Number(stockG) +50);
-    var stock = Number(stockG) + Number($(this).val());
-
-    var ventasG = mes.attr("ventasG");
-    //console.log(ventasG * 1.3);
-    var venta = ventasG * 1.3
- 
-    var quedaMes = stock / venta;
-    //console.log(quedaMes);
-
-    mes.val(quedaMes.toFixed(2));
-
-    if(quedaMes < 2.1){
+    /* if(quedaMes < 2.1){
 
         inputPositivoMes(articuloM);
         //console.log("Hola mundo");
@@ -387,7 +342,7 @@ $(".formularioOrdenCorte").on("change", "input.nuevaCantidadArticuloOC", functio
         inputNegativoMes(articuloM);
         //console.log("Hola no Mundo");
 
-    }
+    } */
 
 
 
@@ -406,7 +361,7 @@ $(".formularioOrdenCorte").on("change", "input.nuevaCantidadArticuloOC", functio
 
   });
 
-  function inputPositivoPend(articulo){
+  /* function inputPositivoPend(articulo){
 
     var input =   document.getElementById(articulo);
     //console.log(input);
@@ -448,7 +403,7 @@ $(".formularioOrdenCorte").on("change", "input.nuevaCantidadArticuloOC", functio
         input.style.color = "#8B0000";
         input.style.background = "white";
 
-  }  
+  }  */ 
   
 
   

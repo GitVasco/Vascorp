@@ -97,6 +97,8 @@ class ControladorNotasIngresos{
 				$fecha = new DateTime();
 				$PcReg= gethostbyaddr($_SERVER['REMOTE_ADDR']);
 
+				$igv = $_POST["nuevoIGV"] * 100;
+
 				#1. Creamos la cabecera
 
 				$ultimoNro = ModeloNotasIngresos::mdlMostrarCorrelativoNotaIngreso();
@@ -114,7 +116,7 @@ class ControladorNotasIngresos{
 									"fecemi" 		=> $_POST["fecS"],
 									"mo"			=> $_POST["nuevaMoneda"],
 									"obser"			=> $_POST["nuevaObservacion"],
-									"pigv"			=> '18',
+									"pigv"			=> $igv,
 									"subtotal"		=> $_POST["subTotalNi"],
 									"igv"			=> $_POST["impuestoNi"],
 									"total"			=> $_POST["totalNi"],

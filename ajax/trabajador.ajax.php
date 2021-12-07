@@ -2,6 +2,7 @@
 session_start();
 require_once "../controladores/trabajador.controlador.php";
 require_once "../modelos/trabajador.modelo.php";
+require_once "../modelos/talleres.modelo.php";
 
 // require_once "../controladores/tipodocumento.controlador.php";
 // require_once "../modelos/tipodocumento.modelo.php";
@@ -72,6 +73,40 @@ class AjaxTrabajador{
 
 		echo $reiniciarConfiguracion;
 	}
+
+	public function ajaxPasarTicket(){
+
+		$codTrab=$this->codTrab;
+		$barra=$this->barra;
+
+		$validar = ModeloTalleres::mdlMostrarTalleresG($barra);
+
+		if($validar["fecha_proceso"] == null){
+
+			date_default_timezone_set('America/Lima');
+
+			//$fecha = "2021-02-26";
+			$fecha = date('Y-m-d G:i:s');
+			//var_dump($fecha);
+
+			//$barra = $_POST["codigoBarra"];
+			//$codTrab = $_POST["cod_tra"];
+
+			$respuesta = ModeloTalleres::mdlProceso($fecha,$barra,$codTrab);
+			//var_dump($respuesta);
+
+			$respuesta2 = ModeloTalleres::mdlTerminado($fecha,$barra,$codTrab);
+
+			echo 'ok';
+
+		}else{
+
+			echo 'no';
+
+		}
+
+	}
+
 }
 
 /*=============================================
@@ -109,4 +144,14 @@ if(isset($_POST["asignarTrab"])){
 	$asignarTrabajador = new AjaxTrabajador();
 	$asignarTrabajador -> asignarTrab = $_POST["asignarTrab"];
 	$asignarTrabajador -> ajaxAsignartrabajador();
+}
+
+/*=============================================
+PASAR TICKETS DESDE AJAX
+=============================================*/	
+if(isset($_POST["codTrab"])){
+	$codTrab=new AjaxTrabajador();
+	$codTrab->codTrab=$_POST["codTrab"];
+	$codTrab->barra=$_POST["barra"];
+	$codTrab->ajaxPasarTicket();
 }

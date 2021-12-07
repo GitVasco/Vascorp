@@ -660,6 +660,17 @@ class controladorArticulos{
 	/* 
 	* MOSTRAR  ARTICULOS
 	*/	
+	static public function ctrVerArticulosB($valor){
+
+		$respuesta = ModeloArticulos::mdlVerArticulosB($valor);
+
+		return $respuesta;
+		
+	}
+		
+	/* 
+	* MOSTRAR  ARTICULOS
+	*/	
 	static public function ctrVerPrecios($modelo, $lista){
 
 		$respuesta = ModeloArticulos::mdlVerPrecios($modelo, $lista);

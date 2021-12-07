@@ -38,6 +38,17 @@ class ControladorPedidos{
 		return $respuesta;
 
     }
+
+    /*
+    *MOSTRAR DETALLE DE TAMPOERAL B
+    */
+	static public function ctrMostrarDetallesTemporalB($valor){
+
+		$respuesta = ModeloPedidos::mdlMostraDetallesTemporalB($valor);
+
+		return $respuesta;
+
+    }     
     
     /* 
     * CREAR ARTICULOS EN EL PEDIDO
@@ -62,8 +73,7 @@ class ControladorPedidos{
                 todo: GUARDAR EL DETALLE TEMPORAL - CUANDO YA EXISTE EL TEMPORAL
                 */
                 $valor = $_POST["modeloModalA"];
-                $respuesta = controladorArticulos::ctrVerArticulos($valor);
-                //var_dump($respuesta);
+                $respuesta = controladorArticulos::ctrVerArticulosB($valor);
 
                 foreach($respuesta as $value){
 
@@ -75,17 +85,17 @@ class ControladorPedidos{
                     $val3 = $_POST["pedido"];
                     $val4 = $_POST["precioA"];
 
-                    //var_dump($val2);
-
                     #1ero eliminar si ya se registro
                     $eliminar = array(  "codigo" => $val3,
-                                        "articulo" => $val1);
+                    "articulo" => $val1);
 
                     $limpiar = ModeloPedidos::mdlEliminarDetalleTemporal($tabla, $eliminar);
-                    //var_dump("eliminar", $eliminar);
-                    #var_dump("limpiar", $limpiar);                    
 
                     if($val2 > 0){
+
+                        
+                        // var_dump("eliminar", $eliminar);
+                        #var_dump("limpiar", $limpiar);
 
                         $datos = array( "codigo"    => $val3,
                                         "articulo"  => $val1,
@@ -93,20 +103,22 @@ class ControladorPedidos{
                                         "precio"    => $val4);
                         #var_dump("datos", $datos);
 
-                        $respuesta = ModeloPedidos::mdlGuardarTemporalDetalle($tabla, $datos);
+                        $respuestaB = ModeloPedidos::mdlGuardarTemporalDetalle($tabla, $datos);
                         #var_dump("respuesta", $respuesta);
 
-                        if($respuesta = "ok"){
-                            
-                            echo '  <script>
-
-                                        window.location="index.php?ruta=crear-pedidocv&pedido='.$_POST["pedido"].'";
-
-                                    </script>';
-
-                        }
-
                     }
+
+                }
+
+                if($respuestaB = "ok"){
+
+                    echo '  <script>                                        
+
+                                Command: toastr["success"]("El modelo fue registrado");
+                                $("#updDiv").load(" #updDiv");//actualizas el div
+                                $("#updDivB").load(" #updDivB");//actualizas el div
+
+                            </script>';
 
                 }
 
@@ -121,7 +133,6 @@ class ControladorPedidos{
 
                 $usuario = $_POST["usuario"];
                 $talonarioN = $usuario.$talonario;
-                // var_dump($talonarioN);
 
                 /*
                 todo: GUARDAR CABECERA
@@ -166,6 +177,7 @@ class ControladorPedidos{
 
                             echo '  <script>
 
+                                        Command: toastr["success"]("El modelo fue registrado");
                                         window.location="index.php?ruta=crear-pedidocv&pedido='.$talonarioN.'";
 
                                     </script>';
@@ -193,6 +205,7 @@ class ControladorPedidos{
             /*
             * ACTUALIZAMOS LOS TOTALES DEL PEDIDO
             */
+            $dscto = round($_POST["descuentoM"] / $_POST["opGravadaM"] *100,2);
             $datos = array( "cliente" => $_POST["codClienteM"],
                             "codigo" => $_POST["codigoM"],
                             "op_gravada" => $_POST["opGravadaM"],
@@ -202,83 +215,62 @@ class ControladorPedidos{
                             "total" => $_POST["totalM"],
                             "usuario" => $_POST["usuarioM"],
                             "condicion_venta" => $_POST["condicionVentaM"],
-                            "agencia" => $_POST["agenciaM"]);
+                            "agencia" => $_POST["agenciaM"],
+                            "dscto" => $dscto);
 
             //var_dump($datos);
 
             $respuesta = ModeloPedidos::mdlActualizarTotalesPedido($datos);
+            $respuesta = ModeloPedidos::mdlEliminarDetalleTemporalTotal($datos);
             //var_dump($respuesta);
+
             if($respuesta == "ok"){
 
                 $articulosM=json_decode($_POST["articulosM"],true);
                 //var_dump($articulosM);
 
-                /* 
-                *ACTUALIZAMOS LAS CANTIDADES EN PEDIDOS
-                */
-                foreach($articulosM as $key => $value){
-
-                    $articulo = $value["articulo"];
-
-                    $verArticulos = ModeloArticulos::mdlMostrarArticulos($articulo);
-                    //var_dump($verArticulos["pedidos"]);
-
-                    $cantidad = $value["cantidad"];
-                    //var_dump($cantidad);
-
-                    $pedidos = $verArticulos["pedidos"] + $cantidad;
-                    //var_dump($pedidos);
-
-                    //ModeloArticulos::mdlActualizarCantPedidos($articulo, $pedidos);
-
-                }
-
-                $respuesta = ModeloPedidos::mdlEliminarDetalleTemporalTotal($datos);
-
-                //var_dump($respuesta);
-
+                $intoA = "";
+                $intoB = "";
                 foreach($articulosM as $key=>$value){
 
-                    $datos=array(   "codigo"=>$_POST["codigoM"],
-                                    "articulo"=>$value["articulo"],
-                                    "cantidad"=>$value["cantidad"],
-                                    "precio"=>$value["precio"],
-                                    "total"=>$value["total"]);
-
-                    //var_dump($datos);
-
-                    $resp = ModeloPedidos::mdlGuardarTemporalDetalle("detalle_temporal", $datos);
-
-                    if($resp == "ok"){
-
-                        # Mostramos una alerta suave
-                        echo '<script>
-                                swal({
-                                    type: "success",
-                                    title: "Felicitaciones",
-                                    text: "¡La información fue registrada con éxito!",
-                                    showConfirmButton: true,
-                                    confirmButtonText: "Cerrar"
-                                }).then((result)=>{
-                                    if(result.value){
-                                        window.location="pedidoscv";}
-                                });
-                            </script>';
-
+                    if($key < count($articulosM)-1){
+                        
+                        $intoA .= "(".$_POST["codigoM"].",'".$value["articulo"]."',".$value["cantidad"].",".$value["precio"].",".$value["total"]."),";
+                        
                     }else{
 
-                        // var_dump("no llego aqui");
+                        $intoB .= "(".$_POST["codigoM"].",'".$value["articulo"]."',".$value["cantidad"].",".$value["precio"].",".$value["total"].")";
 
                     }
 
+                    //var_dump("intoA", $intoA.$intoB);                    
 
                 }
 
+                $detalle = $intoA.$intoB;
+                //var_dump("intoB", $detalle);
+              
+                $resp = ModeloPedidos::mdlGuardarTemporalDetalleB($detalle);
+                //$resp = "no";
+                //var_dump($resp);
 
+                if($resp == "ok"){
+
+                    # Mostramos una alerta suave
+                    echo '<script>
+                             Command: toastr["success"]("El pedido fue registrado");
+                                    window.location="pedidoscv";
+                        </script>';
+
+                }else{
+
+                    var_dump("no llego aqui");
+
+                }
 
             }else{
 
-                // var_dump("no llego aqui");
+                var_dump("no llego aqui");
 
             }
 
@@ -331,6 +323,17 @@ class ControladorPedidos{
     }
 
     /*
+    * MOSTRAR PEDIDO CON FORMATO DE IMRPESION
+    */
+	static public function ctrPedidoImpresionB($codigo, $ini, $fin){
+
+		$respuesta = ModeloPedidos::mdlPedidoImpresionB($codigo, $ini, $fin);
+
+		return $respuesta;
+
+    }       
+
+    /*
     * MOSTRAR PEDIDO CON FORMATO DE IMRPESION - MODELOS
     */
 	static public function ctrPedidoImpresionMod($valor){
@@ -362,5 +365,294 @@ class ControladorPedidos{
 		return $respuesta;
 
     }
+
+    /*
+    * DIVIDIR PEDIDO
+    */
+	static public function ctrDividirPedido(){
+
+        if(isset($_POST["codPedidoD"])){
+
+            
+            $pedido = $_POST["codPedidoD"];
+            $porcentaje = $_POST["perPed"];
+
+            $respuesta = ModeloPedidos::mdlDividirPedidoD($pedido, $porcentaje);
+
+            $respC = ModeloPedidos::mdlPedidoImpresionCab($pedido);
+
+            $cabecera = ModeloPedidos::mdlDetalleToalDiv($pedido);
+            //var_dump($cabecera);
+
+            $op_gravada = $cabecera["total"];
+            $dscto = round($cabecera["total"] * $respC["dscto"]/100,2);
+            $subTotal = $op_gravada - $dscto;
+            $igv = round($subTotal * 0.18,2);
+            $total = $subTotal + $igv;
+
+            //var_dump($op_gravada, $dscto, $subTotal, $igv, $total);
+
+            $respuestaCab = ModeloPedidos::mdlActualizarDiv($pedido, $op_gravada, $dscto, $subTotal, $igv, $total);
+
+            //var_dump($respuestaCab);
+
+            if($respuestaCab == "ok"){
+
+                # Mostramos una alerta suave
+                echo'<script>
+
+                swal({
+                      type: "success",
+                      title: "El pedido ha sido actualizaddo",
+                      showConfirmButton: true,
+                      confirmButtonText: "Cerrar"
+                      }).then(function(result){
+                                if (result.value) {
+
+                                window.location = "pedidoscv";
+
+                                }
+                            })
+
+                </script>';
+
+            }else{
+
+                var_dump("no llego aqui");
+
+            }
+
+
+        }
+
+    }    
+
+    static public function ctrEnviarPedido(){
+
+        if(isset($_POST["fechaEnvio"])){
+
+            //var_dump($_POST["fechaEnvio"]);
+            $fecha = $_POST["fechaEnvio"];
+
+            $cabecera = ModeloPedidos::mdlMostrarTemporalFecha($fecha);
+            //var_dump($cabecera);
+
+            $rutaCab = "vistas/pedidos/".$fecha.".txt";
+
+            $archivoCab = fopen($rutaCab,"w");  
+
+            fwrite($archivoCab, "F|".$fecha."|".$_SESSION["id"]."\r\n");
+
+            foreach($cabecera as $key => $value){
+
+                if($key < count($cabecera)-1){
+
+                    fwrite($archivoCab,$value["cabecera"]."\r\n");
+
+                }else{
+
+                    fwrite($archivoCab,$value["cabecera"]);
+
+                }
+
+            }
+
+            fclose($archivoCab);
+
+            echo'<script>
+
+            swal({
+
+                type: "success",
+                title: "Se genero archivos",
+                showConfirmButton: true,
+                confirmButtonText: "Cerrar"
+                }).then(function(result){
+
+                    if (result.value) {
+
+                    window.location = "pedidoscv";
+
+                    }
+
+                })
+
+            </script>';
+
+
+        }
+    }
+
+
+    static public function ctrLeerPedido(){
+
+        if(isset($_POST["importPedTxt"])){
+
+            #var_dump($_FILES['archivoPedTxt']['name']);
+            if($_FILES['archivoPedTxt']['name'] != ""){
+
+                $ruta = "vistas/pedidos/leer/";
+                $subir_archivo = $ruta.basename($_FILES['archivoPedTxt']['name']);
+                #var_dump($subir_archivo);
+
+                move_uploaded_file($_FILES['archivoPedTxt']['tmp_name'],$subir_archivo);
+
+                $archivo = fopen($subir_archivo, "r");
+
+                $contenido = file_get_contents($subir_archivo);
+                $lineas = explode("\n", $contenido); // this is your array of words
+
+                $intoA = "";
+                $intoB = "";
+                foreach($lineas as $key => $value) {
+
+                    $partes = explode("|",$value);
+                    $existeC = ModeloPedidos::mdlMostrarTemporal("temporaljf", $partes[1]);
+                    #var_dump($existeC["codigo"]);
+
+                    if($existeC == null){
+
+                        if($partes[0] == "D"){
+
+                            if($key < count($lineas)-1){
+                        
+                                $intoA .= "(".$partes[1].",'".$partes[2]."',".$partes[3].",".$partes[4].",".$partes[5]."),";
+                                
+                            }else{
+        
+                                $intoB .= "(".$partes[1].",'".$partes[2]."',".$partes[3].",".$partes[4].",".$partes[5].")";
+        
+                            }
+
+                        }
+
+                    }
+
+                    #var_dump("intoA", $intoA.$intoB); 
+
+                }
+
+                $detalle = $intoA.$intoB;
+                #var_dump("intoB", $detalle);
+
+                $resp = ModeloPedidos::mdlLeerPedidoD($detalle);
+                #var_dump($resp);
+
+                foreach($lineas as $key => $value) {
+
+                    $partes = explode("|",$value);
+                    $existeC = ModeloPedidos::mdlMostrarTemporal("temporaljf", $partes[1]);
+                    #var_dump($existeC["codigo"]);
+
+                    if($existeC == null){
+
+                        if($partes[0] == "C"){
+
+                            $datosC = array("codigo"            => $partes[1],
+                                            "cliente"           => $partes[2],
+                                            "vendedor"          => $partes[3],
+                                            "lista"             => $partes[4],
+                                            "op_gravada"        => $partes[5],
+                                            "descuento_total"   => $partes[6],
+                                            "sub_total"         => $partes[7],
+                                            "igv"               => $partes[8],
+                                            "total"             => $partes[9],
+                                            "condicion_venta"   => $partes[10],
+                                            "estado"            => $partes[11],
+                                            "fecha"             => $partes[12],
+                                            "usuario"           => $partes[13],
+                                            "agencia"           => $partes[14],
+                                            "usuario_estado"    => $partes[15],
+                                            "dscto"             => $partes[16]);
+                            #var_dump($datosC); 
+
+                            $respuestaC = ModeloPedidos::mdlLeerPedidoC($datosC);                           
+
+                        }
+
+                    }
+
+                }
+                
+                #$fecha = "";
+                #$vend = "";
+                foreach($lineas as $key => $value) {
+
+                    $partes = explode("|",$value);
+
+                    if($partes[0] == "F"){
+
+                        $fecha = $partes[1];
+                        $vend = $partes[2];
+
+                    }
+
+                }
+
+                #var_dump($fecha, $vend);
+
+                echo '<script>
+
+                    window.open("vistas/reportes_ticket/pedidos_prov.php?fecha='.$fecha.'&vend='.trim($vend).'","_blank");
+
+                </script>';
+
+                echo'<script>
+
+                swal({
+                      type: "success",
+                      title: "Los pedidos han sido ingresados",
+                      showConfirmButton: true,
+                      confirmButtonText: "Cerrar"
+                      }).then(function(result){
+                                if (result.value) {
+
+                                window.location = "pedidoscv";
+
+                                }
+                            })
+
+                </script>';                
+
+
+
+            }else{
+
+                echo'<script>
+
+                swal({
+
+                    type: "error",
+                    title: "¡Error, debe seleccionar un archivo!",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+                    }).then(function(result){
+                        if (result.value) {
+
+                        window.location = "pedidoscv";
+
+                        }
+                    })
+
+                </script>';
+
+            }
+
+
+        }
+
+    }
+
+
+    /*
+    * MOSTRAR CABECERA DE TEMPORAL
+    */
+	static public function ctrMostrarTemporalFecVen($fecha, $vend){
+
+		$respuesta = ModeloPedidos::mdlMostrarTemporalFecVen($fecha, $vend);
+
+		return $respuesta;
+
+    }    
 
 }

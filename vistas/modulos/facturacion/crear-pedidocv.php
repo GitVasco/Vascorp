@@ -142,7 +142,7 @@
                                             // var_dump($clientes);
 
                                             echo '<option value="">Seleccione Cliente</option>';
-                                            // //var_dump($clientes);
+                                            //var_dump($clientes);
 
                                             // foreach ($clientes as $key => $value) {
 
@@ -157,9 +157,7 @@
 
                                         </select>
 
-
                                         <?php
-                                            
 
                                             $valor = $_GET["pedido"];
 
@@ -198,7 +196,7 @@
 
                                         <span class="input-group-addon"><i class="fa fa-shopping-cart"></i></span>
 
-                                        <select class="form-control selectpicker" id="seleccionarVendedor" name="seleccionarVendedor" data-live-search="true" data-size="10" required>
+                                        <select class="form-control" id="seleccionarVendedor" name="seleccionarVendedor" required>
 
                                         <?php
 
@@ -267,8 +265,7 @@
                                     }
 
                                     ?>
-
-<div class=" form-group buscador" id="elid" style="padding-bottom:25px">
+                                <div class=" form-group buscador" id="elid" style="padding-bottom:25px">
                                     <label for="" class="col-form-label col-lg-1">Buscar:</label>
                                     <div class="col-lg-11">
                                         <div class="input-group">
@@ -277,73 +274,88 @@
                                             <div class="input-group-addon"><i class="fa fa-search"></i></div>
                                         </div>
                                     </div>
-                                        
                                 </div>
-
                                 <!--=====================================
-                                        TITULOS
+                                ENTRADA PARA AGREGAR PRODUCTO
                                 ======================================-->
 
-                                <div class="box box-primary">
+                                <div class="form-group row nuevoProductoPedido" style="height:500px; overflow: scroll;">
 
-                                    <div class="row">
+                                    <!--=====================================
+                                            TITULOS
+                                    ======================================-->
 
-                                        <div class="col-xs-7">
+                                    <div class="box box-primary">
 
-                                            <label>Item</label>
+                                        <div class="row">
 
-                                        </div>
+                                            <div class="col-xs-5">
 
-                                        <div class="col-xs-2">
+                                                <label>Item</label>
 
-                                            <label for="">Cantidad</label>
+                                            </div>
 
-                                        </div>
+                                            <div class="col-xs-2">
 
-                                        <div class="col-xs-3">
+                                                <label for="">Cantidad</label>
 
-                                            <label for="">Total S/ IGV</label>
+                                            </div>
+
+                                            <div class="col-xs-2">
+
+                                                <label for="">P. Unit</label>
+
+                                            </div>                                        
+
+                                            <div class="col-xs-1">
+
+                                                <label for="">Total</label>
+
+                                            </div>
+
+                                            <div class="col-xs-1">
+
+                                                <label for="">U. IGV</label>
+
+                                            </div>                                        
+
+                                            <div class="col-xs-1">
+
+                                                <label for="">T. IGV</label>
+
+                                            </div>                                        
 
                                         </div>
 
                                     </div>
 
-                                </div>
-
-                                <!--=====================================
-                                ENTRADA PARA AGREGAR PRODUCTO
-                                ======================================-->
-
-                                <div class="form-group row nuevoProductoPedido" style="height:400px; overflow: scroll; overflow-x:hidden">
-
-                                
-
+                                    <div class="box box-primary"  id="updDiv">
                                     <?php
 
                                     #tremos la lista de items
-                                    $listaArtPed = ControladorPedidos::ctrMostrarDetallesTemporal($_GET["pedido"]);
-                                    #var_dump("listaArtPed", $listaArtPed);
+                                    $listaArtPed = ControladorPedidos::ctrMostrarDetallesTemporalB($_GET["pedido"]);
+                                    //var_dump("listaArtPed", $listaArtPed);
 
                                     foreach ($listaArtPed as $key => $value) {
 
-                                        $infoArtPed = controladorArticulos::ctrMostrarArticulos($value["articulo"]);
+                                        //$infoArtPed = controladorArticulos::ctrMostrarArticulos($value["articulo"]);
 
                                         $total_detalle = $value["cantidad"] * $value["precio"];
                                         #var_dump("infoArtPed", $infoArtPed);
 
                                         echo '  <div class="row mundito" style="padding:5px 15px">
 
-                                                <div class="col-xs-7" style="padding-right:0px">
+                                                <div class="col-xs-5" style="padding-right:0px">
 
                                                     <div class="input-group">
 
                                                         <span class="input-group-addon">
 
-                                                            <button type="button" class="btn btn-danger btn-xs quitarArtPed" articulo="' . $infoArtPed["articulo"] . '"><i class="fa fa-times"></i></button>
+                                                            <button type="button" class="btn btn-danger btn-xs quitarArtPed" articulo="' . $value["articulo"] . '"><i class="fa fa-times"></i></button>
 
                                                         </span>
 
-                                                        <input type="text" class="form-control nuevaDescripcionArticulo input-sm" articulo="' . $infoArtPed["articulo"] . '" name="agregarProducto" value="' . $infoArtPed["packing"] . '" articuloP="' . $infoArtPed["articulo"] . '" readonly required>
+                                                        <input type="text" class="form-control nuevaDescripcionArticulo input-sm" articulo="' . $value["articulo"] . '" name="agregarProducto" value="' . $value["packing"] . '" articuloP="' . $value["articulo"] . '" readonly required>
 
                                                     </div>
 
@@ -351,27 +363,44 @@
 
                                                 <div class="col-xs-2">
 
-                                                    <input type="number" class="form-control nuevaCantidadArtPed input-sm" name="nuevaCantidadArtPed" min="1" value="' . $value["cantidad"] . '" artPed="'.$infoArtPed["pedidos"].'" nuevoArtPed="0" required>
+                                                    <input type="number" class="form-control nuevaCantidadArtPed input-sm" name="nuevaCantidadArtPed" min="1" value="' . $value["cantidad"] . '" artPed="'.$value["pedidos"].'" nuevoArtPed="0" required>
 
                                                 </div>
 
-                                                <div class="col-xs-3 ingresoPrecio" style="padding-left:0px">
+                                                <div class="col-xs-2">
+
+                                                    <input type="text" class="form-control nuevoPunit input-sm" name="nuevoPunit" min="1" value="' . $value["precio"] . '" readonly>
+
+                                                </div>                                                
+
+                                                <div class="col-xs-1 ingresoPrecio" style="padding-left:0px">
 
                                                     <div class="input-group">
 
-                                                        <span class="input-group-addon"><i class="fa fa-money"></i></span>
-
-                                                        <input type="text" class="form-control nuevoPrecioArticulo" precioReal="' . $value["precio"] . '" name="nuevoPrecioArticulo" value="' . $total_detalle . '" readonly required>
+                                                        <input type="text" class="form-control nuevoPrecioArticulo input-sm" precioReal="' . $value["precio"] . '" name="nuevoPrecioArticulo" value="' . round($total_detalle,2) . '" readonly required>
 
                                                     </div>
 
                                                 </div>
+
+                                                <div class="col-xs-1">
+
+                                                    <input type="text" class="form-control nuevoPunitC input-sm" name="nuevoPunitC" min="1" value="' . ($value["precio"]*1.18) . '" readonly>
+
+                                                </div> 
+                                                
+                                                <div class="col-xs-1">
+
+                                                    <input type="text" class="form-control nuevoTotalC input-sm" name="nuevoTotalC" min="1" value="' . round($total_detalle*1.18,2) . '" readonly>
+
+                                                </div>                                                 
 
                                             </div>';
                                     }
 
                                     ?>
 
+                                    </div>
                                 </div>
 
                                 <input type="hidden" id="listaProductosPedidos" name="listaProductosPedidos">
@@ -393,19 +422,6 @@
                                         <div class="form-group">
 
                                             <div class="col-xs-4">
-
-                                                <div class="input-group pull-left">
-
-                                                <span class="form-control"><b>Unidades</b></span>
-
-                                                </div>
-
-                                                <div class="input-group pull-left">
-
-                                                <input type="number" step="any" class="form-control" min="0" id="unidades" name="unidades" value="0" readonly>
-
-                                                </div>
-
                                             </div>
 
                                             <div class="col-xs-3">
@@ -894,7 +910,7 @@
 
                                 //var_dump("hola 1");
 
-                                echo '<button type="button" class="btn btn-primary pull-right crearPedido" id="modalito" name="modalito" data-toggle="modal" data-target="#modalGenerarPedido">Crear Pedido
+                                echo '<button type="button" class="btn btn-primary pull-right crearPedido" id="modalito" name="modalito" data-toggle="modal" data-target="#modalGenerarPedido" disabled>Crear Pedido
                                 </button>';
 
                             }else{
@@ -927,24 +943,246 @@
 
                     <div class="box-header with-border"></div>
 
-                    <div class="box-body">
+                        <div class="box-body">
+                            
+                            <label for="" class="col-form-label col-lg-2">Modelo</label>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control input-md" id='modelo' name='modelo'>
+                            </div>
+                            <div class="form-group col-lg-2">
+                                <button class='btn btn-primary btn-md modificarArtPedB' data-toggle='modal' data-target='#modalModificarClienteP'>Agregar</button>
+                            </div>                            
+                        
+                        </div>                    
 
-                        <table class="table table-bordered table-striped dt-responsive tablaArticulosPedidos" width="100%">
+                    <div class="box-body" id="updDivB">
 
-                            <thead>
+                    <body>
+                    <?php
 
-                                <tr>
-                                    <th style="width: 10px">#</th>
-                                    <th>Modelo</th>
-                                    <th>Nombre</th>
-                                    <th>Color</th>
-                                    <th>Talla</th>
-                                    <th>Acciones</th>
-                                </tr>
+                        require_once "controladores/pedidos.controlador.php";
+                        require_once "modelos/pedidos.modelo.php";
 
-                            </thead>
+                        /* 
+                        * TRAEMOS LOS DATOS DEL PEDIDO
+                        */
+                        $codigo = $_GET["pedido"];
+                        //var_dump($codigo);
+
+                        $respuesta = ControladorPedidos::ctrPedidoImpresionCab($codigo);
+                        //var_dump($respuesta["pedido"]);
+                        //var_dump($respuesta);
+
+                        $totales = ControladorPedidos::ctrPedidoImpresionTotales($codigo);
+                        //var_dump($totales);
+
+                        date_default_timezone_set("America/Lima");
+
+                        //var_dump($respuesta["fecha"]);
+
+                        $originalDate = $respuesta["fecha"];
+                        $newDate = date("d/m/Y", strtotime($originalDate));
+                        //var_dump($newDate);
+
+                    ?>
+
+                        <div class="zona_impresion">
+
+                        <table border="1" align="left" width="700px">
+
+                        <thead>
+                        <tr>
+                        <th style="width:10%"></th>
+                        <th style="width:20%"></th>
+                        <th style="width:6%">S</th>
+                        <th style="width:6%">M</th>
+                        <th style="width:6%">L</th>
+                        <th style="width:6%">XL</th>
+                        <th style="width:6%">XXL</th>
+                        <th style="width:6%">XS</th>
+                        <th style="width:6%"></th>
+                        <th style="width:6%"></th>
+                        <th style="width:6%"></th>
+                        </tr>
+
+                        <tr>
+                        <th style="width:10%"></th>
+                        <th style="width:20%"></th>
+                        <th style="width:6%">28</th>
+                        <th style="width:6%">30</th>
+                        <th style="width:6%">32</th>
+                        <th style="width:6%">34</th>
+                        <th style="width:6%">36</th>
+                        <th style="width:6%">38</th>
+                        <th style="width:6%">40</th>
+                        <th style="width:6%">42</th>
+                        <th style="width:6%"></th>
+                        </tr>
+
+                        <tr>
+                        <th style="width:10%;text-align:left;">Modelo</th>
+                        <th style="width:20%">Color</th>
+                        <th style="width:6%">3</th>
+                        <th style="width:6%">4</th>
+                        <th style="width:6%">6</th>
+                        <th style="width:6%">8</th>
+                        <th style="width:6%">10</th>
+                        <th style="width:6%">12</th>
+                        <th style="width:6%">14</th>
+                        <th style="width:6%">16</th>
+                        <th style="width:6%">TOTAL</th>
+                        </tr>
+                        </thead>
 
                         </table>
+
+                        <?php
+
+                        $modelo = ControladorPedidos::ctrPedidoImpresionMod($codigo);
+                        //var_dump($modelo);
+
+                        foreach($modelo as $key => $value){
+
+                        echo '<table border="1" style="border:dashed" align="left" width="700px">';
+
+                        $respuesta = ControladorPedidos::ctrPedidoImpresion($codigo, $value["modelo"]);
+
+                        foreach($respuesta as $key => $value2){
+
+                        if($value2["t1"] <= 0){
+
+                        $value2["t1"] = " ";
+
+                        }else{
+
+                        $value2["t1"];
+
+                        }
+
+                        if($value2["t2"] <= 0){
+
+                        $value2["t2"] = " ";
+
+                        }else{
+
+                        $value2["t2"];
+
+                        }
+
+                        if($value2["t3"] <= 0){
+
+                        $value2["t3"] = " ";
+
+                        }else{
+
+                        $value2["t3"];
+
+                        }
+
+                        if($value2["t4"] <= 0){
+
+                        $value2["t4"] = " ";
+
+                        }else{
+
+                        $value2["t4"];
+
+                        }
+
+                        if($value2["t5"] <= 0){
+
+                        $value2["t5"] = " ";
+
+                        }else{
+
+                        $value2["t5"];
+
+                        }
+
+                        if($value2["t6"] <= 0){
+
+                        $value2["t6"] = " ";
+
+                        }else{
+
+                        $value2["t6"];
+
+                        }
+
+                        if($value2["t7"] <= 0){
+
+                        $value2["t7"] = " ";
+
+                        }else{
+
+                        $value2["t7"];
+
+                        }
+
+                        if($value2["t8"] <= 0){
+
+                        $value2["t8"] = " ";
+
+                        }else{
+
+                        $value2["t8"];
+
+                        }
+
+                        echo '<tr>
+                        <th style="width:10%;font-weight: normal;text-align:left;">'.$value2["modelo"].'</th>
+                        <th style="width:20%;text-align:left;">'.$value2["color"].'</th>
+                        <th style="width:6%;font-weight: normal;">'.$value2["t1"].'</th>
+                        <th style="width:6%;font-weight: normal;">'.$value2["t2"].'</th>
+                        <th style="width:6%;font-weight: normal;">'.$value2["t3"].'</th>
+                        <th style="width:6%;font-weight: normal;">'.$value2["t4"].'</th>
+                        <th style="width:6%;font-weight: normal;">'.$value2["t5"].'</th>
+                        <th style="width:6%;font-weight: normal;">'.$value2["t6"].'</th>
+                        <th style="width:6%;font-weight: normal;">'.$value2["t7"].'</th>
+                        <th style="width:6%;font-weight: normal;">'.$value2["t8"].'</th>
+                        <th style="width:6%">'.$value2["total"].'</th>
+                        </tr>';
+
+                        }
+
+                        echo '</table>';
+
+                        }
+
+                        ?>
+
+                        <table border="1" align="left" width="700px">
+
+                        </thead>
+
+                        <tr>
+
+                        <th style="width:10%;text-align:left;">TOTALES</th>
+                        <th style="width:20%;text-align:left;">PEDIDO</th>
+                        <th style="width:6%"><?php echo $totales["t1"]; ?></th>
+                        <th style="width:6%"><?php echo $totales["t2"]; ?></th>
+                        <th style="width:6%"><?php echo $totales["t3"]; ?></th>
+                        <th style="width:6%"><?php echo $totales["t4"]; ?></th>
+                        <th style="width:6%"><?php echo $totales["t5"]; ?></th>
+                        <th style="width:6%"><?php echo $totales["t6"]; ?></th>
+                        <th style="width:6%"><?php echo $totales["t7"]; ?></th>
+                        <th style="width:6%"><?php echo $totales["t8"]; ?></th>
+                        <th style="width:6%"><?php echo $totales["total"]; ?></th>
+
+                        </tr>
+
+                        </thead>
+
+                        </table>
+
+                        <br>
+
+
+
+                        </div>
+                        <p>&nbsp;</p>
+
+                    </body>
 
                     </div>
 
@@ -958,7 +1196,6 @@
     </section>
 
 </div>
-
 <!--=====================================
 MODAL MODIFICAR ARTICULOS
 ======================================-->
@@ -969,7 +1206,8 @@ MODAL MODIFICAR ARTICULOS
 
         <div class="modal-content">
 
-            <form role="form" method="post" class="formularioPedido">
+            <!-- <form role="form" method="post" class="formularioPedido"> -->
+            <form role="form" method="post" class="formularioPedido" onkeypress="return anular(event)">
 
                 <!--=====================================
                 CABEZA DEL MODAL
@@ -1040,6 +1278,15 @@ MODAL MODIFICAR ARTICULOS
                                     <input type="hidden" class="form-control input-sm" id="nLista" name="nLista" readonly>
 
                                     <input type="hidden" class="form-control input-sm" id="usuario" name="usuario" value="<?php echo $_SESSION["id"]; ?>">
+
+                                    <!-- <input type="hidden" class="form-control input-sm" id="tal1" name="tal1">
+                                    <input type="hidden" class="form-control input-sm" id="tal2" name="tal2">
+                                    <input type="hidden" class="form-control input-sm" id="tal3" name="tal3">
+                                    <input type="hidden" class="form-control input-sm" id="tal4" name="tal4">
+                                    <input type="hidden" class="form-control input-sm" id="tal5" name="tal5">
+                                    <input type="hidden" class="form-control input-sm" id="tal6" name="tal6">
+                                    <input type="hidden" class="form-control input-sm" id="tal7" name="tal7">
+                                    <input type="hidden" class="form-control input-sm" id="tal8" name="tal8"> -->
 
                                 </div>
 
@@ -1123,9 +1370,6 @@ MODAL MODIFICAR ARTICULOS
                             </div>
 
                         </div>
-
-
-
 
                     </div>
 
@@ -1292,9 +1536,9 @@ MODAL PARA GENERAR EL PEDIDO
 
                     <div>
 
-                        <h3>
+                        <h4>
                             <label>Totales</label>
-                        </h3>
+                        </h4>
 
                     </div>
 
@@ -1308,7 +1552,7 @@ MODAL PARA GENERAR EL PEDIDO
 
                         <span class="input-group-addon" style="width: 150px;">Op. Gravada <b>S/</b></span>
 
-                        <input type="text" class="form-control input-lg" style="text-align:right;" name="opGravadaM" id="opGravadaM" required readonly>
+                        <input type="text" class="form-control input-sm" style="text-align:right;" name="opGravadaM" id="opGravadaM" required readonly>
 
                     </div>
 
@@ -1320,7 +1564,7 @@ MODAL PARA GENERAR EL PEDIDO
 
                         <span class="input-group-addon" style="width: 150px;">Descuento <b>S/</b></span>
 
-                        <input type="text" class="form-control input-lg" style="text-align:right;" name="descuentoM" id="descuentoM" required readonly>
+                        <input type="text" class="form-control input-sm" style="text-align:right;" name="descuentoM" id="descuentoM" required readonly>
 
                     </div>
 
@@ -1332,7 +1576,7 @@ MODAL PARA GENERAR EL PEDIDO
 
                         <span class="input-group-addon" style="width: 150px;">Subtotal <b>S/</b></span>
 
-                        <input type="text" class="form-control input-lg" style="text-align:right;" name="subTotalM" id="subTotalM" required readonly>
+                        <input type="text" class="form-control input-sm" style="text-align:right;" name="subTotalM" id="subTotalM" required readonly>
 
                     </div>
 
@@ -1344,7 +1588,7 @@ MODAL PARA GENERAR EL PEDIDO
 
                         <span class="input-group-addon" style="width: 150px;">Igv <b>18%</b></span>
 
-                        <input type="text" class="form-control input-lg" style="text-align:right;" name="igvM" id="igvM" required readonly>
+                        <input type="text" class="form-control input-sm" style="text-align:right;" name="igvM" id="igvM" required readonly>
 
                     </div>
 
@@ -1356,7 +1600,7 @@ MODAL PARA GENERAR EL PEDIDO
 
                         <span class="input-group-addon" style="width: 150px;">Total <b>S/</b></span>
 
-                        <input type="text" class="form-control input-lg" style="text-align:right;" name="totalM" id="totalM" required readonly>
+                        <input type="text" class="form-control input-sm" style="text-align:right;" name="totalM" id="totalM" required readonly>
 
                     </div>
 
@@ -1366,7 +1610,7 @@ MODAL PARA GENERAR EL PEDIDO
 
                     <div class="input-group">
 
-                        <input type="hidden" class="form-control input-lg" style="text-align:right;" name="articulosM" id="articulosM" required readonly>
+                        <input type="hidden" class="form-control input-sm" style="text-align:right;" name="articulosM" id="articulosM" required readonly>
 
                     </div>
 
@@ -1446,12 +1690,13 @@ $('.nuevoProductoPedido').ready(function(){
 
        for( var i = 0; i < nombres.length; i++ ){
 
-        item = $(nombres[i]).val().toLowerCase();
-        //console.log(item);
+        item = $(nombres[i]).val();
+        item2 = $(nombres[i]).val().toLowerCase();
+        // console.log(item);
 
             for(var x = 0; x < item.length; x++ ){
 
-                if( buscando.length == 0 || item.indexOf( buscando ) > -1 ){
+                if( buscando.length == 0 || item.indexOf( buscando ) > -1 || item2.indexOf( buscando ) > -1 ){
 
                     $(nombres[i]).parents('.mundito').show(); 
 
@@ -1464,5 +1709,14 @@ $('.nuevoProductoPedido').ready(function(){
        }
     });
   });
+
+  function anular(e){
+
+    tecla = (document.all) ? e.keyCode : e.which;
+    //console.log(tecla);
+    return (tecla != 13);
+
+  }
+
 
 </script>

@@ -213,8 +213,16 @@
                                         </select>
                                     </div> 
 
-                                    <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Observaciones</label>
-                                    <div class="col-lg-4">
+                                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">IGV</label>
+                                    <div class="col-lg-1">
+                                        <select  class="form-control input-md"  name="nuevoIGV"  id="nuevoIGV">
+                                            <option value="0.18">18%</option>
+                                            <option value="0.09">9%</option>
+                                        </select>
+                                    </div>                                    
+
+                                <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Observaciones</label>
+                                    <div class="col-lg-2">
                                         <input type="text" class="form-control input-sm" id="nuevaObservacion" name="nuevaObservacion">
                                     </div> 
 

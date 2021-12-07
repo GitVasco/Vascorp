@@ -200,7 +200,7 @@ class ControladorAlmacenCorte{
 
                         foreach($listaArticulosAC as $key=>$value){
 
-                            $datosD = array("almacencorte"=>$ultimoId["ultimo_codigo"],
+                            $datosD = array("almacencorte"=>$_POST["nuevaGuia"],
                                             "ordcorte"=>$value["ordencorte"],
                                             "idocd"=>$value["idocd"],
                                             "articulo"=>$value["articulo"],

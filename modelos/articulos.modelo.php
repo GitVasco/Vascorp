@@ -434,7 +434,7 @@ class ModeloArticulos
 		
 		}else if ($valor == null && $modelo == "null" ){
 
-			$stmt = Conexion::conectar()->prepare("  SELECT 
+			$stmt = Conexion::conectar()->prepare("SELECT 
 			a.articulo,
 			a.id_marca,
 			m.marca,
@@ -449,7 +449,7 @@ class ModeloArticulos
 			a.mp_faltante,
 			ROUND(
 			  (
-				IFNULL(v.ult_mes, 0) * a.urgencia / 100
+				IFNULL(a.ult_mes, 0) * a.urgencia / 100
 			  ),
 			  0
 			) AS configuracion,
@@ -464,43 +464,22 @@ class ModeloArticulos
 			a.alm_corte,
 			a.ord_corte,
 			a.proyeccion,
-			IFNULL(p.prod, 0) AS prod,
+			IFNULL(a.prod, 0) AS prod,
 			IFNULL(
 			  ROUND(
-				(IFNULL(p.prod, 0) / a.proyeccion) * 100,
+				(IFNULL(a.prod, 0) / a.proyeccion) * 100,
 				2
 			  ),
 			  0
 			) AS avance,
-			IFNULL(v.ult_mes, 0) AS ult_mes 
+			IFNULL(a.ult_mes, 0) AS ult_mes 
 		  FROM
 			articulojf a 
 			LEFT JOIN marcasjf m 
 			  ON a.id_marca = m.id 
-			LEFT JOIN 
-			  (SELECT 
-				m.articulo,
-				SUM(m.cantidad) AS prod 
-			  FROM
-				movimientosjf m 
-			  WHERE YEAR(m.fecha) = '2021' 
-				AND MONTH(m.fecha) >= 1 
-				AND tipo = 'E20' 
-			  GROUP BY m.articulo) AS p 
-			  ON a.articulo = p.articulo 
-			LEFT JOIN 
-			  (SELECT 
-				m.articulo,
-				SUM(m.cantidad) AS ult_mes 
-			  FROM
-				movimientosjf m 
-			  WHERE m.tipo IN ('S02', 'S03', 'S70') 
-				AND DATEDIFF(DATE(NOW()), m.fecha) <= 30 
-			  GROUP BY m.articulo) AS v 
-			  ON a.articulo = v.articulo 
 		  WHERE ROUND(
 			  (
-				IFNULL(v.ult_mes, 0) * a.urgencia / 100
+				IFNULL(a.ult_mes, 0) * a.urgencia / 100
 			  ),
 			  0
 			) > (a.stock - a.pedidos) 
@@ -882,6 +861,29 @@ class ModeloArticulos
 		$stmt=null;
 
 	}
+
+	/* 
+	* MOSTRAR ARTICULOS PARA PEDIDOS
+	*/
+	static public function mdlVerArticulosB($valor){
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+						a.modelo,
+						a.articulo 
+					FROM
+						articulojf a 
+					WHERE a.modelo = :valor
+						AND a.estado = 'Activo'");
+
+		$stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt=null;
+
+	}		
 
 	/* 
 	* MOSTRAR PRECIOS

@@ -43,6 +43,42 @@
 
         ?>
 
+        <?php
+        
+          //var_dump($_SESSION["id"]);
+
+          if( $_SESSION["id"] == "6" || 
+              $_SESSION["id"] == "53" || 
+              $_SESSION["id"] == "54" || 
+              $_SESSION["id"] == "55"){
+
+            echo '<button class="btn btn-success btnEnviarPedido" data-toggle="modal"       data-target="#modalEnviarPedido">
+            <i class="fa fa-plane"></i>
+            Enviar Pedidos
+
+                </button>';
+
+            echo '<div class="col-lg-6">
+
+                  <form role="form"  method="POST" enctype="multipart/form-data">
+                      <div class="col-lg-10">
+                          <input type="file" name="archivoPedTxt" id="archivoPedTxt" class="form-control" accept="text/plain">
+                      </div>
+                      <div class="col-lg-2">
+                          <button type="submit"  class="btn btn-info" name="importPedTxt"><i class="fa fa-upload"></i> Cargar Pedidos</a>
+                      </div>
+                  </form>';
+
+                  $actualizarStock = new ControladorPedidos();
+                  $actualizarStock -> ctrLeerPedido();
+
+            echo '</div>  ';
+
+          }
+
+        
+        ?>
+
         </div>
 
         <div class="btn-group pull-right" style="margin: 13px;">
@@ -122,7 +158,7 @@
               <th>Estado</th>
               <th>Usuario</th>
               <th>Fecha</th>
-              <th>Acciones</th>
+              <th width="200px">Acciones</th>
             </tr>
 
           </thead>
@@ -377,6 +413,273 @@ MODAL FACTURAR
 
       $facturar = new controladorFacturacion();
       $facturar->ctrFacturar();
+
+      ?>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!--=====================================
+MODAL DIVIDIR
+======================================-->
+
+<div id="modalDividir" class="modal fade" role="dialog">
+
+  <div class="modal-dialog" style="width: 40% !important;">
+
+    <div class="modal-content">
+
+      <form role="form" method="post">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Pasar Pedido a:</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+          <div class="box box-primary col-lg-12 ">
+
+            <div class="box-header">
+
+              <b>Datos Principales</b>
+
+            </div>
+
+              <!-- ENTRADA PARA EL CODIGO DEL PEDIDO-->
+
+              <div class="form-group col-lg-3">
+
+                  <label>Cod. Pedido</label>
+
+                  <div class="input-group">
+
+                      <span class="input-group-addon"><i class="fa fa-key"></i></span>
+
+                      <input type="text" class="form-control input-sm" id="codPedidoD" name="codPedidoD" readonly>
+
+                  </div>
+
+              </div>
+
+              <!-- ENTRADA PARA EL NOMBRE DEL CLIENTE-->
+
+              <div class="form-group col-lg-9">
+
+                  <label>Cliente</label>
+
+                  <div class="input-group">
+
+                      <span class="input-group-addon"><i class="fa fa-key"></i></span>
+
+                      <input type="text" class="form-control input-sm" id="nomCliD" name="nomCliD" readonly>
+
+                  </div>
+
+              </div>
+
+              <!-- ENTRADA PARA EL codigo DEL CLIENTE-->
+
+              <div class="form-group col-lg-3">
+
+                  <label>Cod. Cliente</label>
+
+                  <div class="input-group">
+
+                      <span class="input-group-addon"><i class="fa fa-key"></i></span>
+
+                      <input type="text" class="form-control input-sm" id="codCliD" name="codCliD" readonly>
+
+                  </div>
+
+              </div>
+
+              <!-- ENTRADA PARA EL codigo DEL CLIENTE-->
+
+              <div class="form-group col-lg-4">
+
+                  <label>Total S/.</label>
+
+                  <div class="input-group">
+
+                      <span class="input-group-addon"><i class="fa fa-key"></i></span>
+
+                      <input type="text" class="form-control input-sm" id="totalD" name="totalD" readonly>
+
+                  </div>
+
+              </div>          
+              
+              <div class="form-group col-lg-4">
+
+                  <label>Porcentaje Aprobado</label>
+
+                  <div class="input-group">
+
+                      <span class="input-group-addon"><i class="fa fa-percent"></i></span>
+
+                        <select class="form-control input-sm" id="perPed" name="perPed" required>
+
+                          <option value="">Porcentaje</option>
+
+                          <option value="0.9">90 %</option>
+
+                          <option value="0.8">80 %</option>
+
+                          <option value="0.7">70 %</option>
+
+                          <option value="0.6">60 %</option>
+
+                          <option value="0.5">50 %</option>
+
+                          <option value="0.4">40 %</option>
+
+                          <option value="0.3">30 %</option>
+
+                          <option value="0.2">20 %</option>
+
+                          <option value="0.1">10 %</option>
+                        
+                        </select>
+
+                  </div>
+
+              </div>                 
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Dividir Pedido</button>
+
+        </div>
+
+      </form>
+
+      <?php
+
+      $dividir = new ControladorPedidos();
+      $dividir -> ctrDividirPedido();
+
+      ?>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!--=====================================
+MODAL ENVIAR PEDIDOS
+======================================-->
+
+<div id="modalEnviarPedido" class="modal fade" role="dialog">
+
+  <div class="modal-dialog" style="width: 20% !important;">
+
+    <div class="modal-content">
+
+      <form role="form" method="post">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Enviar Pedidos</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+          <div class="box box-primary col-lg-12 ">
+
+            <div class="box-header">
+
+              <b>Seleccionar Fecha</b>
+
+            </div>
+
+              <!-- ENTRADA PARA EL CODIGO DEL PEDIDO-->
+
+              <div class="form-group col-lg-12">
+
+                  <div class="input-group">
+
+                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+
+                      <?php
+
+                        date_default_timezone_set('America/Lima');
+                        $fecha = new DateTime();
+
+                      ?>
+
+                      <input type="date" class="form-control input-sm" id="fechaEnvio" name="fechaEnvio" value="<?php echo $fecha->format("Y-m-d"); ?>">
+
+                  </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Enviar Pedido</button>
+
+        </div>
+
+      </form>
+
+      <?php
+
+      $enviar = new ControladorPedidos();
+      $enviar -> ctrEnviarPedido();
 
       ?>
 

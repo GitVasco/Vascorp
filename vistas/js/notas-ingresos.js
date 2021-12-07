@@ -298,6 +298,17 @@ $("#nuevaOc").change(function(){
 
 });
 
+/*  
+* CARGAR TABLA CON LA ORDEN DE COMPRA
+*/
+$("#nuevoIGV").change(function(){
+
+  sumarTotalPreciosNI();
+  agregarImpustoNI();
+  listarMpNi();
+
+});
+
 /* 
 *AGREGANDO MATERIA PRIMA
 */
@@ -711,7 +722,10 @@ function agregarImpustoNI(){
   subTotal = $("#nuevoSubTotalNi").attr("subTotal");
   //console.log(subTotal);
 
-  impuesto= Number(subTotal) * 0.18;
+  var igv = document.getElementById("nuevoIGV").value;
+  console.log(igv);
+
+  impuesto= Number(subTotal) * Number(igv);
   //console.log(impuesto);
 
   $("#nuevoImpuestoNi").val(impuesto.toFixed(4));

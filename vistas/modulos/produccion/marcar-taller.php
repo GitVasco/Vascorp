@@ -102,7 +102,7 @@
 
                     <div class="box-header "></div>
 
-                    <form role="form" method="post">
+                    <form onsubmit="return false;">
 
                         <div class="box-body">
 
@@ -196,18 +196,18 @@
 
                         </div>
 
-                        <div class="box-footer">
+                        <!-- <div class="box-footer">
 
                             <button type="submit" class="btn btn-primary pull-right">Registrar</button>
 
-                        </div>
+                        </div> -->
 
                     </form>
 
                     <?php
 
-                    $registrarProceso = new ControladorTalleres();
-                    $registrarProceso -> ctrProcesoB();
+                    /* $registrarProceso = new ControladorTalleres();
+                    $registrarProceso -> ctrProcesoB(); */
 
                     ?> 
 

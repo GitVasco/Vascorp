@@ -173,80 +173,52 @@ class AjaxFacturacion{
     
       }
 
-      /*=============================================
-      ACTIVAR PEDIDO
-      =============================================*/	
-      public function ajaxActivarPedido(){
-        
-        $valor=$this->activarId;
-        $estado= $this->activarEstado;
-        $usuario=$_SESSION["id"];
-        $nom_user = $_SESSION["nombre"];
-        date_default_timezone_set('America/Lima');
-		    $fecha = new DateTime();
+    /*=============================================
+    ACTIVAR PEDIDO
+    =============================================*/	
+    public function ajaxActivarPedido(){
+    
+    $valor=$this->activarId;
+    $estado= $this->activarEstado;
+
+    $usuario=$_SESSION["id"];
+    $nom_user = $_SESSION["nombre"];
+    date_default_timezone_set('America/Lima');
+    $fecha = new DateTime();
+    
+        $respuesta=ModeloFacturacion::mdlActualizarPedido($valor,$estado,$usuario);
+
         if($estado == 'APROBADO'){
 
-          $descripcion   = 'El usuario '.$nom_user.' aprobó el pedido '.$valor;
-          $detalle = ControladorPedidos::ctrMostrarDetallesTemporal($valor);
-          foreach ($detalle as $key => $value) {
-            $articulo = ModeloFacturacion::mdlActualizarArticuloPedido($value["articulo"],$value["cantidad"]);
-          }
+            $descripcion   = 'El usuario '.$nom_user.' aprobó el pedido '.$valor;
+
+            ModeloPedidos::mdlCantAprobados();
 
         }else if($estado == 'APT'){
-          
-          $descripcion   = 'El usuario '.$nom_user.' dio de apta el pedido '.$valor;
+            
+            $descripcion   = 'El usuario '.$nom_user.' dio de apta el pedido '.$valor;
 
         }else if($estado == 'CONFIRMADO'){
 
-          $temporal= ControladorPedidos::ctrMostrarTemporal($valor);
-          $tabla="temporaljf_bkp";
-          $datos1= array("codigo" => $temporal["codigo"],
-          "cliente" => $temporal["cliente"],
-          "vendedor" => $temporal["vendedor"],
-          "lista" => $temporal["lista"],
-          "op_gravada" => $temporal["op_gravada"],
-          "descuento_total" => $temporal["descuento_total"],
-          "sub_total" => $temporal["sub_total"],
-          "igv" => $temporal["igv"],
-          "total" => $temporal["total"],
-          "condicion_venta" => $temporal["condicion_venta"],
-          "estado" => $temporal["estado"],
-          "fecha" => $temporal["fecha"],
-          "usuario" => $temporal["usuario"],
-          "agencia" => $temporal["agencia"],
-          "usuario_estado" => $temporal["usuario_estado"]);
+            ModeloPedidos::mdlGuardarTemporalBkpCab($valor);
 
-          ModeloPedidos::mdlGuardarTemporalBkp($tabla, $datos1);
+            ModeloPedidos::mdlGuardarTemporalBkpDet($valor);
 
-
-          $detalle = ControladorPedidos::ctrMostrarDetallesTemporal($valor);
-          foreach ($detalle as $key => $value) {
-            $tabla2="detalle_temporalbkp";
-            $datos3 = array( "codigo"    => $value["codigo"],
-                            "articulo"  => $value["articulo"],
-                            "cantidad"  => $value["cantidad"],
-                            "precio"    => $value["precio"]);
-
-                        $respuesta = ModeloPedidos::mdlGuardarTemporalDetalle($tabla2, $datos3);
-          }
-
-          $descripcion   = 'El usuario '.$nom_user.' confirmo el pedido '.$valor;
-
-        }else if($estado == 'FACTURADOS'){
-
-          $descripcion   = 'El usuario '.$nom_user.' facturo el pedido '.$valor;
+            $descripcion   = 'El usuario '.$nom_user.' confirmo el pedido '.$valor;
 
         }
 
         if($_SESSION["datos"] == 1){
-          $datos2= array( "usuario" => $nom_user,
-              "concepto" => $descripcion,
-              "fecha" => $fecha->format("Y-m-d H:i:s"));
-          $auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
+            $datos2= array( "usuario" => $nom_user,
+                "concepto" => $descripcion,
+                "fecha" => $fecha->format("Y-m-d H:i:s"));
+            $auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
         }
-        $respuesta=ModeloFacturacion::mdlActualizarPedido($valor,$estado,$usuario);
+
+        
         echo $respuesta;
-      }
+
+        }
 
       /*=============================================
       GENERAR TOKEN PARA HACER CONSULTAS SUNAT

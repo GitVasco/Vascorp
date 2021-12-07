@@ -49,7 +49,7 @@ class TablaUsuarios{
         $botones =  "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarUsuario' idUsuario='".$usuarios[$i]["id"]."' data-toggle='modal' data-target='#modalEditarUsuario' title='Editar Usuario'><i class='fa fa-pencil'></i></button><button class='btn btn-xs btn-danger btnEliminarUsuario' idUsuario='".$usuarios[$i]["id"]."' fotoUsuario='".$usuarios[$i]["foto"]."' usuario='".$usuarios[$i]["usuario"]."' title='Eliminar Usuario'><i class='fa fa-times'></i></button><button class='btn btn-xs btn-primary btnEditarCorreo' idUsuario='".$usuarios[$i]["id"]."' data-toggle='modal' data-target='#modalEditarCorreo' title='Envio correo datos'><i class='fa fa-envelope'></i></button></div>"; 
 
             $datosJson .= '[
-            "'.($i+1).'",
+            "'.$usuarios[$i]["id"].'",
             "'.$usuarios[$i]["nombre"].'",
             "'.$usuarios[$i]["usuario"].'",
             "'.$foto.'",

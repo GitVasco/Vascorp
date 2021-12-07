@@ -95,6 +95,11 @@
                                 <!--=====================================
                                 ENTRADA DEL CLIENTE
                                 ======================================-->
+                                <div class="form-group">
+                                    <div class='progress progress-striped'>
+                                        <div id='progressBar1' class='progress-bar' role='progressbar' aria-valuenow='0' aria-valuemin='0' aria-valuemax='100' style='width: 0%'>0%</div>
+                                    </div>
+                                </div>
 
                                 <div class="form-group">
 
@@ -102,7 +107,7 @@
 
                                         <span class="input-group-addon"><i class="fa fa-users"></i></span>
 
-                                        <select class="form-control selectpicker" id="seleccionarCliente" name="seleccionarCliente" data-live-search="true"  required>
+                                        <select class="form-control selectpicker" id="seleccionarCliente" name="seleccionarCliente" data-live-search="true" data-size="10" required>
 
                                         <?php
 
@@ -193,7 +198,7 @@
 
                                         <span class="input-group-addon"><i class="fa fa-shopping-cart"></i></span>
 
-                                        <select class="form-control" id="seleccionarVendedor" name="seleccionarVendedor" required>
+                                        <select class="form-control selectpicker" id="seleccionarVendedor" name="seleccionarVendedor" data-live-search="true" data-size="10" required>
 
                                         <?php
 
@@ -263,16 +268,17 @@
 
                                     ?>
 
-                                <!--=====================================
-                                ENTRADA PARA AGREGAR PRODUCTO
-                                ======================================-->
-
-                                <div class="form-group row nuevoProductoPedido" style="height:500px; overflow: scroll;">
-
-                                <p class="buscador" id="elid">
-                                    <label>Buscar:</label>
-                                    <input type="text" class="form-control input-sm" id="buscador" name="buscador">
-                                </p>
+                                <div class=" form-group buscador" id="elid" style="padding-bottom:25px">
+                                    <label for="" class="col-form-label col-lg-1">Buscar:</label>
+                                    <div class="col-lg-11">
+                                        <div class="input-group">
+                                            
+                                            <input type="text" class="form-control " id="buscador" name="buscador"/>
+                                            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                        </div>
+                                    </div>
+                                        
+                                </div>
 
                                 <!--=====================================
                                         TITULOS
@@ -303,6 +309,14 @@
                                     </div>
 
                                 </div>
+
+                                <!--=====================================
+                                ENTRADA PARA AGREGAR PRODUCTO
+                                ======================================-->
+
+                                <div class="form-group row nuevoProductoPedido" style="height:400px; overflow: scroll; overflow-x:hidden">
+
+                                
 
                                     <?php
 
@@ -379,6 +393,19 @@
                                         <div class="form-group">
 
                                             <div class="col-xs-4">
+
+                                                <div class="input-group pull-left">
+
+                                                <span class="form-control"><b>Unidades</b></span>
+
+                                                </div>
+
+                                                <div class="input-group pull-left">
+
+                                                <input type="number" step="any" class="form-control" min="0" id="unidades" name="unidades" value="0" readonly>
+
+                                                </div>
+
                                             </div>
 
                                             <div class="col-xs-3">
@@ -902,7 +929,7 @@
 
                     <div class="box-body">
 
-                        <table class="table table-bordered table-striped dt-responsive tablaArticulosPedidos">
+                        <table class="table table-bordered table-striped dt-responsive tablaArticulosPedidos" width="100%">
 
                             <thead>
 
@@ -929,252 +956,6 @@
         </div>
 
     </section>
-
-</div>
-
-<!--=====================================
-MODAL AGREGAR ARTICULOS
-======================================-->
-
-<div id="modalAgregarClienteP" class="modal fade" role="dialog">
-
-    <div class="modal-dialog" style="width: 60% !important;">
-
-        <div class="modal-content">
-
-            <form role="form" method="post" class="formularioPedido">
-
-                <!--=====================================
-                CABEZA DEL MODAL
-                ======================================-->
-
-                <div class="modal-header" style="background:#3c8dbc; color:white">
-
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-
-                    <h4 class="modal-title">Detalle Artículos</h4>
-
-                </div>
-
-                <!--=====================================
-                CUERPO DEL MODAL
-                ======================================-->
-
-                <div class="modal-body">
-
-                    <div class="box-body">
-
-                        <div class="box box-primary">
-
-                            <div class="form-group col-lg-3">
-
-                                <div class="input-group">
-
-                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
-
-                                    <input type="text" class="form-control input-sm" id="modeloModal" name="modeloModal" readonly>
-
-                                </div>
-
-                            </div>
-
-                            <div class="form-group col-lg-3">
-
-                                <div class="input-group">
-
-                                    <span class="input-group-addon"><i class="fa fa-money"></i></span>
-
-                                    <input type="text" class="form-control input-sm" id="precio" name="precio">
-
-                                </div>
-
-                            </div>
-
-                            <div class="form-group col-lg-3">
-
-                                <div class="input-group">
-
-                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
-
-                                    <input type="text" class="form-control input-sm" id="cliente" name="cliente" placeholder="Tiene que escoger el Cliente" required>
-
-                                </div>
-
-                            </div>
-
-                            <div class="form-group col-lg-3">
-
-                                <div class="input-group">
-
-                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
-
-                                    <input type="text" class="form-control input-sm" id="vendedor" name="vendedor" placeholder="Tiene que escoger el Vendedor" required>
-
-                                    <input type="hidden" class="form-control input-sm" id="nLista" name="nLista" readonly>
-
-                                    <input type="hidden" class="form-control input-sm" id="usuario" name="usuario" value="<?php echo $_SESSION["id"]; ?>">
-
-                                </div>
-
-                            </div>
-
-
-                            <?php
-
-                            $pedido = $_GET["pedido"];
-
-                            echo '<input type="hidden" class="form-control input-sm" id="pedido" name="pedido" value="' . $pedido . '" readonly>';
-
-
-                            ?>
-
-
-                        </div>
-
-                        <div class="box box-warning col-lg-12">
-
-                            <!-- TABLA DE DETALLES -->
-
-                            <label>TABLA DETALLES</label>
-
-                            <div class="box-body">
-
-                                <table class="table table-bordered table-striped dt-responsive tablaColTal" width="100%">
-
-                                    <thead>
-
-                                        <tr>
-                                            <th style="width:50px"></th>
-                                            <th style="width:200px"></th>
-                                            <th style="width:100px">S</th>
-                                            <th style="width:100px">M</th>
-                                            <th style="width:100px">L</th>
-                                            <th style="width:100px">XL</th>
-                                            <th style="width:100px">XXL</th>
-                                            <th style="width:100px">XS</th>
-                                            <th style="width:100px"></th>
-                                            <th style="width:100px"></th>
-                                        </tr>
-
-                                        <tr>
-                                            <th style="width:50px"></th>
-                                            <th style="width:200px"></th>
-                                            <th style="width:100px">28</th>
-                                            <th style="width:100px">30</th>
-                                            <th style="width:100px">32</th>
-                                            <th style="width:100px">34</th>
-                                            <th style="width:100px">36</th>
-                                            <th style="width:100px">38</th>
-                                            <th style="width:100px">40</th>
-                                            <th style="width:100px">42</th>
-                                        </tr>
-
-                                        <tr>
-                                            <th style="width:50px">Modelo</th>
-                                            <th style="width:200px">Color</th>
-                                            <th style="width:100px">3</th>
-                                            <th style="width:100px">4</th>
-                                            <th style="width:100px">6</th>
-                                            <th style="width:100px">8</th>
-                                            <th style="width:100px">10</th>
-                                            <th style="width:100px">12</th>
-                                            <th style="width:100px">14</th>
-                                            <th style="width:100px">16</th>
-                                        </tr>
-
-                                    </thead>
-
-                                    <tbody>
-                                        <tr class="detalleCT">
-
-                                        </tr>
-
-                                    </tbody>
-
-                                </table>
-
-                            </div>
-
-                        </div>
-
-
-
-
-                    </div>
-
-                </div>
-
-                <div class="box box-success">
-
-                    <div class="form-group col-lg-4">
-
-                        <label> Total Unidades</label>
-
-                        <div class="input-group">
-
-                            <input type="text" name="totalCantidad" id="totalCantidad" readonly>
-
-
-                        </div>
-
-                    </div>
-
-                    <div class="form-group col-lg-4">
-
-                        <label> Total Soles</label>
-
-                        <div class="input-group">
-
-                            <input type="text" name="totalSoles" id="totalSoles" readonly>
-
-
-                        </div>
-
-
-                    </div>
-
-                    <div class="form-group col-lg-4">
-
-                        <label></label>
-
-                        <div class="input-group">
-
-                            <button type="button" class="btn btn-success pull-left btnCalCant">Calcular</button>
-
-                        </div>
-
-
-                    </div>
-
-                </div>
-
-
-                <!--=====================================
-                PIE DEL MODAL
-                ======================================-->
-
-                <div class="modal-footer">
-
-                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
-
-                    <button type="submit" class="btn btn-primary">Guardar Modelo</button>
-
-                </div>
-
-
-
-            </form>
-
-            <?php
-
-            $crearPedido = new ControladorPedidos();
-            $crearPedido->ctrCrearPedido();
-
-            ?>
-
-        </div>
-
-    </div>
 
 </div>
 
@@ -1666,7 +1447,7 @@ $('.nuevoProductoPedido').ready(function(){
        for( var i = 0; i < nombres.length; i++ ){
 
         item = $(nombres[i]).val().toLowerCase();
-        console.log(item);
+        //console.log(item);
 
             for(var x = 0; x < item.length; x++ ){
 

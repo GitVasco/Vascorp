@@ -84,45 +84,65 @@ class ControladorCompras{
         if(isset($_POST["imporTxt"])){
 
             #var_dump($_POST["imporTxt"]);
-        if($_FILES['archivotxt']['name'] != null){
+            if($_FILES['archivotxt']['name'] != null){
 
-            $ruta = "vistas/sunat/leer/";
-            $subir_archivo = $ruta.basename($_FILES['archivotxt']['name']);
-            #var_dump($subir_archivo);
+                $ruta = "vistas/sunat/leer/";
+                $subir_archivo = $ruta.basename($_FILES['archivotxt']['name']);
+                #var_dump($subir_archivo);
 
-            move_uploaded_file($_FILES['archivotxt']['tmp_name'],$subir_archivo);
+                move_uploaded_file($_FILES['archivotxt']['tmp_name'],$subir_archivo);
 
-            $archivo = fopen($subir_archivo, "r");
+                $archivo = fopen($subir_archivo, "r");
 
-            while(!feof($archivo)){
+                while(!feof($archivo)){
 
-                $linea = fgets($archivo);
-                $partes = explode("|",$linea);
+                    $linea = fgets($archivo);
+                    $partes = explode("|",$linea);
 
-                $datos = array( "ruc"           =>  $partes[0],
-                                "serie_doc"     =>  $partes[2],
-                                "num_doc"       =>  $partes[3],
-                                "comprobante"   =>  $partes[6],
-                                "contribuyente" =>  $partes[7],
-                                "condicion"     =>  $partes[8],
-                                "estado"        =>  '1');
-                #var_dump($datos);
+                    $datos = array( "ruc"           =>  $partes[0],
+                                    "serie_doc"     =>  $partes[2],
+                                    "num_doc"       =>  $partes[3],
+                                    "comprobante"   =>  $partes[6],
+                                    "contribuyente" =>  $partes[7],
+                                    "condicion"     =>  $partes[8],
+                                    "estado"        =>  '1');
+                    #var_dump($datos);
 
-                $respuesta = ModeloCompras::mdlActualizarRegCompras($datos);
-                $respuesta2 = ModeloCompras::mdlActualizarDiario($datos);
+                    $respuesta = ModeloCompras::mdlActualizarRegCompras($datos);
+                    $respuesta2 = ModeloCompras::mdlActualizarDiario($datos);
 
-            }
+                }
 
-            #var_dump($respuesta2);
+                #var_dump($respuesta2);
 
-            if($respuesta == "ok" && $respuesta2 == "ok"){
+                if($respuesta == "ok" && $respuesta2 == "ok"){
 
-                echo'<script>
+                    echo'<script>
+
+                        swal({
+                            
+                            type: "success",
+                            title: "Se actualizo correctamente",
+                            showConfirmButton: true,
+                            confirmButtonText: "Cerrar"
+                            }).then(function(result){
+                                if (result.value) {
+
+                                window.location = "compras-reg";
+
+                                }
+                            })
+
+                        </script>';
+
+                }else{
+
+                    echo'<script>
 
                     swal({
-                        
-                        type: "success",
-                        title: "Se actualizo correctamente",
+
+                        type: "error",
+                        title: "¡No se puedo actualizar!",
                         showConfirmButton: true,
                         confirmButtonText: "Cerrar"
                         }).then(function(result){
@@ -135,14 +155,15 @@ class ControladorCompras{
 
                     </script>';
 
+                }
+                
             }else{
-
                 echo'<script>
 
                 swal({
 
                     type: "error",
-                    title: "¡No se puedo actualizar!",
+                    title: "¡Error, debe seleccionar un archivo!",
                     showConfirmButton: true,
                     confirmButtonText: "Cerrar"
                     }).then(function(result){
@@ -154,27 +175,7 @@ class ControladorCompras{
                     })
 
                 </script>';
-
             }
-        }else{
-            echo'<script>
-
-            swal({
-
-                type: "error",
-                title: "¡Error, debe seleccionar un archivo!",
-                showConfirmButton: true,
-                confirmButtonText: "Cerrar"
-                }).then(function(result){
-                    if (result.value) {
-
-                    window.location = "compras-reg";
-
-                    }
-                })
-
-            </script>';
-        }
 
         }
 

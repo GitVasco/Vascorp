@@ -81,7 +81,7 @@
            <th>Saldo</th> 
            <th>Estado</th>
            <th>Fecha</th>
-           <th style="width:200px">Acciones</th>
+           <th style="width:250px">Acciones</th>
 
          </tr> 
 

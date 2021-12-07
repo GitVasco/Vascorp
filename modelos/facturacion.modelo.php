@@ -2160,7 +2160,7 @@ class ModeloFacturacion{
       $stmt = null;
   
   
-      }
+    }
 
     static public function mdlMostrarTipoVentaResumen($optipo,$opdocumento,$impuesto,$vend,$inicio,$fin){
 
