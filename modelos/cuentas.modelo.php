@@ -10,7 +10,65 @@ class ModeloCuentas{
 
 	static public function mdlIngresarCuenta($tabla,$datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(tipo_doc,num_cta,cliente,vendedor,fecha,fecha_ven,fecha_cep,tip_mon,monto,tip_cambio,estado,notas,cod_pago,doc_origen,renovacion,protesta,usuario,saldo,ult_pago,estado_doc,banco,num_unico,fecha_envio,fecha_abono,tip_mov) VALUES (:tipo_doc,:num_cta,:cliente,:vendedor,:fecha,:fecha_ven,:fecha_cep,:tip_mon,:monto,:tip_cambio,:estado,:notas,:cod_pago,:doc_origen,:renovacion,:protesta,:usuario,:saldo,:ult_pago,:estado_doc,:banco,:num_unico,:fecha_envio,:fecha_abono,:tip_mov)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (
+			tipo_doc,
+			num_cta,
+			cliente,
+			vendedor,
+			fecha,
+			fecha_ven,
+			fecha_cep,
+			tip_mon,
+			monto,
+			tip_cambio,
+			estado,
+			notas,
+			cod_pago,
+			doc_origen,
+			renovacion,
+			protesta,
+			usuario,
+			saldo,
+			ult_pago,
+			estado_doc,
+			banco,
+			num_unico,
+			fecha_envio,
+			fecha_abono,
+			tip_mov,
+			usureg,
+			pcreg
+		  ) 
+		  VALUES
+			(
+			  :tipo_doc,
+			  :num_cta,
+			  :cliente,
+			  :vendedor,
+			  :fecha,
+			  :fecha_ven,
+			  :fecha_cep,
+			  :tip_mon,
+			  :monto,
+			  :tip_cambio,
+			  :estado,
+			  :notas,
+			  :cod_pago,
+			  :doc_origen,
+			  :renovacion,
+			  :protesta,
+			  :usuario,
+			  :saldo,
+			  :ult_pago,
+			  :estado_doc,
+			  :banco,
+			  :num_unico,
+			  :fecha_envio,
+			  :fecha_abono,
+			  :tip_mov,
+			  :usureg,
+			  :pcreg
+			)");
 
 		$stmt->bindParam(":tipo_doc", $datos["tipo_doc"], PDO::PARAM_STR);
 		$stmt->bindParam(":num_cta", $datos["num_cta"], PDO::PARAM_STR);
@@ -37,6 +95,8 @@ class ModeloCuentas{
 		$stmt->bindParam(":fecha_envio", $datos["fecha_envio"], PDO::PARAM_STR);
 		$stmt->bindParam(":fecha_abono", $datos["fecha_abono"], PDO::PARAM_STR);
 		$stmt->bindParam(":tip_mov", $datos["tip_mov"], PDO::PARAM_STR);
+		$stmt->bindParam(":usureg", $datos["usureg"], PDO::PARAM_STR);
+		$stmt->bindParam(":pcreg", $datos["pcreg"], PDO::PARAM_STR);
 
 
 		if($stmt->execute()){
@@ -91,13 +151,15 @@ class ModeloCuentas{
 		(SELECT 
 		  *,
 		  :usuario_bkp,
-		  :fecha_bkp 
+		  :fecha_bkp,
+		  :pc_bkp 
 		FROM
 		  cuenta_ctejf
 		  WHERE id = :id) ;");
 
 		$stmt->bindParam(":usuario_bkp", $datos["usuario_bkp"], PDO::PARAM_STR);
 		$stmt->bindParam(":fecha_bkp", $datos["fecha_bkp"], PDO::PARAM_STR);
+		$stmt->bindParam(":pc_bkp", $datos["pc_bkp"], PDO::PARAM_STR);
 		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_STR);
 
 
@@ -107,7 +169,7 @@ class ModeloCuentas{
 
 		}else{
 
-			return "error";
+			return $stmt->errorInfo();
 		
 		}
 
@@ -509,6 +571,53 @@ class ModeloCuentas{
 
     }
 	
+	static public function mdlEditarCancelacion($tabla,$datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE 
+												$tabla 
+											SET
+												tipo_doc = :tipo_doc,
+												cod_pago = :cod_pago,
+												num_cta = :num_cta,
+												doc_origen = :doc_origen,
+												cliente = :cliente,
+												vendedor = :vendedor,
+												fecha = :fecha,
+												monto = :monto,
+												notas = :notas,
+												usuario = :usuario,
+												usureg = :usureg,
+												pcreg = :pcreg 
+											WHERE id = :id");
+
+		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
+		$stmt->bindParam(":tipo_doc", $datos["tipo_doc"], PDO::PARAM_STR);
+		$stmt->bindParam(":cod_pago", $datos["cod_pago"], PDO::PARAM_STR);
+		$stmt->bindParam(":num_cta", $datos["num_cta"], PDO::PARAM_STR);
+		$stmt->bindParam(":doc_origen", $datos["doc_origen"], PDO::PARAM_STR);
+		$stmt->bindParam(":cliente", $datos["cliente"], PDO::PARAM_STR);
+		$stmt->bindParam(":vendedor", $datos["vendedor"], PDO::PARAM_STR);
+		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+		$stmt->bindParam(":monto", $datos["monto"], PDO::PARAM_STR);
+		$stmt->bindParam(":notas", $datos["notas"], PDO::PARAM_STR);
+		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+		$stmt->bindParam(":usureg", $datos["usureg"], PDO::PARAM_STR);
+		$stmt->bindParam(":pcreg", $datos["pcreg"], PDO::PARAM_STR);
+		
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return $stmt->errorInfo();
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+    }	
 	
 	/*=============================================
 	ELIMINAR CUENTA

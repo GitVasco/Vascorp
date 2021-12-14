@@ -417,7 +417,7 @@ $(".box").on("click", ".btnEditarPedidoCV", function () {
 /* 
 * BOTON  IMPRIMIR TICKET
 */
-$(".tablaPedidosCV, .tablaPedidosGenerados, .tablaPedidosAprobados").on("click", ".btnImprimirPedido", function () {
+$(".tablaPedidosCV, .tablaPedidosGenerados, .tablaPedidosAprobados, .tablaPedidosAPT, .tablaPedidosConfirmados, .tablaPedidosFacturados").on("click", ".btnImprimirPedido", function () {
 
     var codigo = $(this).attr("codigo");
     //console.log(codigo);
@@ -1524,3 +1524,34 @@ $(".tablaPedidosCV").on("click", "button.btnDividirPed", function(){
     $("#totalD").val(total);
 
 })
+
+
+/* 
+*ANULAR PEDIDOS
+*/
+$(".tablaPedidosAprobados, .tablaPedidosCV, .tablaPedidosGenerados").on("click",".btnAnularPedidoCV",function(){
+	
+    var codigo = $(this).attr("codigo");
+    var estado = $(this).attr("estado");
+    //console.log(codigo,estado);
+ 
+	// Capturamos el id de la orden de compra
+	swal({
+        title: '¿Está seguro de anular el pedido?',
+        text: "¡Si no lo está puede cancelar la acción!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si, anular pedido!'
+    }).then(function (result) {
+
+	if (result.value) {
+
+		window.location = "index.php?ruta=pedidoscv&codigoP="+codigo;
+
+	}
+	})
+
+});

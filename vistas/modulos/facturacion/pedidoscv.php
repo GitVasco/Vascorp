@@ -689,6 +689,14 @@ MODAL ENVIAR PEDIDOS
 
 </div>
 
+
+<?php
+
+  $anularPedido = new ControladorPedidos();
+  $anularPedido -> ctrAnularPedido();
+
+?>
+
 <script>
 window.document.title = "Pedidos"
 </script>

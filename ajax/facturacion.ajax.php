@@ -188,11 +188,11 @@ class AjaxFacturacion{
     
         $respuesta=ModeloFacturacion::mdlActualizarPedido($valor,$estado,$usuario);
 
+        ModeloPedidos::mdlCantAprobados();
+
         if($estado == 'APROBADO'){
 
             $descripcion   = 'El usuario '.$nom_user.' aprobó el pedido '.$valor;
-
-            ModeloPedidos::mdlCantAprobados();
 
         }else if($estado == 'APT'){
             

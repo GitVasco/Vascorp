@@ -28,6 +28,7 @@
             in_array(14,$valores)?$_SESSION['cuenta']=1:$_SESSION['cuenta']=0;
             in_array(15,$valores)?$_SESSION['costos']=1:$_SESSION['costos']=0;
             in_array(16,$valores)?$_SESSION['caja']=1:$_SESSION['caja']=0;
+            in_array(17,$valores)?$_SESSION['mantenimiento']=1:$_SESSION['mantenimiento']=0;
             ?>
 
         <!-- search form -->
@@ -1743,6 +1744,44 @@
                 </ul>
 
             </li>
+
+            <?php
+            }
+            if($_SESSION["mantenimiento"] == 1){
+            ?>
+
+            <li class="treeview <?php if(   $_GET["ruta"] == "mantenimiento") echo 'active';?>">
+
+                <a href="#">
+
+                    <i class="fa fa-industry text-white"></i>
+
+                    <span>Mantenimiento</span>
+
+                    <span class="pull-right-container">
+
+                        <i class="fa fa-angle-left pull-right"></i>
+
+                    </span>
+
+                </a>
+
+                <ul class="treeview-menu">
+
+                    <li class="<?php if($_GET["ruta"] == "equipos") echo 'active';?>">
+
+                        <a href="equipos">
+
+                            <i class="fa fa-wrench"></i>
+                            <span>Equipos</span>
+
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </li>            
 
             <?php
             }

@@ -2287,3 +2287,17 @@ $(".tablaProcesarCE").on("click","button.btnConsultarEstado",function(){
     }
   })
 });
+
+
+/* 
+* BOTON  IMPRIMIR TICKET
+*/
+$(".tablaGuiasRemision").on("click", ".btnImprimirGuia", function () {
+
+  var codigo = $(this).attr("codigo");
+  var tipo = $(this).attr("tip_doc");
+  //console.log(tipo);
+
+  window.open("vistas/reportes_ticket/guia_remision.php?codigo=" +codigo + "&tipo=" + tipo,"_blank");
+
+})

@@ -1659,5 +1659,75 @@ class ModeloArticulos
 
 	}	
 
+	/*
+	* BAJAR EL STOCK y CANT EN PEDIDO
+	*/
+	static public function mdlActualizarStockPedido($codigo){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE 
+									articulojf a 
+									LEFT JOIN 
+									(SELECT 
+										articulo,
+										cantidad 
+									FROM
+										detalle_temporal 
+									WHERE codigo = :codigo) AS dt 
+									ON a.articulo = dt.articulo SET a.stock = a.stock - dt.cantidad,
+									a.pedidos = a.pedidos - dt.cantidad WHERE dt.articulo IS NOT NULL");
+
+		$stmt->bindParam(":codigo", $codigo, PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+
+		} else {
+
+			return "error";
+
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+
+	}	
+
+	/*
+	* SUBIR EL STOCK y CANT EN PEDIDO
+	*/
+	static public function mdlActualizarStockPedidoB($codigo){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE 
+									articulojf a 
+									LEFT JOIN 
+									(SELECT 
+										articulo,
+										cantidad 
+									FROM
+										detalle_temporal 
+									WHERE codigo = :codigo) AS dt 
+									ON a.articulo = dt.articulo SET a.stock = a.stock + dt.cantidad,
+									a.pedidos = a.pedidos - dt.cantidad WHERE dt.articulo IS NOT NULL");
+
+		$stmt->bindParam(":codigo", $codigo, PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+
+		} else {
+
+			return "error";
+
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+
+	}	
+
 }
 

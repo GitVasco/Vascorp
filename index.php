@@ -108,6 +108,8 @@ require_once "controladores/centro-costos.controlador.php";
 
 require_once "controladores/compras.controlador.php";
 
+require_once "controladores/mantenimiento.controlador.php";
+
 /* 
 * MODELOS
 */
@@ -212,6 +214,8 @@ require_once "modelos/orden-servicio.modelo.php";
 require_once "modelos/centro-costos.modelo.php";
 
 require_once "modelos/compras.modelo.php";
+
+require_once "modelos/mantenimiento.modelo.php";
 
 require_once "extensiones/vendor/autoload.php";
 

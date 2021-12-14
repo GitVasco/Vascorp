@@ -120,7 +120,8 @@
                 echo '<tr>
                             <td style="width:120px;">'.$value["modelo"].'</td>
                             <td style="width:600px;">'.$value["nombre"].'</td>
-                            <td>'.$value["cantidad"].' '.'C62</td>
+                            <td align="right">'.$value["cantidad"].'</td>
+                            <td>C62</td>
                         </tr>';
 
                 $cont++;

@@ -399,13 +399,18 @@ CUERPO DOCUMENTO
 
               include "modulos/costos/".$_GET["ruta"].".php";
 
-        }else if( $_GET["ruta"] == "salir" ||
+        }else if( $_GET["ruta"] == "equipos") {
+
+              include "modulos/mantenimiento/".$_GET["ruta"].".php";
+
+}       else if( $_GET["ruta"] == "salir" ||
                   $_GET["ruta"] == "reportes"){
 
               include "modulos/".$_GET["ruta"].".php";
 
         }else if($_GET["ruta"] == "leer-stock" ||
                  $_GET["ruta"] == "cargas-automaticas"){
+
           include "reportes_excel/".$_GET["ruta"].".php";
 
         }else{
@@ -495,6 +500,7 @@ CUERPO DOCUMENTO
   <script src="vistas/js/gastoscaja.js"></script>
   <script src="vistas/js/ingresoscaja.js"></script>
   <script src="vistas/js/compras.js"></script>
+  <script src="vistas/js/mantenimiento.js"></script>
 
 
 </body>

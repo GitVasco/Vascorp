@@ -6,7 +6,7 @@ class ModeloFacturacion{
 	/*
 	* REGISTAR MOVIMIENTOS 
 	*/
-	static public function mdlRegistrarMovimientos($datos){
+	static public function mdlRegistrarMovimientos($detalle){
 
 		$stmt = Conexion::conectar()->prepare("INSERT INTO movimientosjf_2021 (
                                                     tipo,
@@ -23,38 +23,14 @@ class ModeloFacturacion{
                                                     nombre_tipo
                                                 )
                                                 VALUES
-                                                    (
-                                                    :tipo,
-                                                    :documento,
-                                                    DATE(NOW()),
-                                                    :articulo,
-                                                    :cliente,
-                                                    :vendedor,
-                                                    :cantidad,
-                                                    :precio,
-                                                    '0',
-                                                    :dscto2,
-                                                    :total,
-                                                    :nombre_tipo
-                                                    )");
-
-        $stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
-        $stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
-        $stmt->bindParam(":articulo", $datos["articulo"], PDO::PARAM_STR);
-        $stmt->bindParam(":cliente", $datos["cliente"], PDO::PARAM_STR);
-        $stmt->bindParam(":vendedor", $datos["vendedor"], PDO::PARAM_STR);
-        $stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_STR);
-        $stmt->bindParam(":precio", $datos["precio"], PDO::PARAM_STR);
-        $stmt->bindParam(":dscto2", $datos["dscto2"], PDO::PARAM_STR);
-        $stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
-        $stmt->bindParam(":nombre_tipo", $datos["nombre_tipo"], PDO::PARAM_STR);
-
+                                                    $detalle");
 		if ($stmt->execute()) {
 
 			return "ok";
+
 		} else {
 
-			return "error";
+			return $stmt->errorInfo();
 		}
 
 		$stmt->close();
@@ -84,7 +60,9 @@ class ModeloFacturacion{
                                                         condicion_venta,
                                                         doc_destino,
                                                         doc_origen,
-                                                        usuario
+                                                        usuario,
+                                                        usureg,
+                                                        pcreg
                                                     )
                                                     VALUES
                                                         (
@@ -103,7 +81,9 @@ class ModeloFacturacion{
                                                         :condicion_venta,
                                                         :doc_destino,
                                                         :doc_origen,
-                                                        :usuario
+                                                        :usuario,
+                                                        :usureg,
+                                                        :pcreg
                                                         )");
 
         $stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
@@ -121,6 +101,8 @@ class ModeloFacturacion{
         $stmt->bindParam(":doc_origen", $datos["doc_origen"], PDO::PARAM_STR);
         $stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
         $stmt->bindParam(":tipo_documento", $datos["tipo_documento"], PDO::PARAM_STR);
+        $stmt->bindParam(":usureg", $datos["usureg"], PDO::PARAM_STR);
+        $stmt->bindParam(":pcreg", $datos["pcreg"], PDO::PARAM_STR);
 
 
 		if ($stmt->execute()) {
@@ -136,7 +118,6 @@ class ModeloFacturacion{
 		$stmt = null;
 
     }
-
 
     /*
     * ACTUALIZAR TALONARIO + 1 GUIA
@@ -256,7 +237,7 @@ class ModeloFacturacion{
 		$sql="UPDATE
                     temporaljf
                 SET
-                    estado = 'FACTURADO'
+                    estado = 'FACTURADOS'
                 WHERE codigo = :codigo";
 
         $stmt=Conexion::conectar()->prepare($sql);
@@ -291,7 +272,9 @@ class ModeloFacturacion{
                         cod_pago,
                         doc_origen,
                         usuario,
-                        saldo
+                        saldo,
+                        usureg,
+                        pcreg
                     )
                     VALUES
                         (
@@ -305,7 +288,9 @@ class ModeloFacturacion{
                         :cod_pago,
                         :num_cta,
                         :usuario,
-                        :saldo
+                        :saldo,
+                        :usureg,
+                        :pcreg
                         )";
 
         $stmt=Conexion::conectar()->prepare($sql);
@@ -319,6 +304,8 @@ class ModeloFacturacion{
         $stmt->bindParam(":cod_pago", $datos["cod_pago"], PDO::PARAM_STR);
         $stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
         $stmt->bindParam(":saldo", $datos["saldo"], PDO::PARAM_STR);
+        $stmt->bindParam(":usureg", $datos["usureg"], PDO::PARAM_STR);
+        $stmt->bindParam(":pcreg", $datos["pcreg"], PDO::PARAM_STR);
 
 		if ($stmt->execute()) {
 
@@ -369,7 +356,7 @@ class ModeloFacturacion{
                     LEFT JOIN ubigeojf u
                     ON c.ubigeo = u.cod_ubi
                 WHERE v.tipo = :tipo
-                    AND v.estado = :estado";
+                    AND v.estado in (:estado)";
 
         $stmt=Conexion::conectar()->prepare($sql);
 
@@ -428,6 +415,52 @@ class ModeloFacturacion{
 		$stmt=null;
 
     }
+
+    /*
+    * MOSTRAR DETALLE DE TEMPORAL
+    */
+    static public function mdlMostrarTablasB(){
+
+
+        $sql="SELECT
+                        v.tipo,
+                        v.tipo_documento,
+                        v.documento,
+                        v.total,
+                        v.cliente,
+                        c.nombre,
+                        c.tipo_documento AS tip_doc,
+                        c.documento AS num_doc,
+                        v.vendedor,
+                        v.fecha,
+                        cv.descripcion,
+                        v.doc_destino,
+                        LEFT(v.doc_destino,4) AS serie_dest,
+                        SUBSTR(v.doc_destino,5,8) AS nro_dest,
+                        v.estado,
+                        IFNULL(a.nombre, '') AS agencia,
+                        IFNULL(u.nom_ubi, '') AS ubigeo
+                    FROM
+                        ventajf v
+                        LEFT JOIN clientesjf c
+                        ON v.cliente = c.codigo
+                        LEFT JOIN condiciones_ventajf cv
+                        ON v.condicion_venta = cv.id
+                        LEFT JOIN agenciasjf a
+                        ON v.agencia = a.id
+                        LEFT JOIN ubigeojf u
+                        ON c.ubigeo = u.cod_ubi
+                    WHERE v.tipo='S01' AND v.estado in ('GENERADO','FACTURADO')";
+
+            $stmt=Conexion::conectar()->prepare($sql);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+
+        $stmt=null;
+  
+    }    
 
 	/*
 	* REGISTAR MOVIMIENTO DESDE GUIA
@@ -509,7 +542,9 @@ class ModeloFacturacion{
                                                                 lista_precios,
                                                                 condicion_venta,
                                                                 doc_origen,
-                                                                usuario
+                                                                usuario,
+                                                                usureg,
+                                                                pcreg
                                                             )
                                                             (SELECT
                                                                 :tipo,
@@ -526,7 +561,9 @@ class ModeloFacturacion{
                                                                 v.lista_precios,
                                                                 v.condicion_venta,
                                                                 :codigo,
-                                                                :usuario
+                                                                :usuario,
+                                                                :usureg,
+                                                                :pcreg
                                                             FROM
                                                                 ventajf v
                                                             WHERE v.documento = :codigo
@@ -538,6 +575,8 @@ class ModeloFacturacion{
         $stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
         $stmt->bindParam(":tipo_documento", $datos["tipo_documento"], PDO::PARAM_STR);
         $stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+        $stmt->bindParam(":usureg", $datos["usureg"], PDO::PARAM_STR);
+        $stmt->bindParam(":pcreg", $datos["pcreg"], PDO::PARAM_STR);
 
 		if ($stmt->execute()) {
 
@@ -727,66 +766,78 @@ class ModeloFacturacion{
     */
 	static public function mdlMostrarVentaImpresion($valor, $tipoDoc){
 
-			$sql="SELECT 
-                        v.tipo,
-                        v.documento,
-                        v.neto,
-                        v.igv,
-                        v.dscto,
-                        v.total,
-                        n.observacion,
-                        n.tipo_doc,
-                        n.tip_cont,
-                        n.doc_origen,
-                        n.motivo,
-                        (SELECT 
-                        descripcion 
-                        FROM
-                        maestrajf m 
-                        WHERE m.tipo_dato = 'TMOT' 
-                        AND n.motivo = m.codigo) AS nom_motivo,
-                        DATE_FORMAT(n.fecha_origen,'%Y-%m-%d') AS fecha_origen,
-                        v.cliente,
-                        c.nombre,
-                        c.documento as dni,
-                        c.direccion,
-                        c.email,
-                        CONCAT(u.distrito, ' / ', u.provincia) AS nom_ubigeo,
-                        u.departamento,
-                        c.ubigeo,
-                        v.agencia,
-                        DATE_FORMAT(v.fecha,'%d/%m/%Y') AS fecha,
-                        v.fecha AS fecha_emision,
-                        v.tipo_documento,
-                        v.lista_precios,
-                        v.condicion_venta,
-                        cv.descripcion,
-                        v.vendedor,
-                        ven.descripcion AS nom_vendedor,
-                        cv.dias,
-                        DATE_FORMAT(
-                    DATE_ADD(v.fecha, INTERVAL cv.dias DAY),
-                    '%d/%m/%Y'
-                ) AS fecha_vencimiento,
-                        v.doc_destino
-                        FROM
-                        ventajf v 
-                        LEFT JOIN condiciones_ventajf cv 
-                            ON v.condicion_venta = cv.id 
-                        LEFT JOIN clientesjf c 
-                            ON v.cliente = c.codigo 
-                        LEFT JOIN ubigeo u 
-                            ON c.ubigeo = u.codigo 
-                            LEFT JOIN notascd_jf n
-                            ON v.documento=n.documento AND v.tipo=n.tipo
-                        LEFT JOIN 
-                            (SELECT 
-                            codigo,
-                            descripcion 
-                            FROM
-                            maestrajf m 
-                            WHERE m.tipo_dato = 'TVEND') ven 
-                            ON v.vendedor = ven.codigo 
+			$sql="SELECT
+      v.tipo,
+      v.documento,
+      v.neto,
+      v.igv,
+      v.dscto,
+      v.total,
+      n.observacion,
+      n.tipo_doc,
+      n.tip_cont,
+      n.doc_origen,
+      n.motivo,
+      (SELECT 
+          descripcion 
+      FROM
+          maestrajf m 
+      WHERE m.tipo_dato = 'TMOT' 
+          AND n.motivo = m.codigo) AS nom_motivo,
+      DATE_FORMAT(n.fecha_origen, '%Y-%m-%d') AS fecha_origen,
+      v.cliente,
+      c.nombre,
+      c.documento AS dni,
+      c.direccion,
+      c.email,
+      CONCAT(u.distrito, ' / ', u.provincia) AS nom_ubigeo,
+      u.departamento,
+      c.ubigeo,
+      v.agencia,
+      DATE_FORMAT(v.fecha, '%d/%m/%Y') AS fecha,
+      v.fecha AS fecha_emision,
+      v.tipo_documento,
+      v.lista_precios,
+      v.condicion_venta,
+      cv.descripcion,
+      v.vendedor,
+      ven.descripcion AS nom_vendedor,
+      cv.dias,
+      DATE_FORMAT(
+          DATE_ADD(v.fecha, INTERVAL cv.dias DAY),
+          '%d/%m/%Y'
+      ) AS fecha_vencimiento,
+      v.doc_destino,
+      v.agencia,
+      (SELECT 
+          a.nombre 
+      FROM
+          agenciasjf a 
+      WHERE v.agencia = a.id) AS nom_agencia,
+      (SELECT 
+          a.ruc 
+      FROM
+          agenciasjf a 
+      WHERE v.agencia = a.id) AS ruc_agencia 
+      FROM
+      ventajf v 
+      LEFT JOIN condiciones_ventajf cv 
+          ON v.condicion_venta = cv.id 
+      LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+      LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+      LEFT JOIN notascd_jf n 
+          ON v.documento = n.documento 
+          AND v.tipo = n.tipo 
+      LEFT JOIN 
+          (SELECT 
+          codigo,
+          descripcion 
+          FROM
+          maestrajf m 
+          WHERE m.tipo_dato = 'TVEND') ven 
+          ON v.vendedor = ven.codigo 
                         WHERE v.documento = :codigo
                         AND v.tipo = :tipo_doc";
 
@@ -7025,6 +7076,11 @@ class ModeloFacturacion{
             v.igv AS f1,
             'PEN' AS g1,
             v.total AS n1,
+            CASE
+              WHEN v.condicion_venta IN ('1', '2') 
+              THEN 'CONTADO' 
+              ELSE 'CREDITO' 
+            END AS o1,            
             '0101' AS q1,
             v.neto - v.dscto AS v1,
             v.neto - v.dscto AS z1,
@@ -7038,13 +7094,31 @@ class ModeloFacturacion{
             /*v.dscto AS bh1,*/
             /*FILA 3*/
             CONCAT(
-                '0',
-                LEFT(v.doc_origen, 3),
-                '-0',
-                RIGHT(v.doc_origen, 7)
+              '0',
+              LEFT(v.doc_origen, 3),
+              '-0',
+              RIGHT(v.doc_origen, 7)
             ) AS a3,
             '09' AS b3,
-            'ATTACH_DOC' AS e3,
+            CASE
+              WHEN v.condicion_venta IN ('1', '2') 
+              THEN '' 
+              ELSE 'CUOTA001' 
+            END AS e3,
+            CASE
+              WHEN v.condicion_venta IN ('1', '2') 
+              THEN '' 
+              ELSE v.total 
+            END AS f3,
+            CASE
+              WHEN v.condicion_venta IN ('1', '2') 
+              THEN '' 
+              ELSE DATE_FORMAT(
+                DATE_ADD(v.fecha, INTERVAL cv.dias DAY),
+                '%d/%m/%Y'
+              ) 
+            END AS g3,
+            'ATTACH_DOC' AS h3,
             /*FILA4*/
             'Corporacion Vasco S.A.C.' AS a4,
             'JACKY FORM' AS b4,

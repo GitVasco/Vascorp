@@ -110,7 +110,7 @@ class ModeloTalonarios{
                         CONCAT(
                         serie_proformas,
                         '-',
-                        REPEAT('0', 8- LENGTH(proformas + 1)),
+                        REPEAT('0', 7- LENGTH(proformas + 1)),
                         proformas + 1
                         ) AS numero
                     FROM
