@@ -1971,4 +1971,30 @@ class ModeloMateriaPrima{
 	} 
 
 
+	/* 
+	* MOSTRAR DATOS DE LA MATERIA PRIMA
+	*/
+	static public function mdlGlobalMaestra($valor){
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+						t.cod_argumento,
+						t.cod_tabla,
+						t.des_larga,
+						t.des_corta 
+					FROM
+						tabla_m_detalle t 
+					WHERE t.cod_tabla = :valor");
+
+		$stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    } 		
+
 }

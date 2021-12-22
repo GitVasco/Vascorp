@@ -1779,6 +1779,28 @@
 
                     </li>
 
+                    <li class="<?php if($_GET["ruta"] == "calendario") echo 'active';?>">
+
+                        <a href="calendario">
+
+                            <i class="fa fa-calendar"></i>
+                            <span>Calendaio</span>
+
+                        </a>
+
+                    </li>   
+                    
+                    <li class="<?php if($_GET["ruta"] == "mantenimiento") echo 'active';?>">
+
+                        <a href="mantenimiento">
+
+                            <i class="fa fa-wrench"></i>
+                            <span>Mantenimiento</span>
+
+                        </a>
+
+                    </li>                    
+
                 </ul>
 
             </li>            

@@ -1387,7 +1387,7 @@ $(".tablaAlm01Off").on("click", ".btnOffAlm01", function() {
 $(".tablaAlmacen01").on("click", ".btnagregarCuadrosProd", function () {
 
 	var codpro = $(this).attr("codpro");
-	console.log(codpro);
+	//console.log(codpro);
 
   	//window.location = "index.php?ruta=editar-tarjeta&idTarjeta=" + idTarjeta;
   

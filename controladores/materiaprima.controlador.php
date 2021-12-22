@@ -327,6 +327,17 @@ class ControladorMateriaPrima{
 		return $respuesta;
 
 	}
+
+	/* 
+	* VISUALIZAR DATOS DE LA TABLA DETALLE
+	*/
+	static public function ctrGlobalMaestra($valor){
+
+		$respuesta = ModeloMateriaPrima::mdlGlobalMaestra($valor);
+
+		return $respuesta;
+
+	}	
 	
 	/* 
 	*EDITAR COSTO DE MATERIA PRIMA

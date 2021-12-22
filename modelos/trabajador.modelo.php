@@ -170,6 +170,13 @@ class ModeloTrabajador{
 		cod_tra,
 		d.tipo_doc,
 		nro_doc_tra,
+		CONCAT(
+			nom_tra,
+			', ',
+			ape_pat_tra,
+			' ',
+			ape_mat_tra
+		) AS trabajador,
 		nom_tra,
 		ape_pat_tra,
 		ape_mat_tra,

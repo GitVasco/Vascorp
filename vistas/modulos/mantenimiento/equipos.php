@@ -26,7 +26,7 @@
 
             <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarEquipos">
             <i class="fa fa-plus-square"></i>
-                Agregar modelo
+                Agregar maquina
 
             </button>
 
@@ -40,7 +40,6 @@
 
                     <tr>
 
-                        <th>Cod. Global</th>
                         <th>Cod. Tip</th>
                         <th>Nombre Tipo</th>
                         <th>Descripcion</th>
@@ -48,13 +47,6 @@
                         <th>Marca Equipo</th>
                         <th>Modelo Equipo</th>
                         <th>Serie Equipo</th>
-                        <th>Tipo Motor</th>
-                        <th>Marca Motor</th>
-                        <th>Modelo Motor</th>
-                        <th>Serie Motor</th>
-                        <th>Marca Caja</th>
-                        <th>Modelo Caja</th>
-                        <th>Serie Caja</th>
                         <th>Estado</th>
                         <th style="width:100px">Acciones</th>
 
@@ -81,489 +73,777 @@ MODAL AGREGAR EQUIPOS
 ======================================-->
 <div id="modalAgregarEquipos" class="modal fade" role="dialog">
   
-  <div class="modal-dialog" style="width:50%">
+    <div class="modal-dialog" style="width:50%">
 
-    <div class="modal-content">
+        <div class="modal-content">
 
-      <form role="form" method="post" enctype="multipart/form-data">
+            <form role="form" method="post" enctype="multipart/form-data">
 
-        <!--=====================================
-        CABEZA DEL MODAL
-        ======================================-->
+            <!--=====================================
+            CABEZA DEL MODAL
+            ======================================-->
 
-        <div class="modal-header" style="background:#3c8dbc; color:white">
+            <div class="modal-header" style="background:#3c8dbc; color:white">
 
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title">Agregar Equipo</h4>
+                <h4 class="modal-title">Agregar Equipo</h4>
 
-        </div>
+            </div>
 
-        <?php 
-        date_default_timezone_set('America/Lima');
-        $fecha = new DateTime();
-        ?>
+            <?php 
+            date_default_timezone_set('America/Lima');
+            $fecha = new DateTime();
+            ?>
 
-        <!--=====================================
-        CUERPO DEL MODAL
-        ======================================-->
+            <!--=====================================
+            CUERPO DEL MODAL
+            ======================================-->
 
-        <div class="modal-body">
+            <div class="modal-body">
 
-            <div class="box-body">            
-                
-                <div class="form-group">
-
-                    <!-- ENTRADA PARA EL CÓDIGO GLOBAL -->
-                    <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">COD. GLOBAL</label>
-                    <div class="col-lg-2">
-
-                        <input type="text" class="form-control input-md"  name="nuevoCodGlobal"  id ="nuevoCodGlobal" readonly required>
-
-                    </div>
-
-                    <!-- ENTRADA PARA EL CÓDIGO TIPO -->
-                    <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">COD. TIPO</label>
-                    <div class="col-lg-2">
-
-                        <input type="text" class="form-control input-md"  name="nuevoCodTipo"  id ="nuevoCodTipo" readonly required>
-
-                    </div>
+                <div class="box-body">            
                     
-                    <!-- ENTRADA PARA EL TIPO -->
-                    <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">COD. TIPO</label>
-                    <div class="col-lg-6">
+                <label>DATOS DE LA MAQUINA</label>
+                    <div class="form-group">
 
-                        <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevaLinea" id="nuevaLinea" data-size="10" required>
+                        <!-- ENTRADA PARA EL CÓDIGO DEL TIPO DE MAQUINA -->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">TIPO MAQUINA</label>
+                        <div class="col-lg-4">
+
+                            <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevoTipMaq" id="nuevoTipMaq" data-size="10" required>
+                            
+                            <?php
+
+                                $valor = 'TDMV';
+                                $tmaq = ControladorMateriaPrima::ctrGlobalMaestra($valor);
+                                var_dump($tmaq);
+
+
+                                echo '<option value="">SELECCIONAR TIPO MAQUINA</option>';
+
+                                foreach ($tmaq as $key => $value) {
+
+                                    echo '<option value="'.$value["cod_argumento"].'">'.$value["cod_argumento"].' - '.$value["des_larga"].'</option>';
+
+                                }
+
+                            ?>
+                            </select>
+
+                        </div> 
+
+                        <!-- ENTRADA PARA EL CÓDIGO TIPO -->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">COD. TIPO</label>
+                        <div class="col-lg-2">
+
+                            <input type="text" class="form-control input-md"  name="nuevoCodTipo"  id ="nuevoCodTipo" readonly required>
+
+                        </div>           
+
+                    </div>
+
+                    <div class="col-lg-12"></div>
+                    
+                    <div class="form-group" style ="padding-top:25px">
+
+                        <!-- ENTRADA PARA LA DESCRIPCION -->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">DESCRIPCION</label>
+                        <div class="col-lg-4">
+
+                            <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="nuevaDescripcion"  id="nuevaDescripcion" placeholder="Ingresar descripción"  required>
+
+                        </div> 
+
+                        <!-- ENTRADA PARA LA UBICACION -->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">UBICACIÓN</label>
+                        <div class="col-lg-4">
+
+                            <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevaUbicacion" id="nuevaUbicacion" data-size="10" required>
+                            
+                            <?php
+
+                                $valor = 'TUBI';
+                                $tmaq = ControladorMateriaPrima::ctrGlobalMaestra($valor);
+                                var_dump($tmaq);
+
+
+                                echo '<option value="">SELECCIONAR UBICACIÓN</option>';
+
+                                foreach ($tmaq as $key => $value) {
+
+                                    echo '<option value="'.$value["cod_argumento"].'">'.$value["cod_argumento"].' - '.$value["des_larga"].'</option>';
+
+                                }
+
+                            ?>
+                            </select>
+
+                        </div>                     
+
+                    </div>
+
+                    <div class="col-lg-12"></div>
+
+                    <div class="form-group" style ="padding-top:25px">
+
+                        <!-- ENTRADA PARA LA MARCA DE MAQUINA -->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">MARCA MAQUINA</label>
+                        <div class="col-lg-4">
+
+                            <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevaMarcaMaq" id="nuevaMarcaMaq" data-size="10" required>
+                            
+                            <?php
+
+                                $valor = 'TMAR';
+                                $tmaq = ControladorMateriaPrima::ctrGlobalMaestra($valor);
+                                var_dump($tmaq);
+
+
+                                echo '<option value="">SELECCIONAR MARCA</option>';
+
+                                foreach ($tmaq as $key => $value) {
+
+                                    echo '<option value="'.$value["cod_argumento"].'">'.$value["cod_argumento"].' - '.$value["des_larga"].'</option>';
+
+                                }
+
+                            ?>
+                            </select>
+
+                        </div> 
                         
-                        <?php
+                        <!-- ENTRADA PARA modelo -->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">MODELO MAQUINA</label>
+                        <div class="col-lg-4">
 
-                            $lineas = ControladorMateriaPrima::ctrMostrarLineas();
+                            <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="nuevoModeloMaq"  id="nuevoModeloMaq" placeholder="Ingresar modelo de maquina"  required>
 
-                            echo '<option value="">SELECCIONAR LINEAS</option>';
+                        </div>                     
 
-                            foreach ($lineas as $key => $value) {
-
-                                echo '<option value="'.$value["Des_Corta"].'">'.$value["Des_Corta"].' - '.$value["Cod_Argumento"].' - '.$value["Des_Larga"].'</option>';
-
-                            }
-
-                        ?>
-                        </select>
-
-                    </div>                
-
-                </div>
-
-                <div class="col-lg-12"></div>
-
-                <!-- ENTRADA PARA LA LINEA -->
-                <div class="form-group" style ="padding-top:25px">
-
-                <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">DESCRIPCION</label>
-                <div class="col-lg-9">
-
-                    <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="nuevaDescripcion"  id="nuevaDescripcion" placeholder="Ingresar descripción"  required>
-
-                </div> 
-
-                </div>
-
-                <div class="col-lg-12"></div>         
-                
-                <div class="form-group" style ="padding-top:25px">                
-                
-                <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">LINEA</label>
-                <div class="col-lg-5">
-
-                    <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevaLinea" id="nuevaLinea" data-size="10" required>
+                    </div>  
                     
-                    <?php
+                    <div class="col-lg-12"></div>
 
-                        $lineas = ControladorMateriaPrima::ctrMostrarLineas();
+                    <div class="form-group" style ="padding-top:25px">
 
-                        echo '<option value="">SELECCIONAR LINEAS</option>';
+                        <!-- ENTRADA PARA LA SERIE -->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">SERIE MAQUINA</label>
+                        <div class="col-lg-4">
 
-                        foreach ($lineas as $key => $value) {
+                            <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="nuevaSerieMaq"  id="nuevaSerieMaq" placeholder="Ingresar serie de maquina"  required>
 
-                            echo '<option value="'.$value["Des_Corta"].'">'.$value["Des_Corta"].' - '.$value["Cod_Argumento"].' - '.$value["Des_Larga"].'</option>';
+                        </div>                     
 
-                        }
+                    </div>                  
 
-                    ?>
-                    </select>
-
-                </div>
-
-                </div>
-
-                <!-- ENTRADA PARA LA SUB LINEA -->
-                <div class="form-group" style ="padding-top:25px">
-                
-                <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">SUB LINEA</label>
-                <div class="col-lg-5">
-
-                    <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevaSubLinea" id="nuevaSubLinea" data-size="10" required>
-                    <option value="">SELECCIONAR SUBLINEAS</option>
+                    <div class="col-lg-12"></div>     
                     
-                    </select>
+                    <label style ="padding-top:15px">DATOS DEL MOTOR</label>
+                    <div class="form-group">
 
-                </div>
+                        <!-- ENTRADA PARA TIPO MOTOR-->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">TIPO MOTOR</label>
+                        <div class="col-lg-4">
 
-                </div>
+                            <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="nuevoTipoMotor"  id="nuevoTipoMotor" placeholder="Ingresar tipo motor">
 
-                <!-- ENTRADA PARA EL COLOR -->
-                <div class="form-group" style ="padding-top:25px">
-                
-                <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">COLOR</label>
-                <div class="col-lg-5">
+                        </div>   
+                        
+                        <!-- ENTRADA PARA LA MARCA DE MOTOR -->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">MARCA MOTOR</label>
+                        <div class="col-lg-4">
 
-                    <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevoColorMateria" id="nuevoColorMateria" data-size="10" required>
+                            <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevaMarcaMotor" id="nuevaMarcaMotor" data-size="10">
+                            
+                            <?php
+
+                                $valor = 'TMAR';
+                                $tmaq = ControladorMateriaPrima::ctrGlobalMaestra($valor);
+                                var_dump($tmaq);
+
+
+                                echo '<option value="">SELECCIONAR UBICACIÓN</option>';
+
+                                foreach ($tmaq as $key => $value) {
+
+                                    echo '<option value="'.$value["cod_argumento"].'">'.$value["cod_argumento"].' - '.$value["des_larga"].'</option>';
+
+                                }
+
+                            ?>
+                            </select>
+
+                        </div>                     
+
+                    </div>               
                     
-                    <?php
-
-                        $colores = ControladorMateriaPrima::ctrMostrarColores();
-
-                        echo '<option value="">SELECCIONAR COLOR</option>';
-
-                        foreach ($colores as $key => $value) {
-
-                            echo '<option value="'.$value["Cod_Argumento"].'">'.$value["Cod_Argumento"].' - '.$value["Des_Larga"].'</option>';
-
-                        }
-
-                    ?>
-                    </select>
-
-                </div>
-
-                </div>
-
-                <!-- ENTRADA PARA LA TALLA -->
-                <div class="form-group" style ="padding-top:25px">
-                
-                <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">TALLA</label>
-                <div class="col-lg-5">
-
-                    <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevaTallaMateria" id="nuevaTallaMateria" data-size="10" required>
+                    <div class="col-lg-12"></div>     
                     
-                    <?php
+                    <div class="form-group" style ="padding-top:25px">
 
-                        $tallas = ControladorMateriaPrima::ctrMostrarTallas();
+                        <!-- ENTRADA PARA MODELO MOTOR-->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">MODELO MOTOR</label>
+                        <div class="col-lg-4">
 
-                        echo '<option value="">SELECCIONAR TALLA</option>';
+                            <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="nuevoModeloMotor"  id="nuevoModeloMotor" placeholder="Ingresar modelo motor">
 
-                        foreach ($tallas as $key => $value) {
+                        </div>   
+                        
+                        <!-- ENTRADA PARA SERIE MOTOR-->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">SERIE MOTOR</label>
+                        <div class="col-lg-4">
 
-                            echo '<option value="'.$value["Cod_Argumento"].'">'.$value["Cod_Argumento"].' - '.$value["Des_Larga"].'</option>';
+                            <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="nuevoSerieMotor"  id="nuevoSerieMotor" placeholder="Ingresar serie motor">
 
-                        }
+                        </div>                      
 
-                    ?>
-                    </select>
+                    </div> 
 
-                </div>
-
-                </div>
-
-                <div class="col-lg-12"></div>
-
-                <!-- ENTRADA PARA LA DESCRIPCION -->
-                <div class="form-group" style="padding-top:25px">
-
-                
-                <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">DESCRIPCION</label>
-                <div class="col-lg-11">
-
-                    <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="nuevaDescripcion"  id="nuevaDescripcionMat" placeholder="Ingresar descripción"  required>
-
-                </div>
-
-                </div>
-
-                <!-- ENTRADA PARA LA UND. MEDIDA -->
-                <div class="form-group" style ="padding-top:25px">
-                
-                <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">UNID. MEDIDA</label>
-                <div class="col-lg-2">
-
-                    <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevaUnidadMedida" data-size="10" required>
+                    <div class="col-lg-12"></div>     
                     
-                    <?php
-                        $item = null;
-                        $valor = null;
+                    <label style ="padding-top:15px">DATOS DE LA CAJA</label>
+                    <div class="form-group">
 
-                        $bancos = ControladorMateriaPrima::ctrMostrarUndMedida();
+                        <!-- ENTRADA PARA LA MARCA DE CAJA -->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">MARCA CAJA</label>
+                        <div class="col-lg-4">
 
-                        echo '<option value="">SELECCIONAR UNID MEDIDA</option>';
+                            <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevaMarcaCaja" id="nuevaMarcaCaja" data-size="10">
+                            
+                            <?php
 
-                        foreach ($bancos as $key => $value) {
+                                $valor = 'TMAR';
+                                $tmaq = ControladorMateriaPrima::ctrGlobalMaestra($valor);
+                                var_dump($tmaq);
 
-                            echo '<option value="'.$value["Cod_Argumento"].'">'.$value["Cod_Argumento"].' - '.$value["Des_Larga"].' - '.$value["Des_Corta"].'</option>';
 
-                        }
+                                echo '<option value="">SELECCIONAR MARCA CAJA</option>';
 
-                    ?>
-                    </select>
+                                foreach ($tmaq as $key => $value) {
 
-                </div>
+                                    echo '<option value="'.$value["cod_argumento"].'">'.$value["cod_argumento"].' - '.$value["des_larga"].'</option>';
 
-                </div>
-                
-                <div class="col-lg-12"></div>
+                                }
 
-                <div class="form-group" style="padding-top:25px">
+                            ?>
+                            </select>
 
-                <!-- ENTRADA PARA EL CÓDIGO FABRICA -->
-                <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">PESO</label>
-                <div class="col-lg-2">
+                        </div>        
+                        
+                        <!-- ENTRADA PARA MODELO CAJA-->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">MODELO CAJA</label>
+                        <div class="col-lg-4">
 
-                    <input type="number" min = "0" step="any"  class="form-control input-md"  name="nuevoPeso"   value="0.00" >
+                            <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="nuevoModeloCaja"  id="nuevoModeloCaja" placeholder="Ingresar modelo caja">
 
-                </div>
-                <!-- ENTRADA PARA EL CÓDIGO ALTERNO-->
-                <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">%AD VAL</label>
-                <div class="col-lg-2">
-                
-                    <input type="number" min = "0" step="any" class="form-control input-md"  name="nuevoAdVal"  value="0.00"  >
-                </div>
+                        </div>                      
 
-                <!-- ENTRADA PARA LA FECHA DE EMISION -->
-                <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">%SEGURO</label>
-                <div class="col-lg-2">
-                
-                    <input type="number" min = "0" step="any" class="form-control input-md" name="nuevoSeguro" value="0.00"  >
-
-                </div>
-
-                </div>
-
-                <div class="col-lg-12"></div>
-
-                <div class="form-group" style="padding-top:25px">
-
-                <!-- ENTRADA PARA EL CÓDIGO FABRICA -->
-                <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">STK ACTUAL</label>
-                <div class="col-lg-2">
-
-                    <input type="number" min = "0" step="any"  class="form-control input-md"  name="nuevoStockActual"   value="0.00"  readonly>
-
-                </div>
-                <!-- ENTRADA PARA EL CÓDIGO ALTERNO-->
-                <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">STK MIN</label>
-                <div class="col-lg-2">
-                
-                    <input type="number" min = "0" step="any" class="form-control input-md"  name="nuevoStockMinimo"  value="0.00"  >
-                </div>
-
-                <!-- ENTRADA PARA LA FECHA DE EMISION -->
-                <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">STK MAX.</label>
-                <div class="col-lg-2">
-                
-                    <input type="number" min = "0" step="any" class="form-control input-md" name="nuevoStockMaximo" value="0.00"  >
-
-                </div>
-
-                </div>
-                <div class="col-lg-12"></div>
-                <label for="" style="padding-top:25px">PROVEEDORES X LISTA DE PRECIO</label>
-
-                <div class="form-group" style="padding-top:25px">
-
-                <!-- ENTRADA PARA EL CÓDIGO FABRICA -->
-                <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">PROVEEDOR</label>
-                <div class="col-lg-5">
-
-                    <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevoProveedor" id="nuevoProveedor" data-size="10">
+                    </div>               
                     
-                    <?php
-                        $item = null;
-                        $valor = null;
-
-                        $proveedores = ControladorProveedores::ctrMostrarProveedores($item, $valor);
-
-                        echo '<option value="">SELECCIONAR PROVEEDOR</option>';
-
-                        foreach ($proveedores as $key => $value) {
-
-                            echo '<option value="'.$value["CodRuc"].'">'.$value["CodRuc"].' - '.$value["RazPro"].'</option>';
-
-                        }
-
-                    ?>
-                    </select>
-
-                </div>
-                <!-- ENTRADA PARA EL CÓDIGO ALTERNO-->
-                <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">MONEDA</label>
-                <div class="col-lg-2">
-                
-                    <input type="text" class="form-control input-md"  name="nuevaMoneda"  id="nuevaMoneda" readonly >
-                </div>
-
-                <!-- ENTRADA PARA LA FECHA DE EMISION -->
-                <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">P S/IGV</label>
-                <div class="col-lg-2">
-                
-                    <input type="number" min = "0" step="any" class="form-control input-md" name="nuevoPrecioSIGV"  >
-
-                </div>
-
-                </div>
-
-
-                <div class="form-group" style="padding-top:25px">
-
-                <!-- ENTRADA PARA EL CÓDIGO FABRICA -->
-                <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">PROVEEDOR</label>
-                <div class="col-lg-5">
-
-                    <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevoProveedor1" id="nuevoProveedor1" data-size="10">
+                    <div class="col-lg-12"></div>     
                     
-                    <?php
-                        $item = null;
-                        $valor = null;
+                    <div class="form-group" style="padding-top:25px">
 
-                        $proveedores = ControladorProveedores::ctrMostrarProveedores($item, $valor);
+                        <!-- ENTRADA PARA SERIE CAJA-->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">SERIE CAJA</label>
+                        <div class="col-lg-4">
 
-                        echo '<option value="">SELECCIONAR PROVEEDOR</option>';
+                            <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="nuevaSerieCaja"  id="nuevaSerieCaja" placeholder="Ingresar serie caja">
 
-                        foreach ($proveedores as $key => $value) {
+                        </div>   
 
-                            echo '<option value="'.$value["CodRuc"].'">'.$value["CodRuc"].' - '.$value["RazPro"].'</option>';
-
-                        }
-
-                    ?>
-                    </select>
-
-                </div>
-                <!-- ENTRADA PARA EL CÓDIGO ALTERNO-->
-                <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">MONEDA</label>
-                <div class="col-lg-2">
-                
-                    <input type="text" class="form-control input-md"  name="nuevaMoneda1" id="nuevaMoneda1"  readonly >
-                </div>
-
-                <!-- ENTRADA PARA LA FECHA DE EMISION -->
-                <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">P S/IGV</label>
-                <div class="col-lg-2">
-                
-                    <input type="number" min = "0" step="any" class="form-control input-md" name="nuevoPrecioSIGV1"  >
-
-                </div>
-
-                </div>
-
-                <div class="form-group" style="padding-top:25px">
-
-                <!-- ENTRADA PARA EL CÓDIGO FABRICA -->
-                <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">PROVEEDOR</label>
-                <div class="col-lg-5">
-
-                    <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevoProveedor2" id="nuevoProveedor2" data-size="10">
+                    </div>  
                     
-                    <?php
-                        $item = null;
-                        $valor = null;
+                    <div class="col-lg-12"></div>     
+                    
+                    <label style="padding-top:15px">DETALLES</label>  
 
-                        $proveedores = ControladorProveedores::ctrMostrarProveedores($item, $valor);
+                    <div class="form-group"> 
 
-                        echo '<option value="">SELECCIONAR PROVEEDOR</option>';
+                        <!-- ENTRADA PARA FACTURA-->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">DOCUMENTO</label>
+                        <div class="col-lg-2">
 
-                        foreach ($proveedores as $key => $value) {
+                            <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="nuevoDocumento"  id="nuevoDocumento">   
 
-                            echo '<option value="'.$value["CodRuc"].'">'.$value["CodRuc"].' - '.$value["RazPro"].'</option>';
+                        </div>   
 
-                        }
+                        <!-- ENTRADA PARA RUC-->
+                        <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">RUC</label>
+                        <div class="col-lg-2">
 
-                    ?>
-                    </select>
+                            <input type="number" class="form-control input-md" style="text-transform:uppercase;" name="nuevoRuc"  id="nuevoRuc">   
 
-                </div>
-                <!-- ENTRADA PARA EL CÓDIGO ALTERNO-->
-                <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">MONEDA</label>
-                <div class="col-lg-2">
-                
-                    <input type="text" class="form-control input-md"  name="nuevaMoneda2" id="nuevaMoneda2"   readonly >
-                </div>
+                        </div>                          
 
-                <!-- ENTRADA PARA LA FECHA DE EMISION -->
-                <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3 ">P S/IGV</label>
-                <div class="col-lg-2">
-                
-                    <input type="number" min = "0" step="any" class="form-control input-md" name="nuevoPrecioSIGV2"  >
+                        <!-- ENTRADA PARA EMISION FACTURA-->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">Fecha Emisión</label>
+                        <div class="col-lg-3">
 
-                </div>
+                            <input type="date" class="form-control input-md" style="text-transform:uppercase;" name="nuevoFecEmision"  id="nuevoFecEmision">
 
-                </div>
+                        </div> 
 
-                <div class="col-lg-12"></div>
+                    </div>                      
+                    
+                    <div class="form-group" style="padding-top:25px">
 
-                <!-- ENTRADA PARA LA OBSERVACION DE PROVEEDOR 1 -->
-                <div class="form-group" style="padding-top:25px">
+                        <!-- ENTRADA PARA ESTADO-->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">ESTADO</label>
+                        <div class="col-lg-4">
 
-                <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">OBSERVACION PROV 1</label>
-                <div class="col-lg-10">
+                            <select  class="form-control input-md selectpicker" data-live-search="true" name="nuevoEstado" id="nuevoEstado" data-size="10" required>
 
-                    <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="nuevaObservacion1" placeholder="Ingresar observación de proveedor 1"  >
+                                <option value="">SELECCIONAR</option>
+                                <option value="Operativo">Operativo</option>
+                                <option value="Inoperativo">Inoperativo</option>
+                                <option value="Sin Usar">Sin Usar</option>
 
-                </div>
+                            </select>
 
-                </div>
+                        </div>   
 
-                <!-- ENTRADA PARA LA OBSERVACION DE PROVEEDOR 2 -->
-                <div class="form-group" style="padding-top:25px">
+                        <!-- ENTRADA PARA OBSERVACIÓN-->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">OBSERVACIÓN</label>
+                        <div class="col-lg-4">
 
-                <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">OBSERVACION PROV 2</label>
-                <div class="col-lg-10">
+                            <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="nuevaObservacion"  id="nuevaObservacion" placeholder="Ingresar observaciones">
 
-                    <input type="text" class="form-control input-md" style="text-transform:uppercase;"  name="nuevaObservacion2" placeholder="Ingresar observación de proveedor 2"  >
+                        </div>  
+                        
+                    </div> 
 
-                </div>
+                    <div class="col-lg-12"></div>
 
-                </div>
+                    <div class="form-group" style="padding-top:25px">
 
-                <!-- ENTRADA PARA LA OBSERVACION DE PROVEEDOR 3 -->
-                <div class="form-group" style="padding-top:25px">
+                        <!-- ENTRADA PARA ULTIMO MANTE-->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">ÚLT. MANTE.</label>
+                        <div class="col-lg-4">
 
-                <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">OBSERVACION PROV 3</label>
-                <div class="col-lg-10">
+                            <input type="date" class="form-control input-md" style="text-transform:uppercase;" name="nuevoUltimoMantenimiento"  id="nuevoUltimoMantenimiento">
 
-                    <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="nuevaObservacion3" placeholder="Ingresar observación de proveedor 3"  >
+                        </div>   
 
-                </div>
+                        <!-- ENTRADA PARA MANTENIMIENTO PROGRAMADO-->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">PROG. MANTE.</label>
+                        <div class="col-lg-4">
+
+                            <input type="date" class="form-control input-md" style="text-transform:uppercase;" name="nuevoProgMantenimiento"  id="nuevoProgMantenimiento">
+
+                        </div>                         
+
+                    </div>                      
 
                 </div>
 
             </div>
 
+            <!--=====================================
+            PIE DEL MODAL
+            ======================================-->
+
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+                <button type="submit" class="btn btn-primary">Guardar maquina</button>
+
+            </div>
+
+            </form>
+
+            <?php
+
+            $crearMaquina = new ControladorMantenimiento();
+            $crearMaquina -> ctrCrearMaquina();
+
+            ?>    
+
         </div>
-
-        <!--=====================================
-        PIE DEL MODAL
-        ======================================-->
-
-        <div class="modal-footer">
-
-          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
-
-          <button type="submit" class="btn btn-primary">Guardar materia prima</button>
-
-        </div>
-
-      </form>
-
-      <?php
-
-      $guardarMateriaPrima = new ControladorMateriaPrima();
-      $guardarMateriaPrima -> ctrCrearMateriaPrima();
-
-      ?>    
 
     </div>
 
-  </div>
+</div>
+
+<!--=====================================
+MODAL EDITAR EQUIPOS
+======================================-->
+<div id="modalEditarEquipos" class="modal fade" role="dialog">
+  
+    <div class="modal-dialog" style="width:50%">
+
+        <div class="modal-content">
+
+            <form role="form" method="post" enctype="multipart/form-data">
+
+            <!--=====================================
+            CABEZA DEL MODAL
+            ======================================-->
+
+            <div class="modal-header" style="background:#3c8dbc; color:white">
+
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                <h4 class="modal-title">Editar Equipo</h4>
+
+            </div>
+
+            <!--=====================================
+            CUERPO DEL MODAL
+            ======================================-->
+
+            <div class="modal-body">
+
+                <div class="box-body">            
+                    
+                <label>DATOS DE LA MAQUINA</label>
+                    <div class="form-group">
+
+                        <!-- ENTRADA PARA EL CÓDIGO DEL TIPO DE MAQUINA -->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">TIPO MAQUINA</label>
+                        <div class="col-lg-4">
+
+                            <input type="text" class="form-control input-md"  name="editarTipMaq"  id ="editarTipMaq" readonly required>
+
+                        </div> 
+
+                        <!-- ENTRADA PARA EL CÓDIGO TIPO -->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">COD. TIPO</label>
+                        <div class="col-lg-2">
+
+                            <input type="text" class="form-control input-md"  name="editarCodTipo"  id="editarCodTipo" readonly required>
+
+                            <input type="hidden" class="form-control input-md"  name="editarIdEquipo"  id="editarIdEquipo" readonly required>
+
+                        </div>           
+
+                    </div>
+
+                    <div class="col-lg-12"></div>
+                    
+                    <div class="form-group" style ="padding-top:25px">
+
+                        <!-- ENTRADA PARA LA DESCRIPCION -->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">DESCRIPCION</label>
+                        <div class="col-lg-4">
+
+                            <input type="text" class="form-control input-md" name="editarDescripcion"  id="editarDescripcion" required>
+
+                        </div> 
+
+                        <!-- ENTRADA PARA LA UBICACION -->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">UBICACIÓN</label>
+                        <div class="col-lg-4">
+
+                            <select  class="form-control input-md selectpicker" data-live-search="true" name="editarUbicacion" id="editarUbicacion" data-size="10" required>
+                            
+                            <?php
+
+                                $valor = 'TUBI';
+                                $tmaq = ControladorMateriaPrima::ctrGlobalMaestra($valor);
+                                var_dump($tmaq);
+
+
+                                echo '<option value="">SELECCIONAR UBICACIÓN</option>';
+
+                                foreach ($tmaq as $key => $value) {
+
+                                    echo '<option value="'.$value["cod_argumento"].'">'.$value["cod_argumento"].' - '.$value["des_larga"].'</option>';
+
+                                }
+
+                            ?>
+                            </select>
+
+                        </div>                     
+
+                    </div>
+
+                    <div class="col-lg-12"></div>
+
+                    <div class="form-group" style ="padding-top:25px">
+
+                        <!-- ENTRADA PARA LA MARCA DE MAQUINA -->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">MARCA MAQUINA</label>
+                        <div class="col-lg-4">
+
+                            <select  class="form-control input-md selectpicker" data-live-search="true" name="editarMarcaMaq" id="editarMarcaMaq" data-size="10" required>
+                            
+                            <?php
+
+                                $valor = 'TMAR';
+                                $tmaq = ControladorMateriaPrima::ctrGlobalMaestra($valor);
+                                var_dump($tmaq);
+
+
+                                echo '<option value="">SELECCIONAR MARCA</option>';
+
+                                foreach ($tmaq as $key => $value) {
+
+                                    echo '<option value="'.$value["cod_argumento"].'">'.$value["cod_argumento"].' - '.$value["des_larga"].'</option>';
+
+                                }
+
+                            ?>
+                            </select>
+
+                        </div> 
+                        
+                        <!-- ENTRADA PARA modelo -->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">MODELO MAQUINA</label>
+                        <div class="col-lg-4">
+
+                            <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="editarModeloMaq"  id="editarModeloMaq" placeholder="Ingresar modelo de maquina"  required>
+
+                        </div>                     
+
+                    </div>  
+                    
+                    <div class="col-lg-12"></div>
+
+                    <div class="form-group" style ="padding-top:25px">
+
+                        <!-- ENTRADA PARA LA SERIE -->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">SERIE MAQUINA</label>
+                        <div class="col-lg-4">
+
+                            <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="editarSerieMaq"  id="editarSerieMaq" placeholder="Ingresar serie de maquina"  required>
+
+                        </div>                     
+
+                    </div>                  
+
+                    <div class="col-lg-12"></div>     
+                    
+                    <label style ="padding-top:15px">DATOS DEL MOTOR</label>
+                    <div class="form-group">
+
+                        <!-- ENTRADA PARA TIPO MOTOR-->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">TIPO MOTOR</label>
+                        <div class="col-lg-4">
+
+                            <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="editarTipoMotor"  id="editarTipoMotor" placeholder="Ingresar tipo motor">
+
+                        </div>   
+                        
+                        <!-- ENTRADA PARA LA MARCA DE MOTOR -->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">MARCA MOTOR</label>
+                        <div class="col-lg-4">
+
+                            <select  class="form-control input-md selectpicker" data-live-search="true" name="editarMarcaMotor" id="editarMarcaMotor" data-size="10">
+                            
+                            <?php
+
+                                $valor = 'TMAR';
+                                $tmaq = ControladorMateriaPrima::ctrGlobalMaestra($valor);
+                                var_dump($tmaq);
+
+
+                                echo '<option value="">SELECCIONAR UBICACIÓN</option>';
+
+                                foreach ($tmaq as $key => $value) {
+
+                                    echo '<option value="'.$value["cod_argumento"].'">'.$value["cod_argumento"].' - '.$value["des_larga"].'</option>';
+
+                                }
+
+                            ?>
+                            </select>
+
+                        </div>                     
+
+                    </div>               
+                    
+                    <div class="col-lg-12"></div>     
+                    
+                    <div class="form-group" style ="padding-top:25px">
+
+                        <!-- ENTRADA PARA MODELO MOTOR-->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">MODELO MOTOR</label>
+                        <div class="col-lg-4">
+
+                            <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="editarModeloMotor"  id="editarModeloMotor" placeholder="Ingresar modelo motor">
+
+                        </div>   
+                        
+                        <!-- ENTRADA PARA SERIE MOTOR-->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">SERIE MOTOR</label>
+                        <div class="col-lg-4">
+
+                            <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="editarSerieMotor"  id="editarSerieMotor" placeholder="Ingresar serie motor">
+
+                        </div>                      
+
+                    </div> 
+
+                    <div class="col-lg-12"></div>     
+                    
+                    <label style ="padding-top:15px">DATOS DE LA CAJA</label>
+                    <div class="form-group">
+
+                        <!-- ENTRADA PARA LA MARCA DE CAJA -->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">MARCA CAJA</label>
+                        <div class="col-lg-4">
+
+                            <select  class="form-control input-md selectpicker" data-live-search="true" name="editarMarcaCaja" id="editarMarcaCaja" data-size="10">
+                            
+                            <?php
+
+                                $valor = 'TMAR';
+                                $tmaq = ControladorMateriaPrima::ctrGlobalMaestra($valor);
+                                var_dump($tmaq);
+
+
+                                echo '<option value="">SELECCIONAR MARCA CAJA</option>';
+
+                                foreach ($tmaq as $key => $value) {
+
+                                    echo '<option value="'.$value["cod_argumento"].'">'.$value["cod_argumento"].' - '.$value["des_larga"].'</option>';
+
+                                }
+
+                            ?>
+                            </select>
+
+                        </div>        
+                        
+                        <!-- ENTRADA PARA MODELO CAJA-->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">MODELO CAJA</label>
+                        <div class="col-lg-4">
+
+                            <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="editarModeloCaja"  id="editarModeloCaja" placeholder="Ingresar modelo caja">
+
+                        </div>                      
+
+                    </div>               
+                    
+                    <div class="col-lg-12"></div>     
+                    
+                    <div class="form-group" style="padding-top:25px">
+
+                        <!-- ENTRADA PARA SERIE CAJA-->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">SERIE CAJA</label>
+                        <div class="col-lg-4">
+
+                            <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="editarSerieCaja"  id="editarSerieCaja" placeholder="Ingresar serie caja">
+
+                        </div>   
+
+                    </div>  
+                    
+                    <div class="col-lg-12"></div>     
+                    
+                    <label style ="padding-top:15px">DETALLES</label>  
+                    
+                    <div class="form-group" > 
+
+                        <!-- ENTRADA PARA FACTURA-->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">DOCUMENTO</label>
+                        <div class="col-lg-2">
+
+                            <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="editarDocumento"  id="editarDocumento">   
+
+                        </div>   
+
+                        <!-- ENTRADA PARA RUC-->
+                        <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">RUC</label>
+                        <div class="col-lg-2">
+
+                            <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="editarRuc"  id="editarRuc">   
+
+                        </div>                          
+
+                        <!-- ENTRADA PARA EMISION FACTURA-->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">Fecha Emisión</label>
+                        <div class="col-lg-3">
+
+                            <input type="date" class="form-control input-md" style="text-transform:uppercase;" name="editarFecEmision"  id="editarFecEmision">
+
+                        </div> 
+
+                    </div>  
+                        
+                    <div class="col-lg-12"></div>
+
+                    <div class="form-group" style="padding-top:25px">
+
+                        <!-- ENTRADA PARA ULTIMO MANTE-->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">ÚLT. MANTE.</label>
+                        <div class="col-lg-4">
+
+                            <input type="date" class="form-control input-md" style="text-transform:uppercase;" name="editarUltimoMantenimiento"  id="editarUltimoMantenimiento">
+
+                        </div>   
+
+                        <!-- ENTRADA PARA MANTENIMIENTO PROGRAMADO-->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">PROG. MANTE.</label>
+                        <div class="col-lg-4">
+
+                            <input type="date" class="form-control input-md" style="text-transform:uppercase;" name="editarProgMantenimiento"  id="editarProgMantenimiento">
+
+                        </div>                         
+
+                    </div>    
+                    
+                    <div class="col-lg-12"></div>  
+
+                    <div class="form-group" style="padding-top:25px">                     
+
+                        <!-- ENTRADA PARA ESTADO-->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">ESTADO</label>
+                        <div class="col-lg-2">
+
+                            <select  class="form-control input-md selectpicker" data-live-search="true" name="editarEstado" id="editarEstado" data-size="10" required>
+
+                                <option value="">SELECCIONAR</option>
+                                <option value="Operativo">Operativo</option>
+                                <option value="Inoperativo">Inoperativo</option>
+                                <option value="Sin Usar">Sin Usar</option>
+
+                            </select>
+
+                        </div>   
+
+                        <!-- ENTRADA PARA OBSERVACIÓN-->
+                        <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">OBSERVACIÓN</label>
+                        <div class="col-lg-6">
+
+                            <input type="text" class="form-control input-md" style="text-transform:uppercase;" name="editarObservacion"  id="editarObservacion" placeholder="Ingresar observaciones">
+
+                        </div>  
+                    
+                    </div>  
+
+                </div>
+
+            </div>
+
+            <!--=====================================
+            PIE DEL MODAL
+            ======================================-->
+
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+                <button type="submit" class="btn btn-primary">Editar maquina</button>
+
+            </div>
+
+            </form>
+
+            <?php
+
+            $editarMaquina = new ControladorMantenimiento();
+            $editarMaquina -> ctrEditarMaquina();
+
+            ?>    
+
+        </div>
+
+    </div>
 
 </div>
 

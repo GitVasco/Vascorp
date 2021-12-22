@@ -65,6 +65,10 @@
   <!-- Toastr -->
   <link rel="stylesheet" href="vistas/bower_components/toastr/toastr.min.css">
 
+  <!-- fullCalendar -->
+  <link rel="stylesheet" href="vistas/bower_components/fullcalendar/dist/fullcalendar.min.css">
+  <link rel="stylesheet" href="vistas/bower_components/fullcalendar/dist/fullcalendar.print.min.css" media="print">  
+
   <!--=====================================
   PLUGINS DE JAVASCRIPT
   ======================================-->
@@ -131,6 +135,11 @@
   <script src="vistas/bower_components/moment/locale/es.js"></script>
 
   <script src="vistas/bower_components/toastr/toastr.min.js"></script>
+
+<!-- fullCalendar -->
+  <script src="vistas/bower_components/moment/moment.js"></script>
+  <script src="vistas/bower_components/fullcalendar/dist/fullcalendar.min.js"></script>  
+ 
 
   <style>
     .table thead, .table tfoot{
@@ -399,7 +408,9 @@ CUERPO DOCUMENTO
 
               include "modulos/costos/".$_GET["ruta"].".php";
 
-        }else if( $_GET["ruta"] == "equipos") {
+        }else if( $_GET["ruta"] == "equipos" ||
+                  $_GET["ruta"] == "calendario" ||
+                  $_GET["ruta"] == "mantenimiento") {
 
               include "modulos/mantenimiento/".$_GET["ruta"].".php";
 

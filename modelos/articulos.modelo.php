@@ -689,7 +689,7 @@ class ModeloArticulos
 			detalle_temporal t 
 		  WHERE codigo = :pedido) AS t 
 		  ON a.articulo = t.articulo 
-	  WHERE a.modelo = :modelo 
+	  WHERE a.modelo LIKE '%$modelo%' 
 		AND a.estado = 'activo' 
 	  GROUP BY a.modelo,
 		a.cod_color,
@@ -824,7 +824,7 @@ class ModeloArticulos
 			) AS v8 
 		  FROM
 			articulojf a 
-		  WHERE a.modelo = :modelo
+		  WHERE a.modelo LIKE '%$modelo%'
 			AND a.estado = 'activo' 
 		  GROUP BY a.modelo,
 			a.cod_color,
@@ -895,7 +895,9 @@ class ModeloArticulos
 											modelo,
 											$lista as precio
 										FROM
-											preciojf where modelo='$modelo' ");
+											preciojf where modelo like '%$modelo%' ");
+
+		$stmt->bindParam(":modelo", $modelo, PDO::PARAM_STR);											
 
 		$stmt->execute();
 

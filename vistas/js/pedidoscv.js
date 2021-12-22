@@ -1290,7 +1290,7 @@ $(".modificarArtPedB").click(function () {
     //var mod = $(this).attr("modelo");
     //console.log(mod);
 
-    $("#modeloModalA").val(mod);
+    //$("#modeloModalA").val(mod);
 
     //var datos = new FormData();
     datos.append("mod", mod);
@@ -1309,7 +1309,11 @@ $(".modificarArtPedB").click(function () {
 
             //console.log("respuesta",respuestaLista["precio"]);
 
+            $("#modeloModalA").val(respuestaLista["modelo"]);
+
             $("#precioA").val(respuestaLista["precio"]);
+
+            
 
 		}
 
@@ -1318,9 +1322,9 @@ $(".modificarArtPedB").click(function () {
     /*
     * datos para la tabla
     */
-
+    //var modelo = respuestaLista["modelo"];
     var modelo = document.getElementById("modelo").value; 
-    // console.log(modelo);
+    console.log(modelo);
 
 	var datosPedido = new FormData();
 	datosPedido.append("modeloA", modelo);
