@@ -69,6 +69,28 @@ class AjaxMantenimiento{
 
 		echo json_encode($respuesta);
 
+	}
+	
+	//*EDITAR MANTENIMIENTO DETALLE
+	public function ajaxEditarDetalleMantenimiento(){
+
+		$valor = $this->idDetMante;
+
+		$respuesta = ControladorMantenimiento::ctrMostrarMantenimientoDetalleEditar($valor);
+
+		echo json_encode($respuesta);
+
+	}	
+
+	//*TRAER CALENDARIO
+	public function ajaxTraerCalendario(){
+
+		$valor = $this->idCalendario;
+
+		$respuesta = ControladorMantenimiento::ctrTraerCalendario($valor);
+
+		echo json_encode($respuesta);
+
 	}	
 
 }
@@ -117,5 +139,23 @@ if(isset($_POST["idMantenimiento"])){
 	$editarMantenimiento = new AjaxMantenimiento();
 	$editarMantenimiento -> idMantenimiento = $_POST["idMantenimiento"];
 	$editarMantenimiento -> ajaxEditarMantenimiento();
+
+}
+
+//*EDITAR MANTENIMIENTO DETALLE
+if(isset($_POST["idDetMante"])){
+
+	$editarDetMantenimiento = new AjaxMantenimiento();
+	$editarDetMantenimiento -> idDetMante = $_POST["idDetMante"];
+	$editarDetMantenimiento -> ajaxEditarDetalleMantenimiento();
+
+}
+
+//*TRAER CALENDARIO
+if(isset($_POST["idCalendario"])){
+
+	$editarDetMantenimiento = new AjaxMantenimiento();
+	$editarDetMantenimiento -> idCalendario = $_POST["idCalendario"];
+	$editarDetMantenimiento -> ajaxTraerCalendario();
 
 }

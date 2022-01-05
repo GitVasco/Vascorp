@@ -93,6 +93,10 @@ class AjaxCuentas{
       public function ajaxCrearCuentaNota(){
         $valor = $this->datosCuenta;
         $datos = json_decode($valor);
+
+        $usureg = $_SESSION["nombre"];
+        $pcreg= gethostbyaddr($_SERVER['REMOTE_ADDR']);  
+
         foreach ($datos->{"datosCuenta"} as  $value) {
           $doc = $value->{"tipo_doc"};
           $cta = $value->{"num_cta"};
@@ -125,7 +129,9 @@ class AjaxCuentas{
                                   "protesta"=>$prot,
                                   "usuario"=>$user,
                                   "saldo"=>$saldo,
-                                  "tip_mov" => $mov);
+                                  "tip_mov" => $mov,
+                                  "usureg" => $usureg,
+                                  "pcreg" => $pcreg);
           
           $respuesta = ModeloCuentas::mdlIngresarCuenta("cuenta_ctejf",$arregloCuenta);
         }

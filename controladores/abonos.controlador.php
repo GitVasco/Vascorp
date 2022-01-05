@@ -217,6 +217,10 @@ class ControladorAbonos{
 
 			$tabla="cuenta_ctejf";
 			$tabla2="abonosjf";
+
+			$usureg = $_SESSION["nombre"];
+			$pcreg= gethostbyaddr($_SERVER['REMOTE_ADDR']);  
+
 			$datos = array("id" => $_POST["idCuenta4"],
 			   			   "tipo_doc"=>"05",
 						   "num_cta"=>$_POST["editarCuenta"],
@@ -224,7 +228,9 @@ class ControladorAbonos{
 						   "vendedor"=>$_POST["editarVendedor"],
 						   "monto"=>$_POST["editarMonto"],
 						   "usuario"=>$_POST["editarUsuario"],
-						   "fecha"=>$_POST["editarFecha"]);
+						   "fecha"=>$_POST["editarFecha"],						
+						   "usureg" => $usureg,
+						   "pcreg" => $pcreg);
 
 			$respuesta=ModeloCuentas::mdlIngresarCuenta($tabla,$datos);
 			$saldoNuevo=$_POST["editarSaldo"]-$_POST["editarAbono"];

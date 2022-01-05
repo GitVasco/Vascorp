@@ -10,7 +10,7 @@ $colores = array("red","green","yellow","aqua","purple","blue","cyan","magenta",
 
 $sumaUnd = ControladorMovimientos::ctrSumaUnd($valor);
 
-/* var_dump("sumaUnd", $sumaUnd["sumaUnd"]); */
+#var_dump("sumaUnd", $sumaUnd["sumaUnd"]);
 
 
 ?>

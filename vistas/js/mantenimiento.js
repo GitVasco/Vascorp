@@ -37,7 +37,7 @@ $('.tablaCalendario').DataTable({
     "deferRender": true,
     "retrieve": true,
     "processing": true,
-    "order": [[3, "asc"]],
+    "order": [[2, "desc"]],
     "pageLength": 20,
 	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
     "language": {
@@ -164,12 +164,16 @@ function cargarTablaMantenimientoDetalle(manteCab){
 
 $("#cargarTablaRpt").click(function(){
 
+    $(".TablaMantenimientoRepuestos").DataTable().destroy();
+
     $('#divRpt').removeAttr('hidden');   
 
     var manteDet = document.getElementById("nuevoId").value; 
-    console.log(manteDet);
+    console.log("hola mundo");
 
     localStorage.setItem("manteDet", manteDet);
+
+    cargarTablaMantenimientoRepuesto(manteDet);
 
 });
 
@@ -181,12 +185,16 @@ $("#ocultarTablaRpt").click(function(){
 
 $("#cargarTablaRptE").click(function(){
 
+    $(".TablaMantenimientoRepuestos").DataTable().destroy();
+
     $('#divRptE').removeAttr('hidden');  
     
     var manteDet = document.getElementById("editarId").value;
-    console.log(manteDet);
+    console.log("hola mundo e");
 
     localStorage.setItem("manteDet", manteDet);
+
+    cargarTablaMantenimientoRepuesto(manteDet);
 
 });
 
@@ -196,39 +204,43 @@ $("#ocultarTablaRptE").click(function(){
 
 });
 
-$('.TablaMantenimientoRepuestos').DataTable({
-    "ajax": "ajax/mantenimiento/tabla-mante-repuestos.ajax.php?codInterno=" + localStorage.getItem("manteDet"),
-    "deferRender": true,
-    "retrieve": true,
-    "processing": true,
-    "order": [[0, "desc"]],
-    "pageLength": 10,
-    "lengthMenu": [[10, 20, 30, -1], [10, 20, 30, 'Todos']],
-    "language": {
-        "sProcessing":     "Procesando...",
-        "sLengthMenu":     "Mostrar _MENU_ registros",
-        "sZeroRecords":    "No se encontraron resultados",
-        "sEmptyTable":     "Ningún dato disponible en esta tabla",
-        "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
-        "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0",
-        "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-        "sInfoPostFix":    "",
-        "sSearch":         "Buscar:",
-        "sUrl":            "",
-        "sInfoThousands":  ",",
-        "sLoadingRecords": "Cargando...",
-        "oPaginate": {
-        "sFirst":    "Primero",
-        "sLast":     "Último",
-        "sNext":     "Siguiente",
-        "sPrevious": "Anterior"
-        },
-        "oAria": {
-            "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-        }
-    }    
-});
+function cargarTablaMantenimientoRepuesto(manteDet){
+
+    $('.TablaMantenimientoRepuestos').DataTable({
+        "ajax": "ajax/mantenimiento/tabla-mante-repuestos.ajax.php?codInterno=" +  manteDet,
+        "deferRender": true,
+        "retrieve": true,
+        "processing": true,
+        "order": [[0, "desc"]],
+        "pageLength": 10,
+        "lengthMenu": [[10, 20, 30, -1], [10, 20, 30, 'Todos']],
+        "language": {
+            "sProcessing":     "Procesando...",
+            "sLengthMenu":     "Mostrar _MENU_ registros",
+            "sZeroRecords":    "No se encontraron resultados",
+            "sEmptyTable":     "Ningún dato disponible en esta tabla",
+            "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+            "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0",
+            "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix":    "",
+            "sSearch":         "Buscar:",
+            "sUrl":            "",
+            "sInfoThousands":  ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+            "sFirst":    "Primero",
+            "sLast":     "Último",
+            "sNext":     "Siguiente",
+            "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+        }    
+    });
+
+}
 
 //*crear cod tipo maquina
 $("#nuevoTipMaq").change(function(){
@@ -409,7 +421,9 @@ $("#nuevoTipo").change(function(){
 
 
 //*AGREGAR MANTENIMIENTO REPUESTOS
-$(".TablaMantenimientoRepuestos tbody").on("click", "button.btnAddRpt", function(){
+$(".TablaMantenimientoRepuestos").on("click", ".btnAddRpt", function(){
+    
+    //console.log("click en add");
 
     $(this).removeClass("btn-primary btnAddRpt");
 
@@ -442,7 +456,8 @@ $(".TablaMantenimientoRepuestos tbody").on("click", "button.btnAddRpt", function
                 Command: toastr["success"]("Se registro el Repuesto");
 
                 $(".TablaMantenimientoDetalle").DataTable().destroy();
-                cargarTablaMantenimientoDetalle(localStorage.getItem("manteCab"));
+                localStorage.setItem("manteCab", codInterno);
+	            cargarTablaMantenimientoDetalle(localStorage.getItem("manteCab"));
                 
               }else{
       
@@ -482,9 +497,12 @@ $(".TablaMantenimientoCabecera").on("click", ".btnEditarMantenimiento", function
             $("#editarId").val(respuesta["cod_interno"]);
             $("#id").val(respuesta["id"]);
             $("#editarTipo").val(respuesta["tipo_mante"]);
-            $("#editarInicio").val(respuesta["mante_inicio"]);
-            $("#editarFin").val(respuesta["mante_fin"]);
+            $("#editarInicio").val(respuesta["mante_inicio_a"]);
+            $("#editarFin").val(respuesta["mante_fin_a"]);
+
             $("#editarMaquina").val(respuesta["descripcion"]);
+            $("#editarMaquinaCod").val(respuesta["cod_maquina"]);
+
             $("#editarNombreUbicacion").val(respuesta["ubicacion_maquina"]);
 
             $("#editarResponsable").val(respuesta["responsable"]);
@@ -498,8 +516,135 @@ $(".TablaMantenimientoCabecera").on("click", ".btnEditarMantenimiento", function
 
             $("#editarObservacion").val(respuesta["observaciones"]);
 
+            $(".TablaMantenimientoDetalle").DataTable().destroy();
+            localStorage.setItem("manteCab", respuesta["cod_interno"]);
+            cargarTablaMantenimientoDetalle(localStorage.getItem("manteCab"));
+
 		}
 
 	})  
 
 })
+
+//*EDITAR MANTENIMIENTO DETALLE
+$(".TablaMantenimientoDetalle").on("click", ".btnEditarRepuesto", function(){
+
+	var idDetMante = $(this).attr("idDetMante");
+    //console.log(idDetMante);
+
+    var datos = new FormData();
+	datos.append("idDetMante", idDetMante);
+
+    $.ajax({
+
+		url:"ajax/mantenimiento.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType:"json",
+		success:function(respuesta){
+            
+            //console.log(respuesta);
+
+            $("#editarIdD").val(respuesta["cod_interno"]);
+            $("#idD").val(respuesta["id"]);
+            $("#editarNombre").val(respuesta["item"]);
+            $("#editarCantidadD").val(respuesta["cantidad"]);
+            $("#editarPrecio").val(respuesta["precio"]);
+            $("#editarObservacionD").val(respuesta["observacion"]);
+
+
+		}
+
+	})  
+
+})
+
+//* ANULAR DETALLE
+$(".TablaMantenimientoDetalle").on("click",".btnAnularRepuestos",function(){
+	var idDetMante = $(this).attr("idDetMante");
+    //console.log(idDetMante);
+ 
+	// Capturamos el id de la orden de compra
+	swal({
+        title: '¿Está seguro de anular el repuesto?',
+        text: "¡Si no lo está puede cancelar la acción!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si, anular repuesto!'
+    }).then(function (result) {
+
+	if (result.value) {
+
+		window.location = "index.php?ruta=mantenimiento&idDetMante="+idDetMante;
+
+	}
+	})
+
+});
+
+//*editar CALENDARIO
+$(".tablaCalendario").on("click", ".btnEditaCalendario", function(){
+
+	var idCalendario = $(this).attr("idCalendario");
+    //console.log(calendario);
+
+	var datos = new FormData();
+	datos.append("idCalendario", idCalendario);
+	
+	$.ajax({
+
+		url:"ajax/mantenimiento.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType:"json",
+		success:function(respuesta){
+            
+            //console.log(respuesta);
+            $("#id").val(respuesta["id"]);
+            $("#editarTipo").val(respuesta["tipo"]);
+            $("#editarTipo").selectpicker("refresh");
+            $("#editarInicio").val(respuesta["inicio_a"]);
+            $("#editarFin").val(respuesta["fin_a"]);
+            $("#editarTitulo").val(respuesta["titulo"]);
+            $("#editarObservacion").val(respuesta["indicaciones"]);
+
+		}
+
+	})    
+
+})
+
+//* ANULAR CALENDARIO
+$(".tablaCalendario").on("click",".btnAnularCalendario",function(){
+	var idCalendario = $(this).attr("idCalendario");
+    console.log(idCalendario);
+ 
+	// Capturamos el id de la orden de compra
+	swal({
+        title: '¿Está seguro de anular la actividad?',
+        text: "¡Si no lo está puede cancelar la acción!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si, anular actividad!'
+    }).then(function (result) {
+
+	if (result.value) {
+
+		window.location = "index.php?ruta=calendario&idCalendario="+idCalendario;
+
+	}
+	})
+
+});

@@ -92,13 +92,13 @@
                             <thead>
 
                                 <tr>
-                                    <th>Mante</th>
+                                    <th style="width: 10px; max-width: 46px !important;">Mante</th>
                                     <th>Item</th>
-                                    <th>Cantidad</th>
+                                    <th>Cant.</th>
                                     <th>Precio</th>
                                     <th>Total</th>
                                     <th>Observacion</th>
-                                    <th>Acciones</th>
+                                    <th style="width: 100px">Acciones</th>
                                 </tr>
 
                             </thead>
@@ -417,7 +417,7 @@ MODAL AGREGAR MANTENIMIENTO
 </div>
 
 <!--=====================================
-MODAL AGREGAR MANTENIMIENTO
+MODAL EDITAR MANTENIMIENTO
 ======================================-->
 <div id="modalEditarMantenimiento" class="modal fade" role="dialog">
   
@@ -477,7 +477,7 @@ MODAL AGREGAR MANTENIMIENTO
                         <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">MANTE. INICIO</label>
                         <div class="col-lg-4">
 
-                            <input type="text" class="form-control input-md" name="editarInicio" id="editarInicio" data-inputmask="'mask':'9999-99-99 99:99:99'" data-mask required>
+                            <input type="datetime-local" class="form-control input-md" name="editarInicio" id="editarInicio" required>
 
                         </div>  
 
@@ -485,7 +485,7 @@ MODAL AGREGAR MANTENIMIENTO
                         <label for="" class="col-form-label col-lg-2 col-md-3 col-sm-3">MANTE. FIN</label>
                         <div class="col-lg-4">
 
-                            <input type="text" class="form-control input-md" name="editarFin"  id="editarFin" data-inputmask="'mask':'9999-99-99 99:99:99'" data-mask required>
+                            <input type="datetime-local" class="form-control input-md" name="editarFin"  id="editarFin" required>
 
                         </div>                          
 
@@ -500,6 +500,7 @@ MODAL AGREGAR MANTENIMIENTO
                         <div class="col-lg-4">
 
                             <input type="text" class="form-control input-md" name="editarMaquina" id="editarMaquina" readonly>
+                            <input type="hidden" class="form-control input-md" name="editarMaquinaCod" id="editarMaquinaCod" readonly>
 
                         </div>                         
 
@@ -610,11 +611,11 @@ MODAL AGREGAR MANTENIMIENTO
                         <!-- ENTRADA PARA TIPO MOTOR-->
                         <label class="col-form-label col-lg-2 col-md-3 col-sm-3">REPUESTOS</label>
                         <div class="col-lg-3 col-xs-12">
-                            <button type="button" class="btn btn-primary btn-xs" id="cargarTablaRptE" name="cargarTablaRpt">Agregar</button>
+                            <button type="button" class="btn btn-primary btn-xs" id="cargarTablaRptE" name="cargarTablaRptE">Agregar</button>
                         </div>
 
                         <div class="col-lg-3 col-xs-12">
-                            <button type="button" class="btn btn-danger btn-xs" id="ocultarTablaRptE" name="ocultarTablaRpt">Ocultar</button>
+                            <button type="button" class="btn btn-danger btn-xs" id="ocultarTablaRptE" name="ocultarTablaRptE">Ocultar</button>
                         </div>
 
 
@@ -664,7 +665,7 @@ MODAL AGREGAR MANTENIMIENTO
 
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-                <button type="submit" class="btn btn-primary">Registrar mantenimiento</button>
+                <button type="submit" class="btn btn-primary">Editar mantenimiento</button>
 
             </div>
 
@@ -672,8 +673,8 @@ MODAL AGREGAR MANTENIMIENTO
 
             <?php
 
-            /* $crearMantenimiento = new ControladorMantenimiento();
-            $crearMantenimiento -> ctrCrearMantenimiento(); */
+            $editarMantenimiento = new ControladorMantenimiento();
+            $editarMantenimiento -> ctrEditarMantenimiento();
 
             ?>    
 
@@ -682,6 +683,136 @@ MODAL AGREGAR MANTENIMIENTO
     </div>
 
 </div>
+
+<!--=====================================
+MODAL EDITAR DETALLE MANTENIMIENTO
+======================================-->
+<div id="modalEditarRepuestos" class="modal fade" role="dialog">
+  
+    <div class="modal-dialog modal-dialog-centered" style="width:30%">
+
+        <div class="modal-content">
+
+            <form role="form" method="post" enctype="multipart/form-data">
+
+            <!--=====================================
+            CABEZA DEL MODAL
+            ======================================-->
+
+            <div class="modal-header" style="background:#3c8dbc; color:white">
+
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                <h4 class="modal-title">Editar Detalle</h4>
+
+            </div>
+
+            <!--=====================================
+            CUERPO DEL MODAL
+            ======================================-->
+
+            <div class="modal-body">
+
+                <div class="box-body">            
+                    
+                <label>DATOS DEL REPUESTO</label>
+                    <div class="form-group">
+
+                        <!-- ENTRADA PARA EL ID -->
+                        <label for="" class="col-form-label col-lg-3 col-md-3 col-sm-3">COD. INT.</label>
+                        <div class="col-lg-3">
+
+                            <input type="text" class="form-control input-md"  name="editarIdD"  id ="editarIdD" readonly> 
+                            <input type="hidden" class="form-control input-md"  name="idD"  id ="idD" readonly>                     
+
+                        </div>                        
+
+                    </div>
+
+                    <div class="col-lg-12"></div>     
+                    <div class="form-group" style ="padding-top:25px">
+
+                        <!-- ENTRADA PARA EL ID -->
+                        <label for="" class="col-form-label col-lg-3 col-md-3 col-sm-3">Descripcion</label>
+                        <div class="col-lg-9">
+
+                            <input type="text" class="form-control input-md"  name="editarNombre"  id ="editarNombre" readonly> 
+
+                        </div>                        
+
+                    </div>                         
+                    
+                    <div class="col-lg-12"></div>                      
+                    <div class="form-group" style ="padding-top:25px">
+
+                        <!-- ENTRADA PARA EL ID -->
+                        <label for="" class="col-form-label col-lg-3 col-md-3 col-sm-3">Cantidad</label>
+                        <div class="col-lg-3">
+
+                            <input type="number" step="any "class="form-control input-md"  name="editarCantidadD"  id ="editarCantidadD">                   
+
+                        </div>  
+                        
+                        <!-- ENTRADA PARA EL ID -->
+                        <label for="" class="col-form-label col-lg-3 col-md-3 col-sm-3">Precio</label>
+                        <div class="col-lg-3">
+
+                            <input type="number" step="any "class="form-control input-md"  name="editarPrecio"  id ="editarPrecio" readonly>                   
+
+                        </div>                          
+
+                    </div>
+
+                    <div class="col-lg-12"></div>  
+                    <div class="form-group" style ="padding-top:25px">
+
+                        <!-- ENTRADA PARA TIPO MOTOR-->
+                        <label for="" class="col-form-label col-lg-12 col-md-3 col-sm-3">DESCRIPCIÓN DEL MANTENIMIENTO</label>
+                        <div class="col-lg-12">
+
+                            <textarea type="textarea" rows="5" cols="75" id="editarObservacionD" name="editarObservacionD" placeholder="Detallar lo realizado con la máquina"></textarea>
+
+                        </div>   
+
+                    </div>  
+
+                </div>
+
+            </div>
+
+            <!--=====================================
+            PIE DEL MODAL
+            ======================================-->
+
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+                <button type="submit" class="btn btn-primary">Editar detalle</button>
+
+            </div>
+
+            </form>
+
+            <?php
+
+            $editarMantenimientoDetalle = new ControladorMantenimiento();
+            $editarMantenimientoDetalle -> ctrEditarMantenimientoDetalle();
+
+            ?>    
+
+        </div>
+
+    </div>
+
+</div>
+
+<?php
+
+$anularMantenimientoDetalle = new ControladorMantenimiento();
+$anularMantenimientoDetalle -> ctrAnularMantenimientoDetalle();
+
+?>  
 
 <script>
     window.document.title = "Mantenimiento"

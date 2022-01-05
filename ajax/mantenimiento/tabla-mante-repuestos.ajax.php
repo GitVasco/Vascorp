@@ -3,13 +3,13 @@
 require_once "../../controladores/mantenimiento.controlador.php";
 require_once "../../modelos/mantenimiento.modelo.php";
 
-class TablaManteCabecera{
+class TablaManteRepuestos{
 
     /*=============================================
     MOSTRAR LA TABLA DE AGENCIAS
     =============================================*/ 
 
-    public function mostrarTablaManteCabecera(){
+    public function mostrarTablaManteRepuestos(){
 
         $valor = 'CAJ';
         $repuestos = ControladorMantenimiento::ctrMostrarMantenimientoRepuestos($valor);	
@@ -62,6 +62,6 @@ class TablaManteCabecera{
 /*=============================================
 ACTIVAR TABLA DE AGENCIAS
 =============================================*/ 
-$activarAgencias = new TablaManteCabecera();
-$activarAgencias -> mostrarTablaManteCabecera();
+$activarAgencias = new TablaManteRepuestos();
+$activarAgencias -> mostrarTablaManteRepuestos();
 

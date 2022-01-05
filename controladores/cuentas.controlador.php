@@ -21,6 +21,10 @@ class ControladorCuentas{
 				}else{
 					$protestado=$_POST["protestado"];
 				}
+
+				$usureg = $_SESSION["nombre"];
+				$pcreg= gethostbyaddr($_SERVER['REMOTE_ADDR']);  
+
 			   	$datos = array("tipo_doc"=>$_POST["nuevoCodigo"],
 							   "num_cta"=>$_POST["nuevoDocumento"],
 							   "cliente"=>$_POST["nuevoCliente"],
@@ -45,7 +49,9 @@ class ControladorCuentas{
 							   "num_unico"=>$_POST["nuevoUnico"],
 							   "fecha_envio"=>$_POST["nuevaFechaEnvio"],
 							   "fecha_abono"=>$_POST["nuevaFechaAbono"],
-							   "tip_mov" => "+");
+							   "tip_mov" => "+",
+							   "usureg" => $usureg,
+							   "pcreg" => $pcreg);
 							   
 
 
@@ -396,6 +402,9 @@ class ControladorCuentas{
 		if(isset($_POST["cancelarDocumento"])){
 
 			$tabla="cuenta_ctejf";
+			$usureg = $_SESSION["nombre"];
+			$pcreg= gethostbyaddr($_SERVER['REMOTE_ADDR']);  
+
 			   $datos = array("id" => $_POST["idCuenta2"],
 			   			   "tipo_doc"=>$_POST["cancelarTipoDocumento"],
 						   "num_cta"=>$_POST["cancelarDocumentoOriginal"],
@@ -409,7 +418,9 @@ class ControladorCuentas{
 							"cod_pago" => $_POST["cancelarCodigo"],
 							"doc_origen" => $_POST["cancelarDocumento"],
 							"saldo"=>0,
-							"tip_mov" => "-");
+							"tip_mov" => "-",
+							"usureg" => $usureg,
+							"pcreg" => $pcreg);
 
 				$cuenta=ControladorCuentas::ctrMostrarCuentas("id",$_POST["idCuenta2"]);
 				$saldoNuevo=$cuenta["saldo"]-$_POST["cancelarMonto"];
@@ -704,6 +715,10 @@ class ControladorCuentas{
 			$doc1=substr($_POST["letraDocumento"],0,4);
 			$doc2=substr($_POST["letraDocumento"],-5);
 			$documento=$doc1.$doc2."-";
+
+			$usureg = $_SESSION["nombre"];
+			$pcreg= gethostbyaddr($_SERVER['REMOTE_ADDR']);  
+
             for ($i=0; $i <count($fechasInput) ; $i++) { 
 
 				$datos = array("tipo_doc"=>"85",
@@ -722,7 +737,9 @@ class ControladorCuentas{
 							"doc_origen"=>$_POST["letraDocumento"],
 							"renovacion"=>0,
 							"protesta"=>0,
-							"tip_mov"=>'+');
+							"tip_mov"=>'+',
+							"usureg" => $usureg,
+							"pcreg" => $pcreg);
 
 					
 					$respuesta = ModeloCuentas::mdlIngresarCuenta($tabla,$datos);
@@ -1026,6 +1043,9 @@ class ControladorCuentas{
 			   	$respuesta = ModeloCuentas::mdlIngresarCuenta($tabla,$datos);
 
 				// ingresar Cancelación
+				$usureg = $_SESSION["nombre"];
+				$pcreg= gethostbyaddr($_SERVER['REMOTE_ADDR']);  
+
 				$datos2 = array("tipo_doc"=>$_POST["dividirDocumento"],
 								"num_cta"=>$_POST["dividirNroDocumento"],
 								"cliente"=>$_POST["dividirCliente"],
@@ -1038,7 +1058,9 @@ class ControladorCuentas{
 								"cod_pago" => $_POST["dividirDocumento"],
 								"doc_origen" => $_POST["dividirNroDocumento2"],
 								"saldo"=>0,
-								"tip_mov" => "-");
+								"tip_mov" => "-",
+								"usureg" => $usureg,
+								"pcreg" => $pcreg);
 				$respuesta2 = ModeloCuentas::mdlIngresarCuenta($tabla,$datos2);   
 
 			   	if($respuesta == "ok"){

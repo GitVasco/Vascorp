@@ -288,7 +288,7 @@ class ModeloMantenimiento{
                                                 :fin,
                                                 :allday,
                                                 :dirurl,
-                                                :indicaciones,
+                                                REPLACE(:indicaciones,'\n',''),
                                                 :estado,
                                                 :usureg,
                                                 :pcreg,
@@ -338,7 +338,7 @@ class ModeloMantenimiento{
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM calendario_jf c");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM calendario_jf c WHERE c.estado = 'Pendiente'");
 
 			$stmt -> execute();
 
@@ -590,14 +590,11 @@ class ModeloMantenimiento{
                                                     m.cod_interno,
                                                     m.tipo_mante,
                                                     m.mante_inicio,
-                                                    DATE_FORMAT(
-                                                        m.mante_inicio,
-                                                        '%d/%m/%Y %H:%i %r'
-                                                    ) AS mante_inicio_a,
+                                                    DATE_FORMAT(m.mante_inicio, '%Y-%m-%dT%H:%i')  AS mante_inicio_a,
                                                     m.mante_fin,
                                                         DATE_FORMAT(
                                                         m.mante_fin,
-                                                        '%d/%m/%Y %H:%i:%s'
+                                                        '%Y-%m-%dT%H:%i'
                                                     ) AS mante_fin_a,
                                                     m.cod_maquina,
                                                     CONCAT(
@@ -696,78 +693,31 @@ class ModeloMantenimiento{
     //*MOSTRAR MANTENIMIENTO DETALLE
     static public function mdlMostrarMantenimientoDetalle($valor){
 
-		if($valor != null){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+                                                md.id,
+                                                m.cod_interno,
+                                                md.codpro,
+                                                p.despro,
+                                                CONCAT(md.codpro, ' - ', p.despro) AS item,
+                                                md.cantidad,
+                                                md.precio,
+                                                md.total,
+                                                md.observacion,
+                                                md.estado 
+                                            FROM
+                                                mantenimiento_detallejf md 
+                                                LEFT JOIN mantenimientojf m 
+                                                ON md.id_mante = m.cod_interno 
+                                                LEFT JOIN producto p 
+                                                ON md.codpro = p.codpro 
+                                            WHERE m.cod_interno = :valor 
+                                                AND md.estado='REGISTRADO'");
 
-			$stmt = Conexion::conectar()->prepare("SELECT 
-                                                    m.cod_interno,
-                                                    md.codpro,
-                                                    p.despro,
-                                                    CONCAT(md.codpro, ' - ', p.despro) AS item,
-                                                    md.cantidad,
-                                                    md.precio,
-                                                    md.total,
-                                                    md.observacion,
-                                                    md.estado 
-                                                FROM
-                                                    mantenimiento_detallejf md 
-                                                    LEFT JOIN mantenimientojf m 
-                                                    ON md.id_mante = m.cod_interno 
-                                                    LEFT JOIN producto p 
-                                                    ON md.codpro = p.codpro 
-                                                WHERE m.cod_interno = :valor ");
+        $stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
 
-			$stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
+        $stmt -> execute();
 
-			$stmt -> execute();
-
-			return $stmt -> fetchAll();
-
-		}else{
-
-			$stmt = Conexion::conectar()->prepare("SELECT 
-                                                    m.id,
-                                                    m.cod_interno,
-                                                    m.tipo_mante,
-                                                    m.mante_inicio,
-                                                    m.mante_fin,
-                                                    m.cod_maquina,
-                                                    CONCAT(
-                                                        m.cod_maquina,
-                                                        ' - ',
-                                                        e.descripcion
-                                                    ) AS descripcion,
-                                                    m.cod_ubi,
-                                                    (SELECT 
-                                                    t.des_larga 
-                                                    FROM
-                                                    tabla_m_detalle t 
-                                                    WHERE t.cod_tabla = 'TUBI' 
-                                                    AND t.cod_argumento = m.cod_ubi) AS ubicacion_maquina,
-                                                    m.responsable,
-                                                    SUBSTRING_INDEX(
-                                                        (SELECT 
-                                                        t.des_larga 
-                                                        FROM
-                                                        tabla_m_detalle t 
-                                                        WHERE t.cod_tabla = 'TMEC' 
-                                                        AND t.cod_argumento = m.responsable),
-                                                        ' ',
-                                                        1
-                                                    ) AS nom_responsable,
-                                                    m.items,
-                                                    m.total_soles,
-                                                    SUBSTRING(m.observaciones, 1, 20) AS observaciones,
-                                                    m.estado 
-                                                FROM
-                                                    mantenimientojf m 
-                                                    LEFT JOIN equipos_jf e 
-                                                    ON m.cod_maquina = e.cod_tipo");
-
-			$stmt -> execute();
-
-			return $stmt -> fetchAll();
-
-		}
+        return $stmt -> fetchAll();
 
 		$stmt -> close();
 
@@ -920,16 +870,16 @@ class ModeloMantenimiento{
                                                     equipos_jf 
                                                 SET
                                                     fec_ult_mant = :fec_ult_mant,
-                                                    usureg = :usureg,
-                                                    pcreg = :pcreg,
-                                                    fecreg = :fecreg 
+                                                    usumod = :usumod,
+                                                    pcmod = :pcmod,
+                                                    fecmod = :fecmod 
                                                 WHERE cod_tipo = :cod_tipo ");
 
         $stmt->bindParam(":cod_tipo", $datos["cod_tipo"], PDO::PARAM_STR);
         $stmt->bindParam(":fec_ult_mant", $datos["fec_ult_mant"], PDO::PARAM_STR);
-        $stmt->bindParam(":usureg", $datos["usureg"], PDO::PARAM_STR);
-        $stmt->bindParam(":pcreg", $datos["pcreg"], PDO::PARAM_STR);
-        $stmt->bindParam(":fecreg", $datos["fecreg"], PDO::PARAM_STR);
+        $stmt->bindParam(":usumod", $datos["usumod"], PDO::PARAM_STR);
+        $stmt->bindParam(":pcmod", $datos["pcmod"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecmod", $datos["fecmod"], PDO::PARAM_STR);
 
 		if ($stmt->execute()) {
 
@@ -1038,6 +988,7 @@ class ModeloMantenimiento{
                                                 FROM
                                                     mantenimiento_detallejf md 
                                                 WHERE md.id_mante = :valor 
+                                                    AND md.estado = 'REGISTRADO'
                                                 GROUP BY md.id_mante) md 
                                                 ON m.cod_interno = md.id_mante SET m.items = md.item,
                                                 m.total_soles = md.total 
@@ -1058,6 +1009,342 @@ class ModeloMantenimiento{
 
 		$stmt = null;
 
+	}  
+    
+	//*ACTUALIZAR TOTAL DE ITEMS Y SOLES
+	static public function mdlEditarMantenimiento($datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE 
+                                                    mantenimientojf 
+                                                SET
+                                                    mante_inicio = :mante_inicio,
+                                                    mante_fin = :mante_fin,
+                                                    responsable = :responsable,
+                                                    operario = :operario,
+                                                    observaciones = :observaciones,
+                                                    estado = :estado,
+                                                    usumod = :usumod,
+                                                    pcmod = :pcmod,
+                                                    fecmod = :fecmod 
+                                                WHERE id = :id ");
+
+        $stmt->bindParam(":id", $datos["id"], PDO::PARAM_STR);
+        $stmt->bindParam(":mante_inicio", $datos["mante_inicio"], PDO::PARAM_STR);
+        $stmt->bindParam(":mante_fin", $datos["mante_fin"], PDO::PARAM_STR);
+        $stmt->bindParam(":responsable", $datos["responsable"], PDO::PARAM_STR);
+        $stmt->bindParam(":operario", $datos["operario"], PDO::PARAM_STR);
+        $stmt->bindParam(":observaciones", $datos["observaciones"], PDO::PARAM_STR);
+        $stmt->bindParam(":estado", $datos["estado"], PDO::PARAM_STR);
+        $stmt->bindParam(":usumod", $datos["usumod"], PDO::PARAM_STR);
+        $stmt->bindParam(":pcmod", $datos["pcmod"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecmod", $datos["fecmod"], PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+
+		}else {
+
+			return $stmt->ErrorInfo();
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+
 	}     
+
+    //*MOSTRAR MANTENIMIENTO DETALLE EDITAR
+    static public function mdlMostrarMantenimientoDetalleEditar($valor){
+
+        $stmt = Conexion::conectar()->prepare("SELECT 
+                                                md.id,
+                                                m.cod_interno,
+                                                md.codpro,
+                                                p.despro,
+                                                CONCAT(md.codpro, ' - ', p.despro) AS item,
+                                                md.cantidad,
+                                                md.precio,
+                                                md.total,
+                                                md.observacion,
+                                                md.estado 
+                                            FROM
+                                                mantenimiento_detallejf md 
+                                                LEFT JOIN mantenimientojf m 
+                                                ON md.id_mante = m.cod_interno 
+                                                LEFT JOIN producto p 
+                                                ON md.codpro = p.codpro 
+                                            WHERE md.id = :valor ");
+
+        $stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
+
+        $stmt -> execute();
+
+        return $stmt -> fetch();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}     
+
+	//*ACTUALIZAR PRECIO Y CANTIDAD DEL DETALLE
+	static public function mdlEditarMantenimientoDetalle($datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE 
+                                                mantenimiento_detallejf 
+                                            SET
+                                                cantidad = :cantidad,
+                                                precio = :precio,
+                                                total = :total,
+                                                observacion = :observacion,
+                                                usumod = :usumod,
+                                                pcmod = :pcmod,
+                                                fecmod = :fecmod 
+                                            WHERE id = :id");
+
+        $stmt->bindParam(":id", $datos["id"], PDO::PARAM_STR);
+        $stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_STR);
+        $stmt->bindParam(":precio", $datos["precio"], PDO::PARAM_STR);
+        $stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
+        $stmt->bindParam(":observacion", $datos["observaciones"], PDO::PARAM_STR);
+        $stmt->bindParam(":usumod", $datos["usumod"], PDO::PARAM_STR);
+        $stmt->bindParam(":pcmod", $datos["pcmod"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecmod", $datos["fecmod"], PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+
+		}else {
+
+			return $stmt->ErrorInfo();
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+
+	}  
+
+	//*ANULAR DETALLE
+	static public function mdlAnularMantenimientoDetalle($datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE 
+                                            mantenimiento_detallejf 
+                                        SET
+                                            estado = 'ANULADO',
+                                            usuanu = :usuanu,
+                                            pcanu = :pcanu,
+                                            fecanu = :fecanu 
+                                        WHERE id = :id");
+
+        $stmt->bindParam(":id", $datos["id"], PDO::PARAM_STR);
+        $stmt->bindParam(":usuanu", $datos["usuanu"], PDO::PARAM_STR);
+        $stmt->bindParam(":pcanu", $datos["pcanu"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecanu", $datos["fecanu"], PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+
+		}else {
+
+			return $stmt->ErrorInfo();
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+
+	}       
+
+    //*MOSTRAR EQUIPOS
+    static public function mdlTraerCalendario($valor){
+
+		if($valor != null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+                                                    c.id,
+                                                    c.tipo,
+                                                    c.titulo,
+                                                    c.cod_interno,
+                                                    c.inicio,
+                                                    DATE_FORMAT(c.inicio, '%Y-%m-%dT%H:%i') AS inicio_a,
+                                                    c.fin,
+                                                    DATE_FORMAT(c.fin, '%Y-%m-%dT%H:%i') AS fin_a,
+                                                    c.allday,
+                                                    c.dirurl,
+                                                    c.indicaciones,
+                                                    c.estado,
+                                                    c.usureg,
+                                                    c.pcreg,
+                                                    c.fecreg,
+                                                    c.usumod,
+                                                    c.pcmod,
+                                                    c.fecmod,
+                                                    c.usuanu,
+                                                    c.pcanu,
+                                                    c.fecanu 
+                                                FROM
+                                                    calendario_jf c
+                                                WHERE c.id = :valor");
+
+			$stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();
+
+		}else{
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+                                                c.id,
+                                                c.tipo,
+                                                c.titulo,
+                                                YEAR(c.inicio) AS yi,
+                                                MONTH(c.inicio) - 1 AS moi,
+                                                DAY(c.inicio) AS di,
+                                                HOUR(c.inicio) AS hi,
+                                                MINUTE(c.inicio) AS mi,
+                                                YEAR(c.fin) AS yf,
+                                                MONTH(c.fin) - 1 AS mof,
+                                                DAY(c.fin) AS df,
+                                                HOUR(c.fin) AS hf,
+                                                MINUTE(c.fin) AS mf,
+                                                CASE
+                                                WHEN c.tipo = 'Mantenimiento' 
+                                                THEN '#f39c12' 
+                                                /*amarillo*/
+                                                WHEN c.tipo = 'Capacitacion' 
+                                                THEN '#f56954' 
+                                                /*rojo*/
+                                                WHEN c.tipo = 'Reunion' 
+                                                THEN '#0dcaf0' 
+                                                /*azul*/
+                                                WHEN c.tipo = 'Cumpleaños' 
+                                                THEN '#00a65a' 
+                                                /*verde*/
+                                                WHEN c.tipo = 'Actividades' 
+                                                THEN '#0073b7' 
+                                                /*celeste*/
+                                                ELSE '#00a65a' 
+                                                /*primary*/
+                                                END AS backgroundColor,
+                                                CASE
+                                                WHEN c.tipo = 'Mantenimiento' 
+                                                THEN '#f39c12' 
+                                                /*amarillo*/
+                                                WHEN c.tipo = 'Capacitacion' 
+                                                THEN '#f56954' 
+                                                /*rojo*/
+                                                WHEN c.tipo = 'Reunion' 
+                                                THEN '#0dcaf0' 
+                                                /*azul*/
+                                                WHEN c.tipo = 'Cumpleaños' 
+                                                THEN '#00a65a' 
+                                                /*verde*/
+                                                WHEN c.tipo = 'Actividades' 
+                                                THEN '#0073b7' 
+                                                /*celeste*/
+                                                ELSE '#00a65a' 
+                                                /*primary*/
+                                                END AS borderColor 
+                                            FROM
+                                                calendario_jf c
+                                            WHERE c.estado = 'Pendiente'");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}    
+
+	//*ACTUALIZAR PRECIO Y CANTIDAD DEL DETALLE
+	static public function mdlEditarCalendario($datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE 
+                                                calendario_jf 
+                                            SET
+                                                tipo = :tipo,
+                                                titulo = :titulo,
+                                                cod_interno = :cod_interno,
+                                                inicio = :inicio,
+                                                fin = :fin,
+                                                allday = :allday,
+                                                dirurl = :dirurl,
+                                                indicaciones = :indicaciones,
+                                                estado = :estado,
+                                                usumod = :usumod,
+                                                pcmod = :pcmod,
+                                                fecmod = :fecmod 
+                                            WHERE id = :id");
+
+        $stmt->bindParam(":id", $datos["id"], PDO::PARAM_STR); 
+        $stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
+        $stmt->bindParam(":titulo", $datos["titulo"], PDO::PARAM_STR);
+        $stmt->bindParam(":cod_interno", $datos["cod_interno"], PDO::PARAM_STR);
+        $stmt->bindParam(":inicio", $datos["inicio"], PDO::PARAM_STR);
+        $stmt->bindParam(":fin", $datos["fin"], PDO::PARAM_STR);
+        $stmt->bindParam(":allday", $datos["allday"], PDO::PARAM_STR);
+        $stmt->bindParam(":dirurl", $datos["dirurl"], PDO::PARAM_STR);
+        $stmt->bindParam(":indicaciones", $datos["indicaciones"], PDO::PARAM_STR);
+        $stmt->bindParam(":estado", $datos["estado"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecmod", $datos["fecmod"], PDO::PARAM_STR);
+        $stmt->bindParam(":usumod", $datos["usumod"], PDO::PARAM_STR);
+        $stmt->bindParam(":pcmod", $datos["pcmod"], PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+
+		}else {
+
+			return $stmt->ErrorInfo();
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+
+	}    
+
+	//*ANULAR DETALLE
+	static public function mdlAnularCalendario($datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE 
+                                            calendario_jf 
+                                        SET
+                                            estado = 'Anulado',
+                                            usuanu = :usuanu,
+                                            pcanu = :pcanu,
+                                            fecanu = :fecanu 
+                                        WHERE id = :id");
+
+        $stmt->bindParam(":id", $datos["id"], PDO::PARAM_STR);
+        $stmt->bindParam(":usuanu", $datos["usuanu"], PDO::PARAM_STR);
+        $stmt->bindParam(":pcanu", $datos["pcanu"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecanu", $datos["fecanu"], PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+
+		}else {
+
+			return $stmt->ErrorInfo();
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+
+	}      
 
 }

@@ -26,9 +26,8 @@ class TablaMantenimientoDetalle{
 
         /*=============================================
         TRAEMOS LAS ACCIONES
-        =============================================*/         
-        
-        $botones =  "<div class='btn-group'><button class='btn btn-warning btn-xs btnEditarManteDetalle' codpro='".$mantenimiento[$i]["codpro"]."' data-toggle='modal' data-target='#modalEditarMantenimiento'><i class='fa fa-pencil'></i></button></div>"; 
+        =============================================*/      
+        $botones =  "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarRepuesto' idDetMante='".$mantenimiento[$i]["id"]."' data-toggle='modal' data-target='#modalEditarRepuestos'><i class='fa fa-pencil'></i></button><button class='btn btn-xs btn-danger btnAnularRepuestos' idDetMante='".$mantenimiento[$i]["id"]."'><i class='fa fa-times'></i></button></div>";
 
             $datosJson .= '[
             "'.$mantenimiento[$i]["cod_interno"].'",
@@ -37,7 +36,7 @@ class TablaMantenimientoDetalle{
             "'.$mantenimiento[$i]["precio"].'",
             "'.$mantenimiento[$i]["total"].'",
             "'.$mantenimiento[$i]["observacion"].'",
-            "'.$mantenimiento[$i]["cod_interno"].'"
+            "'.$botones.'"
             ],';        
             }
 

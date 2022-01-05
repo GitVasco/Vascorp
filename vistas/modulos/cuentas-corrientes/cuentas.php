@@ -87,7 +87,7 @@
            <th style="width:20px">Estado doc.</th>
            <th style="width:100px">Nro. unico</th>
            <th>Doc. origen</th>
-           <th>Acciones</th>
+           <th style="width:250px">Acciones</th>
 
          </tr> 
 

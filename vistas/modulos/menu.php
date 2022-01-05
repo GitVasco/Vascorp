@@ -1784,7 +1784,7 @@
                         <a href="calendario">
 
                             <i class="fa fa-calendar"></i>
-                            <span>Calendaio</span>
+                            <span>Calendario</span>
 
                         </a>
 

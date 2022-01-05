@@ -21,14 +21,38 @@ class TablaCalendario{
 
             for($i = 0; $i < count($calendario); $i++){  
 
-                //*ESTADO
+                //*TIPO ACTIVIDAD
+
+                if($calendario[$i]["tipo"] == "Actividades"){
+
+                    $tipo = "<span style='font-size:85%' class='label label-primary'>".$calendario[$i]["tipo"]."</span>";
+
+                }else if($calendario[$i]["tipo"] == "Mantenimiento"){
+
+                    $tipo = "<span style='font-size:85%' class='label label-warning'>".$calendario[$i]["tipo"]."</span>";
+
+                }else if($calendario[$i]["tipo"] == "Reunion"){
+
+                    $tipo = "<span style='font-size:85%' class='label label-info'>".$calendario[$i]["tipo"]."</span>";
+
+                }else if($calendario[$i]["tipo"] == "Capacitacion"){
+
+                    $tipo = "<span style='font-size:85%' class='label label-danger'>".$calendario[$i]["tipo"]."</span>";
+
+                }else if($calendario[$i]["tipo"] == "Cumpleaños"){
+
+                    $tipo = "<span style='font-size:85%' class='label label-success'>".$calendario[$i]["tipo"]."</span>";
+
+                }
+
+
 
 
                 //*TRAEMOS LAS ACCIONES  
-                $botones =  "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarEquipo' idCalendario='".$calendario[$i]["id"]."' data-toggle='modal' data-target='#modalAgregarEquipos'><i class='fa fa-pencil'></i></button><button class='btn btn-xs btn-danger btnEliminarAgencia' idCalendario='".$calendario[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
+                $botones =  "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditaCalendario' idCalendario='".$calendario[$i]["id"]."' data-toggle='modal' data-target='#modalEditarCalendario'><i class='fa fa-pencil'></i></button><button class='btn btn-xs btn-danger btnAnularCalendario' idCalendario='".$calendario[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
 
                 $datosJson .= '[
-                    "'.$calendario[$i]["tipo"].'",
+                    "'.$tipo.'",
                     "'.$calendario[$i]["titulo"].'",
                     "'.$calendario[$i]["inicio"].'",
                     "'.$calendario[$i]["fin"].'",

@@ -68,7 +68,7 @@ class ControladorMantenimiento{
                 if($_POST["nuevoProgMantenimiento"] != null){
 
                     $datosCalendario = array(   "tipo"          => 'Mantenimiento',
-                                                "titulo"        => 'Mant. - '.$_POST["nuevoCodTipo"],
+                                                "titulo"        => $_POST["nuevoCodTipo"],
                                                 "cod_interno"   => $_POST["nuevoCodTipo"],
                                                 "inicio"        => $_POST["nuevoProgMantenimiento"],
                                                 "fin"           => '',
@@ -299,7 +299,16 @@ class ControladorMantenimiento{
 
 		return $respuesta;
 
-    }     
+    }  
+
+    //*MOSTRAR MANTENIMIENTO DETALLE editar
+    static public function ctrMostrarMantenimientoDetalleEditar($valor){
+
+        $respuesta = ModeloMantenimiento::mdlMostrarMantenimientoDetalleEditar($valor);
+
+		return $respuesta;
+
+    }        
 
     //*MOSTRAR MANTENIMIENTO REPUESTOS
     static public function ctrMostrarMantenimientoRepuestos($valor){
@@ -319,7 +328,7 @@ class ControladorMantenimiento{
 
     }      
     
-    //*EDITAR MAQUINA
+    //*CREAR MANTENIMIENTO
     static public function ctrCrearMantenimiento(){
 
         if(isset($_POST["nuevoId"])){
@@ -367,7 +376,7 @@ class ControladorMantenimiento{
                 $fechaInicio = new DateTime($_POST["nuevoInicio"]);
 
                 $datosCalendario = array(   "tipo"          => 'Mantenimiento',
-                                            "titulo"        => 'Mant. - '.$_POST["nuevaMaquina"],
+                                            "titulo"        => $_POST["nuevaMaquina"],
                                             "cod_interno"   => $_POST["nuevaMaquina"],
                                             "inicio"        => $fechaInicio->format("Y-m-d"),
                                             "fin"           => '',
@@ -400,9 +409,9 @@ class ControladorMantenimiento{
 
                 $datosEquipo = array(   "fec_ult_mant"  => $fechaInicio->format("Y-m-d"),
                                         "cod_tipo"      => $_POST["nuevaMaquina"],
-                                        "usureg"        => $usureg,
-                                        "pcreg"         => $pcreg,
-                                        "fecreg"        => $fecreg->format("Y-m-d H:i:s"));
+                                        "usumod"        => $usumod,
+                                        "pcmod"         => $pcmod,
+                                        "fecmod"        => $fecmod->format("Y-m-d H:i:s"));
 
                 #var_dump($datosEquipo);
                 $respuestaEquipo = ModeloMantenimiento::mdlActualizarEquipoMantUlt($datosEquipo);
@@ -471,5 +480,512 @@ class ControladorMantenimiento{
 		return $respuesta;
 
     }  
+
+    //*EDITAR MANTENIMIENTO
+    static public function ctrEditarMantenimiento(){
+
+        if(isset($_POST["id"])){
+
+            var_dump($_POST["id"]);
+
+            # traemos la fecha y la pc
+            date_default_timezone_set('America/Lima');
+            $usumod =$_SESSION["nombre"];
+            $pcmod = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+            $fecmod = new DateTime();
+
+            $datos = array( "id"            => $_POST["id"],
+                            "mante_inicio"  => $_POST["editarInicio"],
+                            "mante_fin"     => $_POST["editarFin"],
+                            "responsable"   => $_POST["editarResponsable"],
+                            "operario"      => $_POST["editarOperario"],
+                            "observaciones" => $_POST["editarObservacion"],
+                            "estado"        => $_POST["editarEstado"],                            
+                            "usumod"        => $usumod,
+                            "pcmod"         => $pcmod,
+                            "fecmod"        => $fecmod->format("Y-m-d H:i:s"));
+
+            var_dump($datos);
+            $respuesta = ModeloMantenimiento::mdlEditarMantenimiento($datos);
+            var_dump($respuesta);            
+
+            $fechaInicio = new DateTime($_POST["editarInicio"]);
+
+            $datosUlt = array(      "fec_ult_mant"  => $fechaInicio->format("Y-m-d"),
+                                    "cod_tipo"      => $_POST["editarMaquinaCod"],
+                                    "usumod"        => $usumod,
+                                    "pcmod"         => $pcmod,
+                                    "fecmod"        => $fecmod->format("Y-m-d H:i:s"));
+
+            #var_dump($datosUlt);
+            $respuestaUlt = ModeloMantenimiento::mdlActualizarEquipoMantUlt($datosUlt);
+            #var_dump($respuestaUlt);       
+            
+            $datosProg = array(     "fec_ult_mant"  => '0000-00-00 00:00',
+                                    "cod_tipo"      => $_POST["editarMaquinaCod"],
+                                    "usumod"        => $usumod,
+                                    "pcmod"         => $pcmod,
+                                    "fecmod"        => $fecmod->format("Y-m-d H:i:s"));
+
+            #var_dump($datosProg);
+            $respuestaProg = ModeloMantenimiento::mdlActualizarEquipoMantProg($datosProg);
+            #var_dump($respuestaProg);     
+            
+            if($respuesta == "ok"){
+
+                ModeloMantenimiento::mdlActualizarManteTotales($_POST["editarId"]);
+
+                echo'<script>
+
+                swal({
     
+                    type: "success",
+                    title: "Se edito el mantenimiento",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+                    }).then(function(result){
+    
+                        if (result.value) {
+    
+                        window.location = "mantenimiento";
+    
+                        }
+    
+                    })
+    
+                </script>';  
+
+            }else{
+
+                echo'<script>
+
+                swal({
+    
+                    type: "error",
+                    title: "No se edito el mantenimiento",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+                    }).then(function(result){
+    
+                        if (result.value) {
+    
+                        window.location = "mantenimiento";
+    
+                        }
+    
+                    })
+    
+                </script>';
+
+            }            
+
+        }
+
+    }
+
+    //*CREAR MANTENIMIENTO
+    static public function ctrEditarMantenimientoDetalle(){
+
+        if(isset($_POST["idD"])){
+
+            #var_dump($_POST["idD"]);
+            # traemos la fecha y la pc
+            date_default_timezone_set('America/Lima');
+            $usumod =$_SESSION["nombre"];
+            $pcmod = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+            $fecmod = new DateTime();
+
+            $cantidad = $_POST["editarCantidadD"];
+            $precio = $_POST["editarPrecio"];
+            $total = $cantidad * $precio;
+
+            $datos = array( "id"            => $_POST["idD"],
+                            "cantidad"      => $cantidad,
+                            "precio"        => $precio,
+                            "total"         => $total,
+                            "observaciones" => $_POST["editarObservacionD"],
+                            "usumod"        => $usumod,
+                            "pcmod"         => $pcmod,
+                            "fecmod"        => $fecmod->format("Y-m-d H:i:s"));
+
+            var_dump($datos);
+            $respuesta = ModeloMantenimiento::mdlEditarMantenimientoDetalle($datos);
+            var_dump($respuesta);  
+            
+            if($respuesta == "ok"){
+
+                ModeloMantenimiento::mdlActualizarManteTotales($_POST["editarIdD"]);
+
+                echo'<script>
+
+                swal({
+    
+                    type: "success",
+                    title: "Se edito el detalle",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+                    }).then(function(result){
+    
+                        if (result.value) {
+    
+                        window.location = "mantenimiento";
+    
+                        }
+    
+                    })
+    
+                </script>';  
+
+            }else{
+
+                echo'<script>
+
+                swal({
+    
+                    type: "error",
+                    title: "No se edito el detalle",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+                    }).then(function(result){
+    
+                        if (result.value) {
+    
+                        window.location = "mantenimiento";
+    
+                        }
+    
+                    })
+    
+                </script>';
+
+            } 
+
+        }
+        
+    }
+
+    //*ANULAR DETALLE MANTENIMIENTO
+    static public function ctrAnularMantenimientoDetalle(){
+
+        if(isset($_GET["idDetMante"])){
+
+            $id = $_GET["idDetMante"];
+
+            $codInt = ModeloMantenimiento::mdlMostrarMantenimientoDetalleEditar($id);
+
+            # traemos la fecha y la pc
+            date_default_timezone_set('America/Lima');
+            $usuanu =$_SESSION["nombre"];
+            $pcanu = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+            $fecanu = new DateTime();
+
+            $datos = array( "id"        =>  $id, 
+                            "usuanu"	=>  $usuanu,
+                            "fecanu"    =>  $fecanu->format("Y-m-d H:i:s"),                            
+                            "pcanu" 	=>  $pcanu);
+
+            #var_dump($datos);
+            $respuesta = ModeloMantenimiento::mdlAnularMantenimientoDetalle($datos);
+            #var_dump($respuesta);     
+            
+            if($respuesta == "ok"){
+
+                ModeloMantenimiento::mdlActualizarManteTotales($codInt["cod_interno"]);
+
+                echo'<script>
+
+                swal({
+    
+                    type: "success",
+                    title: "Se anulo el detalle",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+                    }).then(function(result){
+    
+                        if (result.value) {
+    
+                        window.location = "mantenimiento";
+    
+                        }
+    
+                    })
+    
+                </script>';  
+
+            }else{
+
+                echo'<script>
+
+                swal({
+    
+                    type: "error",
+                    title: "No se anulo el detalle",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+                    }).then(function(result){
+    
+                        if (result.value) {
+    
+                        window.location = "mantenimiento";
+    
+                        }
+    
+                    })
+    
+                </script>';
+
+            }            
+
+        }    
+    }
+
+    //*MOSTRAR CALENDARIO
+    static public function ctrTraerCalendario($valor){
+
+        $respuesta = ModeloMantenimiento::mdlTraerCalendario($valor);
+
+		return $respuesta;
+
+    }   
+    
+    //*CREAR CALENDARIO
+    static public function ctrCrearCalendario(){
+
+        if(isset($_POST["nuevoTipo"])){
+
+            #var_dump($_POST["nuevoTipo"]);
+            # traemos la fecha y la pc
+            date_default_timezone_set('America/Lima');
+            $usureg =$_SESSION["nombre"];
+            $pcreg = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+            $fecreg = new DateTime();
+
+            $_POST["nuevaObservacion"] = preg_replace("/[\r\n|\n|\r]+/", " ", $_POST["nuevaObservacion"]);
+
+            $datos = array( "tipo"          => $_POST["nuevoTipo"],
+                            "titulo"        => $_POST["nuevoTitulo"],
+                            "cod_interno"   => '',
+                            "inicio"        => $_POST["nuevoInicio"],
+                            "fin"           => $_POST["nuevoFin"],
+                            "allday"        => '',
+                            "dirurl"        => '',
+                            "indicaciones"  => $_POST["nuevaObservacion"],
+                            "estado"        => 'Pendiente',
+                            "usureg"        => $usureg,
+                            "pcreg"         => $pcreg,
+                            "fecreg"        => $fecreg->format("Y-m-d H:i:s"));
+            
+            #var_dump($datos);
+            $respuesta = ModeloMantenimiento::mdlCrearCalendario($datos);
+            #var_dump($respuesta);   
+            
+            if($respuesta == "ok"){
+
+                ModeloMantenimiento::mdlActualizarManteTotales($_POST["nuevoId"]);
+
+                echo'<script>
+
+                swal({
+    
+                    type: "success",
+                    title: "Se creo la actividad",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+                    }).then(function(result){
+    
+                        if (result.value) {
+    
+                        window.location = "calendario";
+    
+                        }
+    
+                    })
+    
+                </script>';  
+
+            }else{
+
+                echo'<script>
+
+                swal({
+    
+                    type: "error",
+                    title: "No se creo la actividad",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+                    }).then(function(result){
+    
+                        if (result.value) {
+    
+                        window.location = "calendario";
+    
+                        }
+    
+                    })
+    
+                </script>';
+
+            }            
+
+        }
+
+
+    }    
+
+    //*CREAR CALENDARIO
+    static public function ctrEditarCalendario(){
+
+        if(isset($_POST["id"])){
+
+            var_dump($_POST["id"]);
+            # traemos la fecha y la pc
+            date_default_timezone_set('America/Lima');
+            $usumod =$_SESSION["nombre"];
+            $pcmod = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+            $fecmod = new DateTime();
+
+            $_POST["editarObservacion"] = preg_replace("/[\r\n|\n|\r]+/", " ", $_POST["editarObservacion"]);            
+          
+            $datos = array( "id"            => $_POST["id"],
+                            "tipo"          => $_POST["editarTipo"],
+                            "titulo"        => $_POST["editarTitulo"],
+                            "cod_interno"   => '',
+                            "inicio"        => $_POST["editarInicio"],
+                            "fin"           => $_POST["editarFin"],
+                            "allday"        => '',
+                            "dirurl"        => '',
+                            "indicaciones"  => $_POST["editarObservacion"],
+                            "estado"        => 'Pendiente',
+                            "usumod"        => $usumod,
+                            "pcmod"         => $pcmod,
+                            "fecmod"        => $fecmod->format("Y-m-d H:i:s"));    
+                            
+            #var_dump($datos); 
+            $respuesta = ModeloMantenimiento::mdlEditarCalendario($datos);
+            #var_dump($respuesta);                    
+            
+            if($respuesta == "ok"){
+
+                ModeloMantenimiento::mdlActualizarManteTotales($_POST["nuevoId"]);
+
+                echo'<script>
+
+                swal({
+    
+                    type: "success",
+                    title: "Se creo la actividad",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+                    }).then(function(result){
+    
+                        if (result.value) {
+    
+                        window.location = "calendario";
+    
+                        }
+    
+                    })
+    
+                </script>';  
+
+            }else{
+
+                echo'<script>
+
+                swal({
+    
+                    type: "error",
+                    title: "No se creo la actividad",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+                    }).then(function(result){
+    
+                        if (result.value) {
+    
+                        window.location = "calendario";
+    
+                        }
+    
+                    })
+    
+                </script>';
+
+            }             
+
+        }
+
+    }        
+
+    //*ANULAR CALNDARIO
+    static public function ctrAnularCalendario(){
+
+        if(isset($_GET["idCalendario"])){
+
+            $id = $_GET["idCalendario"];
+
+            # traemos la fecha y la pc
+            date_default_timezone_set('America/Lima');
+            $usuanu =$_SESSION["nombre"];
+            $pcanu = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+            $fecanu = new DateTime();
+
+            $datos = array( "id"        =>  $id, 
+                            "usuanu"	=>  $usuanu,
+                            "fecanu"    =>  $fecanu->format("Y-m-d H:i:s"),                            
+                            "pcanu" 	=>  $pcanu);
+
+            #var_dump($datos);
+            $respuesta = ModeloMantenimiento::mdlAnularCalendario($datos);
+            #var_dump($respuesta);      
+
+            if($respuesta == "ok"){
+
+                echo'<script>
+
+                swal({
+    
+                    type: "success",
+                    title: "Se anulo la actividad",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+                    }).then(function(result){
+    
+                        if (result.value) {
+    
+                        window.location = "calendario";
+    
+                        }
+    
+                    })
+    
+                </script>';  
+
+            }else{
+
+                echo'<script>
+
+                swal({
+    
+                    type: "error",
+                    title: "No se anulo la actividad",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+                    }).then(function(result){
+    
+                        if (result.value) {
+    
+                        window.location = "calendario";
+    
+                        }
+    
+                    })
+    
+                </script>';
+
+            }             
+
+        }   
+    
+    } 
+
 }
