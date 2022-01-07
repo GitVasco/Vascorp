@@ -946,7 +946,7 @@ class ControladorFacturacion{
                                     "doc_destino" => $docDest,
                                     "doc_origen" => $docOrigen,
                                     "usuario" => $usuario,
-                                    "tipo_documento" => "NTCD",
+                                    "tipo_documento" => "NC",
                                     "usureg" => $usureg,
                                     "pcreg" => $pcreg);
                     //var_dump($datosD);

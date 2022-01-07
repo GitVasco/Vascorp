@@ -103,7 +103,7 @@ class AjaxFacturacion{
       public function ajaxValidarDocumentoDebito(){
         
         $valor=$this->documentoDebito;
-        $tipo="E23";
+        $tipo="S05";
         $estado="FACTURADO";
         $respuesta=ControladorFacturacion::ctrMostrarTablas($tipo,$estado,$valor);
         echo json_encode($respuesta);
@@ -336,13 +336,17 @@ class AjaxFacturacion{
 
           $respuesta=ControladorFacturacion::ctrGenerarFEFacBolA($tipo, $documento);
 
+          ModeloFacturacion::mdlEnviarTXT($tipo, $documento);
+
         }elseif ($tipo == "E05") {
           
           $respuesta=ControladorFacturacion::ctrGenerarFENCA($tipo, $documento);
+          ModeloFacturacion::mdlEnviarTXT($tipo, $documento);
 
-        }elseif ($tipo == "E23") {
+        }elseif ($tipo == "S05") {
           
           $respuesta=ControladorFacturacion::ctrGenerarFENDA($tipo, $documento);
+          ModeloFacturacion::mdlEnviarTXT($tipo, $documento);
 
         }
 

@@ -1977,6 +1977,13 @@ $("#daterange-btnProcesarCE").daterangepicker(
       }
     })
 
+	//Cambiamos el estado del botón físicamente
+
+    $(this).removeClass("btn-primary");
+    $(this).addClass("btn-default");
+    $(this).attr("disabled",true);
+
+
 
   });
 

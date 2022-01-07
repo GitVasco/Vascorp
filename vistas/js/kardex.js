@@ -74,7 +74,7 @@ $(".btnFiltrar").click(function () {
 
     if(ano == ""){
 
-        ano = 2021;
+        ano = 2022;
 
     }
 

@@ -28,7 +28,7 @@
                         <option value="E05">NOTAS CREDITO</option>
                         <option value="S02">BOLETAS VENTAS</option>
                         <option value="S03">FACTURAS</option>
-                        <option value="E23">NOTAS DEBITO</option>
+                        <option value="S05">NOTAS DEBITO</option>
                     </select>
                 </div>
 

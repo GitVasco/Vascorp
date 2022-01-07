@@ -30,6 +30,7 @@ class TablaCancelarCuentas{
             "'.$cuenta[$i]["tipo_doc"].'",
             "'.$cuenta[$i]["num_cta"].'",
             "'.$cuenta[$i]["cliente"]." - ".$cuenta[$i]["nombre"].'",
+            "'.$cuenta[$i]["documento"].'",
             "'.$cuenta[$i]["fecha"].'",
             "'.$cuenta[$i]["fecha_ven"].'",
             "'.$cuenta[$i]["monto"].'",

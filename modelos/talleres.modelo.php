@@ -1063,6 +1063,7 @@ class ModeloTalleres{
                 AND m.tipo NOT IN ('brasier')
                 AND m.modelo NOT IN ('10013') 
                 AND MONTH(et.fecha_terminado) = MONTH(NOW())  
+                AND YEAR(et.fecha_terminado) = YEAR(NOW())  
               GROUP BY MONTH(et.fecha_terminado),
                 DAY(et.fecha_terminado),
                 et.trabajador,

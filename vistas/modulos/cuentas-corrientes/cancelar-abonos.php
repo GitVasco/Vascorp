@@ -34,6 +34,7 @@
                         <th>Tipo Doc.</th>
                         <th>Nro Doc.</th>
                         <th>Cliente</th>
+                        <th>Documento</th>
                         <th>Fecha</th>
                         <th>Vencimiento</th>
                         <th>Monto</th>

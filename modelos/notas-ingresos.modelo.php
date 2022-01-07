@@ -59,7 +59,7 @@ class ModeloNotasIngresos{
                                             Nea 
                                             WHERE Nea.EstReg = 'P' 
                                             AND Nea.`NroGuiaAsociada` != '') 
-                                            AND YEAR(nea.fecreg) IN ('2020', '2021') 
+                                            AND YEAR(nea.fecreg) IN ('2020', '2021','2022') 
                                         ORDER BY nNea DESC");
 
 			$stmt -> execute();

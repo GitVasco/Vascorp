@@ -53,20 +53,20 @@ class TablaProcesarCE{
 
                 $envio = "<span style='font-size:85%' class='label label-success'>ENVIADO</span>";
 
-                $botones =  "<div class='btn-group' ><a class='btn btn-xs btn-success' href='vistas/generar_xml/archivos_xml/".$archivo.".XML' download title='Descargar XML'>XML</a><button title='Consultar Estado' class='btn btn-xs btn-warning btnConsultarEstado' tipo = '".$tipo."' documento='".$factura[$i]["documento"]."' fecha='".$factura[$i]["fecha"]."' monto='".$factura[$i]["total"]."'><i class='fa fa-search'></i></button></div>"; 
+                $botones =  "<div class='btn-group'><button title='Consultar Estado' class='btn btn-xs btn-warning btnConsultarEstado' tipo = '".$tipo."' documento='".$factura[$i]["documento"]."' fecha='".$factura[$i]["fecha"]."' monto='".$factura[$i]["total"]."'><i class='fa fa-search'></i></button></div>"; 
+
             }else if($factura[$i]["facturacion"] == "1"){
 
                 $envio = "<span style='font-size:85%' class='label label-danger'>ERROR</span>";
                 
-            $botones =  "<div class='btn-group'><button title='Generar XML' class='btn btn-xs btn-primary btnGenerarXMLCE' tipo = '".$factura[$i]["tipo"]."' documento='".$factura[$i]["documento"]."'><i class='fa fa-paper-plane'></i></button><button title='Consultar Estado' class='btn btn-xs btn-warning btnConsultarEstado' tipo = '".$tipo."' documento='".$factura[$i]["documento"]."' fecha='".$factura[$i]["fecha"]."' monto='".$factura[$i]["total"]."'><i class='fa fa-search'></i></button></div>";
+                $botones =  "<div class='btn-group'><button title='Consultar Estado' class='btn btn-xs btn-warning btnConsultarEstado' tipo = '".$tipo."' documento='".$factura[$i]["documento"]."' fecha='".$factura[$i]["fecha"]."' monto='".$factura[$i]["total"]."'><i class='fa fa-search'></i></button></div>";
        
 
             }else{
 
                 $envio = "<span style='font-size:85%' class='label label-info'>SIN ENVIAR</span>";
-
                 
-            $botones =  "<div class='btn-group'><button title='Generar XML' class='btn btn-xs btn-primary btnGenerarXMLCE' tipo = '".$factura[$i]["tipo"]."' documento='".$factura[$i]["documento"]."'><i class='fa fa-paper-plane'></i></button><button title='Consultar Estado' class='btn btn-xs btn-warning btnConsultarEstado' tipo = '".$tipo."' documento='".$factura[$i]["documento"]."' fecha='".$factura[$i]["fecha"]."' monto='".$factura[$i]["total"]."'><i class='fa fa-search'></i></button></div>";
+                $botones =  "<div class='btn-group'><button title='Generar XML' class='btn btn-xs btn-primary btnGenerarXMLCE' tipo = '".$factura[$i]["tipo"]."' documento='".$factura[$i]["documento"]."'><i class='fa fa-paper-plane'></i></button><button title='Consultar Estado' class='btn btn-xs btn-warning btnConsultarEstado' tipo = '".$tipo."' documento='".$factura[$i]["documento"]."' fecha='".$factura[$i]["fecha"]."' monto='".$factura[$i]["total"]."'><i class='fa fa-search'></i></button></div>";
        
 
             }
@@ -75,7 +75,7 @@ class TablaProcesarCE{
             $datosJson .= '[
             "'.$factura[$i]["tipo_documento"].'",
             "<b>'.$factura[$i]["documento"].'</b>",
-            "'.$factura[$i]["total"].'",
+            "'.($factura[$i]["total"]*-1).'",
             "'.$factura[$i]["cliente"].'",
             "<b>'.$factura[$i]["nombre"].'</b>",
             "'.$factura[$i]["vendedor"].'",

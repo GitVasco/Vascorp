@@ -282,7 +282,7 @@ class ModeloAsistencias{
 
 		if($fechaInicial == "null"){
 
-			$stmt = Conexion::conectar()->prepare("SELECT a.*,DATE(a.fecha) as fecha2, t.nom_tra,t.ape_pat_tra,t.ape_mat_tra FROM $tabla a LEFT JOIN trabajadorjf t ON a.id_trabajador=t.cod_tra ORDER BY id DESC");
+			$stmt = Conexion::conectar()->prepare("SELECT a.*,DATE(a.fecha) as fecha2, t.nom_tra,t.ape_pat_tra,t.ape_mat_tra FROM $tabla a LEFT JOIN trabajadorjf t ON a.id_trabajador=t.cod_tra WHERE YEAR(a.fecha) = '2022' ORDER BY id DESC");
 
 			$stmt -> execute();
 

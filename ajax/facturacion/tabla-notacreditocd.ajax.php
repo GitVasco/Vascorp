@@ -44,7 +44,6 @@ class TablaNotasCD{
 
 
                 $datosJson .= '[
-                "'.($i+1).'",
                 "'.$notas[$i]["tipo_documento"].'",
                 "'.$nombre_tipo.'",
                 "'.$notas[$i]["documento"].'",

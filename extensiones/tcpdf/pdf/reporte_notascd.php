@@ -44,7 +44,7 @@ class MYPDF extends TCPDF {
         $this->MultiCell(15, 5, '', 0, 'C', 0, 0, '', '', true);
 
         $this->SetFont('helvetica', 'B', 9);
-        if($tipo == 'E23'){
+        if($tipo == 'S05'){
             $this->MultiCell(70, 35, 'RUC: 20513613939'."\n\n".'NOTAS DE DEBITO ELECTRONICA'."\n\n".'Nro.: '.$documento2.'   ', 1, 'C', 0, 0, '', '', true, 0, false, true, 35, 'M');
         }else{
             $this->MultiCell(70, 35, 'RUC: 20513613939'."\n\n".'NOTAS DE CREDITO ELECTRONICA'."\n\n".'Nro.: '.$documento2.'   ', 1, 'C', 0, 0, '', '', true, 0, false, true, 35, 'M');

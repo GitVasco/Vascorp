@@ -729,7 +729,7 @@ class ModeloIngresos{
 				LEFT JOIN movimientos_cabecerajf mc 
 				  ON m.tipo = mc.tipo 
 				  AND m.documento = mc.documento 
-			  WHERE m.tipo = 'E20' 
+			  WHERE m.tipo = 'E20' and YEAR(m.fecha)='2022'
 			  GROUP BY m.documento,
 				a.modelo,
 				a.nombre,

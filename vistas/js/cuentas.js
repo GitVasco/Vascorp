@@ -1113,7 +1113,7 @@ $('.tablaCuentasConsultar').DataTable({
   "deferRender": true,
   "retrieve": true,
   "processing": true,
-  "order": [[5, "asc"]],
+  "order": [[5, "desc"]],
   "pageLength": 20,
   "lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
   "language": {
@@ -1384,7 +1384,7 @@ $('.tablaEnvioLetras').DataTable({
   "deferRender": true,
   "retrieve": true,
   "processing": true,
-  "order": [[0, "asc"]],
+  "order": [[1, "asc"]],
   "pageLength": 20,
   "lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
   "language": {

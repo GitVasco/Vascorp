@@ -265,7 +265,7 @@ if( $tamaño>= 25){
     
     $pdf->Cell(20, 10, 'Op. Gravadas', 0, false, 'L', 0, '', 0, false, false, false );
     $pdf->Cell(25, 10, 'S/', 0, false, 'C', 0, '', 0, false, false, false );
-    $pdf->Cell(12, 10, number_format(($venta["neto"]),2), 0, false, 'R', 0, '', 0, false, false, false );
+    $pdf->Cell(12, 10, number_format(($venta["neto"]*-1),2), 0, false, 'R', 0, '', 0, false, false, false );
     $pdf->Ln(5);
     $pdf->Cell(125, 10, '   Nro unidades        '.($unidad["cantidad"]*-1), 0, false, 'L', 0, '', 0, false, false, false );
     $pdf->Cell(20, 10, 'Op. Inafecta', 0, false, 'L', 0, '', 0, false, false, false );
@@ -285,7 +285,7 @@ if( $tamaño>= 25){
     $pdf->Ln(5);
     $pdf->Cell(125, 10, '', 0, false, 'L', 0, '', 0, false, false, false );
     $pdf->Cell(20, 10, 'Sub Total', 0, false, 'L', 0, '', 0, false, false, false );
-    $pdf->Cell(37, 10, number_format($subtotal,2), 0, false, 'R', 0, '', 0, false, false, false );
+    $pdf->Cell(37, 10, number_format($subtotal*-1,2), 0, false, 'R', 0, '', 0, false, false, false );
     $pdf->Ln(5);
     $pdf->Cell(125, 10, '', 0, false, 'L', 0, '', 0, false, false, false );
     $pdf->Cell(20, 10, 'ISC', 0, false, 'L', 0, '', 0, false, false, false );
@@ -294,7 +294,7 @@ if( $tamaño>= 25){
     $pdf->Cell(125, 10, '', 0, false, 'L', 0, '', 0, false, false, false );
     $pdf->Cell(10, 10, 'IGV', 0, false, 'L', 0, '', 0, false, false, false );
     $pdf->Cell(10, 10, '18%', 0, false, 'L', 0, '', 0, false, false, false );
-    $pdf->Cell(37, 10, number_format(($venta["igv"]),2), 0, false, 'R', 0, '', 0, false, false, false );
+    $pdf->Cell(37, 10, number_format(($venta["igv"]*-1),2), 0, false, 'R', 0, '', 0, false, false, false );
     $pdf->Ln(5);
     $pdf->Cell(125, 10, '', 0, false, 'L', 0, '', 0, false, false, false );
     $pdf->Cell(20, 10, 'Total', 0, false, 'L', 0, '', 0, false, false, false );

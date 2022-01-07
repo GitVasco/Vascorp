@@ -21,7 +21,7 @@ $respuesta = ControladorMantenimiento::ctrTraerCalendario($valor);
 
     <section class="content">
         <div class="row">
-            <div class="col-lg-7">
+            <div class="col-lg-6">
                 <div class="box box-danger">
                     <div class="box-header with-border"></div>
 
@@ -57,7 +57,7 @@ $respuesta = ControladorMantenimiento::ctrTraerCalendario($valor);
                 </div>
             </div>
 
-            <div class="col-lg-5">
+            <div class="col-lg-6">
                 <div class="box box-primary">
                     <div class="box-body no-padding">
                         <div id="calendar"></div>
@@ -65,7 +65,7 @@ $respuesta = ControladorMantenimiento::ctrTraerCalendario($valor);
                 </div>
             </div>
 
-            <div class="col-lg-7">
+            <div class="col-lg-6">
 
             </div>
             
@@ -76,8 +76,8 @@ $respuesta = ControladorMantenimiento::ctrTraerCalendario($valor);
                     </div>
                     <div>                        
                         <div class="bg-yellow">Mantenimiento</div>
-                        <div class="bg-aqua">Actividades</div>
-                        <div class="bg-light-blue">Reuniones</div>
+                        <div class="bg-aqua">Reuniones</div>
+                        <div class="bg-light-blue">Actividades</div>
                         <div class="bg-red">Capacitaciones</div>
                         <div class="bg-green">Cumpleaños</div>
                     </div>

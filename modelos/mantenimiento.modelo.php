@@ -338,7 +338,29 @@ class ModeloMantenimiento{
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM calendario_jf c WHERE c.estado = 'Pendiente'");
+			$stmt = Conexion::conectar()->prepare("SELECT 
+                                                    c.id,
+                                                    c.tipo,
+                                                    c.titulo,
+                                                    c.cod_interno,
+                                                    c.inicio,
+                                                    c.fin,
+                                                    c.allday,
+                                                    c.dirurl,
+                                                    SUBSTR(c.indicaciones,1,20) AS indicaciones,
+                                                    c.estado,
+                                                    c.usureg,
+                                                    c.pcreg,
+                                                    c.fecreg,
+                                                    c.usumod,
+                                                    c.pcmod,
+                                                    c.fecmod,
+                                                    c.usuanu,
+                                                    c.pcanu,
+                                                    c.fecanu 
+                                                FROM
+                                                    calendario_jf c 
+                                                WHERE c.estado = 'Pendiente'");
 
 			$stmt -> execute();
 

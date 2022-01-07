@@ -65,7 +65,6 @@
         <thead>
          
          <tr>
-           <th>N° </th>
            <th>Tipo doc.</th>
            <th>NT</th>
            <th>documento</th>

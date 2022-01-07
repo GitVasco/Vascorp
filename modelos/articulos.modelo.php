@@ -346,6 +346,7 @@ class ModeloArticulos
 			  LEFT JOIN articulojf a 
 				ON cd.articulo = a.articulo 
 			WHERE LEFT(cd.codigo, 2) = '".$sectorIngreso."' 
+			AND cd.cantidad > 0 
 			ORDER BY c.guia, a.articulo;");
 	
 			$stmt->execute();

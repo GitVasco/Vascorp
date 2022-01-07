@@ -1235,29 +1235,29 @@ class ModeloFacturacion{
         if($fechaInicial=="null"){
     
           $sql="SELECT 
-          v.tipo,
-          v.tipo_documento,
-          v.documento,
-          v.total,
-          v.cliente,
-          c.nombre,
-          v.usuario,
-          u.nombre as nombres,
-          v.estado,
-          v.fecha,
-          CASE
-    WHEN v.tipo = 'E05' 
-    THEN 'NC' 
-    ELSE 'ND' 
-  END AS nombre_tipo  
-        FROM
-          ventajf v 
-          LEFT JOIN clientesjf c 
-            ON v.cliente = c.codigo 
-          LEFT JOIN usuariosjf u 
-            ON v.usuario = u.id 
-        WHERE v.tipo IN ('E05', 'E23') 
-          AND YEAR(v.fecha) = 2021";
+                    v.tipo,
+                    v.tipo_documento,
+                    v.documento,
+                    v.total,
+                    v.cliente,
+                    c.nombre,
+                    v.usuario,
+                    u.nombre as nombres,
+                    v.estado,
+                    v.fecha,
+                    CASE
+                WHEN v.tipo = 'E05' 
+                THEN 'NC' 
+                ELSE 'ND' 
+            END AS nombre_tipo  
+                    FROM
+                    ventajf v 
+                    LEFT JOIN clientesjf c 
+                        ON v.cliente = c.codigo 
+                    LEFT JOIN usuariosjf u 
+                        ON v.usuario = u.id 
+                    WHERE v.tipo IN ('E05', 'S05') 
+                    AND YEAR(v.fecha) = 2022";
     
           $stmt=Conexion::conectar()->prepare($sql);
           
@@ -1268,29 +1268,29 @@ class ModeloFacturacion{
         }else if($fechaInicial == $fechaFinal){
     
           $sql="SELECT 
-          v.tipo,
-          v.tipo_documento,
-          v.documento,
-          v.total,
-          v.cliente,
-          c.nombre,
-          v.usuario,
-          u.nombre as nombres,
-          v.estado,
-          v.fecha ,
-          CASE
-    WHEN v.tipo = 'E05' 
-    THEN 'NC' 
-    ELSE 'ND' 
-  END AS nombre_tipo 
-        FROM
-          ventajf v 
-          LEFT JOIN clientesjf c 
-            ON v.cliente = c.codigo 
-          LEFT JOIN usuariosjf u 
-            ON v.usuario = u.id 
-        WHERE v.tipo IN ('E05', 'E23') 
-          AND DATE(v.fecha)  like '%$fechaFinal%' ";
+                        v.tipo,
+                        v.tipo_documento,
+                        v.documento,
+                        v.total,
+                        v.cliente,
+                        c.nombre,
+                        v.usuario,
+                        u.nombre as nombres,
+                        v.estado,
+                        v.fecha ,
+                        CASE
+                    WHEN v.tipo = 'E05' 
+                    THEN 'NC' 
+                    ELSE 'ND' 
+                END AS nombre_tipo 
+                        FROM
+                        ventajf v 
+                        LEFT JOIN clientesjf c 
+                            ON v.cliente = c.codigo 
+                        LEFT JOIN usuariosjf u 
+                            ON v.usuario = u.id 
+                        WHERE v.tipo IN ('E05', 'S05') 
+                        AND DATE(v.fecha)  like '%$fechaFinal%' ";
     
           $stmt=Conexion::conectar()->prepare($sql);
     
@@ -1301,7 +1301,7 @@ class ModeloFacturacion{
           return $stmt->fetchAll();
     
         }else{
-          $fechaActual = new DateTime();
+                $fechaActual = new DateTime();
                 $fechaActual ->add(new DateInterval("P1D"));
                 $fechaActualMasUno = $fechaActual->format("Y-m-d");
     
@@ -1310,80 +1310,81 @@ class ModeloFacturacion{
                 $fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
     
                 if($fechaFinalMasUno == $fechaActualMasUno){
-            $sql="SELECT 
-            v.tipo,
-            v.tipo_documento,
-            v.documento,
-            v.total,
-            v.cliente,
-            c.nombre,
-            v.usuario,
-            u.nombre as nombres,
-            v.estado,
-            v.fecha ,
-            CASE
-    WHEN v.tipo = 'E05' 
-    THEN 'NC' 
-    ELSE 'ND' 
-  END AS nombre_tipo 
-          FROM
-            ventajf v 
-            LEFT JOIN clientesjf c 
-              ON v.cliente = c.codigo 
-            LEFT JOIN usuariosjf u 
-              ON v.usuario = u.id 
-          WHERE v.tipo IN ('E05', 'E23') 
-            AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'";
+
+                        $sql="SELECT 
+                                            v.tipo,
+                                            v.tipo_documento,
+                                            v.documento,
+                                            v.total,
+                                            v.cliente,
+                                            c.nombre,
+                                            v.usuario,
+                                            u.nombre as nombres,
+                                            v.estado,
+                                            v.fecha ,
+                                            CASE
+                                    WHEN v.tipo = 'E05' 
+                                    THEN 'NC' 
+                                    ELSE 'ND' 
+                                END AS nombre_tipo 
+                                        FROM
+                                            ventajf v 
+                                            LEFT JOIN clientesjf c 
+                                            ON v.cliente = c.codigo 
+                                            LEFT JOIN usuariosjf u 
+                                            ON v.usuario = u.id 
+                                        WHERE v.tipo IN ('E05', 'S05') 
+                                            AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'";
+                
+                    $stmt=Conexion::conectar()->prepare($sql);
+                
+                    $stmt->bindParam(":mes", $mes, PDO::PARAM_STR);
+                
+                    $stmt->execute();
+                
+                    return $stmt->fetchAll();
     
-          $stmt=Conexion::conectar()->prepare($sql);
-    
-          $stmt->bindParam(":mes", $mes, PDO::PARAM_STR);
-    
-          $stmt->execute();
-    
-          return $stmt->fetchAll();
-    
-          }else{
-    
-            $sql="SELECT 
-            v.tipo,
-            v.tipo_documento,
-            v.documento,
-            v.total,
-            v.cliente,
-            c.nombre,
-            v.usuario,
-            u.nombre as nombres,
-            v.estado,
-            v.fecha ,
-            CASE
-    WHEN v.tipo = 'E05' 
-    THEN 'NC' 
-    ELSE 'ND' 
-  END AS nombre_tipo 
-          FROM
-            ventajf v 
-            LEFT JOIN clientesjf c 
-              ON v.cliente = c.codigo 
-            LEFT JOIN usuariosjf u 
-              ON v.usuario = u.id 
-          WHERE v.tipo IN ('E05', 'E23') 
-            AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'";
-    
-            $stmt=Conexion::conectar()->prepare($sql);
-    
-            $stmt->bindParam(":mes", $mes, PDO::PARAM_STR);
-    
-            $stmt->execute();
-    
-            return $stmt->fetchAll();
-          }
+                }else{
+                
+                        $sql="SELECT 
+                                            v.tipo,
+                                            v.tipo_documento,
+                                            v.documento,
+                                            v.total,
+                                            v.cliente,
+                                            c.nombre,
+                                            v.usuario,
+                                            u.nombre as nombres,
+                                            v.estado,
+                                            v.fecha ,
+                                            CASE
+                                    WHEN v.tipo = 'E05' 
+                                    THEN 'NC' 
+                                    ELSE 'ND' 
+                                END AS nombre_tipo 
+                                        FROM
+                                            ventajf v 
+                                            LEFT JOIN clientesjf c 
+                                            ON v.cliente = c.codigo 
+                                            LEFT JOIN usuariosjf u 
+                                            ON v.usuario = u.id 
+                                        WHERE v.tipo IN ('E05', 'S05') 
+                                            AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'";
+                
+                        $stmt=Conexion::conectar()->prepare($sql);
+                
+                        $stmt->bindParam(":mes", $mes, PDO::PARAM_STR);
+                
+                        $stmt->execute();
+                
+                        return $stmt->fetchAll();
+                }
     
         }
     
           $stmt=null;
     
-      }
+    }
 
         /*
 	* Método para mostrar produccion de trusas
@@ -1422,7 +1423,7 @@ class ModeloFacturacion{
       ON c.ubigeo = u.cod_ubi
   WHERE v.tipo = 'S03'
       AND v.estado = 'GENERADO'
-      AND YEAR(v.fecha) = 2021";
+      AND YEAR(v.fecha) = 2022";
 
       $stmt=Conexion::conectar()->prepare($sql);
       
@@ -1608,7 +1609,7 @@ class ModeloFacturacion{
       ON c.ubigeo = u.cod_ubi
   WHERE v.tipo = 'S02'
       AND v.estado = 'GENERADO'
-      AND YEAR(v.fecha) = 2021";
+      AND YEAR(v.fecha) = 2022";
 
       $stmt=Conexion::conectar()->prepare($sql);
       
@@ -1794,7 +1795,7 @@ class ModeloFacturacion{
       ON c.ubigeo = u.cod_ubi
   WHERE v.tipo = 'S70'
       AND v.estado = 'GENERADO'
-      AND YEAR(v.fecha) = 2021";
+      AND YEAR(v.fecha) = 2022";
 
       $stmt=Conexion::conectar()->prepare($sql);
       
@@ -6623,7 +6624,7 @@ class ModeloFacturacion{
       ON v.tipo = n.tipo 
       AND v.documento = n.documento 
   WHERE v.tipo = :tipo
-      AND YEAR(v.fecha) = 2021";
+      AND YEAR(v.fecha) = 2022";
 
       $stmt=Conexion::conectar()->prepare($sql);
       
@@ -7259,85 +7260,85 @@ class ModeloFacturacion{
     static public function mdlFENCACabA($tipo, $documento){
 
         $sql="SELECT 
-                  /*FILA 1*/
-                  DATE_FORMAT(v.fecha, '%d/%m/%Y') AS a1,
-                  CONCAT(
-                    LEFT(v.documento, 4),
-                    '-',
-                    RIGHT(v.documento, 8)
-                  ) AS b1,
-                  'PEN' AS c1,
-                  v.igv AS d1,
-                  v.igv AS e1,
-                  'PEN' AS f1,
-                  v.total * - 1 AS m1,
-                  v.neto - v.dscto AS p1,
-                  v.neto - v.dscto AS t1,
-                  v.neto - v.dscto AS ae1,
-                  '1' AS aj1,
-                  '1' AS ak1,
-                  v.igv AS an1,
-                  /*FILA 3*/
-                  'Corporacion Vasco S.A.C.' AS a3,
-                  'JACKY FORM' AS b3,
-                  '20513613939' AS c3,
-                  '' AS d3,
-                  'CAL.SANTO TORIBIO NRO. 259' AS e3,
-                  'URB.SANTA LUISA 1RA ETAPA' AS f3,
-                  'LIMA' AS g3,
-                  'LIMA' AS h3,
-                  'SAN MARTIN DE PORRES' AS i3,
-                  'PE' AS j3,
-                  'FINANZCO' AS k3,
-                  'josecorpo' AS l3,
-                  '0000' AS m3,
-                  /*FILA 5*/
-                  c.documento AS a4,
-                  c.tipo_documento AS b4,
-                  c.nombre AS c4,
-                  '' AS d4,
-                  CASE
-                    WHEN LENGTH(c.ubigeo) = 6 
-                    THEN c.ubigeo 
-                    ELSE '' 
-                  END AS e4,
-                  c.direccion AS f4,
-                  '-' AS g4,
-                  u.departamento AS h4,
-                  u.provincia AS i4,
-                  u.distrito AS j4,
-                  'PE' AS k4,
-                  c.email AS l4,
-                  /*FILA 6*/
-                  CONCAT(
-                    'Nro.unidades: ',
-                    ROUND(SUM(m.cantidad) * - 1, 0)
-                  ) AS a6,
-                  v.cliente AS d6,
-                  '' AS e6,
-                  v.neto AS f6,
-                  CONCAT(ma.codigo, '   ', ma.descripcion) AS g6,
-                  /*FILA 7*/
-                  CONCAT(
-                    LEFT(n.doc_origen, 4),
-                    '-',
-                    RIGHT(n.doc_origen, 8)
-                  ) AS a7,
-                  n.tipo_doc AS b7,
-                  (SELECT 
-                    argumento 
-                  FROM
-                    maestrajf m 
-                  WHERE m.tipo_dato = 'TMOT' 
-                    AND m.codigo = n.motivo) AS c7,
-                  (SELECT 
-                    descripcion 
-                  FROM
-                    maestrajf m 
-                  WHERE m.tipo_dato = 'TMOT' 
-                    AND m.codigo = n.motivo) AS d7,
-                  DATE_FORMAT(n.fecha_origen, '%d/%m/%Y') AS e7,
-                  'RELATED_DOC' AS f7 
+                /*FILA 1*/
+                DATE_FORMAT(v.fecha, '%d/%m/%Y') AS a1,
+                CONCAT(
+                  LEFT(v.documento, 4),
+                  '-',
+                  RIGHT(v.documento, 8)
+                ) AS b1,
+                'PEN' AS c1,
+                v.igv * - 1 AS d1,
+                v.igv * - 1 AS e1,
+                'PEN' AS f1,
+                v.total * - 1 AS m1,
+                (v.neto - v.dscto) * - 1 AS p1,
+                (v.neto - v.dscto) * - 1 AS t1,
+                (v.neto - v.dscto) * - 1 AS ae1,
+                '1' AS aj1,
+                '1' AS ak1,
+                v.igv * - 1 AS an1,
+                /*FILA 3*/
+                'Corporacion Vasco S.A.C.' AS a3,
+                'JACKY FORM' AS b3,
+                '20513613939' AS c3,
+                '' AS d3,
+                'CAL.SANTO TORIBIO NRO. 259' AS e3,
+                'URB.SANTA LUISA 1RA ETAPA' AS f3,
+                'LIMA' AS g3,
+                'LIMA' AS h3,
+                'SAN MARTIN DE PORRES' AS i3,
+                'PE' AS j3,
+                'FINANZCO' AS k3,
+                'josecorpo' AS l3,
+                '0000' AS m3,
+                /*FILA 5*/
+                c.documento AS a4,
+                c.tipo_documento AS b4,
+                c.nombre AS c4,
+                '' AS d4,
+                CASE
+                  WHEN LENGTH(c.ubigeo) = 6 
+                  THEN c.ubigeo 
+                  ELSE '' 
+                END AS e4,
+                c.direccion AS f4,
+                '-' AS g4,
+                u.departamento AS h4,
+                u.provincia AS i4,
+                u.distrito AS j4,
+                'PE' AS k4,
+                c.email AS l4,
+                /*FILA 6*/
+                CONCAT(
+                  'Nro.unidades: ',
+                  ROUND(SUM(m.cantidad) * - 1, 0)
+                ) AS a6,
+                v.cliente AS d6,
+                '' AS e6,
+                v.neto *-1 AS f6,
+                CONCAT(ma.codigo, '   ', ma.descripcion) AS g6,
+                /*FILA 7*/
+                CONCAT(
+                  LEFT(n.doc_origen, 4),
+                  '-',
+                  RIGHT(n.doc_origen, 8)
+                ) AS a7,
+                n.tipo_doc AS b7,
+                (SELECT 
+                  argumento 
+                FROM
+                  maestrajf m 
+                WHERE m.tipo_dato = 'TMOT' 
+                  AND m.codigo = n.motivo) AS c7,
+                (SELECT 
+                  descripcion 
+                FROM
+                  maestrajf m 
+                WHERE m.tipo_dato = 'TMOT' 
+                  AND m.codigo = n.motivo) AS d7,
+                DATE_FORMAT(n.fecha_origen, '%d/%m/%Y') AS e7,
+                'RELATED_DOC' AS f7 
                 FROM
                   ventajf v 
                   LEFT JOIN 
@@ -7447,20 +7448,20 @@ class ModeloFacturacion{
     static public function mdlFENCDetB($tipo, $documento){
 
         $sql="SELECT 
-                    'ZZ' AS b8,
-                    '1' AS c8,
-                    n.observacion AS d8,
-                    v.total * - 1 AS e8,
-                    '01' AS f8,
-                    v.igv AS i8,
-                    v.igv AS j8,
-                    '10' AS k8,
-                    '1000' AS l8,
-                    '18' AS m8,
-                    v.neto AS t8,
-                    v.neto AS u8,
-                    v.neto AS x8,
-                    v.igv AS ad8 
+                'ZZ' AS b8,
+                '1' AS c8,
+                n.observacion AS d8,
+                v.total * - 1 AS e8,
+                '01' AS f8,
+                v.igv * - 1 AS i8,
+                v.igv * - 1 AS j8,
+                '10' AS k8,
+                '1000' AS l8,
+                '18' AS m8,
+                v.neto * - 1 AS t8,
+                v.neto * - 1 AS u8,
+                v.neto * - 1 AS x8,
+                v.igv * - 1 AS ad8 
                 FROM
                     notascd_jf n 
                     LEFT JOIN ventajf v 
@@ -7735,6 +7736,38 @@ class ModeloFacturacion{
         $stmt=null;
     
     }  
+
+    /*
+	* ESTADO PROCESAR DOCUMENTO
+	*/
+	static public function mdlEnviarTXT($tipo, $documento){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE 
+                                                    ventajf 
+                                                SET
+                                                    estado = 'ENVIADO',
+                                                    facturacion = '2' 
+                                                WHERE tipo = :tipo 
+                                                    AND documento = :documento");
+
+        $stmt->bindParam(":tipo", $tipo, PDO::PARAM_STR);
+        $stmt->bindParam(":documento", $documento, PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+
+		} else {
+
+			return "error";
+
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+
+    }
 
 
 }
