@@ -445,6 +445,7 @@ class ModeloArticulos
 			a.color,
 			a.cod_talla,
 			a.talla,
+			a.servicio,
 			a.estado,
 			a.urgencia,
 			a.mp_faltante,

@@ -41,7 +41,7 @@ class TablaCalendario{
 
                 }else if($calendario[$i]["tipo"] == "Cumpleaños"){
 
-                    $tipo = "<span style='font-size:85%' class='label label-success'>".$calendario[$i]["tipo"]."</span>";
+                    $tipo = "<span style='font-size:85%' class='label label-success'>".$calendario[$i]["tipo"]." / Feriados</span>";
 
                 }
 
@@ -57,7 +57,6 @@ class TablaCalendario{
                     "'.$calendario[$i]["inicio"].'",
                     "'.$calendario[$i]["fin"].'",
                     "'.$calendario[$i]["indicaciones"].'",
-                    "'.$calendario[$i]["estado"].'",
                     "'.$calendario[$i]["usureg"].'",
                     "'.$botones.'"
                     ],';        

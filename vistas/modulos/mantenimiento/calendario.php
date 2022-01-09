@@ -44,7 +44,6 @@ $respuesta = ControladorMantenimiento::ctrTraerCalendario($valor);
                                     <th>Inicio</th>
                                     <th>Fin</th>
                                     <th>Indicaciones</th>
-                                    <th>Estado</th>
                                     <th>Usuario</th>
                                     <th style="width:100px">Acciones</th>
                                 </tr>
@@ -79,7 +78,7 @@ $respuesta = ControladorMantenimiento::ctrTraerCalendario($valor);
                         <div class="bg-aqua">Reuniones</div>
                         <div class="bg-light-blue">Actividades</div>
                         <div class="bg-red">Capacitaciones</div>
-                        <div class="bg-green">Cumpleaños</div>
+                        <div class="bg-green">Cumpleaños /Feriados</div>
                     </div>
                 </div>
             </div>
@@ -138,7 +137,7 @@ MODAL AGREGAR CALENDARIO
                                 <option value="Mantenimiento">Mantenimiento</option>
                                 <option value="Reunion">Reunion</option>
                                 <option value="Capacitacion">Capacitacion</option>
-                                <option value="Cumpleaños">Cumpleaños</option>
+                                <option value="Cumpleaños">Cumpleaños/Feriados</option>
 
                             </select>
 
@@ -266,7 +265,7 @@ MODAL AGREGAR CALENDARIO
                                 <option value="Mantenimiento">Mantenimiento</option>
                                 <option value="Reunion">Reunion</option>
                                 <option value="Capacitacion">Capacitacion</option>
-                                <option value="Cumpleaños">Cumpleaños</option>
+                                <option value="Cumpleaños">Cumpleaños/Feriados</option>
 
                             </select>
 

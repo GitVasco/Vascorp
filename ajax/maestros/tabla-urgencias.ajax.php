@@ -103,6 +103,21 @@ class TablaUrgencias{
             }
 
             /* 
+            todo: Servicio
+            */
+            if($articulos[$i]["servicio"] <= 0){
+
+                $servicioI = number_format($articulos[$i]["servicio"],0);
+                $servicio = "<center><b><span style='font-size:100%' class='text-danger'>".$servicioI."</span></b></center>";
+
+            }else{
+
+                $servicioI = number_format($articulos[$i]["servicio"],0);
+                $servicio = "<center><b><span style='font-size:100%' class='text-primary'>".$servicioI."</span></b></center>";
+
+            }            
+
+            /* 
             todo: Almacen de corte
             */
             if($articulos[$i]["alm_corte"] <= 0){
@@ -163,6 +178,7 @@ class TablaUrgencias{
                 "'.$stock.'",
                 "'.$pedidos.'",
                 "'.$taller.'",
+                "'.$servicio.'",
                 "'.$alm_corte.'",
                 "'.$ord_corte.'",
                 "'.$ult_mes.'",

@@ -112,6 +112,7 @@
            <th>Stock</th>
            <th>Pedidos</th>
            <th>En Taller</th>
+           <th>En Servicio</th>
            <th>Alm. Corte</th>
            <th>Ord. Corte</th>
            <th>Ult 30d</th>

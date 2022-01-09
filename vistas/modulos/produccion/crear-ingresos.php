@@ -275,7 +275,7 @@
                 <tr>
                   <th class="text-center">Guia</th>
                   <th class="text-center">Modelo</th>
-                  <th class="text-center">Color</th>
+                  <th class="text-center" style="width:150px">Color</th>
                   <th class="text-center">Talla</th>
                   <th class="text-center">Stock</th>
                   <th class="text-center">En Taller</th>

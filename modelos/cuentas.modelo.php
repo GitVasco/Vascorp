@@ -3191,6 +3191,45 @@ class ModeloCuentas{
     }
 	
    
+	/*
+	* REGISTAR CANCELACION LETRAS 
+	*/
+	static public function mdlRegistrarCancelacionLetras($detalle){
 
+		$stmt = Conexion::conectar()->prepare("INSERT INTO cuenta_ctejf (
+													tipo_doc,
+													num_cta,
+													cliente,
+													vendedor,
+													fecha,
+													fecha_ven,
+													tip_mon,
+													monto,
+													notas,
+													estado,
+													cod_pago,
+													doc_origen,
+													usuario,
+													saldo,
+													num_unico,
+													tip_mov,
+													usureg,
+													pcreg
+												) VALUES
+                                                    $detalle");
+		if ($stmt->execute()) {
+
+			return "ok";
+
+		} else {
+
+			return $stmt->errorInfo();
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+
+    }
 
 }

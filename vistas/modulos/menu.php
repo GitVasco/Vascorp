@@ -1750,7 +1750,9 @@
             if($_SESSION["mantenimiento"] == 1){
             ?>
 
-            <li class="treeview <?php if(   $_GET["ruta"] == "mantenimiento") echo 'active';?>">
+            <li class="treeview <?php if(   $_GET["ruta"] == "mantenimiento" ||
+                                            $_GET["ruta"] == "equipos" || 
+                                            $_GET["ruta"] == "calendario") echo 'active';?>">
 
                 <a href="#">
 

@@ -786,38 +786,54 @@ class ControladorCuentas{
 				$con=ControladorUsuarios::ctrMostrarConexiones("id",1);
 				$conexion = mysql_connect($con["ip"], $con["user"], $con["pwd"]) or die("No se pudo conectar: " . mysql_error());
 				mysql_select_db($con["db"], $conexion);
+
+				$intoA = "";
 				for ($i = 6; $i <= $data->sheets[0]['numRows']; $i++) {
-					for ($j = 1; $j <= 1; $j++) {
-						$documento=$data->sheets[0]['cells'][$i][1];
-						$unico=$data->sheets[0]['cells'][$i][2];
-						$fecha_ven=$data->sheets[0]['cells'][$i][5];
-						$monto=$data->sheets[0]['cells'][$i][6];
-						$montoConv=str_replace(",","",$monto);
-						$montoReducido=substr($montoConv,3);
-						$estado=$data->sheets[0]['cells'][$i][8];
-						$fecha=$data->sheets[0]['cells'][$i][10];
-						$tipo_mon="Soles";
-						$usuario=$_SESSION["id"];
-						$saldo=0;
-						$existe=ControladorCuentas::ctrMostrarCuentas("num_unico",$unico);
 
-						$sqlInsertar = mysql_query("INSERT INTO cuenta_ctejf (tipo_doc,num_cta,cliente,vendedor,fecha,fecha_ven,tip_mon,monto,notas,estado,cod_pago,doc_origen,usuario,saldo,num_unico,tip_mov)  values('85','".$existe["num_cta"]."','".$existe["cliente"]."','".$existe["vendedor"]."','".substr($fecha,6,4)."-".substr($fecha,3,2)."-".substr($fecha,0,2)."','".substr($fecha_ven,6,4)."-".substr($fecha_ven,3,2)."-".substr($fecha_ven,0,2)."','".$tipo_mon."',".$montoReducido.",'Pago Telecredito','".$estado."','00','".$existe["doc_origen"]."','".$usuario."',".$saldo.",'".$unico."','-')");
+					if($data->sheets[0]['cells'][$i][8] == "Cancelado"){
 
-						
-						if($existe){
-							$saldoImportar=$existe["saldo"]-$montoReducido;
-							$actualizarSaldo=ModeloCuentas::mdlActualizarUnDato("cuenta_ctejf","saldo",$saldoImportar,$existe["id"]);
-							
-							$actualizarPago=ModeloCuentas::mdlActualizarUnDato("cuenta_ctejf","ult_pago",substr($fecha,6,4)."-".substr($fecha,3,2)."-".substr($fecha,0,2),$existe["id"]);
-						
-							if($saldoImportar == 0){
-								$actualizarEstado=ModeloCuentas::mdlActualizarUnDato("cuenta_ctejf","estado",'CANCELADO',$existe["id"]);
+							$documento=$data->sheets[0]['cells'][$i][1];
+							$unico=$data->sheets[0]['cells'][$i][2];
+							$fecha_ven=$data->sheets[0]['cells'][$i][5];
+							$monto=$data->sheets[0]['cells'][$i][6];
+							$montoConv=str_replace(",","",$monto);
+							$montoReducido=substr($montoConv,3);
+							$estado=$data->sheets[0]['cells'][$i][8];
+							$fecha=$data->sheets[0]['cells'][$i][10];
+							$tipo_mon="Soles";
+							$usuario=$_SESSION["id"];
+							$saldo=0;
+							$usureg = $_SESSION["nombre"];
+							$pcreg= gethostbyaddr($_SERVER['REMOTE_ADDR']);  
+	
+							$existe=ControladorCuentas::ctrMostrarCuentas("num_unico",$unico);
+							#var_dump($existe["num_cta"]);
+
+							if($existe["saldo"] > 0){
+
+								$intoA .= "('85'".",'".$existe["num_cta"]."','".$existe["cliente"]."','".$existe["vendedor"]."','".substr($fecha,6,4)."-".substr($fecha,3,2)."-".substr($fecha,0,2)."','".substr($fecha_ven,6,4)."-".substr($fecha_ven,3,2)."-".substr($fecha_ven,0,2)."','Soles',".$montoReducido.",'Pago Telecredito','PENDIENTE','00','".$existe["doc_origen"]."','".$usuario."',".$saldo.",'".$unico."','-','".$usureg."','".$pcreg."'),";
+
+								$saldoImportar=$existe["saldo"]-$montoReducido;
+								$actualizarSaldo=ModeloCuentas::mdlActualizarUnDato("cuenta_ctejf","saldo",$saldoImportar,$existe["id"]);
 								
-							}
+								$actualizarPago=ModeloCuentas::mdlActualizarUnDato("cuenta_ctejf","ult_pago",substr($fecha,6,4)."-".substr($fecha,3,2)."-".substr($fecha,0,2),$existe["id"]);
 							
-						}
+								if($saldoImportar == 0){
+									$actualizarEstado=ModeloCuentas::mdlActualizarUnDato("cuenta_ctejf","estado",'CANCELADO',$existe["id"]);
+									
+								}
+
+							}
+
 					}
+					
 				}
+				
+				$detalle = substr($intoA,0,-1);
+                #var_dump("detalle", $detalle);
+				$respuestaMovimientos = ModeloCuentas::mdlRegistrarCancelacionLetras($detalle);
+				#var_dump($respuestaMovimientos);  
+
 				echo'<script>
 
 				swal({
@@ -834,6 +850,8 @@ class ControladorCuentas{
 							})
 
 				</script>';
+
+
 				
 		}
 	}
