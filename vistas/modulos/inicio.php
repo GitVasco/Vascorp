@@ -91,7 +91,7 @@ $respuesta = ControladorMantenimiento::ctrTraerCalendario($valor);
 
                     <?php
 
-                        include "reportes/vtas-modA.php";
+                        //include "reportes/vtas-modA.php";
 
                     ?>
 

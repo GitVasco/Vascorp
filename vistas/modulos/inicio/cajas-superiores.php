@@ -7,8 +7,7 @@
 $valor = null;
 
 $ventas = ControladorMovimientos::ctrTotUndVen($valor);
-
-if($ventas["total_venta"] != 0){
+#var_dump($ventas);
 
 $produccion = ControladorMovimientos::ctrTotUndProd($valor);
 
@@ -16,8 +15,16 @@ $articulosP = controladorArticulos::ctrArticulosPedidos();
 
 $articulosF = controladorArticulos::ctrArticulosFaltantes();
 
-$porcentaje =number_format($articulosF["faltantes"]*100/$articulosP["pedidos"],2) ;
+if($articulosF["faltantes"] == '0'){
+  
+  $porcentaje=0;
 
+
+}else{
+
+  $porcentaje =number_format($articulosF["faltantes"]*100/$articulosP["pedidos"],2) ;
+
+}
 
 ?>
 
@@ -134,8 +141,3 @@ $porcentaje =number_format($articulosF["faltantes"]*100/$articulosP["pedidos"],2
   </div>
 
 </div>
-<?php 
-
-}
-
-?>

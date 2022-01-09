@@ -8,18 +8,20 @@ $valor = 1;
 
 $ventasA = ControladorMovimientos::ctrTotUndVen($valor);
 
-/* var_dump("ventasA", $ventasA["total_venta"]); */
+//var_dump("ventasA", $ventasA["total_venta"]);
+
 if($ventasA["total_venta"] != 0){
-$produccionA = ControladorMovimientos::ctrTotUndProd($valor);
 
-/* var_dump("produccionA", $produccionA["total_produccion"]); */
+  $produccionA = ControladorMovimientos::ctrTotUndProd($valor);
 
-$dias = ControladorMovimientos::ctrTotDiasProd($valor);
+  //var_dump("produccionA", $produccionA["total_produccion"]);
+
+  $dias = ControladorMovimientos::ctrTotDiasProd($valor);
 
 
-$promedio = number_format( $produccionA["total_produccion"] / $dias["dias_produccion"] ,0);
+  $promedio = number_format( $produccionA["total_produccion"] / $dias["dias_produccion"] ,0);
 
-/* var_dump("promedio", $promedio); */
+  //var_dump("promedio", $promedio);
 
 
 
