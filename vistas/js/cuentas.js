@@ -615,10 +615,12 @@ $(".box").on("click", ".btnCodigoCuenta", function () {
 })
 
 $(".tablaCuentas").on("click", ".btnVisualizarCuenta", function () {
+  var codCuenta = $(this).attr("codCta");
   var numCuenta = $(this).attr("numCta");
   localStorage.setItem("numCta2",numCuenta);
+  localStorage.setItem("codCta2",codCuenta);
   var rutas="cuentas";
-  window.location = "index.php?ruta=ver-cuentas&numCta=" + numCuenta +"&rutas=" + rutas;
+  window.location = "index.php?ruta=ver-cuentas&numCta=" + numCuenta +"&codCuenta=" + codCuenta+"&rutas=" + rutas;
 
 })
 
@@ -941,8 +943,10 @@ $(".btnLimpiarLetra").click(function(){
 
 $(".btnCancelarCuenta2").click(function(){
   var numCta = $(this).attr("numCta");
+  var codCta = $(this).attr("codCta");
   var datos = new FormData();
   datos.append("numCta", numCta);
+  datos.append("codCta", codCta);
 
   $.ajax({
 
@@ -1337,15 +1341,15 @@ $('.tablaVerCuentasConsultar').DataTable({
 }
 
 if (localStorage.getItem("numCta2") != null) {
-	cargarTablaVerCuentas(localStorage.getItem("numCta2"));
+	cargarTablaVerCuentas(localStorage.getItem("numCta2"),localStorage.getItem("codCta2"));
 } else {
-	cargarTablaVerCuentas(null);
+	cargarTablaVerCuentas(null,null);
 }
 
 //CUENTAS consultar
-function cargarTablaVerCuentas(numCta){
+function cargarTablaVerCuentas(numCta, codCta){
 $('.tablaVerCuentas').DataTable({
-  "ajax": "ajax/cuentas-corrientes/tabla-ver-cuentas.ajax.php?perfil="+$("#perfilOculto").val()+"&numCta=" + numCta ,
+  "ajax": "ajax/cuentas-corrientes/tabla-ver-cuentas.ajax.php?perfil="+$("#perfilOculto").val()+"&numCta=" + numCta +"&codCta=" + codCta,
   "deferRender": true,
   "retrieve": true,
   "processing": true,

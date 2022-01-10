@@ -36,10 +36,12 @@ class AjaxCuentas{
       public $numCta;
     
       public function ajaxCancelarCuenta(){
-        $item="num_cta";
-        $valor = $this->numCta;
+
+        $numCta = $this->numCta;
+        $codCta = $this->codCta;
+
     
-        $respuesta = ControladorCuentas::ctrMostrarCuentas($item,$valor);
+        $respuesta = ControladorCuentas::ctrMostrarCuentasV2($numCta,$codCta);
     
         echo json_encode($respuesta);
     
@@ -256,6 +258,7 @@ class AjaxCuentas{
     
       $cancelaCuenta = new AjaxCuentas();
       $cancelaCuenta -> numCta = $_POST["numCta"];
+      $cancelaCuenta -> codCta = $_POST["codCta"];
       $cancelaCuenta -> ajaxCancelarCuenta();
   }
 

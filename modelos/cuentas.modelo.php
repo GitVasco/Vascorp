@@ -212,6 +212,37 @@ class ModeloCuentas{
 	}
 
 	/*=============================================
+	MOSTRAR CUENTAS V2
+	=============================================*/
+
+	static public function mdlMostrarCuentasV2($numCta, $tipoDoc){
+
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+							c.*,
+							cli.nombre 
+						FROM
+							cuenta_ctejf c 
+							LEFT JOIN clientesjf cli 
+							ON c.cliente = cli.codigo 
+						WHERE c.tip_mov = '+' 
+							AND c.num_cta = :numCta
+							AND c.tipo_doc = :tipoDoc");
+
+		$stmt -> bindParam(":numCta", $numCta, PDO::PARAM_STR);
+		$stmt -> bindParam(":tipoDoc", $tipoDoc, PDO::PARAM_STR);
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
+
+	/*=============================================
 	VALIDAR CUENTA
 	=============================================*/
 
@@ -526,6 +557,31 @@ class ModeloCuentas{
 
     }
 	
+
+	static public function mdlMostrarCancelacionesV2($numCta, $codCta){
+
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+													* 
+												FROM
+													cuenta_ctejf c 
+												WHERE c.num_cta = :numCta
+													AND c.tipo_doc = :codCta 
+													AND c.tip_mov = '-'");
+
+		$stmt -> bindParam(":numCta", $numCta, PDO::PARAM_STR);
+		$stmt -> bindParam(":codCta", $codCta, PDO::PARAM_STR);
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }	
 	
 	static public function mdlMostrarCancelacion($tabla,$item,$valor){
 

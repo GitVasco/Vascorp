@@ -8,7 +8,8 @@
 
                 if(isset($_GET["numCta"])){
 
-                    $cuentas=ControladorCuentas::ctrMostrarCuentas("num_cta",$_GET["numCta"]);
+                    $cuentas=ControladorCuentas::ctrMostrarCuentasV2($_GET["numCta"],$_GET["codCuenta"]);
+                    #var_dump($cuentas);
 
                     $cliente=ControladorClientes::ctrMostrarClientes("codigo",$cuentas["cliente"]);
                     
@@ -126,7 +127,7 @@
           
           <?php if($cuentas["saldo"] != 0){?>
           <div class="col-md-3" style="margin-top:30px;">
-            <button class='btn btn-success btnCancelarCuenta2' numCta="<?php echo $_GET["numCta"]?>" data-toggle='modal' data-target='#modalCancelarCuenta' title='Cancelar cuenta'><i class='fa fa-money'></i> Cancelar cuenta</button>
+            <button class='btn btn-success btnCancelarCuenta2' numCta="<?php echo $_GET["numCta"]?>" codCta="<?php echo $_GET["codCuenta"]?>" data-toggle='modal' data-target='#modalCancelarCuenta' title='Cancelar cuenta'><i class='fa fa-money'></i> Cancelar cuenta</button>
           </div>
           <?php }?>
         </div>

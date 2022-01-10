@@ -1621,7 +1621,7 @@ class ControladorFacturacion{
 
 
                 /*
-                todo: BAJAR EL STOCK
+                todo: BAJAR o subir EL STOCK
                 */
                 $tabla = "detalle_ing_sal";
 
@@ -1632,7 +1632,7 @@ class ControladorFacturacion{
 
                     $datos = array( "articulo" => $value["articulo"],
                                     "cantidad" => $value["cantidad"]);
-                    //var_dump($datos);
+                    #var_dump($datos);
                     $inicioTipo = substr($_POST["tdoc"],0,1);
                     if($inicioTipo == 'E'){
                         $respuestaGuia = ModeloArticulos::mdlActualizarStockIngreso($value["articulo"],$value["cantidad"]);
@@ -1640,18 +1640,22 @@ class ControladorFacturacion{
                         $respuestaGuia = ModeloArticulos::mdlActualizarStock($datos);
                     }
                     
-                    //var_dump($respuestaGuia);
+                    #var_dump($respuestaGuia);
 
                 }
 
                 //var_dump($respuestaGuia);
+
+                $respuestaGuia="ok";
 
                 /*
                 todo: registrar en movimientos
                 */
                 if($respuestaGuia == "ok"){
 
-                    foreach($respuesta as $value){
+                    $intoA = "";
+                    $intoB = "";
+                    foreach($respuesta as $key => $value){
 
                         $tipo= $_POST["tdoc"];
 
@@ -1668,25 +1672,31 @@ class ControladorFacturacion{
                         $dscto = $_POST["dscto"];
                         //var_dump($dscto);
 
+                        date_default_timezone_set("America/Lima");
+                        $fecha = date("Y-m-d");
+                        $nombre_tipo = "AJUSTENS DE INV.";
+
+
                         $total = $value["cantidad"] * $value["precio"] * ((100 - $dscto)/100);
                         //var_dump($total);
 
-                        $datosM = array("tipo" => $tipo,
-                                        "documento" => $doc,
-                                        "articulo" => $value["articulo"],
-                                        "cliente" => $cliente,
-                                        "vendedor" => $vendedor,
-                                        "cantidad" => $value["cantidad"],
-                                        "precio" => $value["precio"],
-                                        "dscto2" => $dscto,
-                                        "total" => $total,
-                                        "nombre_tipo" => $_POST["nomTipo"]);
-                        //var_dump($datosM);
+                        if($key < count($respuesta)-1){
 
-                        $respuestaMovimientos = ModeloFacturacion::mdlRegistrarMovimientos($datosM);
+                            $intoA .= "('".$tipo."','".$doc."','".$fecha."','".$value["articulo"]."','".$cliente."','".$vendedor."',".$value["cantidad"].",".$value["precio"].",0,".$dscto.",".$total.",'".$nombre_tipo."'),";
+
+                        }else{
+
+                            $intoB .= "('".$tipo."','".$doc."','".$fecha."','".$value["articulo"]."','".$cliente."','".$vendedor."',".$value["cantidad"].",".$value["precio"].",0,".$dscto.",".$total.",'".$nombre_tipo."')";
+
+                        }
 
                     }
 
+                    $detalle = $intoA.$intoB;
+                    #var_dump("detalle", $detalle);
+
+                    $respuestaMovimientos = ModeloFacturacion::mdlRegistrarMovimientos($detalle);
+                    var_dump($respuestaMovimientos);   
                     //var_dump($respuestaMovimientos);
 
                     /*

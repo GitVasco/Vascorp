@@ -135,6 +135,19 @@ class ControladorCuentas{
 	}
 
 	/*=============================================
+	MOSTRAR CUENTAS V2
+	=============================================*/
+
+	static public function ctrMostrarCuentasV2($numCta, $tipoDocr){
+
+		$respuesta = ModeloCuentas::mdlMostrarCuentasV2($numCta, $tipoDocr);
+
+		return $respuesta;
+
+	}
+
+
+	/*=============================================
 	MOSTRAR CUENTAS
 	=============================================*/
 
@@ -249,6 +262,18 @@ class ControladorCuentas{
 	static public function ctrMostrarCancelaciones($item,$valor){
 		$tabla="cuenta_ctejf";
 		$respuesta = ModeloCuentas::mdlMostrarCancelaciones($tabla,$item,$valor);
+
+		return $respuesta;
+
+    }
+
+	/*=============================================
+	MOSTRAR CANCELACIONES V2
+	=============================================*/
+
+	static public function ctrMostrarCancelacionesV2($numCta, $codCta){
+
+		$respuesta = ModeloCuentas::mdlMostrarCancelacionesV2($numCta, $codCta);
 
 		return $respuesta;
 
@@ -1013,7 +1038,7 @@ class ControladorCuentas{
 						  }).then(function(result){
 									if (result.value) {
 
-									window.location = "index.php?ruta=ver-cuentas&numCta='.$cuenta["num_cta"].'";
+									window.location = "index.php?ruta=ver-cuentas&numCta='.$cuenta["num_cta"].'"&codCuenta="'.$cuenta["tipo_doc"].'";
 
 									}
 								})

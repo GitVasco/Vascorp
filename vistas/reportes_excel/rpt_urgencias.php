@@ -501,7 +501,7 @@ $sqlDetalle = mysql_query("SELECT
                                 END AS stock,
                                 (a.stock - a.pedidos) AS stockB,
                                 a.pedidos,
-                                a.taller,
+                                (a.taller+a.servicio) as taller,
                                 a.alm_corte,
                                 a.ord_corte,
                                 a.proyeccion,
@@ -524,7 +524,8 @@ $sqlDetalle = mysql_query("SELECT
                                   ),
                                   0
                                 ) > (a.stock - a.pedidos) 
-                                AND a.estado = 'Activo'") or die(mysql_error());
+                                AND a.estado = 'Activo'
+                                AND LEFT(a.modelo, 1) NOT IN ('D')") or die(mysql_error());
 
 
 while($respDetalle = mysql_fetch_array($sqlDetalle)){
