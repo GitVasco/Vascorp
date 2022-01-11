@@ -407,7 +407,7 @@
 
                                 <hr>
 
-                                <div class="row">
+                                <div class="row" id="updDivC">
 
                                     <!--=====================================
                                     SUB TOTALES Y TOTALES

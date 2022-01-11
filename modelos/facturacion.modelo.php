@@ -1406,6 +1406,7 @@ class ModeloFacturacion{
       v.fecha,
       cv.descripcion,
       v.doc_destino,
+      v.facturacion,
       LEFT(v.doc_destino,4) AS serie_dest,
       SUBSTR(v.doc_destino,5,8) AS nro_dest,
       v.estado,
@@ -1446,6 +1447,7 @@ class ModeloFacturacion{
       v.fecha,
       cv.descripcion,
       v.doc_destino,
+      v.facturacion,
       LEFT(v.doc_destino,4) AS serie_dest,
       SUBSTR(v.doc_destino,5,8) AS nro_dest,
       v.estado,
@@ -1496,6 +1498,7 @@ class ModeloFacturacion{
         v.fecha,
         cv.descripcion,
         v.doc_destino,
+        v.facturacion,
         LEFT(v.doc_destino,4) AS serie_dest,
         SUBSTR(v.doc_destino,5,8) AS nro_dest,
         v.estado,
@@ -1538,6 +1541,7 @@ class ModeloFacturacion{
         v.fecha,
         cv.descripcion,
         v.doc_destino,
+        v.facturacion,
         LEFT(v.doc_destino,4) AS serie_dest,
         SUBSTR(v.doc_destino,5,8) AS nro_dest,
         v.estado,
@@ -1592,6 +1596,7 @@ class ModeloFacturacion{
       v.fecha,
       cv.descripcion,
       v.doc_destino,
+      v.facturacion,
       LEFT(v.doc_destino,4) AS serie_dest,
       SUBSTR(v.doc_destino,5,8) AS nro_dest,
       v.estado,
@@ -1632,6 +1637,7 @@ class ModeloFacturacion{
       v.fecha,
       cv.descripcion,
       v.doc_destino,
+      v.facturacion,
       LEFT(v.doc_destino,4) AS serie_dest,
       SUBSTR(v.doc_destino,5,8) AS nro_dest,
       v.estado,
@@ -1682,6 +1688,7 @@ class ModeloFacturacion{
         v.fecha,
         cv.descripcion,
         v.doc_destino,
+        v.facturacion,
         LEFT(v.doc_destino,4) AS serie_dest,
         SUBSTR(v.doc_destino,5,8) AS nro_dest,
         v.estado,
@@ -1724,6 +1731,7 @@ class ModeloFacturacion{
         v.fecha,
         cv.descripcion,
         v.doc_destino,
+        v.facturacion,
         LEFT(v.doc_destino,4) AS serie_dest,
         SUBSTR(v.doc_destino,5,8) AS nro_dest,
         v.estado,
@@ -1778,6 +1786,7 @@ class ModeloFacturacion{
       v.fecha,
       cv.descripcion,
       v.doc_destino,
+      v.facturacion,
       LEFT(v.doc_destino,4) AS serie_dest,
       SUBSTR(v.doc_destino,5,8) AS nro_dest,
       v.estado,
@@ -1818,6 +1827,7 @@ class ModeloFacturacion{
       v.fecha,
       cv.descripcion,
       v.doc_destino,
+      v.facturacion,
       LEFT(v.doc_destino,4) AS serie_dest,
       SUBSTR(v.doc_destino,5,8) AS nro_dest,
       v.estado,
@@ -1868,6 +1878,7 @@ class ModeloFacturacion{
         v.fecha,
         cv.descripcion,
         v.doc_destino,
+        v.facturacion,
         LEFT(v.doc_destino,4) AS serie_dest,
         SUBSTR(v.doc_destino,5,8) AS nro_dest,
         v.estado,
@@ -1910,6 +1921,7 @@ class ModeloFacturacion{
         v.fecha,
         cv.descripcion,
         v.doc_destino,
+        v.facturacion,
         LEFT(v.doc_destino,4) AS serie_dest,
         SUBSTR(v.doc_destino,5,8) AS nro_dest,
         v.estado,
@@ -7769,5 +7781,159 @@ class ModeloFacturacion{
 
     }
 
+    static public function mdlRegresarStock($tipo, $documento){
+
+      $sql="UPDATE 
+            articulojf a 
+            LEFT JOIN movimientosjf_2021 m 
+              ON a.articulo = m.articulo SET a.stock = a.stock + m.cantidad 
+          WHERE m.tipo = :tipo 
+            AND m.documento = :documento";
+  
+      $stmt=Conexion::conectar()->prepare($sql);
+  
+      $stmt->bindParam(":tipo", $tipo, PDO::PARAM_STR);
+      $stmt->bindParam(":documento", $documento, PDO::PARAM_STR);
+  
+      if ($stmt->execute()) {
+  
+        return "ok";
+  
+      }else{
+  
+        return "error";
+  
+      }
+  
+      $stmt=null;
+  
+    }    
+
+    static public function mdlEliminarDetalle($tipo, $documento){
+
+      $sql="DELETE 
+              FROM
+                movimientosjf_2021  
+              WHERE tipo = :tipo
+                AND documento = :documento";
+  
+      $stmt=Conexion::conectar()->prepare($sql);
+  
+      $stmt->bindParam(":tipo", $tipo, PDO::PARAM_STR);
+      $stmt->bindParam(":documento", $documento, PDO::PARAM_STR);
+  
+      if ($stmt->execute()) {
+  
+        return "ok";
+  
+      }else{
+  
+        return $stmt->errorInfo();
+  
+      }
+  
+      $stmt=null;
+  
+    }      
+
+
+    static public function mdlAnularCabecera($tipo, $documento, $usuario, $usureg, $pcreg){
+
+      $sql="UPDATE 
+                  ventajf 
+                SET
+                  neto = 0,
+                  igv = 0,
+                  dscto = 0,
+                  total = 0,
+                  cliente = '',
+                  vendedor = '',
+                  agencia = '',
+                  lista_precios = '',
+                  condicion_venta = '',
+                  usuario = :usuario,
+                  fecha_creacion = NOW(),
+                  estado = 'ANULADO',
+                  facturacion = '4',
+                  usureg = :usureg,
+                  pcreg = :pcreg 
+                WHERE tipo = :tipo 
+                  AND documento = :documento";
+  
+      $stmt=Conexion::conectar()->prepare($sql);
+  
+      $stmt->bindParam(":tipo", $tipo, PDO::PARAM_STR);
+      $stmt->bindParam(":documento", $documento, PDO::PARAM_STR);
+      $stmt->bindParam(":usuario", $usuario, PDO::PARAM_STR);
+      $stmt->bindParam(":usureg", $usureg, PDO::PARAM_STR);
+      $stmt->bindParam(":pcreg", $pcreg, PDO::PARAM_STR);
+  
+      if ($stmt->execute()) {
+  
+        return "ok";
+  
+      }else{
+  
+        return $stmt->errorInfo();
+  
+      }
+  
+      $stmt=null;
+  
+    }  
+
+    static public function mdlEliminarCta($tip, $documento){
+
+      $sql="DELETE 
+                FROM
+                  cuenta_ctejf 
+                WHERE tipo_doc = :tipo 
+                  AND num_cta = :documento";
+  
+      $stmt=Conexion::conectar()->prepare($sql);
+  
+      $stmt->bindParam(":tipo", $tip, PDO::PARAM_STR);
+      $stmt->bindParam(":documento", $documento, PDO::PARAM_STR);
+  
+      if ($stmt->execute()) {
+  
+        return "ok";
+  
+      }else{
+  
+        return $stmt->errorInfo();
+  
+      }
+  
+      $stmt=null;
+  
+    }  
+
+    static public function mdlEliminarDocumento($tipo, $documento){
+
+      $sql="DELETE 
+              FROM
+                ventajf 
+              WHERE tipo = :tipo 
+                AND documento = :documento";
+  
+      $stmt=Conexion::conectar()->prepare($sql);
+  
+      $stmt->bindParam(":tipo", $tipo, PDO::PARAM_STR);
+      $stmt->bindParam(":documento", $documento, PDO::PARAM_STR);
+  
+      if ($stmt->execute()) {
+  
+        return "ok";
+  
+      }else{
+  
+        return $stmt->errorInfo();
+  
+      }
+  
+      $stmt=null;
+  
+    }  
 
 }

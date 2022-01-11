@@ -144,7 +144,7 @@ class ControladorAlmacenCorte{
 
                         ModeloAlmacenCorte::mdlActualizarOrdCorte($valor, $valor1);
 
-                        ModeloAlmacenCorte::mdlIngresarCantCorte($valor, $valor1);
+                        #ModeloAlmacenCorte::mdlIngresarCantCorte($valor, $valor1);
 
                     }
 
@@ -153,7 +153,7 @@ class ControladorAlmacenCorte{
                     */
 
                     $listaArticulosAC = json_decode($_POST["listaArticulosAC"], true);
-                    #var_dump("listaArticulosAC", $listaArticulosAC);
+                    var_dump("listaArticulosAC", $listaArticulosAC);
 
                     foreach($listaArticulosAC as $value){
 
@@ -215,33 +215,35 @@ class ControladorAlmacenCorte{
 
                         # Mostramos una alerta suave
                         echo '<script>
-                                swal({
-                                    type: "success",
-                                    title: "Felicitaciones",
-                                    text: "¡La información fue registrada con éxito!",
-                                    showConfirmButton: true,
-                                    confirmButtonText: "Cerrar"
-                                }).then((result)=>{
-                                    if(result.value){
-                                        window.location="almacencorte";}
-                                });
-                            </script>';
+                        swal({
+                            type: "success",
+                            title: "Felicitaciones",
+                            text: "¡La información fue registrada con éxito!",
+                            showConfirmButton: true,
+                            confirmButtonText: "Cerrar"
+                        }).then((result)=>{
+                            if(result.value){
+                                window.location="almacencorte";}
+                        });
+                    </script>';
+
 
                     }else{
 
                         # Mostramos una alerta suave
                         echo '<script>
-                                swal({
-                                    type: "error",
-                                    title: "Error",
-                                    text: "¡La información presento problemas y no se registro adecuadamente. Por favor, intenteló de nuevo!",
-                                    showConfirmButton: true,
-                                    confirmButtonText: "Cerrar"
-                                }).then((result)=>{
-                                    if(result.value){
-                                        window.location="crear-almacencorte";}
-                                });
-                            </script>';
+                        swal({
+                            type: "error",
+                            title: "Error",
+                            text: "¡La información presento problemas y no se registro adecuadamente. Por favor, intenteló de nuevo!",
+                            showConfirmButton: true,
+                            confirmButtonText: "Cerrar"
+                        }).then((result)=>{
+                            if(result.value){
+                                window.location="crear-almacencorte";}
+                        });
+                    </script>';
+
 
                     }
 

@@ -601,15 +601,21 @@ class ControladorCuentas{
 						   	"fecha"=>$_POST["cancelarFechaUltima"],
 							"usureg" => $usureg,
 							"pcreg" => $pcreg);
-			var_dump($datos);
+			#var_dump($datos);
 						   
-				$origen=ControladorCuentas::ctrMostrarCuentas("num_cta",$_POST["cancelarDocumento"]);
+				$origen=ControladorCuentas::ctrMostrarCuentasv2($_POST["cancelarDocumento"],$_POST["tipEditar"]);
 				$idOrigen=$origen["id"];
+
+				#var_dump($idOrigen);
+
 				$saldoNuevo= $_POST["cancelarSaldoAntiguo"] + $_POST["cancelarMontoAntiguo"]-$_POST["cancelarMonto2"];
+
 				if($saldoNuevo>0){
 					$estado=ModeloCuentas::mdlActualizarUnDato($tabla,"estado","PENDIENTE",$idOrigen);
 				}
+
 				$actualizacion=ModeloCuentas::mdlActualizarUnDato($tabla,"saldo",$saldoNuevo,$idOrigen);
+
 				date_default_timezone_set('America/Lima');
 				$fecha = new DateTime();
 				$cancelacion=ModeloCuentas::mdlMostrarCancelacion($tabla,"id",$datos);
@@ -629,7 +635,12 @@ class ControladorCuentas{
 				}
 					
 			   	$respuesta = ModeloCuentas::mdlEditarCancelacion($tabla,$datos);
+
+				
+
 			   	if($respuesta == "ok"){
+
+					$ultimo_pago = ModeloCuentas::mdlEditarUltPago($_POST["cancelarDocumento"], $_POST["tipEditar"]);
 
 					echo'<script>
 
@@ -641,7 +652,7 @@ class ControladorCuentas{
 						  }).then(function(result){
 									if (result.value) {
 
-									window.location = "index.php?ruta=ver-cuentas&numCta='.$_POST["cancelarDocumento"].'";
+									window.location = "index.php?ruta=ver-cuentas&numCta='.$_POST["cancelarDocumento"].'&codCuenta='.$_POST["tipEditar"].'";
 
 									}
 								})
@@ -667,6 +678,7 @@ class ControladorCuentas{
 			date_default_timezone_set('America/Lima');
 			$fecha = new DateTime();
 			$cancelacion=ModeloCuentas::mdlMostrarCancelacion($tabla,"id",$datos);
+			#var_dump($cancelacion["tipo_doc"]);
 			
 			$usuario= $_SESSION["nombre"];
 			$para      = 'notificacionesvascorp@gmail.com';
@@ -682,17 +694,28 @@ class ControladorCuentas{
 								"fecha" => $fecha->format("Y-m-d H:i:s"));
 				$auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
 			}
-			$origen=ControladorCuentas::ctrMostrarCuentas("num_cta",$cancelacion["num_cta"]);
+			$origen=ControladorCuentas::ctrMostrarCuentasV2($cancelacion["num_cta"],$cancelacion["tipo_doc"]);
+			#var_dump($origen);
 			$idOrigen=$origen["id"];
+			#var_dump($idOrigen);
 			$saldoNuevo=$cancelacion["monto"]+$origen["saldo"];
+			#var_dump($saldoNuevo);
+
 			if($saldoNuevo>0){
-				$estado=ModeloCuentas::mdlActualizarUnDato($tabla,"estado","PENDIENTE",$idOrigen);
+
+				$estado=ModeloCuentas::mdlActualizarEstado($idOrigen);
+				#var_dump($estado);
+
 			}
+
 			$actualizacion=ModeloCuentas::mdlActualizarUnDato($tabla,"saldo",$saldoNuevo,$idOrigen);
+			var_dump($actualizacion);
+
 			$datos3 = array("id"=>$cancelacion["id"],
 						   "usuario_bkp"=>$_SESSION["nombre"],
 						   "fecha_bkp"=>$fecha->format("Y-m-d H:i:s"),
 						   "pc_bkp" => gethostbyaddr($_SERVER['REMOTE_ADDR']));
+
 			$ingreso_bkp = ModeloCuentas::mdlIngresarCuentaBckp2("cuenta_cte_bkpjf",$datos3);
 			#var_dump($ingreso_bkp);
 
@@ -701,8 +724,9 @@ class ControladorCuentas{
 
 
 			if($respuesta == "ok"){
-				
-				
+
+				$ultimo_pago = ModeloCuentas::mdlEditarUltPago($origen["num_cta"], $cancelacion["tipo_doc"]);
+
 				echo'<script>
 
 				swal({
@@ -714,12 +738,13 @@ class ControladorCuentas{
 					  }).then(function(result){
 								if (result.value) {
 
-								window.location = "index.php?ruta=ver-cuentas&numCta='.$origen["num_cta"].'&rutas=cuentas";
+								window.location = "index.php?ruta=ver-cuentas&numCta='.$origen["num_cta"].'&codCuenta='.$cancelacion["tipo_doc"].'";
 
 								}
 							})
 
 				</script>';
+
 
 			}		
 
@@ -1026,7 +1051,10 @@ class ControladorCuentas{
 				$ultimo_pago=ModeloCuentas::mdlActualizarUnDato($tabla,"ult_pago",$_POST["cancelarFechaUltima2"],$_POST["idCuenta3"]);
 				$actualizado=ModeloCuentas::mdlActualizarUnDato($tabla,"saldo",$saldoNuevo,$_POST["idCuenta3"]);
 			   	$respuesta = ModeloCuentas::mdlIngresarCuenta($tabla,$datos);
+				   
 			   	if($respuesta == "ok"){
+
+					$ultimo_pago = ModeloCuentas::mdlEditarUltPago($cuenta["num_cta"], $cuenta["tipo_doc"]);
 
 					echo'<script>	
 
@@ -1038,7 +1066,7 @@ class ControladorCuentas{
 						  }).then(function(result){
 									if (result.value) {
 
-									window.location = "index.php?ruta=ver-cuentas&numCta='.$cuenta["num_cta"].'"&codCuenta="'.$cuenta["tipo_doc"].'";
+									window.location = "index.php?ruta=ver-cuentas&numCta='.$cuenta["num_cta"].'&codCuenta='.$cuenta["tipo_doc"].'";
 
 									}
 								})

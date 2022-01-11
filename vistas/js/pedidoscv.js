@@ -893,7 +893,7 @@ $(".tablaPedidosFacturados").DataTable({
     }
 });
 
-$(".tablaPedidosGenerados").on("click", ".btnAprobarPedido", function () {
+$(".tablaPedidosGenerados, .tablaPedidosCV").on("click", ".btnAprobarPedido", function () {
     var codigo = $(this).attr("codigo");
 	var estadoPedido=$(this).attr("estadoPedido");
 	//Realizamos la activación-desactivación por una petición AJAX

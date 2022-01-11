@@ -457,6 +457,15 @@ MODAL FACTURAR B
 
 </div>
 
+<?php
+
+$anularDocumento = new ControladorFacturacion();
+$anularDocumento -> ctrAnularDocumento();
+
+$eliminarDocumento = new ControladorFacturacion();
+$eliminarDocumento -> ctrEliminarDocumento();
+?>
+
 <script>
     window.document.title = "Guias de Remisión"
 </script>

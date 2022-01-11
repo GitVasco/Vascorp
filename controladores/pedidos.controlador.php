@@ -114,11 +114,13 @@ class ControladorPedidos{
 
                     echo '  <script>                                        
 
-                                Command: toastr["success"]("El modelo fue registrado");
-                                $("#updDiv").load(" #updDiv");//actualizas el div
-                                $("#updDivB").load(" #updDivB");//actualizas el div
+                    Command: toastr["success"]("El modelo fue registrado");
+                    $("#updDiv").load(" #updDiv");//actualizas el div
+                    $("#updDivB").load(" #updDivB");//actualizas el div
+                    $("#updDivC").load(" #updDivC");//actualizas el div
 
-                            </script>';
+                </script>';
+
 
                 }
 

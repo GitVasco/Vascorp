@@ -1646,7 +1646,7 @@ class ControladorFacturacion{
 
                 //var_dump($respuestaGuia);
 
-                $respuestaGuia="ok";
+                #$respuestaGuia="ok";
 
                 /*
                 todo: registrar en movimientos
@@ -1669,12 +1669,12 @@ class ControladorFacturacion{
                         $vendedor = $_POST["codVen"];
                         //var_dump($vendedor);
 
-                        $dscto = $_POST["dscto"];
+                        $dscto = 0;
                         //var_dump($dscto);
 
                         date_default_timezone_set("America/Lima");
                         $fecha = date("Y-m-d");
-                        $nombre_tipo = "AJUSTENS DE INV.";
+                        $nombre_tipo = "AJUSTES DE INV.";
 
 
                         $total = $value["cantidad"] * $value["precio"] * ((100 - $dscto)/100);
@@ -1696,7 +1696,7 @@ class ControladorFacturacion{
                     #var_dump("detalle", $detalle);
 
                     $respuestaMovimientos = ModeloFacturacion::mdlRegistrarMovimientos($detalle);
-                    var_dump($respuestaMovimientos);   
+                    #var_dump($respuestaMovimientos);   
                     //var_dump($respuestaMovimientos);
 
                     /*
@@ -1744,7 +1744,7 @@ class ControladorFacturacion{
 
                     }
 
-                    //var_dump($respuestaDocumento);
+                    var_dump($respuestaDocumento);
 
                     /* 
                     todo: SUMAR 1 AL DOCUMENTO
@@ -3811,5 +3811,123 @@ class ControladorFacturacion{
 		return $respuesta;
 
     }    
+
+    static public function ctrAnularDocumento(){
+
+        if(isset($_GET["documento"])){
+
+            $documento=$_GET["documento"];
+            $tipo=$_GET["tipo"];
+            #var_dump($documento,$tipo);
+
+            #regresar stock al almacén
+            $articulo = ModeloFacturacion::mdlRegresarStock($tipo, $documento);
+            #var_dump($articulo);     
+
+            #eliminar movimientos detalle
+            $detalle = ModeloFacturacion::mdlEliminarDetalle($tipo, $documento);
+            #var_dump($detalle);   
+
+            $usureg = $_SESSION["nombre"];
+            $pcreg = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+
+            #anular cabecera
+            $cabecera = ModeloFacturacion::mdlAnularCabecera($tipo, $documento,$_SESSION["id"], $usureg, $pcreg);
+            #var_dump($cabecera); 
+
+            #eliminar cta cte
+            if($tipo == "S03"){
+
+                $tip = "01";
+                $pagina = "facturas";
+
+            }else if($tipo == "S02"){
+
+                $tip = "03";
+                $pagina = "boletas";
+
+            }else if($tipo == "E05"){
+
+                $tip = "07";
+                $pagina = "ver-nota-credito";
+
+            }else if($tipo = "S70"){
+
+                $tip = "09";
+                $pagina = "proformas";
+
+            }else if($tipo = "S01"){
+
+                $tip = "AA";
+                $pagina = "guias-remision";
+
+            }
+
+            $cta = ModeloFacturacion::mdlEliminarCta($tip, $documento);
+            #var_dump($cta); 
+
+            if($cabecera == "ok"){
+
+                echo'<script>
+
+                swal({
+                    type: "success",
+                    title: "El documento ha sido anulada correctamente",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar",
+                    closeOnConfirm: false
+                    }).then(function(result){
+                        if (result.value) {
+
+                        window.location = "'.$pagina.'";
+
+                        }
+                    })
+    
+                </script>';
+
+            }
+
+        }
+    
+    }    
+
+    static public function ctrEliminarDocumento(){
+
+        if(isset($_GET["documentoE"])){
+
+            $documento=$_GET["documentoE"];
+            $tipo=$_GET["tipo"];
+            $pagina=$_GET["pagina"];
+            var_dump($documento, $tipo, $pagina);
+
+            $respuesta = ModeloFacturacion::mdlEliminarDocumento($tipo, $documento);
+            var_dump($respuesta);
+
+            if($respuesta == "ok"){
+
+                echo'<script>
+
+                swal({
+                    type: "success",
+                    title: "El documento ha sido anulada correctamente",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar",
+                    closeOnConfirm: false
+                    }).then(function(result){
+                        if (result.value) {
+
+                        window.location = "'.$pagina.'";
+
+                        }
+                    })
+    
+                </script>';
+
+            }            
+
+        }
+
+    }      
 
 }

@@ -21,23 +21,44 @@ class TablaGuiasRemision{
 
         for($i = 0; $i < count($factura); $i++){
 
-        /*=============================================
-        TRAEMOS LAS ACCIONES
-        =============================================*/
+            /* 
+            *estado
+            */
+            if($factura[$i]["facturacion"] == "0"){
 
-        if($factura[$i]["doc_destino"] != ""){
-            $botones =  "<div class='btn-group'><button title='Imprimir Factura' class='btn btn-xs btn-success btnImprimirFactura' tipo='".$factura[$i]["tipo"]."' documento='".$factura[$i]["documento"]."'><i class='fa fa-print'></i></button></div>";
-        }else{
+                $estado = "<span style='font-size:85%' class='label label-success'>GENERADO</span>";
+                
+            }else if($factura[$i]["facturacion"] == "1"){
 
-            $botones =  "<div class='btn-group'><button title='Imprimir Factura' class='btn btn-xs btn-success btnImprimirFactura' tipo='".$factura[$i]["tipo"]."' documento='".$factura[$i]["documento"]."'><i class='fa fa-print'></i></button></div>";
+                $estado = "<span style='font-size:85%' class='label label-warning'>ERROR</span>";
 
-        }
+            }else if($factura[$i]["facturacion"] == "2"){
+
+                $estado = "<span style='font-size:85%' class='label label-primary'>ENVIADO</span>";
+
+            }else if($factura[$i]["facturacion"] == "4"){
+
+                $estado = "<span class='btn btn-danger btn-xs btn btnEliminarDocumento' documento='".$factura[$i]["documento"]."' tipo='".$factura[$i]["tipo"]."' pagina='facturas'>ANULADO</span>";
+
+            }
+
+            $total = "<div style='text-align:right !important'>".number_format($factura[$i]["total"],2)."</div>";
+
+            if($factura[$i]["facturacion"] == "0"){
+
+                $botones =  "<div class='btn-group'><button title='Imprimir Factura' class='btn btn-xs btn-success btnImprimirBoleta' tipo='".$factura[$i]["tipo"]."' documento='".$factura[$i]["documento"]."'><i class='fa fa-print'></i></button><button title='Anular Documento' class='btn btn-xs  btn-danger btnAnularDocumento' documento='".$factura[$i]["documento"]."' tipo='".$factura[$i]["tipo"]."' pagina='facturas'><i class='fa fa-close'></i></button></div>";
+
+            }else{
+
+                $botones =  "<div class='btn-group'><button title='Imprimir Factura' class='btn btn-xs btn-success btnImprimirBoleta' tipo='".$factura[$i]["tipo"]."' documento='".$factura[$i]["documento"]."'><i class='fa fa-print'></i></button><button class='btn btn-xs btn-primary btnImprimirTicketFacBol' tipo='".$factura[$i]["tipo"]."' documento='".$factura[$i]["documento"]."'><i class='fa fa-file-word-o'></i></button></div>";
+
+            }     
 
 
             $datosJson .= '[
             "'.$factura[$i]["tipo_documento"].'",
             "<b>'.$factura[$i]["documento"].'</b>",
-            "'.$factura[$i]["total"].'",
+            "'.$total.'",
             "'.$factura[$i]["cliente"].'",
             "<b>'.$factura[$i]["nombre"].'</b>",
             "'.$factura[$i]["vendedor"].'",

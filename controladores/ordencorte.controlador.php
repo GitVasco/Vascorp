@@ -68,7 +68,7 @@ class ControladorOrdenCorte{
 
                     $listaArticulos = json_decode($_POST["listaArticulosOC"], true);
 
-                    #var_dump("listaArticulos", $listaArticulos);
+                    var_dump("listaArticulos", $listaArticulos);
 
                     foreach($listaArticulos as $value){
 
@@ -77,7 +77,7 @@ class ControladorOrdenCorte{
                         $valor = $value["articulo"];
 
                         $item1 = "ord_corte";
-                        $valor1 = $value["ord_corte"];
+                        $valor1 = $value["cantidad"];
 
                         ModeloArticulos::mdlActualizarUnDato($tabla, $item1, $valor1, $valor);
 
@@ -122,17 +122,17 @@ class ControladorOrdenCorte{
 
                         # Mostramos una alerta suave
                         echo '<script>
-                                swal({
-                                    type: "success",
-                                    title: "Felicitaciones",
-                                    text: "¡La información fue registrada con éxito!",
-                                    showConfirmButton: true,
-                                    confirmButtonText: "Cerrar"
-                                }).then((result)=>{
-                                    if(result.value){
-                                        window.location="ordencorte";}
-                                });
-                            </script>';                        
+                        swal({
+                            type: "success",
+                            title: "Felicitaciones",
+                            text: "¡La información fue registrada con éxito!",
+                            showConfirmButton: true,
+                            confirmButtonText: "Cerrar"
+                        }).then((result)=>{
+                            if(result.value){
+                                window.location="ordencorte";}
+                        });
+                    </script>';                        
 
                     }else{
 

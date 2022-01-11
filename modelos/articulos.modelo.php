@@ -692,7 +692,7 @@ class ModeloArticulos
 		  WHERE codigo = :pedido) AS t 
 		  ON a.articulo = t.articulo 
 	  WHERE a.modelo LIKE '%".$modelo."%'
-		AND a.estado = 'activo' 
+		/* AND a.estado = 'activo'  */
 	  GROUP BY a.modelo,
 		a.cod_color,
 		a.color";
@@ -827,7 +827,7 @@ class ModeloArticulos
 		  FROM
 			articulojf a 
 		  WHERE a.modelo LIKE '%".$modelo."%'
-			AND a.estado = 'activo' 
+			/* AND a.estado = 'activo' */ 
 		  GROUP BY a.modelo,
 			a.cod_color,
 			a.color";
@@ -875,7 +875,7 @@ class ModeloArticulos
 					FROM
 						articulojf a 
 					WHERE a.modelo = :valor
-						AND a.estado = 'Activo'");
+						/* AND a.estado = 'Activo' */");
 
 		$stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
 

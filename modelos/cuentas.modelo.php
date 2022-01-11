@@ -647,6 +647,49 @@ class ModeloCuentas{
 		$stmt = null;
 
     }
+
+	/*=============================================
+	EDITAR TULTIMO PAGO
+	=============================================*/
+
+	static public function mdlEditarUltPago($numCta,$tipoDoc){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE 
+								cuenta_ctejf c1 
+								LEFT JOIN 
+								(SELECT 
+									num_cta,
+									tipo_doc,
+									MAX(fecha) AS ult_pago 
+								FROM
+									cuenta_ctejf 
+								WHERE num_cta = :numCta 
+									AND tipo_doc = :tipoDoc 
+									AND tip_mov = '-') AS c2 
+								ON c1.num_cta = c2.num_cta 
+								AND c1.tipo_doc = c2.tipo_doc SET c1.ult_pago = c2.ult_pago 
+							WHERE c1.num_cta = :numCta 
+								AND c1.tipo_doc = :tipoDoc 
+								AND c1.tip_mov = '+'");
+
+		$stmt->bindParam(":numCta", $numCta, PDO::PARAM_STR);
+		$stmt->bindParam(":tipoDoc", $tipoDoc, PDO::PARAM_STR);
+
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+    }	
 	
 	static public function mdlEditarCancelacion($tabla,$datos){
 
@@ -758,9 +801,39 @@ class ModeloCuentas{
 		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->bindParam(":" . $item1, $valor1, PDO::PARAM_STR);
+		$stmt->bindParam(":id", $valor2, PDO::PARAM_STR);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return $stmt->errorInfo();	
+
+		}
+
+		$stmt = null;
+	}
+
+	//* ACTUALIZAR ESTADO DE CUENTA
+	static public function mdlActualizarEstado($valor2){
+
+		$sql = "UPDATE cuenta_ctejf SET estado='PENDIENTE' WHERE id=:id";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
 		$stmt->bindParam(":id", $valor2, PDO::PARAM_INT);
 
-		$stmt->execute();
+		if($stmt -> execute()){
+
+			return $sql;
+		
+		}else{
+
+			return $stmt->errorInfo();	
+
+		}
 
 		$stmt = null;
 	}
