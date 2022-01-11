@@ -90,6 +90,7 @@
            <th>Responsable</th>
            <th>Taller</th>
            <th>Documento</th> 
+           <th>Guia</th> 
            <th>Total</th>
            <th>Fecha</th>
            <th>Almacen</th>

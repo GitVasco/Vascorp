@@ -45,7 +45,7 @@ class TablaProformas{
 
             if($proformas[$i]["facturacion"] == "0"){
 
-                $botones =  "<div class='btn-group'><button title='Imprimir Factura' class='btn btn-xs btn-success btnImprimirBoleta' tipo='".$proformas[$i]["tipo"]."' documento='".$proformas[$i]["documento"]."'><i class='fa fa-print'></i></button><button title='Anular Documento' class='btn btn-xs  btn-danger btnAnularDocumento' documento='".$proformas[$i]["documento"]."' tipo='".$proformas[$i]["tipo"]."' pagina='facturas'><i class='fa fa-close'></i></button></div>";
+                $botones =  "<div class='btn-group'><button title='Imprimir Proforma' class='btn btn-xs btn-success btnImprimirProforma' tipo='".$proformas[$i]["tipo"]."' documento='".$proformas[$i]["documento"]."'><i class='fa fa-print'></i></button><button title='Anular Documento' class='btn btn-xs  btn-danger btnAnularDocumento' documento='".$proformas[$i]["documento"]."' tipo='".$proformas[$i]["tipo"]."' pagina='facturas'><i class='fa fa-close'></i></button></div>";
 
             }else{
 

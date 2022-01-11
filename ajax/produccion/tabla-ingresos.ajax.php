@@ -55,6 +55,7 @@ class TablaIngresos{
                 "'.$ingreso[$i]["nombre"].'",
                 "'.$ingreso[$i]["taller"].'",
                 "'.$ingreso[$i]["documento"].'",
+                "'.$ingreso[$i]["guia"].'",
                 "'.$total.'",
                 "'.$ingreso[$i]["fecha"].'",
                 "'.$estado.'",

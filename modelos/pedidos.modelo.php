@@ -886,6 +886,7 @@ class ModeloPedidos{
 			$sql="SELECT
 						t.id,
 						t.codigo,
+						RIGHT(t.codigo, 7) AS codigoB,
 						c.codigo AS cod_cli,
 						c.nombre,
 						c.tipo_documento,
@@ -923,7 +924,8 @@ class ModeloPedidos{
 						ON t.condicion_venta = cv.id
 						LEFT JOIN usuariosjf u
 						ON t.usuario = u.id
-					ORDER BY fecha DESC";
+					ORDER BY fecha DESC,
+					 RIGHT(t.codigo, 7) DESC";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 
@@ -989,48 +991,51 @@ class ModeloPedidos{
 
 		if($valor != null){
 
-			$sql="SELECT
-						t.id,
-						t.codigo,
-						c.codigo AS cod_cli,
-						c.nombre,
-						c.tipo_documento,
-						(SELECT 
-						tipo_doc 
-					FROM
-						tipo_documentojf td 
-					WHERE c.tipo_documento = td.cod_doc) AS tipo_doc,						
-						c.documento,
-						t.lista,
-						t.vendedor,
-						t.op_gravada,
-						t.descuento_total,
-						t.sub_total,
-						t.igv,
-						t.total,
-						ROUND(
-						t.descuento_total / t.op_gravada * 100,
-						2
-						) AS dscto,
-						t.condicion_venta,
-						cv.descripcion,
-						t.estado,
-						t.usuario,
-						t.agencia,
-						u.nombre AS nom_usu,
-						DATE(t.fecha) AS fecha,
-						cv.dias,
-						DATE_ADD(DATE(t.fecha), INTERVAL cv.dias DAY) AS fecha_ven
-					FROM
-						temporaljf t
-						LEFT JOIN clientesjf c
-						ON t.cliente = c.codigo
-						LEFT JOIN condiciones_ventajf cv
-						ON t.condicion_venta = cv.id
-						LEFT JOIN usuariosjf u
-						ON t.usuario = u.id
-					WHERE t.estado = '$valor'
-					ORDER BY fecha DESC";
+			$sql="SELECT 
+			t.id,
+			t.codigo,
+			RIGHT(t.codigo, 7) AS codigoB,
+			c.codigo AS cod_cli,
+			c.nombre,
+			c.tipo_documento,
+			(SELECT 
+			  tipo_doc 
+			FROM
+			  tipo_documentojf td 
+			WHERE c.tipo_documento = td.cod_doc) AS tipo_doc,
+			c.documento,
+			t.lista,
+			t.vendedor,
+			t.op_gravada,
+			t.descuento_total,
+			t.sub_total,
+			t.igv,
+			t.total,
+			ROUND(
+			  t.descuento_total / t.op_gravada * 100,
+			  2
+			) AS dscto,
+			t.condicion_venta,
+			cv.descripcion,
+			t.estado,
+			t.usuario,
+			t.agencia,
+			u.nombre AS nom_usu,
+			DATE(t.fecha) AS fecha,
+			cv.dias,
+			DATE_ADD(DATE(t.fecha), INTERVAL cv.dias DAY) AS fecha_ven 
+		  FROM
+			temporaljf t 
+			LEFT JOIN clientesjf c 
+			  ON t.cliente = c.codigo 
+			LEFT JOIN condiciones_ventajf cv 
+			  ON t.condicion_venta = cv.id 
+			LEFT JOIN usuariosjf u 
+			  ON t.usuario = u.id 
+		  WHERE t.estado = '$valor' 
+		  ORDER BY 
+			t.fecha DESC,
+			RIGHT(t.codigo, 7)";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 

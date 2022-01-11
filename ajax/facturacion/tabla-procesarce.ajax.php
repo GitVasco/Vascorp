@@ -75,7 +75,7 @@ class TablaProcesarCE{
             $datosJson .= '[
             "'.$factura[$i]["tipo_documento"].'",
             "<b>'.$factura[$i]["documento"].'</b>",
-            "'.($factura[$i]["total"]*-1).'",
+            "'.($factura[$i]["total"]).'",
             "'.$factura[$i]["cliente"].'",
             "<b>'.$factura[$i]["nombre"].'</b>",
             "'.$factura[$i]["vendedor"].'",
