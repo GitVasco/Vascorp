@@ -2462,75 +2462,80 @@ class ModeloFacturacion{
     static public function mdlMostrarVentaDetalle($optipo,$opdocumento,$impuesto,$vend,$inicio,$fin){
 
       if($optipo == 'detallado' && $opdocumento == 'todos' && $impuesto == '1' && $vend =='todos' && $inicio == 'todos' && $fin == 'todos'){
+        
         $stmt = Conexion::conectar()->prepare("SELECT 
-        v.vendedor,
-        v.tipo,
-        v.tipo_documento,
-        v.documento,
-        v.fecha,
-        c.nombre,
-        v.total 
-      FROM
-        ventajf v 
-        LEFT JOIN clientesjf c 
-          ON v.cliente = c.codigo 
-        WHERE YEAR(v.fecha) = YEAR(NOW()) 
-      UNION
-      SELECT 
-        v.vendedor,
-        v.tipo,
-        v.tipo_documento,
-        'subtotal' AS documento,
-        '' AS fecha,
-        '' AS nombre,
-        SUM(v.total) AS total 
-      FROM
-        ventajf v 
-        LEFT JOIN clientesjf c 
-          ON v.cliente = c.codigo 
-        WHERE YEAR(v.fecha) = YEAR(NOW()) 
-      GROUP BY v.tipo,
-        v.tipo_documento,
-        v.vendedor 
-      UNION
-      SELECT 
-        v.vendedor,
-        'S99' AS tipo,
-        '' AS tipo_documento,
-        '' AS documento,
-        '' AS fecha,
-        '' AS nombre,
-        SUM(v.total) AS total 
-      FROM
-        ventajf v 
-        LEFT JOIN clientesjf c 
-          ON v.cliente = c.codigo 
-        WHERE YEAR(v.fecha) = YEAR(NOW()) 
-      GROUP BY v.vendedor 
-      UNION
-      SELECT 
-        v.vendedor,
-        'A00' AS tipo,
-        '' AS tipo_documento,
-        '' AS documento,
-        '' AS fecha,
-        ve.nom_ven AS nombre,
-        '' AS total 
-      FROM
-        ventajf v 
-        LEFT JOIN 
-          (SELECT 
-            codigo,
-            descripcion AS nom_ven 
-          FROM
-            maestrajf 
-          WHERE tipo_dato = 'TVEND') AS ve 
-          ON v.vendedor = ve.codigo 
-        WHERE YEAR(v.fecha) = YEAR(NOW()) 
-      GROUP BY v.vendedor 
-      ORDER BY vendedor,
-        tipo,
-        documento");
+                    v.vendedor,
+                    v.tipo,
+                    v.tipo_documento,
+                    v.documento,
+                    v.fecha,
+                    c.nombre,
+                    v.total 
+                FROM
+                    ventajf v 
+                    LEFT JOIN clientesjf c 
+                    ON v.cliente = c.codigo 
+                    WHERE YEAR(v.fecha) = YEAR(NOW()) 
+                    AND v.tipo NOT IN ('S01') 
+                UNION
+                SELECT 
+                    v.vendedor,
+                    v.tipo,
+                    v.tipo_documento,
+                    'subtotal' AS documento,
+                    '' AS fecha,
+                    '' AS nombre,
+                    SUM(v.total) AS total 
+                FROM
+                    ventajf v 
+                    LEFT JOIN clientesjf c 
+                    ON v.cliente = c.codigo 
+                    WHERE YEAR(v.fecha) = YEAR(NOW()) 
+                    AND v.tipo not in ('S01')
+                GROUP BY v.tipo,
+                    v.tipo_documento,
+                    v.vendedor 
+                UNION
+                SELECT 
+                    v.vendedor,
+                    'S99' AS tipo,
+                    '' AS tipo_documento,
+                    '' AS documento,
+                    '' AS fecha,
+                    '' AS nombre,
+                    SUM(v.total) AS total 
+                FROM
+                    ventajf v 
+                    LEFT JOIN clientesjf c 
+                    ON v.cliente = c.codigo 
+                    WHERE YEAR(v.fecha) = YEAR(NOW()) 
+                    AND  v.tipo NOT IN ('S01')
+                GROUP BY v.vendedor 
+                UNION
+                SELECT 
+                    v.vendedor,
+                    'A00' AS tipo,
+                    '' AS tipo_documento,
+                    '' AS documento,
+                    '' AS fecha,
+                    ve.nom_ven AS nombre,
+                    '' AS total 
+                FROM
+                    ventajf v 
+                    LEFT JOIN 
+                    (SELECT 
+                        codigo,
+                        descripcion AS nom_ven 
+                    FROM
+                        maestrajf 
+                    WHERE tipo_dato = 'TVEND') AS ve 
+                    ON v.vendedor = ve.codigo 
+                    WHERE YEAR(v.fecha) = YEAR(NOW()) 
+                    AND v.tipo not in ('S01')
+                GROUP BY v.vendedor 
+                ORDER BY vendedor,
+                    tipo,
+                    documento");
         
         $stmt -> execute();
   
@@ -2539,74 +2544,78 @@ class ModeloFacturacion{
       }else if($optipo == 'detallado' && $opdocumento == 'todos' && $impuesto == '0' && $vend == 'todos' && $inicio == 'todos' && $fin == 'todos'){
   
         $stmt = Conexion::conectar()->prepare("SELECT 
-        v.vendedor,
-        v.tipo,
-        v.tipo_documento,
-        v.documento,
-        v.fecha,
-        c.nombre,
-        ROUND(v.total/ 1.18, 2) AS total 
-      FROM
-        ventajf v 
-        LEFT JOIN clientesjf c 
-          ON v.cliente = c.codigo 
-        WHERE YEAR(v.fecha) = YEAR(NOW()) 
-      UNION
-      SELECT 
-        v.vendedor,
-        v.tipo,
-        v.tipo_documento,
-        'subtotal' AS documento,
-        '' AS fecha,
-        '' AS nombre,
-        ROUND(SUM(v.total) / 1.18, 2) AS total 
-      FROM
-        ventajf v 
-        LEFT JOIN clientesjf c 
-          ON v.cliente = c.codigo 
-        WHERE YEAR(v.fecha) = YEAR(NOW()) 
-      GROUP BY v.tipo,
-        v.tipo_documento,
-        v.vendedor 
-      UNION
-      SELECT 
-        v.vendedor,
-        'S99' AS tipo,
-        '' AS tipo_documento,
-        '' AS documento,
-        '' AS fecha,
-        '' AS nombre,
-        ROUND(SUM(v.total) / 1.18, 2) AS total 
-      FROM
-        ventajf v 
-        LEFT JOIN clientesjf c 
-          ON v.cliente = c.codigo 
-        WHERE YEAR(v.fecha) = YEAR(NOW()) 
-      GROUP BY v.vendedor 
-      UNION
-      SELECT 
-        v.vendedor,
-        'A00' AS tipo,
-        '' AS tipo_documento,
-        '' AS documento,
-        '' AS fecha,
-        ve.nom_ven AS nombre,
-        '' AS total 
-      FROM
-        ventajf v 
-        LEFT JOIN 
-          (SELECT 
-            codigo,
-            descripcion AS nom_ven 
-          FROM
-            maestrajf 
-          WHERE tipo_dato = 'TVEND') AS ve 
-          ON v.vendedor = ve.codigo 
-        WHERE YEAR(v.fecha) = YEAR(NOW()) 
-      GROUP BY v.vendedor 
-      ORDER BY vendedor,
-        tipo,
-        documento");
+                    v.vendedor,
+                    v.tipo,
+                    v.tipo_documento,
+                    v.documento,
+                    v.fecha,
+                    c.nombre,
+                    ROUND(v.total/ 1.18, 2) AS total 
+                FROM
+                    ventajf v 
+                    LEFT JOIN clientesjf c 
+                    ON v.cliente = c.codigo 
+                    WHERE YEAR(v.fecha) = YEAR(NOW()) 
+                    AND v.tipo NOT IN ('S01') 
+                UNION
+                SELECT 
+                    v.vendedor,
+                    v.tipo,
+                    v.tipo_documento,
+                    'subtotal' AS documento,
+                    '' AS fecha,
+                    '' AS nombre,
+                    ROUND(SUM(v.total) / 1.18, 2) AS total 
+                FROM
+                    ventajf v 
+                    LEFT JOIN clientesjf c 
+                    ON v.cliente = c.codigo 
+                    WHERE YEAR(v.fecha) = YEAR(NOW()) 
+                    AND v.tipo not in ('S01')
+                GROUP BY v.tipo,
+                    v.tipo_documento,
+                    v.vendedor 
+                UNION
+                SELECT 
+                    v.vendedor,
+                    'S99' AS tipo,
+                    '' AS tipo_documento,
+                    '' AS documento,
+                    '' AS fecha,
+                    '' AS nombre,
+                    ROUND(SUM(v.total) / 1.18, 2) AS total 
+                FROM
+                    ventajf v 
+                    LEFT JOIN clientesjf c 
+                    ON v.cliente = c.codigo 
+                    WHERE YEAR(v.fecha) = YEAR(NOW()) 
+                    AND  v.tipo NOT IN ('S01')
+                GROUP BY v.vendedor 
+                UNION
+                SELECT 
+                    v.vendedor,
+                    'A00' AS tipo,
+                    '' AS tipo_documento,
+                    '' AS documento,
+                    '' AS fecha,
+                    ve.nom_ven AS nombre,
+                    '' AS total 
+                FROM
+                    ventajf v 
+                    LEFT JOIN 
+                    (SELECT 
+                        codigo,
+                        descripcion AS nom_ven 
+                    FROM
+                        maestrajf 
+                    WHERE tipo_dato = 'TVEND') AS ve 
+                    ON v.vendedor = ve.codigo 
+                    WHERE YEAR(v.fecha) = YEAR(NOW()) 
+                    AND v.tipo not in ('S01')
+                GROUP BY v.vendedor 
+                ORDER BY vendedor,
+                    tipo,
+                    documento");
         
         $stmt -> execute();
   
@@ -2614,78 +2623,82 @@ class ModeloFacturacion{
   
       }else if ($optipo == 'detallado' && $opdocumento == 'todos' && $impuesto == '0' && $vend == 'todos' && $inicio != 'todos' && $fin != 'todos'){
         $stmt = Conexion::conectar()->prepare("SELECT 
-        v.vendedor,
-        v.tipo,
-        v.tipo_documento,
-        v.documento,
-        v.fecha,
-        c.nombre,
-        ROUND(v.total/ 1.18, 2) AS total 
-      FROM
-        ventajf v 
-        LEFT JOIN clientesjf c 
-          ON v.cliente = c.codigo 
-        WHERE v.fecha BETWEEN :inicio 
-        AND :fin
-      UNION
-      SELECT 
-        v.vendedor,
-        v.tipo,
-        v.tipo_documento,
-        'subtotal' AS documento,
-        '' AS fecha,
-        '' AS nombre,
-        ROUND(SUM(v.total) / 1.18, 2) AS total 
-      FROM
-        ventajf v 
-        LEFT JOIN clientesjf c 
-          ON v.cliente = c.codigo 
-        WHERE v.fecha BETWEEN :inicio 
-        AND :fin
-      GROUP BY v.tipo,
-        v.tipo_documento,
-        v.vendedor 
-      UNION
-      SELECT 
-        v.vendedor,
-        'S99' AS tipo,
-        '' AS tipo_documento,
-        '' AS documento,
-        '' AS fecha,
-        '' AS nombre,
-        ROUND(SUM(v.total) / 1.18, 2) AS total 
-      FROM
-        ventajf v 
-        LEFT JOIN clientesjf c 
-          ON v.cliente = c.codigo 
-        WHERE v.fecha BETWEEN :inicio 
-        AND :fin
-      GROUP BY v.vendedor 
-      UNION
-      SELECT 
-        v.vendedor,
-        'A00' AS tipo,
-        '' AS tipo_documento,
-        '' AS documento,
-        '' AS fecha,
-        ve.nom_ven AS nombre,
-        '' AS total 
-      FROM
-        ventajf v 
-        LEFT JOIN 
-          (SELECT 
-            codigo,
-            descripcion AS nom_ven 
-          FROM
-            maestrajf 
-          WHERE tipo_dato = 'TVEND') AS ve 
-          ON v.vendedor = ve.codigo 
-        WHERE v.fecha BETWEEN :inicio 
-        AND :fin
-      GROUP BY v.vendedor 
-      ORDER BY vendedor,
-        tipo,
-        documento");
+                    v.vendedor,
+                    v.tipo,
+                    v.tipo_documento,
+                    v.documento,
+                    v.fecha,
+                    c.nombre,
+                    ROUND(v.total/ 1.18, 2) AS total 
+                FROM
+                    ventajf v 
+                    LEFT JOIN clientesjf c 
+                    ON v.cliente = c.codigo 
+                    WHERE v.fecha BETWEEN :inicio 
+                    AND :fin
+                    AND v.tipo NOT IN ('S01') 
+                UNION
+                SELECT 
+                    v.vendedor,
+                    v.tipo,
+                    v.tipo_documento,
+                    'subtotal' AS documento,
+                    '' AS fecha,
+                    '' AS nombre,
+                    ROUND(SUM(v.total) / 1.18, 2) AS total 
+                FROM
+                    ventajf v 
+                    LEFT JOIN clientesjf c 
+                    ON v.cliente = c.codigo 
+                    WHERE v.fecha BETWEEN :inicio 
+                    AND :fin
+                    AND v.tipo not in ('S01')
+                GROUP BY v.tipo,
+                    v.tipo_documento,
+                    v.vendedor 
+                UNION
+                SELECT 
+                    v.vendedor,
+                    'S99' AS tipo,
+                    '' AS tipo_documento,
+                    '' AS documento,
+                    '' AS fecha,
+                    '' AS nombre,
+                    ROUND(SUM(v.total) / 1.18, 2) AS total 
+                FROM
+                    ventajf v 
+                    LEFT JOIN clientesjf c 
+                    ON v.cliente = c.codigo 
+                    WHERE v.fecha BETWEEN :inicio 
+                    AND :fin
+                    AND v.tipo NOT IN ('S01')
+                GROUP BY v.vendedor 
+                UNION
+                SELECT 
+                    v.vendedor,
+                    'A00' AS tipo,
+                    '' AS tipo_documento,
+                    '' AS documento,
+                    '' AS fecha,
+                    ve.nom_ven AS nombre,
+                    '' AS total 
+                FROM
+                    ventajf v 
+                    LEFT JOIN 
+                    (SELECT 
+                        codigo,
+                        descripcion AS nom_ven 
+                    FROM
+                        maestrajf 
+                    WHERE tipo_dato = 'TVEND') AS ve 
+                    ON v.vendedor = ve.codigo 
+                    WHERE v.fecha BETWEEN :inicio 
+                    AND :fin
+                    AND v.tipo not in ('S01')
+                GROUP BY v.vendedor 
+                ORDER BY vendedor,
+                    tipo,
+                    documento");
 
         $stmt -> bindParam(":inicio",$inicio, PDO::PARAM_STR);
         $stmt -> bindParam(":fin",$fin, PDO::PARAM_STR);
@@ -2695,79 +2708,84 @@ class ModeloFacturacion{
         return $stmt -> fetchAll();
   
       }else if ($optipo == 'detallado' && $opdocumento == 'todos' && $impuesto == '1' && $vend == 'todos' && $inicio !='todos' && $fin != 'todos'){
-        $stmt = Conexion::conectar()->prepare("SELECT 
-        v.vendedor,
-        v.tipo,
-        v.tipo_documento,
-        v.documento,
-        v.fecha,
-        c.nombre,
-        v.total 
-      FROM
-        ventajf v 
-        LEFT JOIN clientesjf c 
-          ON v.cliente = c.codigo 
-        WHERE v.fecha BETWEEN :inicio 
-        AND :fin 
-      UNION
-      SELECT 
-        v.vendedor,
-        v.tipo,
-        v.tipo_documento,
-        'subtotal' AS documento,
-        '' AS fecha,
-        '' AS nombre,
-        SUM(v.total) AS total 
-      FROM
-        ventajf v 
-        LEFT JOIN clientesjf c 
-          ON v.cliente = c.codigo 
-        WHERE v.fecha BETWEEN :inicio 
-        AND :fin
-      GROUP BY v.tipo,
-        v.tipo_documento,
-        v.vendedor 
-      UNION
-      SELECT 
-        v.vendedor,
-        'S99' AS tipo,
-        '' AS tipo_documento,
-        '' AS documento,
-        '' AS fecha,
-        '' AS nombre,
-        SUM(v.total) AS total 
-      FROM
-        ventajf v 
-        LEFT JOIN clientesjf c 
-          ON v.cliente = c.codigo 
-        WHERE v.fecha BETWEEN :inicio 
-        AND :fin 
-      GROUP BY v.vendedor 
-      UNION
-      SELECT 
-        v.vendedor,
-        'A00' AS tipo,
-        '' AS tipo_documento,
-        '' AS documento,
-        '' AS fecha,
-        ve.nom_ven AS nombre,
-        '' AS total 
-      FROM
-        ventajf v 
-        LEFT JOIN 
-          (SELECT 
-            codigo,
-            descripcion AS nom_ven 
-          FROM
-            maestrajf 
-          WHERE tipo_dato = 'TVEND') AS ve 
-          ON v.vendedor = ve.codigo 
-        WHERE v.fecha BETWEEN :inicio 
-        AND :fin
-      GROUP BY v.vendedor 
-      ORDER BY vendedor,
-        tipo,
-        documento");
+       
+       $stmt = Conexion::conectar()->prepare("SELECT 
+                    v.vendedor,
+                    v.tipo,
+                    v.tipo_documento,
+                    v.documento,
+                    v.fecha,
+                    c.nombre,
+                    v.total 
+                FROM
+                    ventajf v 
+                    LEFT JOIN clientesjf c 
+                    ON v.cliente = c.codigo 
+                    WHERE v.fecha BETWEEN :inicio 
+                    AND :fin 
+                    AND v.tipo NOT IN ('S01') 
+                UNION
+                SELECT 
+                    v.vendedor,
+                    v.tipo,
+                    v.tipo_documento,
+                    'subtotal' AS documento,
+                    '' AS fecha,
+                    '' AS nombre,
+                    SUM(v.total) AS total 
+                FROM
+                    ventajf v 
+                    LEFT JOIN clientesjf c 
+                    ON v.cliente = c.codigo 
+                    WHERE v.fecha BETWEEN :inicio 
+                    AND :fin
+                    AND v.tipo not in ('S01')
+                GROUP BY v.tipo,
+                    v.tipo_documento,
+                    v.vendedor 
+                UNION
+                SELECT 
+                    v.vendedor,
+                    'S99' AS tipo,
+                    '' AS tipo_documento,
+                    '' AS documento,
+                    '' AS fecha,
+                    '' AS nombre,
+                    SUM(v.total) AS total 
+                FROM
+                    ventajf v 
+                    LEFT JOIN clientesjf c 
+                    ON v.cliente = c.codigo 
+                    WHERE v.fecha BETWEEN :inicio 
+                    AND :fin 
+                    AND v.tipo NOT IN ('S01')
+                GROUP BY v.vendedor 
+                UNION
+                SELECT 
+                    v.vendedor,
+                    'A00' AS tipo,
+                    '' AS tipo_documento,
+                    '' AS documento,
+                    '' AS fecha,
+                    ve.nom_ven AS nombre,
+                    '' AS total 
+                FROM
+                    ventajf v 
+                    LEFT JOIN 
+                    (SELECT 
+                        codigo,
+                        descripcion AS nom_ven 
+                    FROM
+                        maestrajf 
+                    WHERE tipo_dato = 'TVEND') AS ve 
+                    ON v.vendedor = ve.codigo 
+                    WHERE v.fecha BETWEEN :inicio 
+                    AND :fin
+                    AND v.tipo not in ('S01')
+                GROUP BY v.vendedor 
+                ORDER BY vendedor,
+                    tipo,
+                    documento");
 
         $stmt -> bindParam(":inicio" ,$inicio , PDO::PARAM_STR);
         $stmt -> bindParam(":fin" , $fin, PDO::PARAM_STR);
@@ -2778,82 +2796,86 @@ class ModeloFacturacion{
 
       }else if ($optipo == 'detallado' && $opdocumento == 'todos' && $impuesto == '0' && $vend != 'todos' && $inicio != 'todos' && $fin != 'todos'){
         $stmt = Conexion::conectar()->prepare("SELECT 
-        v.vendedor,
-        v.tipo,
-        v.tipo_documento,
-        v.documento,
-        v.fecha,
-        c.nombre,
-        ROUND(v.total/ 1.18, 2) AS total 
-      FROM
-        ventajf v 
-        LEFT JOIN clientesjf c 
-          ON v.cliente = c.codigo 
-        WHERE v.fecha BETWEEN :inicio 
-        AND :fin
-        AND v.vendedor = :vendedor
-      UNION
-      SELECT 
-        v.vendedor,
-        v.tipo,
-        v.tipo_documento,
-        'subtotal' AS documento,
-        '' AS fecha,
-        '' AS nombre,
-        ROUND(SUM(v.total) / 1.18, 2) AS total 
-      FROM
-        ventajf v 
-        LEFT JOIN clientesjf c 
-          ON v.cliente = c.codigo 
-        WHERE v.fecha BETWEEN :inicio 
-        AND :fin
-        AND v.vendedor = :vendedor
-      GROUP BY v.tipo,
-        v.tipo_documento,
-        v.vendedor 
-      UNION
-      SELECT 
-        v.vendedor,
-        'S99' AS tipo,
-        '' AS tipo_documento,
-        '' AS documento,
-        '' AS fecha,
-        '' AS nombre,
-        ROUND(SUM(v.total) / 1.18, 2) AS total 
-      FROM
-        ventajf v 
-        LEFT JOIN clientesjf c 
-          ON v.cliente = c.codigo 
-        WHERE v.fecha BETWEEN :inicio 
-        AND :fin
-        AND v.vendedor = :vendedor
-      GROUP BY v.vendedor 
-      UNION
-      SELECT 
-        v.vendedor,
-        'A00' AS tipo,
-        '' AS tipo_documento,
-        '' AS documento,
-        '' AS fecha,
-        ve.nom_ven AS nombre,
-        '' AS total 
-      FROM
-        ventajf v 
-        LEFT JOIN 
-          (SELECT 
-            codigo,
-            descripcion AS nom_ven 
-          FROM
-            maestrajf 
-          WHERE tipo_dato = 'TVEND') AS ve 
-          ON v.vendedor = ve.codigo 
-        WHERE v.fecha BETWEEN :inicio 
-        AND :fin
-        AND v.vendedor = :vendedor
-      GROUP BY v.vendedor 
-      ORDER BY vendedor,
-        tipo,
-        documento");
+                    v.vendedor,
+                    v.tipo,
+                    v.tipo_documento,
+                    v.documento,
+                    v.fecha,
+                    c.nombre,
+                    ROUND(v.total/ 1.18, 2) AS total 
+                FROM
+                    ventajf v 
+                    LEFT JOIN clientesjf c 
+                    ON v.cliente = c.codigo 
+                    WHERE v.fecha BETWEEN :inicio 
+                    AND :fin
+                    AND v.vendedor = :vendedor
+                    AND v.tipo not in ('S01')
+                UNION
+                SELECT 
+                    v.vendedor,
+                    v.tipo,
+                    v.tipo_documento,
+                    'subtotal' AS documento,
+                    '' AS fecha,
+                    '' AS nombre,
+                    ROUND(SUM(v.total) / 1.18, 2) AS total 
+                FROM
+                    ventajf v 
+                    LEFT JOIN clientesjf c 
+                    ON v.cliente = c.codigo 
+                    WHERE v.fecha BETWEEN :inicio 
+                    AND :fin
+                    AND v.vendedor = :vendedor
+                    AND v.tipo not in ('S01')
+                GROUP BY v.tipo,
+                    v.tipo_documento,
+                    v.vendedor 
+                UNION
+                SELECT 
+                    v.vendedor,
+                    'S99' AS tipo,
+                    '' AS tipo_documento,
+                    '' AS documento,
+                    '' AS fecha,
+                    '' AS nombre,
+                    ROUND(SUM(v.total) / 1.18, 2) AS total 
+                FROM
+                    ventajf v 
+                    LEFT JOIN clientesjf c 
+                    ON v.cliente = c.codigo 
+                    WHERE v.fecha BETWEEN :inicio 
+                    AND :fin
+                    AND v.vendedor = :vendedor
+                    AND v.tipo not in ('S01')
+                GROUP BY v.vendedor 
+                UNION
+                SELECT 
+                    v.vendedor,
+                    'A00' AS tipo,
+                    '' AS tipo_documento,
+                    '' AS documento,
+                    '' AS fecha,
+                    ve.nom_ven AS nombre,
+                    '' AS total 
+                FROM
+                    ventajf v 
+                    LEFT JOIN 
+                    (SELECT 
+                        codigo,
+                        descripcion AS nom_ven 
+                    FROM
+                        maestrajf 
+                    WHERE tipo_dato = 'TVEND') AS ve 
+                    ON v.vendedor = ve.codigo 
+                    WHERE v.fecha BETWEEN :inicio 
+                    AND :fin                    
+                    AND v.vendedor = :vendedor
+                    AND v.tipo not in ('S01')
+                GROUP BY v.vendedor 
+                ORDER BY vendedor,
+                    tipo,
+                    documento");
 
         $stmt -> bindParam(":inicio",$inicio,PDO::PARAM_STR);
         $stmt -> bindParam(":fin",$fin,PDO::PARAM_STR);
@@ -2865,83 +2887,88 @@ class ModeloFacturacion{
         return $stmt -> fetchAll();
 
       }else if ($optipo == 'detallado' && $opdocumento == 'todos' && $impuesto == '1' && $vend != 'todos' && $inicio != 'todos' && $fin != 'todos' ){
+        
         $stmt = Conexion::conectar()->prepare("SELECT 
-        v.vendedor,
-        v.tipo,
-        v.tipo_documento,
-        v.documento,
-        v.fecha,
-        c.nombre,
-        v.total 
-      FROM
-        ventajf v 
-        LEFT JOIN clientesjf c 
-          ON v.cliente = c.codigo 
-        WHERE v.fecha BETWEEN :inicio 
-        AND :fin 
-        AND v.vendedor = :vendedor
-      UNION
-      SELECT 
-        v.vendedor,
-        v.tipo,
-        v.tipo_documento,
-        'subtotal' AS documento,
-        '' AS fecha,
-        '' AS nombre,
-        SUM(v.total) AS total 
-      FROM
-        ventajf v 
-        LEFT JOIN clientesjf c 
-          ON v.cliente = c.codigo 
-        WHERE v.fecha BETWEEN :inicio 
-        AND :fin
-        AND v.vendedor = :vendedor
-      GROUP BY v.tipo,
-        v.tipo_documento,
-        v.vendedor 
-      UNION
-      SELECT 
-        v.vendedor,
-        'S99' AS tipo,
-        '' AS tipo_documento,
-        '' AS documento,
-        '' AS fecha,
-        '' AS nombre,
-        SUM(v.total) AS total 
-      FROM
-        ventajf v 
-        LEFT JOIN clientesjf c 
-          ON v.cliente = c.codigo 
-        WHERE v.fecha BETWEEN :inicio 
-        AND :fin 
-        AND v.vendedor = :vendedor
-      GROUP BY v.vendedor 
-      UNION
-      SELECT 
-        v.vendedor,
-        'A00' AS tipo,
-        '' AS tipo_documento,
-        '' AS documento,
-        '' AS fecha,
-        ve.nom_ven AS nombre,
-        '' AS total 
-      FROM
-        ventajf v 
-        LEFT JOIN 
-          (SELECT 
-            codigo,
-            descripcion AS nom_ven 
-          FROM
-            maestrajf 
-          WHERE tipo_dato = 'TVEND') AS ve 
-          ON v.vendedor = ve.codigo 
-        WHERE v.fecha BETWEEN :inicio 
-        AND :fin
-        AND v.vendedor = :vendedor
-      GROUP BY v.vendedor 
-      ORDER BY vendedor,
-        tipo,
-        documento");
+                v.vendedor,
+                v.tipo,
+                v.tipo_documento,
+                v.documento,
+                v.fecha,
+                c.nombre,
+                v.total 
+            FROM
+                ventajf v 
+                LEFT JOIN clientesjf c 
+                ON v.cliente = c.codigo 
+                WHERE v.fecha BETWEEN :inicio 
+                AND :fin 
+                AND v.vendedor = :vendedor
+                AND v.tipo not in ('S01')
+            UNION
+            SELECT 
+                v.vendedor,
+                v.tipo,
+                v.tipo_documento,
+                'subtotal' AS documento,
+                '' AS fecha,
+                '' AS nombre,
+                SUM(v.total) AS total 
+            FROM
+                ventajf v 
+                LEFT JOIN clientesjf c 
+                ON v.cliente = c.codigo 
+                WHERE v.fecha BETWEEN :inicio 
+                AND :fin
+                AND v.vendedor = :vendedor
+                AND v.tipo not in ('S01')
+            GROUP BY v.tipo,
+                v.tipo_documento,
+                v.vendedor 
+            UNION
+            SELECT 
+                v.vendedor,
+                'S99' AS tipo,
+                '' AS tipo_documento,
+                '' AS documento,
+                '' AS fecha,
+                '' AS nombre,
+                SUM(v.total) AS total 
+            FROM
+                ventajf v 
+                LEFT JOIN clientesjf c 
+                ON v.cliente = c.codigo 
+                WHERE v.fecha BETWEEN :inicio 
+                AND :fin 
+                AND v.vendedor = :vendedor
+                AND v.tipo not in ('S01')
+            GROUP BY v.vendedor 
+            UNION
+            SELECT 
+                v.vendedor,
+                'A00' AS tipo,
+                '' AS tipo_documento,
+                '' AS documento,
+                '' AS fecha,
+                ve.nom_ven AS nombre,
+                '' AS total 
+            FROM
+                ventajf v 
+                LEFT JOIN 
+                (SELECT 
+                    codigo,
+                    descripcion AS nom_ven 
+                FROM
+                    maestrajf 
+                WHERE tipo_dato = 'TVEND') AS ve 
+                ON v.vendedor = ve.codigo 
+                WHERE v.fecha BETWEEN :inicio 
+                AND :fin
+                AND v.vendedor = :vendedor
+                AND v.tipo not in ('S01')
+            GROUP BY v.vendedor 
+            ORDER BY vendedor,
+                tipo,
+                documento");
         
         $stmt->bindParam(":inicio",$inicio,PDO::PARAM_STR);
         $stmt->bindParam(":fin",$fin,PDO::PARAM_STR);
@@ -2951,79 +2978,84 @@ class ModeloFacturacion{
         return $stmt -> fetchAll();
         
       }else if ($optipo == 'detallado' && $opdocumento == 'todos' && $impuesto == '1' && $vend != 'todos' && $inicio=='todos' && $fin == 'todos'){
+        
         $stmt = Conexion::conectar()->prepare("SELECT 
-        v.vendedor,
-        v.tipo,
-        v.tipo_documento,
-        v.documento,
-        v.fecha,
-        c.nombre,
-        v.total 
-      FROM
-        ventajf v 
-        LEFT JOIN clientesjf c 
-          ON v.cliente = c.codigo 
-        WHERE YEAR(v.fecha) = YEAR(NOW()) 
-        AND v.vendedor=:vendedor
-      UNION
-      SELECT 
-        v.vendedor,
-        v.tipo,
-        v.tipo_documento,
-        'subtotal' AS documento,
-        '' AS fecha,
-        '' AS nombre,
-        SUM(v.total) AS total 
-      FROM
-        ventajf v 
-        LEFT JOIN clientesjf c 
-          ON v.cliente = c.codigo 
-        WHERE YEAR(v.fecha) = YEAR(NOW()) 
-        AND v.vendedor = :vendedor
-      GROUP BY v.tipo,
-        v.tipo_documento,
-        v.vendedor 
-      UNION
-      SELECT 
-        v.vendedor,
-        'S99' AS tipo,
-        '' AS tipo_documento,
-        '' AS documento,
-        '' AS fecha,
-        '' AS nombre,
-        SUM(v.total) AS total 
-      FROM
-        ventajf v 
-        LEFT JOIN clientesjf c 
-          ON v.cliente = c.codigo 
-        WHERE YEAR(v.fecha) = YEAR(NOW()) 
-        AND v.vendedor  = :vendedor
-      GROUP BY v.vendedor 
-      UNION
-      SELECT 
-        v.vendedor,
-        'A00' AS tipo,
-        '' AS tipo_documento,
-        '' AS documento,
-        '' AS fecha,
-        ve.nom_ven AS nombre,
-        '' AS total 
-      FROM
-        ventajf v 
-        LEFT JOIN 
-          (SELECT 
-            codigo,
-            descripcion AS nom_ven 
-          FROM
-            maestrajf 
-          WHERE tipo_dato = 'TVEND') AS ve 
-          ON v.vendedor = ve.codigo 
-        WHERE YEAR(v.fecha) = YEAR(NOW()) 
-        AND v.vendedor = :vendedor
-      GROUP BY v.vendedor 
-      ORDER BY vendedor,
-        tipo,
-        documento");
+                    v.vendedor,
+                    v.tipo,
+                    v.tipo_documento,
+                    v.documento,
+                    v.fecha,
+                    c.nombre,
+                    v.total 
+                FROM
+                    ventajf v 
+                    LEFT JOIN clientesjf c 
+                    ON v.cliente = c.codigo 
+                    WHERE YEAR(v.fecha) = YEAR(NOW()) 
+                    AND v.vendedor=:vendedor
+                    AND v.tipo not in ('S01')
+                UNION
+                SELECT 
+                    v.vendedor,
+                    v.tipo,
+                    v.tipo_documento,
+                    'subtotal' AS documento,
+                    '' AS fecha,
+                    '' AS nombre,
+                    SUM(v.total) AS total 
+                FROM
+                    ventajf v 
+                    LEFT JOIN clientesjf c 
+                    ON v.cliente = c.codigo 
+                    WHERE YEAR(v.fecha) = YEAR(NOW()) 
+                    AND v.vendedor = :vendedor
+                    AND v.tipo not in ('S01')
+                GROUP BY v.tipo,
+                    v.tipo_documento,
+                    v.vendedor 
+                UNION
+                SELECT 
+                    v.vendedor,
+                    'S99' AS tipo,
+                    '' AS tipo_documento,
+                    '' AS documento,
+                    '' AS fecha,
+                    '' AS nombre,
+                    SUM(v.total) AS total 
+                FROM
+                    ventajf v 
+                    LEFT JOIN clientesjf c 
+                    ON v.cliente = c.codigo 
+                    WHERE YEAR(v.fecha) = YEAR(NOW()) 
+                    AND v.vendedor  = :vendedor
+                    AND v.tipo not in ('S01')
+                GROUP BY v.vendedor 
+                UNION
+                SELECT 
+                    v.vendedor,
+                    'A00' AS tipo,
+                    '' AS tipo_documento,
+                    '' AS documento,
+                    '' AS fecha,
+                    ve.nom_ven AS nombre,
+                    '' AS total 
+                FROM
+                    ventajf v 
+                    LEFT JOIN 
+                    (SELECT 
+                        codigo,
+                        descripcion AS nom_ven 
+                    FROM
+                        maestrajf 
+                    WHERE tipo_dato = 'TVEND') AS ve 
+                    ON v.vendedor = ve.codigo 
+                    WHERE YEAR(v.fecha) = YEAR(NOW()) 
+                    AND v.vendedor = :vendedor
+                    AND v.tipo not in ('S01')
+                GROUP BY v.vendedor 
+                ORDER BY vendedor,
+                    tipo,
+                    documento");
 
         $stmt->bindParam(":vendedor",$vend,PDO::PARAM_STR);
 
@@ -3034,78 +3066,81 @@ class ModeloFacturacion{
       } else if($optipo == 'detallado' && $opdocumento == 'todos' && $impuesto == '0' && $vend != 'todos' && $inicio == 'todos' && $fin == 'todos'){
 
         $stmt = Conexion::conectar()->prepare("SELECT 
-        v.vendedor,
-        v.tipo,
-        v.tipo_documento,
-        v.documento,
-        v.fecha,
-        c.nombre,
-        ROUND(v.total/ 1.18, 2) AS total 
-      FROM
-        ventajf v 
-        LEFT JOIN clientesjf c 
-          ON v.cliente = c.codigo 
-        WHERE YEAR(v.fecha) = YEAR(NOW()) 
-        AND v.vendedor = :vendedor
-      UNION
-      SELECT 
-        v.vendedor,
-        v.tipo,
-        v.tipo_documento,
-        'subtotal' AS documento,
-        '' AS fecha,
-        '' AS nombre,
-        ROUND(SUM(v.total) / 1.18, 2) AS total 
-      FROM
-        ventajf v 
-        LEFT JOIN clientesjf c 
-          ON v.cliente = c.codigo 
-        WHERE YEAR(v.fecha) = YEAR(NOW()) 
-        AND v.vendedor = :vendedor
-      GROUP BY v.tipo,
-        v.tipo_documento,
-        v.vendedor 
-      UNION
-      SELECT 
-        v.vendedor,
-        'S99' AS tipo,
-        '' AS tipo_documento,
-        '' AS documento,
-        '' AS fecha,
-        '' AS nombre,
-        ROUND(SUM(v.total) / 1.18, 2) AS total 
-      FROM
-        ventajf v 
-        LEFT JOIN clientesjf c 
-          ON v.cliente = c.codigo 
-        WHERE YEAR(v.fecha) = YEAR(NOW()) 
-        AND v.vendedor = :vendedor
-      GROUP BY v.vendedor 
-      UNION
-      SELECT 
-        v.vendedor,
-        'A00' AS tipo,
-        '' AS tipo_documento,
-        '' AS documento,
-        '' AS fecha,
-        ve.nom_ven AS nombre,
-        '' AS total 
-      FROM
-        ventajf v 
-        LEFT JOIN 
-          (SELECT 
-            codigo,
-            descripcion AS nom_ven 
-          FROM
-            maestrajf 
-          WHERE tipo_dato = 'TVEND') AS ve 
-          ON v.vendedor = ve.codigo 
-        WHERE YEAR(v.fecha) = YEAR(NOW()) 
-        AND v.vendedor = :vendedor
-      GROUP BY v.vendedor 
-      ORDER BY vendedor,
-        tipo,
-        documento");
+                v.vendedor,
+                v.tipo,
+                v.tipo_documento,
+                v.documento,
+                v.fecha,
+                c.nombre,
+                ROUND(v.total/ 1.18, 2) AS total 
+            FROM
+                ventajf v 
+                LEFT JOIN clientesjf c 
+                ON v.cliente = c.codigo 
+                WHERE YEAR(v.fecha) = YEAR(NOW()) 
+                AND v.vendedor = :vendedor
+            UNION
+            SELECT 
+                v.vendedor,
+                v.tipo,
+                v.tipo_documento,
+                'subtotal' AS documento,
+                '' AS fecha,
+                '' AS nombre,
+                ROUND(SUM(v.total) / 1.18, 2) AS total 
+            FROM
+                ventajf v 
+                LEFT JOIN clientesjf c 
+                ON v.cliente = c.codigo 
+                WHERE YEAR(v.fecha) = YEAR(NOW()) 
+                AND v.vendedor = :vendedor
+                AND v.tipo not in ('S01')
+            GROUP BY v.tipo,
+                v.tipo_documento,
+                v.vendedor 
+            UNION
+            SELECT 
+                v.vendedor,
+                'S99' AS tipo,
+                '' AS tipo_documento,
+                '' AS documento,
+                '' AS fecha,
+                '' AS nombre,
+                ROUND(SUM(v.total) / 1.18, 2) AS total 
+            FROM
+                ventajf v 
+                LEFT JOIN clientesjf c 
+                ON v.cliente = c.codigo 
+                WHERE YEAR(v.fecha) = YEAR(NOW()) 
+                AND v.vendedor = :vendedor
+                AND v.tipo not in ('S01')
+            GROUP BY v.vendedor 
+            UNION
+            SELECT 
+                v.vendedor,
+                'A00' AS tipo,
+                '' AS tipo_documento,
+                '' AS documento,
+                '' AS fecha,
+                ve.nom_ven AS nombre,
+                '' AS total 
+            FROM
+                ventajf v 
+                LEFT JOIN 
+                (SELECT 
+                    codigo,
+                    descripcion AS nom_ven 
+                FROM
+                    maestrajf 
+                WHERE tipo_dato = 'TVEND') AS ve 
+                ON v.vendedor = ve.codigo 
+                WHERE YEAR(v.fecha) = YEAR(NOW()) 
+                AND v.vendedor = :vendedor
+                AND v.tipo not in ('S01')
+            GROUP BY v.vendedor 
+            ORDER BY vendedor,
+                tipo,
+                documento");
 
         $stmt->bindParam(":vendedor",$vend,PDO::PARAM_STR);
 
