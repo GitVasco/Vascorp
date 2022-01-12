@@ -2598,8 +2598,268 @@ class ModeloCuentas{
 
 	static public function mdlMostrarReportePagos($tabla,$orden1,$orden2,$canc,$vend,$inicio,$fin){
 		
-	if($orden1 == "fecha_ven" && $orden2 == "ordNumCuenta" && $canc=="todo"){
+	if($orden1 == "fecha_pag" && $orden2 == "ordNumCuenta" && $canc=="todo"){
+
 		$stmt = Conexion::conectar()->prepare("SELECT 
+										'-1' AS tipo_doc,
+										'Fecha de pago:' AS num_cta,
+										cc.fecha,
+										'' AS cliente,
+										'' AS nombre,
+										'' AS cod_pago,
+										'' AS doc_origen,
+										'' AS fact,
+										'' AS letra 
+									FROM
+										cuenta_ctejf cc 
+										LEFT JOIN clientesjf c 
+										ON cc.cliente = c.codigo 
+										LEFT JOIN 
+										(SELECT 
+											* 
+										FROM
+											maestrajf 
+										WHERE tipo_dato = 'tvend') v 
+										ON cc.vendedor = v.codigo 
+									WHERE cc.tip_mov = '-' 
+										AND (
+										cc.fecha BETWEEN '".$inicio."' 
+										AND '".$fin."'
+										) 
+									GROUP BY cc.fecha 
+									UNION
+									SELECT 
+										cc.tipo_doc,
+										cc.num_cta,
+										cc.fecha,
+										cc.cliente,
+										c.nombre,
+										cc.cod_pago,
+										cc.doc_origen,
+										CASE
+										WHEN cc.tipo_doc IN ('01', '03', '09', '08', '07') 
+										THEN FORMAT(cc.monto, 2) 
+										ELSE '' 
+										END AS fact,
+										CASE
+										WHEN cc.tipo_doc IN ('85') 
+										THEN FORMAT(cc.monto, 2) 
+										ELSE '' 
+										END AS letra 
+									FROM
+										cuenta_ctejf cc 
+										LEFT JOIN clientesjf c 
+										ON cc.cliente = c.codigo 
+										LEFT JOIN 
+										(SELECT 
+											* 
+										FROM
+											maestrajf 
+										WHERE tipo_dato = 'tvend') v 
+										ON cc.vendedor = v.codigo 
+									WHERE cc.tip_mov = '-' 
+										AND (
+										cc.fecha BETWEEN '".$inicio."' 
+										AND '".$fin."'
+										) 
+										UNION
+										SELECT 
+										'999' AS tipo_doc,
+										'Fecha de pago:',
+										cc.fecha,
+										'',
+										'',
+										'',
+										'',
+										FORMAT(
+											SUM(
+											CASE
+												WHEN cc.tipo_doc IN ('01', '03', '09', '08', '07') 
+												THEN cc.monto 
+												ELSE '' 
+											END
+											),
+											2
+										) AS fact,
+										FORMAT(
+											SUM(
+											CASE
+												WHEN cc.tipo_doc IN ('85') 
+												THEN cc.monto 
+												ELSE '' 
+											END
+											),
+											2
+										) AS letra 
+										FROM
+										cuenta_ctejf cc 
+										LEFT JOIN clientesjf c 
+											ON cc.cliente = c.codigo 
+										LEFT JOIN 
+											(SELECT 
+											* 
+											FROM
+											maestrajf 
+											WHERE tipo_dato = 'tvend') v 
+											ON cc.vendedor = v.codigo 
+										WHERE cc.tip_mov = '-' 
+										AND (
+											cc.fecha BETWEEN '".$inicio."' 
+										AND '".$fin."'
+										) 
+										GROUP BY cc.fecha 
+										ORDER BY fecha,
+										tipo_doc");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+
+	}else if($orden1 == "vendedor" && $orden2 == "ordNumCuenta" ){
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+							'-1' AS tipo_doc,
+							'Vendedor: ' AS num_cta,
+							CONCAT( m.codigo , ' ', m.descripcion) AS fecha,
+							'' AS cliente,
+							'' AS nombre,
+							'' AS cod_pago,
+							'' AS doc_origen,
+							'' AS fact,
+							'' AS letra 
+						FROM
+							maestrajf m 
+						WHERE m.tipo_dato = 'tvend' 
+							AND m.codigo = '".$vend."' 
+						UNION
+						SELECT 
+							cc.tipo_doc,
+							cc.num_cta,
+							cc.fecha,
+							cc.cliente,
+							c.nombre,
+							cc.cod_pago,
+							cc.doc_origen,
+							CASE
+							WHEN cc.tipo_doc IN ('01', '03', '09', '08', '07') 
+							THEN FORMAT(cc.monto, 2) 
+							ELSE '' 
+							END AS fact,
+							CASE
+							WHEN cc.tipo_doc IN ('85') 
+							THEN FORMAT(cc.monto, 2) 
+							ELSE '' 
+							END AS letra 
+						FROM
+							cuenta_ctejf cc 
+							LEFT JOIN clientesjf c 
+							ON cc.cliente = c.codigo 
+							LEFT JOIN 
+							(SELECT 
+								* 
+							FROM
+								maestrajf 
+							WHERE tipo_dato = 'tvend') v 
+							ON cc.vendedor = v.codigo 
+						WHERE cc.tip_mov = '-' 
+							AND (
+							cc.fecha BETWEEN '".$inicio."' 
+							AND '".$fin."'
+							) 
+							AND cc.vendedor = '".$vend."'  
+						UNION
+						SELECT 
+							'999' AS tipo_doc,
+							'' AS num_cta,
+							'9999-12-31' AS fecha,
+							'' AS cliente,
+							'' AS nombre,
+							cc.cod_pago,
+							'' AS doc_origen,
+							FORMAT(
+							SUM(
+								CASE
+								WHEN cc.tipo_doc IN ('01', '03', '09', '08', '07') 
+								THEN cc.monto 
+								ELSE '' 
+								END
+							),
+							2
+							) AS fact,
+							FORMAT(
+							SUM(
+								CASE
+								WHEN cc.tipo_doc IN ('85') 
+								THEN cc.monto 
+								ELSE '' 
+								END
+							),
+							2
+							) AS letra 
+						FROM
+							cuenta_ctejf cc 
+							LEFT JOIN clientesjf c 
+							ON cc.cliente = c.codigo 
+							LEFT JOIN 
+							(SELECT 
+								* 
+							FROM
+								maestrajf 
+							WHERE tipo_dato = 'tvend') v 
+							ON cc.vendedor = v.codigo 
+						WHERE cc.tip_mov = '-' 
+							AND (
+							cc.fecha BETWEEN '".$inicio."' 
+							AND '".$fin."'
+							) 
+							AND cc.vendedor = '".$vend."' 
+						GROUP BY cc.cod_pago 
+						ORDER BY cod_pago,
+							tipo_doc,
+							fecha,
+							num_cta ");
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+	}else if($orden1 == "fecha_pag" && $orden2 == "ordNumCuenta" && $canc != "todo"){
+		$stmt = Conexion::conectar()->prepare("SELECT 
+		cc.tipo_doc,
+		cc.num_cta,
+		cc.fecha,
+		cc.cliente,
+		c.nombre,
+		cc.cod_pago,
+		cc.doc_origen,
+		CASE
+		  WHEN cc.tipo_doc IN ('01', '03', '09', '08', '07') 
+		  THEN FORMAT(cc.monto, 2) 
+		  ELSE '' 
+		END AS fact,
+		CASE
+		  WHEN cc.tipo_doc IN ('85') 
+		  THEN FORMAT(cc.monto, 2) 
+		  ELSE '' 
+		END AS letra 
+	  FROM
+		cuenta_ctejf cc 
+		LEFT JOIN clientesjf c 
+		  ON cc.cliente = c.codigo 
+		LEFT JOIN 
+		  (SELECT 
+			* 
+		  FROM
+			maestrajf 
+		  WHERE tipo_dato = 'tvend') v 
+		  ON cc.vendedor = v.codigo 
+	  WHERE cc.tip_mov = '-' 
+		AND (
+		  cc.fecha BETWEEN '".$inicio."' 
+		  AND '".$fin."'
+		) 
+		AND cc.cod_pago = '".$canc."' 
+	  UNION
+	  SELECT 
 		'-1' AS tipo_doc,
 		'Fecha de pago:' AS num_cta,
 		cc.fecha,
@@ -2625,245 +2885,17 @@ class ModeloCuentas{
 		  cc.fecha BETWEEN '".$inicio."' 
 		  AND '".$fin."'
 		) 
+		AND cc.cod_pago = '".$canc."' 
 	  GROUP BY cc.fecha 
 	  UNION
 	  SELECT 
-		cc.tipo_doc,
-		cc.num_cta,
-		cc.fecha,
-		cc.cliente,
-		c.nombre,
-		cc.cod_pago,
-		cc.doc_origen,
-		CASE
-		  WHEN cc.tipo_doc IN ('01', '03', '09', '08', '07') 
-		  THEN FORMAT(cc.monto, 2) 
-		  ELSE '' 
-		END AS fact,
-		CASE
-		  WHEN cc.tipo_doc IN ('85') 
-		  THEN FORMAT(cc.monto, 2) 
-		  ELSE '' 
-		END AS letra 
-	  FROM
-		cuenta_ctejf cc 
-		LEFT JOIN clientesjf c 
-		  ON cc.cliente = c.codigo 
-		LEFT JOIN 
-		  (SELECT 
-			* 
-		  FROM
-			maestrajf 
-		  WHERE tipo_dato = 'tvend') v 
-		  ON cc.vendedor = v.codigo 
-	  WHERE cc.tip_mov = '-' 
-		AND (
-		  cc.fecha BETWEEN '".$inicio."' 
-		  AND '".$fin."'
-		) 
-		UNION
-		SELECT 
-		  '999' AS tipo_doc,
-		  'Fecha de pago:',
-		  cc.fecha,
-		  '',
-		  '',
-		  '',
-		  '',
-		  FORMAT(
-			SUM(
-			  CASE
-				WHEN cc.tipo_doc IN ('01', '03', '09', '08', '07') 
-				THEN cc.monto 
-				ELSE '' 
-			  END
-			),
-			2
-		  ) AS fact,
-		  FORMAT(
-			SUM(
-			  CASE
-				WHEN cc.tipo_doc IN ('85') 
-				THEN cc.monto 
-				ELSE '' 
-			  END
-			),
-			2
-		  ) AS letra 
-		FROM
-		  cuenta_ctejf cc 
-		  LEFT JOIN clientesjf c 
-			ON cc.cliente = c.codigo 
-		  LEFT JOIN 
-			(SELECT 
-			  * 
-			FROM
-			  maestrajf 
-			WHERE tipo_dato = 'tvend') v 
-			ON cc.vendedor = v.codigo 
-		WHERE cc.tip_mov = '-' 
-		  AND (
-			cc.fecha BETWEEN '".$inicio."' 
-		  AND '".$fin."'
-		  ) 
-		GROUP BY cc.fecha 
-		ORDER BY fecha,
-		  tipo_doc");
-			
-		  $stmt -> execute();
-
-		  return $stmt -> fetchAll();
-	}else if($orden1 == "vendedor" && $orden2 == "ordNumCuenta" ){
-		$stmt = Conexion::conectar()->prepare("SELECT 
-		'-1' AS tipo_doc,
-		'Vendedor: ' AS num_cta,
-		CONCAT( m.codigo , ' ', m.descripcion) AS fecha,
-		'' AS cliente,
-		'' AS nombre,
-		'' AS cod_pago,
-		'' AS doc_origen,
-		'' AS fact,
-		'' AS letra 
-	  FROM
-		maestrajf m 
-	  WHERE m.tipo_dato = 'tvend' 
-		AND m.codigo = '".$vend."' 
-	  UNION
-	  SELECT 
-		cc.tipo_doc,
-		cc.num_cta,
-		cc.fecha,
-		cc.cliente,
-		c.nombre,
-		cc.cod_pago,
-		cc.doc_origen,
-		CASE
-		  WHEN cc.tipo_doc IN ('01', '03', '09', '08', '07') 
-		  THEN FORMAT(cc.monto, 2) 
-		  ELSE '' 
-		END AS fact,
-		CASE
-		  WHEN cc.tipo_doc IN ('85') 
-		  THEN FORMAT(cc.monto, 2) 
-		  ELSE '' 
-		END AS letra 
-	  FROM
-		cuenta_ctejf cc 
-		LEFT JOIN clientesjf c 
-		  ON cc.cliente = c.codigo 
-		LEFT JOIN 
-		  (SELECT 
-			* 
-		  FROM
-			maestrajf 
-		  WHERE tipo_dato = 'tvend') v 
-		  ON cc.vendedor = v.codigo 
-	  WHERE cc.tip_mov = '-' 
-		AND (
-		  cc.fecha BETWEEN '".$inicio."' 
-		  AND '".$fin."'
-		) 
-		AND cc.vendedor = '".$vend."'  
-	  UNION
-	  SELECT 
 		'999' AS tipo_doc,
-		'' AS num_cta,
-		'9999-12-31' AS fecha,
-		'' AS cliente,
-		'' AS nombre,
-		cc.cod_pago,
-		'' AS doc_origen,
-		FORMAT(
-		  SUM(
-			CASE
-			  WHEN cc.tipo_doc IN ('01', '03', '09', '08', '07') 
-			  THEN cc.monto 
-			  ELSE '' 
-			END
-		  ),
-		  2
-		) AS fact,
-		FORMAT(
-		  SUM(
-			CASE
-			  WHEN cc.tipo_doc IN ('85') 
-			  THEN cc.monto 
-			  ELSE '' 
-			END
-		  ),
-		  2
-		) AS letra 
-	  FROM
-		cuenta_ctejf cc 
-		LEFT JOIN clientesjf c 
-		  ON cc.cliente = c.codigo 
-		LEFT JOIN 
-		  (SELECT 
-			* 
-		  FROM
-			maestrajf 
-		  WHERE tipo_dato = 'tvend') v 
-		  ON cc.vendedor = v.codigo 
-	  WHERE cc.tip_mov = '-' 
-		AND (
-		  cc.fecha BETWEEN '".$inicio."' 
-		  AND '".$fin."'
-		) 
-		AND cc.vendedor = '".$vend."' 
-	  GROUP BY cc.cod_pago 
-	  ORDER BY cod_pago,
-		tipo_doc,
-		fecha,
-		num_cta ");
-			
-		  $stmt -> execute();
-
-		  return $stmt -> fetchAll();
-	}else if($orden1 == "fecha_ven" && $orden2 == "ordNumCuenta" && $canc != "todo"){
-		$stmt = Conexion::conectar()->prepare("SELECT 
-		cc.tipo_doc,
-		cc.num_cta,
+		'Fecha de pago:',
 		cc.fecha,
-		cc.cliente,
-		c.nombre,
-		cc.cod_pago,
-		cc.doc_origen,
-		CASE
-		  WHEN cc.tipo_doc IN ('01', '03', '09', '08', '07') 
-		  THEN FORMAT(cc.monto, 2) 
-		  ELSE '' 
-		END AS fact,
-		CASE
-		  WHEN cc.tipo_doc IN ('85') 
-		  THEN FORMAT(cc.monto, 2) 
-		  ELSE '' 
-		END AS letra 
-	  FROM
-		cuenta_ctejf cc 
-		LEFT JOIN clientesjf c 
-		  ON cc.cliente = c.codigo 
-		LEFT JOIN 
-		  (SELECT 
-			* 
-		  FROM
-			maestrajf 
-		  WHERE tipo_dato = 'tvend') v 
-		  ON cc.vendedor = v.codigo 
-	  WHERE cc.tip_mov = '-' 
-		AND (
-		  cc.fecha BETWEEN '".$inicio."' 
-		  AND '".$fin."'
-		) 
-		AND cc.cod_pago = '".$canc."'  
-	  UNION
-	  SELECT 
-		'999' AS tipo_doc,
-		'' AS num_cta,
-		'9999-12-31' AS fecha,
-		'' AS cliente,
-		'' AS nombre,
-		cc.cod_pago,
-		'' AS doc_origen,
+		'',
+		'',
+		'',
+		'',
 		FORMAT(
 		  SUM(
 			CASE
@@ -2901,18 +2933,14 @@ class ModeloCuentas{
 		  AND '".$fin."'
 		) 
 		AND cc.cod_pago = '".$canc."' 
-	  GROUP BY cc.cod_pago 
-	  ORDER BY cod_pago,
-		tipo_doc,
-		fecha,
-		num_cta ");
+		GROUP BY cc.fecha 
+		ORDER BY fecha,
+		  tipo_doc ");
 			
 		  $stmt -> execute();
 
 		  return $stmt -> fetchAll();
 	}
-		
-
 
 		$stmt -> close();
 
@@ -3024,7 +3052,7 @@ class ModeloCuentas{
 
 			static public function mdlMostrarReporteTotalPagos($tabla,$orden1,$orden2,$canc,$vend,$inicio,$fin){
 
-				if($orden1 == "fecha_ven" && $orden2 == "ordNumCuenta"){
+				if($orden1 == "fecha_pag" && $orden2 == "ordNumCuenta"){
 					$stmt = Conexion::conectar()->prepare("SELECT 
 					'Total General' AS total_gral,
 					FORMAT(
@@ -3062,13 +3090,13 @@ class ModeloCuentas{
 					AND (
 					  cc.fecha BETWEEN '".$inicio."' 
 					 AND '".$fin."'
-					) ");
+					) AND cc.cod_pago = '".$canc."' ");
 					// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
 			
 					$stmt -> execute();
 			
 					return $stmt -> fetch();
-				}else if ($orden1 == "vendedor" && $orden2 == "ordNumCuenta"){
+				}else if ($canc != "" && $orden2 == "ordNumCuenta"){
 					$stmt = Conexion::conectar()->prepare("SELECT 
 					'Total General' AS total_gral,
 					cc.vendedor, 

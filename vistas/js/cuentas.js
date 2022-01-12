@@ -2018,6 +2018,20 @@ $(".btnGenerarReporteCuenta").click(function(){
  var inicio = $(this).attr("inicio");
  var fin = $(this).attr("fin");
  var impresion = $(this).attr("impresion");
+
+ console.log("consulta", consulta);
+ console.log("orden1", orden1);
+ console.log("orden2", orden2);
+ console.log("tip_doc", tip_doc);
+ console.log("canc", canc);
+ console.log("cli", cli);
+ console.log("vend", vend);
+ console.log("banco", banco);
+ console.log("inicio", inicio);
+ console.log("fin", fin);
+
+
+
  if(impresion == "pantalla"){
    if(consulta=='pendiente' || consulta=='pendienteVencidoMenor'|| consulta=='pendienteVencidoMayor'|| consulta=='protestado'){
     if(orden1 == "cliente"){
@@ -2035,9 +2049,13 @@ $(".btnGenerarReporteCuenta").click(function(){
     }
 
   }else if(consulta== "pagos"){
+
     window.open("extensiones/tcpdf/pdf/reporte_pago_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&canc="+canc+"&vend="+vend+"&inicio="+inicio+"&fin="+fin,"_blank");
+
   }else if(consulta== "fechaActualSaldo"){
+
     window.open("extensiones/tcpdf/pdf/reporte_estado_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&canc="+canc+"&vend="+vend+"&inicio="+inicio+"&fin="+fin,"_blank");
+    
   }
   
  }else{

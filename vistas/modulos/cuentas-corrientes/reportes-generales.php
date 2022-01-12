@@ -133,6 +133,11 @@
                 <label  for="radioOrd4">
                     <input type="radio" class="form-check-input radioOrd1" id="radioOrd4" name="radioOrd1" value="fecha_ven">Por Fch. vencimiento
                 </label>
+                <div class="form-check">
+                <label  for="radioOrd5">
+                    <input type="radio" class="form-check-input radioOrd1" id="radioOrd5" name="radioOrd1" value="fecha_pag">Por Fch. Pago
+                </label>
+                </div>                
                 </div>
             </div>
         
