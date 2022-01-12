@@ -89,7 +89,7 @@
               <th>Fecha</th>
               <th>F. termino</th>
               <th>Estado</th>
-              <th>Acciones</th>
+              <th width="150px">Acciones</th>
 
             </tr>
 

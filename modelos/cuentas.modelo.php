@@ -845,17 +845,17 @@ class ModeloCuentas{
 
 		if($saldo != "null" ){
 			$stmt = Conexion::conectar()->prepare("SELECT 
-			c.id,
-			c.tipo_doc,
-			c.num_cta,
-			c.cliente,
-			cli.documento,
-			c.fecha,
-			c.fecha_ven,
-			c.monto,
-			c.saldo,
-			cli.nombre,
-			'1' AS rank 
+  c.saldo,
+  c.monto,
+  c.id,
+  c.tipo_doc,
+  c.num_cta,
+  c.cliente,
+  cli.documento,
+  c.fecha,
+  c.fecha_ven,
+  cli.nombre,
+  '1' AS rank 
 		  FROM
 			cuenta_ctejf c 
 			LEFT JOIN clientesjf cli 
@@ -864,7 +864,9 @@ class ModeloCuentas{
 			AND tip_mov = '+' 
 			AND saldo LIKE '%$saldo%' 
 		  UNION
-		  SELECT 
+		  (SELECT 
+			c.saldo,
+			c.monto,
 			c.id,
 			c.tipo_doc,
 			c.num_cta,
@@ -872,8 +874,6 @@ class ModeloCuentas{
 			cli.documento,
 			c.fecha,
 			c.fecha_ven,
-			c.monto,
-			c.saldo,
 			cli.nombre,
 			'2' AS rank 
 		  FROM
@@ -882,10 +882,31 @@ class ModeloCuentas{
 			  ON c.cliente = cli.codigo 
 		  WHERE saldo > 0 
 			AND tip_mov = '+' 
-		  ORDER BY rank,
-			saldo BETWEEN ($saldo - 10) 
-			AND ($saldo + 10) DESC,
-			saldo ASC ");
+			AND (
+			  saldo BETWEEN ($saldo-1000) 
+			  AND ($saldo+1000)
+			) 
+		  ORDER BY c.saldo) 
+		  UNION
+		  (SELECT 
+			c.saldo,
+			c.monto,
+			c.id,
+			c.tipo_doc,
+			c.num_cta,
+			c.cliente,
+			cli.documento,
+			c.fecha,
+			c.fecha_ven,
+			cli.nombre,
+			'3' AS rank 
+		  FROM
+			cuenta_ctejf c 
+			LEFT JOIN clientesjf cli 
+			  ON c.cliente = cli.codigo 
+		  WHERE saldo > 0 
+			AND tip_mov = '+' 
+		  ORDER BY c.saldo)");
 	
 			$stmt -> execute();
 	
