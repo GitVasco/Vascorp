@@ -854,14 +854,36 @@ class ModeloCuentas{
 			c.fecha_ven,
 			c.monto,
 			c.saldo,
-			cli.nombre 
+			cli.nombre,
+			'1' AS rank 
 		  FROM
-			cuenta_ctejf  c
-		  LEFT JOIN clientesjf cli
-		  ON c.cliente = cli.codigo
-			WHERE saldo > 0 
-			AND tip_mov ='+'
-			ORDER BY saldo BETWEEN ($saldo - 10) 
+			cuenta_ctejf c 
+			LEFT JOIN clientesjf cli 
+			  ON c.cliente = cli.codigo 
+		  WHERE saldo > 0 
+			AND tip_mov = '+' 
+			AND saldo LIKE '%$saldo%' 
+		  UNION
+		  SELECT 
+			c.id,
+			c.tipo_doc,
+			c.num_cta,
+			c.cliente,
+			cli.documento,
+			c.fecha,
+			c.fecha_ven,
+			c.monto,
+			c.saldo,
+			cli.nombre,
+			'2' AS rank 
+		  FROM
+			cuenta_ctejf c 
+			LEFT JOIN clientesjf cli 
+			  ON c.cliente = cli.codigo 
+		  WHERE saldo > 0 
+			AND tip_mov = '+' 
+		  ORDER BY rank,
+			saldo BETWEEN ($saldo - 10) 
 			AND ($saldo + 10) DESC,
 			saldo ASC ");
 	

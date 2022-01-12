@@ -148,6 +148,7 @@ MODAL CANCELAR ABONO
 
                 <input type="text" class="form-control input-lg" name="editarCuenta" id="editarCuenta" readonly required>
                 <input type="hidden" id="idCuenta4" name="idCuenta4">
+                <input type="hidden" id="fechaVen" name="fechaVen">
               </div>
 
             </div>
@@ -217,7 +218,7 @@ MODAL CANCELAR ABONO
               
                 <span class="input-group-addon"><i class="fa fa-usd"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="editarAbono" id="editarAbono" readonly required>
+                <input type="text" class="form-control input-lg" name="editarAbono" id="editarAbono" required>
                 <input type="hidden"  name="idAbono" id="idAbono" >
                 <input type="hidden"  name="editarUsuario" value="<?php echo $_SESSION["id"];?>" >
                 
@@ -270,3 +271,7 @@ MODAL CANCELAR ABONO
   </div>
 
 </div>
+
+<script>
+    window.document.title = "Cancelar Abonos"
+</script>

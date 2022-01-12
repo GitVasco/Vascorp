@@ -737,7 +737,7 @@ class ControladorFacturacion{
                 if($respuestaDocumento == "ok"){
 
                     $documento = $_POST["serie"];
-                    $serie = substr($documento,0,4);
+                    $serie = substr($documento,0,3);
                     //var_dump($serie);
 
                     $talonario = ModeloFacturacion::mdlActualizarTalonarioProforma($serie);

@@ -109,8 +109,10 @@ $('.tablaAbonosCancelar').on("click",'.chkAbono',function(){
     $(".tablaCuentasCancelar").DataTable().destroy();
     var saldo = $(this).attr("saldo");
     var idAbono = $(this).attr("idAbono");
+    var fecAbono = $(this).attr("fecAbono");
     $(".btnCancelarAbono").attr("idAbono",idAbono);
     localStorage.setItem("saldo", saldo);
+    localStorage.setItem("fecAbono", fecAbono);
 	  cargarTablaCuentasCancelar(localStorage.getItem("saldo"));
 
 });
@@ -170,6 +172,7 @@ function cargarTablaCuentasCancelar(saldo) {
     "deferRender": true,
     "retrieve": true,
     "processing": true,
+    "ordering": false,
     "pageLength": 20,
 	  "lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
     "language": {
@@ -227,6 +230,8 @@ $(".btnCancelarAbono").click(function(){
       dataType: "json",
       success: function (respuesta) {
 
+        console.log(respuesta)
+
           $("#idCuenta4").val(respuesta["id"]);
           $("#editarTipo").val(respuesta["tipo_doc"]);
           $("#editarCuenta").val(respuesta["num_cta"]);
@@ -234,6 +239,8 @@ $(".btnCancelarAbono").click(function(){
           $("#editarCliente").val(respuesta["cliente"]);
           $("#editarSaldo").val(respuesta["saldo"]);
           $("#editarMonto").val(respuesta["monto"]);
+          $("#editarFecha").val(localStorage.getItem("fecAbono"));
+          $("#fechaVen").val(respuesta["fecha_ven"]);
           $("#editarAbono").val(localStorage.getItem("saldo"));
           $("#idAbono").val(idAbono);
       }

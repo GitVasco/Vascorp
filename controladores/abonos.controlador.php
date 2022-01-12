@@ -221,52 +221,83 @@ class ControladorAbonos{
 			$usureg = $_SESSION["nombre"];
 			$pcreg= gethostbyaddr($_SERVER['REMOTE_ADDR']);  
 
-			$datos = array("id" => $_POST["idCuenta4"],
-			   			   "tipo_doc"=>"05",
-						   "num_cta"=>$_POST["editarCuenta"],
-						   "cliente"=>$_POST["editarCliente"],
-						   "vendedor"=>$_POST["editarVendedor"],
-						   "monto"=>$_POST["editarMonto"],
-						   "usuario"=>$_POST["editarUsuario"],
-						   "fecha"=>$_POST["editarFecha"],						
-						   "usureg" => $usureg,
-						   "pcreg" => $pcreg);
+			if($_POST["editarSaldo"] >= $_POST["editarAbono"]){
+
+				$abono = $_POST["editarAbono"];
+
+			}else{
+
+				$abono = $_POST["editarSaldo"];
+
+			}
+
+			$datos = array("id" 		=> $_POST["idCuenta4"],
+			   			   "tipo_doc"	=>$_POST["editarTipo"],
+						   "num_cta"	=>$_POST["editarCuenta"],
+						   "cod_pago"	=>'05',
+						   "doc_origen"	=>$_POST["editarCuenta"],
+						   "cliente"	=>$_POST["editarCliente"],
+						   "vendedor"	=>$_POST["editarVendedor"],
+						   "monto"		=>$abono,
+						   "saldo"		=> 0,
+						   "tip_mov"	=> "-",
+						   "notas"		=> "Dep.en Cta BCP",
+						   "renovacion"	=> 0,
+						   "protesta"	=> 0,
+						   "estado"		=> "PENDIENTE",
+						   "usuario"	=>$_POST["editarUsuario"],
+						   "fecha"		=>$_POST["editarFecha"],	
+						   "fecha_ven"	=>$_POST["fechaVen"],						
+						   "usureg" 	=> $usureg,
+						   "pcreg" 		=> $pcreg);
+
+			#var_dump($datos);
 
 			$respuesta=ModeloCuentas::mdlIngresarCuenta($tabla,$datos);
 			$saldoNuevo=$_POST["editarSaldo"]-$_POST["editarAbono"];
-			if($saldoNuevo<0){
+			var_dump($saldoNuevo);
+
+			if($saldoNuevo<0){//*cuando el abono es mayor al monto
+
 				$vuelto=$saldoNuevo * -1;
 				$abono=ModeloCuentas::mdlActualizarUnDato($tabla2,"monto",$vuelto,$_POST["idAbono"]);
 				$cuenta=ModeloCuentas::mdlActualizarUnDato($tabla,"saldo",0,$_POST["idCuenta4"]);
 				$cuenta=ModeloCuentas::mdlActualizarUnDato($tabla,"estado","CANCELADO",$_POST["idCuenta4"]);
+
 			}else if($saldoNuevo == 0){
+
 				$cuenta=ModeloCuentas::mdlActualizarUnDato($tabla,"saldo",0,$_POST["idCuenta4"]);
 				$cuenta=ModeloCuentas::mdlActualizarUnDato($tabla,"estado","CANCELADO",$_POST["idCuenta4"]);
 				$abono=ModeloAbonos::mdlEliminarAbono($tabla2,$_POST["idAbono"]);
+
 			}else{
+
 				$cuenta=ModeloCuentas::mdlActualizarUnDato($tabla,"saldo",$saldoNuevo,$_POST["idCuenta4"]);
 				$cuenta=ModeloCuentas::mdlActualizarUnDato($tabla,"estado","PENDIENTE",$_POST["idCuenta4"]);
 				$abono=ModeloAbonos::mdlEliminarAbono($tabla2,$_POST["idAbono"]);
+
 			}
 
 			if($respuesta == "ok"){
 
-			echo'<script>
+				$ultimo_pago = ModeloCuentas::mdlEditarUltPago($_POST["editarCuenta"], $_POST["editarTipo"]);
 
-			swal({
-					type: "success",
-					title: "El abono ha sido cancelado correctamente",
-					showConfirmButton: true,
-					confirmButtonText: "Cerrar"
-					}).then(function(result){
-							if (result.value) {
+				echo'<script>
 
-							window.location = "cancelar-abonos";
-
-							}
-						})
-
-			</script>';
+				swal({
+						type: "success",
+						title: "El abono ha sido cancelado correctamente",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar"
+						}).then(function(result){
+								if (result.value) {
+	
+								window.location = "cancelar-abonos";
+	
+								}
+							})
+	
+				</script>';
 
 
 			}
