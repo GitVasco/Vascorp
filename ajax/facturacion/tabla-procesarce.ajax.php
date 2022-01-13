@@ -78,6 +78,7 @@ class TablaProcesarCE{
             "'.($factura[$i]["total"]).'",
             "'.$factura[$i]["cliente"].'",
             "<b>'.$factura[$i]["nombre"].'</b>",
+            "'.$factura[$i]["num_doc"].'",
             "'.$factura[$i]["vendedor"].'",
             "'.$factura[$i]["fecha"].'",
             "'.$origen.'",

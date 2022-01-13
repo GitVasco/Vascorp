@@ -89,6 +89,7 @@
                             <th>Total</th>
                             <th>Cod. Cliente</th>
                             <th>Nombre</th>
+                            <th>DNI/RUC</th>
                             <th>Vendedor</th>
                             <th>Fec. Emisión</th>
                             <th>Doc. Origen</th>
