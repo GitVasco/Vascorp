@@ -2339,3 +2339,12 @@ $(".tablaFacturas, .tablaBoletas, .tablaProformas, .tablaGuiasRemision").on("cli
   })
 
 });
+
+$("#formularioRegistro").on("click","button.btnGenerarReg",function(){
+
+  var mes = cod = document.getElementById("regMes").value;
+  //console.log(mes);
+
+  window.location = "vistas/reportes_excel/rpt_registro_ventas.php?mes="+mes;
+
+})
