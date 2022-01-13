@@ -729,7 +729,7 @@ $(".btnGuardarNotaCredito").click(function(){
             });
 
     }else{
-      var tipoImp = "S99";
+      var tipoImp = "S05";
         if(chkCuenta.checked == true){
 
             var documento =$("#tipoNotaDocumento").val();
@@ -765,7 +765,7 @@ $(".btnGuardarNotaCredito").click(function(){
                         datos.push({
                             'id':respuesta["id"],
                             'tipo_doc':'08',
-                            'tipo_venta':'S99',
+                            'tipo_venta':'S05',
                             'num_cta' : documento,
                             'cliente':cliente,
                             'vendedor':vendedor,
@@ -856,7 +856,7 @@ $(".btnGuardarNotaCredito").click(function(){
                     }else{
                         datos.push({
                             'tipo_doc':'08',
-                            'tipo_venta':'S99',
+                            'tipo_venta':'S05',
                             'num_cta' : documento,
                             'cliente':cliente,
                             'vendedor':vendedor,
@@ -973,7 +973,7 @@ $(".btnGuardarNotaCredito").click(function(){
             var datos = new Array();
             datos.push({
                 'tipo_doc':'08',
-                'tipo_venta':'S99',
+                'tipo_venta':'S05',
                 'num_cta' : documento,
                 'cliente':cliente,
                 'vendedor':vendedor,

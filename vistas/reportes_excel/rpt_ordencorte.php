@@ -523,60 +523,60 @@ $sqlCabecera = mysql_query("SELECT
                                     SUM(
                                       CASE
                                         WHEN a.cod_talla = '1' 
-                                        THEN doc.saldo 
+                                        THEN doc.cantidad 
                                         ELSE 0 
                                       END
                                     ) AS t1,
                                     SUM(
                                       CASE
                                         WHEN a.cod_talla = '2' 
-                                        THEN doc.saldo 
+                                        THEN doc.cantidad 
                                         ELSE 0 
                                       END
                                     ) AS t2,
                                     SUM(
                                       CASE
                                         WHEN a.cod_talla = '3' 
-                                        THEN doc.saldo 
+                                        THEN doc.cantidad 
                                         ELSE 0 
                                       END
                                     ) AS t3,
                                     SUM(
                                       CASE
                                         WHEN a.cod_talla = '4' 
-                                        THEN doc.saldo 
+                                        THEN doc.cantidad 
                                         ELSE 0 
                                       END
                                     ) AS t4,
                                     SUM(
                                       CASE
                                         WHEN a.cod_talla = '5' 
-                                        THEN doc.saldo 
+                                        THEN doc.cantidad 
                                         ELSE 0 
                                       END
                                     ) AS t5,
                                     SUM(
                                       CASE
                                         WHEN a.cod_talla = '6' 
-                                        THEN doc.saldo 
+                                        THEN doc.cantidad 
                                         ELSE 0 
                                       END
                                     ) AS t6,
                                     SUM(
                                       CASE
                                         WHEN a.cod_talla = '7' 
-                                        THEN doc.saldo 
+                                        THEN doc.cantidad 
                                         ELSE 0 
                                       END
                                     ) AS t7,
                                     SUM(
                                       CASE
                                         WHEN a.cod_talla = '8' 
-                                        THEN doc.saldo 
+                                        THEN doc.cantidad 
                                         ELSE 0 
                                       END
                                     ) AS t8,
-                                    SUM(doc.saldo) AS subtotal 
+                                    SUM(doc.cantidad) AS subtotal 
                                     FROM
                                     detalles_ordencortejf doc 
                                     LEFT JOIN articulojf a 
@@ -711,334 +711,6 @@ todo: FIN DE DETALLE
 */
 
 /* 
-todo: INICIO DEL RELLENO
-*/
-
-$fila = 12;
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "A$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "B$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "D$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "F$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "G$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "H$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "I$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "J$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "K$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "L$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "M$fila");
-
-$fila = 13;
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "A$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "B$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "D$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "F$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "G$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "H$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "I$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "J$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "K$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "L$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "M$fila");
-
-$fila = 14;
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "A$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "B$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "D$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "F$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "G$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "H$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "I$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "J$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "K$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "L$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "M$fila");
-
-$fila = 15;
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "A$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "B$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "D$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "F$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "G$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "H$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "I$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "J$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "K$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "L$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "M$fila");
-
-$fila = 16;
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "A$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "B$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "D$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "F$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "G$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "H$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "I$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "J$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "K$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "L$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "M$fila");
-
-$fila = 17;
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "A$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "B$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "D$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "F$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "G$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "H$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "I$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "J$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "K$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "L$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "M$fila");
-
-$fila = 18;
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "A$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "B$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "D$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "F$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "G$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "H$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "I$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "J$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "K$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "L$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "M$fila");
-
-$fila = 19;
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "A$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "B$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "D$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "F$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "G$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "H$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "I$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "J$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "K$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "L$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "M$fila");
-
-$fila = 20;
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "A$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "B$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "D$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "F$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "G$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "H$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "I$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "J$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "K$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "L$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "M$fila");
-
-$fila = 21;
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "A$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "B$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "D$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "F$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "G$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "H$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "I$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "J$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "K$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "L$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "M$fila");
-
-$fila = 22;
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "A$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "B$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "D$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "F$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "G$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "H$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "I$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "J$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "K$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "L$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "M$fila");
-
-$fila = 23;
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "A$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "B$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "D$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "F$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "G$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "H$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "I$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "J$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "K$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "L$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "M$fila");
-
-$fila = 24;
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "A$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "B$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "D$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "F$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "G$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "H$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "I$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "J$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "K$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "L$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "M$fila");
-
-$fila = 25;
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "A$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "B$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "D$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "F$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "G$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "H$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "I$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "J$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "K$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "L$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "M$fila");
-
-$fila = 26;
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "A$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "B$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "D$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "F$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "G$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "H$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "I$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "J$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "K$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "L$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "M$fila");
-
-$fila = 27;
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "A$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "B$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "D$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "F$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "G$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "H$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "I$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "J$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "K$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "L$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "M$fila");
-
-$fila = 28;
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "A$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "B$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "D$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "F$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "G$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "H$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "I$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "J$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "K$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "L$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "M$fila");
-
-$fila = 29;
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "A$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "B$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "D$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "F$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "G$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "H$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "I$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "J$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "K$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "L$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "M$fila");
-
-$fila = 30;
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "A$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "B$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "D$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "F$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "G$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "H$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "I$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "J$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "K$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "L$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "M$fila");
-
-$fila = 31;
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "A$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "B$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "D$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "F$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "G$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "H$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "I$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "J$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "K$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "L$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "M$fila");
-
-/* 
-todo: FIN DE RELLENO
-*/
-
-/* 
 todo: INICIO TOTAL
 */
 
@@ -1056,7 +728,7 @@ $sqlTotal = mysql_query("SELECT
 
 $respTotal = mysql_fetch_array($sqlTotal);
 
-$fila = 32;
+$fila+=1;
 $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", '');
 $objPHPExcel->getActiveSheet()->mergeCells("A$fila:D$fila");
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde7, "A$fila:D$fila");
@@ -1077,7 +749,7 @@ todo: FIN TOTAL
 /* 
 todo: INICIO FIRMA
 */
-$fila = 36;
+$fila+=3;
 $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", '');
 $objPHPExcel->getActiveSheet()->mergeCells("C$fila:D$fila");
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde8, "C$fila:D$fila");
@@ -1086,7 +758,7 @@ $objPHPExcel->getActiveSheet()->SetCellValue("F$fila", '');
 $objPHPExcel->getActiveSheet()->mergeCells("F$fila:L$fila");
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde8, "F$fila:L$fila");
 
-$fila = 37;
+$fila+=1;
 $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", 'RESPONSABLE PRODUCCIÓN');
 $objPHPExcel->getActiveSheet()->mergeCells("C$fila:D$fila");
 $objPHPExcel->getActiveSheet()->setSharedStyle($texto2, "C$fila:D$fila");
@@ -1538,7 +1210,7 @@ todo: FIN TOTAL
 todo: INICIO DEL RESUMEN
 */
 
-$fila += 1;
+$fila += 2;
 $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", 'RESUMEN: Consumo de Telas');
 $objPHPExcel->getActiveSheet()->mergeCells("B$fila:D$fila");
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde7, "B$fila:D$fila");

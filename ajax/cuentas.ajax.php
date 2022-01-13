@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 require_once "../controladores/cuentas.controlador.php";
 require_once "../modelos/cuentas.modelo.php";
@@ -121,6 +122,7 @@ class AjaxCuentas{
                                   "cliente"=>$cli,
                                   "vendedor"=>$vend,
                                   "fecha"=>$fecha,
+                                  "fecha_ven"=>$fecha,
                                   "tip_mon"=>$mon,
                                   "monto"=>$monto,
                                   "estado"=>$estado,

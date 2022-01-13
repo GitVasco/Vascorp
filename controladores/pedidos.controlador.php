@@ -215,12 +215,13 @@ class ControladorPedidos{
                             "sub_total" => $_POST["subTotalM"],
                             "impuesto" => $_POST["igvM"],
                             "total" => $_POST["totalM"],
+                            "vendedor" => $_POST["vendedorM"],
                             "usuario" => $_POST["usuarioM"],
                             "condicion_venta" => $_POST["condicionVentaM"],
                             "agencia" => $_POST["agenciaM"],
                             "dscto" => $dscto);
 
-            //var_dump($datos);
+            #var_dump($datos);
 
             $respuesta = ModeloPedidos::mdlActualizarTotalesPedido($datos);
             $respuesta = ModeloPedidos::mdlEliminarDetalleTemporalTotal($datos);

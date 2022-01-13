@@ -379,6 +379,7 @@ class ModeloPedidos{
 					sub_total = :sub_total,
 					igv = :impuesto,
 					total = :total,
+					vendedor = :vendedor,
 					condicion_venta = :condicion_venta,
 					agencia = :agencia,
 					usuario = :usuario,
@@ -394,6 +395,7 @@ class ModeloPedidos{
 		$stmt->bindParam(":sub_total", $datos["sub_total"], PDO::PARAM_STR);
 		$stmt->bindParam(":impuesto", $datos["impuesto"], PDO::PARAM_STR);
 		$stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
+		$stmt->bindParam(":vendedor", $datos["vendedor"], PDO::PARAM_STR);
 		$stmt->bindParam(":condicion_venta", $datos["condicion_venta"], PDO::PARAM_STR);
 		$stmt->bindParam(":agencia", $datos["agencia"], PDO::PARAM_STR);
 		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);

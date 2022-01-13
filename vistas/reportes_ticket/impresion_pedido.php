@@ -432,12 +432,11 @@
                             <td style="width:20%">'.$respuesta["vendedor"].'</td>
                             <th style="width:6%;text-align:left;">'.$respuesta["tipo_doc"].'</th>
                             <td colspan="2">'.$respuesta["documento"].'</td>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
+                            <th style="width:50%">'.$respuesta["nom_agencia"].'</th>
+                            <th style="width:1%"></th>
+                            <th style="width:1%"></th>
+                            <th style="width:1%"></th>
+                            <th style="width:1%"></th>
                     
                         </tr>
                     
@@ -701,12 +700,11 @@
                             <td style="width:20%">'.$respuesta["vendedor"].'</td>
                             <th style="width:6%;text-align:left;">'.$respuesta["tipo_doc"].'</th>
                             <td colspan="2">'.$respuesta["documento"].'</td>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
+                            <th style="width:50%">'.$respuesta["nom_agencia"].'</th>
+                            <th style="width:1%"></th>
+                            <th style="width:1%"></th>
+                            <th style="width:1%"></th>
+                            <th style="width:1%"></th>
                     
                         </tr>
                     
@@ -1031,12 +1029,11 @@
                             <td style="width:20%">'.$respuesta["vendedor"].'</td>
                             <th style="width:6%;text-align:left;">'.$respuesta["tipo_doc"].'</th>
                             <td colspan="2">'.$respuesta["documento"].'</td>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
+                            <th style="width:50%">'.$respuesta["nom_agencia"].'</th>
+                            <th style="width:1%"></th>
+                            <th style="width:1%"></th>
+                            <th style="width:1%"></th>
+                            <th style="width:1%"></th>
                     
                         </tr>
                     
@@ -1300,12 +1297,11 @@
                             <td style="width:20%">'.$respuesta["vendedor"].'</td>
                             <th style="width:6%;text-align:left;">'.$respuesta["tipo_doc"].'</th>
                             <td colspan="2">'.$respuesta["documento"].'</td>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
+                            <th style="width:50%">'.$respuesta["nom_agencia"].'</th>
+                            <th style="width:1%"></th>
+                            <th style="width:1%"></th>
+                            <th style="width:1%"></th>
+                            <th style="width:1%"></th>
                     
                         </tr>
                     
@@ -1569,12 +1565,11 @@
                             <td style="width:20%">'.$respuesta["vendedor"].'</td>
                             <th style="width:6%;text-align:left;">'.$respuesta["tipo_doc"].'</th>
                             <td colspan="2">'.$respuesta["documento"].'</td>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
+                            <th style="width:50%">'.$respuesta["nom_agencia"].'</th>
+                            <th style="width:1%"></th>
+                            <th style="width:1%"></th>
+                            <th style="width:1%"></th>
+                            <th style="width:1%"></th>
                     
                         </tr>
                     
@@ -2435,12 +2430,11 @@
                             <td style="width:20%">'.$respuesta["vendedor"].'</td>
                             <th style="width:6%;text-align:left;">'.$respuesta["tipo_doc"].'</th>
                             <td colspan="2">'.$respuesta["documento"].'</td>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
+                            <th style="width:50%">'.$respuesta["nom_agencia"].'</th>
+                            <th style="width:1%"></th>
+                            <th style="width:1%"></th>
+                            <th style="width:1%"></th>
+                            <th style="width:1%"></th>
                     
                         </tr>
                     
@@ -2704,12 +2698,11 @@
                             <td style="width:20%">'.$respuesta["vendedor"].'</td>
                             <th style="width:6%;text-align:left;">'.$respuesta["tipo_doc"].'</th>
                             <td colspan="2">'.$respuesta["documento"].'</td>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
+                            <th style="width:50%">'.$respuesta["nom_agencia"].'</th>
+                            <th style="width:1%"></th>
+                            <th style="width:1%"></th>
+                            <th style="width:1%"></th>
+                            <th style="width:1%"></th>
                     
                         </tr>
                     
@@ -3571,12 +3564,11 @@
                             <td style="width:20%">'.$respuesta["vendedor"].'</td>
                             <th style="width:6%;text-align:left;">'.$respuesta["tipo_doc"].'</th>
                             <td colspan="2">'.$respuesta["documento"].'</td>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
+                            <th style="width:50%">'.$respuesta["nom_agencia"].'</th>
+                            <th style="width:1%"></th>
+                            <th style="width:1%"></th>
+                            <th style="width:1%"></th>
+                            <th style="width:1%"></th>
                     
                         </tr>
                     
@@ -3840,12 +3832,11 @@
                             <td style="width:20%">'.$respuesta["vendedor"].'</td>
                             <th style="width:6%;text-align:left;">'.$respuesta["tipo_doc"].'</th>
                             <td colspan="2">'.$respuesta["documento"].'</td>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
+                            <th style="width:50%">'.$respuesta["nom_agencia"].'</th>
+                            <th style="width:1%"></th>
+                            <th style="width:1%"></th>
+                            <th style="width:1%"></th>
+                            <th style="width:1%"></th>
                     
                         </tr>
                     
@@ -4109,12 +4100,11 @@
                             <td style="width:20%">'.$respuesta["vendedor"].'</td>
                             <th style="width:6%;text-align:left;">'.$respuesta["tipo_doc"].'</th>
                             <td colspan="2">'.$respuesta["documento"].'</td>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
-                            <th style="width:6%"></th>
+                            <th style="width:50%">'.$respuesta["nom_agencia"].'</th>
+                            <th style="width:1%"></th>
+                            <th style="width:1%"></th>
+                            <th style="width:1%"></th>
+                            <th style="width:1%"></th>
                     
                         </tr>
                     

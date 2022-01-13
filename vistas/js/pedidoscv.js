@@ -328,6 +328,7 @@ $(".crearPedido").click(function () {
 	})
 
     var vendedor = document.getElementById("seleccionarVendedor").value;
+    console.log(vendedor);
     $("#vendedorM").val(vendedor);
 
     var lista = document.getElementById("seleccionarLista").value;
