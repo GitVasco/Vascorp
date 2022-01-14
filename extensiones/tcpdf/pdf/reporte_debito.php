@@ -60,7 +60,7 @@ class MYPDF extends TCPDF {
 
         $this->SetFont('helvetica', 'B', 9);
         
-        $this->MultiCell(70, 35, 'RUC: 10094806777'."\n\n".'NOTA CREDITO ELECTRONICA'."\n\n".'Nro.: '.$documento2.'   ', 1, 'C', 0, 0, '', '', true, 0, false, true, 35, 'M');
+        $this->MultiCell(70, 35, 'RUC: 10094806777'."\n\n".'NOTA DEBITO ELECTRONICA'."\n\n".'Nro.: '.$documento2.'   ', 1, 'C', 0, 0, '', '', true, 0, false, true, 35, 'M');
       
         
         // Title

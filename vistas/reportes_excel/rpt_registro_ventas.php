@@ -258,6 +258,46 @@ $borde9->applyFromArray(
     )
 ));
 
+#negrita-11-verde
+$borde_5 = new PHPExcel_Style();
+$borde_5->applyFromArray(
+  array('alignment' => array(
+      'wrap' => false
+    ),
+    'borders' => array(
+        'bottom' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+        'top' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+        'right' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+        'left' => array('style' => PHPExcel_Style_Border::BORDER_THIN)
+    ),
+    'font' => array(
+      'bold' => true,
+      'underline' =>false,
+      'color' => array('rgb' => '00833E'),
+      'size' => 8
+    )
+));
+
+#negrita-11-rojo
+$borde_1 = new PHPExcel_Style();
+$borde_1->applyFromArray(
+  array('alignment' => array(
+      'wrap' => false
+    ),
+    'borders' => array(
+        'bottom' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+        'top' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+        'right' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+        'left' => array('style' => PHPExcel_Style_Border::BORDER_THIN)
+    ),
+    'font' => array(
+      'bold' => true,
+      'underline' =>false,
+      'color' => array('rgb' => 'FF0008'),
+      'size' => 8
+    )
+));
+
 /* 
 * FIN DE ESTILOS
 */
@@ -337,41 +377,43 @@ $objPHPExcel->getActiveSheet()->setSharedStyle($borde3, "L$fila");
 $objPHPExcel->getActiveSheet()->SetCellValue("M$fila", 'TOTAL');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde3, "M$fila");
 
+$objPHPExcel->getActiveSheet()->SetCellValue("N$fila", 'ESTADO');
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde3, "N$fila");
+
 $sqlDetalle = mysql_query("SELECT 
-              DATE_FORMAT(v.fecha, '%d-%m-%Y') AS fecha,
-              CASE
-                WHEN v.tipo = 's03' 
-                THEN '1' 
-                WHEN v.tipo = 's02' 
-                THEN '3' 
-                ELSE '7' 
-              END AS tipo_doc,
-              CONCAT(
-                LEFT(v.documento, 4),
-                '-',
-                RIGHT(v.documento, 8)
-              ) AS doc,
-              c.documento,
-              c.nombre,
-              v.neto,
-              v.dscto,
-              v.neto - v.dscto AS subtotal,
-              ROUND((v.neto - v.dscto) * 0.18, 2) AS igv,
-              v.total 
-              FROM
-              ventajf v 
-              LEFT JOIN clientesjf c 
-                ON v.cliente = c.codigo 
-              WHERE MONTH(v.fecha) = $mes 
-              AND YEAR(v.fecha) = YEAR(NOW()) 
-              AND v.tipo NOT IN ('S70') 
-              AND (
-                LEFT(v.documento, 2)= 'B0'
-                OR LEFT(v.documento, 2) = 'F0'
-              ) 
-              ORDER BY v.tipo ASC,
-              v.fecha,
-              v.documento") or die(mysql_error());
+DATE_FORMAT(v.fecha, '%d-%m-%Y') AS fecha,
+CASE
+  WHEN v.tipo = 's03' 
+  THEN '1' 
+  WHEN v.tipo = 's02' 
+  THEN '3' 
+  WHEN v.tipo = 'e05' 
+  THEN '7' 
+  ELSE '8' 
+END AS tipo_doc,
+CONCAT(
+  LEFT(v.documento, 4),
+  '-',
+  RIGHT(v.documento, 8)
+) AS doc,
+c.documento,
+c.nombre,
+v.neto,
+v.dscto,
+v.neto - v.dscto AS subtotal,
+ROUND((v.neto - v.dscto) * 0.18, 2) AS igv,
+v.total,
+v.estado 
+FROM
+ventajf v 
+LEFT JOIN clientesjf c 
+  ON v.cliente = c.codigo 
+WHERE MONTH(v.fecha) = 1 
+AND YEAR(v.fecha) = YEAR(NOW()) 
+AND v.tipo NOT IN ('S70', 'S01') 
+ORDER BY tipo_doc DESC,
+v.fecha,
+v.documento") or die(mysql_error());
 
 while($respDetalle = mysql_fetch_array($sqlDetalle)){
 
@@ -392,6 +434,20 @@ while($respDetalle = mysql_fetch_array($sqlDetalle)){
   $objPHPExcel->getActiveSheet()->SetCellValue("L$fila", $respDetalle["igv"]);
   $objPHPExcel->getActiveSheet()->SetCellValue("M$fila", $respDetalle["total"]);   
 
+  if($respDetalle["estado"] == "GENERADO"){
+
+    $objPHPExcel->getActiveSheet()->SetCellValue("n$fila", $respDetalle["estado"]);  
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde_1, "n$fila");
+
+  }else{
+
+    $objPHPExcel->getActiveSheet()->SetCellValue("n$fila", $respDetalle["estado"]);  
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde_5, "n$fila");
+
+  }
+
+   
+
 }
 
 
@@ -409,7 +465,7 @@ $sqlDetalleTotal = mysql_query("SELECT
               ON v.cliente = c.codigo 
             WHERE MONTH(v.fecha) = $mes 
             AND YEAR(v.fecha) = YEAR(NOW()) 
-            AND v.tipo NOT IN ('S70') 
+            AND v.tipo NOT IN ('S70', 'S01') 
             AND (
               LEFT(v.documento, 2)= 'B0'
               OR LEFT(v.documento, 2) = 'F0'
@@ -446,7 +502,7 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth(13.71);
 $objPHPExcel->getActiveSheet()->getColumnDimension('J')->setWidth(13.71);
 $objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(13.71);
 $objPHPExcel->getActiveSheet()->getColumnDimension('L')->setWidth(13.71);
-$objPHPExcel->getActiveSheet()->getColumnDimension('M')->setWidth(13.71);
+$objPHPExcel->getActiveSheet()->getColumnDimension('M')->setWidth(15);
 
 /* 
 * CREAR EL ARCHIVO
