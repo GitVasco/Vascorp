@@ -349,5 +349,5 @@
 
 
 <script>
-window.document.title = "Notas de crédito"
+window.document.title = "Nc / Nd"
 </script>

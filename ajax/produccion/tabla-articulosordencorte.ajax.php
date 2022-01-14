@@ -325,7 +325,7 @@ class TablaArticulosOrdenCorte{
 
             $datosJson .= '[
             "'.$botones.'",
-            "'.$articulos[$i]["modelo"].'",
+            "'.$articulos[$i]["modelo"].' - '.$articulos[$i]["nombre"].'",
             "'.$colores.'",
             "'.$articulos[$i]["talla"].'",
             "'.$proyeccion.'",

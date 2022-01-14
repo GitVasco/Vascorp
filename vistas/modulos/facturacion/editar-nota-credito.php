@@ -24,6 +24,22 @@
 
     $venta = ModeloFacturacion::mdlMostrarVentaImpresion($documento,$tipo);
     
+    if($tipo == "E05"){
+
+        $venta["neto"] = $venta["neto"]*-1;
+        $venta["dscto"] = $venta["dscto"]*-1;
+        $venta["igv"] = $venta["igv"]*-1;
+        $venta["total"] = $venta["total"]*-1;
+
+    }else {
+        
+        $venta["neto"] = $venta["neto"];
+        $venta["dscto"] = $venta["dscto"];
+        $venta["igv"] = $venta["igv"];
+        $venta["total"] = $venta["total"];
+
+    }
+    
 
     ?>
     <section class="container-fluid col-lg-4">
@@ -248,8 +264,18 @@
                     <select  class="form-control input-md selectpicker" name="notaMotivo" id="notaMotivo" data-live-search="true" style="width:200px !important" required>
                     <option value="">Seleccionar motivo</option>
                     <?php
+                    
+                    if($_GET["tipo"] == "S05"){
+
+                        $valor = "TMOTD";
+
+                    }else{
+
+                        $valor = "TMOT";
+
+                    }
                       $item= "tipo_dato";
-                      $valor = "TMOT";
+                      
 
                     $documentos = ControladorCuentas::ctrMostrarPagos($item,$valor);
 
@@ -298,7 +324,7 @@
             <div class="form-group  col-lg-12" style="margin-top:23px">
                 <label for="" class="col-form-label col-lg-6">Sub - Total: </label>
                 <div class="input-group">
-                    <input type="number"  class="form-control input-sm text-right" name="notaSubTotal" id="notaSubTotal" step ="any" min="0" value="<?php echo number_format(($venta["neto"]*-1),2);?>">
+                    <input type="number"  class="form-control input-sm text-right" name="notaSubTotal" id="notaSubTotal" step ="any" min="0" value="<?php echo number_format(($venta["neto"]),2);?>">
 
                 </div>
             </div>
@@ -333,7 +359,7 @@
                 </div>
 
                 <div class="col-lg-6">
-                <input type="number"  class="form-control input-sm text-right" name="notaIGV" id="notaIGV" step ="any" min="0" value="<?php echo number_format(($venta["igv"]*-1),2);?>"  readonly>
+                <input type="number"  class="form-control input-sm text-right" name="notaIGV" id="notaIGV" step ="any" min="0" value="<?php echo number_format(($venta["igv"]),2);?>"  readonly>
                 </div>
                 </div>
             </div>
@@ -349,7 +375,7 @@
             <div class="form-group  col-lg-12">
                 <label for="" class="col-form-label col-lg-6">Total:</label>
                 <div class="input-group">
-                    <input type="number"  class="form-control input-sm text-right" name="notaTotal" id="notaTotal" step ="any" min="0" value="<?php echo number_format(($venta["total"]*-1),2);?>" readonly>
+                    <input type="number"  class="form-control input-sm text-right" name="notaTotal" id="notaTotal" step ="any" min="0" value="<?php echo number_format(($venta["total"]),2);?>" readonly>
                     <input type="hidden" name="notaUsuario" id ="notaUsuario" value="<?php echo $_SESSION["id"]?>">
                 </div>
             </div>
@@ -399,5 +425,5 @@
 </div>
 
 <script>
-window.document.title = "Notas de crédito"
+window.document.title = "Nc / Nd"
 </script>

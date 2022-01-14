@@ -172,7 +172,7 @@ $(".tablaArticulosOrdenCorte tbody").on("click", "button.agregarArt", function (
 
                     "<!-- Descripción del Articulo -->" +
 
-                    '<div class="col-xs-6" style="padding-right:0px">' +
+                    '<div class="col-xs-8" style="padding-right:0px">' +
 
                         '<div class="input-group">' +
                         

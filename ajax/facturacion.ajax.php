@@ -45,6 +45,11 @@ class AjaxFacturacion{
             $neto2 = $neto;
             $igv2 = $igv;
           }
+
+          $usureg = $_SESSION["nombre"];
+          $pcreg= gethostbyaddr($_SERVER['REMOTE_ADDR']);  
+
+
           $arregloVenta = array("tipo"=>$doc,
                                 "documento"=>$cta,
                                 "neto"=>$neto2,
@@ -55,7 +60,9 @@ class AjaxFacturacion{
                                 "fecha"=>$fecha,
                                 "tipo_documento"=>$tipo_doc,
                                 "doc_origen"=>'',
-                                "usuario"=>$user);
+                                "usuario"=>$user,
+                                "usureg"=>$usureg,
+                                "pcreg"=>$pcreg);
           
           $respuesta = ModeloFacturacion::mdlRegistrarVentaNota($arregloVenta);
 
@@ -91,7 +98,7 @@ class AjaxFacturacion{
         
         $valor=$this->documentoCredito;
         $tipo="E05";
-        $estado="FACTURADO";
+        $estado="GENERADO";
         $respuesta=ControladorFacturacion::ctrMostrarTablas($tipo,$estado,$valor);
         echo json_encode($respuesta);
       }
@@ -104,7 +111,7 @@ class AjaxFacturacion{
         
         $valor=$this->documentoDebito;
         $tipo="S05";
-        $estado="FACTURADO";
+        $estado="GENERADO";
         $respuesta=ControladorFacturacion::ctrMostrarTablas($tipo,$estado,$valor);
         echo json_encode($respuesta);
       }

@@ -104,7 +104,7 @@ if($articulosF["faltantes"] == '0'){
     
     </div>
     
-    <a href="tarjetas" class="small-box-footer">
+    <a href="#" class="small-box-footer">
 
       Más info <i class="fa fa-arrow-circle-right"></i>
 
@@ -132,7 +132,7 @@ if($articulosF["faltantes"] == '0'){
     
     </div>
     
-    <a href="articulos" class="small-box-footer">
+    <a href="#" class="small-box-footer">
       
       Más info <i class="fa fa-arrow-circle-right"></i>
     

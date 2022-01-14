@@ -1373,7 +1373,7 @@
                         <a href="ver-nota-credito">
 
                             <i class="fa fa-circle-o text-green"></i>
-                            <span>Notas credito</span>
+                            <span>NC/ND</span>
 
                         </a>
 

@@ -810,7 +810,7 @@ $(".btnGuardarNotaCredito").click(function(){
                                     processData: false,
                                     dataType: "json",
                                     success: function (respuesta3) {
-                                        // console.log(respuesta);
+                                        //console.log(respuesta3);
                                         if (respuesta3) {
                                             
                                             $.ajax({
@@ -905,7 +905,7 @@ $(".btnGuardarNotaCredito").click(function(){
                                     processData: false,
                                     dataType: "json",
                                     success: function (respuesta3) {
-                                        // console.log(respuesta);
+                                         //console.log(respuesta3);
                                         if (respuesta3) {
                                             var jsonCuenta2= {"jsonCuenta2":JSON.stringify(cuenta)};
                                             $.ajax({
@@ -1015,7 +1015,7 @@ $(".btnGuardarNotaCredito").click(function(){
                 processData: false,
                 dataType: "json",
                 success: function (respuesta3) {
-                    // console.log(respuesta);
+                     //console.log(respuesta3);
                     if (respuesta3) {
                         var jsonCuenta2= {"jsonCuenta2":JSON.stringify(cuenta)};
                         $.ajax({

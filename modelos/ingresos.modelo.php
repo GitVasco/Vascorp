@@ -1108,8 +1108,8 @@ class ModeloIngresos{
 					ON mc.tipo = m.tipo 
 					AND mc.documento = m.documento SET mc.fecha = :fecha,
 					m.fecha = :fecha 
-				WHERE mc.tipo = 'E20' 
-					AND mc.documento = 'TA0040'";
+				WHERE mc.tipo = :tipo 
+					AND mc.documento = :documento";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 

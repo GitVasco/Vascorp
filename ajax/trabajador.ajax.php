@@ -101,7 +101,7 @@ class AjaxTrabajador{
 
 		}else{
 
-			echo $validar;
+			echo "no";
 
 		}
 

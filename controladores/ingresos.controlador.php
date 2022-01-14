@@ -1010,10 +1010,27 @@ class ControladorIngresos{
                             "documento" => $documento,
                             "fecha" => $fecha);
 
-            var_dump($datos);
+            #var_dump($datos);
 
             $respuesta = ModeloIngresos::mdlActualizarFecha($datos);
-            var_dump($respuesta);
+            #var_dump($respuesta);
+
+            if($respuesta == "ok"){
+
+                echo '<script>
+                swal({
+                    type: "success",
+                    title: "Felicitaciones",
+                    text: "¡La información fue Actualizada con éxito!",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+                }).then((result)=>{
+                    if(result.value){
+                        window.location="ingresos";}
+                });
+            </script>';  
+
+            }
 
 
         }
