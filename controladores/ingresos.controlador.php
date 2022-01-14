@@ -994,4 +994,30 @@ class ControladorIngresos{
 		return $respuesta;
 		
     }
+
+    /* 
+    * Actualizar FECHA
+    */
+    static public function ctrActualizarFecha(){
+
+        if(isset($_POST["cierre"])){
+
+            $tipo = $_POST["tipoIng"];
+            $documento = $_POST["cierre"];
+            $fecha = $_POST["fecha"];
+
+            $datos = array( "tipo" => $tipo,
+                            "documento" => $documento,
+                            "fecha" => $fecha);
+
+            var_dump($datos);
+
+            $respuesta = ModeloIngresos::mdlActualizarFecha($datos);
+            var_dump($respuesta);
+
+
+        }
+
+
+    }    
 }

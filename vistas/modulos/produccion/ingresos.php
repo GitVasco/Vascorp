@@ -153,6 +153,8 @@ MODAL VISUALIZAR INFORMACION
 
                 <strong><input type="text" class="form-control input-sm" name="cierre" id="cierre" required readonly></strong>
 
+                <input type="hidden" class="form-control input-sm" name="tipoIng" id="tipoIng">
+
               </div>
 
             </div>
@@ -183,7 +185,7 @@ MODAL VISUALIZAR INFORMACION
               
                 <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
 
-                <strong><input type="text" class="form-control input-sm" name="fecha" id="fecha" required readonly></strong>
+                <strong><input type="text" class="form-control input-sm" name="fecha" id="fecha" required></strong>
 
               </div>
 
@@ -325,6 +327,8 @@ MODAL VISUALIZAR INFORMACION
 
           <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
 
+          <button type="submit" class="btn btn-primary">Guardar</button>
+
         </div>
 
 
@@ -332,6 +336,13 @@ MODAL VISUALIZAR INFORMACION
       </form>
 
     </div>
+    <?php
+
+      $actualizar = new ControladorIngresos();
+      $actualizar -> ctrActualizarFecha();
+
+    ?>
+
 
   </div>
 

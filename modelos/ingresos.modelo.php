@@ -1097,4 +1097,38 @@ class ModeloIngresos{
 			}
 	
 		}
+
+
+	//*ACTUALIZAR FECHA
+	static public function mdlActualizarFecha($datos){
+
+		$sql="UPDATE 
+					movimientos_cabecerajf mc 
+					LEFT JOIN movimientosjf_2021 m 
+					ON mc.tipo = m.tipo 
+					AND mc.documento = m.documento SET mc.fecha = :fecha,
+					m.fecha = :fecha 
+				WHERE mc.tipo = 'E20' 
+					AND mc.documento = 'TA0040'";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":tipo",$datos["tipo"],PDO::PARAM_INT);
+		$stmt->bindParam(":documento",$datos["documento"],PDO::PARAM_STR);
+		$stmt->bindParam(":fecha",$datos["fecha"],PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		}
+
+		$stmt=null;
+		
+	}
+
+
 }

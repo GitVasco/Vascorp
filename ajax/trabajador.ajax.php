@@ -81,7 +81,7 @@ class AjaxTrabajador{
 
 		$validar = ModeloTalleres::mdlMostrarTalleresG($barra);
 
-		if($validar["fecha_proceso"] == null){
+		if($validar["fecha_proceso"] == null || $validar["fecha_proceso"] == "0000-00-00 00:00:00"){
 
 			date_default_timezone_set('America/Lima');
 
@@ -101,7 +101,7 @@ class AjaxTrabajador{
 
 		}else{
 
-			echo 'no';
+			echo $validar;
 
 		}
 

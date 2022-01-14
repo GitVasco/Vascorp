@@ -44,6 +44,8 @@ class ModeloTalleres{
                                                             LEFT JOIN sectorjf s 
                                                             ON et.sector = s.cod_sector");
 
+                                                             
+
 			$stmt -> execute();
 
 			return $stmt -> fetchAll();
@@ -63,7 +65,9 @@ class ModeloTalleres{
           ON a.articulo = t.articulo
           LEFT JOIN operacionesjf o 
           ON t.cod_operacion = o.codigo 
-          WHERE t.codigo='$valor'");
+          WHERE t.codigo=:valor");
+
+$stmt->bindParam(":valor", $valor, PDO::PARAM_STR);   
 
 			$stmt->execute();
 

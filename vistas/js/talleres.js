@@ -2698,16 +2698,17 @@ $(".tablaIngresoM").on("click", ".btnVisualizarIngreso", function () {
 		dataType:"json",
 		success:function(respuesta){
 
-			// console.log("respuesta", respuesta);
+			//console.log("respuesta", respuesta);
 
-      $("#cierre").val(respuesta["documento"]);
-      $("#guia").val(respuesta["guia"]);
-      $("#fecha").val(respuesta["fecha"]);
-      $("#nombre").val(respuesta["taller"]+" - "+respuesta["nom_sector"]);
-      $("#cantidad").val(respuesta["total"]);
-      $("#estado").val(respuesta["estado"]);
+			$("#cierre").val(respuesta["documento"]);
+			$("#tipoIng").val(respuesta["tipo"]);
+			$("#guia").val(respuesta["guia"]);
+			$("#fecha").val(respuesta["fecha"]);
+			$("#nombre").val(respuesta["taller"]+" - "+respuesta["nom_sector"]);
+			$("#cantidad").val(respuesta["total"]);
+			$("#estado").val(respuesta["estado"]);
 
-      $("#cantidad").number(true, 0);
+			$("#cantidad").number(true, 0);
 
 			
 		}
