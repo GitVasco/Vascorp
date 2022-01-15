@@ -951,7 +951,11 @@
                             </div>
                             <div class="form-group col-lg-2">
                                 <button class='btn btn-primary btn-md modificarArtPedB' data-toggle='modal' data-target='#modalModificarClienteP'>Agregar</button>
-                            </div>                            
+                            </div>   
+                            
+                            <div class="form-group col-lg-2">
+                                <button class='btn btn-success btn-md refreshDetalle' pedido='<?php echo $_GET["pedido"]; ?>' ><i class="fa fa-refresh"></i></button>
+                            </div>                              
                         
                         </div>                    
 
@@ -1043,7 +1047,7 @@
 
                         foreach($modelo as $key => $value){
 
-                        echo '<table border="1" style="border:dashed" align="left" width="700px">';
+                        echo '<table class="tablaVerPed" border="1" style="border:dashed" align="left" width="700px">';
 
                         $respuesta = ControladorPedidos::ctrPedidoImpresion($codigo, $value["modelo"]);
 
@@ -1130,16 +1134,26 @@
                         }
 
                         echo '<tr>
-                        <th style="width:10%;font-weight: normal;text-align:left;">'.$value2["modelo"].'</th>
+                        <th style="width:10%;font-weight: normal;text-align:left;"><buttton class="btn-link btnBorrarModelo" modelo="'.$value2["modelo"].'" pedido="'.$_GET["pedido"].'">'.$value2["modelo"].'</button></th>
+
                         <th style="width:20%;text-align:left;">'.$value2["color"].'</th>
-                        <th style="width:6%;font-weight: normal;">'.$value2["t1"].'</th>
-                        <th style="width:6%;font-weight: normal;">'.$value2["t2"].'</th>
-                        <th style="width:6%;font-weight: normal;">'.$value2["t3"].'</th>
-                        <th style="width:6%;font-weight: normal;">'.$value2["t4"].'</th>
-                        <th style="width:6%;font-weight: normal;">'.$value2["t5"].'</th>
-                        <th style="width:6%;font-weight: normal;">'.$value2["t6"].'</th>
-                        <th style="width:6%;font-weight: normal;">'.$value2["t7"].'</th>
-                        <th style="width:6%;font-weight: normal;">'.$value2["t8"].'</th>
+
+                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="'.$value2["modelo"].$value2["cod_color"].'1" pedido="'.$_GET["pedido"].'">'.$value2["t1"].'</button></th>
+
+                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="'.$value2["modelo"].$value2["cod_color"].'2" pedido="'.$_GET["pedido"].'">'.$value2["t2"].'</button></th>
+
+                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="'.$value2["modelo"].$value2["cod_color"].'3" pedido="'.$_GET["pedido"].'">'.$value2["t3"].'</button></th>
+
+                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="'.$value2["modelo"].$value2["cod_color"].'4" pedido="'.$_GET["pedido"].'">'.$value2["t4"].'</button></th>
+
+                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="'.$value2["modelo"].$value2["cod_color"].'5" pedido="'.$_GET["pedido"].'">'.$value2["t5"].'</button></th>
+
+                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="'.$value2["modelo"].$value2["cod_color"].'6" pedido="'.$_GET["pedido"].'">'.$value2["t6"].'</button></th>
+                        
+                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="'.$value2["modelo"].$value2["cod_color"].'7" pedido="'.$_GET["pedido"].'">'.$value2["t7"].'</button></th>
+
+                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="'.$value2["modelo"].$value2["cod_color"].'8" pedido="'.$_GET["pedido"].'">'.$value2["t8"].'</button></th>
+
                         <th style="width:6%">'.$value2["total"].'</th>
                         </tr>';
 

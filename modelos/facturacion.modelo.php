@@ -256,6 +256,33 @@ class ModeloFacturacion{
 
     }
 
+        /*
+    * ACTUALIZAR PEDIDO A FACTURADO
+    */
+	static public function mdlActualizarPedidoB($codigo){
+
+		$sql="UPDATE
+                    temporaljf_bkp
+                SET
+                    estado = 'FACTURADOS'
+                WHERE codigo = :codigo";
+
+        $stmt=Conexion::conectar()->prepare($sql);
+
+        $stmt->bindParam(":codigo", $codigo, PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt=null;
+
+    }
+
     /*
     * ACTUALIZAR TALONARIO + 1 FACTURA
     */

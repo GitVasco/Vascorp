@@ -139,6 +139,7 @@ class ControladorFacturacion{
                 if($talonario == "ok"){
 
                     $estado = ModeloFacturacion::mdlActualizarPedidoF($_POST["codPedido"]);
+                    $estadoB = ModeloFacturacion::mdlActualizarPedidoB($_POST["codPedido"]);
 
                     //var_dump($estado);
 
@@ -301,6 +302,7 @@ class ControladorFacturacion{
                 if($talonario == "ok"){
 
                     $estado = ModeloFacturacion::mdlActualizarPedidoF($_POST["codPedido"]);
+                    $estadoB = ModeloFacturacion::mdlActualizarPedidoB($_POST["codPedido"]);
 
                     //var_dump($estado);
 
@@ -526,6 +528,7 @@ class ControladorFacturacion{
                 if($talonario == "ok"){
 
                     $estado = ModeloFacturacion::mdlActualizarPedidoF($_POST["codPedido"]);
+                    $estadoB = ModeloFacturacion::mdlActualizarPedidoB($_POST["codPedido"]);
 
                     //var_dump($estado);
 
@@ -751,6 +754,7 @@ class ControladorFacturacion{
                 if($talonario == "ok"){
 
                     $estado = ModeloFacturacion::mdlActualizarPedidoF($_POST["codPedido"]);
+                    $estadoB = ModeloFacturacion::mdlActualizarPedidoB($_POST["codPedido"]);
 
                     //var_dump($estado);
 
@@ -976,6 +980,7 @@ class ControladorFacturacion{
                 if($talonario == "ok"){
 
                     $estado = ModeloFacturacion::mdlActualizarPedidoF($_POST["codPedido"]);
+                    $estadoB = ModeloFacturacion::mdlActualizarPedidoB($_POST["codPedido"]);
 
                     //var_dump($estado);
 

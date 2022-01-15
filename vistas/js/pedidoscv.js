@@ -1560,3 +1560,60 @@ $(".tablaPedidosAprobados, .tablaPedidosCV, .tablaPedidosGenerados").on("click",
 	})
 
 });
+
+
+$(".tablaVerPed tbody").on("click", "button.btnBorrarModelo", function () {
+
+
+
+})
+
+
+$(".btnBorrarModelo").click(function(){
+
+	var modeloB = $(this).attr("modelo");
+    var pedidoB = $(this).attr("pedido");
+	//console.log("modelo", modeloB, "pedido", pedidoB);
+
+    var datos = new FormData();
+	datos.append("modeloB", modeloB);
+    datos.append("pedidoB", pedidoB);
+
+	$.ajax({
+
+		url: "ajax/pedidos.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function (respuesta) {
+
+            console.log("respuesta", respuesta);
+
+            if(respuesta == "ok"){
+
+                Command: toastr["error"]("El modelo fue eliminado");
+                $("#updDiv").load(" #updDiv");//actualizas el div
+                //$("#updDivB").load(" #updDivB");//actualizas el div
+                $("#updDivC").load(" #updDivC");//actualizas el div
+
+            }
+
+
+		}
+
+	})
+
+})
+
+$(".refreshDetalle").click(function(){
+
+    var pedido = $(this).attr("pedido");
+
+    Command: toastr["success"]("Se actualizo los detalles");
+    window.location="index.php?ruta=crear-pedidocv&pedido=" + pedido;
+                                        
+
+})

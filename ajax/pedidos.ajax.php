@@ -5,6 +5,9 @@ require_once '../modelos/articulos.modelo.php';
 require_once '../controladores/clientes.controlador.php';
 require_once '../modelos/clientes.modelo.php';
 
+require_once '../controladores/pedidos.controlador.php';
+require_once '../modelos/pedidos.modelo.php';
+
 class AjaxPedidos{
 
     /* 
@@ -55,7 +58,21 @@ class AjaxPedidos{
         $respuestaDet = ControladorClientes::ctrVerLista($valor);
        
         echo json_encode($respuestaDet);
-    }      
+    }   
+    
+    /* 
+	* SACAR LA LISTA DE PRECIOS ASIGNADA
+	*/
+	public function ajaxBorrarModelo(){
+
+        $modelo = $this->modelo;
+        $pedido = $this->pedido;
+
+        $respuesta = ModeloPedidos::mdlBorrarModelo($modelo, $pedido);
+
+        echo json_encode($respuesta);
+
+    }     
 
 
 }
@@ -103,5 +120,17 @@ if(isset($_POST["cliList"])){
     $visualizarListaPrecios = new AjaxPedidos();
     $visualizarListaPrecios -> cliList = $_POST["cliList"];
     $visualizarListaPrecios -> ajaxVeLista();
+
+}
+
+/* 
+ * PARA BORRAR POR MODELO
+*/
+if(isset($_POST["modeloB"])){
+
+    $borrarModelo = new AjaxPedidos();
+    $borrarModelo -> modelo = $_POST["modeloB"];
+    $borrarModelo -> pedido = $_POST["pedidoB"];
+    $borrarModelo -> ajaxBorrarModelo();
 
 }

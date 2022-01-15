@@ -1461,4 +1461,34 @@ class ModeloPedidos{
 		$stmt = null;
 	}		
 
+    /*
+    *BORRAR POR MODELO
+    */
+	static public function mdlBorrarModelo($modelo, $pedido){
+
+		$sql="DELETE 
+		FROM
+		  detalle_temporal 
+		WHERE codigo = $pedido 
+		  AND articulo LIKE '$modelo%'";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":pedido", $pedido, PDO::PARAM_STR);
+		$stmt->bindParam(":modelo", $modelo, PDO::PARAM_STR);
+
+        if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return $stmt->errorInfo();
+
+		}
+
+		$stmt=null;
+
+	}
+
 }
