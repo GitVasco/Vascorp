@@ -3541,6 +3541,8 @@ class ControladorFacturacion{
             if( substr($_POST["documento"],0,4) == "B001" || 
                 substr($_POST["documento"],0,4) == "F001"){
 
+                    //*Uniaades
+
                     $datosD = ModeloFacturacion::mdlFENCDetA($_POST["tipo"], $_POST["documento"]);
                     //var_dump($datosD);
         
@@ -3592,6 +3594,7 @@ class ControladorFacturacion{
 
             }else{
 
+                //*CONCEPTO
                 $datosD = ModeloFacturacion::mdlFENCDetB($_POST["tipo"], $_POST["documento"]);
                 //var_dump($datosD);
     
@@ -3603,7 +3606,6 @@ class ControladorFacturacion{
                                         $value["b8"].','.
                                         $value["c8"].','.
                                         $value["d8"].','.
-                                        $value["e8"].','.
                                         $value["f8"].',,,'.
                                         $value["i8"].','.
                                         $value["j8"].','.
@@ -3622,7 +3624,6 @@ class ControladorFacturacion{
                                     $value["b8"].','.
                                     $value["c8"].','.
                                     $value["d8"].','.
-                                    $value["e8"].','.
                                     $value["f8"].',,,'.
                                     $value["i8"].','.
                                     $value["j8"].','.
