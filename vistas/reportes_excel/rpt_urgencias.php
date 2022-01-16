@@ -478,7 +478,7 @@ $objPHPExcel->getActiveSheet()->getStyle("M$fila")->getAlignment()->setWrapText(
 $sqlDetalle = mysql_query("SELECT 
                                 a.articulo,
                                 a.id_marca,
-                                m.marca,
+                                a.marca,
                                 a.modelo,
                                 a.nombre,
                                 a.cod_color,
@@ -501,7 +501,7 @@ $sqlDetalle = mysql_query("SELECT
                                 END AS stock,
                                 (a.stock - a.pedidos) AS stockB,
                                 a.pedidos,
-                                (a.taller+a.servicio) as taller,
+                                (a.taller + a.servicio) AS taller,
                                 a.alm_corte,
                                 a.ord_corte,
                                 a.proyeccion,
@@ -516,16 +516,70 @@ $sqlDetalle = mysql_query("SELECT
                                 IFNULL(a.ult_mes, 0) AS ult_mes 
                                 FROM
                                 articulojf a 
-                                LEFT JOIN marcasjf m 
-                                  ON a.id_marca = m.id 
+                                LEFT JOIN modelojf m 
+                                  ON a.modelo = m.modelo 
                                 WHERE ROUND(
                                   (
                                     IFNULL(a.ult_mes, 0) * a.urgencia / 100
                                   ),
                                   0
                                 ) > (a.stock - a.pedidos) 
-                                AND a.estado = 'Activo'
-                                AND LEFT(a.modelo, 1) NOT IN ('D')") or die(mysql_error());
+                                AND a.estado = 'Activo' 
+                                AND LEFT(a.modelo, 1) NOT IN ('D') 
+                                AND m.tipo NOT IN ('BRASIER') 
+                                UNION
+                                SELECT 
+                                a.articulo,
+                                a.id_marca,
+                                a.marca,
+                                a.modelo,
+                                a.nombre,
+                                a.cod_color,
+                                a.color,
+                                a.cod_talla,
+                                a.talla,
+                                a.estado,
+                                a.urgencia,
+                                a.mp_faltante,
+                                ROUND(
+                                  (
+                                    IFNULL(a.ult_mes, 0) * a.urgencia / 100
+                                  ),
+                                  0
+                                ) AS configuracion,
+                                CASE
+                                  WHEN a.stock < 0 
+                                  THEN 0 
+                                  ELSE a.stock 
+                                END AS stock,
+                                (a.stock - a.pedidos) AS stockB,
+                                a.pedidos,
+                                (a.taller + a.servicio) AS taller,
+                                a.alm_corte,
+                                a.ord_corte,
+                                a.proyeccion,
+                                IFNULL(a.prod, 0) AS prod,
+                                IFNULL(
+                                  ROUND(
+                                    (IFNULL(a.prod, 0) / a.proyeccion) * 100,
+                                    2
+                                  ),
+                                  0
+                                ) AS avance,
+                                IFNULL(a.ult_mes, 0) AS ult_mes 
+                                FROM
+                                articulojf a 
+                                LEFT JOIN modelojf m 
+                                  ON a.modelo = m.modelo 
+                                WHERE ROUND(
+                                  (
+                                    IFNULL(a.ult_mes, 0) * a.urgencia / 100
+                                  ),
+                                  0
+                                ) > (a.stock - a.pedidos) 
+                                AND a.estado = 'Activo' 
+                                AND LEFT(a.modelo, 1) NOT IN ('D') 
+                                AND m.tipo IN ('BRASIER')") or die(mysql_error());
 
 
 while($respDetalle = mysql_fetch_array($sqlDetalle)){

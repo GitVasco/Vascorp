@@ -196,6 +196,51 @@ class ControladorMovimientos{
 
         return $respuesta;
 
+    }      
+    
+    /* 
+    * MOSTRAR TOTALES DEL MES VTAS - PAGOS
+    */
+    static public function ctrTotalesSoles($mes){
+
+        $respuesta = ModeloMovimientos::mdlTotalesSoles($mes);
+
+        return $respuesta;
+
     }       
+    
+    /* 
+    * MOSTRAR TOTALES DEL MES PEDIDOS
+    */
+    static public function ctrTotalesSolesPedidos($mes){
+
+        $respuesta = ModeloMovimientos::mdlTotalesSolesPedidos($mes);
+
+        return $respuesta;
+
+    }     
+    
+    /* 
+    * MOSTRAR RESUMEN DE VENTAS
+    */
+    static public function ctrMostrarResumenVtas($mes){
+
+        $respuesta = ModeloMovimientos::mdlMostrarResumenVtas($mes);
+
+        return $respuesta;
+
+    }     
+
+    /* 
+    * MOSTRAR RESUMEN DE VENTAS POR VENDEDOR
+    */
+    static public function ctrMostrarResumenVdor($mes){
+
+        $respuesta = ModeloMovimientos::mdlMostrarResumenVdor($mes);
+
+        return $respuesta;
+
+    }     
+
 
 }

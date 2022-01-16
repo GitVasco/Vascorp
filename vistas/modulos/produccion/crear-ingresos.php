@@ -89,6 +89,22 @@
                 </div>
 
                 <!--=====================================
+                ENTRADA DEL CODIGO INTERNO
+                ======================================-->
+
+                <div class="form-group">
+
+                  <div class="input-group">
+
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="date" class="form-control" id="nuevaFecha" name="nuevaFecha" value="<?php echo date("Y-m-d");?>" required>
+                   
+
+                  </div>
+
+                </div>                
+
+                <!--=====================================
                 ENTRADA DEL ARTICULO
                 ======================================-->
 

@@ -1433,6 +1433,26 @@ class ControladorCuentas{
 
 	}
 
+	/*=============================================
+	ESTADO DE CUENTA CABECERA
+	=============================================*/
+	static public function ctrEstadoCuentaCab($cliente){
+
+		$respuesta = ModeloCuentas::ctrEstadoCuentaCab($cliente);
+
+		return $respuesta;
+
+	}
 	
+	/*=============================================
+	ESTADO DE CUENTA DETALLE
+	=============================================*/
+	static public function ctrEstadoCuentaDet($cliente){
+
+		$respuesta = ModeloCuentas::ctrEstadoCuentaDet($cliente);
+
+		return $respuesta;
+
+	}	
    
 }

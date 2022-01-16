@@ -678,6 +678,15 @@ class ControladorTalleres{
         return $respuesta;
 
     }    
+
+
+    static public function ctrMesB($mes){
+
+        $respuesta = ModeloTalleres::mdlMesB($mes);
+
+        return $respuesta;
+
+    }  
     
     /*
     * MOSTRAR PRODUCCION DE TRUSAS

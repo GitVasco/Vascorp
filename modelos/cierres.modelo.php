@@ -85,12 +85,13 @@ class ModeloCierres{
 	// Método para guardar las ventas
 	static public function mdlGuardarDetallesCierres($tabla,$datos){
 
-		$sql="INSERT INTO $tabla(codigo,articulo,cantidad,cod_servicio) VALUES (:codigo,:articulo,:cantidad,:cod_servicio)";
+		$sql="INSERT INTO $tabla(codigo,articulo,cantidad,inicio,cod_servicio) VALUES (:codigo,:articulo,:cantidad,:inicio,:cod_servicio)";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":codigo",$datos["codigo"],PDO::PARAM_STR);
 		$stmt->bindParam(":articulo",$datos["articulo"],PDO::PARAM_STR);
 		$stmt->bindParam(":cantidad",$datos["cantidad"],PDO::PARAM_INT);
+		$stmt->bindParam(":inicio",$datos["inicio"],PDO::PARAM_INT);
 		$stmt->bindParam(":cod_servicio",$datos["cod_servicio"],PDO::PARAM_STR);
 		
 		$stmt->execute();

@@ -961,7 +961,7 @@ $(".btnCancelarCuenta2").click(function(){
           $("#idCuenta3").val(respuesta["id"]);
           $("#cancelarTipoDocumento2").val(respuesta["tipo_doc"]);
           $("#cancelarDocumentoOriginal2").val(respuesta["num_cta"]);
-          $("#cancelarDocumento2").val(respuesta["num_cta"]);
+          //$("#cancelarDocumento2").val(respuesta["num_cta"]);
           $("#cancelarVendedor2").val(respuesta["vendedor"]);
           $("#cancelarFechaOrigen2").val(respuesta["fecha"]);
           $("#cancelarVencimientoOrigen2").val(respuesta["fecha_ven"]);
@@ -2062,4 +2062,18 @@ $(".btnGenerarReporteCuenta").click(function(){
   alert("hola");
  }
   
+})
+
+
+/* 
+* BOTON  IMPRIMIR TICKET
+*/
+$(".tablaClientes").on("click", ".btnImprimirEstadoCuenta", function () {
+
+  var cliente = $(this).attr("cliente");
+  //console.log(cliente);
+
+
+window.open("vistas/reportes_ticket/estado_cuenta.php?cliente=" +cliente,"_blank");
+
 })

@@ -89,7 +89,7 @@
         labels  : ['ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JUNIO','AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'],
         datasets: [
         {
-            label               : '2017',
+            label               : '2020',
             fillColor           : 'rgba(200, 56, 56, 0.7)',
             strokeColor         : 'rgba(200, 56, 56, 0.7)',
             pointColor          : 'rgba(200, 56, 56, 0.7)',
@@ -122,7 +122,7 @@
             ]
         },
         {
-            label               : '2018',
+            label               : '2021',
             fillColor           : 'rgba(95, 214, 167, 0.8)',
             strokeColor         : 'rgba(95, 214, 167, 0.8)',
             pointColor          : '#5FD6A7',
@@ -155,7 +155,7 @@
                 ]
         },
         {
-            label               : '2019',
+            label               : '2022',
             fillColor           : 'rgba(21, 117, 146, 1)',
             strokeColor         : 'rgba(21, 117, 146, 1)',
             pointColor          : 'rgba(21, 117, 146, 1)',
@@ -213,7 +213,7 @@
         responsive              : true,
         multiTooltipTemplate    : '<%= datasetLabel %> - <%= value %> Mil',
         scaleOverride           : true,
-        scaleSteps              : 17,
+        scaleSteps              : 23,
         scaleStepWidth          : 100,
         scaleStartValue         : 0
         

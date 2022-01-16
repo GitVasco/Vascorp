@@ -706,4 +706,15 @@ class ControladorPedidos{
 
     }
 
+    /*
+    * MOSTRAR COTIZACIÓN
+    */
+	static public function ctrMostrarCotizacion($codigo){
+
+		$respuesta = ModeloPedidos::mdlMostrarCotizacion($codigo);
+
+		return $respuesta;
+
+    }       
+
 }

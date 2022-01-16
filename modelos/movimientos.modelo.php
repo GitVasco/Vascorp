@@ -2334,6 +2334,326 @@ class ModeloMovimientos{
       }
       
 		$stmt=null;
-   }      
+   }  
+   
+	/*
+	* MOSTRAR TOTALES DEL MES
+	*/
+	static public function mdlTotalesSoles($mes){
+
+      if( $mes == null){
+
+         $stmt = Conexion::conectar()->prepare("SELECT 
+         t.año,
+         SUM(total_ventas_soles) AS vtas_soles,
+         SUM(total_pagos_soles) AS pagos_soles 
+       FROM
+         totalesjf t 
+       WHERE t.año = YEAR(NOW()) 
+       GROUP BY t.año");
+
+         $stmt -> execute();
+
+         return $stmt -> fetch();
+
+         $stmt -> close();
+
+         $stmt = null;
+
+      }else{
+
+         $stmt = Conexion::conectar()->prepare("SELECT 
+                        t.año,
+                        t.mes,
+                        SUM(total_ventas_soles) AS vtas_soles,
+                        SUM(total_pagos_soles) AS pagos_soles 
+                     FROM
+                        totalesjf t 
+                     WHERE t.año = YEAR(NOW()) 
+                        AND t.mes = $mes
+                     GROUP BY t.año,
+                        t.mes ;");
+
+         $stmt -> execute();
+
+         return $stmt -> fetch();
+
+         $stmt -> close();
+
+         $stmt = null;
+
+      }
+
+	}	   
+
+	static public function mdlTotalesSolesPedidos($mes){
+
+      if( $mes == null){
+
+         $stmt = Conexion::conectar()->prepare("SELECT 
+         MONTH(t.fecha) AS mes,
+         SUM(op_gravada) AS total 
+      FROM
+         temporaljf t 
+      WHERE YEAR(t.fecha) = YEAR(NOW()) 
+         AND t.estado IN ('APROBADO', 'APT', 'CONFIRMADO')");
+
+         $stmt -> execute();
+
+         return $stmt -> fetch();
+
+         $stmt -> close();
+
+         $stmt = null;
+
+      }else{
+
+         $stmt = Conexion::conectar()->prepare("SELECT 
+                                                MONTH(t.fecha) AS mes,
+                                                SUM(op_gravada) AS total 
+                                             FROM
+                                                temporaljf t 
+                                             WHERE YEAR(t.fecha) = YEAR(NOW()) 
+                                                AND MONTH(t.fecha) = $mes
+                                                AND t.estado IN ('APROBADO', 'APT', 'CONFIRMADO')");
+
+         $stmt -> execute();
+
+         return $stmt -> fetch();
+
+         $stmt -> close();
+
+         $stmt = null;
+
+      }
+
+	}   
+
+	static public function mdlMostrarResumenVtas($mes){
+
+      if( $mes == "null"){
+
+         $stmt = Conexion::conectar()->prepare("SELECT 
+         v.tipo,
+         v.tipo_documento,
+         SUM(v.neto) AS neto,
+         SUM(v.igv) AS igv,
+         SUM(v.dscto) AS dscto,
+         SUM(v.total) AS total 
+       FROM
+         ventajf v 
+       WHERE YEAR(v.fecha) = YEAR(NOW()) 
+       AND v.tipo IN ('E05', 'S02', 'S03', 'S70') 
+       GROUP BY v.tipo,
+         v.tipo_documento 
+       UNION
+       SELECT 
+         YEAR(v.fecha) AS anno,
+         '' AS mes,
+         SUM(v.neto) AS neto,
+         SUM(v.igv) AS igv,
+         SUM(v.dscto) AS dscto,
+         SUM(v.total) AS total 
+       FROM
+         ventajf v 
+       WHERE YEAR(v.fecha) = YEAR(NOW()) 
+       AND v.tipo IN ('E05', 'S02', 'S03', 'S70') 
+       GROUP BY YEAR(v.fecha)");
+
+         $stmt -> execute();
+
+         return $stmt -> fetchAll();
+
+         $stmt -> close();
+
+         $stmt = null;
+
+      }else{
+
+         $stmt = Conexion::conectar()->prepare("SELECT 
+         v.tipo,
+         v.tipo_documento,
+         SUM(v.neto) AS neto,
+         SUM(v.igv) AS igv,
+         SUM(v.dscto) AS dscto,
+         SUM(v.total) AS total 
+       FROM
+         ventajf v 
+       WHERE YEAR(v.fecha) = YEAR(NOW()) 
+         AND MONTH(v.fecha) = $mes 
+         AND v.tipo IN ('E05', 'S02', 'S03', 'S70') 
+       GROUP BY v.tipo,
+         v.tipo_documento 
+       UNION
+       SELECT 
+         YEAR(v.fecha) AS anno,
+         '' AS mes,
+         SUM(v.neto) AS neto,
+         SUM(v.igv) AS igv,
+         SUM(v.dscto) AS dscto,
+         SUM(v.total) AS total 
+       FROM
+         ventajf v 
+       WHERE YEAR(v.fecha) = YEAR(NOW()) 
+         AND MONTH(v.fecha) = $mes 
+         AND v.tipo IN ('E05', 'S02', 'S03', 'S70') 
+       GROUP BY YEAR(v.fecha),
+         MONTH(fecha)");
+
+         $stmt -> execute();
+
+         return $stmt -> fetchAll();
+
+         $stmt -> close();
+
+         $stmt = null;
+
+      }
+
+	}    
+
+	static public function mdlMostrarResumenVdor($mes){
+
+      if( $mes == "null"){
+
+         $stmt = Conexion::conectar()->prepare("SELECT 
+         m.codigo,
+         m.descripcion,
+         IFNULL(p.pedidos, 0) AS pedidos,
+         IFNULL(v.ventas, 0) AS ventas,
+         (
+           IFNULL(p.pedidos, 0) + IFNULL(v.ventas, 0)
+         ) AS total 
+       FROM
+         maestrajf m 
+         LEFT JOIN 
+           (SELECT 
+             t.vendedor,
+             SUM(op_gravada) AS pedidos 
+           FROM
+             temporaljf t 
+           WHERE t.estado IN ('APROBADO', 'APT', 'CONFIRMADO') 
+             AND YEAR(t.fecha) = YEAR(NOW()) 
+           GROUP BY t.vendedor) AS p 
+           ON m.codigo = p.vendedor 
+         LEFT JOIN 
+           (SELECT 
+             v.vendedor,
+             SUM(v.neto) AS ventas 
+           FROM
+             ventajf v 
+           WHERE YEAR(v.fecha) = YEAR(NOW()) 
+             AND v.tipo IN ('E05', 'S02', 'S03', 'S70') 
+           GROUP BY v.vendedor) AS v 
+           ON m.codigo = v.vendedor 
+       WHERE m.tipo_dato = 'TVEND' 
+         AND (
+           IFNULL(p.pedidos, 0) + IFNULL(v.ventas, 0)
+         ) <> 0 
+       UNION
+       SELECT 
+         '99' AS codigo,
+         '' AS descripcion,
+         SUM(op_gravada) AS pedidos,
+         v.ventas,
+         (SUM(op_gravada) + v.ventas) AS total 
+       FROM
+         temporaljf t 
+         LEFT JOIN 
+           (SELECT 
+             MONTH(NOW()) AS mes,
+             SUM(v.neto) AS ventas 
+           FROM
+             ventajf v 
+           WHERE YEAR(v.fecha) = YEAR(NOW()) 
+             AND v.tipo IN ('E05', 'S02', 'S03', 'S70') 
+           GROUP BY MONTH(v.fecha)) AS v 
+           ON MONTH(t.fecha) = v.mes 
+       WHERE t.estado IN ('APROBADO', 'APT', 'CONFIRMADO') 
+         AND YEAR(t.fecha) = YEAR(NOW()) 
+       GROUP BY MONTH(t.fecha)");
+
+         $stmt -> execute();
+
+         return $stmt -> fetchAll();
+
+         $stmt -> close();
+
+         $stmt = null;
+
+      }else{
+
+         $stmt = Conexion::conectar()->prepare("SELECT 
+                           m.codigo,
+                           m.descripcion,
+                           IFNULL(p.pedidos, 0) AS pedidos,
+                           IFNULL(v.ventas, 0) AS ventas,
+                           (
+                           IFNULL(p.pedidos, 0) + IFNULL(v.ventas, 0)
+                           ) AS total 
+                        FROM
+                           maestrajf m 
+                           LEFT JOIN 
+                           (SELECT 
+                              t.vendedor,
+                              SUM(op_gravada) AS pedidos 
+                           FROM
+                              temporaljf t 
+                           WHERE t.estado IN ('APROBADO', 'APT', 'CONFIRMADO') 
+                              AND YEAR(t.fecha) = YEAR(NOW()) 
+                              AND MONTH(t.fecha) = $mes 
+                           GROUP BY t.vendedor) AS p 
+                           ON m.codigo = p.vendedor 
+                           LEFT JOIN 
+                           (SELECT 
+                              v.vendedor,
+                              SUM(v.neto) AS ventas 
+                           FROM
+                              ventajf v 
+                           WHERE YEAR(v.fecha) = YEAR(NOW()) 
+                              AND MONTH(v.fecha) =  $mes 
+                              AND v.tipo IN ('E05', 'S02', 'S03', 'S70') 
+                           GROUP BY v.vendedor) AS v 
+                           ON m.codigo = v.vendedor 
+                        WHERE m.tipo_dato = 'TVEND' 
+                           AND (
+                           IFNULL(p.pedidos, 0) + IFNULL(v.ventas, 0)
+                           ) <> 0 
+                        UNION
+                        SELECT 
+                           '99' AS codigo,
+                           '' AS descripcion,
+                           SUM(op_gravada) AS pedidos,
+                           v.ventas,
+                           (SUM(op_gravada) + v.ventas) AS total 
+                        FROM
+                           temporaljf t 
+                           LEFT JOIN 
+                           (SELECT 
+                              MONTH(NOW()) AS mes,
+                              SUM(v.neto) AS ventas 
+                           FROM
+                              ventajf v 
+                           WHERE YEAR(v.fecha) = YEAR(NOW()) 
+                              AND MONTH(v.fecha) =  $mes 
+                              AND v.tipo IN ('E05', 'S02', 'S03', 'S70') 
+                           GROUP BY MONTH(v.fecha)) AS v 
+                           ON MONTH(t.fecha) = v.mes 
+                        WHERE t.estado IN ('APROBADO', 'APT', 'CONFIRMADO') 
+                           AND YEAR(t.fecha) = YEAR(NOW()) 
+                           AND MONTH(t.fecha) =  $mes 
+                        GROUP BY MONTH(t.fecha)");
+
+         $stmt -> execute();
+
+         return $stmt -> fetchAll();
+
+         $stmt -> close();
+
+         $stmt = null;
+
+      }
+
+	}    
 
 }

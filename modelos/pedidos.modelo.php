@@ -1491,4 +1491,138 @@ class ModeloPedidos{
 
 	}
 
+    /*
+    * MOSTRAR COTIZACION
+    */
+    static public function mdlMostrarCotizacion($valor){
+
+        $stmt = Conexion::conectar()->prepare("SELECT 
+		dt.codigo,
+		a.modelo,
+		a.nombre,
+		dt.precio,
+		SUM(dt.cantidad) AS cantidad,
+		SUM(dt.total) AS neto,
+		SUM(dt.total) * 0.18 AS igv,
+		SUM(dt.total) * 1.18 AS total 
+	  FROM
+		detalle_temporal dt 
+		LEFT JOIN articulojf a 
+		  ON dt.articulo = a.articulo 
+	  WHERE dt.codigo = $valor 
+	  GROUP BY a.modelo ");
+
+        $stmt -> execute();
+
+        return $stmt -> fetchAll();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
+
+	//*COPIAR CABECERA
+	static public function mdlDuplicarCabecera($codDup,$talonarioN){
+
+		$sql="INSERT INTO temporaljf (
+								codigo,
+								cliente,
+								vendedor,
+								lista,
+								op_gravada,
+								descuento_total,
+								sub_total,
+								igv,
+								total,
+								condicion_venta,
+								estado,
+								fecha,
+								usuario,
+								agencia,
+								usuario_estado,
+								dscto
+							) 
+							(SELECT 
+								:talonarioN,
+								cliente,
+								vendedor,
+								lista,
+								op_gravada,
+								descuento_total,
+								sub_total,
+								igv,
+								total,
+								condicion_venta,
+								'GENERADO',
+								NOW(),
+								usuario,
+								agencia,
+								usuario_estado,
+								dscto 
+							FROM
+								temporaljf 
+							WHERE codigo = :codDup)";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":codDup", $codDup, PDO::PARAM_STR);
+		$stmt->bindParam(":talonarioN", $talonarioN, PDO::PARAM_STR);
+
+
+        if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+
+		}
+
+		$stmt=null;
+
+	}
+
+	//*COPIAR DETALLE
+	static public function mdlDuplicarDetalle($codDup,$talonarioN){
+
+		$sql="INSERT INTO detalle_temporal (
+								codigo,
+								articulo,
+								cantidad,
+								precio,
+								total
+							) 
+							(SELECT 
+								:talonarioN,
+								articulo,
+								cantidad,
+								precio,
+								total 
+							FROM
+								detalle_temporal 
+							WHERE codigo = :codDup) ";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":codDup", $codDup, PDO::PARAM_STR);
+		$stmt->bindParam(":talonarioN", $talonarioN, PDO::PARAM_STR);
+
+
+        if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+
+		}
+
+		$stmt=null;
+
+	}	
+
+
 }

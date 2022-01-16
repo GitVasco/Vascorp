@@ -140,14 +140,14 @@ class ControladorIngresos{
                     /* 
                     * GUARDAR EL INGRESO
                     */
-                    $fecha=new DateTime();
+                    $fecha= $_POST["nuevaFecha"];
                     $datos = array( "tipo"=>"E20",
                                     "usuario"=>$_POST["idUsuario"],
                                     "guia"=>$_POST["nuevaGuiaIng"],
                                     "taller"=>$_POST["nuevoTalleres"],
                                     "documento"=>$_POST["nuevoCodigo"],
                                     "total"=>$_POST["totalTaller"],
-                                    "fecha"=>$fecha->format("Y-m-d"),
+                                    "fecha"=>$fecha,
                                     "almacen" => "01");
 
                     #var_dump("datos", $datos);
@@ -162,7 +162,7 @@ class ControladorIngresos{
                             $datosD = array("tipo"=>"E20",
                                             "documento"=>$_POST["nuevoCodigo"],
                                             "taller"=>$_POST["nuevoTalleres"],
-                                            "fecha"=>$fecha->format("Y-m-d"),
+                                            "fecha"=>$fecha,
                                             "articulo"=>$value["articulo"],
                                             "cantidad"=>$value["cantidad"],
                                             "almacen"=>"01",

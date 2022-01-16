@@ -437,6 +437,7 @@ function cargarTablaMpSal(lineaMpSal) {
 		}
 	});
 }
+
 //Reporte de Produccion
 $(".box").on("click", ".btnReporteProduccion", function () {
 	var modelo = $(this).attr("modelo");
@@ -464,3 +465,95 @@ $(".box").on("click", ".btnReporteSalida", function () {
     window.location = "vistas/reportes_excel/rpt_movimiento_salida.php?linea="+linea;
   
 })
+
+
+/* 
+* BOTON ACEPTAR
+*/
+$("#mesGerencia").change(function(){
+
+	var mes = $(this).val();
+
+	localStorage.setItem("mesGerencia",mes);
+
+	console.log(mes)
+
+	window.location = "index.php?ruta=inicio-gerencia&mes=" + mes;
+
+	$(".tablaVtasGerencia").DataTable().destroy();
+
+	//cargarVtasGerencia(mes);
+	
+})
+
+
+const urlParams = new URLSearchParams(window.location.search);
+const myParam = urlParams.get('mes');
+
+$(".tablaVtasGerencia").DataTable({
+	"ajax": "ajax/movimientos/tabla-vtasgerencia.ajax.php?mes=" + myParam,
+	"deferRender": true,
+	"retrieve": true,
+	"processing": true,
+	"order": [[4, "asc"]],
+	"pageLength": 30,
+	"lengthMenu": [[30, 60, 90, -1], [30, 60, 90, 'Todos']],
+	"language": {
+		"sProcessing": "Procesando...",
+		"sLengthMenu": "Mostrar _MENU_ registros",
+		"sZeroRecords": "No se encontraron resultados",
+		"sEmptyTable": "No hay datos disponibles en esta tabla",
+		"sInfo": "Registros del _START_ al _END_ de un total de _TOTAL_",
+		"sInfoEmpty": "Registros del 0 al 0 de un total de 0",
+		"sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+		"sInfoPostFix": "",
+		"sSearch": "Buscar:",
+		"sUrl": "",
+		"sInfoThousands": ",",
+		"sLoadingRecords": "Cargando...",
+		"oPaginate": {
+			"sFirst": "Primero",
+			"sLast": "Último",
+			"sNext": "Siguiente",
+			"sPrevious": "Anterior"
+		},
+		"oAria": {
+			"sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+			"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+		}
+	}
+});
+
+$(".tablaVtasGerenciaVdor").DataTable({
+	"ajax": "ajax/movimientos/tabla-vtasgerenciavdor.ajax.php?mes=" + myParam,
+	"deferRender": true,
+	"retrieve": true,
+	"processing": true,
+	"order": [[0, "asc"]],
+	"pageLength": 30,
+	"lengthMenu": [[30, 60, 90, -1], [30, 60, 90, 'Todos']],
+	"language": {
+		"sProcessing": "Procesando...",
+		"sLengthMenu": "Mostrar _MENU_ registros",
+		"sZeroRecords": "No se encontraron resultados",
+		"sEmptyTable": "No hay datos disponibles en esta tabla",
+		"sInfo": "Registros del _START_ al _END_ de un total de _TOTAL_",
+		"sInfoEmpty": "Registros del 0 al 0 de un total de 0",
+		"sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+		"sInfoPostFix": "",
+		"sSearch": "Buscar:",
+		"sUrl": "",
+		"sInfoThousands": ",",
+		"sLoadingRecords": "Cargando...",
+		"oPaginate": {
+			"sFirst": "Primero",
+			"sLast": "Último",
+			"sNext": "Siguiente",
+			"sPrevious": "Anterior"
+		},
+		"oAria": {
+			"sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+			"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+		}
+	}
+});

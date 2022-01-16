@@ -115,6 +115,7 @@ class ControladorCierres{
 
 						$datos=array("articulo"=>$value["articulo"],
 									 "cantidad"=>$value["cantidad"],
+									 "inicio"=>$value["cantidad"],
 									 "codigo"=>$_POST["nuevoCierre"],
 									 "cod_servicio"=>$value["codServicio"]);
 

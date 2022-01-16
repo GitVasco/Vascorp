@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require_once '../controladores/articulos.controlador.php';
 require_once '../modelos/articulos.modelo.php';
 require_once '../controladores/clientes.controlador.php';
@@ -7,6 +9,9 @@ require_once '../modelos/clientes.modelo.php';
 
 require_once '../controladores/pedidos.controlador.php';
 require_once '../modelos/pedidos.modelo.php';
+
+require_once '../controladores/movimientos.controlador.php';
+require_once '../modelos/movimientos.modelo.php';
 
 class AjaxPedidos{
 
@@ -74,6 +79,38 @@ class AjaxPedidos{
 
     }     
 
+    /* 
+	* SACAR LA LISTA DE PRECIOS ASIGNADA
+	*/
+	public function ajaxDupicarPedido(){
+
+        $codDup = $this->codDup;       
+
+        #vemos el numero que sigue en el talonario y actualizamos en +1
+        $numero = ControladorMovimientos::ctrMostrarTalonario();
+        $talonario = $numero["pedido"] + 1;
+
+        
+
+        $usuario = $_SESSION["id"];
+        $talonarioN = $usuario.$talonario;
+
+        //*COPIAR CABECERA
+        $rptCab = ModeloPedidos::mdlDuplicarCabecera($codDup,$talonarioN);
+
+        if($rptCab == "ok"){
+
+        //*COPIAR DETALLE
+        $rptDet = ModeloPedidos::mdlDuplicarDetalle($codDup,$talonarioN);
+
+        ModeloPedidos::mdlActualizarTalonario();
+
+        }
+
+        echo json_encode($rptDet);
+
+    }      
+
 
 }
 
@@ -132,5 +169,16 @@ if(isset($_POST["modeloB"])){
     $borrarModelo -> modelo = $_POST["modeloB"];
     $borrarModelo -> pedido = $_POST["pedidoB"];
     $borrarModelo -> ajaxBorrarModelo();
+
+}
+
+/* 
+ * PARA BORRAR POR MODELO
+*/
+if(isset($_POST["codDup"])){
+
+    $borrarModelo = new AjaxPedidos();
+    $borrarModelo -> codDup = $_POST["codDup"];
+    $borrarModelo -> ajaxDupicarPedido();
 
 }
