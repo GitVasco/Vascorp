@@ -3596,9 +3596,12 @@ class ControladorFacturacion{
 
                 //*CONCEPTO
                 $datosD = ModeloFacturacion::mdlFENCDetB($_POST["tipo"], $_POST["documento"]);
-                var_dump($datosD);   
+                #var_dump($datosD["d8"]);   
+
+                $datosD["d8"] = str_replace(",", "A", $datosD["d8"] );
  
-                $fila8 =    $datosD["b8"].','.
+                $fila8 =    '1'.','.
+                            $datosD["b8"].','.
                             $datosD["c8"].','.
                             $datosD["d8"].','.
                             $datosD["e8"].','.
