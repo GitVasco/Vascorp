@@ -136,6 +136,7 @@
                                 <th>Ventas</th>
                                 <th>Pedidos</th>                                
                                 <th>Total</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>                            

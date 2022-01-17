@@ -36,6 +36,17 @@ class TablaMovimientos{
                 $total = "<div style='text-align:right !important'>".number_format($movimientos[$i]["total"],2)."</div>";
                 
             }
+            
+            if($movimientos[$i]["codigo"] != "99"){
+
+                $botones =  "<div class='btn-group'><button class='btn btn-xs btn-success btnEstadoCtaVdor' title='Descargar Estado de Cuenta' vendedor=".$movimientos[$i]['codigo']."><i class='fa fa-download'></i></button></div>"; 
+
+            }else{
+
+                $botones =  "<div class='btn-group'></div>"; 
+
+            }
+
 
 
 
@@ -45,7 +56,8 @@ class TablaMovimientos{
                 "'.$movimientos[$i]["descripcion"].'",
                 "'.$ventas.'",
                 "'.$pedidos.'",                
-                "'.$total.'"
+                "'.$total.'",
+                "'.$botones.'"
                 ],';        
                 }
 

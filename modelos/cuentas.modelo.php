@@ -3635,7 +3635,7 @@ class ModeloCuentas{
 								'' AS doc_origen,
 								'' AS fecha,
 								'' AS fecha_ven,
-								'9999999' AS cliente,
+								'Z9999999' AS cliente,
 								'' AS nombre,
 								SUM(cc.monto) AS monto,
 								SUM(cc.saldo) AS saldo,

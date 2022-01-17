@@ -2077,3 +2077,16 @@ $(".tablaClientes").on("click", ".btnImprimirEstadoCuenta", function () {
 window.open("vistas/reportes_ticket/estado_cuenta.php?cliente=" +cliente,"_blank");
 
 })
+
+/* 
+* BOTON  IMPRIMIR TICKET
+*/
+$(".tablaVtasGerenciaVdor").on("click", ".btnEstadoCtaVdor", function () {
+
+  var vendedor = $(this).attr("vendedor");
+  //console.log(codigo);
+
+
+window.open("extensiones/tcpdf/pdf/reporte_estado_cuenta_vdor.php?vendedor=" +vendedor,"_blank");
+
+})
