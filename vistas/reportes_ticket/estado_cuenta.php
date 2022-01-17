@@ -24,7 +24,7 @@
     $ctaDet = Controladorcuentas::ctrEstadoCuentaDet($cliente);
     #var_dump($ctaDet);
 
-    $hoy = date("m-d-y"); 
+    $hoy = date("d-m-y"); 
 
 ?>
     <div class="zona_impresion">

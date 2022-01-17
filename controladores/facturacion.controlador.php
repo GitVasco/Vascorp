@@ -3596,51 +3596,25 @@ class ControladorFacturacion{
 
                 //*CONCEPTO
                 $datosD = ModeloFacturacion::mdlFENCDetB($_POST["tipo"], $_POST["documento"]);
-                //var_dump($datosD);
-    
-                foreach($datosD as $key=>$value){
-    
-                    if($key < count($datosD)-1){
-    
-                        fwrite($fp,     ($key+1).','.
-                                        $value["b8"].','.
-                                        $value["c8"].','.
-                                        $value["d8"].','.
-                                        $value["e8"].','.
-                                        $value["f8"].',,,'.
-                                        $value["i8"].','.
-                                        $value["j8"].','.
-                                        $value["k8"].','.
-                                        $value["l8"].','.
-                                        $value["m8"].',,,,,,,'.
-                                        $value["t8"].','.
-                                        $value["u8"].',,,'.
-                                        $value["x8"].',,,,,,'.
-                                        $value["ad8"].',,,,,,'.
-                                        "\r\n");
-    
-                    }else{
-    
-                        fwrite($fp, ($key+1).','.
-                                    $value["b8"].','.
-                                    $value["c8"].','.
-                                    $value["d8"].','.
-                                    $value["e8"].','.
-                                    $value["f8"].',,,'.
-                                    $value["i8"].','.
-                                    $value["j8"].','.
-                                    $value["k8"].','.
-                                    $value["l8"].','.
-                                    $value["m8"].',,,,,,,'.
-                                    $value["t8"].','.
-                                    $value["u8"].',,,'.
-                                    $value["x8"].',,,,,,'.
-                                    $value["ad8"].',,,,,,'.PHP_EOL);
+                var_dump($datosD);   
+ 
+                $fila8 =    $datosD["b8"].','.
+                            $datosD["c8"].','.
+                            $datosD["d8"].','.
+                            $datosD["e8"].','.
+                            $datosD["f8"].',,,'.
+                            $datosD["i8"].','.
+                            $datosD["j8"].','.
+                            $datosD["k8"].','.
+                            $datosD["l8"].','.
+                            $datosD["m8"].',,,,,,,'.
+                            $datosD["t8"].','.
+                            $datosD["u8"].',,,'.
+                            $datosD["x8"].',,,,,,'.
+                            $datosD["ad8"].',,,,,,';
+   
+                        fwrite($fp, $fila8.PHP_EOL);
                         fwrite($fp, 'FF00FF');
-    
-                    }					
-    
-                }                
 
             }
 

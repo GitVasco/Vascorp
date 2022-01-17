@@ -1454,5 +1454,13 @@ class ControladorCuentas{
 		return $respuesta;
 
 	}	
+
+	static public function ctrEstadoCtaVdor($vendedor){
+
+		$respuesta = ModeloCuentas::mdlEstadoCtaVdor($vendedor);
+
+		return $respuesta;
+
+    }	
    
 }

@@ -7545,7 +7545,7 @@ class ModeloFacturacion{
 
         $stmt->execute();
 
-        return $stmt->fetchAll();
+        return $stmt->fetch();
 
 
         $stmt=null;
