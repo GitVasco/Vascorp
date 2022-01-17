@@ -133,8 +133,8 @@
                             <tr>
                                 <th>Codigo</th>
                                 <th>Nombre</th>
-                                <th>Pedidos</th>
                                 <th>Ventas</th>
+                                <th>Pedidos</th>                                
                                 <th>Total</th>
                             </tr>
                         </thead>

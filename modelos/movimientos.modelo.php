@@ -2431,7 +2431,7 @@ class ModeloMovimientos{
 
 	static public function mdlMostrarResumenVtas($mes){
 
-      if( $mes == "null"){
+      if( $mes == "null" || $mes == "TODO"){
 
          $stmt = Conexion::conectar()->prepare("SELECT 
          v.tipo,
@@ -2514,7 +2514,7 @@ class ModeloMovimientos{
 
 	static public function mdlMostrarResumenVdor($mes){
 
-      if( $mes == "null"){
+      if( $mes == "null" || $mes == "TODO"){
 
          $stmt = Conexion::conectar()->prepare("SELECT 
          m.codigo,

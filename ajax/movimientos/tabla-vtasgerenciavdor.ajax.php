@@ -43,8 +43,8 @@ class TablaMovimientos{
                 $datosJson .= '[
                 "'.$movimientos[$i]["codigo"].'",
                 "'.$movimientos[$i]["descripcion"].'",
-                "'.$pedidos.'",
                 "'.$ventas.'",
+                "'.$pedidos.'",                
                 "'.$total.'"
                 ],';        
                 }

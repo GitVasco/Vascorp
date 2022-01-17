@@ -3596,7 +3596,7 @@ class ControladorFacturacion{
 
                 //*CONCEPTO
                 $datosD = ModeloFacturacion::mdlFENCDetB($_POST["tipo"], $_POST["documento"]);
-                var_dump($datosD);
+                //var_dump($datosD);
     
                 foreach($datosD as $key=>$value){
     
