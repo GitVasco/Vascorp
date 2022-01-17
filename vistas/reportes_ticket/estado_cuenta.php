@@ -2,11 +2,11 @@
 
     <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <link href="css/ticket_v2.css" target="_blank" rel="stylesheet" type="text/css">
+    <link href="css/ticket_v8.css" target="_blank" rel="stylesheet" type="text/css">
     </head>
 
-<!-- <body> -->
-<body onload="window.print();">
+<body>
+<!-- <body onload="window.print();"> -->
 <?php
     require_once "../../controladores/cuentas.controlador.php";
     require_once "../../modelos/cuentas.modelo.php";
@@ -32,7 +32,7 @@
 
         <?php
 
-            echo ' <table border="0" align="left" width="900px">
+            echo ' <table border="0" align="left" width="1000px">
 
                         <thead>
                     
@@ -64,7 +64,7 @@
                                 <td style="width:50%" colspan="4">'.$ctaCab["nombre"].'</td>
                                 <th colspan="1"></th>
                                 <th style="text-align:right;">Deuda Total:</th>
-                                <th style="width:10%;text-align:right;" colspan="4">S/ '.number_format($ctaCab["saldo"],2).'</td>                             
+                                <th style="width:10%;text-align:right;" colspan="4">S/ '.number_format($ctaCab["monto_total"],2).'</td>                             
 
                             </tr>
                         
@@ -110,23 +110,25 @@
             echo '<br>';
             echo '<br>';
 
-            echo '<table border="1" align="left" width="900px">
+            echo '<table border="1" align="left" width="1000px">
 
                 <thead>
                     <tr></tr>
 
                     <tr>
 
-                        <th style="width:6%">N°</th>
+                        <th style="width:4%">N°</th>
                         <th style="width:10%;text-align:left;">T/D</th>
-                        <th style="width:15%;text-align:left;">DOCUMENTO</th>
-                        <th style="width:10%;text-align:left;">FECHA EMISIÓN</th>
-                        <th style="width:10%;text-align:left;">FECHA VEN.</th>
-                        <th style="width:6%;text-align:left;">VEND.</th>
-                        <th style="width:10%;text-align:left;">NRO ÚNICO</th>
-                        <th style="width:10%;text-align:left;">MONTO TOTAL</th>
-                        <th style="width:10%;text-align:left;">SALDO PENDIENTE</th>
-                        <th style="width:10%;text-align:left;">PROTESTO</th>
+                        <th style="width:10%;text-align:left;">DOCUMENTO</th>
+                        <th style="width:8%;text-align:left;">FECHA EMISIÓN</th>
+                        <th style="width:8%;text-align:left;">FECHA VEN.</th>
+                        <th style="width:5%;text-align:left;">VEND.</th>
+                        <th style="width:8%;text-align:left;">NRO ÚNICO</th>
+                        <th style="width:8%;text-align:left;">MONTO TOTAL</th>
+                        <th style="width:8%;text-align:left;">SALDO PENDIENTE</th>
+                        <th style="width:8%;text-align:left;">GASTOS</th>
+                        <th style="width:8%;text-align:left;">DEUDA TOTAL</th>
+                        <th style="width:6%;text-align:left;">PROT.</th>
                         
                     </tr>
             
@@ -134,22 +136,38 @@
         
             </table>';            
  
-            echo '<table border="1" align="left" width="900px">';
+            echo '<table border="1" align="left" width="1000px">';
 
                 foreach($ctaDet as $key => $value){
 
+                    if($value["protesta"]=="SI"){
+
+                        $prot = '<td style="width:6%;text-align:center;"><b>'.$value["protesta"].'</b></td>';
+
+                        $gasto = '<td style="width:8%;text-align:right;"><b>S/ '.number_format($value["gasto"],2).'</b></td>';
+
+                    }else{
+
+                        $prot = '<td style="width:6%;text-align:center;">'.$value["protesta"].'</td>';
+
+                        $gasto = '<td style="width:8%;text-align:right;">S/ '.number_format($value["gasto"],2).'</td>';
+
+                    }
+
                     echo '<tr>
                                 
-                                <td style="width:6%">'.($key+1).'</td>
+                                <td style="width:4%">'.($key+1).'</td>
                                 <td style="width:10%;text-align:left;">'.$value["tipo_documento"].'</td>
-                                <td style="width:15%;text-align:left;">'.$value["num_cta"].'</td>
-                                <td style="width:10%;text-align:left;">'.$value["fecha"].'</td>
-                                <td style="width:10%;text-align:left;">'.$value["fecha_ven"].'</td>
-                                <td style="width:6%;text-align:left;">'.$value["vendedor"].'</td>
-                                <td style="width:10%;text-align:left;">'.$value["num_unico"].'</td>
-                                <td style="width:10%;text-align:right;">S/ '.number_format($value["monto"],2).'</td>
-                                <td style="width:10%;text-align:right;">S/ '.number_format($value["saldo"],2).'</td>
-                                <td style="width:10%;text-align:center;">'.$value["protesta"].'</td>
+                                <td style="width:10%;text-align:left;">'.$value["num_cta"].'</td>
+                                <td style="width:8%;text-align:left;">'.$value["fecha"].'</td>
+                                <td style="width:8%;text-align:left;">'.$value["fecha_ven"].'</td>
+                                <td style="width:5%;text-align:left;">'.$value["vendedor"].'</td>
+                                <td style="width:8%;text-align:left;">'.$value["num_unico"].'</td>
+                                <td style="width:8%;text-align:right;">S/ '.number_format($value["monto"],2).'</td>
+                                <td style="width:8%;text-align:right;">S/ '.number_format($value["saldo"],2).'</td>
+                                '.$gasto.'
+                                <td style="width:8%;text-align:right;"><b>S/ '.number_format($value["monto_total"],2).'</b></td>
+                                '.$prot.'                                
 
                         </tr>';                    
 
@@ -157,23 +175,25 @@
 
             echo '</table>';
 
-            echo '<table border="1" align="left" width="900px">
+            echo '<table border="1" align="left" width="1000px">
 
                 <thead>
                     <tr></tr>
 
                     <tr>
 
-                        <th style="width:6%"></th>
-                        <th style="width:10%;text-align:left;"></th>
-                        <th style="width:15%;text-align:left;"></th>
+                        <th style="width:4%"></th>
                         <th style="width:10%;text-align:left;"></th>
                         <th style="width:10%;text-align:left;"></th>
+                        <th style="width:8%;text-align:left;"></th>
+                        <th style="width:8%;text-align:left;"></th>
+                        <th style="width:5%;text-align:left;"></th>
+                        <th style="width:8%;text-align:left;"></th>
+                        <th style="width:8%;text-align:left;"></th>
+                        <th style="width:8%;text-align:right;">S/ '.number_format($ctaCab["saldo"],2).'</th>
+                        <th style="width:8%;text-align:right;">S/ '.number_format($ctaCab["gastos"],2).'</th>
+                        <th style="width:8%;text-align:right;">S/ '.number_format($ctaCab["monto_total"],2).'</th>
                         <th style="width:6%;text-align:left;"></th>
-                        <th style="width:10%;text-align:left;"></th>
-                        <th style="width:10%;text-align:left;"></th>
-                        <th style="width:10%;text-align:right;">S/ '.number_format($ctaCab["saldo"],2).'</th>
-                        <th style="width:10%;text-align:left;"></th>
                         
                     </tr>
             
