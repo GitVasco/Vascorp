@@ -37,27 +37,12 @@ class TablaMovimientos{
                 
             }
             
-            if($movimientos[$i]["codigo"] != ""){
-
-                $botones =  "<div class='btn-group'><button class='btn btn-xs btn-success btnEstadoCtaVdor' title='Descargar Estado de Cuenta' vendedor=".$movimientos[$i]['codigo']."><i class='fa fa-download'></i></button></div>"; 
-
-            }else{
-
-                $botones =  "<div class='btn-group'></div>"; 
-
-            }
-
-
-
-
-
                 $datosJson .= '[
                 "'.$movimientos[$i]["codigo"].'",
                 "'.$movimientos[$i]["descripcion"].'",
                 "'.$ventas.'",
                 "'.$pedidos.'",                
-                "'.$total.'",
-                "'.$botones.'"
+                "'.$total.'"
                 ],';        
                 }
 

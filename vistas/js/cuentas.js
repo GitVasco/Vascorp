@@ -2081,7 +2081,7 @@ window.open("vistas/reportes_ticket/estado_cuenta.php?cliente=" +cliente,"_blank
 /* 
 * BOTON  IMPRIMIR TICKET
 */
-$(".tablaVtasGerenciaVdor").on("click", ".btnEstadoCtaVdor", function () {
+$(".tablaCtasVdor").on("click", ".btnEstadoCtaVdor", function () {
 
   var vendedor = $(this).attr("vendedor");
   //console.log(codigo);

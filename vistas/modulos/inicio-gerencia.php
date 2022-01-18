@@ -93,7 +93,7 @@
 
     <div class="row">
 
-        <div class="col-lg-4">
+        <div class="col-lg-3">
 
             <div class="box box-danger">
                 <div class="box-header with-border"></div>
@@ -138,7 +138,6 @@
                                 <th>Ventas</th>
                                 <th>Pedidos</th>                                
                                 <th>Total</th>
-                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>                            
@@ -152,7 +151,7 @@
 
         </div>
 
-        <div class="col-lg-4">
+        <div class="col-lg-5">
 
         <div class="box box-danger">
                 <div class="box-header with-border"></div>

@@ -12,7 +12,7 @@ class TablaMovimientos{
 
     public function mostrarTablaMovimientos(){
 
-        $movimientos = ControladorMovimientos::ctrMostrarTotales();	
+        $movimientos = ControladorMovimientos::ctrMostrarCtasVdor();	
         if(count($movimientos)>0){
 
         $datosJson = '{
@@ -20,24 +20,49 @@ class TablaMovimientos{
 
         for($i = 0; $i < count($movimientos); $i++){
 
-                $datosJson .= '[
-                "'.($i+1).'",
-                "'.$movimientos[$i]["año"].'",
-                "'.$movimientos[$i]["mes"].'",
-                "'.$nombre_mes.'",
-                "'.number_format($movimientos[$i]["ventas"],0).' UND",
-                "'.number_format($movimientos[$i]["produccion"],0).' UND",
-                "S/ '.number_format($movimientos[$i]["ventasSoles"],2).'",
-                "S/ '.number_format($movimientos[$i]["pagosSoles"],2).'",
-                "'.$botones.'"
-                ],';        
-                }
+            if($movimientos[$i]["vendedor"] == "ZZ"){
 
-                $datosJson=substr($datosJson, 0, -1);
+                $facturas = "<div style='text-align:right !important'><b>".number_format($movimientos[$i]["facturas"],2)."</b></div>";
+                $guias = "<div style='text-align:right !important'><b>".number_format($movimientos[$i]["guias"],2)."</div>";
+                $letras = "<div style='text-align:right !important'><b>".number_format($movimientos[$i]["letras"],2)."</b></div>";
+                $total = "<div style='text-align:right !important'><b>".number_format($movimientos[$i]["total"],2)."</b></div>";
 
-                $datosJson .= '] 
+            }else{
 
-                }';
+                $facturas = "<div style='text-align:right !important'>".number_format($movimientos[$i]["facturas"],2)."</div>";
+                $guias = "<div style='text-align:right !important'>".number_format($movimientos[$i]["guias"],2)."</div>";
+                $letras = "<div style='text-align:right !important'>".number_format($movimientos[$i]["letras"],2)."</div>";
+                $total = "<div style='text-align:right !important'>".number_format($movimientos[$i]["total"],2)."</div>";
+                
+            }
+
+
+            if($movimientos[$i]["vendedor"] != "ZZ"){
+
+                $botones =  "<div class='btn-group'><button class='btn btn-xs btn-success btnEstadoCtaVdor' title='Descargar Estado de Cuenta' vendedor=".$movimientos[$i]['vendedor']."><i class='fa fa-download'></i></button></div>"; 
+
+            }else{
+
+                $botones =  "<div class='btn-group'></div>"; 
+
+            }
+
+            $datosJson .= '[
+            "'.$movimientos[$i]["vendedor"].'",
+            "'.$movimientos[$i]["nom_vendedor"].'",
+            "'.$facturas.'",
+            "'.$guias.'",
+            "'.$letras.'",
+            "'.$total.'",
+            "'.$botones.'"
+            ],';        
+            }
+
+            $datosJson=substr($datosJson, 0, -1);
+
+            $datosJson .= '] 
+
+            }';
 
             echo $datosJson;
             }else{

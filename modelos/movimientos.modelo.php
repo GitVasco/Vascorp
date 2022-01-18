@@ -2654,6 +2654,85 @@ class ModeloMovimientos{
 
       }
 
-	}    
+	} 
+   
+	static public function mldMostrarCtasVdor(){
+
+        $stmt = Conexion::conectar()->prepare("SELECT 
+                                            c.vendedor,
+                                            (SELECT 
+                                            descripcion 
+                                            FROM
+                                            maestrajf m 
+                                            WHERE c.vendedor = m.codigo 
+                                            AND tipo_dato = 'tvend') AS nom_vendedor,
+                                            SUM(
+                                            CASE
+                                                WHEN c.tipo_doc IN ('01', '03', '07', '08') 
+                                                THEN c.saldo 
+                                                ELSE 0 
+                                            END
+                                            ) AS 'facturas',
+                                            SUM(
+                                            CASE
+                                                WHEN c.tipo_doc IN ('09') 
+                                                THEN c.saldo 
+                                                ELSE 0 
+                                            END
+                                            ) AS 'guias',
+                                            SUM(
+                                            CASE
+                                                WHEN c.tipo_doc IN ('85') 
+                                                THEN c.saldo 
+                                                ELSE 0 
+                                            END
+                                            ) AS 'letras',
+                                            SUM(c.saldo) AS total 
+                                        FROM
+                                            cuenta_ctejf c 
+                                        WHERE c.tip_mov = '+' 
+                                            AND c.estado = 'PENDIENTE' 
+                                        GROUP BY c.vendedor 
+                                        UNION
+                                        SELECT 
+                                            'ZZ' AS tip_mov,
+                                            '' AS nom_vendedor,
+                                            SUM(
+                                            CASE
+                                                WHEN c.tipo_doc IN ('01', '03', '07', '08') 
+                                                THEN c.saldo 
+                                                ELSE 0 
+                                            END
+                                            ) AS 'facturas',
+                                            SUM(
+                                            CASE
+                                                WHEN c.tipo_doc IN ('09') 
+                                                THEN c.saldo 
+                                                ELSE 0 
+                                            END
+                                            ) AS 'guias',
+                                            SUM(
+                                            CASE
+                                                WHEN c.tipo_doc IN ('85') 
+                                                THEN c.saldo 
+                                                ELSE 0 
+                                            END
+                                            ) AS 'letras',
+                                            SUM(c.saldo) AS total 
+                                        FROM
+                                            cuenta_ctejf c 
+                                        WHERE c.tip_mov = '+' 
+                                            AND c.estado = 'PENDIENTE' 
+                                        GROUP BY c.tip_mov");
+
+        $stmt -> execute();
+
+        return $stmt -> fetchAll();
+
+        $stmt -> close();
+
+        $stmt = null;
+
+	}   
 
 }

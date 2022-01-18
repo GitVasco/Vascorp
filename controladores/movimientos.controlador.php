@@ -242,5 +242,16 @@ class ControladorMovimientos{
 
     }     
 
+    /* 
+    * sacamos los totales por mes de la  nueva tabla TOTALES
+    */
+    static public function ctrMostrarCtasVdor(){
+
+        $respuesta = ModeloMovimientos::mldMostrarCtasVdor();
+
+        return $respuesta;
+
+    }    
+
 
 }

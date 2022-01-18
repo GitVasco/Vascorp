@@ -558,7 +558,7 @@ $(".tablaVtasGerenciaVdor").DataTable({
 	}
 });
 
-$(".tablaVtasGerenciaVdor").DataTable({
+$(".tablaCtasVdor").DataTable({
 	"ajax": "ajax/movimientos/tabla-ctasgerenciavdor.ajax.php",
 	"deferRender": true,
 	"retrieve": true,

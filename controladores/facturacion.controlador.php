@@ -938,9 +938,9 @@ class ControladorFacturacion{
 
                     $datosD = array("tipo" => "E05",
                                     "documento" => $doc,
-                                    "neto" => $respuestaDoc["op_gravada"],
-                                    "igv" => $respuestaDoc["igv"],
-                                    "dscto" => $respuestaDoc["descuento_total"],
+                                    "neto" => "-".$respuestaDoc["op_gravada"],
+                                    "igv" => "-".$respuestaDoc["igv"],
+                                    "dscto" => "-".$respuestaDoc["descuento_total"],
                                     "total" => "-".$respuestaDoc["total"],
                                     "cliente" => $respuestaDoc["cod_cli"],
                                     "vendedor" => $respuestaDoc["vendedor"],
