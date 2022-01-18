@@ -2552,7 +2552,7 @@ class ModeloMovimientos{
          ) <> 0 
        UNION
        SELECT 
-         '99' AS codigo,
+         'ZZ' AS codigo,
          '' AS descripcion,
          SUM(op_gravada) AS pedidos,
          v.ventas,

@@ -2090,3 +2090,11 @@ $(".tablaVtasGerenciaVdor").on("click", ".btnEstadoCtaVdor", function () {
 window.open("extensiones/tcpdf/pdf/reporte_estado_cuenta_vdor.php?vendedor=" +vendedor,"_blank");
 
 })
+
+
+//Reporte de Cuentas
+$(".box").on("click", ".btnReporteCrediPagos", function () {
+
+  window.location = "vistas/reportes_excel/rpt_credipagos.php";
+
+})

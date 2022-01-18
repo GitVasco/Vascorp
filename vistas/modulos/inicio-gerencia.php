@@ -93,10 +93,11 @@
 
     <div class="row">
 
-        <div class="col-lg-6">
+        <div class="col-lg-4">
 
             <div class="box box-danger">
                 <div class="box-header with-border"></div>
+                <center><b>Ventas por Documento</b></center>
 
                 <div class="box-body no-padding">
                     <table class="table table-bordered table-striped dt-responsive tablaVtasGerencia" width="100%"> 
@@ -122,10 +123,11 @@
 
 
 
-        <div class="col-lg-6">
+        <div class="col-lg-4">
 
         <div class="box box-danger">
                 <div class="box-header with-border"></div>
+                <center><b>Ventas / Pedidos por Vendedor</b></center>
 
                 <div class="box-body no-padding">
                     <table class="table table-bordered table-striped dt-responsive tablaVtasGerenciaVdor" width="100%"> 
@@ -149,6 +151,36 @@
 
 
         </div>
+
+        <div class="col-lg-4">
+
+        <div class="box box-danger">
+                <div class="box-header with-border"></div>
+                <center><b>Cuentas por cobrar - Vendedor</b></center>
+
+                <div class="box-body no-padding">
+                    <table class="table table-bordered table-striped dt-responsive tablaCtasVdor" width="100%"> 
+                        <thead>
+                            <tr>
+                                <th>Codigo</th>
+                                <th>Nombre</th>
+                                <th>Facturas</th>
+                                <th>Guias</th>                                
+                                <th>Letras</th>
+                                <th>Total</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>                            
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>        
+
+
+
+        </div>        
 
 
     </div>      

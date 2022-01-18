@@ -64,6 +64,11 @@
         </div>
         
         <div class="pull-right">
+          <button class="btn btn-outline-success btnReporteCrediPagos"  ano="null"  style="border:green 1px solid">
+          <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Credipagos  </button>
+        </div>
+
+        <div class="pull-right">
           <button class="btn btn-outline-success btnReporteCuentas"  ano="null"  style="border:green 1px solid">
           <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte cuentas  </button>
         </div>

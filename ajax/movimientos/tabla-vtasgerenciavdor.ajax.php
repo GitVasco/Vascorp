@@ -23,7 +23,7 @@ class TablaMovimientos{
 
         for($i = 0; $i < count($movimientos); $i++){
 
-            if($movimientos[$i]["codigo"] == "99"){
+            if($movimientos[$i]["codigo"] == "ZZ"){
 
                 $pedidos = "<div style='text-align:right !important'><b>".number_format($movimientos[$i]["pedidos"],2)."</b></div>";
                 $ventas = "<div style='text-align:right !important'><b>".number_format($movimientos[$i]["ventas"],2)."</div>";
@@ -37,7 +37,7 @@ class TablaMovimientos{
                 
             }
             
-            if($movimientos[$i]["codigo"] != "99"){
+            if($movimientos[$i]["codigo"] != ""){
 
                 $botones =  "<div class='btn-group'><button class='btn btn-xs btn-success btnEstadoCtaVdor' title='Descargar Estado de Cuenta' vendedor=".$movimientos[$i]['codigo']."><i class='fa fa-download'></i></button></div>"; 
 
