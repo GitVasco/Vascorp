@@ -3,6 +3,9 @@
 require_once "../../../controladores/cuentas.controlador.php";
 require_once "../../../modelos/cuentas.modelo.php";
 
+require_once "../../../controladores/vendedor.controlador.php";
+require_once "../../../modelos/vendedor.modelo.php";
+
 
 //REQUERIMOS LA CLASE TCPDF
 
@@ -18,7 +21,7 @@ class MYPDF extends TCPDF {
         $fecha=new Datetime();
         $fechaActual=$fecha->format("d/m/Y");
         $fechaCabecera= "Fecha:".$fechaActual;
-        $this->SetFont('helvetica', 'B', 7);
+        $this->SetFont('helvetica', 'B', 8);
         // Title
         $this->Cell(0, 8, 'CORPORACIÓN VASCO S.A.C.', 0, false, 'L', 0, '', 0, false, false, false );
         $this->Cell(0, 8, $fechaCabecera, 0, false, 'R', 0, '', 0, false, false, false );
@@ -26,9 +29,9 @@ class MYPDF extends TCPDF {
         $this->Ln(2);
         $this->Cell(0, 15, 'DOCUMENTOS POR COBRAR - '.$fechaActual, 0, false, 'C', 0, '', 0, false, false, false );
         $this->Ln(7);
-        $this->Cell(0, 9, 'Tipo             Nro. doc.              Td.            Fecha        Vencimien  Vend.       Cliente               Razon social / Nombre cliente               Tot. S/.    Prot.      Unico           Banco  ', 0, 1, 'C', 0, '', 0, false, false, false );
+        $this->Cell(0, 9, 'T.        Nro. doc.                Td.     Origen                    F. Emi                F. Ven                  Saldo              Prot.    Unico            Banco                 ', 0, 1, 'C', 0, '', 0, false, false, false );
         
-        $this->Cell(0, 0, '=================================================================================================================================', 0, 1, 'L', 0, '', 0, false, 'M', 'M' );
+        $this->Cell(0, 0, '=======================================================================================================', 0, 1, 'L', 0, '', 0, false, 'M', 'M' );
 
     }
 }
@@ -55,6 +58,7 @@ $pdf->setPage(1, true);
 $vendedor= $_GET["vendedor"];
 
 $cuentas = ControladorCuentas::ctrEstadoCtaVdor($vendedor);
+$vendedor = ControladorVendedores::ctrMostrarVendedores("codigo", $vendedor);
 #var_dump($cuentas);
 
 // convert TTF font to TCPDF format and store it on the fonts folder
@@ -64,6 +68,41 @@ $fontname = TCPDF_FONTS::addTTFfont('../../lucida-console.ttf', 'TrueTypeUnicode
 $pdf->SetFont($fontname, '', 7, '', false);
 //---------------------------------------------------------
 
+
+$pdf->SetFont($fontname, '', 10, '', false);
+
+$bloque1 = '<table style="text-center" >
+                <tbody>
+                    <tr>
+                        <td style="width:26px"></td>
+                        <td style="width:60px">Cod: '.$_GET["vendedor"].'</td>
+                        <td style="width:242px"><strong>'.$vendedor["descripcion"].'</strong></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="width:27px"></td>
+                        <td style="width:50px"></td>
+                        <td style="width:35px"></td>
+                    </tr>
+
+                    <tr>
+                        <td style="width:26px"></td>
+                        <td style="width:60px"></td>
+                        <td style="width:242px"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="width:27px"></td>
+                        <td style="width:50px"></td>
+                        <td style="width:35px"></td>
+                    </tr>
+                                        
+                </tbody>
+            </table>';
+
+$pdf->writeHTML($bloque1, false, false, false, false, '');   
 
 $pdf->SetFont($fontname, '', 8, '', false);
 

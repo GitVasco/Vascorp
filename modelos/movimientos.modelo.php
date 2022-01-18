@@ -2443,7 +2443,7 @@ class ModeloMovimientos{
        FROM
          ventajf v 
        WHERE YEAR(v.fecha) = YEAR(NOW()) 
-       AND v.tipo IN ('E05', 'S02', 'S03', 'S70') 
+       AND v.tipo IN ('E05', 'S02', 'S03', 'S70','S05') 
        GROUP BY v.tipo,
          v.tipo_documento 
        UNION
@@ -2457,7 +2457,7 @@ class ModeloMovimientos{
        FROM
          ventajf v 
        WHERE YEAR(v.fecha) = YEAR(NOW()) 
-       AND v.tipo IN ('E05', 'S02', 'S03', 'S70') 
+       AND v.tipo IN ('E05', 'S02', 'S03', 'S70','S05') 
        GROUP BY YEAR(v.fecha)");
 
          $stmt -> execute();
@@ -2481,7 +2481,7 @@ class ModeloMovimientos{
          ventajf v 
        WHERE YEAR(v.fecha) = YEAR(NOW()) 
          AND MONTH(v.fecha) = $mes 
-         AND v.tipo IN ('E05', 'S02', 'S03', 'S70') 
+         AND v.tipo IN ('E05', 'S02', 'S03', 'S70','S05') 
        GROUP BY v.tipo,
          v.tipo_documento 
        UNION
@@ -2496,7 +2496,7 @@ class ModeloMovimientos{
          ventajf v 
        WHERE YEAR(v.fecha) = YEAR(NOW()) 
          AND MONTH(v.fecha) = $mes 
-         AND v.tipo IN ('E05', 'S02', 'S03', 'S70') 
+         AND v.tipo IN ('E05', 'S02', 'S03', 'S70','S05') 
        GROUP BY YEAR(v.fecha),
          MONTH(fecha)");
 
@@ -2543,7 +2543,7 @@ class ModeloMovimientos{
            FROM
              ventajf v 
            WHERE YEAR(v.fecha) = YEAR(NOW()) 
-             AND v.tipo IN ('E05', 'S02', 'S03', 'S70') 
+             AND v.tipo IN ('E05', 'S02', 'S03', 'S70','S05') 
            GROUP BY v.vendedor) AS v 
            ON m.codigo = v.vendedor 
        WHERE m.tipo_dato = 'TVEND' 
@@ -2566,7 +2566,7 @@ class ModeloMovimientos{
            FROM
              ventajf v 
            WHERE YEAR(v.fecha) = YEAR(NOW()) 
-             AND v.tipo IN ('E05', 'S02', 'S03', 'S70') 
+             AND v.tipo IN ('E05', 'S02', 'S03', 'S70','S05') 
            GROUP BY MONTH(v.fecha)) AS v 
            ON MONTH(t.fecha) = v.mes 
        WHERE t.estado IN ('APROBADO', 'APT', 'CONFIRMADO') 
@@ -2612,7 +2612,7 @@ class ModeloMovimientos{
                               ventajf v 
                            WHERE YEAR(v.fecha) = YEAR(NOW()) 
                               AND MONTH(v.fecha) =  $mes 
-                              AND v.tipo IN ('E05', 'S02', 'S03', 'S70') 
+                              AND v.tipo IN ('E05', 'S02', 'S03', 'S70','S05') 
                            GROUP BY v.vendedor) AS v 
                            ON m.codigo = v.vendedor 
                         WHERE m.tipo_dato = 'TVEND' 
@@ -2636,7 +2636,7 @@ class ModeloMovimientos{
                               ventajf v 
                            WHERE YEAR(v.fecha) = YEAR(NOW()) 
                               AND MONTH(v.fecha) =  $mes 
-                              AND v.tipo IN ('E05', 'S02', 'S03', 'S70') 
+                              AND v.tipo IN ('E05', 'S02', 'S03', 'S70','S05') 
                            GROUP BY MONTH(v.fecha)) AS v 
                            ON MONTH(t.fecha) = v.mes 
                         WHERE t.estado IN ('APROBADO', 'APT', 'CONFIRMADO') 
