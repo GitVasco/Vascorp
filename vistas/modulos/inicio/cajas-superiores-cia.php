@@ -23,6 +23,9 @@ $totales = ControladorMovimientos::ctrTotalesSoles($mes);
 $pedidos = ControladorMovimientos::ctrTotalesSolesPedidos($mes);
 #var_dump($pedidos);
 
+$vencidos = ControladorMovimientos::ctrTotalVencidos();
+#var_dump($vencidos["saldo"]);
+
 
 ?>
 
@@ -113,4 +116,30 @@ $pedidos = ControladorMovimientos::ctrTotalesSolesPedidos($mes);
 </div>
 
 
+<div class="col-lg-3 col-xs-6">
 
+  <div class="small-box bg-red">
+    
+    <div class="inner">
+    
+      <h3>S/<?php echo number_format($vencidos["saldo"],0); ?></h3>
+
+      <p>Documentos Vencidos - Soles</p>
+    
+    </div>
+    
+    <div class="icon">
+    
+      <i class="fa fa-exclamation-circle"></i>
+    
+    </div>
+    
+    <a href="#" class="small-box-footer">
+      
+      Más info <i class="fa fa-arrow-circle-right"></i>
+    
+    </a>
+
+  </div>
+
+</div>

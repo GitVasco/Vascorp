@@ -352,7 +352,7 @@ MODAL VISUALIZAR INFORMACION
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title">Detalle del Cierre</h4>
+          <h4 class="modal-title">Detalle del Cierre - GRAL</h4>
 
         </div>
 

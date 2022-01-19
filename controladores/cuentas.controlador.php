@@ -1272,9 +1272,9 @@ class ControladorCuentas{
 	MOSTRAR REPORTES COBRAR
 	=============================================*/
 
-	static public function ctrMostrarReporteCobrar($orden1,$orden2,$tip_doc,$cli,$vend,$banco){
+	static public function ctrMostrarReporteCobrar($orden1,$orden2,$tip_doc,$cli,$vend,$banco, $fin){
 		$tabla="cuenta_ctejf";
-		$respuesta = ModeloCuentas::mdlMostrarReporteCobrar($tabla,$orden1,$orden2,$tip_doc,$cli,$vend,$banco);
+		$respuesta = ModeloCuentas::mdlMostrarReporteCobrar($tabla,$orden1,$orden2,$tip_doc,$cli,$vend,$banco, $fin);
 
 		return $respuesta;
 
@@ -1334,6 +1334,19 @@ class ControladorCuentas{
 	static public function ctrMostrarReporteTotalCobrar($orden1,$orden2,$tip_doc,$cli,$vend,$banco){
 		$tabla="cuenta_ctejf";
 		$respuesta = ModeloCuentas::mdlMostrarReporteTotalCobrar($tabla,$orden1,$orden2,$tip_doc,$cli,$vend,$banco);
+
+		return $respuesta;
+
+	}
+
+
+	/*=============================================
+	MOSTRAR REPORTES TOTAL COBRAR 8VO DIA
+	=============================================*/
+
+	static public function ctrMostrarReporteTotalOct($tip_doc,$banco,$fin){
+
+		$respuesta = ModeloCuentas::mdlMostrarReporteTotalOct($tip_doc,$banco,$fin);
 
 		return $respuesta;
 

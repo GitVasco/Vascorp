@@ -219,6 +219,17 @@ class ControladorMovimientos{
         return $respuesta;
 
     }     
+
+    /* 
+    * MOSTRAR TOTALES VENCIDOS
+    */
+    static public function ctrTotalVencidos(){
+
+        $respuesta = ModeloMovimientos::mdlTotalVencidos();
+
+        return $respuesta;
+
+    }     
     
     /* 
     * MOSTRAR RESUMEN DE VENTAS

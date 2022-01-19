@@ -1261,7 +1261,7 @@ class ModeloCuentas{
 
 	} 
 
-	static public function mdlMostrarReporteCobrar($tabla,$orden1,$orden2,$tip_doc,$cli,$vend,$banco){
+	static public function mdlMostrarReporteCobrar($tabla,$orden1,$orden2,$tip_doc,$cli,$vend,$banco, $fin){
 
 		if($orden1 == 'tipo' && $orden2 == 'ordNumCuenta' ){
 			$stmt = Conexion::conectar()->prepare("SELECT 
@@ -1455,6 +1455,7 @@ class ModeloCuentas{
 		  $stmt -> execute();
 
 		  return $stmt -> fetchAll();
+
 		}else if ($orden1 == 'vendedor' && $orden2 == 'ordNumCuenta' && $vend == 'todo'){
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.tipo_doc,
@@ -1518,6 +1519,7 @@ class ModeloCuentas{
 		  $stmt -> execute();
 
 		  return $stmt -> fetchAll();
+
 		}else if ($orden1 == 'vendedor' && $orden2 == 'ordCliente' && $vend == 'todo'){
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.tipo_doc,
@@ -1549,6 +1551,7 @@ class ModeloCuentas{
 		  $stmt -> execute();
 
 		  return $stmt -> fetchAll();
+
 		}else if($orden1 == 'fecha_ven' && $orden2 == 'ordNumCuenta'){
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.tipo_doc,
@@ -1579,7 +1582,51 @@ class ModeloCuentas{
 		  $stmt -> execute();
 
 		  return $stmt -> fetchAll();
+		
+		}else if($orden1 == 'fecha_ven' && $orden2 == 'ordVencimiento'){
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			cc.tipo_doc,
+			cc.num_cta,
+			cc.fecha,
+			cc.fecha_ven,
+			cc.vendedor,
+			cc.cliente,
+			c.nombre,
+			cc.saldo,
+			cc.num_unico,
+			CASE
+			  WHEN cc.protesta = '1' 
+			  THEN 'SI' 
+			  ELSE '' 
+			END AS protesta, 
+			CASE
+			  WHEN cc.banco = '02' 
+			  THEN 'BCP' 
+			  ELSE '' 
+			END AS banco 
+		  FROM
+			cuenta_ctejf cc 
+			LEFT JOIN clientesjf c 
+			  ON cc.cliente = c.codigo 
+		  WHERE cc.tip_mov = '+' 
+			AND cc.estado = 'PENDIENTE' 
+			AND cc.tipo_doc = '85'
+			AND cc.banco = '02' 
+			AND cc.fecha_ven <= '2022-01-11' ");
+
+			$stmt->bindParam(":tip_doc", $tip_doc, PDO::PARAM_STR);
+			$stmt->bindParam(":banco", $banco, PDO::PARAM_STR);
+			$stmt->bindParam(":fin", $fin, PDO::PARAM_STR);
+
+			
+		  $stmt -> execute();
+
+		  return $stmt -> fetchAll();
+
+
 		}
+
 
 		$stmt -> close();
 
@@ -2973,6 +3020,36 @@ class ModeloCuentas{
 		$stmt = null;
 
     }
+
+	static public function mdlMostrarReporteTotalOct($tip_doc,$banco,$fin){
+
+		
+		$stmt = Conexion::conectar()->prepare("SELECT 
+		FORMAT(SUM(cc.saldo), 2) AS saldo_total 
+	  FROM
+		cuenta_ctejf cc 
+		LEFT JOIN clientesjf c 
+		  ON cc.cliente = c.codigo 
+	  WHERE cc.tip_mov = '+' 
+		AND cc.estado = 'PENDIENTE' 
+		AND cc.tipo_doc = '85' 
+		AND cc.banco = '02' 
+		AND cc.fecha_ven <= '2022-01-11' 
+	  GROUP BY '+'");
+
+
+		$stmt -> bindParam(":fin", $fin, PDO::PARAM_STR);
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+		
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }	
 
 	static public function mdlMostrarReporteTotalVencidos($tabla,$orden1,$orden2,$tip_doc,$cli,$vend,$banco){
 
