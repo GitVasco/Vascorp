@@ -145,26 +145,31 @@
 
             echo '</table>';
 
-            if(substr($guiaC["doc_destino"], 0, 1) == "F"){
+            if(strlen($guiaC["dni"]) == 11){
 
-                $docDest = "Factura";
+                echo '<table>
+                        <tr>
+                            <td style="width:250px;"></td>
+                            <td style="width:250px;">N° FACTURA'.$guiaC["doc_destino"].'</td>
+                            <td style="width:200px;"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                </table>';  
 
             }else{
 
-                $docDest = "Boleta";
+                echo '<table>
+                        <tr>
+                            <td style="width:250px;"></td>
+                            <td style="width:250px;">N° BOLETA'.$guiaC["doc_destino"].'</td>
+                            <td style="width:200px;"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                </table>';   
 
             }
-            
-            echo '<table>
-                    <tr>
-                        <td style="width:250px;"></td>
-                        <td style="width:250px;">N° '.$docDest.': '.$guiaC["doc_destino"].'</td>
-                        <td style="width:200px;"></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-            </table>';             
-
 
         ?>
 
