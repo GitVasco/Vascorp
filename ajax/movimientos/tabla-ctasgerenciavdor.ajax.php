@@ -39,7 +39,7 @@ class TablaMovimientos{
 
             if($movimientos[$i]["vendedor"] != "ZZ"){
 
-                $botones =  "<div class='btn-group'><button class='btn btn-xs btn-success btnEstadoCtaVdor' title='Descargar Estado de Cuenta' vendedor=".$movimientos[$i]['vendedor']."><i class='fa fa-download'></i></button></div>"; 
+                $botones =  "<div class='btn-group'><button class='btn btn-xs btn-success btnEstadoCtaVdor' title='Descargar Estado de Cuenta' vendedor=".$movimientos[$i]['vendedor']."><i class='fa fa-download'></i></button><button class='btn btn-xs btn-danger btnEstadoCtaVdorVdos' title='Descargar Estado de Cuenta Vencidos' vendedor=".$movimientos[$i]['vendedor']."><i class='fa fa-download'></i></button></div>"; 
 
             }else{
 

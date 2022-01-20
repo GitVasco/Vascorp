@@ -150,7 +150,7 @@
                 echo '<table>
                         <tr>
                             <td style="width:250px;"></td>
-                            <td style="width:250px;">N° FACTURA'.$guiaC["doc_destino"].'</td>
+                            <td style="width:250px;">N° FACTURA: '.$guiaC["doc_destino"].'</td>
                             <td style="width:200px;"></td>
                             <td></td>
                             <td></td>
@@ -162,7 +162,7 @@
                 echo '<table>
                         <tr>
                             <td style="width:250px;"></td>
-                            <td style="width:250px;">N° BOLETA'.$guiaC["doc_destino"].'</td>
+                            <td style="width:250px;">N° BOLETA: '.$guiaC["doc_destino"].'</td>
                             <td style="width:200px;"></td>
                             <td></td>
                             <td></td>

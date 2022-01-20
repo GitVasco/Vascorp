@@ -3776,7 +3776,7 @@ class ModeloCuentas{
 							AND c.vendedor = :vendedor 
 						UNION
 						SELECT 
-							'' AS tipo_doc,
+							'ZZ' AS tipo_doc,
 							'' AS num_cta,
 							'' AS fecha,
 							'' AS fecha_ven,

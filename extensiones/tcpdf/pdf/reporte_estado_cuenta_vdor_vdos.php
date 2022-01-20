@@ -29,9 +29,9 @@ class MYPDF extends TCPDF {
         $this->Ln(2);
         $this->Cell(0, 15, 'DOCUMENTOS POR COBRAR - '.$fechaActual, 0, false, 'C', 0, '', 0, false, false, false );
         $this->Ln(7);
-        $this->Cell(0, 9, 'T.        Nro. doc.                Td.     Origen                    F. Emi                F. Ven                  Saldo              Prot.    Unico            Banco                 ', 0, 1, 'C', 0, '', 0, false, false, false );
+        $this->Cell(0, 9, 'T.     Nro. doc.          F. Emi            F. Ven           Saldo                   Cod.              Cliente                                                 Saldo             Zona                        Prot.  ', 0, 1, 'C', 0, '', 0, false, false, false );
         
-        $this->Cell(0, 0, '=======================================================================================================', 0, 1, 'L', 0, '', 0, false, 'M', 'M' );
+        $this->Cell(0, 0, '========================================================================================================================', 0, 1, 'L', 0, '', 0, false, 'M', 'M' );
 
     }
 }
@@ -108,22 +108,70 @@ $pdf->SetFont($fontname, '', 7, '', false);
 
 foreach ($cuentas as $key => $value){
 
-    $bloque3 = '<table style="text-center" >
-    <tbody>
-        <tr>
-            <td style="width:15px">'.$value["tipo_doc"].'</td>
-            <td style="width:60px">'.$value["num_cta"].'</td>
-            <td style="width:50px">'.$value["fecha"].'</td>
-            <td style="width:50px">'.$value["fecha_ven"].'</td>
-            <td style="width:60px">'.$value["doc_origen"].'</td>
-            <td style="width:50px">'.$value["cliente"].'</td>
-            <td style="width:150px">'.$value["nombre"].'</td>
-            <td style="width:27px">'.$value["saldo"].'</td>
-            <td style="width:50px">'.$value["nom_ubigeo"].'</td>
-            <td style="width:35px">'.$value["protesta"].'</td>
-        </tr>
-    </tbody>
-</table>';
+    if($value["tipo_doc"] == "ZZ"){
+
+        $pdf->SetFont($fontname, '', 8, '', false);
+        $nombre = substr($value["nombre"],1,30);
+
+        $bloque3 = '<table style="text-center" >
+        <tbody>
+
+            <tr>
+                <td style="width:15px"></td>
+                <td style="width:60px"></td>
+                <td style="width:50px"></td>
+                <td style="width:50px"></td>
+                <td style="width:60px"></td>
+                <td style="width:50px"></td>
+                <td style="width:140px"></td>
+                <td style="width:55px;text-align:right"></td>
+                <td style="width:70px"></td>
+                <td style="width:35px"></td>
+            </tr>
+    
+    
+            <tr>
+                <td style="width:15px"></td>
+                <td style="width:60px"></td>
+                <td style="width:50px"></td>
+                <td style="width:50px"></td>
+                <td style="width:60px"></td>
+                <td style="width:50px"></td>
+                <td style="width:140px"><b>Total Vencidos S/</b></td>
+                <td style="width:55px;text-align:right">'.number_format($value["saldo"],2).'</td>
+                <td style="width:70px"></td>
+                <td style="width:35px"></td>
+            </tr>
+        </tbody>
+    </table>';
+
+
+        
+    }else {
+        
+        $nombre = substr($value["nombre"],1,30);
+
+        $bloque3 = '<table style="text-center" >
+        <tbody>
+            <tr>
+                <td style="width:15px">'.$value["tipo_doc"].'</td>
+                <td style="width:60px">'.$value["num_cta"].'</td>
+                <td style="width:50px">'.$value["fecha"].'</td>
+                <td style="width:50px">'.$value["fecha_ven"].'</td>
+                <td style="width:60px">'.$value["doc_origen"].'</td>
+                <td style="width:50px">'.$value["cliente"].'</td>
+                <td style="width:140px">'.$nombre.'</td>
+                <td style="width:50px;text-align:right">'.number_format($value["saldo"],2).'</td>
+                <td style="width:70px">'.$value["nom_ubigeo"].'</td>
+                <td style="width:35px">'.$value["protesta"].'</td>
+            </tr>
+        </tbody>
+    </table>';        
+
+
+    }
+
+
 
 
 

@@ -2108,6 +2108,19 @@ window.open("extensiones/tcpdf/pdf/reporte_estado_cuenta_vdor.php?vendedor=" +ve
 
 })
 
+/* 
+* BOTON  IMPRIMIR TICKET
+*/
+$(".tablaCtasVdor").on("click", ".btnEstadoCtaVdorVdos", function () {
+
+  var vendedor = $(this).attr("vendedor");
+  //console.log(codigo);
+
+
+window.open("extensiones/tcpdf/pdf/reporte_estado_cuenta_vdor_vdos.php?vendedor=" +vendedor,"_blank");
+
+})
+
 
 //Reporte de Cuentas
 $(".box").on("click", ".btnReporteCrediPagos", function () {
