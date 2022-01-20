@@ -538,6 +538,7 @@
                                             $_GET["ruta"] == "crear-salidas-varios" || 
                                             $_GET["ruta"] == "operacion-taller" || 
                                             $_GET["ruta"] == "sublimados" || 
+                                            $_GET["ruta"] == "seguimiento" || 
                                             $_GET["ruta"] == "listar-documento") echo 'active';?>">
 
                 <a href="#">
@@ -761,7 +762,8 @@
 
                     <li class="treeview <?php if(   $_GET["ruta"] == "urgencias" || 
                                                     $_GET["ruta"] == "urgenciasamp" || 
-                                                    $_GET["ruta"] == "proyeccion-mp") echo 'active';?>" >
+                                                    $_GET["ruta"] == "proyeccion-mp" ||
+                                                    $_GET["ruta"] == "seguimiento") echo 'active';?>" >
 
                         <a href="#"><i class="fa fa-file-o"></i> Reportes
                         <span class="pull-right-container">
@@ -778,6 +780,14 @@
                                 </a>
 
                             </li>
+
+                            <li class="<?php if($_GET["ruta"] == "seguimiento") echo 'active';?>">
+
+                                <a href="seguimiento">
+                                <i class="fa fa-circle-o"></i> Seguimiento
+                                </a>
+
+                            </li>                            
 
                             <li class="<?php if($_GET["ruta"] == "urgenciasamp") echo 'active';?>">
 

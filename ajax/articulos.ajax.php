@@ -56,6 +56,16 @@ class AjaxArticulos{
 
 		echo $respuesta;
 	}
+
+	public function ajaxCorteIncompleto(){
+
+		$codigo=$this->codigo;
+		$estado=$this->estado;
+
+		$respuesta=ModeloArticulos::mdlCorteIncompleto($codigo, $estado);
+
+		echo $respuesta;
+	}	
 	
 	/* 
 	* EDITAR ARTICULO
@@ -196,5 +206,18 @@ if( isset($_POST["articuloT"])){
 	$mostrarArticuloT = new AjaxArticulos();
 	$mostrarArticuloT -> articuloT = $_POST["articuloT"];
 	$mostrarArticuloT -> ajaxMostrarArticuloT();
+
+}
+
+
+/* 
+* Actualozar Corte Incompleto
+*/ 
+if( isset($_POST["codigo"])){
+
+	$corteI = new AjaxArticulos();
+	$corteI -> codigo = $_POST["codigo"];
+	$corteI -> estado = $_POST["estadoCorte"];
+	$corteI -> ajaxCorteIncompleto();
 
 }

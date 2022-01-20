@@ -111,7 +111,7 @@ foreach ($cuentas as $key => $value){
     if($value["tipo_doc"] == "ZZ"){
 
         $pdf->SetFont($fontname, '', 8, '', false);
-        $nombre = substr($value["nombre"],1,30);
+        $nombre = substr($value["nombre"],0,30);
 
         $bloque3 = '<table style="text-center" >
         <tbody>
@@ -149,7 +149,7 @@ foreach ($cuentas as $key => $value){
         
     }else {
         
-        $nombre = substr($value["nombre"],1,30);
+        $nombre = substr($value["nombre"],0,30);
 
         $bloque3 = '<table style="text-center" >
         <tbody>

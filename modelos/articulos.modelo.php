@@ -508,6 +508,128 @@ class ModeloArticulos
 		$stmt = null;
 	}
 
+
+	/* 
+	* MOSTRAR ARTICULOS PARA LA TABLA SEGUIMIENTO
+	*/
+	static public function mdlMostrarSeguimiento($valor){
+
+		if ($valor == "null") {
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			a.articulo,
+			a.id_marca,
+			m.marca,
+			a.modelo,
+			a.nombre,
+			a.cod_color,
+			a.color,
+			a.cod_talla,
+			a.talla,
+			a.servicio,
+			a.estado,
+			a.urgencia,
+			a.mp_faltante,
+			a.alerta,
+			ROUND(
+			  (
+				IFNULL(a.ult_mes, 0) * a.urgencia / 100
+			  ),
+			  0
+			) AS configuracion,
+			CASE
+			  WHEN a.stock < 0 
+			  THEN 0 
+			  ELSE a.stock 
+			END AS stock,
+			(a.stock - a.pedidos) AS stockB,
+			a.pedidos,
+			a.taller,
+			a.alm_corte,
+			a.ord_corte,
+			a.proyeccion,
+			IFNULL(a.prod, 0) AS prod,
+			IFNULL(
+			  ROUND(
+				(IFNULL(a.prod, 0) / a.proyeccion) * 100,
+				2
+			  ),
+			  0
+			) AS avance,
+			IFNULL(a.ult_mes, 0) AS ult_mes 
+		  FROM
+			articulojf a 
+			LEFT JOIN marcasjf m 
+			  ON a.id_marca = m.id 
+		  WHERE  a.estado = 'Activo'");
+
+			$stmt->bindParam(":modelo", $modelo, PDO::PARAM_STR);
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		
+		}else{
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			a.articulo,
+			a.id_marca,
+			m.marca,
+			a.modelo,
+			a.nombre,
+			a.cod_color,
+			a.color,
+			a.cod_talla,
+			a.talla,
+			a.servicio,
+			a.estado,
+			a.urgencia,
+			a.mp_faltante,
+			a.alerta,
+			ROUND(
+			  (
+				IFNULL(a.ult_mes, 0) * a.urgencia / 100
+			  ),
+			  0
+			) AS configuracion,
+			CASE
+			  WHEN a.stock < 0 
+			  THEN 0 
+			  ELSE a.stock 
+			END AS stock,
+			(a.stock - a.pedidos) AS stockB,
+			a.pedidos,
+			a.taller,
+			a.alm_corte,
+			a.ord_corte,
+			a.proyeccion,
+			IFNULL(a.prod, 0) AS prod,
+			IFNULL(
+			  ROUND(
+				(IFNULL(a.prod, 0) / a.proyeccion) * 100,
+				2
+			  ),
+			  0
+			) AS avance,
+			IFNULL(a.ult_mes, 0) AS ult_mes 
+		  FROM
+			articulojf a 
+			LEFT JOIN marcasjf m 
+			  ON a.id_marca = m.id 
+		  WHERE  a.estado = 'Activo'
+		  AND a.modelo = :valor");
+
+			$stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
 	/* 
 	* MOSTRAR EL DETALLE DE LAS URGENCIAS
 	*/
@@ -1262,6 +1384,34 @@ class ModeloArticulos
 		$stmt = null;
 
 	}
+
+	/*
+	* ACTUALIZAR ESTADO CORTE
+	*/
+	static public function mdlCorteIncompleto($codigo,$estado){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE
+													articulojf
+												SET
+													alerta = :estado
+												WHERE articulo = :codigo");
+
+		$stmt->bindParam(":codigo", $codigo, PDO::PARAM_STR);
+		$stmt->bindParam(":estado", $estado, PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+
+	}	
 
 	/*
 	* * RECUPERAMOS LA CANTIDAD DE SERVICOP DE ARTICULO

@@ -601,6 +601,18 @@ class controladorArticulos{
 		
 	}
 	
+
+		/* 
+	* MOSTRAR ARTICULOS PARA LA TABLA SEGUIMIENTO
+	*/	
+	static public function ctrMostrarSeguimiento($valor){
+
+		$respuesta = ModeloArticulos::mdlMostrarSeguimiento($valor);
+
+		return $respuesta;
+		
+	}
+
 		/* 
 	* MOSTRAR MP DETALLE PARA LA TABLA URGENCIA
 	*/	
