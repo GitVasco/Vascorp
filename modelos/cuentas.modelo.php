@@ -1613,7 +1613,7 @@ class ModeloCuentas{
 			AND cc.estado = 'PENDIENTE' 
 			AND cc.tipo_doc = '85'
 			AND cc.banco = '02' 
-			AND cc.fecha_ven <= '2022-01-11' ");
+			AND cc.fecha_ven <= '$fin' ");
 
 			$stmt->bindParam(":tip_doc", $tip_doc, PDO::PARAM_STR);
 			$stmt->bindParam(":banco", $banco, PDO::PARAM_STR);
@@ -3034,7 +3034,7 @@ class ModeloCuentas{
 		AND cc.estado = 'PENDIENTE' 
 		AND cc.tipo_doc = '85' 
 		AND cc.banco = '02' 
-		AND cc.fecha_ven <= '2022-01-11' 
+		AND cc.fecha_ven <= '$fin' 
 	  GROUP BY '+'");
 
 
@@ -3742,4 +3742,74 @@ class ModeloCuentas{
 		$stmt = null;
 
 	}	
+
+	//* ESTADO DE CEUNTA VENDEDOR VENDIDOS POR ZONA
+	static public function mdlEstadoCtaVdorVdos($vendedor){	
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+							c.tipo_doc,
+							c.num_cta,
+							c.fecha,
+							c.fecha_ven,
+							c.doc_origen,
+							c.cliente,
+							cc.nombre,
+							c.saldo,
+							cc.ubigeo,
+							(SELECT 
+							nombre 
+							FROM
+							ubigeo u 
+							WHERE cc.ubigeo = u.codigo) AS nom_ubigeo,
+							CASE
+							WHEN c.protesta = '1' 
+							THEN 'SI' 
+							ELSE '' 
+							END AS protesta 
+						FROM
+							cuenta_ctejf c 
+							LEFT JOIN clientesjf cc 
+							ON c.cliente = cc.codigo 
+						WHERE c.tip_mov = '+' 
+							AND c.estado = 'PENDIENTE' 
+							AND c.fecha_ven < DATE(NOW()) 
+							AND c.vendedor = :vendedor 
+						UNION
+						SELECT 
+							'' AS tipo_doc,
+							'' AS num_cta,
+							'' AS fecha,
+							'' AS fecha_ven,
+							'' AS doc_origen,
+							'' cliente,
+							'' AS nombre,
+							SUM(c.saldo) AS saldo,
+							'999999' AS ubigeo,
+							'' AS nom_ubigeo,
+							'' AS protesta 
+						FROM
+							cuenta_ctejf c 
+							LEFT JOIN clientesjf cc 
+							ON c.cliente = cc.codigo 
+						WHERE c.tip_mov = '+' 
+							AND c.estado = 'PENDIENTE' 
+							AND c.fecha_ven < DATE(NOW()) 
+							AND c.vendedor = :vendedor 
+						GROUP BY c.vendedor 
+						ORDER BY ubigeo,
+							cliente,
+							fecha_ven");
+
+		$stmt -> bindParam(":vendedor", $vendedor, PDO::PARAM_STR);
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
+
 }

@@ -145,8 +145,6 @@ $pdf->AddPage('P','A4');
 $pdf->setPage(1, true);
 
 
-
-
 // use the font
 $pdf->SetFont('Helvetica', 'A', 8);
 //---------------------------------------------------------
@@ -155,33 +153,74 @@ $texto =$venta["observacion"];
 
 $monto_letra= CantidadEnLetra($venta["total"]);
 $pdf->Ln(72);
+
+//$tamañoA=count($modelo);
 foreach ($modelo as $key => $value) {
-    $pdf->Ln(5);
-    $pdf->SetFillColor(0, 240, 240);
-    $pdf->SetTextColor(0, 0, 0);
-    $pdf->Cell(16, 5, $value["modelo"], 'LR', false, 'L', 0, '', 0, false, 'T', 'M');
-    $pdf->Cell(23, 5, $value["cantidad"], 'LR', false, 'L', 0, '', 0, false, 'T', 'M');
-    $pdf->Cell(14, 5, $value["unidad"], 'LR', false, 'L', 0, '', 0, false, 'T', 'M');
-    $pdf->Cell(62, 5, $value["nombre"], 'LR', false, 'L', 0, '', 0, false, 'T', 'M');
-    $pdf->Cell(24, 5, $value["precio"], 'LR', false, 'R', 0, '', 0, false, 'T', 'M');
-    $pdf->Cell(21, 5, $value["dscto1"], 'LR', false, 'R', 0, '', 0, false, 'T', 'M');
-    $pdf->Cell(23, 5, $value["total"], 'LR', false, 'R', 0, '', 0, false, 'T', 'M' );
+
+    if($key <= 32){
+
+        $pdf->Ln(5);
+        $pdf->SetFillColor(0, 240, 240);
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->Cell(16, 5, $value["modelo"], 'LR', false, 'L', 0, '', 0, false, 'T', 'M');
+        $pdf->Cell(23, 5, $value["cantidad"], 'LR', false, 'L', 0, '', 0, false, 'T', 'M');
+        $pdf->Cell(14, 5, $value["unidad"], 'LR', false, 'L', 0, '', 0, false, 'T', 'M');
+        $pdf->Cell(62, 5, $value["nombre"], 'LR', false, 'L', 0, '', 0, false, 'T', 'M');
+        $pdf->Cell(24, 5, $value["precio"], 'LR', false, 'R', 0, '', 0, false, 'T', 'M');
+        $pdf->Cell(21, 5, $value["dscto1"], 'LR', false, 'R', 0, '', 0, false, 'T', 'M');
+        $pdf->Cell(23, 5, $value["total"], 'LR', false, 'R', 0, '', 0, false, 'T', 'M' );
+
+
+    }
     
 }
+
+
+
 $tamaño=count($modelo);
 $image_file = K_PATH_IMAGES.'borde4.png';
 
 $image_file2 = K_PATH_IMAGES.'borde2.png';
 
 if( $tamaño>= 23){
+
     $pdf->AddPage();
+    $pdf->Ln(72);
+
+    $lineas = 0;
+    foreach ($modelo as $key => $value) {
+
+        if($key >= 33){
+    
+            $pdf->Ln(5);
+            $pdf->SetFillColor(0, 240, 240);
+            $pdf->SetTextColor(0, 0, 0);
+            $pdf->Cell(16, 5, $value["modelo"], 'LR', false, 'L', 0, '', 0, false, 'T', 'M');
+            $pdf->Cell(23, 5, $value["cantidad"], 'LR', false, 'L', 0, '', 0, false, 'T', 'M');
+            $pdf->Cell(14, 5, $value["unidad"], 'LR', false, 'L', 0, '', 0, false, 'T', 'M');
+            $pdf->Cell(62, 5, $value["nombre"], 'LR', false, 'L', 0, '', 0, false, 'T', 'M');
+            $pdf->Cell(24, 5, $value["precio"], 'LR', false, 'R', 0, '', 0, false, 'T', 'M');
+            $pdf->Cell(21, 5, $value["dscto1"], 'LR', false, 'R', 0, '', 0, false, 'T', 'M');
+            $pdf->Cell(23, 5, $value["total"], 'LR', false, 'R', 0, '', 0, false, 'T', 'M' );
+    
+            $lineas++;
+        }
+        
+    }
+
+    $pdf->Ln(5);
+    $pdf->Cell(0,11, $pdf->Image($image_file, $pdf->GetX(), $pdf->GetY(),185),0);
+    $pdf->Ln(1);
+    $pdf->Cell(120, 10, '   Observaciones', 0, false, 'L', 0, '', 0, false, false, false );
+
+    /* $pdf->Ln(1);
     $pdf->Image($image_file, 10, 110, 190, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
     $pdf->Ln(1);
-    $pdf->Cell(120, 10, 'Observaciones', 0, false, 'L', 0, '', 0, false, false, false );
+    $pdf->Cell(120, 10, 'Observaciones'.$lineas, 0, false, 'L', 0, '', 0, false, false, false ); */
     
-    $pdf->Cell(20, 10, 'Op. Gravadas', 0, false, 'L', 0, '', 0, false, false, false );
+    $pdf->Cell(22, 10, 'Op. Gravadas', 0, false, 'L', 0, '', 0, false, false, false );
     $pdf->Cell(30, 10, 'S/', 0, false, 'C', 0, '', 0, false, false, false );
-    $pdf->Cell(12, 10, $venta["neto"], 0, false, 'R', 0, '', 0, false, false, false );
+    $pdf->Cell(10, 10, $venta["neto"], 0, false, 'R', 0, '', 0, false, false, false );
     $pdf->Ln(5);
     $pdf->Cell(120, 10, '   Nro unidades        '.$unidad["cantidad"], 0, false, 'L', 0, '', 0, false, false, false );
     $pdf->Cell(20, 10, 'Op. Inafecta', 0, false, 'L', 0, '', 0, false, false, false );
@@ -216,10 +255,19 @@ if( $tamaño>= 23){
     $pdf->Cell(20, 10, 'Total', 0, false, 'L', 0, '', 0, false, false, false );
     $pdf->Cell(30, 10, 'S/', 0, false, 'C', 0, '', 0, false, false, false );
     $pdf->Cell(12, 10, $venta["total"], 0, false, 'R', 0, '', 0, false, false, false );
-    $pdf->Ln(2);
-    $pdf->Image($image_file2, 10, 170, 190, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+    $pdf->Ln(20);
+    //$pdf->Image($image_file2, 10, 170, 190, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+
+    $pdf->Ln(0);
+    $pdf->Cell(0, 7, 'Son: '.$monto_letra, 0, false, 'L', 0, '', 0, false, false, false );
+    $pdf->Ln(6);
+    $pdf->Cell(120, 10, 'Cta. Recaudadora Bco. Crédito:  191-1553564-0-64', 0, false, 'L', 0, '', 0, false, false, false );
+    $pdf->Cell(70, 10, 'CANCELADO', 0, false, 'L', 0, '', 0, false, false, false );
+    $pdf->Ln(8);
+    $pdf->Cell(180, 10, 'Lima, ________ de __________________ de _______', 0, false, 'R', 0, '', 0, false, false, false );
     
 }else{
+
     $pdf->Ln(5);
     $pdf->Cell(0,11, $pdf->Image($image_file, $pdf->GetX(), $pdf->GetY(),185),0);
     $pdf->Ln(1);
@@ -267,13 +315,13 @@ if( $tamaño>= 23){
 }
 
 
-$pdf->Ln(0);
+/* $pdf->Ln(0);
 $pdf->Cell(0, 7, 'Son: '.$monto_letra, 0, false, 'L', 0, '', 0, false, false, false );
 $pdf->Ln(6);
 $pdf->Cell(120, 10, 'Cta. Recaudadora Bco. Crédito:  191-1553564-0-64', 0, false, 'L', 0, '', 0, false, false, false );
 $pdf->Cell(70, 10, 'CANCELADO', 0, false, 'L', 0, '', 0, false, false, false );
 $pdf->Ln(8);
-$pdf->Cell(180, 10, 'Lima, ________ de __________________ de _______', 0, false, 'R', 0, '', 0, false, false, false );
+$pdf->Cell(180, 10, 'Lima, ________ de __________________ de _______', 0, false, 'R', 0, '', 0, false, false, false ); */
 // ---------------------------------------------------------
 //SALIDA DEL ARCHIVO 
 
