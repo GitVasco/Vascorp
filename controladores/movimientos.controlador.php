@@ -264,5 +264,26 @@ class ControladorMovimientos{
 
     }    
 
+    /* 
+    * MOSTRAR TOTALES EN FACTURAS
+    */
+    static public function ctrFacturas($mes){
+
+        $respuesta = ModeloMovimientos::mdlFacturas($mes);
+
+        return $respuesta;
+
+    }  
+
+    /* 
+    * MOSTRAR TOTALES EN PROFORMAS
+    */
+    static public function ctrProformas($mes){
+
+        $respuesta = ModeloMovimientos::mdlProformas($mes);
+
+        return $respuesta;
+
+    }      
 
 }

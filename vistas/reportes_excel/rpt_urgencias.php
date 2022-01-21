@@ -488,6 +488,7 @@ $sqlDetalle = mysql_query("SELECT
                                 a.estado,
                                 a.urgencia,
                                 a.mp_faltante,
+                                a.alerta,
                                 ROUND(
                                   (
                                     IFNULL(a.ult_mes, 0) * a.urgencia / 100
@@ -503,6 +504,11 @@ $sqlDetalle = mysql_query("SELECT
                                 a.pedidos,
                                 (a.taller + a.servicio) AS taller,
                                 a.alm_corte,
+                                CASE
+                                  WHEN a.alerta = '0' 
+                                  THEN a.alm_corte 
+                                  ELSE CONCAT('I-', a.alm_corte) 
+                                END alm_corteA,
                                 a.ord_corte,
                                 a.proyeccion,
                                 IFNULL(a.prod, 0) AS prod,
@@ -541,6 +547,7 @@ $sqlDetalle = mysql_query("SELECT
                                 a.estado,
                                 a.urgencia,
                                 a.mp_faltante,
+                                a.alerta,
                                 ROUND(
                                   (
                                     IFNULL(a.ult_mes, 0) * a.urgencia / 100
@@ -556,6 +563,11 @@ $sqlDetalle = mysql_query("SELECT
                                 a.pedidos,
                                 (a.taller + a.servicio) AS taller,
                                 a.alm_corte,
+                                CASE
+                                  WHEN a.alerta = '0' 
+                                  THEN a.alm_corte 
+                                  ELSE CONCAT('I-', a.alm_corte) 
+                                END alm_corteA,
                                 a.ord_corte,
                                 a.proyeccion,
                                 IFNULL(a.prod, 0) AS prod,
@@ -595,7 +607,7 @@ while($respDetalle = mysql_fetch_array($sqlDetalle)){
     $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", utf8_encode($respDetalle["stockB"]));
     $objPHPExcel->getActiveSheet()->SetCellValue("I$fila", utf8_encode($respDetalle["pedidos"]));
     $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", utf8_encode($respDetalle["taller"]));
-    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", utf8_encode($respDetalle["alm_corte"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", utf8_encode($respDetalle["alm_corteA"]));
     $objPHPExcel->getActiveSheet()->SetCellValue("L$fila", utf8_encode($respDetalle["ord_corte"]));
     $objPHPExcel->getActiveSheet()->SetCellValue("M$fila", utf8_encode($respDetalle["ult_mes"]));
 
@@ -655,10 +667,12 @@ while($respDetalle = mysql_fetch_array($sqlDetalle)){
     if(utf8_encode($respDetalle["alm_corte"]) <= 0){
 
         $objPHPExcel->getActiveSheet()->setSharedStyle($borde_8, "K$fila");
+        $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 
     }else{
 
         $objPHPExcel->getActiveSheet()->setSharedStyle($borde_6, "K$fila");
+        $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 
     }
     

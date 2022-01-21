@@ -118,14 +118,90 @@
 
             </div>
 
-        </div>
+            <?php
 
+            if(isset($_GET["mes"]) && $_GET["mes"] != "TODO"){
+
+                $mes = $_GET["mes"];
+
+            }else{
+
+                $mes = null;
+
+            }            
+
+            $totales = ControladorMovimientos::ctrTotalesSoles($mes);
+            #var_dump($totales);
+
+            $facturas = ControladorMovimientos::ctrFacturas($mes);
+            #var_dump($facturas);
+
+            $proformas = ControladorMovimientos::ctrProformas($mes);
+            #var_dump($proformas);
+
+            $totalFacturas = $facturas["neto"]/$totales["vtas_soles"]*100;
+            #var_dump($totalFacturas);
+
+            $totalProformas = $proformas["neto"]/$totales["vtas_soles"]*100;
+            #var_dump($totalProformas);
+
+            ?>            
+
+            <div class="info-box bg-blue">
+            <span class="info-box-icon"><i class="ion ion-ios-pricetag-outline"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Facturas</span>
+                    <span class="info-box-number">S/ <?php echo number_format($facturas["neto"],2) ?></span>
+
+                    <div class="progress">
+                        <div class="progress-bar" style="width: <?php echo number_format($totalFacturas,0) ?>%"></div>
+                    </div>
+                    <span class="progress-description">
+                    <?php echo number_format($totalFacturas,0) ?>% Del Mes Actual
+                    </span>
+                </div>
+
+            </div>
+
+            <?php
+
+            if($totalProformas > 20){
+
+                echo '<div class="info-box bg-red">';
+
+            }else{
+
+                echo '<div class="info-box bg-green">';
+
+            }
+
+            ?>
+
+            <!-- <div class="info-box bg-red"> -->
+            <span class="info-box-icon"><i class="ion ion-ios-cloud-download-outline"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Guias</span>
+                    <span class="info-box-number">S/ <?php echo number_format($proformas["neto"],2) ?></span>
+
+                    <div class="progress">
+                        <div class="progress-bar" style="width: <?php echo number_format($totalProformas,0) ?>%"></div>
+                    </div>
+                    <span class="progress-description">
+                    <?php echo number_format($totalProformas,0) ?>% Del mes actual
+                    </span>
+                </div>
+
+            </div>         
+
+        </div>
 
 
 
         <div class="col-lg-4">
 
-        <div class="box box-danger">
+            <div class="box box-danger">
                 <div class="box-header with-border"></div>
                 <center><b>Ventas / Pedidos por Vendedor</b></center>
 
@@ -145,7 +221,9 @@
                     </table>
                 </div>
 
-            </div>        
+            </div>   
+            
+            
 
 
 

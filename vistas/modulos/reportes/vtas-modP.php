@@ -4,13 +4,13 @@ $valor = 1;
 
 $modelos = ControladorMovimientos::ctrMovMes($valor);
 
-//var_dump("modelos",$modelos);
+#var_dump("modelos",$modelos);
 
 $colores = array("red","green","yellow","aqua","purple","blue","cyan","magenta","orange","gold");
 
 $sumaUnd = ControladorMovimientos::ctrSumaUnd($valor);
 
-//var_dump("sumaUnd", $sumaUnd["sumaUnd"]);
+#var_dump("sumaUnd", $sumaUnd["sumaUnd"]);
 
 if(count($modelos)!=0){
 

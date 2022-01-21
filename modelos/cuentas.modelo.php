@@ -211,6 +211,23 @@ class ModeloCuentas{
 
 	}
 
+	static public function mdlMostrarCuentasNroUnico($documento){
+
+		$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.tip_mov ='+' AND c.$item = :$item ");
+
+		$stmt -> bindParam(":documento", $documento, PDO::PARAM_STR);
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
+
 	/*=============================================
 	MOSTRAR CUENTAS V2
 	=============================================*/

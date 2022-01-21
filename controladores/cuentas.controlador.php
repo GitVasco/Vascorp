@@ -925,6 +925,8 @@ class ControladorCuentas{
 						$documento=$data->sheets[0]['cells'][$i][1];
 						$unico=$data->sheets[0]['cells'][$i][2];
 
+						$existe=ControladorCuentas::ctrMostrarCuentas("num_unico",$unico);
+
 						$sqlInsertar = mysql_query("UPDATE 
 							cuenta_ctejf 
 						  SET
@@ -1206,17 +1208,28 @@ class ControladorCuentas{
 					$actualizarEnvio=ModeloCuentas::mdlActualizarUnDato("cuenta_ctejf","fecha_envio",$fecha->format("Y-m-d"),$value["idcuenta"]);
 					$actualizarAceptacion=ModeloCuentas::mdlActualizarUnDato("cuenta_ctejf","fecha_cep",$fecha->format("Y-m-d"),$value["idcuenta"]);
 					$actualizarEstadoDoc=ModeloCuentas::mdlActualizarUnDato("cuenta_ctejf","estado_doc","01",$value["idcuenta"]);
+					$actualizarBanco=ModeloCuentas::mdlActualizarUnDato("cuenta_ctejf","banco","02",$value["idcuenta"]);
+
+					if(strlen($value["cliente_doc"]) == "11"){
+
+						$cliente_doc = "6".$value["cliente_doc"];
+
+					}else{
+
+						$cliente_doc = "1".$value["cliente_doc"];
+
+					}
 
 					//saltos para el txt
 					$salto1= 72;
 					$salto2= 24;
 					$salto3= 24;
-					$salto4= 16;
+					$salto4= 15;
 					$salto5= 12 ;
 					$salto6= 14 ;
 
 
-					fwrite($file,str_pad( $value["cliente_nom"],$salto1).str_pad( $value["cliente_pat"],$salto2).str_pad( $value["cliente_mat"],$salto3).str_pad( $value["cliente_doc"],$salto4).str_pad( $value["numcta"],$salto5).str_pad( $value["fecha"],$salto6). $value["monto"] . PHP_EOL);
+					fwrite($file,str_pad( $value["cliente_nom"],$salto1).str_pad( $value["cliente_pat"],$salto2).str_pad( $value["cliente_mat"],$salto3).str_pad( $cliente_doc,$salto4).str_pad( $value["numcta"],$salto5).str_pad( $value["fecha"],$salto6). $value["monto"] . PHP_EOL);
 				}
 				fclose($file);
 			   	if($respuesta == "ok"  && $respuesta2=="ok"){
