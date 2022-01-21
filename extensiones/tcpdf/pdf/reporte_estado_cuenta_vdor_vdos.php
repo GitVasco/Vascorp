@@ -113,6 +113,8 @@ foreach ($cuentas as $key => $value){
         $pdf->SetFont($fontname, '', 8, '', false);
         $nombre = substr($value["nombre"],0,30);
 
+        $nom_ubigeo = substr($value["nom_ubigeo"],0,15);
+
         $bloque3 = '<table style="text-center" >
         <tbody>
 
@@ -151,6 +153,8 @@ foreach ($cuentas as $key => $value){
         
         $nombre = substr($value["nombre"],0,30);
 
+        $nom_ubigeo = substr($value["nom_ubigeo"],0,15);
+
         $bloque3 = '<table style="text-center" >
         <tbody>
             <tr>
@@ -162,7 +166,7 @@ foreach ($cuentas as $key => $value){
                 <td style="width:50px">'.$value["cliente"].'</td>
                 <td style="width:140px">'.$nombre.'</td>
                 <td style="width:50px;text-align:right">'.number_format($value["saldo"],2).'</td>
-                <td style="width:70px">'.$value["nom_ubigeo"].'</td>
+                <td style="width:70px">'.$nom_ubigeo.'</td>
                 <td style="width:35px">'.$value["protesta"].'</td>
             </tr>
         </tbody>

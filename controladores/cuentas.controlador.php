@@ -925,8 +925,6 @@ class ControladorCuentas{
 						$documento=$data->sheets[0]['cells'][$i][1];
 						$unico=$data->sheets[0]['cells'][$i][2];
 
-						$existe=ControladorCuentas::ctrMostrarCuentas("num_unico",$unico);
-
 						$sqlInsertar = mysql_query("UPDATE 
 							cuenta_ctejf 
 						  SET
