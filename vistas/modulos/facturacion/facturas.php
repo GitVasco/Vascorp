@@ -57,17 +57,19 @@
 
                         <tr>
 
-                            <th>Tipo Documento</th>
+                            <th>Tipo Doc.</th>
                             <th>Documento</th>
                             <th>Total</th>
-                            <th>Cod. Cliente</th>
+                            <th>Cliente</th>
                             <th>Nombre</th>
-                            <th>Vendedor</th>
-                            <th>Fec. Emisión</th>
-                            <th>Doc. Destino</th>
+                            <th>Vend.</th>
+                            <th>Fec. Emi.</th>
+                            <th>Doc. Dest.</th>
+                            <th>Cond. Venta</th>
                             <th>Estado</th>
                             <th>Agencia</th>
                             <th>Destino</th>
+                            <th>Responsable</th>
                             <th style="width:130px">Acciones</th>
 
                         </tr>

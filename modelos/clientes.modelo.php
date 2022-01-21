@@ -343,7 +343,7 @@ class ModeloClientes{
 
 		if($item != null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT codigo,nombre FROM $tabla WHERE $item = :$item ORDER BY id ASC");
+			$stmt = Conexion::conectar()->prepare("SELECT codigo,nombre,documento FROM $tabla WHERE $item = :$item ORDER BY id ASC");
 
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 
@@ -354,7 +354,7 @@ class ModeloClientes{
 		}else{
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
-			codigo,nombre
+			codigo,nombre,documento
 		  FROM
 			clientesjf 
 		  ORDER BY id DESC ");

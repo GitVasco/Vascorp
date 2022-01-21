@@ -21,12 +21,19 @@ class TablaGuiasRemision{
 
         for($i = 0; $i < count($boletas); $i++){
 
+            date_default_timezone_set('America/Lima');
+            $hoy = date("Y-m-d");
+
             /* 
             *estado
             */
-            if($boletas[$i]["facturacion"] == "0"){
+            if($boletas[$i]["facturacion"] == "0" && $hoy == $boletas[$i]["fecha"]){
 
                 $estado = "<span style='font-size:85%' class='label label-success'>GENERADO</span>";
+                
+            }else if($boletas[$i]["facturacion"] == "0" && $hoy >= $boletas[$i]["fecha"]){
+
+                $estado = "<span style='font-size:85%' class='label label-warning'>GENERADO</span>";
                 
             }else if($boletas[$i]["facturacion"] == "1"){
 
@@ -65,9 +72,11 @@ class TablaGuiasRemision{
             "'.$boletas[$i]["vendedor"].'",
             "'.$boletas[$i]["fecha"].'",
             "'.$boletas[$i]["doc_destino"].'",
-            "'.$boletas[$i]["estado"].'",
+            "'.$boletas[$i]["descripcion"].'",
+            "'.$estado.'",
             "'.$boletas[$i]["agencia"].'",
             "'.$boletas[$i]["ubigeo"].'",
+            "'.$boletas[$i]["usureg"].'",
             "'.$botones.'"
             ],';
             }

@@ -147,7 +147,7 @@ MODAL FACTURAR
 
     <div class="modal-content">
 
-      <form role="form" method="post">
+      <form role="form" method="post" onsubmit="return checkSubmit();">
 
         <!--=====================================
         CABEZA DEL MODAL
@@ -411,7 +411,7 @@ MODAL FACTURAR
 
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" class="btn btn-primary">Generar Documento</button>
+          <button type="submit" id="btnGenerarDoc" class="btn btn-primary">Generar Documento</button>
 
         </div>
 
@@ -439,4 +439,7 @@ MODAL FACTURAR
 
 <script>
 window.document.title = "Pedidos"
+
+
+
 </script>

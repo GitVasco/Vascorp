@@ -84,13 +84,13 @@
 
                         <tr>
 
-                            <th>Tipo Documento</th>
+                            <th>Tipo Doc.</th>
                             <th>Documento</th>
                             <th>Total</th>
                             <th>Cod. Cliente</th>
                             <th>Nombre</th>
                             <th>DNI/RUC</th>
-                            <th>Vendedor</th>
+                            <th>Vend.</th>
                             <th>Fec. Emisión</th>
                             <th>Doc. Origen</th>
                             <th>Estado</th>

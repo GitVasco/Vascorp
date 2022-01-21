@@ -1444,7 +1444,8 @@ class ModeloFacturacion{
       SUBSTR(v.doc_destino,5,8) AS nro_dest,
       v.estado,
       IFNULL(a.nombre, '') AS agencia,
-      IFNULL(u.nom_ubi, '') AS ubigeo
+      IFNULL(u.nom_ubi, '') AS ubigeo,
+      v.usureg
   FROM
       ventajf v
       LEFT JOIN clientesjf c
@@ -1484,7 +1485,8 @@ class ModeloFacturacion{
       SUBSTR(v.doc_destino,5,8) AS nro_dest,
       v.estado,
       IFNULL(a.nombre, '') AS agencia,
-      IFNULL(u.nom_ubi, '') AS ubigeo
+      IFNULL(u.nom_ubi, '') AS ubigeo,
+      v.usureg
   FROM
       ventajf v
       LEFT JOIN clientesjf c
@@ -1534,7 +1536,8 @@ class ModeloFacturacion{
         SUBSTR(v.doc_destino,5,8) AS nro_dest,
         v.estado,
         IFNULL(a.nombre, '') AS agencia,
-        IFNULL(u.nom_ubi, '') AS ubigeo
+        IFNULL(u.nom_ubi, '') AS ubigeo,
+        v.usureg
     FROM
         ventajf v
         LEFT JOIN clientesjf c
@@ -1576,7 +1579,8 @@ class ModeloFacturacion{
         SUBSTR(v.doc_destino,5,8) AS nro_dest,
         v.estado,
         IFNULL(a.nombre, '') AS agencia,
-        IFNULL(u.nom_ubi, '') AS ubigeo
+        IFNULL(u.nom_ubi, '') AS ubigeo,
+        v.usureg
     FROM
         ventajf v
         LEFT JOIN clientesjf c
@@ -1630,7 +1634,8 @@ class ModeloFacturacion{
       SUBSTR(v.doc_destino,5,8) AS nro_dest,
       v.estado,
       IFNULL(a.nombre, '') AS agencia,
-      IFNULL(u.nom_ubi, '') AS ubigeo
+      IFNULL(u.nom_ubi, '') AS ubigeo,
+      v.usureg
   FROM
       ventajf v
       LEFT JOIN clientesjf c
@@ -1670,7 +1675,8 @@ class ModeloFacturacion{
       SUBSTR(v.doc_destino,5,8) AS nro_dest,
       v.estado,
       IFNULL(a.nombre, '') AS agencia,
-      IFNULL(u.nom_ubi, '') AS ubigeo
+      IFNULL(u.nom_ubi, '') AS ubigeo,
+      v.usureg
   FROM
       ventajf v
       LEFT JOIN clientesjf c
@@ -1720,7 +1726,8 @@ class ModeloFacturacion{
         SUBSTR(v.doc_destino,5,8) AS nro_dest,
         v.estado,
         IFNULL(a.nombre, '') AS agencia,
-        IFNULL(u.nom_ubi, '') AS ubigeo
+        IFNULL(u.nom_ubi, '') AS ubigeo,
+        v.usureg
     FROM
         ventajf v
         LEFT JOIN clientesjf c
@@ -1762,7 +1769,8 @@ class ModeloFacturacion{
         SUBSTR(v.doc_destino,5,8) AS nro_dest,
         v.estado,
         IFNULL(a.nombre, '') AS agencia,
-        IFNULL(u.nom_ubi, '') AS ubigeo
+        IFNULL(u.nom_ubi, '') AS ubigeo,
+        v.usureg
     FROM
         ventajf v
         LEFT JOIN clientesjf c

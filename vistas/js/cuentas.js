@@ -994,6 +994,8 @@ $("#cancelarMonto3").change(function(){
     return;
   }
 });
+
+
 $("#tipoCliente").change(function(){
   var cliente = $(this).val();
   var descripcion = $(this).find('option:selected').text();
@@ -1287,7 +1289,7 @@ $(".box").on("click", "#cargaClienteCuenta", function () {
 			$("#tipoCliente").append('<option value="">Seleccionar cliente</option>');
       for (let i = 0; i < respuesta.length; i++) {
         
-        $("#tipoCliente").append("<option value='"+respuesta[i]["codigo"]+"'>"+respuesta[i]["codigo"]+" - "+respuesta[i]["nombre"]+"</option>");
+        $("#tipoCliente").append("<option value='"+respuesta[i]["codigo"]+"'>"+respuesta[i]["codigo"]+" - "+respuesta[i]["nombre"]+" - "+ respuesta[i]["documento"]+"</option>");
         
       }
       $("#tipoCliente").selectpicker("refresh");

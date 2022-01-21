@@ -1027,7 +1027,7 @@ class ModeloCuentas{
 
 		if($ano == "null"){
 
-			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.tip_mov ='+'  AND YEAR(c.fecha) = YEAR(NOW()) ORDER BY c.id ASC");
+			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.tip_mov ='+'  AND YEAR(c.fecha) >= '2021' ORDER BY c.id ASC");
 
 			$stmt -> execute();
 

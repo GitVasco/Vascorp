@@ -1664,7 +1664,6 @@ class ModeloArticulos
 		  WHERE codigo = $salida) AS t 
 		  ON a.articulo = t.articulo 
 	  WHERE a.modelo = '".$modelo."'
-		AND a.estado = 'activo' 
 	  GROUP BY a.modelo,
 		a.cod_color,
 		a.color";
@@ -1796,7 +1795,6 @@ class ModeloArticulos
 		  FROM
 			articulojf a 
 		  WHERE a.modelo = '".$modelo."' 
-			AND a.estado = 'activo' 
 		  GROUP BY a.modelo,
 			a.cod_color,
 			a.color";

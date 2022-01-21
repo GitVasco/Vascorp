@@ -13,8 +13,25 @@ class TablaCuentasConsultar{
         $item = "cliente";     
         $valor = $_GET["cliente"];
 
-        $cuenta = ControladorCuentas::ctrMostrarTipoCuentas($item, $valor);	
-        if(count($cuenta)>0){
+        
+
+        //$regis = count($cuenta);
+
+        if($valor == "null"){
+
+            $regis = 0;
+
+
+        }else{
+
+            $cuenta = ControladorCuentas::ctrMostrarTipoCuentas($item, $valor);	
+            $regis = count($cuenta);
+
+        }
+
+
+
+        if($regis>0){
 
         $datosJson = '{
         "data": [';

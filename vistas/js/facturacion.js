@@ -2348,3 +2348,9 @@ $("#formularioRegistro").on("click","button.btnGenerarReg",function(){
   window.location = "vistas/reportes_excel/rpt_registro_ventas.php?mes="+mes;
 
 })
+
+function checkSubmit() {
+	document.getElementById("btnGenerarDoc").value = "Enviando...";
+	document.getElementById("btnGenerarDoc").disabled = true;
+	return true;
+}
