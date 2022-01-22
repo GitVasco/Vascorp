@@ -376,7 +376,7 @@ LEFT JOIN
       vd.fecemi BETWEEN DATE_SUB(NOW(), INTERVAL 6 MONTH) 
       AND NOW()
     ) 
-  GROUP BY YEAR(vd.fecemi),
+  GROUP BY 
     vd.codpro) AS s 
   ON p.Codpro = s.codpro,
 Tabla_M_Detalle AS tb,
