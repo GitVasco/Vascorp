@@ -692,7 +692,7 @@ $(".tablaVerCuentas").on("click", ".btnEditarCancelacion", function () {
       success: function (respuesta) {
         //console.log(respuesta);
           $("#idCuenta2").val(respuesta["id"]);
-          $("#cancelarDocumento").val(respuesta["num_cta"]);
+          $("#cancelarDocumento").val(respuesta["doc_origen"]);
           $("#docEditar").val(respuesta["num_cta"]);
           $("#cancelarNota").val(respuesta["notas"]);
           $("#cancelarCodigo").val(respuesta["cod_pago"]);

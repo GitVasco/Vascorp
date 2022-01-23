@@ -89,6 +89,17 @@ class ControladorMovimientos{
     }
 
     /* 
+    * sacamos los totales vencidos por vendedor
+    */
+    static public function ctrTotalesVencidosVendedor($inicio, $lineas){
+
+        $respuesta = ModeloMovimientos::mdlTotalesVencidosVendedor($inicio, $lineas);
+
+        return $respuesta;
+
+    }    
+
+    /* 
     * total de dias con produccion del mes pasado
     */
     static public function ctrTotDiasProd($valor){
@@ -248,6 +259,17 @@ class ControladorMovimientos{
     static public function ctrMostrarResumenVdor($mes){
 
         $respuesta = ModeloMovimientos::mdlMostrarResumenVdor($mes);
+
+        return $respuesta;
+
+    }     
+
+    /* 
+    * MOSTRAR RANGOS
+    */
+    static public function ctrMostrarRangos($mes){
+
+        $respuesta = ModeloMovimientos::mdlMostrarRangos($mes);
 
         return $respuesta;
 

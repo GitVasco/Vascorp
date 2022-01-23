@@ -242,6 +242,23 @@ $(".chkFacturaB").change(function(){
     var serieSeparadoB = $("#serieSeparadoB");
     //console.log(serieSeparadoB);
 
+    var tipoDoc = document.getElementById("tipDocB").value;
+    console.log(tipoDoc);
+
+    if(tipoDoc == "DNI"){
+
+        document.getElementById("tipDocB").style.background = "#FF6868";
+        document.getElementById("tipDocB").style.color = "black";
+        $("#tipDocB").css("font-weight","bold");
+
+    }else{
+
+        document.getElementById("tipDocB").style.background = "#52BE80";
+        document.getElementById("tipDocB").style.color = "black";
+        $("#tipDocB").css("font-weight","bold");
+
+    }    
+
     if(chkBox.checked == true){
 
         document.getElementById("chkBoletaB").disabled = true;
@@ -299,8 +316,24 @@ $(".chkBoletaB").change(function(){
     serieSeparadoB.find('option').remove();
     //console.log(serieSeparadoB);
 
-
     var documento = "03";
+
+    var tipoDoc = document.getElementById("tipDocB").value;
+    //console.log(tipoDoc);
+
+    if(tipoDoc == "RUC"){
+
+        document.getElementById("tipDocB").style.background = "#FF6868";
+        document.getElementById("tipDocB").style.color = "black";
+        $("#tipDocB").css("font-weight","bold");
+
+    }else{
+
+        document.getElementById("tipDocB").style.background = "#52BE80";
+        document.getElementById("tipDocB").style.color = "black";
+        $("#tipDocB").css("font-weight","bold");
+
+    }      
 
     if(chkBox.checked == true){
 
@@ -1077,7 +1110,7 @@ function cargarTablaNotaCD(fechaInicial,fechaFinal) {
 		"deferRender": true,
 		"retrieve": true,
 		"processing": true,
-		"order": [[6, "desc"]],
+		"order": [[5, "desc"]],
 		"pageLength": 20,
 		"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
 		"language": {

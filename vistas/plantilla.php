@@ -328,7 +328,8 @@ CUERPO DOCUMENTO
                   $_GET["ruta"] == "crear-salidas-varios"||
                   $_GET["ruta"] == "listar-documento"||
                   $_GET["ruta"] == "pago-servicio" ||
-                  $_GET["ruta"] == "seguimiento"){
+                  $_GET["ruta"] == "seguimiento" ||
+                  $_GET["ruta"] == "enviados-taller"){
 
               include "modulos/produccion/".$_GET["ruta"].".php";
 

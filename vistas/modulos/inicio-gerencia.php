@@ -257,7 +257,172 @@
 
 
 
-        </div>        
+        </div>    
+        
+        <div class="col-lg-7">
+
+            <div class="box box-primary">
+                <div class="box-header with-border"></div>
+                <center><b>Resumen de gestión</b></center>
+
+                <div class="box-body no-padding">
+                    <table class="table table-bordered table-striped dt-responsive tablaRangos" width="100%"> 
+                        <thead>
+                            <tr>
+                                <th>Codigo</th>
+                                <th>Nombre</th>
+                                <th>Ventas</th>
+                                <th>Cobranza</th>                                
+                                <th>Vencidos</th>
+                                <th>2015</th>
+                                <th>2016</th>
+                                <th>2017</th>
+                                <th>2018</th>
+                                <th>2019</th>
+                                <th>2020</th>
+                                <th>2021</th>
+                                <th>2022</th>
+                            </tr>
+                        </thead>
+                        <tbody>                            
+                        </tbody>
+                        <tfoot>
+                            <th></th>
+                            <th></th>
+                            <th style="text-align:right !important;"></th>
+                            <th style="text-align:right !important;"></th>
+                            <th style="text-align:right !important;"></th>
+                            <th style="text-align:right !important;"></th>
+                            <th style="text-align:right !important;"></th>
+                            <th style="text-align:right !important;"></th>
+                            <th style="text-align:right !important;"></th>
+                            <th style="text-align:right !important;"></th>
+                            <th style="text-align:right !important;"></th>
+                            <th style="text-align:right !important;"></th>
+                            <th style="text-align:right !important;"></th>
+                        </tfoot>                        
+                    </table>
+                </div>
+
+            </div>        
+
+
+
+        </div>          
+
+        <div class="col-lg-5">
+
+            <div class="col-lg-6">
+
+                <div class="box box-primary">
+                    <div class="box-header with-border"></div>
+                    <center><b>Participación en documento vencidos</b></center>
+                    
+                    <div class="box-body">
+                    <?php
+
+                    $vencidosV = ControladorMovimientos::ctrTotalesVencidosVendedor(0,8);
+                    #var_dump($vencidosV);
+                    
+                    $vencidos = ControladorMovimientos::ctrTotalVencidos();
+                    #var_dump($vencidos["saldo"]);
+
+                    foreach($vencidosV as $key => $value){
+
+                        $porcentaje = number_format(100-($value["saldo"]/$vencidos["saldo"]*100),0);
+                        #var_dump($porcentaje);
+
+                        if($porcentaje >=98 && $porcentaje <=100){
+
+                            $color = "green";
+
+
+                        }else if($porcentaje >=91 && $porcentaje <98){
+
+                            $color = "yellow";
+
+                        }else if($porcentaje >=0 && $porcentaje <90){
+
+                            $color = "red";
+
+                        }
+
+                        echo '<div class="progress-group">
+                                    <span class="progress-text">'.$value["vendedor"].' - '.$value["nom_vendedor"].'</span>
+                                    <span class="progress-number"><b>'.number_format($value["saldo"],2).'</b>/'.number_format($vencidos["saldo"],2).'</span>
+
+                                    <div class="progress sm">
+                                        <div class="progress-bar progress-bar-'.$color.'" style="width: '.$porcentaje.'%"></div>
+                                    </div>
+                                </div>';
+
+
+                    }
+
+                    ?>
+
+                    </div>                
+
+                </div>  
+
+            </div>
+
+            <div class="col-lg-6">
+
+                <div class="box box-primary">
+                    <div class="box-header with-border"></div>
+                    <center><b>Participación en documento vencidos</b></center>
+                    
+                    <div class="box-body">
+                    <?php
+
+                    $vencidosV = ControladorMovimientos::ctrTotalesVencidosVendedor(8,8);
+                    #var_dump($vencidosV);
+                    
+                    $vencidos = ControladorMovimientos::ctrTotalVencidos();
+                    #var_dump($vencidos["saldo"]);
+
+                    foreach($vencidosV as $key => $value){
+
+                        $porcentaje = number_format(100-($value["saldo"]/$vencidos["saldo"]*100),0);
+                        #var_dump($porcentaje);
+
+                        if($porcentaje >=98 && $porcentaje <=100){
+
+                            $color = "green";
+
+
+                        }else if($porcentaje >=91 && $porcentaje <98){
+
+                            $color = "yellow";
+
+                        }else if($porcentaje >=0 && $porcentaje <90){
+
+                            $color = "red";
+
+                        }
+
+                        echo '<div class="progress-group">
+                                    <span class="progress-text">'.$value["vendedor"].' - '.$value["nom_vendedor"].'</span>
+                                    <span class="progress-number"><b>'.number_format($value["saldo"],2).'</b>/'.number_format($vencidos["saldo"],2).'</span>
+
+                                    <div class="progress sm">
+                                        <div class="progress-bar progress-bar-'.$color.'" style="width: '.$porcentaje.'%"></div>
+                                    </div>
+                                </div>';
+
+
+                    }
+
+                    ?>
+
+                    </div>                
+
+                </div>  
+
+            </div>      
+
+        </div>          
 
 
     </div>      

@@ -603,26 +603,31 @@ class ControladorCuentas{
 							"pcreg" => $pcreg);
 			#var_dump($datos);
 						   
-				$origen=ControladorCuentas::ctrMostrarCuentasv2($_POST["cancelarDocumento"],$_POST["tipEditar"]);
+				$origen=ControladorCuentas::ctrMostrarCuentasv2($_POST["docEditar"],$_POST["tipEditar"]);
 				$idOrigen=$origen["id"];
-
 				#var_dump($idOrigen);
 
 				$saldoNuevo= $_POST["cancelarSaldoAntiguo"] + $_POST["cancelarMontoAntiguo"]-$_POST["cancelarMonto2"];
+				#var_dump($saldoNuevo);
 
 				if($saldoNuevo>0){
 					$estado=ModeloCuentas::mdlActualizarUnDato($tabla,"estado","PENDIENTE",$idOrigen);
+				}else{
+
+					$estado=ModeloCuentas::mdlActualizarUnDato($tabla,"estado","CANCELADO",$idOrigen);
 				}
 
 				$actualizacion=ModeloCuentas::mdlActualizarUnDato($tabla,"saldo",$saldoNuevo,$idOrigen);
 
 				date_default_timezone_set('America/Lima');
 				$fecha = new DateTime();
-				$cancelacion=ModeloCuentas::mdlMostrarCancelacion($tabla,"id",$datos);
+				$cancelacion=ModeloCuentas::mdlMostrarCancelacion("cuenta_ctejf","id",$_POST["idCuenta2"]);
+				#var_dump($cancelacion);
 				$usuario= $_SESSION["nombre"];
 				$para      = 'notificacionesvascorp@gmail.com';
 				$asunto    = 'Se edito una cancelación';
 				$descripcion   = 'El usuario '.$usuario.' edito una cancelacion de la cuenta de '.$cancelacion["tipo_doc"].' - '.$cancelacion["num_cta"];
+				#var_dump($descripcion);
 				$de = 'From: notificacionesvascorp@gmail.com';
 				if($_SESSION["correo"] == 1){
 					mail($para, $asunto, $descripcion, $de);
@@ -652,7 +657,7 @@ class ControladorCuentas{
 						  }).then(function(result){
 									if (result.value) {
 
-									window.location = "index.php?ruta=ver-cuentas&numCta='.$_POST["cancelarDocumento"].'&codCuenta='.$_POST["tipEditar"].'";
+									window.location = "index.php?ruta=ver-cuentas&numCta='.$_POST["docEditar"].'&codCuenta='.$_POST["tipEditar"].'";
 
 									}
 								})

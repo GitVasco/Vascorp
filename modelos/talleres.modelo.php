@@ -375,6 +375,28 @@ $stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
 		$stmt = null;
 
   }    
+
+  static public function mdlEliminarTallerDetalleCab($datos){
+
+		$stmt = Conexion::conectar()->prepare("DELETE FROM entaller_cabjf WHERE id_cabecera = :id");
+
+		$stmt -> bindParam(":id", $datos, PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+  }  
   
 	/*=============================================
 	CREAR TALLER

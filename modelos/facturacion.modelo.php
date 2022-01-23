@@ -457,6 +457,11 @@ class ModeloFacturacion{
                         v.cliente,
                         c.nombre,
                         c.tipo_documento AS tip_doc,
+                        (SELECT 
+                          tipo_doc 
+                        FROM
+                          tipo_documentojf td 
+                        WHERE c.tipo_documento = td.cod_doc) AS tipo_doc,	
                         c.documento AS num_doc,
                         v.vendedor,
                         v.fecha,
@@ -1290,7 +1295,9 @@ class ModeloFacturacion{
                     LEFT JOIN usuariosjf u 
                         ON v.usuario = u.id 
                     WHERE v.tipo IN ('E05', 'S05') 
-                    AND YEAR(v.fecha) = 2022";
+                    AND YEAR(v.fecha) = 2022
+                    ORDER BY v.fecha DESC,
+                    v.tipo ";
     
           $stmt=Conexion::conectar()->prepare($sql);
           
@@ -1323,7 +1330,9 @@ class ModeloFacturacion{
                         LEFT JOIN usuariosjf u 
                             ON v.usuario = u.id 
                         WHERE v.tipo IN ('E05', 'S05') 
-                        AND DATE(v.fecha)  like '%$fechaFinal%' ";
+                        AND DATE(v.fecha)  like '%$fechaFinal%' 
+                        ORDER BY v.fecha DESC,
+                        v.tipo";
     
           $stmt=Conexion::conectar()->prepare($sql);
     
@@ -1367,7 +1376,9 @@ class ModeloFacturacion{
                                             LEFT JOIN usuariosjf u 
                                             ON v.usuario = u.id 
                                         WHERE v.tipo IN ('E05', 'S05') 
-                                            AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'";
+                                            AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'
+                                            ORDER BY v.fecha DESC,
+                                            v.tipo ";
                 
                     $stmt=Conexion::conectar()->prepare($sql);
                 
@@ -1402,7 +1413,9 @@ class ModeloFacturacion{
                                             LEFT JOIN usuariosjf u 
                                             ON v.usuario = u.id 
                                         WHERE v.tipo IN ('E05', 'S05') 
-                                            AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'";
+                                            AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'
+                                            ORDER BY v.fecha DESC,
+                                            v.tipo ";
                 
                         $stmt=Conexion::conectar()->prepare($sql);
                 

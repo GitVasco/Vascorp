@@ -558,6 +558,7 @@ $(".tablaVtasGerenciaVdor").DataTable({
 	}
 });
 
+
 $(".tablaCtasVdor").DataTable({
 	"ajax": "ajax/movimientos/tabla-ctasgerenciavdor.ajax.php",
 	"deferRender": true,
@@ -590,4 +591,88 @@ $(".tablaCtasVdor").DataTable({
 			"sSortDescending": ": Activar para ordenar la columna de manera descendente"
 		}
 	}
+});
+
+
+$(".tablaRangos").DataTable({
+	"ajax": "ajax/movimientos/tabla-rangos.ajax.php?mes=" + myParam,
+	"deferRender": true,
+	"retrieve": true,
+	"processing": true,
+	"order": [[0, "asc"]],
+	"searching": false,
+	"paging": false,
+	"language": {
+		"sProcessing": "Procesando...",
+		"sLengthMenu": "Mostrar _MENU_ registros",
+		"sZeroRecords": "No se encontraron resultados",
+		"sEmptyTable": "No hay datos disponibles en esta tabla",
+		"sInfo": "Registros del _START_ al _END_ de un total de _TOTAL_",
+		"sInfoEmpty": "Registros del 0 al 0 de un total de 0",
+		"sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+		"sInfoPostFix": "",
+		"sSearch": "Buscar:",
+		"sUrl": "",
+		"sInfoThousands": ",",
+		"sLoadingRecords": "Cargando...",
+		"oPaginate": {
+			"sFirst": "Primero",
+			"sLast": "Último",
+			"sNext": "Siguiente",
+			"sPrevious": "Anterior"
+		},
+		"oAria": {
+			"sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+			"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+		}
+	},
+	"drawCallback":function(){
+		var api=this.api();
+		$(api.column(2).footer()).html(
+			Intl.NumberFormat().format(api.column(2,{page:'current'}).data().sum().toFixed(2)*-1)
+		)
+
+		$(api.column(3).footer()).html(
+			Intl.NumberFormat().format(api.column(3,{page:'current'}).data().sum().toFixed(2)*-1)
+		)
+
+		$(api.column(4).footer()).html(
+			Intl.NumberFormat().format(api.column(4,{page:'current'}).data().sum().toFixed(2)*-1)
+		)
+
+		$(api.column(5).footer()).html(
+			Intl.NumberFormat().format(api.column(5,{page:'current'}).data().sum().toFixed(2)*-1)
+		)
+
+		$(api.column(6).footer()).html(
+			Intl.NumberFormat().format(api.column(6,{page:'current'}).data().sum().toFixed(2)*-1)
+		)
+
+		$(api.column(7).footer()).html(
+			Intl.NumberFormat().format(api.column(7,{page:'current'}).data().sum().toFixed(2)*-1)
+		)
+
+		$(api.column(8).footer()).html(
+			Intl.NumberFormat().format(api.column(8,{page:'current'}).data().sum().toFixed(2)*-1)
+		)
+
+		$(api.column(9).footer()).html(
+			Intl.NumberFormat().format(api.column(9,{page:'current'}).data().sum().toFixed(2)*-1)
+		)
+
+		$(api.column(10).footer()).html(
+			Intl.NumberFormat().format(api.column(10,{page:'current'}).data().sum().toFixed(2)*-1)
+		)
+
+		$(api.column(11).footer()).html(
+			Intl.NumberFormat().format(api.column(11,{page:'current'}).data().sum().toFixed(2)*-1)
+		)
+		
+		$(api.column(12).footer()).html(
+
+			Intl.NumberFormat().format(api.column(12,{page:'current'}).data().sum().toFixed(2)*-1)
+		)
+
+
+	} 
 });

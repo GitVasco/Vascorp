@@ -1276,6 +1276,7 @@ class ControladorTalleres{
             $cod = $_POST["nuevoCodigo2"];
 
             $respuesta1=ModeloTalleres::mdlEliminarTallerDetalle($tabla,$cod);
+            $respuestaB=ModeloTalleres::mdlEliminarTallerDetalleCab($cod);
             $tabla2="entaller_cabjf";
             //Traemos la cabecera taller
             $cabeceraTaller=ControladorTalleres::ctrMostrarTallerCabecera("id",$cod);
@@ -2204,7 +2205,8 @@ class ControladorTalleres{
 		if(isset($_POST["verCantidad"])){
             $datosCab=array("articulo" => $_POST["verArti"], 
                              "usuario" => $_POST["verUser"],
-                             "cantidad" => $_POST["verCantidad"]);
+                             "cantidad" => $_POST["verCantidad"],
+                             "estado" => "1");
             $respuestaCab=ModeloCortes::mdlMandarTallerCab($datosCab);
             
             
@@ -2266,7 +2268,8 @@ class ControladorTalleres{
 		if(isset($_POST["verCantidad2"])){
             $datosCab=array("articulo" => $_POST["verArti"], 
                              "usuario" => $_POST["verUser"],
-                             "cantidad" => $_POST["verCantidad2"]);
+                             "cantidad" => $_POST["verCantidad2"],
+                             "estado" => "1");
             $respuestaCab=ModeloCortes::mdlMandarTallerCab($datosCab);
             
             
@@ -2332,7 +2335,8 @@ class ControladorTalleres{
             */
             $datosCab = array( "usuario" => $_POST["ticketUser"],
                             "articulo" => $_POST["ticketArticulo"],
-                            "cantidad" => $_POST["ticketCantidad"]);
+                            "cantidad" => $_POST["ticketCantidad"],
+                            "estado" => "1");
 
             $respuestaCab = ModeloCortes::mdlMandarTallerCab($datosCab);
 

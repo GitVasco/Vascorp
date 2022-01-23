@@ -27,6 +27,17 @@ class ControladorCortes{
     }
 
     /*
+    * MOSTRAR DATOS DE ALMACEN DE CORTE -VERSION 2
+    */
+    static public function ctrMostrarEnviadosTaller($modeloTaller){
+
+        $respuesta = ModeloCortes::mdlMostrarEnviadosTaller($modeloTaller);
+
+        return $respuesta;
+
+    }
+
+    /*
     * MOSTRAR TALLERES DISPONIBLES
     */
 	static public function ctrMostrarTaller(){
@@ -60,7 +71,8 @@ class ControladorCortes{
             */
             $datosCab = array( "usuario" => $_POST["usuario"],
                             "articulo" => $_POST["nuevoArticulo"],
-                            "cantidad" => $_POST["nuevoAlmCorte"]);
+                            "cantidad" => $_POST["nuevoAlmCorte"],
+                            "estado" => "0");
 
             $respuestaCab = ModeloCortes::mdlMandarTallerCab($datosCab);
 

@@ -449,6 +449,41 @@ $("#tdoc").change(function(){
 	var documento = document.getElementById("tdoc").value;
     //console.log(documento);
 
+    var tipoDoc = document.getElementById("tipDoc").value;
+    //console.log(tipoDoc);
+
+    if(documento == "01" && tipoDoc == "DNI"){
+
+        document.getElementById("tipDoc").style.background = "#FF6868";
+        document.getElementById("tipDoc").style.color = "black";
+        $("#tipDoc").css("font-weight","bold");
+
+    }else if(documento == "03" && tipoDoc == "DNI"){
+
+        document.getElementById("tipDoc").style.background = "#52BE80";
+        document.getElementById("tipDoc").style.color = "black";
+        $("#tipDoc").css("font-weight","bold");
+
+    }else if(documento == "03" && tipoDoc == "RUC"){
+
+        document.getElementById("tipDoc").style.background = "#FF6868";
+        document.getElementById("tipDoc").style.color = "black";
+        $("#tipDoc").css("font-weight","bold");
+
+    }else if(documento == "01" && tipoDoc == "RUC"){
+
+        document.getElementById("tipDoc").style.background = "#52BE80";
+        document.getElementById("tipDoc").style.color = "black";
+        $("#tipDoc").css("font-weight","bold");
+
+    }else{
+
+        document.getElementById("tipDoc").style.background = "#52BE80";
+        document.getElementById("tipDoc").style.color = "black";
+        $("#tipDoc").css("font-weight","bold");
+
+    }
+
     document.getElementById("chkFactura").checked = false;
     document.getElementById("chkBoleta").checked = false;
 
@@ -525,6 +560,22 @@ $(".chkFactura").change(function(){
     var serieSeparado = $("#serieSeparado");
     //console.log(serieSeparado);
 
+    var tipoDoc = document.getElementById("tipDoc").value;
+    //console.log(tipoDoc);
+
+    if(tipoDoc == "DNI"){
+
+        document.getElementById("tipDoc").style.background = "#FF6868";
+        document.getElementById("tipDoc").style.color = "black";
+        $("#tipDoc").css("font-weight","bold");
+
+    }else{
+
+        document.getElementById("tipDoc").style.background = "#52BE80";
+        document.getElementById("tipDoc").style.color = "black";
+        $("#tipDoc").css("font-weight","bold");
+
+    }
 
     if(chkBox.checked == true){
 
@@ -581,8 +632,24 @@ $(".chkBoleta").change(function(){
     serieSeparado.find('option').remove();
     //console.log(serieSeparado);
 
-
     var documento = "03";
+
+    var tipoDoc = document.getElementById("tipDoc").value;
+    //console.log(tipoDoc);
+
+    if(tipoDoc == "RUC"){
+
+        document.getElementById("tipDoc").style.background = "#FF6868";
+        document.getElementById("tipDoc").style.color = "black";
+        $("#tipDoc").css("font-weight","bold");
+
+    }else{
+
+        document.getElementById("tipDoc").style.background = "#52BE80";
+        document.getElementById("tipDoc").style.color = "black";
+        $("#tipDoc").css("font-weight","bold");
+
+    }    
 
     if(chkBox.checked == true){
 

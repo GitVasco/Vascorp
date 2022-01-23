@@ -539,6 +539,7 @@
                                             $_GET["ruta"] == "operacion-taller" || 
                                             $_GET["ruta"] == "sublimados" || 
                                             $_GET["ruta"] == "seguimiento" || 
+                                            $_GET["ruta"] == "enviados-taller" || 
                                             $_GET["ruta"] == "listar-documento") echo 'active';?>">
 
                 <a href="#">
@@ -635,6 +636,15 @@
                         </a>
 
                     </li>
+
+                    <li class="<?php if($_GET["ruta"] == "enviados-taller") echo 'active';?>">
+
+                        <a href="enviados-taller">
+                        <i class="fa fa-scissors"></i>
+                        <span>Env. a Taller</span>
+                        </a>
+
+                    </li>                    
 
                     <li class="treeview <?php if(   $_GET["ruta"] == "en-taller" || 
                                                     $_GET["ruta"] == "marcar-taller" || 
