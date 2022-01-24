@@ -1645,7 +1645,8 @@ class ModeloCuentas{
 			AND cc.estado = 'PENDIENTE' 
 			AND cc.tipo_doc = '85'
 			AND cc.banco = '02' 
-			AND cc.fecha_ven <= '$fin' ");
+			AND cc.fecha_ven <= '$fin' 
+			ORDER BY cc.fecha_ven DESC");
 
 			$stmt->bindParam(":tip_doc", $tip_doc, PDO::PARAM_STR);
 			$stmt->bindParam(":banco", $banco, PDO::PARAM_STR);
