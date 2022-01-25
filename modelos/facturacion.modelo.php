@@ -2072,6 +2072,9 @@ class ModeloFacturacion{
           WHERE tipo_dato = 'TVEND') AS ve 
           ON v.vendedor = ve.codigo 
       WHERE YEAR(v.fecha) = YEAR(NOW()) 
+      AND v.estado <> 'ANULADO' 
+                              AND v.tipo <> 'S01' 
+                              AND v.vendedor <> '99'
       GROUP BY v.vendedor");
         
         $stmt -> execute();
@@ -2095,6 +2098,9 @@ class ModeloFacturacion{
           WHERE tipo_dato = 'TVEND') AS ve 
           ON v.vendedor = ve.codigo 
       WHERE YEAR(v.fecha) = YEAR(NOW()) 
+      AND v.estado <> 'ANULADO' 
+                              AND v.tipo <> 'S01' 
+                              AND v.vendedor <> '99'
       GROUP BY v.vendedor");
         
         $stmt -> execute();
@@ -2103,22 +2109,25 @@ class ModeloFacturacion{
   
       }else if ($optipo == 'resumen' && $opdocumento == 'todos' && $impuesto == '0' && $vend == 'todos' && $inicio != 'todos' && $fin != 'todos'){
         $stmt = Conexion::conectar()->prepare("SELECT 
-          v.vendedor,
-          ve.descripcion,
-          ROUND(SUM(total) / 1.18, 2) AS total 
-        FROM
-          ventajf v 
-          LEFT JOIN 
-            (SELECT 
-              codigo,
-              descripcion 
-            FROM
-              maestrajf 
-            WHERE tipo_dato = 'TVEND') AS ve 
-            ON v.vendedor = ve.codigo 
-        WHERE v.fecha BETWEEN :inicio 
-          AND :fin 
-        GROUP BY v.vendedor");
+                            v.vendedor,
+                            ve.descripcion,
+                            ROUND(SUM(total) / 1.18, 2) AS total 
+                            FROM
+                              ventajf v 
+                              LEFT JOIN 
+                                (SELECT 
+                                  codigo,
+                                  descripcion 
+                                FROM
+                                  maestrajf 
+                                WHERE tipo_dato = 'TVEND') AS ve 
+                                ON v.vendedor = ve.codigo 
+                            WHERE v.fecha BETWEEN :inicio
+                              AND :fin
+                              AND v.estado <> 'ANULADO' 
+                              AND v.tipo <> 'S01' 
+                              AND v.vendedor <> '99'
+                            GROUP BY v.vendedor");
 
         $stmt -> bindParam(":inicio",$inicio, PDO::PARAM_STR);
         $stmt -> bindParam(":fin",$fin, PDO::PARAM_STR);
@@ -2144,6 +2153,9 @@ class ModeloFacturacion{
             ON v.vendedor = ve.codigo 
         WHERE v.fecha BETWEEN :inicio 
           AND :fin
+          AND v.estado <> 'ANULADO' 
+                              AND v.tipo <> 'S01' 
+                              AND v.vendedor <> '99'
         GROUP BY v.vendedor");
 
         $stmt -> bindParam(":inicio" ,$inicio , PDO::PARAM_STR);
@@ -2171,6 +2183,9 @@ class ModeloFacturacion{
         WHERE v.fecha BETWEEN :inicio 
           AND :fin
           AND v.vendedor = :vendedor
+          AND v.estado <> 'ANULADO' 
+                              AND v.tipo <> 'S01' 
+                              AND v.vendedor <> '99'
         GROUP BY v.vendedor");
 
         $stmt -> bindParam(":inicio",$inicio,PDO::PARAM_STR);
@@ -2200,6 +2215,9 @@ class ModeloFacturacion{
         WHERE v.fecha BETWEEN :inicio 
           AND :fin
           AND v.vendedor = :vendedor
+          AND v.estado <> 'ANULADO' 
+                              AND v.tipo <> 'S01' 
+                              AND v.vendedor <> '99'
         GROUP BY v.vendedor");
         
         $stmt->bindParam(":inicio",$inicio,PDO::PARAM_STR);
@@ -2226,6 +2244,9 @@ class ModeloFacturacion{
             ON v.vendedor = ve.codigo 
         WHERE v.vendedor = :vendedor
         AND YEAR(v.fecha) = YEAR(NOW()) 
+        AND v.estado <> 'ANULADO' 
+                              AND v.tipo <> 'S01' 
+                              AND v.vendedor <> '99'
         GROUP BY v.vendedor");
 
         $stmt->bindParam(":vendedor",$vend,PDO::PARAM_STR);
@@ -2252,6 +2273,9 @@ class ModeloFacturacion{
             ON v.vendedor = ve.codigo 
         WHERE v.vendedor = :vendedor
         AND YEAR(v.fecha) = YEAR(NOW()) 
+        AND v.estado <> 'ANULADO' 
+                              AND v.tipo <> 'S01' 
+                              AND v.vendedor <> '99'
         GROUP BY v.vendedor");
 
         $stmt->bindParam(":vendedor",$vend,PDO::PARAM_STR);
@@ -2287,6 +2311,9 @@ class ModeloFacturacion{
             ON v.vendedor = ve.codigo 
         WHERE YEAR(v.fecha) = YEAR(NOW()) 
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+                              AND v.tipo <> 'S01' 
+                              AND v.vendedor <> '99'
         GROUP BY v.vendedor");
 
         $stmt->bindParam(":documento",$opdocumento,PDO::PARAM_STR);
@@ -2313,6 +2340,9 @@ class ModeloFacturacion{
             ON v.vendedor = ve.codigo 
         WHERE YEAR(v.fecha) = YEAR(NOW()) 
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+                              AND v.tipo <> 'S01' 
+                              AND v.vendedor <> '99'
         GROUP BY v.vendedor");
 
         $stmt->bindParam(":documento",$opdocumento,PDO::PARAM_STR);
@@ -2339,6 +2369,9 @@ class ModeloFacturacion{
         WHERE v.fecha BETWEEN :inicio 
           AND :fin 
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+                              AND v.tipo <> 'S01' 
+                              AND v.vendedor <> '99'
         GROUP BY v.vendedor");
 
         $stmt -> bindParam(":inicio",$inicio, PDO::PARAM_STR);
@@ -2367,6 +2400,9 @@ class ModeloFacturacion{
         WHERE v.fecha BETWEEN :inicio 
           AND :fin
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+                              AND v.tipo <> 'S01' 
+                              AND v.vendedor <> '99'
         GROUP BY v.vendedor");
 
         $stmt -> bindParam(":inicio" ,$inicio , PDO::PARAM_STR);
@@ -2396,6 +2432,9 @@ class ModeloFacturacion{
           AND :fin
           AND v.vendedor = :vendedor
           AND v.tipo = :documento
+          AND v.estado <> 'ANULADO' 
+                              AND v.tipo <> 'S01' 
+                              AND v.vendedor <> '99'
         GROUP BY v.vendedor");
 
         $stmt -> bindParam(":inicio",$inicio,PDO::PARAM_STR);
@@ -2427,6 +2466,9 @@ class ModeloFacturacion{
           AND :fin
           AND v.vendedor = :vendedor
           AND v.tipo = :documento
+          AND v.estado <> 'ANULADO' 
+                              AND v.tipo <> 'S01' 
+                              AND v.vendedor <> '99'
         GROUP BY v.vendedor");
         
         $stmt->bindParam(":inicio",$inicio,PDO::PARAM_STR);
@@ -2456,6 +2498,9 @@ class ModeloFacturacion{
         WHERE v.vendedor = :vendedor
         AND v.tipo = :documento
         AND YEAR(v.fecha) = YEAR(NOW()) 
+        AND v.estado <> 'ANULADO' 
+                              AND v.tipo <> 'S01' 
+                              AND v.vendedor <> '99'
         GROUP BY v.vendedor");
 
         $stmt->bindParam(":vendedor",$vend,PDO::PARAM_STR);
@@ -2484,6 +2529,9 @@ class ModeloFacturacion{
         WHERE v.vendedor = :vendedor
         AND v.tipo = :documento
         AND YEAR(v.fecha) = YEAR(NOW()) 
+        AND v.estado <> 'ANULADO' 
+                              AND v.tipo <> 'S01' 
+                              AND v.vendedor <> '99'
         GROUP BY v.vendedor");
 
         $stmt->bindParam(":vendedor",$vend,PDO::PARAM_STR);
@@ -2599,6 +2647,7 @@ class ModeloFacturacion{
                     ON v.cliente = c.codigo 
                     WHERE YEAR(v.fecha) = YEAR(NOW()) 
                     AND v.tipo NOT IN ('S01') 
+                    AND v.estado <> 'ANULADO'
                 UNION
                 SELECT 
                     v.vendedor,
@@ -2632,6 +2681,7 @@ class ModeloFacturacion{
                     ON v.cliente = c.codigo 
                     WHERE YEAR(v.fecha) = YEAR(NOW()) 
                     AND  v.tipo NOT IN ('S01')
+                    AND v.estado <> 'ANULADO'
                 GROUP BY v.vendedor 
                 UNION
                 SELECT 
@@ -2654,6 +2704,7 @@ class ModeloFacturacion{
                     ON v.vendedor = ve.codigo 
                     WHERE YEAR(v.fecha) = YEAR(NOW()) 
                     AND v.tipo not in ('S01')
+                    AND v.estado <> 'ANULADO'
                 GROUP BY v.vendedor 
                 ORDER BY vendedor,
                     tipo,
@@ -2679,6 +2730,7 @@ class ModeloFacturacion{
                     WHERE v.fecha BETWEEN :inicio 
                     AND :fin
                     AND v.tipo NOT IN ('S01') 
+                    AND v.estado <> 'ANULADO'
                 UNION
                 SELECT 
                     v.vendedor,
@@ -2695,6 +2747,7 @@ class ModeloFacturacion{
                     WHERE v.fecha BETWEEN :inicio 
                     AND :fin
                     AND v.tipo not in ('S01')
+                    AND v.estado <> 'ANULADO'
                 GROUP BY v.tipo,
                     v.tipo_documento,
                     v.vendedor 
@@ -2714,6 +2767,7 @@ class ModeloFacturacion{
                     WHERE v.fecha BETWEEN :inicio 
                     AND :fin
                     AND v.tipo NOT IN ('S01')
+                    AND v.estado <> 'ANULADO'
                 GROUP BY v.vendedor 
                 UNION
                 SELECT 
@@ -2737,6 +2791,7 @@ class ModeloFacturacion{
                     WHERE v.fecha BETWEEN :inicio 
                     AND :fin
                     AND v.tipo not in ('S01')
+                    AND v.estado <> 'ANULADO'
                 GROUP BY v.vendedor 
                 ORDER BY vendedor,
                     tipo,
@@ -2766,6 +2821,7 @@ class ModeloFacturacion{
                     WHERE v.fecha BETWEEN :inicio 
                     AND :fin 
                     AND v.tipo NOT IN ('S01') 
+                    AND v.estado <> 'ANULADO'
                 UNION
                 SELECT 
                     v.vendedor,
@@ -2782,6 +2838,7 @@ class ModeloFacturacion{
                     WHERE v.fecha BETWEEN :inicio 
                     AND :fin
                     AND v.tipo not in ('S01')
+                    AND v.estado <> 'ANULADO'
                 GROUP BY v.tipo,
                     v.tipo_documento,
                     v.vendedor 
@@ -2801,6 +2858,7 @@ class ModeloFacturacion{
                     WHERE v.fecha BETWEEN :inicio 
                     AND :fin 
                     AND v.tipo NOT IN ('S01')
+                    AND v.estado <> 'ANULADO'
                 GROUP BY v.vendedor 
                 UNION
                 SELECT 
@@ -2824,6 +2882,7 @@ class ModeloFacturacion{
                     WHERE v.fecha BETWEEN :inicio 
                     AND :fin
                     AND v.tipo not in ('S01')
+                    AND v.estado <> 'ANULADO'
                 GROUP BY v.vendedor 
                 ORDER BY vendedor,
                     tipo,
@@ -2853,6 +2912,7 @@ class ModeloFacturacion{
                     AND :fin
                     AND v.vendedor = :vendedor
                     AND v.tipo not in ('S01')
+                    AND v.estado <> 'ANULADO'
                 UNION
                 SELECT 
                     v.vendedor,
@@ -2870,6 +2930,7 @@ class ModeloFacturacion{
                     AND :fin
                     AND v.vendedor = :vendedor
                     AND v.tipo not in ('S01')
+                    AND v.estado <> 'ANULADO'
                 GROUP BY v.tipo,
                     v.tipo_documento,
                     v.vendedor 
@@ -2890,6 +2951,7 @@ class ModeloFacturacion{
                     AND :fin
                     AND v.vendedor = :vendedor
                     AND v.tipo not in ('S01')
+                    AND v.estado <> 'ANULADO'
                 GROUP BY v.vendedor 
                 UNION
                 SELECT 
@@ -2914,6 +2976,7 @@ class ModeloFacturacion{
                     AND :fin                    
                     AND v.vendedor = :vendedor
                     AND v.tipo not in ('S01')
+                    AND v.estado <> 'ANULADO'
                 GROUP BY v.vendedor 
                 ORDER BY vendedor,
                     tipo,
@@ -2946,6 +3009,7 @@ class ModeloFacturacion{
                 AND :fin 
                 AND v.vendedor = :vendedor
                 AND v.tipo not in ('S01')
+                AND v.estado <> 'ANULADO'
             UNION
             SELECT 
                 v.vendedor,
@@ -2963,6 +3027,7 @@ class ModeloFacturacion{
                 AND :fin
                 AND v.vendedor = :vendedor
                 AND v.tipo not in ('S01')
+                AND v.estado <> 'ANULADO'
             GROUP BY v.tipo,
                 v.tipo_documento,
                 v.vendedor 
@@ -2983,6 +3048,7 @@ class ModeloFacturacion{
                 AND :fin 
                 AND v.vendedor = :vendedor
                 AND v.tipo not in ('S01')
+                AND v.estado <> 'ANULADO'
             GROUP BY v.vendedor 
             UNION
             SELECT 
@@ -3007,6 +3073,7 @@ class ModeloFacturacion{
                 AND :fin
                 AND v.vendedor = :vendedor
                 AND v.tipo not in ('S01')
+                AND v.estado <> 'ANULADO'
             GROUP BY v.vendedor 
             ORDER BY vendedor,
                 tipo,
@@ -3036,6 +3103,7 @@ class ModeloFacturacion{
                     WHERE YEAR(v.fecha) = YEAR(NOW()) 
                     AND v.vendedor=:vendedor
                     AND v.tipo not in ('S01')
+                    AND v.estado <> 'ANULADO'
                 UNION
                 SELECT 
                     v.vendedor,
@@ -3052,6 +3120,7 @@ class ModeloFacturacion{
                     WHERE YEAR(v.fecha) = YEAR(NOW()) 
                     AND v.vendedor = :vendedor
                     AND v.tipo not in ('S01')
+                    AND v.estado <> 'ANULADO'
                 GROUP BY v.tipo,
                     v.tipo_documento,
                     v.vendedor 
@@ -3071,6 +3140,7 @@ class ModeloFacturacion{
                     WHERE YEAR(v.fecha) = YEAR(NOW()) 
                     AND v.vendedor  = :vendedor
                     AND v.tipo not in ('S01')
+                    AND v.estado <> 'ANULADO'
                 GROUP BY v.vendedor 
                 UNION
                 SELECT 
@@ -3094,6 +3164,7 @@ class ModeloFacturacion{
                     WHERE YEAR(v.fecha) = YEAR(NOW()) 
                     AND v.vendedor = :vendedor
                     AND v.tipo not in ('S01')
+                    AND v.estado <> 'ANULADO'
                 GROUP BY v.vendedor 
                 ORDER BY vendedor,
                     tipo,
@@ -3108,81 +3179,86 @@ class ModeloFacturacion{
       } else if($optipo == 'detallado' && $opdocumento == 'todos' && $impuesto == '0' && $vend != 'todos' && $inicio == 'todos' && $fin == 'todos'){
 
         $stmt = Conexion::conectar()->prepare("SELECT 
-                v.vendedor,
-                v.tipo,
-                v.tipo_documento,
-                v.documento,
-                v.fecha,
-                c.nombre,
-                ROUND(v.total/ 1.18, 2) AS total 
-            FROM
-                ventajf v 
-                LEFT JOIN clientesjf c 
-                ON v.cliente = c.codigo 
-                WHERE YEAR(v.fecha) = YEAR(NOW()) 
-                AND v.vendedor = :vendedor
-            UNION
-            SELECT 
-                v.vendedor,
-                v.tipo,
-                v.tipo_documento,
-                'subtotal' AS documento,
-                '' AS fecha,
-                '' AS nombre,
-                ROUND(SUM(v.total) / 1.18, 2) AS total 
-            FROM
-                ventajf v 
-                LEFT JOIN clientesjf c 
-                ON v.cliente = c.codigo 
-                WHERE YEAR(v.fecha) = YEAR(NOW()) 
-                AND v.vendedor = :vendedor
-                AND v.tipo not in ('S01')
-            GROUP BY v.tipo,
-                v.tipo_documento,
-                v.vendedor 
-            UNION
-            SELECT 
-                v.vendedor,
-                'S99' AS tipo,
-                '' AS tipo_documento,
-                '' AS documento,
-                '' AS fecha,
-                '' AS nombre,
-                ROUND(SUM(v.total) / 1.18, 2) AS total 
-            FROM
-                ventajf v 
-                LEFT JOIN clientesjf c 
-                ON v.cliente = c.codigo 
-                WHERE YEAR(v.fecha) = YEAR(NOW()) 
-                AND v.vendedor = :vendedor
-                AND v.tipo not in ('S01')
-            GROUP BY v.vendedor 
-            UNION
-            SELECT 
-                v.vendedor,
-                'A00' AS tipo,
-                '' AS tipo_documento,
-                '' AS documento,
-                '' AS fecha,
-                ve.nom_ven AS nombre,
-                '' AS total 
-            FROM
-                ventajf v 
-                LEFT JOIN 
-                (SELECT 
-                    codigo,
-                    descripcion AS nom_ven 
-                FROM
-                    maestrajf 
-                WHERE tipo_dato = 'TVEND') AS ve 
-                ON v.vendedor = ve.codigo 
-                WHERE YEAR(v.fecha) = YEAR(NOW()) 
-                AND v.vendedor = :vendedor
-                AND v.tipo not in ('S01')
-            GROUP BY v.vendedor 
-            ORDER BY vendedor,
-                tipo,
-                documento");
+                                    v.vendedor,
+                                    v.tipo,
+                                    v.tipo_documento,
+                                    v.documento,
+                                    v.fecha,
+                                    c.nombre,
+                                    ROUND(v.total / 1.18, 2) AS total 
+                                FROM
+                                    ventajf v 
+                                    LEFT JOIN clientesjf c 
+                                    ON v.cliente = c.codigo 
+                                WHERE YEAR(v.fecha) = YEAR(NOW()) 
+                                    AND v.vendedor = :vendedor 
+                                    AND v.tipo <> 'S01' 
+                                    AND v.estado <> 'ANULADO'
+                                UNION
+                                SELECT 
+                                    v.vendedor,
+                                    v.tipo,
+                                    v.tipo_documento,
+                                    'subtotal' AS documento,
+                                    '' AS fecha,
+                                    '' AS nombre,
+                                    ROUND(SUM(v.total) / 1.18, 2) AS total 
+                                FROM
+                                    ventajf v 
+                                    LEFT JOIN clientesjf c 
+                                    ON v.cliente = c.codigo 
+                                WHERE YEAR(v.fecha) = YEAR(NOW()) 
+                                    AND v.vendedor = :vendedor 
+                                    AND v.tipo <> 'S01' 
+                                    AND v.estado <> 'ANULADO'
+                                GROUP BY v.tipo,
+                                    v.tipo_documento,
+                                    v.vendedor 
+                                UNION
+                                SELECT 
+                                    v.vendedor,
+                                    'S99' AS tipo,
+                                    '' AS tipo_documento,
+                                    '' AS documento,
+                                    '' AS fecha,
+                                    '' AS nombre,
+                                    ROUND(SUM(v.total) / 1.18, 2) AS total 
+                                FROM
+                                    ventajf v 
+                                    LEFT JOIN clientesjf c 
+                                    ON v.cliente = c.codigo 
+                                WHERE YEAR(v.fecha) = YEAR(NOW()) 
+                                    AND v.vendedor = :vendedor 
+                                    AND v.tipo <> 'S01' 
+                                    AND v.estado <> 'ANULADO'
+                                GROUP BY v.vendedor 
+                                UNION
+                                SELECT 
+                                    v.vendedor,
+                                    'A00' AS tipo,
+                                    '' AS tipo_documento,
+                                    '' AS documento,
+                                    '' AS fecha,
+                                    ve.nom_ven AS nombre,
+                                    '' AS total 
+                                FROM
+                                    ventajf v 
+                                    LEFT JOIN 
+                                    (SELECT 
+                                        codigo,
+                                        descripcion AS nom_ven 
+                                    FROM
+                                        maestrajf 
+                                    WHERE tipo_dato = 'TVEND') AS ve 
+                                    ON v.vendedor = ve.codigo 
+                                WHERE YEAR(v.fecha) = YEAR(NOW()) 
+                                    AND v.vendedor = :vendedor 
+                                    AND v.tipo <> 'S01' 
+                                    AND v.estado <> 'ANULADO'
+                                GROUP BY v.vendedor 
+                                ORDER BY vendedor,
+                                    tipo,
+                                    documento");
 
         $stmt->bindParam(":vendedor",$vend,PDO::PARAM_STR);
 
@@ -3215,6 +3291,9 @@ class ModeloFacturacion{
           ON v.cliente = c.codigo 
         WHERE YEAR(v.fecha) = YEAR(NOW()) 
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       UNION
       SELECT 
         v.vendedor,
@@ -3230,6 +3309,9 @@ class ModeloFacturacion{
           ON v.cliente = c.codigo 
         WHERE YEAR(v.fecha) = YEAR(NOW()) 
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       GROUP BY v.tipo,
         v.tipo_documento,
         v.vendedor 
@@ -3248,6 +3330,9 @@ class ModeloFacturacion{
           ON v.cliente = c.codigo 
         WHERE YEAR(v.fecha) = YEAR(NOW()) 
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       GROUP BY v.vendedor 
       UNION
       SELECT 
@@ -3270,6 +3355,9 @@ class ModeloFacturacion{
           ON v.vendedor = ve.codigo 
         WHERE YEAR(v.fecha) = YEAR(NOW()) 
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       GROUP BY v.vendedor 
       ORDER BY vendedor,
         tipo,
@@ -3297,6 +3385,9 @@ class ModeloFacturacion{
           ON v.cliente = c.codigo 
         WHERE YEAR(v.fecha) = YEAR(NOW()) 
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       UNION
       SELECT 
         v.vendedor,
@@ -3312,6 +3403,9 @@ class ModeloFacturacion{
           ON v.cliente = c.codigo 
         WHERE YEAR(v.fecha) = YEAR(NOW()) 
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       GROUP BY v.tipo,
         v.tipo_documento,
         v.vendedor 
@@ -3330,6 +3424,9 @@ class ModeloFacturacion{
           ON v.cliente = c.codigo 
         WHERE YEAR(v.fecha) = YEAR(NOW()) 
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       GROUP BY v.vendedor 
       UNION
       SELECT 
@@ -3352,6 +3449,9 @@ class ModeloFacturacion{
           ON v.vendedor = ve.codigo 
         WHERE YEAR(v.fecha) = YEAR(NOW()) 
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       GROUP BY v.vendedor 
       ORDER BY vendedor,
         tipo,
@@ -3379,6 +3479,9 @@ class ModeloFacturacion{
         WHERE v.fecha BETWEEN :inicio 
         AND :fin
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       UNION
       SELECT 
         v.vendedor,
@@ -3395,6 +3498,9 @@ class ModeloFacturacion{
         WHERE v.fecha BETWEEN :inicio 
         AND :fin
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       GROUP BY v.tipo,
         v.tipo_documento,
         v.vendedor 
@@ -3414,6 +3520,9 @@ class ModeloFacturacion{
         WHERE v.fecha BETWEEN :inicio 
         AND :fin
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       GROUP BY v.vendedor 
       UNION
       SELECT 
@@ -3437,6 +3546,9 @@ class ModeloFacturacion{
         WHERE v.fecha BETWEEN :inicio 
         AND :fin
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       GROUP BY v.vendedor 
       ORDER BY vendedor,
         tipo,
@@ -3466,6 +3578,9 @@ class ModeloFacturacion{
         WHERE v.fecha BETWEEN :inicio 
         AND :fin 
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       UNION
       SELECT 
         v.vendedor,
@@ -3482,6 +3597,9 @@ class ModeloFacturacion{
         WHERE v.fecha BETWEEN :inicio 
         AND :fin
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       GROUP BY v.tipo,
         v.tipo_documento,
         v.vendedor 
@@ -3501,6 +3619,9 @@ class ModeloFacturacion{
         WHERE v.fecha BETWEEN :inicio 
         AND :fin 
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       GROUP BY v.vendedor 
       UNION
       SELECT 
@@ -3524,6 +3645,9 @@ class ModeloFacturacion{
         WHERE v.fecha BETWEEN :inicio 
         AND :fin
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       GROUP BY v.vendedor 
       ORDER BY vendedor,
         tipo,
@@ -3554,6 +3678,9 @@ class ModeloFacturacion{
         AND :fin
         AND v.vendedor = :vendedor
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       UNION
       SELECT 
         v.vendedor,
@@ -3571,6 +3698,9 @@ class ModeloFacturacion{
         AND :fin
         AND v.vendedor = :vendedor
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       GROUP BY v.tipo,
         v.tipo_documento,
         v.vendedor 
@@ -3591,6 +3721,9 @@ class ModeloFacturacion{
         AND :fin
         AND v.vendedor = :vendedor
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       GROUP BY v.vendedor 
       UNION
       SELECT 
@@ -3615,6 +3748,9 @@ class ModeloFacturacion{
         AND :fin
         AND v.vendedor = :vendedor
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       GROUP BY v.vendedor 
       ORDER BY vendedor,
         tipo,
@@ -3646,6 +3782,9 @@ class ModeloFacturacion{
         AND :fin 
         AND v.vendedor = :vendedor
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       UNION
       SELECT 
         v.vendedor,
@@ -3663,6 +3802,9 @@ class ModeloFacturacion{
         AND :fin
         AND v.vendedor = :vendedor
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       GROUP BY v.tipo,
         v.tipo_documento,
         v.vendedor 
@@ -3683,6 +3825,9 @@ class ModeloFacturacion{
         AND :fin 
         AND v.vendedor = :vendedor
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       GROUP BY v.vendedor 
       UNION
       SELECT 
@@ -3707,6 +3852,9 @@ class ModeloFacturacion{
         AND :fin
         AND v.vendedor = :vendedor
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       GROUP BY v.vendedor 
       ORDER BY vendedor,
         tipo,
@@ -3737,6 +3885,9 @@ class ModeloFacturacion{
         WHERE YEAR(v.fecha) = YEAR(NOW()) 
         AND v.vendedor=:vendedor
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       UNION
       SELECT 
         v.vendedor,
@@ -3753,6 +3904,9 @@ class ModeloFacturacion{
         WHERE YEAR(v.fecha) = YEAR(NOW()) 
         AND v.vendedor = :vendedor
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       GROUP BY v.tipo,
         v.tipo_documento,
         v.vendedor 
@@ -3772,6 +3926,9 @@ class ModeloFacturacion{
         WHERE YEAR(v.fecha) = YEAR(NOW()) 
         AND v.vendedor  = :vendedor
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       GROUP BY v.vendedor 
       UNION
       SELECT 
@@ -3795,6 +3952,9 @@ class ModeloFacturacion{
         WHERE YEAR(v.fecha) = YEAR(NOW()) 
         AND v.vendedor = :vendedor
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       GROUP BY v.vendedor 
       ORDER BY vendedor,
         tipo,
@@ -3824,6 +3984,9 @@ class ModeloFacturacion{
         WHERE YEAR(v.fecha) = YEAR(NOW()) 
         AND v.vendedor = :vendedor
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       UNION
       SELECT 
         v.vendedor,
@@ -3840,6 +4003,9 @@ class ModeloFacturacion{
         WHERE YEAR(v.fecha) = YEAR(NOW()) 
         AND v.vendedor = :vendedor
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       GROUP BY v.tipo,
         v.tipo_documento,
         v.vendedor 
@@ -3859,6 +4025,9 @@ class ModeloFacturacion{
         WHERE YEAR(v.fecha) = YEAR(NOW()) 
         AND v.vendedor = :vendedor
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       GROUP BY v.vendedor 
       UNION
       SELECT 
@@ -3882,6 +4051,9 @@ class ModeloFacturacion{
         WHERE YEAR(v.fecha) = YEAR(NOW()) 
         AND v.vendedor = :vendedor
         AND v.tipo = :documento
+        AND v.estado <> 'ANULADO' 
+  AND v.tipo <> 'S01' 
+  AND v.vendedor <> '99' 
       GROUP BY v.vendedor 
       ORDER BY vendedor,
         tipo,

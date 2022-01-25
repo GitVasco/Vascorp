@@ -144,7 +144,7 @@ $bloque3 = <<<EOF
 <tbody>
     <tr>
         
-        <td style="width:443px;text-align:right">Total Serie</td>
+        <td style="width:450px;text-align:right">Total Serie</td>
         <td style="width:59px;text-align:right">$value[total]</td>
     </tr>
 </tbody>
@@ -162,7 +162,7 @@ $bloque3 = <<<EOF
 <table  style="text-align:center;padding-top:5px;padding-bottom:5px">
 <tbody>
     <tr>
-        <td style="width:443px;text-align:right">Total Serie </td>
+        <td style="width:450px;text-align:right">Total Serie </td>
         <td style="width:59px;text-align:right">$value[total]</td>
     </tr>
 </tbody>
@@ -174,7 +174,7 @@ $bloque3 = <<<EOF
 <table  >
 <tbody>
     <tr>
-        <td style="width:42px">$value[tipo_documento]</td>
+        <td style="width:50px">$value[tipo_documento]</td>
         <td style="width:85px">$value[documento]</td>
         <td style="width:58px">$value[fecha]</td>
         <td style="width:250px">$value[nombre]</td>
