@@ -1883,6 +1883,18 @@ window.open("vistas/reportes_ticket/imprimir_letra.php?numCuenta=" +numCuenta,"_
 })
 
 //Imprimir letra con hoja pequeña
+$(".tablaCuentas").on("click", ".btnCargoProtesto", function () {
+
+  var num_cta = $(this).attr("num_cta");
+  var cliente = $(this).attr("cliente");
+  //console.log(codigo);
+
+
+window.open("vistas/reportes_ticket/cargo_protesto.php?num_cta=" +num_cta + "&cliente=" + cliente,"_blank");
+
+})
+
+//Imprimir letra con hoja pequeña
 $(".tablaCuentasPendientes").on("click", ".btnImprimirLetra", function () {
 
   var numCuenta = $(this).attr("numCuenta");
@@ -2128,5 +2140,12 @@ window.open("extensiones/tcpdf/pdf/reporte_estado_cuenta_vdor_vdos.php?vendedor=
 $(".box").on("click", ".btnReporteCrediPagos", function () {
 
   window.location = "vistas/reportes_excel/rpt_credipagos.php";
+
+})
+
+//Reporte de Cuentas
+$(".box").on("click", ".btnDocContado", function () {
+
+  window.open("vistas/reportes_ticket/documentos_contado.php","_blank");
 
 })

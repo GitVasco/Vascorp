@@ -44,7 +44,7 @@ $letras= CantidadEnLetra($respuesta["monto"]);
       echo '<table >
     
                 <tr>
-                    <td style="width:150px;text-align:center;font-size: 20px">'.$respuesta["num_cta"].'</td>
+                    <td style="width:160px;text-align:center;">'.$respuesta["num_cta"].'</td>
                     <td style="width:150px;text-align:center;font-size: 20px">'.$respuesta["doc_origen"].'</td>
                     <td style="width:40px;text-align:center">'.$diaEmision.'</td>
                     <td style="width:40px;text-align:center">'.$mesEmision.'</td>
@@ -63,7 +63,7 @@ $letras= CantidadEnLetra($respuesta["monto"]);
                     <td style="font-size: 20px">'.$letras.'</td>  
                 </tr>
             </table>
-            <table   style="padding-top:23px;margin-left:100px">
+            <table   style="padding-top:25px;margin-left:100px">
     
                 <tr>
                     <td style="width:600px;text-align:left;font-size: 20px">'.$respuesta["nombre"].'</td>

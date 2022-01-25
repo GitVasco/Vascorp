@@ -72,6 +72,11 @@
           <button class="btn btn-outline-success btnReporteCuentas"  ano="null"  style="border:green 1px solid">
           <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte cuentas  </button>
         </div>
+
+        <div class="pull-right">
+          <button class="btn btn-outline-success btnDocContado"  ano="null"  style="border:green 1px solid">
+          <img src="vistas/img/plantilla/download.png" width="20px"> Reporte Doc. Contado  </button>
+        </div>        
       </div>
         
       <div class="box-body">
@@ -91,8 +96,9 @@
            <th>Saldo</th>
            <th style="width:20px">Estado doc.</th>
            <th style="width:100px">Nro. unico</th>
+           <th>Prote.</th>
            <th>Doc. origen</th>
-           <th style="width:250px">Acciones</th>
+           <th style="width:280px">Acciones</th>
 
          </tr> 
 

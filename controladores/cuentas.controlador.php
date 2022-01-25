@@ -1472,6 +1472,17 @@ class ControladorCuentas{
 		return $respuesta;
 
 	}
+
+	/*=============================================
+	DOCUMENTOS CONTADO PENDIENTES
+	=============================================*/
+	static public function ctrContadoPendientes(){
+
+		$respuesta = ModeloCuentas::mdlContadoPendientes();
+
+		return $respuesta;
+
+	}	
 	
 	/*=============================================
 	ESTADO DE CUENTA DETALLE
@@ -1483,6 +1494,17 @@ class ControladorCuentas{
 		return $respuesta;
 
 	}	
+
+	/*=============================================
+	ESTADO DE CUENTA DETALLE PROTESTO
+	=============================================*/
+	static public function ctrEstadoCuentaProt($cliente){
+
+		$respuesta = ModeloCuentas::mdlEstadoCuentaProt($cliente);
+
+		return $respuesta;
+
+	}
 
 	//* ESTADO DE CUENTA GRAL
 	static public function ctrEstadoCtaVdor($vendedor){
