@@ -69,7 +69,7 @@
 
                             $ult_codigo = ControladorAlmacenCorte::ctrUltimoCodigoAC();
 
-                            /* var_dump("ult_codigo", $ult_codigo); */
+                            #var_dump("ult_codigo", $ult_codigo);
 
                             if(!$ult_codigo){
 

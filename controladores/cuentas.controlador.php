@@ -1227,9 +1227,21 @@ class ControladorCuentas{
 					$salto1= 72;
 					$salto2= 24;
 					$salto3= 24;
-					$salto4= 15;
+					$salto4= 16;
 					$salto5= 12 ;
-					$salto6= 14 ;
+
+					if(strlen($value["monto"]) == 7){
+
+						$salto6= 13 ;
+
+					}else{
+
+						$salto6= 14 ;
+
+					}
+
+
+					//$salto6= 14 ;
 
 
 					fwrite($file,str_pad( $value["cliente_nom"],$salto1).str_pad( $value["cliente_pat"],$salto2).str_pad( $value["cliente_mat"],$salto3).str_pad( $cliente_doc,$salto4).str_pad( $value["numcta"],$salto5).str_pad( $value["fecha"],$salto6). $value["monto"] . PHP_EOL);
