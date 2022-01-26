@@ -845,7 +845,7 @@ class ControladorCuentas{
 				$intoA = "";
 				for ($i = 6; $i <= $data->sheets[0]['numRows']; $i++) {
 
-					if($data->sheets[0]['cells'][$i][8] == "Cancelado"){
+					if($data->sheets[0]['cells'][$i][8] == "Cancelado" || $data->sheets[0]['cells'][$i][8] == "Amortizado"){
 
 							$documento=$data->sheets[0]['cells'][$i][1];
 							$unico=$data->sheets[0]['cells'][$i][2];

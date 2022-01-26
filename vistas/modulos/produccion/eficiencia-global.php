@@ -48,21 +48,33 @@
             
             <tr>
 
-                <th>Sector</th>
-                <th>Cod. Trab.</th>
+                <th>S.</th>
+                <th>CT</th>
                 <th>Trabajador</th>
-                <th>01-JUL</th>
-                <th>02-JUL</th>
-                <th>01-AGO</th>
-                <th>02-AGO</th>
-                <th>01-SEP</th>
-                <th>02-SEP</th>
-                <th>01-OCT</th>
-                <th>02-OCT</th>
-                <th>01-NOV</th>
-                <th>02-NOV</th>
-                <th>01-DIC</th>
-                <th>02-DIC</th>
+                <th>01-Ene</th>
+                <th>02-Ene</th>
+                <th>01-Feb</th>
+                <th>02-Feb</th>
+                <th>01-Mar</th>
+                <th>02-Mar</th>
+                <th>01-Abr</th>
+                <th>02-Abr</th>
+                <th>01-May</th>
+                <th>02-May</th>
+                <th>01-Jun</th>
+                <th>02-Jun</th>
+                <th>01-Jul</th>
+                <th>02-Jul</th>
+                <th>01-Ago</th>
+                <th>02-Ago</th>
+                <th>01-Sep</th>
+                <th>02-Sep</th>
+                <th>01-Oct</th>
+                <th>02-Oct</th>
+                <th>01-Nov</th>
+                <th>02-Nov</th>
+                <th>01-Dic</th>
+                <th>02-Dic</th>
                 <th>Promedio</th>
             
             </tr> 

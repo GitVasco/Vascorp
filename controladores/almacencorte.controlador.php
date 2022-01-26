@@ -213,6 +213,8 @@ class ControladorAlmacenCorte{
 
                         ModeloAlmacenCorte::mdlGuardarDetallesAlmacenCorteMP($ultimoId["ultimo_codigo"]);
 
+                        ModeloAlmacenCorte::mdlActualizarOrdCorteSaldo();
+
                         # Mostramos una alerta suave
                         echo '<script>
                         swal({

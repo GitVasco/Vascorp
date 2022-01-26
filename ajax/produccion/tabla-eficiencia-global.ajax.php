@@ -21,376 +21,746 @@ class TablaEficienciaGlobal{
             for($i = 0; $i < count($eficiencia); $i++){
 
                 /* 
-                * q15
+                * q27
                 */
-                if($eficiencia[$i]["q15"] > 0 && $eficiencia[$i]["q15"] < 0.25){
+                if($eficiencia[$i]["q27"] > 0 && $eficiencia[$i]["q27"] < 0.25){
 
-                    $q15 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q15"]*100,2)." %</div>";
+                    $q27 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q27"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q15"] >= 0.25 && $eficiencia[$i]["q15"] < 0.50){
+                }else if($eficiencia[$i]["q27"] >= 0.25 && $eficiencia[$i]["q27"] < 0.50){
 
-                    $q15 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q15"]*100,2)." %</div>";
+                    $q27 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q27"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q15"] >= 0.50 && $eficiencia[$i]["q15"] < 0.75){
+                }else if($eficiencia[$i]["q27"] >= 0.50 && $eficiencia[$i]["q27"] < 0.75){
 
-                    $q15 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q15"]*100,2)." %</div>";
+                    $q27 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q27"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q15"] >= 0.75 ){
+                }else if($eficiencia[$i]["q27"] >= 0.75 ){
 
-                    $q15 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q15"]*100,2)." %</div>";
+                    $q27 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q27"]*100,2)." %</div>";
 
                 }else{
 
-                    $q15 = "";
+                    $q27 = "";
 
                 }
 
                 /* 
-                * q16
+                * q28
                 */
-                if($eficiencia[$i]["q16"] > 0 && $eficiencia[$i]["q16"] < 0.25){
+                if($eficiencia[$i]["q28"] > 0 && $eficiencia[$i]["q28"] < 0.25){
 
-                    $q16 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q16"]*100,2)." %</div>";
+                    $q28 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q28"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q16"] >= 0.25 && $eficiencia[$i]["q16"] < 0.50){
+                }else if($eficiencia[$i]["q28"] >= 0.25 && $eficiencia[$i]["q28"] < 0.50){
 
-                    $q16 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q16"]*100,2)." %</div>";
+                    $q28 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q28"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q16"] >= 0.50 && $eficiencia[$i]["q16"] < 0.75){
+                }else if($eficiencia[$i]["q28"] >= 0.50 && $eficiencia[$i]["q28"] < 0.75){
 
-                    $q16 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q16"]*100,2)." %</div>";
+                    $q28 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q28"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q16"] >= 0.75 ){
+                }else if($eficiencia[$i]["q28"] >= 0.75 ){
 
-                    $q16 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q16"]*100,2)." %</div>";
+                    $q28 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q28"]*100,2)." %</div>";
 
                 }else{
 
-                    $q16 = "";
+                    $q28 = "";
 
                 }
                 
                 /* 
-                * q17
+                * q29
                 */
-                if($eficiencia[$i]["q17"] > 0 && $eficiencia[$i]["q17"] < 0.25){
+                if($eficiencia[$i]["q29"] > 0 && $eficiencia[$i]["q29"] < 0.25){
 
-                    $q17 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q17"]*100,2)." %</div>";
+                    $q29 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q29"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q17"] >= 0.25 && $eficiencia[$i]["q17"] < 0.50){
+                }else if($eficiencia[$i]["q29"] >= 0.25 && $eficiencia[$i]["q29"] < 0.50){
 
-                    $q17 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q17"]*100,2)." %</div>";
+                    $q29 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q29"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q17"] >= 0.50 && $eficiencia[$i]["q17"] < 0.75){
+                }else if($eficiencia[$i]["q29"] >= 0.50 && $eficiencia[$i]["q29"] < 0.75){
 
-                    $q17 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q17"]*100,2)." %</div>";
+                    $q29 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q29"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q17"] >= 0.75 ){
+                }else if($eficiencia[$i]["q29"] >= 0.75 ){
 
-                    $q17 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q17"]*100,2)." %</div>";
+                    $q29 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q29"]*100,2)." %</div>";
                     
                 }else{
 
-                    $q17 = "";
+                    $q29 = "";
 
                 }
                 
                 /* 
-                * q18
+                * q30
                 */
-                if($eficiencia[$i]["q18"] > 0 && $eficiencia[$i]["q18"] < 0.25){
+                if($eficiencia[$i]["q30"] > 0 && $eficiencia[$i]["q30"] < 0.25){
 
-                    $q18 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q18"]*100,2)." %</div>";
+                    $q30 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q30"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q18"] >= 0.25 && $eficiencia[$i]["q18"] < 0.50){
+                }else if($eficiencia[$i]["q30"] >= 0.25 && $eficiencia[$i]["q30"] < 0.50){
 
-                    $q18 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q18"]*100,2)." %</div>";
+                    $q30 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q30"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q18"] >= 0.50 && $eficiencia[$i]["q18"] < 0.75){
+                }else if($eficiencia[$i]["q30"] >= 0.50 && $eficiencia[$i]["q30"] < 0.75){
 
-                    $q18 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q18"]*100,2)." %</div>";
+                    $q30 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q30"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q18"] >= 0.75 ){
+                }else if($eficiencia[$i]["q30"] >= 0.75 ){
 
-                    $q18 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q18"]*100,2)." %</div>";
+                    $q30 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q30"]*100,2)." %</div>";
 
                 }else{
 
-                    $q18 = "";
+                    $q30 = "";
 
                 }
                 
                 /* 
-                * q19
+                * q31
                 */
-                if($eficiencia[$i]["q19"] > 0 && $eficiencia[$i]["q19"] < 0.25){
+                if($eficiencia[$i]["q31"] > 0 && $eficiencia[$i]["q31"] < 0.25){
 
-                    $q19 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q19"]*100,2)." %</div>";
+                    $q31 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q31"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q19"] >= 0.25 && $eficiencia[$i]["q19"] < 0.50){
+                }else if($eficiencia[$i]["q31"] >= 0.25 && $eficiencia[$i]["q31"] < 0.50){
 
-                    $q19 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q19"]*100,2)." %</div>";
+                    $q31 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q31"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q19"] >= 0.50 && $eficiencia[$i]["q19"] < 0.75){
+                }else if($eficiencia[$i]["q31"] >= 0.50 && $eficiencia[$i]["q31"] < 0.75){
 
-                    $q19 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q19"]*100,2)." %</div>";
+                    $q31 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q31"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q19"] >= 0.75 ){
+                }else if($eficiencia[$i]["q31"] >= 0.75 ){
 
-                    $q19 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q19"]*100,2)." %</div>";
+                    $q31 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q31"]*100,2)." %</div>";
 
                 }else{
 
-                    $q19 = "";
+                    $q31 = "";
 
                 }
                 
                 /* 
-                * q20
+                * q32
                 */
-                if($eficiencia[$i]["q20"] > 0 && $eficiencia[$i]["q20"] < 0.25){
+                if($eficiencia[$i]["q32"] > 0 && $eficiencia[$i]["q32"] < 0.25){
 
-                    $q20 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q20"]*100,2)." %</div>";
+                    $q32 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q32"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q20"] >= 0.25 && $eficiencia[$i]["q20"] < 0.50){
+                }else if($eficiencia[$i]["q32"] >= 0.25 && $eficiencia[$i]["q32"] < 0.50){
 
-                    $q20 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q20"]*100,2)." %</div>";
+                    $q32 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q32"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q20"] >= 0.50 && $eficiencia[$i]["q20"] < 0.75){
+                }else if($eficiencia[$i]["q32"] >= 0.50 && $eficiencia[$i]["q32"] < 0.75){
 
-                    $q20 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q20"]*100,2)." %</div>";
+                    $q32 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q32"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q20"] >= 0.75 ){
+                }else if($eficiencia[$i]["q32"] >= 0.75 ){
 
-                    $q20 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q20"]*100,2)." %</div>";
+                    $q32 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q32"]*100,2)." %</div>";
 
                 }else{
 
-                    $q20 = "";
+                    $q32 = "";
 
                 }
                 
                 /* 
-                * q21
+                * q33
                 */
-                if($eficiencia[$i]["q21"] > 0 && $eficiencia[$i]["q21"] < 0.25){
+                if($eficiencia[$i]["q33"] > 0 && $eficiencia[$i]["q33"] < 0.25){
 
-                    $q21 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q21"]*100,2)." %</div>";
+                    $q33 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q33"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q21"] >= 0.25 && $eficiencia[$i]["q21"] < 0.50){
+                }else if($eficiencia[$i]["q33"] >= 0.25 && $eficiencia[$i]["q33"] < 0.50){
 
-                    $q21 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q21"]*100,2)." %</div>";
+                    $q33 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q33"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q21"] >= 0.50 && $eficiencia[$i]["q21"] < 0.75){
+                }else if($eficiencia[$i]["q33"] >= 0.50 && $eficiencia[$i]["q33"] < 0.75){
 
-                    $q21 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q21"]*100,2)." %</div>";
+                    $q33 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q33"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q21"] >= 0.75 ){
+                }else if($eficiencia[$i]["q33"] >= 0.75 ){
 
-                    $q21 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q21"]*100,2)." %</div>";
+                    $q33 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q33"]*100,2)." %</div>";
 
                 }else{
 
-                    $q21 = "";
+                    $q33 = "";
 
                 }
                 
                 /* 
-                * q22
+                * q34
                 */
-                if($eficiencia[$i]["q22"] > 0 && $eficiencia[$i]["q22"] < 0.25){
+                if($eficiencia[$i]["q34"] > 0 && $eficiencia[$i]["q34"] < 0.25){
 
-                    $q22 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q22"]*100,2)." %</div>";
+                    $q34 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q34"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q22"] >= 0.25 && $eficiencia[$i]["q22"] < 0.50){
+                }else if($eficiencia[$i]["q34"] >= 0.25 && $eficiencia[$i]["q34"] < 0.50){
 
-                    $q22 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q22"]*100,2)." %</div>";
+                    $q34 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q34"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q22"] >= 0.50 && $eficiencia[$i]["q22"] < 0.75){
+                }else if($eficiencia[$i]["q34"] >= 0.50 && $eficiencia[$i]["q34"] < 0.75){
 
-                    $q22 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q22"]*100,2)." %</div>";
+                    $q34 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q34"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q22"] >= 0.75 ){
+                }else if($eficiencia[$i]["q34"] >= 0.75 ){
 
-                    $q22 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q22"]*100,2)." %</div>";
+                    $q34 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q34"]*100,2)." %</div>";
 
                 }else{
 
-                    $q22 = "";
+                    $q34 = "";
 
                 }
                 
                 /* 
-                * q23
+                * q35
                 */
-                if($eficiencia[$i]["q23"] > 0 && $eficiencia[$i]["q23"] < 0.25){
+                if($eficiencia[$i]["q35"] > 0 && $eficiencia[$i]["q35"] < 0.25){
 
-                    $q23 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q23"]*100,2)." %</div>";
+                    $q35 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q35"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q23"] >= 0.25 && $eficiencia[$i]["q23"] < 0.50){
+                }else if($eficiencia[$i]["q35"] >= 0.25 && $eficiencia[$i]["q35"] < 0.50){
 
-                    $q23 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q23"]*100,2)." %</div>";
+                    $q35 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q35"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q23"] >= 0.50 && $eficiencia[$i]["q23"] < 0.75){
+                }else if($eficiencia[$i]["q35"] >= 0.50 && $eficiencia[$i]["q35"] < 0.75){
 
-                    $q23 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q23"]*100,2)." %</div>";
+                    $q35 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q35"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q23"] >= 0.75 ){
+                }else if($eficiencia[$i]["q35"] >= 0.75 ){
 
-                    $q23 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q23"]*100,2)." %</div>";
+                    $q35 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q35"]*100,2)." %</div>";
 
                 }else{
 
-                    $q23 = "";
+                    $q35 = "";
 
                 }
                 
                 /* 
-                * q24
+                * q36
                 */
-                if($eficiencia[$i]["q24"] > 0 && $eficiencia[$i]["q24"] < 0.25){
+                if($eficiencia[$i]["q36"] > 0 && $eficiencia[$i]["q36"] < 0.25){
 
-                    $q24 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q24"]*100,2)." %</div>";
+                    $q36 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q36"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q24"] >= 0.25 && $eficiencia[$i]["q24"] < 0.50){
+                }else if($eficiencia[$i]["q36"] >= 0.25 && $eficiencia[$i]["q36"] < 0.50){
 
-                    $q24 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q24"]*100,2)." %</div>";
+                    $q36 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q36"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q24"] >= 0.50 && $eficiencia[$i]["q24"] < 0.75){
+                }else if($eficiencia[$i]["q36"] >= 0.50 && $eficiencia[$i]["q36"] < 0.75){
 
-                    $q24 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q24"]*100,2)." %</div>";
+                    $q36 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q36"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q24"] >= 0.75 ){
+                }else if($eficiencia[$i]["q36"] >= 0.75 ){
 
-                    $q24 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q24"]*100,2)." %</div>";
+                    $q36 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q36"]*100,2)." %</div>";
 
                 }else{
 
-                    $q24 = "";
+                    $q36 = "";
 
                 }
                 
                 /* 
-                * q25
+                * q37
                 */
-                if($eficiencia[$i]["q25"] > 0 && $eficiencia[$i]["q25"] < 0.25){
+                if($eficiencia[$i]["q37"] > 0 && $eficiencia[$i]["q37"] < 0.25){
 
-                    $q25 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q25"]*100,2)." %</div>";
+                    $q37 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q37"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q25"] >= 0.25 && $eficiencia[$i]["q25"] < 0.50){
+                }else if($eficiencia[$i]["q37"] >= 0.25 && $eficiencia[$i]["q37"] < 0.50){
 
-                    $q25 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q25"]*100,2)." %</div>";
+                    $q37 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q37"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q25"] >= 0.50 && $eficiencia[$i]["q25"] < 0.75){
+                }else if($eficiencia[$i]["q37"] >= 0.50 && $eficiencia[$i]["q37"] < 0.75){
 
-                    $q25 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q25"]*100,2)." %</div>";
+                    $q37 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q37"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q25"] >= 0.75 ){
+                }else if($eficiencia[$i]["q37"] >= 0.75 ){
 
-                    $q25 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q25"]*100,2)." %</div>";
+                    $q37 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q37"]*100,2)." %</div>";
 
                 }else{
 
-                    $q25 = "";
+                    $q37 = "";
 
                 }
                 
                 /* 
-                * q26
+                * q38
                 */
-                if($eficiencia[$i]["q26"] > 0 && $eficiencia[$i]["q26"] < 0.25){
+                if($eficiencia[$i]["q38"] > 0 && $eficiencia[$i]["q38"] < 0.25){
 
-                    $q26 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q26"]*100,2)." %</div>";
+                    $q38 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q38"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q26"] >= 0.25 && $eficiencia[$i]["q26"] < 0.50){
+                }else if($eficiencia[$i]["q38"] >= 0.25 && $eficiencia[$i]["q38"] < 0.50){
 
-                    $q26 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q26"]*100,2)." %</div>";
+                    $q38 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q38"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q26"] >= 0.50 && $eficiencia[$i]["q26"] < 0.75){
+                }else if($eficiencia[$i]["q38"] >= 0.50 && $eficiencia[$i]["q38"] < 0.75){
 
-                    $q26 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q26"]*100,2)." %</div>";
+                    $q38 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q38"]*100,2)." %</div>";
 
-                }else if($eficiencia[$i]["q26"] >= 0.75 ){
+                }else if($eficiencia[$i]["q38"] >= 0.75 ){
 
-                    $q26 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q26"]*100,2)." %</div>";
+                    $q38 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q38"]*100,2)." %</div>";
 
                 }else{
 
-                    $q26 = "";
+                    $q38 = "";
 
                 }
+
+                /* 
+                * q39
+                */
+                if($eficiencia[$i]["q39"] > 0 && $eficiencia[$i]["q39"] < 0.25){
+
+                    $q39 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q39"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q39"] >= 0.25 && $eficiencia[$i]["q39"] < 0.50){
+
+                    $q39 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q39"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q39"] >= 0.50 && $eficiencia[$i]["q39"] < 0.75){
+
+                    $q39 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q39"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q39"] >= 0.75 ){
+
+                    $q39 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q39"]*100,2)." %</div>";
+
+                }else{
+
+                    $q39 = "";
+
+                }
+                
+                /* 
+                * q40
+                */
+                if($eficiencia[$i]["q40"] > 0 && $eficiencia[$i]["q40"] < 0.25){
+
+                    $q40 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q40"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q40"] >= 0.25 && $eficiencia[$i]["q40"] < 0.50){
+
+                    $q40 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q40"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q40"] >= 0.50 && $eficiencia[$i]["q40"] < 0.75){
+
+                    $q40 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q40"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q40"] >= 0.75 ){
+
+                    $q40 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q40"]*100,2)." %</div>";
+
+                }else{
+
+                    $q40 = "";
+
+                }
+                
+                /* 
+                * q41
+                */
+                if($eficiencia[$i]["q41"] > 0 && $eficiencia[$i]["q41"] < 0.25){
+
+                    $q41 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q41"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q41"] >= 0.25 && $eficiencia[$i]["q41"] < 0.50){
+
+                    $q41 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q41"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q41"] >= 0.50 && $eficiencia[$i]["q41"] < 0.75){
+
+                    $q41 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q41"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q41"] >= 0.75 ){
+
+                    $q41 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q41"]*100,2)." %</div>";
+
+                }else{
+
+                    $q41 = "";
+
+                }
+                /* 
+                * q42
+                */
+                if($eficiencia[$i]["q42"] > 0 && $eficiencia[$i]["q42"] < 0.25){
+
+                    $q42 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q42"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q42"] >= 0.25 && $eficiencia[$i]["q42"] < 0.50){
+
+                    $q42 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q42"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q42"] >= 0.50 && $eficiencia[$i]["q42"] < 0.75){
+
+                    $q42 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q42"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q42"] >= 0.75 ){
+
+                    $q42 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q42"]*100,2)." %</div>";
+
+                }else{
+
+                    $q42 = "";
+
+                }
+                
+                /* 
+                * q43
+                */
+                if($eficiencia[$i]["q43"] > 0 && $eficiencia[$i]["q43"] < 0.25){
+
+                    $q43 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q43"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q43"] >= 0.25 && $eficiencia[$i]["q43"] < 0.50){
+
+                    $q43 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q43"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q43"] >= 0.50 && $eficiencia[$i]["q43"] < 0.75){
+
+                    $q43 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q43"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q43"] >= 0.75 ){
+
+                    $q43 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q43"]*100,2)." %</div>";
+
+                }else{
+
+                    $q43 = "";
+
+                }
+                
+                /* 
+                * q44
+                */
+                if($eficiencia[$i]["q44"] > 0 && $eficiencia[$i]["q44"] < 0.25){
+
+                    $q44 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q44"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q44"] >= 0.25 && $eficiencia[$i]["q44"] < 0.50){
+
+                    $q44 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q44"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q44"] >= 0.50 && $eficiencia[$i]["q44"] < 0.75){
+
+                    $q44 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q44"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q44"] >= 0.75 ){
+
+                    $q44 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q44"]*100,2)." %</div>";
+
+                }else{
+
+                    $q44 = "";
+
+                }
+                
+                /* 
+                * q45
+                */
+                if($eficiencia[$i]["q45"] > 0 && $eficiencia[$i]["q45"] < 0.25){
+
+                    $q45 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q45"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q45"] >= 0.25 && $eficiencia[$i]["q45"] < 0.50){
+
+                    $q45 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q45"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q45"] >= 0.50 && $eficiencia[$i]["q45"] < 0.75){
+
+                    $q45 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q45"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q45"] >= 0.75 ){
+
+                    $q45 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q45"]*100,2)." %</div>";
+
+                }else{
+
+                    $q45 = "";
+
+                }
+                
+                /* 
+                * q46
+                */
+                if($eficiencia[$i]["q46"] > 0 && $eficiencia[$i]["q46"] < 0.25){
+
+                    $q46 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q46"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q46"] >= 0.25 && $eficiencia[$i]["q46"] < 0.50){
+
+                    $q46 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q46"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q46"] >= 0.50 && $eficiencia[$i]["q46"] < 0.75){
+
+                    $q46 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q46"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q46"] >= 0.75 ){
+
+                    $q46 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q46"]*100,2)." %</div>";
+
+                }else{
+
+                    $q46 = "";
+
+                }
+                
+                /* 
+                * q47
+                */
+                if($eficiencia[$i]["q47"] > 0 && $eficiencia[$i]["q47"] < 0.25){
+
+                    $q47 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q47"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q47"] >= 0.25 && $eficiencia[$i]["q47"] < 0.50){
+
+                    $q47 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q47"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q47"] >= 0.50 && $eficiencia[$i]["q47"] < 0.75){
+
+                    $q47 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q47"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q47"] >= 0.75 ){
+
+                    $q47 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q47"]*100,2)." %</div>";
+
+                }else{
+
+                    $q47 = "";
+
+                }
+                
+                /* 
+                * q48
+                */
+                if($eficiencia[$i]["q48"] > 0 && $eficiencia[$i]["q48"] < 0.25){
+
+                    $q48 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q48"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q48"] >= 0.25 && $eficiencia[$i]["q48"] < 0.50){
+
+                    $q48 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q48"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q48"] >= 0.50 && $eficiencia[$i]["q48"] < 0.75){
+
+                    $q48 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q48"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q48"] >= 0.75 ){
+
+                    $q48 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q48"]*100,2)." %</div>";
+
+                }else{
+
+                    $q48 = "";
+
+                }
+                
+                /* 
+                * q49
+                */
+                if($eficiencia[$i]["q49"] > 0 && $eficiencia[$i]["q49"] < 0.25){
+
+                    $q49 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q49"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q49"] >= 0.25 && $eficiencia[$i]["q49"] < 0.50){
+
+                    $q49 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q49"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q49"] >= 0.50 && $eficiencia[$i]["q49"] < 0.75){
+
+                    $q49 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q49"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q49"] >= 0.75 ){
+
+                    $q49 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q49"]*100,2)." %</div>";
+
+                }else{
+
+                    $q49 = "";
+
+                }
+                
+                /* 
+                * q50
+                */
+                if($eficiencia[$i]["q50"] > 0 && $eficiencia[$i]["q50"] < 0.25){
+
+                    $q50 = "<div><i class='fa fa-battery-quarter text-red' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q50"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q50"] >= 0.25 && $eficiencia[$i]["q50"] < 0.50){
+
+                    $q50 = "<div><i class='fa fa-battery-half text-orange' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q50"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q50"] >= 0.50 && $eficiencia[$i]["q50"] < 0.75){
+
+                    $q50 = "<div><i class='fa fa-battery-three-quarters text-yellow' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q50"]*100,2)." %</div>";
+
+                }else if($eficiencia[$i]["q50"] >= 0.75 ){
+
+                    $q50 = "<div><i class='fa fa-battery-full text-green' style='transform:rotate(270deg)'></i> ".number_format($eficiencia[$i]["q50"]*100,2)." %</div>";
+
+                }else{
+
+                    $q50 = "";
+
+                }                
 
                 /* 
                 *PROMEDIO
                 */
-                if($eficiencia[$i]["q15"] >0){
+                $nro = array();
+                if($eficiencia[$i]["q27"] >0){
 
-                    $nro[0] = $eficiencia[$i]["q15"];
-
-                }
-                if($eficiencia[$i]["q16"] >0){
-
-                    $nro[1] = $eficiencia[$i]["q15"];
+                    $nro[0] = $eficiencia[$i]["q27"];
 
                 }
-                if($eficiencia[$i]["q17"] >0){
+                if($eficiencia[$i]["q28"] >0){
 
-                    $nro[2] = $eficiencia[$i]["q15"];
-
-                }
-                if($eficiencia[$i]["q18"] >0){
-
-                    $nro[3] = $eficiencia[$i]["q15"];
+                    $nro[1] = $eficiencia[$i]["q28"];
 
                 }
-                if($eficiencia[$i]["q19"] >0){
+                if($eficiencia[$i]["q29"] >0){
 
-                    $nro[4] = $eficiencia[$i]["q15"];
-
-                }
-                if($eficiencia[$i]["q20"] >0){
-
-                    $nro[5] = $eficiencia[$i]["q15"];
+                    $nro[2] = $eficiencia[$i]["q29"];
 
                 }
-                if($eficiencia[$i]["q21"] >0){
+                if($eficiencia[$i]["q30"] >0){
 
-                    $nro[6] = $eficiencia[$i]["q15"];
-
-                }
-                if($eficiencia[$i]["q22"] >0){
-
-                    $nro[7] = $eficiencia[$i]["q15"];
+                    $nro[3] = $eficiencia[$i]["q30"];
 
                 }
-                if($eficiencia[$i]["q23"] >0){
+                if($eficiencia[$i]["q31"] >0){
 
-                    $nro[8] = $eficiencia[$i]["q15"];
-
-                }
-                if($eficiencia[$i]["q24"] >0){
-
-                    $nro[9] = $eficiencia[$i]["q15"];
+                    $nro[4] = $eficiencia[$i]["q31"];
 
                 }
-                if($eficiencia[$i]["q25"] >0){
+                if($eficiencia[$i]["q32"] >0){
 
-                    $nro[10] = $eficiencia[$i]["q15"];
+                    $nro[5] = $eficiencia[$i]["q32"];
 
                 }
-                if($eficiencia[$i]["q26"] >0){
+                if($eficiencia[$i]["q33"] >0){
 
-                    $nro[11] = $eficiencia[$i]["q15"];
+                    $nro[6] = $eficiencia[$i]["q33"];
+
+                }
+                if($eficiencia[$i]["q34"] >0){
+
+                    $nro[7] = $eficiencia[$i]["q34"];
+
+                }
+                if($eficiencia[$i]["q35"] >0){
+
+                    $nro[8] = $eficiencia[$i]["q35"];
+
+                }
+                if($eficiencia[$i]["q36"] >0){
+
+                    $nro[9] = $eficiencia[$i]["q36"];
+
+                }
+                if($eficiencia[$i]["q37"] >0){
+
+                    $nro[10] = $eficiencia[$i]["q37"];
+
+                }
+                if($eficiencia[$i]["q38"] >0){
+
+                    $nro[11] = $eficiencia[$i]["q38"];
+
+                }
+                if($eficiencia[$i]["q39"] >0){
+
+                    $nro[12] = $eficiencia[$i]["q39"];
+
+                }
+                if($eficiencia[$i]["q40"] >0){
+
+                    $nro[13] = $eficiencia[$i]["q40"];
+
+                }
+                if($eficiencia[$i]["q41"] >0){
+
+                    $nro[14] = $eficiencia[$i]["q41"];
+
+                }
+                if($eficiencia[$i]["q42"] >0){
+
+                    $nro[15] = $eficiencia[$i]["q42"];
+
+                }
+                if($eficiencia[$i]["q43"] >0){
+
+                    $nro[16] = $eficiencia[$i]["q43"];
+
+                }
+                if($eficiencia[$i]["q44"] >0){
+
+                    $nro[17] = $eficiencia[$i]["q44"];
+
+                }
+                if($eficiencia[$i]["q45"] >0){
+
+                    $nro[18] = $eficiencia[$i]["q45"];
+
+                }
+                if($eficiencia[$i]["q46"] >0){
+
+                    $nro[19] = $eficiencia[$i]["q46"];
+
+                }
+                if($eficiencia[$i]["q47"] >0){
+
+                    $nro[20] = $eficiencia[$i]["q47"];
+
+                }
+                if($eficiencia[$i]["q48"] >0){
+
+                    $nro[21] = $eficiencia[$i]["q48"];
+
+                }
+                if($eficiencia[$i]["q49"] >0){
+
+                    $nro[22] = $eficiencia[$i]["q49"];
+
+                }
+                if($eficiencia[$i]["q50"] >0){
+
+                    $nro[23] = $eficiencia[$i]["q50"];
 
                 }
 
                 $cantidad = count($nro);
 
-                $numeros = [$eficiencia[$i]["q15"],$eficiencia[$i]["q16"],$eficiencia[$i]["q17"],$eficiencia[$i]["q18"],$eficiencia[$i]["q19"],$eficiencia[$i]["q20"],$eficiencia[$i]["q21"],$eficiencia[$i]["q22"],$eficiencia[$i]["q23"],$eficiencia[$i]["q24"],$eficiencia[$i]["q25"],$eficiencia[$i]["q26"]];
+                $numeros = [$eficiencia[$i]["q27"],$eficiencia[$i]["q28"],$eficiencia[$i]["q29"],$eficiencia[$i]["q30"],$eficiencia[$i]["q31"],$eficiencia[$i]["q32"],$eficiencia[$i]["q33"],$eficiencia[$i]["q34"],$eficiencia[$i]["q35"],$eficiencia[$i]["q36"],$eficiencia[$i]["q37"],$eficiencia[$i]["q38"],$eficiencia[$i]["q39"],$eficiencia[$i]["q40"],$eficiencia[$i]["q41"],$eficiencia[$i]["q42"],$eficiencia[$i]["q43"],$eficiencia[$i]["q44"],$eficiencia[$i]["q45"],$eficiencia[$i]["q46"],$eficiencia[$i]["q47"],$eficiencia[$i]["q48"],$eficiencia[$i]["q49"],$eficiencia[$i]["q50"]];
 
                 $suma = array_sum($numeros);
                 
-                $promedio = $suma / $cantidad;
+                if($cantidad > 0){
+
+                    $promedio = $suma / $cantidad;
+                    
+
+                }else{
+
+                    $promedio = 0;
+
+                }
+                
 
                 if($promedio > 0 && $promedio < 0.25){
 
@@ -419,18 +789,30 @@ class TablaEficienciaGlobal{
                 "<b>'.$eficiencia[$i]["sector"].'</b>",
                 "'.$eficiencia[$i]["cod_tra"].'",
                 "<b>'.$eficiencia[$i]["nom_tra"].'</b>",
-                "'.$q15.'",
-                "'.$q16.'",
-                "'.$q17.'",
-                "'.$q18.'",
-                "'.$q19.'",
-                "'.$q20.'",
-                "'.$q21.'",
-                "'.$q22.'",
-                "'.$q23.'",
-                "'.$q24.'",
-                "'.$q25.'",
-                "'.$q26.'",
+                "'.$q27.'",
+                "'.$q28.'",
+                "'.$q29.'",
+                "'.$q30.'",
+                "'.$q31.'",
+                "'.$q32.'",
+                "'.$q33.'",
+                "'.$q34.'",
+                "'.$q35.'",
+                "'.$q36.'",
+                "'.$q37.'",
+                "'.$q38.'",
+                "'.$q39.'",
+                "'.$q40.'",
+                "'.$q41.'",
+                "'.$q42.'",
+                "'.$q43.'",
+                "'.$q44.'",
+                "'.$q45.'",
+                "'.$q46.'",
+                "'.$q47.'",
+                "'.$q48.'",
+                "'.$q49.'",
+                "'.$q50.'",
                 "'.$prom.'"
                 ],';        
                 }

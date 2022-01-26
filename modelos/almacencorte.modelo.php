@@ -1262,4 +1262,33 @@ class ModeloAlmacenCorte{
 		$stmt=null;
 	}
 
+	/* 
+	* Método ACTUALIZAR CANTIDAD EN ORDEN DE CORTE CON SALDO
+	*/
+	static public function mdlActualizarOrdCorteSaldo(){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE 
+												articulojf a 
+												LEFT JOIN 
+												(SELECT 
+													doc.articulo,
+													SUM(doc.saldo) AS ord_corte 
+												FROM
+													detalles_ordencortejf doc 
+												WHERE doc.estado = '0' 
+												GROUP BY doc.articulo) AS doc 
+												ON a.articulo = doc.articulo SET a.ord_corte = IFNULL(doc.ord_corte, 0)");
+
+		if ($stmt->execute()) {
+
+			return "ok";
+
+		} else {
+
+			return "error";
+		}
+
+		$stmt = null;
+	}	
+
 }

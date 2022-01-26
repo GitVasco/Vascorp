@@ -1993,155 +1993,270 @@ class ModeloProduccion
     if($taller == "null"){
 
       $stmt = Conexion::conectar()->prepare("SELECT 
-          t.sector,
-          t.cod_tra,
-          CONCAT(t.nom_tra,' ',t.ape_pat_tra) AS nom_tra,
-          SUM(
-            CASE
-              WHEN q.id = '15' 
-              THEN q.total_tiempo / q.minutos 
-              ELSE 0 
-            END
-          ) AS q15,
-          SUM(
-            CASE
-              WHEN q.id = '16' 
-              THEN q.total_tiempo / q.minutos 
-              ELSE 0 
-            END
-          ) AS q16,
-          SUM(
-            CASE
-              WHEN q.id = '17' 
-              THEN q.total_tiempo / q.minutos 
-              ELSE 0 
-            END
-          ) AS q17,
-          SUM(
-            CASE
-              WHEN q.id = '18' 
-              THEN q.total_tiempo / q.minutos 
-              ELSE 0 
-            END
-          ) AS q18,
-          SUM(
-            CASE
-              WHEN q.id = '19' 
-              THEN q.total_tiempo / q.minutos 
-              ELSE 0 
-            END
-          ) AS q19,
-          SUM(
-            CASE
-              WHEN q.id = '20' 
-              THEN q.total_tiempo / q.minutos 
-              ELSE 0 
-            END
-          ) AS q20,
-          SUM(
-            CASE
-              WHEN q.id = '21' 
-              THEN q.total_tiempo / q.minutos 
-              ELSE 0 
-            END
-          ) AS q21,
-          SUM(
-            CASE
-              WHEN q.id = '22' 
-              THEN q.total_tiempo / q.minutos 
-              ELSE 0 
-            END
-          ) AS q22,
-          SUM(
-            CASE
-              WHEN q.id = '23' 
-              THEN q.total_tiempo / q.minutos 
-              ELSE 0 
-            END
-          ) AS q23,
-          SUM(
-            CASE
-              WHEN q.id = '24' 
-              THEN q.total_tiempo / q.minutos 
-              ELSE 0 
-            END
-          ) AS q24,
-          SUM(
-            CASE
-              WHEN q.id = '25' 
-              THEN q.total_tiempo / q.minutos 
-              ELSE 0 
-            END
-          ) AS q25,
-          SUM(
-            CASE
-              WHEN q.id = '26' 
-              THEN q.total_tiempo / q.minutos 
-              ELSE 0 
-            END
-          ) AS q26 
-        FROM
-          trabajadorjf t 
-          LEFT JOIN 
-            (SELECT 
-              q.id,
-              e.trabajador,
-              SUM(e.total_tiempo) AS total_tiempo,
-              a.minutos 
-            FROM
-              entallerjf e 
-              LEFT JOIN quincenasjf q 
-                ON DATE(e.fecha_terminado) BETWEEN q.inicio 
-                AND q.fin 
-              LEFT JOIN 
-                (SELECT 
-                  q.id,
-                  a.id_trabajador,
-                  SUM(a.minutos) AS minutos 
-                FROM
-                  asistenciasjf a 
-                  LEFT JOIN quincenasjf q 
-                    ON DATE(a.fecha) BETWEEN q.inicio 
-                    AND q.fin 
-                WHERE q.id IN (
-                    '15',
-                    '16',
-                    '17',
-                    '18',
-                    '19',
-                    '20',
-                    '21',
-                    '22',
-                    '23',
-                    '24',
-                    '25',
-                    '26'
-                  ) 
-                GROUP BY q.id,
-                  a.id_trabajador) AS a 
-                ON q.id = a.id 
-                AND e.trabajador = a.id_trabajador 
-            WHERE e.estado = 3 
-              AND q.id IN (
-                '15',
-                '16',
-                '17',
-                '18',
-                '19',
-                '20',
-                '21',
-                '22',
-                '23',
-                '24',
-                '25',
-                '26'
-              ) 
-            GROUP BY q.id,
-              e.trabajador) AS q 
-            ON t.cod_tra = q.trabajador 
-        WHERE t.estado = 'activo' 
-        AND t.cod_tra NOT IN ('24','79') 
-        GROUP BY q.trabajador ");
+                                        t.sector,
+                                        t.cod_tra,
+                                        CONCAT(t.nom_tra, ' ', t.ape_pat_tra) AS nom_tra,
+                                        SUM(
+                                            CASE
+                                            WHEN q.id = '27' 
+                                            THEN q.total_tiempo / q.minutos 
+                                            ELSE 0 
+                                            END
+                                        ) AS q27,
+                                        SUM(
+                                            CASE
+                                            WHEN q.id = '28' 
+                                            THEN q.total_tiempo / q.minutos 
+                                            ELSE 0 
+                                            END
+                                        ) AS q28,
+                                        SUM(
+                                            CASE
+                                            WHEN q.id = '29' 
+                                            THEN q.total_tiempo / q.minutos 
+                                            ELSE 0 
+                                            END
+                                        ) AS q29,
+                                        SUM(
+                                            CASE
+                                            WHEN q.id = '30' 
+                                            THEN q.total_tiempo / q.minutos 
+                                            ELSE 0 
+                                            END
+                                        ) AS q30,
+                                        SUM(
+                                            CASE
+                                            WHEN q.id = '31' 
+                                            THEN q.total_tiempo / q.minutos 
+                                            ELSE 0 
+                                            END
+                                        ) AS q31,
+                                        SUM(
+                                            CASE
+                                            WHEN q.id = '32' 
+                                            THEN q.total_tiempo / q.minutos 
+                                            ELSE 0 
+                                            END
+                                        ) AS q32,
+                                        SUM(
+                                            CASE
+                                            WHEN q.id = '33' 
+                                            THEN q.total_tiempo / q.minutos 
+                                            ELSE 0 
+                                            END
+                                        ) AS q33,
+                                        SUM(
+                                            CASE
+                                            WHEN q.id = '34' 
+                                            THEN q.total_tiempo / q.minutos 
+                                            ELSE 0 
+                                            END
+                                        ) AS q34,
+                                        SUM(
+                                            CASE
+                                            WHEN q.id = '35' 
+                                            THEN q.total_tiempo / q.minutos 
+                                            ELSE 0 
+                                            END
+                                        ) AS q35,
+                                        SUM(
+                                            CASE
+                                            WHEN q.id = '36' 
+                                            THEN q.total_tiempo / q.minutos 
+                                            ELSE 0 
+                                            END
+                                        ) AS q36,
+                                        SUM(
+                                            CASE
+                                            WHEN q.id = '37' 
+                                            THEN q.total_tiempo / q.minutos 
+                                            ELSE 0 
+                                            END
+                                        ) AS q37,
+                                        SUM(
+                                            CASE
+                                            WHEN q.id = '38' 
+                                            THEN q.total_tiempo / q.minutos 
+                                            ELSE 0 
+                                            END
+                                        ) AS q38,
+                                        SUM(
+                                            CASE
+                                            WHEN q.id = '39' 
+                                            THEN q.total_tiempo / q.minutos 
+                                            ELSE 0 
+                                            END
+                                        ) AS q39,
+                                        SUM(
+                                            CASE
+                                            WHEN q.id = '40' 
+                                            THEN q.total_tiempo / q.minutos 
+                                            ELSE 0 
+                                            END
+                                        ) AS q40,
+                                        SUM(
+                                            CASE
+                                            WHEN q.id = '41' 
+                                            THEN q.total_tiempo / q.minutos 
+                                            ELSE 0 
+                                            END
+                                        ) AS q41,
+                                        SUM(
+                                            CASE
+                                            WHEN q.id = '42' 
+                                            THEN q.total_tiempo / q.minutos 
+                                            ELSE 0 
+                                            END
+                                        ) AS q42,
+                                        SUM(
+                                            CASE
+                                            WHEN q.id = '43' 
+                                            THEN q.total_tiempo / q.minutos 
+                                            ELSE 0 
+                                            END
+                                        ) AS q43,
+                                        SUM(
+                                            CASE
+                                            WHEN q.id = '44' 
+                                            THEN q.total_tiempo / q.minutos 
+                                            ELSE 0 
+                                            END
+                                        ) AS q44,
+                                        SUM(
+                                            CASE
+                                            WHEN q.id = '45' 
+                                            THEN q.total_tiempo / q.minutos 
+                                            ELSE 0 
+                                            END
+                                        ) AS q45,
+                                        SUM(
+                                            CASE
+                                            WHEN q.id = '46' 
+                                            THEN q.total_tiempo / q.minutos 
+                                            ELSE 0 
+                                            END
+                                        ) AS q46,
+                                        SUM(
+                                            CASE
+                                            WHEN q.id = '47' 
+                                            THEN q.total_tiempo / q.minutos 
+                                            ELSE 0 
+                                            END
+                                        ) AS q47,
+                                        SUM(
+                                            CASE
+                                            WHEN q.id = '38' 
+                                            THEN q.total_tiempo / q.minutos 
+                                            ELSE 0 
+                                            END
+                                        ) AS q38,
+                                        SUM(
+                                            CASE
+                                            WHEN q.id = '48' 
+                                            THEN q.total_tiempo / q.minutos 
+                                            ELSE 0 
+                                            END
+                                        ) AS q48,
+                                        SUM(
+                                            CASE
+                                            WHEN q.id = '49' 
+                                            THEN q.total_tiempo / q.minutos 
+                                            ELSE 0 
+                                            END
+                                        ) AS q49,
+                                        SUM(
+                                            CASE
+                                            WHEN q.id = '50' 
+                                            THEN q.total_tiempo / q.minutos 
+                                            ELSE 0 
+                                            END
+                                        ) AS q50 
+                                        FROM
+                                        trabajadorjf t 
+                                        LEFT JOIN 
+                                            (SELECT 
+                                            q.id,
+                                            e.trabajador,
+                                            SUM(e.total_tiempo) AS total_tiempo,
+                                            a.minutos 
+                                            FROM
+                                            entallerjf e 
+                                            LEFT JOIN quincenasjf q 
+                                                ON DATE(e.fecha_terminado) BETWEEN q.inicio 
+                                                AND q.fin 
+                                            LEFT JOIN 
+                                                (SELECT 
+                                                q.id,
+                                                a.id_trabajador,
+                                                SUM(a.minutos) AS minutos 
+                                                FROM
+                                                asistenciasjf a 
+                                                LEFT JOIN quincenasjf q 
+                                                    ON DATE(a.fecha) BETWEEN q.inicio 
+                                                    AND q.fin 
+                                                WHERE q.id IN (
+                                                    '27',
+                                                    '28',
+                                                    '29',
+                                                    '30',
+                                                    '31',
+                                                    '32',
+                                                    '33',
+                                                    '34',
+                                                    '35',
+                                                    '36',
+                                                    '37',
+                                                    '38',
+                                                    '39',
+                                                    '40',
+                                                    '41',
+                                                    '42',
+                                                    '43',
+                                                    '44',
+                                                    '45',
+                                                    '46',
+                                                    '47',
+                                                    '48',
+                                                    '49',
+                                                    '50'
+                                                ) 
+                                                GROUP BY q.id,
+                                                a.id_trabajador) AS a 
+                                                ON q.id = a.id 
+                                                AND e.trabajador = a.id_trabajador 
+                                            WHERE e.estado = 3 
+                                            AND q.id IN (
+                                                '27',
+                                                '28',
+                                                '29',
+                                                '30',
+                                                '31',
+                                                '32',
+                                                '33',
+                                                '34',
+                                                '35',
+                                                '36',
+                                                '37',
+                                                '38',
+                                                '39',
+                                                '40',
+                                                '41',
+                                                '42',
+                                                '43',
+                                                '44',
+                                                '45',
+                                                '46',
+                                                '47',
+                                                '48',
+                                                '49',
+                                                '50'
+                                            ) 
+                                            GROUP BY q.id,
+                                            e.trabajador) AS q 
+                                            ON t.cod_tra = q.trabajador 
+                                        WHERE t.estado = 'activo' 
+                                        AND t.cod_tra NOT IN ('24', '79') 
+                                        GROUP BY q.trabajador");
 
       $stmt->execute();
 
@@ -2150,156 +2265,271 @@ class ModeloProduccion
     }else{
 
       $stmt = Conexion::conectar()->prepare("SELECT 
-            t.sector,
-            t.cod_tra,
-            CONCAT(t.nom_tra,' ',t.ape_pat_tra) AS nom_tra,
-            SUM(
-              CASE
-                WHEN q.id = '15' 
-                THEN q.total_tiempo / q.minutos 
-                ELSE 0 
-              END
-            ) AS q15,
-            SUM(
-              CASE
-                WHEN q.id = '16' 
-                THEN q.total_tiempo / q.minutos 
-                ELSE 0 
-              END
-            ) AS q16,
-            SUM(
-              CASE
-                WHEN q.id = '17' 
-                THEN q.total_tiempo / q.minutos 
-                ELSE 0 
-              END
-            ) AS q17,
-            SUM(
-              CASE
-                WHEN q.id = '18' 
-                THEN q.total_tiempo / q.minutos 
-                ELSE 0 
-              END
-            ) AS q18,
-            SUM(
-              CASE
-                WHEN q.id = '19' 
-                THEN q.total_tiempo / q.minutos 
-                ELSE 0 
-              END
-            ) AS q19,
-            SUM(
-              CASE
-                WHEN q.id = '20' 
-                THEN q.total_tiempo / q.minutos 
-                ELSE 0 
-              END
-            ) AS q20,
-            SUM(
-              CASE
-                WHEN q.id = '21' 
-                THEN q.total_tiempo / q.minutos 
-                ELSE 0 
-              END
-            ) AS q21,
-            SUM(
-              CASE
-                WHEN q.id = '22' 
-                THEN q.total_tiempo / q.minutos 
-                ELSE 0 
-              END
-            ) AS q22,
-            SUM(
-              CASE
-                WHEN q.id = '23' 
-                THEN q.total_tiempo / q.minutos 
-                ELSE 0 
-              END
-            ) AS q23,
-            SUM(
-              CASE
-                WHEN q.id = '24' 
-                THEN q.total_tiempo / q.minutos 
-                ELSE 0 
-              END
-            ) AS q24,
-            SUM(
-              CASE
-                WHEN q.id = '25' 
-                THEN q.total_tiempo / q.minutos 
-                ELSE 0 
-              END
-            ) AS q25,
-            SUM(
-              CASE
-                WHEN q.id = '26' 
-                THEN q.total_tiempo / q.minutos 
-                ELSE 0 
-              END
-            ) AS q26 
+      t.sector,
+      t.cod_tra,
+      CONCAT(t.nom_tra, ' ', t.ape_pat_tra) AS nom_tra,
+      SUM(
+          CASE
+          WHEN q.id = '27' 
+          THEN q.total_tiempo / q.minutos 
+          ELSE 0 
+          END
+      ) AS q27,
+      SUM(
+          CASE
+          WHEN q.id = '28' 
+          THEN q.total_tiempo / q.minutos 
+          ELSE 0 
+          END
+      ) AS q28,
+      SUM(
+          CASE
+          WHEN q.id = '29' 
+          THEN q.total_tiempo / q.minutos 
+          ELSE 0 
+          END
+      ) AS q29,
+      SUM(
+          CASE
+          WHEN q.id = '30' 
+          THEN q.total_tiempo / q.minutos 
+          ELSE 0 
+          END
+      ) AS q30,
+      SUM(
+          CASE
+          WHEN q.id = '31' 
+          THEN q.total_tiempo / q.minutos 
+          ELSE 0 
+          END
+      ) AS q31,
+      SUM(
+          CASE
+          WHEN q.id = '32' 
+          THEN q.total_tiempo / q.minutos 
+          ELSE 0 
+          END
+      ) AS q32,
+      SUM(
+          CASE
+          WHEN q.id = '33' 
+          THEN q.total_tiempo / q.minutos 
+          ELSE 0 
+          END
+      ) AS q33,
+      SUM(
+          CASE
+          WHEN q.id = '34' 
+          THEN q.total_tiempo / q.minutos 
+          ELSE 0 
+          END
+      ) AS q34,
+      SUM(
+          CASE
+          WHEN q.id = '35' 
+          THEN q.total_tiempo / q.minutos 
+          ELSE 0 
+          END
+      ) AS q35,
+      SUM(
+          CASE
+          WHEN q.id = '36' 
+          THEN q.total_tiempo / q.minutos 
+          ELSE 0 
+          END
+      ) AS q36,
+      SUM(
+          CASE
+          WHEN q.id = '37' 
+          THEN q.total_tiempo / q.minutos 
+          ELSE 0 
+          END
+      ) AS q37,
+      SUM(
+          CASE
+          WHEN q.id = '38' 
+          THEN q.total_tiempo / q.minutos 
+          ELSE 0 
+          END
+      ) AS q38,
+      SUM(
+          CASE
+          WHEN q.id = '39' 
+          THEN q.total_tiempo / q.minutos 
+          ELSE 0 
+          END
+      ) AS q39,
+      SUM(
+          CASE
+          WHEN q.id = '40' 
+          THEN q.total_tiempo / q.minutos 
+          ELSE 0 
+          END
+      ) AS q40,
+      SUM(
+          CASE
+          WHEN q.id = '41' 
+          THEN q.total_tiempo / q.minutos 
+          ELSE 0 
+          END
+      ) AS q41,
+      SUM(
+          CASE
+          WHEN q.id = '42' 
+          THEN q.total_tiempo / q.minutos 
+          ELSE 0 
+          END
+      ) AS q42,
+      SUM(
+          CASE
+          WHEN q.id = '43' 
+          THEN q.total_tiempo / q.minutos 
+          ELSE 0 
+          END
+      ) AS q43,
+      SUM(
+          CASE
+          WHEN q.id = '44' 
+          THEN q.total_tiempo / q.minutos 
+          ELSE 0 
+          END
+      ) AS q44,
+      SUM(
+          CASE
+          WHEN q.id = '45' 
+          THEN q.total_tiempo / q.minutos 
+          ELSE 0 
+          END
+      ) AS q45,
+      SUM(
+          CASE
+          WHEN q.id = '46' 
+          THEN q.total_tiempo / q.minutos 
+          ELSE 0 
+          END
+      ) AS q46,
+      SUM(
+          CASE
+          WHEN q.id = '47' 
+          THEN q.total_tiempo / q.minutos 
+          ELSE 0 
+          END
+      ) AS q47,
+      SUM(
+          CASE
+          WHEN q.id = '38' 
+          THEN q.total_tiempo / q.minutos 
+          ELSE 0 
+          END
+      ) AS q38,
+      SUM(
+          CASE
+          WHEN q.id = '48' 
+          THEN q.total_tiempo / q.minutos 
+          ELSE 0 
+          END
+      ) AS q48,
+      SUM(
+          CASE
+          WHEN q.id = '49' 
+          THEN q.total_tiempo / q.minutos 
+          ELSE 0 
+          END
+      ) AS q49,
+      SUM(
+          CASE
+          WHEN q.id = '50' 
+          THEN q.total_tiempo / q.minutos 
+          ELSE 0 
+          END
+      ) AS q50 
+      FROM
+      trabajadorjf t 
+      LEFT JOIN 
+          (SELECT 
+          q.id,
+          e.trabajador,
+          SUM(e.total_tiempo) AS total_tiempo,
+          a.minutos 
           FROM
-            trabajadorjf t 
-            LEFT JOIN 
+          entallerjf e 
+          LEFT JOIN quincenasjf q 
+              ON DATE(e.fecha_terminado) BETWEEN q.inicio 
+              AND q.fin 
+          LEFT JOIN 
               (SELECT 
-                q.id,
-                e.trabajador,
-                SUM(e.total_tiempo) AS total_tiempo,
-                a.minutos 
+              q.id,
+              a.id_trabajador,
+              SUM(a.minutos) AS minutos 
               FROM
-                entallerjf e 
-                LEFT JOIN quincenasjf q 
-                  ON DATE(e.fecha_terminado) BETWEEN q.inicio 
+              asistenciasjf a 
+              LEFT JOIN quincenasjf q 
+                  ON DATE(a.fecha) BETWEEN q.inicio 
                   AND q.fin 
-                LEFT JOIN 
-                  (SELECT 
-                    q.id,
-                    a.id_trabajador,
-                    SUM(a.minutos) AS minutos 
-                  FROM
-                    asistenciasjf a 
-                    LEFT JOIN quincenasjf q 
-                      ON DATE(a.fecha) BETWEEN q.inicio 
-                      AND q.fin 
-                  WHERE q.id IN (
-                      '15',
-                      '16',
-                      '17',
-                      '18',
-                      '19',
-                      '20',
-                      '21',
-                      '22',
-                      '23',
-                      '24',
-                      '25',
-                      '26'
-                    ) 
-                  GROUP BY q.id,
-                    a.id_trabajador) AS a 
-                  ON q.id = a.id 
-                  AND e.trabajador = a.id_trabajador 
-              WHERE e.estado = 3 
-                AND q.id IN (
-                  '15',
-                  '16',
-                  '17',
-                  '18',
-                  '19',
-                  '20',
-                  '21',
-                  '22',
-                  '23',
-                  '24',
-                  '25',
-                  '26'
-                ) 
+              WHERE q.id IN (
+                  '27',
+                  '28',
+                  '29',
+                  '30',
+                  '31',
+                  '32',
+                  '33',
+                  '34',
+                  '35',
+                  '36',
+                  '37',
+                  '38',
+                  '39',
+                  '40',
+                  '41',
+                  '42',
+                  '43',
+                  '44',
+                  '45',
+                  '46',
+                  '47',
+                  '48',
+                  '49',
+                  '50'
+              ) 
               GROUP BY q.id,
-                e.trabajador) AS q 
-              ON t.cod_tra = q.trabajador 
-          WHERE t.estado = 'activo' 
-          AND t.cod_tra NOT IN ('24','79') 
-          AND t.sector = :taller 
-          GROUP BY q.trabajador ");
+              a.id_trabajador) AS a 
+              ON q.id = a.id 
+              AND e.trabajador = a.id_trabajador 
+          WHERE e.estado = 3 
+          AND q.id IN (
+              '27',
+              '28',
+              '29',
+              '30',
+              '31',
+              '32',
+              '33',
+              '34',
+              '35',
+              '36',
+              '37',
+              '38',
+              '39',
+              '40',
+              '41',
+              '42',
+              '43',
+              '44',
+              '45',
+              '46',
+              '47',
+              '48',
+              '49',
+              '50'
+          ) 
+          GROUP BY q.id,
+          e.trabajador) AS q 
+          ON t.cod_tra = q.trabajador 
+      WHERE t.estado = 'activo' 
+      AND t.cod_tra NOT IN ('24', '79') 
+      AND t.sector = :taller
+      GROUP BY q.trabajador");
 
       $stmt->bindParam(":taller", $taller, PDO::PARAM_STR);
 
