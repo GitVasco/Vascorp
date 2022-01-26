@@ -604,7 +604,6 @@ class ModeloSalidas{
 						ON t.condicion_venta = cv.id
 						LEFT JOIN usuariosjf u
 						ON t.usuario = u.id
-					WHERE t.estado='GENERADO'
 					ORDER BY fecha DESC";
 
 		$stmt=Conexion::conectar()->prepare($sql);

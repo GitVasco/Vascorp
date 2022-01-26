@@ -103,6 +103,7 @@
             ?>
 
             <li class="treeview <?php if(   $_GET["ruta"] == "movimientos" || 
+                                            $_GET["ruta"] == "datos-dia" || 
                                             $_GET["ruta"] == "backupDB" || 
                                             $_GET["ruta"] == "bkplista" || 
                                             $_GET["ruta"] == "cargas-automaticas" || 
@@ -135,9 +136,20 @@
 
                     </li>
 
+                    <li class="<?php if($_GET["ruta"] == "datos-dia") echo 'active';?>">
+
+                        <a href="datos-dia">
+
+                            <i class="fa fa-circle-o"></i>
+                            <span>Datos Diarios</span>
+
+                        </a>
+
+                    </li>                    
+
                     <li class="<?php if($_GET["ruta"] == "backupDB") echo 'active';?>">
 
-                        <a href="backupDB">
+                        <a href="#">
 
                             <i class="fa fa-circle-o"></i>
                             <span>Backup</span>

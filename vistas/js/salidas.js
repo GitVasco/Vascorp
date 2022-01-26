@@ -534,6 +534,7 @@ $(".tablaSalidaVarios").DataTable({
     retrieve: true,
     processing: true,
     "pageLength": 20,
+    "order": [[8, "desc"]],
 	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
     language: {
         sProcessing: "Procesando...",

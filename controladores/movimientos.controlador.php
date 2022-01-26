@@ -67,6 +67,17 @@ class ControladorMovimientos{
     }
 
     /* 
+    * sacamos los datos de mov del dia
+    */
+    static public function ctrMostrarDias(){
+
+        $respuesta = ModeloMovimientos::mldMostrarDias();
+
+        return $respuesta;
+
+    }    
+
+    /* 
     * sacamos los totales por mes de la  nueva tabla TOTALES
     */
     static public function ctrTotalesSolesVenta(){
@@ -306,6 +317,6 @@ class ControladorMovimientos{
 
         return $respuesta;
 
-    }      
-
+    }  
+    
 }

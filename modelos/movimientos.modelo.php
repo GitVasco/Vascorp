@@ -127,6 +127,63 @@ class ModeloMovimientos{
    }
 
    /* 
+   * sacamos los totales por mes de la  nueva tabla TOTALES
+   */
+    static public function mldMostrarDias(){
+
+    $stmt = Conexion::conectar()->prepare("SELECT 
+                                    t.id,
+                                    t.año,
+                                    t.mes,
+                                    CASE
+                                    WHEN t.mes = '1' 
+                                    THEN 'ENERO' 
+                                    WHEN t.mes = '2' 
+                                    THEN 'FEBRERO' 
+                                    WHEN t.mes = '3' 
+                                    THEN 'MARZO' 
+                                    WHEN t.mes = '4' 
+                                    THEN 'ABRIL' 
+                                    WHEN t.mes = '5' 
+                                    THEN 'MAYO' 
+                                    WHEN t.mes = '6' 
+                                    THEN 'JUNIO' 
+                                    WHEN t.mes = '7' 
+                                    THEN 'JULIO' 
+                                    WHEN t.mes = '8' 
+                                    THEN 'AGOSTO' 
+                                    WHEN t.mes = '9' 
+                                    THEN 'SEPTIEMBRE' 
+                                    WHEN t.mes = '10' 
+                                    THEN 'OCTUBRE' 
+                                    WHEN t.mes = '11' 
+                                    THEN 'NOVIEMBRE' 
+                                    ELSE 'DICIEMBRE' 
+                                    END AS nom_mes,
+                                    t.dia,
+                                    t.total_ventas,
+                                    t.total_produccion,
+                                    t.total_ventas_soles,
+                                    t.total_pagos_soles,
+                                    t.cambio_compra,
+                                    t.cambio_venta,
+                                    DATE(t.fecha) AS fecha 
+                                FROM
+                                    totalesjf t 
+                                WHERE DATE(t.fecha) <= DATE(NOW()) 
+                                AND YEAR(t.fecha) = YEAR(NOW())");
+
+    $stmt -> execute();
+
+    return $stmt -> fetchAll();
+
+    $stmt -> close();
+
+    $stmt = null;
+
+    }   
+
+   /* 
 	* Método para actualizar los totales por dia
 	*/
 	static public function mdlActualizarMovimientos($valor1,$valor2){
@@ -3159,5 +3216,37 @@ class ModeloMovimientos{
       }
 
    }   
+
+   /* 
+	* Método para actualizar los totales por dia
+	*/
+	static public function mdlActualizarTipoCambio($compra, $venta, $fecha){
+	
+		$sql="UPDATE 
+                    totalesjf 
+                SET
+                    cambio_compra = :compra,
+                    cambio_venta = :venta 
+                WHERE DATE(fecha) = :fecha";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+        $stmt->bindParam(":compra", $compra, PDO::PARAM_STR);
+        $stmt->bindParam(":venta", $venta, PDO::PARAM_STR);
+        $stmt->bindParam(":fecha", $fecha, PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+		
+		}else{
+		
+			return $stmt->errorInfo();
+		
+		}
+		
+		$stmt=null;
+
+	}   
 
 }

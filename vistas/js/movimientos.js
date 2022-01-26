@@ -38,6 +38,45 @@ $('.tablaMovimientos').DataTable( {
 } );
 
 /* 
+* TABLA DIAS
+*/
+$('.tablaDatosDia').DataTable( {
+    "ajax": "ajax/movimientos/tabla-datos-dia.ajax.php",
+    "deferRender": true,
+	"retrieve": true,
+    "processing": true,
+    "order": [[3, "desc"]],
+	"pageLength": 31,
+	"lengthMenu": [[31, 62, 93, -1], [31, 62, 93, 'Todos']],
+	 "language": {
+
+			"sProcessing":     "Procesando...",
+			"sLengthMenu":     "Mostrar _MENU_ registros",
+			"sZeroRecords":    "No se encontraron resultados",
+			"sEmptyTable":     "Ningún dato disponible en esta tabla",
+			"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+			"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0",
+			"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+			"sInfoPostFix":    "",
+			"sSearch":         "Buscar:",
+			"sUrl":            "",
+			"sInfoThousands":  ",",
+			"sLoadingRecords": "Cargando...",
+			"oPaginate": {
+			"sFirst":    "Primero",
+			"sLast":     "Último",
+			"sNext":     "Siguiente",
+			"sPrevious": "Anterior"
+			},
+			"oAria": {
+				"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+				"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+			}
+
+	}
+} );
+
+/* 
 * ACTUALIZAR TOTALES DEL MES
 */
 $(".tablaMovimientos").on("click", ".btnActualizarMes", function () {
@@ -676,3 +715,50 @@ $(".tablaRangos").DataTable({
 
 	} 
 });
+
+
+
+/* 
+* ACTUALIZAR TIPO DE CAMBIO
+*/
+$(".tablaDatosDia").on("click", ".btnActualizarMes", function () {
+
+	var fecha = $(this).attr("fecha");
+    console.log(fecha);
+
+	var datos = new FormData();
+    datos.append("fecha", fecha);
+
+    $.ajax({
+
+		url: "ajax/movimientos.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		success: function (respuesta) {
+
+			if (respuesta == "ok") {
+				swal({
+					type: "success",
+					title: "¡Ok!",
+					text: "¡La información fue Actualizada con éxito!",
+					showConfirmButton: true,
+					confirmButtonText: "Cerrar"
+				}).then((result) => {
+					if (result.value) {
+						window.location = "datos-dia";
+					}
+				});
+			}else{
+
+				Command: toastr["error"]("No se encontro el tipo de cambio");
+
+			}
+		
+		}
+	})
+
+
+})

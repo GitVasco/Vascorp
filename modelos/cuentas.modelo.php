@@ -3673,6 +3673,11 @@ class ModeloCuentas{
 											c.fecha_ven,
 											c.vendedor,
 											c.num_unico,
+											CASE
+												WHEN c.banco = '02' 
+												THEN 'BCP' 
+												ELSE '' 
+											END AS banco,
 											c.monto,
 											c.saldo,
 											CASE

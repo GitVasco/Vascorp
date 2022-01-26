@@ -124,6 +124,7 @@
                         <th style="width:8%;text-align:left;">FECHA VEN.</th>
                         <th style="width:5%;text-align:left;">VEND.</th>
                         <th style="width:8%;text-align:left;">NRO ÚNICO</th>
+                        <th style="width:8%;text-align:left;">BANCO</th>
                         <th style="width:8%;text-align:left;">MONTO TOTAL</th>
                         <th style="width:8%;text-align:left;">SALDO PENDIENTE</th>
                         <th style="width:8%;text-align:left;">GASTOS</th>
@@ -163,6 +164,7 @@
                                 <td style="width:8%;text-align:left;">'.$value["fecha_ven"].'</td>
                                 <td style="width:5%;text-align:left;">'.$value["vendedor"].'</td>
                                 <td style="width:8%;text-align:left;">'.$value["num_unico"].'</td>
+                                <td style="width:8%;text-align:center;">'.$value["banco"].'</td>
                                 <td style="width:8%;text-align:right;">S/ '.number_format($value["monto"],2).'</td>
                                 <td style="width:8%;text-align:right;">S/ '.number_format($value["saldo"],2).'</td>
                                 '.$gasto.'
@@ -188,6 +190,7 @@
                         <th style="width:8%;text-align:left;"></th>
                         <th style="width:8%;text-align:left;"></th>
                         <th style="width:5%;text-align:left;"></th>
+                        <th style="width:8%;text-align:left;"></th>
                         <th style="width:8%;text-align:left;"></th>
                         <th style="width:8%;text-align:left;"></th>
                         <th style="width:8%;text-align:right;">S/ '.number_format($ctaCab["saldo"],2).'</th>
