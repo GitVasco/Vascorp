@@ -153,7 +153,7 @@ class ControladorContabilidad{
             $rutaBat = "vistas/contabilidad/ventas/VB$fi$ff.bat";
             $archivoBat = fopen($rutaBat, "w");
 
-            $nombreEmpresa = "VASCO";
+            $nombreEmpresa = "VASCO2022";
 
             fwrite($archivoBat, "MSISCONT.EXE ".$nombreEmpresa." V".$nomar.".txt".PHP_EOL);
             fclose($archivoBat); 
