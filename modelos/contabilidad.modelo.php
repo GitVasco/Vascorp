@@ -78,6 +78,8 @@ class ModeloContabilidad{
                     '-',
                     RIGHT(n.doc_origen, 8)
                     ) AS doc_origen,
+                    n.tipo_doc AS tip_origen,
+                    DATE_FORMAT(n.fecha_origen, '%d/%m/%y') AS fec_origen,
                     '2' AS tip_cli,
                     c.nombre AS nom_cliente,
                     c.ape_paterno,

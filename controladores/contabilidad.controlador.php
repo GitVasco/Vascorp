@@ -57,9 +57,9 @@ class ControladorContabilidad{
                     $pre        = str_pad(" ", 10); 
                     $mpago      = str_pad($value2["mpago"], 3);
                     $glosa      = str_pad($value2["glosa"], 60);
-                    $rnumero    = str_pad(" ", 40);
-                    $rtdoc      = str_pad(" ", 2);
-                    $rfecha     = str_pad(" ", 8);
+                    $rnumero    = str_pad($value2["doc_origen"], 40);
+                    $rtdoc      = str_pad($value2["tip_origen"], 2);
+                    $rfecha     = str_pad($value2["fec_origen"], 8);
                     $snumero    = str_pad(" ", 40);
                     $sfecha     = str_pad(" ", 8);
                     $tl         = str_pad(" ", 1);
@@ -145,7 +145,8 @@ class ControladorContabilidad{
 
             $origen = 'c:/xampp/htdocs/vascorp/vistas/contabilidad/ventas/V'.$nomar.'.txt';
                 
-            $destino = '//Sistemas-2/d/contabilidad/ventas/V'.$nomar.'.txt';           
+            #$destino = '//Sistemas-2/d/contabilidad/ventas/V'.$nomar.'.txt';   
+            $destino = '//Yudy-pc/datasmart/VASCO2022/V'.$nomar.'.txt';        
             
             copy($origen, $destino);
 
@@ -158,7 +159,8 @@ class ControladorContabilidad{
             fclose($archivoBat); 
             
             $origen2 = 'c:/xampp/htdocs/vascorp/vistas/contabilidad/ventas/VB'.$nomar.'.bat';
-            $destino2 = '//Sistemas-2/d/contabilidad/ventas/VB'.$nomar.'.bat';  
+            #$destino2 = '//Sistemas-2/d/contabilidad/ventas/VB'.$nomar.'.bat';
+            $destino2 = '//Yudy-pc/datasmart/VASCO2022/VB'.$nomar.'.bat';  
             copy($origen2, $destino2);
 
             #var_dump($corr);

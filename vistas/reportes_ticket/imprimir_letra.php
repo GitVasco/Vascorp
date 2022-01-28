@@ -52,8 +52,8 @@ $letras= CantidadEnLetra($respuesta["monto"]);
                     <td style="width:150px;text-align:center">'.$lugar.'</td>
                     <td style="width:40px">'.$diaVencimiento.'</td>
                     <td style="width:40px">'.$mesVencimiento.'</td>
-                    <td style="width:80px">'.$anoVencimiento.'</td>
-                    <td style="width:30px">S/</td>
+                    <td style="width:60px">'.$anoVencimiento.'</td>
+                    <td style="width:25px">S/</td>
                     <td style="width:40px;text-align:right">'.$respuesta["monto"].'</td>
                 </tr>
 
