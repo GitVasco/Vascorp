@@ -7536,7 +7536,11 @@ class ModeloFacturacion{
                 (v.neto - v.dscto) * - 1 AS p1,
                 (v.neto - v.dscto) * - 1 AS t1,
                 (v.neto - v.dscto) * - 1 AS ae1,
-                '1' AS aj1,
+                CASE
+                  WHEN COUNT(m.cantidad) > 0 
+                  THEN COUNT(m.modelo) 
+                  ELSE '1' 
+                END AS aj1,
                 '1' AS ak1,
                 v.igv * - 1 AS an1,
                 /*FILA 3*/

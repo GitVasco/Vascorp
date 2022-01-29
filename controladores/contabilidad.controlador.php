@@ -55,7 +55,7 @@ class ControladorContabilidad{
                     $cc         = str_pad(" ", 10);
                     $fe         = str_pad(" ", 4);
                     $pre        = str_pad(" ", 10); 
-                    $mpago      = str_pad($value2["mpago"], 3);
+                    $mpago      = str_pad(" ", 3);
                     $glosa      = str_pad($value2["glosa"], 60);
                     $rnumero    = str_pad($value2["doc_origen"], 40);
                     $rtdoc      = str_pad($value2["tip_origen"], 2);
@@ -165,8 +165,8 @@ class ControladorContabilidad{
 
             #var_dump($corr);
 
-            $correlativo = ModeloContabilidad::mdlActualizarCorrelativo($añoI, $mesI, $corr);
-            var_dump($correlativo);
+            $correlativo = ModeloContabilidad::mdlActualizarCorrelativo($añoI, $mesI, $corr, "valor_1");
+            #var_dump($correlativo);
 
             if($correlativo == "ok"){
 
@@ -190,6 +190,200 @@ class ControladorContabilidad{
 
             }
             
+        }
+
+    }
+
+    static public function ctrGenerarCanjeSiscont(){
+        
+        if(isset($_POST["inicioSiscontL"])){
+
+            #var_dump($_POST["inicioSiscontL"]);
+
+            $fechaInicio = $_POST["inicioSiscontL"];
+            $fechaFin = $_POST["finSiscontL"];
+
+            $añoI = date("Y", strtotime($fechaInicio));
+            $mesI = date("m", strtotime($fechaInicio));
+
+            $fi = str_replace("-", "",$fechaInicio);
+            $ff = str_replace("-", "",$fechaFin);
+
+            $nomar = $fi.$ff;
+            #var_dump($nomar);
+
+            $ruta = "vistas/contabilidad/letras/L$fi$ff.txt";
+            #var_dump($ruta);
+
+            $archivo = fopen($ruta, "w");
+
+            $letras = ModeloContabilidad::mdlLetrasConfiguradas($fechaInicio, $fechaFin);
+            $voucher = ModeloContabilidad::mdlVoucherSiscont($añoI, $mesI);
+            #var_dump($letras);
+
+            $corr = $voucher["correlativoL"];
+            #var_dump($corr);
+
+            foreach($letras as $key => $value){
+
+                $corr++;
+
+                $documento = ModeloContabilidad::mdlLetrasSiscont($value["doc_origen"]);                
+
+                foreach($documento as $key => $value2){
+
+                    #var_dump($value2["debe"]);
+
+                    $origen     = str_pad($value2["t"], 2);
+                    $voucher    = str_pad($corr, 5 , '0', STR_PAD_LEFT);
+                    $fecha      = str_pad($value2["fecha"], 8);
+                    $cuenta     = str_pad($value2["cuenta"],10);
+                    $debe       = str_pad($value2["debe"], 12 , '0', STR_PAD_LEFT);
+                    $haber      = str_pad($value2["haber"], 12 , '0', STR_PAD_LEFT);
+                    $moneda     = str_pad($value2["moneda"], 1);
+                    $tc         = str_pad($value2["tc"], 10 , '0', STR_PAD_LEFT);
+                    $doc        = str_pad($value2["doc"], 2);
+                    $numero     = str_pad($value2["numero"], 40);
+                    $fechad     = str_pad($value2["fechad"], 8);
+                    $fechav     = str_pad($value2["fechav"], 8);
+                    $codigo     = str_pad($value2["codigo"], 15);
+                    $cc         = str_pad(" ", 10);
+                    $fe         = str_pad(" ", 4);
+                    $pre        = str_pad(" ", 10); 
+                    $mpago      = str_pad(" ", 3);
+                    $glosa      = str_pad($value2["glosa"], 60);
+                    $rnumero    = str_pad(" ", 40);
+                    $rtdoc      = str_pad(" ", 2);
+                    $rfecha     = str_pad(" ", 8);
+                    $snumero    = str_pad(" ", 40);
+                    $sfecha     = str_pad(" ", 8);
+                    $tl         = str_pad(" ", 1);
+                    $neto       = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                    $neto2      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                    $neto3      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                    $neto4      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                    $igv        = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                    $neto5      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                    $neto6      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                    $neto7      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                    $neto8      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                    $neto9      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                    $ruc        = str_pad($value2["ruc"], 15);
+                    $tipo       = str_pad($value2["tipo"], 1);
+                    $r5         = str_pad(str_replace("Ñ", "N",$value2["rs"]), 60);
+                    $ape1       = str_pad(str_replace("Ñ", "N",$value2["ape1"]), 20);
+                    $ape2       = str_pad(str_replace("Ñ", "N",$value2["ape2"]), 20);
+                    $nombre     = str_pad(str_replace("Ñ", "N",$value2["nombre"]), 20);
+                    $tdoi       = str_pad($value2["tdoci"], 1);
+                    $rnumdes    = str_pad(" ", 1);
+                    $rcodtasa   = str_pad(" ", 5);
+                    $rindret    = str_pad(" ", 1);
+                    $rmonto     = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                    $rigv       = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                    $tbien      = str_pad(" ", 1);
+
+                    fwrite($archivo,    $origen.
+                                        $voucher.
+                                        $fecha.
+                                        $cuenta.
+                                        $debe.
+                                        $haber.
+                                        $moneda.
+                                        $tc.
+                                        $doc.
+                                        $numero.
+                                        $fechad.
+                                        $fechav.
+                                        $codigo.
+                                        $cc.
+                                        $fe.
+                                        $pre.
+                                        $mpago.
+                                        $glosa.
+                                        $rnumero.
+                                        $rtdoc.
+                                        $rfecha.
+                                        $snumero.
+                                        $sfecha.
+                                        $tl.
+                                        $neto.
+                                        $neto2.
+                                        $neto3.
+                                        $neto4.
+                                        $igv.
+                                        $neto5.
+                                        $neto6.
+                                        $neto7.
+                                        $neto8.
+                                        $neto9.
+                                        $ruc.
+                                        $tipo.
+                                        $r5.
+                                        $ape1.
+                                        $ape2.
+                                        $nombre.
+                                        $tdoi.
+                                        $rnumdes.
+                                        $rcodtasa.
+                                        $rindret.
+                                        $rmonto.
+                                        $rigv.
+                                        $tbien.
+                                        PHP_EOL);
+
+                }
+
+            }
+
+            fclose($archivo); 
+
+            $origen = 'c:/xampp/htdocs/vascorp/vistas/contabilidad/letras/L'.$nomar.'.txt';
+                
+            $destino = '//Sistemas-2/d/contabilidad/letras/L'.$nomar.'.txt';   
+            #$destino = '//Yudy-pc/datasmart/VASCO2022/L'.$nomar.'.txt';        
+            
+            copy($origen, $destino);
+
+            $rutaBat = "vistas/contabilidad/letras/LB$fi$ff.bat";
+            $archivoBat = fopen($rutaBat, "w");
+
+            $nombreEmpresa = "VASCO2022";
+
+            fwrite($archivoBat, "MSISCONT.EXE ".$nombreEmpresa." L".$nomar.".txt".PHP_EOL);
+            fclose($archivoBat); 
+            
+            $origen2 = 'c:/xampp/htdocs/vascorp/vistas/contabilidad/letras/LB'.$nomar.'.bat';
+            $destino2 = '//Sistemas-2/d/contabilidad/letras/LB'.$nomar.'.bat';
+            #$destino2 = '//Yudy-pc/datasmart/VASCO2022/VB'.$nomar.'.bat';  
+            copy($origen2, $destino2);
+
+            #var_dump($corr);
+
+            $correlativo = ModeloContabilidad::mdlActualizarCorrelativo($añoI, $mesI, $corr, "valor_2");
+            var_dump($correlativo);
+
+            if($correlativo == "ok"){
+
+                echo'<script>
+
+                swal({
+                    type: "success",
+                    title: "Se genero el archivo correctamente",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar",
+                    closeOnConfirm: false
+                    }).then(function(result){
+                        if (result.value) {
+
+                        window.location = "procesar-ce";
+
+                        }
+                    })
+    
+                </script>';                
+
+            }            
+
         }
 
     }

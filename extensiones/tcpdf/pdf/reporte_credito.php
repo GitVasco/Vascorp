@@ -198,7 +198,7 @@ if($serie == "B002" || $serie == "F002"){
         $pdf->Cell(62, 5, $value["nombre"], 'LR', false, 'L', 0, '', 0, false, 'T', 'M');
         $pdf->Cell(24, 5, $value["precio"], 'LR', false, 'R', 0, '', 0, false, 'T', 'M');
         $pdf->Cell(21, 5, $value["dscto1"], 'LR', false, 'R', 0, '', 0, false, 'T', 'M');
-        $pdf->Cell(23, 5, ($value["total"]*-1), 'LR', false, 'R', 0, '', 0, false, 'T', 'M' );
+        $pdf->Cell(23, 5, (round($value["total"]*-1,2)), 'LR', false, 'R', 0, '', 0, false, 'T', 'M' );
         
     }
     $tamaño=count($modelo);
