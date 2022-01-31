@@ -339,8 +339,8 @@ class ControladorContabilidad{
 
             $origen = 'c:/xampp/htdocs/vascorp/vistas/contabilidad/letras/L'.$nomar.'.txt';
                 
-            $destino = '//Sistemas-2/d/contabilidad/letras/L'.$nomar.'.txt';   
-            #$destino = '//Yudy-pc/datasmart/VASCO2022/L'.$nomar.'.txt';        
+            #$destino = '//Sistemas-2/d/contabilidad/letras/L'.$nomar.'.txt';   
+            $destino = '//Yudy-pc/datasmart/VASCO2022/L'.$nomar.'.txt';        
             
             copy($origen, $destino);
 
@@ -353,8 +353,8 @@ class ControladorContabilidad{
             fclose($archivoBat); 
             
             $origen2 = 'c:/xampp/htdocs/vascorp/vistas/contabilidad/letras/LB'.$nomar.'.bat';
-            $destino2 = '//Sistemas-2/d/contabilidad/letras/LB'.$nomar.'.bat';
-            #$destino2 = '//Yudy-pc/datasmart/VASCO2022/VB'.$nomar.'.bat';  
+            #$destino2 = '//Sistemas-2/d/contabilidad/letras/LB'.$nomar.'.bat';
+            $destino2 = '//Yudy-pc/datasmart/VASCO2022/VB'.$nomar.'.bat';  
             copy($origen2, $destino2);
 
             #var_dump($corr);
@@ -645,8 +645,8 @@ class ControladorContabilidad{
 
             $origen = 'c:/xampp/htdocs/vascorp/vistas/contabilidad/cancelaciones/C'.$nomar.'.txt';
                 
-            $destino = '//Sistemas-2/d/contabilidad/cancelaciones/C'.$nomar.'.txt';   
-            #$destino = '//Yudy-pc/datasmart/VASCO2022/C'.$nomar.'.txt';        
+            #$destino = '//Sistemas-2/d/contabilidad/cancelaciones/C'.$nomar.'.txt';   
+            $destino = '//Yudy-pc/datasmart/VASCO2022/C'.$nomar.'.txt';        
             
             copy($origen, $destino);
 
@@ -659,8 +659,8 @@ class ControladorContabilidad{
             fclose($archivoBat); 
             
             $origen2 = 'c:/xampp/htdocs/vascorp/vistas/contabilidad/cancelaciones/CB'.$nomar.'.bat';
-            $destino2 = '//Sistemas-2/d/contabilidad/cancelaciones/CB'.$nomar.'.bat';
-            #$destino2 = '//Yudy-pc/datasmart/VASCO2022/VB'.$nomar.'.bat';  
+            #$destino2 = '//Sistemas-2/d/contabilidad/cancelaciones/CB'.$nomar.'.bat';
+            $destino2 = '//Yudy-pc/datasmart/VASCO2022/CB'.$nomar.'.bat';  
             copy($origen2, $destino2);
 
             echo'<script>

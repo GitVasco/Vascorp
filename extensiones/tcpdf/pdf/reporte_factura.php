@@ -312,6 +312,14 @@ if( $tamaño>= 23){
     $pdf->Cell(12, 10, $venta["total"], 0, false, 'R', 0, '', 0, false, false, false );
     $pdf->Ln(15);
     $pdf->Cell(0,11, $pdf->Image($image_file2, $pdf->GetX(), $pdf->GetY(),185),0);
+
+    $pdf->Ln(0);
+    $pdf->Cell(0, 7, 'Son: '.$monto_letra, 0, false, 'L', 0, '', 0, false, false, false );
+    $pdf->Ln(6);
+    $pdf->Cell(120, 10, 'Cta. Recaudadora Bco. Crédito:  191-1553564-0-64', 0, false, 'L', 0, '', 0, false, false, false );
+    $pdf->Cell(70, 10, 'CANCELADO', 0, false, 'L', 0, '', 0, false, false, false );
+    $pdf->Ln(8);
+    $pdf->Cell(180, 10, 'Lima, ________ de __________________ de _______', 0, false, 'R', 0, '', 0, false, false, false );     
 }
 
 
