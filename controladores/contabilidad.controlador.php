@@ -75,10 +75,10 @@ class ControladorContabilidad{
                     $neto9      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
                     $ruc        = str_pad($value2["doc_cli"], 15);
                     $tipo       = str_pad($value2["tip_cli"], 1);
-                    $r5         = str_pad(str_replace("Ñ", "N",$value2["nom_cliente"]), 60);
-                    $ape1       = str_pad(str_replace("Ñ", "N",$value2["ape_paterno"]), 20);
-                    $ape2       = str_pad(str_replace("Ñ", "N",$value2["ape_materno"]), 20);
-                    $nombre     = str_pad(str_replace("Ñ", "N",$value2["nombres"]), 20);
+                    $r5         = str_pad(utf8_decode($value2["nom_cliente"]), 60);
+                    $ape1       = str_pad(utf8_decode($value2["ape_paterno"]), 20);
+                    $ape2       = str_pad(utf8_decode($value2["ape_materno"]), 20);
+                    $nombre     = str_pad(utf8_decode($value2["nombres"]), 20);
                     $tdoi       = str_pad($value2["tipo_documento"], 1);
                     $rnumdes    = str_pad(" ", 1);
                     $rcodtasa   = str_pad(" ", 5);
