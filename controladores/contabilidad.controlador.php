@@ -62,7 +62,7 @@ class ControladorContabilidad{
                     $rfecha     = str_pad($value2["fec_origen"], 8);
                     $snumero    = str_pad(" ", 40);
                     $sfecha     = str_pad(" ", 8);
-                    $tl         = str_pad(" ", 1);
+                    $tl         = str_pad("V", 1);
                     $neto       = str_pad("0.00", 12, '0', STR_PAD_LEFT);
                     $neto2      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
                     $neto3      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
