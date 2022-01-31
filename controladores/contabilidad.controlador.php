@@ -2,6 +2,47 @@
 
 class ControladorContabilidad{
 
+    static public function eliminar_tildes($cadena){
+
+        //Codificamos la cadena en formato utf8 en caso de que nos de errores
+        #$cadena = utf8_decode($cadena);
+    
+        //Ahora reemplazamos las letras
+        $cadena = str_replace(
+            array('á', 'à', 'ä', 'â', 'ª', 'Á', 'À', 'Â', 'Ä'),
+            array('a', 'a', 'a', 'a', 'a', 'A', 'A', 'A', 'A'),
+            $cadena
+        );
+    
+        $cadena = str_replace(
+            array('é', 'è', 'ë', 'ê', 'É', 'È', 'Ê', 'Ë'),
+            array('e', 'e', 'e', 'e', 'E', 'E', 'E', 'E'),
+            $cadena );
+    
+        $cadena = str_replace(
+            array('í', 'ì', 'ï', 'î', 'Í', 'Ì', 'Ï', 'Î'),
+            array('i', 'i', 'i', 'i', 'I', 'I', 'I', 'I'),
+            $cadena );
+    
+        $cadena = str_replace(
+            array('ó', 'ò', 'ö', 'ô', 'Ó', 'Ò', 'Ö', 'Ô'),
+            array('o', 'o', 'o', 'o', 'O', 'O', 'O', 'O'),
+            $cadena );
+    
+        $cadena = str_replace(
+            array('ú', 'ù', 'ü', 'û', 'Ú', 'Ù', 'Û', 'Ü'),
+            array('u', 'u', 'u', 'u', 'U', 'U', 'U', 'U'),
+            $cadena );
+    
+        $cadena = str_replace(
+            array('ñ', 'Ñ', 'ç', 'Ç'),
+            array('n', 'N', 'c', 'C'),
+            $cadena
+        );
+    
+        return $cadena;
+    } 
+
     static public function ctrGenerarVentasSiscont(){
         
         if(isset($_POST["inicioSiscont"])){
@@ -39,6 +80,11 @@ class ControladorContabilidad{
 
                 foreach($documento as $key => $value2){
 
+                    $nom_cliente = ControladorContabilidad::eliminar_tildes($value2["nom_cliente"]);
+                    $ape_paterno = ControladorContabilidad::eliminar_tildes($value2["ape_paterno"]);
+                    $ape_materno = ControladorContabilidad::eliminar_tildes($value2["ape_materno"]);
+                    $nombres = ControladorContabilidad::eliminar_tildes($value2["nombres"]);
+
                     $origen     = str_pad($value2["origen"], 2);
                     $voucher    = str_pad($corr, 5 , '0', STR_PAD_LEFT);
                     $fecha      = str_pad($value2["fecha"], 8);
@@ -75,10 +121,10 @@ class ControladorContabilidad{
                     $neto9      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
                     $ruc        = str_pad($value2["doc_cli"], 15);
                     $tipo       = str_pad($value2["tip_cli"], 1);
-                    $r5         = str_pad(utf8_decode($value2["nom_cliente"]), 60);
-                    $ape1       = str_pad(utf8_decode($value2["ape_paterno"]), 20);
-                    $ape2       = str_pad(utf8_decode($value2["ape_materno"]), 20);
-                    $nombre     = str_pad(utf8_decode($value2["nombres"]), 20);
+                    $r5         = str_pad($nom_cliente, 60);
+                    $ape1       = str_pad($ape_paterno, 20);
+                    $ape2       = str_pad($ape_materno, 20);
+                    $nombre     = str_pad($nombres, 20);
                     $tdoi       = str_pad($value2["tipo_documento"], 1);
                     $rnumdes    = str_pad(" ", 1);
                     $rcodtasa   = str_pad(" ", 5);
