@@ -63,11 +63,11 @@ class ControladorContabilidad{
                     $snumero    = str_pad(" ", 40);
                     $sfecha     = str_pad(" ", 8);
                     $tl         = str_pad("V", 1);
-                    $neto       = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                    $neto       = str_pad($value2["neto"], 12 , '0', STR_PAD_LEFT);
                     $neto2      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
                     $neto3      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
                     $neto4      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
-                    $igv        = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                    $igv        = str_pad($value2["igv"], 12 , '0', STR_PAD_LEFT);
                     $neto5      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
                     $neto6      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
                     $neto7      = str_pad("0.00", 12, '0', STR_PAD_LEFT);

@@ -11,6 +11,21 @@ class ModeloContabilidad{
                     DATE_FORMAT(v.fecha, '%d/%m/%y') AS fecha,
                     v.tipo,
                     v.documento,
+                    CASE
+                        WHEN v.tipo = 'E05' 
+                        THEN ROUND(v.neto, 2) * - 1 
+                        ELSE ROUND(v.neto, 2) 
+                    END AS neto,
+                    CASE
+                        WHEN v.tipo = 'E05' 
+                        THEN ROUND(v.igv, 2) * - 1 
+                        ELSE ROUND(v.igv, 2) 
+                    END AS igv,
+                    CASE
+                        WHEN v.tipo = 'E05' 
+                        THEN ROUND(v.total, 2) * - 1 
+                        ELSE ROUND(v.total, 2) 
+                    END AS total,
                     tm.cuenta,
                     CASE
                     WHEN LEFT(c.ubigeo, 1) = 'L' 
