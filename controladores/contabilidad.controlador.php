@@ -388,4 +388,301 @@ class ControladorContabilidad{
 
     }
 
+    static public function ctrGenerarCancelacionesSiscont(){
+        
+        if(isset($_POST["inicioSiscontC"])){
+
+            #var_dump($_POST["inicioSiscontC"]);
+
+            $fechaInicio = $_POST["inicioSiscontC"];
+            $fechaFin = $_POST["finSiscontC"];
+
+            $añoI = date("Y", strtotime($fechaInicio));
+            $mesI = date("m", strtotime($fechaInicio));
+
+            $fi = str_replace("-", "",$fechaInicio);
+            $ff = str_replace("-", "",$fechaFin);
+
+            $nomar = $fi.$ff;
+            #var_dump($nomar);
+
+            $ruta = "vistas/contabilidad/cancelaciones/C$fi$ff.txt";
+            #var_dump($ruta);
+
+            $archivo = fopen($ruta, "w");
+
+            $cancelaciones04 = ModeloContabilidad::mdlCancelacionesSiscont04($fechaInicio, $fechaFin);
+            $cancelaciones08 = ModeloContabilidad::mdlCancelacionesSiscont08($fechaInicio, $fechaFin);
+            $voucher = ModeloContabilidad::mdlVoucherSiscont($añoI, $mesI);
+            #var_dump($cancelaciones04);   
+
+            $corr04 = 0;
+            $corr08 = 0;
+
+            for($i = 0; $i < count($cancelaciones04); $i++){
+
+                if($cancelaciones04[$i]["num_cta"] == $cancelaciones04[$i-1]["num_cta"]){
+
+                    $corr04;
+
+                }else{
+
+                    $corr04++;
+
+                }
+
+                $origen     = str_pad('04', 2);
+                $voucher    = str_pad($corr04, 5 , '0', STR_PAD_LEFT);
+                $fecha      = str_pad($cancelaciones04[$i]["fecha"], 8);
+                $cuenta     = str_pad($cancelaciones04[$i]["cuenta"],10);
+                $debe       = str_pad($cancelaciones04[$i]["debe"], 12 , '0', STR_PAD_LEFT);
+                $haber      = str_pad($cancelaciones04[$i]["haber"], 12 , '0', STR_PAD_LEFT);
+                $moneda     = str_pad($cancelaciones04[$i]["moneda"], 1);
+                $tc         = str_pad($cancelaciones04[$i]["tc"], 10 , '0', STR_PAD_LEFT);
+                $doc        = str_pad($cancelaciones04[$i]["doc"], 2);
+                $numero     = str_pad($cancelaciones04[$i]["numero"], 40);
+                $fechad     = str_pad($cancelaciones04[$i]["fechad"], 8);
+                $fechav     = str_pad($cancelaciones04[$i]["fechav"], 8);
+                $codigo     = str_pad($cancelaciones04[$i]["codigo"], 15);
+                $cc         = str_pad(" ", 10);
+                $fe         = str_pad(" ", 4);
+                $pre        = str_pad(" ", 10); 
+                $mpago      = str_pad(" ", 3);
+                $glosa      = str_pad($cancelaciones04[$i]["glosa"], 60);
+                $rnumero    = str_pad(" ", 40);
+                $rtdoc      = str_pad(" ", 2);
+                $rfecha     = str_pad(" ", 8);
+                $snumero    = str_pad(" ", 40);
+                $sfecha     = str_pad(" ", 8);
+                $tl         = str_pad(" ", 1);
+                $neto       = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $neto2      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $neto3      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $neto4      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $igv        = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $neto5      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $neto6      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $neto7      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $neto8      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $neto9      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $ruc        = str_pad($cancelaciones04[$i]["ruc"], 15);
+                $tipo       = str_pad($cancelaciones04[$i]["tipo"], 1);
+                $r5         = str_pad(str_replace("Ñ", "N",$cancelaciones04[$i]["rs"]), 60);
+                $ape1       = str_pad(str_replace("Ñ", "N",$cancelaciones04[$i]["ape1"]), 20);
+                $ape2       = str_pad(str_replace("Ñ", "N",$cancelaciones04[$i]["ape2"]), 20);
+                $nombre     = str_pad(str_replace("Ñ", "N",$cancelaciones04[$i]["nombre"]), 20);
+                $tdoi       = str_pad($cancelaciones04[$i]["tdoci"], 1);
+                $rnumdes    = str_pad(" ", 1);
+                $rcodtasa   = str_pad(" ", 5);
+                $rindret    = str_pad(" ", 1);
+                $rmonto     = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $rigv       = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $tbien      = str_pad(" ", 1);                
+
+                fwrite($archivo,    $origen.
+                                    $voucher.
+                                    $fecha.
+                                    $cuenta.
+                                    $debe.
+                                    $haber.
+                                    $moneda.
+                                    $tc.
+                                    $doc.
+                                    $numero.
+                                    $fechad.
+                                    $fechav.
+                                    $codigo.
+                                    $cc.
+                                    $fe.
+                                    $pre.
+                                    $mpago.
+                                    $glosa.
+                                    $rnumero.
+                                    $rtdoc.
+                                    $rfecha.
+                                    $snumero.
+                                    $sfecha.
+                                    $tl.
+                                    $neto.
+                                    $neto2.
+                                    $neto3.
+                                    $neto4.
+                                    $igv.
+                                    $neto5.
+                                    $neto6.
+                                    $neto7.
+                                    $neto8.
+                                    $neto9.
+                                    $ruc.
+                                    $tipo.
+                                    $r5.
+                                    $ape1.
+                                    $ape2.
+                                    $nombre.
+                                    $tdoi.
+                                    $rnumdes.
+                                    $rcodtasa.
+                                    $rindret.
+                                    $rmonto.
+                                    $rigv.
+                                    $tbien.
+                                    PHP_EOL);
+
+            }
+
+            for($i = 0; $i < count($cancelaciones08); $i++){
+
+                if($cancelaciones08[$i]["num_cta"] == $cancelaciones08[$i-1]["num_cta"]){
+
+                    $corr08;
+
+                }else{
+
+                    $corr08++;
+
+                }
+
+                $origen     = str_pad('08', 2);
+                $voucher    = str_pad($corr08, 5 , '0', STR_PAD_LEFT);
+                $fecha      = str_pad($cancelaciones08[$i]["fecha"], 8);
+                $cuenta     = str_pad($cancelaciones08[$i]["cuenta"],10);
+                $debe       = str_pad($cancelaciones08[$i]["debe"], 12 , '0', STR_PAD_LEFT);
+                $haber      = str_pad($cancelaciones08[$i]["haber"], 12 , '0', STR_PAD_LEFT);
+                $moneda     = str_pad($cancelaciones08[$i]["moneda"], 1);
+                $tc         = str_pad($cancelaciones08[$i]["tc"], 10 , '0', STR_PAD_LEFT);
+                $doc        = str_pad($cancelaciones08[$i]["doc"], 2);
+                $numero     = str_pad($cancelaciones08[$i]["numero"], 40);
+                $fechad     = str_pad($cancelaciones08[$i]["fechad"], 8);
+                $fechav     = str_pad($cancelaciones08[$i]["fechav"], 8);
+                $codigo     = str_pad($cancelaciones08[$i]["codigo"], 15);
+                $cc         = str_pad(" ", 10);
+                $fe         = str_pad(" ", 4);
+                $pre        = str_pad(" ", 10); 
+                $mpago      = str_pad(" ", 3);
+                $glosa      = str_pad($cancelaciones08[$i]["glosa"], 60);
+                $rnumero    = str_pad(" ", 40);
+                $rtdoc      = str_pad(" ", 2);
+                $rfecha     = str_pad(" ", 8);
+                $snumero    = str_pad(" ", 40);
+                $sfecha     = str_pad(" ", 8);
+                $tl         = str_pad(" ", 1);
+                $neto       = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $neto2      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $neto3      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $neto4      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $igv        = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $neto5      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $neto6      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $neto7      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $neto8      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $neto9      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $ruc        = str_pad($cancelaciones08[$i]["ruc"], 15);
+                $tipo       = str_pad($cancelaciones08[$i]["tipo"], 1);
+                $r5         = str_pad(str_replace("Ñ", "N",$cancelaciones08[$i]["rs"]), 60);
+                $ape1       = str_pad(str_replace("Ñ", "N",$cancelaciones08[$i]["ape1"]), 20);
+                $ape2       = str_pad(str_replace("Ñ", "N",$cancelaciones08[$i]["ape2"]), 20);
+                $nombre     = str_pad(str_replace("Ñ", "N",$cancelaciones08[$i]["nombre"]), 20);
+                $tdoi       = str_pad($cancelaciones08[$i]["tdoci"], 1);
+                $rnumdes    = str_pad(" ", 1);
+                $rcodtasa   = str_pad(" ", 5);
+                $rindret    = str_pad(" ", 1);
+                $rmonto     = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $rigv       = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $tbien      = str_pad(" ", 1);                
+
+                fwrite($archivo,    $origen.
+                                    $voucher.
+                                    $fecha.
+                                    $cuenta.
+                                    $debe.
+                                    $haber.
+                                    $moneda.
+                                    $tc.
+                                    $doc.
+                                    $numero.
+                                    $fechad.
+                                    $fechav.
+                                    $codigo.
+                                    $cc.
+                                    $fe.
+                                    $pre.
+                                    $mpago.
+                                    $glosa.
+                                    $rnumero.
+                                    $rtdoc.
+                                    $rfecha.
+                                    $snumero.
+                                    $sfecha.
+                                    $tl.
+                                    $neto.
+                                    $neto2.
+                                    $neto3.
+                                    $neto4.
+                                    $igv.
+                                    $neto5.
+                                    $neto6.
+                                    $neto7.
+                                    $neto8.
+                                    $neto9.
+                                    $ruc.
+                                    $tipo.
+                                    $r5.
+                                    $ape1.
+                                    $ape2.
+                                    $nombre.
+                                    $tdoi.
+                                    $rnumdes.
+                                    $rcodtasa.
+                                    $rindret.
+                                    $rmonto.
+                                    $rigv.
+                                    $tbien.
+                                    PHP_EOL);
+
+            }
+
+            fclose($archivo); 
+
+            $origen = 'c:/xampp/htdocs/vascorp/vistas/contabilidad/cancelaciones/C'.$nomar.'.txt';
+                
+            $destino = '//Sistemas-2/d/contabilidad/cancelaciones/C'.$nomar.'.txt';   
+            #$destino = '//Yudy-pc/datasmart/VASCO2022/C'.$nomar.'.txt';        
+            
+            copy($origen, $destino);
+
+            $rutaBat = "vistas/contabilidad/cancelaciones/CB$fi$ff.bat";
+            $archivoBat = fopen($rutaBat, "w");
+
+            $nombreEmpresa = "VASCO2022";
+
+            fwrite($archivoBat, "MSISCONT.EXE ".$nombreEmpresa." L".$nomar.".txt".PHP_EOL);
+            fclose($archivoBat); 
+            
+            $origen2 = 'c:/xampp/htdocs/vascorp/vistas/contabilidad/cancelaciones/CB'.$nomar.'.bat';
+            $destino2 = '//Sistemas-2/d/contabilidad/cancelaciones/CB'.$nomar.'.bat';
+            #$destino2 = '//Yudy-pc/datasmart/VASCO2022/VB'.$nomar.'.bat';  
+            copy($origen2, $destino2);
+
+            echo'<script>
+
+            swal({
+                type: "success",
+                title: "Se genero el archivo correctamente",
+                showConfirmButton: true,
+                confirmButtonText: "Cerrar",
+                closeOnConfirm: false
+                }).then(function(result){
+                    if (result.value) {
+
+                    window.location = "procesar-ce";
+
+                    }
+                })
+
+            </script>';               
+            
+        }
+
+    }
+
 }

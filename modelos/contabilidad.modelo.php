@@ -140,7 +140,9 @@ class ModeloContabilidad{
                     tm.des_larga AS mes,
                     tm.des_corta AS ano,
                     tm.valor_1 AS correlativo,
-                    tm.valor_2 AS correlativoL
+                    tm.valor_2 AS correlativoL,
+                    tm.valor_3 as correlativo04,
+                    tm.valor_4 as correlativo08
                 FROM
                     tabla_m_detalle tm 
                 WHERE tm.cod_tabla = 'tcor' 
@@ -336,5 +338,427 @@ class ModeloContabilidad{
         $stmt=null;
 
     }    
+
+    static public function mdlCancelacionesSiscont04($fechaInicio, $fechaFin){
+
+        $sql="SELECT 
+                        tip.codigos_pago,
+                        DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fecha,
+                        cc.tipo_doc,
+                        cc.num_cta,
+                        cc.doc_origen,
+                        cc.cod_pago,
+                        CASE
+                        WHEN cc.tipo_doc IN ('01', '03', '08') 
+                        THEN '121101' 
+                        ELSE '123101' 
+                        END AS cuenta,
+                        ROUND('0.00',2) AS debe,
+                        cc.monto AS haber,
+                        'S' AS moneda,
+                        cc.tip_cambio AS tc,
+                        CASE
+                        WHEN cc.tipo_doc = '85' 
+                        THEN 'LE' 
+                        ELSE cc.tipo_doc 
+                        END AS doc,
+                        CASE
+                        WHEN cc.tipo_doc IN ('01', '03', '08') 
+                        AND LEFT(cc.num_cta, 1) <> '0' 
+                        THEN CONCAT(
+                            LEFT(cc.num_cta, 4),
+                            '-',
+                            RIGHT(cc.num_cta, 8)
+                        ) 
+                        WHEN cc.tipo_doc IN ('01', '03', '08') 
+                        AND LEFT(cc.num_cta, 1) = '0' 
+                        THEN CONCAT(
+                            LEFT(cc.num_cta, 3),
+                            '-',
+                            RIGHT(cc.num_cta, 7)
+                        ) 
+                        ELSE cc.num_cta 
+                        END AS numero,
+                        DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fechad,
+                        DATE_FORMAT(cc.fecha_ven, '%d/%m/%y') AS fechav,
+                        cc.cliente,
+                        c.documento AS codigo,
+                        CASE
+                        WHEN cc.tipo_doc = '85' 
+                        THEN 'CANCELACION DE LETRAS' 
+                        ELSE 'CANCELACION DE DOCUMENTOS' 
+                        END AS glosa,
+                        c.documento AS ruc,
+                        '2' AS tipo,
+                        c.nombre AS rs,
+                        c.ape_paterno AS ape1,
+                        c.ape_materno AS ape2,
+                        c.nombres AS nombre,
+                        c.tipo_documento AS tdoci 
+                    FROM
+                        cuenta_ctejf cc 
+                        LEFT JOIN clientesjf c 
+                        ON cc.cliente = c.codigo 
+                        LEFT JOIN 
+                        (SELECT 
+                            cc.tipo_doc,
+                            cc.num_cta,
+                            GROUP_CONCAT(cc.cod_pago) AS codigos_pago 
+                        FROM
+                            cuenta_ctejf cc 
+                        WHERE cc.fecha BETWEEN :fechaInicio 
+                            AND :fechaFin 
+                            AND cc.tip_mov = '-' 
+                            AND cc.tipo_doc IN ('01', '03', '07', '08', '85') 
+                            AND cc.cod_pago NOT IN ('85', 'RF') 
+                        GROUP BY cc.num_cta) AS tip 
+                        ON cc.tipo_doc = tip.tipo_doc 
+                        AND cc.num_cta = tip.num_cta 
+                    WHERE cc.fecha BETWEEN :fechaInicio 
+                        AND :fechaFin 
+                        AND cc.tip_mov = '-' 
+                        AND cc.tipo_doc IN ('01', '03', '07', '08', '85') 
+                        AND cc.cod_pago NOT IN ('85', 'RF') 
+                        AND tip.codigos_pago LIKE '%80%'
+            UNION
+                        SELECT 
+                        tip.codigos_pago,
+                        DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fecha,
+                        cc.tipo_doc,
+                        cc.num_cta,
+                        cc.doc_origen,
+                        cc.cod_pago,
+                        CASE
+                            WHEN cc.cod_pago IN ('00', '05', '82') 
+                            THEN '104101' 
+                            WHEN cc.cod_pago IN ('06', '14') 
+                            THEN '104103' 
+                            WHEN cc.cod_pago IN ('80') 
+                            THEN '101100' 
+                            ELSE '121101' 
+                        END AS cuenta,
+                        SUM(cc.monto) AS debe,
+                        0 AS haber,
+                        'S' AS moneda,
+                        cc.tip_cambio AS tc,
+                        CASE
+                            WHEN cc.cod_pago IN ('96', '97') 
+                            THEN '07' 
+                            WHEN cc.tipo_doc = '85' 
+                            THEN 'LE' 
+                            ELSE cc.tipo_doc 
+                        END AS doc,
+                        IFNULL(
+                            CASE
+                            WHEN cc.cod_pago IN ('96', '97') 
+                            THEN 
+                            (SELECT DISTINCT 
+                                CONCAT(
+                                LEFT(n.documento, 4),
+                                '-',
+                                RIGHT(n.documento, 8)
+                                ) 
+                            FROM
+                                notascd_jf n 
+                            WHERE n.doc_origen = cc.num_cta 
+                                AND n.tipo = 'E05' 
+                            LIMIT 1) 
+                            WHEN cc.tipo_doc IN ('01', '03', '08') 
+                            AND LEFT(cc.num_cta, 1) <> '0' 
+                            THEN CONCAT(
+                                LEFT(cc.num_cta, 4),
+                                '-',
+                                RIGHT(cc.num_cta, 8)
+                            ) 
+                            WHEN cc.tipo_doc IN ('01', '03', '08') 
+                            AND LEFT(cc.num_cta, 1) = '0' 
+                            THEN CONCAT(
+                                LEFT(cc.num_cta, 3),
+                                '-',
+                                RIGHT(cc.num_cta, 7)
+                            ) 
+                            ELSE cc.num_cta 
+                            END,
+                            (SELECT DISTINCT 
+                            CONCAT(
+                                LEFT(n.documento, 4),
+                                '-',
+                                RIGHT(n.documento, 8)
+                            ) 
+                            FROM
+                            notascd_jf n 
+                            WHERE RIGHT(cc.notas, 12) = n.documento 
+                            AND n.tipo = 'E05')
+                        ) AS numero,
+                        DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fechad,
+                        DATE_FORMAT(cc.fecha_ven, '%d/%m/%y') AS fechav,
+                        cc.cliente,
+                        c.documento AS codigo,
+                        CASE
+                            WHEN cc.tipo_doc = '85' 
+                            THEN 'CANCELACION DE LETRAS' 
+                            ELSE 'CANCELACION DE DOCUMENTOS' 
+                        END AS glosa,
+                        c.documento AS ruc,
+                        '2' AS tipo,
+                        c.nombre AS rs,
+                        c.ape_paterno AS ape1,
+                        c.ape_materno AS ape2,
+                        c.nombres AS nombre,
+                        c.tipo_documento AS tdoci 
+                        FROM
+                        cuenta_ctejf cc 
+                        LEFT JOIN clientesjf c 
+                            ON cc.cliente = c.codigo 
+                        LEFT JOIN 
+                            (SELECT 
+                            cc.tipo_doc,
+                            cc.num_cta,
+                            GROUP_CONCAT(cc.cod_pago) AS codigos_pago 
+                            FROM
+                            cuenta_ctejf cc 
+                            WHERE cc.fecha BETWEEN :fechaInicio 
+                            AND :fechaFin 
+                            AND cc.tip_mov = '-' 
+                            AND cc.tipo_doc IN ('01', '03', '07', '08', '85') 
+                            AND cc.cod_pago NOT IN ('85', 'RF') 
+                            GROUP BY cc.num_cta) AS tip 
+                            ON cc.tipo_doc = tip.tipo_doc 
+                            AND cc.num_cta = tip.num_cta 
+                        WHERE cc.fecha BETWEEN :fechaInicio 
+                        AND :fechaFin 
+                        AND cc.tip_mov = '-' 
+                        AND cc.tipo_doc IN ('01', '03', '07', '08', '85') 
+                        AND cc.cod_pago NOT IN ('85', 'RF') 
+                        AND tip.codigos_pago LIKE '%80%'
+                        GROUP BY cc.num_cta,
+                        cc.cod_pago 
+                        ORDER BY num_cta,
+                        debe DESC,
+                        fechad";                
+
+        $stmt=Conexion::conectar()->prepare($sql);
+
+        $stmt -> bindParam(":fechaInicio", $fechaInicio, PDO::PARAM_STR);
+		$stmt -> bindParam(":fechaFin", $fechaFin, PDO::PARAM_STR); 
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+
+        $stmt=null;
+
+    }      
+    
+    static public function mdlCancelacionesSiscont08($fechaInicio, $fechaFin){
+
+        $sql="SELECT 
+                        tip.codigos_pago,
+                        DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fecha,
+                        cc.tipo_doc,
+                        cc.num_cta,
+                        cc.doc_origen,
+                        cc.cod_pago,
+                        CASE
+                        WHEN cc.tipo_doc IN ('01', '03', '08') 
+                        THEN '121101' 
+                        ELSE '123101' 
+                        END AS cuenta,
+                        ROUND('0.00',2) AS debe,
+                        cc.monto AS haber,
+                        'S' AS moneda,
+                        cc.tip_cambio AS tc,
+                        CASE
+                        WHEN cc.tipo_doc = '85' 
+                        THEN 'LE' 
+                        ELSE cc.tipo_doc 
+                        END AS doc,
+                        CASE
+                        WHEN cc.tipo_doc IN ('01', '03', '08') 
+                        AND LEFT(cc.num_cta, 1) <> '0' 
+                        THEN CONCAT(
+                            LEFT(cc.num_cta, 4),
+                            '-',
+                            RIGHT(cc.num_cta, 8)
+                        ) 
+                        WHEN cc.tipo_doc IN ('01', '03', '08') 
+                        AND LEFT(cc.num_cta, 1) = '0' 
+                        THEN CONCAT(
+                            LEFT(cc.num_cta, 3),
+                            '-',
+                            RIGHT(cc.num_cta, 7)
+                        ) 
+                        ELSE cc.num_cta 
+                        END AS numero,
+                        DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fechad,
+                        DATE_FORMAT(cc.fecha_ven, '%d/%m/%y') AS fechav,
+                        cc.cliente,
+                        c.documento AS codigo,
+                        CASE
+                        WHEN cc.tipo_doc = '85' 
+                        THEN 'CANCELACION DE LETRAS' 
+                        ELSE 'CANCELACION DE DOCUMENTOS' 
+                        END AS glosa,
+                        c.documento AS ruc,
+                        '2' AS tipo,
+                        c.nombre AS rs,
+                        c.ape_paterno AS ape1,
+                        c.ape_materno AS ape2,
+                        c.nombres AS nombre,
+                        c.tipo_documento AS tdoci 
+                    FROM
+                        cuenta_ctejf cc 
+                        LEFT JOIN clientesjf c 
+                        ON cc.cliente = c.codigo 
+                        LEFT JOIN 
+                        (SELECT 
+                            cc.tipo_doc,
+                            cc.num_cta,
+                            GROUP_CONCAT(cc.cod_pago) AS codigos_pago 
+                        FROM
+                            cuenta_ctejf cc 
+                        WHERE cc.fecha BETWEEN :fechaInicio 
+                            AND :fechaFin 
+                            AND cc.tip_mov = '-' 
+                            AND cc.tipo_doc IN ('01', '03', '07', '08', '85') 
+                            AND cc.cod_pago NOT IN ('85', 'RF') 
+                        GROUP BY cc.num_cta) AS tip 
+                        ON cc.tipo_doc = tip.tipo_doc 
+                        AND cc.num_cta = tip.num_cta 
+                    WHERE cc.fecha BETWEEN :fechaInicio 
+                        AND :fechaFin 
+                        AND cc.tip_mov = '-' 
+                        AND cc.tipo_doc IN ('01', '03', '07', '08', '85') 
+                        AND cc.cod_pago NOT IN ('85', 'RF') 
+                        AND tip.codigos_pago NOT LIKE '%80%'
+            UNION
+                        SELECT 
+                        tip.codigos_pago,
+                        DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fecha,
+                        cc.tipo_doc,
+                        cc.num_cta,
+                        cc.doc_origen,
+                        cc.cod_pago,
+                        CASE
+                            WHEN cc.cod_pago IN ('00', '05', '82') 
+                            THEN '104101' 
+                            WHEN cc.cod_pago IN ('06', '14') 
+                            THEN '104103' 
+                            WHEN cc.cod_pago IN ('80') 
+                            THEN '101100' 
+                            ELSE '121101' 
+                        END AS cuenta,
+                        SUM(cc.monto) AS debe,
+                        0 AS haber,
+                        'S' AS moneda,
+                        cc.tip_cambio AS tc,
+                        CASE
+                            WHEN cc.cod_pago IN ('96', '97') 
+                            THEN '07' 
+                            WHEN cc.tipo_doc = '85' 
+                            THEN 'LE' 
+                            ELSE cc.tipo_doc 
+                        END AS doc,
+                        IFNULL(
+                            CASE
+                            WHEN cc.cod_pago IN ('96', '97') 
+                            THEN 
+                            (SELECT DISTINCT 
+                                CONCAT(
+                                LEFT(n.documento, 4),
+                                '-',
+                                RIGHT(n.documento, 8)
+                                ) 
+                            FROM
+                                notascd_jf n 
+                            WHERE n.doc_origen = cc.num_cta 
+                                AND n.tipo = 'E05' 
+                            LIMIT 1) 
+                            WHEN cc.tipo_doc IN ('01', '03', '08') 
+                            AND LEFT(cc.num_cta, 1) <> '0' 
+                            THEN CONCAT(
+                                LEFT(cc.num_cta, 4),
+                                '-',
+                                RIGHT(cc.num_cta, 8)
+                            ) 
+                            WHEN cc.tipo_doc IN ('01', '03', '08') 
+                            AND LEFT(cc.num_cta, 1) = '0' 
+                            THEN CONCAT(
+                                LEFT(cc.num_cta, 3),
+                                '-',
+                                RIGHT(cc.num_cta, 7)
+                            ) 
+                            ELSE cc.num_cta 
+                            END,
+                            (SELECT DISTINCT 
+                            CONCAT(
+                                LEFT(n.documento, 4),
+                                '-',
+                                RIGHT(n.documento, 8)
+                            ) 
+                            FROM
+                            notascd_jf n 
+                            WHERE RIGHT(cc.notas, 12) = n.documento 
+                            AND n.tipo = 'E05')
+                        ) AS numero,
+                        DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fechad,
+                        DATE_FORMAT(cc.fecha_ven, '%d/%m/%y') AS fechav,
+                        cc.cliente,
+                        c.documento AS codigo,
+                        CASE
+                            WHEN cc.tipo_doc = '85' 
+                            THEN 'CANCELACION DE LETRAS' 
+                            ELSE 'CANCELACION DE DOCUMENTOS' 
+                        END AS glosa,
+                        c.documento AS ruc,
+                        '2' AS tipo,
+                        c.nombre AS rs,
+                        c.ape_paterno AS ape1,
+                        c.ape_materno AS ape2,
+                        c.nombres AS nombre,
+                        c.tipo_documento AS tdoci 
+                        FROM
+                        cuenta_ctejf cc 
+                        LEFT JOIN clientesjf c 
+                            ON cc.cliente = c.codigo 
+                        LEFT JOIN 
+                            (SELECT 
+                            cc.tipo_doc,
+                            cc.num_cta,
+                            GROUP_CONCAT(cc.cod_pago) AS codigos_pago 
+                            FROM
+                            cuenta_ctejf cc 
+                            WHERE cc.fecha BETWEEN :fechaInicio 
+                            AND :fechaFin 
+                            AND cc.tip_mov = '-' 
+                            AND cc.tipo_doc IN ('01', '03', '07', '08', '85') 
+                            AND cc.cod_pago NOT IN ('85', 'RF') 
+                            GROUP BY cc.num_cta) AS tip 
+                            ON cc.tipo_doc = tip.tipo_doc 
+                            AND cc.num_cta = tip.num_cta 
+                        WHERE cc.fecha BETWEEN :fechaInicio 
+                        AND :fechaFin 
+                        AND cc.tip_mov = '-' 
+                        AND cc.tipo_doc IN ('01', '03', '07', '08', '85') 
+                        AND cc.cod_pago NOT IN ('85', 'RF') 
+                        AND tip.codigos_pago NOT LIKE '%80%'
+                        GROUP BY cc.num_cta,
+                        cc.cod_pago 
+                        ORDER BY num_cta,
+                        debe DESC,
+                        fechad";                
+
+        $stmt=Conexion::conectar()->prepare($sql);
+
+        $stmt -> bindParam(":fechaInicio", $fechaInicio, PDO::PARAM_STR);
+		$stmt -> bindParam(":fechaFin", $fechaFin, PDO::PARAM_STR); 
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+
+        $stmt=null;
+
+    }  
 
 }
