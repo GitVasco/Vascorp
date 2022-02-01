@@ -2500,7 +2500,6 @@ class ModeloMovimientos{
                                              FROM
                                                 temporaljf t 
                                              WHERE YEAR(t.fecha) = YEAR(NOW()) 
-                                                AND MONTH(t.fecha) = $mes
                                                 AND t.estado IN ('APROBADO', 'APT', 'CONFIRMADO')");
 
          $stmt -> execute();
@@ -2746,15 +2745,15 @@ class ModeloMovimientos{
                            temporaljf t 
                            LEFT JOIN 
                            (SELECT 
-                              MONTH(NOW()) AS mes,
-                              SUM(v.neto) AS ventas 
-                           FROM
-                              ventajf v 
-                           WHERE YEAR(v.fecha) = YEAR(NOW()) 
-                              AND MONTH(v.fecha) =  $mes 
-                              AND v.tipo IN ('E05', 'S02', 'S03', 'S70','S05') 
-                              AND v.vendedor <> '99'
-                           GROUP BY MONTH(v.fecha)) AS v 
+                           MONTH(v.fecha) AS mes,
+                           SUM(v.neto) AS ventas 
+                        FROM
+                           ventajf v 
+                        WHERE YEAR(v.fecha) = YEAR(NOW()) 
+                           AND MONTH(v.fecha) = $mes
+                           AND v.tipo IN ('E05', 'S02', 'S03', 'S70', 'S05') 
+                           AND v.vendedor <> '99' 
+                        GROUP BY MONTH(v.fecha)) AS v 
                            ON MONTH(t.fecha) = v.mes 
                         WHERE t.estado IN ('APROBADO', 'APT', 'CONFIRMADO') 
                            AND YEAR(t.fecha) = YEAR(NOW()) 

@@ -120,7 +120,7 @@ class ControladorContabilidad{
                     $neto6      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
                     $neto7      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
                     $neto8      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
-                    $neto9      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                    #$neto9      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
                     $ruc        = str_pad($value2["doc_cli"], 15);
                     $tipo       = str_pad($value2["tip_cli"], 1);
                     $r5         = str_pad($nom_cliente, 60);
@@ -169,7 +169,6 @@ class ControladorContabilidad{
                                     $neto6.
                                     $neto7.
                                     $neto8.
-                                    $neto9.
                                     $ruc.
                                     $tipo.
                                     $r5.
