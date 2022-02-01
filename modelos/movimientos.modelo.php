@@ -2662,30 +2662,7 @@ class ModeloMovimientos{
                         AND (
                         IFNULL(p.pedidos, 0) + IFNULL(v.ventas, 0)
                         ) <> 0 
-                        AND m.codigo <> '99' 
-                     UNION
-                     SELECT 
-                        'ZZ' AS codigo,
-                        '' AS descripcion,
-                        SUM(op_gravada) AS pedidos,
-                        v.ventas,
-                        (SUM(op_gravada) + v.ventas) AS total 
-                     FROM
-                        temporaljf t 
-                        LEFT JOIN 
-                        (SELECT 
-                           YEAR(NOW()) AS anno,
-                           SUM(v.neto) AS ventas 
-                        FROM
-                           ventajf v 
-                        WHERE YEAR(v.fecha) = YEAR(NOW()) 
-                           AND v.tipo IN ('E05', 'S02', 'S03', 'S70', 'S05') 
-                           AND v.vendedor <> '99' 
-                        GROUP BY YEAR(v.fecha)) AS v 
-                        ON YEAR(t.fecha) = v.anno 
-                     WHERE t.estado IN ('APROBADO', 'APT', 'CONFIRMADO') 
-                        AND YEAR(t.fecha) = YEAR(NOW()) 
-                     GROUP BY MONTH(t.fecha)");
+                        AND m.codigo <> '99'");
 
          $stmt -> execute();
 
@@ -2715,7 +2692,6 @@ class ModeloMovimientos{
                               temporaljf t 
                            WHERE t.estado IN ('APROBADO', 'APT', 'CONFIRMADO') 
                               AND YEAR(t.fecha) = YEAR(NOW()) 
-                              AND MONTH(t.fecha) = $mes 
                            GROUP BY t.vendedor) AS p 
                            ON m.codigo = p.vendedor 
                            LEFT JOIN 
@@ -2733,32 +2709,7 @@ class ModeloMovimientos{
                            AND (
                            IFNULL(p.pedidos, 0) + IFNULL(v.ventas, 0)
                            ) <> 0 
-                           AND m.codigo <> '99' 
-                        UNION
-                        SELECT 
-                           'ZZ' AS codigo,
-                           '' AS descripcion,
-                           SUM(op_gravada) AS pedidos,
-                           v.ventas,
-                           (SUM(op_gravada) + v.ventas) AS total 
-                        FROM
-                           temporaljf t 
-                           LEFT JOIN 
-                           (SELECT 
-                           MONTH(v.fecha) AS mes,
-                           SUM(v.neto) AS ventas 
-                        FROM
-                           ventajf v 
-                        WHERE YEAR(v.fecha) = YEAR(NOW()) 
-                           AND MONTH(v.fecha) = $mes
-                           AND v.tipo IN ('E05', 'S02', 'S03', 'S70', 'S05') 
-                           AND v.vendedor <> '99' 
-                        GROUP BY MONTH(v.fecha)) AS v 
-                           ON MONTH(t.fecha) = v.mes 
-                        WHERE t.estado IN ('APROBADO', 'APT', 'CONFIRMADO') 
-                           AND YEAR(t.fecha) = YEAR(NOW()) 
-                           AND MONTH(t.fecha) =  $mes 
-                        GROUP BY MONTH(t.fecha)");
+                           AND m.codigo <> '99'");
 
          $stmt -> execute();
 

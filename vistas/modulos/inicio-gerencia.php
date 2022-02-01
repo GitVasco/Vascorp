@@ -218,6 +218,17 @@
                         </thead>
                         <tbody>                            
                         </tbody>
+
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th style="text-align:right !important;"></th>
+                                <th style="text-align:right !important;"></th>                                
+                                <th style="text-align:right !important;"></th>
+                            </tr>
+                        </tfoot>
+
                     </table>
                 </div>
 
