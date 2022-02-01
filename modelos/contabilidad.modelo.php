@@ -776,4 +776,36 @@ class ModeloContabilidad{
 
     }  
 
+    static public function mdlClientes($fechaInicio, $fechaFin){
+
+        $sql="SELECT 
+                    c.documento AS ruc,
+                    '2' AS tipo,
+                    c.nombre AS rs,
+                    c.ape_paterno AS ape1,
+                    c.ape_materno AS ape2,
+                    SUBSTRING_INDEX(
+                    SUBSTRING_INDEX(c.nombres, ' ', 1),
+                    ' ',
+                    - 1
+                    ) AS nombre,
+                    c.tipo_documento AS tdoci 
+                FROM
+                    clientesjf c 
+                WHERE DATE(c.fecha) BETWEEN :fechaInicio
+                    AND :fechaFin";                
+
+        $stmt=Conexion::conectar()->prepare($sql);
+
+        $stmt -> bindParam(":fechaInicio", $fechaInicio, PDO::PARAM_STR);
+		$stmt -> bindParam(":fechaFin", $fechaFin, PDO::PARAM_STR); 
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+
+        $stmt=null;
+
+    }      
+
 }
