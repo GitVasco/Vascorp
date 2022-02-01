@@ -774,7 +774,7 @@ class ControladorContabilidad{
                 $nombre1 = explode(" ", $nombre);
 
                 $origen     = str_pad(" ", 2);
-                $voucher    = str_pad(" ", 5 , '0', STR_PAD_LEFT);
+                $voucher    = str_pad(" ", 5);
                 $fecha      = str_pad(" ", 8);
                 $cuenta     = str_pad(" ", 10);
                 $debe       = str_pad(" ", 12 , '0', STR_PAD_LEFT);
@@ -785,7 +785,7 @@ class ControladorContabilidad{
                 $numero     = str_pad(" ", 40);
                 $fechad     = str_pad(" ", 8);
                 $fechav     = str_pad(" ", 8);
-                $codigo     = str_pad(" ", 15);
+                $codigo     = str_pad($value["ruc"], 15);
                 $cc         = str_pad(" ", 10);
                 $fe         = str_pad(" ", 4);
                 $pre        = str_pad(" ", 10); 
@@ -796,8 +796,8 @@ class ControladorContabilidad{
                 $rfecha     = str_pad(" ", 8);
                 $snumero    = str_pad(" ", 40);
                 $sfecha     = str_pad(" ", 8);
-                $tl         = str_pad(" ", 1);
-                $neto       = str_pad(" ", 12 , '0', STR_PAD_LEFT);
+                $tl         = str_pad("V", 1);
+                $neto       = str_pad("0.00", 12, '0', STR_PAD_LEFT);
                 $neto2      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
                 $neto3      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
                 $neto4      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
