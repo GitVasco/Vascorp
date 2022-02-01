@@ -40,7 +40,7 @@ class MYPDF extends TCPDF {
         
         $this->Cell(90, 10, 'Proforma:           '.$venta["documento"], 0, false, 'L', 0, '', 0, false, false, false );
         $this->SetFont('helvetica', 'A', 9);
-        $this->Cell(100, 10, $fechaActual.'   Página 1', 0, false, 'L', 0, '', 0, false, false, false );
+        $this->Cell(100, 10, $venta["fecha"].'   Página 1', 0, false, 'L', 0, '', 0, false, false, false );
         $this->Ln(8);
         $this->Cell(40, 10, 'Cliente:          '.$venta["nombre"], 0, false, 'L', 0, '', 0, false, false, false );
         $this->Ln(8);

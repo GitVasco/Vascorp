@@ -2427,7 +2427,7 @@ class ModeloMovimientos{
 	*/
 	static public function mdlTotalesSoles($mes){
 
-      if( $mes == null){
+      if( $mes == null || $mes == "TODO" ){
 
          $stmt = Conexion::conectar()->prepare("SELECT 
          t.año,
@@ -2474,7 +2474,7 @@ class ModeloMovimientos{
 
 	static public function mdlTotalesSolesPedidos($mes){
 
-      if( $mes == null){
+      if( $mes == null || $mes == "TODO"){
 
          $stmt = Conexion::conectar()->prepare("SELECT 
          MONTH(t.fecha) AS mes,
@@ -2675,15 +2675,15 @@ class ModeloMovimientos{
                         temporaljf t 
                         LEFT JOIN 
                         (SELECT 
-                           MONTH(NOW()) AS mes,
+                           YEAR(NOW()) AS anno,
                            SUM(v.neto) AS ventas 
                         FROM
                            ventajf v 
                         WHERE YEAR(v.fecha) = YEAR(NOW()) 
                            AND v.tipo IN ('E05', 'S02', 'S03', 'S70', 'S05') 
                            AND v.vendedor <> '99' 
-                        GROUP BY MONTH(v.fecha)) AS v 
-                        ON MONTH(t.fecha) = v.mes 
+                        GROUP BY YEAR(v.fecha)) AS v 
+                        ON YEAR(t.fecha) = v.anno 
                      WHERE t.estado IN ('APROBADO', 'APT', 'CONFIRMADO') 
                         AND YEAR(t.fecha) = YEAR(NOW()) 
                      GROUP BY MONTH(t.fecha)");

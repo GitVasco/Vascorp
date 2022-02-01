@@ -85,6 +85,8 @@ class ControladorContabilidad{
                     $ape_materno = ControladorContabilidad::eliminar_tildes($value2["ape_materno"]);
                     $nombres = ControladorContabilidad::eliminar_tildes($value2["nombres"]);
 
+                    $nombre1 = explode(" ", $nombres);
+
                     $origen     = str_pad($value2["origen"], 2);
                     $voucher    = str_pad($corr, 5 , '0', STR_PAD_LEFT);
                     $fecha      = str_pad($value2["fecha"], 8);
@@ -124,7 +126,7 @@ class ControladorContabilidad{
                     $r5         = str_pad($nom_cliente, 60);
                     $ape1       = str_pad($ape_paterno, 20);
                     $ape2       = str_pad($ape_materno, 20);
-                    $nombre     = str_pad($nombres, 20);
+                    $nombre     = str_pad($nombre1[0], 20);
                     $tdoi       = str_pad($value2["tipo_documento"], 1);
                     $rnumdes    = str_pad(" ", 1);
                     $rcodtasa   = str_pad(" ", 5);
