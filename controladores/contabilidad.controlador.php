@@ -390,6 +390,125 @@ class ControladorContabilidad{
 
             }
 
+            $correlativo = ModeloContabilidad::mdlActualizarCorrelativo($añoI, $mesI, $corr, "valor_2");
+
+            $letrasB = ModeloContabilidad::mdlLetrasConfiguradasB($fechaInicio, $fechaFin);
+            $voucherB = ModeloContabilidad::mdlVoucherSiscont($añoI, $mesI);
+            #var_dump($letrasB);
+
+            $corrB = $voucherB["correlativoL"];
+            #var_dump("inicio", $corr);       
+            
+            foreach($letrasB as $key => $value){
+
+                $corrB++;
+
+                $documento = ModeloContabilidad::mdlLetrasSiscontB($value["num_cta"], $value["doc_origen"]); 
+
+                foreach($documento as $key => $value2){
+
+                    $origen     = str_pad($value2["t"], 2);
+                    $voucher    = str_pad($corrB, 5 , '0', STR_PAD_LEFT);
+                    $fecha      = str_pad($value2["fecha"], 8);
+                    $cuenta     = str_pad($value2["cuenta"],10);
+                    $debe       = str_pad($value2["debe"], 12 , '0', STR_PAD_LEFT);
+                    $haber      = str_pad($value2["haber"], 12 , '0', STR_PAD_LEFT);
+                    $moneda     = str_pad($value2["moneda"], 1);
+                    $tc         = str_pad($value2["tc"], 10 , '0', STR_PAD_LEFT);
+                    $doc        = str_pad($value2["doc"], 2);
+                    $numero     = str_pad($value2["numero"], 40);
+                    $fechad     = str_pad($value2["fechad"], 8);
+                    $fechav     = str_pad($value2["fechav"], 8);
+                    $codigo     = str_pad($value2["codigo"], 15);
+                    $cc         = str_pad(" ", 10);
+                    $fe         = str_pad(" ", 4);
+                    $pre        = str_pad(" ", 10); 
+                    $mpago      = str_pad(" ", 3);
+                    $glosa      = str_pad($value2["glosa"], 60);
+                    $rnumero    = str_pad(" ", 40);
+                    $rtdoc      = str_pad(" ", 2);
+                    $rfecha     = str_pad(" ", 8);
+                    $snumero    = str_pad(" ", 40);
+                    $sfecha     = str_pad(" ", 8);
+                    $tl         = str_pad("V", 1);
+                    $neto       = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                    $neto2      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                    $neto3      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                    $neto4      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                    $igv        = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                    $neto5      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                    $neto6      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                    $neto7      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                    $neto8      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                    #$neto9      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                    $ruc        = str_pad(" ", 15);
+                    $tipo       = str_pad(" ", 1);
+                    $r5         = str_pad(" ", 60);
+                    $ape1       = str_pad(" ", 20);
+                    $ape2       = str_pad(" ", 20);
+                    $nombre     = str_pad(" ", 20);
+                    $tdoi       = str_pad(" ", 1);
+                    $rnumdes    = str_pad(" ", 1);
+                    $rcodtasa   = str_pad(" ", 5);
+                    $rindret    = str_pad(" ", 1);
+                    $rmonto     = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                    $rigv       = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                    $tbien      = str_pad(" ", 1);
+
+                    fwrite($archivo,    $origen.
+                                        $voucher.
+                                        $fecha.
+                                        $cuenta.
+                                        $debe.
+                                        $haber.
+                                        $moneda.
+                                        $tc.
+                                        $doc.
+                                        $numero.
+                                        $fechad.
+                                        $fechav.
+                                        $codigo.
+                                        $cc.
+                                        $fe.
+                                        $pre.
+                                        $mpago.
+                                        $glosa.
+                                        $rnumero.
+                                        $rtdoc.
+                                        $rfecha.
+                                        $snumero.
+                                        $sfecha.
+                                        $tl.
+                                        $neto.
+                                        $neto2.
+                                        $neto3.
+                                        $neto4.
+                                        $igv.
+                                        $neto5.
+                                        $neto6.
+                                        $neto7.
+                                        $neto8.
+                                        $ruc.
+                                        $tipo.
+                                        $r5.
+                                        $ape1.
+                                        $ape2.
+                                        $nombre.
+                                        $tdoi.
+                                        $rnumdes.
+                                        $rcodtasa.
+                                        $rindret.
+                                        $rmonto.
+                                        $rigv.
+                                        $tbien.
+                                        PHP_EOL);
+
+                }
+
+                #var_dump($corrB);
+
+            }
+            
             fclose($archivo); 
 
             $origen = 'c:/xampp/htdocs/vascorp/vistas/contabilidad/letras/L'.$nomar.'.txt';
@@ -414,28 +533,11 @@ class ControladorContabilidad{
 
             #var_dump($corr);
 
-            $correlativo = ModeloContabilidad::mdlActualizarCorrelativo($añoI, $mesI, $corr, "valor_2");
+            $correlativo = ModeloContabilidad::mdlActualizarCorrelativo($añoI, $mesI, $corrB, "valor_2");
             #var_dump($correlativo);
 
             if($correlativo == "ok"){
 
-                echo'<script>
-
-                swal({
-                    type: "success",
-                    title: "Se genero el archivo correctamente",
-                    showConfirmButton: true,
-                    confirmButtonText: "Cerrar",
-                    closeOnConfirm: false
-                    }).then(function(result){
-                        if (result.value) {
-
-                        window.location = "procesar-ce";
-
-                        }
-                    })
-    
-                </script>';                
 
             }            
 
