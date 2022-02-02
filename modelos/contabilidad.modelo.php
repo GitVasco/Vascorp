@@ -317,7 +317,11 @@ class ModeloContabilidad{
                         ROUND(SUM(cc.monto), 2) AS haber,
                         'S' AS moneda,
                         ROUND(cc.tip_cambio, 7) AS tc,
-                        cc.cod_pago AS doc,
+                        CASE
+                            WHEN cc.cod_pago = '85' 
+                            THEN 'LE' 
+                            ELSE cc.cod_pago 
+                        END AS doc,
                         CASE
                         WHEN cc.cod_pago = '85' 
                         THEN cc.doc_origen 
