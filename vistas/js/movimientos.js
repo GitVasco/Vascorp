@@ -45,7 +45,7 @@ $('.tablaDatosDia').DataTable( {
     "deferRender": true,
 	"retrieve": true,
     "processing": true,
-    "order": [[3, "desc"]],
+    "order": [[0, "desc"]],
 	"pageLength": 31,
 	"lengthMenu": [[31, 62, 93, -1], [31, 62, 93, 'Todos']],
 	 "language": {

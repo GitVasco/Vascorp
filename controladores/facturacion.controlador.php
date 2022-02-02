@@ -2662,7 +2662,7 @@ class ControladorFacturacion{
 
         $xml.="</CreditNote>";
 
-    }
+     }
 
 	    $doc->loadXML($xml);
 	    $doc->save($ruta.'.XML');
@@ -3441,8 +3441,8 @@ class ControladorFacturacion{
 
             }
 
-            copy($origen,$destino);
-            //rename($origen, $destino);
+            //copy($origen,$destino);
+            rename($origen, $destino);
 
         }
         
@@ -3632,8 +3632,8 @@ class ControladorFacturacion{
                 //!$destino = 'c:/daemonOSE21/documents/in/creditnote/'.$nombre.'.csv';
 
 
-            copy($origen,$destino);
-            //rename($origen, $destino);          
+            //copy($origen,$destino);
+            rename($origen, $destino);          
 
         }
 
@@ -3787,8 +3787,8 @@ class ControladorFacturacion{
                 //!$destino = 'c:/daemonOSE21/documents/in/debitnote/'.$nombre.'.csv';
 
 
-            copy($origen,$destino);
-            //rename($origen, $destino);               
+            //copy($origen,$destino);
+            rename($origen, $destino);               
 
         }
 

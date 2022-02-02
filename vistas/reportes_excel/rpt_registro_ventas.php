@@ -408,7 +408,7 @@ FROM
 ventajf v 
 LEFT JOIN clientesjf c 
   ON v.cliente = c.codigo 
-WHERE MONTH(v.fecha) = 1 
+WHERE MONTH(v.fecha) = $mes 
 AND YEAR(v.fecha) = YEAR(NOW()) 
 AND v.tipo NOT IN ('S70', 'S01') 
 ORDER BY tipo_doc DESC,

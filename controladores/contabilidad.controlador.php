@@ -203,6 +203,7 @@ class ControladorContabilidad{
             $destino = '//Yudy-pc/datasmart/VASCO2022/V'.$nomar.'.txt';        
             
             copy($origen, $destino);
+            #rename($origen, $destino);
 
             $rutaBat = "vistas/contabilidad/ventas/VB$fi$ff.bat";
             $archivoBat = fopen($rutaBat, "w");
@@ -216,6 +217,7 @@ class ControladorContabilidad{
             #$destino2 = '//Sistemas-2/d/contabilidad/ventas/VB'.$nomar.'.bat';
             $destino2 = '//Yudy-pc/datasmart/VASCO2022/VB'.$nomar.'.bat';  
             copy($origen2, $destino2);
+            #rename($origen, $destino);
 
             #var_dump($corr);
 
@@ -311,7 +313,7 @@ class ControladorContabilidad{
                     $rfecha     = str_pad(" ", 8);
                     $snumero    = str_pad(" ", 40);
                     $sfecha     = str_pad(" ", 8);
-                    $tl         = str_pad(" ", 1);
+                    $tl         = str_pad("V", 1);
                     $neto       = str_pad("0.00", 12, '0', STR_PAD_LEFT);
                     $neto2      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
                     $neto3      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
@@ -407,13 +409,13 @@ class ControladorContabilidad{
             
             $origen2 = 'c:/xampp/htdocs/vascorp/vistas/contabilidad/letras/LB'.$nomar.'.bat';
             #$destino2 = '//Sistemas-2/d/contabilidad/letras/LB'.$nomar.'.bat';
-            $destino2 = '//Yudy-pc/datasmart/VASCO2022/VB'.$nomar.'.bat';  
+            $destino2 = '//Yudy-pc/datasmart/VASCO2022/LB'.$nomar.'.bat';  
             copy($origen2, $destino2);
 
             #var_dump($corr);
 
             $correlativo = ModeloContabilidad::mdlActualizarCorrelativo($añoI, $mesI, $corr, "valor_2");
-            var_dump($correlativo);
+            #var_dump($correlativo);
 
             if($correlativo == "ok"){
 

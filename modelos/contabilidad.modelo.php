@@ -240,8 +240,8 @@ class ModeloContabilidad{
                         cc.doc_origen
                     FROM
                         cuenta_ctejf cc 
-                    WHERE cc.fecha BETWEEN '2022-01-26' 
-                        AND '2022-01-26' 
+                    WHERE cc.fecha BETWEEN :fechaInicio 
+                        AND :fechaFin
                         AND cc.tipo_doc = '85' 
                         AND cc.tip_mov = '+' 
                     GROUP BY cc.doc_origen";

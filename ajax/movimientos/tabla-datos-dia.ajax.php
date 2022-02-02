@@ -27,6 +27,7 @@ class TablaMovimientos{
             $botones =  "<div class='btn-group'><button class='btn btn-xs btn-success btnActualizarMes' fecha='".$movimientos[$i]["fecha"]."'><i class='fa fa-refresh'></i></button></div>"; 
 
                 $datosJson .= '[
+                "'.$movimientos[$i]["fecha"].'",
                 "'.$movimientos[$i]["año"].'",
                 "'.$movimientos[$i]["mes"].'",
                 "'.$movimientos[$i]["nom_mes"].'",

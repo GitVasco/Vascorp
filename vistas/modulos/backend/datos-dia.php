@@ -31,6 +31,7 @@
                     <thead >
 
                         <tr>
+                            <th>Fecha</th>
                             <th>Año</th>
                             <th>Mes</th>
                             <th>Nombre del Mes</th>
