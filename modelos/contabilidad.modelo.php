@@ -262,85 +262,92 @@ class ModeloContabilidad{
     static public function mdlLetrasSiscont($documento){
 
         $sql="SELECT 
-                            '05' AS t,
-                            DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fecha,
-                            cc.tipo_doc,
-                            cc.num_cta,
-                            cc.doc_origen,
-                            tm.cuenta,
-                            ROUND(cc.monto, 2) AS debe,
-                            ROUND('0.00', 2) AS haber,
-                            'S' AS moneda,
-                            ROUND(cc.tip_cambio, 7) AS tc,
-                            'LE' AS doc,
-                            cc.num_cta AS numero,
-                            DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fechad,
-                            DATE_FORMAT(cc.fecha_ven, '%d/%m/%y') AS fechav,
-                            c.documento AS codigo,
-                            'CANJE DE FACTURAS POR LETRAS' AS glosa,
-                            c.documento AS ruc,
-                            '2' AS tipo,
-                            c.nombre AS rs,
-                            c.ape_paterno AS ape1,
-                            c.ape_materno AS ape2,
-                            c.nombres AS nombre,
-                            c.tipo_documento AS tdoci 
+                        '05' AS t,
+                        DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fecha,
+                        cc.tipo_doc,
+                        cc.num_cta,
+                        cc.doc_origen,
+                        tm.cuenta,
+                        ROUND(cc.monto, 2) AS debe,
+                        ROUND('0.00', 2) AS haber,
+                        'S' AS moneda,
+                        ROUND(cc.tip_cambio, 7) AS tc,
+                        'LE' AS doc,
+                        cc.num_cta AS numero,
+                        DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fechad,
+                        DATE_FORMAT(cc.fecha_ven, '%d/%m/%y') AS fechav,
+                        c.documento AS codigo,
+                        'CANJE DE FACTURAS POR LETRAS' AS glosa,
+                        c.documento AS ruc,
+                        '2' AS tipo,
+                        c.nombre AS rs,
+                        c.ape_paterno AS ape1,
+                        c.ape_materno AS ape2,
+                        c.nombres AS nombre,
+                        c.tipo_documento AS tdoci 
+                    FROM
+                        cuenta_ctejf cc 
+                        LEFT JOIN clientesjf c 
+                        ON cc.cliente = c.codigo 
+                        LEFT JOIN 
+                        (SELECT 
+                            tm.cod_argumento AS tipo,
+                            tm.cod_tabla AS tabla,
+                            tm.des_larga AS nombre,
+                            tm.des_corta AS cuenta 
                         FROM
-                            cuenta_ctejf cc 
-                            LEFT JOIN clientesjf c 
-                            ON cc.cliente = c.codigo 
-                            LEFT JOIN 
-                            (SELECT 
-                                tm.cod_argumento AS tipo,
-                                tm.cod_tabla AS tabla,
-                                tm.des_larga AS nombre,
-                                tm.des_corta AS cuenta 
-                            FROM
-                                tabla_m_detalle tm 
-                            WHERE tm.cod_tabla = 'TASL') tm 
-                            ON cc.tipo_doc = tm.tipo 
-                        WHERE cc.doc_origen = :documento 
-                            AND cc.tip_mov = '+' 
-                        UNION
-                        SELECT 
-                            '05' AS t,
-                            DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fecha,
-                            cc.cod_pago,
-                            cc.num_cta,
-                            cc.doc_origen,
-                            '121101' AS cuenta,
-                            ROUND('0.00', 2) AS debe,
-                            ROUND(SUM(cc.monto), 2) AS haber,
-                            'S' AS moneda,
-                            ROUND(cc.tip_cambio, 7) AS tc,
-                            cc.cod_pago AS doc,
-                            CONCAT(
+                            tabla_m_detalle tm 
+                        WHERE tm.cod_tabla = 'TASL') tm 
+                        ON cc.tipo_doc = tm.tipo 
+                    WHERE cc.doc_origen = :documento 
+                        AND cc.tip_mov = '+' 
+                    UNION
+                    SELECT 
+                        '05' AS t,
+                        DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fecha,
+                        cc.cod_pago,
+                        cc.num_cta,
+                        cc.doc_origen,
+                        CASE
+                        WHEN cc.cod_pago = '85' 
+                        THEN '123101' 
+                        ELSE '121101' 
+                        END AS cuenta,
+                        ROUND('0.00', 2) AS debe,
+                        ROUND(SUM(cc.monto), 2) AS haber,
+                        'S' AS moneda,
+                        ROUND(cc.tip_cambio, 7) AS tc,
+                        cc.cod_pago AS doc,
+                        CASE
+                        WHEN cc.cod_pago = '85' 
+                        THEN cc.doc_origen 
+                        ELSE CONCAT(
                             LEFT(cc.doc_origen, 4),
                             '-',
                             RIGHT(cc.doc_origen, 8)
-                            ) AS numero,
-                            DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fechad,
-                            DATE_FORMAT(cc.fecha_ven, '%d/%m/%y') AS fechav,
-                            c.documento AS codigo,
-                            'CANJE DE FACTURAS POR LETRAS' AS glosa,
-                            c.documento AS ruc,
-                            '2' AS tipo,
-                            c.nombre AS rs,
-                            c.ape_paterno AS ape1,
-                            c.ape_materno AS ape2,
-                            c.nombres AS nombre,
-                            c.tipo_documento AS tdoci 
-                        FROM
-                            cuenta_ctejf cc 
-                            LEFT JOIN clientesjf c 
-                            ON cc.cliente = c.codigo 
-                        WHERE cc.doc_origen = :documento 
-                            AND cc.tipo_doc = '85' 
-                            AND cc.tip_mov = '+' 
-                        GROUP BY cc.doc_origen 
-                        ORDER BY doc_origen,
-                            cuenta DESC,
-                            num_cta";                
+                        ) 
+                        END AS numero,
+                        DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fechad,
+                        DATE_FORMAT(cc.fecha_ven, '%d/%m/%y') AS fechav,
+                        c.documento AS codigo,
+                        'CANJE DE FACTURAS POR LETRAS' AS glosa,
+                        c.documento AS ruc,
+                        '2' AS tipo,
+                        c.nombre AS rs,
+                        c.ape_paterno AS ape1,
+                        c.ape_materno AS ape2,
+                        c.nombres AS nombre,
+                        c.tipo_documento AS tdoci 
+                    FROM
+                        cuenta_ctejf cc 
+                        LEFT JOIN clientesjf c 
+                        ON cc.cliente = c.codigo 
+                    WHERE cc.doc_origen = :documento AND cc.tipo_doc = '85' 
+                        AND cc.tip_mov = '+' 
+                    GROUP BY cc.doc_origen 
+                    ORDER BY doc_origen,
+                        cuenta DESC,
+                        num_cta";                
 
         $stmt=Conexion::conectar()->prepare($sql);
 
