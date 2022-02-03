@@ -855,7 +855,7 @@ class ControladorContabilidad{
                     }
                 })
 
-            </script>';               
+            </script>';
             
         }
 
