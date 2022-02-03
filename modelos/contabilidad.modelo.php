@@ -864,16 +864,23 @@ class ModeloContabilidad{
                             ) 
                             ELSE cc.num_cta 
                             END,
+                            IFNULL(
                             (SELECT DISTINCT 
-                            CONCAT(
+                                CONCAT(
                                 LEFT(n.documento, 4),
                                 '-',
                                 RIGHT(n.documento, 8)
-                            ) 
+                                ) 
                             FROM
-                            notascd_jf n 
+                                notascd_jf n 
                             WHERE RIGHT(cc.notas, 12) = n.documento 
-                            AND n.tipo = 'E05')
+                                AND n.tipo = 'E05'),
+                            CONCAT(
+                                LEFT(cc.num_cta, 4),
+                                '-',
+                                RIGHT(cc.num_cta, 8)
+                            )
+                            )
                         ) AS numero,
                         DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fechad,
                         DATE_FORMAT(cc.fecha_ven, '%d/%m/%y') AS fechav,
@@ -891,25 +898,6 @@ class ModeloContabilidad{
                         c.ape_materno AS ape2,
                         c.nombres AS nombre,
                         c.tipo_documento AS tdoci 
-                        FROM
-                        cuenta_ctejf cc 
-                        LEFT JOIN clientesjf c 
-                            ON cc.cliente = c.codigo 
-                        LEFT JOIN 
-                            (SELECT 
-                            cc.tipo_doc,
-                            cc.num_cta,
-                            GROUP_CONCAT(cc.cod_pago) AS codigos_pago 
-                            FROM
-                            cuenta_ctejf cc 
-                            WHERE cc.fecha BETWEEN :fechaInicio 
-                            AND :fechaFin 
-                            AND cc.tip_mov = '-' 
-                            AND cc.tipo_doc IN ('01', '03', '07', '08', '85') 
-                            AND cc.cod_pago NOT IN ('85', 'RF') 
-                            GROUP BY cc.num_cta) AS tip 
-                            ON cc.tipo_doc = tip.tipo_doc 
-                            AND cc.num_cta = tip.num_cta 
                         WHERE cc.fecha BETWEEN :fechaInicio 
                         AND :fechaFin 
                         AND cc.tip_mov = '-' 

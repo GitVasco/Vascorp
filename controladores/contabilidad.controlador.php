@@ -827,7 +827,7 @@ class ControladorContabilidad{
 
             $nombreEmpresa = "VASCO2022";
 
-            fwrite($archivoBat, "MSISCONT.EXE ".$nombreEmpresa." L".$nomar.".txt".PHP_EOL);
+            fwrite($archivoBat, "MSISCONT.EXE ".$nombreEmpresa." C".$nomar.".txt".PHP_EOL);
             fclose($archivoBat); 
             
             $origen2 = 'c:/xampp/htdocs/vascorp/vistas/contabilidad/cancelaciones/CB'.$nomar.'.bat';
