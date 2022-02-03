@@ -263,17 +263,15 @@ class ModeloContabilidad{
     static public function mdlLetrasConfiguradasB($fechaInicio, $fechaFin){
 
         $sql="SELECT 
-                    cc.cod_pago,
-                    cc.num_cta,
-                    cc.doc_origen 
-                FROM
-                    cuenta_ctejf cc 
-                WHERE cc.fecha BETWEEN :fechaInicio 
-                    AND :fechaFin
-                    AND cc.tipo_doc = '85' 
-                    AND cc.cod_pago = '85' 
-                    AND cc.tip_mov = '+' 
-                GROUP BY cc.doc_origen";
+                        cc.cliente 
+                    FROM
+                        cuenta_ctejf cc 
+                    WHERE cc.fecha BETWEEN :fechaInicio 
+                        AND :fechaFin
+                        AND cc.tipo_doc = '85' 
+                        AND cc.cod_pago = '85' 
+                        AND cc.tip_mov = '+' 
+                    GROUP BY cc.cliente ";
 
         $stmt=Conexion::conectar()->prepare($sql);
 
@@ -330,6 +328,7 @@ class ModeloContabilidad{
                         ON cc.tipo_doc = tm.tipo 
                     WHERE cc.doc_origen = :documento 
                         AND cc.tip_mov = '+' 
+                        AND cc.tipo_doc = '85' 
                     UNION
                     SELECT 
                         '05' AS t,
@@ -394,106 +393,117 @@ class ModeloContabilidad{
 
     }    
 
-    static public function mdlLetrasSiscontB($num_cta, $doc_origen){
+    static public function mdlLetrasSiscontB($cliente, $fechaInicio, $fechaFin){
 
         $sql="SELECT 
-                '05' AS t,
-                DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fecha,
-                cc.tipo_doc,
-                cc.num_cta,
-                cc.doc_origen,
-                '123101' AS cuenta,
-                ROUND(cc.monto, 2) AS debe,
-                ROUND('0.00', 2) AS haber,
-                'S' AS moneda,
-                ROUND(cc.tip_cambio, 7) AS tc,
-                'LE' AS doc,
-                cc.num_cta AS numero,
-                DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fechad,
-                DATE_FORMAT(cc.fecha_ven, '%d/%m/%y') AS fechav,
-                c.documento AS codigo,
-                'CANJE DE FACTURAS POR LETRAS' AS glosa,
-                c.documento AS ruc,
-                '2' AS tipo,
-                c.nombre AS rs,
-                c.ape_paterno AS ape1,
-                c.ape_materno AS ape2,
-                c.nombres AS nombre,
-                c.tipo_documento AS tdoci 
-            FROM
-                cuenta_ctejf cc 
-                LEFT JOIN clientesjf c 
-                ON cc.cliente = c.codigo 
-            WHERE cc.num_cta = :num_cta 
-                AND cc.tip_mov = '+' 
-            UNION
-            SELECT 
-                '05' AS t,
-                DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fecha,
-                cc.cod_pago,
-                cc.num_cta,
-                cc.doc_origen,
-                CASE
-                    WHEN cc.tipo_doc = '08' 
-                    THEN '121101' 
-                    ELSE '123101' 
-                END AS cuenta,
-                ROUND('0.00', 2) AS debe,
-                ROUND(cc.monto, 2) AS haber,
-                'S' AS moneda,
-                ROUND(cc.tip_cambio, 7) AS tc,
-                CASE
-                WHEN cc.tipo_doc = '85' 
-                THEN 'LE' 
-                ELSE cc.tipo_doc 
-                END AS doc,
-                CASE
-                WHEN cc.tipo_doc = '85' 
-                THEN cc.num_cta 
-                ELSE CONCAT(
-                    LEFT(cc.num_cta, 4),
-                    '-',
-                    RIGHT(cc.num_cta, 8)
-                ) 
-                END AS numero,
-                DATE_FORMAT(
-                (SELECT 
-                    c1.fecha 
-                FROM
-                    cuenta_ctejf c1 
-                WHERE c1.num_cta = cc.num_cta 
-                    AND c1.tip_mov = '+'),
-                '%d/%m/%y'
-                ) AS fechad,
-                DATE_FORMAT(
-                (SELECT 
-                    c1.fecha_ven 
-                FROM
-                    cuenta_ctejf c1 
-                WHERE c1.num_cta = cc.num_cta 
-                    AND c1.tip_mov = '+'),
-                '%d/%m/%y'
-                ) AS fechav,
-                c.documento AS codigo,
-                'CANJE DE FACTURAS POR LETRAS' AS glosa,
-                c.documento AS ruc,
-                '2' AS tipo,
-                c.nombre AS rs,
-                c.ape_paterno AS ape1,
-                c.ape_materno AS ape2,
-                c.nombres AS nombre,
-                c.tipo_documento AS tdoci 
-            FROM
-                cuenta_ctejf cc 
-                LEFT JOIN clientesjf c 
-                ON cc.cliente = c.codigo 
-            WHERE cc.doc_origen = :num_cta 
-                AND cc.tip_mov = '-'";                
+                        '05' AS t,
+                        DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fecha,
+                        cc.tipo_doc,
+                        cc.num_cta,
+                        cc.doc_origen,
+                        '123101' AS cuenta,
+                        ROUND(cc.monto, 2) AS debe,
+                        ROUND('0.00', 2) AS haber,
+                        'S' AS moneda,
+                        ROUND(cc.tip_cambio, 7) AS tc,
+                        'LE' AS doc,
+                        cc.num_cta AS numero,
+                        DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fechad,
+                        DATE_FORMAT(cc.fecha_ven, '%d/%m/%y') AS fechav,
+                        c.documento AS codigo,
+                        'CANJE DE FACTURAS POR LETRAS' AS glosa,
+                        c.documento AS ruc,
+                        '2' AS tipo,
+                        c.nombre AS rs,
+                        c.ape_paterno AS ape1,
+                        c.ape_materno AS ape2,
+                        c.nombres AS nombre,
+                        c.tipo_documento AS tdoci 
+                    FROM
+                        cuenta_ctejf cc 
+                        LEFT JOIN clientesjf c 
+                        ON cc.cliente = c.codigo 
+                    WHERE DATE(cc.fecha) BETWEEN :fechaInicio 
+                        AND :fechaFin 
+                        AND cc.cliente = :cliente 
+                        AND cc.tipo_doc = '85' 
+                        AND cc.cod_pago = '85' 
+                        AND cc.tip_mov = '+' 
+                    UNION
+                    /*HABER*/
+                    SELECT 
+                        '05' AS t,
+                        DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fecha,
+                        cc.cod_pago,
+                        cc.num_cta,
+                        cc.doc_origen,
+                        CASE
+                        WHEN cc.tipo_doc = '08' 
+                        THEN '121101' 
+                        ELSE '123101' 
+                        END AS cuenta,
+                        ROUND('0.00', 2) AS debe,
+                        ROUND(cc.monto, 2) AS haber,
+                        'S' AS moneda,
+                        ROUND(cc.tip_cambio, 7) AS tc,
+                        CASE
+                        WHEN cc.tipo_doc = '85' 
+                        THEN 'LE' 
+                        ELSE cc.tipo_doc 
+                        END AS doc,
+                        CASE
+                        WHEN cc.tipo_doc = '85' 
+                        THEN cc.num_cta 
+                        ELSE CONCAT(
+                            LEFT(cc.num_cta, 4),
+                            '-',
+                            RIGHT(cc.num_cta, 8)
+                        ) 
+                        END AS numero,
+                        DATE_FORMAT(
+                        (SELECT 
+                            c1.fecha 
+                        FROM
+                            cuenta_ctejf c1 
+                        WHERE c1.num_cta = cc.num_cta 
+                            AND c1.tip_mov = '+'),
+                        '%d/%m/%y'
+                        ) AS fechad,
+                        DATE_FORMAT(
+                        (SELECT 
+                            c1.fecha_ven 
+                        FROM
+                            cuenta_ctejf c1 
+                        WHERE c1.num_cta = cc.num_cta 
+                            AND c1.tip_mov = '+'),
+                        '%d/%m/%y'
+                        ) AS fechav,
+                        c.documento AS codigo,
+                        'CANJE DE FACTURAS POR LETRAS' AS glosa,
+                        c.documento AS ruc,
+                        '2' AS tipo,
+                        c.nombre AS rs,
+                        c.ape_paterno AS ape1,
+                        c.ape_materno AS ape2,
+                        c.nombres AS nombre,
+                        c.tipo_documento AS tdoci 
+                    FROM
+                        cuenta_ctejf cc 
+                        LEFT JOIN clientesjf c 
+                        ON cc.cliente = c.codigo 
+                    WHERE DATE(cc.fecha) BETWEEN :fechaInicio 
+                        AND :fechaFin 
+                        AND cc.cliente = :cliente 
+                        AND cc.tip_mov = '-' 
+                        AND cc.cod_pago IN ('85', 'RF') 
+                    ORDER BY ruc,
+                        debe DESC";                
 
         $stmt=Conexion::conectar()->prepare($sql);
 
-        $stmt -> bindParam(":doc_origen", $doc_origen, PDO::PARAM_STR);   
-        $stmt -> bindParam(":num_cta", $num_cta, PDO::PARAM_STR);   
+        $stmt -> bindParam(":cliente", $cliente, PDO::PARAM_STR);   
+        $stmt -> bindParam(":fechaInicio", $fechaInicio, PDO::PARAM_STR);
+		$stmt -> bindParam(":fechaFin", $fechaFin, PDO::PARAM_STR); 
 
         $stmt->execute();
 

@@ -403,7 +403,9 @@ class ControladorContabilidad{
 
                 $corrB++;
 
-                $documento = ModeloContabilidad::mdlLetrasSiscontB($value["num_cta"], $value["doc_origen"]); 
+                $documento = ModeloContabilidad::mdlLetrasSiscontB($value["cliente"], $fechaInicio, $fechaFin); 
+
+                #var_dump($value["cliente"], $fechaInicio, $fechaFin);
 
                 foreach($documento as $key => $value2){
 
@@ -537,7 +539,22 @@ class ControladorContabilidad{
             #var_dump($correlativo);
 
             if($correlativo == "ok"){
+                echo'<script>
+                    swal({
+                        type: "success",
+                        title: "Se genero el archivo correctamente",
+                        showConfirmButton: true,
+                        confirmButtonText: "Cerrar",
+                        closeOnConfirm: false
+                        }).then(function(result){
+                            if (result.value) {
 
+                            window.location = "procesar-ce";
+
+                            }
+                        })
+        
+                    </script>';   
 
             }            
 
