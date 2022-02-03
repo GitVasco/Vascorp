@@ -590,8 +590,8 @@ class ControladorContabilidad{
             $voucher = ModeloContabilidad::mdlVoucherSiscont($añoI, $mesI);
             #var_dump($cancelaciones04);   
 
-            $corr04 = 0;
-            $corr08 = 0;
+            $corr04 = $voucher["correlativo04"];
+            $corr08 = $voucher["correlativo08"];
 
             for($i = 0; $i < count($cancelaciones04); $i++){
 
@@ -628,7 +628,7 @@ class ControladorContabilidad{
                 $rfecha     = str_pad(" ", 8);
                 $snumero    = str_pad(" ", 40);
                 $sfecha     = str_pad(" ", 8);
-                $tl         = str_pad(" ", 1);
+                $tl         = str_pad("V", 1);
                 $neto       = str_pad("0.00", 12, '0', STR_PAD_LEFT);
                 $neto2      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
                 $neto3      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
@@ -638,14 +638,13 @@ class ControladorContabilidad{
                 $neto6      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
                 $neto7      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
                 $neto8      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
-                $neto9      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
-                $ruc        = str_pad($cancelaciones04[$i]["ruc"], 15);
-                $tipo       = str_pad($cancelaciones04[$i]["tipo"], 1);
-                $r5         = str_pad(str_replace("Ñ", "N",$cancelaciones04[$i]["rs"]), 60);
-                $ape1       = str_pad(str_replace("Ñ", "N",$cancelaciones04[$i]["ape1"]), 20);
-                $ape2       = str_pad(str_replace("Ñ", "N",$cancelaciones04[$i]["ape2"]), 20);
-                $nombre     = str_pad(str_replace("Ñ", "N",$cancelaciones04[$i]["nombre"]), 20);
-                $tdoi       = str_pad($cancelaciones04[$i]["tdoci"], 1);
+                $ruc        = str_pad(" ", 15);
+                $tipo       = str_pad(" ", 1);
+                $r5         = str_pad(" ", 60);
+                $ape1       = str_pad(" ", 20);
+                $ape2       = str_pad(" ", 20);
+                $nombre     = str_pad(" ", 20);
+                $tdoi       = str_pad(" ", 1);
                 $rnumdes    = str_pad(" ", 1);
                 $rcodtasa   = str_pad(" ", 5);
                 $rindret    = str_pad(" ", 1);
@@ -739,7 +738,7 @@ class ControladorContabilidad{
                 $rfecha     = str_pad(" ", 8);
                 $snumero    = str_pad(" ", 40);
                 $sfecha     = str_pad(" ", 8);
-                $tl         = str_pad(" ", 1);
+                $tl         = str_pad("V", 1);
                 $neto       = str_pad("0.00", 12, '0', STR_PAD_LEFT);
                 $neto2      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
                 $neto3      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
@@ -749,14 +748,14 @@ class ControladorContabilidad{
                 $neto6      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
                 $neto7      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
                 $neto8      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
-                $neto9      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
-                $ruc        = str_pad($cancelaciones08[$i]["ruc"], 15);
-                $tipo       = str_pad($cancelaciones08[$i]["tipo"], 1);
-                $r5         = str_pad(str_replace("Ñ", "N",$cancelaciones08[$i]["rs"]), 60);
-                $ape1       = str_pad(str_replace("Ñ", "N",$cancelaciones08[$i]["ape1"]), 20);
-                $ape2       = str_pad(str_replace("Ñ", "N",$cancelaciones08[$i]["ape2"]), 20);
-                $nombre     = str_pad(str_replace("Ñ", "N",$cancelaciones08[$i]["nombre"]), 20);
-                $tdoi       = str_pad($cancelaciones08[$i]["tdoci"], 1);
+                #$neto9      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $ruc        = str_pad(" ", 15);
+                $tipo       = str_pad(" ", 1);
+                $r5         = str_pad(" ", 60);
+                $ape1       = str_pad(" ", 20);
+                $ape2       = str_pad(" ", 20);
+                $nombre     = str_pad(" ", 20);
+                $tdoi       = str_pad(" ", 1);
                 $rnumdes    = str_pad(" ", 1);
                 $rcodtasa   = str_pad(" ", 5);
                 $rindret    = str_pad(" ", 1);
@@ -797,7 +796,6 @@ class ControladorContabilidad{
                                     $neto6.
                                     $neto7.
                                     $neto8.
-                                    $neto9.
                                     $ruc.
                                     $tipo.
                                     $r5.
@@ -836,6 +834,10 @@ class ControladorContabilidad{
             #$destino2 = '//Sistemas-2/d/contabilidad/cancelaciones/CB'.$nomar.'.bat';
             $destino2 = '//Yudy-pc/datasmart/VASCO2022/CB'.$nomar.'.bat';  
             copy($origen2, $destino2);
+
+            $correlativo = ModeloContabilidad::mdlActualizarCorrelativo($añoI, $mesI, $corr04, "valor_3");
+            $correlativo = ModeloContabilidad::mdlActualizarCorrelativo($añoI, $mesI, $corr08, "valor_4");
+            #var_dump($correlativo);
 
             echo'<script>
 
