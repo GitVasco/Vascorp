@@ -2898,6 +2898,7 @@ class ModeloMovimientos{
                                           FROM
                                              cuenta_ctejf cc 
                                           WHERE YEAR(cc.fecha) = YEAR(NOW()) 
+                                             AND MONTH(cc.fecha) = $mes 
                                              AND cc.tip_mov = '-' 
                                              AND cc.cod_pago IN ('00', '05', '06', '14', '80', '82', 'TR') 
                                           GROUP BY cc.vendedor) AS c 

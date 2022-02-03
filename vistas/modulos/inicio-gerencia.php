@@ -319,7 +319,52 @@
 
 
 
-        </div>          
+        </div>  
+        
+        <div class="col-lg-5">
+
+            <div class="box box-primary">
+                <div class="box-header with-border"></div>
+                <center><b>Resumen de gestión</b></center>
+
+                <div class="box-body no-padding">
+                    <table class="table table-bordered table-striped dt-responsive tablaRangosDias" width="100%"> 
+                        <thead>
+                            <tr>
+                                <th>Codigo</th>
+                                <th>Nombre</th>
+                                <th>1 a 30</th>
+                                <th>31 a 60</th>                                
+                                <th>61 a 90</th>
+                                <th>91 a 120</th>
+                                <th>121 a 150</th>
+                                <th>151 a 180</th>
+                                <th>181 a mas</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>                            
+                        </tbody>
+                        <tfoot>
+                            <th></th>
+                            <th></th>
+                            <th style="text-align:right !important;"></th>
+                            <th style="text-align:right !important;"></th>
+                            <th style="text-align:right !important;"></th>
+                            <th style="text-align:right !important;"></th>
+                            <th style="text-align:right !important;"></th>
+                            <th style="text-align:right !important;"></th>
+                            <th style="text-align:right !important;"></th>
+                            <th style="text-align:right !important;"></th>
+                        </tfoot>                        
+                    </table>
+                </div>
+
+            </div>        
+
+
+
+        </div>        
 
         <div class="col-lg-5">
 
