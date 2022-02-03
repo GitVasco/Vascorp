@@ -530,7 +530,7 @@ class ModeloContabilidad{
                         ROUND('0.00',2) AS debe,
                         cc.monto AS haber,
                         'S' AS moneda,
-                        cc.tip_cambio AS tc,
+                        ROUND(cc.tip_cambio, 7) as tc,
                         CASE
                         WHEN cc.tipo_doc = '85' 
                         THEN 'LE' 
@@ -614,7 +614,7 @@ class ModeloContabilidad{
                         SUM(cc.monto) AS debe,
                         0 AS haber,
                         'S' AS moneda,
-                        cc.tip_cambio AS tc,
+                        ROUND(cc.tip_cambio, 7) as tc,
                         CASE
                             WHEN cc.cod_pago IN ('96', '97') 
                             THEN '07' 
@@ -741,7 +741,7 @@ class ModeloContabilidad{
                     ROUND('0.00', 2) AS debe,
                     cc.monto AS haber,
                     'S' AS moneda,
-                    cc.tip_cambio AS tc,
+                    ROUND(cc.tip_cambio, 7) as tc,
                     CASE
                     WHEN cc.tipo_doc = '85' 
                     THEN 'LE' 
@@ -805,7 +805,7 @@ class ModeloContabilidad{
                     AND cc.tipo_doc IN ('01', '03', '07', '08', '85') 
                     AND cc.cod_pago NOT IN ('85', 'RF') 
                     AND tip.codigos_pago NOT LIKE '%80%' 
-                UNION
+    UNION
                 SELECT 
                     tip.codigos_pago,
                     DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fecha,
@@ -825,7 +825,7 @@ class ModeloContabilidad{
                     SUM(cc.monto) AS debe,
                     0 AS haber,
                     'S' AS moneda,
-                    cc.tip_cambio AS tc,
+                    ROUND(cc.tip_cambio, 7) as tc,
                     CASE
                     WHEN cc.cod_pago IN ('96', '97') 
                     THEN '07' 
