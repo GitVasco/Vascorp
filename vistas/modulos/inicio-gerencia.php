@@ -203,7 +203,8 @@
 
             <div class="box box-danger">
                 <div class="box-header with-border"></div>
-                <center><b>Ventas / Pedidos por Vendedor</b></center>
+                <center><b>Ventas / Pedidos por Vendedor <button class='btn btn-primary btn-xs btnRptPeds' title='Pedidos' vendedor=''>Pedidos</button></b></center>
+                
 
                 <div class="box-body no-padding">
                     <table class="table table-bordered table-striped dt-responsive tablaVtasGerenciaVdor" width="100%"> 
@@ -325,13 +326,12 @@
 
             <div class="box box-primary">
                 <div class="box-header with-border"></div>
-                <center><b>Resumen de gestión</b></center>
+                <center><b>Resumen Rangos</b></center>
 
                 <div class="box-body no-padding">
                     <table class="table table-bordered table-striped dt-responsive tablaRangosDias" width="100%"> 
                         <thead>
                             <tr>
-                                <th>Codigo</th>
                                 <th>Nombre</th>
                                 <th>1 a 30</th>
                                 <th>31 a 60</th>                                
@@ -346,7 +346,6 @@
                         <tbody>                            
                         </tbody>
                         <tfoot>
-                            <th></th>
                             <th></th>
                             <th style="text-align:right !important;"></th>
                             <th style="text-align:right !important;"></th>
@@ -366,7 +365,7 @@
 
         </div>        
 
-        <div class="col-lg-5">
+        <div class="col-lg-4">
 
             <div class="col-lg-6">
 

@@ -442,6 +442,7 @@ MODAL AGREGAR CLIENTE
                     <option value="precio8">Lista - 08</option>
                     <option value="precio9">Lista - 09</option>
                     <option value="precio10">Lista - 10</option>
+                    <option value="precio11">Lista - 11</option>
 
 
                   </select>

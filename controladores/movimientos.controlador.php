@@ -295,7 +295,18 @@ class ControladorMovimientos{
 
         return $respuesta;
 
-    }    
+    }  
+    
+    /* 
+    * rangos por meses
+    */
+    static public function ctrMostrarRangosDias(){
+
+        $respuesta = ModeloMovimientos::mldMostrarRangosDias();
+
+        return $respuesta;
+
+    }     
 
     /* 
     * MOSTRAR TOTALES EN FACTURAS

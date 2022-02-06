@@ -177,7 +177,7 @@ MODAL EDITAR TIPO PAGO
 
     <div class="modal-content">
 
-      <form role="form" method="post">
+      <form role="form" method="post" onsubmit="return checkSubmitG();">
 
         <!--=====================================
         CABEZA DEL MODAL
@@ -307,7 +307,7 @@ MODAL EDITAR TIPO PAGO
 
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" class="btn btn-primary">Editar cancelacion</button>
+          <button type="submit" id="btnBlocClic" class="btn btn-primary">Editar cancelacion</button>
 
         </div>
 
@@ -339,7 +339,7 @@ MODAL CANCELAR CUENTA
 
     <div class="modal-content">
 
-      <form role="form" method="post">
+      <form role="form" method="post" onsubmit="return checkSubmitG();">
 
         <!--=====================================
         CABEZA DEL MODAL
@@ -618,7 +618,7 @@ MODAL CANCELAR CUENTA
 
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" class="btn btn-primary">Cancelar cuenta</button>
+          <button type="submit" id="btnBlocClic" class="btn btn-primary">Cancelar cuenta</button>
 
         </div>
 

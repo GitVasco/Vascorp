@@ -118,6 +118,8 @@ class TablaCortes{
 
                 $datosJson .= '[
                 "'.$cortes[$i]["fecha"].'",
+                "'.$cortes[$i]["taller"].'",
+                "'.$cortes[$i]["nombre_taller"].'",
                 "<b><center>'.$cortes[$i]["modelo"].'</center></b>",
                 "'.$cortes[$i]["nombre"].'",
                 "<b>'.$cortes[$i]["color"].'</b>",

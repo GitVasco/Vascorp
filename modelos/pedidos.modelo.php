@@ -517,6 +517,109 @@ class ModeloPedidos{
 
 	}
 
+	    /*
+    * MOSTRAR DETALLE DE TEMPORAL
+    */
+	static public function mdlPedidosPendientes($vendedor){
+
+		if($vendedor == null){
+
+			$sql="SELECT 
+			t.codigo,
+			t.codigo,
+			t.vendedor,
+			(SELECT 
+			  descripcion 
+			FROM
+			  maestrajf m 
+			WHERE m.tipo_dato = 'tvend' 
+			  AND m.codigo = t.vendedor) AS nom_vendedor,
+			t.op_gravada,
+			t.igv,
+			t.total,
+			t.condicion_venta,
+			(SELECT 
+			  descripcion 
+			FROM
+			  condiciones_ventajf cv 
+			WHERE cv.id = t.condicion_venta) AS nom_condicion,
+			t.estado,
+			DATE(t.fecha) AS fecha,
+			t.cliente,
+			c.nombre,
+			c.ubigeo,
+			(SELECT 
+			  nombre 
+			FROM
+			  ubigeo u 
+			WHERE u.codigo = c.ubigeo) AS nom_ubigeo 
+		  FROM
+			temporaljf t 
+			LEFT JOIN clientesjf c 
+			  ON t.cliente = c.codigo 
+		  WHERE t.estado NOT IN ('FACTURADOS', 'ANULADO') 
+		  ORDER BY t.vendedor,
+			c.ubigeo";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		}else{
+
+			$sql="SELECT 
+						t.codigo,
+						t.codigo,
+						t.vendedor,
+						(SELECT 
+						descripcion 
+						FROM
+						maestrajf m 
+						WHERE m.tipo_dato = 'tvend' 
+						AND m.codigo = t.vendedor) AS nom_vendedor,
+						t.op_gravada,
+						t.igv,
+						t.total,
+						t.condicion_venta,
+						(SELECT 
+						descripcion 
+						FROM
+						condiciones_ventajf cv 
+						WHERE cv.id = t.condicion_venta) AS nom_condicion,
+						t.estado,
+						DATE(t.fecha) AS fecha,
+						t.cliente,
+						c.nombre,
+						c.ubigeo,
+						(SELECT 
+						nombre 
+						FROM
+						ubigeo u 
+						WHERE u.codigo = c.ubigeo) AS nom_ubigeo 
+					FROM
+						temporaljf t 
+						LEFT JOIN clientesjf c 
+						ON t.cliente = c.codigo 
+					WHERE t.estado NOT IN ('FACTURADOS', 'ANULADO') 
+						AND t.vendedor = :vendedor 
+					ORDER BY c.ubigeo";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":vendedor", $vendedor, PDO::PARAM_STR);
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		}
+
+		$stmt=null;
+
+	}
+
     /*
     * MOSTRAR LOS DATOS PARA LA IMPRESION
     */

@@ -419,7 +419,7 @@ class ControladorCuentas{
     }
 	
 	/*=============================================
-	CANCELAR CUENTAS
+	CANCELAR CUENTAS  -YA NOSE USA
 	=============================================*/
 
 	static public function ctrCancelarCuenta(){
@@ -1030,22 +1030,23 @@ class ControladorCuentas{
 			$usureg = $_SESSION["nombre"];
 			$pcreg= gethostbyaddr($_SERVER['REMOTE_ADDR']);  
 
-			   $datos = array("id" => $_POST["idCuenta3"],
-			   			   "tipo_doc"=>$_POST["cancelarTipoDocumento2"],
-						   "num_cta"=>$_POST["cancelarDocumentoOriginal2"],
-						   "cliente"=>$_POST["cancelarCliente2"],
-						   "vendedor"=>$_POST["cancelarVendedor2"],
-						   "monto"=>$_POST["cancelarMonto3"],
-						   "notas"=>$_POST["cancelarNota2"],
-						   "usuario"=>$_POST["cancelarUsuario2"],
-						   "fecha"=>$_POST["cancelarFechaUltima2"],
-						   "fecha_ven"=>$_POST["cancelarVencimientoOrigen2"],
-						   "cod_pago" => $_POST["cancelarCodigo2"],
-						   "doc_origen" => $_POST["cancelarDocumento2"],
-						   "saldo"=>0,
-						   "tip_mov" => "-",
-						   "usureg" => $usureg,
-							"pcreg" => $pcreg	
+			$datos = array(	"id" 		=> $_POST["idCuenta3"],
+							"tipo_doc"	=>$_POST["cancelarTipoDocumento2"],
+							"num_cta"	=>$_POST["cancelarDocumentoOriginal2"],
+							"cliente"	=>$_POST["cancelarCliente2"],
+							"vendedor"	=>$_POST["cancelarVendedor2"],
+							"monto"		=>$_POST["cancelarMonto3"],
+							"notas"		=>$_POST["cancelarNota2"],
+							"usuario"	=>$_POST["cancelarUsuario2"],
+							"fecha"		=>$_POST["cancelarFechaUltima2"],
+							"fecha_ven"	=>$_POST["cancelarVencimientoOrigen2"],
+							"cod_pago" 	=> $_POST["cancelarCodigo2"],
+							"doc_origen"=> $_POST["cancelarDocumento2"],
+							"saldo"		=>0,
+							"tip_mov" 	=> "-",
+							"usureg" 	=> $usureg,
+							"pcreg" 	=> $pcreg,
+							"fecha_ori" => 	$_POST["cancelarFechaOrigen2"]
 						);
 
 				$cuenta=ControladorCuentas::ctrMostrarCuentas("id",$_POST["idCuenta3"]);
@@ -1136,7 +1137,8 @@ class ControladorCuentas{
 								"saldo"=>0,
 								"tip_mov" => "-",
 								"usureg" => $usureg,
-								"pcreg" => $pcreg);
+								"pcreg" => $pcreg,
+								"fecha_ori" => $_POST["dividirFecha"]);
 				$respuesta2 = ModeloCuentas::mdlIngresarCuenta($tabla,$datos2);   
 
 			   	if($respuesta == "ok"){
@@ -1491,6 +1493,17 @@ class ControladorCuentas{
 	static public function ctrContadoPendientes(){
 
 		$respuesta = ModeloCuentas::mdlContadoPendientes();
+
+		return $respuesta;
+
+	}	
+
+	/*=============================================
+	DOCUMENTOS CONTADO PENDIENTES
+	=============================================*/
+	static public function ctrLetrasAceptar(){
+
+		$respuesta = ModeloCuentas::mdlLetrasAceptar();
 
 		return $respuesta;
 

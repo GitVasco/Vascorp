@@ -214,7 +214,7 @@
 
                     <?php
                       $item= "tipo_dato";
-                      $valor = "TCAN";
+                      $valor = "tdoc";
 
                     $documentos = ControladorCuentas::ctrMostrarPagos($item,$valor);
 

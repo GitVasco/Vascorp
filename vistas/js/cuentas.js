@@ -2112,6 +2112,19 @@ window.open("vistas/reportes_ticket/estado_cuenta.php?cliente=" +cliente,"_blank
 /* 
 * BOTON  IMPRIMIR TICKET
 */
+$(".tablaVtasGerenciaVdor").on("click", ".btnRptPeds", function () {
+
+  var vendedor = $(this).attr("vendedor");
+  //console.log(vendedor);
+
+
+window.open("vistas/reportes_ticket/pedidos_vendedor.php?vendedor=" +vendedor,"_blank");
+
+})
+
+/* 
+* BOTON  IMPRIMIR TICKET
+*/
 $(".tablaCtasVdor").on("click", ".btnEstadoCtaVdor", function () {
 
   var vendedor = $(this).attr("vendedor");
@@ -2143,9 +2156,37 @@ $(".box").on("click", ".btnReporteCrediPagos", function () {
 
 })
 
+
+
 //Reporte de Cuentas
 $(".box").on("click", ".btnDocContado", function () {
 
   window.open("vistas/reportes_ticket/documentos_contado.php","_blank");
+
+})
+
+//Reporte de Cuentas
+$(".box").on("click", ".btnPorAceptar", function () {
+
+  window.open("vistas/reportes_ticket/letras_aceptar.php","_blank");
+
+})
+
+
+function checkSubmitG() {
+	document.getElementById("btnBlocClic").value = "Enviando...";
+	document.getElementById("btnBlocClic").disabled = true;
+	return true;
+}
+
+
+$(".btnRptPeds").click(function(){
+
+  var vendedor = $(this).attr("vendedor");
+  console.log(vendedor);
+
+
+  window.open("vistas/reportes_ticket/pedidos_vendedor.php?vendedor=" +vendedor,"_blank");
+
 
 })

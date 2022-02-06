@@ -37,7 +37,8 @@ class ModeloCuentas{
 			fecha_abono,
 			tip_mov,
 			usureg,
-			pcreg
+			pcreg,
+			fecha_ori
 		  ) 
 		  VALUES
 			(
@@ -67,7 +68,8 @@ class ModeloCuentas{
 			  :fecha_abono,
 			  :tip_mov,
 			  :usureg,
-			  :pcreg
+			  :pcreg,
+			  :fecha_ori
 			)");
 
 		$stmt->bindParam(":tipo_doc", $datos["tipo_doc"], PDO::PARAM_STR);
@@ -97,6 +99,7 @@ class ModeloCuentas{
 		$stmt->bindParam(":tip_mov", $datos["tip_mov"], PDO::PARAM_STR);
 		$stmt->bindParam(":usureg", $datos["usureg"], PDO::PARAM_STR);
 		$stmt->bindParam(":pcreg", $datos["pcreg"], PDO::PARAM_STR);
+		$stmt->bindParam(":fecha_ori", $datos["fecha_ori"], PDO::PARAM_STR);
 
 
 		if($stmt->execute()){
@@ -3636,7 +3639,7 @@ class ModeloCuentas{
 											AND cc.estado = 'PENDIENTE' 
 											AND cc.tipo_doc <> '85' 
 											AND cc.fecha = cc.fecha_ven 
-											AND cc.vendedor <> '08' 
+											AND cc.vendedor NOT IN ('08','99') 
 										ORDER BY cc.vendedor,
 											cc.fecha");
 		$stmt -> execute();
@@ -3645,11 +3648,48 @@ class ModeloCuentas{
 
 	
 
-	$stmt -> close();
+		$stmt -> close();
 
-	$stmt = null;
+		$stmt = null;
 
-}		
+	}	
+	
+	//* LETRAS POR ACEPTAR
+	static public function mdlLetrasAceptar(){	
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+												cc.tipo_doc,
+												cc.num_cta,
+												cc.cod_pago,
+												cc.doc_origen,
+												cc.fecha,
+												cc.fecha_ven,
+												cc.monto,
+												cc.cliente,
+												c.nombre,
+												cc.vendedor 
+											FROM
+												cuenta_ctejf cc 
+												LEFT JOIN clientesjf c 
+												ON cc.cliente = c.codigo 
+											WHERE cc.tipo_doc = '85' 
+												AND cc.estado = 'PENDIENTE' 
+												AND cc.tip_mov = '+' 
+												AND cc.banco <> '02' 
+												AND cc.num_unico = '' 
+												AND cc.protesta <> '1' 
+											ORDER BY cc.cod_pago,
+												cc.doc_origen,
+												cc.fecha_ven");
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();	
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
 
 	//* ESTADO DE CEUNTA DETALLE
 	static public function ctrEstadoCuentaDet($cliente){	

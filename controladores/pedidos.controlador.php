@@ -16,6 +16,17 @@ class ControladorPedidos{
     }
 
     /*
+    * Pedidos pendentes reporte
+    */
+	static public function ctrPedidosPendientes($vendedor){
+
+		$respuesta = ModeloPedidos::mdlPedidosPendientes($vendedor);
+
+		return $respuesta;
+
+    }
+
+    /*
     * MOSTRAR CABECERA DE TEMPORAL TOTAL
     */
 	static public function ctrMostrarTemporalTotal($valor){

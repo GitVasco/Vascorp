@@ -316,7 +316,8 @@
 
             <div class="form-group">
             <label for="">Detalle</label>
-                <textarea class="form-control" rows="8" name="notaTexto" id="notaTexto"></textarea>
+                <textarea class="form-control" rows="8" name="notaTexto" id="notaTexto" placeholder="Ingresar detalle sin dar enter ni usar comas. 
+                Atte: Sistemas"></textarea>
             </div>
         </div>
     </div>

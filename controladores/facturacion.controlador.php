@@ -1003,7 +1003,7 @@ class ControladorFacturacion{
                                             "tipo_doc"=>$tip_nota,
                                             "doc_origen"=>$origen_venta,
                                             "fecha_origen"=>$fecha_origen,
-                                            "motivo"=>'C6',
+                                            "motivo"=> $_POST["notaMotivo"],
                                             "tip_cont"=>'NTCD',
                                             "observacion"=>'',
                                             "usuario"=>$usuario);

@@ -3078,6 +3078,89 @@ class ModeloMovimientos{
 
 	}   
 
+	static public function mldMostrarRangosDias(){
+
+      $stmt = Conexion::conectar()->prepare("SELECT 
+                           c.vendedor,
+                           (SELECT 
+                           descripcion 
+                           FROM
+                           maestrajf m 
+                           WHERE m.tipo_dato = 'TVEND' 
+                           AND m.codigo = c.vendedor) AS nombre,
+                           SUM(
+                           CASE
+                              WHEN TIMESTAMPDIFF(DAY, c.fecha_ven, DATE(NOW())) >= 1 
+                              AND TIMESTAMPDIFF(DAY, c.fecha_ven, DATE(NOW())) <= 30 
+                              THEN c.saldo 
+                              ELSE 0 
+                           END
+                           ) AS '1a30',
+                           SUM(
+                           CASE
+                              WHEN TIMESTAMPDIFF(DAY, c.fecha_ven, DATE(NOW())) > 30 
+                              AND TIMESTAMPDIFF(DAY, c.fecha_ven, DATE(NOW())) <= 60 
+                              THEN c.saldo 
+                              ELSE 0 
+                           END
+                           ) AS '31a60',
+                           SUM(
+                           CASE
+                              WHEN TIMESTAMPDIFF(DAY, c.fecha_ven, DATE(NOW())) > 60 
+                              AND TIMESTAMPDIFF(DAY, c.fecha_ven, DATE(NOW())) <= 90 
+                              THEN c.saldo 
+                              ELSE 0 
+                           END
+                           ) AS '61a90',
+                           SUM(
+                           CASE
+                              WHEN TIMESTAMPDIFF(DAY, c.fecha_ven, DATE(NOW())) > 90 
+                              AND TIMESTAMPDIFF(DAY, c.fecha_ven, DATE(NOW())) <= 120 
+                              THEN c.saldo 
+                              ELSE 0 
+                           END
+                           ) AS '91a120',
+                           SUM(
+                           CASE
+                              WHEN TIMESTAMPDIFF(DAY, c.fecha_ven, DATE(NOW())) > 120 
+                              AND TIMESTAMPDIFF(DAY, c.fecha_ven, DATE(NOW())) <= 150 
+                              THEN c.saldo 
+                              ELSE 0 
+                           END
+                           ) AS '121a150',
+                           SUM(
+                           CASE
+                              WHEN TIMESTAMPDIFF(DAY, c.fecha_ven, DATE(NOW())) > 150 
+                              AND TIMESTAMPDIFF(DAY, c.fecha_ven, DATE(NOW())) <= 180 
+                              THEN c.saldo 
+                              ELSE 0 
+                           END
+                           ) AS '151a180',
+                           SUM(
+                           CASE
+                              WHEN TIMESTAMPDIFF(DAY, c.fecha_ven, DATE(NOW())) > 180 
+                              THEN c.saldo 
+                              ELSE 0 
+                           END
+                           ) AS '180amas' ,
+                           SUM(c.saldo) AS total
+                        FROM
+                           cuenta_ctejf c 
+                        WHERE c.tip_mov = '+' 
+                           AND c.estado = 'PENDIENTE' 
+                           AND c.fecha_ven < DATE(NOW()) 
+                        GROUP BY c.vendedor");
+
+      $stmt -> execute();
+
+      return $stmt -> fetchAll();
+
+      $stmt -> close();
+
+      $stmt = null;
+
+ }    
+
 	static public function mdlFacturas($mes){
 
       if( $mes == null){

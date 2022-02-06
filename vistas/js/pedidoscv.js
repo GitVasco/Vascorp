@@ -506,10 +506,12 @@ $("#tdoc").change(function(){
         $(".campoTipOrigen").removeClass("hidden");
         $(".campoDocOrigen").removeClass("hidden");
         $(".campoFecOrigen").removeClass("hidden");
+        $(".campoMotOrigen").removeClass("hidden");
     }else{
         $(".campoTipOrigen").addClass("hidden");
         $(".campoDocOrigen").addClass("hidden");
         $(".campoFecOrigen").addClass("hidden");
+        $(".campoMotOrigen").addClass("hidden");
     }
 
     var serie = $("#serie");
@@ -1509,7 +1511,7 @@ $(".modificarArtPedB").click(function () {
                 /* TALLA 8 */
                 if(id.t8 == 1){
 
-                    var talla8 = '<td><input style="width:100%" class="cantidad" type="text" name="'+ id.modelo + id.cod_color +8 +'" id="'+ id.modelo + id.cod_color +8 +'"value="'+id.v8+'" min="0" ></td>'
+                    var talla8 = '<td><input style="width:100%" class="pruebaA" type="text" name="'+ id.modelo + id.cod_color +8 +'" id="'+ id.modelo + id.cod_color +8 +'"value="'+id.v8+'" min="0" ></td>'
 
                 }else{
 
@@ -1587,8 +1589,8 @@ $(".btnCalCantA").click(function () {
     $("#totalSolesA").val(totalSolesA);
     $("#totalSolesA").number(true, 2);
 
-    //console.log(totalSolesA);
-    //console.log(totalCantidadA);
+    console.log(totalSolesA);
+    console.log(totalCantidadA);
 
 })
 

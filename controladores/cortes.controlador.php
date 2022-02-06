@@ -69,10 +69,22 @@ class ControladorCortes{
             /* 
             * registramos en la tabla taller cabecera para el código
             */
-            $datosCab = array( "usuario" => $_POST["usuario"],
-                            "articulo" => $_POST["nuevoArticulo"],
-                            "cantidad" => $_POST["nuevoAlmCorte"],
-                            "estado" => "0");
+
+            if($_POST["seleccionarSectorServicio"] != ""){
+
+                $tallerCab = $_POST["seleccionarSectorServicio"];
+
+            }else{
+
+                $tallerCab = "VC";
+
+            }
+
+            $datosCab = array(  "usuario"   => $_POST["usuario"],
+                                "articulo"  => $_POST["nuevoArticulo"],
+                                "cantidad"  => $_POST["nuevoAlmCorte"],
+                                "estado"    => "0",
+                                "taller"    => $tallerCab);
 
             $respuestaCab = ModeloCortes::mdlMandarTallerCab($datosCab);
 

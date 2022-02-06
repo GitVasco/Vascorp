@@ -4,7 +4,7 @@
 
     <h1>
 
-      Almacén de corte
+    Articulos Enviados a Taller / Servicio
 
     </h1>
 
@@ -12,7 +12,7 @@
 
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-      <li class="active">Almacén de corte</li>
+      <li class="active">Articulos Enviados a Taller / Servicio</li>
 
     </ol>
 
@@ -53,6 +53,8 @@
                 <th></th>
                 <th></th>
                 <th></th>
+                <th></th>
+                <th></th>
                 <th style="text-align: center">S</th>
                 <th style="text-align: center">M</th>
                 <th style="text-align: center">L</th>
@@ -66,6 +68,8 @@
             </tr>
 
             <tr>
+                <th></th>
+                <th></th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -84,6 +88,8 @@
 
             <tr>
                 <th>Fecha</th>
+                <th>Cod. Taller</th>
+                <th>Taller</th>
                 <th><center>Modelo</center></th>
                 <th>Nombre</th>
                 <th>Color</th>

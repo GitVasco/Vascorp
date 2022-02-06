@@ -76,7 +76,14 @@
         <div class="pull-right">
           <button class="btn btn-outline-success btnDocContado"  ano="null"  style="border:green 1px solid">
           <img src="vistas/img/plantilla/download.png" width="20px"> Reporte Doc. Contado  </button>
-        </div>        
+        </div>    
+        
+        <div class="pull-right">
+          <button class="btn btn-outline-success btnPorAceptar"  ano="null"  style="border:green 1px solid">
+          <img src="vistas/img/plantilla/download.png" width="20px"> Letras x Aceptar  </button>
+        </div>   
+        
+        
       </div>
         
       <div class="box-body">

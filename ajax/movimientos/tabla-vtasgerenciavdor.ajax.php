@@ -31,14 +31,16 @@ class TablaMovimientos{
 
             }else{
 
-                $pedidos = "<div style='text-align:right !important'>".number_format($movimientos[$i]["pedidos"],2)."</div>";
+                $pedidos = "<div type='button' style='text-align:right !important'>".number_format($movimientos[$i]["pedidos"],2)."</div>";
                 $ventas = "<div style='text-align:right !important'>".number_format($movimientos[$i]["ventas"],2)."</div>";
                 $total = "<div style='text-align:right !important'>".number_format($movimientos[$i]["total"],2)."</div>";
                 
             }
+
+            $codigo = "<button class='btn btn-link btn-xs btnRptPeds' title='Pedidos' vendedor='".$movimientos[$i]["codigo"]."' >".$movimientos[$i]["codigo"]."</button>";
             
                 $datosJson .= '[
-                "'.$movimientos[$i]["codigo"].'",
+                "'.$codigo.'",
                 "'.$movimientos[$i]["descripcion"].'",
                 "'.$ventas.'",
                 "'.$pedidos.'",                
