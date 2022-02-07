@@ -2168,7 +2168,14 @@ $(".box").on("click", ".btnDocContado", function () {
 //Reporte de Cuentas
 $(".box").on("click", ".btnPorAceptar", function () {
 
-  window.open("vistas/reportes_ticket/letras_aceptar.php","_blank");
+  var vendedor = prompt("Ingrese el codigo del vendedor", "");
+  console.log(vendedor);
+
+  if (vendedor != "") {
+    window.open("vistas/reportes_ticket/letras_aceptar.php?vendedor=" + vendedor ,"_blank");
+}
+
+  //window.open("vistas/reportes_ticket/letras_aceptar.php","_blank");
 
 })
 

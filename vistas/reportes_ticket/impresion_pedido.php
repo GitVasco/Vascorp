@@ -2970,7 +2970,7 @@
                                     
 
             }            
-            //todo: 4 PAGINAS
+            //todo: 5 PAGINAS
             else if($cantidadArticulos > 200 && $cantidadArticulos <= 250){
 
                 //*Cabecera GLOBAL PAG 1

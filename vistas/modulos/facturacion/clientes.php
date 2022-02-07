@@ -249,13 +249,13 @@ MODAL AGREGAR CLIENTE
 
             <!-- FIN DATOS PRINCIPALES -->
 
-            <!-- DATOS DIRECCION -->
+            <!-- DATOS DIRECCION PRINCIPAL-->
 
             <div class="box box-warning col-lg-12 ">
 
               <div class="box-header">
 
-                <b>Dirección</b>
+                <b>Dirección Facturación</b>
 
               </div>
 
@@ -306,7 +306,66 @@ MODAL AGREGAR CLIENTE
 
               </div>              
 
-            </div>
+            <!-- </div> -->
+
+            <!-- DATOS DIRECCION SECUNDARIA-->
+
+            <!-- <div class="box box-danger col-lg-12 "> -->
+
+              <div class="box-header">
+
+                <b>Dirección Despacho</b>
+
+              </div>
+
+              <!-- ENTRADA PARA LA DIRECCION -->
+
+              <div class="form-group col-lg-8">
+
+                <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
+
+                  <input type="text" class="form-control input-sm info-box-text" name="direccionDespacho" id="nuevaDireccion" placeholder="Direccion de Despacho" required>
+
+                </div>
+
+              </div>
+
+              <!-- ENTRADA PARA EL UBIGEO -->
+
+              <div class="form-group col-lg-4">
+
+                <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
+
+                  <select class="form-control input-sm selectpicker" id="nuevoUbiPro" name="ubigeoDespacho" data-live-search="true" data-size="10" required>
+
+                    <option value="">UBIGEO</option>
+
+                    <?php
+                    
+                    $ubigeo = ControladorClientes::ctrMostrarUbigeos();
+                    #var_dump("ubigeo", $ubigeo);
+                    foreach ($ubigeo as $key => $value) {
+
+                      echo '<option value="' . $value["codigo"] . '">' . $value["codigo"] . ' - ' . $value["ubigeo"] . '</option>';
+
+                    }
+
+                    
+                    ?>
+
+                    
+
+                  </select>
+
+                </div>
+
+              </div>              
+
+            </div>            
 
             <!-- FIN DATOS DIRECCION -->
             

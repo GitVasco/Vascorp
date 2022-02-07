@@ -13,34 +13,35 @@ class ControladorClientes{
 
 			$tabla = "clientesjf";
 			$interruptores= array("'",'"',"´");
-			$codigo = str_replace($interruptores, "", $_POST["codigoCliente"]);
-			$nombre = str_replace($interruptores, "", $_POST["nombre"]);
-			$ape_pat = str_replace($interruptores, "", $_POST["ape_paterno"]);
-			$ape_mat = str_replace($interruptores, "", $_POST["ape_materno"]);
-			$nombres = str_replace($interruptores, "", $_POST["nombres"]);
-			$direccion = str_replace($interruptores, "", $_POST["direccion"]);
-			$telefono1 = str_replace($interruptores, "", $_POST["telefono"]);
-			$telefono2 = str_replace($interruptores, "", $_POST["telefono2"]);
-			$email = str_replace($interruptores, "", $_POST["email"]);
-			$contacto = str_replace($interruptores, "", $_POST["contacto"]);
+			$codigo 	= str_replace($interruptores, "", $_POST["codigoCliente"]);
+			$nombre 	= str_replace($interruptores, "", $_POST["nombre"]);
+			$ape_pat 	= str_replace($interruptores, "", $_POST["ape_paterno"]);
+			$ape_mat 	= str_replace($interruptores, "", $_POST["ape_materno"]);
+			$nombres 	= str_replace($interruptores, "", $_POST["nombres"]);
+			$direccion 	= str_replace($interruptores, "", $_POST["direccion"]);
+			$direccion 	= str_replace($interruptores, "", $_POST["direccionDespacho"]);
+			$telefono1 	= str_replace($interruptores, "", $_POST["telefono"]);
+			$telefono2 	= str_replace($interruptores, "", $_POST["telefono2"]);
+			$email 		= str_replace($interruptores, "", $_POST["email"]);
+			$contacto 	= str_replace($interruptores, "", $_POST["contacto"]);
 
-			$datos = array("codigoCliente"=>$codigo,
-						"nombre"=>$nombre,
-						"tipo_documento"=>$_POST["tipo_documento"],
-						"documento"=>$_POST["documento"],
-						"tipo_persona"=>$_POST["tipo_persona"],
-						"ape_paterno"=>$ape_pat,
-						"ape_materno"=>$ape_mat,
-						"nombres"=>$nombres,
-						"direccion"=>$direccion,
-						"ubigeo"=>$_POST["ubigeo"],
-						"telefono"=>$telefono1,
-						"telefono2"=>$telefono2,
-						"email"=>$email,
-						"contacto"=>$contacto,
-						"vendedor"=>$_POST["vendedor"],
-						"grupo"=>$_POST["grupo"],
-						"lista_precios"=>$_POST["lista_precios"]);
+			$datos = array(	"codigoCliente"		=> $codigo,
+							"nombre"			=> $nombre,
+							"tipo_documento"	=> $_POST["tipo_documento"],
+							"documento"			=> $_POST["documento"],
+							"tipo_persona"		=> $_POST["tipo_persona"],
+							"ape_paterno"		=> $ape_pat,
+							"ape_materno"		=> $ape_mat,
+							"nombres"			=> $nombres,
+							"direccion"			=> $direccion,
+							"ubigeo"			=> $_POST["ubigeo"],
+							"telefono"			=> $telefono1,
+							"telefono2"			=> $telefono2,
+							"email"				=> $email,
+							"contacto"			=> $contacto,
+							"vendedor"			=> $_POST["vendedor"],
+							"grupo"				=> $_POST["grupo"],
+							"lista_precios"		=> $_POST["lista_precios"]);
 			#var_dump("datos", $datos);
 
 			$respuesta = ModeloClientes::mdlIngresarCliente($tabla, $datos);

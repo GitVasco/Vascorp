@@ -3655,7 +3655,7 @@ class ModeloCuentas{
 	}	
 	
 	//* LETRAS POR ACEPTAR
-	static public function mdlLetrasAceptar(){	
+	static public function mdlLetrasAceptar($vendedor, $ini, $fin){	
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
 												cc.tipo_doc,
@@ -3675,12 +3675,22 @@ class ModeloCuentas{
 											WHERE cc.tipo_doc = '85' 
 												AND cc.estado = 'PENDIENTE' 
 												AND cc.tip_mov = '+' 
-												AND cc.banco <> '02' 
-												AND cc.num_unico = '' 
-												AND cc.protesta <> '1' 
-											ORDER BY cc.cod_pago,
+												AND (cc.banco <> '02' 
+												OR cc.banco IS NULL) 
+												AND (
+												cc.num_unico = '' 
+												OR cc.num_unico IS NULL
+												) 
+												AND cc.protesta <> '1'
+												AND cc.vendedor = :vendedor 
+											ORDER BY cc.vendedor,
+												cc.cliente,
 												cc.doc_origen,
-												cc.fecha_ven");
+												cc.fecha_ven
+												LIMIT $ini, $fin");
+
+		$stmt -> bindParam(":vendedor", $vendedor, PDO::PARAM_STR);
+
 		$stmt -> execute();
 
 		return $stmt -> fetchAll();	

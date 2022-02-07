@@ -1501,9 +1501,9 @@ class ControladorCuentas{
 	/*=============================================
 	DOCUMENTOS CONTADO PENDIENTES
 	=============================================*/
-	static public function ctrLetrasAceptar(){
+	static public function ctrLetrasAceptar($vendedor, $ini, $fin){
 
-		$respuesta = ModeloCuentas::mdlLetrasAceptar();
+		$respuesta = ModeloCuentas::mdlLetrasAceptar($vendedor, $ini, $fin);
 
 		return $respuesta;
 
