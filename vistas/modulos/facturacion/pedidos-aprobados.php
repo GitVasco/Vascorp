@@ -399,7 +399,7 @@ MODAL FACTURAR
             <label for="">Motivo</label>
                 
 
-                    <select  class="form-control input-md selectpicker" name="notaMotivo" id="notaMotivo" data-live-search="true" style="width:200px !important" required>
+                    <select  class="form-control input-md selectpicker" name="notaMotivo" id="notaMotivo" data-live-search="true" style="width:200px !important">
                     <option value="">Seleccionar motivo</option>
                     <?php
                        $item= "tipo_dato";
