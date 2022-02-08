@@ -98,7 +98,7 @@
         
             </table>';      
             
-            echo '<table border="0" align="left" width="980px">';
+            echo '<table border="1" align="left" width="980px">';
 
                 $suma = 0;
                 foreach($pedidos as $key => $value){

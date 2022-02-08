@@ -69,7 +69,9 @@
            <th>En Servicio</th>
            <th>Alm. Corte</th>
            <th>Ord. Corte</th>
-           <th>Ult 30d</th>
+           <th>Ult 30d</th>           
+           <th>Duración Mes</th>
+           <th>Und. Faltantes</th>
            <th>MP Faltante</th>
            <th>Acciones</th>
 

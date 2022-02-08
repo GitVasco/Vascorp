@@ -560,7 +560,9 @@ class ModeloPedidos{
 			  ON t.cliente = c.codigo 
 		  WHERE t.estado NOT IN ('FACTURADOS', 'ANULADO') 
 		  ORDER BY t.vendedor,
-			c.ubigeo";
+					t.estado,
+					c.ubigeo,
+					t.fecha";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 
@@ -605,7 +607,9 @@ class ModeloPedidos{
 						ON t.cliente = c.codigo 
 					WHERE t.estado NOT IN ('FACTURADOS', 'ANULADO') 
 						AND t.vendedor = :vendedor 
-					ORDER BY c.ubigeo";
+						ORDER BY t.estado,
+							t.fecha DESC,
+							c.ubigeo";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 

@@ -518,50 +518,68 @@ class ModeloArticulos
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			a.articulo,
-			a.id_marca,
-			m.marca,
+			a.marca,
 			a.modelo,
 			a.nombre,
 			a.cod_color,
 			a.color,
-			a.cod_talla,
 			a.talla,
+			a.proyeccion,
+			ROUND(IFNULL(a.prod, 0), 0) AS prod,
+			IFNULL(
+			  ROUND(
+				((ROUND(a.prod, 0) / a.proyeccion) * 100),
+				2
+			  ),
+			  0
+			) AS avance,
+			a.stock,
+			a.pedidos,
+			(a.stock - a.pedidos) AS stockB,
+			a.ord_corte,
+			a.alm_corte,
+			a.taller,
 			a.servicio,
-			a.estado,
+			IFNULL(ROUND(a.ult_mes, 0), 0) AS ventas,
 			a.urgencia,
-			a.mp_faltante,
-			a.alerta,
+			ROUND(
+			  (
+				(
+				  IFNULL((a.stock - a.pedidos) / a.ult_mes, 0)
+				) * 100
+			  ),
+			  2
+			) AS xprog,
 			ROUND(
 			  (
 				IFNULL(a.ult_mes, 0) * a.urgencia / 100
 			  ),
 			  0
 			) AS configuracion,
-			CASE
-			  WHEN a.stock < 0 
-			  THEN 0 
-			  ELSE a.stock 
-			END AS stock,
-			(a.stock - a.pedidos) AS stockB,
-			a.pedidos,
-			a.taller,
-			a.alm_corte,
-			a.ord_corte,
-			a.proyeccion,
-			IFNULL(a.prod, 0) AS prod,
-			IFNULL(
-			  ROUND(
-				(IFNULL(a.prod, 0) / a.proyeccion) * 100,
-				2
+			a.mes,
+			ROUND(
+			  ((a.ult_mes + pedidos) * mes) - (
+				a.ord_corte + a.alm_corte + a.taller + a.servicio + (a.stock - a.pedidos)
 			  ),
 			  0
-			) AS avance,
-			IFNULL(a.ult_mes, 0) AS ult_mes 
+			) AS faltantes,
+			ROUND(
+			  (
+				(a.stock - a.pedidos) + a.taller + servicio + a.alm_corte + a.ord_corte
+			  ) / (
+				(a.ult_mes + a.pedidos) - ((a.ult_mes + a.pedidos) * 10 / 100)
+			  ),
+			  1
+			) AS dura_tc,
+			a.mp_faltante,
+			a.ult_mes,
+			a.estado,
+			a.alerta  
 		  FROM
 			articulojf a 
-			LEFT JOIN marcasjf m 
-			  ON a.id_marca = m.id 
-		  WHERE  a.estado = 'Activo'");
+		  WHERE a.estado = 'ACTIVO' 
+			AND a.marca IN ('JACKYFORM', 'VASCO', 'GUAPITAS') 
+		  ORDER BY a.articulo ASC");
 
 			$stmt->bindParam(":modelo", $modelo, PDO::PARAM_STR);
 
@@ -573,51 +591,69 @@ class ModeloArticulos
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			a.articulo,
-			a.id_marca,
-			m.marca,
+			a.marca,
 			a.modelo,
 			a.nombre,
 			a.cod_color,
 			a.color,
-			a.cod_talla,
 			a.talla,
+			a.proyeccion,
+			ROUND(IFNULL(a.prod, 0), 0) AS prod,
+			IFNULL(
+			  ROUND(
+				((ROUND(a.prod, 0) / a.proyeccion) * 100),
+				2
+			  ),
+			  0
+			) AS avance,
+			a.stock,
+			a.pedidos,
+			(a.stock - a.pedidos) AS stockB,
+			a.ord_corte,
+			a.alm_corte,
+			a.taller,
 			a.servicio,
-			a.estado,
+			IFNULL(ROUND(a.ult_mes, 0), 0) AS ventas,
 			a.urgencia,
-			a.mp_faltante,
-			a.alerta,
+			ROUND(
+			  (
+				(
+				  IFNULL((a.stock - a.pedidos) / a.ult_mes, 0)
+				) * 100
+			  ),
+			  2
+			) AS xprog,
 			ROUND(
 			  (
 				IFNULL(a.ult_mes, 0) * a.urgencia / 100
 			  ),
 			  0
 			) AS configuracion,
-			CASE
-			  WHEN a.stock < 0 
-			  THEN 0 
-			  ELSE a.stock 
-			END AS stock,
-			(a.stock - a.pedidos) AS stockB,
-			a.pedidos,
-			a.taller,
-			a.alm_corte,
-			a.ord_corte,
-			a.proyeccion,
-			IFNULL(a.prod, 0) AS prod,
-			IFNULL(
-			  ROUND(
-				(IFNULL(a.prod, 0) / a.proyeccion) * 100,
-				2
+			a.mes,
+			ROUND(
+			  ((a.ult_mes + pedidos) * mes) - (
+				a.ord_corte + a.alm_corte + a.taller + a.servicio + (a.stock - a.pedidos)
 			  ),
 			  0
-			) AS avance,
-			IFNULL(a.ult_mes, 0) AS ult_mes 
+			) AS faltantes,
+			ROUND(
+			  (
+				(a.stock - a.pedidos) + a.taller + servicio + a.alm_corte + a.ord_corte
+			  ) / (
+				(a.ult_mes + a.pedidos) - ((a.ult_mes + a.pedidos) * 10 / 100)
+			  ),
+			  1
+			) AS dura_tc,
+			a.mp_faltante,
+			a.ult_mes,
+			a.estado,
+			a.alerta  
 		  FROM
 			articulojf a 
-			LEFT JOIN marcasjf m 
-			  ON a.id_marca = m.id 
-		  WHERE  a.estado = 'Activo'
-		  AND a.modelo = :valor");
+		  WHERE a.estado = 'ACTIVO' 
+			AND a.marca IN ('JACKYFORM', 'VASCO', 'GUAPITAS') 
+			AND a.modelo = :valor
+		  ORDER BY a.articulo ASC");
 
 			$stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
 

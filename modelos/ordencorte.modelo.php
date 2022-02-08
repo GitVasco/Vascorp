@@ -837,21 +837,21 @@ class ModeloOrdenCorte{
 	static public function mdlAgregarCantidadOC($datos){
 
 		$sql="UPDATE 
-					ordencortejf o 
-					LEFT JOIN 
-					(SELECT 
-						ordencorte,
-						SUM(cantidad) AS cant,
-						SUM(saldo) 
-					FROM
-						detalles_ordencortejf doc 
-					WHERE ordencorte = :codigo 
-					GROUP BY ordencorte) AS doc 
-					ON o.codigo = doc.ordencorte SET usuario = :usuario,
-					total = doc.cant,
-					saldo = doc.cant,
-					lastUpdate = :fecha 
-				WHERE codigo = :codigo ";
+				ordencortejf o 
+				LEFT JOIN 
+				(SELECT 
+					ordencorte,
+					SUM(cantidad) AS cant,
+					SUM(saldo) AS saldo
+				FROM
+					detalles_ordencortejf doc 
+				WHERE ordencorte = :codigo 
+				GROUP BY ordencorte) AS doc 
+				ON o.codigo = doc.ordencorte SET usuario = :usuario,
+				total = doc.cant,
+				saldo = doc.saldo,
+				lastUpdate = :fecha 
+			WHERE codigo = :codigo";
 
 		$stmt=Conexion::conectar()->prepare($sql);
 
