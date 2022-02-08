@@ -218,12 +218,13 @@ class ModeloPedidos{
 	static public function mdlGuardarTemporal($tabla, $datos){
 
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (codigo, cliente, vendedor, lista) VALUES (:codigo, :cliente, :vendedor, :lista)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (codigo, cliente, vendedor, lista, agencia) VALUES (:codigo, :cliente, :vendedor, :lista, :agencia)");
 
 		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
 		$stmt->bindParam(":cliente", $datos["cliente"], PDO::PARAM_STR);
 		$stmt->bindParam(":vendedor", $datos["vendedor"], PDO::PARAM_STR);
 		$stmt->bindParam(":lista", $datos["lista"], PDO::PARAM_STR);
+		$stmt->bindParam(":agencia", $datos["agencia"], PDO::PARAM_STR);
 
 		if ($stmt->execute()) {
 

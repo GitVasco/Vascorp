@@ -1339,6 +1339,8 @@ $(".modificarArtPedB").click(function () {
     var pedido = document.getElementById("nuevoCodigo").value;
     var modLista = document.getElementById("lista").value;
 
+    var agencia = document.getElementById("agencia").value;
+
     // console.log(pedido);
 
     if(modLista == ''){
@@ -1362,6 +1364,7 @@ $(".modificarArtPedB").click(function () {
     //ver para q sirve
     $("#clienteA").val(cliente);
     $("#vendedorA").val(vendedor);
+    $("#agenciaA").val(agencia);
 
     
 
@@ -1756,5 +1759,37 @@ $(".tablaPedidosConfirmados").on("click",".btnDuplicarPedido",function(){
 
         }
 	})
+
+});
+
+
+// BUSCAR AGENCIA DE TRANSPORTES
+$("#seleccionarCliente").change(function () {
+
+    var codigo = document.getElementById("seleccionarCliente").value;
+    //console.log("codigo", codigo);
+
+	var datos = new FormData();
+	datos.append("codigo", codigo);
+	
+	$.ajax({
+
+		url:"ajax/clientes.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType:"json",
+		success:function(respuesta){
+
+            if(respuesta["agencia"] != "" )
+
+            $("#agencia").val(respuesta["agencia"]);
+            $("#agencia").selectpicker('refresh');
+
+		}
+
+	})	        
 
 });

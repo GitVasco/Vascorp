@@ -858,7 +858,7 @@ class ControladorFacturacion{
                 $respuesta = ModeloPedidos::mdlMostraDetallesTemporal($tabla, $_POST["codPedido"]);
                 //var_dump($respuesta);
 
-                $respuestaNota = ModeloArticulos::mdlActualizarStockPedido($_POST["codPedido"]);
+                $respuestaNota = ModeloArticulos::mdlActualizarStockPedidoB($_POST["codPedido"]);
                 //var_dump($respuestaNota);
 
                 /*
@@ -1037,6 +1037,8 @@ class ControladorFacturacion{
                 }                
 
             }
+
+            ModeloPedidos::mdlCantAprobados();
 
         }else{
 

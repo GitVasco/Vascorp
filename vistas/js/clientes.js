@@ -217,6 +217,14 @@ $(".tablaClientes").on("click", ".btnEditarCliente", function () {
             $("#editarUbigeo").val(respuesta["ubigeo"]);
             $("#editarUbigeo").selectpicker('refresh');
 
+			$("#editarDireccionDespacho").val(respuesta["direccion_despacho"]);
+
+            $("#editarUbigeoDespacho").val(respuesta["ubigeo_despacho"]);
+            $("#editarUbigeoDespacho").selectpicker('refresh');
+
+			$("#editarAgencia").val(respuesta["agencia"]);
+            $("#editarAgencia").selectpicker('refresh');
+
             $("#editarTelefono").val(respuesta["telefono"]);
             $("#editarTelefono2").val(respuesta["telefono2"]);
             $("#editarEmail").val(respuesta["email"]);

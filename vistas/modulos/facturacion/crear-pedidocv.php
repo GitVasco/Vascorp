@@ -830,9 +830,11 @@
 
                                         <span class="input-group-addon"><i class="fa fa-plane"></i></span>
 
-                                        <select class="form-control selectpicker" id="agencia" name="agencia" data-live-search="true" required>
+                                        
 
                                         <?php
+
+                                            
 
                                             $valor = $_GET["pedido"];
 
@@ -840,6 +842,8 @@
                                             //var_dump("pedido", $pedido["agencia"]);
 
                                             if($pedido["agencia"] > 0){
+
+                                                echo '<select class="form-control selectpicker" id="agencia" name="agencia" data-live-search="true" required>';
 
                                                 $item = "id";
                                                 $valor = $pedido["agencia"];
@@ -862,6 +866,8 @@
 
 
                                             }else{
+
+                                                echo '<select class="form-control selectpicker" id="agencia" name="agencia" data-live-search="true" required>';
 
                                                 $item = null;
                                                 $valor = null;
@@ -1290,6 +1296,8 @@ MODAL MODIFICAR ARTICULOS
                                     <input type="text" class="form-control input-sm" id="vendedorA" name="vendedorA" placeholder="Tiene que escoger el Vendedor" required>
 
                                     <input type="hidden" class="form-control input-sm" id="nLista" name="nLista" readonly>
+
+                                    <input type="hidden" class="form-control input-sm" id="agenciaA" name="agenciaA" readonly>
 
                                     <input type="hidden" class="form-control input-sm" id="usuario" name="usuario" value="<?php echo $_SESSION["id"]; ?>">
 

@@ -798,7 +798,7 @@ class ModeloFacturacion{
     */
 	static public function mdlMostrarVentaImpresion($valor, $tipoDoc){
 
-			$sql="SELECT
+			$sql="SELECT 
       v.tipo,
       v.documento,
       v.neto,
@@ -811,16 +811,21 @@ class ModeloFacturacion{
       n.doc_origen,
       n.motivo,
       (SELECT 
-          descripcion 
+        descripcion 
       FROM
-          maestrajf m 
+        maestrajf m 
       WHERE m.tipo_dato = 'TMOT' 
-          AND n.motivo = m.codigo) AS nom_motivo,
+        AND n.motivo = m.codigo) AS nom_motivo,
       DATE_FORMAT(n.fecha_origen, '%Y-%m-%d') AS fecha_origen,
       v.cliente,
       c.nombre,
       c.documento AS dni,
-      c.direccion,
+      CASE
+        WHEN v.tipo = 'S01' 
+        AND c.direccion_despacho <> '' 
+        THEN c.direccion_despacho 
+        ELSE c.direccion 
+      END AS direccion,
       c.email,
       CONCAT(u.distrito, ' / ', u.provincia) AS nom_ubigeo,
       u.departamento,
@@ -836,42 +841,48 @@ class ModeloFacturacion{
       ven.descripcion AS nom_vendedor,
       cv.dias,
       DATE_FORMAT(
-          DATE_ADD(v.fecha, INTERVAL cv.dias DAY),
-          '%d/%m/%Y'
+        DATE_ADD(v.fecha, INTERVAL cv.dias DAY),
+        '%d/%m/%Y'
       ) AS fecha_vencimiento,
       v.doc_destino,
       v.agencia,
       (SELECT 
-          a.nombre 
+        a.nombre 
       FROM
-          agenciasjf a 
+        agenciasjf a 
       WHERE v.agencia = a.id) AS nom_agencia,
       (SELECT 
-          a.ruc 
+        a.ruc 
       FROM
-          agenciasjf a 
+        agenciasjf a 
       WHERE v.agencia = a.id) AS ruc_agencia 
-      FROM
+    FROM
       ventajf v 
       LEFT JOIN condiciones_ventajf cv 
-          ON v.condicion_venta = cv.id 
+        ON v.condicion_venta = cv.id 
       LEFT JOIN clientesjf c 
-          ON v.cliente = c.codigo 
+        ON v.cliente = c.codigo 
       LEFT JOIN ubigeo u 
-          ON c.ubigeo = u.codigo 
+        ON 
+        CASE
+          WHEN v.tipo = 'S01' 
+          AND c.direccion_despacho <> '' 
+          THEN c.ubigeo_despacho 
+          ELSE c.ubigeo 
+        END = u.codigo 
       LEFT JOIN notascd_jf n 
-          ON v.documento = n.documento 
-          AND v.tipo = n.tipo 
+        ON v.documento = n.documento 
+        AND v.tipo = n.tipo 
       LEFT JOIN 
-          (SELECT 
+        (SELECT 
           codigo,
           descripcion 
-          FROM
+        FROM
           maestrajf m 
-          WHERE m.tipo_dato = 'TVEND') ven 
-          ON v.vendedor = ven.codigo 
-                        WHERE v.documento = :codigo
-                        AND v.tipo = :tipo_doc";
+        WHERE m.tipo_dato = 'TVEND') ven 
+        ON v.vendedor = ven.codigo
+    WHERE v.documento = :codigo 
+      AND v.tipo = :tipo_doc";
 
         $stmt=Conexion::conectar()->prepare($sql);
 

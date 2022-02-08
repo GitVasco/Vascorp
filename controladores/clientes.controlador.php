@@ -13,17 +13,22 @@ class ControladorClientes{
 
 			$tabla = "clientesjf";
 			$interruptores= array("'",'"',"´");
-			$codigo 	= str_replace($interruptores, "", $_POST["codigoCliente"]);
-			$nombre 	= str_replace($interruptores, "", $_POST["nombre"]);
-			$ape_pat 	= str_replace($interruptores, "", $_POST["ape_paterno"]);
-			$ape_mat 	= str_replace($interruptores, "", $_POST["ape_materno"]);
-			$nombres 	= str_replace($interruptores, "", $_POST["nombres"]);
-			$direccion 	= str_replace($interruptores, "", $_POST["direccion"]);
-			$direccion 	= str_replace($interruptores, "", $_POST["direccionDespacho"]);
-			$telefono1 	= str_replace($interruptores, "", $_POST["telefono"]);
-			$telefono2 	= str_replace($interruptores, "", $_POST["telefono2"]);
-			$email 		= str_replace($interruptores, "", $_POST["email"]);
-			$contacto 	= str_replace($interruptores, "", $_POST["contacto"]);
+			$codigo 			= str_replace($interruptores, "", $_POST["codigoCliente"]);
+			$nombre 			= str_replace($interruptores, "", $_POST["nombre"]);
+			$ape_pat 			= str_replace($interruptores, "", $_POST["ape_paterno"]);
+			$ape_mat 			= str_replace($interruptores, "", $_POST["ape_materno"]);
+			$nombres 			= str_replace($interruptores, "", $_POST["nombres"]);
+			$direccion 			= str_replace($interruptores, "", $_POST["direccion"]);
+			$direccionDespacho 	= str_replace($interruptores, "", $_POST["direccionDespacho"]);
+			$telefono1 			= str_replace($interruptores, "", $_POST["telefono"]);
+			$telefono2 			= str_replace($interruptores, "", $_POST["telefono2"]);
+			$email 				= str_replace($interruptores, "", $_POST["email"]);
+			$contacto 			= str_replace($interruptores, "", $_POST["contacto"]);
+
+			date_default_timezone_set('America/Lima');
+			$fecreg 			= new DateTime();
+			$pcreg				= gethostbyaddr($_SERVER['REMOTE_ADDR']);
+			$usureg				= $_SESSION["nombre"];
 
 			$datos = array(	"codigoCliente"		=> $codigo,
 							"nombre"			=> $nombre,
@@ -35,16 +40,24 @@ class ControladorClientes{
 							"nombres"			=> $nombres,
 							"direccion"			=> $direccion,
 							"ubigeo"			=> $_POST["ubigeo"],
+							"direccion_despacho"=> $direccionDespacho,
+							"ubigeo_despacho"	=> $_POST["ubigeoDespacho"],
 							"telefono"			=> $telefono1,
 							"telefono2"			=> $telefono2,
 							"email"				=> $email,
 							"contacto"			=> $contacto,
 							"vendedor"			=> $_POST["vendedor"],
 							"grupo"				=> $_POST["grupo"],
-							"lista_precios"		=> $_POST["lista_precios"]);
-			#var_dump("datos", $datos);
+							"lista_precios"		=> $_POST["lista_precios"],
+							"agencia"			=> $_POST["agencia"],
+							"usureg"            => $usureg,
+                            "pcreg"             => $pcreg,
+                            "fecreg"            => $fecreg->format("Y-m-d H:i:s"));
+			var_dump("datos", $datos);
 
 			$respuesta = ModeloClientes::mdlIngresarCliente($tabla, $datos);
+			var_dump($respuesta);
+			#$respuesta = "no";
 
 			if($respuesta == "ok"){
 
@@ -52,7 +65,7 @@ class ControladorClientes{
 
 				swal({
 					  type: "success",
-					  title: "La marca ha sido guardada correctamente",
+					  title: "El cliente fue creado correctamente",
 					  showConfirmButton: true,
 					  confirmButtonText: "Cerrar"
 					  }).then(function(result){
@@ -138,38 +151,43 @@ class ControladorClientes{
 
 			   	$tabla = "clientesjf";
 				$interruptores= array("'",'"',"´");
-				$codigo = str_replace($interruptores, "", $_POST["editarCodigoCliente"]);
-				$nombre = str_replace($interruptores, "", $_POST["editarNombre"]);
-				$ape_pat = str_replace($interruptores, "", $_POST["editarApe_paterno"]);
-				$ape_mat = str_replace($interruptores, "", $_POST["editarApe_materno"]);
-				$nombres = str_replace($interruptores, "", $_POST["editarNombres"]);
-				$direccion = str_replace($interruptores, "", $_POST["editarDireccion"]);
-				$telefono1 = str_replace($interruptores, "", $_POST["editarTelefono"]);
-				$telefono2 = str_replace($interruptores, "", $_POST["editarTelefono2"]);
-				$email = str_replace($interruptores, "", $_POST["editarEmail"]);
-				$contacto = str_replace($interruptores, "", $_POST["editarContacto"]);
+				$codigo 				= str_replace($interruptores, "", $_POST["editarCodigoCliente"]);
+				$nombre 				= str_replace($interruptores, "", $_POST["editarNombre"]);
+				$ape_pat 				= str_replace($interruptores, "", $_POST["editarApe_paterno"]);
+				$ape_mat 				= str_replace($interruptores, "", $_POST["editarApe_materno"]);
+				$nombres 				= str_replace($interruptores, "", $_POST["editarNombres"]);
+				$direccion 				= str_replace($interruptores, "", $_POST["editarDireccion"]);
+				$direccionDespacho 		= str_replace($interruptores, "", $_POST["editarDireccionDespacho"]);
+				$telefono1 				= str_replace($interruptores, "", $_POST["editarTelefono"]);
+				$telefono2 				= str_replace($interruptores, "", $_POST["editarTelefono2"]);
+				$email 					= str_replace($interruptores, "", $_POST["editarEmail"]);
+				$contacto 				= str_replace($interruptores, "", $_POST["editarContacto"]);
 
 
-				$datos = array(	"codigoCliente"=>$codigo,
-								"nombre"=>$nombre,
-								"tipo_documento"=>$_POST["editarTipo_documento"],
-								"documento"=>$_POST["editarDocumento"],
-								"tipo_persona"=>$_POST["editarTipo_persona"],
-								"ape_paterno"=>$ape_pat,
-								"ape_materno"=>$ape_mat,
-								"nombres"=>$nombres,
-								"direccion"=>$direccion,
-								"ubigeo"=>$_POST["editarUbigeo"],
-								"telefono"=>$telefono1,
-								"telefono2"=>$telefono2,
-								"email"=>$email,
-								"contacto"=>$contacto,
-								"vendedor"=>$_POST["editarVendedor"],
-								"grupo"=>$_POST["editarGrupo"],
-								"lista_precios"=>$_POST["editarLista_precios"]);
+				$datos = array(	"codigoCliente"		=>$codigo,
+								"nombre"			=>$nombre,
+								"tipo_documento"	=>$_POST["editarTipo_documento"],
+								"documento"			=>$_POST["editarDocumento"],
+								"tipo_persona"		=>$_POST["editarTipo_persona"],
+								"ape_paterno"		=>$ape_pat,
+								"ape_materno"		=>$ape_mat,
+								"nombres"			=>$nombres,
+								"direccion"			=>$direccion,
+								"direccion_despacho"=>$direccionDespacho,
+								"ubigeo"			=>$_POST["editarUbigeo"],
+								"ubigeo_despacho"	=>$_POST["editarUbigeoDespacho"],
+								"telefono"			=>$telefono1,
+								"telefono2"			=>$telefono2,
+								"email"				=>$email,
+								"contacto"			=>$contacto,
+								"vendedor"			=>$_POST["editarVendedor"],
+								"grupo"				=>$_POST["editarGrupo"],
+								"lista_precios"		=>$_POST["editarLista_precios"],
+								"agencia"			=>$_POST["editarAgencia"]);
 				#var_dump("datos", $datos);
 
 			   	$respuesta = ModeloClientes::mdlEditarCliente($tabla, $datos);
+				#var_dump($respuesta);
 				#$respuesta = "false";
 
 			   	if($respuesta == "ok"){

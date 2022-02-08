@@ -326,7 +326,7 @@ MODAL AGREGAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <input type="text" class="form-control input-sm info-box-text" name="direccionDespacho" id="nuevaDireccion" placeholder="Direccion de Despacho" required>
+                  <input type="text" class="form-control input-sm info-box-text" name="direccionDespacho" id="nuevaDireccion" placeholder="Direccion de Despacho">
 
                 </div>
 
@@ -340,7 +340,7 @@ MODAL AGREGAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <select class="form-control input-sm selectpicker" id="nuevoUbiPro" name="ubigeoDespacho" data-live-search="true" data-size="10" required>
+                  <select class="form-control input-sm selectpicker" id="nuevoUbiPro" name="ubigeoDespacho" data-live-search="true" data-size="10">
 
                     <option value="">UBIGEO</option>
 
@@ -463,7 +463,7 @@ MODAL AGREGAR CLIENTE
 
               <!-- ENTRADA PARA LOS GRUPOS -->
 
-              <div class="form-group col-lg-4">
+              <div class="form-group col-lg-2">
 
                 <div class="input-group">
 
@@ -482,7 +482,7 @@ MODAL AGREGAR CLIENTE
               
               <!-- ENTRADA PARA LA LISTA DE PRECIOS -->
 
-              <div class="form-group col-lg-3">
+              <div class="form-group col-lg-2">
 
                 <div class="input-group">
 
@@ -509,6 +509,37 @@ MODAL AGREGAR CLIENTE
                 </div>
 
               </div>
+
+              <!-- ENTRADA PARA AGENCIA DE TRANSPORTES-->
+
+              <div class="form-group col-lg-4">
+
+                <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
+
+                  <select class="form-control selectpicker" id="agencia" name="agencia" data-live-search="true">
+
+                  <option value="">Agencia de Transportes</option>
+                  <?php
+
+                    $agencia = ControladorAgencias::ctrMostrarAgencias(null, null);
+
+                    //var_dump($agencia);
+
+                    foreach ($agencia as $key => $value) {
+
+                    echo '<option value="'.$value["id"].'">'.$value["id"].' - '.$value["nombre"].'</option>';
+
+                    }
+
+                  ?>
+
+                  </select>
+
+                </div>
+
+              </div>              
               
                 
 
@@ -726,17 +757,17 @@ MODAL EDITAR CLIENTE
 
             <!-- FIN DATOS PRINCIPALES -->
 
-            <!-- DATOS DIRECCION -->
+            <!-- DATOS DIRECCION PRINCIPAL-->
 
             <div class="box box-warning col-lg-12 ">
 
               <div class="box-header">
 
-                <b>Dirección</b>
+                <b>Dirección Principal</b>
 
               </div>
 
-              <!-- ENTRADA PARA LA DIRECCION -->
+              <!-- ENTRADA PARA LA DIRECCION-->
 
               <div class="form-group col-lg-8">
 
@@ -782,7 +813,65 @@ MODAL EDITAR CLIENTE
 
               </div>              
 
-            </div>
+            <!-- </div> -->
+
+            <!-- DATOS DIRECCION  DESPACHO-->
+
+            <!-- <div class="box box-warning col-lg-12 "> -->
+
+              <div class="box-header">
+
+                <b>Dirección Despacho</b>
+
+              </div>
+
+              <!-- ENTRADA PARA LA DIRECCION-->
+
+              <div class="form-group col-lg-8">
+
+                <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
+
+                  <input type="text" class="form-control input-sm info-box-text" name="editarDireccionDespacho" id="editarDireccionDespacho" placeholder="Direccion de despacho" required>
+
+                </div>
+
+              </div>
+
+              <!-- ENTRADA PARA EL UBIGEO -->
+
+              <div class="form-group col-lg-4">
+
+                <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
+
+                  <select class="form-control input-sm selectpicker" id="editarUbigeoDespacho" name="editarUbigeoDespacho" data-live-search="true" data-size="10" required>
+
+                    <?php
+                    
+                    $ubigeo = ControladorClientes::ctrMostrarUbigeos();
+                    #var_dump("ubigeo", $ubigeo);
+
+                    foreach ($ubigeo as $key => $value) {
+
+                      echo '<option value="' . $value["codigo"] . '">' . $value["codigo"] . ' - ' . $value["ubigeo"] . '</option>';
+
+                    }
+
+                    
+                    ?>
+
+                    
+
+                  </select>
+
+                </div>
+
+              </div>              
+
+            </div>            
 
             <!-- FIN DATOS DIRECCION -->
             
@@ -881,7 +970,7 @@ MODAL EDITAR CLIENTE
 
               <!-- ENTRADA PARA LOS GRUPOS -->
 
-              <div class="form-group col-lg-4">
+              <div class="form-group col-lg-2">
 
                 <div class="input-group">
 
@@ -900,7 +989,7 @@ MODAL EDITAR CLIENTE
               
               <!-- ENTRADA PARA LA LISTA DE PRECIOS -->
 
-              <div class="form-group col-lg-3">
+              <div class="form-group col-lg-2">
 
                 <div class="input-group">
 
@@ -927,6 +1016,37 @@ MODAL EDITAR CLIENTE
                 </div>
 
               </div>
+
+              <!-- ENTRADA PARA AGENCIA DE TRANSPORTES-->
+
+              <div class="form-group col-lg-4">
+
+                <div class="input-group">
+
+                  <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
+
+                  <select class="form-control selectpicker" id="editarAgencia" name="editarAgencia" data-live-search="true">
+
+                  <option value="">Agencia de Transportes</option>
+                  <?php
+
+                    $agencia = ControladorAgencias::ctrMostrarAgencias(null, null);
+
+                    //var_dump($agencia);
+
+                    foreach ($agencia as $key => $value) {
+
+                    echo '<option value="'.$value["id"].'">'.$value["id"].' - '.$value["nombre"].'</option>';
+
+                    }
+
+                  ?>
+
+                  </select>
+
+                </div>
+
+              </div>               
               
                 
 

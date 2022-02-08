@@ -154,7 +154,8 @@ class ControladorPedidos{
                                 "cliente" => $_POST["clienteA"],
                                 "vendedor" => $_POST["vendedorA"],
                                 "lista" => $_POST["nLista"],
-                                "usuario" => $_POST["usuario"]);
+                                "usuario" => $_POST["usuario"],
+                                "agencia" => $_POST["agenciaA"]);
                                 // var_dump($datos);
 
                 ModeloPedidos::mdlGuardarTemporal($tabla, $datos);
