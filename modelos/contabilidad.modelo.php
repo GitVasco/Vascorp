@@ -569,10 +569,10 @@ class ModeloContabilidad{
                             WHEN c1.cod_pago IN ('96', '97') 
                             THEN c1.fechab 
                             WHEN c1.cod_pago IN ('85', 'RF') 
-                            THEN cc.fecha 
+                            THEN cc.fecha_ven 
                             WHEN c1.tipo_doc = '85' 
-                            THEN cc.fecha 
-                            ELSE cc.fecha 
+                            THEN cc.fecha_ven 
+                            ELSE cc.fecha_ven 
                         END,
                         '%d/%m/%y'
                         ) AS fechav,
@@ -707,7 +707,7 @@ class ModeloContabilidad{
                         END AS doc,
                         cc.num_cta AS numero,
                         DATE_FORMAT(c1.fecha_ori, '%d/%m/%y') AS fechad,
-                        DATE_FORMAT(c1.fecha_ori, '%d/%m/%y') AS fechav,
+                        DATE_FORMAT(c1.fecha_ori_ven, '%d/%m/%y') AS fechav,
                         cc.cliente,
                         c.documento AS codigo,
                         CASE
@@ -750,7 +750,8 @@ class ModeloContabilidad{
                             END
                             ) AS codigos_pago,
                             SUM(monto) AS monto ,
-                            cc.fecha_ori
+                            cc.fecha_ori,
+                            cc.fecha_ori_ven
                         FROM
                             cuenta_ctejf cc 
                         WHERE cc.fecha BETWEEN :fechaInicio 
@@ -844,10 +845,10 @@ class ModeloContabilidad{
                         WHEN c1.cod_pago IN ('96', '97') 
                         THEN c1.fechab 
                         WHEN c1.cod_pago IN ('85', 'RF') 
-                        THEN cc.fecha 
+                        THEN cc.fecha_ven 
                         WHEN c1.tipo_doc = '85' 
-                        THEN cc.fecha 
-                        ELSE cc.fecha 
+                        THEN cc.fecha_ven 
+                        ELSE cc.fecha_ven 
                     END,
                     '%d/%m/%y'
                     ) AS fechav,
@@ -976,7 +977,7 @@ class ModeloContabilidad{
                     END AS doc,
                     cc.num_cta AS numero,
                     DATE_FORMAT(c1.fecha_ori, '%d/%m/%y') AS fechad,
-                    DATE_FORMAT(c1.fecha_ori, '%d/%m/%y') AS fechav,
+                    DATE_FORMAT(c1.fecha_ori_ven, '%d/%m/%y') AS fechav,
                     cc.cliente,
                     c.documento AS codigo,
                     CASE
@@ -1019,7 +1020,8 @@ class ModeloContabilidad{
                             END
                         ) AS codigos_pago,
                         SUM(monto) AS monto,
-                        cc.fecha_ori 
+                        cc.fecha_ori,
+                        cc.fecha_ori_ven 
                         FROM
                         cuenta_ctejf cc 
                         WHERE cc.fecha BETWEEN :fechaInicio 

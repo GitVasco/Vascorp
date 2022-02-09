@@ -728,6 +728,17 @@ class ControladorContabilidad{
 
                 }
 
+                if($cancelaciones08[$i]["doc"] == 'LE'){
+
+                    $docFormato = $cancelaciones08[$i]["numero"];
+    
+                }else{
+
+
+                    $docFormato = substr($cancelaciones08[$i]["numero"],0,4).'-'.substr($cancelaciones08[$i]["numero"],4,8);
+
+                }
+
                 $origen     = str_pad('08', 2);
                 $voucher    = str_pad($corr08, 5 , '0', STR_PAD_LEFT);
                 $fecha      = str_pad($cancelaciones08[$i]["fecha"], 8);
@@ -737,7 +748,7 @@ class ControladorContabilidad{
                 $moneda     = str_pad($cancelaciones08[$i]["moneda"], 1);
                 $tc         = str_pad($cancelaciones08[$i]["tc"], 10 , '0', STR_PAD_LEFT);
                 $doc        = str_pad($cancelaciones08[$i]["doc"], 2);
-                $numero     = str_pad($cancelaciones08[$i]["numero"], 40);
+                $numero     = str_pad($docFormato, 40);
                 $fechad     = str_pad($cancelaciones08[$i]["fechad"], 8);
                 $fechav     = str_pad($cancelaciones08[$i]["fechav"], 8);
                 $codigo     = str_pad($cancelaciones08[$i]["codigo"], 15);
