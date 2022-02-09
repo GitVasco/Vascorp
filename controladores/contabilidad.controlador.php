@@ -698,7 +698,6 @@ class ControladorContabilidad{
                                     $neto6.
                                     $neto7.
                                     $neto8.
-                                    $neto9.
                                     $ruc.
                                     $tipo.
                                     $r5.
@@ -730,12 +729,12 @@ class ControladorContabilidad{
 
                 if($cancelaciones08[$i]["doc"] == 'LE'){
 
-                    $docFormato = $cancelaciones08[$i]["numero"];
+                    $docFormato08 = $cancelaciones08[$i]["numero"];
     
                 }else{
 
 
-                    $docFormato = substr($cancelaciones08[$i]["numero"],0,4).'-'.substr($cancelaciones08[$i]["numero"],4,8);
+                    $docFormato08 = substr($cancelaciones08[$i]["numero"],0,4).'-'.substr($cancelaciones08[$i]["numero"],4,8);
 
                 }
 
@@ -748,7 +747,7 @@ class ControladorContabilidad{
                 $moneda     = str_pad($cancelaciones08[$i]["moneda"], 1);
                 $tc         = str_pad($cancelaciones08[$i]["tc"], 10 , '0', STR_PAD_LEFT);
                 $doc        = str_pad($cancelaciones08[$i]["doc"], 2);
-                $numero     = str_pad($docFormato, 40);
+                $numero     = str_pad($docFormato08, 40);
                 $fechad     = str_pad($cancelaciones08[$i]["fechad"], 8);
                 $fechav     = str_pad($cancelaciones08[$i]["fechav"], 8);
                 $codigo     = str_pad($cancelaciones08[$i]["codigo"], 15);
