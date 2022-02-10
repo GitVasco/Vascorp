@@ -833,7 +833,7 @@ MODAL EDITAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <input type="text" class="form-control input-sm info-box-text" name="editarDireccionDespacho" id="editarDireccionDespacho" placeholder="Direccion de despacho" required>
+                  <input type="text" class="form-control input-sm info-box-text" name="editarDireccionDespacho" id="editarDireccionDespacho" placeholder="Direccion de despacho">
 
                 </div>
 
@@ -847,7 +847,7 @@ MODAL EDITAR CLIENTE
 
                   <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                  <select class="form-control input-sm selectpicker" id="editarUbigeoDespacho" name="editarUbigeoDespacho" data-live-search="true" data-size="10" required>
+                  <select class="form-control input-sm selectpicker" id="editarUbigeoDespacho" name="editarUbigeoDespacho" data-live-search="true" data-size="10">
 
                     <?php
                     

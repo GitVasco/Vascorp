@@ -60,6 +60,9 @@ $fin= $_GET["fin"];
 $canc= $_GET["canc"];
 $vend= $_GET["vend"];
 
+$estadoCta = ControladorCuentas::ctrEstadoCuenta($inicio);
+#var_dump($estadoCta);
+
 // convert TTF font to TCPDF format and store it on the fonts folder
 $fontname = TCPDF_FONTS::addTTFfont('../../lucida-console.ttf', 'TrueTypeUnicode', '', 96);
 
@@ -70,107 +73,35 @@ $pdf->SetFont($fontname, '', 7, '', false);
 
 $pdf->SetFont($fontname, '', 6, '', false);
 
+foreach($estadoCta as $key => $value){
 
-     
-$cuentas=ControladorCuentas::ctrMostrarReportePagos($orden1,$orden2,$canc,$vend,$inicio,$fin);
+    $bloque1 = '<table style="text-center" >
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td>'.$value["tipo_doc"].'</td>
+                            <td>'.$value["num_cta"].'</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                                            
+                    </tbody>
+                </table>';
 
-$total = ControladorCuentas::ctrMostrarReporteTotalPagos($orden1,$orden2,$canc,$vend,$inicio,$fin);
 
+    $pdf->writeHTML($bloque1, false, false, false, false, '');
 
-foreach ($cuentas as $key => $value) {
-$tamCliente=strlen($value["nombre"]);
-if($tamCliente > 31){
-    $nomCliente=substr($value["nombre"],0,31);
-}else{
-    $nomCliente=$value["nombre"];
 }
 
-if($value["tipo_doc"] == '-1'){
-$bloque3 = <<<EOF
 
-<table  style="text-align:center">
-<tbody>
-    <tr>
-        <td style="width:80px">$value[num_cta]</td>
-        <td style="width:130px">$value[fecha]</td>
-    </tr>
-</tbody>
-</table>
-EOF;
-$pdf->writeHTML($bloque3, false, false, false, false, '');
-    
-}else if($value["tipo_doc"] == '999'){
-    if($orden1 == 'fecha_ven'){
-$bloque3 = <<<EOF
-<table style="border-top:1px solid #000;width:500px" >
-</table>
-<table  style="text-align:center;padding-top:5px;padding-bottom:5px">
-<tbody>
-    <tr>
-        <td style="width:403px;text-align:right">Total fecha de pago: </td>
-        <td style="width:51px;text-align:right">$value[fact]</td>
-        <td style="width:59px;text-align:right">$value[letra]</td>
-    </tr>
-</tbody>
-</table>
-EOF;
-    }else{
-$bloque3 = <<<EOF
-<table style="border-top:1px solid #000;width:500px" >
-</table>
-<table  style="text-align:center;padding-top:5px;padding-bottom:5px">
-<tbody>
-    <tr>
-        <td style="width:403px;text-align:right">Total Tip doc: </td>
-        <td style="width:51px;text-align:right">$value[fact]</td>
-        <td style="width:59px;text-align:right">$value[letra]</td>
-    </tr>
-</tbody>
-</table>
-EOF;
-    }
 
-$pdf->writeHTML($bloque3, false, false, false, false, '');
-        
-}else{   
 
-$bloque3 = <<<EOF
 
-<table  style="text-align:center">
-<tbody>
-    <tr>
-        <td style="width:38px">$value[tipo_doc]</td>
-        <td style="width:60px">$value[num_cta]</td>
-        <td style="width:42px">$value[fecha]</td>
-        <td style="width:45px">$value[cliente]</td>
-        <td style="width:130px">$nomCliente</td>
-        <td style="width:38px">$value[cod_pago]</td>
-        <td style="width:50px">$value[doc_origen]</td>
-        <td style="width:50px;text-align:right">$value[fact]</td>
-        <td style="width:60px;text-align:right">$value[letra]</td>
-    </tr>
-</tbody>
-</table>
-EOF;
-$pdf->writeHTML($bloque3, false, false, false, false, '');
-    }
-}
-
-$bloque4 = <<<EOF
-<table style="border-top:1px solid #000;width:500px" >
-</table>
-<table style="padding-top:20px;text-align:right">
-    <tbody>
-        <tr >
-        
-         <td  style="width:394px;" ><b>$total[total_gral]</b></td>   
-         <td  style="width:60px; ">$total[fact]</td>
-         <td  style="width:60px; ">$total[letra]</td>
-        </tr>
-    </tbody>
-</table>
-EOF;
-$pdf->writeHTML($bloque4, false, false, false, false, '');
 // ---------------------------------------------------------
 //SALIDA DEL ARCHIVO 
 

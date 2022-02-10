@@ -2028,71 +2028,82 @@ $(".box").on("change", ".radioImpresion", function () {
 })
 
 $(".btnGenerarReporteCuenta").click(function(){ 
- var consulta = $(this).attr("consulta");
- var orden1 = $(this).attr("orden1");
- var orden2 = $(this).attr("orden2");
- var tip_doc = $(this).attr("tip_doc");
- var canc = $(this).attr("canc");
- var cli = $(this).attr("cli");
- var vend = $(this).attr("vend");
- var banco = $(this).attr("banco");
- var inicio = $(this).attr("inicio");
- var fin = $(this).attr("fin");
- var impresion = $(this).attr("impresion");
+    var consulta = $(this).attr("consulta");
+    var orden1 = $(this).attr("orden1");
+    var orden2 = $(this).attr("orden2");
+    var tip_doc = $(this).attr("tip_doc");
+    var canc = $(this).attr("canc");
+    var cli = $(this).attr("cli");
+    var vend = $(this).attr("vend");
+    var banco = $(this).attr("banco");
+    var inicio = $(this).attr("inicio");
+    var fin = $(this).attr("fin");
+    var impresion = $(this).attr("impresion");
 
- /* console.log("consulta", consulta);
- console.log("orden1", orden1);
- console.log("orden2", orden2);
- console.log("tip_doc", tip_doc);
- console.log("canc", canc);
- console.log("cli", cli);
- console.log("vend", vend);
- console.log("banco", banco);
- console.log("inicio", inicio);
- console.log("fin", fin); */
+    /* console.log("consulta", consulta);
+    console.log("orden1", orden1);
+    console.log("orden2", orden2);
+    console.log("tip_doc", tip_doc);
+    console.log("canc", canc);
+    console.log("cli", cli);
+    console.log("vend", vend);
+    console.log("banco", banco);
+    console.log("inicio", inicio);
+    console.log("fin", fin); */
 
 
 
- if(impresion == "pantalla"){
-   if(consulta=='pendiente' || consulta=='pendienteVencidoMenor'|| consulta=='pendienteVencidoMayor'|| consulta=='protestado'){
+    if(impresion == "pantalla"){
 
-    if(orden1 == "cliente"){
-      window.open("extensiones/tcpdf/pdf/reporte_cliente_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&cli="+cli,"_blank");
+        if(consulta=='pendiente' || consulta=='pendienteVencidoMenor'|| consulta=='pendienteVencidoMayor'|| consulta=='protestado'){
 
-    }else if (orden1 == "tipo"){
+            if(orden1 == "cliente"){
+                window.open("extensiones/tcpdf/pdf/reporte_cliente_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&cli="+cli,"_blank");
 
-      window.open("extensiones/tcpdf/pdf/reporte_general_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2,"_blank");
+            }else if (orden1 == "tipo"){
 
-    }else if(orden1 == "vendedor"){
+                window.open("extensiones/tcpdf/pdf/reporte_general_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2,"_blank");
 
-      if(vend== ''){
-        window.open("extensiones/tcpdf/pdf/reporte_general_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&vend="+vend,"_blank");
-      }else{
-        window.open("extensiones/tcpdf/pdf/reporte_vendedor_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&vend="+vend,"_blank");
-      }
+            }else if(orden1 == "vendedor"){
 
-    }else if(orden1 == "fecha_ven"){
+                if(vend== ''){
+                window.open("extensiones/tcpdf/pdf/reporte_general_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&vend="+vend,"_blank");
+                }else{
+                window.open("extensiones/tcpdf/pdf/reporte_vendedor_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&vend="+vend,"_blank");
+                }
 
-      //console.log("aqui");
+            }else if(orden1 == "fecha_ven"){
 
-      window.open("extensiones/tcpdf/pdf/reporte_general_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&banco="+banco+"&tip_doc="+tip_doc+"&fin="+fin,"_blank");
+                //console.log("aqui");
+
+                window.open("extensiones/tcpdf/pdf/reporte_general_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&banco="+banco+"&tip_doc="+tip_doc+"&fin="+fin,"_blank");
+
+            }
+
+        }else if(consulta== "pagos"){
+
+            window.open("extensiones/tcpdf/pdf/reporte_pago_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&canc="+canc+"&vend="+vend+"&inicio="+inicio+"&fin="+fin,"_blank");
+
+        }else if(consulta== "fechaActualSaldo"){
+
+            window.open("vistas/reportes_ticket/reporte_estado_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&canc="+canc+"&vend="+vend+"&inicio="+inicio+"&fin="+fin,"_blank");
+
+        }
+
+    }else{
+
+        if(consulta== "pagos"){
+
+            window.open("vistas/reportes_excel/rpt_pagos_cta_cte.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&canc="+canc+"&vend="+vend+"&inicio="+inicio+"&fin="+fin,"_blank");
+
+        }else if (consulta== "fechaActualSaldo"){
+
+          window.open("vistas/reportes_excel/rpt_estado_cuenta.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&canc="+canc+"&vend="+vend+"&inicio="+inicio+"&fin="+fin,"_blank");
+
+        }
 
     }
 
-  }else if(consulta== "pagos"){
-
-    window.open("extensiones/tcpdf/pdf/reporte_pago_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&canc="+canc+"&vend="+vend+"&inicio="+inicio+"&fin="+fin,"_blank");
-
-  }else if(consulta== "fechaActualSaldo"){
-
-    window.open("extensiones/tcpdf/pdf/reporte_estado_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&canc="+canc+"&vend="+vend+"&inicio="+inicio+"&fin="+fin,"_blank");
-    
-  }
-  
- }else{
-  alert("hola");
- }
-  
 })
 
 

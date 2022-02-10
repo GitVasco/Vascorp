@@ -1550,6 +1550,15 @@ class ControladorCuentas{
 
 		return $respuesta;
 
-    }		
+    }
+	
+	//ESTADO DE CUENTA
+	static public function ctrEstadoCuenta($fin){
+
+		$respuesta = ModeloCuentas::mdlEstadoCuenta($fin);
+
+		return $respuesta;
+
+    }	
    
 }

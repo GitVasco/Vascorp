@@ -4112,4 +4112,90 @@ class ModeloCuentas{
 
 	}	
 
+	//* DOCUMENTOS ESTADO DE CUENTA
+	static public function mdlEstadoCuenta($fin){	
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+						'A' AS orden,
+						'' AS tipo_doc,
+						'' AS num_cta,
+						cc.cliente,
+						c.nombre AS nom_cliente,
+						DATE_SUB(:fin, INTERVAL 1 DAY) AS fecha,
+						'' AS fecha_ven,
+						'' AS doc_origen,
+						'' AS tip_mov,
+						ROUND(SUM(cc.monto - IFNULL(c1.monto, 0)), 2) AS monto 
+					FROM
+						cuenta_ctejf cc 
+						LEFT JOIN 
+						(SELECT 
+							cc.tipo_doc,
+							cc.num_cta,
+							SUM(cc.monto) AS monto 
+						FROM
+							cuenta_ctejf cc 
+						WHERE cc.tip_mov = '-' 
+							AND cc.fecha <= DATE_SUB(:fin, INTERVAL 1 DAY) 
+						GROUP BY cc.tipo_doc,
+							cc.num_cta) AS c1 
+						ON cc.tipo_doc = c1.tipo_doc 
+						AND cc.num_cta = c1.num_cta 
+						LEFT JOIN clientesjf AS c 
+						ON cc.cliente = c.codigo 
+					WHERE cc.tip_mov = '+' 
+						AND cc.fecha <= DATE_SUB(:fin, INTERVAL 1 DAY) 
+					GROUP BY c.codigo 
+					UNION
+					SELECT 
+						'B' AS orden,
+						cc.tipo_doc,
+						cc.num_cta,
+						cc.cliente,
+						c.nombre AS nom_cliente,
+						cc.fecha,
+						cc.fecha_ven,
+						cc.doc_origen,
+						cc.tip_mov,
+						ROUND(cc.monto, 2) AS monto 
+					FROM
+						cuenta_ctejf cc 
+						LEFT JOIN clientesjf c 
+						ON cc.cliente = c.codigo 
+					WHERE cc.fecha >= DATE_SUB(:fin, INTERVAL 1 DAY) 
+					UNION
+					SELECT 
+						'C' AS orden,
+						'' AS tipo_doc,
+						'' AS num_cta,
+						cc.cliente,
+						'TOTAL' AS nom_cliente,
+						'' AS fecha,
+						'' AS fecha_ven,
+						'' AS doc_origen,
+						'' AS tip_mov,
+						ROUND(SUM(saldo), 2) AS saldo 
+					FROM
+						cuenta_ctejf cc 
+					WHERE cc.tip_mov = '+' 
+					GROUP BY cc.cliente 
+					ORDER BY cliente,
+						orden,
+						tipo_doc,
+						num_cta,
+						fecha,
+						tip_mov");
+
+		$stmt -> bindParam(":fin", $fin, PDO::PARAM_STR);
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();	
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
+
 }
