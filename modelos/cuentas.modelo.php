@@ -493,32 +493,36 @@ class ModeloCuentas{
 			return $stmt -> fetch();
 		}else{
 			$stmt = Conexion::conectar()->prepare("SELECT 
-											c.*,
-											REPLACE(
-											DATE_FORMAT(c.fecha_ven, '%d-%m-%Y'),
-											'-',
-											''
-											) AS fechaVen,
-											REPLACE(c.num_cta, '-', '') AS cuenta,
-											cli.nombre,
-											cli.ape_paterno,
-											cli.ape_materno,
-											cli.nombres,
-											cli.documento 
-										FROM
-											cuenta_ctejf c 
-											LEFT JOIN clientesjf cli 
-											ON c.cliente = cli.codigo 
-										WHERE c.tip_mov = '+' 
-											AND c.tipo_doc = '85' 
-											AND c.estado = 'PENDIENTE' 
-											AND (
-											c.estado_doc IS NULL 
-											OR c.estado_doc = ''
-											) 
-											AND c.protesta = 0 
-											AND c.num_unico <> 'Cartera' 
-											AND DATE(c.fecha_ven) > DATE(NOW()) ");
+												c.*,
+												REPLACE(
+												DATE_FORMAT(c.fecha_ven, '%d-%m-%Y'),
+												'-',
+												''
+												) AS fechaVen,
+												REPLACE(c.num_cta, '-', '') AS cuenta,
+												cli.nombre,
+												cli.ape_paterno,
+												cli.ape_materno,
+												cli.nombres,
+												cli.documento 
+											FROM
+												cuenta_ctejf c 
+												LEFT JOIN clientesjf cli 
+												ON c.cliente = cli.codigo 
+											WHERE c.tip_mov = '+' 
+												AND c.tipo_doc = '85' 
+												AND c.estado = 'PENDIENTE' 
+												AND (
+												c.estado_doc IS NULL 
+												OR c.estado_doc = ''
+												) 
+												AND c.protesta = 0 
+												AND (
+												c.num_unico <> 'Cartera' 
+												OR c.num_unico IS NULL 
+												OR c.num_unico = ''
+												) 
+												AND DATE(c.fecha_ven) > DATE(NOW())");
 	
 	
 			$stmt -> execute();

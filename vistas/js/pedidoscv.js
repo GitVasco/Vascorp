@@ -1843,7 +1843,7 @@ $("#serie").change(function () {
                     document.getElementById("serie").style.color = "black";
                     $("#serie").css("font-weight","bold");
 
-                    document.getElementById("btnGenerarDoc").disabled = true;
+                    //document.getElementById("btnGenerarDoc").disabled = true;
 
                 }else{
 
