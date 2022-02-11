@@ -1807,13 +1807,13 @@ $("#serie").change(function () {
 
         var serie = documento.substring(0,3);
         var talonario = documento.substr(-7);
-        console.log(serie, Number(talonario));
+        //console.log(serie, Number(talonario));
 
     }else{
 
         var serie = documento.substring(0,4);
         var talonario = documento.substr(-8);
-        console.log(serie, Number(talonario));
+        //console.log(serie, Number(talonario));
 
     }
 
@@ -1878,10 +1878,41 @@ $("#serie").change(function () {
 
     }
 
+});
 
 
-    //1ERO COMPARAMOS Y SI ES DIFERENTE GUARDAMOS
+$("#modalFacturar").on("hidden.bs.modal", function () {
+    
+    var tipo = document.getElementById("tdoc").value;
+    console.log(tipo);
 
+    console.log("mundo");
+
+    if(tipo == "01" || tipo == "03" || tipo == "09"){
+
+            //*actualizamos el talonario
+            var datos = new FormData();
+            datos.append("tipo", tipo);
+                        
+            $.ajax({
+        
+                url:"ajax/pedidos.ajax.php",
+                method: "POST",
+                data: datos,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType:"json",
+                success:function(respuesta){
+
+                    console.log(respuesta);
+        
+                }
+        
+            })   
+
+
+    }
 
 
 });

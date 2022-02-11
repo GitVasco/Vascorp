@@ -107,6 +107,19 @@ class AjaxPedidos{
 
     }    
 
+    /* 
+	* VER TALONARIO
+	*/
+	public function ajaxReiniciarTalonario(){
+
+        $tipo = $this->tipo;
+
+        $respuesta = ModeloPedidos::mdlReiniciarTalonario($tipo);
+
+        echo json_encode($respuesta);
+
+    }     
+
 
     /* 
 	* SACAR LA LISTA DE PRECIOS ASIGNADA
@@ -233,5 +246,17 @@ if(isset($_POST["talonarioA"])){
     $verColoresyCantidades -> serieA = $_POST["serieA"];
     $verColoresyCantidades -> talonarioA = $_POST["talonarioA"];
     $verColoresyCantidades -> ajaxActualizarTalonario();
+
+}
+
+
+/* 
+ * REINICIAR TALONARIO
+*/
+if(isset($_POST["tipo"])){
+
+    $verColoresyCantidades = new AjaxPedidos();
+    $verColoresyCantidades -> tipo = $_POST["tipo"];
+    $verColoresyCantidades -> ajaxReiniciarTalonario();
 
 }
