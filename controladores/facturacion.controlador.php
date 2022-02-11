@@ -303,6 +303,7 @@ class ControladorFacturacion{
 
                     $estado = ModeloFacturacion::mdlActualizarPedidoF($_POST["codPedido"]);
                     $estadoB = ModeloFacturacion::mdlActualizarPedidoB($_POST["codPedido"]);
+                    ModeloPedidos::mdlReiniciarTalonario($_POST["tdoc"]);
 
                     //var_dump($estado);
 
@@ -529,6 +530,7 @@ class ControladorFacturacion{
 
                     $estado = ModeloFacturacion::mdlActualizarPedidoF($_POST["codPedido"]);
                     $estadoB = ModeloFacturacion::mdlActualizarPedidoB($_POST["codPedido"]);
+                    ModeloPedidos::mdlReiniciarTalonario($_POST["tdoc"]);
 
                     //var_dump($estado);
 
@@ -755,6 +757,8 @@ class ControladorFacturacion{
 
                     $estado = ModeloFacturacion::mdlActualizarPedidoF($_POST["codPedido"]);
                     $estadoB = ModeloFacturacion::mdlActualizarPedidoB($_POST["codPedido"]);
+                    $reserva = ModeloPedidos::mdlReiniciarTalonario($_POST["tdoc"]);
+                    var_dump($reserva);
 
                     //var_dump($estado);
 
@@ -1039,6 +1043,7 @@ class ControladorFacturacion{
             }
 
             ModeloPedidos::mdlCantAprobados();
+            
 
         }else{
 

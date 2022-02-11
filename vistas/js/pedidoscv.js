@@ -1793,3 +1793,95 @@ $("#seleccionarCliente").change(function () {
 	})	        
 
 });
+
+// BUSCAR AGENCIA DE TRANSPORTES
+$("#serie").change(function () {
+
+    var tipo = document.getElementById("tdoc").value;
+    //console.log(tipo);
+
+    var documento = document.getElementById("serie").value;
+    //console.log("documento", documento);    
+    
+    if(tipo == '09'){
+
+        var serie = documento.substring(0,3);
+        var talonario = documento.substr(-7);
+        console.log(serie, Number(talonario));
+
+    }else{
+
+        var serie = documento.substring(0,4);
+        var talonario = documento.substr(-8);
+        console.log(serie, Number(talonario));
+
+    }
+
+    //*validamos si es de factura o boleta
+    if(tipo == "01" || tipo == "03" || tipo == "09"){
+
+        //*vemos que número trae
+        var datos = new FormData();
+        datos.append("serie", serie);
+        datos.append("talonario", talonario);
+        
+        $.ajax({
+    
+            url:"ajax/pedidos.ajax.php",
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType:"json",
+            success:function(respuesta){
+    
+                //console.log(respuesta["talonario"]);
+                if(Number(respuesta["talonario"]) == talonario){
+
+                    document.getElementById("serie").style.background = "#FF6868";
+                    document.getElementById("serie").style.color = "black";
+                    $("#serie").css("font-weight","bold");
+
+                    document.getElementById("btnGenerarDoc").disabled = true;
+
+                }else{
+
+                    //*actualizamos el talonario
+                    var datos = new FormData();
+                    datos.append("serieA", serie);
+                    datos.append("talonarioA", Number(talonario));
+                    
+                    $.ajax({
+                
+                        url:"ajax/pedidos.ajax.php",
+                        method: "POST",
+                        data: datos,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        dataType:"json",
+                        success:function(respuesta){
+
+                            console.log(respuesta);
+                
+                        }
+                
+                    })                    
+
+                }
+    
+            }
+    
+        })
+
+
+    }
+
+
+
+    //1ERO COMPARAMOS Y SI ES DIFERENTE GUARDAMOS
+
+
+
+});

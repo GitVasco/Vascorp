@@ -77,7 +77,36 @@ class AjaxPedidos{
 
         echo json_encode($respuesta);
 
-    }     
+    }
+    
+    /* 
+	* VER TALONARIO
+	*/
+	public function ajaxVerTalonario(){
+
+        $serie = $this->serie;
+        $talonario = $this->talonario;
+
+        $respuesta = ModeloPedidos::mdlVerTalonario($serie, $talonario);
+
+        echo json_encode($respuesta);
+
+    }
+
+    /* 
+	* VER TALONARIO
+	*/
+	public function ajaxActualizarTalonario(){
+
+        $serie = $this->serieA;
+        $talonario = $this->talonarioA;
+
+        $respuesta = ModeloPedidos::mdlSepararTalonario($serie, $talonario);
+
+        echo json_encode($respuesta);
+
+    }    
+
 
     /* 
 	* SACAR LA LISTA DE PRECIOS ASIGNADA
@@ -180,5 +209,29 @@ if(isset($_POST["codDup"])){
     $borrarModelo = new AjaxPedidos();
     $borrarModelo -> codDup = $_POST["codDup"];
     $borrarModelo -> ajaxDupicarPedido();
+
+}
+
+/* 
+ * VER TALONARIOS QUE TRAE
+*/
+if(isset($_POST["talonario"])){
+
+    $verColoresyCantidades = new AjaxPedidos();
+    $verColoresyCantidades -> serie = $_POST["serie"];
+    $verColoresyCantidades -> talonario = $_POST["talonario"];
+    $verColoresyCantidades -> ajaxVerTalonario();
+
+}
+
+/* 
+ * ACTUALIZAR Y SEPARAR EL COONTROL
+*/
+if(isset($_POST["talonarioA"])){
+
+    $verColoresyCantidades = new AjaxPedidos();
+    $verColoresyCantidades -> serieA = $_POST["serieA"];
+    $verColoresyCantidades -> talonarioA = $_POST["talonarioA"];
+    $verColoresyCantidades -> ajaxActualizarTalonario();
 
 }

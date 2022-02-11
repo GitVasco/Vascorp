@@ -1732,5 +1732,88 @@ class ModeloPedidos{
 
 	}	
 
+    /*
+    * MOSTRAR COTIZACION
+    */
+    static public function mdlVerTalonario($serie, $talonario){
+
+        $stmt = Conexion::conectar()->prepare("SELECT 
+							argumento AS talonario 
+						FROM
+							maestrajf 
+						WHERE tipo_dato = 'TTAL' 
+							AND descripcion = :serie");
+
+
+		$stmt->bindParam(":serie", $serie, PDO::PARAM_STR);
+
+        $stmt -> execute();
+
+        return $stmt -> fetch();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}	
+
+	//*ACTUALIZAR TALONARIO
+	static public function mdlSepararTalonario($serie, $talonario){
+
+		$sql="UPDATE 
+						maestrajf 
+					SET
+						argumento = :talonarioA 
+					WHERE tipo_dato = 'TTAL' 
+						AND descripcion = :serieA";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":serieA", $serie, PDO::PARAM_STR);
+		$stmt->bindParam(":talonarioA", $talonario, PDO::PARAM_STR);
+
+
+        if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return $stmt -> errorInfo();
+
+		}
+
+		$stmt=null;
+
+	}	
+
+	//*REINICIAR TALONARIO
+	static public function mdlReiniciarTalonario($tipo){
+
+		$sql="UPDATE 
+					maestrajf 
+				SET
+					argumento = '0' 
+				WHERE tipo_dato = 'TTAL' 
+					AND codigo = :tipo";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":tipo", $tipo, PDO::PARAM_STR);
+
+
+        if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return $stmt -> errorInfo();
+
+		}
+
+		$stmt=null;
+
+	}	
 
 }
