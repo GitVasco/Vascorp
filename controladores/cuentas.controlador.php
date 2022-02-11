@@ -1186,18 +1186,20 @@ class ControladorCuentas{
 								window.location="ver-envio-letras";}
 						});
 					</script>';
+
 			}else{
+
 				$tabla="envio_letra_cabecerajf";
 				date_default_timezone_set('America/Lima');
 				$fecha= new DateTime();
 				$ruta="vistas/letras/L".$fecha->format("Y").$fecha->format("m").$fecha->format("d").$fecha->format("H").$fecha->format("i").".txt";
 				$file = fopen( $ruta, "w");
-				$datos = array("codigo" => $_POST["nuevoCodigoEnvio"],
-				   				 "fecha"=>$fecha->format("Y-m-d"),
-					   		     "usuario"=>$_POST["idUsuario"],
-							     "cantidad"=>$_POST["nuevoTotalCuentaEnvio"],
-								 "archivo"=>$ruta
-							   );
+				$datos = array(		"codigo"	=> 	$_POST["nuevoCodigoEnvio"],
+									"fecha"		=>	$fecha->format("Y-m-d"),
+									"usuario"	=>	$_POST["idUsuario"],
+									"cantidad"	=>	$_POST["nuevoTotalCuentaEnvio"],
+									"archivo"	=>	$ruta
+						);
 
 			   	$respuesta = ModeloCuentas::mdlIngresarEnvioLetra($tabla,$datos);
 				
@@ -1209,9 +1211,11 @@ class ControladorCuentas{
 				
 
 				foreach($cuentas as $key=>$value){
+
 					$tabla2="envio_letrasjf";
 					$datos2=array("num_cta"=>$value["numcta"],
 								  "codigo"=>$_POST["nuevoCodigoEnvio"]);
+
 					$respuesta2= ModeloCuentas::mdlIngresarEnvioLetraDetalle($tabla2,$datos2);
 					$actualizarEnvio=ModeloCuentas::mdlActualizarUnDato("cuenta_ctejf","fecha_envio",$fecha->format("Y-m-d"),$value["idcuenta"]);
 					$actualizarAceptacion=ModeloCuentas::mdlActualizarUnDato("cuenta_ctejf","fecha_cep",$fecha->format("Y-m-d"),$value["idcuenta"]);
@@ -1248,8 +1252,17 @@ class ControladorCuentas{
 
 					//$salto6= 14 ;
 
+					$cliente_nom = ControladorContabilidad::eliminar_tildes($value["cliente_nom"]);
+					$cliente_pat = ControladorContabilidad::eliminar_tildes($value["cliente_pat"]);
+					$cliente_mat = ControladorContabilidad::eliminar_tildes($value["cliente_mat"]);
 
-					fwrite($file,str_pad( $value["cliente_nom"],$salto1).str_pad( $value["cliente_pat"],$salto2).str_pad( $value["cliente_mat"],$salto3).str_pad( $cliente_doc,$salto4).str_pad( $value["numcta"],$salto5).str_pad( $value["fecha"],$salto6). $value["monto"] . PHP_EOL);
+					fwrite($file,	str_pad( $cliente_nom,$salto1).
+									str_pad( $cliente_pat,$salto2).
+									str_pad( $cliente_mat,$salto3).
+									str_pad( $cliente_doc,$salto4).
+									str_pad( $value["numcta"],$salto5).
+									str_pad( $value["fecha"],$salto6). $value["monto"].
+									PHP_EOL);
 				}
 				fclose($file);
 			   	if($respuesta == "ok"  && $respuesta2=="ok"){

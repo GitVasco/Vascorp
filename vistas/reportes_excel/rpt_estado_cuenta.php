@@ -304,9 +304,10 @@ $objPHPExcel->getActiveSheet()->SetCellValue("I$fila", 'TC');
 $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", 'Ult. Pago');
 $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", 'Tip Mov');
 $objPHPExcel->getActiveSheet()->SetCellValue("L$fila", 'Cod. Cli');
-$objPHPExcel->getActiveSheet()->SetCellValue("M$fila", 'Cliente');
-$objPHPExcel->getActiveSheet()->SetCellValue("N$fila", 'Vendedor');
-$objPHPExcel->getActiveSheet()->SetCellValue("O$fila", 'Notas');
+$objPHPExcel->getActiveSheet()->SetCellValue("M$fila", 'Doc. Cli');
+$objPHPExcel->getActiveSheet()->SetCellValue("N$fila", 'Cliente');
+$objPHPExcel->getActiveSheet()->SetCellValue("O$fila", 'Vendedor');
+$objPHPExcel->getActiveSheet()->SetCellValue("P$fila", 'Notas');
 
 
 
@@ -319,66 +320,68 @@ $sqlDetalle = mysql_query("SELECT
                           '' AS num_cta,
                           '' AS cod_pago,
                           '' AS doc_origen,
-                          DATE_SUB('2022-01-01', INTERVAL 1 DAY) AS fecha,
-                          DATE_SUB('2022-01-01', INTERVAL 1 DAY) AS fecha_ven,
+                          DATE_SUB('$fechaInicial', INTERVAL 1 DAY) AS fecha,
+                          DATE_SUB('$fechaInicial', INTERVAL 1 DAY) AS fecha_ven,
                           ROUND(SUM(cc.monto - IFNULL(c1.monto, 0)), 2) AS monto,
                           0 AS saldo,
                           '' AS tip_cambio,
                           '' AS ult_pago,
                           '' AS tip_mov,
                           cc.cliente AS cliente,
+                          '' AS doc_cliente,
                           '' AS nombre,
                           '' AS vendedor,
-                          '' AS notas
-                        FROM
-                        cuenta_ctejf cc 
-                        LEFT JOIN 
-                          (SELECT 
-                            cc.tipo_doc,
-                            cc.num_cta,
-                            SUM(cc.monto) AS monto 
+                          '' AS notas 
                           FROM
-                            cuenta_ctejf cc 
-                          WHERE cc.tip_mov = '-' 
-                            AND cc.fecha <= DATE_SUB('$fechaInicial', INTERVAL 1 DAY) 
-                          GROUP BY cc.tipo_doc,
-                            cc.num_cta) AS c1 
-                          ON cc.tipo_doc = c1.tipo_doc 
-                          AND cc.num_cta = c1.num_cta 
-                        LEFT JOIN clientesjf AS c 
-                          ON cc.cliente = c.codigo 
-                        WHERE cc.tip_mov = '+' 
-                        AND cc.fecha <= DATE_SUB('$fechaInicial', INTERVAL 1 DAY) 
-                        GROUP BY c.codigo 
-                        UNION
-                        SELECT 
-                        'B' AS orden,
-                        cc.tipo_doc,
-                        cc.num_cta,
-                        cc.cod_pago,
-                        cc.doc_origen,
-                        cc.fecha,
-                        cc.fecha_ven,
-                        ROUND(cc.monto, 2) AS monto,
-                        ROUND(cc.saldo, 2) AS saldo,
-                        cc.tip_cambio,
-                        cc.ult_pago,
-                        cc.tip_mov,
-                        cc.cliente,
-                        c.nombre,
-                        cc.vendedor,
-                        cc.notas 
-                        FROM
-                        cuenta_ctejf cc 
-                        LEFT JOIN clientesjf c 
-                          ON cc.cliente = c.codigo 
-                        WHERE cc.fecha >= DATE_SUB('$fechaInicial', INTERVAL 1 DAY) 
-                        ORDER BY cliente,
-                        orden,
-                        tipo_doc,
-                        num_cta,
-                        fecha,
-                        tip_mov") or die(mysql_error());
+                          cuenta_ctejf cc 
+                          LEFT JOIN 
+                            (SELECT 
+                              cc.tipo_doc,
+                              cc.num_cta,
+                              SUM(cc.monto) AS monto 
+                            FROM
+                              cuenta_ctejf cc 
+                            WHERE cc.tip_mov = '-' 
+                              AND cc.fecha <= DATE_SUB('$fechaInicial', INTERVAL 1 DAY) 
+                            GROUP BY cc.tipo_doc,
+                              cc.num_cta) AS c1 
+                            ON cc.tipo_doc = c1.tipo_doc 
+                            AND cc.num_cta = c1.num_cta 
+                          LEFT JOIN clientesjf AS c 
+                            ON cc.cliente = c.codigo 
+                          WHERE cc.tip_mov = '+' 
+                          AND cc.fecha <= DATE_SUB('$fechaInicial', INTERVAL 1 DAY) 
+                          GROUP BY c.codigo 
+                          UNION
+                          SELECT 
+                          'B' AS orden,
+                          cc.tipo_doc,
+                          cc.num_cta,
+                          cc.cod_pago,
+                          cc.doc_origen,
+                          cc.fecha,
+                          cc.fecha_ven,
+                          ROUND(cc.monto, 2) AS monto,
+                          ROUND(cc.saldo, 2) AS saldo,
+                          cc.tip_cambio,
+                          cc.ult_pago,
+                          cc.tip_mov,
+                          cc.cliente,
+                          c.documento AS doc_cliente,
+                          c.nombre,
+                          cc.vendedor,
+                          cc.notas 
+                          FROM
+                          cuenta_ctejf cc 
+                          LEFT JOIN clientesjf c 
+                            ON cc.cliente = c.codigo 
+                          WHERE cc.fecha >= DATE_SUB('$fechaInicial', INTERVAL 1 DAY) 
+                          ORDER BY cliente,
+                          orden,
+                          tipo_doc,
+                          num_cta,
+                          fecha,
+                          tip_mov") or die(mysql_error());
 
 
 while($respDetalle = mysql_fetch_array($sqlDetalle)){
@@ -397,9 +400,10 @@ while($respDetalle = mysql_fetch_array($sqlDetalle)){
     $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", date("d/m/Y",strtotime($respDetalle['ult_pago']))); 
     $objPHPExcel->getActiveSheet()->setCellValueExplicit("K$fila", utf8_encode($respDetalle["tip_mov"]), PHPExcel_Cell_DataType::TYPE_STRING);
     $objPHPExcel->getActiveSheet()->setCellValueExplicit("L$fila", utf8_encode($respDetalle["cliente"]), PHPExcel_Cell_DataType::TYPE_STRING);
-    $objPHPExcel->getActiveSheet()->SetCellValue("M$fila", utf8_encode($respDetalle["nombre"])); 
-    $objPHPExcel->getActiveSheet()->setCellValueExplicit("N$fila", utf8_encode($respDetalle["vendedor"]), PHPExcel_Cell_DataType::TYPE_STRING);
-    $objPHPExcel->getActiveSheet()->SetCellValue("O$fila", utf8_encode($respDetalle["notas"])); 
+    $objPHPExcel->getActiveSheet()->setCellValueExplicit("M$fila", utf8_encode($respDetalle["doc_cliente"]), PHPExcel_Cell_DataType::TYPE_STRING);
+    $objPHPExcel->getActiveSheet()->SetCellValue("N$fila", utf8_encode($respDetalle["nombre"])); 
+    $objPHPExcel->getActiveSheet()->setCellValueExplicit("O$fila", utf8_encode($respDetalle["vendedor"]), PHPExcel_Cell_DataType::TYPE_STRING);
+    $objPHPExcel->getActiveSheet()->SetCellValue("P$fila", utf8_encode($respDetalle["notas"])); 
 
     
 
