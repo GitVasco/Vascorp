@@ -9,6 +9,19 @@ require_once '../modelos/usuarios.modelo.php';
 
 class AjaxFacturacion{
     
+      /*=============================================
+     VER SI TIENE IMAGEN
+      =============================================*/	
+      public function ajaxVerDocumento(){
+        
+        $tipo=$this->tipoI;
+        $documento=$this->documentoI;
+
+        $respuesta=ControladorFacturacion::ctrVerDocumento($tipo, $documento);
+        echo json_encode($respuesta);
+      }
+    
+
     /*=============================================
     CREAR DOCUMENTO DE VENTA
     =============================================*/	
@@ -465,5 +478,18 @@ class AjaxFacturacion{
     $generarcsv -> tipo = $_POST["tipo"];
     $generarcsv -> documento = $_POST["documento"];
     $generarcsv -> ajaxGenerarFEFacBol();
+    
+  }
+
+
+  /*=============================================
+VER SI TRAE IMAGENES
+  =============================================*/	
+  if(isset($_POST["tipoI"])){
+    
+    $generarcsv = new AjaxFacturacion();
+    $generarcsv -> tipoI = $_POST["tipoI"];
+    $generarcsv -> documentoI = $_POST["documentoI"];
+    $generarcsv -> ajaxVerDocumento();
     
   }

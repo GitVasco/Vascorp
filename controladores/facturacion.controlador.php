@@ -1067,6 +1067,18 @@ class ControladorFacturacion{
     /*
     * MOSTRAR CABECERA DE TEMPORAL
     */
+	static public function ctrVerDocumento($tipo, $documento){
+
+		$respuesta = ModeloFacturacion::mdlVerDocumento($tipo, $documento);
+
+		return $respuesta;
+
+    }
+
+
+    /*
+    * MOSTRAR CABECERA DE TEMPORAL
+    */
 	static public function ctrMostrarTablasB(){
 
 		$respuesta = ModeloFacturacion::mdlMostrarTablasB();
@@ -3920,6 +3932,191 @@ class ControladorFacturacion{
 
         }
 
-    }      
+    }    
+    
+    static public function ctrCargarImagen(){
+
+        if(isset($_POST["documento"])){
+
+            //var_dump($_POST["documento"]);
+
+            //*CARGO
+            $rutaCar = $_POST["imagenActualCar"];
+
+            if(	isset($_FILES["editarCargo"]["tmp_name"]) && 
+				!empty($_FILES["editarCargo"]["tmp_name"])){
+
+                list($ancho, $alto) = getimagesize($_FILES["editarCargo"]["tmp_name"]);
+
+                $nuevoAncho = $ancho *1;
+                $nuevoAlto = $alto *1;
+
+                if(!empty($_POST["imagenActualCar"]) && $_POST["imagenActualCar"] != $_FILES["editarCargo"]["tmp_name"]){
+
+                    unlink($_POST["imagenActualCar"]);
+                    clearstatcache();
+
+                }
+
+                if($_FILES["editarCargo"]["type"] == "image/jpeg"){
+
+                    /*=============================================
+                    GUARDAMOS LA IMAGEN EN EL DIRECTORIO
+                    =============================================*/
+
+                    $rutaCarB = "../imagenes_vasco/".$_POST["tipo"]."/cargos/C".$_POST["tipo"].$_POST["documento"].".jpg";
+
+                    $origen = imagecreatefromjpeg($_FILES["editarCargo"]["tmp_name"]);						
+
+                    $destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
+
+                    imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
+
+                    imagejpeg($destino, $rutaCarB);
+
+                }
+
+                if($_FILES["editarCargo"]["type"] == "image/png"){
+
+                    /*=============================================
+                    GUARDAMOS LA IMAGEN EN EL DIRECTORIO
+                    =============================================*/
+
+                    $rutaCarB = "../imagenes_vasco/".$_POST["tipo"]."/cargos/C".$_POST["tipo"].$_POST["documento"].".png";
+
+                    $origen = imagecreatefromjpeg($_FILES["editarCargo"]["tmp_name"]);						
+
+                    $destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
+
+                    imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
+
+                    imagejpeg($destino, $rutaCarB);
+
+                }                
+
+            }
+
+            //*RECEPCION
+            $rutaRep = $_POST["imagenActualRep"];
+
+            if(	isset($_FILES["editarRecepcion"]["tmp_name"]) && 
+				!empty($_FILES["editarRecepcion"]["tmp_name"])){
+
+                list($ancho, $alto) = getimagesize($_FILES["editarRecepcion"]["tmp_name"]);
+
+                $nuevoAncho = $ancho *1;
+                $nuevoAlto = $alto *1;
+
+                if(!empty($_POST["imagenActualRep"]) && $_POST["imagenActualRep"] != $_FILES["editarRecepcion"]["tmp_name"]){
+
+                    unlink($_POST["imagenActualRep"]);
+                    clearstatcache();
+
+                }
+
+                if($_FILES["editarRecepcion"]["type"] == "image/jpeg"){
+
+                    /*=============================================
+                    GUARDAMOS LA IMAGEN EN EL DIRECTORIO
+                    =============================================*/
+
+                    $rutaRepB = "../imagenes_vasco/".$_POST["tipo"]."/recepcion/R".$_POST["tipo"].$_POST["documento"].".jpg";
+
+                    $origen = imagecreatefromjpeg($_FILES["editarRecepcion"]["tmp_name"]);						
+
+                    $destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
+
+                    imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
+
+                    imagejpeg($destino, $rutaRepB);
+
+                }
+
+                if($_FILES["editarRecepcion"]["type"] == "image/png"){
+
+                    /*=============================================
+                    GUARDAMOS LA IMAGEN EN EL DIRECTORIO
+                    =============================================*/
+
+                    $rutaRepB = "../imagenes_vasco/".$_POST["tipo"]."/recepcion/R".$_POST["tipo"].$_POST["documento"].".png";
+
+                    $origen = imagecreatefromjpeg($_FILES["editarRecepcion"]["tmp_name"]);						
+
+                    $destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
+
+                    imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
+
+                    imagejpeg($destino, $rutaRepB);
+
+                }                
+
+            }   
+
+            if(isset($rutaCarB)){
+
+                $rutaCargo = $rutaCarB;
+
+            }else{
+
+                $rutaCargo = $rutaCar;
+
+            }
+
+            if(isset($rutaRepB)){
+
+                $rutaRecepcion = $rutaRepB;
+
+            }else{
+
+                $rutaRecepcion = $rutaRep;
+
+            }
+            
+            $datos = array( "tipo"      => $_POST["tipo"],
+                            "documento" => $_POST["documento"],
+                            "cargo"     => $rutaCargo,
+                            "recepcion" => $rutaRecepcion
+            );
+            //var_dump($rutaCar, $rutaRep);
+            //var_dump($rutaCarB, $rutaRepB);
+            #var_dump($rutaCargo, $rutaRecepcion);
+            $respuesta=ModeloFacturacion::mdlActualizarCarRep($datos);
+
+            if($_POST["tipo"] == "S03"){
+
+                $salto = "facturas";
+
+            }else if($_POST["tipo"] == "S02"){
+
+                $salto = "boletas";
+
+            }else if($_POST["tipo"] == "S70"){
+
+                $salto = "proformas";
+
+
+            }
+
+
+            echo'<script>
+
+                swal({
+                    type: "success",
+                    title: "Se han cargado las imágenes",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+                    }).then(function(result){
+                                if (result.value) {
+
+                                window.location = "'.$salto.'";
+
+                                }
+                            })
+
+            </script>';
+
+        }
+
+    }    
 
 }

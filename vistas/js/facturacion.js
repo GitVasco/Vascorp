@@ -2387,3 +2387,156 @@ function checkSubmit() {
 	document.getElementById("btnGenerarDoc").disabled = true;
 	return true;
 }
+
+
+$(".tablaFacturas, .tablaBoletas, .tablaProformas").on("click", ".btnCargarFotosFact", function () {
+
+    var tipo = $(this).attr("tipo");
+    var documento = $(this).attr("documento");
+    //console.log(tipo, documento);
+
+	//VDOCUMENTO
+	var datos = new FormData();
+
+	datos.append("tipoI", tipo);
+    datos.append("documentoI", documento);
+
+	$.ajax({
+
+		url:"ajax/facturacion.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType:"json",
+		success:function(respuesta){
+
+            if(respuesta["cargo"] != null){
+
+                $("#tipo").val(respuesta["tipo"]);
+                $("#documento").val(respuesta["documento"]);
+
+				$("#imagenActualCar").val(respuesta["cargo"]);
+
+				$(".previsualizarCar").attr("src",  respuesta["cargo"]);
+
+			}else{
+
+				$(".previsualizarCar").attr("src",  "vistas/img/modelos/default/anonymous.png");
+
+			}
+
+            if(respuesta["recepcion"] != null){
+
+				$("#imagenActualRep").val(respuesta["recepcion"]);
+
+				$(".previsualizarRep").attr("src",  respuesta["recepcion"]);
+
+			}else{
+
+				$(".previsualizarRep").attr("src",  "vistas/img/modelos/default/anonymous.png");
+                
+			}
+
+
+
+
+
+		}
+	});    
+
+})
+
+
+$(".editarCargo").change(function(){
+
+	var imagen = this.files[0];
+	
+	/*=============================================
+  	VALIDAMOS EL FORMATO DE LA IMAGEN SEA JPG O PNG
+  	=============================================*/
+
+  	if(imagen["type"] != "image/jpeg" && imagen["type"] != "image/png"){
+
+  		$(".editarCargo").val("");
+
+  		 swal({
+		      title: "Error al subir la imagen",
+		      text: "¡La imagen debe estar en formato JPG o PNG!",
+		      type: "error",
+		      confirmButtonText: "¡Cerrar!"
+		    });
+
+  	}else if(imagen["size"] > 2000000){
+
+  		$(".editarCargo").val("");
+
+  		 swal({
+		      title: "Error al subir la imagen",
+		      text: "¡La imagen no debe pesar más de 2MB!",
+		      type: "error",
+		      confirmButtonText: "¡Cerrar!"
+		    });
+
+  	}else{
+
+  		var datosImagen = new FileReader;
+  		datosImagen.readAsDataURL(imagen);
+
+  		$(datosImagen).on("load", function(event){
+
+  			var rutaImagen = event.target.result;
+
+  			$(".previsualizarCar").attr("src", rutaImagen);
+
+  		})
+
+  	}
+})
+
+$(".editarRecepcion").change(function(){
+
+	var imagen = this.files[0];
+	
+	/*=============================================
+  	VALIDAMOS EL FORMATO DE LA IMAGEN SEA JPG O PNG
+  	=============================================*/
+
+  	if(imagen["type"] != "image/jpeg" && imagen["type"] != "image/png"){
+
+  		$(".editarRecepcion").val("");
+
+  		 swal({
+		      title: "Error al subir la imagen",
+		      text: "¡La imagen debe estar en formato JPG o PNG!",
+		      type: "error",
+		      confirmButtonText: "¡Cerrar!"
+		    });
+
+  	}else if(imagen["size"] > 2000000){
+
+  		$(".editarRecepcion").val("");
+
+  		 swal({
+		      title: "Error al subir la imagen",
+		      text: "¡La imagen no debe pesar más de 2MB!",
+		      type: "error",
+		      confirmButtonText: "¡Cerrar!"
+		    });
+
+  	}else{
+
+  		var datosImagen = new FileReader;
+  		datosImagen.readAsDataURL(imagen);
+
+  		$(datosImagen).on("load", function(event){
+
+  			var rutaImagen = event.target.result;
+
+  			$(".previsualizarRep").attr("src", rutaImagen);
+
+  		})
+
+  	}
+})

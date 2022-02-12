@@ -1469,7 +1469,9 @@ class ModeloFacturacion{
       v.estado,
       IFNULL(a.nombre, '') AS agencia,
       IFNULL(u.nom_ubi, '') AS ubigeo,
-      v.usureg
+      v.usureg,
+      v.cargo,
+      v.recepcion
   FROM
       ventajf v
       LEFT JOIN clientesjf c
@@ -1510,7 +1512,9 @@ class ModeloFacturacion{
       v.estado,
       IFNULL(a.nombre, '') AS agencia,
       IFNULL(u.nom_ubi, '') AS ubigeo,
-      v.usureg
+      v.usureg,
+      v.cargo,
+      v.recepcion
   FROM
       ventajf v
       LEFT JOIN clientesjf c
@@ -1561,7 +1565,9 @@ class ModeloFacturacion{
         v.estado,
         IFNULL(a.nombre, '') AS agencia,
         IFNULL(u.nom_ubi, '') AS ubigeo,
-        v.usureg
+        v.usureg,
+        v.cargo,
+      v.recepcion
     FROM
         ventajf v
         LEFT JOIN clientesjf c
@@ -1604,7 +1610,9 @@ class ModeloFacturacion{
         v.estado,
         IFNULL(a.nombre, '') AS agencia,
         IFNULL(u.nom_ubi, '') AS ubigeo,
-        v.usureg
+        v.usureg,
+        v.cargo,
+      v.recepcion
     FROM
         ventajf v
         LEFT JOIN clientesjf c
@@ -1659,7 +1667,9 @@ class ModeloFacturacion{
       v.estado,
       IFNULL(a.nombre, '') AS agencia,
       IFNULL(u.nom_ubi, '') AS ubigeo,
-      v.usureg
+      v.usureg,
+      v.cargo,
+      v.recepcion
   FROM
       ventajf v
       LEFT JOIN clientesjf c
@@ -1700,7 +1710,9 @@ class ModeloFacturacion{
       v.estado,
       IFNULL(a.nombre, '') AS agencia,
       IFNULL(u.nom_ubi, '') AS ubigeo,
-      v.usureg
+      v.usureg,
+      v.cargo,
+      v.recepcion
   FROM
       ventajf v
       LEFT JOIN clientesjf c
@@ -1751,7 +1763,9 @@ class ModeloFacturacion{
         v.estado,
         IFNULL(a.nombre, '') AS agencia,
         IFNULL(u.nom_ubi, '') AS ubigeo,
-        v.usureg
+        v.usureg,
+        v.cargo,
+      v.recepcion
     FROM
         ventajf v
         LEFT JOIN clientesjf c
@@ -1794,7 +1808,9 @@ class ModeloFacturacion{
         v.estado,
         IFNULL(a.nombre, '') AS agencia,
         IFNULL(u.nom_ubi, '') AS ubigeo,
-        v.usureg
+        v.usureg,
+        v.cargo,
+      v.recepcion
     FROM
         ventajf v
         LEFT JOIN clientesjf c
@@ -1848,7 +1864,9 @@ class ModeloFacturacion{
       SUBSTR(v.doc_destino,5,8) AS nro_dest,
       v.estado,
       IFNULL(a.nombre, '') AS agencia,
-      IFNULL(u.nom_ubi, '') AS ubigeo
+      IFNULL(u.nom_ubi, '') AS ubigeo,
+      v.cargo,
+      v.recepcion
   FROM
       ventajf v
       LEFT JOIN clientesjf c
@@ -1888,7 +1906,9 @@ class ModeloFacturacion{
       SUBSTR(v.doc_destino,5,8) AS nro_dest,
       v.estado,
       IFNULL(a.nombre, '') AS agencia,
-      IFNULL(u.nom_ubi, '') AS ubigeo
+      IFNULL(u.nom_ubi, '') AS ubigeo,
+      v.cargo,
+      v.recepcion
   FROM
       ventajf v
       LEFT JOIN clientesjf c
@@ -1938,7 +1958,9 @@ class ModeloFacturacion{
         SUBSTR(v.doc_destino,5,8) AS nro_dest,
         v.estado,
         IFNULL(a.nombre, '') AS agencia,
-        IFNULL(u.nom_ubi, '') AS ubigeo
+        IFNULL(u.nom_ubi, '') AS ubigeo,
+        v.cargo,
+      v.recepcion
     FROM
         ventajf v
         LEFT JOIN clientesjf c
@@ -1980,7 +2002,9 @@ class ModeloFacturacion{
         SUBSTR(v.doc_destino,5,8) AS nro_dest,
         v.estado,
         IFNULL(a.nombre, '') AS agencia,
-        IFNULL(u.nom_ubi, '') AS ubigeo
+        IFNULL(u.nom_ubi, '') AS ubigeo,
+        v.cargo,
+      v.recepcion
     FROM
         ventajf v
         LEFT JOIN clientesjf c
@@ -8199,5 +8223,63 @@ class ModeloFacturacion{
       $stmt=null;
   
     }  
+
+    /*
+    * MOSTRAR DETALLE DE TEMPORAL
+    */
+    static public function mdlVerDocumento($tipo, $documento){
+
+
+        $sql="SELECT 
+                    * 
+                FROM
+                    ventajf v 
+                WHERE v.tipo = :tipo 
+                    AND v.documento = :documento";
+
+        $stmt=Conexion::conectar()->prepare($sql);
+
+
+        $stmt->bindParam(":tipo", $tipo, PDO::PARAM_STR);
+        $stmt->bindParam(":documento", $documento, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetch();
+
+        $stmt=null;
+  
+    } 
+
+    static public function mdlActualizarCarRep($datos){
+
+        $sql="UPDATE 
+                    ventajf 
+                SET
+                    cargo = :cargo,
+                    recepcion = :recepcion 
+                WHERE tipo = :tipo 
+                    AND documento = :documento";
+                
+        $stmt=Conexion::conectar()->prepare($sql);
+    
+        $stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
+        $stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
+        $stmt->bindParam(":cargo", $datos["cargo"], PDO::PARAM_STR);
+        $stmt->bindParam(":recepcion", $datos["recepcion"], PDO::PARAM_STR);
+    
+        if ($stmt->execute()) {
+    
+          return "ok";
+    
+        }else{
+    
+          return $stmt->errorInfo();
+    
+        }
+    
+        $stmt=null;
+    
+    }    
 
 }

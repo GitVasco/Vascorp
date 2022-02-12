@@ -43,13 +43,40 @@ class TablaProformas{
 
             $total = "<div style='text-align:right !important'>".number_format($proformas[$i]["total"],2)."</div>";
 
-            if($proformas[$i]["facturacion"] == "0"){
+            //* CARGO
+            $rutaCar  = "../../".$proformas[$i]["cargo"];
+            
 
-                $botones =  "<div class='btn-group'><button title='Imprimir Proforma' class='btn btn-xs btn-success btnImprimirProforma' tipo='".$proformas[$i]["tipo"]."' documento='".$proformas[$i]["documento"]."'><i class='fa fa-print'></i></button><button title='Anular Documento' class='btn btn-xs  btn-danger btnAnularDocumento' documento='".$proformas[$i]["documento"]."' tipo='".$proformas[$i]["tipo"]."' pagina='facturas'><i class='fa fa-close'></i></button></div>";
+            if(file_exists($rutaCar) && $proformas[$i]["cargo"] != "../imagenes_vasco/default/anonymous.png"){
+
+                $cargo = "<a class='btn btn-xs btn-info' href='".$rutaCar."' download title='Descargar CARGO' >C</a>";
 
             }else{
 
-                $botones =  "<div class='btn-group'><button title='Imprimir Factura' class='btn btn-xs btn-success btnImprimirBoleta' tipo='".$proformas[$i]["tipo"]."' documento='".$proformas[$i]["documento"]."'><i class='fa fa-print'></i></button><button class='btn btn-xs btn-primary btnImprimirTicketFacBol' tipo='".$proformas[$i]["tipo"]."' documento='".$proformas[$i]["documento"]."'><i class='fa fa-file-word-o'></i></button></div>";
+                $cargo = "";
+
+            }
+
+            //*RECEPCION
+            $rutaRep = "../../".$proformas[$i]["recepcion"];
+
+            if(file_exists($rutaRep) && $proformas[$i]["recepcion"] != "../imagenes_vasco/default/anonymous.png"){
+
+                $recepcion = "<a class='btn btn-xs btn-info' href='".$rutaRep."' download title='Descargar RECEPCION' >R</a>";
+
+            }else{
+
+                $recepcion = "";
+
+            }            
+
+            if($proformas[$i]["facturacion"] == "0"){
+
+                $botones =  "<div class='btn-group'><button title='Imprimir Proforma' class='btn btn-xs btn-success btnImprimirProforma' tipo='".$proformas[$i]["tipo"]."' documento='".$proformas[$i]["documento"]."'><i class='fa fa-print'></i></button><button title='Anular Documento' class='btn btn-xs  btn-danger btnAnularDocumento' documento='".$proformas[$i]["documento"]."' tipo='".$proformas[$i]["tipo"]."' pagina='facturas'><i class='fa fa-close'></i></button><button title='Cargar Fotos' class='btn btn-xs btn-info btnCargarFotosFact' tipo='".$proformas[$i]["tipo"]."' documento='".$proformas[$i]["documento"]."' data-toggle='modal' data-target='#modalCargarFotos'><i class='fa fa-camera'></i></button></div>";
+
+            }else{
+
+                $botones =  "<div class='btn-group'><button title='Imprimir Factura' class='btn btn-xs btn-success btnImprimirBoleta' tipo='".$proformas[$i]["tipo"]."' documento='".$proformas[$i]["documento"]."'><i class='fa fa-print'></i></button><button class='btn btn-xs btn-primary btnImprimirTicketFacBol' tipo='".$proformas[$i]["tipo"]."' documento='".$proformas[$i]["documento"]."'><i class='fa fa-file-word-o'></i></button><button title='Cargar Fotos' class='btn btn-xs btn-info btnCargarFotosFact' tipo='".$proformas[$i]["tipo"]."' documento='".$proformas[$i]["documento"]."' data-toggle='modal' data-target='#modalCargarFotos'><i class='fa fa-camera'></i></button></div>";
 
             }            
 
@@ -65,8 +92,8 @@ class TablaProformas{
             "'.$proformas[$i]["fecha"].'",
             "'.$proformas[$i]["doc_destino"].'",
             "'.$proformas[$i]["estado"].'",
-            "'.$proformas[$i]["agencia"].'",
             "'.$proformas[$i]["ubigeo"].'",
+            "'.$cargo." ".$recepcion.'",
             "'.$botones.'"
             ],';
             }
