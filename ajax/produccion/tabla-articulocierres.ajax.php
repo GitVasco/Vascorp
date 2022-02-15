@@ -20,23 +20,13 @@ class TablaProductosCierres{
 
         for($i = 0; $i < count($articulos); $i++){
 
-        
+            $cerrar = "<button class='btn btn-danger btn-xs btnCerrarServicio' articulo='".$articulos[$i]["articulo"]."' codigo='".$articulos[$i]["codigo"]."' saldo='".$articulos[$i]["saldo"]."' idServ='".$articulos[$i]["id"]."' cerrar='1'>C</button>"; 
 
-        // if($articulos[$i]["taller"] <= 0){
-
-        //     $taller = "<button class='btn btn-danger'>".$articulos[$i]["taller"]."</button>";
-
-        // }else{
-
-        //     $taller = "<button class='btn btn-success'>".$articulos[$i]["taller"]."</button>";
-
-        // }        
-
-        /*=============================================
-        TRAEMOS LAS ACCIONES
-        =============================================*/         
-        
-        $botones =  "<div class='btn-group'><button class='btn btn-primary btn-xs agregarServicio recuperarBoton' codServicio ='".$articulos[$i]["id"]."' codDetalle ='".$articulos[$i]["codigo"]."' articuloCierre='".$articulos[$i]["articulo"]."' saldoServicio='".$articulos[$i]["saldo"]."'><i class='fa fa-plus-circle'></i> Agregar</button></div>"; 
+            /*=============================================
+            TRAEMOS LAS ACCIONES
+            =============================================*/         
+            
+            $botones =  "<div class='btn-group'><button class='btn btn-primary btn-xs agregarServicio recuperarBoton' codServicio ='".$articulos[$i]["id"]."' codDetalle ='".$articulos[$i]["codigo"]."' articuloCierre='".$articulos[$i]["articulo"]."' saldoServicio='".$articulos[$i]["saldo"]."'><i class='fa fa-plus-circle'></i> Agregar</button></div>"; 
 
             $datosJson .= '[
             "'.$articulos[$i]["codigo"].'",
@@ -46,6 +36,7 @@ class TablaProductosCierres{
             "'.$articulos[$i]["color"].'",
             "'.$articulos[$i]["talla"].'",
             "'.$articulos[$i]["saldo"].'",
+            "<center>'.$cerrar.'</center>",
             "'.$botones.'"
             ],';        
             }

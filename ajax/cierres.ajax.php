@@ -42,6 +42,25 @@ class AjaxCierres{
         
 	}
 
+	public function ajaxCerrarServicio(){
+
+
+        $articulo=$this->articulo;
+		$saldo=$this->saldo;
+		$id=$this->id;
+
+		//*1ERO CERRAR EL SERVICIO
+
+		$respuestaC=ModeloCierres::mdlCerrarServicio($id);
+
+		//*2DO BAJAR EN SERVICIOS DEL ARTICULO
+
+		$respuestaS=ModeloArticulos::mdlBajarServicio($articulo, $saldo);
+
+        echo json_encode($respuestaS);
+        
+	}
+
 
 	//PAGAR ESTADO DE PAGO
 	public $activarGuia;
@@ -164,3 +183,11 @@ if(isset($_POST["estadoPagoServicio"])){
 	$activarPagoServicio->ajaxPagarCierreServicio();
 }
 
+
+if(isset($_POST["saldo"])){
+	$cerrarServicio=new AjaxCierres();
+	$cerrarServicio->articulo		=$_POST["articuloSer"];
+	$cerrarServicio->saldo			=$_POST["saldo"];
+	$cerrarServicio->id			=$_POST["id"];
+	$cerrarServicio->ajaxCerrarServicio();
+}

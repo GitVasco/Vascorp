@@ -20,6 +20,10 @@ $hora=date('h:i:s');
 include "../reportes_excel/Classes/PHPExcel.php";
 require_once "../../controladores/usuarios.controlador.php";
 require_once "../../modelos/usuarios.modelo.php";
+
+require_once "../../controladores/articulos.controlador.php";
+require_once "../../modelos/articulos.modelo.php";
+
 /* 
 * LLAMAMOS A LA CONEXION
 */
@@ -480,253 +484,444 @@ $objPHPExcel->getActiveSheet()->getStyle("N$fila")->getAlignment()->setHorizonta
 $objPHPExcel->getActiveSheet()->getStyle("N$fila")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 $objPHPExcel->getActiveSheet()->getStyle("N$fila")->getAlignment()->setWrapText(true);
 
+
+$articulos  = ControladorArticulos::ctrArticulosUrgencia();
+
+for ($i=0; $i < count($articulos)-1; $i++) { 
+    
+    $fila+= 1;
+
+    //* nombre del taller
+    if(!isset($articulos[$i-1]["nom_taller"])){
+
+        $articulos[$i-1]["nom_taller"] =  "FALLAR";
+
+    }else{
+
+        $articulos[$i-1]["nom_taller"];
+
+    }
+    
+    if($articulos[$i]["nom_taller"] == $articulos[$i-1]["nom_taller"]){
+
+            $nom_taller = "";        
+
+    }else{
+
+        $nom_taller = $articulos[$i]["nom_taller"];
+
+    }
+
+    //*modelo
+    if(!isset($articulos[$i-1]["modelo"])){
+
+        $articulos[$i-1]["modelo"] =  "FALLAR";
+
+    }else{
+
+        $articulos[$i-1]["modelo"];
+
+    }
+    
+    if($articulos[$i]["modelo"] == $articulos[$i-1]["modelo"]){
+
+            $modelo = "";        
+
+    }else{
+
+        $modelo = $articulos[$i]["modelo"];
+
+    }
+
+    //*nombre
+    if(!isset($articulos[$i-1]["nombre"])){
+
+        $articulos[$i-1]["nombre"] =  "FALLAR";
+
+    }else{
+
+        $articulos[$i-1]["nombre"];
+
+    }
+    
+    if($articulos[$i]["nombre"] == $articulos[$i-1]["nombre"]){
+
+            $nombre = "";        
+
+    }else{
+
+        $nombre = $articulos[$i]["nombre"];
+
+    }
+
+
+    //*color
+    if(!isset($articulos[$i-1]["color"])){
+
+        $articulos[$i-1]["color"] =  "FALLAR";
+
+    }else{
+
+        $articulos[$i-1]["color"];
+
+    }
+    
+    if($articulos[$i]["color"] == $articulos[$i-1]["color"] && $articulos[$i]["nombre"] == $articulos[$i-1]["nombre"]){
+
+            $color = "";        
+
+    }else{
+
+        $color = $articulos[$i]["color"];
+
+    }
+
+    $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", utf8_encode($nom_taller));
+    $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", utf8_encode($modelo));
+    $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", utf8_encode($nombre));
+    $objPHPExcel->getActiveSheet()->SetCellValue("D$fila", utf8_encode($color));
+    $objPHPExcel->getActiveSheet()->SetCellValue("E$fila", "T".utf8_encode($articulos[$i]["talla"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("F$fila", utf8_encode($articulos[$i]["proyeccion"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("G$fila", utf8_encode($articulos[$i]["avance"])." %");
+    $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", utf8_encode($articulos[$i]["mp_faltante"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("I$fila", utf8_encode($articulos[$i]["stockB"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", utf8_encode($articulos[$i]["pedidos"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", utf8_encode($articulos[$i]["taller"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("L$fila", utf8_encode($articulos[$i]["alm_corteA"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("M$fila", utf8_encode($articulos[$i]["ord_corte"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("N$fila", utf8_encode($articulos[$i]["ult_mes"]));
+
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde_3, "A$fila");
+    $objPHPExcel->getActiveSheet()->getStyle("A$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde_2, "B$fila");
+    $objPHPExcel->getActiveSheet()->getStyle("B$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde_6, "C$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde_6, "D$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde_6, "E$fila");
+    $objPHPExcel->getActiveSheet()->getStyle("E$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde_5, "F$fila");
+
+    if(utf8_encode($articulos[$i]["avance"]) < 90){
+
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_1, "G$fila");
+        $objPHPExcel->getActiveSheet()->getStyle("G$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+    }else{
+
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_5, "G$fila");
+        $objPHPExcel->getActiveSheet()->getStyle("G$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+    }
+
+    if(utf8_encode($articulos[$i]["mp_faltante"]) == "F/TELA"){
+
+      $objPHPExcel->getActiveSheet()->setSharedStyle($borde_8, "H$fila");
+
+    }else{
+
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_7, "H$fila");
+
+    }
+
+    if(utf8_encode($articulos[$i]["stockB"]) < 0){
+
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_8, "I$fila");
+
+    }else{
+
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_7, "I$fila");
+
+    }
+
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde_2, "J$fila");
+
+    if(utf8_encode($articulos[$i]["taller"]) <= 0){
+
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_8, "K$fila");
+
+    }else{
+
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_6, "K$fila");
+
+    }
+
+    if(utf8_encode($articulos[$i]["alm_corte"]) <= 0){
+
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_8, "L$fila");
+        $objPHPExcel->getActiveSheet()->getStyle("L$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+    }else{
+
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_6, "L$fila");
+        $objPHPExcel->getActiveSheet()->getStyle("L$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+    }
+    
+    if(utf8_encode($articulos[$i]["ord_corte"]) <= 0){
+
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_1, "M$fila");
+
+    }else{
+
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_3, "M$fila");
+
+    }
+
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde_4, "N$fila");    
+
+}
+
 #query para sacar los datos deL detalle
-$sqlDetalle = mysql_query("SELECT 
-                                      'a' AS inicio,
-                                      'T3 - TRUSAS' AS nom_taller,
-                                      a.articulo,
-                                      a.id_marca,
-                                      a.marca,
-                                      a.modelo,
-                                      a.nombre,
-                                      a.cod_color,
-                                      a.color,
-                                      a.cod_talla,
-                                      a.talla,
-                                      a.estado,
-                                      a.urgencia,
-                                      a.mp_faltante,
-                                      a.alerta,
-                                      ROUND(
-                                        (
-                                          IFNULL(a.ult_mes, 0) * a.urgencia / 100
-                                        ),
-                                        0
-                                      ) AS configuracion,
-                                      CASE
-                                        WHEN a.stock < 0 
-                                        THEN 0 
-                                        ELSE a.stock 
-                                      END AS stock,
-                                      (a.stock - a.pedidos) AS stockB,
-                                      a.pedidos,
-                                      (a.taller + a.servicio) AS taller,
-                                      a.alm_corte,
-                                      CASE
-                                        WHEN a.alerta = '0' 
-                                        THEN a.alm_corte 
-                                        ELSE CONCAT('I-', a.alm_corte) 
-                                      END alm_corteA,
-                                      a.ord_corte,
-                                      a.proyeccion,
-                                      IFNULL(a.prod, 0) AS prod,
-                                      IFNULL(
-                                        ROUND(
-                                          (IFNULL(a.prod, 0) / a.proyeccion) * 100,
-                                          2
-                                        ),
-                                        0
-                                      ) AS avance,
-                                      IFNULL(a.ult_mes, 0) AS ult_mes 
-                                      FROM
-                                      articulojf a 
-                                      LEFT JOIN modelojf m 
-                                        ON a.modelo = m.modelo 
-                                      WHERE ROUND(
-                                        (
-                                          IFNULL(a.ult_mes, 0) * a.urgencia / 100
-                                        ),
-                                        0
-                                      ) > (a.stock - a.pedidos) 
-                                      AND a.estado = 'Activo' 
-                                      AND LEFT(a.modelo, 1) NOT IN ('D') 
-                                      AND a.servicio = 0 
-                                      AND m.tipo NOT IN ('BRASIER') 
-                                      UNION
-                                      SELECT 
-                                      'b' AS inicio,
-                                      CONCAT(
-                                        CASE
-                                          WHEN sd.taller IS NULL 
-                                          THEN cd.taller 
-                                          WHEN cd.taller IS NULL 
-                                          THEN sd.taller 
-                                          WHEN sd.taller = cd.taller 
-                                          THEN sd.taller 
-                                          WHEN sd.taller <> cd.taller 
-                                          THEN sd.taller 
-                                        END,
-                                        ' - ',
-                                        (SELECT 
-                                          nom_sector 
-                                        FROM
-                                          sectorjf s 
-                                        WHERE s.cod_sector = 
-                                          CASE
-                                            WHEN sd.taller IS NULL 
-                                            THEN cd.taller 
-                                            WHEN cd.taller IS NULL 
-                                            THEN sd.taller 
-                                            WHEN sd.taller = cd.taller 
-                                            THEN sd.taller 
-                                            WHEN sd.taller <> cd.taller 
-                                            THEN sd.taller 
-                                          END)
-                                      ) AS nom_sector,
-                                      a.articulo,
-                                      a.id_marca,
-                                      a.marca,
-                                      a.modelo,
-                                      a.nombre,
-                                      a.cod_color,
-                                      a.color,
-                                      a.cod_talla,
-                                      a.talla,
-                                      a.estado,
-                                      a.urgencia,
-                                      a.mp_faltante,
-                                      a.alerta,
-                                      ROUND(
-                                        (
-                                          IFNULL(a.ult_mes, 0) * a.urgencia / 100
-                                        ),
-                                        0
-                                      ) AS configuracion,
-                                      CASE
-                                        WHEN a.stock < 0 
-                                        THEN 0 
-                                        ELSE a.stock 
-                                      END AS stock,
-                                      (a.stock - a.pedidos) AS stockB,
-                                      a.pedidos,
-                                      CASE
+/* $sqlDetalle = mysql_query("SELECT 
+                                'a' AS inicio,
+                                'T3 - TRUSAS' AS nom_taller,
+                                a.articulo,
+                                a.id_marca,
+                                a.marca,
+                                a.modelo,
+                                a.nombre,
+                                a.cod_color,
+                                a.color,
+                                a.cod_talla,
+                                a.talla,
+                                a.estado,
+                                a.urgencia,
+                                a.mp_faltante,
+                                a.alerta,
+                                ROUND(
+                                    (
+                                    IFNULL(a.ult_mes, 0) * a.urgencia / 100
+                                    ),
+                                    0
+                                ) AS configuracion,
+                                CASE
+                                    WHEN a.stock < 0 
+                                    THEN 0 
+                                    ELSE a.stock 
+                                END AS stock,
+                                (a.stock - a.pedidos) AS stockB,
+                                a.pedidos,
+                                (a.taller + a.servicio) AS taller,
+                                a.alm_corte,
+                                CASE
+                                    WHEN a.alerta = '0' 
+                                    THEN a.alm_corte 
+                                    ELSE CONCAT('I-', a.alm_corte) 
+                                END alm_corteA,
+                                a.ord_corte,
+                                a.proyeccion,
+                                IFNULL(a.prod, 0) AS prod,
+                                IFNULL(
+                                    ROUND(
+                                    (IFNULL(a.prod, 0) / a.proyeccion) * 100,
+                                    2
+                                    ),
+                                    0
+                                ) AS avance,
+                                IFNULL(a.ult_mes, 0) AS ult_mes 
+                                FROM
+                                articulojf a 
+                                LEFT JOIN modelojf m 
+                                    ON a.modelo = m.modelo 
+                                WHERE ROUND(
+                                    (
+                                    IFNULL(a.ult_mes, 0) * a.urgencia / 100
+                                    ),
+                                    0
+                                ) > (a.stock - a.pedidos) 
+                                AND a.estado = 'Activo' 
+                                AND LEFT(a.modelo, 1) NOT IN ('D') 
+                                AND a.servicio = 0 
+                                AND m.tipo NOT IN ('BRASIER') 
+                                UNION
+                                SELECT 
+                                'b' AS inicio,
+                                CONCAT(
+                                    CASE
+                                    WHEN sd.taller IS NULL 
+                                    THEN cd.taller 
+                                    WHEN cd.taller IS NULL 
+                                    THEN sd.taller 
+                                    WHEN sd.taller = cd.taller 
+                                    THEN sd.taller 
+                                    WHEN sd.taller <> cd.taller 
+                                    THEN sd.taller 
+                                    END,
+                                    ' - ',
+                                    (SELECT 
+                                    nom_sector 
+                                    FROM
+                                    sectorjf s 
+                                    WHERE s.cod_sector = 
+                                    CASE
                                         WHEN sd.taller IS NULL 
-                                        THEN cd.cantidad 
+                                        THEN cd.taller 
                                         WHEN cd.taller IS NULL 
-                                        THEN sd.saldo 
+                                        THEN sd.taller 
                                         WHEN sd.taller = cd.taller 
-                                        THEN sd.saldo + cd.cantidad 
+                                        THEN sd.taller 
                                         WHEN sd.taller <> cd.taller 
-                                        THEN sd.saldo 
-                                      END AS taller,
-                                      a.alm_corte,
-                                      CASE
-                                        WHEN a.alerta = '0' 
-                                        THEN a.alm_corte 
-                                        ELSE CONCAT('I-', a.alm_corte) 
-                                      END alm_corteA,
-                                      a.ord_corte,
-                                      a.proyeccion,
-                                      IFNULL(a.prod, 0) AS prod,
-                                      IFNULL(
-                                        ROUND(
-                                          (IFNULL(a.prod, 0) / a.proyeccion) * 100,
-                                          2
-                                        ),
-                                        0
-                                      ) AS avance,
-                                      IFNULL(a.ult_mes, 0) AS ult_mes 
-                                      FROM
-                                      articulojf a 
-                                      LEFT JOIN 
-                                        (SELECT 
-                                          LEFT(sd.codigo, 2) AS taller,
-                                          sd.articulo,
-                                          SUM(sd.saldo) AS saldo 
-                                        FROM
-                                          servicios_detallejf sd 
-                                        WHERE sd.saldo > 0 
-                                        GROUP BY LEFT(sd.codigo, 2),
-                                          sd.articulo) AS sd 
-                                        ON a.articulo = sd.articulo 
-                                      LEFT JOIN 
-                                        (SELECT 
-                                          LEFT(cd.codigo, 2) AS taller,
-                                          cd.articulo,
-                                          SUM(cd.cantidad) AS cantidad 
-                                        FROM
-                                          cierres_detallejf cd 
-                                        WHERE cd.cantidad > 0 
-                                        GROUP BY LEFT(cd.codigo, 2),
-                                          cd.articulo) AS cd 
-                                        ON a.articulo = cd.articulo 
-                                      WHERE a.estado = 'ACTIVO' 
-                                      AND servicio > 0 
-                                      AND ROUND(
-                                        (
-                                          IFNULL(a.ult_mes, 0) * a.urgencia / 100
-                                        ),
-                                        0
-                                      ) > (a.stock - a.pedidos) 
-                                      GROUP BY a.articulo,
-                                      sd.taller 
-                                      UNION
-                                      SELECT 
-                                      'c' AS inicio,
-                                      'T1 - BRASIER' AS nom_taller,
-                                      a.articulo,
-                                      a.id_marca,
-                                      a.marca,
-                                      a.modelo,
-                                      a.nombre,
-                                      a.cod_color,
-                                      a.color,
-                                      a.cod_talla,
-                                      a.talla,
-                                      a.estado,
-                                      a.urgencia,
-                                      a.mp_faltante,
-                                      a.alerta,
-                                      ROUND(
-                                        (
-                                          IFNULL(a.ult_mes, 0) * a.urgencia / 100
-                                        ),
-                                        0
-                                      ) AS configuracion,
-                                      CASE
-                                        WHEN a.stock < 0 
-                                        THEN 0 
-                                        ELSE a.stock 
-                                      END AS stock,
-                                      (a.stock - a.pedidos) AS stockB,
-                                      a.pedidos,
-                                      (a.taller + a.servicio) AS taller,
-                                      a.alm_corte,
-                                      CASE
-                                        WHEN a.alerta = '0' 
-                                        THEN a.alm_corte 
-                                        ELSE CONCAT('I-', a.alm_corte) 
-                                      END alm_corteA,
-                                      a.ord_corte,
-                                      a.proyeccion,
-                                      IFNULL(a.prod, 0) AS prod,
-                                      IFNULL(
-                                        ROUND(
-                                          (IFNULL(a.prod, 0) / a.proyeccion) * 100,
-                                          2
-                                        ),
-                                        0
-                                      ) AS avance,
-                                      IFNULL(a.ult_mes, 0) AS ult_mes 
-                                      FROM
-                                      articulojf a 
-                                      LEFT JOIN modelojf m 
-                                        ON a.modelo = m.modelo 
-                                      WHERE ROUND(
-                                        (
-                                          IFNULL(a.ult_mes, 0) * a.urgencia / 100
-                                        ),
-                                        0
-                                      ) > (a.stock - a.pedidos) 
-                                      AND a.estado = 'Activo' 
-                                      AND LEFT(a.modelo, 1) NOT IN ('D') 
-                                      AND m.tipo IN ('BRASIER')
-                                      ORDER BY inicio, 
-                                      nom_taller,
-                                      articulo") or die(mysql_error());
+                                        THEN sd.taller 
+                                    END)
+                                ) AS nom_sector,
+                                a.articulo,
+                                a.id_marca,
+                                a.marca,
+                                a.modelo,
+                                a.nombre,
+                                a.cod_color,
+                                a.color,
+                                a.cod_talla,
+                                a.talla,
+                                a.estado,
+                                a.urgencia,
+                                a.mp_faltante,
+                                a.alerta,
+                                ROUND(
+                                    (
+                                    IFNULL(a.ult_mes, 0) * a.urgencia / 100
+                                    ),
+                                    0
+                                ) AS configuracion,
+                                CASE
+                                    WHEN a.stock < 0 
+                                    THEN 0 
+                                    ELSE a.stock 
+                                END AS stock,
+                                (a.stock - a.pedidos) AS stockB,
+                                a.pedidos,
+                                CASE
+                                    WHEN sd.taller IS NULL 
+                                    THEN cd.cantidad 
+                                    WHEN cd.taller IS NULL 
+                                    THEN sd.saldo 
+                                    WHEN sd.taller = cd.taller 
+                                    THEN sd.saldo + cd.cantidad 
+                                    WHEN sd.taller <> cd.taller 
+                                    THEN sd.saldo 
+                                END AS taller,
+                                a.alm_corte,
+                                CASE
+                                    WHEN a.alerta = '0' 
+                                    THEN a.alm_corte 
+                                    ELSE CONCAT('I-', a.alm_corte) 
+                                END alm_corteA,
+                                a.ord_corte,
+                                a.proyeccion,
+                                IFNULL(a.prod, 0) AS prod,
+                                IFNULL(
+                                    ROUND(
+                                    (IFNULL(a.prod, 0) / a.proyeccion) * 100,
+                                    2
+                                    ),
+                                    0
+                                ) AS avance,
+                                IFNULL(a.ult_mes, 0) AS ult_mes 
+                                FROM
+                                articulojf a 
+                                LEFT JOIN 
+                                    (SELECT 
+                                    LEFT(sd.codigo, 2) AS taller,
+                                    sd.articulo,
+                                    SUM(sd.saldo) AS saldo 
+                                    FROM
+                                    servicios_detallejf sd 
+                                    WHERE sd.saldo > 0 
+                                    AND sd.cerrar = 0 
+                                    GROUP BY LEFT(sd.codigo, 2),
+                                    sd.articulo) AS sd 
+                                    ON a.articulo = sd.articulo 
+                                LEFT JOIN 
+                                    (SELECT 
+                                    LEFT(cd.codigo, 2) AS taller,
+                                    cd.articulo,
+                                    SUM(cd.cantidad) AS cantidad 
+                                    FROM
+                                    cierres_detallejf cd 
+                                    WHERE cd.cantidad > 0 
+                                    GROUP BY LEFT(cd.codigo, 2),
+                                    cd.articulo) AS cd 
+                                    ON a.articulo = cd.articulo 
+                                WHERE a.estado = 'ACTIVO' 
+                                AND servicio > 0 
+                                AND ROUND(
+                                    (
+                                    IFNULL(a.ult_mes, 0) * a.urgencia / 100
+                                    ),
+                                    0
+                                ) > (a.stock - a.pedidos) 
+                                GROUP BY a.articulo,
+                                sd.taller 
+                                UNION
+                                SELECT 
+                                'c' AS inicio,
+                                'T1 - BRASIER' AS nom_taller,
+                                a.articulo,
+                                a.id_marca,
+                                a.marca,
+                                a.modelo,
+                                a.nombre,
+                                a.cod_color,
+                                a.color,
+                                a.cod_talla,
+                                a.talla,
+                                a.estado,
+                                a.urgencia,
+                                a.mp_faltante,
+                                a.alerta,
+                                ROUND(
+                                    (
+                                    IFNULL(a.ult_mes, 0) * a.urgencia / 100
+                                    ),
+                                    0
+                                ) AS configuracion,
+                                CASE
+                                    WHEN a.stock < 0 
+                                    THEN 0 
+                                    ELSE a.stock 
+                                END AS stock,
+                                (a.stock - a.pedidos) AS stockB,
+                                a.pedidos,
+                                (a.taller + a.servicio) AS taller,
+                                a.alm_corte,
+                                CASE
+                                    WHEN a.alerta = '0' 
+                                    THEN a.alm_corte 
+                                    ELSE CONCAT('I-', a.alm_corte) 
+                                END alm_corteA,
+                                a.ord_corte,
+                                a.proyeccion,
+                                IFNULL(a.prod, 0) AS prod,
+                                IFNULL(
+                                    ROUND(
+                                    (IFNULL(a.prod, 0) / a.proyeccion) * 100,
+                                    2
+                                    ),
+                                    0
+                                ) AS avance,
+                                IFNULL(a.ult_mes, 0) AS ult_mes 
+                                FROM
+                                articulojf a 
+                                LEFT JOIN modelojf m 
+                                    ON a.modelo = m.modelo 
+                                WHERE ROUND(
+                                    (
+                                    IFNULL(a.ult_mes, 0) * a.urgencia / 100
+                                    ),
+                                    0
+                                ) > (a.stock - a.pedidos) 
+                                AND a.estado = 'Activo' 
+                                AND LEFT(a.modelo, 1) NOT IN ('D') 
+                                AND m.tipo IN ('BRASIER') 
+                                ORDER BY inicio,
+                                nom_taller,
+                                articulo"
+              
+) or die(mysql_error()); */
+
+/* while($respDetalle = mysql_fetch_array($sqlDetalle)){
 
 
-while($respDetalle = mysql_fetch_array($sqlDetalle)){
 
     $fila+= 1;
     $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", utf8_encode($respDetalle["nom_taller"]));
@@ -822,7 +1017,7 @@ while($respDetalle = mysql_fetch_array($sqlDetalle)){
 
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde_4, "N$fila");
 
-}
+} */
 
 
 

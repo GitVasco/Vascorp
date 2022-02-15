@@ -301,6 +301,7 @@
                   <th>Color</th>
                   <th>Talla</th>
                   <th>Saldo</th>
+                  <th>Cerrar</th>
                   <th>Acciones</th>
                 </tr>
 

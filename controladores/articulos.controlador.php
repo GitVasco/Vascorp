@@ -1237,5 +1237,15 @@ class controladorArticulos{
 		
 	}
 
+	//* articulos en urgencia
+	static public function ctrArticulosUrgencia(){
+
+		$respuesta = ModeloArticulos::mdlArticulosUrgencia();
+
+		return $respuesta;
+		
+	}
+
+
 }
 

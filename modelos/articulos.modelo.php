@@ -1917,5 +1917,294 @@ class ModeloArticulos
 
 	}	
 
+	//* BAJAR SERVICIO
+	static public function mdlBajarServicio($articulo, $saldo){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE 
+													articulojf 
+												SET
+													servicio = servicio - :saldo 
+												WHERE articulo = :articulo ");
+
+		$stmt->bindParam(":articulo", $articulo, PDO::PARAM_STR);
+		$stmt->bindParam(":saldo", $saldo, PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+
+		} else {
+
+			return $stmt->errorInfo();
+
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+
+	}	
+
+
+	/* 
+	* MOSTRAR ARTICULOS EN URGENCIA
+	*/
+	static public function mdlArticulosUrgencia(){
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+					'a' AS inicio,
+					'T3 - TRUSAS' AS nom_taller,
+					a.articulo,
+					a.id_marca,
+					a.marca,
+					a.modelo,
+					a.nombre,
+					a.cod_color,
+					a.color,
+					a.cod_talla,
+					a.talla,
+					a.estado,
+					a.urgencia,
+					a.mp_faltante,
+					a.alerta,
+					ROUND(
+					(
+						IFNULL(a.ult_mes, 0) * a.urgencia / 100
+					),
+					0
+					) AS configuracion,
+					CASE
+					WHEN a.stock < 0 
+					THEN 0 
+					ELSE a.stock 
+					END AS stock,
+					(a.stock - a.pedidos) AS stockB,
+					a.pedidos,
+					(a.taller + a.servicio) AS taller,
+					a.alm_corte,
+					CASE
+					WHEN a.alerta = '0' 
+					THEN a.alm_corte 
+					ELSE CONCAT('I-', a.alm_corte) 
+					END alm_corteA,
+					a.ord_corte,
+					a.proyeccion,
+					IFNULL(a.prod, 0) AS prod,
+					IFNULL(
+					ROUND(
+						(IFNULL(a.prod, 0) / a.proyeccion) * 100,
+						2
+					),
+					0
+					) AS avance,
+					IFNULL(a.ult_mes, 0) AS ult_mes 
+				FROM
+					articulojf a 
+					LEFT JOIN modelojf m 
+					ON a.modelo = m.modelo 
+				WHERE ROUND(
+					(
+						IFNULL(a.ult_mes, 0) * a.urgencia / 100
+					),
+					0
+					) > (a.stock - a.pedidos) 
+					AND a.estado = 'Activo' 
+					AND LEFT(a.modelo, 1) NOT IN ('D') 
+					AND a.servicio = 0 
+					AND m.tipo NOT IN ('BRASIER') 
+				UNION
+				SELECT 
+					'b' AS inicio,
+					CONCAT(
+					CASE
+						WHEN sd.taller IS NULL 
+						THEN cd.taller 
+						WHEN cd.taller IS NULL 
+						THEN sd.taller 
+						WHEN sd.taller = cd.taller 
+						THEN sd.taller 
+						WHEN sd.taller <> cd.taller 
+						THEN sd.taller 
+					END,
+					' - ',
+					(SELECT 
+						nom_sector 
+					FROM
+						sectorjf s 
+					WHERE s.cod_sector = 
+						CASE
+						WHEN sd.taller IS NULL 
+						THEN cd.taller 
+						WHEN cd.taller IS NULL 
+						THEN sd.taller 
+						WHEN sd.taller = cd.taller 
+						THEN sd.taller 
+						WHEN sd.taller <> cd.taller 
+						THEN sd.taller 
+						END)
+					) AS nom_sector,
+					a.articulo,
+					a.id_marca,
+					a.marca,
+					a.modelo,
+					a.nombre,
+					a.cod_color,
+					a.color,
+					a.cod_talla,
+					a.talla,
+					a.estado,
+					a.urgencia,
+					a.mp_faltante,
+					a.alerta,
+					ROUND(
+					(
+						IFNULL(a.ult_mes, 0) * a.urgencia / 100
+					),
+					0
+					) AS configuracion,
+					CASE
+					WHEN a.stock < 0 
+					THEN 0 
+					ELSE a.stock 
+					END AS stock,
+					(a.stock - a.pedidos) AS stockB,
+					a.pedidos,
+					CASE
+					WHEN sd.taller IS NULL 
+					THEN cd.cantidad 
+					WHEN cd.taller IS NULL 
+					THEN sd.saldo 
+					WHEN sd.taller = cd.taller 
+					THEN sd.saldo + cd.cantidad 
+					WHEN sd.taller <> cd.taller 
+					THEN sd.saldo 
+					END AS taller,
+					a.alm_corte,
+					CASE
+					WHEN a.alerta = '0' 
+					THEN a.alm_corte 
+					ELSE CONCAT('I-', a.alm_corte) 
+					END alm_corteA,
+					a.ord_corte,
+					a.proyeccion,
+					IFNULL(a.prod, 0) AS prod,
+					IFNULL(
+					ROUND(
+						(IFNULL(a.prod, 0) / a.proyeccion) * 100,
+						2
+					),
+					0
+					) AS avance,
+					IFNULL(a.ult_mes, 0) AS ult_mes 
+				FROM
+					articulojf a 
+					LEFT JOIN 
+					(SELECT 
+						LEFT(sd.codigo, 2) AS taller,
+						sd.articulo,
+						SUM(sd.saldo) AS saldo 
+					FROM
+						servicios_detallejf sd 
+					WHERE sd.saldo > 0 
+						AND sd.cerrar = 0 
+					GROUP BY LEFT(sd.codigo, 2),
+						sd.articulo) AS sd 
+					ON a.articulo = sd.articulo 
+					LEFT JOIN 
+					(SELECT 
+						LEFT(cd.codigo, 2) AS taller,
+						cd.articulo,
+						SUM(cd.cantidad) AS cantidad 
+					FROM
+						cierres_detallejf cd 
+					WHERE cd.cantidad > 0 
+					GROUP BY LEFT(cd.codigo, 2),
+						cd.articulo) AS cd 
+					ON a.articulo = cd.articulo 
+				WHERE a.estado = 'ACTIVO' 
+					AND servicio > 0 
+					AND ROUND(
+					(
+						IFNULL(a.ult_mes, 0) * a.urgencia / 100
+					),
+					0
+					) > (a.stock - a.pedidos) 
+				GROUP BY a.articulo,
+					sd.taller 
+				UNION
+				SELECT 
+					'c' AS inicio,
+					'T1 - BRASIER' AS nom_taller,
+					a.articulo,
+					a.id_marca,
+					a.marca,
+					a.modelo,
+					a.nombre,
+					a.cod_color,
+					a.color,
+					a.cod_talla,
+					a.talla,
+					a.estado,
+					a.urgencia,
+					a.mp_faltante,
+					a.alerta,
+					ROUND(
+					(
+						IFNULL(a.ult_mes, 0) * a.urgencia / 100
+					),
+					0
+					) AS configuracion,
+					CASE
+					WHEN a.stock < 0 
+					THEN 0 
+					ELSE a.stock 
+					END AS stock,
+					(a.stock - a.pedidos) AS stockB,
+					a.pedidos,
+					(a.taller + a.servicio) AS taller,
+					a.alm_corte,
+					CASE
+					WHEN a.alerta = '0' 
+					THEN a.alm_corte 
+					ELSE CONCAT('I-', a.alm_corte) 
+					END alm_corteA,
+					a.ord_corte,
+					a.proyeccion,
+					IFNULL(a.prod, 0) AS prod,
+					IFNULL(
+					ROUND(
+						(IFNULL(a.prod, 0) / a.proyeccion) * 100,
+						2
+					),
+					0
+					) AS avance,
+					IFNULL(a.ult_mes, 0) AS ult_mes 
+				FROM
+					articulojf a 
+					LEFT JOIN modelojf m 
+					ON a.modelo = m.modelo 
+				WHERE ROUND(
+					(
+						IFNULL(a.ult_mes, 0) * a.urgencia / 100
+					),
+					0
+					) > (a.stock - a.pedidos) 
+					AND a.estado = 'Activo' 
+					AND LEFT(a.modelo, 1) NOT IN ('D') 
+					AND m.tipo IN ('BRASIER') 
+				ORDER BY inicio,
+					nom_taller,
+					articulo");
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+
+		$stmt->close();
+
+		$stmt = null;
+	}	
+
 }
 

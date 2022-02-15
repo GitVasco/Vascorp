@@ -1037,3 +1037,37 @@ $(".tablaCierres").on("click",".btnPagarCierre",function(){
 	  $(this).html("POR PAGAR");
     $(this).attr("estadoPago","PAGADO");}
 });
+
+
+$(".tablaArticuloCierre tbody").on("click", "button.btnCerrarServicio", function() {
+
+    var articuloSer = $(this).attr("articulo");
+    var saldo = $(this).attr("saldo");
+    var id = $(this).attr("idServ");
+
+    //console.log(articuloSer, saldo, id)
+
+    $(this).removeClass("btn-danger btnCerrarServicio");  
+    $(this).addClass("btn-default");
+
+    var datos = new FormData();
+    datos.append("articuloSer", articuloSer);
+    datos.append("saldo", saldo);
+    datos.append("id", id);
+
+    $.ajax({
+        url: "ajax/cierres.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function(respuesta) {
+
+            console.log(respuesta);
+
+        }
+    })
+
+})

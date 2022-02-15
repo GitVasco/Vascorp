@@ -2813,12 +2813,13 @@ class ModeloCuentas{
 							'' AS cod_pago,
 							'' AS doc_origen,
 							'' AS fact,
-							'' AS letra 
+							'' AS letra,
+							'' as notas 
 						FROM
 							maestrajf m 
 						WHERE m.tipo_dato = 'tvend' 
 							AND m.codigo = '".$vend."' 
-						UNION
+					UNION
 						SELECT 
 							cc.tipo_doc,
 							cc.num_cta,
@@ -2836,7 +2837,8 @@ class ModeloCuentas{
 							WHEN cc.tipo_doc IN ('85') 
 							THEN FORMAT(cc.monto, 2) 
 							ELSE '' 
-							END AS letra 
+							END AS letra,
+							cc.notas  
 						FROM
 							cuenta_ctejf cc 
 							LEFT JOIN clientesjf c 
@@ -2854,7 +2856,7 @@ class ModeloCuentas{
 							AND '".$fin."'
 							) 
 							AND cc.vendedor = '".$vend."'  
-						UNION
+				UNION
 						SELECT 
 							'999' AS tipo_doc,
 							'' AS num_cta,
@@ -2882,7 +2884,8 @@ class ModeloCuentas{
 								END
 							),
 							2
-							) AS letra 
+							) AS letra,
+							'' as notas
 						FROM
 							cuenta_ctejf cc 
 							LEFT JOIN clientesjf c 

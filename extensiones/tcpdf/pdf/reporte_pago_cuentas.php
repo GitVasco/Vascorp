@@ -18,17 +18,17 @@ class MYPDF extends TCPDF {
         $fecha=new Datetime();
         $fechaActual=$fecha->format("d/m/Y");
         $fechaCabecera= "Fecha:".$fechaActual;
-        $this->SetFont('helvetica', 'B', 7);
+        $this->SetFont('helvetica', 'B', 8);
         // Title
         $this->Cell(0, 8, 'CORPORACIÓN VASCO S.A.C.', 0, false, 'L', 0, '', 0, false, false, false );
         $this->Cell(0, 8, $fechaCabecera, 0, false, 'R', 0, '', 0, false, false, false );
         
         $this->Ln(2);
-        $this->Cell(0, 15, 'PAGOS EFECTUADOS  - '.$fechaActual, 0, false, 'C', 0, '', 0, false, false, false );
+        $this->Cell(0, 15, 'PAGOS EFECTUADOS  - '.$_GET["inicio"].' al '.$_GET["fin"], 0, false, 'C', 0, '', 0, false, false, false );
         $this->Ln(7);
-        $this->Cell(0, 9, '              Tipo             Nro. doc.            Fecha            Cliente              Razon social / Nombre cliente           Tipo            Nro.doc                Fact. S/                   Letra S/     ', 0, 1, 'C', 0, '', 0, false, false, false );
+        $this->Cell(0, 9, 'Tip    Nro. doc.                Fecha               Cliente       Razon social / Nombre cliente                      Cob            Notas                  Fact. S/                   Letra S/           ', 0, 1, 'C', 0, '', 0, false, false, false );
         
-        $this->Cell(0, 0, '====================================================================================================================================', 0, 1, 'L', 0, '', 0, false, 'M', 'M' );
+        $this->Cell(0, 0, '================================================================================================================================================', 0, 1, 'L', 0, '', 0, false, 'M', 'M' );
 
     }
 }
@@ -42,7 +42,7 @@ $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 // set header and footer fonts
 $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
 // set margins
-$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+$pdf->SetMargins(1, PDF_MARGIN_TOP, 1);
 $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
 
 $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
@@ -68,7 +68,7 @@ $pdf->SetFont($fontname, '', 7, '', false);
 //---------------------------------------------------------
 
 
-$pdf->SetFont($fontname, '', 6, '', false);
+$pdf->SetFont($fontname, '', 8, '', false);
 
 
      
@@ -78,98 +78,100 @@ $total = ControladorCuentas::ctrMostrarReporteTotalPagos($orden1,$orden2,$canc,$
 
 
 foreach ($cuentas as $key => $value) {
+
 $tamCliente=strlen($value["nombre"]);
-if($tamCliente > 31){
-    $nomCliente=substr($value["nombre"],0,31);
-}else{
-    $nomCliente=$value["nombre"];
-}
 
-if($value["tipo_doc"] == '-1'){
-$bloque3 = <<<EOF
-
-<table  style="text-align:center">
-<tbody>
-    <tr>
-        <td style="width:80px">$value[num_cta]</td>
-        <td style="width:130px">$value[fecha]</td>
-    </tr>
-</tbody>
-</table>
-EOF;
-$pdf->writeHTML($bloque3, false, false, false, false, '');
-    
-}else if($value["tipo_doc"] == '999'){
-    if($orden1 == 'fecha_ven'){
-$bloque3 = <<<EOF
-<table style="border-top:1px solid #000;width:500px" >
-</table>
-<table  style="text-align:center;padding-top:5px;padding-bottom:5px">
-<tbody>
-    <tr>
-        <td style="width:403px;text-align:right">Total fecha de pago: </td>
-        <td style="width:51px;text-align:right">$value[fact]</td>
-        <td style="width:59px;text-align:right">$value[letra]</td>
-    </tr>
-</tbody>
-</table>
-EOF;
+    if($tamCliente > 31){
+        $nomCliente=substr($value["nombre"],0,31);
     }else{
-$bloque3 = <<<EOF
-<table style="border-top:1px solid #000;width:500px" >
-</table>
-<table  style="text-align:center;padding-top:5px;padding-bottom:5px">
-<tbody>
-    <tr>
-        <td style="width:403px;text-align:right">Total Tip doc: </td>
-        <td style="width:51px;text-align:right">$value[fact]</td>
-        <td style="width:59px;text-align:right">$value[letra]</td>
-    </tr>
-</tbody>
-</table>
-EOF;
+        $nomCliente=$value["nombre"];
     }
 
-$pdf->writeHTML($bloque3, false, false, false, false, '');
+    if($value["tipo_doc"] == '-1'){
+
+        $bloque3 = '<table  style="text-align:center">
+                        <tbody>
+                            <tr>
+                                <td style="width:80px"><b>'.$value["num_cta"].'</b></td>
+                                <td style="width:130px"><b>'.$value["fecha"].'</b></td>
+                            </tr>
+                        </tbody>
+                    </table>';
+
+    $pdf->writeHTML($bloque3, false, false, false, false, '');
         
-}else{   
+    }else if($value["tipo_doc"] == '999'){
 
-$bloque3 = <<<EOF
+        if($orden1 == 'fecha_ven'){
 
-<table  style="text-align:center">
-<tbody>
-    <tr>
-        <td style="width:38px">$value[tipo_doc]</td>
-        <td style="width:60px">$value[num_cta]</td>
-        <td style="width:42px">$value[fecha]</td>
-        <td style="width:45px;text-align:left">$value[cliente]</td>
-        <td style="width:130px;text-align:left">$nomCliente</td>
-        <td style="width:38px">$value[cod_pago]</td>
-        <td style="width:50px">$value[doc_origen]</td>
-        <td style="width:50px;text-align:right">$value[fact]</td>
-        <td style="width:60px;text-align:right">$value[letra]</td>
-    </tr>
-</tbody>
-</table>
-EOF;
-$pdf->writeHTML($bloque3, false, false, false, false, '');
+            $bloque3 = '<table style="border-top:1px solid #000;width:500px" >
+                            </table>
+                            <table  style="text-align:center;padding-top:5px;padding-bottom:5px">
+                            <tbody>
+                                <tr>
+                                    <td style="width:460px;text-align:right">Total fecha de pago: </td>
+                                    <td style="width:51px;text-align:right">'.$value["fact"].'</td>
+                                    <td style="width:59px;text-align:right">'.$value["letra"].'</td>
+                                </tr>
+                            </tbody>
+                        </table>';
+
+
+
+        }else{
+
+            $bloque3 = '<table style="border-top:1px solid #000;width:500px" >
+                        </table>
+                        <table  style="text-align:center;padding-top:5px;padding-bottom:5px">
+                            <tbody>
+                                <tr>
+                                    <td style="width:460px;text-align:right">Total Tip doc: </td>
+                                    <td style="width:51px;text-align:right">'.$value["fact"].'</td>
+                                    <td style="width:59px;text-align:right">'.$value["letra"].'</td>
+                                </tr>
+                            </tbody>
+                        </table>';
+            
+        }
+
+    $pdf->writeHTML($bloque3, false, false, false, false, '');
+            
+    }else{   
+
+        $bloque3 = '<table  style="text-align:center">
+                        <tbody>
+                            <tr>
+                                <td style="width:20px">'.$value["tipo_doc"].'</td>
+                                <td style="width:70px;text-align:left">'.$value["num_cta"].'</td>
+                                <td style="width:55px">'.$value["fecha"].'</td>
+                                <td style="width:45px;text-align:left">'.$value["cliente"].'</td>
+                                <td style="width:160px;text-align:left">'.$nomCliente.'</td>
+                                <td style="width:20px">'.$value["cod_pago"].'</td>
+                                <td style="width:90px;text-align:left">'.$value["notas"].'</td>
+                                <td style="width:50px;text-align:right">'.$value["fact"].'</td>
+                                <td style="width:60px;text-align:right">'.$value["letra"].'</td>
+                            </tr>
+                        </tbody>
+                    </table>';
+
+        $pdf->writeHTML($bloque3, false, false, false, false, '');
+
     }
 }
 
-$bloque4 = <<<EOF
-<table style="border-top:1px solid #000;width:500px" >
-</table>
-<table style="padding-top:20px;text-align:right">
-    <tbody>
-        <tr >
-        
-         <td  style="width:394px;" ><b>$total[total_gral]</b></td>   
-         <td  style="width:60px; ">$total[fact]</td>
-         <td  style="width:60px; ">$total[letra]</td>
-        </tr>
-    </tbody>
-</table>
-EOF;
+$bloque4 =' <table style="border-top:1px solid #000;width:100px" >
+            </table>
+            <table style="padding-top:20px;text-align:right">
+                <tbody>
+                    <tr >
+                    
+                    <td  style="width:460px;" ><b>'.$total["total_gral"].'</b></td>   
+                    <td  style="width:60px; ">'.$total["fact"].'</td>
+                    <td  style="width:60px; ">'.$total["letra"].'</td>
+                    </tr>
+                </tbody>
+            </table>';
+
 $pdf->writeHTML($bloque4, false, false, false, false, '');
 // ---------------------------------------------------------
 //SALIDA DEL ARCHIVO 

@@ -971,4 +971,28 @@ class ModeloCierres{
 
 		$stmt = null;
 	}
+
+	//* CERRAR SERVICIO
+	static public function mdlCerrarServicio($id){
+
+		$sql = "UPDATE 
+					servicios_detallejf 
+				SET
+					cerrar = '1' 
+				WHERE id = $id";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return $stmt -> errorInfo();
+		}
+
+		$stmt = null;
+	}
+	
+	
 }
