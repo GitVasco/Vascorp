@@ -66,132 +66,135 @@ class ControladorContabilidad{
 
             $archivo = fopen($ruta, "w");
 
-            $ventas = ModeloContabilidad::mdlVentasConfiguradas($fechaInicio, $fechaFin);
+            #$ventas = ModeloContabilidad::mdlVentasConfiguradas($fechaInicio, $fechaFin);
+            $ventas = ModeloContabilidad::mdlVentasSiscontB($fechaInicio, $fechaFin);
             $voucher = ModeloContabilidad::mdlVoucherSiscont($añoI, $mesI);
             #var_dump($ventas);
 
             $corr = $voucher["correlativo"];
 
-            foreach($ventas as $key => $value){
-
-                $corr++;
-
-                $documento = ModeloContabilidad::mdlVentasSiscont($value["tipo"], $value["documento"]);
-
-                foreach($documento as $key => $value2){
-
-                    $nom_cliente = ControladorContabilidad::eliminar_tildes($value2["nom_cliente"]);
-                    $ape_paterno = ControladorContabilidad::eliminar_tildes($value2["ape_paterno"]);
-                    $ape_materno = ControladorContabilidad::eliminar_tildes($value2["ape_materno"]);
-                    $nombres = ControladorContabilidad::eliminar_tildes($value2["nombres"]);
-
-                    $nombre1 = explode(" ", $nombres);
-
-                    $origen     = str_pad($value2["origen"], 2);
-                    $voucher    = str_pad($corr, 5 , '0', STR_PAD_LEFT);
-                    $fecha      = str_pad($value2["fecha"], 8);
-                    $cuenta     = str_pad($value2["cuenta"],10);
-                    $debe       = str_pad($value2["debe"], 12 , '0', STR_PAD_LEFT);
-                    $haber      = str_pad($value2["haber"], 12 , '0', STR_PAD_LEFT);
-                    $moneda     = str_pad($value2["moneda"], 1);
-                    $tc         = str_pad($value2["tipo_cambio"], 10 , '0', STR_PAD_LEFT);
-                    $doc        = str_pad($value2["tipo_doc"], 2);
-                    $numero     = str_pad($value2["documentoA"], 40);
-                    $fechad     = str_pad($value2["fecha_emi"], 8);
-                    $fechav     = str_pad($value2["fecha_ven"], 8);
-                    $codigo     = str_pad($value2["doc_cli"], 15);
-                    $cc         = str_pad(" ", 10);
-                    $fe         = str_pad(" ", 4);
-                    $pre        = str_pad(" ", 10); 
-                    $mpago      = str_pad(" ", 3);
-                    $glosa      = str_pad($value2["glosa"], 60);
-                    $rnumero    = str_pad($value2["doc_origen"], 40);
-                    $rtdoc      = str_pad($value2["tip_origen"], 2);
-                    $rfecha     = str_pad($value2["fec_origen"], 8);
-                    $snumero    = str_pad(" ", 40);
-                    $sfecha     = str_pad(" ", 8);
-                    $tl         = str_pad("V", 1);
-                    $neto       = str_pad($value2["neto"], 12 , '0', STR_PAD_LEFT);
-                    $neto2      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
-                    $neto3      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
-                    $neto4      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
-                    $igv        = str_pad($value2["igv"], 12 , '0', STR_PAD_LEFT);
-                    $neto5      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
-                    $neto6      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
-                    $neto7      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
-                    $neto8      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
-                    #$neto9      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
-                    /* $ruc        = str_pad($value2["doc_cli"], 15);
-                    $tipo       = str_pad($value2["tip_cli"], 1);
-                    $r5         = str_pad($nom_cliente, 60);
-                    $ape1       = str_pad($ape_paterno, 20);
-                    $ape2       = str_pad($ape_materno, 20);
-                    $nombre     = str_pad($nombre1[0], 20);
-                    $tdoi       = str_pad($value2["tipo_documento"], 1); */
-                    $ruc        = str_pad(" ", 15);
-                    $tipo       = str_pad(" ", 1);
-                    $r5         = str_pad(" ", 60);
-                    $ape1       = str_pad(" ", 20);
-                    $ape2       = str_pad(" ", 20);
-                    $nombre     = str_pad(" ", 20);
-                    $tdoi       = str_pad(" ", 1);
-                    $rnumdes    = str_pad(" ", 1);
-                    $rcodtasa   = str_pad(" ", 5);
-                    $rindret    = str_pad(" ", 1);
-                    $rmonto     = str_pad("0.00", 12, '0', STR_PAD_LEFT);
-                    $rigv       = str_pad("0.00", 12, '0', STR_PAD_LEFT);
-                    $tbien      = str_pad(" ", 1);
-
-
-                fwrite($archivo,    $origen.
-                                    $voucher.
-                                    $fecha.
-                                    $cuenta.
-                                    $debe.
-                                    $haber.
-                                    $moneda.
-                                    $tc.
-                                    $doc.
-                                    $numero.
-                                    $fechad.
-                                    $fechav.
-                                    $codigo.
-                                    $cc.
-                                    $fe.
-                                    $pre.
-                                    $mpago.
-                                    $glosa.
-                                    $rnumero.
-                                    $rtdoc.
-                                    $rfecha.
-                                    $snumero.
-                                    $sfecha.
-                                    $tl.
-                                    $neto.
-                                    $neto2.
-                                    $neto3.
-                                    $neto4.
-                                    $igv.
-                                    $neto5.
-                                    $neto6.
-                                    $neto7.
-                                    $neto8.
-                                    $ruc.
-                                    $tipo.
-                                    $r5.
-                                    $ape1.
-                                    $ape2.
-                                    $nombre.
-                                    $tdoi.
-                                    $rnumdes.
-                                    $rcodtasa.
-                                    $rindret.
-                                    $rmonto.
-                                    $rigv.
-                                    $tbien.
-                                    PHP_EOL);
+            for ($i=0; $i < count($ventas) ; $i++) { 
                 
+                if($ventas[$i]["documento"] == $ventas[$i-1]["documento"]){
+
+                    $corr;
+
+                }else{
+
+                    $corr++;
+
                 }
+
+                $nom_cliente = ControladorContabilidad::eliminar_tildes($ventas[$i]["nom_cliente"]);
+                $ape_paterno = ControladorContabilidad::eliminar_tildes($ventas[$i]["ape_paterno"]);
+                $ape_materno = ControladorContabilidad::eliminar_tildes($ventas[$i]["ape_materno"]);
+                $nombres = ControladorContabilidad::eliminar_tildes($ventas[$i]["nombres"]);
+
+                $nombre1 = explode(" ", $nombres);   
+                
+                $origen     = str_pad($ventas[$i]["origen"], 2);
+                $voucher    = str_pad($corr, 5 , '0', STR_PAD_LEFT);
+                $fecha      = str_pad($ventas[$i]["fecha"], 8);
+                $cuenta     = str_pad($ventas[$i]["cuenta"],10);
+                $debe       = str_pad($ventas[$i]["debe"], 12 , '0', STR_PAD_LEFT);
+                $haber      = str_pad($ventas[$i]["haber"], 12 , '0', STR_PAD_LEFT);
+                $moneda     = str_pad($ventas[$i]["moneda"], 1);
+                $tc         = str_pad($ventas[$i]["tipo_cambio"], 10 , '0', STR_PAD_LEFT);
+                $doc        = str_pad($ventas[$i]["tipo_doc"], 2);
+                $numero     = str_pad($ventas[$i]["documentoA"], 40);
+                $fechad     = str_pad($ventas[$i]["fecha_emi"], 8);
+                $fechav     = str_pad($ventas[$i]["fecha_ven"], 8);
+                $codigo     = str_pad($ventas[$i]["doc_cli"], 15);
+                $cc         = str_pad(" ", 10);
+                $fe         = str_pad(" ", 4);
+                $pre        = str_pad(" ", 10); 
+                $mpago      = str_pad(" ", 3);
+                $glosa      = str_pad($ventas[$i]["glosa"], 60);
+                $rnumero    = str_pad($ventas[$i]["doc_origen"], 40);
+                $rtdoc      = str_pad($ventas[$i]["tip_origen"], 2);
+                $rfecha     = str_pad($ventas[$i]["fec_origen"], 8);
+                $snumero    = str_pad(" ", 40);
+                $sfecha     = str_pad(" ", 8);
+                $tl         = str_pad("V", 1);
+                $neto       = str_pad($ventas[$i]["neto"], 12 , '0', STR_PAD_LEFT);
+                $neto2      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $neto3      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $neto4      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $igv        = str_pad($ventas[$i]["igv"], 12 , '0', STR_PAD_LEFT);
+                $neto5      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $neto6      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $neto7      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $neto8      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                #$neto9      = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $ruc        = str_pad($ventas[$i]["ruc"], 15);
+                $tipo       = str_pad($ventas[$i]["tip_cli"], 1);
+                $r5         = str_pad($nom_cliente, 60);
+                $ape1       = str_pad($ape_paterno, 20);
+                $ape2       = str_pad($ape_materno, 20);
+                $nombre     = str_pad($nombre1[0], 20);
+                $tdoi       = str_pad($ventas[$i]["tipo_documento"], 1);
+                /* $ruc        = str_pad(" ", 15);
+                $tipo       = str_pad(" ", 1);
+                $r5         = str_pad(" ", 60);
+                $ape1       = str_pad(" ", 20);
+                $ape2       = str_pad(" ", 20);
+                $nombre     = str_pad(" ", 20);
+                $tdoi       = str_pad(" ", 1); */
+                $rnumdes    = str_pad(" ", 1);
+                $rcodtasa   = str_pad(" ", 5);
+                $rindret    = str_pad(" ", 1);
+                $rmonto     = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $rigv       = str_pad("0.00", 12, '0', STR_PAD_LEFT);
+                $tbien      = str_pad(" ", 1);
+
+
+            fwrite($archivo,    $origen.
+                                $voucher.
+                                $fecha.
+                                $cuenta.
+                                $debe.
+                                $haber.
+                                $moneda.
+                                $tc.
+                                $doc.
+                                $numero.
+                                $fechad.
+                                $fechav.
+                                $codigo.
+                                $cc.
+                                $fe.
+                                $pre.
+                                $mpago.
+                                $glosa.
+                                $rnumero.
+                                $rtdoc.
+                                $rfecha.
+                                $snumero.
+                                $sfecha.
+                                $tl.
+                                $neto.
+                                $neto2.
+                                $neto3.
+                                $neto4.
+                                $igv.
+                                $neto5.
+                                $neto6.
+                                $neto7.
+                                $neto8.
+                                $ruc.
+                                $tipo.
+                                $r5.
+                                $ape1.
+                                $ape2.
+                                $nombre.
+                                $tdoi.
+                                $rnumdes.
+                                $rcodtasa.
+                                $rindret.
+                                $rmonto.
+                                $rigv.
+                                $tbien.
+                                PHP_EOL);                
 
             }
 
