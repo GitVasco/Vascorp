@@ -351,6 +351,71 @@ MODAL FACTURAR
 
             </div>
 
+             <div class="col-lg-12"></div>
+
+            <div class="form-group col-lg-3 campoTipOrigen hidden">
+              <label for="">Tipo doc. origen</label>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-text-width"></i></span>
+                <select type="text" class="form-control input-sm selectpicker" name="tdocorigen" id="tdocorigen" data-live-search="true"  >
+                  <option value="">Seleccionar tipo de documento</option>
+
+                    <?php
+
+                      $item="tipo_dato";
+                      $valor = "tdoc";
+
+                      $documentos = ControladorCuentas::ctrMostrarPagos($item,$valor);
+                      foreach ($documentos as $key => $value) {
+                        if($value["codigo"] == '01' || $value["codigo"] == '03'){
+                          echo '<option value="' . $value["codigo"] . '">' .$value["codigo"]. " - " . $value["descripcion"] . '</option>';
+                        }
+                        
+                      }
+
+                    ?>
+
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group col-lg-3 campoDocOrigen hidden">
+              <label for="">Doc. origen</label>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                <input type="text" name="serieOrigen" id="serieOrigen" class="form-control input-md">
+              </div>
+            </div>
+
+            <div class="form-group col-lg-3 campoFecOrigen hidden">
+              <label for="">Fecha origen</label>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input type="date" name="fechaOrigen" id="fechaOrigen" class="form-control input-md">
+              </div>
+            </div>
+
+            <div class="form-group col-lg-3 campoMotOrigen hidden">
+            <label for="">Motivo</label>
+                
+
+                    <select  class="form-control input-md selectpicker" name="notaMotivo" id="notaMotivo" data-live-search="true" style="width:200px !important">
+                    <option value="">Seleccionar motivo</option>
+                    <?php
+                       $item= "tipo_dato";
+                       $valor = "TMOT";
+
+                     $documentos = ControladorCuentas::ctrMostrarPagos($item,$valor);
+
+                     foreach ($documentos as $key => $value) {
+                       echo '<option value="' . $value["codigo"] . '">' .$value["codigo"]. " - " . $value["descripcion"] . '</option>';
+                    }
+
+                    ?>   
+                    </select>
+
+            </div>            
+
           </div>
 
 
