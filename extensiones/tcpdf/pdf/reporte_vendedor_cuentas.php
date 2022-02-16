@@ -55,12 +55,66 @@ $pdf->setPage(1, true);
 $consulta= $_GET["consulta"];
 $orden1= $_GET["orden1"];
 $orden2= $_GET["orden2"];
-$tip_doc= $_GET["tip_doc"];
-$cli= $_GET["cli"];
-$vend= $_GET["vend"];
-$banco= $_GET["banco"];
-$inicio= $_GET["inicio"];
-$fin= $_GET["fin"];
+
+if(isset($_GET["tip_doc"])){
+
+    $tip_doc= $_GET["tip_doc"];
+
+}else{
+
+    $tip_doc= '';
+
+}
+
+if(isset($_GET["cli"])){
+
+    $cli= $_GET["cli"];
+
+}else{
+
+    $cli= "";
+
+}
+
+if(isset($_GET["banco"])){
+
+    $banco= $_GET["banco"];
+
+}else{
+
+    $banco= "";
+
+}
+
+if(isset($_GET["inicio"])){
+
+    $inicio= $_GET["inicio"];
+
+}else{
+
+    $inicio= "";
+
+}
+
+if(isset($_GET["fin"])){
+
+    $fin= $_GET["fin"];
+
+}else{
+
+    $fin= "";
+
+}
+
+if(isset($_GET["vend"])){
+
+    $vend= $_GET["vend"];
+
+}else{
+
+    $vend= "";
+
+}
 
 // convert TTF font to TCPDF format and store it on the fonts folder
 $fontname = TCPDF_FONTS::addTTFfont('../../lucida-console.ttf', 'TrueTypeUnicode', '', 96);
@@ -80,9 +134,6 @@ if($consulta== 'pendiente'){
         
         $vendedor=ControladorCuentas::ctrMostrarReporteNombre($cli,$vend);
         
-     
-  
-   
 }else if($consulta== 'pendienteVencidoMenor'){
     $cuentas=ControladorCuentas::ctrMostrarReporteVencidos($orden1,$orden2,$tip_doc,$cli,$vend,$banco);
         
@@ -92,10 +143,15 @@ if($consulta== 'pendiente'){
     $cuentas=ControladorCuentas::ctrMostrarReporteNoVencidos($orden1,$orden2,$tip_doc,$cli,$vend,$banco);
         
     $vendedor=ControladorCuentas::ctrMostrarReporteNombreNoVencidos($cli,$vend);
+
 }else if($consulta== 'protestado'){
+
     $cuentas=ControladorCuentas::ctrMostrarReporteProtestados($orden1,$orden2,$tip_doc,$cli,$vend,$banco);
+    #var_dump($cuentas);
         
     $vendedor=ControladorCuentas::ctrMostrarReporteNombreProtestados($cli,$vend);
+    #var_dump($vendedor);
+    
 }else if($consulta== 'estadoEnvioVacio'){
     
 }else if($consulta== 'unicoCartera'){
@@ -132,26 +188,24 @@ if($tamCliente > 36){
     $nomCliente=$value["nombre"];
 }
 
-$bloque3 = <<<EOF
+$bloque3 = '<table style="text-center" >
+                <tbody>
+                    <tr>
+                    <td style="width:26px">'.$value["tipo_doc"].'</td>
+                    <td style="width:60px">'.$value["num_cta"].'</td>
+                    <td style="width:42px">'.$value["fecha"].'</td>
+                    <td style="width:42px">'.$value["fecha_ven"].'</td>
+                    <td style="width:27px">'.$value["vendedor"].'</td>
+                    <td style="width:40px">'.$value["cliente"].'</td>
+                    <td style="width:142px">'.$nomCliente.'</td>
+                    <td style="width:40px;text-align:right">'.$value["saldo"].'</td>
+                    <td style="width:27px">'.$value["protesta"].'</td>
+                    <td style="width:50px">'.$value["num_unico"].'</td>
+                    <td style="width:35px">'.$value["banco"].'</td>
+                    </tr>
+                </tbody>
+            </table>';
 
-<table style="text-center" >
-    <tbody>
-        <tr>
-         <td style="width:26px">$value[tipo_doc]</td>
-         <td style="width:60px">$value[num_cta]</td>
-         <td style="width:42px">$value[fecha]</td>
-         <td style="width:42px">$value[fecha_ven]</td>
-         <td style="width:27px">$value[vendedor]</td>
-         <td style="width:40px">$value[cliente]</td>
-         <td style="width:142px">$nomCliente</td>
-         <td style="width:40px;text-align:right">$value[saldo]</td>
-         <td style="width:27px">$value[protesta]</td>
-         <td style="width:50px">$value[num_unico]</td>
-         <td style="width:35px">$value[banco]</td>
-        </tr>
-    </tbody>
-</table>
-EOF;
 $pdf->writeHTML($bloque3, false, false, false, false, '');
 }
 

@@ -2040,7 +2040,7 @@ $(".btnGenerarReporteCuenta").click(function(){
     var fin = $(this).attr("fin");
     var impresion = $(this).attr("impresion");
 
-    /* console.log("consulta", consulta);
+    console.log("consulta", consulta);
     console.log("orden1", orden1);
     console.log("orden2", orden2);
     console.log("tip_doc", tip_doc);
@@ -2049,7 +2049,7 @@ $(".btnGenerarReporteCuenta").click(function(){
     console.log("vend", vend);
     console.log("banco", banco);
     console.log("inicio", inicio);
-    console.log("fin", fin); */
+    console.log("fin", fin);
 
 
 
@@ -2067,9 +2067,13 @@ $(".btnGenerarReporteCuenta").click(function(){
             }else if(orden1 == "vendedor"){
 
                 if(vend== ''){
-                window.open("extensiones/tcpdf/pdf/reporte_general_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&vend="+vend,"_blank");
+
+                    window.open("extensiones/tcpdf/pdf/reporte_general_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&vend="+vend,"_blank");
+
                 }else{
-                window.open("extensiones/tcpdf/pdf/reporte_vendedor_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&vend="+vend,"_blank");
+
+                    window.open("extensiones/tcpdf/pdf/reporte_vendedor_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&vend="+vend,"_blank");
+
                 }
 
             }else if(orden1 == "fecha_ven"){
