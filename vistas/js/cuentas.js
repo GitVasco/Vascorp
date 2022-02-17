@@ -2216,3 +2216,13 @@ $(".btnRptResVtas").click(function(){
   window.open("vistas/reportes_excel/rpt_resumen_vtas.php","_blank");
 
 })
+
+
+$(".btnRptResVtaMes").click(function(){
+
+  var mes = $(this).attr("mes");
+  console.log(mes);
+
+  window.open("vistas/reportes_ticket/reporte_resumen_vtas.php?mes="+ mes,"_blank");
+
+})

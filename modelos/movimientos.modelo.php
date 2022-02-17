@@ -2624,6 +2624,63 @@ class ModeloMovimientos{
 
 	}    
 
+
+	static public function mdlMostrarResumenVtasB($mes){
+
+      if( $mes == "null" || $mes == "TODO"){
+
+         $stmt = Conexion::conectar()->prepare("SELECT 
+                        v.tipo,
+                        v.tipo_documento,
+                        SUM(v.neto) AS neto,
+                        SUM(v.igv) AS igv,
+                        SUM(v.dscto) AS dscto,
+                        SUM(v.total) AS total 
+                     FROM
+                        ventajf v 
+                     WHERE YEAR(v.fecha) = YEAR(NOW()) 
+                        AND v.tipo IN ('E05', 'S02', 'S03', 'S05') 
+                     GROUP BY v.tipo,
+                        v.tipo_documento 
+                     ORDER BY v.tipo_documento ");
+
+         $stmt -> execute();
+
+         return $stmt -> fetchAll();
+
+         $stmt -> close();
+
+         $stmt = null;
+
+      }else{
+
+         $stmt = Conexion::conectar()->prepare("SELECT 
+                        v.tipo,
+                        v.tipo_documento,
+                        SUM(v.neto) AS neto,
+                        SUM(v.igv) AS igv,
+                        SUM(v.dscto) AS dscto,
+                        SUM(v.total) AS total 
+                     FROM
+                        ventajf v 
+                     WHERE YEAR(v.fecha) = YEAR(NOW()) 
+                        AND MONTH(v.fecha) = $mes 
+                        AND v.tipo IN ('E05', 'S02', 'S03', 'S05') 
+                     GROUP BY v.tipo,
+                        v.tipo_documento");
+
+         $stmt -> execute();
+
+         return $stmt -> fetchAll();
+
+         $stmt -> close();
+
+         $stmt = null;
+
+      }
+
+	}   
+
 	static public function mdlMostrarResumenVdor($mes){
 
       if( $mes == "null" || $mes == "TODO"){
