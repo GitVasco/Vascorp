@@ -97,7 +97,7 @@
 
             <div class="box box-danger">
                 <div class="box-header with-border"></div>
-                <center><b>Ventas por Documento</b></center>
+                <center><b>Ventas por Documento <button class='btn btn-primary btn-xs btnRptResVtas' title='Pedidos' mes=<?php echo isset($_GET["mes"]) ? $_GET["mes"] : "TODO" ?> >Resumen</button></b></center>
 
                 <div class="box-body no-padding">
                     <table class="table table-bordered table-striped dt-responsive tablaVtasGerencia" width="100%"> 

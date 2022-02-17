@@ -254,6 +254,49 @@ $borde9->applyFromArray(
     )
 ));
 
+
+#bordes grueso: ABAJO
+$borde10 = new PHPExcel_Style();
+$borde10->applyFromArray(
+  array('alignment' => array( 
+      'wrap' => false,
+      'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_RIGHT
+    ),
+    'borders' => array(
+      'bottom' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+      'right' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+      'left' => array('style' => PHPExcel_Style_Border::BORDER_THIN)
+    ),
+      'font' => array(
+      'bold' => false,
+      'size' => 10
+    )
+));
+
+
+#bordes grueso: izquierda-arriba-derecha, color  GRIS NEGRITA T11
+$borde11 = new PHPExcel_Style();
+$borde11->applyFromArray(
+  array('alignment' => array( 
+      'wrap' => false,
+      'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_RIGHT
+    ),
+    'fill' => array(
+      'type' => PHPExcel_Style_Fill::FILL_SOLID,
+      'color' => array('rgb' => 'D7DBDD')
+    ),
+    'borders' => array(
+      'top' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
+      'bottom' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
+      'right' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
+      'left' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM)
+    ),
+      'font' => array(
+      'bold' => true,
+      'size' => 11
+    )
+));
+
 /* 
 * FIN DE ESTILOS
 */
@@ -355,7 +398,7 @@ $sqlDetalle = mysql_query("SELECT
                               cc.nombre,
                               c.cod_pago,
                               c.doc_origen,
-                              round(c.monto,2) AS monto
+                              FORMAT(ROUND(c.monto, 2),2) AS monto 
                               FROM
                               cuenta_ctejf c 
                               LEFT JOIN clientesjf cc 
@@ -378,8 +421,7 @@ while($respDetalle = mysql_fetch_array($sqlDetalle)){
     $objPHPExcel->getActiveSheet()->SetCellValue("E$fila", utf8_encode($respDetalle["nombre"])); 
     $objPHPExcel->getActiveSheet()->SetCellValue("F$fila", utf8_encode($respDetalle["cod_pago"])); 
     $objPHPExcel->getActiveSheet()->setCellValueExplicit("G$fila",$respDetalle["doc_origen"], PHPExcel_Cell_DataType::TYPE_STRING);
-    $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", utf8_encode($respDetalle["monto"])); 
-    $objPHPExcel->getActiveSheet()->getStyle ("H$fila")->getNumberFormat()->setFormatCode ("0.00");
+    $objPHPExcel->getActiveSheet()->setCellValueExplicit("H$fila",$respDetalle["monto"], PHPExcel_Cell_DataType::TYPE_STRING);
 
 
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "A$fila");
@@ -389,7 +431,7 @@ while($respDetalle = mysql_fetch_array($sqlDetalle)){
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "E$fila");
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "F$fila");
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "G$fila");
-    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "H$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde10, "H$fila");
 
 
 }
@@ -397,7 +439,7 @@ while($respDetalle = mysql_fetch_array($sqlDetalle)){
 #query para sacar el total
 $sqlTotal = mysql_query("SELECT 
                 c.cod_pago,
-                SUM(c.monto) AS monto 
+                FORMAT(SUM(c.monto),2) AS monto 
                 FROM
                 cuenta_ctejf c 
                 LEFT JOIN clientesjf cc 
@@ -414,7 +456,7 @@ $objPHPExcel->getActiveSheet()->SetCellValue("G$fila", 'TOTAL');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde7, "G$fila");
 
 $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", $respTotal["monto"]);
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde7, "H$fila");
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde11, "H$fila");
 
 //*RESUMEN
 
@@ -463,23 +505,23 @@ $objPHPExcel->getActiveSheet()->getStyle("H$fila")->getAlignment()->setHorizonta
 
 #query para sacar los datos deL detalle
 $sqlDetalle2 = mysql_query("SELECT 
-c.vendedor,
-cc.documento,
-c.cliente,
-cc.nombre,
-c.tipo_doc,
-c.num_cta,
-SUM(c.monto) AS monto 
-FROM
-cuenta_ctejf c 
-LEFT JOIN clientesjf cc 
-  ON c.cliente = cc.codigo 
-WHERE c.tip_mov = '-' 
-AND c.cod_pago = '82' 
-AND YEAR(c.fecha) >= '2021' 
-GROUP BY c.cliente,
-c.num_cta
-ORDER BY c.vendedor ") or die(mysql_error());
+              c.vendedor,
+              cc.documento,
+              c.cliente,
+              cc.nombre,
+              c.tipo_doc,
+              c.num_cta,
+              FORMAT(SUM(c.monto),2) AS monto 
+              FROM
+              cuenta_ctejf c 
+              LEFT JOIN clientesjf cc 
+                ON c.cliente = cc.codigo 
+              WHERE c.tip_mov = '-' 
+              AND c.cod_pago = '82' 
+              AND YEAR(c.fecha) >= '2021' 
+              GROUP BY c.cliente,
+              c.num_cta
+              ORDER BY c.vendedor ") or die(mysql_error());
 
 while($respDetalle2 = mysql_fetch_array($sqlDetalle2)){
 
@@ -492,8 +534,8 @@ while($respDetalle2 = mysql_fetch_array($sqlDetalle2)){
     $objPHPExcel->getActiveSheet()->SetCellValue("E$fila", utf8_encode($respDetalle2["nombre"])); 
     $objPHPExcel->getActiveSheet()->setCellValueExplicit("F$fila",$respDetalle2["tipo_doc"], PHPExcel_Cell_DataType::TYPE_STRING);
     $objPHPExcel->getActiveSheet()->setCellValueExplicit("G$fila",$respDetalle2["num_cta"], PHPExcel_Cell_DataType::TYPE_STRING);
-    $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", utf8_encode($respDetalle2["monto"])); 
-    $objPHPExcel->getActiveSheet()->getStyle("H$fila")->getNumberFormat()->setFormatCode ("0.00");
+    $objPHPExcel->getActiveSheet()->setCellValueExplicit("H$fila",$respDetalle2["monto"], PHPExcel_Cell_DataType::TYPE_STRING);
+
 
 
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "A$fila");
@@ -503,7 +545,7 @@ while($respDetalle2 = mysql_fetch_array($sqlDetalle2)){
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "E$fila");
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "F$fila");
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "G$fila");
-    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "H$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde10, "H$fila");
 
 
 }
@@ -512,7 +554,7 @@ while($respDetalle2 = mysql_fetch_array($sqlDetalle2)){
 #query para sacar el total
 $sqlTotal = mysql_query("SELECT 
                 c.cod_pago,
-                SUM(c.monto) AS monto 
+                FORMAT(SUM(c.monto),2) AS monto 
                 FROM
                 cuenta_ctejf c 
                 LEFT JOIN clientesjf cc 
@@ -529,7 +571,7 @@ $objPHPExcel->getActiveSheet()->SetCellValue("G$fila", 'TOTAL');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde7, "G$fila");
 
 $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", $respTotal["monto"]);
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde7, "H$fila");
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde11, "H$fila");
 
 
 # Ajustar el tamaño de las columnas
@@ -562,7 +604,8 @@ header("Content-Type: application/vnd.ms-excel");
 
 
 # Nombre del archivo
-header('Content-Disposition: attachment; filename=" Credipagos - '.$fecha.'.xls"');
+header('Content-Disposition: attachment; filename=" Credipagos - '.$fecha.'.xlsx"');
+$objWriter=PHPExcel_IOFactory::createWriter($objPHPExcel,'Excel2007');
 
 
 //forzar a descarga por el navegador

@@ -2205,10 +2205,14 @@ function checkSubmitG() {
 $(".btnRptPeds").click(function(){
 
   var vendedor = $(this).attr("vendedor");
-  console.log(vendedor);
-
+  //console.log(vendedor);
 
   window.open("vistas/reportes_ticket/pedidos_vendedor.php?vendedor=" +vendedor,"_blank");
 
+})
+
+$(".btnRptResVtas").click(function(){
+
+  window.open("vistas/reportes_excel/rpt_resumen_vtas.php","_blank");
 
 })

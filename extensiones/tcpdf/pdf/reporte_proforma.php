@@ -97,7 +97,7 @@ foreach ($modelo as $key => $value) {
     $pdf->Cell(47, 5, $value["nombre"], 0, false, 'L', 0, '', 0, false, 'T', 'M');
     $pdf->Cell(30, 5, $value["cantidad"], 0, false, 'R', 0, '', 0, false, 'T', 'M');
     $pdf->Cell(34, 5, $value["precio"], 0, false, 'R', 0, '', 0, false, 'T', 'M');
-    $pdf->Cell(37, 5, $value["total"], 0, false, 'R', 0, '', 0, false, 'T', 'M' );
+    $pdf->Cell(37, 5, number_format($value["total"],2), 0, false, 'R', 0, '', 0, false, 'T', 'M' );
     
 }
     $image_file2 = K_PATH_IMAGES.'borde2.png';
@@ -106,7 +106,7 @@ foreach ($modelo as $key => $value) {
     $pdf->Ln(0);  
     $pdf->Cell(110, 7, '', 0, false, 'C', 0, '', 0, false, false, false );
     $pdf->Cell(44, 7, 'Total General S/', 0, false, 'R', 0, '', 0, false, false, false );
-    $pdf->Cell(29, 7, $venta["total"], 0, false, 'R', 0, '', 0, false, false, false );
+    $pdf->Cell(29, 7, number_format($venta["total"],2), 0, false, 'R', 0, '', 0, false, false, false );
 // convert TTF font to TCPDF format and store it on the fonts folder
 
 
