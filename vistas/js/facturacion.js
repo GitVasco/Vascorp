@@ -2439,10 +2439,6 @@ $(".tablaFacturas, .tablaBoletas, .tablaProformas").on("click", ".btnCargarFotos
                 
 			}
 
-
-
-
-
 		}
 	});    
 
@@ -2539,4 +2535,50 @@ $(".editarRecepcion").change(function(){
   		})
 
   	}
+})
+
+
+$(".btnActualizarTalonarios").click(function(){
+
+  var guia = prompt("Ingrese la Guia que toca", "");
+  //console.log(guia)
+
+  if(guia != "" && guia != null){
+
+    var datos = new FormData();
+    datos.append("guia", Number(guia)-1);
+  
+    $.ajax({
+  
+      url:"ajax/facturacion.ajax.php",
+      method: "POST",
+      data: datos,
+      cache: false,
+      contentType: false,
+      processData: false,
+      dataType:"json",
+      success:function(respuesta){
+  
+        //console.log(respuesta)
+  
+        if(respuesta == "ok"){
+  
+          Command:toastr["success"]("Se actualizo la guia");
+  
+        }else{
+  
+          Command:toastr["error"]("No se actualizo la guia");
+  
+        }
+  
+      }
+  
+    })
+
+  }else{
+
+    Command:toastr["error"]("No se actualizo la guia");
+
+  }
+
 })

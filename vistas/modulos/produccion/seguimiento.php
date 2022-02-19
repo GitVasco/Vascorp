@@ -4,7 +4,7 @@
     
     <h1>
       
-      Urgencias Articulos
+      Seguimiento
     
     </h1>
 

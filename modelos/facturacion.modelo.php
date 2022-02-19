@@ -8282,4 +8282,31 @@ class ModeloFacturacion{
     
     }    
 
+	/*
+	* ACTUALIZAR LA CANTIDAD DE STOCK DEL ARTICULO
+	*/
+	static public function mdlActualizarTalonariGuia($guia){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE 
+												talonariosjf 
+											SET
+                      guias_remision = :guia 
+											WHERE serie_guias = '003'");
+
+		$stmt->bindParam(":guia", $guia, PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return $stmt->errorInfo();
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+
+	}    
+
 }

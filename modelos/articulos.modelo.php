@@ -1364,7 +1364,6 @@ class ModeloArticulos
 
 	}	
 
-
 	/*
 	* ACTUALIZAR LA CANTIDAD DE STOCK DEL ARTICULO
 	*/

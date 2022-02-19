@@ -2,11 +2,29 @@
 
     <section class="content-header">
 
-        <h1>
+        <?php
 
-            Administrar Guias de Remisión
+            if($_SESSION["id"] == "20" || $_SESSION["id"] == "6"){
 
-        </h1>
+                echo '<h1>
+
+                        Administrar Guias de Remisión <button class="btn btn-primary btn-xs btnActualizarTalonarios" title="Correlativo">Cambiar Correlativo</button>
+            
+                    </h1>';
+
+
+            }else{
+
+                echo '<h1>
+
+                        Administrar Guias de Remisión
+            
+                    </h1>';
+
+            }
+
+
+        ?>
 
         <ol class="breadcrumb">
 

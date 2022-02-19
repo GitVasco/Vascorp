@@ -2596,7 +2596,16 @@ class ModeloCuentas{
 											THEN '' 
 											ELSE 'Si' 
 											END AS protesta,
-											IFNULL(cc.num_unico, '') AS num_unico 
+											-- IFNULL(cc.num_unico, '') AS num_unico,
+											c.ubigeo,
+											LEFT(
+											(SELECT 
+											u.nombre 
+											FROM
+											ubigeo u 
+											WHERE u.codigo = c.ubigeo),
+											12
+										) AS num_unico 
 										FROM
 											cuenta_ctejf cc 
 											LEFT JOIN clientesjf c 
@@ -2604,8 +2613,9 @@ class ModeloCuentas{
 										WHERE cc.tip_mov = '+' 
 											AND cc.estado = 'Pendiente' 
 											AND cc.protesta = 1 
-											AND cc.vendedor = '".$vend."' 
-										ORDER BY cc.tipo_doc,
+											AND cc.vendedor = '04' 
+										ORDER BY c.ubigeo,
+											cc.tipo_doc,
 											cc.cliente,
 											cc.num_cta");
 			

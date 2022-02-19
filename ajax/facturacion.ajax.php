@@ -240,6 +240,19 @@ class AjaxFacturacion{
 
         }
 
+    /*=============================================
+    ACTIVAR PEDIDO
+    =============================================*/	
+    public function ajaxActualizarTalonariGuia(){
+    
+        $guia=$this->guia;
+        
+        $respuesta=ModeloFacturacion::mdlActualizarTalonariGuia($guia);
+
+        echo json_encode($respuesta);
+    
+    }        
+
       /*=============================================
       GENERAR TOKEN PARA HACER CONSULTAS SUNAT
       =============================================*/	
@@ -491,5 +504,17 @@ VER SI TRAE IMAGENES
     $generarcsv -> tipoI = $_POST["tipoI"];
     $generarcsv -> documentoI = $_POST["documentoI"];
     $generarcsv -> ajaxVerDocumento();
+    
+  }
+
+
+  /*=============================================
+  ACTUALIZAR TALONARIO DE GUIAS
+    =============================================*/	
+  if(isset($_POST["guia"])){
+    
+    $guia = new AjaxFacturacion();
+    $guia -> guia = $_POST["guia"];
+    $guia -> ajaxActualizarTalonariGuia();
     
   }

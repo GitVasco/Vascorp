@@ -845,19 +845,24 @@ $(".tablaCuentasAprobadas").on("click", ".btnAgregarLetra", function () {
 })
 
 $(".btnGenerarLetra").click(function(){
+
   $(this).attr("disabled", true);
   $(this).removeClass("btn-primary");
   $(this).addClass("btn-default");
+
   var nroLetra = $("#nroLetra").val();  
   var saldo=$("#letraSaldo").val();
   var montoLetra=Number(saldo)/Number(nroLetra);
   var fecha= new Date($("#letraFecha").val());
   var sumaDias = Number($("#sumaFecha").val())+1;
   var intervalo=Number($("#sumaIntervalo").val());
+
   fecha.setDate(fecha.getDate() + sumaDias);
   var mes=(fecha.getMonth() + 1);
   var dia =fecha.getDate();
+
   if(mes.toString().length == 1){
+
     if(dia.toString().length == 1){
       var resultado= fecha.getFullYear() + '-0' +
       (fecha.getMonth() + 1) + '-' + "0"+fecha.getDate();
@@ -875,10 +880,20 @@ $(".btnGenerarLetra").click(function(){
     }
   }
   
+  //console.log(resultado);
   
   for (let index = 0; index < nroLetra; index++) {
+
+    nuevoTotal = montoLetra.toFixed(2) * nroLetra;
+
+    nuevaDif = Number(saldo) - nuevoTotal;
+
+    nuevoMonto= Number(montoLetra.toFixed(2)) + Number(nuevaDif);
+
+    //console.log(nuevoMonto);
     
     if(index==0){
+
       $(".listaLetras").append(
         '<div class="letraCuenta col-lg-12" style="padding:0px">'+
           '<div class="col-lg-3" style="padding-top:10px">' +
@@ -888,50 +903,61 @@ $(".btnGenerarLetra").click(function(){
               '<input type="text" class="form-control "   name="obs'+index+'" value="Letra '+(index+1)+'"  >' +
           '</div>'+
           '<div class="col-lg-2" style="padding-top:10px">' +
-              '<input type="text" class="form-control "   name="monto'+index+'" value="' + montoLetra.toFixed(2) + '" readonly required>' +
+              '<input type="text" class="form-control "   name="monto'+index+'" value="' + nuevoMonto.toFixed(2) + '" readonly required>' +
           '</div>'+
           '<div class="col-lg-12"></div><br>'+
         '</div>' );
-    }
-    else{
-    fecha.setDate(fecha.getDate() + intervalo);
-    var mes2=(fecha.getMonth() + 1);
-    var dia2 =fecha.getDate();
-    if(mes2.toString().length == 1){
-      if(dia2.toString().length == 1){
-        var resultado2= fecha.getFullYear() + '-0' +
-        (fecha.getMonth() + 1) + '-' + "0"+fecha.getDate();
-      }else{
-        var resultado2= fecha.getFullYear() + '-0' +
-        (fecha.getMonth() + 1) + '-' + fecha.getDate();
-      }
+
     }else{
-      if(dia2.toString().length == 1){
-        var resultado2= fecha.getFullYear() + '-' +
-        (fecha.getMonth() + 1) + '-' + "0"+fecha.getDate();
-      }else{
-        var resultado2= fecha.getFullYear() + '-' +
-        (fecha.getMonth() + 1) + '-' + fecha.getDate();
-      }
-    }
-      $(".listaLetras").append(
-        '<div class="letraCuenta col-lg-12" style="padding:0px">'+
-          '<div class="col-lg-3" style="padding-top:10px">' +
-              '<input type="date" class="form-control "   name="fechaVenc[]" value="'+resultado2+'"  required>' +
-          '</div>'+
-          '<div class="col-lg-6" style="padding-top:10px">' +
-              '<input type="text" class="form-control "   name="obs'+index+'"  value="Letra '+(index+1)+'"  >' +
-          '</div>'+
-          '<div class="col-lg-2" style="padding-top:10px">' +
-              '<input type="text" class="form-control "   name="monto'+index+'" value="' + montoLetra.toFixed(2) + '" readonly required>' +
-          '</div>'+
-          '<div class="col-lg-12"></div><br>'+
-        '</div>' );
+
+        fecha.setDate(fecha.getDate() + intervalo);
+        var mes2=(fecha.getMonth() + 1);
+        var dia2 =fecha.getDate();
+
+        if(mes2.toString().length == 1){
+
+            if(dia2.toString().length == 1){
+                var resultado2= fecha.getFullYear() + '-0' +
+                (fecha.getMonth() + 1) + '-' + "0"+fecha.getDate();
+            }else{
+                var resultado2= fecha.getFullYear() + '-0' +
+                (fecha.getMonth() + 1) + '-' + fecha.getDate();
+            }
+
+        }else{
+
+            if(dia2.toString().length == 1){
+                var resultado2= fecha.getFullYear() + '-' +
+                (fecha.getMonth() + 1) + '-' + "0"+fecha.getDate();
+            }else{
+                var resultado2= fecha.getFullYear() + '-' +
+                (fecha.getMonth() + 1) + '-' + fecha.getDate();
+            }
+
+        }
+
+        //console.log(resultado);
+
+        $(".listaLetras").append(
+            '<div class="letraCuenta col-lg-12" style="padding:0px">'+
+            '<div class="col-lg-3" style="padding-top:10px">' +
+                '<input type="date" class="form-control "   name="fechaVenc[]" value="'+resultado2+'"  required>' +
+            '</div>'+
+            '<div class="col-lg-6" style="padding-top:10px">' +
+                '<input type="text" class="form-control "   name="obs'+index+'"  value="Letra '+(index+1)+'"  >' +
+            '</div>'+
+            '<div class="col-lg-2" style="padding-top:10px">' +
+                '<input type="text" class="form-control "   name="monto'+index+'" value="' + montoLetra.toFixed(2) + '" readonly required>' +
+            '</div>'+
+            '<div class="col-lg-12"></div><br>'+
+            '</div>' );
+
     }
     
   }
    
 });
+
 $(".btnLimpiarLetra").click(function(){
   $(".btnGenerarLetra").removeAttr('disabled');
   $(".btnGenerarLetra").removeClass("btn-default");
@@ -2184,7 +2210,7 @@ $(".box").on("click", ".btnDocContado", function () {
 $(".box").on("click", ".btnPorAceptar", function () {
 
   var vendedor = prompt("Ingrese el codigo del vendedor", "");
-  console.log(vendedor);
+  //console.log(vendedor);
 
   if (vendedor != "") {
     window.open("vistas/reportes_ticket/letras_aceptar.php?vendedor=" + vendedor ,"_blank");
