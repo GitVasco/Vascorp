@@ -54,7 +54,7 @@ $letras= CantidadEnLetra($respuesta["monto"]);
                     <td style="width:40px">'.$mesVencimiento.'</td>
                     <td style="width:60px">'.$anoVencimiento.'</td>
                     <td style="width:25px">S/</td>
-                    <td style="width:40px;text-align:right">'.$respuesta["monto"].'</td>
+                    <td style="width:40px;text-align:right">'.$respuesta["saldo"].'</td>
                 </tr>
 
             </table>

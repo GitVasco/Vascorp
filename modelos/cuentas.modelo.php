@@ -314,6 +314,7 @@ class ModeloCuentas{
 			c.fecha_ven,
 			c.fecha,
 			c.monto,
+			c.saldo,
 			cli.codigo,
 			cli.nombre,
 			cli.direccion,
