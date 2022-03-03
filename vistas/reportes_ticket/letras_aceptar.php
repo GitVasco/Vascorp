@@ -113,7 +113,7 @@
                             <td style="width:5%;text-align:left;">'.$value["vendedor"].'</td>
                             <td style="width:8%;text-align:left;"><b>'.$value["cliente"].'</b></td>
                             <td style="width:30%;text-align:left;">'.$value["nombre"].'</td>
-                            <td style="width:7%;text-align:right;"><b>S/ '.$value["monto"].'</b></td>
+                            <td style="width:7%;text-align:right;"><b>S/ '.$value["saldo"].'</b></td>
                         
 
                         </tr>';                    
@@ -145,7 +145,7 @@
                             <td style="width:5%;text-align:left;">'.$value["vendedor"].'</td>
                             <td style="width:8%;text-align:left;"><b>'.$value["cliente"].'</b></td>
                             <td style="width:30%;text-align:left;">'.$value["nombre"].'</td>
-                            <td style="width:7%;text-align:right;"><b>S/ '.$value["monto"].'</b></td>
+                            <td style="width:7%;text-align:right;"><b>S/ '.$value["saldo"].'</b></td>
                         
 
                         </tr>';                    
@@ -183,7 +183,7 @@
                         <td style="width:5%;text-align:left;">'.$value["vendedor"].'</td>
                         <td style="width:8%;text-align:left;"><b>'.$value["cliente"].'</b></td>
                         <td style="width:30%;text-align:left;">'.$value["nombre"].'</td>
-                        <td style="width:7%;text-align:right;"><b>S/ '.$value["monto"].'</b></td>
+                        <td style="width:7%;text-align:right;"><b>S/ '.$value["saldo"].'</b></td>
                     
 
                     </tr>';                    
@@ -216,7 +216,7 @@
                             <td style="width:5%;text-align:left;">'.$value["vendedor"].'</td>
                             <td style="width:8%;text-align:left;"><b>'.$value["cliente"].'</b></td>
                             <td style="width:30%;text-align:left;">'.$value["nombre"].'</td>
-                            <td style="width:7%;text-align:right;"><b>S/ '.$value["monto"].'</b></td>
+                            <td style="width:7%;text-align:right;"><b>S/ '.$value["saldo"].'</b></td>
                         
 
                         </tr>';                    
@@ -254,7 +254,7 @@
                             <td style="width:5%;text-align:left;">'.$value["vendedor"].'</td>
                             <td style="width:8%;text-align:left;"><b>'.$value["cliente"].'</b></td>
                             <td style="width:30%;text-align:left;">'.$value["nombre"].'</td>
-                            <td style="width:7%;text-align:right;"><b>S/ '.$value["monto"].'</b></td>
+                            <td style="width:7%;text-align:right;"><b>S/ '.$value["saldo"].'</b></td>
                         
 
                         </tr>';                    
@@ -292,7 +292,7 @@
                             <td style="width:5%;text-align:left;">'.$value["vendedor"].'</td>
                             <td style="width:8%;text-align:left;"><b>'.$value["cliente"].'</b></td>
                             <td style="width:30%;text-align:left;">'.$value["nombre"].'</td>
-                            <td style="width:7%;text-align:right;"><b>S/ '.$value["monto"].'</b></td>
+                            <td style="width:7%;text-align:right;"><b>S/ '.$value["saldo"].'</b></td>
                         
 
                         </tr>';                    

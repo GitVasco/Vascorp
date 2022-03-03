@@ -2614,7 +2614,7 @@ class ModeloCuentas{
 										WHERE cc.tip_mov = '+' 
 											AND cc.estado = 'Pendiente' 
 											AND cc.protesta = 1 
-											AND cc.vendedor = '04' 
+											AND cc.vendedor = '$vend'
 										ORDER BY c.ubigeo,
 											cc.tipo_doc,
 											cc.cliente,
@@ -3695,6 +3695,7 @@ class ModeloCuentas{
 												cc.fecha,
 												cc.fecha_ven,
 												cc.monto,
+												cc.saldo,
 												cc.cliente,
 												c.nombre,
 												cc.vendedor 

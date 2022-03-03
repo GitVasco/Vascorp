@@ -1658,9 +1658,13 @@ class ControladorFacturacion{
                                     "cantidad" => $value["cantidad"]);
                     #var_dump($datos);
                     $inicioTipo = substr($_POST["tdoc"],0,1);
+                    
                     if($inicioTipo == 'E'){
+
                         $respuestaGuia = ModeloArticulos::mdlActualizarStockIngreso($value["articulo"],$value["cantidad"]);
+                        
                     }else{
+
                         $respuestaGuia = ModeloArticulos::mdlActualizarStock($datos);
                     }
                     
