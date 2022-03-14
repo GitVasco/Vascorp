@@ -123,3 +123,59 @@ $(".btnFiltrar").click(function () {
     });
 
 })
+
+//*KARDEX DE COSTOS*************************************************************************************
+
+
+$('.TablaKardexCostos').DataTable({
+    "ajax": "ajax/centrocostos/tabla-kardex-carga.ajax.php",
+    "deferRender": true,
+    "retrieve": true,
+    "processing": true,
+    "searching": false,
+    "lengthChange": false,
+    "order": [[2, "asc"]],
+    "pageLength": 20,
+    "lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+    "language": {
+
+        "sProcessing": "Procesando...",
+        "sLengthMenu": "Mostrar _MENU_ registros",
+        "sZeroRecords": "No se encontraron resultados",
+        "sEmptyTable": "Ningún dato disponible en esta tabla",
+        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0",
+        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+        "sInfoPostFix": "",
+        "sSearch": "Buscar:",
+        "sUrl": "",
+        "sInfoThousands": ",",
+        "sLoadingRecords": "Cargando...",
+        "oPaginate": {
+            "sFirst": "Primero",
+            "sLast": "Último",
+            "sNext": "Siguiente",
+            "sPrevious": "Anterior"
+        },
+        "oAria": {
+            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+        }
+
+    }
+
+});
+
+/* 
+* BOTON REXPORTAR KARDEX
+*/
+$(".TablaKardexCostos").on("click", ".btnExpKardex", function () {
+
+    var codigo = $(this).attr("codigo");
+    var anno = $(this).attr("anno");
+    var mes = $(this).attr("mes");
+    //console.log("codigo", codigo);
+
+    window.location = "vistas/reportes_excel/rpt_kardex.php?codigo=" + codigo + "&anno=" + anno + "&mes=" + mes;
+  
+})

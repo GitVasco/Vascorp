@@ -1479,7 +1479,7 @@ $(".tablaEnvioLetras tbody").on("click", "button.agregarEnvioCuenta", function (
 
           var nrocta = respuesta["cuenta"];
           var cliente = respuesta["cliente"]+"-"+respuesta["nombre"];
-          var monto = respuesta["monto"];
+          var monto = respuesta["saldo"];
 
           /* 
           todo: AGREGAR LOS CAMPOS
@@ -2118,6 +2118,10 @@ $(".btnGenerarReporteCuenta").click(function(){
 
             window.open("vistas/reportes_ticket/reporte_estado_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&canc="+canc+"&vend="+vend+"&inicio="+inicio+"&fin="+fin,"_blank");
 
+        }else if(consulta== "fechaSaldo"){
+
+            window.open("extensiones/tcpdf/pdf/reporte_general_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&canc="+canc+"&vend="+vend+"&inicio="+inicio+"&fin="+fin,"_blank");
+
         }
 
     }else{
@@ -2130,7 +2134,13 @@ $(".btnGenerarReporteCuenta").click(function(){
 
           window.open("vistas/reportes_excel/rpt_estado_cuenta.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&canc="+canc+"&vend="+vend+"&inicio="+inicio+"&fin="+fin,"_blank");
 
-        }
+        }else if (consulta== "fechaSaldo"){
+
+            window.open("vistas/reportes_excel/rpt_saldo_fecha.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&canc="+canc+"&vend="+vend+"&inicio="+inicio+"&fin="+fin,"_blank");
+  
+          }
+
+        
 
     }
 
@@ -2226,6 +2236,14 @@ function checkSubmitG() {
 	document.getElementById("btnBlocClic").disabled = true;
 	return true;
 }
+
+
+function checkSubmitGC() {
+	document.getElementById("btnBlocClicC").value = "Enviando...";
+	document.getElementById("btnBlocClicC").disabled = true;
+	return true;
+}
+
 
 
 $(".btnRptPeds").click(function(){

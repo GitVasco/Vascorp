@@ -339,7 +339,7 @@ MODAL CANCELAR CUENTA
 
     <div class="modal-content">
 
-      <form role="form" method="post" onsubmit="return checkSubmitG();">
+      <form role="form" method="post" onsubmit="return checkSubmitGC();">
 
         <!--=====================================
         CABEZA DEL MODAL
@@ -618,7 +618,7 @@ MODAL CANCELAR CUENTA
 
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" id="btnBlocClic" class="btn btn-primary">Cancelar cuenta</button>
+          <button type="submit" id="btnBlocClicC" class="btn btn-primary">Cancelar cuenta</button>
 
         </div>
 

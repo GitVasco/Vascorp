@@ -1338,6 +1338,13 @@ class ControladorCuentas{
 
 	}
 
+	static public function ctrMostrarSaldosFecha($fin){
+
+		$respuesta = ModeloCuentas::mdlMostrarSaldosFecha($fin);
+		return $respuesta;
+
+	}	
+
 	/*=============================================
 	MOSTRAR REPORTES NO VENCIDOS
 	=============================================*/

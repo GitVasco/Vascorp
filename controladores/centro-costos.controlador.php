@@ -1320,6 +1320,193 @@ class ControladorCentroCostos{
 
 		return $respuesta;
 
+    }   
+
+    /* 
+    *Mostrar KARDEX
+    */
+	static public function ctrMostrarKardex($valor){
+
+		$respuesta = ModeloCentroCostos::mdlMostrarKardex($valor);
+
+		return $respuesta;
+
+    } 
+
+    /* 
+    *Mostrar diarios - Alerta
+    */
+	static public function ctrCargarKardex(){
+
+        if(isset($_POST["tipoKardex"])){
+
+            //*Crear la Cabecera
+            date_default_timezone_set('America/Lima');
+            $fecha = new DateTime();
+			$pcreg= gethostbyaddr($_SERVER['REMOTE_ADDR']);
+			$usureg = $_SESSION["nombre"];
+
+            $codigo = $_POST["tipoKardex"].$_POST["anno"].substr($_POST["mes"],0,3);
+
+            $datosCab = array(  "tipo"          => $_POST["tipoKardex"],
+                                "codigo"        => $codigo,
+                                "anno"          => $_POST["anno"],
+                                "mes"           => $_POST["mes"],
+                                "saldo_inicial" => $_POST["saldo_inicial"],
+                                "ingreso"       => $_POST["ingresos"],
+                                "salida"        => $_POST["salidas"],
+                                "saldo_final"   => $_POST["saldo_final"],
+                                "usureg"        => $usureg,
+                                "pcreg"         => $pcreg,
+                                "fecreg"        => $fecha->format("Y-m-d H:i:s"));
+            #var_dump($datosCab);
+            $respuestaCab = ModeloCentroCostos::mdlIngresarKardexCab($datosCab);
+            #var_dump($respuestaCab);
+
+
+            //*Crear detalle
+
+            include "/../vistas/reportes_excel/Excel/reader.php";
+            
+            $directorio="vistas/contabilidad/kardex/".$_FILES["archivo"]["name"];
+            $archivo=move_uploaded_file($_FILES["archivo"]['tmp_name'], $directorio);
+            $data = new Spreadsheet_Excel_Reader();
+            $data->setOutputEncoding('CP1251');
+
+            
+            $data->read("vistas/contabilidad/kardex/".$_FILES["archivo"]["name"]);
+            /* $con=ControladorUsuarios::ctrMostrarConexiones("id",1);
+            $conexion = mysql_connect($con["ip"], $con["user"], $con["pwd"]) or die("No se pudo conectar: " . mysql_error());
+            mysql_select_db($con["db"], $conexion); */
+
+            $columnas = $data ->sheets[0]['numRows'];
+            #var_dump($columnas);
+
+            error_reporting (0);
+
+            $intoA = "";
+            for ($i = 2; $i <= $columnas; $i++) { 
+                
+
+                $fechaK         = $data->sheets[0]['cells'][$i][1];
+                $ttabla         = $data->sheets[0]['cells'][$i][2];
+                $estab          = $data->sheets[0]['cells'][$i][3];
+                $num_doc        = $data->sheets[0]['cells'][$i][4];
+                $item           = utf8_decode($data->sheets[0]['cells'][$i][5]);
+                $descripcion    = utf8_decode($data->sheets[0]['cells'][$i][6]);
+                $coduni         = $data->sheets[0]['cells'][$i][7];
+                $unidad         = $data->sheets[0]['cells'][$i][8];
+                $cliente        = $data->sheets[0]['cells'][$i][9];
+                $ctm            = $data->sheets[0]['cells'][$i][10];
+                $tipo_mov       = $data->sheets[0]['cells'][$i][11];
+
+                $cantidadA      = $data->sheets[0]['cells'][$i][12];
+                $puA            = $data->sheets[0]['cells'][$i][13];
+                $totalA         = $data->sheets[0]['cells'][$i][14];
+
+                $cantidadB      = $data->sheets[0]['cells'][$i][15];
+                $puB            = $data->sheets[0]['cells'][$i][16];
+                $totalB         = $data->sheets[0]['cells'][$i][17];
+
+                $cantidadC      = $data->sheets[0]['cells'][$i][18];
+                $puC            = $data->sheets[0]['cells'][$i][19];
+                $totalC         = $data->sheets[0]['cells'][$i][20];
+
+                $area           = $data->sheets[0]['cells'][$i][21];
+                $cuenta         = $data->sheets[0]['cells'][$i][22];
+                $auxA           = $data->sheets[0]['cells'][$i][23];
+                $nom_cuenta     = $data->sheets[0]['cells'][$i][24];
+                $auxB           = $data->sheets[0]['cells'][$i][25];
+                
+                $intoA .= "('".strtoupper($codigo)."','".
+                                $fechaK."','".
+                                $ttabla."','".
+                                $estab."','".
+                                $num_doc."','".
+                                str_replace('?', 'Ñ', $item)."','".
+                                $descripcion."','".
+                                $coduni."','".
+                                $unidad."','".
+                                $cliente."','".
+                                $ctm."','".
+                                $tipo_mov."','".
+
+                                $cantidadA."','".
+                                $puA."','".
+                                $totalA."','".
+
+                                $cantidadB."','".
+                                $puB."','".
+                                $totalB."','".
+                                
+                                $cantidadC."','".
+                                $puC."','".
+                                $totalC."','".
+
+                                $area."','".
+                                $cuenta."','".
+                                $auxA."','".
+                                $nom_cuenta."','".
+                                $auxB."'".            
+                "),";
+
+            }
+            
+            #var_dump($intoA);
+
+            $detalle = substr($intoA,0,-1);
+            var_dump("detalle", $detalle);
+
+            $respuestaDetalle = ModeloCentroCostos::mdlIngresarKardexDet($detalle);
+            #var_dump($respuestaDetalle); 
+
+            if($respuestaDetalle == "ok"){
+
+                echo'<script>
+
+				swal({
+					type: "success",
+					title: "Se cargo correctamente",
+					showConfirmButton: true,
+					confirmButtonText: "Cerrar"
+					}).then(function(result){
+								if (result.value) {
+
+								window.location = "kardex-carga";
+
+								}
+							})
+
+				</script>';
+
+            }
+
+
+
+        }
+
+    }     
+
+    /* 
+    *Mostrar KARDEX
+    */
+	static public function ctrVerItems($valor){
+
+		$respuesta = ModeloCentroCostos::mdlVerItems($valor);
+
+		return $respuesta;
+
+    }     
+
+    /* 
+    *Mostrar KARDEX
+    */
+	static public function ctrVerItemsDet($codigo, $item){
+
+		$respuesta = ModeloCentroCostos::mdlVerItemsDet($codigo, $item);
+
+		return $respuesta;
+
     }     
 
 }

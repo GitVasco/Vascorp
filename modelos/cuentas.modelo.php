@@ -2012,6 +2012,58 @@ class ModeloCuentas{
 
     }
 
+	static public function mdlMostrarSaldosFecha($fin){
+
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+						cc.cliente,
+						c.nombre,
+						cc.tipo_doc,
+						cc.num_cta,
+						cc.cod_pago,
+						cc.doc_origen,
+						cc.fecha,
+						cc.fecha_ven,
+						cc.monto,
+						cc.saldo AS saldo_actual,
+						cc.estado,
+						IFNULL(cc1.monto, 0) AS pagos_fecha,
+						(cc.monto - IFNULL(cc1.monto, 0)) saldo,
+						cc.vendedor,
+						cc.protesta,
+						cc.num_unico,
+						cc.banco 
+					FROM
+						cuenta_ctejf cc 
+						LEFT JOIN 
+						(SELECT 
+							cc.num_cta,
+							SUM(cc.monto) AS monto 
+						FROM
+							cuenta_ctejf cc 
+						WHERE  cc.tip_mov = '-' 
+							AND cc.fecha <= '$fin' 
+						GROUP BY cc.num_cta) AS cc1 
+						ON cc.num_cta = cc1.num_cta 
+						LEFT JOIN clientesjf c 
+						ON cc.cliente = c.codigo 
+					WHERE cc.tip_mov = '+' 
+						AND cc.fecha <= '$fin' 
+						AND (cc.monto - IFNULL(cc1.monto, 0)) > 0");
+							
+						$stmt -> execute();
+
+						return $stmt -> fetchAll();
+	
+
+
+		$stmt -> close();
+
+		$stmt = null;
+
+
+    }	
+
 	static public function mdlMostrarReporteNoVencidos($tabla,$orden1,$orden2,$tip_doc,$cli,$vend,$banco){
 
 		if($orden1 == 'tipo' && $orden2 == 'ordNumCuenta' ){

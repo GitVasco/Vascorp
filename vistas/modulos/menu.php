@@ -1565,7 +1565,8 @@
                                             $_GET["ruta"] == "gastos-caja" ||
                                             $_GET["ruta"] == "ingresos-caja" ||
                                             $_GET["ruta"] == "centro-costos-rsm" ||
-                                            $_GET["ruta"] == "solicitud-caja") echo 'active';?>">
+                                            $_GET["ruta"] == "solicitud-caja" ||
+                                            $_GET["ruta"] == "kardex-carga") echo 'active';?>">
 
                 <a href="#">
 
@@ -1593,6 +1594,17 @@
                         </a>
 
                     </li>
+
+                    <li class="<?php if($_GET["ruta"] == "kardex-carga") echo 'active';?>">
+
+                        <a href="kardex-carga">
+
+                            <i class="fa fa-cc text-yellow"></i>
+                            <span>Kardex</span>
+
+                        </a>
+
+                    </li>                    
 
                     <li class="<?php if($_GET["ruta"] == "gastos-caja") echo 'active';?>">
 

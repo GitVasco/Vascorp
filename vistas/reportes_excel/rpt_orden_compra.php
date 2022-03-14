@@ -532,7 +532,7 @@ $res1=mysql_fetch_array($sql1);
   $objPHPExcel->getActiveSheet() ->getStyle("C$fila")  ->getAlignment()  ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); 
   $objPHPExcel->getActiveSheet() ->getStyle("E$fila")  ->getAlignment()  ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); 
  $fila+=1;
-  $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", "Elvis Huaman S.");
+  $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", "Rayer Bailon P.");
    $objPHPExcel->getActiveSheet() ->getStyle("C$fila")  ->getAlignment()  ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 $objPHPExcel->getActiveSheet() ->getStyle("E$fila")  ->getAlignment()  ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); 
 
