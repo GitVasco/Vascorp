@@ -1960,7 +1960,11 @@ class ModeloCentroCostos
                             k.item,
                             REPLACE(k.item, 'Total ', '') AS buscador,
                             k.descripcion,
-                            k.ctm,
+                            CASE
+                              WHEN k.ctm <> '' 
+                              THEN k.ctm 
+                              ELSE 'TOTAL' 
+                            END AS ctm,
                             k.cantidad_a,
                             k.pu_a,
                             k.total_a,
