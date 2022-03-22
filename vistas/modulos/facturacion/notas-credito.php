@@ -326,7 +326,7 @@
     <div class="col-lg-12" style="position:relative;bottom:60px">
         <div class="col-lg-3"></div>
         <div class="form-group col-lg-1">
-            <button class="btn btn-success btn-lg btnGuardarNotaCredito"><i class="fa fa-save"></i> Guardar</button>
+            <button class="btn btn-success btn-lg btnGuardarNotaCredito" id="btnBlocNCD"><i class="fa fa-save"></i> Guardar</button>
         </div>
 
         <div class="form-group col-lg-1">

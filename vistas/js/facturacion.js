@@ -634,6 +634,9 @@ $("#notaNoAfecto").change(function(){
 });
 
 $(".btnGuardarNotaCredito").click(function(){
+
+  /* document.getElementById("btnBlocNCD").value = "Enviando...";
+	document.getElementById("btnBlocNCD").disabled = true; */
     
     var nota = $('input[name=optNotas1]:checked').val();
     var chkCuenta = document.getElementById("radioCtaCte");

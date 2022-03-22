@@ -401,6 +401,9 @@ for ($i=0; $i < count($item) ; $i++) {
     $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", '     PERIODO');
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde_3C, "A$fila");
 
+	$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", '     :');
+	$objPHPExcel->getActiveSheet()->getStyle("G$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
     $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", strtoupper($mes).' '.$anno);
     $objPHPExcel->getActiveSheet()->setSharedStyle($texto_3, "H$fila");
 
@@ -411,6 +414,9 @@ for ($i=0; $i < count($item) ; $i++) {
 
     $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", '     RUC');
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde_3C, "A$fila");
+
+	$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", '     :');
+	$objPHPExcel->getActiveSheet()->getStyle("G$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 
     $objPHPExcel->getActiveSheet()->setCellValueExplicit("H$fila", "20513613939", PHPExcel_Cell_DataType::TYPE_STRING);
     $objPHPExcel->getActiveSheet()->setSharedStyle($texto_3, "H$fila");   
@@ -423,6 +429,9 @@ for ($i=0; $i < count($item) ; $i++) {
     $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", '     APELLIDOS Y NOMBRES ,DENOMINACIÓN  Y/O  RAZÓN SOCIAL');
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde_3C, "A$fila");
 
+	$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", '     :');
+	$objPHPExcel->getActiveSheet()->getStyle("G$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
     $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", 'CORPORACION VASCO S.A.C.');
     $objPHPExcel->getActiveSheet()->setSharedStyle($texto_3, "H$fila");
 
@@ -433,6 +442,9 @@ for ($i=0; $i < count($item) ; $i++) {
 
     $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", '     ESTABLECIMIENTO(1)');
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde_3C, "A$fila");
+
+	$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", '     :');
+	$objPHPExcel->getActiveSheet()->getStyle("G$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 
     $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", '001  ALMACEN GENERAL');
     $objPHPExcel->getActiveSheet()->setSharedStyle($texto_3, "H$fila");    
@@ -445,6 +457,9 @@ for ($i=0; $i < count($item) ; $i++) {
     $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", '     CÓDIGO DE  LA EXISTENCIAS');
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde_3C, "A$fila");
 
+	$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", '     :');
+	$objPHPExcel->getActiveSheet()->getStyle("G$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
     $objPHPExcel->getActiveSheet()->setCellValueExplicit("H$fila", utf8_decode($item[$i]["item"]), PHPExcel_Cell_DataType::TYPE_STRING);
     $objPHPExcel->getActiveSheet()->setSharedStyle($texto_3, "H$fila");    
 
@@ -455,6 +470,9 @@ for ($i=0; $i < count($item) ; $i++) {
 
     $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", '     TIPO  (TABLA 5)');
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde_3C, "A$fila");
+
+	$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", '     :');
+	$objPHPExcel->getActiveSheet()->getStyle("G$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 
     $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", '03 MATERIAS PRIMAS Y AUXILIARES - MATERIALES');
     $objPHPExcel->getActiveSheet()->setSharedStyle($texto_3, "H$fila");   
@@ -467,6 +485,9 @@ for ($i=0; $i < count($item) ; $i++) {
     $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", '     DESCRIPCIÓN');
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde_3C, "A$fila");
 
+	$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", '     :');
+	$objPHPExcel->getActiveSheet()->getStyle("G$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+	
     $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", $item[$i]["descripcion"]);
     $objPHPExcel->getActiveSheet()->setSharedStyle($texto_3, "H$fila");  
 
@@ -477,6 +498,9 @@ for ($i=0; $i < count($item) ; $i++) {
 
     $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", '     CÓDIGO DE LA  UNIDAD  DE MEDIDA (TABLA 6)');
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde_3C, "A$fila");
+
+	$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", '     :');
+	$objPHPExcel->getActiveSheet()->getStyle("G$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 
     $objPHPExcel->getActiveSheet()->setCellValueExplicit("H$fila", utf8_decode($item[$i]["cod_unidad"]), PHPExcel_Cell_DataType::TYPE_STRING);
     $objPHPExcel->getActiveSheet()->setSharedStyle($texto_3, "H$fila");      
@@ -490,6 +514,9 @@ for ($i=0; $i < count($item) ; $i++) {
     $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", '     MÉTODO DE  VALUACIÓN');
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde_3C, "A$fila");
 
+	$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", '     :');
+	$objPHPExcel->getActiveSheet()->getStyle("G$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+	
     $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", 'PROMEDIO  PONDERADO MÓVIL');
     $objPHPExcel->getActiveSheet()->setSharedStyle($texto_3, "H$fila");  
     
@@ -1105,7 +1132,7 @@ header("Content-Type: application/vnd.ms-excel");
 
 
 # Nombre del archivo
-header('Content-Disposition: attachment; filename=" Credipagos - '.$fecha.'.xlsx"');
+header('Content-Disposition: attachment; filename=" Kardex - '.$codigo.'.xlsx"');
 $objWriter=PHPExcel_IOFactory::createWriter($objPHPExcel,'Excel2007');
 
 
