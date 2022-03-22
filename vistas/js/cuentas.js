@@ -2201,9 +2201,43 @@ window.open("extensiones/tcpdf/pdf/reporte_estado_cuenta_vdor_vdos.php?vendedor=
 
 
 //Reporte de Cuentas
-$(".box").on("click", ".btnReporteCrediPagos", function () {
+/* $(".box").on("click", ".btnReporteCrediPagos", function () {
 
   window.location = "vistas/reportes_excel/rpt_credipagos.php";
+
+}) */
+
+
+$(".btnReporteCrediPagos").click(function(){
+
+  var inicio = document.getElementById("fechaInicio").value; 
+  var final = document.getElementById("fechaFin").value; 
+
+
+  if(inicio == ""){
+
+    var ini = document.getElementById("iniF").value; 
+
+  }else{
+
+    var ini = inicio;
+
+  }
+
+  if(final == ""){
+
+    var fin = document.getElementById("finF").value; 
+
+  }else{
+
+    var fin = final;
+
+  }
+
+
+  console.log(ini, fin);
+
+  window.location = "vistas/reportes_excel/rpt_credipagos.php?inicio=" + ini + "&fin=" + fin;
 
 })
 

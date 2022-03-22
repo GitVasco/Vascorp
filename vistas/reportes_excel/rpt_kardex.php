@@ -478,7 +478,7 @@ for ($i=0; $i < count($item) ; $i++) {
     $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", '     CÓDIGO DE LA  UNIDAD  DE MEDIDA (TABLA 6)');
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde_3C, "A$fila");
 
-    $objPHPExcel->getActiveSheet()->setCellValueExplicit("H$fila", '01', PHPExcel_Cell_DataType::TYPE_STRING);
+    $objPHPExcel->getActiveSheet()->setCellValueExplicit("H$fila", utf8_decode($item[$i]["cod_unidad"]), PHPExcel_Cell_DataType::TYPE_STRING);
     $objPHPExcel->getActiveSheet()->setSharedStyle($texto_3, "H$fila");      
 
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde_3B, "N$fila");

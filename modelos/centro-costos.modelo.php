@@ -1901,12 +1901,7 @@ class ModeloCentroCostos
                                                             total_b,
                                                             cantidad_c,
                                                             pu_c,
-                                                            total_c,
-                                                            areak,
-                                                            cuenta,
-                                                            aux_a,
-                                                            nombre_cuenta,
-                                                            aux_b
+                                                            total_c
                                                 )
                                                 VALUES
                                                     $detalle");
@@ -1916,7 +1911,7 @@ class ModeloCentroCostos
 
 		} else {
 
-			return $stmt;
+			return $stmt->errorInfo();
 		}
 
 		$stmt->close();
@@ -1932,7 +1927,8 @@ class ModeloCentroCostos
 
         $stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
                         k.item,
-                        k.descripcion 
+                        k.descripcion,
+                        k.cod_unidad  
                     FROM
                         kardex_detjf k 
                     WHERE k.item NOT LIKE '%Total%' 

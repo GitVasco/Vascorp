@@ -1412,11 +1412,11 @@ class ControladorCentroCostos{
                 $puC            = $data->sheets[0]['cells'][$i][19];
                 $totalC         = $data->sheets[0]['cells'][$i][20];
 
-                $area           = $data->sheets[0]['cells'][$i][21];
+                /* $area           = $data->sheets[0]['cells'][$i][21];
                 $cuenta         = $data->sheets[0]['cells'][$i][22];
                 $auxA           = $data->sheets[0]['cells'][$i][23];
                 $nom_cuenta     = $data->sheets[0]['cells'][$i][24];
-                $auxB           = $data->sheets[0]['cells'][$i][25];
+                $auxB           = $data->sheets[0]['cells'][$i][25]; */
                 
                 $intoA .= "('".strtoupper($codigo)."','".
                                 $fechaK."','".
@@ -1441,13 +1441,13 @@ class ControladorCentroCostos{
                                 
                                 $cantidadC."','".
                                 $puC."','".
-                                $totalC."','".
+                                $totalC."'".
 
-                                $area."','".
+                                /* $area."','".
                                 $cuenta."','".
                                 $auxA."','".
                                 $nom_cuenta."','".
-                                $auxB."'".            
+                                $auxB."'".   */          
                 "),";
 
             }
@@ -1458,7 +1458,7 @@ class ControladorCentroCostos{
             var_dump("detalle", $detalle);
 
             $respuestaDetalle = ModeloCentroCostos::mdlIngresarKardexDet($detalle);
-            #var_dump($respuestaDetalle); 
+            var_dump($respuestaDetalle); 
 
             if($respuestaDetalle == "ok"){
 

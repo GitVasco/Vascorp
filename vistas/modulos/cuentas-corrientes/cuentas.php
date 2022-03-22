@@ -64,7 +64,7 @@
         </div>
         
         <div class="pull-right">
-          <button class="btn btn-outline-success btnReporteCrediPagos"  ano="null"  style="border:green 1px solid">
+          <button class="btn btn-outline-success" style="border:green 1px solid" data-toggle="modal" data-target="#modalFechasCredipagos">
           <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Credipagos  </button>
         </div>
 
@@ -1578,6 +1578,100 @@ MODAL DIVIDIR LETRA
       $dividirLetra -> ctrDividirLetra();
       ?>   
 
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!--=====================================
+MODAL IMPORTAR CUENTAS DE BANCO
+======================================-->
+
+<div id="modalFechasCredipagos" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form role="form" method="post" enctype="multipart/form-data">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Credipagos</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+          <div class="box-body">
+
+            <!-- ENTRADA PARA EL CODIGO -->
+
+            <?php
+
+                    $control = ControladorCuentas::ctrControlFechas();
+                    //var_dump($control);
+
+            ?>
+            
+            <div class="form-group">
+            <label for=""><h3>Desde:</h3></label>
+              <div class="input-group">
+                
+                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
+
+                <input type="date" min="<?php echo $control["inicio"] ?>" max="<?php echo $control["fin"] ?>" class="form-control input-lg" name="fechaInicio" id="fechaInicio" required>
+
+
+                <input type="hidden" name="iniF" id="iniF" value="<?php echo $control["inicio"] ?>"">
+                <input type="hidden" name="finF" id="finF" value="<?php echo $control["fin"] ?>"">
+
+              </div>
+
+            </div>     
+            
+            <div class="form-group">
+            <label for=""><h3>Hasta:</h3></label>
+              <div class="input-group">
+                
+                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
+
+                <input type="date" min="<?php echo $control["inicio"] ?>" max="<?php echo $control["fin"] ?>" class="form-control input-lg" name="fechaFin" id="fechaFin" required>
+
+              </div>
+
+            </div>               
+
+          </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="button" id="generarCredipagos" name="generarCredipagos" class="btn btn-primary btnReporteCrediPagos">GENERAR</button>
+
+        </div>
+
+      </form>
 
     </div>
 

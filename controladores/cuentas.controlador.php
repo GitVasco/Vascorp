@@ -1580,5 +1580,15 @@ class ControladorCuentas{
 		return $respuesta;
 
     }	
+
+	//ESTADO DE CUENTA
+	static public function ctrControlFechas(){
+
+		$respuesta = ModeloCuentas::mdlControlFechas();
+
+		return $respuesta;
+
+    }	
+
    
 }

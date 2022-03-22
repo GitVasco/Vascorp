@@ -182,7 +182,7 @@ $image_file = K_PATH_IMAGES.'borde4.png';
 
 $image_file2 = K_PATH_IMAGES.'borde2.png';
 
-if( $tamaño>= 23){
+if( $tamaño>= 22){
 
     $pdf->AddPage();
     $pdf->Ln(72);

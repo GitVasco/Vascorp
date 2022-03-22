@@ -4281,4 +4281,27 @@ class ModeloCuentas{
 
 	}	
 
+	//* ESTADO DE CEUNTA DETALLE PROTESTO
+	static public function mdlControlFechas(){	
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+							MIN(fecha) AS inicio,
+							MAX(fecha) AS fin
+						FROM
+							cuenta_ctejf c 
+						WHERE c.tip_mov = '-' 
+							AND c.cod_pago = '82' 
+							AND YEAR(c.fecha) >= '2021'");
+
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}		
+
 }
