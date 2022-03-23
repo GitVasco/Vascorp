@@ -954,7 +954,18 @@ for ($i=0; $i < count($item) ; $i++) {
 
 		if($detalle[$j]["cantidad_c"] <= 0){
 
-			$objPHPExcel->getActiveSheet()->SetCellValue("L$fila", '');
+			if ($detalle[$j]["ctm"] == "TOTAL") {
+
+				$objPHPExcel->getActiveSheet()->SetCellValue("L$fila", 0);
+				$objPHPExcel->getActiveSheet()->getStyle("L$fila")->getNumberFormat()->setFormatCode ("0.00");
+
+			}else{
+			
+				$objPHPExcel->getActiveSheet()->SetCellValue("L$fila", '');
+
+			}
+
+			//$objPHPExcel->getActiveSheet()->SetCellValue("L$fila", '');
 
 			$objPHPExcel->getActiveSheet()->getStyle("L$fila")->getBorders()->getBottom()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 			$objPHPExcel->getActiveSheet()->getStyle("L$fila")->getBorders()->getTop()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
@@ -1042,7 +1053,16 @@ for ($i=0; $i < count($item) ; $i++) {
 
 		if($detalle[$j]["total_c"] <= 0){
 
-			$objPHPExcel->getActiveSheet()->SetCellValue("N$fila", '');
+			if ($detalle[$j]["ctm"] == "TOTAL") {
+
+				$objPHPExcel->getActiveSheet()->SetCellValue("N$fila", 0);
+				$objPHPExcel->getActiveSheet()->getStyle("N$fila")->getNumberFormat()->setFormatCode ("0.00");
+
+			}else{
+			
+				$objPHPExcel->getActiveSheet()->SetCellValue("N$fila", '');
+
+			}
 
 			$objPHPExcel->getActiveSheet()->getStyle("N$fila")->getBorders()->getBottom()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 			$objPHPExcel->getActiveSheet()->getStyle("N$fila")->getBorders()->getTop()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);

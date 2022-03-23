@@ -642,9 +642,12 @@ $(".tablaCuentasAprobadas").on("click", ".btnVisualizarCuenta", function () {
 
 $(".tablaCuentasConsultar").on("click", ".btnVisualizarCuentaConsultar", function () {
   var numCuenta = $(this).attr("numCta");
-  localStorage.setItem("numCta",numCuenta);
+  localStorage.setItem("numCtaB",numCuenta);
+
+  var codCuenta = $(this).attr("codCta");
+  localStorage.setItem("codCtaB",codCuenta);
   
-  window.location = "index.php?ruta=ver-cuentas-consultar&numCta=" + numCuenta ;
+  window.location = "index.php?ruta=ver-cuentas-consultar&numCta=" + numCuenta + "&codCta=" + codCuenta;
 
   
 })
@@ -1029,6 +1032,9 @@ $("#tipoCliente").change(function(){
   localStorage.setItem("cliente",cliente);
   sessionStorage.setItem("desCliente",descripcion);
   /* console.log("codigo", codigo); */
+
+  $("#CodCliBtn").val(cliente);
+
   //traer nombre de cliente
   var datos = new FormData();
   datos.append("codigo", cliente);
@@ -1043,9 +1049,11 @@ $("#tipoCliente").change(function(){
     processData: false,
     dataType:"json",
     success:function(respuesta){
-      $("#consultaCliente").val(respuesta["codigo"]+" - "+respuesta["nombre"])
-      $("#consultaCliente").css("background-color", "darkblue");
-      $("#consultaCliente").css("color", "white");
+      //console.table(respuesta);
+
+      const resultCliente = document.getElementById("consultaCliente");
+      resultCliente.innerText =  respuesta["codigo"] + " - " + respuesta["nombre"];
+
     }
 
   })
@@ -1064,10 +1072,10 @@ $("#tipoCliente").change(function(){
     processData: false,
     dataType:"json",
     success:function(respuesta2){
-      var credito = parseFloat(respuesta2["total_credito"]);
-      $("#consultaCredito").val("S/ "+new Intl.NumberFormat('de-DE').format(credito.toFixed(2)));
-      $("#consultaCredito").css("background-color", "green");
-      $("#consultaCredito").css("color", "white");
+
+      const resultTotalVenta = document.getElementById("consultaCredito");
+      resultTotalVenta.innerText = "S/ " + respuesta2["total_credito"];
+
     }
 
   })
@@ -1086,14 +1094,17 @@ $("#tipoCliente").change(function(){
     processData: false,
     dataType:"json",
     success:function(respuesta3){
+
         if(respuesta3 ==  false){
-          $("#consultaDeudaTot").val("S/ 0")
+            const resultTotalDeuda = document.getElementById("consultaDeudaTot");
+            resultTotalDeuda.innerText =  "S/ 0.00";
         }else{
-          var deuda = parseFloat(respuesta3["total_deuda"]);
-          $("#consultaDeudaTot").val("S/ "+new Intl.NumberFormat('de-DE').format(deuda.toFixed(2)));
+            var deudaVen = parseFloat(respuesta3["total_deuda"]);
+            
+            const resultTotalDeuda = document.getElementById("consultaDeudaTot");
+            resultTotalDeuda.innerText =  "S/ " + new Intl.NumberFormat('de-DE').format(deudaVen.toFixed(2));
         }
-      $("#consultaDeudaTot").css("background-color", "green");
-      $("#consultaDeudaTot").css("color", "white");
+
     }
 
   })
@@ -1113,15 +1124,17 @@ $("#tipoCliente").change(function(){
     dataType:"json",
     success:function(respuesta4){
       if(respuesta4 == false){
-        $("#consultaDeudaVen").val("S/ 0")
+        const resultTotalDeudaVen = document.getElementById("consultaDeudaVen");
+        resultTotalDeudaVen.innerText =  "S/ 0.00";        
       }else{
         var deudaVen = parseFloat(respuesta4["total_vencido"]);
-        $("#consultaDeudaVen").val("S/ "+new Intl.NumberFormat('de-DE').format(deudaVen.toFixed(2)));
+        
+        const resultTotalDeuda = document.getElementById("consultaDeudaVen");
+        resultTotalDeuda.innerText =  "S/ " + new Intl.NumberFormat('de-DE').format(deudaVen.toFixed(2));
         
       }
       
-      $("#consultaDeudaVen").css("background-color", "red");
-      $("#consultaDeudaVen").css("color", "white");
+
     }
 
   })
@@ -1325,16 +1338,16 @@ $(".box").on("click", "#cargaClienteCuenta", function () {
   
 });
 
-if (localStorage.getItem("numCta") != null) {
-	cargarTablaVerCuentasConsultar(localStorage.getItem("numCta"));
+if (localStorage.getItem("numCtaB") != null) {
+	cargarTablaVerCuentasConsultar(localStorage.getItem("numCtaB"), localStorage.getItem("codCtaB"));
 } else {
-	cargarTablaVerCuentasConsultar(null);
+	cargarTablaVerCuentasConsultar(null, null);
 }
 
 //CUENTAS consultar
-function cargarTablaVerCuentasConsultar(numCta){
+function cargarTablaVerCuentasConsultar(numCta, codCta){
 $('.tablaVerCuentasConsultar').DataTable({
-  "ajax": "ajax/cuentas-corrientes/tabla-ver-cuentas-consultar.ajax.php?perfil="+$("#perfilOculto").val()+"&numCta=" + numCta ,
+  "ajax": "ajax/cuentas-corrientes/tabla-ver-cuentas-consultar.ajax.php?perfil="+$("#perfilOculto").val()+"&numCta=" + numCta + "&codCta=" + codCta,
   "deferRender": true,
   "retrieve": true,
   "processing": true,
@@ -2302,5 +2315,89 @@ $(".btnRptResVtaMes").click(function(){
   console.log(mes);
 
   window.open("vistas/reportes_ticket/reporte_resumen_vtas.php?mes="+ mes,"_blank");
+
+})
+
+
+$("#btnCargarPagos").click(function(){
+
+    let clientePagos = document.getElementById("CodCliBtn").value;
+    console.log(clientePagos);
+
+    var datos = new FormData();
+    datos.append("clientePagos", clientePagos);
+
+    $.ajax({
+  
+      url: "ajax/cuentas.ajax.php",
+      method: "POST",
+      data: datos,
+      cache: false,
+      contentType: false,
+      processData: false,
+      dataType: "json",
+      success: function (respuesta) {
+
+        console.table(respuesta);
+
+        $(".nuevosPagos").find('div').remove();       
+        
+        for (let i = 0; i < respuesta.length; i++) {
+
+            $(".nuevosPagos").append(
+
+                '<div class="row" style="padding:5px 5px">' +
+        
+                    '<div class="form-group col-lg-2">' +
+
+                        '<div style="margin-top:2px"></div>' +
+                        '<label for=""><b>Año</b></label>' + 
+
+                        '<div class="input-group">' +
+
+                            '<input type="text" class="form-control input-sm" name="anno" id="anno" value="' + respuesta[i]["anno"] + '" readonly>' +
+
+                        '</div>' +
+
+                    "</div>" +
+
+                    '<div class="form-group col-lg-4">' +
+
+                        '<div style="margin-top:2px"></div>' +
+                        '<label for=""><b>Mes</b></label>' + 
+
+                        '<div class="input-group">' +
+
+                            '<input type="text" class="form-control input-sm" name="mes" id="mes" value="' + respuesta[i]["mes"] + '" readonly>' +
+
+                        '</div>' +
+
+                    "</div>" +            
+                    
+                    '<div class="form-group col-lg-6">' +
+
+                        '<div style="margin-top:2px"></div>' +
+                        '<label for=""><b>Monto S/</b></label>' + 
+
+                        '<div class="input-group">' +
+
+                            '<input type="text" class="form-control input-sm" name="mes" id="mes" value="' + respuesta[i]["monto"] + '" readonly>' +
+
+                        '</div>' +
+
+                    "</div>" +                    
+        
+                '</div>'
+        
+                )
+
+        }
+
+
+
+        
+      }
+  
+    })  
 
 })

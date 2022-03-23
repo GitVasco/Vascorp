@@ -1119,7 +1119,7 @@ class ModeloCuentas{
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
 		c.cliente,
-		SUM(monto) AS total_credito 
+		FORMAT(SUM(monto),2) AS total_credito 
 		FROM
 			cuenta_ctejf c 
 		WHERE c.cliente = :cliente
@@ -4303,5 +4303,64 @@ class ModeloCuentas{
 		$stmt = null;
 
 	}		
+
+	static public function mdlUltPagos($cliente){
+
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+		@i := @i + 1 AS contador, 
+		  YEAR(c.fecha) AS anno,
+		  CASE
+			WHEN MONTH(c.fecha) = 1 
+			THEN 'ENERO' 
+			WHEN MONTH(c.fecha) = 2 
+			THEN 'FEBRERO' 
+			WHEN MONTH(c.fecha) = 3 
+			THEN 'MARZO' 
+			WHEN MONTH(c.fecha) = 4 
+			THEN 'ABRIL' 
+			WHEN MONTH(c.fecha) = 5 
+			THEN 'MAYO' 
+			WHEN MONTH(c.fecha) = 6 
+			THEN 'JUNIO' 
+			WHEN MONTH(c.fecha) = 7 
+			THEN 'JULIO' 
+			WHEN MONTH(c.fecha) = 8 
+			THEN 'AGOSTO' 
+			WHEN MONTH(c.fecha) = 9 
+			THEN 'SEPTIEMBRE' 
+			WHEN MONTH(c.fecha) = 10 
+			THEN 'OCTUBRE' 
+			WHEN MONTH(c.fecha) = 11 
+			THEN 'NOVIEMBRE' 
+			ELSE 'DICIEMBRE' 
+		  END AS mes,
+		  FORMAT(SUM(c.monto),2) AS monto
+		FROM
+		  cuenta_ctejf c 
+		  CROSS JOIN (SELECT @i := 0) r
+		WHERE c.tip_mov = '-' 
+		  AND c.fecha BETWEEN DATE_SUB(NOW(), INTERVAL 7 MONTH) 
+		  AND NOW() 
+		  AND c.cliente = :cliente 
+		  AND c.cod_pago IN ('00', '05', '06', '14', '80', '82') 
+		GROUP BY YEAR(c.fecha),
+		  MONTH(c.fecha) 
+		ORDER BY YEAR(c.fecha) DESC,
+		  MONTH(c.fecha) DESC
+		  LIMIT 6");
+
+		$stmt -> bindParam(":cliente", $cliente, PDO::PARAM_STR);
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+
+    }
 
 }

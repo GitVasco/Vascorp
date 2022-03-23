@@ -309,7 +309,7 @@ class ModeloCortes{
 		$stmt -> execute();
 
         return $stmt -> fetchAll();
-    }else{
+        }else{
         $stmt = Conexion::conectar()->prepare("SELECT 
                                         DATE(e.fecha) AS fecha,
                                         e.taller,
@@ -397,14 +397,14 @@ class ModeloCortes{
                                         a.modelo,
                                         a.cod_color");
 
-		$stmt -> execute();
+            $stmt -> execute();
 
-        return $stmt -> fetchAll();
-    }
+            return $stmt -> fetchAll();
+        }
 
-		$stmt -> close();
+            $stmt -> close();
 
-		$stmt = null;
+            $stmt = null;
 
     }
 

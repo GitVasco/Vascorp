@@ -34,28 +34,42 @@
         </div>
 
 
-        <div class="col-lg-3 text-center">
-          <label for=""  >Cliente</label>
-          <input type="text" name="consultaCliente" id="consultaCliente" class="form-control input-lg"  readonly>
+        <div class="col-lg-4 text-center bg-primary border-20">
+
+        <span class="info-box-text">Cliente</span>
+        <p class="info-box-number" name="consultaCliente" id="consultaCliente">-</p>
+        <input type="hidden" id="CodCliBtn" name="CodCliBtn">
+
         </div>
 
-        <div class="col-lg-2 text-center">
-          <label for="">Total crédito</label>
-          <input type="text" name="consultaCredito" id="consultaCredito" class="form-control input-lg"  readonly>
+        <div class="col-lg-2 text-center bg-green">
+
+        <span class="info-box-text">Total Venta S/</span>
+        <p class="info-box-number" name="consultaCredito" id="consultaCredito">0</p>
+
         </div>
 
-        <div class="col-lg-2 text-center">
-          <label for="" >Deuda Total</label>
-          <input type="text" name="consultaDeudaTot" id="consultaDeudaTot" class="form-control input-lg"  readonly>
-        </div>
+        <div class="col-lg-1 text-center bg-yellow">
 
-        <div class="col-lg-2 text-center">
-          <label for="" >Deuda Vencida</label>
-          <input type="text" name="consultaDeudaVen" id="consultaDeudaVen" class="form-control input-lg"  readonly>
+        <span class="info-box-text">Deuda Total S/</span>
+        <p class="info-box-number" name="consultaDeudaTot" id="consultaDeudaTot">0</p>
+
+        </div>   
+
+        <div class="col-lg-1 text-center bg-red">
+
+        <span class="info-box-text">Vencido  TotalS/</span>
+        <p class="info-box-number" name="consultaDeudaVen" id="consultaDeudaVen">0</p>
+
+        </div> 
+
+        <div class="col-lg-1">
+          <button class="btn btn-info" data-toggle="modal" data-target="#modalVerPagos" id="btnCargarPagos" >Pagos</button>
         </div>
-      </div>
+ 
       
-      
+    <div class="col-lg-12">
+    </div>
         
       <div class="box-body">
         
@@ -97,6 +111,66 @@
     </div>
 
   </section>
+
+</div>
+
+<!--=====================================
+MODAL AGREGAR USUARIO
+======================================-->
+
+<div id="modalVerPagos" class="modal fade" role="dialog">
+  
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form role="form" method="post">
+
+        <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+        <div class="modal-header" style="background:#3c8dbc; color:white">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <h4 class="modal-title">Pagos de los últimos 6 meses</h4>
+
+        </div>
+
+        <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+        <div class="modal-body">
+
+            <div class="box-body">
+
+                <div class="form-group row nuevosPagos" >
+
+                </div>                          
+
+            </div>
+
+        </div>
+
+        <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+          <button type="submit" class="btn btn-primary">Guardar categoría</button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
 
 </div>
 

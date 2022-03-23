@@ -3216,7 +3216,7 @@ class ModeloMovimientos{
 
       $stmt = null;
 
- }    
+   }    
 
 	static public function mdlFacturas($mes){
 

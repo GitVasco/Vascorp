@@ -53,10 +53,10 @@ class ControladorClientes{
 							"usureg"            => $usureg,
                             "pcreg"             => $pcreg,
                             "fecreg"            => $fecreg->format("Y-m-d H:i:s"));
-			var_dump("datos", $datos);
+			#var_dump("datos", $datos);
 
 			$respuesta = ModeloClientes::mdlIngresarCliente($tabla, $datos);
-			var_dump($respuesta);
+			#var_dump($respuesta);
 			#$respuesta = "no";
 
 			if($respuesta == "ok"){

@@ -5,7 +5,8 @@
     <h1>
     <?php
 
-                $cuentas=ControladorCuentas::ctrMostrarCuentas("num_cta",$_GET["numCta"]);
+                $cuentas=ControladorCuentas::ctrMostrarCuentasV2($_GET["numCta"], $_GET["codCta"]);
+                //var_dump($cuentas);
                 $cliente=ControladorClientes::ctrMostrarClientes("codigo",$cuentas["cliente"]);
 
      ?>

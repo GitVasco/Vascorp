@@ -11,7 +11,7 @@ class TablaVerCuentas{
 
     public function mostrarTablaVerCuentas(){
 
-        $Cuenta = ControladorCuentas::ctrMostrarCancelaciones("num_cta",$_GET["numCta"]);
+        $Cuenta = ControladorCuentas::ctrMostrarCancelacionesV2($_GET["numCta"], $_GET["codCta"]);
         if(count($Cuenta)>0){
 
         $datosJson = '{

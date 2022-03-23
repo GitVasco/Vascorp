@@ -1590,5 +1590,16 @@ class ControladorCuentas{
 
     }	
 
-   
+	/*=============================================
+	MOSTRAR CUENTAS
+	=============================================*/
+
+	static public function ctrUltPagos($cliente){
+
+		$respuesta = ModeloCuentas::mdlUltPagos($cliente);
+
+		return $respuesta;
+
+	}
+
 }

@@ -44,6 +44,7 @@
         <div class="col-lg-2 pull-right">
           <select class="form-control input-lg selectpicker" name="selectAnoCuentaC" id="selectAnoCuentaC" data-live-search="true" data-size="10">
             <option value="">Seleccionar Año</option>
+            <option value="2014">2014</option>
             <option value="2015">2015</option>
             <option value="2016">2016</option>
             <option value="2017">2017</option>

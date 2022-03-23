@@ -230,6 +230,17 @@ class AjaxCuentas{
     
       }
 
+      public function ajaxUltPagos(){
+
+        $cliente = $this->clientePagos;
+
+        $respuesta = ControladorCuentas::ctrUltPagos($cliente);
+    
+        echo json_encode($respuesta);
+    
+    
+      }
+
 
     }
     
@@ -351,4 +362,14 @@ class AjaxCuentas{
       $descripcionDocumento=new AjaxCuentas();
       $descripcionDocumento->documentoSalida=$_POST["documentoSalida"];
       $descripcionDocumento->ajaxNombreDocumento();
+    }
+
+
+     /*=============================================
+    MOSTRAR PAGOS DE LOS ULTIMOS 6 MESES
+    =============================================*/	
+    if(isset($_POST["clientePagos"])){
+      $ult_pagos =new AjaxCuentas();
+      $ult_pagos ->clientePagos=$_POST["clientePagos"];
+      $ult_pagos ->ajaxUltPagos();
     }
