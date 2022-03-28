@@ -109,6 +109,7 @@ MODAL AGREGAR CENTRO DE COSTOS
                         <option value="">Seleccionar Tipo Kardex</option>
                         <option value="APT">Producto Terminado</option>
                         <option value="AMP">Materia Prima</option>
+                        <option value="APP">Producto en Proceso</option>
 
                     </select>
                     </div>

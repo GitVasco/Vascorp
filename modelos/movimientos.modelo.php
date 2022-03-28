@@ -2517,14 +2517,23 @@ class ModeloMovimientos{
 	static public function mdlTotalVencidos(){
 
       $stmt = Conexion::conectar()->prepare("SELECT 
-                                          c.tip_mov,
-                                          SUM(c.saldo) AS saldo
-                                       FROM
-                                          cuenta_ctejf c 
-                                       WHERE c.tip_mov = '+' 
-                                          AND c.estado = 'PENDIENTE' 
-                                          AND c.fecha_ven < DATE(NOW())
-                                          GROUP BY c.tip_mov");
+                        c.tip_mov,
+                        SUM(c.saldo) AS saldo 
+                     FROM
+                        cuenta_ctejf c 
+                     WHERE c.tip_mov = '+' 
+                        AND c.estado = 'PENDIENTE' 
+                        AND c.fecha_ven < DATE(NOW()) 
+                        AND c.vendedor NOT IN (
+                        '00A',
+                        '01',
+                        '03',
+                        '05A',
+                        '07A',
+                        '14',
+                        '15'
+                        ) 
+                     GROUP BY c.tip_mov ");
 
       $stmt -> execute();
 
@@ -2535,7 +2544,39 @@ class ModeloMovimientos{
       $stmt = null;
 
 
-	}    
+	}   
+   
+	static public function mdlTotalVencidosInc(){
+
+      $stmt = Conexion::conectar()->prepare("SELECT 
+                        c.tip_mov,
+                        SUM(c.saldo) AS saldo 
+                     FROM
+                        cuenta_ctejf c 
+                     WHERE c.tip_mov = '+' 
+                        AND c.estado = 'PENDIENTE' 
+                        AND c.fecha_ven < DATE(NOW()) 
+                        AND c.vendedor IN (
+                        '00A',
+                        '01',
+                        '03',
+                        '05A',
+                        '07A',
+                        '14',
+                        '15'
+                        ) 
+                     GROUP BY c.tip_mov ");
+
+      $stmt -> execute();
+
+      return $stmt -> fetch();
+
+      $stmt -> close();
+
+      $stmt = null;
+
+
+	}     
 
 	static public function mdlMostrarResumenVtas($mes){
 

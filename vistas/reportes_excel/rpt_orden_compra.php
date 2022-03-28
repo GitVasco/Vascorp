@@ -61,7 +61,19 @@ $titulo->applyFromArray(
       'size' => 16
     )
 ));
- 
+
+$titulo2 = new PHPExcel_Style(); //nuevo estilo
+$titulo2->applyFromArray(
+  array('alignment' => array( //alineacion
+      'wrap' => false,
+      'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER
+    ),
+    'font' => array( //fuente
+      'bold' => true,
+      'size' => 20
+    )
+));
+
 $observaciones = new PHPExcel_Style(); //nuevo estilo
 $observaciones->applyFromArray(
   array('alignment' => array( //alineacion
@@ -97,8 +109,29 @@ $bordes->applyFromArray(
       'right' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
       'bottom' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
       'left' => array('style' => PHPExcel_Style_Border::BORDER_THIN)
+    ),
+    'font' => array( //fuente
+      'bold' => true,
+      'size' => 14
     )
 ));
+
+$bordes1 = new PHPExcel_Style(); //nuevo estilo
+ 
+$bordes1->applyFromArray(
+  array('borders' => array(
+      'top' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+      'right' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+      'bottom' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+      'left' => array('style' => PHPExcel_Style_Border::BORDER_THIN)
+    ),
+    'font' => array( //fuente
+      'bold' => true,
+      'size' => 12
+    )
+));
+
+
 //fin estilos
  
 $objPHPExcel->createSheet(0); //crear hoja
@@ -217,11 +250,11 @@ $resPro=mysql_fetch_array($sqlPro);
 
 $fila=2;
 $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", 'CORPORACION VASCO S.A.C.');
-$objPHPExcel->getActiveSheet()->SetCellValue("H$fila", 'Orden de Compra N°:');
+$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", 'Orden de Compra N°:');
 $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", $resPro["Nro"]);   
 $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getNumberFormat()->setFormatCode('000000'); 
-$objPHPExcel->getActiveSheet()->mergeCells("H$fila:I$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($titulo, "H$fila:I$fila"); //establecer estilo
+$objPHPExcel->getActiveSheet()->mergeCells("G$fila:I$fila");
+$objPHPExcel->getActiveSheet()->setSharedStyle($titulo, "G$fila:I$fila"); //establecer estilo
 // $objPHPExcel->getActiveSheet()->mergeCells("J$fila:K$fila");
 
 
@@ -337,9 +370,9 @@ $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", 'UND');
 $objPHPExcel->getActiveSheet()->SetCellValue("I$fila", 'P.UNITARIO');
 $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", '% DSCTO');
 $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", 'TOTAL');
-$objPHPExcel->getActiveSheet()->SetCellValue("L$fila", 'ESTADO');
-$objPHPExcel->getActiveSheet()->setSharedStyle($subtitulo, "B$fila:L$fila"); //establecer estilo
-$objPHPExcel->getActiveSheet()->getStyle("A$fila:L$fila")->getFont()->setBold(true); //negrita
+//$objPHPExcel->getActiveSheet()->SetCellValue("L$fila", 'ESTADO');
+$objPHPExcel->getActiveSheet()->setSharedStyle($subtitulo, "B$fila:K$fila"); //establecer estilo
+$objPHPExcel->getActiveSheet()->getStyle("A$fila:K$fila")->getFont()->setBold(true); //negrita
 
 //  <td style="mso-number-format:'0.00';">12346579.00</td>
 //  Exportar de PHP a Excel y dar formato a celdas
@@ -441,19 +474,128 @@ while($res=mysql_fetch_array($sql)){
   $objPHPExcel->getActiveSheet()->SetCellValue("F$fila", utf8_encode($res["Color1"]));
   $objPHPExcel->getActiveSheet()->SetCellValue("G$fila", utf8_encode($res["CanPro"]));
   $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", utf8_encode($res["Unidad"]));
-  $objPHPExcel->getActiveSheet()->SetCellValue("I$fila", utf8_encode($res["PrePro"]));
-  $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", utf8_encode($res["DscPro"]));
-  $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", utf8_encode($res["ImpPro"]));
-  $objPHPExcel->getActiveSheet()->SetCellValue("L$fila", utf8_encode($res["EstAC"]));
+  //$objPHPExcel->getActiveSheet()->SetCellValue("I$fila", utf8_encode($res["PrePro"]));
+  //$objPHPExcel->getActiveSheet()->SetCellValue("J$fila", utf8_encode($res["DscPro"]));
+  //$objPHPExcel->getActiveSheet()->SetCellValue("K$fila", utf8_encode($res["ImpPro"]));
+  //$objPHPExcel->getActiveSheet()->SetCellValue("L$fila", utf8_encode($res["EstAC"]));
                          
+  //*PRECIO
+  if($res["PrePro"] == 0){
 
+    $objPHPExcel->getActiveSheet()->SetCellValue("I$fila",'');   
+    $objPHPExcel->getActiveSheet()->getStyle("I$fila")->getNumberFormat()->setFormatCode ("0.00");
+    $objPHPExcel->getActiveSheet()->getStyle("I$fila")->getFont()->setBold(true)->setSize(14);
+    $objPHPExcel->getActiveSheet()->getStyle("I$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+  }else if($res["PrePro"] > 0 && $res["PrePro"] < 1){
+
+    $objPHPExcel->getActiveSheet()->SetCellValue("I$fila", $res["PrePro"]);   
+    $objPHPExcel->getActiveSheet()->getStyle("I$fila")->getNumberFormat()->setFormatCode ("0.00");
+    $objPHPExcel->getActiveSheet()->getStyle("I$fila")->getFont()->setBold(true)->setSize(14);
+    $objPHPExcel->getActiveSheet()->getStyle("I$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+  }else if($res["PrePro"] >= 1 && $res["PrePro"] < 1000){
+
+    $objPHPExcel->getActiveSheet()->SetCellValue("I$fila", $res["PrePro"]);   
+    $objPHPExcel->getActiveSheet()->getStyle("I$fila")->getNumberFormat()->setFormatCode ("0.00");
+    $objPHPExcel->getActiveSheet()->getStyle("I$fila")->getFont()->setBold(true)->setSize(14);
+    $objPHPExcel->getActiveSheet()->getStyle("I$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+  }else if($res["PrePro"] >= 1000 && $res["PrePro"]< 1000000){
+
+    $objPHPExcel->getActiveSheet()->SetCellValue("I$fila", $res["PrePro"]);   
+    $objPHPExcel->getActiveSheet()->getStyle("I$fila")->getNumberFormat()->setFormatCode ("0,000.00");
+    $objPHPExcel->getActiveSheet()->getStyle("I$fila")->getFont()->setBold(true)->setSize(14);
+    $objPHPExcel->getActiveSheet()->getStyle("I$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+  }
+
+  //*descuento
+  if($res["DscPro"] == 0){
+
+    $objPHPExcel->getActiveSheet()->SetCellValue("J$fila",'');   
+    $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getNumberFormat()->setFormatCode ("0.00");
+    $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getFont()->setBold(true)->setSize(14);
+    $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+  }else if($res["DscPro"] > 0 && $res["DscPro"] < 1){
+
+    $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", $res["DscPro"]);   
+    $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getNumberFormat()->setFormatCode ("0.00");
+    $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getFont()->setBold(true)->setSize(14);
+    $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+  }else if($res["DscPro"] >= 1 && $res["DscPro"] < 1000){
+
+    $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", $res["DscPro"]);   
+    $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getNumberFormat()->setFormatCode ("0.00");
+    $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getFont()->setBold(true)->setSize(14);
+    $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+  }else if($res["DscPro"] >= 1000 && $res["DscPro"]< 1000000){
+
+    $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", $res["DscPro"]);   
+    $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getNumberFormat()->setFormatCode ("0,000.00");
+    $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getFont()->setBold(true)->setSize(14);
+    $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+  }
+
+  //*total
+  if($res["ImpPro"] == 0){
+
+    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila",'');   
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getNumberFormat()->setFormatCode ("0.00");
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getFont()->setBold(true)->setSize(14);
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+  }else if($res["ImpPro"] > 0 && $res["ImpPro"] < 1){
+
+    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", $res["ImpPro"]);   
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getNumberFormat()->setFormatCode ("0.00");
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getFont()->setBold(true)->setSize(14);
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+  }else if($res["ImpPro"] >= 1 && $res["ImpPro"] < 1000){
+
+    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", $res["ImpPro"]);   
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getNumberFormat()->setFormatCode ("0.00");
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getFont()->setBold(true)->setSize(14);
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+  }else if($res["ImpPro"] >= 1000 && $res["ImpPro"]< 1000000){
+
+    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", $res["ImpPro"]);   
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getNumberFormat()->setFormatCode ("0,000.00");
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getFont()->setBold(true)->setSize(14);
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+  }
+
+  $objPHPExcel->getActiveSheet()->getStyle("I$fila")->getBorders()->getBottom()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+  $objPHPExcel->getActiveSheet()->getStyle("I$fila")->getBorders()->getTop()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+  $objPHPExcel->getActiveSheet()->getStyle("I$fila")->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+  $objPHPExcel->getActiveSheet()->getStyle("I$fila")->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+
+  $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getBorders()->getBottom()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+  $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getBorders()->getTop()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+  $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+  $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+
+  $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getBorders()->getBottom()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+  $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getBorders()->getTop()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+  $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+  $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 
   //Establecer estilo
    $objPHPExcel->getActiveSheet()->getStyle("C$fila")->getNumberFormat()->setFormatCode('00000'); 
 
 
 
-  $objPHPExcel->getActiveSheet()->setSharedStyle($bordes, "B$fila:L$fila");
+  $objPHPExcel->getActiveSheet()->setSharedStyle($bordes, "B$fila:C$fila");
+  $objPHPExcel->getActiveSheet()->setSharedStyle($bordes1, "D$fila");
+  $objPHPExcel->getActiveSheet()->setSharedStyle($bordes, "E$fila:H$fila");
+
  }
  
 
@@ -483,16 +625,108 @@ $res1=mysql_fetch_array($sql1);
   $fila+=1;
   $objPHPExcel->getActiveSheet()->SetCellValue("I$fila", "Valor Venta " .$res1["Moneda2"] ); 
   $objPHPExcel->getActiveSheet()->mergeCells("I$fila:J$fila"); 
-  $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", $res1["SubTotal"]);   
+  $objPHPExcel->getActiveSheet()->setSharedStyle($titulo, "I$fila:J$fila"); //establecer estilo
+
+  if($res1["SubTotal"] == 0){
+
+    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila",'');   
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getNumberFormat()->setFormatCode ("0.00");
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getFont()->setBold(true)->setSize(18);
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+  }else if($res1["SubTotal"] > 0 && $res1["SubTotal"] < 1){
+
+    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", $res1["SubTotal"]);   
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getNumberFormat()->setFormatCode ("0.00");
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getFont()->setBold(true)->setSize(18);
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+  }else if($res1["SubTotal"] >= 1 && $res1["SubTotal"] < 1000){
+
+    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", $res1["SubTotal"]);   
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getNumberFormat()->setFormatCode ("0.00");
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getFont()->setBold(true)->setSize(18);
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+  }else if($res1["SubTotal"] >= 1000 && $res1["SubTotal"]< 1000000){
+
+    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", $res1["SubTotal"]);   
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getNumberFormat()->setFormatCode ("0,000.00");
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getFont()->setBold(true)->setSize(18);
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+  }
+
+
   $fila+=1;
   $objPHPExcel->getActiveSheet()->SetCellValue("I$fila", "I.G.V. " .$res1["Moneda2"] );  
   $objPHPExcel->getActiveSheet()->mergeCells("I$fila:J$fila"); 
-  $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", $res1["Igv"]);      
+  $objPHPExcel->getActiveSheet()->setSharedStyle($titulo, "I$fila:J$fila"); //establecer estilo
+
+  if($res1["Igv"] == 0){
+
+    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila",'');   
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getNumberFormat()->setFormatCode ("0.00");
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getFont()->setBold(true)->setSize(18);
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+  }else if($res1["Igv"] > 0 && $res1["Igv"] < 1){
+
+    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", $res1["Igv"]);   
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getNumberFormat()->setFormatCode ("0.00");
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getFont()->setBold(true)->setSize(18);
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+  }else if($res1["Igv"] >= 1 && $res1["Igv"] < 1000){
+
+    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", $res1["Igv"]);   
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getNumberFormat()->setFormatCode ("0.00");
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getFont()->setBold(true)->setSize(18);
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+  }else if($res1["Igv"] >= 1000 && $res1["Igv"]< 1000000){
+
+    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", $res1["Igv"]);   
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getNumberFormat()->setFormatCode ("0,000.00");
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getFont()->setBold(true)->setSize(18);
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+  }  
  
   $fila+=1;
   $objPHPExcel->getActiveSheet()->SetCellValue("I$fila", "Total " .$res1["Moneda2"] );  
   $objPHPExcel->getActiveSheet()->mergeCells("I$fila:J$fila"); 
-  $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", $res1["Total"]); 
+  $objPHPExcel->getActiveSheet()->setSharedStyle($titulo, "I$fila:J$fila"); //establecer estilo
+
+  if($res1["Total"] == 0){
+
+    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila",'');   
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getNumberFormat()->setFormatCode ("0.00");
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getFont()->setBold(true)->setSize(18);
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+  }else if($res1["Total"] > 0 && $res1["Total"] < 1){
+
+    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", $res1["Total"]);   
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getNumberFormat()->setFormatCode ("0.00");
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getFont()->setBold(true)->setSize(18);
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+  }else if($res1["Total"] >= 1 && $res1["Total"] < 1000){
+
+    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", $res1["Total"]);   
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getNumberFormat()->setFormatCode ("0.00");
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getFont()->setBold(true)->setSize(18);
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+  }else if($res1["Total"] >= 1000 && $res1["Total"]< 1000000){
+
+    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", $res1["Total"]);   
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getNumberFormat()->setFormatCode ("0,000.00");
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getFont()->setBold(true)->setSize(18);
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+  }  
 
 
 
@@ -509,15 +743,15 @@ $res1=mysql_fetch_array($sql1);
 
   $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(4);
   $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(15);
-  $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(20);
+  $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(19);
   $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(35);
   $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(20);
   $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(17);
   $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(10);
-  $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(15);
+  $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(6);
   $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth(15);
-  $objPHPExcel->getActiveSheet()->getColumnDimension('J')->setWidth(15);
-  $objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(15);
+  $objPHPExcel->getActiveSheet()->getColumnDimension('J')->setWidth(8);
+  $objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(17);
 
 
 
