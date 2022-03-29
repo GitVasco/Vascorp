@@ -844,3 +844,23 @@ $(".tablaRangosDias").DataTable({
 		)
 	}
 });
+
+
+//Reporte de Salidas
+$(".box").on("click", ".btn180dias", function () {
+
+	//console.log('hola mundo');
+  
+	window.location = "vistas/reportes_excel/rpt_rango7.php";
+	
+  })
+
+
+  //Reporte de Salidas
+$(".box").on("click", ".btnMontoAno", function () {
+
+	//console.log('hola mundo');
+  
+	window.location = "vistas/reportes_excel/rpt_incobanno.php";
+	
+  })

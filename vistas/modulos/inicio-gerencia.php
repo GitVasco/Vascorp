@@ -277,7 +277,7 @@
 
             <div class="box box-primary">
                 <div class="box-header with-border"></div>
-                <center><b>Resumen de gestión</b></center>
+                <center><b>Resumen de gestión<button class='btn btn-primary btn-xs btnMontoAno' title='Pedidos' vendedor=''>Monto Por Año</button></b></center>
 
                 <div class="box-body no-padding">
                     <table class="table table-bordered table-striped dt-responsive tablaRangos" width="100%"> 
@@ -328,9 +328,11 @@
 
             <div class="box box-primary">
                 <div class="box-header with-border"></div>
-                <center><b>Resumen Rangos</b></center>
+                <center><b>Resumen Rangos
+                <button class='btn btn-danger btn-xs btn180dias' title='Pedidos' vendedor=''>181 Días</button></b></center>
 
                 <div class="box-body no-padding">
+
                     <table class="table table-bordered table-striped dt-responsive tablaRangosDias" width="100%"> 
                         <thead>
                             <tr>
