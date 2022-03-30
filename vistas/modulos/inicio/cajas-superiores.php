@@ -48,7 +48,7 @@ if($articulosF["faltantes"] == '0'){
     
     </div>
     
-    <a href="#" class="small-box-footer">
+    <a href="procesar-ce" class="small-box-footer">
       
       Más info <i class="fa fa-arrow-circle-right"></i>
     
@@ -76,7 +76,7 @@ if($articulosF["faltantes"] == '0'){
     
     </div>
     
-    <a href="#" class="small-box-footer">
+    <a href="seguimiento" class="small-box-footer">
       
       Más info <i class="fa fa-arrow-circle-right"></i>
     
@@ -104,7 +104,7 @@ if($articulosF["faltantes"] == '0'){
     
     </div>
     
-    <a href="#" class="small-box-footer">
+    <a href="pedidoscv" class="small-box-footer">
 
       Más info <i class="fa fa-arrow-circle-right"></i>
 
@@ -132,7 +132,7 @@ if($articulosF["faltantes"] == '0'){
     
     </div>
     
-    <a href="#" class="small-box-footer">
+    <a href="urgencias" class="small-box-footer">
       
       Más info <i class="fa fa-arrow-circle-right"></i>
     

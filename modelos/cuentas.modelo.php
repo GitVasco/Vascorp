@@ -3851,6 +3851,47 @@ class ModeloCuentas{
 
 	}	
 
+	//* ESTADO DE CEUNTA DETALLE
+	static public function mdlProyeccionPagos(){	
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+						YEAR(cc.fecha_ven) AS anno,
+						WEEK(cc.fecha_ven) AS semana,
+						MIN(cc.fecha_ven) AS inicio,
+						MAX(cc.fecha_ven) AS fin,
+						SUM(
+						CASE
+							WHEN cc.tipo_doc IN ('01', '03', '07', '08', '09') 
+							THEN cc.saldo 
+							ELSE 0 
+						END
+						) AS 'facturas',
+						SUM(
+						CASE
+							WHEN cc.tipo_doc IN ('85') 
+							THEN cc.saldo 
+							ELSE 0 
+						END
+						) AS 'letras',
+						SUM(cc.saldo) AS total 
+					FROM
+						cuenta_ctejf cc 
+					WHERE cc.tip_mov = '+' 
+						AND cc.estado = 'PENDIENTE' 
+						AND cc.fecha_ven >= DATE(NOW()) 
+					GROUP BY YEAR(cc.fecha_ven),
+						WEEK(cc.fecha_ven)");
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}		
+
 	//* ESTADO DE CEUNTA DETALLE PROTESTO
 	static public function mdlEstadoCuentaProt($num_cta){	
 

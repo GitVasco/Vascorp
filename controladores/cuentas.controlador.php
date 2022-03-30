@@ -1544,6 +1544,17 @@ class ControladorCuentas{
 	}	
 
 	/*=============================================
+	ESTADO DE CUENTA DETALLE
+	=============================================*/
+	static public function ctrProyeccionPagos(){
+
+		$respuesta = ModeloCuentas::mdlProyeccionPagos();
+
+		return $respuesta;
+
+	}		
+
+	/*=============================================
 	ESTADO DE CUENTA DETALLE PROTESTO
 	=============================================*/
 	static public function ctrEstadoCuentaProt($cliente){

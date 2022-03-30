@@ -83,6 +83,11 @@
           <button class="btn btn-outline-success btnPorAceptar"  ano="null"  style="border:green 1px solid">
           <img src="vistas/img/plantilla/download.png" width="20px"> Letras x Aceptar  </button>
         </div>   
+
+        <div class="pull-right">
+          <button class="btn btn-outline-success btnProyeccionPagos"  ano="null"  style="border:green 1px solid">
+          <img src="vistas/img/plantilla/download.png" width="20px"> Proyección Pagos  </button>
+        </div>            
         
         
       </div>

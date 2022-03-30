@@ -2271,9 +2271,15 @@ $(".box").on("click", ".btnPorAceptar", function () {
 
   if (vendedor != "") {
     window.open("vistas/reportes_ticket/letras_aceptar.php?vendedor=" + vendedor ,"_blank");
-}
+  }
 
   //window.open("vistas/reportes_ticket/letras_aceptar.php","_blank");
+
+})
+
+$(".box").on("click", ".btnProyeccionPagos", function () {
+
+  window.open("vistas/reportes_ticket/proyeccion_pagos.php","_blank");
 
 })
 

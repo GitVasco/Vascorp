@@ -29,12 +29,16 @@ $vencidos = ControladorMovimientos::ctrTotalVencidos();
 $incobrables = ControladorMovimientos::ctrTotalVencidosInc();
 #var_dump($vencidos["saldo"]);
 
+$rango7 = ControladorMovimientos::ctrTotalVencidos180();
+#var_dump($vencidos["saldo"]);
+
+
 
 ?>
 
 
 
-<div class="col-lg-3 col-xs-6">
+<div class="col-lg-2 col-xs-6">
 
   <div class="small-box bg-blue">
     
@@ -62,7 +66,7 @@ $incobrables = ControladorMovimientos::ctrTotalVencidosInc();
 
 </div>
 
-<div class="col-lg-3 col-xs-6">
+<div class="col-lg-2 col-xs-6">
 
   <div class="small-box bg-aqua">
     
@@ -125,9 +129,37 @@ $incobrables = ControladorMovimientos::ctrTotalVencidosInc();
     
     <div class="inner">
     
-      <h3>S/<?php echo number_format($vencidos["saldo"],0); ?></h3>
+      <h3>S/<?php echo number_format($vencidos["saldo"]-$rango7["saldo"],0); ?></h3>
 
       <p>Documentos Vencidos - Soles</p>
+    
+    </div>
+    
+    <div class="icon">
+    
+      <i class="fa fa-asterisk"></i>
+    
+    </div>
+    
+    <a href="#" class="small-box-footer">
+      
+      Más info <i class="fa fa-arrow-circle-right"></i>
+    
+    </a>
+
+  </div>
+
+</div>
+
+<div class="col-lg-2 col-xs-6">
+
+  <div class="small-box bg-orange">
+    
+    <div class="inner">
+    
+      <h3>S/<?php echo number_format($rango7["saldo"],0); ?></h3>
+
+      <p>Documentos Vencidos - 180 días</p>
     
     </div>
     
@@ -161,7 +193,7 @@ $incobrables = ControladorMovimientos::ctrTotalVencidosInc();
     
     <div class="icon">
     
-      <i class="fa fa-exclamation-circle"></i>
+      <i class="fa fa-times"></i>
     
     </div>
     
