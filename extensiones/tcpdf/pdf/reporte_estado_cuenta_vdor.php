@@ -29,7 +29,9 @@ class MYPDF extends TCPDF {
         $this->Ln(2);
         $this->Cell(0, 15, 'DOCUMENTOS POR COBRAR - '.$fechaActual, 0, false, 'C', 0, '', 0, false, false, false );
         $this->Ln(7);
-        $this->Cell(0, 9, 'T.        Nro. doc.                Td.     Origen                    F. Emi                F. Ven                  Saldo              Prot.    Unico            Banco                 ', 0, 1, 'C', 0, '', 0, false, false, false );
+
+        $this->SetFont('helvetica', 'B', 10);
+        $this->Cell(0, 9, 'T.       Nro. doc.                 Td.    Origen                     F. Emi                  F. Ven                  Saldo                 Prot.   Unico        Banco ', 0, 1, 'C', 0, '', 0, false, false, false );
         
         $this->Cell(0, 0, '=======================================================================================================', 0, 1, 'L', 0, '', 0, false, 'M', 'M' );
 
@@ -45,7 +47,7 @@ $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 // set header and footer fonts
 $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
 // set margins
-$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+$pdf->SetMargins(2, PDF_MARGIN_TOP, 0.5);
 $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
 
 $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
@@ -69,7 +71,7 @@ $pdf->SetFont($fontname, '', 7, '', false);
 //---------------------------------------------------------
 
 
-$pdf->SetFont($fontname, '', 10, '', false);
+$pdf->SetFont($fontname, '', 12, '', false);
 
 $bloque1 = '<table style="text-center" >
                 <tbody>
@@ -104,7 +106,7 @@ $bloque1 = '<table style="text-center" >
 
 $pdf->writeHTML($bloque1, false, false, false, false, '');   
 
-$pdf->SetFont($fontname, '', 8, '', false);
+$pdf->SetFont($fontname, '', 12, '', false);
 
 foreach ($cuentas as $key => $value){
 
@@ -113,9 +115,9 @@ if($value["tipo_doc"] == "00"){
     $bloque3 = '<table style="text-center" >
                     <tbody>
                         <tr>
-                        <td style="width:26px"></td>
-                        <td style="width:60px">'.$value["cliente"].'</td>
-                        <td style="width:242px">'.$value["nombre"].'</td>
+                        <td style="width:25px"></td>
+                        <td style="width:90px">'.$value["cliente"].'</td>
+                        <td style="width:300px">'.$value["nombre"].'</td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -132,28 +134,28 @@ if($value["tipo_doc"] == "00"){
     $bloque3 = '<table style="text-center" >
                     <tbody>
                         <tr>
-                        <td style="width:26px"></td>
-                        <td style="width:70px"></td>
-                        <td style="width:20px"></td>
-                        <td style="width:70px"></td>
-                        <td style="width:60px"></td>
-                        <td style="width:60px">Total S/</td>
-                        <td style="width:60px;text-align:right">'.number_format($value["saldo"],2).'</td>
-                        <td style="width:27px"></td>
-                        <td style="width:50px"></td>
-                        <td style="width:35px"></td>
+                            <td style="width:25px"></td>
+                            <td style="width:93px"></td>
+                            <td style="width:25px"></td>
+                            <td style="width:93px"></td>
+                            <td style="width:80px"></td>
+                            <td style="width:80px">Total S/</td>
+                            <td style="width:75px;text-align:right">'.number_format($value["saldo"],2).'</td>
+                            <td style="width:27px"></td>
+                            <td style="width:65px"></td>
+                            <td style="width:35px"></td>
                         </tr>
 
                         <tr>
-                            <td style="width:26px"></td>
-                            <td style="width:70px"></td>
-                            <td style="width:20px"></td>
-                            <td style="width:70px"></td>
-                            <td style="width:60px"></td>
-                            <td style="width:60px"></td>
-                            <td style="width:60px;text-align:right"></td>
+                            <td style="width:25px"></td>
+                            <td style="width:93px"></td>
+                            <td style="width:26x"></td>
+                            <td style="width:93px"></td>
+                            <td style="width:80px"></td>
+                            <td style="width:80px"></td>
+                            <td style="width:75px;text-align:right"></td>
                             <td style="width:27px"></td>
-                            <td style="width:50px"></td>
+                            <td style="width:65px"></td>
                             <td style="width:35px"></td>
                         </tr>
                     </tbody>
@@ -165,28 +167,28 @@ if($value["tipo_doc"] == "00"){
                     <tbody>
 
                     <tr>
-                        <td style="width:26px">====</td>
-                        <td style="width:70px">==========</td>
-                        <td style="width:20px">==</td>
-                        <td style="width:70px">=============</td>
-                        <td style="width:60px">===========</td>
-                        <td style="width:60px">===========</td>
-                        <td style="width:60px;text-align:right">==========</td>
-                        <td style="width:27px">====</td>
-                        <td style="width:50px">=========</td>
-                        <td style="width:35px">======</td>
+                        <td style="width:25px">==</td>
+                        <td style="width:93px">==========</td>
+                        <td style="width:25px">==</td>
+                        <td style="width:93px">============</td>
+                        <td style="width:80px">==========</td>
+                        <td style="width:80px">==========</td>
+                        <td style="width:75px;text-align:right">=========</td>
+                        <td style="width:27px">==</td>
+                        <td style="width:65px">========</td>
+                        <td style="width:35px">====</td>
                     </tr>
 
                         <tr>
-                        <td style="width:26px"></td>
-                        <td style="width:70px"></td>
-                        <td style="width:20px"></td>
-                        <td style="width:70px"></td>
-                        <td style="width:40px"></td>
-                        <td style="width:80px">Total Gral S/</td>
-                        <td style="width:60px;text-align:right">'.number_format($value["saldo"],2).'</td>
+                        <td style="width:25px"></td>
+                        <td style="width:93px"></td>
+                        <td style="width:25px"></td>
+                        <td style="width:93px"></td>
+                        <td style="width:55px"></td>
+                        <td style="width:100px">Total Gral S/</td>
+                        <td style="width:80px;text-align:right">'.number_format($value["saldo"],2).'</td>
                         <td style="width:27px">'.$value["protesta"].'</td>
-                        <td style="width:50px">'.$value["num_unico"].'</td>
+                        <td style="width:65px">'.$value["num_unico"].'</td>
                         <td style="width:35px">'.$value["banco"].'</td>
                         </tr>
                     </tbody>
@@ -198,15 +200,15 @@ if($value["tipo_doc"] == "00"){
     $bloque3 = '<table style="text-center" >
                     <tbody>
                         <tr>
-                        <td style="width:26px">'.$value["tipo_doc"].'</td>
-                        <td style="width:70px">'.$value["num_cta"].'</td>
-                        <td style="width:20px">'.$value["cod_pago"].'</td>
-                        <td style="width:70px">'.$value["doc_origen"].'</td>
-                        <td style="width:60px">'.$value["fecha"].'</td>
-                        <td style="width:60px">'.$value["fecha_ven"].'</td>
-                        <td style="width:60px;text-align:right">'.number_format($value["saldo"],2).'</td>
+                        <td style="width:25px">'.$value["tipo_doc"].'</td>
+                        <td style="width:93px">'.$value["num_cta"].'</td>
+                        <td style="width:25px">'.$value["cod_pago"].'</td>
+                        <td style="width:93px">'.$value["doc_origen"].'</td>
+                        <td style="width:80px">'.$value["fecha"].'</td>
+                        <td style="width:80px">'.$value["fecha_ven"].'</td>
+                        <td style="width:75px;text-align:right">'.number_format($value["saldo"],2).'</td>
                         <td style="width:27px">'.$value["protesta"].'</td>
-                        <td style="width:50px">'.$value["num_unico"].'</td>
+                        <td style="width:65px">'.$value["num_unico"].'</td>
                         <td style="width:35px">'.$value["banco"].'</td>
                         </tr>
                     </tbody>

@@ -558,18 +558,16 @@ class ModeloArticulos
 			) AS configuracion,
 			a.mes,
 			ROUND(
-			  ((a.ult_mes + pedidos) * mes) - (
+				(((a.ult_mes * 1.2) + pedidos) * mes) - (
 				a.ord_corte + a.alm_corte + a.taller + a.servicio + (a.stock - a.pedidos)
-			  ),
-			  0
+				),
+				0
 			) AS faltantes,
 			ROUND(
-			  (
+				(
 				(a.stock - a.pedidos) + a.taller + servicio + a.alm_corte + a.ord_corte
-			  ) / (
-				(a.ult_mes + a.pedidos) - ((a.ult_mes + a.pedidos) * 10 / 100)
-			  ),
-			  1
+				) / (((a.ult_mes * 1.2) + a.pedidos)),
+				1
 			) AS dura_tc,
 			a.mp_faltante,
 			a.ult_mes,
@@ -631,18 +629,16 @@ class ModeloArticulos
 			) AS configuracion,
 			a.mes,
 			ROUND(
-			  ((a.ult_mes + pedidos) * mes) - (
+				(((a.ult_mes * 1.2) + pedidos) * mes) - (
 				a.ord_corte + a.alm_corte + a.taller + a.servicio + (a.stock - a.pedidos)
-			  ),
-			  0
+				),
+				0
 			) AS faltantes,
 			ROUND(
-			  (
+				(
 				(a.stock - a.pedidos) + a.taller + servicio + a.alm_corte + a.ord_corte
-			  ) / (
-				(a.ult_mes + a.pedidos) - ((a.ult_mes + a.pedidos) * 10 / 100)
-			  ),
-			  1
+				) / (((a.ult_mes * 1.2) + a.pedidos)),
+				1
 			) AS dura_tc,
 			a.mp_faltante,
 			a.ult_mes,

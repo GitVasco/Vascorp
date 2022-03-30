@@ -294,7 +294,7 @@ class TablaArticulosOrdenCorte{
         /* 
         todo: FALTANTE
         */
-        if( $articulos[$i]["faltantes"] <= 0 ){
+        if( $articulos[$i]["faltantes"] < 0 ){
 
             $faltantes = "<center><b><span style='color:".$rojo."; background-color:".$bgrosado." ;'>".$articulos[$i]["faltantes"]."</span></b></center>";
 
