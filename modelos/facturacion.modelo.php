@@ -7480,7 +7480,7 @@ class ModeloFacturacion{
         LEFT JOIN ubigeo u 
           ON c.ubigeo = u.codigo 
         LEFT JOIN condiciones_ventajf cv 
-          ON v.condicion_venta = cv.codigo 
+          ON v.condicion_venta = cv.id 
         LEFT JOIN maestrajf ma 
           ON ma.tipo_dato = 'TVEND' 
           AND v.vendedor = ma.codigo 
