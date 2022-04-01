@@ -131,6 +131,18 @@ class ControladorMovimientos{
         return $respuesta;
 
     }
+
+    /* 
+    * top 12 de ventas modelos fotos
+    */
+    static public function ctrMovMesFoto(){
+
+        $respuesta = ModeloMovimientos::mdlMovMesFoto();
+
+        return $respuesta;
+
+    }
+
     /* 
     * sacamos los totales por mes de la  nueva tabla TOTALES
     */

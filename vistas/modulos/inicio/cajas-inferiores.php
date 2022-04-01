@@ -14,14 +14,14 @@ if($ventasA["total_venta"] != 0){
 
   $produccionA = ControladorMovimientos::ctrTotUndProd($valor);
 
-  //var_dump("produccionA", $produccionA["total_produccion"]);
+  #var_dump("produccionA", $produccionA["total_produccion"]);
 
   $dias = ControladorMovimientos::ctrTotDiasProd($valor);
 
 
   $promedio = number_format( $produccionA["total_produccion"] / $dias["dias_produccion"] ,0);
 
-  //var_dump("promedio", $promedio);
+  #var_dump("dias", $dias);
 
 
 

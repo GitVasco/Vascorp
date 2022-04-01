@@ -136,6 +136,16 @@ $respuesta = ControladorMantenimiento::ctrTraerCalendario($valor);
 
                 </div>
 
+                <div class="col-lg-6">
+
+                    <?php
+
+                        include "reportes/modelos_vdos.php";
+
+                    ?>
+
+                </div>                
+
 
             </div>            
 
