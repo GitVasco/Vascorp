@@ -31,7 +31,7 @@ $diaVencimiento = substr($respuesta["fecha_ven"],8,2);
 $mesVencimiento = substr($respuesta["fecha_ven"],5,2);
 $anoVencimiento = substr($respuesta["fecha_ven"],0,4);
 
-$letras= CantidadEnLetra($respuesta["monto"]);
+$letras= CantidadEnLetra($respuesta["saldo"]);
 
 ?>
   <div class="zona_impresion">
