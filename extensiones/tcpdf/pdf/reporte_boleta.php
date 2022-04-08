@@ -110,14 +110,12 @@ class MYPDF extends TCPDF {
         $this->Cell(23, 5, 'V. UNITARIA', 0, false, 'C', 0, '', 0, false, false, false );
         $this->Cell(23, 5, 'DSCTOS', 0, false, 'C', 0, '', 0, false, false, false );
         $this->Cell(24, 5, 'P.VENTA', 0, false, 'C', 0, '', 0, false, false, false );
-
-
     }
 
     // Page footer
     public function Footer() {
         // Position at 15 mm from bottom
-        $this->SetY(-15);
+        $this->SetY(-12);
         // Set font
         $this->SetFont('helvetica', 'A', 8);
         // Page number
@@ -157,9 +155,9 @@ $monto_letra= CantidadEnLetra($venta["total"]);
 $pdf->Ln(72);
 foreach ($modelo as $key => $value) {
 
-    if($key <= 32){
+    if($key <= 33){
 
-        $pdf->Ln(5);
+        $pdf->Ln(4);
         $pdf->SetFillColor(0, 240, 240);
         $pdf->SetTextColor(0, 0, 0);
         $pdf->Cell(16, 5, $value["modelo"], 'LR', false, 'L', 0, '', 0, false, 'T', 'M');
@@ -187,9 +185,9 @@ if( $tamaño>= 23){
     $lineas = 0;
     foreach ($modelo as $key => $value) {
 
-        if($key >= 33){
+        if($key >= 34){
     
-            $pdf->Ln(5);
+            $pdf->Ln(4);
             $pdf->SetFillColor(0, 240, 240);
             $pdf->SetTextColor(0, 0, 0);
             $pdf->Cell(16, 5, $value["modelo"], 'LR', false, 'L', 0, '', 0, false, 'T', 'M');
@@ -249,15 +247,15 @@ if( $tamaño>= 23){
     $pdf->Cell(20, 10, 'Total', 0, false, 'L', 0, '', 0, false, false, false );
     $pdf->Cell(30, 10, 'S/', 0, false, 'C', 0, '', 0, false, false, false );
     $pdf->Cell(12, 10, $venta["total"], 0, false, 'R', 0, '', 0, false, false, false );
-    $pdf->Ln(20);
+    $pdf->Ln(12);
     #$pdf->Image($image_file2, 10, 170, 190, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
 
     $pdf->Ln(0);
-    $pdf->Cell(0, 7, 'Son: '.$monto_letra, 0, false, 'L', 0, '', 0, false, false, false );
-    $pdf->Ln(6);
+    $pdf->Cell(0, 10, 'Son: '.$monto_letra, 0, false, 'L', 0, '', 0, false, false, false );
+    $pdf->Ln(3);
     $pdf->Cell(120, 10, 'Cta. Recaudadora Bco. Crédito:  191-1553564-0-64', 0, false, 'L', 0, '', 0, false, false, false );
     $pdf->Cell(70, 10, 'CANCELADO', 0, false, 'L', 0, '', 0, false, false, false );
-    $pdf->Ln(8);
+    $pdf->Ln(5);
     $pdf->Cell(180, 10, 'Lima, ________ de __________________ de _______', 0, false, 'R', 0, '', 0, false, false, false );
 
 

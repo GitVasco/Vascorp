@@ -493,13 +493,13 @@
 
                                                     //var_dump("hola 0");
 
-                                                    echo '<input type="number" step="any" class="form-control" min="0" id="descPer" name="descPer" value="0">';
+                                                    echo '<input type="number" step="any" class="form-control" min="0" id="descPer" name="descPer" value="0" readonly>';
 
                                                 }else if($descuento["descuento_total"] == "0"){
 
                                                     //var_dump("hola 1");
 
-                                                    echo '<input type="number" step="any" class="form-control" min="0" id="descPer" name="descPer" value="0">';
+                                                    echo '<input type="number" step="any" class="form-control" min="0" id="descPer" name="descPer" value="0" readonly>';
 
                                                 }else{
 

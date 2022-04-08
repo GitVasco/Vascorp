@@ -40,7 +40,7 @@ $fechaactual = getdate();
         // print_r($fechaactual);
 $fecha="$fechaactual[mday]/$fechaactual[mon]/$fechaactual[year]";
 
-$UsuReg=$_SESSION['nombre'];
+//$UsuReg=$_SESSION['nombre'];
 
 
 
