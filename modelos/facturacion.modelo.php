@@ -827,6 +827,11 @@ class ModeloFacturacion{
         ELSE c.direccion 
       END AS direccion,
       c.email,
+      CASE
+        WHEN c.tipo_moneda = '1' 
+        THEN 'S/' 
+        ELSE 'US$' 
+      END AS tipo_moneda,
       CONCAT(u.distrito, ' / ', u.provincia) AS nom_ubigeo,
       u.departamento,
       c.ubigeo,
@@ -905,8 +910,12 @@ class ModeloFacturacion{
 
     $sql="SELECT 
     a.modelo,
-    ROUND(SUM(cantidad), 0) AS cantidad,
-    'C62' AS unidad,
+    ROUND(SUM(cantidad), 2) AS cantidad,
+    CASE
+      WHEN SUM(m.cantidad) % 1 > 0 
+      THEN 'KGM' 
+      ELSE 'C62' 
+    END AS unidad,
     a.nombre,
     ROUND(m.precio, 2) AS precio,
     ROUND(m.dscto1, 2) AS dscto1,
@@ -975,7 +984,7 @@ class ModeloFacturacion{
 
       $sql="SELECT 
       m.documento,
-      ROUND(SUM(cantidad), 0) AS cantidad 
+      ROUND(SUM(cantidad), 2) AS cantidad 
     FROM
       movimientosjf_2021 m 
     WHERE m.tipo = :tipo_doc 
@@ -7201,15 +7210,23 @@ class ModeloFacturacion{
       THEN '01' 
       ELSE '03' 
     END AS c1,
-    'PEN' AS d1,
+    CASE
+      WHEN c.tipo_moneda = '1' 
+      THEN 'PEN' 
+      ELSE 'USD' 
+    END AS d1,
     v.neto - v.dscto AS e1,
     v.igv AS f1,
-    'PEN' AS g1,
+    CASE
+      WHEN c.tipo_moneda = '1' 
+      THEN 'PEN' 
+      ELSE 'USD' 
+    END AS g1,
     v.total AS n1,
     '0101' AS q1,
     v.neto - v.dscto AS v1,
     COUNT(m.modelo) AS al1,
-    v.dscto AS ar1,  
+    v.dscto AS ar1,
     v.igv AS bb1,
     v.neto - v.dscto AS bc1,
     v.total AS bd1,
@@ -7271,7 +7288,7 @@ class ModeloFacturacion{
         movimientosjf_2021 m 
         LEFT JOIN articulojf a 
           ON m.articulo = a.articulo 
-      WHERE m.tipo = :tipo
+      WHERE m.tipo = :tipo 
         AND m.documento = :documento 
       GROUP BY m.tipo,
         m.documento,
@@ -7287,7 +7304,7 @@ class ModeloFacturacion{
     LEFT JOIN maestrajf ma 
       ON ma.tipo_dato = 'TVEND' 
       AND v.vendedor = ma.codigo 
-  WHERE v.tipo = :tipo
+  WHERE v.tipo = :tipo 
     AND v.documento = :documento";
 
       $stmt=Conexion::conectar()->prepare($sql);
@@ -7368,10 +7385,18 @@ class ModeloFacturacion{
                 THEN '01' 
                 ELSE '03' 
             END AS c1,
-            'PEN' AS d1,
+            CASE
+              WHEN c.tipo_moneda = '1' 
+              THEN 'PEN' 
+              ELSE 'USD' 
+            END AS d1,
             v.igv AS e1,
             v.igv AS f1,
-            'PEN' AS g1,
+            CASE
+              WHEN c.tipo_moneda = '1' 
+              THEN 'PEN' 
+              ELSE 'USD' 
+            END AS g1,
             v.total AS n1,
             CASE
               WHEN v.condicion_venta IN ('1', '2') 

@@ -41,6 +41,15 @@
 
             <ul class="nav navbar-nav">
 
+                <li class="dropdown task-menu">
+                        <a class="button prbBtn" fecha="<?php echo date('Y-m-d') ?>" id="btnActTC" onclick="actualizarTC()">
+                            <i class="fa fa-usd"></i>
+
+                        </a>
+
+
+                </li>
+
                 <li class="dropdown messages-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-envelope-o"></i>

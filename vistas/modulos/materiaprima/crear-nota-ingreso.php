@@ -279,7 +279,7 @@
 
                                             <div class="col-lg-1">
 
-                                            <label for="">P.S. IGV</label>
+                                            <label for="">V. Unitario</label>
 
                                             </div>
 

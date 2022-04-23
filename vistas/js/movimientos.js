@@ -534,7 +534,7 @@ $(".tablaVtasGerencia").DataTable({
 	"deferRender": true,
 	"retrieve": true,
 	"processing": true,
-	"order": [[4, "asc"]],
+	"order": [[0, "desc"]],
 	"searching": false,
 	"paging": false,
 	"language": {
@@ -738,7 +738,7 @@ $(".tablaRangos").DataTable({
 $(".tablaDatosDia").on("click", ".btnActualizarMes", function () {
 
 	var fecha = $(this).attr("fecha");
-    console.log(fecha);
+    //console.log(fecha);
 
 	var datos = new FormData();
     datos.append("fecha", fecha);
@@ -864,3 +864,37 @@ $(".box").on("click", ".btnMontoAno", function () {
 	window.location = "vistas/reportes_excel/rpt_incobanno.php";
 	
   })
+
+function actualizarTC(){
+
+	let fecha = $("#btnActTC").attr("fecha");
+	//console.log(fecha);
+
+	var datos = new FormData();
+    datos.append("fecha", fecha);
+
+    $.ajax({
+
+		url: "ajax/movimientos.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		success: function (respuesta) {
+
+			if (respuesta == "ok") {
+
+				Command: toastr["success"]("Se actualizo el TC de hoy: "+ fecha);
+				
+			}else{
+
+				Command: toastr["error"]("No se encontro el tipo de cambio");
+
+			}
+		
+		}
+	})	
+
+
+}

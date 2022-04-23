@@ -251,7 +251,7 @@ MODAL VIZUALIZAR NOTA DE INGRESO
                     <th class="text-center">Cant. Recibida</th>
                     <th class="text-center">Saldo</th>
                     <th class="text-center">Exceso</th>
-                    <th class="text-center">P.S. IGV</th>
+                    <th class="text-center">V Unitario</th>
                     <th class="text-center">Total</th>
                     <th class="text-center">O.C</th>
 

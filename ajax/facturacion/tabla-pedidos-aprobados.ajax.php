@@ -53,10 +53,22 @@ class TablaPedidosCV{
 
             $botones =  "<div class='btn-group'><button title='Editar Pedido' class='btn btn-xs btn-warning btnEditarPedidoCV' codigo='".$pedidos[$i]["codigo"]."'><i class='fa fa-pencil-square-o'></i></button><button title='Imprimir Pedido' class='btn btn-xs btn-success btnImprimirPedido' codigo='".$pedidos[$i]["codigo"]."'><i class='fa fa-print'></i></button><button title='Facturar Pedido' class='btn btn-xs btn-primary btnFacturar' codigo='".$pedidos[$i]["codigo"]."' cod_cli='".$pedidos[$i]["cod_cli"]."'  nom_cli='".$pedidos[$i]["nombre"]."' tip_doc='".$pedidos[$i]["tipo_doc"]."' nro_doc='".$pedidos[$i]["documento"]."' dscto='".$pedidos[$i]["dscto"]."' cod_ven='".$pedidos[$i]["vendedor"]."' data-toggle='modal' data-target='#modalFacturar'><i class='fa fa-paper-plane'></i></button><button title='Anular Pedido' class='btn btn-xs  btn-danger btnAnularPedidoCV' codigo='".$pedidos[$i]["codigo"]."' estado='".$pedidos[$i]["estado"]."'><i class='fa fa-close'></i></button></div>";
 
+            //*Validar estado del ruc
+            if($pedidos[$i]["tipo_documento"] == 6){
+
+                $codigo = "<button class='btn btn-warning btn-xs btn btnValidarRuc' documento='".$pedidos[$i]["documento"]."' onclick='ValidarRuc()' name='validarRuc' id='validarRuc'>".$pedidos[$i]["cod_cli"]."</button>";
+
+
+            }else{
+
+                $codigo = $pedidos[$i]["cod_cli"];
+
+            }     
+
             $datosJson .= '[
             "'.($i+1).'",
             "<b>'.$pedidos[$i]["codigo"].'</b>",
-            "'.$pedidos[$i]["cod_cli"].'",
+            "'.$codigo.'",
             "<b>'.$pedidos[$i]["nombre"].'</b>",
             "'.$pedidos[$i]["vendedor"].'",
             "<b>S/ '.$pedidos[$i]["total"].'</b>",

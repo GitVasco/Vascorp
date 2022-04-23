@@ -2492,6 +2492,7 @@ $(".btnIngresoDeta").click(function(){
 	  deferRender: true,
 	  retrieve: true,
 	  processing: true,
+	  "order": [[2, "desc"]],
 	  language: {
 		sProcessing: "Procesando...",
 		sLengthMenu: "Mostrar _MENU_ registros",

@@ -89,7 +89,7 @@
                                 <td style="width:10%;text-align:center;">'.$value["fin"].'</td>
                                 <td style="width:15%;text-align:right;">'.number_format($value["facturas"],2).'</td>
                                 <td style="width:15%;text-align:right;">'.number_format($value["letras"],2).'</td>
-                                <td style="width:15%;text-align:right;"><b>'.number_format($value["total"],2).'</b></td>
+                                <td style="width:15%;text-align:right;"><b>'.number_format($value["facturas"]+$value["letras"], 2).'</b></td>
 
                         </tr>';                    
 

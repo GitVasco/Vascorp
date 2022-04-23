@@ -34,6 +34,8 @@ class MYPDF extends TCPDF {
         $tipo = $_GET["tipo"];
         $documento = $_GET["documento"];
         $venta = ControladorFacturacion::ctrMostrarVentaImpresion($documento,$tipo);
+        $nombreC = ControladorFacturacion::iniciales($venta["nombre"], $venta["dni"]);
+        #var_dump($nombreC);
 
 
         $this->SetFont('helvetica', 'B', 9);
@@ -47,11 +49,11 @@ class MYPDF extends TCPDF {
         $this->MultiCell(20, 5, 'Dirección:    ', 0, 'L', 0, 0, '', '', true);
         $this->MultiCell(66, 5, $venta["direccion"], 0, 'L', 0, 0, '', '', true);
         $this->Ln(4);
-        $this->Cell(40, 10, 'RUC:         '.$venta["dni"], 0, false, 'L', 0, '', 0, false, false, false );
+        $this->Cell(40, 10, 'Codigo:         '.$venta["cliente"], 0, false, 'L', 0, '', 0, false, false, false );
         $this->Cell(90, 10, 'Forma de pago: '.$venta["descripcion"], 0, false, 'L', 0, '', 0, false, false, false );
         $this->Ln(4);
         $this->Cell(40, 10, '', 0, false, 'L', 0, '', 0, false, false, false );
-        $this->Cell(90, 10, 'Vendedor:          '.$venta["vendedor"]."-".$venta["nom_vendedor"], 0, false, 'L', 0, '', 0, false, false, false );
+        $this->Cell(90, 10, 'Vendedor:          '.$venta["vendedor"], 0, false, 'L', 0, '', 0, false, false, false );
         $this->Ln(0);
         $image_file = K_PATH_IMAGES.'borde7.png';
         $this->Image($image_file, 15, 37, 186, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);

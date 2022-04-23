@@ -1,6 +1,5 @@
 <?php
 
-
 require_once "../../../controladores/facturacion.controlador.php";
 require_once "../../../modelos/facturacion.modelo.php";
 
@@ -151,7 +150,19 @@ $pdf->SetFont('Helvetica', 'A', 8);
 
 $texto =$venta["observacion"];
 
-$monto_letra= CantidadEnLetra($venta["total"]);
+if($venta["tipo_moneda"] == "S/"){
+
+    $monto_letra= CantidadEnLetra($venta["total"]);
+
+}else{
+
+    $monto_letra = str_replace("SOLES", "DOLARES AMERICANOS", CantidadEnLetra($venta["total"]));
+
+}
+
+
+
+
 $pdf->Ln(72);
 
 //$tamañoA=count($modelo);
@@ -219,7 +230,7 @@ if( $tamaño>= 22){
     $pdf->Cell(120, 10, 'Observaciones'.$lineas, 0, false, 'L', 0, '', 0, false, false, false ); */
     
     $pdf->Cell(22, 10, 'Op. Gravadas', 0, false, 'L', 0, '', 0, false, false, false );
-    $pdf->Cell(30, 10, 'S/', 0, false, 'C', 0, '', 0, false, false, false );
+    $pdf->Cell(30, 10, $venta["tipo_moneda"], 0, false, 'C', 0, '', 0, false, false, false );
     $pdf->Cell(10, 10, $venta["neto"], 0, false, 'R', 0, '', 0, false, false, false );
     $pdf->Ln(5);
     $pdf->Cell(120, 10, '   Nro unidades        '.$unidad["cantidad"], 0, false, 'L', 0, '', 0, false, false, false );
@@ -253,7 +264,7 @@ if( $tamaño>= 22){
     $pdf->Ln(5);
     $pdf->Cell(120, 10, '', 0, false, 'L', 0, '', 0, false, false, false );
     $pdf->Cell(20, 10, 'Total', 0, false, 'L', 0, '', 0, false, false, false );
-    $pdf->Cell(30, 10, 'S/', 0, false, 'C', 0, '', 0, false, false, false );
+    $pdf->Cell(30, 10, $venta["tipo_moneda"], 0, false, 'C', 0, '', 0, false, false, false );
     $pdf->Cell(12, 10, $venta["total"], 0, false, 'R', 0, '', 0, false, false, false );
     $pdf->Ln(20);
     //$pdf->Image($image_file2, 10, 170, 190, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
@@ -274,7 +285,7 @@ if( $tamaño>= 22){
     $pdf->Cell(125, 10, '   Observaciones', 0, false, 'L', 0, '', 0, false, false, false );
     
     $pdf->Cell(20, 10, 'Op. Gravadas', 0, false, 'L', 0, '', 0, false, false, false );
-    $pdf->Cell(25, 10, 'S/', 0, false, 'C', 0, '', 0, false, false, false );
+    $pdf->Cell(25, 10, $venta["tipo_moneda"], 0, false, 'C', 0, '', 0, false, false, false );
     $pdf->Cell(12, 10, $venta["neto"], 0, false, 'R', 0, '', 0, false, false, false );
     $pdf->Ln(5);
     $pdf->Cell(125, 10, '   Nro unidades        '.$unidad["cantidad"], 0, false, 'L', 0, '', 0, false, false, false );
@@ -308,7 +319,7 @@ if( $tamaño>= 22){
     $pdf->Ln(5);
     $pdf->Cell(125, 10, '', 0, false, 'L', 0, '', 0, false, false, false );
     $pdf->Cell(20, 10, 'Total', 0, false, 'L', 0, '', 0, false, false, false );
-    $pdf->Cell(25, 10, 'S/', 0, false, 'C', 0, '', 0, false, false, false );
+    $pdf->Cell(25, 10, $venta["tipo_moneda"], 0, false, 'C', 0, '', 0, false, false, false );
     $pdf->Cell(12, 10, $venta["total"], 0, false, 'R', 0, '', 0, false, false, false );
     $pdf->Ln(15);
     $pdf->Cell(0,11, $pdf->Image($image_file2, $pdf->GetX(), $pdf->GetY(),185),0);

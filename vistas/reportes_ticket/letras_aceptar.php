@@ -113,7 +113,7 @@
                             <td style="width:5%;text-align:left;">'.$value["vendedor"].'</td>
                             <td style="width:8%;text-align:left;"><b>'.$value["cliente"].'</b></td>
                             <td style="width:30%;text-align:left;">'.$value["nombre"].'</td>
-                            <td style="width:7%;text-align:right;"><b>S/ '.$value["saldo"].'</b></td>
+                            <td style="width:7%;text-align:right;"><b>S/ '.number_format($value["saldo"],2).'</b></td>
                         
 
                         </tr>';                    
@@ -145,7 +145,7 @@
                             <td style="width:5%;text-align:left;">'.$value["vendedor"].'</td>
                             <td style="width:8%;text-align:left;"><b>'.$value["cliente"].'</b></td>
                             <td style="width:30%;text-align:left;">'.$value["nombre"].'</td>
-                            <td style="width:7%;text-align:right;"><b>S/ '.$value["saldo"].'</b></td>
+                            <td style="width:7%;text-align:right;"><b>S/ '.number_format($value["saldo"],2).'</b></td>
                         
 
                         </tr>';                    
@@ -183,7 +183,7 @@
                         <td style="width:5%;text-align:left;">'.$value["vendedor"].'</td>
                         <td style="width:8%;text-align:left;"><b>'.$value["cliente"].'</b></td>
                         <td style="width:30%;text-align:left;">'.$value["nombre"].'</td>
-                        <td style="width:7%;text-align:right;"><b>S/ '.$value["saldo"].'</b></td>
+                        <td style="width:7%;text-align:right;"><b>S/ '.number_format($value["saldo"],2).'</b></td>
                     
 
                     </tr>';                    
@@ -216,7 +216,7 @@
                             <td style="width:5%;text-align:left;">'.$value["vendedor"].'</td>
                             <td style="width:8%;text-align:left;"><b>'.$value["cliente"].'</b></td>
                             <td style="width:30%;text-align:left;">'.$value["nombre"].'</td>
-                            <td style="width:7%;text-align:right;"><b>S/ '.$value["saldo"].'</b></td>
+                            <td style="width:7%;text-align:right;"><b>S/ '.number_format($value["saldo"],2).'</b></td>
                         
 
                         </tr>';                    
@@ -254,7 +254,7 @@
                             <td style="width:5%;text-align:left;">'.$value["vendedor"].'</td>
                             <td style="width:8%;text-align:left;"><b>'.$value["cliente"].'</b></td>
                             <td style="width:30%;text-align:left;">'.$value["nombre"].'</td>
-                            <td style="width:7%;text-align:right;"><b>S/ '.$value["saldo"].'</b></td>
+                            <td style="width:7%;text-align:right;"><b>S/ '.number_format($value["saldo"],2).'</b></td>
                         
 
                         </tr>';                    
@@ -292,7 +292,7 @@
                             <td style="width:5%;text-align:left;">'.$value["vendedor"].'</td>
                             <td style="width:8%;text-align:left;"><b>'.$value["cliente"].'</b></td>
                             <td style="width:30%;text-align:left;">'.$value["nombre"].'</td>
-                            <td style="width:7%;text-align:right;"><b>S/ '.$value["saldo"].'</b></td>
+                            <td style="width:7%;text-align:right;"><b>S/ '.number_format($value["saldo"],2).'</b></td>
                         
 
                         </tr>';                    
@@ -303,6 +303,27 @@
 
 
         }
+
+        echo '<table border="1" align="left" width="980px">';
+
+        $total = Controladorcuentas::ctrLetrasAceptarTotal($vendedor);
+        #var_dump($total);
+
+        echo '<tr>
+                                
+            <td style="width:5%;text-align:center;"><b></b></td>
+            <td style="width:10%;text-align:left;"></td>
+            <td style="width:8%;text-align:left;"><b></b></td>
+            <td style="width:8%;text-align:left;"></td>
+            <td style="width:5%;text-align:left;"></td>
+            <td style="width:8%;text-align:left;"><b></b></td>
+            <th style="width:30%;text-align:left;">TOTAL VENDEDOR</th>
+            <th style="width:7%;text-align:right;"><b>S/ '.number_format($total["saldo"],2).'</b></th>
+        
+
+        </tr>';          
+
+        echo '</table>'
 
         ?>
 

@@ -1531,6 +1531,17 @@ class ControladorCuentas{
 		return $respuesta;
 
 	}	
+
+	/*=============================================
+	DOCUMENTOS CONTADO PENDIENTES
+	=============================================*/
+	static public function ctrLetrasAceptarTotal($vendedor){
+
+		$respuesta = ModeloCuentas::mdlLetrasAceptarTotal($vendedor);
+
+		return $respuesta;
+
+	}	
 	
 	/*=============================================
 	ESTADO DE CUENTA DETALLE

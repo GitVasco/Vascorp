@@ -61,12 +61,22 @@ class TablaPedidosCV{
             TRAEMOS LAS ACCIONES
             =============================================*/
 
-            
+            //*Validar estado del ruc
+            if($pedidos[$i]["tipo_documento"] == 6){
+
+                $codigo = "<button class='btn btn-warning btn-xs btn btnValidarRuc' documento='".$pedidos[$i]["documento"]."' onclick='ValidarRuc()' name='validarRuc' id='validarRuc'>".$pedidos[$i]["cod_cli"]."</button>";
+
+
+            }else{
+
+                $codigo = $pedidos[$i]["cod_cli"];
+
+            }            
 
             $datosJson .= '[
             "'.($i+1).'",
             "<b>'.$pedidos[$i]["codigo"].'</b>",
-            "'.$pedidos[$i]["cod_cli"].'",
+            "'.$codigo.'",
             "<b>'.$pedidos[$i]["nombre"].'</b>",
             "'.$pedidos[$i]["vendedor"].'",
             "<b>S/ '.$pedidos[$i]["total"].'</b>",

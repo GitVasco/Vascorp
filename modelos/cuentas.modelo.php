@@ -3784,6 +3784,44 @@ class ModeloCuentas{
 
 	}	
 
+	//* LETRAS POR ACEPTAR
+	static public function mdlLetrasAceptarTotal($vendedor){	
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+							cc.vendedor,
+							SUM(cc.saldo) AS saldo 
+						FROM
+							cuenta_ctejf cc 
+							LEFT JOIN clientesjf c 
+							ON cc.cliente = c.codigo 
+						WHERE cc.tipo_doc = '85' 
+							AND cc.estado = 'PENDIENTE' 
+							AND cc.tip_mov = '+' 
+							AND (cc.banco <> '02' 
+							OR cc.banco IS NULL) 
+							AND (
+							cc.num_unico = '' 
+							OR cc.num_unico IS NULL
+							) 
+							AND cc.protesta <> '1' 
+							AND cc.vendedor = '$vendedor'
+						ORDER BY cc.vendedor,
+							cc.cliente,
+							cc.doc_origen,
+							cc.fecha_ven");
+
+		$stmt -> bindParam(":vendedor", $vendedor, PDO::PARAM_STR);
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();	
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}		
+
 	//* ESTADO DE CEUNTA DETALLE
 	static public function ctrEstadoCuentaDet($cliente){	
 
@@ -3855,32 +3893,33 @@ class ModeloCuentas{
 	static public function mdlProyeccionPagos(){	
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
-						YEAR(cc.fecha_ven) AS anno,
-						WEEK(cc.fecha_ven) AS semana,
-						MIN(cc.fecha_ven) AS inicio,
-						MAX(cc.fecha_ven) AS fin,
-						SUM(
-						CASE
-							WHEN cc.tipo_doc IN ('01', '03', '07', '08', '09') 
-							THEN cc.saldo 
-							ELSE 0 
-						END
-						) AS 'facturas',
-						SUM(
-						CASE
-							WHEN cc.tipo_doc IN ('85') 
-							THEN cc.saldo 
-							ELSE 0 
-						END
-						) AS 'letras',
-						SUM(cc.saldo) AS total 
-					FROM
-						cuenta_ctejf cc 
-					WHERE cc.tip_mov = '+' 
-						AND cc.estado = 'PENDIENTE' 
-						AND cc.fecha_ven >= DATE(NOW()) 
-					GROUP BY YEAR(cc.fecha_ven),
-						WEEK(cc.fecha_ven)");
+					YEAR(cc.fecha_ven) AS anno,
+					WEEK(cc.fecha_ven) AS semana,
+					MIN(cc.fecha_ven) AS inicio,
+					MAX(cc.fecha_ven) AS fin,
+					SUM(
+					CASE
+						WHEN cc.tipo_doc IN ('01', '03', '07', '08', '09') 
+						THEN cc.saldo 
+						ELSE 0 
+					END
+					) AS 'facturas',
+					SUM(
+					CASE
+						WHEN cc.tipo_doc IN ('85') 
+						AND cc.banco = '02' 
+						THEN cc.saldo 
+						ELSE 0 
+					END
+					) AS 'letras',
+					SUM(cc.saldo) AS total 
+				FROM
+					cuenta_ctejf cc 
+				WHERE cc.tip_mov = '+' 
+					AND cc.estado = 'PENDIENTE' 
+					AND cc.fecha_ven >= DATE(NOW()) 
+				GROUP BY YEAR(cc.fecha_ven),
+					WEEK(cc.fecha_ven)");
 
 		$stmt -> execute();
 

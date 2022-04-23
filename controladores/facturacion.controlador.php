@@ -3133,7 +3133,18 @@ class ControladorFacturacion{
 
             //todo: FILA 6
             require_once("/../extensiones/cantidad_en_letras_v2.php");
-            $monto_letras = convertir($datos["n1"]);
+
+            if($venta["tipo_moneda"] == "PEN"){
+
+                $monto_letra= convertir($datos["n1"]);
+            
+            }else{
+            
+                $monto_letra = str_replace("SOLES", "DOLARES AMERICANOS", convertir($datos["n1"]));
+            
+            }
+
+            //$monto_letras = convertir($datos["n1"]);
             $fila6 =    $monto_letras.',,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,';
 
             //todo: FILA 7
@@ -3370,7 +3381,18 @@ class ControladorFacturacion{
 
             //todo: FILA 6
             require_once("/../extensiones/cantidad_en_letras_v2.php");
-            $monto_letras = convertir($datos["n1"]);
+
+            if($datos["d1"] == "PEN"){
+
+                $monto_letras = convertir($datos["n1"]);
+            
+            }else{
+            
+                $monto_letras = str_replace("SOLES", "DOLARES AMERICANOS", convertir($datos["n1"]));
+            
+            }
+
+            #$monto_letras = convertir($datos["n1"]);
             $fila6 =    $monto_letras.',,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,';
 
             //todo: FILA 7
@@ -4122,5 +4144,37 @@ class ControladorFacturacion{
         }
 
     }    
+
+    static public function iniciales($nombre, $dni){
+
+        $nombre = explode(" ",$nombre);
+
+        if(substr($dni,0,2) == "10"){
+
+            $resNombre = $nombre[0].' '.$nombre[2];
+
+        }else{
+
+
+            $resNombre = $nombre[0].' '.$nombre[1];
+
+        }
+
+        /* if(isset($nombre[2])){
+
+            $resNombre = $nombre[0].' '.$nombre[1];
+
+        }else{
+
+            $resNombre = $nombre[0];
+
+        } */
+
+        #$resNombre = $nombre[0].' '.$nombre[2];
+
+        return $resNombre;
+
+
+    }
 
 }

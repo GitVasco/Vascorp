@@ -128,6 +128,8 @@ function cambioDescuento(){
 
     var impNuevo = subTotal * 0.18;
 
+    //var impNuevo = 0;
+
     var total = subTotal + impNuevo;
 
     $("#descTotal").val(descN.toFixed(2));
@@ -239,7 +241,7 @@ $("#condicionVenta").change(function(){
     //console.log("si llego")
 
     sumarTotalesPreciosA();
-    cambioDescuento();
+    //cambioDescuento();
     listarArticulos();
 
     $('#modalito').removeAttr('disabled');
@@ -343,6 +345,7 @@ $(".crearPedido").click(function () {
     $("#subTotalM").val(subTotal);
 
     var impuesto = document.getElementById("impTotal").value;
+    //console.log(impuesto);
     $("#igvM").val(impuesto);
 
     var total = document.getElementById("nuevoTotal").value;
@@ -1916,3 +1919,49 @@ $("#modalFacturar").on("hidden.bs.modal", function () {
 
 
 });
+
+//VALIDA SI ES RUC O DNI 
+function ValidarRuc(){
+
+	documento = $("#validarRuc").attr("documento");
+	//console.log(documento);
+
+	var datos = new FormData();
+	datos.append("nuevoRuc",documento);
+	$.ajax({
+		type: "POST",
+		url: 'ajax/proveedor.ajax.php',
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success:function( jsonx ) {
+			
+            if(jsonx["condicion"]== "HABIDO"){
+
+                Command: toastr["success"]("HABIDO");
+
+            }else{
+
+                Command: toastr["error"]("NO HABIDO");
+
+            }
+
+            if(jsonx["estado"]== "ACTIVO"){
+
+                Command: toastr["success"]("ACTIVO");
+
+            }else{
+
+                Command: toastr["error"]("NO ACTIVO");
+
+            }
+            //console.log(jsonx["condicion"]);
+
+		}
+	})
+
+
+
+}
