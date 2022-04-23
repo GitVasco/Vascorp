@@ -7529,7 +7529,11 @@ class ModeloFacturacion{
     static public function mdlFEFacturaDetA($tipo, $documento){
 
         $sql="SELECT 
-                'C62' AS b9,
+                  CASE
+                    WHEN SUM(m.cantidad) % 1 > 0 
+                    THEN 'KGM' 
+                    ELSE 'C62' 
+                  END AS b9,
                 ROUND(SUM(m.cantidad), 3) AS c9,
                 REPLACE(a.nombre, 'Ñ', 'N') AS d9,
                 ROUND(m.precio * 1.18, 2) AS e9,
