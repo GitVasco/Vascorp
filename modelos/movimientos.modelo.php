@@ -2730,12 +2730,12 @@ class ModeloMovimientos{
       if( $mes == "null" || $mes == "TODO"){
 
          $stmt = Conexion::conectar()->prepare("SELECT 
-                        v.tipo,
-                        v.tipo_documento,
-                        SUM(v.neto) AS neto,
-                        SUM(v.igv) AS igv,
-                        SUM(v.dscto) AS dscto,
-                        SUM(v.total) AS total 
+                  v.tipo,
+                  v.tipo_documento,
+                  ROUND(SUM(CASE WHEN v.tipo_moneda = '1' THEN v.neto ELSE v.neto * v.tipo_cambio END),2) AS neto,
+                  ROUND(SUM(CASE WHEN v.tipo_moneda = '1' THEN v.igv ELSE v.igv * v.tipo_cambio END),2) AS igv,
+                  ROUND(SUM(CASE WHEN v.tipo_moneda = '1' THEN v.dscto ELSE v.dscto * v.tipo_cambio END),2) AS dscto,
+                  ROUND(SUM(CASE WHEN v.tipo_moneda = '1' THEN v.total ELSE v.total * v.tipo_cambio END),2) AS total 
                      FROM
                         ventajf v 
                      WHERE YEAR(v.fecha) = YEAR(NOW()) 
@@ -2755,12 +2755,12 @@ class ModeloMovimientos{
       }else{
 
          $stmt = Conexion::conectar()->prepare("SELECT 
-                        v.tipo,
-                        v.tipo_documento,
-                        SUM(v.neto) AS neto,
-                        SUM(v.igv) AS igv,
-                        SUM(v.dscto) AS dscto,
-                        SUM(v.total) AS total 
+                     v.tipo,
+                     v.tipo_documento,
+                     ROUND(SUM(CASE WHEN v.tipo_moneda = '1' THEN v.neto ELSE v.neto * v.tipo_cambio END),2) AS neto,
+                     ROUND(SUM(CASE WHEN v.tipo_moneda = '1' THEN v.igv ELSE v.igv * v.tipo_cambio END),2) AS igv,
+                     ROUND(SUM(CASE WHEN v.tipo_moneda = '1' THEN v.dscto ELSE v.dscto * v.tipo_cambio END),2) AS dscto,
+                     ROUND(SUM(CASE WHEN v.tipo_moneda = '1' THEN v.total ELSE v.total * v.tipo_cambio END),2) AS total 
                      FROM
                         ventajf v 
                      WHERE YEAR(v.fecha) = YEAR(NOW()) 

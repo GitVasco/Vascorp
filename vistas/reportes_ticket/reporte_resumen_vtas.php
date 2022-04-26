@@ -167,6 +167,7 @@
                 $subtotal = 0;
                 $igv = 0;
                 $neto = 0;
+                $dscto = 0;
 
                 foreach($movimientos as $key => $value){
 
@@ -187,6 +188,7 @@
                         $subtotal += $value["neto"];
                         $igv += $value["igv"];
                         $neto += $value["total"];  
+                        $dscto += $value["dscto"];
 
                 }
 
@@ -201,7 +203,7 @@
 
                         <th style="width:15%;text-align:center;">Total</th>
                         <th style="width:15%;text-align:right;">'.number_format($bruto,2).'</th>
-                        <th style="width:10%;text-align:right;">0.00</th>
+                        <th style="width:10%;text-align:right;">'.number_format($dscto,2).'</th>
                         <th style="width:10%;text-align:right;">0.00</th>
                         <th style="width:10%;text-align:right;">'.number_format($subtotal,2).'</th>
                         <th style="width:10%;text-align:right;">'.number_format($igv,2).'</th>

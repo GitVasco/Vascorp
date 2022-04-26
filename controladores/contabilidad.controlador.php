@@ -85,34 +85,33 @@ class ControladorContabilidad{
 
                 }
 
-                $nom_cliente = ControladorContabilidad::eliminar_tildes($ventas[$i]["nom_cliente"]);
+                /* $nom_cliente = ControladorContabilidad::eliminar_tildes($ventas[$i]["nom_cliente"]);
                 $ape_paterno = ControladorContabilidad::eliminar_tildes($ventas[$i]["ape_paterno"]);
                 $ape_materno = ControladorContabilidad::eliminar_tildes($ventas[$i]["ape_materno"]);
                 $nombres = ControladorContabilidad::eliminar_tildes($ventas[$i]["nombres"]);
-
-                $nombre1 = explode(" ", $nombres);   
+                $nombre1 = explode(" ", $nombres);    */
                 
-                $origen     = str_pad($ventas[$i]["origen"], 2);
+                $origen     = str_pad($ventas[$i]["t"], 2);
                 $voucher    = str_pad($corr, 5 , '0', STR_PAD_LEFT);
                 $fecha      = str_pad($ventas[$i]["fecha"], 8);
                 $cuenta     = str_pad($ventas[$i]["cuenta"],10);
                 $debe       = str_pad($ventas[$i]["debe"], 12 , '0', STR_PAD_LEFT);
                 $haber      = str_pad($ventas[$i]["haber"], 12 , '0', STR_PAD_LEFT);
                 $moneda     = str_pad($ventas[$i]["moneda"], 1);
-                $tc         = str_pad($ventas[$i]["tipo_cambio"], 10 , '0', STR_PAD_LEFT);
-                $doc        = str_pad($ventas[$i]["tipo_doc"], 2);
-                $numero     = str_pad($ventas[$i]["documentoA"], 40);
-                $fechad     = str_pad($ventas[$i]["fecha_emi"], 8);
-                $fechav     = str_pad($ventas[$i]["fecha_ven"], 8);
-                $codigo     = str_pad($ventas[$i]["doc_cli"], 15);
+                $tc         = str_pad($ventas[$i]["tc"], 10 , '0', STR_PAD_LEFT);
+                $doc        = str_pad($ventas[$i]["doc"], 2);
+                $numero     = str_pad($ventas[$i]["numero"], 40);
+                $fechad     = str_pad($ventas[$i]["fechad"], 8);
+                $fechav     = str_pad($ventas[$i]["fechav"], 8);
+                $codigo     = str_pad($ventas[$i]["codigo"], 15);
                 $cc         = str_pad(" ", 10);
                 $fe         = str_pad(" ", 4);
                 $pre        = str_pad(" ", 10); 
-                $mpago      = str_pad(" ", 3);
+                $mpago      = str_pad($ventas[$i]["mpago"], 3);
                 $glosa      = str_pad($ventas[$i]["glosa"], 60);
-                $rnumero    = str_pad($ventas[$i]["doc_origen"], 40);
-                $rtdoc      = str_pad($ventas[$i]["tip_origen"], 2);
-                $rfecha     = str_pad($ventas[$i]["fec_origen"], 8);
+                $rnumero    = str_pad($ventas[$i]["rnumero"], 40);
+                $rtdoc      = str_pad($ventas[$i]["rtdoc"], 2);
+                $rfecha     = str_pad($ventas[$i]["rfecha"], 8);
                 $snumero    = str_pad(" ", 40);
                 $sfecha     = str_pad(" ", 8);
                 $tl         = str_pad("V", 1);

@@ -2133,7 +2133,7 @@ $(".btnGenerarReporteCuenta").click(function(){
 
         }else if(consulta== "fechaSaldo"){
 
-            window.open("extensiones/tcpdf/pdf/reporte_general_cuentas.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&canc="+canc+"&vend="+vend+"&inicio="+inicio+"&fin="+fin,"_blank");
+            window.open("extensiones/tcpdf/pdf/reporte_saldo_fecha.php?consulta="+consulta+"&orden1="+orden1+"&orden2="+orden2+"&canc="+canc+"&vend="+vend+"&inicio="+inicio+"&fin="+fin,"_blank");
 
         }
 

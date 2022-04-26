@@ -1624,4 +1624,16 @@ class ControladorCuentas{
 
 	}
 
+	/*=============================================
+	SALDOS A UNA FECHA
+	=============================================*/
+
+	static public function ctrSaldoFecha($inicio, $fin){
+
+		$respuesta = ModeloCuentas::mdlSaldoFecha($inicio, $fin);
+
+		return $respuesta;
+
+	}	
+
 }

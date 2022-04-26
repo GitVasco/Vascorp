@@ -381,29 +381,60 @@ $objPHPExcel->getActiveSheet()->SetCellValue("N$fila", 'ESTADO');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde3, "N$fila");
 
 $sqlDetalle = mysql_query("SELECT 
-DATE_FORMAT(v.fecha, '%d-%m-%Y') AS fecha,
-CASE
-  WHEN v.tipo = 's03' 
-  THEN '1' 
-  WHEN v.tipo = 's02' 
-  THEN '3' 
-  WHEN v.tipo = 'e05' 
-  THEN '7' 
-  ELSE '8' 
-END AS tipo_doc,
-CONCAT(
-  LEFT(v.documento, 4),
-  '-',
-  RIGHT(v.documento, 8)
-) AS doc,
-c.documento,
-c.nombre,
-v.neto,
-v.dscto,
-v.neto - v.dscto AS subtotal,
-ROUND((v.neto - v.dscto) * 0.18, 2) AS igv,
-v.total,
-v.estado 
+  DATE_FORMAT(v.fecha, '%d-%m-%Y') AS fecha,
+  CASE
+    WHEN v.tipo = 's03' 
+    THEN '1' 
+    WHEN v.tipo = 's02' 
+    THEN '3' 
+    WHEN v.tipo = 'e05' 
+    THEN '7' 
+    ELSE '8' 
+  END AS tipo_doc,
+  CONCAT(
+    LEFT(v.documento, 4),
+    '-',
+    RIGHT(v.documento, 8)
+  ) AS doc,
+  c.documento,
+  c.nombre,
+  CASE
+    WHEN v.tipo_moneda = '1' 
+    THEN 0 
+    ELSE v.neto 
+  END AS vtausd,
+  v.tipo_cambio,
+  CASE
+    WHEN v.tipo_moneda = '1' 
+    THEN ROUND(v.neto, 2) 
+    ELSE ROUND(v.neto * v.tipo_cambio, 2) 
+  END AS neto,
+  v.dscto,
+  CASE
+    WHEN v.tipo_moneda = '1' 
+    THEN ROUND(v.neto - v.dscto, 2) 
+    ELSE ROUND((v.neto - v.dscto) * v.tipo_cambio, 2) 
+  END AS subtotal,
+  CASE
+    WHEN v.tipo_moneda = '1' 
+    THEN ROUND(ROUND((v.neto - v.dscto) * 0.18, 2), 2) 
+    ELSE ROUND(
+      (v.neto - v.dscto) * 0.18 * v.tipo_cambio,
+      2
+    ) 
+  END AS igv,
+  CASE
+    WHEN v.tipo_moneda = '1' 
+    THEN ROUND(v.total, 2) 
+    ELSE ROUND(
+      ROUND((v.neto - v.dscto) * v.tipo_cambio, 2) + ROUND(
+        (v.neto - v.dscto) * 0.18 * v.tipo_cambio,
+        2
+      ),
+      2
+    ) 
+  END AS total,
+  v.estado
 FROM
 ventajf v 
 LEFT JOIN clientesjf c 
@@ -415,6 +446,13 @@ ORDER BY tipo_doc DESC,
 v.fecha,
 v.documento") or die(mysql_error());
 
+$vtausd = 0;
+$neto = 0;
+$dscto = 0;
+$base = 0;
+$igv = 0;
+$total = 0;
+
 while($respDetalle = mysql_fetch_array($sqlDetalle)){
 
   $fila+=1;
@@ -425,8 +463,8 @@ while($respDetalle = mysql_fetch_array($sqlDetalle)){
   //$objPHPExcel->getActiveSheet()->SetCellValue("D$fila", $respDetalle["documento"]);
   $objPHPExcel->getActiveSheet()->setCellValueExplicit("D$fila", utf8_encode($respDetalle["documento"]), PHPExcel_Cell_DataType::TYPE_STRING); 
   $objPHPExcel->getActiveSheet()->SetCellValue("E$fila", utf8_encode($respDetalle["nombre"]));
-  $objPHPExcel->getActiveSheet()->SetCellValue("F$fila", "0");
-  $objPHPExcel->getActiveSheet()->SetCellValue("G$fila", "0");
+  $objPHPExcel->getActiveSheet()->SetCellValue("F$fila", $respDetalle["vtausd"]);
+  $objPHPExcel->getActiveSheet()->SetCellValue("G$fila", $respDetalle["tipo_cambio"]);
   $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", $respDetalle["neto"]);
   $objPHPExcel->getActiveSheet()->SetCellValue("I$fila", $respDetalle["dscto"]);
   $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", "0");
@@ -445,48 +483,26 @@ while($respDetalle = mysql_fetch_array($sqlDetalle)){
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde_5, "n$fila");
 
   }
-
-   
-
+    $vtausd += $respDetalle["vtausd"];
+    $neto += $respDetalle["neto"];
+    $dscto += $respDetalle["dscto"];
+    $base += $respDetalle["subtotal"];
+    $igv += $respDetalle["igv"];
+    $total += $respDetalle["total"];
 }
 
-
-
-$sqlDetalleTotal = mysql_query("SELECT 
-            MONTH(v.fecha) AS mes,
-            SUM(v.neto) AS neto,
-            SUM(v.dscto) AS dscto,
-            SUM(v.neto - v.dscto) AS subtotal,
-            SUM(ROUND((v.neto - v.dscto) * 0.18, 2)) AS igv,
-            SUM(v.total) AS total 
-            FROM
-            ventajf v 
-            LEFT JOIN clientesjf c 
-              ON v.cliente = c.codigo 
-            WHERE MONTH(v.fecha) = $mes 
-            AND YEAR(v.fecha) = YEAR(NOW()) 
-            AND v.tipo NOT IN ('S70', 'S01') 
-            AND (
-              LEFT(v.documento, 2)= 'B0'
-              OR LEFT(v.documento, 2) = 'F0'
-            ) 
-            GROUP BY MONTH(v.fecha) 
-            ORDER BY v.tipo ASC,
-            v.fecha,
-            v.documento") or die(mysql_error());
 
 $fila+=1;    
 $fila+=1;     
 
-$resTotal=mysql_fetch_array($sqlDetalleTotal);
-$objPHPExcel->getActiveSheet()->SetCellValue("F$fila", "0");
+$objPHPExcel->getActiveSheet()->SetCellValue("F$fila", $vtausd);
 $objPHPExcel->getActiveSheet()->SetCellValue("G$fila", "0");
-$objPHPExcel->getActiveSheet()->SetCellValue("H$fila", $resTotal["neto"]);
-$objPHPExcel->getActiveSheet()->SetCellValue("I$fila", $resTotal["dscto"]);
+$objPHPExcel->getActiveSheet()->SetCellValue("H$fila", $neto);
+$objPHPExcel->getActiveSheet()->SetCellValue("I$fila", $dscto);
 $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", "0");
-$objPHPExcel->getActiveSheet()->SetCellValue("K$fila", $resTotal["subtotal"]);
-$objPHPExcel->getActiveSheet()->SetCellValue("L$fila", $resTotal["igv"]);
-$objPHPExcel->getActiveSheet()->SetCellValue("M$fila", $resTotal["total"]);   
+$objPHPExcel->getActiveSheet()->SetCellValue("K$fila", $base);
+$objPHPExcel->getActiveSheet()->SetCellValue("L$fila", $igv);
+$objPHPExcel->getActiveSheet()->SetCellValue("M$fila", $total);   
 
 
 # Ajustar el tamaño de las columnas

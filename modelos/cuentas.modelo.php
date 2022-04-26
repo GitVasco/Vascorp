@@ -4443,4 +4443,133 @@ class ModeloCuentas{
 
     }
 
+	static public function mdlSaldoFecha($inicio, $fin){
+
+
+		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+							'00' AS tipo_doc,
+							'' AS num_cta,
+							'' AS doc_origen,
+							'' AS fecha,
+							'' AS fecha_ven,
+							'' AS monto,
+							'' AS saldo,
+							cc.cliente,
+							c.nombre,
+							'' AS documento,
+							'' AS vendedor,
+							'' AS estado,
+							'' AS saldoFecha 
+						FROM
+							cuenta_ctejf cc 
+							LEFT JOIN 
+							(SELECT 
+								cc.tipo_doc,
+								cc.num_cta,
+								SUM(cc.monto) AS monto 
+							FROM
+								cuenta_ctejf cc 
+							WHERE cc.tip_mov = '-' 
+								AND cc.fecha <= '$fin' 
+							GROUP BY cc.tipo_doc,
+								cc.num_cta) AS c1 
+							ON cc.tipo_doc = c1.tipo_doc 
+							AND cc.num_cta = c1.num_cta 
+							LEFT JOIN clientesjf c 
+							ON cc.cliente = c.codigo 
+						WHERE cc.tip_mov = '+' 
+							AND cc.fecha BETWEEN '$inicio' 
+							AND '$fin' 
+							AND (cc.monto - IFNULL(c1.monto, 0)) > 0 
+						UNION
+						SELECT 
+							cc.tipo_doc,
+							cc.num_cta,
+							cc.doc_origen,
+							cc.fecha,
+							cc.fecha_ven,
+							cc.monto,
+							cc.saldo,
+							cc.cliente,
+							c.nombre,
+							c.documento,
+							cc.vendedor,
+							cc.estado,
+							(cc.monto - IFNULL(c1.monto, 0)) AS saldoFecha 
+						FROM
+							cuenta_ctejf cc 
+							LEFT JOIN 
+							(SELECT 
+								cc.tipo_doc,
+								cc.num_cta,
+								SUM(cc.monto) AS monto 
+							FROM
+								cuenta_ctejf cc 
+							WHERE cc.tip_mov = '-' 
+								AND cc.fecha <= '$fin' 
+							GROUP BY cc.tipo_doc,
+								cc.num_cta) AS c1 
+							ON cc.tipo_doc = c1.tipo_doc 
+							AND cc.num_cta = c1.num_cta 
+							LEFT JOIN clientesjf c 
+							ON cc.cliente = c.codigo 
+						WHERE cc.tip_mov = '+' 
+							AND cc.fecha BETWEEN '$inicio' 
+							AND '$fin' 
+							AND (cc.monto - IFNULL(c1.monto, 0)) > 0 
+						UNION
+						SELECT 
+							'99' AS tipo_doc,
+							'' AS num_cta,
+							'' AS doc_origen,
+							'' AS fecha,
+							'' AS fecha_ven,
+							'' AS monto,
+							'' AS saldo,
+							cc.cliente,
+							'' AS nombre,
+							'' AS documento,
+							'' AS vendedor,
+							'' AS estado,
+							SUM(cc.monto - IFNULL(c1.monto, 0)) AS saldoFecha 
+						FROM
+							cuenta_ctejf cc 
+							LEFT JOIN 
+							(SELECT 
+								cc.tipo_doc,
+								cc.num_cta,
+								SUM(cc.monto) AS monto 
+							FROM
+								cuenta_ctejf cc 
+							WHERE cc.tip_mov = '-' 
+								AND cc.fecha <= '$fin' 
+							GROUP BY cc.tipo_doc,
+								cc.num_cta) AS c1 
+							ON cc.tipo_doc = c1.tipo_doc 
+							AND cc.num_cta = c1.num_cta 
+							LEFT JOIN clientesjf c 
+							ON cc.cliente = c.codigo 
+						WHERE cc.tip_mov = '+' 
+							AND cc.fecha BETWEEN '$inicio' 
+							AND '$fin' 
+							AND (cc.monto - IFNULL(c1.monto, 0)) > 0 
+						GROUP BY cc.cliente 
+						ORDER BY cliente,
+								tipo_doc,
+								fecha,
+								num_cta");
+
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+
+    }
+
+
 }
