@@ -153,6 +153,17 @@ class AjaxPedidos{
 
     }      
 
+    //*TRAER CUENTAS
+	public function ajaxTraerCuentas(){
+
+		$valor = $this->documento;
+
+		$respuesta = ControladorPedidos::ctrTraerCuentas($valor);
+
+		echo json_encode($respuesta);
+
+	}    
+
 
 }
 
@@ -258,5 +269,17 @@ if(isset($_POST["tipo"])){
     $verColoresyCantidades = new AjaxPedidos();
     $verColoresyCantidades -> tipo = $_POST["tipo"];
     $verColoresyCantidades -> ajaxReiniciarTalonario();
+
+}
+
+
+/* 
+ * Treaemos las cuentas
+*/
+if(isset($_POST["documento"])){
+
+    $verColoresyCantidades = new AjaxPedidos();
+    $verColoresyCantidades -> documento = $_POST["documento"];
+    $verColoresyCantidades -> ajaxTraerCuentas();
 
 }

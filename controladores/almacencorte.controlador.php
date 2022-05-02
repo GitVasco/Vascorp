@@ -167,14 +167,6 @@ class ControladorAlmacenCorte{
 
                     }
 
-                    /*
-                    todo: Actualizamos saldos de las ordenes de corte y estados
-                    */
-                        ModeloAlmacenCorte::mdlActualizarSaldoOrdCorteGral();
-
-                        ModeloAlmacenCorte::mdlActualizarOrdCorteEstadoParcial();
-
-                        ModeloAlmacenCorte::mdlActualizarOrdCorteEstadoCerrado();
 
                     /*
                     todo: Guardar cabeera de ALMACEN DE CORTE
@@ -214,6 +206,15 @@ class ControladorAlmacenCorte{
                         ModeloAlmacenCorte::mdlGuardarDetallesAlmacenCorteMP($ultimoId["ultimo_codigo"]);
 
                         ModeloAlmacenCorte::mdlActualizarOrdCorteSaldo();
+
+                        /*
+                        todo: Actualizamos saldos de las ordenes de corte y estados
+                        */
+                        ModeloAlmacenCorte::mdlActualizarSaldoOrdCorteGral();
+
+                        ModeloAlmacenCorte::mdlActualizarOrdCorteEstadoParcial();
+
+                        ModeloAlmacenCorte::mdlActualizarOrdCorteEstadoCerrado();
 
                         # Mostramos una alerta suave
                         echo '<script>

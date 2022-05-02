@@ -78,13 +78,23 @@ class TablaGuiasRemision{
 
             }            
 
-            if($boletas[$i]["facturacion"] == "0"){
+            if($boletas[$i]["cuenta"] == null || $boletas[$i]["cuenta"] == ""){
 
-                $botones =  "<div class='btn-group'><button title='Imprimir Factura' class='btn btn-xs btn-success btnImprimirBoleta' tipo='".$boletas[$i]["tipo"]."' documento='".$boletas[$i]["documento"]."'><i class='fa fa-print'></i></button><button title='Anular Documento' class='btn btn-xs  btn-danger btnAnularDocumento' documento='".$boletas[$i]["documento"]."' tipo='".$boletas[$i]["tipo"]."' pagina='facturas'><i class='fa fa-close'></i></button><button title='Cargar Fotos' class='btn btn-xs btn-info btnCargarFotosFact' tipo='".$boletas[$i]["tipo"]."' documento='".$boletas[$i]["documento"]."' data-toggle='modal' data-target='#modalCargarFotos'><i class='fa fa-camera'></i></button></div>";
+                $cuenta = "<button title='Cuenta' class='btn btn-xs btn-default btnCargarCuenta' tipo='".$boletas[$i]["tipo"]."' documento='".$boletas[$i]["documento"]."' data-toggle='modal' data-target='#modalCuenta'><i class='fa fa-certificate'></i></button>";
 
             }else{
 
-                $botones =  "<div class='btn-group'><button title='Imprimir Factura' class='btn btn-xs btn-success btnImprimirBoleta' tipo='".$boletas[$i]["tipo"]."' documento='".$boletas[$i]["documento"]."'><i class='fa fa-print'></i></button><button class='btn btn-xs btn-primary btnImprimirTicketFacBol' tipo='".$boletas[$i]["tipo"]."' documento='".$boletas[$i]["documento"]."'><i class='fa fa-file-word-o'></i></button><button title='Cargar Fotos' class='btn btn-xs btn-info btnCargarFotosFact' tipo='".$boletas[$i]["tipo"]."' documento='".$boletas[$i]["documento"]."' data-toggle='modal' data-target='#modalCargarFotos'><i class='fa fa-camera'></i></button></div>";
+                $cuenta = "<button title='Cuenta' class='btn btn-xs btn-warning btnCargarCuenta' tipo='".$boletas[$i]["tipo"]."' documento='".$boletas[$i]["documento"]."' data-toggle='modal' data-target='#modalCuenta'><i class='fa fa-certificate'></i></button>";
+
+            }            
+
+            if($boletas[$i]["facturacion"] == "0"){
+
+                $botones =  "<div class='btn-group'><button title='Imprimir Factura' class='btn btn-xs btn-success btnImprimirBoleta' tipo='".$boletas[$i]["tipo"]."' documento='".$boletas[$i]["documento"]."'><i class='fa fa-print'></i></button><button title='Anular Documento' class='btn btn-xs  btn-danger btnAnularDocumento' documento='".$boletas[$i]["documento"]."' tipo='".$boletas[$i]["tipo"]."' pagina='facturas'><i class='fa fa-close'></i></button><button title='Cargar Fotos' class='btn btn-xs btn-info btnCargarFotosFact' tipo='".$boletas[$i]["tipo"]."' documento='".$boletas[$i]["documento"]."' data-toggle='modal' data-target='#modalCargarFotos'><i class='fa fa-camera'></i></button>".$cuenta."</div>";
+
+            }else{
+
+                $botones =  "<div class='btn-group'><button title='Imprimir Factura' class='btn btn-xs btn-success btnImprimirBoleta' tipo='".$boletas[$i]["tipo"]."' documento='".$boletas[$i]["documento"]."'><i class='fa fa-print'></i></button><button class='btn btn-xs btn-primary btnImprimirTicketFacBol' tipo='".$boletas[$i]["tipo"]."' documento='".$boletas[$i]["documento"]."'><i class='fa fa-file-word-o'></i></button><button title='Cargar Fotos' class='btn btn-xs btn-info btnCargarFotosFact' tipo='".$boletas[$i]["tipo"]."' documento='".$boletas[$i]["documento"]."' data-toggle='modal' data-target='#modalCargarFotos'><i class='fa fa-camera'></i></button>".$cuenta."</div>";
 
             }            
 

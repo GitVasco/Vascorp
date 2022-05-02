@@ -1284,31 +1284,28 @@ class ControladorCuentas{
 
 					</script>';
 
+				}else{
+
+					echo'<script>
+
+						swal({
+							type: "error",
+							title: "¡El envio no puede ir vacío o llevar caracteres especiales!",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar"
+							}).then(function(result){
+								if (result.value) {
+
+								window.location = "ver-envio-letras";
+
+								}
+							})
+
+					</script>';
+
 				}
-
-			else{
-
-				echo'<script>
-
-					swal({
-						  type: "error",
-						  title: "¡El envio no puede ir vacío o llevar caracteres especiales!",
-						  showConfirmButton: true,
-						  confirmButtonText: "Cerrar"
-						  }).then(function(result){
-							if (result.value) {
-
-							window.location = "ver-envio-letras";
-
-							}
-						})
-
-			  	</script>';
-
-
-
+				
 			}
-		}
 
 		}
 	}

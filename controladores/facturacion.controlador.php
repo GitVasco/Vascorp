@@ -110,6 +110,7 @@ class ControladorFacturacion{
                                     "doc_origen" => $docOrigen,
                                     "usuario" => $usuario,
                                     "tipo_documento" => "GUIA REMISION",
+                                    "cuenta" => "",
                                     "usureg" => $usureg,
                                     "pcreg" => $pcreg);
                     //var_dump($datosD);
@@ -273,6 +274,7 @@ class ControladorFacturacion{
                                     "doc_origen" => $docOrigen,
                                     "usuario" => $usuario,
                                     "tipo_documento" => "FACTURA",
+                                    "cuenta" => $_POST["formaPago"],
                                     "usureg" => $usureg,
                                     "pcreg" => $pcreg);
                     //var_dump($datosD);
@@ -500,6 +502,7 @@ class ControladorFacturacion{
                                     "doc_origen" => $docOrigen,
                                     "usuario" => $usuario,
                                     "tipo_documento" => "BOLETA",
+                                    "cuenta" => $_POST["formaPago"],
                                     "usureg" => $usureg,
                                     "pcreg" => $pcreg);
                     //var_dump($datosD);
@@ -727,6 +730,7 @@ class ControladorFacturacion{
                                     "doc_origen" => $docOrigen,
                                     "usuario" => $usuario,
                                     "tipo_documento" => "PROFORMA",
+                                    "cuenta" => "",
                                     "usureg" => $usureg,
                                     "pcreg" => $pcreg);
                     //var_dump($datosD);
@@ -955,6 +959,7 @@ class ControladorFacturacion{
                                     "doc_origen" => $docOrigen,
                                     "usuario" => $usuario,
                                     "tipo_documento" => "NC",
+                                    "cuenta" => $_POST["formaPago"],
                                     "usureg" => $usureg,
                                     "pcreg" => $pcreg);
                     //var_dump($datosD);
@@ -1491,6 +1496,8 @@ class ControladorFacturacion{
             $usuario = $_POST["idUsuarioB"];
             //var_dump($usuario);
 
+            $cuenta = $_POST["formaPago"];
+
             $serie = substr($docDestino, 0, 4);;
             //var_dump($serie);
 
@@ -1546,6 +1553,7 @@ class ControladorFacturacion{
                                         "tipo" => $tipo,
                                         "documento" => $docDestino,
                                         "tipo_documento" => $nombre_tipo,
+                                        "cuenta" => $cuenta,
                                         "doc_origen" => $codigo,
                                         "usuario" => $usuario,
                                         "usureg" => $usureg,
@@ -4174,6 +4182,89 @@ class ControladorFacturacion{
 
         return $resNombre;
 
+
+    }
+
+    static public function ctrAsignarCuenta(){
+
+        if(isset($_POST["nroDocCta"])){
+
+            if($_POST["tipDocCta"] == "FACTURA"){
+
+                $tipo = "S03";
+                $rura = "facturas";
+
+            }else if($_POST["tipDocCta"] == "BOLETA"){
+
+                $tipo = "S02";
+                $ruta = "boletas";
+
+            }else if($_POST["tipDocCta"] == "NC"){
+
+                $tipo = "E05";
+                $ruta = "ver-nota-credito";
+
+            }else if($_POST["tipDocCta"] == "ND"){
+
+                $tipo = "S05";
+                $ruta = "ver-nota-credito";
+
+            }
+        
+            $datos =  array(
+
+                "tipo" => $tipo,
+                "documento" => $_POST["nroDocCta"],
+                "cuenta" => $_POST["formaPagoCta"]
+
+            );
+
+            #var_dump($datos);
+
+            $respuesta = ModeloFacturacion::mdlActualizarCuenta($datos);
+            #var_dump($respuesta);
+
+            if($respuesta == "ok"){
+
+                echo'<script>
+
+                swal({
+                      type: "success",
+                      title: "Se guardo correctamente",
+                      showConfirmButton: true,
+                      confirmButtonText: "Cerrar"
+                      }).then(function(result){
+                                if (result.value) {
+
+                                window.location = "'.$ruta.'";
+
+                                }
+                            })
+
+                </script>';
+
+            }else{
+
+                echo'<script>
+
+                    swal({
+                        type: "error",
+                        title: "No se pudo guardar!",
+                        showConfirmButton: true,
+                        confirmButtonText: "Cerrar"
+                        }).then(function(result){
+                            if (result.value) {
+
+                            window.location = "'.$ruta.'";
+
+                            }
+                        })
+
+                </script>';
+
+            }            
+
+        }    
 
     }
 

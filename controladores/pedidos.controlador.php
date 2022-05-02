@@ -727,6 +727,16 @@ class ControladorPedidos{
 
 		return $respuesta;
 
-    }       
+    }     
+    
+
+    //*TRAER CUENTAS
+	static public function ctrTraerCuentas($valor){
+
+		$respuesta = ModeloPedidos::mdlTraerCuentas($valor);
+
+		return $respuesta;
+
+    }    
 
 }

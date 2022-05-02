@@ -297,7 +297,7 @@ MODAL FACTURAR
 
               </div>
 
-            </div>
+          </div>
 
           <div class="box box-success col-lg-12 ">
 
@@ -388,6 +388,35 @@ MODAL FACTURAR
             </div>
 
           </div>
+
+
+          <div class="box box-warning col-lg-12 ">
+
+            <div class="box-header">
+
+              <b>Forma de Pago</b>
+
+            </div>
+
+            <!-- ENTRADA PARA TIPO DE DOCUMENTO -->
+
+            <div class="form-group col-lg-6">
+
+              <div class="input-group">
+
+                <span class="input-group-addon"><i class="fa fa-share-square-o"></i></span>
+                <select type="text" class="form-control input-sm" name="formaPago" id="formaPago" disabled>
+                  <option value="">Seleccionar Forma de Pago</option>
+
+
+                </select>
+
+              </div>
+
+            </div>
+
+
+          </div>          
 
 
 

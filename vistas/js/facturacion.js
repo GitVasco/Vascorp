@@ -304,6 +304,56 @@ $(".chkFacturaB").change(function(){
 
     })
 
+    //*INICIO DE FORMA DE PAGO
+
+    if(documento == "01" || documento == "03"){
+
+        //console.log("aqui", documento);
+        document.getElementById("formaPago").disabled = false;
+
+        var formaPago = $("#formaPago");
+
+        var datos = new FormData();
+        datos.append("documento", documento);
+    
+        $.ajax({
+    
+            url:"ajax/pedidos.ajax.php",
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType:"json",
+            success:function(respuesta){
+    
+                //console.log(respuesta);
+    
+                formaPago.find('option').remove();
+
+                formaPago.append('<option value="">Seleccionar Forma Pago</option>');
+    
+                for(var id of respuesta){
+                    formaPago.append('<option value="' + id.codigo + '">' + id.codigo + ' - ' + id.cuenta + '</option>');
+                    //console.log(formaPago);
+                }
+
+            }
+    
+        })        
+        
+    }else{
+
+        document.getElementById("formaPago").disabled = true;
+
+        var formaPago = $("#formaPago");
+        formaPago.find('option').remove();
+        formaPago.append('<option value="">Seleccionar Forma Pago</option>');
+
+    }
+    
+    //*FIN DE FORMA DE PAGO    
+
 })
 
 
@@ -380,7 +430,60 @@ $(".chkBoletaB").change(function(){
 
     })
 
+    //*INICIO DE FORMA DE PAGO
+
+    if(documento == "01" || documento == "03"){
+
+        //console.log("aqui", documento);
+        document.getElementById("formaPago").disabled = false;
+
+        var formaPago = $("#formaPago");
+
+        var datos = new FormData();
+        datos.append("documento", documento);
+    
+        $.ajax({
+    
+            url:"ajax/pedidos.ajax.php",
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType:"json",
+            success:function(respuesta){
+    
+                //console.log(respuesta);
+    
+                formaPago.find('option').remove();
+
+                formaPago.append('<option value="">Seleccionar Forma Pago</option>');
+    
+                for(var id of respuesta){
+                    formaPago.append('<option value="' + id.codigo + '">' + id.codigo + ' - ' + id.cuenta + '</option>');
+                    //console.log(formaPago);
+                }
+
+            }
+    
+        })        
+        
+    }else{
+
+        document.getElementById("formaPago").disabled = true;
+
+        var formaPago = $("#formaPago");
+        formaPago.find('option').remove();
+        formaPago.append('<option value="">Seleccionar Forma Pago</option>');
+
+    }
+    
+    //*FIN DE FORMA DE PAGO    
+
 })
+
+
+
 $(".box").on("change", ".optNotas1", function () {
     var nota = $(this).val();
     
@@ -2583,5 +2686,48 @@ $(".btnActualizarTalonarios").click(function(){
     Command:toastr["error"]("No se actualizo la guia");
 
   }
+
+})
+
+
+$(".tablaFacturas, .tablaBoletas, .tablaNotaCredito").on("click", ".btnCargarCuenta", function () {
+
+    var tipo = $(this).attr("tipo");
+    var documento = $(this).attr("documento");
+    //console.log(tipo, documento);
+
+    //VDOCUMENTO
+    var datos = new FormData();
+
+    datos.append("tipoI", tipo);
+    datos.append("documentoI", documento);
+
+    $.ajax({
+
+        url: "ajax/facturacion.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuesta) {
+
+            //console.log(respuesta);
+
+            $("#codCliCta").val(respuesta["cliente"]);
+            $("#nomCliCta").val(respuesta["documento"]);
+
+            $("#tipDocCta").val(respuesta["tipo_documento"]);
+            $("#nroDocCta").val(respuesta["documento"]);
+
+            $("#zonaCta").val(respuesta["zona"]);
+
+            $("#formaPagoCta").val(respuesta["cuenta"]);
+            $("#formaPagoCta").selectpicker('refresh');
+
+
+        }
+    });
 
 })

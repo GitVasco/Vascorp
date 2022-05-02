@@ -56,6 +56,7 @@ class ModeloFacturacion{
                                                         agencia,
                                                         fecha,
                                                         tipo_documento,
+                                                        cuenta,
                                                         lista_precios,
                                                         condicion_venta,
                                                         doc_destino,
@@ -77,6 +78,7 @@ class ModeloFacturacion{
                                                         :agencia,
                                                         DATE(NOW()),
                                                         :tipo_documento,
+                                                        :cuenta,
                                                         :lista_precios,
                                                         :condicion_venta,
                                                         :doc_destino,
@@ -101,6 +103,7 @@ class ModeloFacturacion{
         $stmt->bindParam(":doc_origen", $datos["doc_origen"], PDO::PARAM_STR);
         $stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
         $stmt->bindParam(":tipo_documento", $datos["tipo_documento"], PDO::PARAM_STR);
+        $stmt->bindParam(":cuenta", $datos["cuenta"], PDO::PARAM_STR);
         $stmt->bindParam(":usureg", $datos["usureg"], PDO::PARAM_STR);
         $stmt->bindParam(":pcreg", $datos["pcreg"], PDO::PARAM_STR);
 
@@ -571,6 +574,7 @@ class ModeloFacturacion{
                                                                 agencia,
                                                                 fecha,
                                                                 tipo_documento,
+                                                                cuenta,
                                                                 lista_precios,
                                                                 condicion_venta,
                                                                 doc_origen,
@@ -590,6 +594,7 @@ class ModeloFacturacion{
                                                                 v.agencia,
                                                                 v.fecha,
                                                                 :tipo_documento,
+                                                                :cuenta,
                                                                 v.lista_precios,
                                                                 v.condicion_venta,
                                                                 :codigo,
@@ -606,6 +611,7 @@ class ModeloFacturacion{
         $stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
         $stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
         $stmt->bindParam(":tipo_documento", $datos["tipo_documento"], PDO::PARAM_STR);
+        $stmt->bindParam(":cuenta", $datos["cuenta"], PDO::PARAM_STR);
         $stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
         $stmt->bindParam(":usureg", $datos["usureg"], PDO::PARAM_STR);
         $stmt->bindParam(":pcreg", $datos["pcreg"], PDO::PARAM_STR);
@@ -1295,6 +1301,7 @@ class ModeloFacturacion{
           $sql="SELECT 
                     v.tipo,
                     v.tipo_documento,
+                    v.cuenta,
                     v.documento,
                     v.total,
                     v.cliente,
@@ -1330,6 +1337,7 @@ class ModeloFacturacion{
           $sql="SELECT 
                         v.tipo,
                         v.tipo_documento,
+                        v.cuenta,
                         v.documento,
                         v.total,
                         v.cliente,
@@ -1376,6 +1384,7 @@ class ModeloFacturacion{
                         $sql="SELECT 
                                             v.tipo,
                                             v.tipo_documento,
+                                            v.cuenta,
                                             v.documento,
                                             v.total,
                                             v.cliente,
@@ -1413,6 +1422,7 @@ class ModeloFacturacion{
                         $sql="SELECT 
                                             v.tipo,
                                             v.tipo_documento,
+                                            v.cuenta,
                                             v.documento,
                                             v.total,
                                             v.cliente,
@@ -1467,6 +1477,7 @@ class ModeloFacturacion{
       v.cliente,
       c.nombre,
       c.tipo_documento AS tip_doc,
+      v.cuenta,
       c.documento AS num_doc,
       v.vendedor,
       v.fecha,
@@ -1510,6 +1521,7 @@ class ModeloFacturacion{
       v.cliente,
       c.nombre,
       c.tipo_documento AS tip_doc,
+      v.cuenta,
       c.documento AS num_doc,
       v.vendedor,
       v.fecha,
@@ -1563,6 +1575,7 @@ class ModeloFacturacion{
         v.cliente,
         c.nombre,
         c.tipo_documento AS tip_doc,
+        v.cuenta,
         c.documento AS num_doc,
         v.vendedor,
         v.fecha,
@@ -1608,6 +1621,7 @@ class ModeloFacturacion{
         v.cliente,
         c.nombre,
         c.tipo_documento AS tip_doc,
+        v.cuenta,
         c.documento AS num_doc,
         v.vendedor,
         v.fecha,
@@ -1665,6 +1679,7 @@ class ModeloFacturacion{
       v.cliente,
       c.nombre,
       c.tipo_documento AS tip_doc,
+      v.cuenta,
       c.documento AS num_doc,
       v.vendedor,
       v.fecha,
@@ -1708,6 +1723,7 @@ class ModeloFacturacion{
       v.cliente,
       c.nombre,
       c.tipo_documento AS tip_doc,
+      v.cuenta,
       c.documento AS num_doc,
       v.vendedor,
       v.fecha,
@@ -1761,6 +1777,7 @@ class ModeloFacturacion{
         v.cliente,
         c.nombre,
         c.tipo_documento AS tip_doc,
+        v.cuenta,
         c.documento AS num_doc,
         v.vendedor,
         v.fecha,
@@ -1806,6 +1823,7 @@ class ModeloFacturacion{
         v.cliente,
         c.nombre,
         c.tipo_documento AS tip_doc,
+        v.cuenta,
         c.documento AS num_doc,
         v.vendedor,
         v.fecha,
@@ -8259,10 +8277,45 @@ class ModeloFacturacion{
     static public function mdlVerDocumento($tipo, $documento){
 
 
-        $sql="SELECT 
-                    * 
-                FROM
-                    ventajf v 
+              $sql="SELECT 
+              v.tipo,
+              v.documento,
+              v.neto,
+              v.igv,
+              v.dscto,
+              v.total,
+              v.cliente,
+              c.nombre,
+              c.ubigeo,
+              CASE
+                WHEN LEFT(c.ubigeo, 2) = '15' 
+                OR LEFT(c.ubigeo, 1) = 'L' 
+                THEN 'Lima' 
+                ELSE 'Provincia' 
+              END AS zona,
+              v.vendedor,
+              v.agencia,
+              v.fecha,
+              v.tipo_moneda,
+              v.lista_precios,
+              v.condicion_venta,
+              v.tipo_documento,
+              v.cuenta,
+              v.doc_destino,
+              v.doc_origen,
+              v.usuario,
+              v.fecha_creacion,
+              v.estado,
+              v.facturacion,
+              v.tipo_cambio,
+              v.usureg,
+              v.pcreg,
+              v.cargo,
+              v.recepcion 
+            FROM
+              ventajf v 
+              LEFT JOIN clientesjf c 
+                ON v.cliente = c.codigo
                 WHERE v.tipo = :tipo 
                     AND v.documento = :documento";
 
@@ -8337,5 +8390,35 @@ class ModeloFacturacion{
 		$stmt = null;
 
 	}    
+
+    static public function mdlActualizarCuenta($datos){
+
+        $sql="UPDATE 
+                    ventajf 
+                SET
+                    cuenta = :cuenta 
+                WHERE tipo = :tipo 
+                    AND documento = :documento ";
+                
+        $stmt=Conexion::conectar()->prepare($sql);
+    
+        $stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
+        $stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
+        $stmt->bindParam(":cuenta", $datos["cuenta"], PDO::PARAM_STR);
+
+    
+        if ($stmt->execute()) {
+    
+          return "ok";
+    
+        }else{
+    
+          return $stmt->errorInfo();
+    
+        }
+    
+        $stmt=null;
+    
+    }
 
 }

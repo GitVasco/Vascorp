@@ -18,16 +18,26 @@ class TablaNotasCD{
             "data": [';
     
             for($i = 0; $i < count($notas); $i++){
-                   
+
+                if($notas[$i]["cuenta"] == null || $notas[$i]["cuenta"] == ""){
+
+                    $cuenta = "<button title='Cuenta' class='btn btn-xs btn-default btnCargarCuenta' tipo='".$notas[$i]["tipo"]."' documento='".$notas[$i]["documento"]."' data-toggle='modal' data-target='#modalCuenta'><i class='fa fa-certificate'></i></button>";
+    
+                }else{
+    
+                    $cuenta = "<button title='Cuenta' class='btn btn-xs btn-warning btnCargarCuenta' tipo='".$notas[$i]["tipo"]."' documento='".$notas[$i]["documento"]."' data-toggle='modal' data-target='#modalCuenta'><i class='fa fa-certificate'></i></button>";
+    
+                }                
+
             /* 
             todo: formato de miles
             */
             $serie = substr($notas[$i]["documento"],0,4);
             $estado = "<button class='btn btn-success btn-xs'>FACTURADO</button>";
             if($serie == "B002" || $serie == "F002"){
-                $botones =  "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarNotaCD' title='Editar notas CD' tipo='".$notas[$i]["tipo"]."' documento='".$notas[$i]["documento"]."'><i class='fa fa-pencil'></i></button><button title='Imprimir Nota Credito' class='btn btn-xs btn-success btnImprimirNotaCredito' tipo='".$notas[$i]["tipo"]."' documento='".$notas[$i]["documento"]."'><i class='fa fa-print'></i></button></div>";
+                $botones =  "<div class='btn-group'><button class='btn btn-xs btn-warning btnEditarNotaCD' title='Editar notas CD' tipo='".$notas[$i]["tipo"]."' documento='".$notas[$i]["documento"]."'><i class='fa fa-pencil'></i></button><button title='Imprimir Nota Credito' class='btn btn-xs btn-success btnImprimirNotaCredito' tipo='".$notas[$i]["tipo"]."' documento='".$notas[$i]["documento"]."'><i class='fa fa-print'></i></button>".$cuenta."</div>";
             }else{
-                $botones =  "<div class='btn-group'><button title='Imprimir Nota Credito' class='btn btn-xs btn-success btnImprimirNotaCredito' tipo='".$notas[$i]["tipo"]."' documento='".$notas[$i]["documento"]."'><i class='fa fa-print'></i></button></div>";
+                $botones =  "<div class='btn-group'><button title='Imprimir Nota Credito' class='btn btn-xs btn-success btnImprimirNotaCredito' tipo='".$notas[$i]["tipo"]."' documento='".$notas[$i]["documento"]."'><i class='fa fa-print'></i></button>".$cuenta."</div>";
             }
                 
             if($notas[$i]["nombre_tipo"] == "ND"){

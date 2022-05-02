@@ -566,7 +566,7 @@ class ModeloArticulos
 			ROUND(
 				(
 				(a.stock - a.pedidos) + a.taller + servicio + a.alm_corte + a.ord_corte
-				) / (((a.ult_mes * 1.2) + a.pedidos)),
+				) / ((a.ult_mes + a.pedidos)*1.3),
 				1
 			) AS dura_tc,
 			a.mp_faltante,
@@ -637,7 +637,7 @@ class ModeloArticulos
 			ROUND(
 				(
 				(a.stock - a.pedidos) + a.taller + servicio + a.alm_corte + a.ord_corte
-				) / (((a.ult_mes * 1.2) + a.pedidos)),
+				) / ((a.ult_mes + a.pedidos)*1.3),
 				1
 			) AS dura_tc,
 			a.mp_faltante,

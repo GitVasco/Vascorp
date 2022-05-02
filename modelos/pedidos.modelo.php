@@ -1816,4 +1816,69 @@ class ModeloPedidos{
 
 	}	
 
+    /*
+    * MOSTRAR DETALLE DE TEMPORAL
+    */
+	static public function mdlTraerCuentas($valor){
+
+		if($valor == "01" || $valor == "03"){
+
+			$sql="SELECT 
+					t.cod_argumento AS codint,
+					t.des_larga AS cuenta,
+					t.des_corta AS codigo,
+					t.valor_1 AS tipo 
+				FROM
+					tabla_m_detalle t 
+				WHERE t.cod_tabla = 'TCUE' 
+					AND t.valor_1 = '1'";
+
+			$stmt=Conexion::conectar()->prepare($sql);
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+
+		}else if($valor == "07"){
+
+			$sql="SELECT 
+					t.cod_argumento AS codint,
+					t.des_larga AS cuenta,
+					t.des_corta AS codigo,
+					t.valor_1 AS tipo 
+				FROM
+					tabla_m_detalle t 
+				WHERE t.cod_tabla = 'TCUE' 
+					AND t.valor_1 IN ('2','3')";
+
+			$stmt=Conexion::conectar()->prepare($sql);
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+
+		}else if($valor == "08"){
+
+			$sql="SELECT 
+					t.cod_argumento AS codint,
+					t.des_larga AS cuenta,
+					t.des_corta AS codigo,
+					t.valor_1 AS tipo 
+				FROM
+					tabla_m_detalle t 
+				WHERE t.cod_tabla = 'TCUE' 
+					AND t.valor_1 = '3'";
+
+			$stmt=Conexion::conectar()->prepare($sql);
+
+			$stmt->execute();
+	
+			return $stmt->fetchAll();
+
+		}
+
+		$stmt=null;
+
+	}	
+
 }

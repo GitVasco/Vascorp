@@ -180,311 +180,288 @@ class ModeloContabilidad{
     static public function mdlVentasSiscontB($inicio, $fin){
 
         $sql="SELECT 
-                '02' AS t,
-                DATE_FORMAT(v.fecha, '%d/%m/%y') AS fecha,
-                v.tipo,
-                v.documento,
-                CASE
-                WHEN v.tipo = 'E05' 
-                THEN ROUND(v.neto, 2) * - 1 
-                ELSE ROUND(v.neto, 2) 
-                END AS neto,
-                CASE
-                WHEN v.tipo = 'E05' 
-                THEN ROUND(v.igv, 2) * - 1 
-                ELSE ROUND(v.igv, 2) 
-                END AS igv,
-                CASE
-                WHEN v.tipo = 'E05' 
-                THEN ROUND(v.total, 2) * - 1 
-                ELSE ROUND(v.total, 2) 
-                END AS total,
-                v.tipo_moneda,
-                CASE
-                WHEN LEFT(c.ubigeo, 1) = 'L' 
-                OR LEFT(c.ubigeo, 2) = '15' 
-                THEN '1' 
-                ELSE '2' 
-                END AS zona,
-                CASE
-                WHEN v.tipo_moneda = '1' 
-                THEN '121201' 
-                ELSE '121202' 
-                END AS cuenta,
-                CASE
-                WHEN v.tipo = 'E05' 
-                THEN 0 
-                ELSE v.total 
-                END AS debe,
-                CASE
-                WHEN v.tipo = 'E05' 
-                THEN v.total * - 1 
-                ELSE 0 
-                END AS haber,
-                CASE
-                WHEN v.tipo_moneda = '1' 
-                THEN 'S' 
-                ELSE 'D' 
-                END AS moneda,
-                ROUND(v.tipo_cambio, 7) AS tc,
-                CASE
-                WHEN v.tipo = 'S02' 
-                THEN '03' 
-                WHEN v.tipo = 'S03' 
-                THEN '01' 
-                WHEN v.tipo = 'E05' 
-                THEN '07' 
-                WHEN v.tipo = 'S05' 
-                THEN '08' 
-                END AS doc,
-                CONCAT(
-                LEFT(v.documento, 4),
-                '-',
-                RIGHT(v.documento, 8)
-                ) AS numero,
-                DATE_FORMAT(v.fecha, '%d/%m/%y') AS fechad,
-                DATE_FORMAT(
-                DATE_ADD(
-                    v.fecha,
-                    INTERVAL IFNULL(cv.dias, 0) DAY
-                ),
-                '%d/%m/%y'
-                ) AS fechav,
-                c.documento AS codigo,
-                '001' AS mpago,
-                'VENTA DE ROPA INTERIOR' AS glosa,
-                CONCAT(
-                LEFT(n.doc_origen, 4),
-                '-',
-                RIGHT(n.doc_origen, 8)
-                ) AS rnumero,
-                n.tipo_doc AS rtdoc,
-                DATE_FORMAT(n.fecha_origen, '%d/%m/%y') AS rfecha,
-                'V' AS tl 
-            FROM
-                ventajf v 
-                LEFT JOIN condiciones_ventajf cv 
-                ON v.condicion_venta = cv.id 
-                LEFT JOIN clientesjf c 
-                ON v.cliente = c.codigo 
-                LEFT JOIN notascd_jf n 
-                ON v.tipo = n.tipo 
-                AND v.documento = n.documento 
-            WHERE v.fecha BETWEEN '$inicio' 
-                AND '$fin' 
-                AND v.tipo IN ('S02', 'S03', 'E05', 'S05') 
-            UNION
-            SELECT 
-                '02' AS t,
-                DATE_FORMAT(v.fecha, '%d/%m/%y') AS fecha,
-                v.tipo,
-                v.documento,
-                CASE
-                WHEN v.tipo = 'E05' 
-                THEN ROUND(v.neto, 2) * - 1 
-                ELSE ROUND(v.neto, 2) 
-                END AS neto,
-                CASE
-                WHEN v.tipo = 'E05' 
-                THEN ROUND(v.igv, 2) * - 1 
-                ELSE ROUND(v.igv, 2) 
-                END AS igv,
-                CASE
-                WHEN v.tipo = 'E05' 
-                THEN ROUND(v.total, 2) * - 1 
-                ELSE ROUND(v.total, 2) 
-                END AS total,
-                v.tipo_moneda,
-                CASE
-                WHEN LEFT(c.ubigeo, 1) = 'L' 
-                OR LEFT(c.ubigeo, 2) = '15' 
-                THEN '1' 
-                ELSE '2' 
-                END AS zona,
-                '40111' AS cuenta,
-                CASE
-                WHEN v.tipo = 'E05' 
-                THEN v.igv * - 1 
-                ELSE 0 
-                END AS debe,
-                CASE
-                WHEN v.tipo = 'E05' 
-                THEN 0 
-                ELSE v.igv 
-                END AS haber,
-                CASE
-                WHEN v.tipo_moneda = '1' 
-                THEN 'S' 
-                ELSE 'D' 
-                END AS moneda,
-                ROUND(v.tipo_cambio, 7) AS tc,
-                CASE
-                WHEN v.tipo = 'S02' 
-                THEN '03' 
-                WHEN v.tipo = 'S03' 
-                THEN '01' 
-                WHEN v.tipo = 'E05' 
-                THEN '07' 
-                WHEN v.tipo = 'S05' 
-                THEN '08' 
-                END AS doc,
-                CONCAT(
-                LEFT(v.documento, 4),
-                '-',
-                RIGHT(v.documento, 8)
-                ) AS numero,
-                DATE_FORMAT(v.fecha, '%d/%m/%y') AS fechad,
-                DATE_FORMAT(
-                DATE_ADD(
-                    v.fecha,
-                    INTERVAL IFNULL(cv.dias, 0) DAY
-                ),
-                '%d/%m/%y'
-                ) AS fechav,
-                c.documento AS codigo,
-                '001' AS mpago,
-                'VENTA DE ROPA INTERIOR' AS glosa,
-                CONCAT(
-                LEFT(n.doc_origen, 4),
-                '-',
-                RIGHT(n.doc_origen, 8)
-                ) AS rnumero,
-                n.tipo_doc AS rtdoc,
-                DATE_FORMAT(n.fecha_origen, '%d/%m/%y') AS rfecha,
-                'V' AS tl 
-            FROM
-                ventajf v 
-                LEFT JOIN condiciones_ventajf cv 
-                ON v.condicion_venta = cv.id 
-                LEFT JOIN clientesjf c 
-                ON v.cliente = c.codigo 
-                LEFT JOIN notascd_jf n 
-                ON v.tipo = n.tipo 
-                AND v.documento = n.documento 
-            WHERE v.fecha BETWEEN '$inicio' 
-                AND '$fin' 
-                AND v.tipo IN ('S02', 'S03', 'E05', 'S05') 
-            UNION
-            SELECT 
-                '02' AS t,
-                DATE_FORMAT(v.fecha, '%d/%m/%y') AS fecha,
-                v.tipo,
-                v.documento,
-                CASE
-                WHEN v.tipo = 'E05' 
-                THEN ROUND(v.neto, 2) * - 1 
-                ELSE ROUND(v.neto, 2) 
-                END AS neto,
-                CASE
-                WHEN v.tipo = 'E05' 
-                THEN ROUND(v.igv, 2) * - 1 
-                ELSE ROUND(v.igv, 2) 
-                END AS igv,
-                CASE
-                WHEN v.tipo = 'E05' 
-                THEN ROUND(v.total, 2) * - 1 
-                ELSE ROUND(v.total, 2) 
-                END AS total,
-                v.tipo_moneda,
-                CASE
-                WHEN LEFT(c.ubigeo, 1) = 'L' 
-                OR LEFT(c.ubigeo, 2) = '15' 
-                THEN '1' 
-                ELSE '2' 
-                END AS zona,
-                CASE
-                WHEN v.tipo IN ('S02', 'S03') 
-                AND 
-                CASE
+                    '02' AS t,
+                    DATE_FORMAT(v.fecha, '%d/%m/%y') AS fecha,
+                    v.tipo,
+                    v.documento,
+                    CASE
+                    WHEN v.tipo = 'E05' 
+                    THEN ROUND(v.neto, 2) * - 1 
+                    ELSE ROUND(v.neto, 2) 
+                    END AS neto,
+                    CASE
+                    WHEN v.tipo = 'E05' 
+                    THEN ROUND(v.igv, 2) * - 1 
+                    ELSE ROUND(v.igv, 2) 
+                    END AS igv,
+                    CASE
+                    WHEN v.tipo = 'E05' 
+                    THEN ROUND(v.total, 2) * - 1 
+                    ELSE ROUND(v.total, 2) 
+                    END AS total,
+                    v.tipo_moneda,
+                    CASE
                     WHEN LEFT(c.ubigeo, 1) = 'L' 
                     OR LEFT(c.ubigeo, 2) = '15' 
                     THEN '1' 
                     ELSE '2' 
-                END = '1' 
-                THEN '702211' 
-                WHEN v.tipo IN ('S02', 'S03') 
-                AND 
-                CASE
+                    END AS zona,
+                    CASE
+                    WHEN v.tipo_moneda = '1' 
+                    THEN '121201' 
+                    ELSE '121202' 
+                    END AS cuenta,
+                    CASE
+                    WHEN v.tipo = 'E05' 
+                    THEN 0 
+                    ELSE v.total 
+                    END AS debe,
+                    CASE
+                    WHEN v.tipo = 'E05' 
+                    THEN v.total * - 1 
+                    ELSE 0 
+                    END AS haber,
+                    CASE
+                    WHEN v.tipo_moneda = '1' 
+                    THEN 'S' 
+                    ELSE 'D' 
+                    END AS moneda,
+                    ROUND(v.tipo_cambio, 7) AS tc,
+                    CASE
+                    WHEN v.tipo = 'S02' 
+                    THEN '03' 
+                    WHEN v.tipo = 'S03' 
+                    THEN '01' 
+                    WHEN v.tipo = 'E05' 
+                    THEN '07' 
+                    WHEN v.tipo = 'S05' 
+                    THEN '08' 
+                    END AS doc,
+                    CONCAT(
+                    LEFT(v.documento, 4),
+                    '-',
+                    RIGHT(v.documento, 8)
+                    ) AS numero,
+                    DATE_FORMAT(v.fecha, '%d/%m/%y') AS fechad,
+                    DATE_FORMAT(
+                    DATE_ADD(
+                        v.fecha,
+                        INTERVAL IFNULL(cv.dias, 0) DAY
+                    ),
+                    '%d/%m/%y'
+                    ) AS fechav,
+                    c.documento AS codigo,
+                    '001' AS mpago,
+                    'VENTA DE ROPA INTERIOR' AS glosa,
+                    CONCAT(
+                    LEFT(n.doc_origen, 4),
+                    '-',
+                    RIGHT(n.doc_origen, 8)
+                    ) AS rnumero,
+                    n.tipo_doc AS rtdoc,
+                    DATE_FORMAT(n.fecha_origen, '%d/%m/%y') AS rfecha,
+                    'V' AS tl 
+                FROM
+                    ventajf v 
+                    LEFT JOIN condiciones_ventajf cv 
+                    ON v.condicion_venta = cv.id 
+                    LEFT JOIN clientesjf c 
+                    ON v.cliente = c.codigo 
+                    LEFT JOIN notascd_jf n 
+                    ON v.tipo = n.tipo 
+                    AND v.documento = n.documento 
+                WHERE v.fecha BETWEEN '$inicio' 
+                    AND '$fin' 
+                    AND v.tipo IN ('S02', 'S03', 'E05', 'S05') 
+                UNION
+                SELECT 
+                    '02' AS t,
+                    DATE_FORMAT(v.fecha, '%d/%m/%y') AS fecha,
+                    v.tipo,
+                    v.documento,
+                    CASE
+                    WHEN v.tipo = 'E05' 
+                    THEN ROUND(v.neto, 2) * - 1 
+                    ELSE ROUND(v.neto, 2) 
+                    END AS neto,
+                    CASE
+                    WHEN v.tipo = 'E05' 
+                    THEN ROUND(v.igv, 2) * - 1 
+                    ELSE ROUND(v.igv, 2) 
+                    END AS igv,
+                    CASE
+                    WHEN v.tipo = 'E05' 
+                    THEN ROUND(v.total, 2) * - 1 
+                    ELSE ROUND(v.total, 2) 
+                    END AS total,
+                    v.tipo_moneda,
+                    CASE
                     WHEN LEFT(c.ubigeo, 1) = 'L' 
                     OR LEFT(c.ubigeo, 2) = '15' 
                     THEN '1' 
                     ELSE '2' 
-                END = '2' 
-                THEN '702212' 
-                WHEN v.tipo = 'E05' 
-                AND LEFT(v.documento, 4) IN ('F001', 'B001') 
-                THEN '702211' 
-                WHEN v.tipo = 'E05' 
-                AND LEFT(v.documento, 4) IN ('F002', 'B002') 
-                THEN '741101' 
-                WHEN v.tipo = 'S05' 
-                THEN '759911' 
-                ELSE 'FALTA' 
-                END AS cuenta,
-                CASE
-                WHEN v.tipo = 'E05' 
-                THEN v.neto * - 1 
-                ELSE 0 
-                END AS debe,
-                CASE
-                WHEN v.tipo = 'E05' 
-                THEN 0 
-                ELSE v.neto 
-                END AS haber,
-                CASE
-                WHEN v.tipo_moneda = '1' 
-                THEN 'S' 
-                ELSE 'D' 
-                END AS moneda,
-                ROUND(v.tipo_cambio, 7) AS tc,
-                CASE
-                WHEN v.tipo = 'S02' 
-                THEN '03' 
-                WHEN v.tipo = 'S03' 
-                THEN '01' 
-                WHEN v.tipo = 'E05' 
-                THEN '07' 
-                WHEN v.tipo = 'S05' 
-                THEN '08' 
-                END AS doc,
-                CONCAT(
-                LEFT(v.documento, 4),
-                '-',
-                RIGHT(v.documento, 8)
-                ) AS numero,
-                DATE_FORMAT(v.fecha, '%d/%m/%y') AS fechad,
-                DATE_FORMAT(
-                DATE_ADD(
-                    v.fecha,
-                    INTERVAL IFNULL(cv.dias, 0) DAY
-                ),
-                '%d/%m/%y'
-                ) AS fechav,
-                c.documento AS codigo,
-                '001' AS mpago,
-                'VENTA DE ROPA INTERIOR' AS glosa,
-                CONCAT(
-                LEFT(n.doc_origen, 4),
-                '-',
-                RIGHT(n.doc_origen, 8)
-                ) AS rnumero,
-                n.tipo_doc AS rtdoc,
-                DATE_FORMAT(n.fecha_origen, '%d/%m/%y') AS rfecha,
-                'V' AS tl 
-            FROM
-                ventajf v 
-                LEFT JOIN condiciones_ventajf cv 
-                ON v.condicion_venta = cv.id 
-                LEFT JOIN clientesjf c 
-                ON v.cliente = c.codigo 
-                LEFT JOIN notascd_jf n 
-                ON v.tipo = n.tipo 
-                AND v.documento = n.documento 
-            WHERE v.fecha BETWEEN '$inicio' 
-                AND '$fin' 
-                AND v.tipo IN ('S02', 'S03', 'E05', 'S05') 
-            ORDER BY documento,
-                cuenta";                
+                    END AS zona,
+                    '40111' AS cuenta,
+                    CASE
+                    WHEN v.tipo = 'E05' 
+                    THEN v.igv * - 1 
+                    ELSE 0 
+                    END AS debe,
+                    CASE
+                    WHEN v.tipo = 'E05' 
+                    THEN 0 
+                    ELSE v.igv 
+                    END AS haber,
+                    CASE
+                    WHEN v.tipo_moneda = '1' 
+                    THEN 'S' 
+                    ELSE 'D' 
+                    END AS moneda,
+                    ROUND(v.tipo_cambio, 7) AS tc,
+                    CASE
+                    WHEN v.tipo = 'S02' 
+                    THEN '03' 
+                    WHEN v.tipo = 'S03' 
+                    THEN '01' 
+                    WHEN v.tipo = 'E05' 
+                    THEN '07' 
+                    WHEN v.tipo = 'S05' 
+                    THEN '08' 
+                    END AS doc,
+                    CONCAT(
+                    LEFT(v.documento, 4),
+                    '-',
+                    RIGHT(v.documento, 8)
+                    ) AS numero,
+                    DATE_FORMAT(v.fecha, '%d/%m/%y') AS fechad,
+                    DATE_FORMAT(
+                    DATE_ADD(
+                        v.fecha,
+                        INTERVAL IFNULL(cv.dias, 0) DAY
+                    ),
+                    '%d/%m/%y'
+                    ) AS fechav,
+                    c.documento AS codigo,
+                    '001' AS mpago,
+                    'VENTA DE ROPA INTERIOR' AS glosa,
+                    CONCAT(
+                    LEFT(n.doc_origen, 4),
+                    '-',
+                    RIGHT(n.doc_origen, 8)
+                    ) AS rnumero,
+                    n.tipo_doc AS rtdoc,
+                    DATE_FORMAT(n.fecha_origen, '%d/%m/%y') AS rfecha,
+                    'V' AS tl 
+                FROM
+                    ventajf v 
+                    LEFT JOIN condiciones_ventajf cv 
+                    ON v.condicion_venta = cv.id 
+                    LEFT JOIN clientesjf c 
+                    ON v.cliente = c.codigo 
+                    LEFT JOIN notascd_jf n 
+                    ON v.tipo = n.tipo 
+                    AND v.documento = n.documento 
+                WHERE v.fecha BETWEEN '$inicio' 
+                    AND '$fin' 
+                    AND v.tipo IN ('S02', 'S03', 'E05', 'S05') 
+                UNION
+                SELECT 
+                    '02' AS t,
+                    DATE_FORMAT(v.fecha, '%d/%m/%y') AS fecha,
+                    v.tipo,
+                    v.documento,
+                    CASE
+                    WHEN v.tipo = 'E05' 
+                    THEN ROUND(v.neto, 2) * - 1 
+                    ELSE ROUND(v.neto, 2) 
+                    END AS neto,
+                    CASE
+                    WHEN v.tipo = 'E05' 
+                    THEN ROUND(v.igv, 2) * - 1 
+                    ELSE ROUND(v.igv, 2) 
+                    END AS igv,
+                    CASE
+                    WHEN v.tipo = 'E05' 
+                    THEN ROUND(v.total, 2) * - 1 
+                    ELSE ROUND(v.total, 2) 
+                    END AS total,
+                    v.tipo_moneda,
+                    CASE
+                    WHEN LEFT(c.ubigeo, 1) = 'L' 
+                    OR LEFT(c.ubigeo, 2) = '15' 
+                    THEN '1' 
+                    ELSE '2' 
+                    END AS zona,
+                    v.cuenta,
+                    CASE
+                    WHEN v.tipo = 'E05' 
+                    THEN v.neto * - 1 
+                    ELSE 0 
+                    END AS debe,
+                    CASE
+                    WHEN v.tipo = 'E05' 
+                    THEN 0 
+                    ELSE v.neto 
+                    END AS haber,
+                    CASE
+                    WHEN v.tipo_moneda = '1' 
+                    THEN 'S' 
+                    ELSE 'D' 
+                    END AS moneda,
+                    ROUND(v.tipo_cambio, 7) AS tc,
+                    CASE
+                    WHEN v.tipo = 'S02' 
+                    THEN '03' 
+                    WHEN v.tipo = 'S03' 
+                    THEN '01' 
+                    WHEN v.tipo = 'E05' 
+                    THEN '07' 
+                    WHEN v.tipo = 'S05' 
+                    THEN '08' 
+                    END AS doc,
+                    CONCAT(
+                    LEFT(v.documento, 4),
+                    '-',
+                    RIGHT(v.documento, 8)
+                    ) AS numero,
+                    DATE_FORMAT(v.fecha, '%d/%m/%y') AS fechad,
+                    DATE_FORMAT(
+                    DATE_ADD(
+                        v.fecha,
+                        INTERVAL IFNULL(cv.dias, 0) DAY
+                    ),
+                    '%d/%m/%y'
+                    ) AS fechav,
+                    c.documento AS codigo,
+                    '001' AS mpago,
+                    (SELECT 
+                    des_larga 
+                    FROM
+                    tabla_m_detalle t 
+                    WHERE t.cod_tabla = 'TCUE' 
+                    AND t.des_corta = v.cuenta) AS glosa,
+                    CONCAT(
+                    LEFT(n.doc_origen, 4),
+                    '-',
+                    RIGHT(n.doc_origen, 8)
+                    ) AS rnumero,
+                    n.tipo_doc AS rtdoc,
+                    DATE_FORMAT(n.fecha_origen, '%d/%m/%y') AS rfecha,
+                    'V' AS tl 
+                FROM
+                    ventajf v 
+                    LEFT JOIN condiciones_ventajf cv 
+                    ON v.condicion_venta = cv.id 
+                    LEFT JOIN clientesjf c 
+                    ON v.cliente = c.codigo 
+                    LEFT JOIN notascd_jf n 
+                    ON v.tipo = n.tipo 
+                    AND v.documento = n.documento 
+                WHERE v.fecha BETWEEN '$inicio' 
+                    AND '$fin' 
+                    AND v.tipo IN ('S02', 'S03', 'E05', 'S05') 
+                ORDER BY documento,
+                    cuenta";                
 
         $stmt=Conexion::conectar()->prepare($sql);
  

@@ -550,6 +550,92 @@ $("#tdoc").change(function(){
 
     })
 
+    //*INICIO DE FORMA DE PAGO
+
+    if(documento == "01" || documento == "03"){
+
+        //console.log("aqui", documento);
+        document.getElementById("formaPago").disabled = false;
+
+        var formaPago = $("#formaPago");
+
+        var datos = new FormData();
+        datos.append("documento", documento);
+    
+        $.ajax({
+    
+            url:"ajax/pedidos.ajax.php",
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType:"json",
+            success:function(respuesta){
+    
+                //console.log(respuesta);
+    
+                formaPago.find('option').remove();
+
+                formaPago.append('<option value="">Seleccionar Forma Pago</option>');
+    
+                for(var id of respuesta){
+                    formaPago.append('<option value="' + id.codigo + '">' + id.codigo + ' - ' + id.cuenta + '</option>');
+                    //console.log(formaPago);
+                }
+
+            }
+    
+        })        
+        
+    }else if(documento == "07"){
+
+        //console.log("aqui", documento);
+        document.getElementById("formaPago").disabled = false;
+
+        var formaPago = $("#formaPago");
+
+        var datos = new FormData();
+        datos.append("documento", documento);
+    
+        $.ajax({
+    
+            url:"ajax/pedidos.ajax.php",
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType:"json",
+            success:function(respuesta){
+    
+                //console.log(respuesta);
+    
+                formaPago.find('option').remove();
+
+                formaPago.append('<option value="">Seleccionar Forma Pago</option>');
+    
+                for(var id of respuesta){
+                    formaPago.append('<option value="' + id.codigo + '">' + id.codigo + ' - ' + id.cuenta + '</option>');
+                    //console.log(formaPago);
+                }
+
+            }
+    
+        })        
+        
+    }else{
+
+        document.getElementById("formaPago").disabled = true;
+
+        var formaPago = $("#formaPago");
+        formaPago.find('option').remove();
+        formaPago.append('<option value="">Seleccionar Forma Pago</option>');
+
+    }
+    
+    //*FIN DE FORMA DE PAGO
+
 })
 
 /*
@@ -1962,6 +2048,11 @@ function ValidarRuc(){
 		}
 	})
 
-
-
 }
+
+
+
+$("#BGBGG").change(function(){
+
+
+})
