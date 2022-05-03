@@ -252,7 +252,7 @@ class ModeloContabilidad{
                     ) AS fechav,
                     c.documento AS codigo,
                     '001' AS mpago,
-                    'VENTA DE ROPA INTERIOR' AS glosa,
+                    'VENTA DE LENCERIA' AS glosa,
                     CONCAT(
                     LEFT(n.doc_origen, 4),
                     '-',
@@ -343,7 +343,7 @@ class ModeloContabilidad{
                     ) AS fechav,
                     c.documento AS codigo,
                     '001' AS mpago,
-                    'VENTA DE ROPA INTERIOR' AS glosa,
+                    'VENTA DE LENCERIA' AS glosa,
                     CONCAT(
                     LEFT(n.doc_origen, 4),
                     '-',

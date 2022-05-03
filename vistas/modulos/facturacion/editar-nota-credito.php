@@ -23,6 +23,7 @@
     $documento = $_GET["documento"];
 
     $venta = ModeloFacturacion::mdlMostrarVentaImpresion($documento,$tipo);
+    #var_dump($venta);
     
     if($tipo == "E05"){
 
@@ -165,7 +166,7 @@
                 
                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
 
-                    <input type="date"  class="form-control input-lg" name="notaFecha" id="notaFecha" value="<?php echo $fechaActual?>" required>
+                    <input type="date"  class="form-control input-lg" name="notaFecha" id="notaFecha" value="<?php echo $venta["fecha_emision"]?>" required>
 
                 </div>
             </div>
@@ -324,7 +325,7 @@
             <div class="form-group  col-lg-12" style="margin-top:23px">
                 <label for="" class="col-form-label col-lg-6">Sub - Total: </label>
                 <div class="input-group">
-                    <input type="number"  class="form-control input-sm text-right" name="notaSubTotal" id="notaSubTotal" step ="any" min="0" value="<?php echo number_format(($venta["neto"]),2);?>">
+                    <input type="number"  class="form-control input-sm text-right" name="notaSubTotal" id="notaSubTotal" step ="any" min="0" value="<?php echo $venta["neto"];?>">
 
                 </div>
             </div>
@@ -375,7 +376,7 @@
             <div class="form-group  col-lg-12">
                 <label for="" class="col-form-label col-lg-6">Total:</label>
                 <div class="input-group">
-                    <input type="number"  class="form-control input-sm text-right" name="notaTotal" id="notaTotal" step ="any" min="0" value="<?php echo number_format(($venta["total"]),2);?>" readonly>
+                    <input type="number"  class="form-control input-sm text-right" name="notaTotal" id="notaTotal" step ="any" min="0" value="<?php echo $venta["total"];?>" readonly>
                     <input type="hidden" name="notaUsuario" id ="notaUsuario" value="<?php echo $_SESSION["id"]?>">
                 </div>
             </div>
