@@ -63,7 +63,7 @@ todo: traemmos los meses en letras
   <div class="box-header with-border">
 
     <h3 class="box-title">Ventas vs Producción</h3>
-
+    
   </div>
 
   <div class="box-body">

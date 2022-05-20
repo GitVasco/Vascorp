@@ -112,6 +112,8 @@ require_once "controladores/mantenimiento.controlador.php";
 
 require_once "controladores/contabilidad.controlador.php";
 
+require_once "controladores/evaluacion.controlador.php";
+
 /* 
 * MODELOS
 */
@@ -220,6 +222,8 @@ require_once "modelos/compras.modelo.php";
 require_once "modelos/mantenimiento.modelo.php";
 
 require_once "modelos/contabilidad.modelo.php";
+
+require_once "modelos/evaluacion.modelo.php";
 
 require_once "extensiones/vendor/autoload.php";
 

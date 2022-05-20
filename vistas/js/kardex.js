@@ -176,6 +176,8 @@ $(".TablaKardexCostos").on("click", ".btnExpKardex", function () {
     var mes = $(this).attr("mes");
     //console.log("codigo", codigo);
 
+    
+
     window.location = "vistas/reportes_excel/rpt_kardex.php?codigo=" + codigo + "&anno=" + anno + "&mes=" + mes;
   
 })

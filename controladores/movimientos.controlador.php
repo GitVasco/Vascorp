@@ -374,5 +374,15 @@ class ControladorMovimientos{
         return $respuesta;
 
     }  
+
+    /* 
+    * sacamos los totales de produccion por mes
+    */
+    static public function ctrModelosMovimientos($modelo){
+
+        $respuesta = ModeloMovimientos::mdlModelosMovimientos($modelo);
+
+        return $respuesta;
+    }     
     
 }

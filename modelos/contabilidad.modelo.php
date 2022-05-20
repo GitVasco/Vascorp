@@ -252,188 +252,6 @@ class ModeloContabilidad{
                     ) AS fechav,
                     c.documento AS codigo,
                     '001' AS mpago,
-                    'VENTA DE LENCERIA' AS glosa,
-                    CONCAT(
-                    LEFT(n.doc_origen, 4),
-                    '-',
-                    RIGHT(n.doc_origen, 8)
-                    ) AS rnumero,
-                    n.tipo_doc AS rtdoc,
-                    DATE_FORMAT(n.fecha_origen, '%d/%m/%y') AS rfecha,
-                    'V' AS tl 
-                FROM
-                    ventajf v 
-                    LEFT JOIN condiciones_ventajf cv 
-                    ON v.condicion_venta = cv.id 
-                    LEFT JOIN clientesjf c 
-                    ON v.cliente = c.codigo 
-                    LEFT JOIN notascd_jf n 
-                    ON v.tipo = n.tipo 
-                    AND v.documento = n.documento 
-                WHERE v.fecha BETWEEN '$inicio' 
-                    AND '$fin' 
-                    AND v.tipo IN ('S02', 'S03', 'E05', 'S05') 
-                UNION
-                SELECT 
-                    '02' AS t,
-                    DATE_FORMAT(v.fecha, '%d/%m/%y') AS fecha,
-                    v.tipo,
-                    v.documento,
-                    CASE
-                    WHEN v.tipo = 'E05' 
-                    THEN ROUND(v.neto, 2) * - 1 
-                    ELSE ROUND(v.neto, 2) 
-                    END AS neto,
-                    CASE
-                    WHEN v.tipo = 'E05' 
-                    THEN ROUND(v.igv, 2) * - 1 
-                    ELSE ROUND(v.igv, 2) 
-                    END AS igv,
-                    CASE
-                    WHEN v.tipo = 'E05' 
-                    THEN ROUND(v.total, 2) * - 1 
-                    ELSE ROUND(v.total, 2) 
-                    END AS total,
-                    v.tipo_moneda,
-                    CASE
-                    WHEN LEFT(c.ubigeo, 1) = 'L' 
-                    OR LEFT(c.ubigeo, 2) = '15' 
-                    THEN '1' 
-                    ELSE '2' 
-                    END AS zona,
-                    '40111' AS cuenta,
-                    CASE
-                    WHEN v.tipo = 'E05' 
-                    THEN v.igv * - 1 
-                    ELSE 0 
-                    END AS debe,
-                    CASE
-                    WHEN v.tipo = 'E05' 
-                    THEN 0 
-                    ELSE v.igv 
-                    END AS haber,
-                    CASE
-                    WHEN v.tipo_moneda = '1' 
-                    THEN 'S' 
-                    ELSE 'D' 
-                    END AS moneda,
-                    ROUND(v.tipo_cambio, 7) AS tc,
-                    CASE
-                    WHEN v.tipo = 'S02' 
-                    THEN '03' 
-                    WHEN v.tipo = 'S03' 
-                    THEN '01' 
-                    WHEN v.tipo = 'E05' 
-                    THEN '07' 
-                    WHEN v.tipo = 'S05' 
-                    THEN '08' 
-                    END AS doc,
-                    CONCAT(
-                    LEFT(v.documento, 4),
-                    '-',
-                    RIGHT(v.documento, 8)
-                    ) AS numero,
-                    DATE_FORMAT(v.fecha, '%d/%m/%y') AS fechad,
-                    DATE_FORMAT(
-                    DATE_ADD(
-                        v.fecha,
-                        INTERVAL IFNULL(cv.dias, 0) DAY
-                    ),
-                    '%d/%m/%y'
-                    ) AS fechav,
-                    c.documento AS codigo,
-                    '001' AS mpago,
-                    'VENTA DE LENCERIA' AS glosa,
-                    CONCAT(
-                    LEFT(n.doc_origen, 4),
-                    '-',
-                    RIGHT(n.doc_origen, 8)
-                    ) AS rnumero,
-                    n.tipo_doc AS rtdoc,
-                    DATE_FORMAT(n.fecha_origen, '%d/%m/%y') AS rfecha,
-                    'V' AS tl 
-                FROM
-                    ventajf v 
-                    LEFT JOIN condiciones_ventajf cv 
-                    ON v.condicion_venta = cv.id 
-                    LEFT JOIN clientesjf c 
-                    ON v.cliente = c.codigo 
-                    LEFT JOIN notascd_jf n 
-                    ON v.tipo = n.tipo 
-                    AND v.documento = n.documento 
-                WHERE v.fecha BETWEEN '$inicio' 
-                    AND '$fin' 
-                    AND v.tipo IN ('S02', 'S03', 'E05', 'S05') 
-                UNION
-                SELECT 
-                    '02' AS t,
-                    DATE_FORMAT(v.fecha, '%d/%m/%y') AS fecha,
-                    v.tipo,
-                    v.documento,
-                    CASE
-                    WHEN v.tipo = 'E05' 
-                    THEN ROUND(v.neto, 2) * - 1 
-                    ELSE ROUND(v.neto, 2) 
-                    END AS neto,
-                    CASE
-                    WHEN v.tipo = 'E05' 
-                    THEN ROUND(v.igv, 2) * - 1 
-                    ELSE ROUND(v.igv, 2) 
-                    END AS igv,
-                    CASE
-                    WHEN v.tipo = 'E05' 
-                    THEN ROUND(v.total, 2) * - 1 
-                    ELSE ROUND(v.total, 2) 
-                    END AS total,
-                    v.tipo_moneda,
-                    CASE
-                    WHEN LEFT(c.ubigeo, 1) = 'L' 
-                    OR LEFT(c.ubigeo, 2) = '15' 
-                    THEN '1' 
-                    ELSE '2' 
-                    END AS zona,
-                    v.cuenta,
-                    CASE
-                    WHEN v.tipo = 'E05' 
-                    THEN v.neto * - 1 
-                    ELSE 0 
-                    END AS debe,
-                    CASE
-                    WHEN v.tipo = 'E05' 
-                    THEN 0 
-                    ELSE v.neto 
-                    END AS haber,
-                    CASE
-                    WHEN v.tipo_moneda = '1' 
-                    THEN 'S' 
-                    ELSE 'D' 
-                    END AS moneda,
-                    ROUND(v.tipo_cambio, 7) AS tc,
-                    CASE
-                    WHEN v.tipo = 'S02' 
-                    THEN '03' 
-                    WHEN v.tipo = 'S03' 
-                    THEN '01' 
-                    WHEN v.tipo = 'E05' 
-                    THEN '07' 
-                    WHEN v.tipo = 'S05' 
-                    THEN '08' 
-                    END AS doc,
-                    CONCAT(
-                    LEFT(v.documento, 4),
-                    '-',
-                    RIGHT(v.documento, 8)
-                    ) AS numero,
-                    DATE_FORMAT(v.fecha, '%d/%m/%y') AS fechad,
-                    DATE_FORMAT(
-                    DATE_ADD(
-                        v.fecha,
-                        INTERVAL IFNULL(cv.dias, 0) DAY
-                    ),
-                    '%d/%m/%y'
-                    ) AS fechav,
-                    c.documento AS codigo,
-                    '001' AS mpago,
                     (SELECT 
                     des_larga 
                     FROM
@@ -460,8 +278,200 @@ class ModeloContabilidad{
                 WHERE v.fecha BETWEEN '$inicio' 
                     AND '$fin' 
                     AND v.tipo IN ('S02', 'S03', 'E05', 'S05') 
-                ORDER BY documento,
-                    cuenta";                
+                    UNION
+                    SELECT 
+                    '02' AS t,
+                    DATE_FORMAT(v.fecha, '%d/%m/%y') AS fecha,
+                    v.tipo,
+                    v.documento,
+                    CASE
+                        WHEN v.tipo = 'E05' 
+                        THEN ROUND(v.neto, 2) * - 1 
+                        ELSE ROUND(v.neto, 2) 
+                    END AS neto,
+                    CASE
+                        WHEN v.tipo = 'E05' 
+                        THEN ROUND(v.igv, 2) * - 1 
+                        ELSE ROUND(v.igv, 2) 
+                    END AS igv,
+                    CASE
+                        WHEN v.tipo = 'E05' 
+                        THEN ROUND(v.total, 2) * - 1 
+                        ELSE ROUND(v.total, 2) 
+                    END AS total,
+                    v.tipo_moneda,
+                    CASE
+                        WHEN LEFT(c.ubigeo, 1) = 'L' 
+                        OR LEFT(c.ubigeo, 2) = '15' 
+                        THEN '1' 
+                        ELSE '2' 
+                    END AS zona,
+                    '40111' AS cuenta,
+                    CASE
+                        WHEN v.tipo = 'E05' 
+                        THEN v.igv * - 1 
+                        ELSE 0 
+                    END AS debe,
+                    CASE
+                        WHEN v.tipo = 'E05' 
+                        THEN 0 
+                        ELSE v.igv 
+                    END AS haber,
+                    CASE
+                        WHEN v.tipo_moneda = '1' 
+                        THEN 'S' 
+                        ELSE 'D' 
+                    END AS moneda,
+                    ROUND(v.tipo_cambio, 7) AS tc,
+                    CASE
+                        WHEN v.tipo = 'S02' 
+                        THEN '03' 
+                        WHEN v.tipo = 'S03' 
+                        THEN '01' 
+                        WHEN v.tipo = 'E05' 
+                        THEN '07' 
+                        WHEN v.tipo = 'S05' 
+                        THEN '08' 
+                    END AS doc,
+                    CONCAT(
+                        LEFT(v.documento, 4),
+                        '-',
+                        RIGHT(v.documento, 8)
+                    ) AS numero,
+                    DATE_FORMAT(v.fecha, '%d/%m/%y') AS fechad,
+                    DATE_FORMAT(
+                        DATE_ADD(
+                        v.fecha,
+                        INTERVAL IFNULL(cv.dias, 0) DAY
+                        ),
+                        '%d/%m/%y'
+                    ) AS fechav,
+                    c.documento AS codigo,
+                    '001' AS mpago,
+                    (SELECT 
+                        des_larga 
+                    FROM
+                        tabla_m_detalle t 
+                    WHERE t.cod_tabla = 'TCUE' 
+                        AND t.des_corta = v.cuenta) AS glosa,
+                    CONCAT(
+                        LEFT(n.doc_origen, 4),
+                        '-',
+                        RIGHT(n.doc_origen, 8)
+                    ) AS rnumero,
+                    n.tipo_doc AS rtdoc,
+                    DATE_FORMAT(n.fecha_origen, '%d/%m/%y') AS rfecha,
+                    'V' AS tl 
+                    FROM
+                    ventajf v 
+                    LEFT JOIN condiciones_ventajf cv 
+                        ON v.condicion_venta = cv.id 
+                    LEFT JOIN clientesjf c 
+                        ON v.cliente = c.codigo 
+                    LEFT JOIN notascd_jf n 
+                        ON v.tipo = n.tipo 
+                        AND v.documento = n.documento 
+                    WHERE v.fecha BETWEEN '$inicio' 
+                    AND '$fin' 
+                    AND v.tipo IN ('S02', 'S03', 'E05', 'S05') 
+                    UNION
+                    SELECT 
+                        '02' AS t,
+                        DATE_FORMAT(v.fecha, '%d/%m/%y') AS fecha,
+                        v.tipo,
+                        v.documento,
+                        CASE
+                        WHEN v.tipo = 'E05' 
+                        THEN ROUND(v.neto, 2) * - 1 
+                        ELSE ROUND(v.neto, 2) 
+                        END AS neto,
+                        CASE
+                        WHEN v.tipo = 'E05' 
+                        THEN ROUND(v.igv, 2) * - 1 
+                        ELSE ROUND(v.igv, 2) 
+                        END AS igv,
+                        CASE
+                        WHEN v.tipo = 'E05' 
+                        THEN ROUND(v.total, 2) * - 1 
+                        ELSE ROUND(v.total, 2) 
+                        END AS total,
+                        v.tipo_moneda,
+                        CASE
+                        WHEN LEFT(c.ubigeo, 1) = 'L' 
+                        OR LEFT(c.ubigeo, 2) = '15' 
+                        THEN '1' 
+                        ELSE '2' 
+                        END AS zona,
+                        v.cuenta,
+                        CASE
+                        WHEN v.tipo = 'E05' 
+                        THEN v.neto * - 1 
+                        ELSE 0 
+                        END AS debe,
+                        CASE
+                        WHEN v.tipo = 'E05' 
+                        THEN 0 
+                        ELSE v.neto 
+                        END AS haber,
+                        CASE
+                        WHEN v.tipo_moneda = '1' 
+                        THEN 'S' 
+                        ELSE 'D' 
+                        END AS moneda,
+                        ROUND(v.tipo_cambio, 7) AS tc,
+                        CASE
+                        WHEN v.tipo = 'S02' 
+                        THEN '03' 
+                        WHEN v.tipo = 'S03' 
+                        THEN '01' 
+                        WHEN v.tipo = 'E05' 
+                        THEN '07' 
+                        WHEN v.tipo = 'S05' 
+                        THEN '08' 
+                        END AS doc,
+                        CONCAT(
+                        LEFT(v.documento, 4),
+                        '-',
+                        RIGHT(v.documento, 8)
+                        ) AS numero,
+                        DATE_FORMAT(v.fecha, '%d/%m/%y') AS fechad,
+                        DATE_FORMAT(
+                        DATE_ADD(
+                            v.fecha,
+                            INTERVAL IFNULL(cv.dias, 0) DAY
+                        ),
+                        '%d/%m/%y'
+                        ) AS fechav,
+                        c.documento AS codigo,
+                        '001' AS mpago,
+                        (SELECT 
+                        des_larga 
+                        FROM
+                        tabla_m_detalle t 
+                        WHERE t.cod_tabla = 'TCUE' 
+                        AND t.des_corta = v.cuenta) AS glosa,
+                        CONCAT(
+                        LEFT(n.doc_origen, 4),
+                        '-',
+                        RIGHT(n.doc_origen, 8)
+                        ) AS rnumero,
+                        n.tipo_doc AS rtdoc,
+                        DATE_FORMAT(n.fecha_origen, '%d/%m/%y') AS rfecha,
+                        'V' AS tl 
+                    FROM
+                        ventajf v 
+                        LEFT JOIN condiciones_ventajf cv 
+                        ON v.condicion_venta = cv.id 
+                        LEFT JOIN clientesjf c 
+                        ON v.cliente = c.codigo 
+                        LEFT JOIN notascd_jf n 
+                        ON v.tipo = n.tipo 
+                        AND v.documento = n.documento 
+                    WHERE v.fecha BETWEEN '$inicio' 
+                        AND '$fin' 
+                        AND v.tipo IN ('S02', 'S03', 'E05', 'S05') 
+                    ORDER BY documento,
+                        cuenta";                
 
         $stmt=Conexion::conectar()->prepare($sql);
  
@@ -618,97 +628,98 @@ class ModeloContabilidad{
     static public function mdlLetrasSiscont($documento){
 
         $sql="SELECT 
-                        '05' AS t,
-                        DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fecha,
-                        cc.tipo_doc,
-                        cc.num_cta,
-                        cc.doc_origen,
-                        tm.cuenta,
-                        ROUND(cc.monto, 2) AS debe,
-                        ROUND('0.00', 2) AS haber,
-                        'S' AS moneda,
-                        ROUND(cc.tip_cambio, 7) AS tc,
-                        'LE' AS doc,
-                        cc.num_cta AS numero,
-                        DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fechad,
-                        DATE_FORMAT(cc.fecha_ven, '%d/%m/%y') AS fechav,
-                        c.documento AS codigo,
-                        'CANJE DE FACTURAS POR LETRAS' AS glosa,
-                        c.documento AS ruc,
-                        '2' AS tipo,
-                        c.nombre AS rs,
-                        c.ape_paterno AS ape1,
-                        c.ape_materno AS ape2,
-                        c.nombres AS nombre,
-                        c.tipo_documento AS tdoci 
+                    '05' AS t,
+                    DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fecha,
+                    cc.tipo_doc,
+                    cc.num_cta,
+                    cc.doc_origen,
+                    tm.cuenta,
+                    ROUND(cc.monto, 2) AS debe,
+                    ROUND('0.00', 2) AS haber,
+                    'S' AS moneda,
+                    ROUND(cc.tip_cambio, 7) AS tc,
+                    'LE' AS doc,
+                    cc.num_cta AS numero,
+                    DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fechad,
+                    DATE_FORMAT(cc.fecha_ven, '%d/%m/%y') AS fechav,
+                    c.documento AS codigo,
+                    'CANJE DE FACTURAS POR LETRAS' AS glosa,
+                    c.documento AS ruc,
+                    '2' AS tipo,
+                    c.nombre AS rs,
+                    c.ape_paterno AS ape1,
+                    c.ape_materno AS ape2,
+                    c.nombres AS nombre,
+                    c.tipo_documento AS tdoci 
+                FROM
+                    cuenta_ctejf cc 
+                    LEFT JOIN clientesjf c 
+                    ON cc.cliente = c.codigo 
+                    LEFT JOIN 
+                    (SELECT 
+                        tm.cod_argumento AS tipo,
+                        tm.cod_tabla AS tabla,
+                        tm.des_larga AS nombre,
+                        tm.des_corta AS cuenta 
                     FROM
-                        cuenta_ctejf cc 
-                        LEFT JOIN clientesjf c 
-                        ON cc.cliente = c.codigo 
-                        LEFT JOIN 
-                        (SELECT 
-                            tm.cod_argumento AS tipo,
-                            tm.cod_tabla AS tabla,
-                            tm.des_larga AS nombre,
-                            tm.des_corta AS cuenta 
-                        FROM
-                            tabla_m_detalle tm 
-                        WHERE tm.cod_tabla = 'TASL') tm 
-                        ON cc.tipo_doc = tm.tipo 
-                    WHERE cc.doc_origen = :documento 
-                        AND cc.tip_mov = '+' 
-                        AND cc.tipo_doc = '85' 
-                    UNION
-                    SELECT 
-                        '05' AS t,
-                        DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fecha,
-                        cc.cod_pago,
-                        cc.num_cta,
-                        cc.doc_origen,
-                        CASE
-                        WHEN cc.cod_pago = '85' 
-                        THEN '123101' 
-                        ELSE '121101' 
-                        END AS cuenta,
-                        ROUND('0.00', 2) AS debe,
-                        ROUND(SUM(cc.monto), 2) AS haber,
-                        'S' AS moneda,
-                        ROUND(cc.tip_cambio, 7) AS tc,
-                        CASE
-                            WHEN cc.cod_pago = '85' 
-                            THEN 'LE' 
-                            ELSE cc.cod_pago 
-                        END AS doc,
-                        CASE
-                        WHEN cc.cod_pago = '85' 
-                        THEN cc.doc_origen 
-                        ELSE CONCAT(
-                            LEFT(cc.doc_origen, 4),
-                            '-',
-                            RIGHT(cc.doc_origen, 8)
-                        ) 
-                        END AS numero,
-                        DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fechad,
-                        DATE_FORMAT(cc.fecha_ven, '%d/%m/%y') AS fechav,
-                        c.documento AS codigo,
-                        'CANJE DE FACTURAS POR LETRAS' AS glosa,
-                        c.documento AS ruc,
-                        '2' AS tipo,
-                        c.nombre AS rs,
-                        c.ape_paterno AS ape1,
-                        c.ape_materno AS ape2,
-                        c.nombres AS nombre,
-                        c.tipo_documento AS tdoci 
-                    FROM
-                        cuenta_ctejf cc 
-                        LEFT JOIN clientesjf c 
-                        ON cc.cliente = c.codigo 
-                    WHERE cc.doc_origen = :documento AND cc.tipo_doc = '85' 
-                        AND cc.tip_mov = '+' 
-                    GROUP BY cc.doc_origen 
-                    ORDER BY doc_origen,
-                        cuenta DESC,
-                        num_cta";                
+                        tabla_m_detalle tm 
+                    WHERE tm.cod_tabla = 'TASL') tm 
+                    ON cc.tipo_doc = tm.tipo 
+                WHERE cc.doc_origen = :documento
+                    AND cc.tip_mov = '+' 
+                    AND cc.tipo_doc = '85' 
+                UNION
+                SELECT 
+                    '05' AS t,
+                    DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fecha,
+                    cc.cod_pago,
+                    cc.num_cta,
+                    cc.doc_origen,
+                    CASE
+                    WHEN cc.cod_pago = '85' 
+                    THEN '123201' 
+                    ELSE '121201' 
+                    END AS cuenta,
+                    ROUND('0.00', 2) AS debe,
+                    ROUND(SUM(cc.monto), 2) AS haber,
+                    'S' AS moneda,
+                    ROUND(cc.tip_cambio, 7) AS tc,
+                    CASE
+                    WHEN cc.cod_pago = '85' 
+                    THEN 'LE' 
+                    ELSE cc.cod_pago 
+                    END AS doc,
+                    CASE
+                    WHEN cc.cod_pago = '85' 
+                    THEN cc.doc_origen 
+                    ELSE CONCAT(
+                        LEFT(cc.doc_origen, 4),
+                        '-',
+                        RIGHT(cc.doc_origen, 8)
+                    ) 
+                    END AS numero,
+                    DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fechad,
+                    DATE_FORMAT(cc.fecha_ven, '%d/%m/%y') AS fechav,
+                    c.documento AS codigo,
+                    'CANJE DE FACTURAS POR LETRAS' AS glosa,
+                    c.documento AS ruc,
+                    '2' AS tipo,
+                    c.nombre AS rs,
+                    c.ape_paterno AS ape1,
+                    c.ape_materno AS ape2,
+                    c.nombres AS nombre,
+                    c.tipo_documento AS tdoci 
+                FROM
+                    cuenta_ctejf cc 
+                    LEFT JOIN clientesjf c 
+                    ON cc.cliente = c.codigo 
+                WHERE cc.doc_origen = :documento 
+                    AND cc.tipo_doc = '85' 
+                    AND cc.tip_mov = '+' 
+                GROUP BY cc.doc_origen 
+                ORDER BY doc_origen,
+                    cuenta DESC,
+                    num_cta";                
 
         $stmt=Conexion::conectar()->prepare($sql);
 
@@ -730,7 +741,7 @@ class ModeloContabilidad{
                         cc.tipo_doc,
                         cc.num_cta,
                         cc.doc_origen,
-                        '123101' AS cuenta,
+                        '123201' AS cuenta,
                         ROUND(cc.monto, 2) AS debe,
                         ROUND('0.00', 2) AS haber,
                         'S' AS moneda,
@@ -768,8 +779,8 @@ class ModeloContabilidad{
                         cc.doc_origen,
                         CASE
                         WHEN cc.tipo_doc = '08' 
-                        THEN '121101' 
-                        ELSE '123101' 
+                        THEN '121201' 
+                        ELSE '123201' 
                         END AS cuenta,
                         ROUND('0.00', 2) AS debe,
                         ROUND(cc.monto, 2) AS haber,
@@ -854,7 +865,7 @@ class ModeloContabilidad{
                         CASE
                         WHEN c1.codigos_pago = '04' 
                         THEN '101100' 
-                        ELSE '121101' 
+                        ELSE '121201' 
                         END AS cuenta,
                         ROUND(c1.monto, 2) AS debe,
                         0 AS haber,
@@ -1022,8 +1033,8 @@ class ModeloContabilidad{
                         cc.cod_pago,
                         CASE
                             WHEN cc.tipo_doc = '85' 
-                            THEN '123101' 
-                            ELSE '121101' 
+                            THEN '123201' 
+                            ELSE '121201' 
                         END AS cuenta,
                         ROUND('0.00', 2) AS debe,
                         cc.monto AS haber,
@@ -1130,7 +1141,7 @@ class ModeloContabilidad{
                     THEN '104101' 
                     WHEN c1.cod_pago IN ('06', '14') 
                     THEN '104103' 
-                    ELSE '121101' 
+                    ELSE '121201' 
                     END AS cuenta,
                     ROUND(c1.monto, 2) AS debe,
                     0 AS haber,
@@ -1292,8 +1303,8 @@ class ModeloContabilidad{
                     cc.cod_pago,
                     CASE
                         WHEN cc.tipo_doc = '85' 
-                        THEN '123101' 
-                        ELSE '121101' 
+                        THEN '123201' 
+                        ELSE '121201' 
                     END AS cuenta,
                     ROUND('0.00', 2) AS debe,
                     cc.monto AS haber,

@@ -94,12 +94,28 @@
                   
 
                   <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">PROVEEDOR</label>
-                  <div class="col-lg-2">
-                    <input type="text" class="form-control input-sm" name="nuevoProveedorServicio" id="nuevoProveedorServicio" value="000097" readonly>
+                  <div class="col-lg-8">
+                    <select  class="form-control selectpicker" name="nuevoProveedorServicio" id="nuevoProveedorServicio" data-size="10" data-live-search="true" required>
+                        <option value="">SELECCIONAR PROVEEDOR</option>
+                          <?php
+                              $item = null;
+                              $valor = null;
+
+                              $proveedores = ControladorProveedores::ctrMostrarProveedores($item, $valor);
+
+                              foreach ($proveedores as $key => $value) {
+
+                                  echo '<option value="'.$value["CodRuc"].'">'.$value["CodRuc"].' - '.$value["RazPro"].'</option>';
+
+                              }
+
+                          ?>
+
+                    </select>
                     
                   </div>
                     
-                  <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">RAZON SOCIAL</label>
+                  <!-- <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">RAZON SOCIAL</label>
                   <div class="col-lg-2">
                     <input type="text" class="form-control input-sm"  name ="nuevaRazonSocial" id="nuevaRazonSocial" value="ELASTICOS VASCO" readonly>
                   </div>
@@ -107,7 +123,7 @@
                   <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">RUC</label>
                   <div class="col-lg-2">
                     <input type="text" class="form-control input-sm"  id ="nuevoRuc" name="nuevoRuc" value="20551240356" readonly>
-                  </div>
+                  </div> -->
 
                   <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">FECHA</label>
                   <div class="col-lg-2">

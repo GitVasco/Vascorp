@@ -2549,7 +2549,12 @@ class ModeloMovimientos{
                         cuenta_ctejf c 
                      WHERE c.tip_mov = '+' 
                         AND c.estado = 'PENDIENTE' 
-                        AND c.fecha_ven < DATE(NOW()) 
+                        AND 
+                        CASE
+                        WHEN c.tipo_doc = '85' 
+                        THEN DATE_ADD(c.fecha_ven, INTERVAL 8 DAY) 
+                        ELSE c.fecha_ven 
+                        END < DATE(NOW()) 
                         AND c.vendedor NOT IN (
                         '00A',
                         '01',
@@ -2559,7 +2564,7 @@ class ModeloMovimientos{
                         '14',
                         '15'
                         ) 
-                     GROUP BY c.tip_mov ");
+                     GROUP BY c.tip_mov");
 
       $stmt -> execute();
 
@@ -3439,5 +3444,100 @@ class ModeloMovimientos{
 		$stmt=null;
 
 	}   
+
+   /* 
+   * sacamos los totales de produccion por mes
+   */
+  static public function mdlModelosMovimientos($modelo){
+
+    if( $modelo != null){
+
+        $stmt = Conexion::conectar()->prepare("SELECT 
+                m.ano,
+                m.mes,
+                CASE
+                WHEN m.mes = '1' 
+                THEN CONCAT('ENE-', m.ano) 
+                WHEN m.mes = '2' 
+                THEN CONCAT('FEB-', m.ano) 
+                WHEN m.mes = '3' 
+                THEN CONCAT('MAR-', m.ano) 
+                WHEN m.mes = '4' 
+                THEN CONCAT('ABR-', m.ano) 
+                WHEN m.mes = '5' 
+                THEN CONCAT('MAY-', m.ano) 
+                WHEN m.mes = '6' 
+                THEN CONCAT('JUN-', m.ano) 
+                WHEN m.mes = '7' 
+                THEN CONCAT('JUL-', m.ano) 
+                WHEN m.mes = '8' 
+                THEN CONCAT('AGO-', m.ano) 
+                WHEN m.mes = '9' 
+                THEN CONCAT('SEP-', m.ano) 
+                WHEN m.mes = '10' 
+                THEN CONCAT('OCT-', m.ano) 
+                WHEN m.mes = '11' 
+                THEN CONCAT('NOV-', m.ano) 
+                ELSE CONCAT('DIC-', m.ano) 
+                END AS nom_mes,
+                m.modelo,
+                m.cantidad 
+            FROM
+                modelos_movjf m 
+            WHERE modelo = '$modelo'
+
+        ");
+
+        $stmt -> execute();
+
+        return $stmt -> fetchall();
+
+    }else{
+
+
+        $stmt = Conexion::conectar()->prepare("SELECT 
+                        m.ano,
+                        m.mes,
+                        CASE
+                        WHEN m.mes = '1' 
+                        THEN CONCAT('ENE-', m.ano) 
+                        WHEN m.mes = '2' 
+                        THEN CONCAT('FEB-', m.ano) 
+                        WHEN m.mes = '3' 
+                        THEN CONCAT('MAR-', m.ano) 
+                        WHEN m.mes = '4' 
+                        THEN CONCAT('ABR-', m.ano) 
+                        WHEN m.mes = '5' 
+                        THEN CONCAT('MAY-', m.ano) 
+                        WHEN m.mes = '6' 
+                        THEN CONCAT('JUN-', m.ano) 
+                        WHEN m.mes = '7' 
+                        THEN CONCAT('JUL-', m.ano) 
+                        WHEN m.mes = '8' 
+                        THEN CONCAT('AGO-', m.ano) 
+                        WHEN m.mes = '9' 
+                        THEN CONCAT('SEP-', m.ano) 
+                        WHEN m.mes = '10' 
+                        THEN CONCAT('OCT-', m.ano) 
+                        WHEN m.mes = '11' 
+                        THEN CONCAT('NOV-', m.ano) 
+                        ELSE CONCAT('DIC-', m.ano) 
+                        END AS nom_mes,
+                        m.modelo,
+                        m.cantidad 
+                    FROM
+                        modelos_movjf m 
+                    WHERE modelo = '10197'
+
+                ");
+
+                $stmt -> execute();
+
+                return $stmt -> fetchall();        
+
+    }
+
+
+}   
 
 }

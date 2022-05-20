@@ -92,10 +92,12 @@ class AjaxTrabajador{
 			//$barra = $_POST["codigoBarra"];
 			//$codTrab = $_POST["cod_tra"];
 
-			$respuesta = ModeloTalleres::mdlProceso($fecha,$barra,$codTrab);
+/* 			$respuesta = ModeloTalleres::mdlProceso($fecha,$barra,$codTrab);
 			//var_dump($respuesta);
 
-			$respuesta2 = ModeloTalleres::mdlTerminado($fecha,$barra,$codTrab);
+			$respuesta2 = ModeloTalleres::mdlTerminado($fecha,$barra,$codTrab); */
+
+			$respuesta2 = ModeloTalleres::mdlCompleto($fecha,$barra,$codTrab);
 
 			echo 'ok';
 

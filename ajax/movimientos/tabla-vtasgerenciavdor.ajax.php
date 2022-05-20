@@ -32,10 +32,32 @@ class TablaMovimientos{
             }else{
 
                 $pedidos = "<div type='button' style='text-align:right !important'>".number_format($movimientos[$i]["pedidos"],2)."</div>";
-                $ventas = "<div style='text-align:right !important'>".number_format($movimientos[$i]["ventas"],2)."</div>";
-                $total = "<div style='text-align:right !important'>".number_format($movimientos[$i]["total"],2)."</div>";
+
                 
             }
+
+            if($movimientos[$i]["ventas"] < 0){
+
+                $ventas = "<div style='text-align:right !important'>0.00</div>";
+
+            }else{
+
+                $ventas = "<div style='text-align:right !important'>".number_format($movimientos[$i]["ventas"],2)."</div>";
+
+            }
+
+            if($movimientos[$i]["total"] < 0){
+
+                $total = "<div style='text-align:right !important'>0.00</div>";
+
+            }else{
+
+                $total = "<div style='text-align:right !important'>".number_format($movimientos[$i]["total"],2)."</div>";
+
+            }            
+
+            #$ventas = "<div style='text-align:right !important'>".number_format($movimientos[$i]["ventas"],2)."</div>";
+            #$total = "<div style='text-align:right !important'>".number_format($movimientos[$i]["total"],2)."</div>";
 
             $codigo = "<button class='btn btn-link btn-xs btnRptPeds' title='Pedidos' vendedor='".$movimientos[$i]["codigo"]."' >".$movimientos[$i]["codigo"]."</button>";
             

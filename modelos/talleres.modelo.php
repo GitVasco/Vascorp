@@ -267,7 +267,37 @@ $stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
 
 		$stmt=null;
 
-  }
+    }
+    
+    /* 
+    *ACTUALIZAR COMPLETO
+    */
+	static public function mdlCompleto($fecha, $codigo, $trabajador){
+
+		$sql="UPDATE 
+                        entallerjf 
+                    SET
+                        fecha_proceso = '$fecha',
+                        fecha_terminado = '$fecha',
+                        trabajador = '$trabajador',
+                        estado = 3 
+                    WHERE codigo = '$codigo'";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+        if($stmt->execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt=null;
+
+    }    
   
     /* 
     *ASIGNAR TRABAJADOR

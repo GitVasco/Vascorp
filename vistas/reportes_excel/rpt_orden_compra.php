@@ -782,10 +782,10 @@ $objPHPExcel->getActiveSheet()->setSharedStyle($observaciones, "A$fila"); //esta
 
  $fila+=1;
  $fila+=1;
- $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", "OBSERVACIONES: "); 
+ $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", "CONSIDERACIONES: "); 
  $objPHPExcel->getActiveSheet()->setSharedStyle($observaciones, "A$fila");
  $fila+=1;
- $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", "1.- Indispensable enviar los comprobantes electronicos: Factura, Guia de Remisión , PDF, XML a los siguientes correos: contabilidad@jackyform.com.pe y logistica2@jackyform.com.pe "); 
+ $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", "1.- Indispensable enviar los comprobantes electronicos: Factura, Guia de Remisión , CRD, XML y PDF a los siguientes correos: contabilidad@jackyform.com.pe y logistica2@jackyform.com.pe "); 
  $fila+=1;
  $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", "2.- En la Factura y en la Guía de Remisión, hacer referencia al Número de Orden de Compra(OBLIGATORIO)."); 
  $fila+=1;
@@ -797,11 +797,13 @@ $objPHPExcel->getActiveSheet()->setSharedStyle($observaciones, "A$fila"); //esta
  $fila+=1;
  $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", "6.- Para el caso de Letras, el pago de las mismas no deberan coincidir con los dias 15 y 30 de cada Mes."); 
  $fila+=1;
- $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", "7.- El monto maximo en la generación de una Letra no deberá exceder los S/. 15000."); 
+ $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", "7.- El monto maximo en la generación de una Letra no deberá exceder los S/. 15,000."); 
  $fila+=1;
- $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", "8.- Horario de Recepción de mercaderia : Lunes a Viernes 8:00 a 12:00  y  14:00 a 17:00 pm. / Sabados: 8:00 a 11:00 am. "); 
+ $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", "8.- Todas las letras deberán ser colocadas en la entidad financiera BANCO DE CREDITO DEL PERÚ"); 
  $fila+=1;
- $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", "9.- Dirección : Calle Santo Toribio 259 Urb. Santa Luisa SMP - LIMA "); 
+ $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", "9.- Horario de Recepción de mercaderia : Lunes a Viernes 8:00 a 12:00  y  14:00 a 17:00 pm. / Sabados: 8:00 a 11:00 am. "); 
+ $fila+=1;
+ $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", "10.- Dirección : Calle Santo Toribio 259 Urb. Santa Luisa SMP - LIMA "); 
  
 
 

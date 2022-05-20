@@ -139,7 +139,15 @@
 <!-- fullCalendar -->
   <script src="vistas/bower_components/moment/moment.js"></script>
   <script src="vistas/bower_components/fullcalendar/dist/fullcalendar.min.js"></script>  
- 
+
+  <!-- Material Preloader -->
+  <!-- https://www.jqueryscript.net/loading/Google-Inbox-Style-Linear-Preloader-Plugin-with-jQuery-CSS3.html -->
+  <script src="vistas/bower_components/material-preloader/material-preloader.js"></script>
+  <!-- Notie Alert -->
+  <!-- https://jaredreich.com/notie/ -->
+  <!-- https://github.com/jaredreich/notie -->
+  <script src="vistas/bower_components/notie/notie.min.js"></script>
+
 
   <style>
     .table thead, .table tfoot{
@@ -218,7 +226,8 @@ CUERPO DOCUMENTO
       if(isset($_GET["ruta"])){
 
         if( $_GET["ruta"] == "inicio" ||
-            $_GET["ruta"] == "inicio-gerencia"){
+            $_GET["ruta"] == "inicio-gerencia" ||
+            $_GET["ruta"] == "refrescar"){
 
               include "modulos/".$_GET["ruta"].".php";
 
@@ -418,7 +427,11 @@ CUERPO DOCUMENTO
 
               include "modulos/mantenimiento/".$_GET["ruta"].".php";
 
-}       else if( $_GET["ruta"] == "salir" ||
+        }else if( $_GET["ruta"] == "linea-tiempo") {
+
+              include "modulos/tiempo/".$_GET["ruta"].".php";
+
+        }else if( $_GET["ruta"] == "salir" ||
                   $_GET["ruta"] == "reportes"){
 
               include "modulos/".$_GET["ruta"].".php";
@@ -517,6 +530,16 @@ CUERPO DOCUMENTO
   <script src="vistas/js/compras.js"></script>
   <script src="vistas/js/mantenimiento.js"></script>
 
+  <script>
+      document.addEventListener("DOMContentLoaded", function(){
+          // Invocamos cada 5 segundos ;)
+          const milisegundos = 300 *1000;
+          setInterval(function(){
+              // No esperamos la respuesta de la petición porque no nos importa
+              fetch("vistas/modulos/refrescar.php");
+          },milisegundos);
+      });
+  </script>
 
 </body>
 </body>

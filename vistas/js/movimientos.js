@@ -515,7 +515,7 @@ $("#mesGerencia").change(function(){
 
 	localStorage.setItem("mesGerencia",mes);
 
-	console.log(mes)
+	//console.log(mes)
 
 	window.location = "index.php?ruta=inicio-gerencia&mes=" + mes;
 
@@ -898,3 +898,15 @@ function actualizarTC(){
 
 
 }
+
+
+$("#ModelMov").change(function(){
+
+	var model = $(this).val();
+
+	localStorage.setItem("ModelMov",model);
+
+	window.location = "index.php?ruta=inicio&modelo=" + model;
+
+	
+})

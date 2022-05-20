@@ -347,7 +347,7 @@ $objPHPExcel->createSheet(0);
 $objPHPExcel->setActiveSheetIndex(0);
 
 # Titulo de la hoja
-$objPHPExcel->getActiveSheet()->setTitle("Credipagos -".$fecha);
+$objPHPExcel->getActiveSheet()->setTitle($codigo. " -".$fecha);
 
 # Orientacion hoja
 $objPHPExcel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_PORTRAIT);
@@ -446,8 +446,16 @@ for ($i=0; $i < count($item) ; $i++) {
 	$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", '     :');
 	$objPHPExcel->getActiveSheet()->getStyle("G$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", '001  ALMACEN GENERAL');
-    $objPHPExcel->getActiveSheet()->setSharedStyle($texto_3, "H$fila");    
+	if(substr($codigo, 0, 3) == "APT"){
+		$objPHPExcel->getActiveSheet()->SetCellValue("H$fila", '003 ALMACEN PRODUCTO TERMINADO');
+		$objPHPExcel->getActiveSheet()->setSharedStyle($texto_3, "H$fila");   
+	}else if(substr($codigo, 0, 3) == "AMP"){
+		$objPHPExcel->getActiveSheet()->SetCellValue("H$fila", '001  ALMACEN GENERAL');
+		$objPHPExcel->getActiveSheet()->setSharedStyle($texto_3, "H$fila");   
+	}else{
+		$objPHPExcel->getActiveSheet()->SetCellValue("H$fila", '002 ALMACEN PRODUCTO EN PROCESO');
+		$objPHPExcel->getActiveSheet()->setSharedStyle($texto_3, "H$fila");   
+	}
 
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde_3B, "N$fila");
 
@@ -473,6 +481,17 @@ for ($i=0; $i < count($item) ; $i++) {
 
 	$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", '     :');
 	$objPHPExcel->getActiveSheet()->getStyle("G$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+	if(substr($codigo, 0, 3) == "APT"){
+		$objPHPExcel->getActiveSheet()->SetCellValue("H$fila", '02 PRODUCTO TERMINADO');
+		$objPHPExcel->getActiveSheet()->setSharedStyle($texto_3, "H$fila");   
+	}else if(substr($codigo, 0, 3) == "AMP"){
+		$objPHPExcel->getActiveSheet()->SetCellValue("H$fila", '03 MATERIAS PRIMAS Y AUXILIARES - MATERIALES');
+		$objPHPExcel->getActiveSheet()->setSharedStyle($texto_3, "H$fila");   
+	}else{
+		$objPHPExcel->getActiveSheet()->SetCellValue("H$fila", '99 PRODUCTO EN PROCESO');
+		$objPHPExcel->getActiveSheet()->setSharedStyle($texto_3, "H$fila");   
+	}	
 
     $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", '03 MATERIAS PRIMAS Y AUXILIARES - MATERIALES');
     $objPHPExcel->getActiveSheet()->setSharedStyle($texto_3, "H$fila");   

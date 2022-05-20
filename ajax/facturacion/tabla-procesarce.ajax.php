@@ -55,7 +55,7 @@ class TablaProcesarCE{
 
                 $botones =  "<div class='btn-group'><button title='Generar XML' class='btn btn-xs btn-danger btnGenerarXMLCE' tipo = '".$factura[$i]["tipo"]."' documento='".$factura[$i]["documento"]."'><i class='fa fa-paper-plane'></i></button><button title='Consultar Estado' class='btn btn-xs btn-warning btnConsultarEstado' tipo = '".$tipo."' documento='".$factura[$i]["documento"]."' fecha='".$factura[$i]["fecha"]."' monto='".$factura[$i]["total"]."'><i class='fa fa-search'></i></button></div>"; 
 
-            }else if($factura[$i]["facturacion"] == "1"){
+            }else if($factura[$i]["facturacion"] == "1" || $factura[$i]["facturacion"] == "4"){
 
                 $envio = "<span style='font-size:85%' class='label label-danger'>ERROR</span>";
                 
