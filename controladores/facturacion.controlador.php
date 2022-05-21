@@ -1206,6 +1206,16 @@ class ControladorFacturacion{
     }
 
     /*
+    * MOSTRAR MODELO DE NOTAS PARA IMPRESION
+    */
+	static public function ctrMostrarModeloImpresionV2($documento, $tipo, $ini, $fin){
+		$respuesta = ModeloFacturacion::mdlMostrarModeloImpresionV2( $documento, $tipo, $ini, $fin);
+
+		return $respuesta;
+
+    }    
+
+    /*
     * MOSTRAR MODELO DE PROFORMAS PARA IMPRESION
     */
 	static public function ctrMostrarModeloProforma($documento, $tipo){

@@ -493,9 +493,6 @@ for ($i=0; $i < count($item) ; $i++) {
 		$objPHPExcel->getActiveSheet()->setSharedStyle($texto_3, "H$fila");   
 	}	
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", '03 MATERIAS PRIMAS Y AUXILIARES - MATERIALES');
-    $objPHPExcel->getActiveSheet()->setSharedStyle($texto_3, "H$fila");   
-
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde_3B, "N$fila");
 
     $fila += 1;

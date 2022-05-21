@@ -914,39 +914,79 @@ class ModeloFacturacion{
     */
 	static public function mdlMostrarModeloImpresion($valor, $tipoDoc){
 
-    $sql="SELECT 
-    a.modelo,
-    ROUND(SUM(cantidad), 2) AS cantidad,
-    CASE
-      WHEN SUM(m.cantidad) % 1 > 0 
-      THEN 'KGM' 
-      ELSE 'C62' 
-    END AS unidad,
-    a.nombre,
-    ROUND(m.precio, 2) AS precio,
-    ROUND(m.dscto1, 2) AS dscto1,
-    ROUND(SUM(m.cantidad * m.precio), 2) AS total 
-  FROM
-    movimientosjf_2021 m 
-    LEFT JOIN articulojf a 
-      ON m.articulo = a.articulo 
-  WHERE m.tipo = :tipo_doc 
-    AND m.documento = :codigo 
-  GROUP BY a.modelo ";
+        $sql="SELECT 
+            a.modelo,
+            ROUND(SUM(cantidad), 2) AS cantidad,
+            CASE
+                WHEN SUM(m.cantidad) % 1 > 0 
+                THEN 'KGM' 
+                ELSE 'C62' 
+            END AS unidad,
+            a.nombre,
+            ROUND(m.precio, 2) AS precio,
+            ROUND(m.dscto1, 2) AS dscto1,
+            ROUND(SUM(m.cantidad * m.precio), 2) AS total 
+            FROM
+            movimientosjf_2021 m 
+            LEFT JOIN articulojf a 
+                ON m.articulo = a.articulo 
+            WHERE m.tipo = :tipo_doc 
+            AND m.documento = :codigo 
+            GROUP BY a.modelo ";
 
-      $stmt=Conexion::conectar()->prepare($sql);
+        $stmt=Conexion::conectar()->prepare($sql);
 
-      $stmt -> bindParam(":codigo", $valor, PDO::PARAM_STR);
-      $stmt -> bindParam(":tipo_doc", $tipoDoc, PDO::PARAM_STR);
+        $stmt -> bindParam(":codigo", $valor, PDO::PARAM_STR);
+        $stmt -> bindParam(":tipo_doc", $tipoDoc, PDO::PARAM_STR);
 
-  $stmt->execute();
+        $stmt->execute();
 
-  return $stmt->fetchAll();
+        return $stmt->fetchAll();
 
 
-  $stmt=null;
+        $stmt=null;
 
-}
+  }
+
+  /*
+    * MOSTRAR MODELO PARA NC , FACTURA Y BOLETA
+    */
+	static public function mdlMostrarModeloImpresionV2($valor, $tipoDoc, $ini, $fin){
+
+        $sql="SELECT 
+            a.modelo,
+            ROUND(SUM(cantidad), 2) AS cantidad,
+            CASE
+                WHEN SUM(m.cantidad) % 1 > 0 
+                THEN 'KGM' 
+                ELSE 'C62' 
+            END AS unidad,
+            a.nombre,
+            ROUND(m.precio, 2) AS precio,
+            ROUND(m.dscto1, 2) AS dscto1,
+            ROUND(SUM(m.cantidad * m.precio), 2) AS total 
+            FROM
+            movimientosjf_2021 m 
+            LEFT JOIN articulojf a 
+                ON m.articulo = a.articulo 
+            WHERE m.tipo = :tipo_doc 
+            AND m.documento = :codigo 
+            GROUP BY a.modelo 
+            LIMIT $ini, $fin";
+
+        $stmt=Conexion::conectar()->prepare($sql);
+
+        $stmt -> bindParam(":codigo", $valor, PDO::PARAM_STR);
+        $stmt -> bindParam(":tipo_doc", $tipoDoc, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+
+
+        $stmt=null;
+
+    }  
 
  /*
     * MOSTRAR MODELO PROFORMA IMPRESION

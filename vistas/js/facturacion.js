@@ -1409,14 +1409,18 @@ $(".tablaFacturas").on("click", ".btnImprimirFactura", function () {
     var tipo = $(this).attr("tipo");
     var documento = $(this).attr("documento");
 
-    window.open("extensiones/tcpdf/pdf/reporte_factura.php?tipo="+tipo+"&documento="+documento,"_blank");
+    //window.open("extensiones/tcpdf/pdf/reporte_factura.php?tipo="+tipo+"&documento="+documento,"_blank");
+
+    window.open("vistas/reportes_ticket/impresion_bolfact.php?tipo="+tipo+"&documento="+documento,"_blank");
 })
 
 $(".tablaBoletas").on("click", ".btnImprimirBoleta", function () {
     var tipo = $(this).attr("tipo");
     var documento = $(this).attr("documento");
 
-    window.open("extensiones/tcpdf/pdf/reporte_boleta.php?tipo="+tipo+"&documento="+documento,"_blank");
+    //window.open("extensiones/tcpdf/pdf/reporte_boleta.php?tipo="+tipo+"&documento="+documento,"_blank");
+
+    window.open("vistas/reportes_ticket/impresion_bolfact.php?tipo="+tipo+"&documento="+documento,"_blank");
 })
 
 $(".tablaProformas").on("click", ".btnImprimirProforma", function () {

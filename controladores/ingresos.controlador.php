@@ -303,7 +303,7 @@ class ControladorIngresos{
                                     "taller"=>$_POST["nuevoTalleres"],
                                     "documento"=>$_POST["nuevoCodigo"],
                                     "total"=>$_POST["totalTaller"],
-                                    "fecha"=>$fecha->format("Y-m-d"),
+                                    "fecha"=>$_POST["nuevaFecha"],
                                     "almacen" => "02",
                                     "trabajador"=>$_POST["nuevoTrabajadores"]);
 
@@ -319,7 +319,7 @@ class ControladorIngresos{
                             $datosD = array("tipo"=>"E20",
                                             "documento"=>$_POST["nuevoCodigo"],
                                             "taller"=>$_POST["nuevoTalleres"],
-                                            "fecha"=>$fecha->format("Y-m-d"),
+                                            "fecha"=>$_POST["nuevaFecha"],
                                             "articulo"=>$value["articulo"],
                                             "cliente"=>$_POST["nuevoTrabajadores"],
                                             "cantidad"=>$value["cantidad"],
