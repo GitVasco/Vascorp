@@ -1339,33 +1339,37 @@ class ModeloFacturacion{
         if($fechaInicial=="null"){
     
           $sql="SELECT 
-                    v.tipo,
-                    v.tipo_documento,
-                    v.cuenta,
-                    v.documento,
-                    v.total,
-                    v.cliente,
-                    v.facturacion,
-                    c.nombre,
-                    v.usuario,
-                    u.nombre as nombres,
-                    v.estado,
-                    v.fecha,
-                    CASE
+              v.tipo,
+              v.tipo_documento,
+              v.cuenta,
+              v.documento,
+              v.total,
+              v.cliente,
+              v.facturacion,
+              n.doc_origen,
+              DATE(n.fecha_origen) AS fec_origen,
+              c.nombre,
+              v.usuario,
+              u.nombre AS nombres,
+              v.estado,
+              v.fecha,
+              CASE
                 WHEN v.tipo = 'E05' 
                 THEN 'NC' 
                 ELSE 'ND' 
-            END AS nombre_tipo  
-                    FROM
-                    ventajf v 
-                    LEFT JOIN clientesjf c 
-                        ON v.cliente = c.codigo 
-                    LEFT JOIN usuariosjf u 
-                        ON v.usuario = u.id 
-                    WHERE v.tipo IN ('E05', 'S05') 
-                    AND YEAR(v.fecha) = 2022
-                    ORDER BY v.fecha DESC,
-                    v.tipo ";
+              END AS nombre_tipo 
+            FROM
+              ventajf v 
+              LEFT JOIN clientesjf c 
+                ON v.cliente = c.codigo 
+              LEFT JOIN usuariosjf u 
+                ON v.usuario = u.id 
+            LEFT JOIN notascd_jf n
+            ON v.tipo=n.tipo AND v.documento=n.documento
+            WHERE v.tipo IN ('E05', 'S05') 
+              AND YEAR(v.fecha) = 2022 
+            ORDER BY v.fecha DESC,
+              v.tipo";
     
           $stmt=Conexion::conectar()->prepare($sql);
           
@@ -1376,29 +1380,34 @@ class ModeloFacturacion{
         }else if($fechaInicial == $fechaFinal){
     
           $sql="SELECT 
-                        v.tipo,
-                        v.tipo_documento,
-                        v.cuenta,
-                        v.documento,
-                        v.total,
-                        v.cliente,
-                        v.facturacion,
-                        c.nombre,
-                        v.usuario,
-                        u.nombre as nombres,
-                        v.estado,
-                        v.fecha ,
-                        CASE
-                    WHEN v.tipo = 'E05' 
-                    THEN 'NC' 
-                    ELSE 'ND' 
-                END AS nombre_tipo 
-                        FROM
-                        ventajf v 
-                        LEFT JOIN clientesjf c 
-                            ON v.cliente = c.codigo 
-                        LEFT JOIN usuariosjf u 
-                            ON v.usuario = u.id 
+                    v.tipo,
+                    v.tipo_documento,
+                    v.cuenta,
+                    v.documento,
+                    v.total,
+                    v.cliente,
+                    v.facturacion,
+                    n.doc_origen,
+                    DATE(n.fecha_origen) AS fec_origen,
+                    c.nombre,
+                    v.usuario,
+                    u.nombre AS nombres,
+                    v.estado,
+                    v.fecha,
+                    CASE
+                        WHEN v.tipo = 'E05' 
+                        THEN 'NC' 
+                        ELSE 'ND' 
+                    END AS nombre_tipo 
+                    FROM
+                    ventajf v 
+                    LEFT JOIN clientesjf c 
+                        ON v.cliente = c.codigo 
+                    LEFT JOIN usuariosjf u 
+                        ON v.usuario = u.id 
+                    LEFT JOIN notascd_jf n 
+                        ON v.tipo = n.tipo 
+                        AND v.documento = n.documento 
                         WHERE v.tipo IN ('E05', 'S05') 
                         AND DATE(v.fecha)  like '%$fechaFinal%' 
                         ORDER BY v.fecha DESC,
@@ -1431,22 +1440,27 @@ class ModeloFacturacion{
                                             v.total,
                                             v.cliente,
                                             v.facturacion,
+                                            n.doc_origen,
+                                            DATE(n.fecha_origen) AS fec_origen,
                                             c.nombre,
                                             v.usuario,
-                                            u.nombre as nombres,
+                                            u.nombre AS nombres,
                                             v.estado,
-                                            v.fecha ,
+                                            v.fecha,
                                             CASE
-                                    WHEN v.tipo = 'E05' 
-                                    THEN 'NC' 
-                                    ELSE 'ND' 
-                                END AS nombre_tipo 
+                                            WHEN v.tipo = 'E05' 
+                                            THEN 'NC' 
+                                            ELSE 'ND' 
+                                            END AS nombre_tipo 
                                         FROM
                                             ventajf v 
                                             LEFT JOIN clientesjf c 
                                             ON v.cliente = c.codigo 
                                             LEFT JOIN usuariosjf u 
                                             ON v.usuario = u.id 
+                                            LEFT JOIN notascd_jf n 
+                                            ON v.tipo = n.tipo 
+                                            AND v.documento = n.documento 
                                         WHERE v.tipo IN ('E05', 'S05') 
                                             AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'
                                             ORDER BY v.fecha DESC,
@@ -1470,22 +1484,27 @@ class ModeloFacturacion{
                                             v.total,
                                             v.cliente,
                                             v.facturacion,
+                                            n.doc_origen,
+                                            DATE(n.fecha_origen) AS fec_origen,
                                             c.nombre,
                                             v.usuario,
-                                            u.nombre as nombres,
+                                            u.nombre AS nombres,
                                             v.estado,
-                                            v.fecha ,
+                                            v.fecha,
                                             CASE
-                                    WHEN v.tipo = 'E05' 
-                                    THEN 'NC' 
-                                    ELSE 'ND' 
-                                END AS nombre_tipo 
+                                            WHEN v.tipo = 'E05' 
+                                            THEN 'NC' 
+                                            ELSE 'ND' 
+                                            END AS nombre_tipo 
                                         FROM
                                             ventajf v 
                                             LEFT JOIN clientesjf c 
                                             ON v.cliente = c.codigo 
                                             LEFT JOIN usuariosjf u 
                                             ON v.usuario = u.id 
+                                            LEFT JOIN notascd_jf n 
+                                            ON v.tipo = n.tipo 
+                                            AND v.documento = n.documento 
                                         WHERE v.tipo IN ('E05', 'S05') 
                                             AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'
                                             ORDER BY v.fecha DESC,

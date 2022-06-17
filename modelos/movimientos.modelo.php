@@ -323,7 +323,8 @@ class ModeloMovimientos{
                         m.vtas_mes_pasado 
                      FROM
                         modelojf m 
-                        WHERE m.modelo NOT IN ('10013')
+                     WHERE m.modelo NOT IN ('10013') 
+                        AND m.estado = 'ACTIVO' 
                      ORDER BY m.vtas_mes_pasado DESC 
                      LIMIT 12");
 

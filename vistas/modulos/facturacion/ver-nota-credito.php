@@ -71,6 +71,8 @@
            <th>Total</th>
            <th>Cliente</th>
            <th>Fecha</th>
+           <th>Doc Origen</th>
+           <th>Fec Origen</th>
            <th>Usuario</th>
            <th>Estado</th>
            <th>Acciones</th>

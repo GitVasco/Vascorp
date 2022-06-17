@@ -78,11 +78,8 @@ class TablaNotasCD{
 
                 $nombre_tipo = "<span style='font-size:85%' class='label label-info'>".$notas[$i]["nombre_tipo"]."</span>";
 
-            }
+            }          
             
-            
-
-
                 $datosJson .= '[
                 "'.$notas[$i]["tipo_documento"].'",
                 "'.$nombre_tipo.'",
@@ -90,6 +87,8 @@ class TablaNotasCD{
                 "'.$notas[$i]["total"].'",
                 "'.$notas[$i]["cliente"]." - ".$notas[$i]["nombre"].'",
                 "'.$notas[$i]["fecha"].'",
+                "'.$notas[$i]["doc_origen"].'",
+                "'.$notas[$i]["fec_origen"].'",
                 "'.$notas[$i]["usuario"]." - ".$notas[$i]["nombres"].'",
                 "'.$estado.'",
                 "'.$botones.'"

@@ -10,37 +10,35 @@ class ControladorAbonos{
 
 		if(isset($_POST["nuevaDescripcion"])){
 
-				$tabla="abonosjf";
-			   	$datos = array("fecha"=>$_POST["nuevaFecha"],
-                               "descripcion"=>$_POST["nuevaDescripcion"],
-                               "monto"=>$_POST["nuevoMonto"],
-                               "agencia"=>$_POST["nuevaAgencia"],
-                               "num_ope"=>$_POST["nuevoOpe"]);
+			$tabla="abonosjf";
+			$datos = array("fecha"=>$_POST["nuevaFecha"],
+							"descripcion"=>$_POST["nuevaDescripcion"],
+							"monto"=>$_POST["nuevoMonto"],
+							"agencia"=>$_POST["nuevaAgencia"],
+							"num_ope"=>$_POST["nuevoOpe"]);
 
-			   	$respuesta = ModeloAbonos::mdlIngresarAbono($tabla,$datos);
+			$respuesta = ModeloAbonos::mdlIngresarAbono($tabla,$datos);
 
-			   	if($respuesta == "ok"){
+			if($respuesta == "ok"){
 
-					echo'<script>
+				echo'<script>
 
-					swal({
-						  type: "success",
-						  title: "El abono ha sido guardado correctamente",
-						  showConfirmButton: true,
-						  confirmButtonText: "Cerrar"
-						  }).then(function(result){
-									if (result.value) {
+						swal({
+							type: "success",
+							title: "El abono ha sido guardado correctamente",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar"
+							}).then(function(result){
+								if (result.value) {
 
-									window.location = "abonos";
+								window.location = "abonos";
 
-									}
-								})
+								}
+						})
 
-					</script>';
+				</script>';
 
-				}
-
-			
+			}			
 
 		}
 
