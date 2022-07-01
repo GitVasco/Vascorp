@@ -297,7 +297,7 @@ $("#seleccionarCliente").change(function(){
 $(".crearPedido").click(function () {
 
     sumarTotalesPreciosA();
-    cambioDescuento();
+    //cambioDescuento();
     listarArticulos();
 
     var codigo = document.getElementById("nuevoCodigo").value;

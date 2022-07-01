@@ -34,7 +34,7 @@ class ModeloContabilidad{
                 ELSE '2' 
                 END AS zona,
                 CASE
-                WHEN v.tipo IN ('S02', 'S03', 'S99') 
+                WHEN v.tipo IN ('S02', 'S03', 'S05') 
                 AND LEFT(tm.cuenta, 2) = '12' 
                 THEN v.total 
                 WHEN v.tipo IN ('E05') 
@@ -46,13 +46,13 @@ class ModeloContabilidad{
                 ELSE 0 
                 END AS debe,
                 CASE
-                WHEN v.tipo IN ('S02', 'S03', 'S99') 
+                WHEN v.tipo IN ('S02', 'S03', 'S05') 
                 AND LEFT(tm.cuenta, 2) = '12' 
                 THEN 0 
-                WHEN v.tipo IN ('S02', 'S03', 'S99') 
+                WHEN v.tipo IN ('S02', 'S03', 'S05') 
                 AND LEFT(tm.cuenta, 2) = '40' 
                 THEN v.igv 
-                WHEN v.tipo IN ('S02', 'S03', 'S99') 
+                WHEN v.tipo IN ('S02', 'S03', 'S05') 
                 AND LEFT(tm.cuenta, 2) = '70' 
                 THEN v.neto 
                 WHEN v.tipo IN ('E05') 
@@ -69,7 +69,7 @@ class ModeloContabilidad{
                 THEN '01' 
                 WHEN v.tipo = 'E05' 
                 THEN '07' 
-                WHEN v.tipo = 'S99' 
+                WHEN v.tipo = 'S05' 
                 THEN '08' 
                 END AS tipo_doc,
                 CONCAT(
@@ -159,7 +159,7 @@ class ModeloContabilidad{
                 AND v.documento = n.documento 
             WHERE v.tipo = :tipo 
                 AND v.documento = :documento 
-                AND v.tipo IN ('S02', 'S03', 'S99', 'E05') 
+                AND v.tipo IN ('S02', 'S03', 'S05', 'E05') 
             ORDER BY v.documento,
                 tm.cuenta";                
 
@@ -234,7 +234,7 @@ class ModeloContabilidad{
                     THEN '01' 
                     WHEN v.tipo = 'E05' 
                     THEN '07' 
-                    WHEN v.tipo = 'S99' 
+                    WHEN v.tipo = 'S05' 
                     THEN '08' 
                     END AS doc,
                     CONCAT(
@@ -277,7 +277,7 @@ class ModeloContabilidad{
                     AND v.documento = n.documento 
                 WHERE v.fecha BETWEEN '$inicio' 
                     AND '$fin' 
-                    AND v.tipo IN ('S02', 'S03', 'E05', 'S99') 
+                    AND v.tipo IN ('S02', 'S03', 'E05', 'S05') 
                     UNION
                     SELECT 
                     '02' AS t,
@@ -330,7 +330,7 @@ class ModeloContabilidad{
                         THEN '01' 
                         WHEN v.tipo = 'E05' 
                         THEN '07' 
-                        WHEN v.tipo = 'S99' 
+                        WHEN v.tipo = 'S05' 
                         THEN '08' 
                     END AS doc,
                     CONCAT(
@@ -373,7 +373,7 @@ class ModeloContabilidad{
                         AND v.documento = n.documento 
                     WHERE v.fecha BETWEEN '$inicio' 
                     AND '$fin' 
-                    AND v.tipo IN ('S02', 'S03', 'E05', 'S99') 
+                    AND v.tipo IN ('S02', 'S03', 'E05', 'S05') 
                     UNION
                     SELECT 
                         '02' AS t,
@@ -426,7 +426,7 @@ class ModeloContabilidad{
                         THEN '01' 
                         WHEN v.tipo = 'E05' 
                         THEN '07' 
-                        WHEN v.tipo = 'S99' 
+                        WHEN v.tipo = 'S05' 
                         THEN '08' 
                         END AS doc,
                         CONCAT(
@@ -469,7 +469,7 @@ class ModeloContabilidad{
                         AND v.documento = n.documento 
                     WHERE v.fecha BETWEEN '$inicio' 
                         AND '$fin' 
-                        AND v.tipo IN ('S02', 'S03', 'E05', 'S99') 
+                        AND v.tipo IN ('S02', 'S03', 'E05', 'S05') 
                     ORDER BY documento,
                         cuenta";                
 
@@ -525,7 +525,7 @@ class ModeloContabilidad{
                     ventajf v 
                 WHERE v.fecha BETWEEN :fechaInicio 
                     AND :fechaFin 
-                    AND v.tipo IN ('S02', 'S03', 'S99', 'E05') 
+                    AND v.tipo IN ('S02', 'S03', 'S05', 'E05') 
                 ORDER BY v.fecha,
                     v.tipo,
                     v.documento";

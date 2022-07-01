@@ -45,7 +45,7 @@ class AjaxProveedores{
 
 		$valor=$this->nuevoRuc;
 
-		$ws = file_get_contents("https://dniruc.apisperu.com/api/v1/ruc/$valor?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im5vdGlmaWNhY2lvbmVzdmFzY29ycEBnbWFpbC5jb20ifQ.c-6WZwJBvvbLMYouVDCfsnSn0NnoT88AmAJVRIIcGx4");
+		$ws = file_get_contents("https://dniruc.apisperu.com/api/v1/ruc/$valor?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imp2bWVkcmFub2dAZ21haWwuY29tIn0.aJ4UMqJYgW-79qjsdRCAL7PkPYIKId2Ra96stYWi_4c");
 
 
 		echo $ws;
