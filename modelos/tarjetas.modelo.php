@@ -85,6 +85,43 @@ class ModeloTarjetas{
 	}
 
 	/* 
+	* Método para Mostrar los detalles de tarjetas
+	*/
+	static public function mdlMostraMPDetallesTarjetas(){
+
+		$sql="SELECT 
+		p.codpro AS codigo,
+		LEFT(p.codfab,6) AS codlinea, 
+		p.despro AS descripcion,
+		p.undpro,
+		(SELECT 
+		  t.des_larga 
+		FROM
+		  tabla_m_detalle t 
+		WHERE t.cod_tabla = 'TUND' 
+		  AND t.cod_argumento = p.undpro) AS unidad,
+		p.colpro,
+		(SELECT 
+		  t.des_larga 
+		FROM
+		  tabla_m_detalle t 
+		WHERE t.cod_tabla = 'TCOL' 
+		  AND t.cod_argumento = p.colpro) AS color 
+	  FROM
+		producto p 
+	  WHERE p.estpro = '1' ";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt=null;
+
+	}	
+
+	/* 
 	* Método para guardar las tarjetas
 	*/
 	static public function mdlGuardarTarjetas($tabla,$datos){

@@ -5,8 +5,8 @@
     <link href="css/ticket_v9.css" target="_blank" rel="stylesheet" type="text/css">
     </head>
 
-    <body onload="window.print();">
-
+    <!-- <body onload="window.print();"> -->
+    <body>
     <?php
     require_once "../../controladores/facturacion.controlador.php";
     require_once "../../modelos/facturacion.modelo.php";
@@ -444,6 +444,172 @@
             echo '</table>';            
             
             echo $pie;            
+
+        }
+
+        //todo: 4 páginas
+        else if($cantModelo > 60 && $cantModelo <= 80){
+
+            //*PAGINA 1
+
+            echo $cabecera;
+
+            echo $cliente;
+
+            echo $feccon;
+
+            echo $cabDet;
+
+            echo '<table>';
+    
+            foreach ($modelo as $key => $value) {
+
+                if($key <= 20){
+
+                    echo '<tr>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["modelo"].'</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["cantidad"].'</td>
+                        <td style="width:50px; border-right: 1px solid; text-align:center;">'.$value["unidad"].'</td>
+                        <td style="width:250px; border-right: 1px solid;">'.$value["nombre"].'</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["precio"].'</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["dscto1"].'</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["total"].'</td>
+                    </tr>';
+
+                }               
+
+            }
+    
+            echo '</table>';          
+            
+            for ($i=0; $i < 65; $i++) { 
+
+                echo '<table>
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>';
+
+            }            
+
+            //*PAGINA 2
+
+            echo $cabecera;
+
+            echo $cliente;
+
+            echo $feccon;
+
+            echo $cabDet;              
+
+            echo '<table>';
+            
+            foreach ($modelo as $key => $value) {
+
+                if($key > 20 && $key <= 40){
+
+                    echo '<tr>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["modelo"].'</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["cantidad"].'</td>
+                        <td style="width:50px; border-right: 1px solid; text-align:center;">'.$value["unidad"].'</td>
+                        <td style="width:250px; border-right: 1px solid;">'.$value["nombre"].'</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["precio"].'</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["dscto1"].'</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["total"].'</td>
+                    </tr>';
+
+                }               
+
+            }        
+            
+            echo '</table>';            
+
+            for ($i=0; $i < 65; $i++) { 
+
+                echo '<table>
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>';
+
+            } 
+
+            //*PAGINA 3
+
+            echo $cabecera;
+
+            echo $cliente;
+
+            echo $feccon;
+
+            echo $cabDet;     
+            
+            echo '<table>';
+            
+            foreach ($modelo as $key => $value) {
+
+                if($key > 40 && $key <= 60){
+
+                    echo '<tr>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["modelo"].'</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["cantidad"].'</td>
+                        <td style="width:50px; border-right: 1px solid; text-align:center;">'.$value["unidad"].'</td>
+                        <td style="width:250px; border-right: 1px solid;">'.$value["nombre"].'</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["precio"].'</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["dscto1"].'</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["total"].'</td>
+                    </tr>';
+
+                }               
+
+            }        
+            
+            echo '</table>';      
+            
+            for ($i=0; $i < 65; $i++) { 
+
+                echo '<table>
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>';
+
+            }   
+
+
+            //*PAGINA 4
+
+            echo $cabecera;
+
+            echo $cliente;
+
+            echo $feccon;
+
+            echo $cabDet;  
+
+            echo '<table>';
+            
+            foreach ($modelo as $key => $value) {
+
+                if($key > 60 && $key <= 80){
+
+                    echo '<tr>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["modelo"].'</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["cantidad"].'</td>
+                        <td style="width:50px; border-right: 1px solid; text-align:center;">'.$value["unidad"].'</td>
+                        <td style="width:250px; border-right: 1px solid;">'.$value["nombre"].'</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["precio"].'</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["dscto1"].'</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["total"].'</td>
+                    </tr>';
+
+                }               
+
+            }        
+            
+            echo '</table>';         
+            
+            echo $pie; 
 
         }
 

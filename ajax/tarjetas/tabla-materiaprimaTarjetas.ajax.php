@@ -3,6 +3,10 @@
 require_once "../../controladores/materiaprima.controlador.php";
 require_once "../../modelos/materiaprima.modelo.php";
 
+require_once "../../controladores/tarjetas.controlador.php";
+require_once "../../modelos/tarjetas.modelo.php";
+
+
 class TablaMateriaPrimaTarjetas{
 
     /*=============================================
@@ -13,7 +17,7 @@ class TablaMateriaPrimaTarjetas{
    
         $valor = null;
 
-        $materiaprima = ControladorMateriaPrima::ctrMostrarMateriaPrima($valor);	
+        $materiaprima =  ModeloTarjetas::mdlMostraMPDetallesTarjetas();	
         if(count($materiaprima)>0){
 
         $datosJson = '{
