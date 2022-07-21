@@ -2202,6 +2202,19 @@ window.open("extensiones/tcpdf/pdf/reporte_estado_cuenta_vdor.php?vendedor=" +ve
 /* 
 * BOTON  IMPRIMIR TICKET
 */
+$(".tablaCtasVdor").on("click", ".btnEstadoCtaVdorNVdos", function () {
+
+  var vendedor = $(this).attr("vendedor");
+  //console.log(codigo);
+
+
+window.open("extensiones/tcpdf/pdf/reporte_estado_cuenta_vdor_nvdos.php?vendedor=" +vendedor,"_blank");
+
+})
+
+/* 
+* BOTON  IMPRIMIR TICKET
+*/
 $(".tablaCtasVdor").on("click", ".btnEstadoCtaVdorVdos", function () {
 
   var vendedor = $(this).attr("vendedor");

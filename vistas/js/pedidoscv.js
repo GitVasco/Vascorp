@@ -330,7 +330,6 @@ $(".crearPedido").click(function () {
 	})
 
     var vendedor = document.getElementById("seleccionarVendedor").value;
-    console.log(vendedor);
     $("#vendedorM").val(vendedor);
 
     var lista = document.getElementById("seleccionarLista").value;
@@ -348,8 +347,16 @@ $(".crearPedido").click(function () {
     //console.log(impuesto);
     $("#igvM").val(impuesto);
 
+    var nuevoTotal = Number(opGravada) + Number(impuesto);
+
     var total = document.getElementById("nuevoTotal").value;
-    $("#totalM").val(total);
+
+    if(nuevoTotal == total){
+        $("#totalM").val(nuevoTotal);
+    }else{
+        $("#totalM").val(total);
+    }
+   
 
     var articulos = document.getElementById("listaProductosPedidos").value;
     $("#articulosM").val(articulos);

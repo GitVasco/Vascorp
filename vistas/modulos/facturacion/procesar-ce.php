@@ -328,7 +328,7 @@ MODAL CONSULTAR SUNAT
 
             <!-- ENTRADA PARA EL CODIGO -->
             
-            <div class="form-group  col-lg-6" style="padding-left:0px">
+            <div class="form-group  col-lg-6">
               <label>TIPO DOCUMENTO</label>
               <div class="input-group">
                 
@@ -348,13 +348,13 @@ MODAL CONSULTAR SUNAT
             
             <!-- ENTRADA PARA EL NOMBRE -->
             
-            <div class="form-group col-lg-6"  style="padding-right:0px !important">
-            <label>RUC</label>
-              <div class="input-group ">
+            <div class="form-group col-lg-6">
+              <label>RUC</label>
+              <div class="input-group">
               
               <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-              <input type="text" maxlength="11" class="form-control input-md" name="nuevoRucConsulta" id="nuevoRucConsulta" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+              <input type="text" maxlength="11" class="form-control input-md info-box-text" name="nuevoRucConsulta" id="nuevoRucConsulta" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
               
 
               </div>
@@ -363,7 +363,7 @@ MODAL CONSULTAR SUNAT
 
             <!-- ENTRADA PARA EL NOMBRE -->
             
-            <div class="form-group col-lg-4" style="padding-left:0px">
+            <div class="form-group col-lg-4">
               <label>SERIE</label>
               <div class="input-group">
               
@@ -377,7 +377,7 @@ MODAL CONSULTAR SUNAT
 
             <!-- ENTRADA PARA EL NOMBRE -->
             
-            <div class="form-group col-lg-8" style="padding-right:0px">
+            <div class="form-group col-lg-8">
               <label>CORRELATIVO</label>
               <div class="input-group">
               
@@ -389,7 +389,7 @@ MODAL CONSULTAR SUNAT
 
             </div>
 
-            <div class="form-group col-lg-6" style="padding-left:0px">
+            <div class="form-group col-lg-6">
               <label>FECHA EMISION</label>
               <div class="input-group">
               
@@ -401,9 +401,9 @@ MODAL CONSULTAR SUNAT
 
             </div>
 
-            <!-- ENTRADA PARA EL NOMBRE -->
+            <!-- ENTRADA PARA EL NOMBRE -->            
+            <div class="form-group col-lg-6">
             <label>MONTO</label>
-            <div class="form-group col-lg-6"  style="padding-right:0px !important">
               <div class="input-group ">
               
               <span class="input-group-addon"><i class="fa fa-usd"></i></span> 

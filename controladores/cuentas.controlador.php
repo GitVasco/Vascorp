@@ -1582,7 +1582,7 @@ class ControladorCuentas{
 
     }	
 
-	//DOCUMENTOS VENDIDOS POR ZONA
+	//DOCUMENTOS VENCIDOS POR ZONA
 	static public function ctrEstadoCtaVdorVdos($vendedor){
 
 		$respuesta = ModeloCuentas::mdlEstadoCtaVdorVdos($vendedor);
@@ -1590,6 +1590,15 @@ class ControladorCuentas{
 		return $respuesta;
 
     }
+
+	//DOCUMENTOS NO VENCIDOS POR ZONA
+	static public function ctrEstadoCtaVdorNoVdos($vendedor){
+
+		$respuesta = ModeloCuentas::mdlEstadoCtaVdorNoVdos($vendedor);
+
+		return $respuesta;
+
+    }	
 	
 	//ESTADO DE CUENTA
 	static public function ctrEstadoCuenta($fin){

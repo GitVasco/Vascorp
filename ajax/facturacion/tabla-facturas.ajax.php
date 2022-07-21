@@ -47,7 +47,7 @@ class TablaGuiasRemision{
 
             }else if($factura[$i]["facturacion"] == "4"){
 
-                $estado = "<span class='btn btn-danger btn-xs btn btnEliminarDocumento' documento='".$factura[$i]["documento"]."' tipo='".$factura[$i]["tipo"]."' pagina='facturas'>ANULADO</span>";
+                $estado = "<span class='btn btn-danger btn-xs btn btnEliminarDocumento' documento='".$factura[$i]["documento"]."' tipo='".$factura[$i]["tipo"]."' pagina='facturas'>BAJA</span>";
 
             }
 
