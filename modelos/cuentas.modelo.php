@@ -4318,6 +4318,7 @@ class ModeloCuentas{
 						ELSE c.fecha_ven 
 						END > DATE(NOW()) 
 						AND c.vendedor = '08' 
+						AND c.tipo_doc <>'85'
 					UNION
 					SELECT 
 						'ZZ' AS tipo_doc,
@@ -4345,6 +4346,7 @@ class ModeloCuentas{
 						ELSE c.fecha_ven 
 						END > DATE(NOW()) 
 						AND c.vendedor = '08' 
+						AND c.tipo_doc <>'85'
 					GROUP BY c.vendedor 
 					ORDER BY fecha_ven");
 
@@ -4394,6 +4396,7 @@ class ModeloCuentas{
 					ELSE c.fecha_ven 
 					END > DATE(NOW()) 
 					AND c.vendedor = :vendedor 
+					AND c.tipo_doc <>'85'
 				UNION
 				SELECT 
 					'ZZ' AS tipo_doc,
@@ -4421,6 +4424,7 @@ class ModeloCuentas{
 					ELSE c.fecha_ven 
 					END > DATE(NOW()) 
 					AND c.vendedor = :vendedor 
+					AND c.tipo_doc <>'85'
 				GROUP BY c.vendedor 
 				ORDER BY ubigeo,
 					cliente,
