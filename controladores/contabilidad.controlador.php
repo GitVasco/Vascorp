@@ -618,7 +618,21 @@ class ControladorContabilidad{
 
                 }
 
+                /* $cuentas = array('00','05','06','14','80','82','TR');
 
+                if(in_array($cancelaciones04[$i]["cod_pago"], $cuentas)){
+                    $codFin = 'O101';
+                }else {
+                    $codFin = "";
+                } */
+
+                $cuentas = array('101100');
+
+                if(in_array($cancelaciones04[$i]["cuenta"], $cuentas)){
+                    $codFin = 'O101';
+                }else {
+                    $codFin = "";
+                }
 
                 $origen     = str_pad('04', 2);
                 $voucher    = str_pad($corr04, 5 , '0', STR_PAD_LEFT);
@@ -634,7 +648,7 @@ class ControladorContabilidad{
                 $fechav     = str_pad($cancelaciones04[$i]["fechav"], 8);
                 $codigo     = str_pad($cancelaciones04[$i]["codigo"], 15);
                 $cc         = str_pad(" ", 10);
-                $fe         = str_pad(" ", 4);
+                $fe         = str_pad($codFin, 4);
                 $pre        = str_pad(" ", 10); 
                 $mpago      = str_pad(" ", 3);
                 $glosa      = str_pad($cancelaciones04[$i]["glosa"], 60);
@@ -740,6 +754,23 @@ class ControladorContabilidad{
 
                 }
 
+                /* $cuentas = array('00','05','06','14','80','82','TR');
+
+                if(in_array($cancelaciones08[$i]["cod_pago"], $cuentas)){
+                    $codFin = 'O101';
+                }else {
+                    $codFin = "";
+                }  */     
+                
+                
+                $cuentas = array('104101');
+
+                if(in_array($cancelaciones08[$i]["cuenta"], $cuentas)){
+                    $codFin = 'O101';
+                }else {
+                    $codFin = "";
+                }
+
                 $origen     = str_pad('08', 2);
                 $voucher    = str_pad($corr08, 5 , '0', STR_PAD_LEFT);
                 $fecha      = str_pad($cancelaciones08[$i]["fecha"], 8);
@@ -754,7 +785,7 @@ class ControladorContabilidad{
                 $fechav     = str_pad($cancelaciones08[$i]["fechav"], 8);
                 $codigo     = str_pad($cancelaciones08[$i]["codigo"], 15);
                 $cc         = str_pad(" ", 10);
-                $fe         = str_pad(" ", 4);
+                $fe         = str_pad($codFin, 4);
                 $pre        = str_pad(" ", 10); 
                 $mpago      = str_pad(" ", 3);
                 $glosa      = str_pad($cancelaciones08[$i]["glosa"], 60);

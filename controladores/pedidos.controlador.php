@@ -271,6 +271,8 @@ class ControladorPedidos{
 
                 if($resp == "ok"){
 
+                    ModeloPedidos::mdlActualizarTotalPedido();
+
                     # Mostramos una alerta suave
                     echo '<script>
                              Command: toastr["success"]("El pedido fue registrado");

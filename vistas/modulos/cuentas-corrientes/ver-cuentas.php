@@ -256,7 +256,7 @@ MODAL EDITAR TIPO PAGO
               
                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
 
-                <input type="date" class="form-control input-lg" name="cancelarFechaUltima" id="cancelarFechaUltima"  required>
+                <input type="date" class="form-control input-lg" name="cancelarFechaUltima" id="cancelarFechaUltima"  min="<?php date_default_timezone_set("America/Lima"); $fecha = new DateTime(); echo $fecha->format("Y-m-01")?>" required>
 
               </div>
 
@@ -558,7 +558,7 @@ MODAL CANCELAR CUENTA
               
                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
 
-                <input type="date" class="form-control input-md" name="cancelarFechaUltima2" id="cancelarFechaUltima2" value="<?php echo $fecha->format("Y-m-d")?>"  required>
+                <input type="date" class="form-control input-md" name="cancelarFechaUltima2" id="cancelarFechaUltima2" value="<?php echo $fecha->format("Y-m-d")?>" min="<?php echo $fecha->format("Y-m-01")?>" required>
 
               </div>
 

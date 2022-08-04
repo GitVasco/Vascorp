@@ -107,7 +107,7 @@
                     <td style="text-align:center;">'.$venta["fecha"].'</td>
                     <td style="text-align:center;">'.$venta["descripcion"].'</td>
                     <td style="text-align:center;"></td>
-                    <td style="text-align:center;"></td>
+                    <td style="text-align:center;">'.$venta["fecha_vencimiento"].'</td>
                     <td style="text-align:center;"></td>
                 </tr>
 

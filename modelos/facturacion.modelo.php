@@ -8483,5 +8483,6 @@ class ModeloFacturacion{
         $stmt=null;
     
     }
+ 
 
 }

@@ -1881,4 +1881,23 @@ class ModeloPedidos{
 
 	}	
 
+    static public function mdlActualizarTotalPedido(){
+
+        $sql="UPDATE 
+				temporaljf 
+			SET
+				total = op_gravada + igv";
+    
+            $stmt=Conexion::conectar()->prepare($sql);
+    
+        if ($stmt->execute()) {    
+            return "ok";
+        } else {    
+            return "error";
+        }
+    
+        $stmt=null;
+    
+    }  	
+
 }
