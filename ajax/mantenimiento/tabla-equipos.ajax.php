@@ -47,6 +47,7 @@ class TablaEquipos{
             "'.$equipos[$i]["marca_equipo"].'",
             "'.$equipos[$i]["modelo_equipo"].'",
             "'.$equipos[$i]["serie_equipo"].'",
+            "'.$equipos[$i]["fec_ult_mant"].'",
             "'.$estado.'",
             "'.$botones.'"
             ],';        

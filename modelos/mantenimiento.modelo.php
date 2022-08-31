@@ -122,7 +122,9 @@ class ModeloMantenimiento{
                                                     e.modelo_caja,
                                                     e.serie_caja,
                                                     e.observaciones,
-                                                    e.estado 
+                                                    e.estado ,
+                                                    DATE(e.fec_pro_mant) AS fec_pro_mant,
+                                                    DATE(e.fec_ult_mant) AS fec_ult_mant 
                                                 FROM
                                                     equipos_jf e 
                                                 ORDER BY e.cod_tipo");

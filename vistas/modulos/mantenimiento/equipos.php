@@ -47,6 +47,7 @@
                         <th>Marca Equipo</th>
                         <th>Modelo Equipo</th>
                         <th>Serie Equipo</th>
+                        <th>Ult. Mantenimiento</th>
                         <th>Estado</th>
                         <th style="width:100px">Acciones</th>
 

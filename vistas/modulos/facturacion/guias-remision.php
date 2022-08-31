@@ -4,7 +4,7 @@
 
         <?php
 
-            if($_SESSION["id"] == "20" || $_SESSION["id"] == "6"){
+            if($_SESSION["id"] == "70" || $_SESSION["id"] == "6"){
 
                 echo '<h1>
 

@@ -2658,7 +2658,7 @@ class ModeloMovimientos{
          ventajf v 
        WHERE YEAR(v.fecha) = YEAR(NOW()) 
        AND v.tipo IN ('E05', 'S02', 'S03', 'S70','S05') 
-       AND v.vendedor <> '99' 
+       AND v.vendedor NOT IN ('99','23') 
        GROUP BY v.tipo,
          v.tipo_documento 
        UNION
@@ -2673,7 +2673,7 @@ class ModeloMovimientos{
          ventajf v 
        WHERE YEAR(v.fecha) = YEAR(NOW()) 
        AND v.tipo IN ('E05', 'S02', 'S03', 'S70','S05') 
-       AND v.vendedor <> '99' 
+       AND v.vendedor NOT IN ('99','23') 
        GROUP BY YEAR(v.fecha)");
 
          $stmt -> execute();
@@ -2698,7 +2698,7 @@ class ModeloMovimientos{
        WHERE YEAR(v.fecha) = YEAR(NOW()) 
          AND MONTH(v.fecha) = $mes 
          AND v.tipo IN ('E05', 'S02', 'S03', 'S70','S05') 
-         AND v.vendedor <> '99' 
+         AND v.vendedor NOT IN ('99','23') 
        GROUP BY v.tipo,
          v.tipo_documento 
        UNION
@@ -2714,7 +2714,7 @@ class ModeloMovimientos{
        WHERE YEAR(v.fecha) = YEAR(NOW()) 
          AND MONTH(v.fecha) = $mes 
          AND v.tipo IN ('E05', 'S02', 'S03', 'S70','S05') 
-         AND v.vendedor <> '99' 
+         AND v.vendedor NOT IN ('99','23') 
        GROUP BY YEAR(v.fecha),
          MONTH(fecha)");
 
@@ -2825,7 +2825,7 @@ class ModeloMovimientos{
                         AND (
                         IFNULL(p.pedidos, 0) + IFNULL(v.ventas, 0)
                         ) <> 0 
-                        AND m.codigo <> '99'");
+                        AND m.codigo NOT IN ('99','23')");
 
          $stmt -> execute();
 
@@ -2872,7 +2872,7 @@ class ModeloMovimientos{
                            AND (
                            IFNULL(p.pedidos, 0) + IFNULL(v.ventas, 0)
                            ) <> 0 
-                           AND m.codigo <> '99'");
+                           AND m.codigo NOT IN ('99','23')");
 
          $stmt -> execute();
 

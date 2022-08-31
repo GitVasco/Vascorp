@@ -479,6 +479,9 @@ $("#nuevaMarca").change(function(){
 	else if(marca=="4"){
 		$("#nuevoTipo").html("<option value=''>Seleccionar Tipo</option><option value='SK'>SK</option>");
 	}
+	else if(marca=="9"){
+		$("#nuevoTipo").html("<option value=''>Seleccionar Tipo</option><option value='SESGO'>SESGO</option>");
+	}
 });
 
 //Ingresar readonly para precios 
