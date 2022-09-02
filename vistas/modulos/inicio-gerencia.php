@@ -277,7 +277,7 @@
 
             <div class="box box-primary">
                 <div class="box-header with-border"></div>
-                <center><b>Resumen de gestión<button class='btn btn-primary btn-xs btnMontoAno' title='Pedidos' vendedor=''>Monto Por Año</button></b></center>
+                <center><b>Resumen de gestión<button class='btn btn-primary btn-xs btnMontoAno' title='Pedidos' vendedor=''>Monto Por Año</button> <button class='btn btn-info btn-xs ml-2 btnRptResCobMes' title='Cobranza' mes=<?php echo isset($_GET["mes"]) ? $_GET["mes"] : "TODO" ?> >Resumen de Cobranza</button></b></center>
 
                 <div class="box-body no-padding">
                     <table class="table table-bordered table-striped dt-responsive tablaRangos" width="100%"> 

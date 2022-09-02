@@ -309,6 +309,17 @@ class ControladorMovimientos{
 
     }
 
+    /*
+    * MOSTRAR RESUMEN DE VENTAS
+    */
+    static public function ctrMostrarResumenCobs($mes){
+
+        $respuesta = ModeloMovimientos::mdlMostrarResumenCobs($mes);
+
+        return $respuesta;
+
+    }
+
     /* 
     * MOSTRAR RESUMEN DE VENTAS POR VENDEDOR
     */

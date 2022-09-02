@@ -2787,6 +2787,65 @@ class ModeloMovimientos{
 
 	}   
 
+	static public function mdlMostrarResumenCobs($mes){
+
+      if( $mes == "null" || $mes == "TODO"){
+
+         $stmt = Conexion::conectar()->prepare("SELECT 
+                                    cc.vendedor,
+                                    (SELECT 
+                                    descripcion 
+                                    FROM
+                                    maestrajf m 
+                                    WHERE m.tipo_dato = 'TVEND' 
+                                    AND m.codigo = cc.vendedor) AS nom_vendedor,
+                                    SUM(cc.monto) AS monto 
+                                 FROM
+                                    cuenta_ctejf cc 
+                                 WHERE YEAR(cc.fecha) = YEAR(NOW()) 
+                                    AND cc.tip_mov = '-' 
+                                    AND cc.cod_pago IN ('00', '05', '06', '14', '80', '82', 'TR') 
+                                 GROUP BY cc.vendedor");
+
+         $stmt -> execute();
+
+         return $stmt -> fetchAll();
+
+         $stmt -> close();
+
+         $stmt = null;
+
+      }else{
+
+         $stmt = Conexion::conectar()->prepare("SELECT 
+                              cc.vendedor,
+                              (SELECT 
+                              descripcion 
+                              FROM
+                              maestrajf m 
+                              WHERE m.tipo_dato = 'TVEND' 
+                              AND m.codigo = cc.vendedor) AS nom_vendedor,
+                              SUM(cc.monto) AS monto 
+                           FROM
+                              cuenta_ctejf cc 
+                           WHERE YEAR(cc.fecha) = YEAR(NOW()) 
+                              AND MONTH(cc.fecha) = $mes
+                              AND cc.tip_mov = '-' 
+                              AND cc.cod_pago IN ('00', '05', '06', '14', '80', '82', 'TR') 
+                           GROUP BY cc.vendedor");
+
+         $stmt -> execute();
+
+         return $stmt -> fetchAll();
+
+         $stmt -> close();
+
+         $stmt = null;
+
+      }
+
+	}      
+
 	static public function mdlMostrarResumenVdor($mes){
 
       if( $mes == "null" || $mes == "TODO"){

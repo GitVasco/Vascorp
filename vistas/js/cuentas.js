@@ -2338,6 +2338,16 @@ $(".btnRptResVtaMes").click(function(){
 })
 
 
+$(".btnRptResCobMes").click(function(){
+
+  var mes = $(this).attr("mes");
+  console.log(mes);
+
+  window.open("vistas/reportes_ticket/reporte_resumen_cobs.php?mes="+ mes,"_blank");
+
+})
+
+
 $("#btnCargarPagos").click(function(){
 
     let clientePagos = document.getElementById("CodCliBtn").value;
