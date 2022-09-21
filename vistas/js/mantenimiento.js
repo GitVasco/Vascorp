@@ -648,3 +648,11 @@ $(".tablaCalendario").on("click",".btnAnularCalendario",function(){
 	})
 
 });
+
+
+//Reporte de Salidas
+$(".box").on("click", ".btnReporteEquipos", function () {
+    
+    window.location = "vistas/reportes_excel/rpt_maquinas.php";
+  
+})

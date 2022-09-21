@@ -305,7 +305,7 @@
         }
 
         //*todo: 4 paginas
-        else if($cantidadLetras > 180 && $cantidadLetras <= 200){
+        else if($cantidadLetras > 180 && $cantidadLetras <= 240){
 
             echo $cabeceraGlobal;
 
