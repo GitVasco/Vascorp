@@ -65,6 +65,7 @@ class ModeloCortes{
                                                     a.nombre,
                                                     a.cod_color,
                                                     a.color,
+                                                    a.estado,
                                                     SUM(
                                                     CASE
                                                         WHEN a.cod_talla = 1
@@ -128,7 +129,8 @@ class ModeloCortes{
                                                 AND a.modelo = '".$modeloCorte."'
                                                 GROUP BY a.modelo,
                                                     a.cod_color,
-                                                    a.color");
+                                                    a.color,
+                                                    a.estado");
 
 		$stmt -> execute();
 
@@ -139,6 +141,7 @@ class ModeloCortes{
                                                     a.nombre,
                                                     a.cod_color,
                                                     a.color,
+                                                    a.estado,
                                                     SUM(
                                                     CASE
                                                         WHEN a.cod_talla = 1
@@ -201,7 +204,8 @@ class ModeloCortes{
                                                 WHERE a.alm_corte > 0
                                                 GROUP BY a.modelo,
                                                     a.cod_color,
-                                                    a.color");
+                                                    a.color,
+                                                    a.estado");
 
 		$stmt -> execute();
 

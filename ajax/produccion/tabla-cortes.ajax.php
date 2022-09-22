@@ -106,10 +106,21 @@ class TablaCortes{
 
                 }
 
+                if( $cortes[$i]["estado"] == "Activo" ){
+
+                    $estado = "<center><b><span class='text-success'>Activo</span></b></center>";
+        
+                }else{
+        
+                    $estado = "<center><b><span class='text-danger'>Descontinuado</span></b></center>";
+                    
+                }
+
                 $datosJson .= '[
                 "<b><center>'.$cortes[$i]["modelo"].'</center></b>",
                 "'.$cortes[$i]["nombre"].'",
                 "'.$cortes[$i]["color"].'",
+                "'.$estado.'",
                 "<center>'.$t1.'</center>",
                 "<center>'.$t2.'</center>",
                 "<center>'.$t3.'</center>",

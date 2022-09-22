@@ -487,7 +487,7 @@ header("Content-Type: application/vnd.ms-excel");
 
 
 # Nombre del archivo
-header('Content-Disposition: attachment; filename=" ASISTENCIAS - '.$fecha.'.xls"');
+header('Content-Disposition: attachment; filename=" Maquinas - '.$fecha.'.xls"');
 
 
 //forzar a descarga por el navegador

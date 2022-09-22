@@ -56,6 +56,7 @@
                 <th></th>
                 <th></th>
                 <th></th>
+                <th></th>
                 <th style="text-align: center">S</th>
                 <th style="text-align: center">M</th>
                 <th style="text-align: center">L</th>
@@ -70,6 +71,7 @@
 
             <tr>
 
+                <th></th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -90,6 +92,7 @@
                 <th><center>Modelo</center></th>
                 <th>Nombre</th>
                 <th>Color</th>
+                <th>Estado</th>
                 <th style="text-align: center">3</th>
                 <th style="text-align: center">4</th>
                 <th style="text-align: center">6</th>
