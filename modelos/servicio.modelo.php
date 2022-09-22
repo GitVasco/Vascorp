@@ -425,6 +425,7 @@ class ModeloServicios{
 			a.color,
 			se.cod_sector,
 			se.nom_sector,
+			a.estado,
 			SUM(
 			  CASE
 				WHEN a.cod_talla = '1' 
@@ -495,7 +496,8 @@ class ModeloServicios{
 			a.modelo,
 			a.nombre,
 			a.cod_color,
-			a.color
+			a.color,
+			a.estado
 		  HAVING SUM(sd.saldo) > 0");
 	
 			$stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
@@ -512,6 +514,7 @@ class ModeloServicios{
 			a.color,
 			se.cod_sector,
 			se.nom_sector,
+			a.estado,
 			SUM(
 			  CASE
 				WHEN a.cod_talla = '1' 
@@ -582,7 +585,8 @@ class ModeloServicios{
 			a.modelo,
 			a.nombre,
 			a.cod_color,
-			a.color
+			a.color,
+			a.estado
 			HAVING SUM(sd.saldo) > 0
 			ORDER BY a.modelo ASC
 		   ");

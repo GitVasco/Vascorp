@@ -325,6 +325,7 @@ class ModeloCierres{
 		a.color,
 		se.cod_sector,
 		se.nom_sector,
+		a.estado,
 		SUM(
 		  CASE
 			WHEN a.cod_talla = '1' 
@@ -395,7 +396,8 @@ class ModeloCierres{
 		a.modelo,
 		a.nombre,
 		a.cod_color,
-		a.color");
+		a.color,
+		a.estado");
 
 		$stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
 
@@ -412,6 +414,7 @@ class ModeloCierres{
 		a.color,
 		se.cod_sector,
 		se.nom_sector,
+		a.estado,
 		SUM(
 		  CASE
 			WHEN a.cod_talla = '1' 
@@ -481,7 +484,9 @@ class ModeloCierres{
 		a.modelo,
 		a.nombre,
 		a.cod_color,
-		a.color");
+		a.color,
+		a.estado
+		HAVING SUM(sd.cantidad)>0");
 
 		$stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
 

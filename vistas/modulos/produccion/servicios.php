@@ -28,7 +28,7 @@
           </button>
         </a>
         <button class="btn btn-info btnServicioDeta" data-toggle='modal' data-target='#modalVerServicioDeta' codigoServicio><i class="fa fa-eye"></i> Ver servicios</button>
-        <button class="btn btn-outline-success  btnReporteAlmacen"  style="border:green 1px solid">
+        <button class="btn btn-outline-success  btnReporteServicios"  style="border:green 1px solid">
                       <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Servicios  </button>
         <button type="button" class="btn btn-default pull-right" id="daterange-btnServicios">
             <span>

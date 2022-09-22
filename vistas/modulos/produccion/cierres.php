@@ -28,7 +28,7 @@
           </button>
         </a>
         <button class="btn btn-info btnCierreDeta" data-toggle='modal' data-target='#modalVerCierreDeta' codigoServicio><i class="fa fa-eye"></i> Ver cierres</button>
-        <button class="btn btn-outline-success btnReporteAlmacen"  style="border:green 1px solid">
+        <button class="btn btn-outline-success btnReporteCierre"  style="border:green 1px solid">
                       <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Cierres  </button>
 
         <button type="button" class="btn btn-default pull-right" id="daterange-btnCierres">

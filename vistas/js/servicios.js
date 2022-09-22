@@ -1413,3 +1413,9 @@ $(".tablaPagoServicios").on("click",".btnVerEtiqueta",function(){
     });
     
 });
+
+$(".box").on("click", ".btnReporteServicios", function () {
+
+  window.location = "vistas/reportes_excel/rpt_servicios.php";
+
+})

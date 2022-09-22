@@ -1071,3 +1071,10 @@ $(".tablaArticuloCierre tbody").on("click", "button.btnCerrarServicio", function
     })
 
 })
+
+
+$(".box").on("click", ".btnReporteCierre", function () {
+
+  window.location = "vistas/reportes_excel/rpt_cierres.php";
+
+})
