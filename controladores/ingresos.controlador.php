@@ -1037,4 +1037,59 @@ class ControladorIngresos{
 
 
     }    
+
+    //* Editar Ingreso
+    static public function ctrEditarIngresoB(){
+
+        if(isset($_POST["codigo"])){
+
+            //*Datos
+            $codigo     = $_POST["codigo"];
+            $articulo   = $_POST["articulo"];
+            $cantidadO  = $_POST["cantidadO"];
+            $cantidad   = $_POST["cantidad"];
+            $saldo      = $_POST["saldo"];
+            $sector     = $_POST["sector"];
+            $idcierre   = $_POST["idcierre"];
+            $usureg     = $_SESSION["nombre"];
+            $pcreg      = gethostbyaddr($_SERVER['REMOTE_ADDR']); 
+
+            $stock = ($cantidadO * -1) + $cantidad;
+            $prod = $cantidadO - $cantidad;
+
+            if($sector = "externo"){
+                $actCierre = ModeloIngresos::mdlactualizarCierre($idcierre, $saldo);
+            }
+
+            $actStock = ModeloIngresos::mdlactualizarStock($sector, $articulo, $stock, $prod);            
+
+            $actMov = ModeloIngresos::mdlactualizarMovimiento($codigo, $articulo, $cantidadO, $cantidad);
+
+            if($actMov == "ok"){
+
+                echo'<script>
+
+                swal({
+                    type: "success",
+                    title: "El movimiento se edito correctamente",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+                    }).then(function(result){
+                                if (result.value) {
+
+                                window.location = "ingresos";
+
+                                }
+                            })
+
+                </script>';
+
+            }
+
+
+
+        }
+
+    }    
+
 }

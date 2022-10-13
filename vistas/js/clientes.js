@@ -344,7 +344,8 @@ function ObtenerDatosDni(){
 		processData: false,
 		dataType: "json",
 		success:function( jsonx ) {
-			// console.log(jsonx);
+			//console.log(jsonx["data"]);
+
 			if(jsonx["success"]==false){
 				$('#nuevaRazPro').val("");
 				$('#ape_paterno').val("");
@@ -352,10 +353,13 @@ function ObtenerDatosDni(){
 				$("#nombres").val("");
 				
 			}else{
-				$('#nuevaRazPro').val(jsonx["apellidoPaterno"] +" "+jsonx["apellidoMaterno"] +" "+jsonx["nombres"]);
-				$('#ape_paterno').val(jsonx["apellidoPaterno"]);
-				$("#ape_materno").val(jsonx["apellidoMaterno"]);
-				$("#nombres").val(jsonx["nombres"]);
+
+				const datos = jsonx["data"];
+
+				$('#nuevaRazPro').val(datos["apellido_paterno"] +" "+datos["apellido_materno"] +" "+datos["nombres"]);
+				$('#ape_paterno').val(datos["apellido_paterno"]);
+				$("#ape_materno").val(datos["apellido_materno"]);
+				$("#nombres").val(datos["nombres"]);
 			}
 		  
 		}

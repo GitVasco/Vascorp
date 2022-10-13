@@ -52,7 +52,7 @@ class AjaxClientes{
 
 		$valor=$this->nuevoDni;
 
-		$ws = file_get_contents("https://dniruc.apisperu.com/api/v1/dni/$valor?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imp2bWVkcmFub2dAZ21haWwuY29tIn0.aJ4UMqJYgW-79qjsdRCAL7PkPYIKId2Ra96stYWi_4c");
+		$ws = file_get_contents("https://apiperu.dev/api/dni/$valor?api_token=201e8d38c22bfc0524af033a1ec4702e62cb6a74489d9e07bd59e812e6e818e8");
 
 
 		echo $ws;

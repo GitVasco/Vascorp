@@ -1130,5 +1130,127 @@ class ModeloIngresos{
 		
 	}
 
+	static public function editarDetalleIngreso($codigo){
+
+		$sql="SELECT 
+		m.articulo,
+		a.modelo,
+		a.nombre,
+		a.cod_color,
+		a.color,
+		a.cod_talla,
+		a.talla,
+		a.marca,
+		m.idcierre,
+		m.cantidad,
+		CASE
+		  WHEN m.idcierre = 0 
+		  THEN a.alm_corte 
+		  ELSE c.cantidad 
+		END AS saldo 
+	  FROM
+		movimientosjf_2021 m 
+		LEFT JOIN articulojf a 
+		  ON m.articulo = a.articulo 
+		LEFT JOIN cierres_detallejf c 
+		  ON m.idcierre = c.id 
+	  WHERE m.documento = '$codigo'";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt=null;
+
+
+	}
+
+	/* 
+	* ACTUALIZAR STOCK
+	*/
+	static public function mdlactualizarStock($sector, $articulo, $stock, $prod){
+
+		if($sector == "externo"){
+
+			$sql="UPDATE 
+					articulojf 
+					SET
+					stock = stock + $stock ,
+					servicio = servicio + $prod
+					WHERE articulo = '$articulo' ";
+
+		}else{
+			
+			$sql="UPDATE 
+					articulojf 
+					SET
+					stock = stock + $stock ,
+					alm_taller = alm_taller + $prod
+					WHERE articulo = '$articulo' ";
+
+		}
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		}
+
+		$stmt=null;
+		
+	}
+
+	/* 
+	* ACTUALIZAR CIERRE
+	*/
+	static public function mdlactualizarCierre($cierre, $saldo){
+
+		$sql="UPDATE cierres_detallejf SET cantidad = $saldo WHERE id='$cierre'";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		}
+
+		$stmt=null;
+		
+	}	
+
+
+	/* 
+	* ACTUALIZAR CIERRE
+	*/
+	static public function mdlactualizarMovimiento($codigo, $articulo, $cantidadO, $cantidad){
+
+		$sql="UPDATE movimientosjf_2021 SET cantidad = $cantidad WHERE documento='$codigo' AND articulo='$articulo' AND cantidad=$cantidadO";
+
+		$stmt=Conexion::conectar()->prepare($sql);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		}
+
+		$stmt=null;
+		
+	}	
+
 
 }

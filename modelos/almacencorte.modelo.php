@@ -716,7 +716,7 @@ class ModeloAlmacenCorte{
 			LEFT JOIN articulojf a 
 			  ON dac.articulo = a.articulo
 			LEFT JOIN almacencortejf da
- 			  ON dac.almacencorte=da.codigo
+ 			  ON dac.almacencorte=da.guia
 		  GROUP BY dac.almacencorte,
 			a.modelo,
 			a.nombre,
@@ -798,7 +798,7 @@ class ModeloAlmacenCorte{
 			LEFT JOIN articulojf a 
 			  ON dac.articulo = a.articulo 
 			LEFT JOIN almacencortejf da
- 			  ON dac.almacencorte=da.codigo
+ 			  ON dac.almacencorte=da.guia
 			WHERE DATE(da.fecha) like '%$fechaFinal%'
 		  GROUP BY dac.almacencorte,
 			a.modelo,
@@ -892,7 +892,7 @@ class ModeloAlmacenCorte{
 				LEFT JOIN articulojf a 
 				  ON dac.articulo = a.articulo
 				LEFT JOIN almacencortejf da
- 			  	  ON dac.almacencorte=da.codigo
+ 			  	  ON dac.almacencorte=da.guia
 				WHERE DATE(da.fecha) BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'
 			  GROUP BY dac.almacencorte,
 				a.modelo,
@@ -971,7 +971,7 @@ class ModeloAlmacenCorte{
 				LEFT JOIN articulojf a 
 				  ON dac.articulo = a.articulo 
 				LEFT JOIN almacencortejf da
- 				  ON dac.almacencorte=da.codigo
+ 				  ON dac.almacencorte=da.guia
 				WHERE DATE(da.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'
 			  GROUP BY dac.almacencorte,
 				a.modelo,

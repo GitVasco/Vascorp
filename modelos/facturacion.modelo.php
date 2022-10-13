@@ -1566,7 +1566,9 @@ class ModeloFacturacion{
       LEFT JOIN ubigeojf u
       ON c.ubigeo = u.cod_ubi
   WHERE v.tipo = 'S03'
-      AND YEAR(v.fecha) = 2022";
+      AND YEAR(v.fecha) = 2022
+      ORDER BY v.fecha DESC,
+  v.documento DESC";
 
       $stmt=Conexion::conectar()->prepare($sql);
       
@@ -1610,7 +1612,9 @@ class ModeloFacturacion{
       LEFT JOIN ubigeojf u
       ON c.ubigeo = u.cod_ubi
   WHERE v.tipo = 'S03'
-      AND DATE(v.fecha)  like '%$fechaFinal%' ";
+      AND DATE(v.fecha)  like '%$fechaFinal%'
+      ORDER BY v.fecha DESC,
+  v.documento DESC ";
 
       $stmt=Conexion::conectar()->prepare($sql);
 
@@ -1664,7 +1668,9 @@ class ModeloFacturacion{
         LEFT JOIN ubigeojf u
         ON c.ubigeo = u.cod_ubi
     WHERE v.tipo = 'S03'
-        AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'";
+        AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'
+        ORDER BY v.fecha DESC,
+  v.documento DESC";
 
       $stmt=Conexion::conectar()->prepare($sql);
 
@@ -1710,7 +1716,10 @@ class ModeloFacturacion{
         LEFT JOIN ubigeojf u
         ON c.ubigeo = u.cod_ubi
     WHERE v.tipo = 'S03'
-        AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'";
+        AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'
+        ORDER BY v.fecha DESC,
+  v.documento DESC
+        ";
 
         $stmt=Conexion::conectar()->prepare($sql);
 
@@ -1768,7 +1777,9 @@ class ModeloFacturacion{
       LEFT JOIN ubigeojf u
       ON c.ubigeo = u.cod_ubi
   WHERE v.tipo = 'S02'
-      AND YEAR(v.fecha) = 2022";
+      AND YEAR(v.fecha) = 2022
+      ORDER BY v.fecha DESC,
+  v.documento DESC";
 
       $stmt=Conexion::conectar()->prepare($sql);
       
@@ -1812,7 +1823,9 @@ class ModeloFacturacion{
       LEFT JOIN ubigeojf u
       ON c.ubigeo = u.cod_ubi
   WHERE v.tipo = 'S02'
-      AND DATE(v.fecha)  like '%$fechaFinal%' ";
+      AND DATE(v.fecha)  like '%$fechaFinal%' 
+      ORDER BY v.fecha DESC,
+  v.documento DESC";
 
       $stmt=Conexion::conectar()->prepare($sql);
 
@@ -1866,7 +1879,9 @@ class ModeloFacturacion{
         LEFT JOIN ubigeojf u
         ON c.ubigeo = u.cod_ubi
     WHERE v.tipo = 'S02'
-        AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'";
+        AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'
+        ORDER BY v.fecha DESC,
+  v.documento DESC";
 
       $stmt=Conexion::conectar()->prepare($sql);
 
@@ -1912,7 +1927,9 @@ class ModeloFacturacion{
         LEFT JOIN ubigeojf u
         ON c.ubigeo = u.cod_ubi
     WHERE v.tipo = 'S02'
-        AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'";
+        AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'
+        ORDER BY v.fecha DESC,
+  v.documento DESC";
 
         $stmt=Conexion::conectar()->prepare($sql);
 

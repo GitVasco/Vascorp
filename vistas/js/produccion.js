@@ -874,3 +874,51 @@ $(".btnTotT").click(function(){
 	$(".btnT1").addClass("btn-default");
 
 })
+
+// EDITAR OPERACIÓN
+$(".tablaEditarDetalleIngreso ").on("click","button.btnEditarDetalleIngreso",function(){
+
+	var codigo =$(this).attr("codigo");
+	var articulo =$(this).attr("articulo");
+	var modelo =$(this).attr("modelo");
+	var nombre =$(this).attr("nombre");
+	var color =$(this).attr("color");
+	var talla =$(this).attr("talla");
+	var cantidad =$(this).attr("cantidad");
+	var saldo =$(this).attr("saldo");
+	var idcierre =$(this).attr("idcierre");
+	var sector =$(this).attr("sector");
+
+	var maximo = Number(cantidad) + Number(saldo);
+	document.getElementById("cantidad").setAttribute("max", maximo);
+
+	$("#articulo").val(articulo);
+	$("#modelo").val(modelo);
+	$("#nombre").val(nombre);
+	$("#color").val(color);
+	$("#talla").val("T - " + talla);
+	$("#cantidad").val(cantidad);
+	$("#saldo").val(saldo);
+	$("#cantidadO").val(cantidad);
+	$("#saldoO").val(saldo);
+	$("#codigo").val(codigo);
+	$("#idcierre").val(idcierre);
+	$("#sector").val(sector);
+
+});
+
+
+$("#cantidad").change(function(){
+
+	const cantidadO = document.getElementById("cantidadO").value;
+
+	const cantidad = document.getElementById("cantidad").value;
+	const saldo = document.getElementById("saldoO").value;
+
+	const cantTotal = Number(cantidadO) + Number(saldo);
+	
+	let nuevoSaldo = cantTotal - Number(cantidad);
+
+	$("#saldo").val(nuevoSaldo);
+
+});
