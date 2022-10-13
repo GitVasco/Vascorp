@@ -1077,7 +1077,7 @@ class ControladorIngresos{
                     }).then(function(result){
                                 if (result.value) {
 
-                                window.location = "ingresos";
+                                window.location = "ingresos+";
 
                                 }
                             })
