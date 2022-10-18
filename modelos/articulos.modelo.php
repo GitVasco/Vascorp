@@ -2005,7 +2005,6 @@ class ModeloArticulos
 					) > (a.stock - a.pedidos) 
 					AND a.estado = 'Activo' 
 					AND LEFT(a.modelo, 1) NOT IN ('D') 
-					AND a.servicio = 0 
 					AND m.tipo NOT IN ('BRASIER') 
 				UNION
 				SELECT 
@@ -2186,7 +2185,7 @@ class ModeloArticulos
 					) > (a.stock - a.pedidos) 
 					AND a.estado = 'Activo' 
 					AND LEFT(a.modelo, 1) NOT IN ('D') 
-					AND m.tipo IN ('BRASIER') 
+					AND m.tipo IN ('BRASIER','TOP') 
 				ORDER BY inicio,
 					nom_taller,
 					articulo");
