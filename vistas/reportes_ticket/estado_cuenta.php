@@ -39,6 +39,7 @@
                             <tr>
                         
                                 <th style="text-align:left;" colspan="11">CORPORACION VASCO S.A.C.</th>
+                                <img src="../../vistas/img/plantilla/jackyform_paloma2.png" width="200px" height="100px">
                         
                             </tr>
 

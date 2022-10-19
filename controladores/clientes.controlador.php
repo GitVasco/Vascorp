@@ -145,9 +145,7 @@ class ControladorClientes{
 
 	static public function ctrEditarCliente(){
 
-		if(isset($_POST["editarCodigoCliente"])){
-
-			
+		if(isset($_POST["editarCodigoCliente"])){			
 
 			   	$tabla = "clientesjf";
 				$interruptores= array("'",'"',"´");
@@ -163,6 +161,12 @@ class ControladorClientes{
 				$email 					= str_replace($interruptores, "", $_POST["editarEmail"]);
 				$contacto 				= str_replace($interruptores, "", $_POST["editarContacto"]);
 
+				if(!isset($_POST["editarUbigeoDespacho"])){
+					$editarUbigeoDespacho = '';
+				}else{
+					$editarUbigeoDespacho = $_POST["editarUbigeoDespacho"];
+				}
+
 
 				$datos = array(	"codigoCliente"		=>$codigo,
 								"nombre"			=>$nombre,
@@ -175,7 +179,7 @@ class ControladorClientes{
 								"direccion"			=>$direccion,
 								"direccion_despacho"=>$direccionDespacho,
 								"ubigeo"			=>$_POST["editarUbigeo"],
-								"ubigeo_despacho"	=>$_POST["editarUbigeoDespacho"],
+								"ubigeo_despacho"	=>$editarUbigeoDespacho,
 								"telefono"			=>$telefono1,
 								"telefono2"			=>$telefono2,
 								"email"				=>$email,
