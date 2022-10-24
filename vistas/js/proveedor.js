@@ -205,6 +205,9 @@ function ObtenerDatosRuc(){
 				$("#nuevoUbiPro").selectpicker("refresh");
 				
 			}else{
+
+				
+
 				$('#nuevaRazPro').val(jsonx["razonSocial"]);
 				$('#nuevaDireccion').val(jsonx["direccion"]);
 				$("#nuevoUbiPro").val(jsonx["ubigeo"]);
