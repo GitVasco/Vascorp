@@ -380,7 +380,7 @@ function ObtenerDatosRuc2(){
 		processData: false,
 		dataType: "json",
 		success:function( jsonx ) {
-			// console.log(jsonx);
+			//console.log(jsonx);
 			if(jsonx["success"]==false){
 				$('#nuevaRazPro').attr('readonly',false);
 				$('#nuevaRazPro').val("");
@@ -389,9 +389,12 @@ function ObtenerDatosRuc2(){
 				$("#nuevoUbiPro").selectpicker("refresh");
 				
 			}else{
-				$('#nuevaRazPro').val(jsonx["razonSocial"]);
-				$('#nuevaDireccion').val(jsonx["direccion"]);
-				$("#nuevoUbiPro").val(jsonx["ubigeo"]);
+
+				var data = jsonx["data"];
+
+				$('#nuevaRazPro').val(data["nombre_o_razon_social"]);
+				$('#nuevaDireccion').val(data["direccion"]);
+				$("#nuevoUbiPro").val(data["ubigeo_sunat"]);
 				$("#nuevoUbiPro").selectpicker("refresh");
 			}
 		  

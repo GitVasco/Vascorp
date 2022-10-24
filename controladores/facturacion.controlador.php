@@ -3235,7 +3235,7 @@ class ControladorFacturacion{
             
             fclose($fp); 
 
-            $origen = 'c:/xampp/htdocs/vascorp/vistas/reportes_excel/csv_fe/'.$nombre.'.txt';
+            $origen = 'c:/xampp2/htdocs/vascorp/vistas/reportes_excel/csv_fe/'.$nombre.'.txt';
 
             if($datos["c1"] == "01"){
 
@@ -3484,7 +3484,7 @@ class ControladorFacturacion{
             
             fclose($fp); 
 
-            $origen = 'c:/xampp/htdocs/vascorp/vistas/reportes_excel/csv_fe/'.$nombre.'.txt';
+            $origen = 'c:/xampp2/htdocs/vascorp/vistas/reportes_excel/csv_fe/'.$nombre.'.txt';
 
             if($datos["c1"] == "01"){
 

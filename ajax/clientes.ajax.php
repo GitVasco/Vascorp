@@ -52,10 +52,24 @@ class AjaxClientes{
 
 		$valor=$this->nuevoDni;
 
-		$ws = file_get_contents("https://apiperu.dev/api/dni/$valor?api_token=201e8d38c22bfc0524af033a1ec4702e62cb6a74489d9e07bd59e812e6e818e8");
+/* 		$ws = file_get_contents("https://apiperu.dev/api/dni/$valor?api_token=201e8d38c22bfc0524af033a1ec4702e62cb6a74489d9e07bd59e812e6e818e8");
+		echo $ws; */
 
-
-		echo $ws;
+		$curl = curl_init();
+		curl_setopt_array($curl, array(
+			CURLOPT_URL => "https://apiperu.dev/api/dni/$valor?api_token=201e8d38c22bfc0524af033a1ec4702e62cb6a74489d9e07bd59e812e6e818e8",
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_CUSTOMREQUEST => "GET",
+			CURLOPT_SSL_VERIFYPEER => false
+		));
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+		curl_close($curl);
+		if ($err) {
+			echo "cURL Error #:" . $err;
+		} else {
+			echo $response;
+		}		
 
 	}
 

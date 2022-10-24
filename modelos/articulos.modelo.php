@@ -576,7 +576,7 @@ class ModeloArticulos
 		  FROM
 			articulojf a 
 		  WHERE a.estado = 'ACTIVO' 
-			AND a.marca IN ('JACKYFORM', 'VASCO', 'GUAPITAS') 
+			AND a.marca IN ('JACKYFORM', 'VASCO', 'GUAPITAS','ROSALINDA','ROSITAS','JOSXX')
 		  ORDER BY a.articulo ASC");
 
 			$stmt->bindParam(":modelo", $modelo, PDO::PARAM_STR);
@@ -647,7 +647,7 @@ class ModeloArticulos
 		  FROM
 			articulojf a 
 		  WHERE a.estado = 'ACTIVO' 
-			AND a.marca IN ('JACKYFORM', 'VASCO', 'GUAPITAS') 
+			AND a.marca IN ('JACKYFORM', 'VASCO', 'GUAPITAS','ROSALINDA','ROSITAS','JOSXX')
 			AND a.modelo = :valor
 		  ORDER BY a.articulo ASC");
 
