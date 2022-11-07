@@ -1,25 +1,26 @@
 <?php
 require_once "conexion.php";
 
-class ModeloAlmacenCorte{
+class ModeloAlmacenCorte
+{
 
-  	/*
+	/*
 	* Método para sacar el ultimo codigo del almacen de corte
 	*/
-	static public function mdlUltimoCodigoAC(){
+	static public function mdlUltimoCodigoAC()
+	{
 
-        $stmt = Conexion::conectar()->prepare("CALL sp_1054_almcorte_ultcod()");
+		$stmt = Conexion::conectar()->prepare("CALL sp_1054_almcorte_ultcod()");
 
 		$stmt->execute();
 
 		return $stmt->fetch();
 
-		$stmt=null;
-
-
+		$stmt = null;
 	}
 
-	static public function mdlMostarArticulosOrdCorte(){
+	static public function mdlMostarArticulosOrdCorte()
+	{
 
 		$stmt = Conexion::conectar()->prepare("CALL sp_1055_articulos_ordcorte()");
 
@@ -34,7 +35,8 @@ class ModeloAlmacenCorte{
 	/*
 	* Método para actualizar el total del corte por articulo
 	*/
-	static public function mdlActualizarAlmCorte($valor, $valor1){
+	static public function mdlActualizarAlmCorte($valor, $valor1)
+	{
 
 		$stmt = Conexion::conectar()->prepare("CALL sp_1056_update_articulos_almcorte_p(:valor, :valor1)");
 
@@ -44,13 +46,13 @@ class ModeloAlmacenCorte{
 		$stmt->execute();
 
 		$stmt = null;
-
 	}
 
-		/*
+	/*
 	* Método para recuperar el total del corte por articulo
 	*/
-	static public function mdlRecuperarAlmCorte($valor, $valor1){
+	static public function mdlRecuperarAlmCorte($valor, $valor1)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE 
 			articulojf 
@@ -64,13 +66,13 @@ class ModeloAlmacenCorte{
 		$stmt->execute();
 
 		$stmt = null;
-
 	}
 
-		/*
+	/*
 	* Método para recuperar el total del corte por articulo -ORD CORTE
 	*/
-	static public function mdlRecuperarOrdCorte($valor, $valor1){
+	static public function mdlRecuperarOrdCorte($valor, $valor1)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE 
 		articulojf 
@@ -85,13 +87,13 @@ class ModeloAlmacenCorte{
 		$stmt->execute();
 
 		$stmt = null;
-
 	}
 
-		/*
+	/*
 	* Método para recuperar los saldos de detalle de ordenes de corte
 	*/
-	static public function mdlRecuperarSaldoOrdCorte($valor, $valor1, $valor2){
+	static public function mdlRecuperarSaldoOrdCorte($valor, $valor1, $valor2)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE 
 		detalles_ordencortejf 
@@ -108,13 +110,13 @@ class ModeloAlmacenCorte{
 		$stmt->execute();
 
 		$stmt = null;
-
 	}
 
 	/*
 	* Método para actualizar los saldos de detalle de ordenes de corte
 	*/
-	static public function mdlActualizarSaldoOrdCorte($valor, $valor1, $valor2){
+	static public function mdlActualizarSaldoOrdCorte($valor, $valor1, $valor2)
+	{
 
 		$stmt = Conexion::conectar()->prepare("CALL sp_1057_update_ordencorte_saldo_p(:valor, :valor1, :valor2)");
 
@@ -125,115 +127,134 @@ class ModeloAlmacenCorte{
 		$stmt->execute();
 
 		$stmt = null;
+	}
 
+	/*
+	* Método para actualizar los saldos de detalle de ordenes de corte
+	*/
+	static public function mdlActualizarSaldoOrdCorteB($valor, $valor1, $valor2)
+	{
+
+		$stmt = Conexion::conectar()->prepare("  UPDATE 
+		detalles_ordencortejf 
+	  SET
+		saldo = saldo - :valor2,
+		estado = 0 
+	  WHERE ordencorte = :valor1
+		AND articulo = :valor");
+
+		$stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
+		$stmt->bindParam(":valor1", $valor1, PDO::PARAM_STR);
+		$stmt->bindParam(":valor2", $valor2, PDO::PARAM_STR);
+
+		$stmt->execute();
+
+		$stmt = null;
 	}
 
 	/*
 	* Método para actualizar los saldos de ordenes de corte
 	*/
-	static public function mdlActualizarSaldoOrdCorteGral(){
+	static public function mdlActualizarSaldoOrdCorteGral()
+	{
 
 		$stmt = Conexion::conectar()->prepare("CALL sp_1058_update_ordencorte_saldo()");
 
 		$stmt->execute();
 
 		$stmt = null;
-
 	}
 
 	/*
 	* Guardar cabecera de Almacen DE CORTE
 	*/
-	static public function mdlGuardarAlmacenCorte($datos){
+	static public function mdlGuardarAlmacenCorte($datos)
+	{
 
-		$sql="CALL sp_1059_insert_almcorte_p(:codigo, :guia, :usuario, :total, :estado)";
+		$sql = "CALL sp_1059_insert_almcorte_p(:codigo, :guia, :usuario, :total, :estado)";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->bindParam(":codigo",$datos["codigo"],PDO::PARAM_INT);
-		$stmt->bindParam(":guia",$datos["guia"],PDO::PARAM_STR);
-		$stmt->bindParam(":usuario",$datos["usuario"],PDO::PARAM_INT);
-		$stmt->bindParam(":total",$datos["total"],PDO::PARAM_INT);
-		$stmt->bindParam(":estado",$datos["estado"],PDO::PARAM_STR);
+		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_INT);
+		$stmt->bindParam(":guia", $datos["guia"], PDO::PARAM_STR);
+		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_INT);
+		$stmt->bindParam(":total", $datos["total"], PDO::PARAM_INT);
+		$stmt->bindParam(":estado", $datos["estado"], PDO::PARAM_STR);
 
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-
 		}
 
-		$stmt=null;
+		$stmt = null;
 	}
 
 	/* 
 	* Método para editar el almacen corte
 	*/
-	static public function mdlEditarAlmacenCorte($datos){
+	static public function mdlEditarAlmacenCorte($datos)
+	{
 
-		$sql="UPDATE almacencortejf SET  guia = :guia, usuario=:usuario, total=:total, estado=:estado WHERE codigo=:codigo";
+		$sql = "UPDATE almacencortejf SET  guia = :guia, usuario=:usuario, total=:total, estado=:estado WHERE codigo=:codigo";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->bindParam(":codigo",$datos["codigo"],PDO::PARAM_INT);
-		$stmt->bindParam(":guia",$datos["guia"],PDO::PARAM_STR);
-		$stmt->bindParam(":usuario",$datos["usuario"],PDO::PARAM_INT);
-		$stmt->bindParam(":total",$datos["total"],PDO::PARAM_INT);
-		$stmt->bindParam(":estado",$datos["estado"],PDO::PARAM_STR);
+		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_INT);
+		$stmt->bindParam(":guia", $datos["guia"], PDO::PARAM_STR);
+		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_INT);
+		$stmt->bindParam(":total", $datos["total"], PDO::PARAM_INT);
+		$stmt->bindParam(":estado", $datos["estado"], PDO::PARAM_STR);
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
 		}
 
-		$stmt=null;
-		
+		$stmt = null;
 	}
 
 	/*
 	* Guardar detalle de almacen de corte
 	*/
-	static public function mdlGuardarDetallesAlmacenCorte($datos){
+	static public function mdlGuardarDetallesAlmacenCorte($datos)
+	{
 
-		$sql="CALL sp_1060_insert_almcorte_detalle_p(:almcorte, :ordcorte, :detordcorte, :art, :cant)";
+		$sql = "CALL sp_1060_insert_almcorte_detalle_p(:almcorte, :ordcorte, :detordcorte, :art, :cant)";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->bindParam(":almcorte",$datos["almacencorte"],PDO::PARAM_INT);
-		$stmt->bindParam(":ordcorte",$datos["ordcorte"],PDO::PARAM_INT);
-		$stmt->bindParam(":detordcorte",$datos["idocd"],PDO::PARAM_INT);
-		$stmt->bindParam(":art",$datos["articulo"],PDO::PARAM_INT);
-		$stmt->bindParam(":cant",$datos["cantidad"],PDO::PARAM_INT);
+		$stmt->bindParam(":almcorte", $datos["almacencorte"], PDO::PARAM_INT);
+		$stmt->bindParam(":ordcorte", $datos["ordcorte"], PDO::PARAM_INT);
+		$stmt->bindParam(":detordcorte", $datos["idocd"], PDO::PARAM_INT);
+		$stmt->bindParam(":art", $datos["articulo"], PDO::PARAM_INT);
+		$stmt->bindParam(":cant", $datos["cantidad"], PDO::PARAM_INT);
 
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-
 		}
 
-		$stmt=null;
-
+		$stmt = null;
 	}
 
 	/*
 	* Guardar detalle de almacen de corte
 	*/
-	static public function mdlGuardarDetallesAlmacenCorteMP($id){
+	static public function mdlGuardarDetallesAlmacenCorteMP($id)
+	{
 
-		$sql="INSERT INTO almacencorte_detalle_mpjf (almacencorte, mat_pri, cons_total) 
+		$sql = "INSERT INTO almacencorte_detalle_mpjf (almacencorte, mat_pri, cons_total) 
 		(SELECT 
 		  ac.almacencorte,
 		  dt.mat_pri,
@@ -246,20 +267,20 @@ class ModeloAlmacenCorte{
 		  AND dt.tej_princ = 'si' 
 		GROUP BY dt.mat_pri)";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->bindParam(":id",$id,PDO::PARAM_INT);
+		$stmt->bindParam(":id", $id, PDO::PARAM_INT);
 
 		$stmt->execute();
 
-		$stmt=null;
-
-	}	
+		$stmt = null;
+	}
 
 	/*
 	* Método para DESCONTAR el total del corte por articulo -ORD CORTE
 	*/
-	static public function mdlActualizarOrdCorte($valor, $valor1){
+	static public function mdlActualizarOrdCorte($valor, $valor1)
+	{
 
 		$stmt = Conexion::conectar()->prepare("CALL sp_1061_update_articulos_ordcorte_p(:valor, :valor1)");
 
@@ -269,123 +290,120 @@ class ModeloAlmacenCorte{
 		$stmt->execute();
 
 		$stmt = null;
-
 	}
 
 	/*
 	* Método para mostrar los datos de almacen de corte
 	*/
-	static public function mdlMostrarAlmacenCorte($valor){
+	static public function mdlMostrarAlmacenCorte($valor)
+	{
 
-		if($valor != null){
+		if ($valor != null) {
 
 			$stmt = Conexion::conectar()->prepare("CALL sp_1066_consulta_almacencorte_p(:valor)");
 
-			$stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
+			$stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetch();
-
-		}else{
+			return $stmt->fetch();
+		} else {
 
 			$stmt = Conexion::conectar()->prepare("CALL sp_1062_consulta_almacencorte()");
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
+			return $stmt->fetchAll();
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
 	}
 
 	/*
 	* Método para actualizar lel estado de ordenes de corte a parcial
 	*/
-	static public function mdlActualizarOrdCorteEstadoParcial(){
+	static public function mdlActualizarOrdCorteEstadoParcial()
+	{
 
 		$stmt = Conexion::conectar()->prepare("CALL sp_1063_update_ordencorte_parcial()");
 
 		$stmt->execute();
 
 		$stmt = null;
-
 	}
 
 	/*
 	* Método para actualizar lel estado de ordenes de corte a cerrado
 	*/
-	static public function mdlActualizarOrdCorteEstadoCerrado(){
+	static public function mdlActualizarOrdCorteEstadoCerrado()
+	{
 
 		$stmt = Conexion::conectar()->prepare("CALL sp_1064_update_ordencorte_cerrado()");
 
 		$stmt->execute();
 
 		$stmt = null;
-
 	}
 
 	/* 
 	* Método para vizualizar detalle de la orden de corte
 	*/
-	static public function mdlVisualizarAlmacenCorteDetalle($valor){
+	static public function mdlVisualizarAlmacenCorteDetalle($valor)
+	{
 
-		if($valor != null){
+		if ($valor != null) {
 			$stmt = Conexion::conectar()->prepare("CALL sp_1067_consulta_almacencorte_detalle_p(:valor)");
 
-			$stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
-	
+			$stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
+
 			$stmt->execute();
-	
+
 			return $stmt->fetchAll();
-		}else{
+		} else {
 			$stmt = Conexion::conectar()->prepare("CALL sp_1071_consulta_almacencorte_detalle()");
 
-			$stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
-	
-			$stmt->execute();
-	
-			return $stmt->fetchAll();
+			$stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
 
+			$stmt->execute();
+
+			return $stmt->fetchAll();
 		}
 
-		
 
-		$stmt=null;
 
+		$stmt = null;
 	}
-	
+
 	/* 
 	* Método para activar y desactivar un usuario
 	*/
-	static public function mdlEstadoCorte($valor, $valor1){
+	static public function mdlEstadoCorte($valor, $valor1)
+	{
 
 		$stmt = Conexion::conectar()->prepare("CALL sp_1068_update_alm_estado_p(:valor, :estado)");
 
-		$stmt -> bindParam(":estado", $valor1, PDO::PARAM_STR);
-		$stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
+		$stmt->bindParam(":estado", $valor1, PDO::PARAM_STR);
+		$stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
 
 		if ($stmt->execute()) {
 
 			return "ok";
-
 		} else {
 
 			return "error";
 		}
 
 		$stmt = null;
-	}	
+	}
 
 
 	/*
 	* Método para ingresar la cantidad de cortes por operacion
 	*/
-	static public function mdlIngresarCantCorte($valor, $valor1){
+	static public function mdlIngresarCantCorte($valor, $valor1)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE encortejf
 													SET
@@ -401,16 +419,16 @@ class ModeloAlmacenCorte{
 		$stmt->execute();
 
 		$stmt = null;
-
 	}
 
-/*=============================================
+	/*=============================================
 	RANGO FECHAS
-	=============================================*/	
+	=============================================*/
 
-	static public function mdlRangoFechasAlmacenCortes($tabla, $fechaInicial, $fechaFinal){
+	static public function mdlRangoFechasAlmacenCortes($tabla, $fechaInicial, $fechaFinal)
+	{
 
-		if($fechaInicial == "null"){
+		if ($fechaInicial == "null") {
 
 			$stmt = Conexion::conectar()->prepare("SELECT  
 			ac.id,
@@ -430,12 +448,10 @@ class ModeloAlmacenCorte{
 			LEFT JOIN usuariosjf u 
 			  ON ac.usuario = u.id  ORDER BY ac.id ASC");
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();	
-
-
-		}else if($fechaInicial == $fechaFinal){
+			return $stmt->fetchAll();
+		} else if ($fechaInicial == $fechaFinal) {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			ac.id,
@@ -455,23 +471,22 @@ class ModeloAlmacenCorte{
 			LEFT JOIN usuariosjf u 
 			  ON ac.usuario = u.id   WHERE ac.fecha like '%$fechaFinal%'");
 
-			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+			$stmt->bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
-		}else{
+			return $stmt->fetchAll();
+		} else {
 
 			$fechaActual = new DateTime();
-			$fechaActual ->add(new DateInterval("P1D"));
+			$fechaActual->add(new DateInterval("P1D"));
 			$fechaActualMasUno = $fechaActual->format("Y-m-d");
 
 			$fechaFinal2 = new DateTime($fechaFinal);
-			$fechaFinal2 ->add(new DateInterval("P1D"));
+			$fechaFinal2->add(new DateInterval("P1D"));
 			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
 
-			if($fechaFinalMasUno == $fechaActualMasUno){
+			if ($fechaFinalMasUno == $fechaActualMasUno) {
 
 				$stmt = Conexion::conectar()->prepare("SELECT 
 				ac.id,
@@ -490,8 +505,7 @@ class ModeloAlmacenCorte{
 				almacencortejf ac 
 				LEFT JOIN usuariosjf u 
 				  ON ac.usuario = u.id  WHERE ac.fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'");
-
-			}else{
+			} else {
 
 
 				$stmt = Conexion::conectar()->prepare("SELECT 
@@ -511,21 +525,19 @@ class ModeloAlmacenCorte{
 				almacencortejf ac 
 				LEFT JOIN usuariosjf u 
 				  ON ac.usuario = u.id  WHERE ac.fecha BETWEEN '$fechaInicial' AND '$fechaFinal'");
-
 			}
-		
-			$stmt -> execute();
 
-			return $stmt -> fetchAll();
+			$stmt->execute();
 
+			return $stmt->fetchAll();
 		}
+	}
 
-	}	
-
-		/*
+	/*
 	* Método para mostrar las telas de almacen de corte
 	*/
-	static public function mdlMostrarTelasAlmacenCorte($valor){
+	static public function mdlMostrarTelasAlmacenCorte($valor)
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
 		adm.id,
@@ -561,21 +573,21 @@ class ModeloAlmacenCorte{
 	  WHERE adm.almacencorte = :codigo 
 	  ORDER BY mp.descripcion");
 
-		$stmt -> bindParam(":codigo", $valor, PDO::PARAM_STR);
+		$stmt->bindParam(":codigo", $valor, PDO::PARAM_STR);
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetchAll();
+		return $stmt->fetchAll();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
 	}
 
 	// Método para ingresar la telas de corte
-	
-	static public function mdlIngresarTelaCorte($datos){
+
+	static public function mdlIngresarTelaCorte($datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE almacencorte_detalle_mpjf
 													SET
@@ -597,25 +609,23 @@ class ModeloAlmacenCorte{
 		$stmt->bindParam(":materia", $datos["materia"], PDO::PARAM_STR);
 		$stmt->bindParam(":nota_salida", $datos["nota_salida"], PDO::PARAM_STR);
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-		
 		}
 
 		$stmt->close();
 
 		$stmt = null;
-
 	}
 
 	// Método para ingresar la notificaciones de telas
-	
-	static public function mdlIngresarNotificacionCorte($datos){
+
+	static public function mdlIngresarNotificacionCorte($datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE almacencorte_detalle_mpjf
 													SET
@@ -627,25 +637,23 @@ class ModeloAlmacenCorte{
 		$stmt->bindParam(":notificacion", $datos["notificacion"], PDO::PARAM_STR);
 		$stmt->bindParam(":materia", $datos["materia"], PDO::PARAM_STR);
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-		
 		}
 
 		$stmt->close();
 
 		$stmt = null;
-
 	}
 
-	static public function mdlRangoFechasVerCortes($tabla, $fechaInicial, $fechaFinal){
+	static public function mdlRangoFechasVerCortes($tabla, $fechaInicial, $fechaFinal)
+	{
 
-		if($fechaInicial == "null"){
+		if ($fechaInicial == "null") {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			dac.almacencorte,
@@ -722,12 +730,10 @@ class ModeloAlmacenCorte{
 			a.nombre,
 			a.color  ORDER BY dac.id ASC");
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();	
-
-
-		}else if($fechaInicial == $fechaFinal){
+			return $stmt->fetchAll();
+		} else if ($fechaInicial == $fechaFinal) {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			dac.almacencorte,
@@ -805,23 +811,22 @@ class ModeloAlmacenCorte{
 			a.nombre,
 			a.color  ");
 
-			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+			$stmt->bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
-		}else{
+			return $stmt->fetchAll();
+		} else {
 
 			$fechaActual = new DateTime();
-			$fechaActual ->add(new DateInterval("P1D"));
+			$fechaActual->add(new DateInterval("P1D"));
 			$fechaActualMasUno = $fechaActual->format("Y-m-d");
 
 			$fechaFinal2 = new DateTime($fechaFinal);
-			$fechaFinal2 ->add(new DateInterval("P1D"));
+			$fechaFinal2->add(new DateInterval("P1D"));
 			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
 
-			if($fechaFinalMasUno == $fechaActualMasUno){
+			if ($fechaFinalMasUno == $fechaActualMasUno) {
 
 				$stmt = Conexion::conectar()->prepare("SELECT 
 				dac.almacencorte,
@@ -898,8 +903,7 @@ class ModeloAlmacenCorte{
 				a.modelo,
 				a.nombre,
 				a.color ");
-
-			}else{
+			} else {
 
 
 				$stmt = Conexion::conectar()->prepare("SELECT 
@@ -977,21 +981,19 @@ class ModeloAlmacenCorte{
 				a.modelo,
 				a.nombre,
 				a.color  ");
-
 			}
-		
-			$stmt -> execute();
 
-			return $stmt -> fetchAll();
+			$stmt->execute();
 
+			return $stmt->fetchAll();
 		}
+	}
 
-	}	
 
-	
-	static public function mdlRangoFechasConsumoTelas($fechaInicial, $fechaFinal){
+	static public function mdlRangoFechasConsumoTelas($fechaInicial, $fechaFinal)
+	{
 
-		if($fechaInicial == "null"){
+		if ($fechaInicial == "null") {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			adm.id,
@@ -1035,12 +1037,10 @@ class ModeloAlmacenCorte{
 			  LEFT JOIN almacencortejf a
 			  ON adm.almacencorte=a.codigo");
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();	
-
-
-		}else if($fechaInicial == $fechaFinal){
+			return $stmt->fetchAll();
+		} else if ($fechaInicial == $fechaFinal) {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			adm.id,
@@ -1085,23 +1085,22 @@ class ModeloAlmacenCorte{
 			  ON adm.almacencorte=a.codigo
 			WHERE DATE(fechas) like '%$fechaFinal%' ");
 
-			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+			$stmt->bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
-		}else{
+			return $stmt->fetchAll();
+		} else {
 
 			$fechaActual = new DateTime();
-			$fechaActual ->add(new DateInterval("P1D"));
+			$fechaActual->add(new DateInterval("P1D"));
 			$fechaActualMasUno = $fechaActual->format("Y-m-d");
 
 			$fechaFinal2 = new DateTime($fechaFinal);
-			$fechaFinal2 ->add(new DateInterval("P1D"));
+			$fechaFinal2->add(new DateInterval("P1D"));
 			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
 
-			if($fechaFinalMasUno == $fechaActualMasUno){
+			if ($fechaFinalMasUno == $fechaActualMasUno) {
 
 				$stmt = Conexion::conectar()->prepare("SELECT 
 				adm.id,
@@ -1145,8 +1144,7 @@ class ModeloAlmacenCorte{
 				  LEFT JOIN almacencortejf a
 				  ON adm.almacencorte=a.codigo
 				WHERE DATE(fechas) BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'");
-
-			}else{
+			} else {
 
 
 				$stmt = Conexion::conectar()->prepare("SELECT 
@@ -1191,21 +1189,19 @@ class ModeloAlmacenCorte{
 				  LEFT JOIN almacencortejf a
 				  ON adm.almacencorte=a.codigo
 				WHERE DATE(fechas) BETWEEN '$fechaInicial' AND '$fechaFinal'");
-
 			}
-		
-			$stmt -> execute();
 
-			return $stmt -> fetchAll();
+			$stmt->execute();
 
+			return $stmt->fetchAll();
 		}
-
 	}
 
 
-	static public function mdlMostarDetallesAlmacenCorte($tabla, $item, $valor){
+	static public function mdlMostarDetallesAlmacenCorte($tabla, $item, $valor)
+	{
 
-		if($item != null){
+		if ($item != null) {
 
 			$stmt = Conexion::conectar()->prepare("SELECT
 													a.*,d.saldo 
@@ -1215,57 +1211,53 @@ class ModeloAlmacenCorte{
 													ON d.id = a.detordencorte  
 													WHERE a.$item = :$item ");
 
-			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt->bindParam(":" . $item, $valor, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
-		}else{
+			return $stmt->fetchAll();
+		} else {
 
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ");
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
+			return $stmt->fetchAll();
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
-		$stmt = null;		
-
-
+		$stmt = null;
 	}
 
 	/* 
 	* Método para eliminar los detalles de almacencorte
 	*/
-	static public function mdlEliminarDato($tabla,$item,$valor){
+	static public function mdlEliminarDato($tabla, $item, $valor)
+	{
 
-		$sql="DELETE FROM $tabla WHERE $item=:$item";
+		$sql = "DELETE FROM $tabla WHERE $item=:$item";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->bindParam(":".$item,$valor,PDO::PARAM_STR);
+		$stmt->bindParam(":" . $item, $valor, PDO::PARAM_STR);
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-		
-		}else{
+		} else {
 
 			return "error";
-		
 		}
 
-		$stmt=null;
+		$stmt = null;
 	}
 
 	/* 
 	* Método ACTUALIZAR CANTIDAD EN ORDEN DE CORTE CON SALDO
 	*/
-	static public function mdlActualizarOrdCorteSaldo(){
+	static public function mdlActualizarOrdCorteSaldo()
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE 
 												articulojf a 
@@ -1282,13 +1274,11 @@ class ModeloAlmacenCorte{
 		if ($stmt->execute()) {
 
 			return "ok";
-
 		} else {
 
 			return "error";
 		}
 
 		$stmt = null;
-	}	
-
+	}
 }

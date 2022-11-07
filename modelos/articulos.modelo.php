@@ -8,7 +8,8 @@ class ModeloArticulos
 	/* 
 	* MOSTRAR ARTICULOS
 	*/
-	static public function mdlMostrarArticulos($valor){
+	static public function mdlMostrarArticulos($valor)
+	{
 
 
 		if ($valor != null) {
@@ -37,7 +38,8 @@ class ModeloArticulos
 	/*
 	* MOSTRAR CANTIDAD DE PEDIDOS
 	*/
-	static public function mdlArticulosPedidos(){
+	static public function mdlArticulosPedidos()
+	{
 
 		$stmt = Conexion::conectar()->prepare("CALL sp_1038_pedidos_unidades()");
 
@@ -53,7 +55,8 @@ class ModeloArticulos
 	/*
 	* MOSTRAR CANTIDAD DE FALTANTES
 	*/
-	static public function mdlArticulosFaltantes($tabla){
+	static public function mdlArticulosFaltantes($tabla)
+	{
 
 		$stmt = Conexion::conectar()->prepare("CALL sp_1039_faltantes_unidades()");
 
@@ -69,7 +72,8 @@ class ModeloArticulos
 	/*
 	* MOSTRAR ARTICULOS PENDIENTES DE TARJETAS
 	*/
-	static public function mdlMostrarSinTarjeta(){
+	static public function mdlMostrarSinTarjeta()
+	{
 
 		$stmt = Conexion::conectar()->prepare("CALL sp_1040_articulos_sin_tarjeta()");
 
@@ -86,7 +90,8 @@ class ModeloArticulos
 	/*
 	* REGISTRO DE ARTICULO
 	*/
-	static public function mdlIngresarArticulo($tabla, $datos){
+	static public function mdlIngresarArticulo($tabla, $datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("CALL sp_1041_insert_articulos_p(:articulo, :id_marca,:marca, :modelo, :nombre, :cod_color, :color, :cod_talla, :talla)");
 
@@ -115,7 +120,8 @@ class ModeloArticulos
 	/* 
 	* Método para activar y desactivar un usuario
 	*/
-	static public function mdlActualizarArticulo($valor1, $valor2){
+	static public function mdlActualizarArticulo($valor1, $valor2)
+	{
 
 		$sql = "CALL sp_1042_update_articulos_estado_p(:estado, :valor)";
 
@@ -138,7 +144,8 @@ class ModeloArticulos
 	/* 
 	* EDITAR ARTICULO
 	*/
-	static public function mdlEditarArticulo($datos){
+	static public function mdlEditarArticulo($datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("CALL sp_1043_update_articulos_p(:nombre, :imagen, :valor)");
 
@@ -162,7 +169,8 @@ class ModeloArticulos
 	/* 
 	* BORRAR ARTICULO
 	*/
-	static public function mdlEliminarArticulo($datos){
+	static public function mdlEliminarArticulo($datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("CALL sp_1044_delete_articulos_p(:valor)");
 
@@ -184,7 +192,8 @@ class ModeloArticulos
 	/* 
 	* Método para actualizar un dato CON EL articulo
 	*/
-	static public function mdlActualizarUnDato($tabla, $item1, $valor1, $valor2){
+	static public function mdlActualizarUnDato($tabla, $item1, $valor1, $valor2)
+	{
 
 		$sql = "UPDATE $tabla SET $item1=:$item1 WHERE articulo=:id";
 
@@ -201,7 +210,8 @@ class ModeloArticulos
 	/* 
 	* Método para actualizar el  taller en ingresos
 	*/
-	static public function mdlRecuperarTaller($articulo, $cantidad){
+	static public function mdlRecuperarTaller($articulo, $cantidad)
+	{
 
 		$sql = "UPDATE 
 						articulojf 
@@ -222,7 +232,8 @@ class ModeloArticulos
 	/* 
 	* Método para actualizar un cierre CON EL id
 	*/
-	static public function mdlActualizarUnCierre($tabla, $item1, $valor1, $valor2){
+	static public function mdlActualizarUnCierre($tabla, $item1, $valor1, $valor2)
+	{
 
 		$sql = "UPDATE $tabla SET $item1=:$item1 WHERE id=:id";
 
@@ -239,13 +250,14 @@ class ModeloArticulos
 	/* 
 	* Método para recuperar un cierre CON EL id
 	*/
-	static public function mdlRecuperarUnCierre($tabla, $item1, $valor1, $valor2){
+	static public function mdlRecuperarUnCierre($tabla, $item1, $valor1, $valor2)
+	{
 
 		$sql = "UPDATE $tabla SET cantidad = cantidad + :cantidad WHERE id=:id";
 
 		$stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->bindParam(":cantidad" , $valor1, PDO::PARAM_STR);
+		$stmt->bindParam(":cantidad", $valor1, PDO::PARAM_STR);
 		$stmt->bindParam(":id", $valor2, PDO::PARAM_INT);
 
 		$stmt->execute();
@@ -256,7 +268,8 @@ class ModeloArticulos
 	/* 
 	* METODO PARA VER LA CONFIGURACION DE LAS URGENCIAS
 	*/
-	static public function mdlConfiguracion(){
+	static public function mdlConfiguracion()
+	{
 
 		$sql = "CALL sp_1045_consulta_urg_porc()";
 
@@ -274,7 +287,8 @@ class ModeloArticulos
 	/* 
 	* CONFIGURAR PORCENTAJE DE URGENCIAS
 	*/
-	static public function mdlConfigurarUrgencia($dato){
+	static public function mdlConfigurarUrgencia($dato)
+	{
 
 		$stmt = Conexion::conectar()->prepare("CALL sp_1046_update_urg_porc($dato)");
 
@@ -293,7 +307,8 @@ class ModeloArticulos
 	/* 
 	* MOSTRAR ARTICULOS PARA LA TABLA DE ORDENES DE CORTE
 	*/
-	static public function mdlMostrarArticulosUrgencia(){
+	static public function mdlMostrarArticulosUrgencia()
+	{
 
 		$stmt = Conexion::conectar()->prepare("CALL sp_1047_consulta_urgencia_articulos()");
 
@@ -308,7 +323,8 @@ class ModeloArticulos
 	/* 
 	* MOSTRAR ARTICULOS PARA LA TABLA DE SERVICIOS O VENTAS
 	*/
-	static public function mdlMostrarArticulosServicio(){
+	static public function mdlMostrarArticulosServicio()
+	{
 
 		$stmt = Conexion::conectar()->prepare("CALL sp_1069_consulta_servicio_articulos()");
 
@@ -323,8 +339,9 @@ class ModeloArticulos
 	/* 
 	* MOSTRAR ARTICULOS PARA LA TABLA DE ORDENES DE CORTE
 	*/
-	static public function mdlMostrarArticulosTaller($sectorIngreso){
-		if($sectorIngreso=="T4" || $sectorIngreso=="T6" || $sectorIngreso=="T9" || $sectorIngreso=="T2" || $sectorIngreso=="T8" || $sectorIngreso=="T0" || $sectorIngreso=="TA"|| $sectorIngreso == "T7" || $sectorIngreso == "T10" || $sectorIngreso == "TB"){
+	static public function mdlMostrarArticulosTaller($sectorIngreso)
+	{
+		if ($sectorIngreso == "T4" || $sectorIngreso == "T6" || $sectorIngreso == "T9" || $sectorIngreso == "T2" || $sectorIngreso == "T8" || $sectorIngreso == "T0" || $sectorIngreso == "TA" || $sectorIngreso == "T7" || $sectorIngreso == "T10" || $sectorIngreso == "TB" || $sectorIngreso == "T11") {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			a.articulo,
@@ -345,15 +362,14 @@ class ModeloArticulos
 				ON cd.codigo = c.codigo 
 			  LEFT JOIN articulojf a 
 				ON cd.articulo = a.articulo 
-			WHERE LEFT(cd.codigo, 2) = '".$sectorIngreso."' 
+			WHERE c.taller = '" . $sectorIngreso . "' 
 			AND cd.cantidad > 0 
 			ORDER BY c.guia, a.articulo;");
-	
+
 			$stmt->execute();
-	
+
 			return $stmt->fetchAll();
-	
-		}else{
+		} else {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			'' as id,
 			a.articulo, 
@@ -369,19 +385,19 @@ class ModeloArticulos
 			a.ord_corte FROM
 			articulojf a 
 			WHERE a.taller > 0");
-	
+
 			$stmt->execute();
-	
+
 			return $stmt->fetchAll();
-	
 		}
-		
+
 		$stmt->close();
 		$stmt = null;
 	}
 
-	static public function mdlMostrarArticulosCierres($idCierre){
-		
+	static public function mdlMostrarArticulosCierres($idCierre)
+	{
+
 		$stmt = Conexion::conectar()->prepare("SELECT 
 		a.articulo,
 		cd.id,
@@ -406,14 +422,14 @@ class ModeloArticulos
 			ON cd.codigo = c.codigo 
 			LEFT JOIN articulojf a 
 			ON cd.articulo = a.articulo 
-		WHERE cd.id ='".$idCierre."'
+		WHERE cd.id ='" . $idCierre . "'
 		ORDER BY c.guia, a.articulo;");
 
 		$stmt->execute();
 
 		return $stmt->fetch();
 
-		
+
 		$stmt->close();
 		$stmt = null;
 	}
@@ -421,9 +437,10 @@ class ModeloArticulos
 	/* 
 	* MOSTRAR ARTICULOS PARA LA TABLA URGENCIA
 	*/
-	static public function mdlMostrarUrgencia($tabla, $valor, $modelo){
+	static public function mdlMostrarUrgencia($tabla, $valor, $modelo)
+	{
 
-		if ($valor == null && $modelo != "null" ) {
+		if ($valor == null && $modelo != "null") {
 
 			$stmt = Conexion::conectar()->prepare("CALL sp_1048_cons_urg_art_porc(:modelo)");
 
@@ -432,8 +449,7 @@ class ModeloArticulos
 			$stmt->execute();
 
 			return $stmt->fetchAll();
-		
-		}else if ($valor == null && $modelo == "null" ){
+		} else if ($valor == null && $modelo == "null") {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			a.articulo,
@@ -492,7 +508,6 @@ class ModeloArticulos
 			$stmt->execute();
 
 			return $stmt->fetchAll();
-
 		} else {
 
 			$stmt = Conexion::conectar()->prepare("CALL sp_1036_consulta_articulos_p(:valor)");
@@ -512,7 +527,8 @@ class ModeloArticulos
 	/* 
 	* MOSTRAR ARTICULOS PARA LA TABLA SEGUIMIENTO
 	*/
-	static public function mdlMostrarSeguimiento($valor){
+	static public function mdlMostrarSeguimiento($valor)
+	{
 
 		if ($valor == "null") {
 
@@ -584,8 +600,7 @@ class ModeloArticulos
 			$stmt->execute();
 
 			return $stmt->fetchAll();
-		
-		}else{
+		} else {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			a.articulo,
@@ -665,7 +680,8 @@ class ModeloArticulos
 	/* 
 	* MOSTRAR EL DETALLE DE LAS URGENCIAS
 	*/
-	static public function mdlVisualizarUrgenciasDetalle($valor){
+	static public function mdlVisualizarUrgenciasDetalle($valor)
+	{
 
 		$stmt = Conexion::conectar()->prepare("CALL sp_1049_detalle_mp_articulo_urg_p(:valor)");
 
@@ -675,31 +691,31 @@ class ModeloArticulos
 
 		return $stmt->fetchAll();
 
-		$stmt=null;
-
+		$stmt = null;
 	}
 
 	/* 
 	* MOSTRAR ARTICULOS PARA PEDIDOS
 	*/
-	static public function mdlListaArticulosPedidos(){
+	static public function mdlListaArticulosPedidos()
+	{
 
-		$sql="CALL sp_1050_mod_color_talla()";
+		$sql = "CALL sp_1050_mod_color_talla()";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->execute();
 
 		return $stmt->fetchAll();
 
-		$stmt=null;
-
+		$stmt = null;
 	}
 
 	/* 
 	* MOSTRAR COLORES
 	*/
-	static public function mdlVerColores($valor){
+	static public function mdlVerColores($valor)
+	{
 
 		$stmt = Conexion::conectar()->prepare("CALL sp_1051_mod_cant_col_tal_p(:valor)");
 
@@ -709,16 +725,16 @@ class ModeloArticulos
 
 		return $stmt->fetchAll();
 
-		$stmt=null;
-
+		$stmt = null;
 	}
-	
+
 	/* 
 	* MOSTRAR COLORES Y CANTIDADES
 	*/
-	static public function mdlVerColoresCantidades($pedido, $modelo){
+	static public function mdlVerColoresCantidades($pedido, $modelo)
+	{
 
-		if($pedido != null){
+		if ($pedido != null) {
 
 			$sql = "SELECT 
 		a.modelo,
@@ -845,22 +861,21 @@ class ModeloArticulos
 			detalle_temporal t 
 		  WHERE codigo = :pedido) AS t 
 		  ON a.articulo = t.articulo 
-	  WHERE a.modelo LIKE '%".$modelo."%'
+	  WHERE a.modelo LIKE '%" . $modelo . "%'
 		/* AND a.estado = 'activo'  */
 	  GROUP BY a.modelo,
 		a.cod_color,
 		a.color";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+			$stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->bindParam(":pedido",$pedido,PDO::PARAM_STR);
-		//$stmt->bindParam(":modelo",$modelo,PDO::PARAM_STR);
+			$stmt->bindParam(":pedido", $pedido, PDO::PARAM_STR);
+			//$stmt->bindParam(":modelo",$modelo,PDO::PARAM_STR);
 
-		$stmt->execute();
+			$stmt->execute();
 
-		return $stmt->fetchAll();
-
-		}else{
+			return $stmt->fetchAll();
+		} else {
 
 			$sql = "SELECT 
 			a.modelo,
@@ -980,31 +995,30 @@ class ModeloArticulos
 			) AS v8 
 		  FROM
 			articulojf a 
-		  WHERE a.modelo LIKE '%".$modelo."%'
+		  WHERE a.modelo LIKE '%" . $modelo . "%'
 			/* AND a.estado = 'activo' */ 
 		  GROUP BY a.modelo,
 			a.cod_color,
 			a.color";
 
-			$stmt=Conexion::conectar()->prepare($sql);
+			$stmt = Conexion::conectar()->prepare($sql);
 
-			$stmt->bindParam(":modelo",$modelo,PDO::PARAM_STR);
+			$stmt->bindParam(":modelo", $modelo, PDO::PARAM_STR);
 
 			$stmt->execute();
-	
-			return $stmt->fetchAll();			
 
+			return $stmt->fetchAll();
 		}
-		
 
-		$stmt=null;
 
-	}	
+		$stmt = null;
+	}
 
 	/* 
 	* MOSTRAR ARTICULOS PARA PEDIDOS
 	*/
-	static public function mdlVerArticulos($valor){
+	static public function mdlVerArticulos($valor)
+	{
 
 		$stmt = Conexion::conectar()->prepare("CALL sp_1052_mod_articulos_p(:valor)");
 
@@ -1014,14 +1028,14 @@ class ModeloArticulos
 
 		return $stmt->fetchAll();
 
-		$stmt=null;
-
+		$stmt = null;
 	}
 
 	/* 
 	* MOSTRAR ARTICULOS PARA PEDIDOS
 	*/
-	static public function mdlVerArticulosB($valor){
+	static public function mdlVerArticulosB($valor)
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
 						a.modelo,
@@ -1037,14 +1051,14 @@ class ModeloArticulos
 
 		return $stmt->fetchAll();
 
-		$stmt=null;
-
-	}		
+		$stmt = null;
+	}
 
 	/* 
 	* MOSTRAR PRECIOS
 	*/
-	static public function mdlVerPrecios($modelo, $lista){
+	static public function mdlVerPrecios($modelo, $lista)
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
 											id,
@@ -1053,20 +1067,20 @@ class ModeloArticulos
 										FROM
 											preciojf where modelo like '%$modelo%' ");
 
-		$stmt->bindParam(":modelo", $modelo, PDO::PARAM_STR);											
+		$stmt->bindParam(":modelo", $modelo, PDO::PARAM_STR);
 
 		$stmt->execute();
 
 		return $stmt->fetch();
 
-		$stmt=null;
-
+		$stmt = null;
 	}
 
 	/* 
 	* Método para actualizar el corte y taller
 	*/
-	static public function mdlActualizarTallerCorte($articulo, $cantidad){
+	static public function mdlActualizarTallerCorte($articulo, $cantidad)
+	{
 
 		$sql = "UPDATE 
 						articulojf 
@@ -1088,7 +1102,8 @@ class ModeloArticulos
 	/* 
 	* Método para actualizar el corte y taller
 	*/
-	static public function mdlActualizarServicioCorte($articulo, $cantidad){
+	static public function mdlActualizarServicioCorte($articulo, $cantidad)
+	{
 
 		$sql = "UPDATE 
 						articulojf 
@@ -1110,7 +1125,8 @@ class ModeloArticulos
 	/* 
 	* Método para actualizar el corte y taller
 	*/
-	static public function mdlActualizarTallerEliminado($articulo, $cantidad){
+	static public function mdlActualizarTallerEliminado($articulo, $cantidad)
+	{
 
 		$sql = "UPDATE 
 						articulojf 
@@ -1132,7 +1148,8 @@ class ModeloArticulos
 	/* 
 	* Método para actualizar el corte y servicio
 	*/
-	static public function mdlActualizarServicioEliminado($articulo, $cantidad){
+	static public function mdlActualizarServicioEliminado($articulo, $cantidad)
+	{
 
 		$sql = "UPDATE 
 						articulojf 
@@ -1154,7 +1171,8 @@ class ModeloArticulos
 	/* 
 	* MOSTRAR PRODUCCION
 	*/
-	static public function mdlMostrarProduccion($valor){
+	static public function mdlMostrarProduccion($valor)
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
 													m.articulo,
@@ -1172,14 +1190,14 @@ class ModeloArticulos
 
 		return $stmt->fetch();
 
-		$stmt=null;
-
-	}	
+		$stmt = null;
+	}
 
 	/* 
 	* MOSTRAR VENTAS
 	*/
-	static public function mdlMostrarVentas($valor){
+	static public function mdlMostrarVentas($valor)
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
 													m.articulo,
@@ -1197,17 +1215,17 @@ class ModeloArticulos
 
 		return $stmt->fetch();
 
-		$stmt=null;
-
-	}	
+		$stmt = null;
+	}
 
 	/* 
 	* MOSTRAR ARTICULOS - SIMPLE
 	*/
-	static public function mdlMostrarArticulosSimple($orden){
+	static public function mdlMostrarArticulosSimple($orden)
+	{
 
 
-			$stmt = Conexion::conectar()->prepare("SELECT 
+		$stmt = Conexion::conectar()->prepare("SELECT 
 			a.articulo,
 			CONCAT(
 			  a.articulo,
@@ -1229,21 +1247,22 @@ class ModeloArticulos
 			AND a.estado = 'Activo' 
 			AND id_marca IN ('1', '2', '3') ");
 
-			$stmt->bindParam(":orden", $orden, PDO::PARAM_STR);
+		$stmt->bindParam(":orden", $orden, PDO::PARAM_STR);
 
-			$stmt->execute();
+		$stmt->execute();
 
-			return $stmt->fetchAll();
+		return $stmt->fetchAll();
 
 		$stmt->close();
 
 		$stmt = null;
 	}
-	
+
 	/* 
 	* Método para actualizar la cantidad de orden de corte
 	*/
-	static public function mdlActualizarOrdenCorte($articulo, $cantidad){
+	static public function mdlActualizarOrdenCorte($articulo, $cantidad)
+	{
 
 		$sql = "UPDATE 
 						articulojf 
@@ -1259,12 +1278,13 @@ class ModeloArticulos
 		$stmt->execute();
 
 		$stmt = null;
-	}	
+	}
 
 	/* 
 	* Método para actualizar la cantidad de ord_corte
 	*/
-	static public function mdlSumOc($articulo, $cantidad){
+	static public function mdlSumOc($articulo, $cantidad)
+	{
 
 		$sql = "UPDATE 
 						articulojf 
@@ -1285,29 +1305,30 @@ class ModeloArticulos
 	/*
 	* ACTUALIZAR LA CANTIDAD DE PEDIDOS DEL ARTICULO
 	*/
-	static public function mdlActualizarCantPedidos($articulo, $pedidos){
+	static public function mdlActualizarCantPedidos($articulo, $pedidos)
+	{
 
-		$sql="UPDATE
+		$sql = "UPDATE
 						articulojf
 					SET
 						pedidos = :pedidos
 					WHERE articulo = :articulo";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->bindParam(":articulo", $articulo, PDO::PARAM_STR);
 		$stmt->bindParam(":pedidos", $pedidos, PDO::PARAM_STR);
 
-        $stmt->execute();
+		$stmt->execute();
 
-		$stmt=null;
-
+		$stmt = null;
 	}
 
 	/*
 	* ACTUALIZAR LA CANTIDAD DE STOCK DEL ARTICULO
 	*/
-	static public function mdlActualizarStock($datos){
+	static public function mdlActualizarStock($datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE
 													articulojf
@@ -1329,13 +1350,13 @@ class ModeloArticulos
 		$stmt->close();
 
 		$stmt = null;
-
 	}
 
 	/*
 	* ACTUALIZAR LA CANTIDAD DE STOCK DEL ARTICULO
 	*/
-	static public function mdlActualizarPedido($datos){
+	static public function mdlActualizarPedido($datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE
 													articulojf
@@ -1357,13 +1378,13 @@ class ModeloArticulos
 		$stmt->close();
 
 		$stmt = null;
-
-	}	
+	}
 
 	/*
 	* ACTUALIZAR LA CANTIDAD DE STOCK DEL ARTICULO
 	*/
-	static public function mdlActualizarStockIngreso($valor1,$valor2){
+	static public function mdlActualizarStockIngreso($valor1, $valor2)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE
 													articulojf
@@ -1385,13 +1406,13 @@ class ModeloArticulos
 		$stmt->close();
 
 		$stmt = null;
-
 	}
 
 	/*
 	* ACTUALIZAR LA CANTIDAD DE SERVICOP DE ARTICULO
 	*/
-	static public function mdlActualizarArticuloServicio($valor1,$valor2){
+	static public function mdlActualizarArticuloServicio($valor1, $valor2)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE
 													articulojf
@@ -1413,13 +1434,13 @@ class ModeloArticulos
 		$stmt->close();
 
 		$stmt = null;
-
 	}
 
 	/*
 	* ACTUALIZAR ESTADO CORTE
 	*/
-	static public function mdlCorteIncompleto($codigo,$estado){
+	static public function mdlCorteIncompleto($codigo, $estado)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE
 													articulojf
@@ -1441,13 +1462,13 @@ class ModeloArticulos
 		$stmt->close();
 
 		$stmt = null;
-
-	}	
+	}
 
 	/*
 	* * RECUPERAMOS LA CANTIDAD DE SERVICOP DE ARTICULO
 	*/
-	static public function mdlRecuperarArticuloServicio($valor1,$valor2){
+	static public function mdlRecuperarArticuloServicio($valor1, $valor2)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE
 													articulojf
@@ -1469,16 +1490,16 @@ class ModeloArticulos
 		$stmt->close();
 
 		$stmt = null;
-
 	}
 
-	
+
 	/* 
 	* MOSTRAR ARTICULOS
 	*/
-	static public function mdlMostrarArticulosTallerP(){
+	static public function mdlMostrarArticulosTallerP()
+	{
 
-		
+
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
 												et.articulo,
@@ -1498,7 +1519,7 @@ class ModeloArticulos
 		$stmt->execute();
 
 		return $stmt->fetchAll();
-		
+
 
 		$stmt->close();
 
@@ -1508,9 +1529,10 @@ class ModeloArticulos
 	/* 
 	* MOSTRAR ARTICULOS
 	*/
-	static public function mdlMostrarArticulosTicket(){
+	static public function mdlMostrarArticulosTicket()
+	{
 
-		
+
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
 												articulo,
@@ -1524,7 +1546,7 @@ class ModeloArticulos
 		$stmt->execute();
 
 		return $stmt->fetchAll();
-		
+
 
 		$stmt->close();
 
@@ -1534,15 +1556,16 @@ class ModeloArticulos
 	/*
 	* CONFIGURAR MP FALTANTE
 	*/
-	static public function mdlMpFaltante($modelo, $faltante){
+	static public function mdlMpFaltante($modelo, $faltante)
+	{
 
-		$sql="UPDATE
+		$sql = "UPDATE
 					articulojf
 				SET
 					mp_faltante = :faltante
 				WHERE articulo LIKE :modelo ";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->bindParam(":modelo", $modelo, PDO::PARAM_STR);
 		$stmt->bindParam(":faltante", $faltante, PDO::PARAM_STR);
@@ -1559,15 +1582,15 @@ class ModeloArticulos
 		$stmt->close();
 
 		$stmt = null;
-
 	}
 
 	/* 
 	* MOSTRAR COLORES Y CANTIDADES
 	*/
-	static public function mdlVerColoresCantidades2($salida, $modelo){
+	static public function mdlVerColoresCantidades2($salida, $modelo)
+	{
 
-		if($salida != null){
+		if ($salida != null) {
 
 			$sql = "SELECT 
 		a.modelo,
@@ -1694,18 +1717,17 @@ class ModeloArticulos
 			detalle_ing_sal t 
 		  WHERE codigo = $salida) AS t 
 		  ON a.articulo = t.articulo 
-	  WHERE a.modelo = '".$modelo."'
+	  WHERE a.modelo = '" . $modelo . "'
 	  GROUP BY a.modelo,
 		a.cod_color,
 		a.color";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+			$stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->execute();
+			$stmt->execute();
 
-		return $stmt->fetchAll();
-
-		}else{
+			return $stmt->fetchAll();
+		} else {
 
 			$sql = "SELECT 
 			a.modelo,
@@ -1825,27 +1847,26 @@ class ModeloArticulos
 			) AS v8 
 		  FROM
 			articulojf a 
-		  WHERE a.modelo = '".$modelo."' 
+		  WHERE a.modelo = '" . $modelo . "' 
 		  GROUP BY a.modelo,
 			a.cod_color,
 			a.color";
 
-			$stmt=Conexion::conectar()->prepare($sql);
+			$stmt = Conexion::conectar()->prepare($sql);
 
 			$stmt->execute();
-	
-			return $stmt->fetchAll();			
 
+			return $stmt->fetchAll();
 		}
 
-		$stmt=null;
-
-	}	
+		$stmt = null;
+	}
 
 	/*
 	* BAJAR EL STOCK y CANT EN PEDIDO
 	*/
-	static public function mdlActualizarStockPedido($codigo){
+	static public function mdlActualizarStockPedido($codigo)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE 
 									articulojf a 
@@ -1864,23 +1885,21 @@ class ModeloArticulos
 		if ($stmt->execute()) {
 
 			return "ok";
-
 		} else {
 
 			return "error";
-
 		}
 
 		$stmt->close();
 
 		$stmt = null;
-
-	}	
+	}
 
 	/*
 	* SUBIR EL STOCK y CANT EN PEDIDO
 	*/
-	static public function mdlActualizarStockPedidoB($codigo){
+	static public function mdlActualizarStockPedidoB($codigo)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE 
 									articulojf a 
@@ -1899,21 +1918,19 @@ class ModeloArticulos
 		if ($stmt->execute()) {
 
 			return "ok";
-
 		} else {
 
 			return "error";
-
 		}
 
 		$stmt->close();
 
 		$stmt = null;
-
-	}	
+	}
 
 	//* BAJAR SERVICIO
-	static public function mdlBajarServicio($articulo, $saldo){
+	static public function mdlBajarServicio($articulo, $saldo)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE 
 													articulojf 
@@ -1927,24 +1944,22 @@ class ModeloArticulos
 		if ($stmt->execute()) {
 
 			return "ok";
-
 		} else {
 
 			return $stmt->errorInfo();
-
 		}
 
 		$stmt->close();
 
 		$stmt = null;
-
-	}	
+	}
 
 
 	/* 
 	* MOSTRAR ARTICULOS EN URGENCIA
 	*/
-	static public function mdlArticulosUrgencia(){
+	static public function mdlArticulosUrgencia()
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
 					'a' AS inicio,
@@ -2198,7 +2213,5 @@ class ModeloArticulos
 		$stmt->close();
 
 		$stmt = null;
-	}	
-
+	}
 }
-
