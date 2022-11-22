@@ -1,12 +1,13 @@
 <html>
 
-    <head>
+<head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <link href="css/ticket_v9.css" target="_blank" rel="stylesheet" type="text/css">
-    </head>
+</head>
 
-    <!-- <body onload="window.print();"> -->
-    <body>
+<!-- <body onload="window.print();"> -->
+
+<body>
     <?php
     require_once "../../controladores/facturacion.controlador.php";
     require_once "../../modelos/facturacion.modelo.php";
@@ -14,15 +15,15 @@
 
     $tipo = $_GET["tipo"];
     $documento = $_GET["documento"];
-    $venta = ControladorFacturacion::ctrMostrarVentaImpresion($documento,$tipo);
-    $modelo = ControladorFacturacion::ctrMostrarModeloImpresionV2($documento,$tipo, 0, 100);
+    $venta = ControladorFacturacion::ctrMostrarVentaImpresion($documento, $tipo);
+    $modelo = ControladorFacturacion::ctrMostrarModeloImpresionV2($documento, $tipo, 0, 100);
     $cantModelo = count($modelo);
-    $subtotal= $venta["neto"] - $venta["dscto"]; 
-    $monto_letra= CantidadEnLetra($venta["total"]);
+    $subtotal = $venta["neto"] - $venta["dscto"];
+    $monto_letra = CantidadEnLetra($venta["total"]);
     //var_dump($venta);
     ?>
 
-        <div class="zona_impresion">
+    <div class="zona_impresion">
 
         <?php
 
@@ -33,7 +34,7 @@
                 <tr>
                     <td style="width:150px;">
                         <div style="align:center;">
-                            <img src="../../vistas/img/plantilla/paloma_azul.png">
+                            <img src="../../vistas/img/plantilla/jackyform_paloma2.png" width="150px" height="75px">
                         </div>
                     </td>
 
@@ -53,8 +54,8 @@
 
                     <td style="width:250px; height:100px; border: 1px solid black;">
                         <p style="text-align:center;"><b>RUC: 20513613939</b></p>
-                        <p style="text-align:center;"><b>'.$venta["tipo_documento"].' DE VENTA ELECTRONICA</b></p>
-                        <p style="text-align:center;"><b>Nro.: '.substr($venta["documento"],0,4)."-".substr($venta["documento"],4,12).'</b></p>
+                        <p style="text-align:center;"><b>' . $venta["tipo_documento"] . ' DE VENTA ELECTRONICA</b></p>
+                        <p style="text-align:center;"><b>Nro.: ' . substr($venta["documento"], 0, 4) . "-" . substr($venta["documento"], 4, 12) . '</b></p>
                     </td>
                 </tr>
 
@@ -66,31 +67,31 @@
             <thead>
                 <tr>
                     <td style="width:80px;">Cliente:</td>
-                    <td>'.$venta["nombre"].'</td>
+                    <td>' . $venta["nombre"] . '</td>
                 </tr>
                 <tr>
                     <td style="width:80px;">Dirección:</td>
-                    <td>'.$venta["direccion"].'</td>
+                    <td>' . $venta["direccion"] . '</td>
                 </tr>
                 <tr>
                     <td style="width:80px;">Ciudad:</td>
-                    <td>'.$venta["nom_ubigeo"].'</td>
+                    <td>' . $venta["nom_ubigeo"] . '</td>
                 </tr>
                 <tr>
                     <td style="width:80px;">Nro RUC:</td>
-                    <td>'.$venta["dni"].'</td>                        
+                    <td>' . $venta["dni"] . '</td>                        
                 </tr>
                 <tr>
                     <td style="width:80px;">Cod. Cliente:</td>
-                    <td>'.$venta["cliente"].'</td>                        
+                    <td>' . $venta["cliente"] . '</td>                        
                 </tr>   
                 <tr>
                     <td style="width:80px;">Vendedor:</td>
-                    <td>'.$venta["vendedor"].' - '.$venta["nom_vendedor"].'</td>                        
+                    <td>' . $venta["vendedor"] . ' - ' . $venta["nom_vendedor"] . '</td>                        
                 </tr>                                       
             </thead>
         </table>';
-        
+
         $feccon = '<table>
 
             <thead>
@@ -104,10 +105,10 @@
                 </tr>
                 
                 <tr>
-                    <td style="text-align:center;">'.$venta["fecha"].'</td>
-                    <td style="text-align:center;">'.$venta["descripcion"].'</td>
+                    <td style="text-align:center;">' . $venta["fecha"] . '</td>
+                    <td style="text-align:center;">' . $venta["descripcion"] . '</td>
                     <td style="text-align:center;"></td>
-                    <td style="text-align:center;">'.$venta["fecha_vencimiento"].'</td>
+                    <td style="text-align:center;">' . $venta["fecha_vencimiento"] . '</td>
                     <td style="text-align:center;"></td>
                 </tr>
 
@@ -135,7 +136,7 @@
 
         $cantidaUnidades = 0;
 
-        foreach($modelo as $key => $value2){
+        foreach ($modelo as $key => $value2) {
             $cantidaUnidades += $value2["cantidad"];
         }
 
@@ -143,13 +144,13 @@
             <tr>
                 <td style="width:500px; border-radius: 10px;  border: 1px solid #000000;  padding: 1px;">
                     <p>Observaciones</p>
-                    <p>Nro. Unidades: '.$cantidaUnidades.'</p>
+                    <p>Nro. Unidades: ' . $cantidaUnidades . '</p>
                 </td>
                 <td style="width:220px; border-radius: 10px;  border: 1px solid #000000;  padding: 1px;">
                     <table>
                         <tr>
                             <td style="width:170px;">Op. Gravadas S/</td>
-                            <td style="width:50px; text-align:right;">'.number_format($venta["neto"],2).'</td>
+                            <td style="width:50px; text-align:right;">' . number_format($venta["neto"], 2) . '</td>
                         </tr>
                         <tr>
                             <td style="width:170px;">Op. Inafecta</td>
@@ -165,11 +166,11 @@
                         </tr> 
                         <tr>
                             <td style="width:170px;">Descuentos Totales</td>
-                            <td style="width:50px; text-align:right;">'.number_format($venta["dscto"],2).'</td>
+                            <td style="width:50px; text-align:right;">' . number_format($venta["dscto"], 2) . '</td>
                         </tr> 
                         <tr>
                             <td style="width:170px;">Sub Totales</td>
-                            <td style="width:50px; text-align:right;">'.number_format($subtotal,2).'</td>
+                            <td style="width:50px; text-align:right;">' . number_format($subtotal, 2) . '</td>
                         </tr> 
                         <tr>
                             <td style="width:170px;">ISC</td>
@@ -177,18 +178,18 @@
                         </tr> 
                         <tr>
                             <td style="width:170px;">IGV</td>
-                            <td style="width:50px; text-align:right;">'.number_format($venta["igv"],2).'</td>
+                            <td style="width:50px; text-align:right;">' . number_format($venta["igv"], 2) . '</td>
                         </tr> 
                         <tr>
                             <td style="width:170px;">TOTAL S/</td>
-                            <td style="width:50px; text-align:right;">'.number_format($venta["total"],2).'</td>
+                            <td style="width:50px; text-align:right;">' . number_format($venta["total"], 2) . '</td>
                         </tr> 
                     </table>
                 </td>
             </tr>
 
             <tr>
-                <td style="width:720px; border-radius: 5px;  border: 1px solid #000000;  padding: 1px;">Son: '.$monto_letra.'</td>
+                <td style="width:720px; border-radius: 5px;  border: 1px solid #000000;  padding: 1px;">Son: ' . $monto_letra . '</td>
             </tr>
             <tr></tr>
             <tr>
@@ -211,40 +212,38 @@
         </table>';
 
         //todo: 1 página
-        if($cantModelo <= 20){
+        if ($cantModelo <= 20) {
 
             echo $cabecera;
 
             echo $cliente;
-    
+
             echo $feccon;
-    
+
             echo $cabDet;
-    
+
             echo '<table>';
-    
+
             foreach ($modelo as $key => $value) {
-                
+
                 echo '<tr>
-                    <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["modelo"].'</td>
-                    <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["cantidad"].'</td>
-                    <td style="width:50px; border-right: 1px solid; text-align:center;">'.$value["unidad"].'</td>
-                    <td style="width:250px; border-right: 1px solid;">'.$value["nombre"].'</td>
-                    <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["precio"].'</td>
-                    <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["dscto1"].'</td>
-                    <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["total"].'</td>
+                    <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["modelo"] . '</td>
+                    <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["cantidad"] . '</td>
+                    <td style="width:50px; border-right: 1px solid; text-align:center;">' . $value["unidad"] . '</td>
+                    <td style="width:250px; border-right: 1px solid;">' . $value["nombre"] . '</td>
+                    <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["precio"] . '</td>
+                    <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["dscto1"] . '</td>
+                    <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["total"] . '</td>
                 </tr>';
-
             }
-    
-            echo '</table>';
-    
-            echo $pie;
 
+            echo '</table>';
+
+            echo $pie;
         }
-        
+
         //todo: 2 Páginas
-        else if($cantModelo > 20 && $cantModelo <= 40){
+        else if ($cantModelo > 20 && $cantModelo <= 40) {
 
             //*PAGINA 1
 
@@ -257,35 +256,32 @@
             echo $cabDet;
 
             echo '<table>';
-    
+
             foreach ($modelo as $key => $value) {
 
-                if($key <= 20){
+                if ($key <= 20) {
 
                     echo '<tr>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["modelo"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["cantidad"].'</td>
-                        <td style="width:50px; border-right: 1px solid; text-align:center;">'.$value["unidad"].'</td>
-                        <td style="width:250px; border-right: 1px solid;">'.$value["nombre"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["precio"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["dscto1"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["total"].'</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["modelo"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["cantidad"] . '</td>
+                        <td style="width:50px; border-right: 1px solid; text-align:center;">' . $value["unidad"] . '</td>
+                        <td style="width:250px; border-right: 1px solid;">' . $value["nombre"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["precio"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["dscto1"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["total"] . '</td>
                     </tr>';
-
-                }               
-
+                }
             }
-    
-            echo '</table>';      
-            
-            for ($i=0; $i < 65; $i++) { 
+
+            echo '</table>';
+
+            for ($i = 0; $i < 65; $i++) {
 
                 echo '<table>
                     <tr>
                         <td></td>
                     </tr>
                 </table>';
-
             }
 
             //*PAGINA 2
@@ -296,36 +292,33 @@
 
             echo $feccon;
 
-            echo $cabDet;     
+            echo $cabDet;
 
             echo '<table>';
-            
+
             foreach ($modelo as $key => $value) {
 
-                if($key > 20){
+                if ($key > 20) {
 
                     echo '<tr>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["modelo"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["cantidad"].'</td>
-                        <td style="width:50px; border-right: 1px solid; text-align:center;">'.$value["unidad"].'</td>
-                        <td style="width:250px; border-right: 1px solid;">'.$value["nombre"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["precio"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["dscto1"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["total"].'</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["modelo"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["cantidad"] . '</td>
+                        <td style="width:50px; border-right: 1px solid; text-align:center;">' . $value["unidad"] . '</td>
+                        <td style="width:250px; border-right: 1px solid;">' . $value["nombre"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["precio"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["dscto1"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["total"] . '</td>
                     </tr>';
+                }
+            }
 
-                }               
-
-            }        
-            
             echo '</table>';
-            
-            echo $pie;
 
+            echo $pie;
         }
 
         //todo: 3 páginas
-        else if($cantModelo > 40 && $cantModelo <= 60){
+        else if ($cantModelo > 40 && $cantModelo <= 60) {
 
             //*PAGINA 1
 
@@ -338,35 +331,32 @@
             echo $cabDet;
 
             echo '<table>';
-    
+
             foreach ($modelo as $key => $value) {
 
-                if($key <= 20){
+                if ($key <= 20) {
 
                     echo '<tr>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["modelo"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["cantidad"].'</td>
-                        <td style="width:50px; border-right: 1px solid; text-align:center;">'.$value["unidad"].'</td>
-                        <td style="width:250px; border-right: 1px solid;">'.$value["nombre"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["precio"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["dscto1"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["total"].'</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["modelo"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["cantidad"] . '</td>
+                        <td style="width:50px; border-right: 1px solid; text-align:center;">' . $value["unidad"] . '</td>
+                        <td style="width:250px; border-right: 1px solid;">' . $value["nombre"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["precio"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["dscto1"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["total"] . '</td>
                     </tr>';
-
-                }               
-
+                }
             }
-    
-            echo '</table>';      
-            
-            for ($i=0; $i < 65; $i++) { 
+
+            echo '</table>';
+
+            for ($i = 0; $i < 65; $i++) {
 
                 echo '<table>
                     <tr>
                         <td></td>
                     </tr>
                 </table>';
-
             }
 
             //*PAGINA 2
@@ -377,41 +367,38 @@
 
             echo $feccon;
 
-            echo $cabDet;     
+            echo $cabDet;
 
             echo '<table>';
-            
+
             foreach ($modelo as $key => $value) {
 
-                if($key > 20 && $key <= 40){
+                if ($key > 20 && $key <= 40) {
 
                     echo '<tr>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["modelo"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["cantidad"].'</td>
-                        <td style="width:50px; border-right: 1px solid; text-align:center;">'.$value["unidad"].'</td>
-                        <td style="width:250px; border-right: 1px solid;">'.$value["nombre"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["precio"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["dscto1"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["total"].'</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["modelo"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["cantidad"] . '</td>
+                        <td style="width:50px; border-right: 1px solid; text-align:center;">' . $value["unidad"] . '</td>
+                        <td style="width:250px; border-right: 1px solid;">' . $value["nombre"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["precio"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["dscto1"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["total"] . '</td>
                     </tr>';
+                }
+            }
 
-                }               
-
-            }        
-            
             echo '</table>';
 
             //*pagina 3
 
-            for ($i=0; $i < 65; $i++) { 
+            for ($i = 0; $i < 65; $i++) {
 
                 echo '<table>
                     <tr>
                         <td></td>
                     </tr>
                 </table>';
-
-            }            
+            }
 
             echo $cabecera;
 
@@ -419,36 +406,33 @@
 
             echo $feccon;
 
-            echo $cabDet;     
+            echo $cabDet;
 
             echo '<table>';
-            
+
             foreach ($modelo as $key => $value) {
 
-                if($key > 40 && $key <= 60){
+                if ($key > 40 && $key <= 60) {
 
                     echo '<tr>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["modelo"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["cantidad"].'</td>
-                        <td style="width:50px; border-right: 1px solid; text-align:center;">'.$value["unidad"].'</td>
-                        <td style="width:250px; border-right: 1px solid;">'.$value["nombre"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["precio"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["dscto1"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["total"].'</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["modelo"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["cantidad"] . '</td>
+                        <td style="width:50px; border-right: 1px solid; text-align:center;">' . $value["unidad"] . '</td>
+                        <td style="width:250px; border-right: 1px solid;">' . $value["nombre"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["precio"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["dscto1"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["total"] . '</td>
                     </tr>';
+                }
+            }
 
-                }               
+            echo '</table>';
 
-            }        
-            
-            echo '</table>';            
-            
-            echo $pie;            
-
+            echo $pie;
         }
 
         //todo: 4 páginas
-        else if($cantModelo > 60 && $cantModelo <= 80){
+        else if ($cantModelo > 60 && $cantModelo <= 80) {
 
             //*PAGINA 1
 
@@ -461,36 +445,33 @@
             echo $cabDet;
 
             echo '<table>';
-    
+
             foreach ($modelo as $key => $value) {
 
-                if($key <= 20){
+                if ($key <= 20) {
 
                     echo '<tr>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["modelo"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["cantidad"].'</td>
-                        <td style="width:50px; border-right: 1px solid; text-align:center;">'.$value["unidad"].'</td>
-                        <td style="width:250px; border-right: 1px solid;">'.$value["nombre"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["precio"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["dscto1"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["total"].'</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["modelo"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["cantidad"] . '</td>
+                        <td style="width:50px; border-right: 1px solid; text-align:center;">' . $value["unidad"] . '</td>
+                        <td style="width:250px; border-right: 1px solid;">' . $value["nombre"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["precio"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["dscto1"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["total"] . '</td>
                     </tr>';
-
-                }               
-
+                }
             }
-    
-            echo '</table>';          
-            
-            for ($i=0; $i < 65; $i++) { 
+
+            echo '</table>';
+
+            for ($i = 0; $i < 65; $i++) {
 
                 echo '<table>
                     <tr>
                         <td></td>
                     </tr>
                 </table>';
-
-            }            
+            }
 
             //*PAGINA 2
 
@@ -500,39 +481,36 @@
 
             echo $feccon;
 
-            echo $cabDet;              
+            echo $cabDet;
 
             echo '<table>';
-            
+
             foreach ($modelo as $key => $value) {
 
-                if($key > 20 && $key <= 40){
+                if ($key > 20 && $key <= 40) {
 
                     echo '<tr>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["modelo"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["cantidad"].'</td>
-                        <td style="width:50px; border-right: 1px solid; text-align:center;">'.$value["unidad"].'</td>
-                        <td style="width:250px; border-right: 1px solid;">'.$value["nombre"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["precio"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["dscto1"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["total"].'</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["modelo"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["cantidad"] . '</td>
+                        <td style="width:50px; border-right: 1px solid; text-align:center;">' . $value["unidad"] . '</td>
+                        <td style="width:250px; border-right: 1px solid;">' . $value["nombre"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["precio"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["dscto1"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["total"] . '</td>
                     </tr>';
+                }
+            }
 
-                }               
+            echo '</table>';
 
-            }        
-            
-            echo '</table>';            
-
-            for ($i=0; $i < 65; $i++) { 
+            for ($i = 0; $i < 65; $i++) {
 
                 echo '<table>
                     <tr>
                         <td></td>
                     </tr>
                 </table>';
-
-            } 
+            }
 
             //*PAGINA 3
 
@@ -542,39 +520,36 @@
 
             echo $feccon;
 
-            echo $cabDet;     
-            
+            echo $cabDet;
+
             echo '<table>';
-            
+
             foreach ($modelo as $key => $value) {
 
-                if($key > 40 && $key <= 60){
+                if ($key > 40 && $key <= 60) {
 
                     echo '<tr>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["modelo"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["cantidad"].'</td>
-                        <td style="width:50px; border-right: 1px solid; text-align:center;">'.$value["unidad"].'</td>
-                        <td style="width:250px; border-right: 1px solid;">'.$value["nombre"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["precio"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["dscto1"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["total"].'</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["modelo"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["cantidad"] . '</td>
+                        <td style="width:50px; border-right: 1px solid; text-align:center;">' . $value["unidad"] . '</td>
+                        <td style="width:250px; border-right: 1px solid;">' . $value["nombre"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["precio"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["dscto1"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["total"] . '</td>
                     </tr>';
+                }
+            }
 
-                }               
+            echo '</table>';
 
-            }        
-            
-            echo '</table>';      
-            
-            for ($i=0; $i < 65; $i++) { 
+            for ($i = 0; $i < 65; $i++) {
 
                 echo '<table>
                     <tr>
                         <td></td>
                     </tr>
                 </table>';
-
-            }   
+            }
 
 
             //*PAGINA 4
@@ -585,39 +560,36 @@
 
             echo $feccon;
 
-            echo $cabDet;  
+            echo $cabDet;
 
             echo '<table>';
-            
+
             foreach ($modelo as $key => $value) {
 
-                if($key > 60 && $key <= 80){
+                if ($key > 60 && $key <= 80) {
 
                     echo '<tr>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["modelo"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["cantidad"].'</td>
-                        <td style="width:50px; border-right: 1px solid; text-align:center;">'.$value["unidad"].'</td>
-                        <td style="width:250px; border-right: 1px solid;">'.$value["nombre"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["precio"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["dscto1"].'</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">'.$value["total"].'</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["modelo"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["cantidad"] . '</td>
+                        <td style="width:50px; border-right: 1px solid; text-align:center;">' . $value["unidad"] . '</td>
+                        <td style="width:250px; border-right: 1px solid;">' . $value["nombre"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["precio"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["dscto1"] . '</td>
+                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["total"] . '</td>
                     </tr>';
+                }
+            }
 
-                }               
+            echo '</table>';
 
-            }        
-            
-            echo '</table>';         
-            
-            echo $pie; 
-
+            echo $pie;
         }
 
 
         ?>
 
-        </div>
+    </div>
 
-    </body>
+</body>
 
 </html>
