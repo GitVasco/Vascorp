@@ -48,10 +48,9 @@
 
                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
 
-                    <input type="text" class="form-control" id="usuario" name="usuario"
-                      value="<?php echo $_SESSION["nombre"]; ?>" readonly>
+                    <input type="text" class="form-control" id="usuario" name="usuario" value="<?php echo $_SESSION["nombre"]; ?>" readonly>
 
-                    <input type="hidden" name="idUsuario" value="<?php echo $_SESSION["id"]; ?>">                      
+                    <input type="hidden" name="idUsuario" value="<?php echo $_SESSION["id"]; ?>">
 
                   </div>
 
@@ -70,33 +69,28 @@
                     <?php
 
 
-                      $ult_codigo = ControladorOrdenCorte::ctrUltimoCodigoOC();
+                    $ult_codigo = ControladorOrdenCorte::ctrUltimoCodigoOC();
 
-                      /* var_dump("ult_codigo", $ult_codigo); */
+                    /* var_dump("ult_codigo", $ult_codigo); */
 
-                      if(!$ult_codigo){
+                    if (!$ult_codigo) {
 
-                        echo '<input type="text" class="form-control" id="nuevaOrdenCorte" name="nuevaOrdenCorte" value="1001" readonly>';
+                      echo '<input type="text" class="form-control" id="nuevaOrdenCorte" name="nuevaOrdenCorte" value="1001" readonly>';
+                    } else {
 
-
-                      }else{
-
-                        foreach ($ult_codigo as $key => $value) {
-                                             
-                        }
-
-                        /* var_dump("prueba", $value["ultimo_codigo"]); */
-
-                        $codigo = $value["ultimo_codigo"]+1;
-
-                        /* var_dump("codigo", $codigo); */
-
-                        echo '<input type="text" class="form-control" id="nuevaOrdenCorte" name="nuevaOrdenCorte" value="'.$codigo.'" readonly>';
-
-
+                      foreach ($ult_codigo as $key => $value) {
                       }
 
-                  ?>
+                      /* var_dump("prueba", $value["ultimo_codigo"]); */
+
+                      $codigo = $value["ultimo_codigo"] + 1;
+
+                      /* var_dump("codigo", $codigo); */
+
+                      echo '<input type="text" class="form-control" id="nuevaOrdenCorte" name="nuevaOrdenCorte" value="' . $codigo . '" readonly>';
+                    }
+
+                    ?>
 
                   </div>
 
@@ -108,29 +102,29 @@
 
                 <div class="form-group">
 
-                    <div class="input-group">
+                  <div class="input-group">
 
-                        <span class="input-group-addon"><i class="fa fa-percent"></i></span>
+                    <span class="input-group-addon"><i class="fa fa-percent"></i></span>
 
-                        <?php
+                    <?php
 
-                            $configuracion = controladorArticulos::ctrConfiguracion();
+                    $configuracion = controladorArticulos::ctrConfiguracion();
 
-                            $urgencia = $configuracion["urgencia"];
+                    $urgencia = $configuracion["urgencia"];
 
-                            /* var_dump("urgencia", $urgencia); */
-                        
-                            echo '<input type="number" class="form-control" id="configuracion" name="configuracion" value="'.$urgencia.'" step="any" readonly>';
+                    /* var_dump("urgencia", $urgencia); */
 
-                        ?>
+                    echo '<input type="number" class="form-control" id="configuracion" name="configuracion" value="' . $urgencia . '" step="any" readonly>';
 
-                        <span class="input-group-addon">
+                    ?>
 
-                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modalConfigurarUrgencia" data-dismiss="modal">Configurar Porcentaje</button>
+                    <span class="input-group-addon">
 
-                        </span>
+                      <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modalConfigurarUrgencia" data-dismiss="modal">Configurar Porcentaje</button>
 
-                    </div>
+                    </span>
+
+                  </div>
 
                 </div>
 
@@ -138,49 +132,49 @@
                   ENTRADA BUSCADOR
                   ======================================-->
 
-                  <div class=" form-group buscador" id="elid" style="padding-bottom:25px">
-                    <label for="" class="col-form-label col-lg-1">Buscar:</label>
-                    <div class="col-lg-11">
-                        <div class="input-group">
-                            
-                            <input type="text" class="form-control " id="buscadorOc" name="buscadorOc"/>
-                            <div class="input-group-addon"><i class="fa fa-search"></i></div>
-                        </div>
+                <div class=" form-group buscador" id="elid" style="padding-bottom:25px">
+                  <label for="" class="col-form-label col-lg-1">Buscar:</label>
+                  <div class="col-lg-11">
+                    <div class="input-group">
+
+                      <input type="text" class="form-control " id="buscadorOc" name="buscadorOc" />
+                      <div class="input-group-addon"><i class="fa fa-search"></i></div>
                     </div>
-                        
                   </div>
 
-                  <!--=====================================
+                </div>
+
+                <!--=====================================
                   TITULOS
                   ======================================-->
 
-                  <div class="box box-primary"   >
+                <div class="box box-primary">
 
-                    <div class="row">
+                  <div class="row">
 
-                      <div class="col-xs-8">
+                    <div class="col-xs-8">
 
-                        <label>Articulo</label>
+                      <label>Articulo</label>
 
-                      </div>
+                    </div>
 
-                      <div class="col-xs-2">
+                    <div class="col-xs-2">
 
-                        <label for="">Ord. Corte</label>
+                      <label for="">Ord. Corte</label>
 
-                      </div>
+                    </div>
 
-                      <div class="col-xs-2">
+                    <div class="col-xs-2">
 
-                        <label for="">Mes</label>
-
-                      </div>
+                      <label for="">Mes</label>
 
                     </div>
 
                   </div>
 
-        
+                </div>
+
+
                 <!--=====================================
                 ENTRADA PARA AGREGAR MATERIAPRIMA
                 ======================================-->
@@ -189,9 +183,9 @@
 
                 </div>
 
-                <input type="hidden" id="listaArticulosOC" name="listaArticulosOC">                
+                <input type="text" id="listaArticulosOC" name="listaArticulosOC">
 
-                <div class="row" >
+                <div class="row">
 
                   <!--=====================================
                   ENTRADA IMPUESTOS Y TOTAL
@@ -211,25 +205,24 @@
 
                       <tbody>
 
-                      <tr>
+                        <tr>
 
-                        <td style="width: 50%">
+                          <td style="width: 50%">
 
-                          <div class="input-group">
+                            <div class="input-group">
 
-                            <span class="input-group-addon"><i class="fa fa-scissors"></i></span>
+                              <span class="input-group-addon"><i class="fa fa-scissors"></i></span>
 
-                            <input type="text" min="1" class="form-control input-lg" id="nuevoTotalOrdenCorte"
-                              name="nuevoTotalOrdenCorte" total="" placeholder="0" readonly required>
+                              <input type="text" min="1" class="form-control input-lg" id="nuevoTotalOrdenCorte" name="nuevoTotalOrdenCorte" total="" placeholder="0" readonly required>
 
-                            <input type="hidden" name="totalOrdenCorte" id="totalOrdenCorte">
+                              <input type="hidden" name="totalOrdenCorte" id="totalOrdenCorte">
 
 
-                          </div>
+                            </div>
 
-                        </td>
+                          </td>
 
-                      </tr>
+                        </tr>
 
                       </tbody>
 
@@ -253,8 +246,8 @@
 
             <div class="box-footer">
 
-              <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-floppy-o"></i>  Guardar Orden Corte</button>
-              
+              <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-floppy-o"></i> Guardar Orden Corte</button>
+
               <a href="ordencorte" id="cancel" name="cancel" class="btn btn-danger"><i class="fa fa-times-circle"></i> Cancelar</a>
             </div>
 
@@ -262,11 +255,11 @@
 
           <?php
 
-            $guardarOrdenCorte = new ControladorOrdenCorte();
-            $guardarOrdenCorte -> ctrCrearOrdenCorte();
+          $guardarOrdenCorte = new ControladorOrdenCorte();
+          $guardarOrdenCorte->ctrCrearOrdenCorte();
 
-          ?>            
-          
+          ?>
+
 
         </div>
 
@@ -305,7 +298,7 @@
                   <th>Vtas 30d</th>
                   <th>Mes Dura</th>
                   <th>Faltante</th>
-                  
+
                 </tr>
 
               </thead>
@@ -332,7 +325,7 @@ MODAL CONFIGURAR % DE URGENCIAS
 ======================================-->
 
 <div id="modalConfigurarUrgencia" class="modal fade" role="dialog">
-  
+
   <div class="modal-dialog">
 
     <div class="modal-content">
@@ -363,16 +356,16 @@ MODAL CONFIGURAR % DE URGENCIAS
             <!-- ENTRADA PARA PORCENTAJE -->
 
             <div class="form-group">
-              
+
               <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-tag"></i></span> 
+
+                <span class="input-group-addon"><i class="fa fa-tag"></i></span>
 
                 <input type="text" class="form-control input-md" name="urgencia" id="urgencia" required>
 
               </div>
 
-            </div>       
+            </div>
 
           </div>
 
@@ -394,10 +387,10 @@ MODAL CONFIGURAR % DE URGENCIAS
 
       <?php
 
-        $configurarUrgencia = new controladorArticulos();
-        $configurarUrgencia -> ctrConfigurarUrgencia();
+      $configurarUrgencia = new controladorArticulos();
+      $configurarUrgencia->ctrConfigurarUrgencia();
 
-      ?>  
+      ?>
 
 
     </div>
@@ -408,44 +401,43 @@ MODAL CONFIGURAR % DE URGENCIAS
 
 
 <script>
-window.document.title = "Crear orden de corte"
+  window.document.title = "Crear orden de corte"
 </script>
 
 <script>
-$('.nuevoArticuloOC').ready(function(){
-    $('#buscadorOc').keyup(function(){
+  $('.nuevoArticuloOC').ready(function() {
+    $('#buscadorOc').keyup(function() {
 
-    console.log("hola mundo");
+      console.log("hola mundo");
 
-    var nombres = $('.nuevaDescripcionProducto');
-    //console.log(nombres.val())
-    //console.log(nombres.length())
+      var nombres = $('.nuevaDescripcionProducto');
+      //console.log(nombres.val())
+      //console.log(nombres.length())
 
-    var buscando = $(this).val();
-    //console.log(buscando.length);
+      var buscando = $(this).val();
+      //console.log(buscando.length);
 
-    var item='';
+      var item = '';
 
-       for( var i = 0; i < nombres.length; i++ ){
+      for (var i = 0; i < nombres.length; i++) {
 
         item = $(nombres[i]).val();
         item2 = $(nombres[i]).val().toLowerCase();
         // console.log(item);
 
-            for(var x = 0; x < item.length; x++ ){
+        for (var x = 0; x < item.length; x++) {
 
-                if( buscando.length == 0 || item.indexOf( buscando ) > -1 || item2.indexOf( buscando ) > -1 ){
+          if (buscando.length == 0 || item.indexOf(buscando) > -1 || item2.indexOf(buscando) > -1) {
 
-                    $(nombres[i]).parents('.munditoOC').show(); 
+            $(nombres[i]).parents('.munditoOC').show();
 
-                }else{
+          } else {
 
-                    $(nombres[i]).parents('.munditoOC').hide();
+            $(nombres[i]).parents('.munditoOC').hide();
 
-                }
-            }
-       }
+          }
+        }
+      }
     });
   });
-
 </script>

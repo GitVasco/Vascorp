@@ -6,26 +6,28 @@ require_once '../modelos/ordencorte.modelo.php';
 require_once '../controladores/articulos.controlador.php';
 require_once '../modelos/articulos.modelo.php';
 
-class AjaxOrdenCorte{
+class AjaxOrdenCorte
+{
 
     public $codigo;
 
-    public function ajaxEliminarOrdenCorte(){
+    public function ajaxEliminarOrdenCorte()
+    {
 
         $codigo = $this->codigo;
 
         $respuesta = ControladorOrdenCorte::ctrEliminarOrdenCorte($codigo);
 
         echo $respuesta;
-
     }
 
     /* 
 	* VISUALIZAR LA CABECERA DE LA ORDEN DE CORTE
 	*/
-	public $codigoOC;
+    public $codigoOC;
 
-    public function ajaxVisualizarOrdenCorte(){
+    public function ajaxVisualizarOrdenCorte()
+    {
 
         $item = "codigo";
         $valor = $this->codigoOC;
@@ -33,13 +35,13 @@ class AjaxOrdenCorte{
         $respuesta = ControladorOrdenCorte::ctrVisualizaOrdenCorte($item, $valor);
 
         echo json_encode($respuesta);
-
     }
 
-	/* 
+    /* 
 	* VISUALIZAR DETALLE DE LA ORDEN DE CORTE
 	*/
-	public function ajaxVisualizarOrdenCorteDetalle(){
+    public function ajaxVisualizarOrdenCorteDetalle()
+    {
 
         $item = "ordencorte";
         $valor = $this->codigoDOC;
@@ -47,13 +49,14 @@ class AjaxOrdenCorte{
         $respuestaDetalle = ControladorOrdenCorte::ctrVisualizarOrdenCorteDetalle($item, $valor);
 
         echo json_encode($respuestaDetalle);
-}	    
+    }
 
     /* 
 	* VISUALIZAR DETALLE DE LA ORDEN DE CORTE
     */
     public $idDetalle;
-	public function ajaxMostrarOrdenCorteDetalle(){
+    public function ajaxMostrarOrdenCorteDetalle()
+    {
 
         $item = "id";
         $valor = $this->idDetalle;
@@ -61,49 +64,70 @@ class AjaxOrdenCorte{
         $respuesta = ControladorOrdenCorte::ctrMostrarDetalleOrdenCorte($item, $valor);
 
         echo json_encode($respuesta);
-}	  
+    }
+
+    public function ajaxCargarTarjetas()
+    {
+
+        $lista = $this->lista;
+
+        $listaArticulos = json_decode($lista, true);
+
+        foreach ($listaArticulos as $key => $value) {
+            $articulo = $value["articulo"];
+            $cantidad = $value["cantidad"];
+            $respuesta = ModeloOrdenCorte::mdlCargarTarjetas($articulo, $cantidad);
+
+
+
+            echo json_encode($respuesta);
+        }
+    }
 }
 
 /* 
 * ELIMINAR ORDEN DE CORTE
 */
-if(isset($_POST["codigo"])){
+if (isset($_POST["codigo"])) {
 
-	$eliminarOrdenCorte=new AjaxOrdenCorte();
-	$eliminarOrdenCorte->codigo=$_POST["codigo"];
+    $eliminarOrdenCorte = new AjaxOrdenCorte();
+    $eliminarOrdenCorte->codigo = $_POST["codigo"];
     $eliminarOrdenCorte->ajaxEliminarOrdenCorte();
-    
 }
 
 /* 
  * VISUALIZAR LA CABECERA DE LA ORDEN DE CORTE
 */
-if(isset($_POST["codigoOC"])){
+if (isset($_POST["codigoOC"])) {
 
-	$visualizarOrdenCorte = new AjaxOrdenCorte();
-	$visualizarOrdenCorte -> codigoOC = $_POST["codigoOC"];
-	$visualizarOrdenCorte -> ajaxVisualizarOrdenCorte();
-  
+    $visualizarOrdenCorte = new AjaxOrdenCorte();
+    $visualizarOrdenCorte->codigoOC = $_POST["codigoOC"];
+    $visualizarOrdenCorte->ajaxVisualizarOrdenCorte();
 }
 
 /* 
  * VISUALIZAR DETALLE DE LA ORDEN DE CORTE
 */
-if(isset($_POST["codigoDOC"])){
+if (isset($_POST["codigoDOC"])) {
 
     $visualizarOrdenCorteDetalle = new AjaxOrdenCorte();
-    $visualizarOrdenCorteDetalle -> codigoDOC = $_POST["codigoDOC"];
-    $visualizarOrdenCorteDetalle -> ajaxVisualizarOrdenCorteDetalle();
-
+    $visualizarOrdenCorteDetalle->codigoDOC = $_POST["codigoDOC"];
+    $visualizarOrdenCorteDetalle->ajaxVisualizarOrdenCorteDetalle();
 }
 
 /* 
  * VISUALIZAR DETALLE DE LA ORDEN DE CORTE
 */
-if(isset($_POST["idDetalle"])){
+if (isset($_POST["idDetalle"])) {
 
     $mostrarOrdenCorteDetalle = new AjaxOrdenCorte();
-    $mostrarOrdenCorteDetalle -> idDetalle = $_POST["idDetalle"];
-    $mostrarOrdenCorteDetalle -> ajaxMostrarOrdenCorteDetalle();
+    $mostrarOrdenCorteDetalle->idDetalle = $_POST["idDetalle"];
+    $mostrarOrdenCorteDetalle->ajaxMostrarOrdenCorteDetalle();
+}
 
+if (isset($_POST["lista"])) {
+
+    $mostrarOrdenCorteDetalle = new AjaxOrdenCorte();
+    $mostrarOrdenCorteDetalle->lista = $_POST["lista"];
+    $mostrarOrdenCorteDetalle->ajaxCargarTarjetas();
 }
