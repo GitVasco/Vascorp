@@ -1,5 +1,11 @@
 <?php
+/*=============================================
+CORS
+=============================================*/
 
+header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+header('Access-Control-Allow-Methods: POST');
 /* 
 * CONTROLADORES
 */
@@ -228,4 +234,4 @@ require_once "modelos/evaluacion.modelo.php";
 require_once "extensiones/vendor/autoload.php";
 
 $plantilla = new ControladorPlantilla();
-$plantilla -> ctrPlantilla();
+$plantilla->ctrPlantilla();

@@ -1,31 +1,33 @@
 <?php
 require_once "conexion.php";
 
-class ModeloPedidos{
+class ModeloPedidos
+{
 
-    /*
+	/*
     * MOSTRAR TEMPORAL CABECERA
     */
-    static public function mdlMostrarTemporal($tabla, $valor){
+	static public function mdlMostrarTemporal($tabla, $valor)
+	{
 
-        $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE codigo = $valor ORDER BY id ASC");
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE codigo = $valor ORDER BY id ASC");
 
-        $stmt -> execute();
+		$stmt->execute();
 
-        return $stmt -> fetch();
+		return $stmt->fetch();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
 	}
 
-	    /*
+	/*
     * MOSTRAR TEMPORAL CABECERA
     */
-    static public function mdlMostrarTemporalFecha($fecha){
+	static public function mdlMostrarTemporalFecha($fecha)
+	{
 
-        $stmt = Conexion::conectar()->prepare("SELECT 
+		$stmt = Conexion::conectar()->prepare("SELECT 
 													CONCAT(
 													'C|',
 													codigo,
@@ -88,22 +90,22 @@ class ModeloPedidos{
 
 		$stmt->bindParam(":fecha", $fecha, PDO::PARAM_STR);
 
-        $stmt -> execute();
+		$stmt->execute();
 
-        return $stmt -> fetchAll();
+		return $stmt->fetchAll();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
 	}
 
-	    /*
+	/*
     * MOSTRAR TEMPORAL CABECERA
     */
-    static public function mdlMostrarTemporalFechaD($fecha){
+	static public function mdlMostrarTemporalFechaD($fecha)
+	{
 
-        $stmt = Conexion::conectar()->prepare("SELECT 
+		$stmt = Conexion::conectar()->prepare("SELECT 
 									CONCAT(
 									dt.codigo,
 									'|',
@@ -125,59 +127,59 @@ class ModeloPedidos{
 
 		$stmt->bindParam(":fecha", $fecha, PDO::PARAM_STR);
 
-        $stmt -> execute();
+		$stmt->execute();
 
-        return $stmt -> fetchAll();
+		return $stmt->fetchAll();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
+	}
 
-	}	
-
-    /*
+	/*
     * MOSTRAR TEMPORAL CABECERA
     */
-    static public function mdlMostrarTemporalTotal($valor){
+	static public function mdlMostrarTemporalTotal($valor)
+	{
 
-        $stmt = Conexion::conectar()->prepare("SELECT
+		$stmt = Conexion::conectar()->prepare("SELECT
 												dt.codigo,
 												SUM(total) AS totalArt
 											FROM
 												detalle_temporal dt
 											WHERE dt.codigo = $valor");
 
-        $stmt -> execute();
+		$stmt->execute();
 
-        return $stmt -> fetch();
+		return $stmt->fetch();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
+	}
 
-    }
-
-    /*
+	/*
     * MOSTRAR DETALLE DE TEMPORAL
     */
-	static public function mdlMostraDetallesTemporal($tabla, $valor){
+	static public function mdlMostraDetallesTemporal($tabla, $valor)
+	{
 
-		$sql="SELECT * FROM $tabla WHERE codigo=$valor ORDER BY id ASC";
+		$sql = "SELECT * FROM $tabla WHERE codigo=$valor ORDER BY id ASC";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->execute();
 
 		return $stmt->fetchAll();
 
-		$stmt=null;
-
+		$stmt = null;
 	}
 
-    /*
+	/*
     * MOSTRAR DETALLE DE TEMPORAL B
     */
-	static public function mdlMostraDetallesTemporalB($valor){
+	static public function mdlMostraDetallesTemporalB($valor)
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
 					t.codigo,
@@ -208,14 +210,14 @@ class ModeloPedidos{
 
 		return $stmt->fetchAll();
 
-		$stmt=null;
+		$stmt = null;
+	}
 
-	}	
-
-    /*
+	/*
 	* GUARDAR DETALLE DE TEMPORAL
 	*/
-	static public function mdlGuardarTemporal($tabla, $datos){
+	static public function mdlGuardarTemporal($tabla, $datos)
+	{
 
 
 		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (codigo, cliente, vendedor, lista, agencia) VALUES (:codigo, :cliente, :vendedor, :lista, :agencia)");
@@ -241,7 +243,8 @@ class ModeloPedidos{
 	/*
 	* GUARDAR DETALLE DE TEMPORAL
 	*/
-	static public function mdlGuardarTemporalDetalle($tabla, $datos){
+	static public function mdlGuardarTemporalDetalle($tabla, $datos)
+	{
 
 
 		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (codigo, articulo, cantidad, precio, total) VALUES (:codigo, :articulo, :cantidad, :precio, (:cantidad * :precio) )");
@@ -267,7 +270,8 @@ class ModeloPedidos{
 	/*
 	* GUARDAR DETALLE DE TEMPORAL
 	*/
-	static public function mdlGuardarTemporalDetalleB($detalle){
+	static public function mdlGuardarTemporalDetalleB($detalle)
+	{
 
 
 		$stmt = Conexion::conectar()->prepare("INSERT INTO detalle_temporal (
@@ -285,93 +289,88 @@ class ModeloPedidos{
 		if ($stmt->execute()) {
 
 			return "ok";
-
 		} else {
 
 			//return $detalle;
 			return $stmt->errorInfo();
-
 		}
 
 		$stmt->close();
 		$stmt = null;
-	}	
+	}
 
-    /*
+	/*
     * ELIMINAR ARTICULO REPETIDO
     */
-	static public function mdlEliminarDetalleTemporal($tabla, $eliminar){
+	static public function mdlEliminarDetalleTemporal($tabla, $eliminar)
+	{
 
 		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE codigo = :codigo AND articulo = :articulo");
 
-        $stmt -> bindParam(":codigo", $eliminar["codigo"], PDO::PARAM_INT);
-        $stmt -> bindParam(":articulo", $eliminar["articulo"], PDO::PARAM_STR);
+		$stmt->bindParam(":codigo", $eliminar["codigo"], PDO::PARAM_INT);
+		$stmt->bindParam(":articulo", $eliminar["articulo"], PDO::PARAM_STR);
 
-		if($stmt -> execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
 	}
 
-    /*
+	/*
     * ELIMINAR DETALLES DEL PEDIDO PARA PONER LOS REALES
     */
-	static public function mdlEliminarDetalleTemporalTotal($datos){
+	static public function mdlEliminarDetalleTemporalTotal($datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("DELETE
 												FROM
 												detalle_temporal
 												WHERE codigo = :codigo");
 
-        $stmt -> bindParam(":codigo", $datos["codigo"], PDO::PARAM_INT);
+		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_INT);
 
-		if($stmt -> execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
+	}
 
-    }
-
-    /*
+	/*
     * ACTUALIZAR TALONARIO +1
     */
-	static public function mdlActualizarTalonario(){
+	static public function mdlActualizarTalonario()
+	{
 
-		$sql="UPDATE talonariosjf SET pedido = pedido+1";
+		$sql = "UPDATE talonariosjf SET pedido = pedido+1";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->execute();
 
-		$stmt=null;
-
+		$stmt = null;
 	}
 
-    /*
+	/*
     *ACTUALIZAR TOTALES DEL PEDIDO
     */
-	static public function mdlActualizarTotalesPedido($datos){
+	static public function mdlActualizarTotalesPedido($datos)
+	{
 
-		$sql="UPDATE
+		$sql = "UPDATE
 					temporaljf
 				SET
 					cliente = :cliente,
@@ -387,7 +386,7 @@ class ModeloPedidos{
 					dscto = :dscto
 				WHERE codigo = :codigo";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->bindParam(":cliente", $datos["cliente"], PDO::PARAM_STR);
 		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
@@ -402,28 +401,26 @@ class ModeloPedidos{
 		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
 		$stmt->bindParam(":dscto", $datos["dscto"], PDO::PARAM_STR);
 
-        if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-
 		}
 
-		$stmt=null;
-
+		$stmt = null;
 	}
 
-    /*
+	/*
     * MOSTRAR DETALLE DE TEMPORAL
     */
-	static public function mdlMostraPedidosCabecera($valor){
+	static public function mdlMostraPedidosCabecera($valor)
+	{
 
-		if($valor == null){
+		if ($valor == null) {
 
-			$sql="SELECT
+			$sql = "SELECT
 				t.id,
 				t.codigo,
 				c.codigo AS cod_cli,
@@ -461,15 +458,14 @@ class ModeloPedidos{
 			WHERE t.estado = 'generado'
 			ORDER BY fecha DESC";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+			$stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->execute();
+			$stmt->execute();
 
-		return $stmt->fetchAll();
+			return $stmt->fetchAll();
+		} else {
 
-		}else{
-
-			$sql="SELECT
+			$sql = "SELECT
 					t.id,
 					t.codigo,
 					c.codigo AS cod_cli,
@@ -506,26 +502,25 @@ class ModeloPedidos{
 					ON t.usuario = u.id
 				WHERE t.codigo = $valor";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+			$stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->execute();
+			$stmt->execute();
 
-		return $stmt->fetch();
-
+			return $stmt->fetch();
 		}
 
-		$stmt=null;
-
+		$stmt = null;
 	}
 
-	    /*
+	/*
     * MOSTRAR DETALLE DE TEMPORAL
     */
-	static public function mdlPedidosPendientes($vendedor){
+	static public function mdlPedidosPendientes($vendedor)
+	{
 
-		if($vendedor == null){
+		if ($vendedor == null) {
 
-			$sql="SELECT 
+			$sql = "SELECT 
 			t.codigo,
 			t.codigo,
 			t.vendedor,
@@ -564,15 +559,14 @@ class ModeloPedidos{
 					c.ubigeo,
 					t.fecha";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+			$stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->execute();
+			$stmt->execute();
 
-		return $stmt->fetchAll();
+			return $stmt->fetchAll();
+		} else {
 
-		}else{
-
-			$sql="SELECT 
+			$sql = "SELECT 
 						t.codigo,
 						t.codigo,
 						t.vendedor,
@@ -611,26 +605,25 @@ class ModeloPedidos{
 							t.fecha DESC,
 							c.ubigeo";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+			$stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->bindParam(":vendedor", $vendedor, PDO::PARAM_STR);
+			$stmt->bindParam(":vendedor", $vendedor, PDO::PARAM_STR);
 
-		$stmt->execute();
+			$stmt->execute();
 
-		return $stmt->fetchAll();
-
+			return $stmt->fetchAll();
 		}
 
-		$stmt=null;
-
+		$stmt = null;
 	}
 
-    /*
+	/*
     * MOSTRAR LOS DATOS PARA LA IMPRESION
     */
-	static public function mdlPedidoImpresion($codigo, $modelo){
+	static public function mdlPedidoImpresion($codigo, $modelo)
+	{
 
-		$sql="SELECT 
+		$sql = "SELECT 
 						m.id_modelo,
 						m.modelo,
 						a.cod_color,
@@ -698,28 +691,28 @@ class ModeloPedidos{
 						ON dt.articulo = a.articulo
 						LEFT JOIN modelojf m
 						ON a.modelo = m.modelo
-					WHERE dt.codigo = '".$codigo."'
-						AND m.modelo = '".$modelo."'
+					WHERE dt.codigo = '" . $codigo . "'
+						AND m.modelo = '" . $modelo . "'
 					GROUP BY m.modelo,
 						a.cod_color,
 						a.color";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->execute();
 
 		return $stmt->fetchAll();
 
-		$stmt=null;
+		$stmt = null;
+	}
 
-	}	
-
-    /*
+	/*
     * MOSTRAR LOS DATOS PARA LA IMPRESION
     */
-	static public function mdlPedidoImpresionB($codigo, $ini, $fin){
+	static public function mdlPedidoImpresionB($codigo, $ini, $fin)
+	{
 
-		$sql="SELECT 
+		$sql = "SELECT 
 						dt.codigo,
 						a.modelo,
 						a.cod_color,
@@ -816,22 +809,22 @@ class ModeloPedidos{
 						cod_color
 					LIMIT $ini, $fin";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->execute();
 
 		return $stmt->fetchAll();
 
-		$stmt=null;
-
-	}	
+		$stmt = null;
+	}
 
 	/*
     * MOSTRAR LOS DATOS PARA LA IMPRESION
     */
-	static public function mdlPedidoImpresionMod($valor){
+	static public function mdlPedidoImpresionMod($valor)
+	{
 
-		$sql="SELECT
+		$sql = "SELECT
 			m.id_modelo,
 			m.modelo
 		FROM
@@ -844,22 +837,22 @@ class ModeloPedidos{
 		GROUP BY m.id_modelo
 		ORDER BY m.modelo";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->execute();
 
 		return $stmt->fetchAll();
 
-		$stmt=null;
-
+		$stmt = null;
 	}
 
 	/*
     * MOSTRAR LOS DATOS PARA LA IMPRESION CABECERA
     */
-	static public function mdlPedidoImpresionCab($valor){
+	static public function mdlPedidoImpresionCab($valor)
+	{
 
-		$sql="SELECT 
+		$sql = "SELECT 
 					t.codigo AS pedido,
 					DATE(t.fecha) AS fecha,
 					c.codigo,
@@ -901,22 +894,22 @@ class ModeloPedidos{
 						ON td.cod_doc = c.tipo_documento
 				WHERE t.codigo = $valor";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->execute();
 
 		return $stmt->fetch();
 
-		$stmt=null;
-
+		$stmt = null;
 	}
 
 	/*
     * MOSTRAR PEDIDO CON FORMATO DE IMRPESION - TOTALES GENERALES
     */
-	static public function mdlPedidoImpresionTotales($valor){
+	static public function mdlPedidoImpresionTotales($valor)
+	{
 
-		$sql="SELECT
+		$sql = "SELECT
 					'TOTAL',
 					'PEDIDO',
 					SUM(
@@ -982,24 +975,24 @@ class ModeloPedidos{
 					ON dt.articulo = a.articulo
 				WHERE dt.codigo = $valor";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->execute();
 
 		return $stmt->fetch();
 
-		$stmt=null;
-
+		$stmt = null;
 	}
 
-    /*
+	/*
     * MOSTRAR DETALLE DE TEMPORAL
     */
-	static public function mdlMostraPedidosGeneral($valor){
+	static public function mdlMostraPedidosGeneral($valor)
+	{
 
-		if($valor == null){
+		if ($valor == null) {
 
-			$sql="SELECT
+			$sql = "SELECT
 						t.id,
 						t.codigo,
 						RIGHT(t.codigo, 7) AS codigoB,
@@ -1043,15 +1036,14 @@ class ModeloPedidos{
 					ORDER BY fecha DESC,
 					 RIGHT(t.codigo, 7) DESC";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+			$stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->execute();
+			$stmt->execute();
 
-		return $stmt->fetchAll();
+			return $stmt->fetchAll();
+		} else {
 
-		}else{
-
-			$sql="SELECT
+			$sql = "SELECT
 					t.id,
 					t.codigo,
 					c.codigo AS cod_cli,
@@ -1088,26 +1080,25 @@ class ModeloPedidos{
 					ON t.usuario = u.id
 				WHERE t.codigo = $valor";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+			$stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->execute();
+			$stmt->execute();
 
-		return $stmt->fetch();
-
+			return $stmt->fetch();
 		}
 
-		$stmt=null;
-
+		$stmt = null;
 	}
 
-    /*
+	/*
     * MOSTRAR DETALLE DE TEMPORAL
     */
-	static public function mdlMostraPedidosTablas($valor){
+	static public function mdlMostraPedidosTablas($valor)
+	{
 
-		if($valor != null){
+		if ($valor != null) {
 
-			$sql="SELECT 
+			$sql = "SELECT 
 			t.id,
 			t.codigo,
 			RIGHT(t.codigo, 7) AS codigoB,
@@ -1153,15 +1144,14 @@ class ModeloPedidos{
 			t.fecha DESC,
 			RIGHT(t.codigo, 7)";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+			$stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->execute();
+			$stmt->execute();
 
-		return $stmt->fetchAll();
+			return $stmt->fetchAll();
+		} else {
 
-		}else{
-
-			$sql="SELECT
+			$sql = "SELECT
 					t.id,
 					t.codigo,
 					c.codigo AS cod_cli,
@@ -1203,22 +1193,21 @@ class ModeloPedidos{
 					ON t.usuario = u.id
 				WHERE t.codigo = $valor";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+			$stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->execute();
+			$stmt->execute();
 
-		return $stmt->fetch();
-
+			return $stmt->fetch();
 		}
 
-		$stmt=null;
-
+		$stmt = null;
 	}
 
 	/*
 	* GUARDAR TEMPORAL BKP
 	*/
-	static public function mdlGuardarTemporalBkp($tabla, $datos){
+	static public function mdlGuardarTemporalBkp($tabla, $datos)
+	{
 
 
 		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (codigo, cliente, vendedor, lista,op_gravada,descuento_total,sub_total,igv,total,condicion_venta,estado,fecha,usuario,agencia,usuario_estado) VALUES (:codigo, :cliente, :vendedor, :lista,:op_gravada,:descuento_total,:sub_total,:igv,:total,:condicion_venta,:estado,:fecha,:usuario,:agencia,:usuario_estado)");
@@ -1251,10 +1240,11 @@ class ModeloPedidos{
 		$stmt = null;
 	}
 
-		/*
+	/*
 	* GUARDAR TEMPORAL BKP
 	*/
-	static public function mdlGuardarTemporalBkpCab($codigo){
+	static public function mdlGuardarTemporalBkpCab($codigo)
+	{
 
 
 		$stmt = Conexion::conectar()->prepare("INSERT INTO temporaljf_bkp 
@@ -1274,14 +1264,14 @@ class ModeloPedidos{
 
 		$stmt->close();
 		$stmt = null;
-
 	}
 
 
 	/*
 	* GUARDAR TEMPORAL BKP
 	*/
-	static public function mdlGuardarTemporalBkpDet($codigo){
+	static public function mdlGuardarTemporalBkpDet($codigo)
+	{
 
 
 		$stmt = Conexion::conectar()->prepare("INSERT INTO detalle_temporalbkp 
@@ -1301,13 +1291,13 @@ class ModeloPedidos{
 
 		$stmt->close();
 		$stmt = null;
-
 	}
 
 	/*
 	* GUARDAR TEMPORAL BKP
 	*/
-	static public function mdlDividirPedidoD($pedido, $porcentaje){
+	static public function mdlDividirPedidoD($pedido, $porcentaje)
+	{
 
 
 		$stmt = Conexion::conectar()->prepare("UPDATE 
@@ -1327,15 +1317,15 @@ class ModeloPedidos{
 
 		$stmt->close();
 		$stmt = null;
-
-	}	
+	}
 
 	/*
     * MOSTRAR los datos del nuevo total
     */
-	static public function mdlDetalleToalDiv($pedido){
+	static public function mdlDetalleToalDiv($pedido)
+	{
 
-		$sql="SELECT 
+		$sql = "SELECT 
 						dt.codigo,
 						SUM(total) AS total 
 					FROM
@@ -1343,20 +1333,20 @@ class ModeloPedidos{
 					WHERE dt.codigo = $pedido 
 					GROUP BY dt.codigo";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->execute();
 
 		return $stmt->fetch();
 
-		$stmt=null;
-
-	}	
+		$stmt = null;
+	}
 
 	/*
 	* GUARDAR TEMPORAL DIVIDICO
 	*/
-	static public function mdlActualizarDiv($pedido, $op_gravada, $dscto, $subTotal, $igv, $total){
+	static public function mdlActualizarDiv($pedido, $op_gravada, $dscto, $subTotal, $igv, $total)
+	{
 
 
 		$stmt = Conexion::conectar()->prepare("UPDATE 
@@ -1379,15 +1369,15 @@ class ModeloPedidos{
 
 		$stmt->close();
 		$stmt = null;
+	}
 
-	}	
-
-    /*
+	/*
     *ACTUALIZAR TOTALES DEL PEDIDO
     */
-	static public function mdlLeerPedidoC($datos){
+	static public function mdlLeerPedidoC($datos)
+	{
 
-		$sql="INSERT INTO temporaljf (
+		$sql = "INSERT INTO temporaljf (
 							codigo,
 							cliente,
 							vendedor,
@@ -1425,7 +1415,7 @@ class ModeloPedidos{
 							:dscto
 							)";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
 		$stmt->bindParam(":cliente", $datos["cliente"], PDO::PARAM_STR);
@@ -1438,29 +1428,27 @@ class ModeloPedidos{
 		$stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
 		$stmt->bindParam(":condicion_venta", $datos["condicion_venta"], PDO::PARAM_STR);
 		$stmt->bindParam(":estado", $datos["estado"], PDO::PARAM_STR);
-		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);		
+		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
 		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
 		$stmt->bindParam(":agencia", $datos["agencia"], PDO::PARAM_STR);
 		$stmt->bindParam(":usuario_estado", $datos["usuario_estado"], PDO::PARAM_STR);
 		$stmt->bindParam(":dscto", $datos["dscto"], PDO::PARAM_STR);
 
-        if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-
 		}
 
-		$stmt=null;
+		$stmt = null;
+	}
 
-	}	
+	static public function mdlLeerPedidoD($detalle)
+	{
 
-	static public function mdlLeerPedidoD($detalle){
-
-		$sql="INSERT INTO detalle_temporal (
+		$sql = "INSERT INTO detalle_temporal (
 								codigo,
 								articulo,
 								cantidad,
@@ -1470,28 +1458,26 @@ class ModeloPedidos{
 							VALUES
 								$detalle";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
-        if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-
 		}
 
-		$stmt=null;
+		$stmt = null;
+	}
 
-	}	
-
-    /*
+	/*
     * MOSTRAR TEMPORAL con fecha y vendeor
     */
-    static public function mdlMostrarTemporalFecVen($fecha, $vend){
+	static public function mdlMostrarTemporalFecVen($fecha, $vend)
+	{
 
-        $stmt = Conexion::conectar()->prepare("SELECT 
+		$stmt = Conexion::conectar()->prepare("SELECT 
 						'S60' AS tipo,
 						t.codigo,
 						DATE_FORMAT(t.fecha,'%d/%m/%y') AS fecha,
@@ -1509,19 +1495,19 @@ class ModeloPedidos{
 						AND t.usuario = :vend");
 
 		$stmt->bindParam(":fecha", $fecha, PDO::PARAM_STR);
-		$stmt->bindParam(":vend", $vend, PDO::PARAM_STR);						
+		$stmt->bindParam(":vend", $vend, PDO::PARAM_STR);
 
-        $stmt -> execute();
+		$stmt->execute();
 
-        return $stmt -> fetchAll();
+		return $stmt->fetchAll();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
+	}
 
-	}	
-
-	static public function mdlCantAprobados(){
+	static public function mdlCantAprobados()
+	{
 
 
 		$stmt = Conexion::conectar()->prepare("UPDATE 
@@ -1549,9 +1535,10 @@ class ModeloPedidos{
 
 		$stmt->close();
 		$stmt = null;
-	}		
+	}
 
-	static public function mdlReiniciarPedido(){
+	static public function mdlReiniciarPedido()
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE 
 										articulojf 
@@ -1567,44 +1554,43 @@ class ModeloPedidos{
 
 		$stmt->close();
 		$stmt = null;
-	}		
+	}
 
-    /*
+	/*
     *BORRAR POR MODELO
     */
-	static public function mdlBorrarModelo($modelo, $pedido){
+	static public function mdlBorrarModelo($modelo, $pedido)
+	{
 
-		$sql="DELETE 
+		$sql = "DELETE 
 		FROM
 		  detalle_temporal 
 		WHERE codigo = $pedido 
 		  AND articulo LIKE '$modelo%'";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->bindParam(":pedido", $pedido, PDO::PARAM_STR);
 		$stmt->bindParam(":modelo", $modelo, PDO::PARAM_STR);
 
-        if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return $stmt->errorInfo();
-
 		}
 
-		$stmt=null;
-
+		$stmt = null;
 	}
 
-    /*
+	/*
     * MOSTRAR COTIZACION
     */
-    static public function mdlMostrarCotizacion($valor){
+	static public function mdlMostrarCotizacion($valor)
+	{
 
-        $stmt = Conexion::conectar()->prepare("SELECT 
+		$stmt = Conexion::conectar()->prepare("SELECT 
 		dt.codigo,
 		a.modelo,
 		a.nombre,
@@ -1620,20 +1606,20 @@ class ModeloPedidos{
 	  WHERE dt.codigo = $valor 
 	  GROUP BY a.modelo ");
 
-        $stmt -> execute();
+		$stmt->execute();
 
-        return $stmt -> fetchAll();
+		return $stmt->fetchAll();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-	}	
+	}
 
 	//*COPIAR CABECERA
-	static public function mdlDuplicarCabecera($codDup,$talonarioN){
+	static public function mdlDuplicarCabecera($codDup, $talonarioN)
+	{
 
-		$sql="INSERT INTO temporaljf (
+		$sql = "INSERT INTO temporaljf (
 								codigo,
 								cliente,
 								vendedor,
@@ -1672,30 +1658,28 @@ class ModeloPedidos{
 								temporaljf 
 							WHERE codigo = :codDup)";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->bindParam(":codDup", $codDup, PDO::PARAM_STR);
 		$stmt->bindParam(":talonarioN", $talonarioN, PDO::PARAM_STR);
 
 
-        if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-
 		}
 
-		$stmt=null;
-
+		$stmt = null;
 	}
 
 	//*COPIAR DETALLE
-	static public function mdlDuplicarDetalle($codDup,$talonarioN){
+	static public function mdlDuplicarDetalle($codDup, $talonarioN)
+	{
 
-		$sql="INSERT INTO detalle_temporal (
+		$sql = "INSERT INTO detalle_temporal (
 								codigo,
 								articulo,
 								cantidad,
@@ -1712,32 +1696,30 @@ class ModeloPedidos{
 								detalle_temporal 
 							WHERE codigo = :codDup) ";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->bindParam(":codDup", $codDup, PDO::PARAM_STR);
 		$stmt->bindParam(":talonarioN", $talonarioN, PDO::PARAM_STR);
 
 
-        if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-
 		}
 
-		$stmt=null;
+		$stmt = null;
+	}
 
-	}	
-
-    /*
+	/*
     * MOSTRAR COTIZACION
     */
-    static public function mdlVerTalonario($serie, $talonario){
+	static public function mdlVerTalonario($serie, $talonario)
+	{
 
-        $stmt = Conexion::conectar()->prepare("SELECT 
+		$stmt = Conexion::conectar()->prepare("SELECT 
 							argumento AS talonario 
 						FROM
 							maestrajf 
@@ -1747,83 +1729,79 @@ class ModeloPedidos{
 
 		$stmt->bindParam(":serie", $serie, PDO::PARAM_STR);
 
-        $stmt -> execute();
+		$stmt->execute();
 
-        return $stmt -> fetch();
+		return $stmt->fetch();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-	}	
+	}
 
 	//*ACTUALIZAR TALONARIO
-	static public function mdlSepararTalonario($serie, $talonario){
+	static public function mdlSepararTalonario($serie, $talonario)
+	{
 
-		$sql="UPDATE 
+		$sql = "UPDATE 
 						maestrajf 
 					SET
 						argumento = :talonarioA 
 					WHERE tipo_dato = 'TTAL' 
 						AND descripcion = :serieA";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->bindParam(":serieA", $serie, PDO::PARAM_STR);
 		$stmt->bindParam(":talonarioA", $talonario, PDO::PARAM_STR);
 
 
-        if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
+		} else {
 
-		}else{
-
-			return $stmt -> errorInfo();
-
+			return $stmt->errorInfo();
 		}
 
-		$stmt=null;
-
-	}	
+		$stmt = null;
+	}
 
 	//*REINICIAR TALONARIO
-	static public function mdlReiniciarTalonario($tipo){
+	static public function mdlReiniciarTalonario($tipo)
+	{
 
-		$sql="UPDATE 
+		$sql = "UPDATE 
 					maestrajf 
 				SET
 					argumento = '0' 
 				WHERE tipo_dato = 'TTAL' 
 					AND codigo = :tipo";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->bindParam(":tipo", $tipo, PDO::PARAM_STR);
 
 
-        if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
+		} else {
 
-		}else{
-
-			return $stmt -> errorInfo();
-
+			return $stmt->errorInfo();
 		}
 
-		$stmt=null;
+		$stmt = null;
+	}
 
-	}	
-
-    /*
+	/*
     * MOSTRAR DETALLE DE TEMPORAL
     */
-	static public function mdlTraerCuentas($valor){
+	static public function mdlTraerCuentas($valor)
+	{
 
-		if($valor == "01" || $valor == "03"){
+		if ($valor == "01" || $valor == "03") {
 
-			$sql="SELECT 
+			$sql = "SELECT 
 					t.cod_argumento AS codint,
 					t.des_larga AS cuenta,
 					t.des_corta AS codigo,
@@ -1833,15 +1811,14 @@ class ModeloPedidos{
 				WHERE t.cod_tabla = 'TCUE' 
 					AND t.valor_1 = '1'";
 
-			$stmt=Conexion::conectar()->prepare($sql);
+			$stmt = Conexion::conectar()->prepare($sql);
 
 			$stmt->execute();
 
 			return $stmt->fetchAll();
+		} else if ($valor == "07") {
 
-		}else if($valor == "07"){
-
-			$sql="SELECT 
+			$sql = "SELECT 
 					t.cod_argumento AS codint,
 					t.des_larga AS cuenta,
 					t.des_corta AS codigo,
@@ -1851,15 +1828,14 @@ class ModeloPedidos{
 				WHERE t.cod_tabla = 'TCUE' 
 					AND t.valor_1 IN ('2','3')";
 
-			$stmt=Conexion::conectar()->prepare($sql);
+			$stmt = Conexion::conectar()->prepare($sql);
 
 			$stmt->execute();
 
 			return $stmt->fetchAll();
+		} else if ($valor == "08") {
 
-		}else if($valor == "08"){
-
-			$sql="SELECT 
+			$sql = "SELECT 
 					t.cod_argumento AS codint,
 					t.des_larga AS cuenta,
 					t.des_corta AS codigo,
@@ -1869,35 +1845,65 @@ class ModeloPedidos{
 				WHERE t.cod_tabla = 'TCUE' 
 					AND t.valor_1 = '3'";
 
-			$stmt=Conexion::conectar()->prepare($sql);
+			$stmt = Conexion::conectar()->prepare($sql);
 
 			$stmt->execute();
-	
-			return $stmt->fetchAll();
 
+			return $stmt->fetchAll();
 		}
 
-		$stmt=null;
+		$stmt = null;
+	}
 
-	}	
+	static public function mdlActualizarTotalPedido()
+	{
 
-    static public function mdlActualizarTotalPedido(){
-
-        $sql="UPDATE 
+		$sql = "UPDATE 
 				temporaljf 
 			SET
 				total = op_gravada + igv";
-    
-            $stmt=Conexion::conectar()->prepare($sql);
-    
-        if ($stmt->execute()) {    
-            return "ok";
-        } else {    
-            return "error";
-        }
-    
-        $stmt=null;
-    
-    }  	
 
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		if ($stmt->execute()) {
+			return "ok";
+		} else {
+			return "error";
+		}
+
+		$stmt = null;
+	}
+
+	//*REINICIAR TALONARIO
+	static public function mdlActualizarTotales($codPedido)
+	{
+
+		$sql = "UPDATE 
+					temporaljf t 
+					LEFT JOIN 
+					(SELECT 
+						dt.codigo,
+						SUM(dt.total) AS op_gravada,
+						ROUND(SUM(dt.total) * 0.18, 2) AS igv,
+						SUM(dt.total) + ROUND(SUM(dt.total) * 0.18, 2) AS total 
+					FROM
+						detalle_temporal dt 
+					WHERE dt.codigo = '$codPedido') AS dt 
+					ON t.codigo = dt.codigo SET t.op_gravada = dt.op_gravada,
+					t.igv = dt.igv,
+					t.total = dt.total 
+				WHERE t.codigo = '$codPedido'";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return $stmt->errorInfo();
+		}
+
+		$stmt = null;
+	}
 }

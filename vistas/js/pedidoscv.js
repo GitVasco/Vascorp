@@ -1,13 +1,16 @@
 /*
-* cargamos la tabla para articulos en pedidos
-*/
+ * cargamos la tabla para articulos en pedidos
+ */
 $(".tablaArticulosPedidos").DataTable({
     ajax: "ajax/facturacion/tabla-pedidos.ajax.php",
     deferRender: true,
     retrieve: true,
     processing: true,
-    "pageLength": 25,
-	"lengthMenu": [[25, 50, 75, -1], [25, 50, 75, 'Todos']],
+    pageLength: 25,
+    lengthMenu: [
+        [25, 50, 75, -1],
+        [25, 50, 75, "Todos"],
+    ],
     language: {
         sProcessing: "Procesando...",
         sLengthMenu: "Mostrar _MENU_ registros",
@@ -25,37 +28,32 @@ $(".tablaArticulosPedidos").DataTable({
             sFirst: "Primero",
             sLast: "Último",
             sNext: "Siguiente",
-            sPrevious: "Anterior"
+            sPrevious: "Anterior",
         },
         oAria: {
-            sSortAscending: ": Activar para ordenar la columna de manera ascendente",
-            sSortDescending: ": Activar para ordenar la columna de manera descendente"
-        }
-    }
+            sSortAscending:
+                ": Activar para ordenar la columna de manera ascendente",
+            sSortDescending:
+                ": Activar para ordenar la columna de manera descendente",
+        },
+    },
 });
 
 /*
-* VISUALIZAR DETALLEs QUE SE JALAN DEL PEDIDO
-*/
-
+ * VISUALIZAR DETALLEs QUE SE JALAN DEL PEDIDO
+ */
 
 /*
-* BOTON CREAR PEDIDO
-*/
+ * BOTON CREAR PEDIDO
+ */
 $(".btnCrearPedido").click(function () {
-
     var pedido = $(this).attr("pedido");
     //console.log("pedido", pedido);
 
     window.location = "index.php?ruta=crear-pedidocv&pedido=" + pedido;
+});
 
-})
-
-
-
-
-$("#seleccionarCliente").change(function(){
-
+$("#seleccionarCliente").change(function () {
     var cliList = document.getElementById("seleccionarCliente").value;
     // console.log(cliList);
 
@@ -63,62 +61,46 @@ $("#seleccionarCliente").change(function(){
     datos.append("cliList", cliList);
 
     $.ajax({
-
-		url:"ajax/pedidos.ajax.php",
-		method: "POST",
-		data: datos,
-		cache: false,
-		contentType: false,
-		processData: false,
-		dataType:"json",
-		success:function(respuestaDet){
-
+        url: "ajax/pedidos.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuestaDet) {
             // console.log(respuestaDet);
 
             $("#lista").val(respuestaDet["lista_precios"]);
-
-		}
-
-	})
-
-})
-
-/*
-* quitar productos con el boton
-*/
-
-$(".formularioPedidoCV").on("click", "button.quitarArtPed", function() {
-
-    //console.log("boton");
-
-    $(this)
-    .parent()
-    .parent()
-    .parent()
-    .parent()
-    .remove();
-
-    sumarTotalesPreciosA();
-    cambioDescuento();
-    listarArticulos();
-
-
+        },
+    });
 });
 
-/* 
-* activar cuando cambien el descuento
-*/
+/*
+ * quitar productos con el boton
+ */
 
-$("#descPer").change(function(){
+$(".formularioPedidoCV").on("click", "button.quitarArtPed", function () {
+    //console.log("boton");
+
+    $(this).parent().parent().parent().parent().remove();
 
     sumarTotalesPreciosA();
     cambioDescuento();
     listarArticulos();
+});
 
-})
+/*
+ * activar cuando cambien el descuento
+ */
 
-function cambioDescuento(){
+$("#descPer").change(function () {
+    sumarTotalesPreciosA();
+    cambioDescuento();
+    listarArticulos();
+});
 
+function cambioDescuento() {
     var bruto = document.getElementById("nuevoSubTotal").value;
     var descuento = document.getElementById("descPer").value;
 
@@ -138,21 +120,19 @@ function cambioDescuento(){
     $("#nuevoTotal").val(total.toFixed(2));
 
     //console.log(descN);
-
 }
 
 /*
-* nuevos  totales al cambiar la cantidad
-*/
+ * nuevos  totales al cambiar la cantidad
+ */
 
-$(".formularioPedidoCV").on("change", "input.nuevaCantidadArtPed", function() {
-
+$(".formularioPedidoCV").on("change", "input.nuevaCantidadArtPed", function () {
     var precio = $(this)
-    .parent()
-    .parent()
-    .children(".ingresoPrecio")
-    .children()
-    .children(".nuevoPrecioArticulo");
+        .parent()
+        .parent()
+        .children(".ingresoPrecio")
+        .children()
+        .children(".nuevoPrecioArticulo");
 
     //console.log("precio", precio.val());
 
@@ -170,16 +150,13 @@ $(".formularioPedidoCV").on("change", "input.nuevaCantidadArtPed", function() {
     sumarTotalesPreciosA();
     cambioDescuento();
     listarArticulos();
-
-
 });
 
 /*
-* SUMAR TODOS LOS TOTALES
-*/
+ * SUMAR TODOS LOS TOTALES
+ */
 
-function sumarTotalesPreciosA(){
-
+function sumarTotalesPreciosA() {
     var precioItem = $(".nuevoPrecioArticulo");
 
     var arraySumaPrecio = [];
@@ -200,15 +177,13 @@ function sumarTotalesPreciosA(){
 
     $("#nuevoSubTotalA").val(sumaTotalPrecio.toFixed(2));
     $("#nuevoSubTotal").val(sumaTotalPrecio.toFixed(2));
-
 }
 
 /*
-* ARRAY CON TODOS LOS ARTICULOS
-*/
+ * ARRAY CON TODOS LOS ARTICULOS
+ */
 
 function listarArticulos() {
-
     var listaArticulos = [];
 
     var descripcion = $(".nuevaDescripcionArticulo");
@@ -217,41 +192,36 @@ function listarArticulos() {
 
     for (var i = 0; i < descripcion.length; i++) {
         listaArticulos.push({
-
             articulo: $(descripcion[i]).attr("articulo"),
             descripcion: $(descripcion[i]).val(),
             cantidad: $(cantidad[i]).val(),
             precio: $(precio[i]).attr("precioReal"),
-            total: $(precio[i]).val()
+            total: $(precio[i]).val(),
         });
     }
 
     //console.log("listaArticulos", JSON.stringify(listaArticulos));
 
     $("#listaProductosPedidos").val(JSON.stringify(listaArticulos));
-
 }
 
-/* 
-* AL CAMBIAR LA CONDICION DE VENTA
-*/
+/*
+ * AL CAMBIAR LA CONDICION DE VENTA
+ */
 
-$("#condicionVenta").change(function(){
-
+$("#condicionVenta").change(function () {
     //console.log("si llego")
 
     sumarTotalesPreciosA();
     //cambioDescuento();
     listarArticulos();
 
-    $('#modalito').removeAttr('disabled');
-    $('#modalito').removeClass('btn-default');
-    $('#modalito').addClass('btn-primary');
+    $("#modalito").removeAttr("disabled");
+    $("#modalito").removeClass("btn-default");
+    $("#modalito").addClass("btn-primary");
+});
 
-})
-
-$("#seleccionarCliente").change(function(){
-
+$("#seleccionarCliente").change(function () {
     //console.log("si llego al cliente")
 
     //sumarTotalesPreciosA();
@@ -266,23 +236,19 @@ $("#seleccionarCliente").change(function(){
     datos.append("codigo", cliente);
 
     $.ajax({
-
-		url:"ajax/clientes.ajax.php",
-		method: "POST",
-		data: datos,
-		cache: false,
-		contentType: false,
-		processData: false,
-		dataType:"json",
-		success:function(respuestaDet){
-
+        url: "ajax/clientes.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuestaDet) {
             //console.log(respuestaDet);
 
             $("#nomClienteM").val(respuestaDet["nombre"]);
-
-		}
-
-	})
+        },
+    });
 
     /* var nomCliente = document.getElementById("nomCliente").value;
     console.log(nomCliente);
@@ -291,11 +257,9 @@ $("#seleccionarCliente").change(function(){
     var vendedor = document.getElementById("seleccionarVendedor").value;
     //console.log(vendedor)
     $("#vendedorM").val(vendedor);
-
-})
+});
 
 $(".crearPedido").click(function () {
-
     sumarTotalesPreciosA();
     //cambioDescuento();
     listarArticulos();
@@ -311,23 +275,19 @@ $(".crearPedido").click(function () {
     datos.append("codigo", cliente);
 
     $.ajax({
-
-		url:"ajax/clientes.ajax.php",
-		method: "POST",
-		data: datos,
-		cache: false,
-		contentType: false,
-		processData: false,
-		dataType:"json",
-		success:function(respuestaDet){
-
+        url: "ajax/clientes.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuestaDet) {
             //console.log(respuestaDet);
 
             $("#nomClienteM").val(respuestaDet["nombre"]);
-
-		}
-
-	})
+        },
+    });
 
     var vendedor = document.getElementById("seleccionarVendedor").value;
     $("#vendedorM").val(vendedor);
@@ -351,12 +311,11 @@ $(".crearPedido").click(function () {
 
     var total = document.getElementById("nuevoTotal").value;
 
-    if(nuevoTotal == total){
+    if (nuevoTotal == total) {
         $("#totalM").val(nuevoTotal);
-    }else{
+    } else {
         $("#totalM").val(total);
     }
-   
 
     var articulos = document.getElementById("listaProductosPedidos").value;
     $("#articulosM").val(articulos);
@@ -372,20 +331,22 @@ $(".crearPedido").click(function () {
     $("#usuarioM").val(usuario);
 
     //console.log(usuario);
-
-})
+});
 
 /*
-* cargamos la tabla de pedidos
-*/
+ * cargamos la tabla de pedidos
+ */
 $(".tablaPedidosCV").DataTable({
     ajax: "ajax/facturacion/tabla-pedidosCV.ajax.php",
     deferRender: true,
     retrieve: true,
     processing: true,
-    "order": [[9, "desc"]],
-    "pageLength": 20,
-	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+    order: [[9, "desc"]],
+    pageLength: 20,
+    lengthMenu: [
+        [20, 40, 60, -1],
+        [20, 40, 60, "Todos"],
+    ],
     language: {
         sProcessing: "Procesando...",
         sLengthMenu: "Mostrar _MENU_ registros",
@@ -403,121 +364,107 @@ $(".tablaPedidosCV").DataTable({
             sFirst: "Primero",
             sLast: "Último",
             sNext: "Siguiente",
-            sPrevious: "Anterior"
+            sPrevious: "Anterior",
         },
         oAria: {
-            sSortAscending: ": Activar para ordenar la columna de manera ascendente",
-            sSortDescending: ": Activar para ordenar la columna de manera descendente"
-        }
-    }
+            sSortAscending:
+                ": Activar para ordenar la columna de manera ascendente",
+            sSortDescending:
+                ": Activar para ordenar la columna de manera descendente",
+        },
+    },
 });
 
-
 /*
-* BOTON REVISAR PEDIDO
-*/
+ * BOTON REVISAR PEDIDO
+ */
 $(".box").on("click", ".btnEditarPedidoCV", function () {
-
     var pedido = $(this).attr("codigo");
     //console.log("pedido", pedido);
 
     window.location = "index.php?ruta=crear-pedidocv&pedido=" + pedido;
+});
 
-})
-
-/* 
-* BOTON  IMPRIMIR TICKET
-*/
-$(".tablaPedidosCV, .tablaPedidosGenerados, .tablaPedidosAprobados, .tablaPedidosAPT, .tablaPedidosConfirmados, .tablaPedidosFacturados").on("click", ".btnImprimirPedido", function () {
-
+/*
+ * BOTON  IMPRIMIR TICKET
+ */
+$(
+    ".tablaPedidosCV, .tablaPedidosGenerados, .tablaPedidosAprobados, .tablaPedidosAPT, .tablaPedidosConfirmados, .tablaPedidosFacturados"
+).on("click", ".btnImprimirPedido", function () {
     var codigo = $(this).attr("codigo");
     //console.log(codigo);
 
+    window.open(
+        "vistas/reportes_ticket/impresion_pedido.php?codigo=" + codigo,
+        "_blank"
+    );
+});
 
-	window.open("vistas/reportes_ticket/impresion_pedido.php?codigo=" +codigo,"_blank");
-
-})
-
-/* 
-* BOTON  IMPRIMIR TICKET
-*/
+/*
+ * BOTON  IMPRIMIR TICKET
+ */
 $(".tablaPedidosConfirmados").on("click", ".btnCotizarPedido", function () {
-
     var codigo = $(this).attr("codigo");
     //console.log(codigo);
 
+    window.open(
+        "vistas/reportes_ticket/pedido_cotizar.php?codigo=" + codigo,
+        "_blank"
+    );
+});
 
-	window.open("vistas/reportes_ticket/pedido_cotizar.php?codigo=" +codigo,"_blank");
-
-})
-
-/* 
-* AL CAMBIAR EL SELECT DE DOCUMENTO
-*/
-$("#tdoc").change(function(){
-
-	var documento = document.getElementById("tdoc").value;
+/*
+ * AL CAMBIAR EL SELECT DE DOCUMENTO
+ */
+$("#tdoc").change(function () {
+    var documento = document.getElementById("tdoc").value;
     //console.log(documento);
 
     var tipoDoc = document.getElementById("tipDoc").value;
     //console.log(tipoDoc);
 
-    if(documento == "01" && tipoDoc == "DNI"){
-
+    if (documento == "01" && tipoDoc == "DNI") {
         document.getElementById("tipDoc").style.background = "#FF6868";
         document.getElementById("tipDoc").style.color = "black";
-        $("#tipDoc").css("font-weight","bold");
-
-    }else if(documento == "03" && tipoDoc == "DNI"){
-
+        $("#tipDoc").css("font-weight", "bold");
+    } else if (documento == "03" && tipoDoc == "DNI") {
         document.getElementById("tipDoc").style.background = "#52BE80";
         document.getElementById("tipDoc").style.color = "black";
-        $("#tipDoc").css("font-weight","bold");
-
-    }else if(documento == "03" && tipoDoc == "RUC"){
-
+        $("#tipDoc").css("font-weight", "bold");
+    } else if (documento == "03" && tipoDoc == "RUC") {
         document.getElementById("tipDoc").style.background = "#FF6868";
         document.getElementById("tipDoc").style.color = "black";
-        $("#tipDoc").css("font-weight","bold");
-
-    }else if(documento == "01" && tipoDoc == "RUC"){
-
+        $("#tipDoc").css("font-weight", "bold");
+    } else if (documento == "01" && tipoDoc == "RUC") {
         document.getElementById("tipDoc").style.background = "#52BE80";
         document.getElementById("tipDoc").style.color = "black";
-        $("#tipDoc").css("font-weight","bold");
-
-    }else{
-
+        $("#tipDoc").css("font-weight", "bold");
+    } else {
         document.getElementById("tipDoc").style.background = "#52BE80";
         document.getElementById("tipDoc").style.color = "black";
-        $("#tipDoc").css("font-weight","bold");
-
+        $("#tipDoc").css("font-weight", "bold");
     }
 
     document.getElementById("chkFactura").checked = false;
     document.getElementById("chkBoleta").checked = false;
 
-    if(documento == "00"){
-
+    if (documento == "00") {
         document.getElementById("chkFactura").disabled = false;
         document.getElementById("chkBoleta").disabled = false;
-
-    }else{
-
+    } else {
         document.getElementById("chkFactura").disabled = true;
         document.getElementById("chkBoleta").disabled = true;
 
         document.getElementById("chkFactura").checked = false;
         document.getElementById("chkBoleta").checked = false;
-
     }
 
-    if(documento == "07"){
+    if (documento == "07") {
         $(".campoTipOrigen").removeClass("hidden");
         $(".campoDocOrigen").removeClass("hidden");
         $(".campoFecOrigen").removeClass("hidden");
         $(".campoMotOrigen").removeClass("hidden");
-    }else{
+    } else {
         $(".campoTipOrigen").addClass("hidden");
         $(".campoDocOrigen").addClass("hidden");
         $(".campoFecOrigen").addClass("hidden");
@@ -531,36 +478,37 @@ $("#tdoc").change(function(){
     datos.append("documento", documento);
 
     $.ajax({
-
-        url:"ajax/talonarios.ajax.php",
+        url: "ajax/talonarios.ajax.php",
         method: "POST",
         data: datos,
         cache: false,
         contentType: false,
         processData: false,
-        dataType:"json",
-        success:function(respuesta){
-
+        dataType: "json",
+        success: function (respuesta) {
             //console.log(respuesta);
 
             // Limpiamos el select
-            serie.find('option').remove();
+            serie.find("option").remove();
 
             serie.append('<option value="">Seleccionar Serie</option>');
 
-            for(var id of respuesta){
-                serie.append('<option value="' + id.numero + '">' + id.numero + '</option>');
+            for (var id of respuesta) {
+                serie.append(
+                    '<option value="' +
+                        id.numero +
+                        '">' +
+                        id.numero +
+                        "</option>"
+                );
                 //console.log(serie);
             }
-
-        }
-
-    })
+        },
+    });
 
     //*INICIO DE FORMA DE PAGO
 
-    if(documento == "01" || documento == "03"){
-
+    if (documento == "01" || documento == "03") {
         //console.log("aqui", documento);
         document.getElementById("formaPago").disabled = false;
 
@@ -568,35 +516,39 @@ $("#tdoc").change(function(){
 
         var datos = new FormData();
         datos.append("documento", documento);
-    
+
         $.ajax({
-    
-            url:"ajax/pedidos.ajax.php",
+            url: "ajax/pedidos.ajax.php",
             method: "POST",
             data: datos,
             cache: false,
             contentType: false,
             processData: false,
-            dataType:"json",
-            success:function(respuesta){
-    
+            dataType: "json",
+            success: function (respuesta) {
                 //console.log(respuesta);
-    
-                formaPago.find('option').remove();
 
-                formaPago.append('<option value="">Seleccionar Forma Pago</option>');
-    
-                for(var id of respuesta){
-                    formaPago.append('<option value="' + id.codigo + '">' + id.codigo + ' - ' + id.cuenta + '</option>');
+                formaPago.find("option").remove();
+
+                formaPago.append(
+                    '<option value="">Seleccionar Forma Pago</option>'
+                );
+
+                for (var id of respuesta) {
+                    formaPago.append(
+                        '<option value="' +
+                            id.codigo +
+                            '">' +
+                            id.codigo +
+                            " - " +
+                            id.cuenta +
+                            "</option>"
+                    );
                     //console.log(formaPago);
                 }
-
-            }
-    
-        })        
-        
-    }else if(documento == "07"){
-
+            },
+        });
+    } else if (documento == "07") {
         //console.log("aqui", documento);
         document.getElementById("formaPago").disabled = false;
 
@@ -604,53 +556,54 @@ $("#tdoc").change(function(){
 
         var datos = new FormData();
         datos.append("documento", documento);
-    
+
         $.ajax({
-    
-            url:"ajax/pedidos.ajax.php",
+            url: "ajax/pedidos.ajax.php",
             method: "POST",
             data: datos,
             cache: false,
             contentType: false,
             processData: false,
-            dataType:"json",
-            success:function(respuesta){
-    
+            dataType: "json",
+            success: function (respuesta) {
                 //console.log(respuesta);
-    
-                formaPago.find('option').remove();
 
-                formaPago.append('<option value="">Seleccionar Forma Pago</option>');
-    
-                for(var id of respuesta){
-                    formaPago.append('<option value="' + id.codigo + '">' + id.codigo + ' - ' + id.cuenta + '</option>');
+                formaPago.find("option").remove();
+
+                formaPago.append(
+                    '<option value="">Seleccionar Forma Pago</option>'
+                );
+
+                for (var id of respuesta) {
+                    formaPago.append(
+                        '<option value="' +
+                            id.codigo +
+                            '">' +
+                            id.codigo +
+                            " - " +
+                            id.cuenta +
+                            "</option>"
+                    );
                     //console.log(formaPago);
                 }
-
-            }
-    
-        })        
-        
-    }else{
-
+            },
+        });
+    } else {
         document.getElementById("formaPago").disabled = true;
 
         var formaPago = $("#formaPago");
-        formaPago.find('option').remove();
+        formaPago.find("option").remove();
         formaPago.append('<option value="">Seleccionar Forma Pago</option>');
-
     }
-    
-    //*FIN DE FORMA DE PAGO
 
-})
+    //*FIN DE FORMA DE PAGO
+});
 
 /*
-* validar el checkbox
-*/
-$(".chkFactura").change(function(){
-
-    var chkBox = document.getElementById('chkFactura');
+ * validar el checkbox
+ */
+$(".chkFactura").change(function () {
+    var chkBox = document.getElementById("chkFactura");
 
     var documento = "01";
     //console.log(documento);
@@ -661,73 +614,65 @@ $(".chkFactura").change(function(){
     var tipoDoc = document.getElementById("tipDoc").value;
     //console.log(tipoDoc);
 
-    if(tipoDoc == "DNI"){
-
+    if (tipoDoc == "DNI") {
         document.getElementById("tipDoc").style.background = "#FF6868";
         document.getElementById("tipDoc").style.color = "black";
-        $("#tipDoc").css("font-weight","bold");
-
-    }else{
-
+        $("#tipDoc").css("font-weight", "bold");
+    } else {
         document.getElementById("tipDoc").style.background = "#52BE80";
         document.getElementById("tipDoc").style.color = "black";
-        $("#tipDoc").css("font-weight","bold");
-
+        $("#tipDoc").css("font-weight", "bold");
     }
 
-    if(chkBox.checked == true){
-
+    if (chkBox.checked == true) {
         document.getElementById("chkBoleta").disabled = true;
         document.getElementById("chkBoleta").checked = false;
 
         document.getElementById("serieSeparado").disabled = false;
-
-    }else{
-
+    } else {
         document.getElementById("chkBoleta").disabled = false;
         document.getElementById("serieSeparado").disabled = true;
-
     }
 
     var datos = new FormData();
     datos.append("documento", documento);
 
     $.ajax({
-
-        url:"ajax/talonarios.ajax.php",
+        url: "ajax/talonarios.ajax.php",
         method: "POST",
         data: datos,
         cache: false,
         contentType: false,
         processData: false,
-        dataType:"json",
-        success:function(respuesta){
-
+        dataType: "json",
+        success: function (respuesta) {
             //console.log(respuesta);
 
             // Limpiamos el select
-            serieSeparado.find('option').remove();
+            serieSeparado.find("option").remove();
 
             serieSeparado.append('<option value="">Seleccionar Serie</option>');
 
-            for(var id of respuesta){
-                serieSeparado.append('<option value="' + id.numero + '">' + id.numero + '</option>');
+            for (var id of respuesta) {
+                serieSeparado.append(
+                    '<option value="' +
+                        id.numero +
+                        '">' +
+                        id.numero +
+                        "</option>"
+                );
                 //console.log(serieSeparado);
             }
+        },
+    });
+});
 
-        }
-
-    })
-
-})
-
-$(".chkBoleta").change(function(){
-
-    var chkBox = document.getElementById('chkBoleta');
+$(".chkBoleta").change(function () {
+    var chkBox = document.getElementById("chkBoleta");
     //console.log(chkBox.checked);
 
     var serieSeparado = $("#serieSeparado");
-    serieSeparado.find('option').remove();
+    serieSeparado.find("option").remove();
     //console.log(serieSeparado);
 
     var documento = "03";
@@ -735,73 +680,66 @@ $(".chkBoleta").change(function(){
     var tipoDoc = document.getElementById("tipDoc").value;
     //console.log(tipoDoc);
 
-    if(tipoDoc == "RUC"){
-
+    if (tipoDoc == "RUC") {
         document.getElementById("tipDoc").style.background = "#FF6868";
         document.getElementById("tipDoc").style.color = "black";
-        $("#tipDoc").css("font-weight","bold");
-
-    }else{
-
+        $("#tipDoc").css("font-weight", "bold");
+    } else {
         document.getElementById("tipDoc").style.background = "#52BE80";
         document.getElementById("tipDoc").style.color = "black";
-        $("#tipDoc").css("font-weight","bold");
+        $("#tipDoc").css("font-weight", "bold");
+    }
 
-    }    
-
-    if(chkBox.checked == true){
-
+    if (chkBox.checked == true) {
         document.getElementById("chkFactura").disabled = true;
         document.getElementById("chkFactura").checked = false;
 
         document.getElementById("serieSeparado").disabled = false;
-
-    }else{
-
+    } else {
         document.getElementById("chkFactura").disabled = false;
         document.getElementById("serieSeparado").disabled = true;
-
     }
 
     var datos = new FormData();
     datos.append("documento", documento);
 
     $.ajax({
-
-        url:"ajax/talonarios.ajax.php",
+        url: "ajax/talonarios.ajax.php",
         method: "POST",
         data: datos,
         cache: false,
         contentType: false,
         processData: false,
-        dataType:"json",
-        success:function(respuesta){
-
+        dataType: "json",
+        success: function (respuesta) {
             //console.log(respuesta);
 
             // Limpiamos el select
-            serieSeparado.find('option').remove();
+            serieSeparado.find("option").remove();
 
             serieSeparado.append('<option value="">Seleccionar Serie</option>');
 
-            for(var id of respuesta){
-                serieSeparado.append('<option value="' + id.numero + '">' + id.numero + '</option>');
+            for (var id of respuesta) {
+                serieSeparado.append(
+                    '<option value="' +
+                        id.numero +
+                        '">' +
+                        id.numero +
+                        "</option>"
+                );
                 //console.log(serieSeparado);
             }
-
-        }
-
-    })
-
-})
-
+        },
+    });
+});
 
 /*
-* ACTIVAR MODAL
-*/
+ * ACTIVAR MODAL
+ */
 
-$(".tablaPedidosCV, .tablaPedidosGenerados, .tablaPedidosAprobados, .tablaPedidosAPT, .tablaPedidosConfirmados, .tablaPedidosFacturados").on("click", "button.btnFacturar", function(){
-
+$(
+    ".tablaPedidosCV, .tablaPedidosGenerados, .tablaPedidosAprobados, .tablaPedidosAPT, .tablaPedidosConfirmados, .tablaPedidosFacturados"
+).on("click", "button.btnFacturar", function () {
     var codigo = $(this).attr("codigo");
     var cod_cli = $(this).attr("cod_cli");
     var nom_cli = $(this).attr("nom_cli");
@@ -819,85 +757,89 @@ $(".tablaPedidosCV, .tablaPedidosGenerados, .tablaPedidosAprobados, .tablaPedido
     $("#dscto").val(dscto);
     $("#codVen").val(cod_ven);
 
-})
+    var datos = new FormData();
+    datos.append("codPedido", codPedido);
+
+    $.ajax({
+        url: "ajax/pedidos.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuesta) {
+            console.log("🚀 ~ file: pedidoscv.js:776 ~ respuesta", respuesta);
+        },
+    });
+});
 
 /*
-* BOTON REVISAR FACTURA
-*/
+ * BOTON REVISAR FACTURA
+ */
 $(".box").on("click", ".btnEditarFacturaCV", function () {
-
     var pedido = $(this).attr("codigo");
     //console.log("factura", pedido);
 
     window.location = "index.php?ruta=crear-facturascv&pedido=" + pedido;
-
-})
+});
 
 /*
-* BOTON IR A PEDIDOS GENERADOS
-*/
-$(".btnGenerados").click(function(){
-
+ * BOTON IR A PEDIDOS GENERADOS
+ */
+$(".btnGenerados").click(function () {
     window.location = "pedidos-generados";
-
-})
+});
 
 /*
-* BOTON IR A PEDIDOS APROBADOS
-*/
-$(".btnAprobados").click(function(){
-
+ * BOTON IR A PEDIDOS APROBADOS
+ */
+$(".btnAprobados").click(function () {
     window.location = "pedidos-aprobados";
-
-})
+});
 
 /*
-* BOTON IR A PEDIDOS EN APT
-*/
-$(".btnAPT").click(function(){
-
+ * BOTON IR A PEDIDOS EN APT
+ */
+$(".btnAPT").click(function () {
     window.location = "pedidos-apt";
-
-})
+});
 
 /*
-* BOTON IR A PEDIDOS CONFIRMADOS
-*/
-$(".btnConfirmados").click(function(){
-
+ * BOTON IR A PEDIDOS CONFIRMADOS
+ */
+$(".btnConfirmados").click(function () {
     window.location = "pedidos-confirmados";
-
-})
+});
 
 /*
-* BOTON IR A PEDIDOS FACTURADOS
-*/
-$(".btnFacturados").click(function(){
-
+ * BOTON IR A PEDIDOS FACTURADOS
+ */
+$(".btnFacturados").click(function () {
     window.location = "pedidos-facturados";
-
-})
+});
 
 /*
-* BOTON IR A PEDIDOS INICIO
-*/
-$(".btnInicioPed").click(function(){
-
+ * BOTON IR A PEDIDOS INICIO
+ */
+$(".btnInicioPed").click(function () {
     window.location = "pedidoscv";
-
-})
+});
 
 /*
-* CARGADOS TABLA GENERADOS
-*/
+ * CARGADOS TABLA GENERADOS
+ */
 $(".tablaPedidosGenerados").DataTable({
     ajax: "ajax/facturacion/tabla-pedidos-generados.ajax.php",
     deferRender: true,
     retrieve: true,
     processing: true,
-    "order": [[9, "desc"]],
-    "pageLength": 20,
-	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+    order: [[9, "desc"]],
+    pageLength: 20,
+    lengthMenu: [
+        [20, 40, 60, -1],
+        [20, 40, 60, "Todos"],
+    ],
     language: {
         sProcessing: "Procesando...",
         sLengthMenu: "Mostrar _MENU_ registros",
@@ -915,26 +857,31 @@ $(".tablaPedidosGenerados").DataTable({
             sFirst: "Primero",
             sLast: "Último",
             sNext: "Siguiente",
-            sPrevious: "Anterior"
+            sPrevious: "Anterior",
         },
         oAria: {
-            sSortAscending: ": Activar para ordenar la columna de manera ascendente",
-            sSortDescending: ": Activar para ordenar la columna de manera descendente"
-        }
-    }
+            sSortAscending:
+                ": Activar para ordenar la columna de manera ascendente",
+            sSortDescending:
+                ": Activar para ordenar la columna de manera descendente",
+        },
+    },
 });
 
 /*
-* CARGADOS TABLA APROBADOS
-*/
+ * CARGADOS TABLA APROBADOS
+ */
 $(".tablaPedidosAprobados").DataTable({
     ajax: "ajax/facturacion/tabla-pedidos-aprobados.ajax.php",
     deferRender: true,
     retrieve: true,
     processing: true,
-    "order": [[9, "desc"]],
-    "pageLength": 20,
-	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+    order: [[9, "desc"]],
+    pageLength: 20,
+    lengthMenu: [
+        [20, 40, 60, -1],
+        [20, 40, 60, "Todos"],
+    ],
     language: {
         sProcessing: "Procesando...",
         sLengthMenu: "Mostrar _MENU_ registros",
@@ -952,26 +899,31 @@ $(".tablaPedidosAprobados").DataTable({
             sFirst: "Primero",
             sLast: "Último",
             sNext: "Siguiente",
-            sPrevious: "Anterior"
+            sPrevious: "Anterior",
         },
         oAria: {
-            sSortAscending: ": Activar para ordenar la columna de manera ascendente",
-            sSortDescending: ": Activar para ordenar la columna de manera descendente"
-        }
-    }
+            sSortAscending:
+                ": Activar para ordenar la columna de manera ascendente",
+            sSortDescending:
+                ": Activar para ordenar la columna de manera descendente",
+        },
+    },
 });
 
 /*
-* CARGADOS TABLA APT
-*/
+ * CARGADOS TABLA APT
+ */
 $(".tablaPedidosAPT").DataTable({
     ajax: "ajax/facturacion/tabla-pedidos-apt.ajax.php",
     deferRender: true,
     retrieve: true,
     processing: true,
-    "order": [[9, "desc"]],
-    "pageLength": 20,
-	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+    order: [[9, "desc"]],
+    pageLength: 20,
+    lengthMenu: [
+        [20, 40, 60, -1],
+        [20, 40, 60, "Todos"],
+    ],
     language: {
         sProcessing: "Procesando...",
         sLengthMenu: "Mostrar _MENU_ registros",
@@ -989,26 +941,31 @@ $(".tablaPedidosAPT").DataTable({
             sFirst: "Primero",
             sLast: "Último",
             sNext: "Siguiente",
-            sPrevious: "Anterior"
+            sPrevious: "Anterior",
         },
         oAria: {
-            sSortAscending: ": Activar para ordenar la columna de manera ascendente",
-            sSortDescending: ": Activar para ordenar la columna de manera descendente"
-        }
-    }
+            sSortAscending:
+                ": Activar para ordenar la columna de manera ascendente",
+            sSortDescending:
+                ": Activar para ordenar la columna de manera descendente",
+        },
+    },
 });
 
 /*
-* CARGADOS TABLA CONFIRMADOS
-*/
+ * CARGADOS TABLA CONFIRMADOS
+ */
 $(".tablaPedidosConfirmados").DataTable({
     ajax: "ajax/facturacion/tabla-pedidos-confirmados.ajax.php",
     deferRender: true,
     retrieve: true,
     processing: true,
-    "order": [[9, "desc"]],
-    "pageLength": 20,
-	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+    order: [[9, "desc"]],
+    pageLength: 20,
+    lengthMenu: [
+        [20, 40, 60, -1],
+        [20, 40, 60, "Todos"],
+    ],
     language: {
         sProcessing: "Procesando...",
         sLengthMenu: "Mostrar _MENU_ registros",
@@ -1026,26 +983,31 @@ $(".tablaPedidosConfirmados").DataTable({
             sFirst: "Primero",
             sLast: "Último",
             sNext: "Siguiente",
-            sPrevious: "Anterior"
+            sPrevious: "Anterior",
         },
         oAria: {
-            sSortAscending: ": Activar para ordenar la columna de manera ascendente",
-            sSortDescending: ": Activar para ordenar la columna de manera descendente"
-        }
-    }
+            sSortAscending:
+                ": Activar para ordenar la columna de manera ascendente",
+            sSortDescending:
+                ": Activar para ordenar la columna de manera descendente",
+        },
+    },
 });
 
 /*
-* CARGADOS TABLA FACTURADOS
-*/
+ * CARGADOS TABLA FACTURADOS
+ */
 $(".tablaPedidosFacturados").DataTable({
     ajax: "ajax/facturacion/tabla-pedidos-facturados.ajax.php",
     deferRender: true,
     retrieve: true,
     processing: true,
-    "order": [[9, "desc"]],
-    "pageLength": 20,
-	"lengthMenu": [[20, 40, 60, -1], [20, 40, 60, 'Todos']],
+    order: [[9, "desc"]],
+    pageLength: 20,
+    lengthMenu: [
+        [20, 40, 60, -1],
+        [20, 40, 60, "Todos"],
+    ],
     language: {
         sProcessing: "Procesando...",
         sLengthMenu: "Mostrar _MENU_ registros",
@@ -1063,65 +1025,70 @@ $(".tablaPedidosFacturados").DataTable({
             sFirst: "Primero",
             sLast: "Último",
             sNext: "Siguiente",
-            sPrevious: "Anterior"
+            sPrevious: "Anterior",
         },
         oAria: {
-            sSortAscending: ": Activar para ordenar la columna de manera ascendente",
-            sSortDescending: ": Activar para ordenar la columna de manera descendente"
-        }
-    }
+            sSortAscending:
+                ": Activar para ordenar la columna de manera ascendente",
+            sSortDescending:
+                ": Activar para ordenar la columna de manera descendente",
+        },
+    },
 });
 
-$(".tablaPedidosGenerados, .tablaPedidosCV").on("click", ".btnAprobarPedido", function () {
-    var codigo = $(this).attr("codigo");
-	var estadoPedido=$(this).attr("estadoPedido");
-	//Realizamos la activación-desactivación por una petición AJAX
-	var datos=new FormData();
-	datos.append("activarId",codigo);
-	datos.append("activarEstado",estadoPedido);
+$(".tablaPedidosGenerados, .tablaPedidosCV").on(
+    "click",
+    ".btnAprobarPedido",
+    function () {
+        var codigo = $(this).attr("codigo");
+        var estadoPedido = $(this).attr("estadoPedido");
+        //Realizamos la activación-desactivación por una petición AJAX
+        var datos = new FormData();
+        datos.append("activarId", codigo);
+        datos.append("activarEstado", estadoPedido);
 
-    $.ajax({
-        url:"ajax/facturacion.ajax.php",
-        type:"POST",
-        data:datos,
-        cache:false,
-        contentType:false,
-        processData:false,
-        success:function(respuesta){
-            // console.log(respuesta);
-            swal({
-                type: "success",
-                title: "¡Ok!",
-                text: "¡El pedido fue aprobado con éxito!",
-                showConfirmButton: true,
-                confirmButtonText: "Cerrar",
-                closeOnConfirm: false
-            }).then((result)=>{
-                if(result.value){
-                    window.location="pedidos-generados";}
-            });
-        
-        }
-    });
-})
-
+        $.ajax({
+            url: "ajax/facturacion.ajax.php",
+            type: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (respuesta) {
+                // console.log(respuesta);
+                swal({
+                    type: "success",
+                    title: "¡Ok!",
+                    text: "¡El pedido fue aprobado con éxito!",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar",
+                    closeOnConfirm: false,
+                }).then((result) => {
+                    if (result.value) {
+                        window.location = "pedidos-generados";
+                    }
+                });
+            },
+        });
+    }
+);
 
 $(".tablaPedidosAprobados").on("click", ".btnAptear", function () {
     var codigo = $(this).attr("codigo");
-	var estadoPedido=$(this).attr("estadoPedido");
-	//Realizamos la activación-desactivación por una petición AJAX
-	var datos=new FormData();
-	datos.append("activarId",codigo);
-	datos.append("activarEstado",estadoPedido);
+    var estadoPedido = $(this).attr("estadoPedido");
+    //Realizamos la activación-desactivación por una petición AJAX
+    var datos = new FormData();
+    datos.append("activarId", codigo);
+    datos.append("activarEstado", estadoPedido);
 
     $.ajax({
-        url:"ajax/facturacion.ajax.php",
-        type:"POST",
-        data:datos,
-        cache:false,
-        contentType:false,
-        processData:false,
-        success:function(respuesta){
+        url: "ajax/facturacion.ajax.php",
+        type: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (respuesta) {
             // console.log(respuesta);
             swal({
                 type: "success",
@@ -1129,30 +1096,32 @@ $(".tablaPedidosAprobados").on("click", ".btnAptear", function () {
                 text: "¡El pedido fue dado de apta con éxito!",
                 showConfirmButton: true,
                 confirmButtonText: "Cerrar",
-                closeOnConfirm: false
-            }).then((result)=>{
-                if(result.value){
-                    window.location="pedidos-aprobados";}
-            });}
+                closeOnConfirm: false,
+            }).then((result) => {
+                if (result.value) {
+                    window.location = "pedidos-aprobados";
+                }
+            });
+        },
     });
-})
+});
 
 $(".tablaPedidosAPT").on("click", ".btnConfirmar", function () {
     var codigo = $(this).attr("codigo");
-	var estadoPedido=$(this).attr("estadoPedido");
-	//Realizamos la activación-desactivación por una petición AJAX
-	var datos=new FormData();
-	datos.append("activarId",codigo);
-	datos.append("activarEstado",estadoPedido);
+    var estadoPedido = $(this).attr("estadoPedido");
+    //Realizamos la activación-desactivación por una petición AJAX
+    var datos = new FormData();
+    datos.append("activarId", codigo);
+    datos.append("activarEstado", estadoPedido);
 
     $.ajax({
-        url:"ajax/facturacion.ajax.php",
-        type:"POST",
-        data:datos,
-        cache:false,
-        contentType:false,
-        processData:false,
-        success:function(respuesta){
+        url: "ajax/facturacion.ajax.php",
+        type: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (respuesta) {
             // console.log(respuesta);
             swal({
                 type: "success",
@@ -1160,14 +1129,15 @@ $(".tablaPedidosAPT").on("click", ".btnConfirmar", function () {
                 text: "¡El pedido fue confirmado con éxito!",
                 showConfirmButton: true,
                 confirmButtonText: "Cerrar",
-                closeOnConfirm: false
-            }).then((result)=>{
-                if(result.value){
-                    window.location="pedidos-apt";}
-            });}
+                closeOnConfirm: false,
+            }).then((result) => {
+                if (result.value) {
+                    window.location = "pedidos-apt";
+                }
+            });
+        },
     });
-})
-
+});
 
 $(".formularioPedidoCV").on("click", ".btnCargarCliente", function () {
     var clienteCuenta = "1";
@@ -1175,7 +1145,6 @@ $(".formularioPedidoCV").on("click", ".btnCargarCliente", function () {
     var datos = new FormData();
     datos.append("clienteCuenta", clienteCuenta);
     $.ajax({
-
         url: "ajax/clientes.ajax.php",
         method: "POST",
         data: datos,
@@ -1187,36 +1156,40 @@ $(".formularioPedidoCV").on("click", ".btnCargarCliente", function () {
             var xhr = $.ajaxSettings.xhr();
             xhr.upload.onprogress = function (event) {
                 var perc = Math.round((event.loaded / event.total) * 100);
-                $("#progressBar1").html('Cargando clientes..');
-                $("#progressBar1").css('width', perc + '%');
+                $("#progressBar1").html("Cargando clientes..");
+                $("#progressBar1").css("width", perc + "%");
             };
             return xhr;
         },
         beforeSend: function (xhr) {
-            $("#progressBar1").text('0%');
-            $("#progressBar1").css('width', '0%');
+            $("#progressBar1").text("0%");
+            $("#progressBar1").css("width", "0%");
         },
-        success: function (respuesta2)
-        {        
+        success: function (respuesta2) {
             $("#progressBar1").addClass("progress-bar");
-            $("#progressBar1").text('100% - Carga realizada');
-        
-        $("#seleccionarCliente").find('option').remove();
-        $("#seleccionarCliente").append("<option value='' > Seleccionar cliente </option>");
-        for (let i = 0; i < respuesta2.length; i++) {
-            
-            $("#seleccionarCliente").append("<option value='"+respuesta2[i]["codigo"]+"'>"+respuesta2[i]["codigo"]+" - "+respuesta2[i]["nombre"]+"</option>");
-            
-        }
-        $("#seleccionarCliente").selectpicker("refresh");
-        }
+            $("#progressBar1").text("100% - Carga realizada");
 
-    })
-
-})
+            $("#seleccionarCliente").find("option").remove();
+            $("#seleccionarCliente").append(
+                "<option value='' > Seleccionar cliente </option>"
+            );
+            for (let i = 0; i < respuesta2.length; i++) {
+                $("#seleccionarCliente").append(
+                    "<option value='" +
+                        respuesta2[i]["codigo"] +
+                        "'>" +
+                        respuesta2[i]["codigo"] +
+                        " - " +
+                        respuesta2[i]["nombre"] +
+                        "</option>"
+                );
+            }
+            $("#seleccionarCliente").selectpicker("refresh");
+        },
+    });
+});
 
 $(".tablaArticulosPedidos").on("click", ".modificarArtPed", function () {
-
     //console.log("hola mundo");
 
     var cliente = document.getElementById("seleccionarCliente").value;
@@ -1226,24 +1199,19 @@ $(".tablaArticulosPedidos").on("click", ".modificarArtPed", function () {
 
     console.log(pedido);
 
-    if(modLista == ''){
-
+    if (modLista == "") {
         var modLista1 = document.getElementById("seleccionarLista").value;
         $("#nLista").val(modLista1);
         var datos = new FormData();
         datos.append("modLista", modLista1);
         //console.log('lista',modLista1);
-
-    }else{
-
+    } else {
         $("#nLista").val(modLista);
         var datos = new FormData();
         datos.append("modLista", modLista);
         //console.log('lista',modLista);
-
     }
 
-    
     //ver para q sirve
     $("#clienteA").val(cliente);
     $("#vendedorA").val(vendedor);
@@ -1251,8 +1219,8 @@ $(".tablaArticulosPedidos").on("click", ".modificarArtPed", function () {
     $("#modeloModalA").val($(this).attr("modelo"));
 
     /*
-    *datos para la cabecera
-    */
+     *datos para la cabecera
+     */
     var mod = $(this).attr("modelo");
     //console.log(mod);
 
@@ -1261,432 +1229,642 @@ $(".tablaArticulosPedidos").on("click", ".modificarArtPed", function () {
     //datos.append("modLista", modLista);
 
     $.ajax({
-
-		url:"ajax/pedidos.ajax.php",
-		method: "POST",
-		data: datos,
-		cache: false,
-		contentType: false,
-		processData: false,
-		dataType:"json",
-		success:function(respuestaLista){
-
+        url: "ajax/pedidos.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuestaLista) {
             //console.log("respuesta",respuestaLista["precio"]);
 
             $("#precioA").val(respuestaLista["precio"]);
-
-		}
-
-	})
+        },
+    });
 
     /*
-    * datos para la tabla
-    */
+     * datos para la tabla
+     */
 
     var modelo = $(this).attr("modelo");
     //console.log(modelo);
 
-	var datosPedido = new FormData();
-	datosPedido.append("modeloA", modelo);
+    var datosPedido = new FormData();
+    datosPedido.append("modeloA", modelo);
     datosPedido.append("pedido", pedido);
     //console.log(datosPedido);
 
-	$.ajax({
-
-		url:"ajax/pedidos.ajax.php",
-		method: "POST",
-		data: datosPedido,
-		cache: false,
-		contentType: false,
-		processData: false,
-		dataType:"json",
-		success:function(respuestaA){ 
-
+    $.ajax({
+        url: "ajax/pedidos.ajax.php",
+        method: "POST",
+        data: datosPedido,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuestaA) {
             // console.log("respuestaA", respuestaA);
 
             $(".detalleCT").remove();
 
-			for(var id of respuestaA){
-
+            for (var id of respuestaA) {
                 /* TALLA 1 */
-                if(id.t1 == 1){
-
-                    var talla1 = '<td><input style="width:100%" class="pruebaA" type="number" name="'+ id.modelo + id.cod_color +1 +'" id="'+ id.modelo + id.cod_color +1 +'" value="'+id.v1+'" min="0"></td>'
-
-                }else{
-
-                    var talla1 = '<td><input style="width:100%" type="number" name="'+ id.modelo + id.cod_color +1 +'" id="'+ id.modelo + id.cod_color +1 +'" readonly></td>'
-
+                if (id.t1 == 1) {
+                    var talla1 =
+                        '<td><input style="width:100%" class="pruebaA" type="number" name="' +
+                        id.modelo +
+                        id.cod_color +
+                        1 +
+                        '" id="' +
+                        id.modelo +
+                        id.cod_color +
+                        1 +
+                        '" value="' +
+                        id.v1 +
+                        '" min="0"></td>';
+                } else {
+                    var talla1 =
+                        '<td><input style="width:100%" type="number" name="' +
+                        id.modelo +
+                        id.cod_color +
+                        1 +
+                        '" id="' +
+                        id.modelo +
+                        id.cod_color +
+                        1 +
+                        '" readonly></td>';
                 }
 
                 /* TALLA 2 */
-                if(id.t2 == 1){
-
-                    var talla2 = '<td><input style="width:100%" class="pruebaA" type="number" name="'+ id.modelo + id.cod_color +2 +'" id="'+ id.modelo + id.cod_color +2 +'" value="'+id.v2+'" min="0"></td>'
-
-                }else{
-
-                    var talla2 = '<td><input style="width:100%" type="number" name="'+ id.modelo + id.cod_color +2 +'" id="'+ id.modelo + id.cod_color +2 +'" readonly></td>'
-
+                if (id.t2 == 1) {
+                    var talla2 =
+                        '<td><input style="width:100%" class="pruebaA" type="number" name="' +
+                        id.modelo +
+                        id.cod_color +
+                        2 +
+                        '" id="' +
+                        id.modelo +
+                        id.cod_color +
+                        2 +
+                        '" value="' +
+                        id.v2 +
+                        '" min="0"></td>';
+                } else {
+                    var talla2 =
+                        '<td><input style="width:100%" type="number" name="' +
+                        id.modelo +
+                        id.cod_color +
+                        2 +
+                        '" id="' +
+                        id.modelo +
+                        id.cod_color +
+                        2 +
+                        '" readonly></td>';
                 }
 
                 /* TALLA 3 */
-                if(id.t3 == 1){
-
-                    var talla3 = '<td><input style="width:100%" class="pruebaA" type="number" name="'+ id.modelo + id.cod_color +3 +'" id="'+ id.modelo + id.cod_color +3 +'" value="'+id.v3+'" min="0"></td>'
-
-                }else{
-
-                    var talla3 = '<td><input style="width:100%" type="number" name="'+ id.modelo + id.cod_color +3 +'" id="'+ id.modelo + id.cod_color +3 +'" readonly></td>'
-
+                if (id.t3 == 1) {
+                    var talla3 =
+                        '<td><input style="width:100%" class="pruebaA" type="number" name="' +
+                        id.modelo +
+                        id.cod_color +
+                        3 +
+                        '" id="' +
+                        id.modelo +
+                        id.cod_color +
+                        3 +
+                        '" value="' +
+                        id.v3 +
+                        '" min="0"></td>';
+                } else {
+                    var talla3 =
+                        '<td><input style="width:100%" type="number" name="' +
+                        id.modelo +
+                        id.cod_color +
+                        3 +
+                        '" id="' +
+                        id.modelo +
+                        id.cod_color +
+                        3 +
+                        '" readonly></td>';
                 }
 
                 /* TALLA 4 */
-                if(id.t4 == 1){
-
-                    var talla4 = '<td><input style="width:100%" class="pruebaA" type="number" name="'+ id.modelo + id.cod_color +4 +'" id="'+ id.modelo + id.cod_color +4 +'" value="'+id.v4+'" min="0"></td>'
-
-                }else{
-
-                    var talla4 = '<td><input style="width:100%" type="number" name="'+ id.modelo + id.cod_color +4 +'" id="'+ id.modelo + id.cod_color +4 +'" readonly></td>'
-
+                if (id.t4 == 1) {
+                    var talla4 =
+                        '<td><input style="width:100%" class="pruebaA" type="number" name="' +
+                        id.modelo +
+                        id.cod_color +
+                        4 +
+                        '" id="' +
+                        id.modelo +
+                        id.cod_color +
+                        4 +
+                        '" value="' +
+                        id.v4 +
+                        '" min="0"></td>';
+                } else {
+                    var talla4 =
+                        '<td><input style="width:100%" type="number" name="' +
+                        id.modelo +
+                        id.cod_color +
+                        4 +
+                        '" id="' +
+                        id.modelo +
+                        id.cod_color +
+                        4 +
+                        '" readonly></td>';
                 }
 
                 /* TALLA 5 */
-                if(id.t5 == 1){
-
-                    var talla5 = '<td><input style="width:100%" class="pruebaA" type="number" name="'+ id.modelo + id.cod_color +5 +'" id="'+ id.modelo + id.cod_color +5 +'" value="'+id.v5+'" min="0"></td>'
-
-                }else{
-
-                    var talla5 = '<td><input style="width:100%" type="number" name="'+ id.modelo + id.cod_color +5 +'" id="'+ id.modelo + id.cod_color +5 +'" readonly></td>'
-
+                if (id.t5 == 1) {
+                    var talla5 =
+                        '<td><input style="width:100%" class="pruebaA" type="number" name="' +
+                        id.modelo +
+                        id.cod_color +
+                        5 +
+                        '" id="' +
+                        id.modelo +
+                        id.cod_color +
+                        5 +
+                        '" value="' +
+                        id.v5 +
+                        '" min="0"></td>';
+                } else {
+                    var talla5 =
+                        '<td><input style="width:100%" type="number" name="' +
+                        id.modelo +
+                        id.cod_color +
+                        5 +
+                        '" id="' +
+                        id.modelo +
+                        id.cod_color +
+                        5 +
+                        '" readonly></td>';
                 }
 
                 /* TALLA 6 */
-                if(id.t6 == 1){
-
-                    var talla6 = '<td><input style="width:100%" class="pruebaA" type="number" name="'+ id.modelo + id.cod_color +6 +'" id="'+ id.modelo + id.cod_color +6 +'" value="'+id.v6+'" min="0"></td>'
-
-                }else{
-
-                    var talla6 = '<td><input style="width:100%" type="number" name="'+ id.modelo + id.cod_color +6 +'" id="'+ id.modelo + id.cod_color +6 +'" readonly></td>'
-
+                if (id.t6 == 1) {
+                    var talla6 =
+                        '<td><input style="width:100%" class="pruebaA" type="number" name="' +
+                        id.modelo +
+                        id.cod_color +
+                        6 +
+                        '" id="' +
+                        id.modelo +
+                        id.cod_color +
+                        6 +
+                        '" value="' +
+                        id.v6 +
+                        '" min="0"></td>';
+                } else {
+                    var talla6 =
+                        '<td><input style="width:100%" type="number" name="' +
+                        id.modelo +
+                        id.cod_color +
+                        6 +
+                        '" id="' +
+                        id.modelo +
+                        id.cod_color +
+                        6 +
+                        '" readonly></td>';
                 }
 
                 /* TALLA 7*/
-                if(id.t7 == 1){
-
-                    var talla7 = '<td><input style="width:100%" class="pruebaA" type="number" name="'+ id.modelo + id.cod_color +7 +'" id="'+ id.modelo + id.cod_color +7 +'" value="'+id.v7+'" min="0"></td>'
-
-                }else{
-
-                    var talla7 = '<td><input style="width:100%" type="number" name="'+ id.modelo + id.cod_color +7 +'" id="'+ id.modelo + id.cod_color +7 +'" readonly></td>'
-
+                if (id.t7 == 1) {
+                    var talla7 =
+                        '<td><input style="width:100%" class="pruebaA" type="number" name="' +
+                        id.modelo +
+                        id.cod_color +
+                        7 +
+                        '" id="' +
+                        id.modelo +
+                        id.cod_color +
+                        7 +
+                        '" value="' +
+                        id.v7 +
+                        '" min="0"></td>';
+                } else {
+                    var talla7 =
+                        '<td><input style="width:100%" type="number" name="' +
+                        id.modelo +
+                        id.cod_color +
+                        7 +
+                        '" id="' +
+                        id.modelo +
+                        id.cod_color +
+                        7 +
+                        '" readonly></td>';
                 }
 
                 /* TALLA 8 */
-                if(id.t8 == 1){
-
-                    var talla8 = '<td><input style="width:100%" class="cantidad" type="number" name="'+ id.modelo + id.cod_color +8 +'" id="'+ id.modelo + id.cod_color +8 +'"value="'+id.v8+'" min="0"></td>'
-
-                }else{
-
-                    var talla8 = '<td><input style="width:100%" type="number" name="'+ id.modelo + id.cod_color +8 +'" id="'+ id.modelo + id.cod_color +8 +'" readonly></td>'
-
+                if (id.t8 == 1) {
+                    var talla8 =
+                        '<td><input style="width:100%" class="cantidad" type="number" name="' +
+                        id.modelo +
+                        id.cod_color +
+                        8 +
+                        '" id="' +
+                        id.modelo +
+                        id.cod_color +
+                        8 +
+                        '"value="' +
+                        id.v8 +
+                        '" min="0"></td>';
+                } else {
+                    var talla8 =
+                        '<td><input style="width:100%" type="number" name="' +
+                        id.modelo +
+                        id.cod_color +
+                        8 +
+                        '" id="' +
+                        id.modelo +
+                        id.cod_color +
+                        8 +
+                        '" readonly></td>';
                 }
 
-                var fila ='<tr class="detalleCT">' +
-                                '<td>' + id.modelo + ' </td>' +
-                                '<td>' + id.color + ' </td>' +
-                                talla1 +
-                                talla2 +
-                                talla3 +
-                                talla4 +
-                                talla5 +
-                                talla6 +
-                                talla7 +
-                                talla8 +
+                var fila =
+                    '<tr class="detalleCT">' +
+                    "<td>" +
+                    id.modelo +
+                    " </td>" +
+                    "<td>" +
+                    id.color +
+                    " </td>" +
+                    talla1 +
+                    talla2 +
+                    talla3 +
+                    talla4 +
+                    talla5 +
+                    talla6 +
+                    talla7 +
+                    talla8 +
+                    "</tr>";
 
-                            '</tr>'
-
-				$('.tablaColTal').append(
-
-                    fila
-
-
-                )
-
-			}
-
-		}
-
-    })
-
-})
-
-
+                $(".tablaColTal").append(fila);
+            }
+        },
+    });
+});
 
 //*OPCION B GENERAR PEDIDO
 $(".modificarArtPedB").click(function () {
-
     var modelo = document.getElementById("modelo").value;
 
-    if(modelo != ""){
+    if (modelo != "") {
         var cliente = document.getElementById("seleccionarCliente").value;
         var vendedor = document.getElementById("seleccionarVendedor").value;
         var pedido = document.getElementById("nuevoCodigo").value;
         var modLista = document.getElementById("lista").value;
-    
+
         var agencia = document.getElementById("agencia").value;
-    
+
         // console.log(pedido);
-    
-        if(modLista == ''){
-    
+
+        if (modLista == "") {
             var modLista1 = document.getElementById("seleccionarLista").value;
             $("#nLista").val(modLista1);
             var datos = new FormData();
             datos.append("modLista", modLista1);
             //console.log('lista',modLista1);
-    
-        }else{
-    
+        } else {
             $("#nLista").val(modLista);
             var datos = new FormData();
             datos.append("modLista", modLista);
             //console.log('lista',modLista);
-    
         }
-    
-        
+
         //ver para q sirve
         $("#clienteA").val(cliente);
         $("#vendedorA").val(vendedor);
         $("#agenciaA").val(agencia);
-    
-        
-    
+
         /*
-        *datos para la cabecera
-        */
-    
-        var mod = document.getElementById("modelo").value; 
+         *datos para la cabecera
+         */
+
+        var mod = document.getElementById("modelo").value;
         //var mod = $(this).attr("modelo");
         //console.log(mod);
-    
+
         //$("#modeloModalA").val(mod);
-    
+
         //var datos = new FormData();
         datos.append("mod", mod);
         //datos.append("modLista", modLista);
-    
+
         $.ajax({
-    
-            url:"ajax/pedidos.ajax.php",
+            url: "ajax/pedidos.ajax.php",
             method: "POST",
             data: datos,
             cache: false,
             contentType: false,
             processData: false,
-            dataType:"json",
-            success:function(respuestaLista){
-    
+            dataType: "json",
+            success: function (respuestaLista) {
                 //console.log("respuesta",respuestaLista["precio"]);
-    
+
                 $("#modeloModalA").val(respuestaLista["modelo"]);
-    
+
                 $("#precioA").val(respuestaLista["precio"]);
-    
-                
-    
-            }
-    
-        })
-    
+            },
+        });
+
         /*
-        * datos para la tabla
-        */
+         * datos para la tabla
+         */
         //var modelo = respuestaLista["modelo"];
-        var modelo = document.getElementById("modelo").value; 
+        var modelo = document.getElementById("modelo").value;
         console.log(modelo);
-    
+
         var datosPedido = new FormData();
         datosPedido.append("modeloA", modelo);
         datosPedido.append("pedido", pedido);
         // console.log(datosPedido);
-    
+
         $.ajax({
-    
-            url:"ajax/pedidos.ajax.php",
+            url: "ajax/pedidos.ajax.php",
             method: "POST",
             data: datosPedido,
             cache: false,
             contentType: false,
             processData: false,
-            dataType:"json",
-            success:function(respuestaA){ 
-    
+            dataType: "json",
+            success: function (respuestaA) {
                 //console.log("respuestaA", respuestaA);
-    
+
                 $(".detalleCT").remove();
-    
-                for(var id of respuestaA){
-    
+
+                for (var id of respuestaA) {
                     /* TALLA 1 */
-                    if(id.t1 == 1){
-    
-                        var talla1 = '<td><input style="width:100%" class="pruebaA" type="text" name="'+ id.modelo + id.cod_color +1 +'" id="'+ id.modelo + id.cod_color +1 +'" value="'+id.v1+'" min="0"></td>'
-    
-                    }else{
-    
-                        var talla1 = '<td><input style="width:100%" type="text" name="'+ id.modelo + id.cod_color +1 +'" id="'+ id.modelo + id.cod_color +1 +'" readonly></td>'
-    
+                    if (id.t1 == 1) {
+                        var talla1 =
+                            '<td><input style="width:100%" class="pruebaA" type="text" name="' +
+                            id.modelo +
+                            id.cod_color +
+                            1 +
+                            '" id="' +
+                            id.modelo +
+                            id.cod_color +
+                            1 +
+                            '" value="' +
+                            id.v1 +
+                            '" min="0"></td>';
+                    } else {
+                        var talla1 =
+                            '<td><input style="width:100%" type="text" name="' +
+                            id.modelo +
+                            id.cod_color +
+                            1 +
+                            '" id="' +
+                            id.modelo +
+                            id.cod_color +
+                            1 +
+                            '" readonly></td>';
                     }
-    
+
                     /* TALLA 2 */
-                    if(id.t2 == 1){
-    
-                        var talla2 = '<td><input style="width:100%" class="pruebaA" type="text" name="'+ id.modelo + id.cod_color +2 +'" id="'+ id.modelo + id.cod_color +2 +'" value="'+id.v2+'" min="0"></td>'
-    
-                    }else{
-    
-                        var talla2 = '<td><input style="width:100%" type="text" name="'+ id.modelo + id.cod_color +2 +'" id="'+ id.modelo + id.cod_color +2 +'" readonly></td>'
-    
+                    if (id.t2 == 1) {
+                        var talla2 =
+                            '<td><input style="width:100%" class="pruebaA" type="text" name="' +
+                            id.modelo +
+                            id.cod_color +
+                            2 +
+                            '" id="' +
+                            id.modelo +
+                            id.cod_color +
+                            2 +
+                            '" value="' +
+                            id.v2 +
+                            '" min="0"></td>';
+                    } else {
+                        var talla2 =
+                            '<td><input style="width:100%" type="text" name="' +
+                            id.modelo +
+                            id.cod_color +
+                            2 +
+                            '" id="' +
+                            id.modelo +
+                            id.cod_color +
+                            2 +
+                            '" readonly></td>';
                     }
-    
+
                     /* TALLA 3 */
-                    if(id.t3 == 1){
-    
-                        var talla3 = '<td><input style="width:100%" class="pruebaA" type="text" name="'+ id.modelo + id.cod_color +3 +'" id="'+ id.modelo + id.cod_color +3 +'" value="'+id.v3+'" min="0"></td>'
-    
-                    }else{
-    
-                        var talla3 = '<td><input style="width:100%" type="text" name="'+ id.modelo + id.cod_color +3 +'" id="'+ id.modelo + id.cod_color +3 +'" readonly></td>'
-    
+                    if (id.t3 == 1) {
+                        var talla3 =
+                            '<td><input style="width:100%" class="pruebaA" type="text" name="' +
+                            id.modelo +
+                            id.cod_color +
+                            3 +
+                            '" id="' +
+                            id.modelo +
+                            id.cod_color +
+                            3 +
+                            '" value="' +
+                            id.v3 +
+                            '" min="0"></td>';
+                    } else {
+                        var talla3 =
+                            '<td><input style="width:100%" type="text" name="' +
+                            id.modelo +
+                            id.cod_color +
+                            3 +
+                            '" id="' +
+                            id.modelo +
+                            id.cod_color +
+                            3 +
+                            '" readonly></td>';
                     }
-    
+
                     /* TALLA 4 */
-                    if(id.t4 == 1){
-    
-                        var talla4 = '<td><input style="width:100%" class="pruebaA" type="text" name="'+ id.modelo + id.cod_color +4 +'" id="'+ id.modelo + id.cod_color +4 +'" value="'+id.v4+'" min="0" ></td>'
-    
-                    }else{
-    
-                        var talla4 = '<td><input style="width:100%" type="text" name="'+ id.modelo + id.cod_color +4 +'" id="'+ id.modelo + id.cod_color +4 +'" readonly></td>'
-    
+                    if (id.t4 == 1) {
+                        var talla4 =
+                            '<td><input style="width:100%" class="pruebaA" type="text" name="' +
+                            id.modelo +
+                            id.cod_color +
+                            4 +
+                            '" id="' +
+                            id.modelo +
+                            id.cod_color +
+                            4 +
+                            '" value="' +
+                            id.v4 +
+                            '" min="0" ></td>';
+                    } else {
+                        var talla4 =
+                            '<td><input style="width:100%" type="text" name="' +
+                            id.modelo +
+                            id.cod_color +
+                            4 +
+                            '" id="' +
+                            id.modelo +
+                            id.cod_color +
+                            4 +
+                            '" readonly></td>';
                     }
-    
+
                     /* TALLA 5 */
-                    if(id.t5 == 1){
-    
-                        var talla5 = '<td><input style="width:100%" class="pruebaA" type="text" name="'+ id.modelo + id.cod_color +5 +'" id="'+ id.modelo + id.cod_color +5 +'" value="'+id.v5+'" min="0" ></td>'
-    
-                    }else{
-    
-                        var talla5 = '<td><input style="width:100%" type="text" name="'+ id.modelo + id.cod_color +5 +'" id="'+ id.modelo + id.cod_color +5 +'" readonly></td>'
-    
+                    if (id.t5 == 1) {
+                        var talla5 =
+                            '<td><input style="width:100%" class="pruebaA" type="text" name="' +
+                            id.modelo +
+                            id.cod_color +
+                            5 +
+                            '" id="' +
+                            id.modelo +
+                            id.cod_color +
+                            5 +
+                            '" value="' +
+                            id.v5 +
+                            '" min="0" ></td>';
+                    } else {
+                        var talla5 =
+                            '<td><input style="width:100%" type="text" name="' +
+                            id.modelo +
+                            id.cod_color +
+                            5 +
+                            '" id="' +
+                            id.modelo +
+                            id.cod_color +
+                            5 +
+                            '" readonly></td>';
                     }
-    
+
                     /* TALLA 6 */
-                    if(id.t6 == 1){
-    
-                        var talla6 = '<td><input style="width:100%" class="pruebaA" type="text" name="'+ id.modelo + id.cod_color +6 +'" id="'+ id.modelo + id.cod_color +6 +'" value="'+id.v6+'" min="0" ></td>'
-    
-                    }else{
-    
-                        var talla6 = '<td><input style="width:100%" type="text" name="'+ id.modelo + id.cod_color +6 +'" id="'+ id.modelo + id.cod_color +6 +'" readonly></td>'
-    
+                    if (id.t6 == 1) {
+                        var talla6 =
+                            '<td><input style="width:100%" class="pruebaA" type="text" name="' +
+                            id.modelo +
+                            id.cod_color +
+                            6 +
+                            '" id="' +
+                            id.modelo +
+                            id.cod_color +
+                            6 +
+                            '" value="' +
+                            id.v6 +
+                            '" min="0" ></td>';
+                    } else {
+                        var talla6 =
+                            '<td><input style="width:100%" type="text" name="' +
+                            id.modelo +
+                            id.cod_color +
+                            6 +
+                            '" id="' +
+                            id.modelo +
+                            id.cod_color +
+                            6 +
+                            '" readonly></td>';
                     }
-    
+
                     /* TALLA 7*/
-                    if(id.t7 == 1){
-    
-                        var talla7 = '<td><input style="width:100%" class="pruebaA" type="text" name="'+ id.modelo + id.cod_color +7 +'" id="'+ id.modelo + id.cod_color +7 +'" value="'+id.v7+'" min="0" ></td>'
-    
-                    }else{
-    
-                        var talla7 = '<td><input style="width:100%" type="text" name="'+ id.modelo + id.cod_color +7 +'" id="'+ id.modelo + id.cod_color +7 +'" readonly></td>'
-    
+                    if (id.t7 == 1) {
+                        var talla7 =
+                            '<td><input style="width:100%" class="pruebaA" type="text" name="' +
+                            id.modelo +
+                            id.cod_color +
+                            7 +
+                            '" id="' +
+                            id.modelo +
+                            id.cod_color +
+                            7 +
+                            '" value="' +
+                            id.v7 +
+                            '" min="0" ></td>';
+                    } else {
+                        var talla7 =
+                            '<td><input style="width:100%" type="text" name="' +
+                            id.modelo +
+                            id.cod_color +
+                            7 +
+                            '" id="' +
+                            id.modelo +
+                            id.cod_color +
+                            7 +
+                            '" readonly></td>';
                     }
-    
+
                     /* TALLA 8 */
-                    if(id.t8 == 1){
-    
-                        var talla8 = '<td><input style="width:100%" class="pruebaA" type="text" name="'+ id.modelo + id.cod_color +8 +'" id="'+ id.modelo + id.cod_color +8 +'"value="'+id.v8+'" min="0" ></td>'
-    
-                    }else{
-    
-                        var talla8 = '<td><input style="width:100%" type="text" name="'+ id.modelo + id.cod_color +8 +'" id="'+ id.modelo + id.cod_color +8 +'" readonly></td>'
-    
+                    if (id.t8 == 1) {
+                        var talla8 =
+                            '<td><input style="width:100%" class="pruebaA" type="text" name="' +
+                            id.modelo +
+                            id.cod_color +
+                            8 +
+                            '" id="' +
+                            id.modelo +
+                            id.cod_color +
+                            8 +
+                            '"value="' +
+                            id.v8 +
+                            '" min="0" ></td>';
+                    } else {
+                        var talla8 =
+                            '<td><input style="width:100%" type="text" name="' +
+                            id.modelo +
+                            id.cod_color +
+                            8 +
+                            '" id="' +
+                            id.modelo +
+                            id.cod_color +
+                            8 +
+                            '" readonly></td>';
                     }
-    
-                    var fila ='<tr class="detalleCT">' +
-                                    '<td>' + id.modelo + ' </td>' +
-                                    '<td>' + id.color + ' </td>' +
-                                    talla1 +
-                                    talla2 +
-                                    talla3 +
-                                    talla4 +
-                                    talla5 +
-                                    talla6 +
-                                    talla7 +
-                                    talla8 +
-    
-                                '</tr>'
-    
-                    $('.tablaColTal').append(
-    
-                        fila
-    
-    
-                    )
+
+                    var fila =
+                        '<tr class="detalleCT">' +
+                        "<td>" +
+                        id.modelo +
+                        " </td>" +
+                        "<td>" +
+                        id.color +
+                        " </td>" +
+                        talla1 +
+                        talla2 +
+                        talla3 +
+                        talla4 +
+                        talla5 +
+                        talla6 +
+                        talla7 +
+                        talla8 +
+                        "</tr>";
+
+                    $(".tablaColTal").append(fila);
                 }
-    
+
                 var inputs = $("form :text"),
-                length = inputs.length,
-                i = 25;
+                    length = inputs.length,
+                    i = 25;
                 //console.log(inputs);
                 //console.log(length);
-    
-    
-                inputs.on("keypress", function(event){
-    
-                    var code = event.keyCode || event.which;    
-                    if (code == 13){
-    
+
+                inputs.on("keypress", function (event) {
+                    var code = event.keyCode || event.which;
+                    if (code == 13) {
                         event.preventDefault();
                         i = i == length - 12 ? 26 : ++i;
                         console.log(i);
                         inputs[i].focus();
                         inputs[i].select();
-                        
                     }
-    
-    
-                
-                })
-    
-            }        
-    
-        })
+                });
+            },
+        });
     }
-
-
-})
+});
 
 $(".btnCalCantA").click(function () {
-
-    var totalCantidadA=0;
-    $(".pruebaA").each(function(){
-
-        totalCantidadA+=parseInt($(this).val()) || 0;
-
+    var totalCantidadA = 0;
+    $(".pruebaA").each(function () {
+        totalCantidadA += parseInt($(this).val()) || 0;
     });
 
-    var precio=document.getElementById("precioA").value;
+    var precio = document.getElementById("precioA").value;
 
-    var totalSolesA = (totalCantidadA * precio)
+    var totalSolesA = totalCantidadA * precio;
 
     $("#totalCantidadA").val(totalCantidadA);
 
@@ -1695,15 +1873,13 @@ $(".btnCalCantA").click(function () {
 
     console.log(totalSolesA);
     console.log(totalCantidadA);
-
-})
+});
 
 /*
-* Dividir Pedido
-*/
+ * Dividir Pedido
+ */
 
-$(".tablaPedidosCV").on("click", "button.btnDividirPed", function(){
-
+$(".tablaPedidosCV").on("click", "button.btnDividirPed", function () {
     var codigo = $(this).attr("codigo");
     var cod_cli = $(this).attr("cod_cli");
     var nom_cli = $(this).attr("nom_cli");
@@ -1713,118 +1889,97 @@ $(".tablaPedidosCV").on("click", "button.btnDividirPed", function(){
     $("#codCliD").val(cod_cli);
     $("#nomCliD").val(nom_cli);
     $("#totalD").val(total);
-
-})
-
-
-/* 
-*ANULAR PEDIDOS
-*/
-$(".tablaPedidosAprobados, .tablaPedidosCV, .tablaPedidosGenerados").on("click",".btnAnularPedidoCV",function(){
-	
-    var codigo = $(this).attr("codigo");
-    var estado = $(this).attr("estado");
-    //console.log(codigo,estado);
- 
-	// Capturamos el id de la orden de compra
-	swal({
-        title: '¿Está seguro de anular el pedido?',
-        text: "¡Si no lo está puede cancelar la acción!",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        cancelButtonText: 'Cancelar',
-        confirmButtonText: 'Si, anular pedido!'
-    }).then(function (result) {
-
-	if (result.value) {
-
-		window.location = "index.php?ruta=pedidoscv&codigoP="+codigo;
-
-	}
-	})
-
 });
 
+/*
+ *ANULAR PEDIDOS
+ */
+$(".tablaPedidosAprobados, .tablaPedidosCV, .tablaPedidosGenerados").on(
+    "click",
+    ".btnAnularPedidoCV",
+    function () {
+        var codigo = $(this).attr("codigo");
+        var estado = $(this).attr("estado");
+        //console.log(codigo,estado);
 
-$(".btnBorrarModelo").click(function(){
+        // Capturamos el id de la orden de compra
+        swal({
+            title: "¿Está seguro de anular el pedido?",
+            text: "¡Si no lo está puede cancelar la acción!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "Cancelar",
+            confirmButtonText: "Si, anular pedido!",
+        }).then(function (result) {
+            if (result.value) {
+                window.location = "index.php?ruta=pedidoscv&codigoP=" + codigo;
+            }
+        });
+    }
+);
 
-	var modeloB = $(this).attr("modelo");
+$(".btnBorrarModelo").click(function () {
+    var modeloB = $(this).attr("modelo");
     var pedidoB = $(this).attr("pedido");
-	//console.log("modelo", modeloB, "pedido", pedidoB);
+    //console.log("modelo", modeloB, "pedido", pedidoB);
 
     var datos = new FormData();
-	datos.append("modeloB", modeloB);
+    datos.append("modeloB", modeloB);
     datos.append("pedidoB", pedidoB);
 
-	$.ajax({
-
-		url: "ajax/pedidos.ajax.php",
-		method: "POST",
-		data: datos,
-		cache: false,
-		contentType: false,
-		processData: false,
-		dataType: "json",
-		success: function (respuesta) {
-
+    $.ajax({
+        url: "ajax/pedidos.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuesta) {
             console.log("respuesta", respuesta);
 
-            if(respuesta == "ok"){
-
+            if (respuesta == "ok") {
                 Command: toastr["error"]("El modelo fue eliminado");
-                $("#updDiv").load(" #updDiv");//actualizas el div
+                $("#updDiv").load(" #updDiv"); //actualizas el div
                 //$("#updDivB").load(" #updDivB");//actualizas el div
-                $("#updDivC").load(" #updDivC");//actualizas el div
-
+                $("#updDivC").load(" #updDivC"); //actualizas el div
             }
+        },
+    });
+});
 
-
-		}
-
-	})
-
-})
-
-$(".refreshDetalle").click(function(){
-
+$(".refreshDetalle").click(function () {
     var pedido = $(this).attr("pedido");
 
     Command: toastr["success"]("Se actualizo los detalles");
-    window.location="index.php?ruta=crear-pedidocv&pedido=" + pedido;
-                                        
+    window.location = "index.php?ruta=crear-pedidocv&pedido=" + pedido;
+});
 
-})
-
-
-/* 
-*ANULAR PEDIDOS
-*/
-$(".tablaPedidosConfirmados").on("click",".btnDuplicarPedido",function(){
-	
+/*
+ *ANULAR PEDIDOS
+ */
+$(".tablaPedidosConfirmados").on("click", ".btnDuplicarPedido", function () {
     var codDup = $(this).attr("codigo");
     console.log(codDup);
 
-    	// Capturamos el id de la orden de compra
-	swal({
-        title: '¿Está seguro de duplicar el pedido?',
+    // Capturamos el id de la orden de compra
+    swal({
+        title: "¿Está seguro de duplicar el pedido?",
         text: "¡Si no lo está puede cancelar la acción!",
-        type: 'warning',
+        type: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        cancelButtonText: 'Cancelar',
-        confirmButtonText: 'Si, duplicar pedido!'
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Cancelar",
+        confirmButtonText: "Si, duplicar pedido!",
     }).then(function (result) {
-
         if (result.value) {
-
             var datos = new FormData();
             datos.append("codDup", codDup);
-        
+
             $.ajax({
-        
                 url: "ajax/pedidos.ajax.php",
                 method: "POST",
                 data: datos,
@@ -1833,238 +1988,170 @@ $(".tablaPedidosConfirmados").on("click",".btnDuplicarPedido",function(){
                 processData: false,
                 dataType: "json",
                 success: function (respuesta) {
-        
-                    if(respuesta == "ok"){
-
+                    if (respuesta == "ok") {
                         swal({
-
                             type: "success",
                             title: "Se duplico el pedido",
                             showConfirmButton: true,
-                            confirmButtonText: "Cerrar"
-                            }).then(function(result){
-            
-                                if (result.value) {
-            
+                            confirmButtonText: "Cerrar",
+                        }).then(function (result) {
+                            if (result.value) {
                                 window.location = "pedidoscv";
-            
-                                }
-            
-                            })
-
-                    }        
-        
-                }
-        
-            })
-
+                            }
+                        });
+                    }
+                },
+            });
         }
-	})
-
+    });
 });
-
 
 // BUSCAR AGENCIA DE TRANSPORTES
 $("#seleccionarCliente").change(function () {
-
     var codigo = document.getElementById("seleccionarCliente").value;
     //console.log("codigo", codigo);
 
-	var datos = new FormData();
-	datos.append("codigo", codigo);
-	
-	$.ajax({
+    var datos = new FormData();
+    datos.append("codigo", codigo);
 
-		url:"ajax/clientes.ajax.php",
-		method: "POST",
-		data: datos,
-		cache: false,
-		contentType: false,
-		processData: false,
-		dataType:"json",
-		success:function(respuesta){
-
-            if(respuesta["agencia"] != "" )
-
-            $("#agencia").val(respuesta["agencia"]);
-            $("#agencia").selectpicker('refresh');
-
-		}
-
-	})	        
-
+    $.ajax({
+        url: "ajax/clientes.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuesta) {
+            if (respuesta["agencia"] != "")
+                $("#agencia").val(respuesta["agencia"]);
+            $("#agencia").selectpicker("refresh");
+        },
+    });
 });
 
 // BUSCAR AGENCIA DE TRANSPORTES
 $("#serie").change(function () {
-
     var tipo = document.getElementById("tdoc").value;
     //console.log(tipo);
 
     var documento = document.getElementById("serie").value;
-    //console.log("documento", documento);    
-    
-    if(tipo == '09'){
+    //console.log("documento", documento);
 
-        var serie = documento.substring(0,3);
+    if (tipo == "09") {
+        var serie = documento.substring(0, 3);
         var talonario = documento.substr(-7);
         //console.log(serie, Number(talonario));
-
-    }else{
-
-        var serie = documento.substring(0,4);
+    } else {
+        var serie = documento.substring(0, 4);
         var talonario = documento.substr(-8);
         //console.log(serie, Number(talonario));
-
     }
 
     //*validamos si es de factura o boleta
-    if(tipo == "01" || tipo == "03" || tipo == "09"){
-
+    if (tipo == "01" || tipo == "03" || tipo == "09") {
         //*vemos que número trae
         var datos = new FormData();
         datos.append("serie", serie);
         datos.append("talonario", talonario);
-        
+
         $.ajax({
-    
-            url:"ajax/pedidos.ajax.php",
+            url: "ajax/pedidos.ajax.php",
             method: "POST",
             data: datos,
             cache: false,
             contentType: false,
             processData: false,
-            dataType:"json",
-            success:function(respuesta){
-    
+            dataType: "json",
+            success: function (respuesta) {
                 //console.log(respuesta["talonario"]);
-                if(Number(respuesta["talonario"]) == talonario){
-
-                    document.getElementById("serie").style.background = "#FF6868";
+                if (Number(respuesta["talonario"]) == talonario) {
+                    document.getElementById("serie").style.background =
+                        "#FF6868";
                     document.getElementById("serie").style.color = "black";
-                    $("#serie").css("font-weight","bold");
+                    $("#serie").css("font-weight", "bold");
 
                     //document.getElementById("btnGenerarDoc").disabled = true;
-
-                }else{
-
+                } else {
                     //*actualizamos el talonario
                     var datos = new FormData();
                     datos.append("serieA", serie);
                     datos.append("talonarioA", Number(talonario));
-                    
+
                     $.ajax({
-                
-                        url:"ajax/pedidos.ajax.php",
+                        url: "ajax/pedidos.ajax.php",
                         method: "POST",
                         data: datos,
                         cache: false,
                         contentType: false,
                         processData: false,
-                        dataType:"json",
-                        success:function(respuesta){
-
+                        dataType: "json",
+                        success: function (respuesta) {
                             console.log(respuesta);
-                
-                        }
-                
-                    })                    
-
+                        },
+                    });
                 }
-    
-            }
-    
-        })
-
-
+            },
+        });
     }
-
 });
 
-
 $("#modalFacturar").on("hidden.bs.modal", function () {
-    
     var tipo = document.getElementById("tdoc").value;
     console.log(tipo);
 
     console.log("mundo");
 
-    if(tipo == "01" || tipo == "03" || tipo == "09"){
+    if (tipo == "01" || tipo == "03" || tipo == "09") {
+        //*actualizamos el talonario
+        var datos = new FormData();
+        datos.append("tipo", tipo);
 
-            //*actualizamos el talonario
-            var datos = new FormData();
-            datos.append("tipo", tipo);
-                        
-            $.ajax({
-        
-                url:"ajax/pedidos.ajax.php",
-                method: "POST",
-                data: datos,
-                cache: false,
-                contentType: false,
-                processData: false,
-                dataType:"json",
-                success:function(respuesta){
-
-                    console.log(respuesta);
-        
-                }
-        
-            })   
-
-
+        $.ajax({
+            url: "ajax/pedidos.ajax.php",
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function (respuesta) {
+                console.log(respuesta);
+            },
+        });
     }
-
-
 });
 
-//VALIDA SI ES RUC O DNI 
-function ValidarRuc(){
+//VALIDA SI ES RUC O DNI
+function ValidarRuc() {
+    documento = $("#validarRuc").attr("documento");
+    //console.log(documento);
 
-	documento = $("#validarRuc").attr("documento");
-	//console.log(documento);
-
-	var datos = new FormData();
-	datos.append("nuevoRuc",documento);
-	$.ajax({
-		type: "POST",
-		url: 'ajax/proveedor.ajax.php',
-		data: datos,
-		cache: false,
-		contentType: false,
-		processData: false,
-		dataType: "json",
-		success:function( jsonx ) {
-			
-            if(jsonx["condicion"]== "HABIDO"){
-
+    var datos = new FormData();
+    datos.append("nuevoRuc", documento);
+    $.ajax({
+        type: "POST",
+        url: "ajax/proveedor.ajax.php",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (jsonx) {
+            if (jsonx["condicion"] == "HABIDO") {
                 Command: toastr["success"]("HABIDO");
-
-            }else{
-
+            } else {
                 Command: toastr["error"]("NO HABIDO");
-
             }
 
-            if(jsonx["estado"]== "ACTIVO"){
-
+            if (jsonx["estado"] == "ACTIVO") {
                 Command: toastr["success"]("ACTIVO");
-
-            }else{
-
+            } else {
                 Command: toastr["error"]("NO ACTIVO");
-
             }
             //console.log(jsonx["condicion"]);
-
-		}
-	})
-
+        },
+    });
 }
 
-
-
-$("#BGBGG").change(function(){
-
-
-})
+$("#BGBGG").change(function () {});

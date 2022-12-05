@@ -13,62 +13,68 @@ require_once '../modelos/pedidos.modelo.php';
 require_once '../controladores/movimientos.controlador.php';
 require_once '../modelos/movimientos.modelo.php';
 
-class AjaxPedidos{
+class AjaxPedidos
+{
 
     /* 
 	* VISUALIZAR COLORES
 	*/
-	public function ajaxVerColores(){
+    public function ajaxVerColores()
+    {
 
         $valor = $this->modelo;
 
         $respuesta = controladorArticulos::ctrVerColores($valor);
-       
+
         echo json_encode($respuesta);
     }
 
     /* 
 	* VISUALIZAR COLORES
 	*/
-	public function ajaxVerColoresCantidades(){
+    public function ajaxVerColoresCantidades()
+    {
 
         $pedido = $this->pedido;
         $modelo = $this->modeloA;
 
         $respuesta = controladorArticulos::ctrVerColoresCantidades($pedido, $modelo);
-       
+
         echo json_encode($respuesta);
-    }    
+    }
 
     /* 
 	* VISUALIZAR COLORES
 	*/
-	public function ajaxVerDatos(){
+    public function ajaxVerDatos()
+    {
 
         $modelo = $this->mod;
         $lista = $this->modLista;
 
         $respuestaLista = controladorArticulos::ctrVerPrecios($modelo, $lista);
-       
+
         echo json_encode($respuestaLista);
-    }    
+    }
 
     /* 
 	* SACAR LA LISTA DE PRECIOS ASIGNADA
 	*/
-	public function ajaxVeLista(){
+    public function ajaxVeLista()
+    {
 
         $valor = $this->cliList;
 
         $respuestaDet = ControladorClientes::ctrVerLista($valor);
-       
+
         echo json_encode($respuestaDet);
-    }   
-    
+    }
+
     /* 
 	* SACAR LA LISTA DE PRECIOS ASIGNADA
 	*/
-	public function ajaxBorrarModelo(){
+    public function ajaxBorrarModelo()
+    {
 
         $modelo = $this->modelo;
         $pedido = $this->pedido;
@@ -76,13 +82,13 @@ class AjaxPedidos{
         $respuesta = ModeloPedidos::mdlBorrarModelo($modelo, $pedido);
 
         echo json_encode($respuesta);
-
     }
-    
+
     /* 
 	* VER TALONARIO
 	*/
-	public function ajaxVerTalonario(){
+    public function ajaxVerTalonario()
+    {
 
         $serie = $this->serie;
         $talonario = $this->talonario;
@@ -90,13 +96,13 @@ class AjaxPedidos{
         $respuesta = ModeloPedidos::mdlVerTalonario($serie, $talonario);
 
         echo json_encode($respuesta);
-
     }
 
     /* 
 	* VER TALONARIO
 	*/
-	public function ajaxActualizarTalonario(){
+    public function ajaxActualizarTalonario()
+    {
 
         $serie = $this->serieA;
         $talonario = $this->talonarioA;
@@ -104,182 +110,191 @@ class AjaxPedidos{
         $respuesta = ModeloPedidos::mdlSepararTalonario($serie, $talonario);
 
         echo json_encode($respuesta);
-
-    }    
+    }
 
     /* 
 	* VER TALONARIO
 	*/
-	public function ajaxReiniciarTalonario(){
+    public function ajaxReiniciarTalonario()
+    {
 
         $tipo = $this->tipo;
 
         $respuesta = ModeloPedidos::mdlReiniciarTalonario($tipo);
 
         echo json_encode($respuesta);
-
-    }     
+    }
 
 
     /* 
 	* SACAR LA LISTA DE PRECIOS ASIGNADA
 	*/
-	public function ajaxDupicarPedido(){
+    public function ajaxDupicarPedido()
+    {
 
-        $codDup = $this->codDup;       
+        $codDup = $this->codDup;
 
         #vemos el numero que sigue en el talonario y actualizamos en +1
         $numero = ControladorMovimientos::ctrMostrarTalonario();
         $talonario = $numero["pedido"] + 1;
 
-        
+
 
         $usuario = $_SESSION["id"];
-        $talonarioN = $usuario.$talonario;
+        $talonarioN = $usuario . $talonario;
 
         //*COPIAR CABECERA
-        $rptCab = ModeloPedidos::mdlDuplicarCabecera($codDup,$talonarioN);
+        $rptCab = ModeloPedidos::mdlDuplicarCabecera($codDup, $talonarioN);
 
-        if($rptCab == "ok"){
+        if ($rptCab == "ok") {
 
-        //*COPIAR DETALLE
-        $rptDet = ModeloPedidos::mdlDuplicarDetalle($codDup,$talonarioN);
+            //*COPIAR DETALLE
+            $rptDet = ModeloPedidos::mdlDuplicarDetalle($codDup, $talonarioN);
 
-        ModeloPedidos::mdlActualizarTalonario();
-
+            ModeloPedidos::mdlActualizarTalonario();
         }
 
         echo json_encode($rptDet);
-
-    }      
+    }
 
     //*TRAER CUENTAS
-	public function ajaxTraerCuentas(){
+    public function ajaxTraerCuentas()
+    {
 
-		$valor = $this->documento;
+        $valor = $this->documento;
 
-		$respuesta = ControladorPedidos::ctrTraerCuentas($valor);
+        $respuesta = ControladorPedidos::ctrTraerCuentas($valor);
 
-		echo json_encode($respuesta);
+        echo json_encode($respuesta);
+    }
 
-	}    
+    /* 
+	* VER TALONARIO
+	*/
+    public function ajaxActualizarTotales()
+    {
 
+        $codPedido = $this->codPedido;
 
+        $respuesta = ModeloPedidos::mdlActualizarTotales($codPedido);
+
+        echo json_encode($respuesta);
+    }
 }
 
 /* 
  * VISUALIZAR COLORES
 */
-if(isset($_POST["modelo"])){
+if (isset($_POST["modelo"])) {
 
     $visualizarMateriaPrimaDetalle = new AjaxPedidos();
-    $visualizarMateriaPrimaDetalle -> modelo = $_POST["modelo"];
-    $visualizarMateriaPrimaDetalle -> ajaxVerColores();
-
+    $visualizarMateriaPrimaDetalle->modelo = $_POST["modelo"];
+    $visualizarMateriaPrimaDetalle->ajaxVerColores();
 }
 
 /* 
  * VISUALIZAR COLORES Y MODIFICAR
 */
-if(isset($_POST["pedido"])){
+if (isset($_POST["pedido"])) {
 
     $verColoresyCantidades = new AjaxPedidos();
-    $verColoresyCantidades -> pedido = $_POST["pedido"];
-    $verColoresyCantidades -> modeloA = $_POST["modeloA"];
-    $verColoresyCantidades -> ajaxVerColoresCantidades();
-
+    $verColoresyCantidades->pedido = $_POST["pedido"];
+    $verColoresyCantidades->modeloA = $_POST["modeloA"];
+    $verColoresyCantidades->ajaxVerColoresCantidades();
 }
 
 /* 
  * VISUALIZAR precios y otros
 */
-if(isset($_POST["mod"])){
+if (isset($_POST["mod"])) {
 
     $visualizarPrecios = new AjaxPedidos();
-    $visualizarPrecios -> mod = $_POST["mod"];
-    $visualizarPrecios -> modLista = $_POST["modLista"];
-    $visualizarPrecios -> ajaxVerDatos();
-
+    $visualizarPrecios->mod = $_POST["mod"];
+    $visualizarPrecios->modLista = $_POST["modLista"];
+    $visualizarPrecios->ajaxVerDatos();
 }
 
 /* 
  * SACAR LA LISTA DE PRECIOS ASIGNADA
 */
-if(isset($_POST["cliList"])){
+if (isset($_POST["cliList"])) {
 
     $visualizarListaPrecios = new AjaxPedidos();
-    $visualizarListaPrecios -> cliList = $_POST["cliList"];
-    $visualizarListaPrecios -> ajaxVeLista();
-
+    $visualizarListaPrecios->cliList = $_POST["cliList"];
+    $visualizarListaPrecios->ajaxVeLista();
 }
 
 /* 
  * PARA BORRAR POR MODELO
 */
-if(isset($_POST["modeloB"])){
+if (isset($_POST["modeloB"])) {
 
     $borrarModelo = new AjaxPedidos();
-    $borrarModelo -> modelo = $_POST["modeloB"];
-    $borrarModelo -> pedido = $_POST["pedidoB"];
-    $borrarModelo -> ajaxBorrarModelo();
-
+    $borrarModelo->modelo = $_POST["modeloB"];
+    $borrarModelo->pedido = $_POST["pedidoB"];
+    $borrarModelo->ajaxBorrarModelo();
 }
 
 /* 
  * PARA BORRAR POR MODELO
 */
-if(isset($_POST["codDup"])){
+if (isset($_POST["codDup"])) {
 
     $borrarModelo = new AjaxPedidos();
-    $borrarModelo -> codDup = $_POST["codDup"];
-    $borrarModelo -> ajaxDupicarPedido();
-
+    $borrarModelo->codDup = $_POST["codDup"];
+    $borrarModelo->ajaxDupicarPedido();
 }
 
 /* 
  * VER TALONARIOS QUE TRAE
 */
-if(isset($_POST["talonario"])){
+if (isset($_POST["talonario"])) {
 
     $verColoresyCantidades = new AjaxPedidos();
-    $verColoresyCantidades -> serie = $_POST["serie"];
-    $verColoresyCantidades -> talonario = $_POST["talonario"];
-    $verColoresyCantidades -> ajaxVerTalonario();
-
+    $verColoresyCantidades->serie = $_POST["serie"];
+    $verColoresyCantidades->talonario = $_POST["talonario"];
+    $verColoresyCantidades->ajaxVerTalonario();
 }
 
 /* 
  * ACTUALIZAR Y SEPARAR EL COONTROL
 */
-if(isset($_POST["talonarioA"])){
+if (isset($_POST["talonarioA"])) {
 
     $verColoresyCantidades = new AjaxPedidos();
-    $verColoresyCantidades -> serieA = $_POST["serieA"];
-    $verColoresyCantidades -> talonarioA = $_POST["talonarioA"];
-    $verColoresyCantidades -> ajaxActualizarTalonario();
-
+    $verColoresyCantidades->serieA = $_POST["serieA"];
+    $verColoresyCantidades->talonarioA = $_POST["talonarioA"];
+    $verColoresyCantidades->ajaxActualizarTalonario();
 }
 
 
 /* 
  * REINICIAR TALONARIO
 */
-if(isset($_POST["tipo"])){
+if (isset($_POST["tipo"])) {
 
     $verColoresyCantidades = new AjaxPedidos();
-    $verColoresyCantidades -> tipo = $_POST["tipo"];
-    $verColoresyCantidades -> ajaxReiniciarTalonario();
-
+    $verColoresyCantidades->tipo = $_POST["tipo"];
+    $verColoresyCantidades->ajaxReiniciarTalonario();
 }
 
 
 /* 
  * Treaemos las cuentas
 */
-if(isset($_POST["documento"])){
+if (isset($_POST["documento"])) {
 
     $verColoresyCantidades = new AjaxPedidos();
-    $verColoresyCantidades -> documento = $_POST["documento"];
-    $verColoresyCantidades -> ajaxTraerCuentas();
+    $verColoresyCantidades->documento = $_POST["documento"];
+    $verColoresyCantidades->ajaxTraerCuentas();
+}
 
+/* 
+ * Actualizar totales
+*/
+if (isset($_POST["codPedido"])) {
+
+    $verColoresyCantidades = new AjaxPedidos();
+    $verColoresyCantidades->codPedido = $_POST["codPedido"];
+    $verColoresyCantidades->ajaxActualizarTotales();
 }
