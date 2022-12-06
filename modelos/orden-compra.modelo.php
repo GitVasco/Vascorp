@@ -2,10 +2,12 @@
 
 require_once "conexion.php";
 
-class ModeloOrdenCompra{
+class ModeloOrdenCompra
+{
 
-	static public function mdlMostrarOrdenCompra($item, $valor){
-		if($valor == null){
+	static public function mdlMostrarOrdenCompra($item, $valor)
+	{
+		if ($valor == null) {
 
 			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
             IFNULL(Tabla_M_Detalle.Des_Larga, '') AS Estac,
@@ -29,12 +31,10 @@ class ModeloOrdenCompra{
             AND YEAR(FecEmi) IN ('2020', '2021') 
           ORDER BY Nro DESC ");
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();	
-
-
-		}else{
+			return $stmt->fetchAll();
+		} else {
 			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
 			IFNULL(Tabla_M_Detalle.Des_Larga, '') AS Estac,
 			oCompra.CodRuc,
@@ -66,20 +66,21 @@ class ModeloOrdenCompra{
             AND $item = :$item 
 			ORDER BY Nro DESC");
 
-			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt->bindParam(":" . $item, $valor, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetch();
+			return $stmt->fetch();
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
 	}
 
-	static public function mdlMostrarDetallesOrdenCompra($item, $valor){
-		if($valor == null){
+	static public function mdlMostrarDetallesOrdenCompra($item, $valor)
+	{
+		if ($valor == null) {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			odet.CodPro,
@@ -91,12 +92,10 @@ class ModeloOrdenCompra{
 			odet.ImpPro, FROM ocomdet 
 			ORDER BY Item DESC");
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();	
-
-
-		}else{
+			return $stmt->fetchAll();
+		} else {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			odet.CodPro AS id,
 			odet.ColProv AS colorprov,
@@ -135,27 +134,28 @@ class ModeloOrdenCompra{
 		  WHERE odet.$item = :$item 
 		  ORDER BY odet.Item ASC");
 
-			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt->bindParam(":" . $item, $valor, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
+			return $stmt->fetchAll();
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
 	}
 
 
-    
+
 	/*=============================================
 	RANGO FECHAS
-	=============================================*/	
+	=============================================*/
 
-	static public function mdlRangoFechasOrdenCompra($fechaInicial, $fechaFinal){
+	static public function mdlRangoFechasOrdenCompra($fechaInicial, $fechaFinal)
+	{
 
-		if($fechaInicial == "null"){
+		if ($fechaInicial == "null") {
 
 			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
             IFNULL(Tabla_M_Detalle.Des_Larga, '') AS Estac,
@@ -177,12 +177,10 @@ class ModeloOrdenCompra{
             AND YEAR(FecEmi) IN ('2020', '2021','2022') 
           ORDER BY Nro DESC ");
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();	
-
-
-		}else if($fechaInicial == $fechaFinal){
+			return $stmt->fetchAll();
+		} else if ($fechaInicial == $fechaFinal) {
 
 			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
             IFNULL(Tabla_M_Detalle.Des_Larga, '') AS Estac,
@@ -203,23 +201,22 @@ class ModeloOrdenCompra{
             AND EstOco = '03' 
             AND DATE(FecEmi) like '%$fechaFinal%'  ORDER BY Nro DESC");
 
-			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+			$stmt->bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
-		}else{
+			return $stmt->fetchAll();
+		} else {
 
 			$fechaActual = new DateTime();
-			$fechaActual ->add(new DateInterval("P1D"));
+			$fechaActual->add(new DateInterval("P1D"));
 			$fechaActualMasUno = $fechaActual->format("Y-m-d");
 
 			$fechaFinal2 = new DateTime($fechaFinal);
-			$fechaFinal2 ->add(new DateInterval("P1D"));
+			$fechaFinal2->add(new DateInterval("P1D"));
 			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
 
-			if($fechaFinalMasUno == $fechaActualMasUno){
+			if ($fechaFinalMasUno == $fechaActualMasUno) {
 
 				$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
                 IFNULL(Tabla_M_Detalle.Des_Larga, '') AS Estac,
@@ -240,8 +237,7 @@ class ModeloOrdenCompra{
                 AND EstOco = '03' 
                 AND DATE(FecEmi) BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'   
 			  ORDER BY Nro DESC");
-
-			}else{
+			} else {
 
 
 				$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
@@ -263,24 +259,22 @@ class ModeloOrdenCompra{
                 AND EstOco = '03' 
                 AND DATE(FecEmi) BETWEEN '$fechaInicial' AND '$fechaFinal'
 			  ORDER BY Nro DESC");
-
 			}
-		
-			$stmt -> execute();
 
-			return $stmt -> fetchAll();
+			$stmt->execute();
 
+			return $stmt->fetchAll();
 		}
-
 	}
 
 	/*=============================================
 	REPORTE FECHAS
-	=============================================*/	
+	=============================================*/
 
-	static public function mdlReporteFechasOrdenCompra($fechaInicial, $fechaFinal ,$estado,$estac){
+	static public function mdlReporteFechasOrdenCompra($fechaInicial, $fechaFinal, $estado, $estac)
+	{
 
-		if($fechaInicial == "null"){
+		if ($fechaInicial == "null") {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			od.nro,
@@ -328,18 +322,16 @@ class ModeloOrdenCompra{
 			WHERE o.EstOco = '03' 
 			AND od.EstOco = '03' 
 			AND od.estac = :estac
-			AND YEAR(o.fecemi) = '2021' 
+			AND YEAR(o.fecemi) = '2022' 
 		  ORDER BY o.fecemi ");
 
-		  $stmt -> bindParam(":estac", $estac, PDO::PARAM_STR);
-		  $stmt -> bindParam(":estado", $estado, PDO::PARAM_STR);
+			$stmt->bindParam(":estac", $estac, PDO::PARAM_STR);
+			$stmt->bindParam(":estado", $estado, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();	
-
-
-		}else if($fechaInicial == $fechaFinal){
+			return $stmt->fetchAll();
+		} else if ($fechaInicial == $fechaFinal) {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			od.nro,
@@ -390,24 +382,23 @@ class ModeloOrdenCompra{
             AND DATE(o.fecemi) like '%$fechaFinal%' 
 			ORDER BY o.fecemi DESC");
 
-			$stmt -> bindParam(":estac", $estac, PDO::PARAM_STR);
-			$stmt -> bindParam(":estado", $estado, PDO::PARAM_STR);
+			$stmt->bindParam(":estac", $estac, PDO::PARAM_STR);
+			$stmt->bindParam(":estado", $estado, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
-		}else{
+			return $stmt->fetchAll();
+		} else {
 
 			$fechaActual = new DateTime();
-			$fechaActual ->add(new DateInterval("P1D"));
+			$fechaActual->add(new DateInterval("P1D"));
 			$fechaActualMasUno = $fechaActual->format("Y-m-d");
 
 			$fechaFinal2 = new DateTime($fechaFinal);
-			$fechaFinal2 ->add(new DateInterval("P1D"));
+			$fechaFinal2->add(new DateInterval("P1D"));
 			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
 
-			if($fechaFinalMasUno == $fechaActualMasUno){
+			if ($fechaFinalMasUno == $fechaActualMasUno) {
 
 				$stmt = Conexion::conectar()->prepare("SELECT 
 				od.nro,
@@ -458,10 +449,9 @@ class ModeloOrdenCompra{
                 AND DATE(o.fecemi) BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'   
 			  ORDER BY o.fecemi DESC");
 
-			$stmt -> bindParam(":estac", $estac, PDO::PARAM_STR);
-			$stmt -> bindParam(":estado", $estado, PDO::PARAM_STR);
-
-			}else{
+				$stmt->bindParam(":estac", $estac, PDO::PARAM_STR);
+				$stmt->bindParam(":estado", $estado, PDO::PARAM_STR);
+			} else {
 
 
 				$stmt = Conexion::conectar()->prepare("SELECT 
@@ -513,27 +503,25 @@ class ModeloOrdenCompra{
                 AND DATE(o.fecemi) BETWEEN '$fechaInicial' AND '$fechaFinal'
 			  ORDER BY o.fecemi DESC");
 
-			$stmt -> bindParam(":estac", $estac, PDO::PARAM_STR);
-			$stmt -> bindParam(":estado", $estado, PDO::PARAM_STR);
-
+				$stmt->bindParam(":estac", $estac, PDO::PARAM_STR);
+				$stmt->bindParam(":estado", $estado, PDO::PARAM_STR);
 			}
-		
-			$stmt -> execute();
 
-			return $stmt -> fetchAll();
+			$stmt->execute();
 
+			return $stmt->fetchAll();
 		}
-
 	}
 
 
 	/*=============================================
 	REPORTE FECHAS
-	=============================================*/	
+	=============================================*/
 
-	static public function mdlReporteFechasOrdenCompraGeneral($fechaInicial, $fechaFinal){
+	static public function mdlReporteFechasOrdenCompraGeneral($fechaInicial, $fechaFinal)
+	{
 
-		if($fechaInicial == "null"){
+		if ($fechaInicial == "null") {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			od.nro,
@@ -591,12 +579,10 @@ class ModeloOrdenCompra{
 			) 
 		  ORDER BY o.fecemi ");
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();	
-
-
-		}else if($fechaInicial == $fechaFinal){
+			return $stmt->fetchAll();
+		} else if ($fechaInicial == $fechaFinal) {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			od.nro,
@@ -654,23 +640,22 @@ class ModeloOrdenCompra{
             AND DATE(o.fecemi) like '%$fechaFinal%'  
 			ORDER BY o.fecemi DESC");
 
-			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+			$stmt->bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
-		}else{
+			return $stmt->fetchAll();
+		} else {
 
 			$fechaActual = new DateTime();
-			$fechaActual ->add(new DateInterval("P1D"));
+			$fechaActual->add(new DateInterval("P1D"));
 			$fechaActualMasUno = $fechaActual->format("Y-m-d");
 
 			$fechaFinal2 = new DateTime($fechaFinal);
-			$fechaFinal2 ->add(new DateInterval("P1D"));
+			$fechaFinal2->add(new DateInterval("P1D"));
 			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
 
-			if($fechaFinalMasUno == $fechaActualMasUno){
+			if ($fechaFinalMasUno == $fechaActualMasUno) {
 
 				$stmt = Conexion::conectar()->prepare("SELECT 
 				od.nro,
@@ -727,8 +712,7 @@ class ModeloOrdenCompra{
 				) 
                 AND DATE(o.fecemi) BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'   
 			  ORDER BY o.fecemi DESC");
-
-			}else{
+			} else {
 
 
 				$stmt = Conexion::conectar()->prepare("SELECT 
@@ -786,24 +770,22 @@ class ModeloOrdenCompra{
 				) 
                 AND DATE(o.fecemi) BETWEEN '$fechaInicial' AND '$fechaFinal'
 			  ORDER BY o.fecemi DESC");
-
 			}
-		
-			$stmt -> execute();
 
-			return $stmt -> fetchAll();
+			$stmt->execute();
 
+			return $stmt->fetchAll();
 		}
-
 	}
 
 
 
-  /*=============================================
+	/*=============================================
 	MOSTRAR DESTINO PARA LA MATERIA EN LA NOTA DE SALIDA
 	=============================================*/
 
-	static public function mdlMostrarMateriasCompras($valor){
+	static public function mdlMostrarMateriasCompras($valor)
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT   Producto.CodFab, Producto.DesPro, Producto.CodPro, preciomp.PreProv1 AS PrecioSinIgv, Producto.CodAlm01, Proveedor.RazPro , Proveedor.CodRuc, Tabla_M_Detalle_2.Des_Corta AS Unidad,Tabla_M_Detalle_4.Des_Larga AS Color
     FROM Producto, Tabla_M_Detalle AS Tabla_M_Detalle_2,Tabla_M_Detalle AS Tabla_M_Detalle_4, proveedor, preciomp 
@@ -842,362 +824,349 @@ class ModeloOrdenCompra{
     AND Producto.estpro NOT LIKE '2'
     ORDER BY CodPro ASC  ");
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetchAll();
+		return $stmt->fetchAll();
 
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
 	}
 
-  // Método para guardar la orden de compra
-	static public function mdlGuardarOrdenCompra($datos){
+	// Método para guardar la orden de compra
+	static public function mdlGuardarOrdenCompra($datos)
+	{
 
-		$sql="INSERT INTO ocompra(Tip,Ser,Nro,Cod_Local,Cod_Entidad,CodRuc,FecEmi,tCambio,Mo,Obser,pIgv,SubTotal,Igv,Total,mtopago,Centcosto,Cantidad,NroProforma,FecLlegada,TipPago,Dia,EstOco,EstReg,FecReg,UsuReg,PcReg,estac) VALUES (:Tip,:Ser,:Nro,:Cod_Local,:Cod_Entidad,:CodRuc,:FecEmi,:tCambio,:Mo,UPPER(:Obser),:pIgv,:SubTotal,:Igv,:Total,:mtopago,:Centcosto,:Cantidad,UPPER(:NroProforma),:FecLlegada,:TipPago,UPPER(:Dia),:EstOco,:EstReg,:FecReg,:UsuReg,:PcReg,:estac)";
+		$sql = "INSERT INTO ocompra(Tip,Ser,Nro,Cod_Local,Cod_Entidad,CodRuc,FecEmi,tCambio,Mo,Obser,pIgv,SubTotal,Igv,Total,mtopago,Centcosto,Cantidad,NroProforma,FecLlegada,TipPago,Dia,EstOco,EstReg,FecReg,UsuReg,PcReg,estac) VALUES (:Tip,:Ser,:Nro,:Cod_Local,:Cod_Entidad,:CodRuc,:FecEmi,:tCambio,:Mo,UPPER(:Obser),:pIgv,:SubTotal,:Igv,:Total,:mtopago,:Centcosto,:Cantidad,UPPER(:NroProforma),:FecLlegada,:TipPago,UPPER(:Dia),:EstOco,:EstReg,:FecReg,:UsuReg,:PcReg,:estac)";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->bindParam(":Tip",$datos["Tip"],PDO::PARAM_STR);
-		$stmt->bindParam(":Ser",$datos["Ser"],PDO::PARAM_STR);
-		$stmt->bindParam(":Nro",$datos["Nro"],PDO::PARAM_STR);
-		$stmt->bindParam(":Cod_Local",$datos["Cod_Local"],PDO::PARAM_STR);
-		$stmt->bindParam(":Cod_Entidad",$datos["Cod_Entidad"],PDO::PARAM_STR);
-		$stmt->bindParam(":CodRuc",$datos["CodRuc"],PDO::PARAM_STR);
-		$stmt->bindParam(":FecEmi",$datos["FecEmi"],PDO::PARAM_STR);
-		$stmt->bindParam(":tCambio",$datos["tCambio"],PDO::PARAM_STR);
-		$stmt->bindParam(":Mo",$datos["Mo"],PDO::PARAM_STR);
-		$stmt->bindParam(":Obser",$datos["Obser"],PDO::PARAM_STR);
-		$stmt->bindParam(":pIgv",$datos["pIgv"],PDO::PARAM_STR);
-		$stmt->bindParam(":SubTotal",$datos["SubTotal"],PDO::PARAM_STR);
-		$stmt->bindParam(":Igv",$datos["Igv"],PDO::PARAM_STR);
-		$stmt->bindParam(":Total",$datos["Total"],PDO::PARAM_STR);
-		$stmt->bindParam(":mtopago",$datos["mtopago"],PDO::PARAM_STR);
-		$stmt->bindParam(":Centcosto",$datos["Centcosto"],PDO::PARAM_STR);
-		$stmt->bindParam(":Cantidad",$datos["Cantidad"],PDO::PARAM_STR);
-		$stmt->bindParam(":NroProforma",$datos["NroProforma"],PDO::PARAM_STR);
-		$stmt->bindParam(":FecLlegada",$datos["FecLlegada"],PDO::PARAM_STR);
-		$stmt->bindParam(":TipPago",$datos["TipPago"],PDO::PARAM_STR);
-		$stmt->bindParam(":Dia",$datos["Dia"],PDO::PARAM_STR);
-		$stmt->bindParam(":EstOco",$datos["EstOco"],PDO::PARAM_STR);
-		$stmt->bindParam(":EstReg",$datos["EstReg"],PDO::PARAM_STR);
-		$stmt->bindParam(":FecReg",$datos["FecReg"],PDO::PARAM_STR);
-		$stmt->bindParam(":UsuReg",$datos["UsuReg"],PDO::PARAM_STR);
-		$stmt->bindParam(":PcReg",$datos["PcReg"],PDO::PARAM_STR);
-		$stmt->bindParam(":estac",$datos["estac"],PDO::PARAM_STR);
+		$stmt->bindParam(":Tip", $datos["Tip"], PDO::PARAM_STR);
+		$stmt->bindParam(":Ser", $datos["Ser"], PDO::PARAM_STR);
+		$stmt->bindParam(":Nro", $datos["Nro"], PDO::PARAM_STR);
+		$stmt->bindParam(":Cod_Local", $datos["Cod_Local"], PDO::PARAM_STR);
+		$stmt->bindParam(":Cod_Entidad", $datos["Cod_Entidad"], PDO::PARAM_STR);
+		$stmt->bindParam(":CodRuc", $datos["CodRuc"], PDO::PARAM_STR);
+		$stmt->bindParam(":FecEmi", $datos["FecEmi"], PDO::PARAM_STR);
+		$stmt->bindParam(":tCambio", $datos["tCambio"], PDO::PARAM_STR);
+		$stmt->bindParam(":Mo", $datos["Mo"], PDO::PARAM_STR);
+		$stmt->bindParam(":Obser", $datos["Obser"], PDO::PARAM_STR);
+		$stmt->bindParam(":pIgv", $datos["pIgv"], PDO::PARAM_STR);
+		$stmt->bindParam(":SubTotal", $datos["SubTotal"], PDO::PARAM_STR);
+		$stmt->bindParam(":Igv", $datos["Igv"], PDO::PARAM_STR);
+		$stmt->bindParam(":Total", $datos["Total"], PDO::PARAM_STR);
+		$stmt->bindParam(":mtopago", $datos["mtopago"], PDO::PARAM_STR);
+		$stmt->bindParam(":Centcosto", $datos["Centcosto"], PDO::PARAM_STR);
+		$stmt->bindParam(":Cantidad", $datos["Cantidad"], PDO::PARAM_STR);
+		$stmt->bindParam(":NroProforma", $datos["NroProforma"], PDO::PARAM_STR);
+		$stmt->bindParam(":FecLlegada", $datos["FecLlegada"], PDO::PARAM_STR);
+		$stmt->bindParam(":TipPago", $datos["TipPago"], PDO::PARAM_STR);
+		$stmt->bindParam(":Dia", $datos["Dia"], PDO::PARAM_STR);
+		$stmt->bindParam(":EstOco", $datos["EstOco"], PDO::PARAM_STR);
+		$stmt->bindParam(":EstReg", $datos["EstReg"], PDO::PARAM_STR);
+		$stmt->bindParam(":FecReg", $datos["FecReg"], PDO::PARAM_STR);
+		$stmt->bindParam(":UsuReg", $datos["UsuReg"], PDO::PARAM_STR);
+		$stmt->bindParam(":PcReg", $datos["PcReg"], PDO::PARAM_STR);
+		$stmt->bindParam(":estac", $datos["estac"], PDO::PARAM_STR);
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-
 		}
 
-		$stmt=null;
-	}	
-	
+		$stmt = null;
+	}
+
 	// Método para guardar el detalle de orden de compra
-	static public function mdlGuardarDetalleOrdenCompra($datos){
+	static public function mdlGuardarDetalleOrdenCompra($datos)
+	{
 
-		$sql="INSERT INTO ocomdet(Item,Tip,Ser,Nro,ColProv,Cod_Local,Cod_Entidad,CodRuc,CodPro,CodFab,UndPro,CanPro,CanPro_Ant,PrePro,PrePro_Ant,DscPro,ImpPro,EstOco,CantNI,SalCan,FecEmi,estac,FecReg,UsuReg,PcReg) VALUES (:Item,:Tip,:Ser,:Nro,:ColProv,:Cod_Local,:Cod_Entidad,:CodRuc,:CodPro,:CodFab,:UndPro,:CanPro,:CanPro_Ant,:PrePro,:PrePro_Ant,:DscPro,:ImpPro,:EstOco,:CantNI,:SalCan,:FecEmi,:estac,:FecReg,:UsuReg,:PcReg)";
+		$sql = "INSERT INTO ocomdet(Item,Tip,Ser,Nro,ColProv,Cod_Local,Cod_Entidad,CodRuc,CodPro,CodFab,UndPro,CanPro,CanPro_Ant,PrePro,PrePro_Ant,DscPro,ImpPro,EstOco,CantNI,SalCan,FecEmi,estac,FecReg,UsuReg,PcReg) VALUES (:Item,:Tip,:Ser,:Nro,:ColProv,:Cod_Local,:Cod_Entidad,:CodRuc,:CodPro,:CodFab,:UndPro,:CanPro,:CanPro_Ant,:PrePro,:PrePro_Ant,:DscPro,:ImpPro,:EstOco,:CantNI,:SalCan,:FecEmi,:estac,:FecReg,:UsuReg,:PcReg)";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->bindParam(":Item",$datos["Item"],PDO::PARAM_STR);
-		$stmt->bindParam(":Tip",$datos["Tip"],PDO::PARAM_STR);
-		$stmt->bindParam(":Ser",$datos["Ser"],PDO::PARAM_STR);
-		$stmt->bindParam(":Nro",$datos["Nro"],PDO::PARAM_STR);
-		$stmt->bindParam(":ColProv",$datos["ColProv"],PDO::PARAM_STR);
-		$stmt->bindParam(":Cod_Local",$datos["Cod_Local"],PDO::PARAM_STR);
-		$stmt->bindParam(":Cod_Entidad",$datos["Cod_Entidad"],PDO::PARAM_STR);
-		$stmt->bindParam(":CodRuc",$datos["CodRuc"],PDO::PARAM_STR);
-		$stmt->bindParam(":CodPro",$datos["CodPro"],PDO::PARAM_STR);
-		$stmt->bindParam(":CodFab",$datos["CodFab"],PDO::PARAM_STR);
-		$stmt->bindParam(":UndPro",$datos["UndPro"],PDO::PARAM_STR);
-		$stmt->bindParam(":CanPro",$datos["CanPro"],PDO::PARAM_STR);
-		$stmt->bindParam(":CanPro_Ant",$datos["CanPro_Ant"],PDO::PARAM_STR);
-		$stmt->bindParam(":PrePro",$datos["PrePro"],PDO::PARAM_STR);
-		$stmt->bindParam(":PrePro_Ant",$datos["PrePro_Ant"],PDO::PARAM_STR);
-		$stmt->bindParam(":DscPro",$datos["DscPro"],PDO::PARAM_STR);
-		$stmt->bindParam(":ImpPro",$datos["ImpPro"],PDO::PARAM_STR);
-		$stmt->bindParam(":EstOco",$datos["EstOco"],PDO::PARAM_STR);
-		$stmt->bindParam(":CantNI",$datos["CantNI"],PDO::PARAM_STR);
-		$stmt->bindParam(":SalCan",$datos["SalCan"],PDO::PARAM_STR);
-		$stmt->bindParam(":FecEmi",$datos["FecEmi"],PDO::PARAM_STR);
-		$stmt->bindParam(":estac",$datos["estac"],PDO::PARAM_STR);
-		$stmt->bindParam(":FecReg",$datos["FecReg"],PDO::PARAM_STR);
-		$stmt->bindParam(":UsuReg",$datos["UsuReg"],PDO::PARAM_STR);
-		$stmt->bindParam(":PcReg",$datos["PcReg"],PDO::PARAM_STR);
-		
+		$stmt->bindParam(":Item", $datos["Item"], PDO::PARAM_STR);
+		$stmt->bindParam(":Tip", $datos["Tip"], PDO::PARAM_STR);
+		$stmt->bindParam(":Ser", $datos["Ser"], PDO::PARAM_STR);
+		$stmt->bindParam(":Nro", $datos["Nro"], PDO::PARAM_STR);
+		$stmt->bindParam(":ColProv", $datos["ColProv"], PDO::PARAM_STR);
+		$stmt->bindParam(":Cod_Local", $datos["Cod_Local"], PDO::PARAM_STR);
+		$stmt->bindParam(":Cod_Entidad", $datos["Cod_Entidad"], PDO::PARAM_STR);
+		$stmt->bindParam(":CodRuc", $datos["CodRuc"], PDO::PARAM_STR);
+		$stmt->bindParam(":CodPro", $datos["CodPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":CodFab", $datos["CodFab"], PDO::PARAM_STR);
+		$stmt->bindParam(":UndPro", $datos["UndPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":CanPro", $datos["CanPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":CanPro_Ant", $datos["CanPro_Ant"], PDO::PARAM_STR);
+		$stmt->bindParam(":PrePro", $datos["PrePro"], PDO::PARAM_STR);
+		$stmt->bindParam(":PrePro_Ant", $datos["PrePro_Ant"], PDO::PARAM_STR);
+		$stmt->bindParam(":DscPro", $datos["DscPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":ImpPro", $datos["ImpPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":EstOco", $datos["EstOco"], PDO::PARAM_STR);
+		$stmt->bindParam(":CantNI", $datos["CantNI"], PDO::PARAM_STR);
+		$stmt->bindParam(":SalCan", $datos["SalCan"], PDO::PARAM_STR);
+		$stmt->bindParam(":FecEmi", $datos["FecEmi"], PDO::PARAM_STR);
+		$stmt->bindParam(":estac", $datos["estac"], PDO::PARAM_STR);
+		$stmt->bindParam(":FecReg", $datos["FecReg"], PDO::PARAM_STR);
+		$stmt->bindParam(":UsuReg", $datos["UsuReg"], PDO::PARAM_STR);
+		$stmt->bindParam(":PcReg", $datos["PcReg"], PDO::PARAM_STR);
 
-		if($stmt->execute()){
+
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-
 		}
 
-		$stmt=null;
+		$stmt = null;
 	}
 
 	/*=============================================
 	MOSTRAR ULTIMO NRO DE ORDEN DE COMPRA
 	=============================================*/
 
-	static public function mdlMostrarUltimoNro(){
+	static public function mdlMostrarUltimoNro()
+	{
 
 
 		$stmt = Conexion::conectar()->prepare("SELECT IFNULL(MAX(Nro),'000001') AS Nro FROM ocompra");
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetch();
+		return $stmt->fetch();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-    }
+	}
 
 	/*=============================================
 	CERRAR ORDEN DE COMPRA
 	=============================================*/
 
-	static public function mdlCerrarOrdenCompra($datos){
+	static public function mdlCerrarOrdenCompra($datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE ocompra SET estac = :estac , UsuCer = :UsuCer, FecCer = :FecCer , PcCer = :PcCer WHERE Nro = :Nro");
 
-		$stmt -> bindParam(":estac", $datos["estac"], PDO::PARAM_STR);
-		$stmt -> bindParam(":Nro", $datos["Nro"], PDO::PARAM_STR);
-		$stmt -> bindParam(":UsuCer", $datos["UsuCer"], PDO::PARAM_STR);
-		$stmt -> bindParam(":FecCer", $datos["FecCer"], PDO::PARAM_STR);
-		$stmt -> bindParam(":PcCer", $datos["PcCer"], PDO::PARAM_STR);
-		
+		$stmt->bindParam(":estac", $datos["estac"], PDO::PARAM_STR);
+		$stmt->bindParam(":Nro", $datos["Nro"], PDO::PARAM_STR);
+		$stmt->bindParam(":UsuCer", $datos["UsuCer"], PDO::PARAM_STR);
+		$stmt->bindParam(":FecCer", $datos["FecCer"], PDO::PARAM_STR);
+		$stmt->bindParam(":PcCer", $datos["PcCer"], PDO::PARAM_STR);
 
-		if($stmt -> execute()){
+
+		if ($stmt->execute()) {
 
 			return "ok";
-		
-		}else{
+		} else {
 
-			return "error";	
-
+			return "error";
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-	}	
+	}
 
 	/*=============================================
 	CERRAR DETALLE ORDEN DE COMPRA
 	=============================================*/
 
-	static public function mdlCerrarDetalleOrdenCompra($datos){
+	static public function mdlCerrarDetalleOrdenCompra($datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE ocomdet SET estac = :estac WHERE Nro = :Nro");
 
-		$stmt -> bindParam(":estac", $datos["estac"], PDO::PARAM_STR);
-		$stmt -> bindParam(":Nro", $datos["Nro"], PDO::PARAM_STR);
-		
+		$stmt->bindParam(":estac", $datos["estac"], PDO::PARAM_STR);
+		$stmt->bindParam(":Nro", $datos["Nro"], PDO::PARAM_STR);
 
-		if($stmt -> execute()){
+
+		if ($stmt->execute()) {
 
 			return "ok";
-		
-		}else{
+		} else {
 
-			return "error";	
-
+			return "error";
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-	}	
+	}
 
 	/*=============================================
 	CERRAR DETALLE ORDEN DE COMPRA
 	=============================================*/
 
-	static public function mdlCerrarDetalleOrdenCompra2($datos){
+	static public function mdlCerrarDetalleOrdenCompra2($datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE ocomdet SET estac = :estac WHERE Nro = :Nro AND CodPro = :CodPro");
 
-		$stmt -> bindParam(":estac", $datos["estac"], PDO::PARAM_STR);
-		$stmt -> bindParam(":Nro", $datos["Nro"], PDO::PARAM_STR);
-		$stmt -> bindParam(":CodPro", $datos["CodPro"], PDO::PARAM_STR);
-		
+		$stmt->bindParam(":estac", $datos["estac"], PDO::PARAM_STR);
+		$stmt->bindParam(":Nro", $datos["Nro"], PDO::PARAM_STR);
+		$stmt->bindParam(":CodPro", $datos["CodPro"], PDO::PARAM_STR);
 
-		if($stmt -> execute()){
+
+		if ($stmt->execute()) {
 
 			return "ok";
-		
-		}else{
+		} else {
 
-			return "error";	
-
+			return "error";
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-	}	
+	}
 
 	/*=============================================
 	ANULAR ORDEN DE COMPRA
 	=============================================*/
 
-	static public function mdlAnularOrdenCompra($tabla,$datos){
+	static public function mdlAnularOrdenCompra($tabla, $datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET EstOco = :EstOco , FecAnulacion = :FecAnulacion,FecAnu = :FecAnu, UsuAnu = :UsuAnu, PcAnu = :PcAnu WHERE Nro = :Nro");
 
-		$stmt -> bindParam(":EstOco", $datos["EstOco"], PDO::PARAM_STR);
-		$stmt -> bindParam(":FecAnulacion", $datos["FecAnulacion"], PDO::PARAM_STR);
-		$stmt -> bindParam(":Nro", $datos["Nro"], PDO::PARAM_STR);
-		$stmt -> bindParam(":FecAnu", $datos["FecAnu"], PDO::PARAM_STR);
-		$stmt -> bindParam(":UsuAnu", $datos["UsuAnu"], PDO::PARAM_STR);
-		$stmt -> bindParam(":PcAnu", $datos["PcAnu"], PDO::PARAM_STR);
-		
+		$stmt->bindParam(":EstOco", $datos["EstOco"], PDO::PARAM_STR);
+		$stmt->bindParam(":FecAnulacion", $datos["FecAnulacion"], PDO::PARAM_STR);
+		$stmt->bindParam(":Nro", $datos["Nro"], PDO::PARAM_STR);
+		$stmt->bindParam(":FecAnu", $datos["FecAnu"], PDO::PARAM_STR);
+		$stmt->bindParam(":UsuAnu", $datos["UsuAnu"], PDO::PARAM_STR);
+		$stmt->bindParam(":PcAnu", $datos["PcAnu"], PDO::PARAM_STR);
 
-		if($stmt -> execute()){
+
+		if ($stmt->execute()) {
 
 			return "ok";
-		
-		}else{
+		} else {
 
-			return "error";	
-
+			return "error";
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-	}	
+	}
 
 	// Método para guardar las ventas
-	static public function mdlEditarOrdenCompra($datos){
+	static public function mdlEditarOrdenCompra($datos)
+	{
 
-		$sql="UPDATE ocompra SET Nro = :Nro,CodRuc = :CodRuc,FecEmi = :FecEmi,Mo = :Mo,Obser = UPPER(:Obser),SubTotal = :SubTotal,Igv = :Igv,Total = :Total,Centcosto = :Centcosto,NroProforma = UPPER(:NroProforma),FecLlegada = :FecLlegada,TipPago = :TipPago,Dia = UPPER(:Dia),FecMod = :FecMod,UsuMod = :UsuMod,PcMod = :PcMod WHERE Nro = :Nro";
+		$sql = "UPDATE ocompra SET Nro = :Nro,CodRuc = :CodRuc,FecEmi = :FecEmi,Mo = :Mo,Obser = UPPER(:Obser),SubTotal = :SubTotal,Igv = :Igv,Total = :Total,Centcosto = :Centcosto,NroProforma = UPPER(:NroProforma),FecLlegada = :FecLlegada,TipPago = :TipPago,Dia = UPPER(:Dia),FecMod = :FecMod,UsuMod = :UsuMod,PcMod = :PcMod WHERE Nro = :Nro";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->bindParam(":Nro",$datos["Nro"],PDO::PARAM_STR);
-		$stmt->bindParam(":CodRuc",$datos["CodRuc"],PDO::PARAM_STR);
-		$stmt->bindParam(":FecEmi",$datos["FecEmi"],PDO::PARAM_STR);
-		$stmt->bindParam(":Mo",$datos["Mo"],PDO::PARAM_STR);
-		$stmt->bindParam(":Obser",$datos["Obser"],PDO::PARAM_STR);
-		$stmt->bindParam(":SubTotal",$datos["SubTotal"],PDO::PARAM_STR);
-		$stmt->bindParam(":Igv",$datos["Igv"],PDO::PARAM_STR);
-		$stmt->bindParam(":Total",$datos["Total"],PDO::PARAM_STR);
-		$stmt->bindParam(":Centcosto",$datos["Centcosto"],PDO::PARAM_STR);
-		$stmt->bindParam(":NroProforma",$datos["NroProforma"],PDO::PARAM_STR);
-		$stmt->bindParam(":FecLlegada",$datos["FecLlegada"],PDO::PARAM_STR);
-		$stmt->bindParam(":TipPago",$datos["TipPago"],PDO::PARAM_STR);
-		$stmt->bindParam(":Dia",$datos["Dia"],PDO::PARAM_STR);
-		$stmt->bindParam(":FecMod",$datos["FecMod"],PDO::PARAM_STR);
-		$stmt->bindParam(":UsuMod",$datos["UsuMod"],PDO::PARAM_STR);
-		$stmt->bindParam(":PcMod",$datos["PcMod"],PDO::PARAM_STR);
+		$stmt->bindParam(":Nro", $datos["Nro"], PDO::PARAM_STR);
+		$stmt->bindParam(":CodRuc", $datos["CodRuc"], PDO::PARAM_STR);
+		$stmt->bindParam(":FecEmi", $datos["FecEmi"], PDO::PARAM_STR);
+		$stmt->bindParam(":Mo", $datos["Mo"], PDO::PARAM_STR);
+		$stmt->bindParam(":Obser", $datos["Obser"], PDO::PARAM_STR);
+		$stmt->bindParam(":SubTotal", $datos["SubTotal"], PDO::PARAM_STR);
+		$stmt->bindParam(":Igv", $datos["Igv"], PDO::PARAM_STR);
+		$stmt->bindParam(":Total", $datos["Total"], PDO::PARAM_STR);
+		$stmt->bindParam(":Centcosto", $datos["Centcosto"], PDO::PARAM_STR);
+		$stmt->bindParam(":NroProforma", $datos["NroProforma"], PDO::PARAM_STR);
+		$stmt->bindParam(":FecLlegada", $datos["FecLlegada"], PDO::PARAM_STR);
+		$stmt->bindParam(":TipPago", $datos["TipPago"], PDO::PARAM_STR);
+		$stmt->bindParam(":Dia", $datos["Dia"], PDO::PARAM_STR);
+		$stmt->bindParam(":FecMod", $datos["FecMod"], PDO::PARAM_STR);
+		$stmt->bindParam(":UsuMod", $datos["UsuMod"], PDO::PARAM_STR);
+		$stmt->bindParam(":PcMod", $datos["PcMod"], PDO::PARAM_STR);
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-
 		}
 
-		$stmt=null;
-	}	
+		$stmt = null;
+	}
 
 	// Método para guardar el detalle de orden de compra al editar
-	static public function mdlGuardarDetalleOrdenCompra2($datos){
+	static public function mdlGuardarDetalleOrdenCompra2($datos)
+	{
 
-		$sql="INSERT INTO ocomdet(Item,Tip,Ser,Nro,ColProv,Cod_Local,Cod_Entidad,CodRuc,CodPro,CodFab,UndPro,CanPro,CanPro_Ant,PrePro,PrePro_Ant,DscPro,ImpPro,EstOco,CantNI,SalCan,FecEmi,estac,FecMod,UsuMod,PcMod) VALUES (:Item,:Tip,:Ser,:Nro,:ColProv,:Cod_Local,:Cod_Entidad,:CodRuc,:CodPro,:CodFab,:UndPro,:CanPro,:CanPro_Ant,:PrePro,:PrePro_Ant,:DscPro,:ImpPro,:EstOco,:CantNI,:SalCan,:FecEmi,:estac,:FecMod,:UsuMod,:PcMod)";
+		$sql = "INSERT INTO ocomdet(Item,Tip,Ser,Nro,ColProv,Cod_Local,Cod_Entidad,CodRuc,CodPro,CodFab,UndPro,CanPro,CanPro_Ant,PrePro,PrePro_Ant,DscPro,ImpPro,EstOco,CantNI,SalCan,FecEmi,estac,FecMod,UsuMod,PcMod) VALUES (:Item,:Tip,:Ser,:Nro,:ColProv,:Cod_Local,:Cod_Entidad,:CodRuc,:CodPro,:CodFab,:UndPro,:CanPro,:CanPro_Ant,:PrePro,:PrePro_Ant,:DscPro,:ImpPro,:EstOco,:CantNI,:SalCan,:FecEmi,:estac,:FecMod,:UsuMod,:PcMod)";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->bindParam(":Item",$datos["Item"],PDO::PARAM_STR);
-		$stmt->bindParam(":Tip",$datos["Tip"],PDO::PARAM_STR);
-		$stmt->bindParam(":Ser",$datos["Ser"],PDO::PARAM_STR);
-		$stmt->bindParam(":Nro",$datos["Nro"],PDO::PARAM_STR);
-		$stmt->bindParam(":ColProv",$datos["ColProv"],PDO::PARAM_STR);
-		$stmt->bindParam(":Cod_Local",$datos["Cod_Local"],PDO::PARAM_STR);
-		$stmt->bindParam(":Cod_Entidad",$datos["Cod_Entidad"],PDO::PARAM_STR);
-		$stmt->bindParam(":CodRuc",$datos["CodRuc"],PDO::PARAM_STR);
-		$stmt->bindParam(":CodPro",$datos["CodPro"],PDO::PARAM_STR);
-		$stmt->bindParam(":CodFab",$datos["CodFab"],PDO::PARAM_STR);
-		$stmt->bindParam(":UndPro",$datos["UndPro"],PDO::PARAM_STR);
-		$stmt->bindParam(":CanPro",$datos["CanPro"],PDO::PARAM_STR);
-		$stmt->bindParam(":CanPro_Ant",$datos["CanPro_Ant"],PDO::PARAM_STR);
-		$stmt->bindParam(":PrePro",$datos["PrePro"],PDO::PARAM_STR);
-		$stmt->bindParam(":PrePro_Ant",$datos["PrePro_Ant"],PDO::PARAM_STR);
-		$stmt->bindParam(":DscPro",$datos["DscPro"],PDO::PARAM_STR);
-		$stmt->bindParam(":ImpPro",$datos["ImpPro"],PDO::PARAM_STR);
-		$stmt->bindParam(":EstOco",$datos["EstOco"],PDO::PARAM_STR);
-		$stmt->bindParam(":CantNI",$datos["CantNI"],PDO::PARAM_STR);
-		$stmt->bindParam(":SalCan",$datos["SalCan"],PDO::PARAM_STR);
-		$stmt->bindParam(":FecEmi",$datos["FecEmi"],PDO::PARAM_STR);
-		$stmt->bindParam(":estac",$datos["estac"],PDO::PARAM_STR);
-		$stmt->bindParam(":FecMod",$datos["FecMod"],PDO::PARAM_STR);
-		$stmt->bindParam(":UsuMod",$datos["UsuMod"],PDO::PARAM_STR);
-		$stmt->bindParam(":PcMod",$datos["PcMod"],PDO::PARAM_STR);
-		
+		$stmt->bindParam(":Item", $datos["Item"], PDO::PARAM_STR);
+		$stmt->bindParam(":Tip", $datos["Tip"], PDO::PARAM_STR);
+		$stmt->bindParam(":Ser", $datos["Ser"], PDO::PARAM_STR);
+		$stmt->bindParam(":Nro", $datos["Nro"], PDO::PARAM_STR);
+		$stmt->bindParam(":ColProv", $datos["ColProv"], PDO::PARAM_STR);
+		$stmt->bindParam(":Cod_Local", $datos["Cod_Local"], PDO::PARAM_STR);
+		$stmt->bindParam(":Cod_Entidad", $datos["Cod_Entidad"], PDO::PARAM_STR);
+		$stmt->bindParam(":CodRuc", $datos["CodRuc"], PDO::PARAM_STR);
+		$stmt->bindParam(":CodPro", $datos["CodPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":CodFab", $datos["CodFab"], PDO::PARAM_STR);
+		$stmt->bindParam(":UndPro", $datos["UndPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":CanPro", $datos["CanPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":CanPro_Ant", $datos["CanPro_Ant"], PDO::PARAM_STR);
+		$stmt->bindParam(":PrePro", $datos["PrePro"], PDO::PARAM_STR);
+		$stmt->bindParam(":PrePro_Ant", $datos["PrePro_Ant"], PDO::PARAM_STR);
+		$stmt->bindParam(":DscPro", $datos["DscPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":ImpPro", $datos["ImpPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":EstOco", $datos["EstOco"], PDO::PARAM_STR);
+		$stmt->bindParam(":CantNI", $datos["CantNI"], PDO::PARAM_STR);
+		$stmt->bindParam(":SalCan", $datos["SalCan"], PDO::PARAM_STR);
+		$stmt->bindParam(":FecEmi", $datos["FecEmi"], PDO::PARAM_STR);
+		$stmt->bindParam(":estac", $datos["estac"], PDO::PARAM_STR);
+		$stmt->bindParam(":FecMod", $datos["FecMod"], PDO::PARAM_STR);
+		$stmt->bindParam(":UsuMod", $datos["UsuMod"], PDO::PARAM_STR);
+		$stmt->bindParam(":PcMod", $datos["PcMod"], PDO::PARAM_STR);
 
-		if($stmt->execute()){
+
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-
 		}
 
-		$stmt=null;
+		$stmt = null;
 	}
 
 	// Método para eliminar un detalle de venta
-	static public function mdlEliminarDato($tabla,$item,$valor){
+	static public function mdlEliminarDato($tabla, $item, $valor)
+	{
 
-		$sql="DELETE FROM $tabla WHERE $item=:$item";
+		$sql = "DELETE FROM $tabla WHERE $item=:$item";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->bindParam(":".$item,$valor,PDO::PARAM_STR);
+		$stmt->bindParam(":" . $item, $valor, PDO::PARAM_STR);
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-		
-		}else{
+		} else {
 
 			return "error";
-		
 		}
 
-		$stmt=null;
+		$stmt = null;
 	}
 
-  /*=============================================
+	/*=============================================
 	MOSTRAR DESTINO PARA LA MATERIA EN LA NOTA DE SALIDA
 	=============================================*/
 
-	static public function mdlMpOcPendiente(){
+	static public function mdlMpOcPendiente()
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
 		ocd.codpro,
@@ -1244,16 +1213,13 @@ class ModeloOrdenCompra{
 	  WHERE ocd.estac IN ('ABI', 'PAR') 
 		AND ocd.estoco = '03'");
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetchAll();
+		return $stmt->fetchAll();
 
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-	}	
-
-
+	}
 }

@@ -2,12 +2,14 @@
 
 require_once "conexion.php";
 
-class ModeloMaestras{
+class ModeloMaestras
+{
 
     /* 
     * LISTAR TABLA CABECERA
     */
-    static public function mdlMostrarMaestrasCabecera(){
+    static public function mdlMostrarMaestrasCabecera()
+    {
 
         $stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
                                                 cod_tabla,
@@ -20,20 +22,20 @@ class ModeloMaestras{
                                             WHERE Estado = '1' AND cod_tabla NOT IN ('INVI')
                                             ORDER BY Descripcion ASC");
 
-        $stmt -> execute();
+        $stmt->execute();
 
-        return $stmt -> fetchAll();
+        return $stmt->fetchAll();
 
-		$stmt -> close();
+        $stmt->close();
 
-		$stmt = null;
-
+        $stmt = null;
     }
 
     /* 
     * LISTAR TABLA DETALLE
     */
-    static public function mdlMostrarMaestrasDetalle($valor){
+    static public function mdlMostrarMaestrasDetalle($valor)
+    {
 
         $stmt = Conexion::conectar()->prepare("SELECT 
                                                     cod_tabla,
@@ -53,29 +55,29 @@ class ModeloMaestras{
                                                     tabla_m_detalle 
                                                 WHERE cod_Tabla = :valor");
 
-        $stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
+        $stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
 
-        $stmt -> execute();
+        $stmt->execute();
 
-        return $stmt -> fetchAll();
+        return $stmt->fetchAll();
 
-		$stmt -> close();
+        $stmt->close();
 
-		$stmt = null;
-
-    }    
+        $stmt = null;
+    }
 
     /* 
     *MOSTRAR CORRELATIVO
     */
-    static public function mdlMostrarCorrelativo($valor){
+    static public function mdlMostrarCorrelativo($valor)
+    {
 
         $stmt = Conexion::conectar()->prepare("SELECT 
         tm.cod_tabla,
         tm.descripcion,
         tm.lon_campo,
         LPAD(
-          MAX(td.cod_Argumento) + 1,
+          MAX(CAST(td.cod_Argumento AS SIGNED)) + 1,
           tm.lon_campo,
           '0'
         ) AS correlativo 
@@ -85,22 +87,22 @@ class ModeloMaestras{
           ON tm.cod_tabla = td.cod_tabla 
       WHERE tm.cod_tabla = :valor");
 
-        $stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
+        $stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
 
-        $stmt -> execute();
+        $stmt->execute();
 
-        return $stmt -> Fetch();
+        return $stmt->Fetch();
 
-		$stmt -> close();
+        $stmt->close();
 
-		$stmt = null;
+        $stmt = null;
+    }
 
-    } 
-    
     /* 
     *MOSTRAR CORRELATIVO
     */
-    static public function mdlMostrarSubLineas(){
+    static public function mdlMostrarSubLineas()
+    {
 
         $stmt = Conexion::conectar()->prepare("SELECT 
                     cod_tabla,
@@ -110,20 +112,20 @@ class ModeloMaestras{
                     tabla_m_detalle 
                 WHERE cod_tabla = 'tlin'");
 
-        $stmt -> execute();
+        $stmt->execute();
 
-        return $stmt -> fetchAll();
+        return $stmt->fetchAll();
 
-		$stmt -> close();
+        $stmt->close();
 
-		$stmt = null;
+        $stmt = null;
+    }
 
-    }   
-    
     /* 
     *MOSTRAR CORRELATIVO SUBLINEA
     */
-    static public function mdlMostrarCorrelativoSubLinea($valor){
+    static public function mdlMostrarCorrelativoSubLinea($valor)
+    {
 
         $stmt = Conexion::conectar()->prepare("SELECT 
                         des_corta,
@@ -133,24 +135,24 @@ class ModeloMaestras{
                     WHERE cod_tabla = 'tsub' 
                         AND des_corta = :valor");
 
-        $stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
+        $stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
 
-        $stmt -> execute();
+        $stmt->execute();
 
-        return $stmt -> Fetch();
+        return $stmt->Fetch();
 
-		$stmt -> close();
+        $stmt->close();
 
-		$stmt = null;
+        $stmt = null;
+    }
 
-    }  
-    
     /* 
     * CREAR SUBLINEAS
     */
-	static public function ctrCrearSubLinea($datos){
+    static public function ctrCrearSubLinea($datos)
+    {
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO tabla_m_detalle (
+        $stmt = Conexion::conectar()->prepare("INSERT INTO tabla_m_detalle (
                                                     cod_argumento,
                                                     cod_local,
                                                     cod_entidad,
@@ -186,9 +188,9 @@ class ModeloMaestras{
                                                     UPPER(:pcreg)
                                                     )");
 
-		$stmt->bindParam(":cod_argumento", $datos["cod_argumento"], PDO::PARAM_STR);
-		$stmt->bindParam(":cod_local", $datos["cod_local"], PDO::PARAM_STR);
-		$stmt->bindParam(":cod_entidad", $datos["cod_entidad"], PDO::PARAM_STR);
+        $stmt->bindParam(":cod_argumento", $datos["cod_argumento"], PDO::PARAM_STR);
+        $stmt->bindParam(":cod_local", $datos["cod_local"], PDO::PARAM_STR);
+        $stmt->bindParam(":cod_entidad", $datos["cod_entidad"], PDO::PARAM_STR);
         $stmt->bindParam(":cod_tabla", $datos["cod_tabla"], PDO::PARAM_STR);
         $stmt->bindParam(":des_larga", $datos["des_larga"], PDO::PARAM_STR);
         $stmt->bindParam(":des_corta", $datos["des_corta"], PDO::PARAM_STR);
@@ -201,25 +203,23 @@ class ModeloMaestras{
         $stmt->bindParam(":usureg", $datos["usureg"], PDO::PARAM_STR);
         $stmt->bindParam(":pcreg", $datos["pcreg"], PDO::PARAM_STR);
 
-		if($stmt->execute()){
+        if ($stmt->execute()) {
 
-			return "ok";
+            return "ok";
+        } else {
 
-		}else{
+            return "error";
+        }
 
-			return "error";
-		
-		}
-
-		$stmt->close();
-		$stmt = null;
-
-	}    
+        $stmt->close();
+        $stmt = null;
+    }
 
     /* 
     *MOSTRAR SUBLINEA
     */
-    static public function mdlMostrarSubLineaEditar($valor,$valor1){
+    static public function mdlMostrarSubLineaEditar($valor, $valor1)
+    {
 
         $stmt = Conexion::conectar()->prepare("SELECT 
                                                 cod_argumento,
@@ -236,23 +236,23 @@ class ModeloMaestras{
                                             WHERE cod_tabla = :valor
                                                 AND cod_argumento = :valor1");
 
-        $stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
-        $stmt -> bindParam(":valor1", $valor1, PDO::PARAM_STR);
+        $stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
+        $stmt->bindParam(":valor1", $valor1, PDO::PARAM_STR);
 
-        $stmt -> execute();
+        $stmt->execute();
 
-        return $stmt -> Fetch();
+        return $stmt->Fetch();
 
-		$stmt -> close();
+        $stmt->close();
 
-		$stmt = null;
-
-    }    
+        $stmt = null;
+    }
 
     /* 
     *EDITAR SUB LINEA
     */
-    static public function mdlEditarSubLinea($datos){
+    static public function mdlEditarSubLinea($datos)
+    {
         $stmt = Conexion::conectar()->prepare("UPDATE 
                                                     tabla_m_detalle 
                                                 SET
@@ -283,29 +283,27 @@ class ModeloMaestras{
         $stmt->bindParam(":usumod", $datos["usumod"], PDO::PARAM_STR);
         $stmt->bindParam(":pcmod", $datos["pcmod"], PDO::PARAM_STR);
 
-		if($stmt->execute()){
+        if ($stmt->execute()) {
 
-			return "ok";
+            return "ok";
+        } else {
 
-		}else{
+            return "error";
+        }
 
-			return "error";
-		
-		}
-
-		$stmt->close();
-		$stmt = null;        
-
+        $stmt->close();
+        $stmt = null;
     }
 
     /* 
     * LISTAR TABLA CABECERA
     */
-    static public function mdlMostrarProdCabecera($tipo, $documento){
+    static public function mdlMostrarProdCabecera($tipo, $documento)
+    {
 
-      if($documento == null){
+        if ($documento == null) {
 
-        $stmt = Conexion::conectar()->prepare("SELECT 
+            $stmt = Conexion::conectar()->prepare("SELECT 
                                                 c.tipo,
                                                 c.documento,
                                                 valor1 AS total,
@@ -314,12 +312,11 @@ class ModeloMaestras{
                                                 maestra_prod_cab c 
                                             ORDER BY c.documento DESC");
 
-        $stmt -> execute();
+            $stmt->execute();
 
-        return $stmt -> fetchAll();
-
-      }else{
-        $stmt = Conexion::conectar()->prepare("SELECT 
+            return $stmt->fetchAll();
+        } else {
+            $stmt = Conexion::conectar()->prepare("SELECT 
                                                 c.tipo,
                                                 c.documento,
                                                 valor1 AS total,
@@ -329,24 +326,23 @@ class ModeloMaestras{
                                                 WHERE c.tipo = 'PCUA' AND c.documento='000007'
                                             ORDER BY c.documento DESC");
 
-        $stmt -> execute();
+            $stmt->execute();
 
-        return $stmt -> fetch();
-
-      }
-
+            return $stmt->fetch();
+        }
 
 
-		$stmt -> close();
 
-		$stmt = null;
+        $stmt->close();
 
-    }    
+        $stmt = null;
+    }
 
     /* 
     * LISTAR TABLA DETALLE
     */
-    static public function mdlMostrarProdDetalle($tipo, $documento){
+    static public function mdlMostrarProdDetalle($tipo, $documento)
+    {
 
         $stmt = Conexion::conectar()->prepare("SELECT 
         d.tipo,
@@ -396,22 +392,22 @@ class ModeloMaestras{
         $stmt->bindParam(":tipo", $tipo, PDO::PARAM_STR);
         $stmt->bindParam(":documento", $documento, PDO::PARAM_STR);
 
-        $stmt -> execute();
+        $stmt->execute();
 
-        return $stmt -> fetchAll();
+        return $stmt->fetchAll();
 
-		$stmt -> close();
+        $stmt->close();
 
-		$stmt = null;
-
-    }      
+        $stmt = null;
+    }
 
     /* 
     * LISTAR TABLA DETALLE
     */
-    static public function mdlMostrarProdDetalle2($codigo, $documento,$tipo){
+    static public function mdlMostrarProdDetalle2($codigo, $documento, $tipo)
+    {
 
-      $stmt = Conexion::conectar()->prepare("SELECT 
+        $stmt = Conexion::conectar()->prepare("SELECT 
       d.tipo,
       d.documento,
       d.codigo,
@@ -422,26 +418,26 @@ class ModeloMaestras{
       AND d.documento = :documento
       AND d.tipo = :tipo");
 
-      $stmt->bindParam(":codigo", $codigo, PDO::PARAM_STR);
-      $stmt->bindParam(":documento", $documento, PDO::PARAM_STR);
-      $stmt->bindParam(":tipo", $tipo, PDO::PARAM_STR);
+        $stmt->bindParam(":codigo", $codigo, PDO::PARAM_STR);
+        $stmt->bindParam(":documento", $documento, PDO::PARAM_STR);
+        $stmt->bindParam(":tipo", $tipo, PDO::PARAM_STR);
 
-      $stmt -> execute();
+        $stmt->execute();
 
-      return $stmt -> fetch();
+        return $stmt->fetch();
 
-  $stmt -> close();
+        $stmt->close();
 
-  $stmt = null;
+        $stmt = null;
+    }
 
-  }    
-  
-  /* 
+    /* 
   * LISTAR TABLA DETALLE
   */
-  static public function mdlTraerSaldos($mesG){
+    static public function mdlTraerSaldos($mesG)
+    {
 
-      $stmt = Conexion::conectar()->prepare("SELECT 
+        $stmt = Conexion::conectar()->prepare("SELECT 
                   t.cod_argumento AS correlativo,
                   t.cod_tabla AS anno,
                   t.des_corta AS cod_mes,
@@ -457,16 +453,14 @@ class ModeloMaestras{
                 WHERE t.cod_tabla = YEAR(NOW()) 
                   AND t.des_corta = :mesG");
 
-      $stmt->bindParam(":mesG", $mesG, PDO::PARAM_STR);
+        $stmt->bindParam(":mesG", $mesG, PDO::PARAM_STR);
 
-      $stmt -> execute();
+        $stmt->execute();
 
-      return $stmt -> fetch();
+        return $stmt->fetch();
 
-    $stmt -> close();
+        $stmt->close();
 
-    $stmt = null;
-
-  }    
-
+        $stmt = null;
+    }
 }
