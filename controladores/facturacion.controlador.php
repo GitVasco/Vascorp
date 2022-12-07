@@ -3771,7 +3771,7 @@ class ControladorFacturacion
 
             fclose($fp);
 
-            $origen = 'c:/xampp/htdocs/vascorp/vistas/reportes_excel/csv_fe/' . $nombre . '.txt';
+            $origen = 'c:/xampp2/htdocs/vascorp/vistas/reportes_excel/csv_fe/' . $nombre . '.txt';
 
             //?destino prueba
             $destino = 'c:/prueba/nd/' . $nombre . '.csv';
