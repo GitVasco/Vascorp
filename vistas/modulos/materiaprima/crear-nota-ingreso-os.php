@@ -26,43 +26,44 @@
             LA TABLA DE PRODUCTOS
             ======================================-->
             <div class="col-lg-12">
-                <div class="box box-warning collapsed-box tablaCollapsada" id="tablaCollapsada" name="tablaCollapsada" >
+                <div class="box box-warning collapsed-box tablaCollapsada" id="tablaCollapsada" name="tablaCollapsada">
                     <div class="box-header with-border">
-                    <h3 class="box-title">Seleccionar Materia Prima</h3>
+                        <h3 class="box-title">Seleccionar Materia Prima</h3>
 
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
-                        </button>
-                    </div>
-
-                    </div>
-                        <div class="box-body">
-
-                            <table class="table table-bordered table-striped dt-responsive tablaMpSO" width="100%">
-
-                                <thead>
-
-                                    <tr>
-                                        <th>Nro</th>
-                                        <th>Descripción</th>
-                                        <th>Cod. Ori.</th>                                        
-                                        <th>Color Ori</th>
-                                        <th>Cod. Dest.</th>
-                                        <th>Color Dest.</th>
-                                        <th>Cantidad</th>
-                                        <th>#</th>
-                                    </tr>
-
-                                </thead>
-
-                            </table>
-
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                            </button>
                         </div>
+
+                    </div>
+                    <div class="box-body">
+
+                        <table class="table table-bordered table-striped dt-responsive tablaMpSO" width="100%">
+
+                            <thead>
+
+                                <tr>
+                                    <th>Nro</th>
+                                    <th>Descripción</th>
+                                    <th>Cod. Ori.</th>
+                                    <th>Color Ori</th>
+                                    <th>Cod. Dest.</th>
+                                    <th>Descripcion</th>
+                                    <th>Color Dest.</th>
+                                    <th>Cantidad</th>
+                                    <th>#</th>
+                                </tr>
+
+                            </thead>
+
+                        </table>
+
+                    </div>
 
                 </div>
 
             </div>
-     
+
 
             <!--=====================================
             EL FORMULARIO
@@ -80,36 +81,34 @@
 
                             <div class="box">
 
-                            <?php 
+                                <?php
                                 date_default_timezone_set('America/Lima');
                                 $fecha = new DateTime();
-                            ?>
+                                ?>
 
                                 <div class="form-group" style="padding-top:5px;padding-bottom:30px">
 
                                     <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Proveedor</label>
                                     <div class="col-lg-2">
 
-                                       <input type="text" class="form-control input-sm" id="NomProv" name="NomProv"
-                                            value="ELASTICOS VASCO" readonly>
-                                        
-                                    </div>                                
+                                        <input type="text" class="form-control input-sm" id="NomProv" name="NomProv" value="ELASTICOS VASCO" readonly>
+
+                                    </div>
 
                                     <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Fec. Emision</label>
                                     <div class="col-lg-2">
-                                        <input type="date" class="form-control input-sm" id="fecP" name="fecP"
-                                        value="<?php echo $fecha->format("Y-m-d"); ?>">
+                                        <input type="date" class="form-control input-sm" id="fecP" name="fecP" value="<?php echo $fecha->format("Y-m-d"); ?>">
                                     </div>
 
                                     <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Serie</label>
                                     <div class="col-lg-1">
                                         <input type="text" class="form-control input-sm" id="nuevaSerieP" name="nuevaSerieP" placeholder="Serie">
                                     </div>
-                                    <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Nro</label>                                    
+                                    <label class="col-form-label col-lg-1 col-md-3 col-sm-3">Nro</label>
                                     <div class="col-lg-1">
                                         <input type="text" class="form-control input-sm" id="nuevoNroP" name="nuevoNroP" placeholder="Número">
-                                    </div>                                    
-                                    
+                                    </div>
+
                                 </div>
 
                                 <!--=====================================
@@ -119,62 +118,62 @@
                                 <div class="box box-primary">
 
                                     <div class="row">
-                                            <div class="col-lg-1">
+                                        <div class="col-lg-1">
 
                                             <label>CodOri</label>
 
-                                            </div>
+                                        </div>
 
-                                            <div class="col-lg-4">
+                                        <div class="col-lg-4">
 
                                             <label for="">Descripción Origen</label>
 
-                                            </div>
+                                        </div>
 
-                                            <div class="col-lg-1">
+                                        <div class="col-lg-1">
 
                                             <label for="">Color</label>
 
-                                            </div>   
-                                            
-                                            <div class="col-lg-1">
+                                        </div>
+
+                                        <div class="col-lg-1">
 
                                             <label for="">CodDest</label>
 
-                                            </div>
+                                        </div>
 
-                                            <div class="col-lg-1">
+                                        <div class="col-lg-1">
 
                                             <label for="">Color</label>
 
-                                            </div>  
+                                        </div>
 
-                                            <div class="col-lg-1">
+                                        <div class="col-lg-1">
 
                                             <label for="">Saldo</label>
 
-                                            </div>
+                                        </div>
 
-                                            <div class="col-lg-1">
+                                        <div class="col-lg-1">
 
                                             <label for="">C. Recibida</label>
 
-                                            </div>
+                                        </div>
 
-                                            <div class="col-lg-1">
+                                        <div class="col-lg-1">
 
                                             <label for="">Nro OS</label>
 
-                                            </div>
+                                        </div>
 
-                                            <div class="col-lg-1">
+                                        <div class="col-lg-1">
 
                                             <label for="">Cerrar</label>
 
-                                            </div>
+                                        </div>
                                     </div>
 
-                                </div>                                
+                                </div>
 
                                 <!--=====================================
                                 ENTRADA PARA AGREGAR PRODUCTO
@@ -201,7 +200,7 @@
 
                             <button type="submit" class="btn btn-primary pull-right">Guardar Nota de Ingreso</button>
 
-                            <a href="notas-ingresos-os"  class="btn btn-danger"><i class="fa fa-times-circle"></i> Cancelar</a>
+                            <a href="notas-ingresos-os" class="btn btn-danger"><i class="fa fa-times-circle"></i> Cancelar</a>
 
                         </div>
 
@@ -210,9 +209,9 @@
                     <?php
 
                     $crearNotaIngreso = new ControladorNotasIngresos();
-                    $crearNotaIngreso -> ctrCrearNotaIngresoServicio();
+                    $crearNotaIngreso->ctrCrearNotaIngresoServicio();
 
-                    ?>                     
+                    ?>
 
                 </div>
 
@@ -225,5 +224,5 @@
 </div>
 
 <script>
-window.document.title = "Crear Ing. x Serv."
+    window.document.title = "Crear Ing. x Serv."
 </script>

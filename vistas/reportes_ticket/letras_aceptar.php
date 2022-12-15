@@ -1,13 +1,13 @@
 <html>
 
-    <head>
+<head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <link href="css/ticket_v8.css" target="_blank" rel="stylesheet" type="text/css">
-    </head>
+</head>
 
 <body>
-<!-- <body onload="window.print();"> -->
-<?php
+    <!-- <body onload="window.print();"> -->
+    <?php
     require_once "../../controladores/cuentas.controlador.php";
     require_once "../../modelos/cuentas.modelo.php";
 
@@ -29,11 +29,11 @@
     #var_dump($cantidadLetras);
 
 
-    $hoy = date("d-m-y"); 
+    $hoy = date("d-m-y");
 
-?>
+    ?>
     <div class="zona_impresion">
-    <!-- codigo imprimir -->
+        <!-- codigo imprimir -->
 
         <?php
 
@@ -92,7 +92,7 @@
         </table>';
 
         //todo: 1 pagina
-        if($cantidadLetras <= 60){
+        if ($cantidadLetras <= 60) {
 
             //*CABECERA GLOBAL
 
@@ -102,29 +102,27 @@
 
             echo '<table border="1" align="left" width="980px">';
 
-                foreach($letras as $key => $value){
+            foreach ($letras as $key => $value) {
 
-                    echo '<tr>
+                echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>'.$value["tipo_doc"].'</b></td>
-                            <td style="width:10%;text-align:left;">'.$value["num_cta"].'</td>
-                            <td style="width:8%;text-align:left;"><b>'.$value["fecha"].'</b></td>
-                            <td style="width:8%;text-align:left;">'.$value["fecha_ven"].'</td>
-                            <td style="width:5%;text-align:left;">'.$value["vendedor"].'</td>
-                            <td style="width:8%;text-align:left;"><b>'.$value["cliente"].'</b></td>
-                            <td style="width:30%;text-align:left;">'.$value["nombre"].'</td>
-                            <td style="width:7%;text-align:right;"><b>S/ '.number_format($value["saldo"],2).'</b></td>
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
                         
 
-                        </tr>';                    
+                        </tr>';
+            }
 
-                }
-
-            echo '</table>';            
-
+            echo '</table>';
         }
         //*todo: 2 paginas
-        else if($cantidadLetras > 60 && $cantidadLetras <= 120){
+        else if ($cantidadLetras > 60 && $cantidadLetras <= 120) {
 
             echo $cabeceraGlobal;
 
@@ -132,36 +130,34 @@
 
             echo '<table border="1" align="left" width="980px">';
 
-                $letrasP1 = Controladorcuentas::ctrLetrasAceptar($vendedor, 0, 60);
+            $letrasP1 = Controladorcuentas::ctrLetrasAceptar($vendedor, 0, 60);
 
-                foreach($letrasP1 as $key => $value){
+            foreach ($letrasP1 as $key => $value) {
 
-                    echo '<tr>
+                echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>'.$value["tipo_doc"].'</b></td>
-                            <td style="width:10%;text-align:left;">'.$value["num_cta"].'</td>
-                            <td style="width:8%;text-align:left;"><b>'.$value["fecha"].'</b></td>
-                            <td style="width:8%;text-align:left;">'.$value["fecha_ven"].'</td>
-                            <td style="width:5%;text-align:left;">'.$value["vendedor"].'</td>
-                            <td style="width:8%;text-align:left;"><b>'.$value["cliente"].'</b></td>
-                            <td style="width:30%;text-align:left;">'.$value["nombre"].'</td>
-                            <td style="width:7%;text-align:right;"><b>S/ '.number_format($value["saldo"],2).'</b></td>
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
                         
 
-                        </tr>';                    
+                        </tr>';
+            }
 
-                }
+            echo '</table>';
 
-            echo '</table>';  
-            
-            for ($i=0; $i < 25; $i++) { 
+            for ($i = 0; $i < 25; $i++) {
 
                 echo '<table border="0" align="left" width="900px">
                     <tr>
                         <td></td>
                     </tr>
                 </table>';
-
             }
 
             echo $cabeceraGlobal;
@@ -172,30 +168,28 @@
 
             $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 60, 120);
 
-            foreach($letrasP2 as $key => $value){
+            foreach ($letrasP2 as $key => $value) {
 
                 echo '<tr>
                             
-                        <td style="width:5%;text-align:center;"><b>'.$value["tipo_doc"].'</b></td>
-                        <td style="width:10%;text-align:left;">'.$value["num_cta"].'</td>
-                        <td style="width:8%;text-align:left;"><b>'.$value["fecha"].'</b></td>
-                        <td style="width:8%;text-align:left;">'.$value["fecha_ven"].'</td>
-                        <td style="width:5%;text-align:left;">'.$value["vendedor"].'</td>
-                        <td style="width:8%;text-align:left;"><b>'.$value["cliente"].'</b></td>
-                        <td style="width:30%;text-align:left;">'.$value["nombre"].'</td>
-                        <td style="width:7%;text-align:right;"><b>S/ '.number_format($value["saldo"],2).'</b></td>
+                        <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                        <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                        <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                        <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                        <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                        <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                        <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                        <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
                     
 
-                    </tr>';                    
-
+                    </tr>';
             }
 
-            echo '</table>';  
-
+            echo '</table>';
         }
 
         //*todo: 3 paginas
-        else if($cantidadLetras > 120 && $cantidadLetras <= 180){
+        else if ($cantidadLetras > 120 && $cantidadLetras <= 180) {
 
             echo $cabeceraGlobal;
 
@@ -203,36 +197,34 @@
 
             echo '<table border="1" align="left" width="980px">';
 
-                $letrasP1 = Controladorcuentas::ctrLetrasAceptar($vendedor, 0, 60);
+            $letrasP1 = Controladorcuentas::ctrLetrasAceptar($vendedor, 0, 60);
 
-                foreach($letrasP1 as $key => $value){
+            foreach ($letrasP1 as $key => $value) {
 
-                    echo '<tr>
+                echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>'.$value["tipo_doc"].'</b></td>
-                            <td style="width:10%;text-align:left;">'.$value["num_cta"].'</td>
-                            <td style="width:8%;text-align:left;"><b>'.$value["fecha"].'</b></td>
-                            <td style="width:8%;text-align:left;">'.$value["fecha_ven"].'</td>
-                            <td style="width:5%;text-align:left;">'.$value["vendedor"].'</td>
-                            <td style="width:8%;text-align:left;"><b>'.$value["cliente"].'</b></td>
-                            <td style="width:30%;text-align:left;">'.$value["nombre"].'</td>
-                            <td style="width:7%;text-align:right;"><b>S/ '.number_format($value["saldo"],2).'</b></td>
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
                         
 
-                        </tr>';                    
+                        </tr>';
+            }
 
-                }
+            echo '</table>';
 
-            echo '</table>';  
-            
-            for ($i=0; $i < 25; $i++) { 
+            for ($i = 0; $i < 25; $i++) {
 
                 echo '<table border="0" align="left" width="900px">
                     <tr>
                         <td></td>
                     </tr>
                 </table>';
-
             }
 
             echo $cabeceraGlobal;
@@ -241,71 +233,66 @@
 
             echo '<table border="1" align="left" width="980px">';
 
-                $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 60, 60);
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 60, 60);
 
-                foreach($letrasP2 as $key => $value){
+            foreach ($letrasP2 as $key => $value) {
 
-                    echo '<tr>
+                echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>'.$value["tipo_doc"].'</b></td>
-                            <td style="width:10%;text-align:left;">'.$value["num_cta"].'</td>
-                            <td style="width:8%;text-align:left;"><b>'.$value["fecha"].'</b></td>
-                            <td style="width:8%;text-align:left;">'.$value["fecha_ven"].'</td>
-                            <td style="width:5%;text-align:left;">'.$value["vendedor"].'</td>
-                            <td style="width:8%;text-align:left;"><b>'.$value["cliente"].'</b></td>
-                            <td style="width:30%;text-align:left;">'.$value["nombre"].'</td>
-                            <td style="width:7%;text-align:right;"><b>S/ '.number_format($value["saldo"],2).'</b></td>
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
                         
 
-                        </tr>';                    
+                        </tr>';
+            }
 
-                }
+            echo '</table>';
 
-            echo '</table>';      
-
-            for ($i=0; $i < 25; $i++) { 
+            for ($i = 0; $i < 25; $i++) {
 
                 echo '<table border="0" align="left" width="900px">
                     <tr>
                         <td></td>
                     </tr>
                 </table>';
+            }
 
-            }            
-            
             echo $cabeceraGlobal;
 
             echo $cabecera;
 
             echo '<table border="1" align="left" width="980px">';
 
-                $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 120, 60);
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 120, 60);
 
-                foreach($letrasP2 as $key => $value){
+            foreach ($letrasP2 as $key => $value) {
 
-                    echo '<tr>
+                echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>'.$value["tipo_doc"].'</b></td>
-                            <td style="width:10%;text-align:left;">'.$value["num_cta"].'</td>
-                            <td style="width:8%;text-align:left;"><b>'.$value["fecha"].'</b></td>
-                            <td style="width:8%;text-align:left;">'.$value["fecha_ven"].'</td>
-                            <td style="width:5%;text-align:left;">'.$value["vendedor"].'</td>
-                            <td style="width:8%;text-align:left;"><b>'.$value["cliente"].'</b></td>
-                            <td style="width:30%;text-align:left;">'.$value["nombre"].'</td>
-                            <td style="width:7%;text-align:right;"><b>S/ '.number_format($value["saldo"],2).'</b></td>
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
                         
 
-                        </tr>';                    
+                        </tr>';
+            }
 
-                }
-
-            echo '</table>';              
-
-
+            echo '</table>';
         }
 
         //*todo: 4 paginas
-        else if($cantidadLetras > 180 && $cantidadLetras <= 240){
+        else if ($cantidadLetras > 180 && $cantidadLetras <= 240) {
 
             echo $cabeceraGlobal;
 
@@ -313,143 +300,1053 @@
 
             echo '<table border="1" align="left" width="980px">';
 
-                $letrasP1 = Controladorcuentas::ctrLetrasAceptar($vendedor, 0, 60);
+            $letrasP1 = Controladorcuentas::ctrLetrasAceptar($vendedor, 0, 60);
 
-                foreach($letrasP1 as $key => $value){
+            foreach ($letrasP1 as $key => $value) {
 
-                    echo '<tr>
+                echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>'.$value["tipo_doc"].'</b></td>
-                            <td style="width:10%;text-align:left;">'.$value["num_cta"].'</td>
-                            <td style="width:8%;text-align:left;"><b>'.$value["fecha"].'</b></td>
-                            <td style="width:8%;text-align:left;">'.$value["fecha_ven"].'</td>
-                            <td style="width:5%;text-align:left;">'.$value["vendedor"].'</td>
-                            <td style="width:8%;text-align:left;"><b>'.$value["cliente"].'</b></td>
-                            <td style="width:30%;text-align:left;">'.$value["nombre"].'</td>
-                            <td style="width:7%;text-align:right;"><b>S/ '.number_format($value["saldo"],2).'</b></td>
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
                         
 
-                        </tr>';                    
-
-                }
-
-            echo '</table>';        
-            
-            for ($i=0; $i < 25; $i++) { 
-
-                echo '<table border="0" align="left" width="900px">
-                    <tr>
-                        <td></td>
-                    </tr>
-                </table>';
-    
+                        </tr>';
             }
-    
-            echo $cabeceraGlobal;
-    
-            echo $cabecera;    
-            
-            echo '<table border="1" align="left" width="980px">';
-    
-                $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 60, 60);
-    
-                foreach($letrasP2 as $key => $value){
-    
-                    echo '<tr>
-                                
-                            <td style="width:5%;text-align:center;"><b>'.$value["tipo_doc"].'</b></td>
-                            <td style="width:10%;text-align:left;">'.$value["num_cta"].'</td>
-                            <td style="width:8%;text-align:left;"><b>'.$value["fecha"].'</b></td>
-                            <td style="width:8%;text-align:left;">'.$value["fecha_ven"].'</td>
-                            <td style="width:5%;text-align:left;">'.$value["vendedor"].'</td>
-                            <td style="width:8%;text-align:left;"><b>'.$value["cliente"].'</b></td>
-                            <td style="width:30%;text-align:left;">'.$value["nombre"].'</td>
-                            <td style="width:7%;text-align:right;"><b>S/ '.number_format($value["saldo"],2).'</b></td>
-                        
-    
-                        </tr>';                    
-    
-                }
-    
-            echo '</table>';  
-            
-            for ($i=0; $i < 25; $i++) { 
+
+            echo '</table>';
+
+            for ($i = 0; $i < 25; $i++) {
 
                 echo '<table border="0" align="left" width="900px">
                     <tr>
                         <td></td>
                     </tr>
                 </table>';
+            }
 
-            }            
-            
             echo $cabeceraGlobal;
 
             echo $cabecera;
 
             echo '<table border="1" align="left" width="980px">';
 
-                $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 120, 60);
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 60, 60);
 
-                foreach($letrasP2 as $key => $value){
+            foreach ($letrasP2 as $key => $value) {
 
-                    echo '<tr>
+                echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>'.$value["tipo_doc"].'</b></td>
-                            <td style="width:10%;text-align:left;">'.$value["num_cta"].'</td>
-                            <td style="width:8%;text-align:left;"><b>'.$value["fecha"].'</b></td>
-                            <td style="width:8%;text-align:left;">'.$value["fecha_ven"].'</td>
-                            <td style="width:5%;text-align:left;">'.$value["vendedor"].'</td>
-                            <td style="width:8%;text-align:left;"><b>'.$value["cliente"].'</b></td>
-                            <td style="width:30%;text-align:left;">'.$value["nombre"].'</td>
-                            <td style="width:7%;text-align:right;"><b>S/ '.number_format($value["saldo"],2).'</b></td>
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
                         
+    
+                        </tr>';
+            }
 
-                        </tr>';                    
+            echo '</table>';
 
-                }
-
-            echo '</table>';                
-
-            for ($i=0; $i < 25; $i++) { 
+            for ($i = 0; $i < 25; $i++) {
 
                 echo '<table border="0" align="left" width="900px">
                     <tr>
                         <td></td>
                     </tr>
                 </table>';
+            }
 
-            }            
-            
             echo $cabeceraGlobal;
 
             echo $cabecera;
 
             echo '<table border="1" align="left" width="980px">';
 
-                $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 180, 60);
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 120, 60);
 
-                foreach($letrasP2 as $key => $value){
+            foreach ($letrasP2 as $key => $value) {
 
-                    echo '<tr>
+                echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>'.$value["tipo_doc"].'</b></td>
-                            <td style="width:10%;text-align:left;">'.$value["num_cta"].'</td>
-                            <td style="width:8%;text-align:left;"><b>'.$value["fecha"].'</b></td>
-                            <td style="width:8%;text-align:left;">'.$value["fecha_ven"].'</td>
-                            <td style="width:5%;text-align:left;">'.$value["vendedor"].'</td>
-                            <td style="width:8%;text-align:left;"><b>'.$value["cliente"].'</b></td>
-                            <td style="width:30%;text-align:left;">'.$value["nombre"].'</td>
-                            <td style="width:7%;text-align:right;"><b>S/ '.number_format($value["saldo"],2).'</b></td>
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
                         
 
-                        </tr>';                    
+                        </tr>';
+            }
 
-                }
+            echo '</table>';
 
-            echo '</table>';   
+            for ($i = 0; $i < 25; $i++) {
 
+                echo '<table border="0" align="left" width="900px">
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>';
+            }
+
+            echo $cabeceraGlobal;
+
+            echo $cabecera;
+
+            echo '<table border="1" align="left" width="980px">';
+
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 180, 60);
+
+            foreach ($letrasP2 as $key => $value) {
+
+                echo '<tr>
+                                
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                        
+
+                        </tr>';
+            }
+
+            echo '</table>';
         }
+
+        //*todo: 5 paginas
+        else if ($cantidadLetras > 240 && $cantidadLetras <= 300) {
+
+            echo $cabeceraGlobal;
+
+            echo $cabecera;
+
+            echo '<table border="1" align="left" width="980px">';
+
+            $letrasP1 = Controladorcuentas::ctrLetrasAceptar($vendedor, 0, 60);
+
+            foreach ($letrasP1 as $key => $value) {
+
+                echo '<tr>
+                                
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                        
+
+                        </tr>';
+            }
+
+            echo '</table>';
+
+            for ($i = 0; $i < 25; $i++) {
+
+                echo '<table border="0" align="left" width="900px">
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>';
+            }
+
+            echo $cabeceraGlobal;
+
+            echo $cabecera;
+
+            echo '<table border="1" align="left" width="980px">';
+
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 60, 60);
+
+            foreach ($letrasP2 as $key => $value) {
+
+                echo '<tr>
+                                
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                        
+    
+                        </tr>';
+            }
+
+            echo '</table>';
+
+            for ($i = 0; $i < 25; $i++) {
+
+                echo '<table border="0" align="left" width="900px">
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>';
+            }
+
+            echo $cabeceraGlobal;
+
+            echo $cabecera;
+
+            echo '<table border="1" align="left" width="980px">';
+
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 120, 60);
+
+            foreach ($letrasP2 as $key => $value) {
+
+                echo '<tr>
+                                
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                        
+
+                        </tr>';
+            }
+
+            echo '</table>';
+
+            for ($i = 0; $i < 25; $i++) {
+
+                echo '<table border="0" align="left" width="900px">
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>';
+            }
+
+            echo $cabeceraGlobal;
+
+            echo $cabecera;
+
+            echo '<table border="1" align="left" width="980px">';
+
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 180, 60);
+
+            foreach ($letrasP2 as $key => $value) {
+
+                echo '<tr>
+                                
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                        
+
+                        </tr>';
+            }
+
+            echo '</table>';
+
+
+            for ($i = 0; $i < 25; $i++) {
+
+                echo '<table border="0" align="left" width="900px">
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>';
+            }
+
+            echo $cabeceraGlobal;
+
+            echo $cabecera;
+
+            echo '<table border="1" align="left" width="980px">';
+
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 240, 60);
+
+            foreach ($letrasP2 as $key => $value) {
+
+                echo '<tr>
+                                
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                        
+
+                        </tr>';
+            }
+
+            echo '</table>';
+        }
+
+        //*todo: 6 paginas
+        else if ($cantidadLetras > 300 && $cantidadLetras <= 360) {
+
+            echo $cabeceraGlobal;
+
+            echo $cabecera;
+
+            echo '<table border="1" align="left" width="980px">';
+
+            $letrasP1 = Controladorcuentas::ctrLetrasAceptar($vendedor, 0, 60);
+
+            foreach ($letrasP1 as $key => $value) {
+
+                echo '<tr>
+                                
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                        
+
+                        </tr>';
+            }
+
+            echo '</table>';
+
+            for ($i = 0; $i < 25; $i++) {
+
+                echo '<table border="0" align="left" width="900px">
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>';
+            }
+
+            echo $cabeceraGlobal;
+
+            echo $cabecera;
+
+            echo '<table border="1" align="left" width="980px">';
+
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 60, 60);
+
+            foreach ($letrasP2 as $key => $value) {
+
+                echo '<tr>
+                                
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                        
+    
+                        </tr>';
+            }
+
+            echo '</table>';
+
+            for ($i = 0; $i < 25; $i++) {
+
+                echo '<table border="0" align="left" width="900px">
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>';
+            }
+
+            echo $cabeceraGlobal;
+
+            echo $cabecera;
+
+            echo '<table border="1" align="left" width="980px">';
+
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 120, 60);
+
+            foreach ($letrasP2 as $key => $value) {
+
+                echo '<tr>
+                                
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                        
+
+                        </tr>';
+            }
+
+            echo '</table>';
+
+            for ($i = 0; $i < 25; $i++) {
+
+                echo '<table border="0" align="left" width="900px">
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>';
+            }
+
+            echo $cabeceraGlobal;
+
+            echo $cabecera;
+
+            echo '<table border="1" align="left" width="980px">';
+
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 180, 60);
+
+            foreach ($letrasP2 as $key => $value) {
+
+                echo '<tr>
+                                
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                        
+
+                        </tr>';
+            }
+
+            echo '</table>';
+
+            for ($i = 0; $i < 25; $i++) {
+
+                echo '<table border="0" align="left" width="900px">
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>';
+            }
+
+            echo $cabeceraGlobal;
+
+            echo $cabecera;
+
+            echo '<table border="1" align="left" width="980px">';
+
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 240, 60);
+
+            foreach ($letrasP2 as $key => $value) {
+
+                echo '<tr>
+                                
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                        
+
+                        </tr>';
+            }
+
+            echo '</table>';
+
+            for ($i = 0; $i < 25; $i++) {
+
+                echo '<table border="0" align="left" width="900px">
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>';
+            }
+
+            echo $cabeceraGlobal;
+
+            echo $cabecera;
+
+            echo '<table border="1" align="left" width="980px">';
+
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 300, 60);
+
+            foreach ($letrasP2 as $key => $value) {
+
+                echo '<tr>
+                                
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                        
+
+                        </tr>';
+            }
+
+            echo '</table>';
+        }
+
+        //*todo: 7 paginas
+        else if ($cantidadLetras > 360 && $cantidadLetras <= 420) {
+
+            echo $cabeceraGlobal;
+
+            echo $cabecera;
+
+            echo '<table border="1" align="left" width="980px">';
+
+            $letrasP1 = Controladorcuentas::ctrLetrasAceptar($vendedor, 0, 60);
+
+            foreach ($letrasP1 as $key => $value) {
+
+                echo '<tr>
+                                
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                        
+
+                        </tr>';
+            }
+
+            echo '</table>';
+
+            for ($i = 0; $i < 25; $i++) {
+
+                echo '<table border="0" align="left" width="900px">
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>';
+            }
+
+            echo $cabeceraGlobal;
+
+            echo $cabecera;
+
+            echo '<table border="1" align="left" width="980px">';
+
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 60, 60);
+
+            foreach ($letrasP2 as $key => $value) {
+
+                echo '<tr>
+                                
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                        
+    
+                        </tr>';
+            }
+
+            echo '</table>';
+
+            for ($i = 0; $i < 25; $i++) {
+
+                echo '<table border="0" align="left" width="900px">
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>';
+            }
+
+            echo $cabeceraGlobal;
+
+            echo $cabecera;
+
+            echo '<table border="1" align="left" width="980px">';
+
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 120, 60);
+
+            foreach ($letrasP2 as $key => $value) {
+
+                echo '<tr>
+                                
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                        
+
+                        </tr>';
+            }
+
+            echo '</table>';
+
+            for ($i = 0; $i < 25; $i++) {
+
+                echo '<table border="0" align="left" width="900px">
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>';
+            }
+
+            echo $cabeceraGlobal;
+
+            echo $cabecera;
+
+            echo '<table border="1" align="left" width="980px">';
+
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 180, 60);
+
+            foreach ($letrasP2 as $key => $value) {
+
+                echo '<tr>
+                                
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                        
+
+                        </tr>';
+            }
+
+            echo '</table>';
+
+            for ($i = 0; $i < 25; $i++) {
+
+                echo '<table border="0" align="left" width="900px">
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>';
+            }
+
+            echo $cabeceraGlobal;
+
+            echo $cabecera;
+
+            echo '<table border="1" align="left" width="980px">';
+
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 240, 60);
+
+            foreach ($letrasP2 as $key => $value) {
+
+                echo '<tr>
+                                
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                        
+
+                        </tr>';
+            }
+
+            echo '</table>';
+
+            for ($i = 0; $i < 25; $i++) {
+
+                echo '<table border="0" align="left" width="900px">
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>';
+            }
+
+            echo $cabeceraGlobal;
+
+            echo $cabecera;
+
+            echo '<table border="1" align="left" width="980px">';
+
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 300, 60);
+
+            foreach ($letrasP2 as $key => $value) {
+
+                echo '<tr>
+                                
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                        
+
+                        </tr>';
+            }
+
+            echo '</table>';
+
+            for ($i = 0; $i < 25; $i++) {
+
+                echo '<table border="0" align="left" width="900px">
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>';
+            }
+
+            echo $cabeceraGlobal;
+
+            echo $cabecera;
+
+            echo '<table border="1" align="left" width="980px">';
+
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 360, 60);
+
+            foreach ($letrasP2 as $key => $value) {
+
+                echo '<tr>
+                                
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                        
+
+                        </tr>';
+            }
+
+            echo '</table>';
+        }
+
+        //*todo: 8 paginas
+        else if ($cantidadLetras > 420 && $cantidadLetras <= 480) {
+
+            echo $cabeceraGlobal;
+
+            echo $cabecera;
+
+            echo '<table border="1" align="left" width="980px">';
+
+            $letrasP1 = Controladorcuentas::ctrLetrasAceptar($vendedor, 0, 60);
+
+            foreach ($letrasP1 as $key => $value) {
+
+                echo '<tr>
+                                
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                        
+
+                        </tr>';
+            }
+
+            echo '</table>';
+
+            for ($i = 0; $i < 25; $i++) {
+
+                echo '<table border="0" align="left" width="900px">
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>';
+            }
+
+            echo $cabeceraGlobal;
+
+            echo $cabecera;
+
+            echo '<table border="1" align="left" width="980px">';
+
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 60, 60);
+
+            foreach ($letrasP2 as $key => $value) {
+
+                echo '<tr>
+                                
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                        
+    
+                        </tr>';
+            }
+
+            echo '</table>';
+
+            for ($i = 0; $i < 25; $i++) {
+
+                echo '<table border="0" align="left" width="900px">
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>';
+            }
+
+            echo $cabeceraGlobal;
+
+            echo $cabecera;
+
+            echo '<table border="1" align="left" width="980px">';
+
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 120, 60);
+
+            foreach ($letrasP2 as $key => $value) {
+
+                echo '<tr>
+                                
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                        
+
+                        </tr>';
+            }
+
+            echo '</table>';
+
+            for ($i = 0; $i < 25; $i++) {
+
+                echo '<table border="0" align="left" width="900px">
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>';
+            }
+
+            echo $cabeceraGlobal;
+
+            echo $cabecera;
+
+            echo '<table border="1" align="left" width="980px">';
+
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 180, 60);
+
+            foreach ($letrasP2 as $key => $value) {
+
+                echo '<tr>
+                                
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                        
+
+                        </tr>';
+            }
+
+            echo '</table>';
+
+            for ($i = 0; $i < 25; $i++) {
+
+                echo '<table border="0" align="left" width="900px">
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>';
+            }
+
+            echo $cabeceraGlobal;
+
+            echo $cabecera;
+
+            echo '<table border="1" align="left" width="980px">';
+
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 240, 60);
+
+            foreach ($letrasP2 as $key => $value) {
+
+                echo '<tr>
+                                
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                        
+
+                        </tr>';
+            }
+
+            echo '</table>';
+
+            for ($i = 0; $i < 25; $i++) {
+
+                echo '<table border="0" align="left" width="900px">
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>';
+            }
+
+            echo $cabeceraGlobal;
+
+            echo $cabecera;
+
+            echo '<table border="1" align="left" width="980px">';
+
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 300, 60);
+
+            foreach ($letrasP2 as $key => $value) {
+
+                echo '<tr>
+                                
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                        
+
+                        </tr>';
+            }
+
+            echo '</table>';
+
+            for ($i = 0; $i < 25; $i++) {
+
+                echo '<table border="0" align="left" width="900px">
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>';
+            }
+
+            echo $cabeceraGlobal;
+
+            echo $cabecera;
+
+            echo '<table border="1" align="left" width="980px">';
+
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 360, 60);
+
+            foreach ($letrasP2 as $key => $value) {
+
+                echo '<tr>
+                                
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                        
+
+                        </tr>';
+            }
+
+            echo '</table>';
+
+            for ($i = 0; $i < 25; $i++) {
+
+                echo '<table border="0" align="left" width="900px">
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>';
+            }
+
+            echo $cabeceraGlobal;
+
+            echo $cabecera;
+
+            echo '<table border="1" align="left" width="980px">';
+
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 420, 60);
+
+            foreach ($letrasP2 as $key => $value) {
+
+                echo '<tr>
+                                
+                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                        
+
+                        </tr>';
+            }
+
+            echo '</table>';
+        }
+
 
         echo '<table border="1" align="left" width="980px">';
 
@@ -465,12 +1362,12 @@
             <td style="width:5%;text-align:left;"></td>
             <td style="width:8%;text-align:left;"><b></b></td>
             <th style="width:30%;text-align:left;">TOTAL VENDEDOR</th>
-            <th style="width:7%;text-align:right;"><b>S/ '.number_format($total["saldo"],2).'</b></th>
+            <th style="width:7%;text-align:right;"><b>S/ ' . number_format($total["saldo"], 2) . '</b></th>
         
 
-        </tr>';          
+        </tr>';
 
-        echo '</table>';           
+        echo '</table>';
 
         ?>
 
@@ -481,7 +1378,3 @@
 </body>
 
 </html>
-
-
-
-
