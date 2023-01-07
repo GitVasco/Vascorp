@@ -1,14 +1,16 @@
 <?php
 require_once "conexion.php";
 
-class ModeloCortes{
+class ModeloCortes
+{
 
-	/*
+    /*
 	* Método para mostrar los cortes
 	*/
-	static public function mdlMostrarCortes($valor1){
+    static public function mdlMostrarCortes($valor1)
+    {
 
-        if($valor1 == null){
+        if ($valor1 == null) {
 
             $stmt = Conexion::conectar()->prepare("SELECT 
                     a.articulo,
@@ -22,11 +24,10 @@ class ModeloCortes{
                     articulojf a 
                 WHERE a.alm_corte > 0");
 
-			$stmt -> execute();
+            $stmt->execute();
 
-			return $stmt -> fetchAll();
-
-        }else{
+            return $stmt->fetchAll();
+        } else {
 
             $stmt = Conexion::conectar()->prepare("SELECT 
                         a.articulo,
@@ -40,27 +41,26 @@ class ModeloCortes{
                         articulojf a 
                     WHERE  a.articulo = :valor1");
 
-			$stmt->bindParam(":valor1", $valor1, PDO::PARAM_STR);
-            
-			$stmt->execute();
+            $stmt->bindParam(":valor1", $valor1, PDO::PARAM_STR);
 
-			return $stmt->fetch();
+            $stmt->execute();
 
+            return $stmt->fetch();
         }
 
-		$stmt -> close();
+        $stmt->close();
 
-		$stmt = null;
-
+        $stmt = null;
     }
 
-	/*
+    /*
 	* MOSTRAR TALLERES - VERSION 2
 	*/
-	static public function mdlMostrarCortesV($modeloCorte){
+    static public function mdlMostrarCortesV($modeloCorte)
+    {
 
-        if($modeloCorte != "null"){
-		$stmt = Conexion::conectar()->prepare("SELECT
+        if ($modeloCorte != "null") {
+            $stmt = Conexion::conectar()->prepare("SELECT
                                                     a.modelo,
                                                     a.nombre,
                                                     a.cod_color,
@@ -126,17 +126,17 @@ class ModeloCortes{
                                                 FROM
                                                     articulojf a
                                                 WHERE a.alm_corte > 0
-                                                AND a.modelo = '".$modeloCorte."'
+                                                AND a.modelo = '" . $modeloCorte . "'
                                                 GROUP BY a.modelo,
                                                     a.cod_color,
                                                     a.color,
                                                     a.estado");
 
-		$stmt -> execute();
+            $stmt->execute();
 
-        return $stmt -> fetchAll();
-    }else{
-        $stmt = Conexion::conectar()->prepare("SELECT 
+            return $stmt->fetchAll();
+        } else {
+            $stmt = Conexion::conectar()->prepare("SELECT 
                                             a.marca,
                                             a.modelo,
                                             a.nombre,
@@ -213,22 +213,22 @@ class ModeloCortes{
                                             m.tipo,
                                             a.estado");
 
-		$stmt -> execute();
+            $stmt->execute();
 
-        return $stmt -> fetchAll();
-    }
+            return $stmt->fetchAll();
+        }
 
-		$stmt -> close();
+        $stmt->close();
 
-		$stmt = null;
-
+        $stmt = null;
     }
 
     //*enviados a taller
-	static public function mdlMostrarEnviadosTaller($modeloTaller){
+    static public function mdlMostrarEnviadosTaller($modeloTaller)
+    {
 
-        if($modeloTaller != "null"){
-		$stmt = Conexion::conectar()->prepare("SELECT 
+        if ($modeloTaller != "null") {
+            $stmt = Conexion::conectar()->prepare("SELECT 
                                                 DATE(e.fecha) AS fecha,
                                                 e.taller,
                                                 CASE
@@ -306,7 +306,8 @@ class ModeloCortes{
                                                 LEFT JOIN sectorjf s 
                                                 ON e.taller = s.cod_sector 
                                         WHERE e.estado = '0' 
-                                            AND a.modelo = '".$modeloTaller."' 
+                                            AND a.modelo = '" . $modeloTaller . "' 
+                                            AND YEAR(e.fecha) = YEAR(NOW())
                                         GROUP BY DATE(e.fecha),
                                                     e.taller,
                                             a.modelo,
@@ -316,11 +317,11 @@ class ModeloCortes{
                                             a.modelo,
                                             a.cod_color");
 
-		$stmt -> execute();
+            $stmt->execute();
 
-        return $stmt -> fetchAll();
-        }else{
-        $stmt = Conexion::conectar()->prepare("SELECT 
+            return $stmt->fetchAll();
+        } else {
+            $stmt = Conexion::conectar()->prepare("SELECT 
                                         DATE(e.fecha) AS fecha,
                                         e.taller,
                                         CASE
@@ -398,6 +399,7 @@ class ModeloCortes{
                                         LEFT JOIN sectorjf s 
                                         ON e.taller = s.cod_sector 
                                     WHERE e.estado = '0' 
+                                    AND YEAR(e.fecha) = YEAR(NOW())
                                     GROUP BY DATE(e.fecha),
                                         e.taller,
                                         a.modelo,
@@ -407,41 +409,41 @@ class ModeloCortes{
                                         a.modelo,
                                         a.cod_color");
 
-            $stmt -> execute();
+            $stmt->execute();
 
-            return $stmt -> fetchAll();
+            return $stmt->fetchAll();
         }
 
-            $stmt -> close();
+        $stmt->close();
 
-            $stmt = null;
-
+        $stmt = null;
     }
 
 
-	/*
+    /*
 	* MOSTRAR TALLERES
 	*/
-	static public function mdlMostrarTallerA(){
+    static public function mdlMostrarTallerA()
+    {
 
-		$stmt = Conexion::conectar()->prepare("SELECT * FROM tallerjf");
+        $stmt = Conexion::conectar()->prepare("SELECT * FROM tallerjf");
 
-		$stmt -> execute();
+        $stmt->execute();
 
-		return $stmt -> fetchAll();
+        return $stmt->fetchAll();
 
-		$stmt -> close();
+        $stmt->close();
 
-		$stmt = null;
-
+        $stmt = null;
     }
 
     /*
     *ACTUALIZAR LA NUEVA CANTIDAD EN LA TABLA CORTE
     */
-	static public function mdlActualizarCorte($articulo, $operacion, $cantidad){
+    static public function mdlActualizarCorte($articulo, $operacion, $cantidad)
+    {
 
-		$stmt = Conexion::conectar()->prepare("UPDATE encortejf
+        $stmt = Conexion::conectar()->prepare("UPDATE encortejf
                                                 SET
                                                     cantidad = :cantidad,
                                                     total_precio = (precio_doc / 12) * cantidad,
@@ -450,22 +452,22 @@ class ModeloCortes{
                                                     articulo = :articulo
                                                         AND cod_operacion = :operacion");
 
-		$stmt->bindParam(":articulo", $articulo, PDO::PARAM_STR);
+        $stmt->bindParam(":articulo", $articulo, PDO::PARAM_STR);
         $stmt->bindParam(":operacion", $operacion, PDO::PARAM_STR);
         $stmt->bindParam(":cantidad", $cantidad, PDO::PARAM_STR);
 
-		$stmt->execute();
+        $stmt->execute();
 
-		$stmt = null;
-
+        $stmt = null;
     }
 
-	/*
+    /*
 	* REGISTRAR LO QUE SE MANDA A TALLER
 	*/
-	static public function mdlMandarTaller($datos){
+    static public function mdlMandarTaller($datos)
+    {
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO entallerjf (
+        $stmt = Conexion::conectar()->prepare("INSERT INTO entallerjf (
                                                 id_cabecera,
                                                 articulo,
                                                 cod_operacion,
@@ -490,81 +492,81 @@ class ModeloCortes{
                                                 ON a.modelo = od.modelo 
                                             WHERE articulo = :articulo)");
 
-		$stmt->bindParam(":articulo", $datos["articulo"], PDO::PARAM_STR);
-		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_INT);
-		$stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_INT);
-		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+        $stmt->bindParam(":articulo", $datos["articulo"], PDO::PARAM_STR);
+        $stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_INT);
+        $stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_INT);
+        $stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
 
 
-		if ($stmt->execute()) {
+        if ($stmt->execute()) {
 
-			return "ok";
-		} else {
+            return "ok";
+        } else {
 
-			return "error";
-		}
+            return "error";
+        }
 
-		$stmt->close();
-		$stmt = null;
+        $stmt->close();
+        $stmt = null;
     }
-    
-	/*
+
+    /*
 	* ULTIMO CODIGO
 	*/
-	static public function mdlUltCodigo(){
+    static public function mdlUltCodigo()
+    {
 
-		$stmt = Conexion::conectar()->prepare("SELECT 
+        $stmt = Conexion::conectar()->prepare("SELECT 
                                                 IFNULL(MAX(id), 1000000) AS ult_codigo 
                                             FROM
                                                 entaller_cabjf en");
 
-		$stmt -> execute();
+        $stmt->execute();
 
-		return $stmt -> fetch();
+        return $stmt->fetch();
 
-		$stmt -> close();
+        $stmt->close();
 
-		$stmt = null;
-
+        $stmt = null;
     }
 
 
-	/*
+    /*
 	* REGISTRAR LO QUE SE MANDA A TALLER CABECERA
 	*/
-	static public function mdlMandarTallerCab($datos){
+    static public function mdlMandarTallerCab($datos)
+    {
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO entaller_cabjf (articulo, usuario, cantidad, estado, taller) 
+        $stmt = Conexion::conectar()->prepare("INSERT INTO entaller_cabjf (articulo, usuario, cantidad, estado, taller) 
         VALUES
           (:articulo, :usuario, :cantidad, :estado, :taller) ");
 
-		$stmt->bindParam(":articulo", $datos["articulo"], PDO::PARAM_STR);
-		$stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_INT);
-		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+        $stmt->bindParam(":articulo", $datos["articulo"], PDO::PARAM_STR);
+        $stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_INT);
+        $stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
         $stmt->bindParam(":estado", $datos["estado"], PDO::PARAM_STR);
         $stmt->bindParam(":taller", $datos["taller"], PDO::PARAM_STR);
 
 
-		if ($stmt->execute()) {
+        if ($stmt->execute()) {
 
             return "ok";
-            
-		} else {
+        } else {
 
             return "error";
-            
-		}
+        }
 
-		$stmt->close();
-		$stmt = null;
+        $stmt->close();
+        $stmt = null;
     }
-    
-	/*
+
+    /*
 	* MOSTRAR EN TALLERES
 	*/
-	static public function mdlMostrarEnTalleres($articulo){
+    static public function mdlMostrarEnTalleres($articulo)
+    {
 
-		$stmt = Conexion::conectar()->prepare("SELECT 
+        $stmt = Conexion::conectar()->prepare("SELECT 
                                             a.modelo,
                                             a.nombre,
                                             a.color,
@@ -592,20 +594,20 @@ class ModeloCortes{
 
         $stmt->bindParam(":articulo", $articulo, PDO::PARAM_STR);
 
-		$stmt -> execute();
+        $stmt->execute();
 
-		return $stmt -> fetchAll();
+        return $stmt->fetchAll();
 
-		$stmt -> close();
+        $stmt->close();
 
-		$stmt = null;
-
-    }    
+        $stmt = null;
+    }
 
     /*
 	* Método para mostrar los cortes DEL SUBLIMADO POR ARTICULO
 	*/
-	static public function mdlMostrarCorteSublimado($valor1,$valor2){
+    static public function mdlMostrarCorteSublimado($valor1, $valor2)
+    {
 
 
         $stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
@@ -617,16 +619,15 @@ class ModeloCortes{
           ON ac.codigo = ad.almacencorte 
         LEFT JOIN articulojf a 
           ON ad.articulo = a.articulo 
-      WHERE a.modelo = '".$valor1."' 
-      AND a.cod_color = '".$valor2."'");
+      WHERE a.modelo = '" . $valor1 . "' 
+      AND a.cod_color = '" . $valor2 . "'");
 
-        $stmt -> execute();
+        $stmt->execute();
 
-        return $stmt -> fetchAll();
+        return $stmt->fetchAll();
 
-		$stmt -> close();
+        $stmt->close();
 
-		$stmt = null;
-
+        $stmt = null;
     }
 }

@@ -631,7 +631,7 @@ class ModeloOrdenCorte
 	static public function mdlRangoFechasOrdenCortes($tabla, $fechaInicial, $fechaFinal)
 	{
 
-		if ($fechaInicial == "null") {
+		if ($fechaInicial == "null" || $fechaInicial == null) {
 
 			$stmt = Conexion::conectar()->prepare("SELECT oc.codigo,
 			oc.usuario,
@@ -644,7 +644,9 @@ class ModeloOrdenCorte
 		FROM
 			ordencortejf oc 
 			LEFT JOIN usuariosjf u 
-				ON oc.usuario = u.id ORDER BY oc.id ASC");
+				ON oc.usuario = u.id 
+				WHERE YEAR(oc.fecha)=YEAR(NOW()) 
+				ORDER BY oc.id ASC");
 
 			$stmt->execute();
 
@@ -1263,6 +1265,7 @@ class ModeloOrdenCorte
 			ON doc.articulo = a.articulo 
 			LEFT JOIN ordencortejf oc 
    			ON doc.ordencorte = oc.codigo 
+			WHERE YEAR(oc.fecha)= YEAR(NOW())
 		GROUP BY doc.ordencorte,
 			a.modelo,
 			a.nombre,
@@ -1542,6 +1545,53 @@ class ModeloOrdenCorte
 		$stmt->execute();
 
 		return $stmt->fetchAll();
+
+		$stmt = null;
+	}
+
+	/* 
+	* Guardar articulos para articulos con tarjeta
+	*/
+	static public function mdlCargarArticulo($datos)
+	{
+
+		$sql = "INSERT INTO articulosorden (articulo, cantidad) 
+		VALUES
+		  (:articulo, :cantidad)";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":articulo", $datos["articulo"], PDO::PARAM_INT);
+		$stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_INT);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt = null;
+	}
+
+	/* 
+	* GEliminar datos 
+	*/
+	static public function mdlEliminarArticulo()
+	{
+
+		$sql = "DELETE FROM articulosorden ";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
 
 		$stmt = null;
 	}

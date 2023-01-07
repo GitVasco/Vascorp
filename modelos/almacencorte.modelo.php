@@ -446,7 +446,9 @@ class ModeloAlmacenCorte
 		  FROM
 			almacencortejf ac 
 			LEFT JOIN usuariosjf u 
-			  ON ac.usuario = u.id  ORDER BY ac.id ASC");
+			  ON ac.usuario = u.id 
+			  WHERE YEAR(ac.fecha) = YEAR(NOW())
+			   ORDER BY ac.id ASC");
 
 			$stmt->execute();
 
@@ -725,6 +727,7 @@ class ModeloAlmacenCorte
 			  ON dac.articulo = a.articulo
 			LEFT JOIN almacencortejf da
  			  ON dac.almacencorte=da.guia
+			  where year(da.fecha)=YEAR(NOW())
 		  GROUP BY dac.almacencorte,
 			a.modelo,
 			a.nombre,

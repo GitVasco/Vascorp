@@ -1906,4 +1906,25 @@ class ModeloPedidos
 
 		$stmt = null;
 	}
+
+	/*
+    * MOSTRAR TEMPORAL CABECERA
+    */
+	static public function MostrarDatos($valor)
+	{
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+				* 
+			FROM
+				tabla_m_detalle t 
+			WHERE t.cod_tabla = '$valor'");
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt->close();
+
+		$stmt = null;
+	}
 }

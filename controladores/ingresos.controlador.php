@@ -1,72 +1,76 @@
 <?php
 
-class ControladorIngresos{
+class ControladorIngresos
+{
 
     /* 
     * MOSTRAR DATOS DE INGRESO CABECERA
     */
-    static public function ctrMostrarIngresos($item, $valor){
+    static public function ctrMostrarIngresos($item, $valor)
+    {
 
         $tabla = "movimientos_cabecerajf";
 
         $respuesta = ModeloIngresos::mdlMostarIngresos($tabla, $item, $valor);
 
         return $respuesta;
-
     }
 
     /* 
     * MOSTRAR DETALLE DE INGRESO
     */
-    static public function ctrMostrarDetallesIngresos($item, $valor){
+    static public function ctrMostrarDetallesIngresos($item, $valor)
+    {
 
-        $tabla = "movimientosjf_2021";
+        $tabla = "movimientosjf_2023";
 
         $respuesta = ModeloIngresos::mdlMostarDetallesIngresos($tabla, $item, $valor);
 
         return $respuesta;
-
     }
 
     /* 
     * MOSTRAR DATOS DE LAS ARTICULOS O CIERRES PARA CREAR INGRESO
     */
-    static public function ctrMostrarArticulosCierres($idCierre){
+    static public function ctrMostrarArticulosCierres($idCierre)
+    {
 
-        $respuesta = ModeloArticulos::mdlMostrarArticulosCierres( $idCierre);
+        $respuesta = ModeloArticulos::mdlMostrarArticulosCierres($idCierre);
 
         return $respuesta;
-
     }
 
     // VISUALIZAR INGRESO DETALLE
-	static public function ctrVisualizarIngresoDetalle($valor){
+    static public function ctrVisualizarIngresoDetalle($valor)
+    {
 
         $respuesta = ModeloIngresos::mdlVisualizarIngresoDetalle($valor);
-        
-		return $respuesta;
 
-	} 
+        return $respuesta;
+    }
 
     /* 
     * CREAR INGRESO
     */
-    static public function ctrCrearIngreso(){
+    static public function ctrCrearIngreso()
+    {
 
         /* 
         todo: Verificamos que traiga datos
         */
-        if( isset($_POST["nuevoTalleres"]) &&
-            isset($_POST["idUsuario"])){
+        if (
+            isset($_POST["nuevoTalleres"]) &&
+            isset($_POST["idUsuario"])
+        ) {
 
-                #var_dump("nuevaOrdenCorte", $_POST["nuevaOrdenCorte"]);
+            #var_dump("nuevaOrdenCorte", $_POST["nuevaOrdenCorte"]);
 
-                if($_POST["listaArticulosIngreso"] == ""){
+            if ($_POST["listaArticulosIngreso"] == "") {
 
-                    /* 
+                /* 
                     ? Mostramos una alerta suave si viene vacia
                     */
-                    echo '<script>
+                echo '<script>
                             swal({
                                 type: "error",
                                 title: "Error",
@@ -78,104 +82,105 @@ class ControladorIngresos{
                                     window.location="crear-ingresos";}
                             });
                         </script>';
+            } else {
 
-                }else{
-
-                    /* 
+                /* 
                     ? Actualizamos la cantidad de la orden de corte
                     */
 
-                    $listaArticulos = json_decode($_POST["listaArticulosIngreso"], true);
+                $listaArticulos = json_decode($_POST["listaArticulosIngreso"], true);
 
-                    #var_dump("listaArticulos", $listaArticulos);
+                #var_dump("listaArticulos", $listaArticulos);
 
-                    if($_POST["nuevoTipoSector"] == "0"){
-                        foreach($listaArticulos as $value){
+                if ($_POST["nuevoTipoSector"] == "0") {
+                    foreach ($listaArticulos as $value) {
 
-                            $tabla = "articulojf";
-    
-                            $valor = $value["articulo"];
-                            
-                            //Actualizamos Taller
-                            $item1 = "taller";
-                            $valor1 = $value["taller"];
+                        $tabla = "articulojf";
 
-                            ModeloArticulos::mdlActualizarUnDato($tabla, $item1, $valor1, $valor);
+                        $valor = $value["articulo"];
 
-                            //Actualizamos Stock
-                            $item2="stock";
-                            $valor2= $value["cantidad"];
-    
-                            ModeloArticulos::mdlActualizarStockIngreso( $valor, $valor2);
-    
-                        }
-                    }else{
-                        foreach($listaArticulos as $value){
+                        //Actualizamos Taller
+                        $item1 = "taller";
+                        $valor1 = $value["taller"];
 
-                            $tabla = "cierres_detallejf";
-    
-                            $valor = $value["idCierre"];
-                            $articulo= $value["articulo"];
-                            
-                            //Actualizar Taller
-                            $item1 = "cantidad";
-                            $valor1 = $value["taller"];
-    
-                            ModeloArticulos::mdlActualizarUnCierre($tabla, $item1, $valor1, $valor);
+                        ModeloArticulos::mdlActualizarUnDato($tabla, $item1, $valor1, $valor);
 
-                            //Actualizamos Stock
-                            $item2="stock";
-                            $valor2= $value["cantidad"];
-    
-                            ModeloArticulos::mdlActualizarStockIngreso( $articulo, $valor2);
+                        //Actualizamos Stock
+                        $item2 = "stock";
+                        $valor2 = $value["cantidad"];
 
-                            //Actualizamos servicio
-                            
-                            ModeloArticulos::mdlActualizarArticuloServicio( $articulo, $valor2);
-                        }
+                        ModeloArticulos::mdlActualizarStockIngreso($valor, $valor2);
                     }
+                } else {
+                    foreach ($listaArticulos as $value) {
 
-                    
+                        $tabla = "cierres_detallejf";
 
-                    /* 
+                        $valor = $value["idCierre"];
+                        $articulo = $value["articulo"];
+
+                        //Actualizar Taller
+                        $item1 = "cantidad";
+                        $valor1 = $value["taller"];
+
+                        ModeloArticulos::mdlActualizarUnCierre($tabla, $item1, $valor1, $valor);
+
+                        //Actualizamos Stock
+                        $item2 = "stock";
+                        $valor2 = $value["cantidad"];
+
+                        ModeloArticulos::mdlActualizarStockIngreso($articulo, $valor2);
+
+                        //Actualizamos servicio
+
+                        ModeloArticulos::mdlActualizarArticuloServicio($articulo, $valor2);
+                    }
+                }
+
+
+
+                /* 
                     * GUARDAR EL INGRESO
                     */
-                    $fecha= $_POST["nuevaFecha"];
-                    $datos = array( "tipo"=>"E20",
-                                    "usuario"=>$_POST["idUsuario"],
-                                    "guia"=>$_POST["nuevaGuiaIng"],
-                                    "taller"=>$_POST["nuevoTalleres"],
-                                    "documento"=>$_POST["nuevoCodigo"],
-                                    "total"=>$_POST["totalTaller"],
-                                    "fecha"=>$fecha,
-                                    "almacen" => "01");
+                $fecha = $_POST["nuevaFecha"];
+                $datos = array(
+                    "tipo" => "E20",
+                    "usuario" => $_POST["idUsuario"],
+                    "guia" => $_POST["nuevaGuiaIng"],
+                    "taller" => $_POST["nuevoTalleres"],
+                    "documento" => $_POST["nuevoCodigo"],
+                    "total" => $_POST["totalTaller"],
+                    "fecha" => $fecha,
+                    "almacen" => "01"
+                );
 
-                    #var_dump("datos", $datos);
-                    
-                    $respuesta = ModeloIngresos::mdlGuardarIngreso("movimientos_cabecerajf", $datos);
+                #var_dump("datos", $datos);
 
-                    if($respuesta == "ok"){
+                $respuesta = ModeloIngresos::mdlGuardarIngreso("movimientos_cabecerajf", $datos);
+
+                if ($respuesta == "ok") {
 
 
-                        foreach($listaArticulos as $key=>$value){
+                    foreach ($listaArticulos as $key => $value) {
 
-                            $datosD = array("tipo"=>"E20",
-                                            "documento"=>$_POST["nuevoCodigo"],
-                                            "taller"=>$_POST["nuevoTalleres"],
-                                            "fecha"=>$fecha,
-                                            "articulo"=>$value["articulo"],
-                                            "cantidad"=>$value["cantidad"],
-                                            "almacen"=>"01",
-                                            "idcierre"=>$value["idCierre"]);
+                        $datosD = array(
+                            "tipo" => "E20",
+                            "documento" => $_POST["nuevoCodigo"],
+                            "taller" => $_POST["nuevoTalleres"],
+                            "fecha" => $fecha,
+                            "articulo" => $value["articulo"],
+                            "cantidad" => $value["cantidad"],
+                            "almacen" => "01",
+                            "idcierre" => $value["idCierre"]
+                        );
 
-                            #var_dump("datosD", $datosD);
+                        #var_dump("datosD", $datosD);
 
-                            ModeloIngresos::mdlGuardarDetalleIngreso("movimientosjf_2021", $datosD);
+                        ModeloIngresos::mdlGuardarDetalleIngreso("movimientosjf_2023", $datosD);
+                    }
 
-                        }
-
-                        # Mostramos una alerta suave
-                        echo '<script>
+                    # Mostramos una alerta suave
+                    echo '<script>
                                 swal({
                                     type: "success",
                                     title: "Felicitaciones",
@@ -186,12 +191,11 @@ class ControladorIngresos{
                                     if(result.value){
                                         window.location="ingresos";}
                                 });
-                            </script>';                        
+                            </script>';
+                } else {
 
-                    }else{
-
-					# Mostramos una alerta suave
-					echo '<script>
+                    # Mostramos una alerta suave
+                    echo '<script>
 							swal({
 								type: "error",
 								title: "Error",
@@ -203,37 +207,33 @@ class ControladorIngresos{
 									window.location="crear-ingresos";}
 							});
 						</script>';
-
-                    }
-
-
-
                 }
-
+            }
         }
-
-
     }
 
     /* 
     * CREAR SEGUNDA
     */
-    static public function ctrCrearSegunda(){
+    static public function ctrCrearSegunda()
+    {
 
         /* 
         todo: Verificamos que traiga datos
         */
-        if( isset($_POST["nuevoTalleres"]) &&
-            isset($_POST["idUsuario"])){
+        if (
+            isset($_POST["nuevoTalleres"]) &&
+            isset($_POST["idUsuario"])
+        ) {
 
-                #var_dump("nuevaOrdenCorte", $_POST["nuevaOrdenCorte"]);
+            #var_dump("nuevaOrdenCorte", $_POST["nuevaOrdenCorte"]);
 
-                if($_POST["listaArticulosIngreso"] == ""){
+            if ($_POST["listaArticulosIngreso"] == "") {
 
-                    /* 
+                /* 
                     ? Mostramos una alerta suave si viene vacia
                     */
-                    echo '<script>
+                echo '<script>
                             swal({
                                 type: "error",
                                 title: "Error",
@@ -245,95 +245,94 @@ class ControladorIngresos{
                                     window.location="crear-segunda";}
                             });
                         </script>';
+            } else {
 
-                }else{
-
-                    /* 
+                /* 
                     ? Actualizamos la cantidad de taller en articulos
                     */
 
-                    $listaArticulos = json_decode($_POST["listaArticulosIngreso"], true);
+                $listaArticulos = json_decode($_POST["listaArticulosIngreso"], true);
 
-                    #var_dump("listaArticulos", $listaArticulos);
+                #var_dump("listaArticulos", $listaArticulos);
 
-                    if($_POST["nuevoTipoSector"] == "0"){
-                        foreach($listaArticulos as $value){
+                if ($_POST["nuevoTipoSector"] == "0") {
+                    foreach ($listaArticulos as $value) {
 
-                            $tabla = "articulojf";
-    
-                            $valor = $value["articulo"];
-                            
-                            //Actualizamos Taller
-                            $item1 = "taller";
-                            $valor1 = $value["taller"];
+                        $tabla = "articulojf";
 
-                            ModeloArticulos::mdlActualizarUnDato($tabla, $item1, $valor1, $valor);
+                        $valor = $value["articulo"];
 
-                            
-    
-                        }
-                    }else{
-                        foreach($listaArticulos as $value){
+                        //Actualizamos Taller
+                        $item1 = "taller";
+                        $valor1 = $value["taller"];
 
-                            $tabla = "cierres_detallejf";
-    
-                            $valor = $value["idCierre"];
-                            $articulo= $value["articulo"];
-                            
-                            //Actualizar Taller
-                            $item1 = "cantidad";
-                            $valor1 = $value["taller"];
-    
-                            ModeloArticulos::mdlActualizarUnCierre($tabla, $item1, $valor1, $valor);
-
-                           
-                            $valor2= $value["cantidad"];
-                            //Actualizamos servicio
-                            
-                            ModeloArticulos::mdlActualizarArticuloServicio( $articulo, $valor2);
-                        }
+                        ModeloArticulos::mdlActualizarUnDato($tabla, $item1, $valor1, $valor);
                     }
-                    /* 
+                } else {
+                    foreach ($listaArticulos as $value) {
+
+                        $tabla = "cierres_detallejf";
+
+                        $valor = $value["idCierre"];
+                        $articulo = $value["articulo"];
+
+                        //Actualizar Taller
+                        $item1 = "cantidad";
+                        $valor1 = $value["taller"];
+
+                        ModeloArticulos::mdlActualizarUnCierre($tabla, $item1, $valor1, $valor);
+
+
+                        $valor2 = $value["cantidad"];
+                        //Actualizamos servicio
+
+                        ModeloArticulos::mdlActualizarArticuloServicio($articulo, $valor2);
+                    }
+                }
+                /* 
                     * GUARDAR EL INGRESO
                     */
-                    $fecha=new DateTime();
-                    $datos = array( "tipo"=>"E20",
-                                    "usuario"=>$_POST["idUsuario"],
-                                    "guia"=>$_POST["nuevaGuiaIng"],
-                                    "taller"=>$_POST["nuevoTalleres"],
-                                    "documento"=>$_POST["nuevoCodigo"],
-                                    "total"=>$_POST["totalTaller"],
-                                    "fecha"=>$_POST["nuevaFecha"],
-                                    "almacen" => "02",
-                                    "trabajador"=>$_POST["nuevoTrabajadores"]);
+                $fecha = new DateTime();
+                $datos = array(
+                    "tipo" => "E20",
+                    "usuario" => $_POST["idUsuario"],
+                    "guia" => $_POST["nuevaGuiaIng"],
+                    "taller" => $_POST["nuevoTalleres"],
+                    "documento" => $_POST["nuevoCodigo"],
+                    "total" => $_POST["totalTaller"],
+                    "fecha" => $_POST["nuevaFecha"],
+                    "almacen" => "02",
+                    "trabajador" => $_POST["nuevoTrabajadores"]
+                );
 
-                    #var_dump("datos", $datos);
-                    
-                    $respuesta = ModeloIngresos::mdlGuardarSegunda("movimientos_cabecerajf", $datos);
+                #var_dump("datos", $datos);
 
-                    if($respuesta == "ok"){
+                $respuesta = ModeloIngresos::mdlGuardarSegunda("movimientos_cabecerajf", $datos);
+
+                if ($respuesta == "ok") {
 
 
-                        foreach($listaArticulos as $key=>$value){
+                    foreach ($listaArticulos as $key => $value) {
 
-                            $datosD = array("tipo"=>"E20",
-                                            "documento"=>$_POST["nuevoCodigo"],
-                                            "taller"=>$_POST["nuevoTalleres"],
-                                            "fecha"=>$_POST["nuevaFecha"],
-                                            "articulo"=>$value["articulo"],
-                                            "cliente"=>$_POST["nuevoTrabajadores"],
-                                            "cantidad"=>$value["cantidad"],
-                                            "almacen"=>"02",
-                                            "idcierre"=>$value["idCierre"]);
+                        $datosD = array(
+                            "tipo" => "E20",
+                            "documento" => $_POST["nuevoCodigo"],
+                            "taller" => $_POST["nuevoTalleres"],
+                            "fecha" => $_POST["nuevaFecha"],
+                            "articulo" => $value["articulo"],
+                            "cliente" => $_POST["nuevoTrabajadores"],
+                            "cantidad" => $value["cantidad"],
+                            "almacen" => "02",
+                            "idcierre" => $value["idCierre"]
+                        );
 
-                            #var_dump("datosD", $datosD);
+                        #var_dump("datosD", $datosD);
 
-                            ModeloIngresos::mdlGuardarDetalleSegunda("movimientosjf_2021", $datosD);
+                        ModeloIngresos::mdlGuardarDetalleSegunda("movimientosjf_2023", $datosD);
+                    }
 
-                        }
-
-                        # Mostramos una alerta suave
-                        echo '<script>
+                    # Mostramos una alerta suave
+                    echo '<script>
                                 swal({
                                     type: "success",
                                     title: "Felicitaciones",
@@ -344,12 +343,11 @@ class ControladorIngresos{
                                     if(result.value){
                                         window.location="ingresos";}
                                 });
-                            </script>';                        
+                            </script>';
+                } else {
 
-                    }else{
-
-					# Mostramos una alerta suave
-					echo '<script>
+                    # Mostramos una alerta suave
+                    echo '<script>
 							swal({
 								type: "error",
 								title: "Error",
@@ -361,30 +359,24 @@ class ControladorIngresos{
 									window.location="crear-segunda";}
 							});
 						</script>';
-
-                    }
-
-
-
                 }
-
+            }
         }
-
-
     }
 
     /* 
     * Editar Ingreso
     */
-    static public function ctrEditarIngreso(){
+    static public function ctrEditarIngreso()
+    {
 
-        if(isset($_POST["idUsuario"]) && isset($_POST["listaArticulosIngreso"])){
+        if (isset($_POST["idUsuario"]) && isset($_POST["listaArticulosIngreso"])) {
 
             #var_dump($_POST["editarCodigo"], $_POST["idUsuario"],$_POST["listaArticulosOC"]);
 
-            if($_POST["listaArticulosIngreso"] == ""){
+            if ($_POST["listaArticulosIngreso"] == "") {
 
-				echo '<script>
+                echo '<script>
 						swal({
 							type: "error",
 							title: "Error",
@@ -395,51 +387,48 @@ class ControladorIngresos{
 							if(result.value){
 								window.location="index.php?ruta=editar-ingreso";}
 						});
-					</script>';              
-
-            }else{
+					</script>';
+            } else {
 
                 /* 
                 todo: Traemos los datos del detalle de ingreso
                 */
-                $detaOC = ModeloIngresos::mdlMostarDetallesIngresos("movimientosjf_2021", "documento", $_POST["editarCodigo"]);
+                $detaOC = ModeloIngresos::mdlMostarDetallesIngresos("movimientosjf_2023", "documento", $_POST["editarCodigo"]);
                 #var_dump("detaOC", $detaOC);
 
                 /* 
                 todo: Cabiamos los codigos de al lista por los codigos de articulos
                 */
-                foreach($detaOC as $key=>$value){
+                foreach ($detaOC as $key => $value) {
 
                     $infoArt = controladorArticulos::ctrMostrarArticulos($value["articulo"]);
-                    $detaOC[$key]["articulo"]=$infoArt["articulo"];
+                    $detaOC[$key]["articulo"] = $infoArt["articulo"];
                     #var_dump("detaOC", $detaOC[$key]["articulo"]);
 
                 }
 
-                if($_POST["listaArticulosIngreso"] == ""){
+                if ($_POST["listaArticulosIngreso"] == "") {
 
                     $listaArticulosOC = $detaOC;
                     $validarCambio = false;
-
-                }else{
+                } else {
 
                     $listaArticulosOC = json_decode($_POST["listaArticulosIngreso"], true);
                     $validarCambio = true;
-
                 }
 
-                if($validarCambio){
+                if ($validarCambio) {
 
                     /* 
                     todo: Actualizamos en articulos de ingresos
                     */
-                    if($_POST["editarTipoSector"] == "0"){
-                        foreach($listaArticulosOC as $value){
+                    if ($_POST["editarTipoSector"] == "0") {
+                        foreach ($listaArticulosOC as $value) {
 
                             $tabla = "articulojf";
-    
+
                             $valor = $value["articulo"];
-                            
+
                             //Actualizamos Taller
                             $item1 = "taller";
                             $valor1 = $value["taller"];
@@ -447,83 +436,84 @@ class ControladorIngresos{
                             ModeloArticulos::mdlActualizarUnDato($tabla, $item1, $valor1, $valor);
 
                             //Actualizamos Stock
-                            $item2="stock";
-                            $valor2= $value["cantidad"];
-    
-                            ModeloArticulos::mdlActualizarStockIngreso( $valor, $valor2);
-    
+                            $item2 = "stock";
+                            $valor2 = $value["cantidad"];
+
+                            ModeloArticulos::mdlActualizarStockIngreso($valor, $valor2);
                         }
-                    }else{
-                        foreach($listaArticulosOC as $value){
+                    } else {
+                        foreach ($listaArticulosOC as $value) {
 
                             $tabla = "cierres_detallejf";
-    
+
                             $valor = $value["idCierre"];
-                            $articulo= $value["articulo"];
-                            
+                            $articulo = $value["articulo"];
+
                             //Actualizar Taller
                             $item1 = "cantidad";
-                            
+
                             $valor1 = $value["taller"];
-    
+
                             ModeloArticulos::mdlActualizarUnCierre($tabla, $item1, $valor1, $valor);
 
                             //Actualizamos Stock
-                            $item2="stock";
-                            $valor2= $value["cantidad"];
-    
-                            ModeloArticulos::mdlActualizarStockIngreso( $articulo, $valor2);
+                            $item2 = "stock";
+                            $valor2 = $value["cantidad"];
+
+                            ModeloArticulos::mdlActualizarStockIngreso($articulo, $valor2);
 
                             //Actualizamos servicio
-                            
-                            ModeloArticulos::mdlActualizarArticuloServicio( $articulo, $valor2);
+
+                            ModeloArticulos::mdlActualizarArticuloServicio($articulo, $valor2);
                         }
                     }
-
                 }
-                $fecha=new DateTime();
+                $fecha = new DateTime();
                 /* 
                 todo: Editamos los cambios de la cabecera ingreso
                 */
-                $datos = array( "id" => $_POST["idIngreso"],
-                                "documento"=>$_POST["editarCodigo"],
-                                "guia"=>$_POST["editarGuiaIng"],
-                                "taller"=>$_POST["editarTalleres"],
-                                "usuario"=>$_POST["idUsuario"],
-                                "total"=>$_POST["totalTaller"],
-                                "fecha"=>$fecha->format("Y-m-d"));
+                $datos = array(
+                    "id" => $_POST["idIngreso"],
+                    "documento" => $_POST["editarCodigo"],
+                    "guia" => $_POST["editarGuiaIng"],
+                    "taller" => $_POST["editarTalleres"],
+                    "usuario" => $_POST["idUsuario"],
+                    "total" => $_POST["totalTaller"],
+                    "fecha" => $fecha->format("Y-m-d")
+                );
                 #var_dump("datos", $datos);
 
                 $respuesta = ModeloIngresos::mdlEditarIngreso("movimientos_cabecerajf", $datos);
 
-                if($respuesta == "ok"){
+                if ($respuesta == "ok") {
 
                     /* 
                     todo: Editamos los cambios del detalle Ingreso, primero eliminamos los detalles
                     */
 
-                    $eliminarDato = ModeloIngresos::mdlEliminarDato("movimientosjf_2021", "documento", $_POST["editarCodigo"]);
+                    $eliminarDato = ModeloIngresos::mdlEliminarDato("movimientosjf_2023", "documento", $_POST["editarCodigo"]);
 
                     $eliminarDato = "ok";
 
-                    if($eliminarDato == "ok"){
+                    if ($eliminarDato == "ok") {
 
-                        foreach($listaArticulosOC as $key=>$value){
+                        foreach ($listaArticulosOC as $key => $value) {
 
                             #var_dump("listaArticulosOC", $listaArticulosOC);
 
-                            $datosD = array("tipo"=>"E20",
-                                            "documento"=>$_POST["editarCodigo"],
-                                            "taller"=>$_POST["editarTalleres"],
-                                            "fecha"=>$fecha->format("Y-m-d"),
-                                            "articulo"=>$value["articulo"],
-                                            "cantidad"=>$value["nuevaCant"],
-                                            "almacen" => "01",
-                                            "idcierre"=>$value["idCierre"]);
+                            $datosD = array(
+                                "tipo" => "E20",
+                                "documento" => $_POST["editarCodigo"],
+                                "taller" => $_POST["editarTalleres"],
+                                "fecha" => $fecha->format("Y-m-d"),
+                                "articulo" => $value["articulo"],
+                                "cantidad" => $value["nuevaCant"],
+                                "almacen" => "01",
+                                "idcierre" => $value["idCierre"]
+                            );
                             #var_dump("datosD", $datosD);
 
-                            ModeloIngresos::mdlGuardarDetalleIngreso("movimientosjf_2021", $datosD);
-
+                            ModeloIngresos::mdlGuardarDetalleIngreso("movimientosjf_2023", $datosD);
                         }
 
                         # Mostramos una alerta suave
@@ -538,13 +528,11 @@ class ControladorIngresos{
                                     if(result.value){
                                         window.location="ingresos";}
                                 });
-                            </script>';                     
+                            </script>';
+                    } else {
 
-
-                    }else{
-
-					# Mostramos una alerta suave
-					echo '<script>
+                        # Mostramos una alerta suave
+                        echo '<script>
 							swal({
 								type: "error",
 								title: "Error",
@@ -556,13 +544,10 @@ class ControladorIngresos{
 									window.location="ingresos";}
 							});
 						</script>';
-
                     }
+                } else {
 
-
-                }else{
-
-				echo '<script>
+                    echo '<script>
 						swal({
 							type: "error",
 							title: "Error",
@@ -574,24 +559,21 @@ class ControladorIngresos{
 								window.location="ingresos";}
 						});
 					</script>';
-
-                }                                
-
+                }
             }
-
         }
-
     }
 
-    static public function ctrEditarSegunda(){
+    static public function ctrEditarSegunda()
+    {
 
-        if(isset($_POST["idUsuario"]) && isset($_POST["listaArticulosIngreso"])){
+        if (isset($_POST["idUsuario"]) && isset($_POST["listaArticulosIngreso"])) {
 
             #var_dump($_POST["editarCodigo"], $_POST["idUsuario"],$_POST["listaArticulosOC"]);
 
-            if($_POST["listaArticulosIngreso"] == ""){
+            if ($_POST["listaArticulosIngreso"] == "") {
 
-				echo '<script>
+                echo '<script>
 						swal({
 							type: "error",
 							title: "Error",
@@ -602,126 +584,124 @@ class ControladorIngresos{
 							if(result.value){
 								window.location="index.php?ruta=editar-ingreso";}
 						});
-					</script>';              
-
-            }else{
+					</script>';
+            } else {
 
                 /* 
                 todo: Traemos los datos del detalle de ingresos segunda
                 */
-                $detaOC = ModeloIngresos::mdlMostarDetallesIngresos("movimientosjf_2021", "documento", $_POST["editarCodigo"]);
+                $detaOC = ModeloIngresos::mdlMostarDetallesIngresos("movimientosjf_2023", "documento", $_POST["editarCodigo"]);
                 #var_dump("detaOC", $detaOC);
 
                 /* 
                 todo: Cabiamos los codigos de al lista por los codigos de articulos
                 */
-                foreach($detaOC as $key=>$value){
+                foreach ($detaOC as $key => $value) {
 
                     $infoArt = controladorArticulos::ctrMostrarArticulos($value["articulo"]);
-                    $detaOC[$key]["articulo"]=$infoArt["articulo"];
+                    $detaOC[$key]["articulo"] = $infoArt["articulo"];
                     #var_dump("detaOC", $detaOC[$key]["articulo"]);
 
                 }
 
-                if($_POST["listaArticulosIngreso"] == ""){
+                if ($_POST["listaArticulosIngreso"] == "") {
 
                     $listaArticulosOC = $detaOC;
                     $validarCambio = false;
-
-                }else{
+                } else {
 
                     $listaArticulosOC = json_decode($_POST["listaArticulosIngreso"], true);
                     $validarCambio = true;
-
                 }
 
-                if($validarCambio){
+                if ($validarCambio) {
 
                     /* 
                     todo: Actualizamos en articulos  los ingresos
                     */
-                    if($_POST["editarTipoSector"] == "0"){
-                        foreach($listaArticulosOC as $value){
+                    if ($_POST["editarTipoSector"] == "0") {
+                        foreach ($listaArticulosOC as $value) {
 
                             $tabla = "articulojf";
-    
+
                             $valor = $value["articulo"];
-                            
+
                             //Actualizamos Taller
                             $item1 = "taller";
                             $valor1 = $value["taller"];
 
                             ModeloArticulos::mdlActualizarUnDato($tabla, $item1, $valor1, $valor);
-
                         }
-                    }else{
-                        foreach($listaArticulosOC as $value){
+                    } else {
+                        foreach ($listaArticulosOC as $value) {
 
                             $tabla = "cierres_detallejf";
-    
+
                             $valor = $value["idCierre"];
-                            $articulo= $value["articulo"];
-                            
+                            $articulo = $value["articulo"];
+
                             //Actualizar Taller
                             $item1 = "cantidad";
                             $valor1 = $value["taller"];
-    
+
                             ModeloArticulos::mdlActualizarUnCierre($tabla, $item1, $valor1, $valor);
-                            
-                            $valor2= $value["cantidad"];
+
+                            $valor2 = $value["cantidad"];
                             //Actualizamos servicio
-                            
-                            ModeloArticulos::mdlActualizarArticuloServicio( $articulo, $valor2);
+
+                            ModeloArticulos::mdlActualizarArticuloServicio($articulo, $valor2);
                         }
                     }
-
                 }
-                $fecha=new DateTime();
+                $fecha = new DateTime();
                 /* 
                 todo: Editamos los cambios de la cabecera ingreso segunda
                 */
-                $datos = array( "id" => $_POST["idIngreso"],
-                                "documento"=>$_POST["editarCodigo"],
-                                "guia"=>$_POST["editarGuiaIng"],
-                                "taller"=>$_POST["editarTalleres"],
-                                "usuario"=>$_POST["idUsuario"],
-                                "total"=>$_POST["totalTaller"],
-                                "fecha"=>$fecha->format("Y-m-d"),
-                                "almacen"=>"02",
-                                "trabajador" => $_POST["editarTrabajadores"]);
+                $datos = array(
+                    "id" => $_POST["idIngreso"],
+                    "documento" => $_POST["editarCodigo"],
+                    "guia" => $_POST["editarGuiaIng"],
+                    "taller" => $_POST["editarTalleres"],
+                    "usuario" => $_POST["idUsuario"],
+                    "total" => $_POST["totalTaller"],
+                    "fecha" => $fecha->format("Y-m-d"),
+                    "almacen" => "02",
+                    "trabajador" => $_POST["editarTrabajadores"]
+                );
                 #var_dump("datos", $datos);
 
                 $respuesta = ModeloIngresos::mdlEditarSegunda("movimientos_cabecerajf", $datos);
 
-                if($respuesta == "ok"){
+                if ($respuesta == "ok") {
 
                     /* 
                     todo: Editamos los cambios del detalle Ingreso Segunda, primero eliminamos los detalles
                     */
 
-                    $eliminarDato = ModeloIngresos::mdlEliminarDato("movimientosjf_2021", "documento", $_POST["editarCodigo"]);
+                    $eliminarDato = ModeloIngresos::mdlEliminarDato("movimientosjf_2023", "documento", $_POST["editarCodigo"]);
 
                     $eliminarDato = "ok";
 
-                    if($eliminarDato == "ok"){
+                    if ($eliminarDato == "ok") {
 
-                        foreach($listaArticulosOC as $key=>$value){
+                        foreach ($listaArticulosOC as $key => $value) {
 
                             #var_dump("listaArticulosOC", $listaArticulosOC);
 
-                            $datosD = array("tipo"=>"E20",
-                                            "documento"=>$_POST["editarCodigo"],
-                                            "taller"=>$_POST["editarTalleres"],
-                                            "fecha"=>$fecha->format("Y-m-d"),
-                                            "articulo"=>$value["articulo"],
-                                            "cliente"=>$_POST["editarTrabajadores"],
-                                            "cantidad"=>$value["nuevaCant"],
-                                            "almacen" => "02",
-                                            "idcierre"=>$value["idCierre"]);
+                            $datosD = array(
+                                "tipo" => "E20",
+                                "documento" => $_POST["editarCodigo"],
+                                "taller" => $_POST["editarTalleres"],
+                                "fecha" => $fecha->format("Y-m-d"),
+                                "articulo" => $value["articulo"],
+                                "cliente" => $_POST["editarTrabajadores"],
+                                "cantidad" => $value["nuevaCant"],
+                                "almacen" => "02",
+                                "idcierre" => $value["idCierre"]
+                            );
                             #var_dump("datosD", $datosD);
 
-                            ModeloIngresos::mdlGuardarDetalleSegunda("movimientosjf_2021", $datosD);
-
+                            ModeloIngresos::mdlGuardarDetalleSegunda("movimientosjf_2023", $datosD);
                         }
 
                         # Mostramos una alerta suave
@@ -736,13 +716,11 @@ class ControladorIngresos{
                                     if(result.value){
                                         window.location="ingresos";}
                                 });
-                            </script>';                     
+                            </script>';
+                    } else {
 
-
-                    }else{
-
-					# Mostramos una alerta suave
-					echo '<script>
+                        # Mostramos una alerta suave
+                        echo '<script>
 							swal({
 								type: "error",
 								title: "Error",
@@ -754,13 +732,10 @@ class ControladorIngresos{
 									window.location="ingresos";}
 							});
 						</script>';
-
                     }
+                } else {
 
-
-                }else{
-
-				echo '<script>
+                    echo '<script>
 						swal({
 							type: "error",
 							title: "Error",
@@ -772,97 +747,95 @@ class ControladorIngresos{
 								window.location="ingresos";}
 						});
 					</script>';
-
-                }                                
-
+                }
             }
-
         }
-
     }
 
     /* 
     *Método para eliminar los ingresos
     */
-    static public function ctrEliminarIngreso(){
-        if(isset($_GET["documento"]) && isset($_GET["idIngreso"]) ){
-        $item = "documento";
-        $codigo=$_GET["documento"];
+    static public function ctrEliminarIngreso()
+    {
+        if (isset($_GET["documento"]) && isset($_GET["idIngreso"])) {
+            $item = "documento";
+            $codigo = $_GET["documento"];
 
-        $detaOC = ModeloIngresos::mdlMostarDetallesIngresos("movimientosjf_2021", "documento", $codigo);
-        #var_dump("detaOC", $detaOC);
-         
-        $cabeceraIngreso= ModeloIngresos::mdlMostarIngresos("movimientos_cabecerajf","id",$_GET["idIngreso"]);
-        /* 
+            $detaOC = ModeloIngresos::mdlMostarDetallesIngresos("movimientosjf_2023", "documento", $codigo);
+            #var_dump("detaOC", $detaOC);
+
+            $cabeceraIngreso = ModeloIngresos::mdlMostarIngresos("movimientos_cabecerajf", "id", $_GET["idIngreso"]);
+            /* 
         todo: Actualizamos orden de corte en Articulojf
         */
-        if($cabeceraIngreso["taller"] == "T1" || $cabeceraIngreso["taller"] == "T3" || $cabeceraIngreso["taller"] == "T5"){
-            foreach($detaOC as $value){
+            if ($cabeceraIngreso["taller"] == "T1" || $cabeceraIngreso["taller"] == "T3" || $cabeceraIngreso["taller"] == "T5") {
+                foreach ($detaOC as $value) {
 
-                $tabla = "articulojf";
+                    $tabla = "articulojf";
 
-                $valor = $value["articulo"];
-                
-                //Actualizamos Taller
-                $item1 = "taller";
-                $valor1 = $value["cantidad"];
+                    $valor = $value["articulo"];
 
-                ModeloArticulos::mdlRecuperarTaller( $valor, $valor1);
+                    //Actualizamos Taller
+                    $item1 = "taller";
+                    $valor1 = $value["cantidad"];
 
-                //Actualizamos Stock
-                $item2="stock";
-                $datosArt = array( "articulo" => $value["articulo"],
-                                    "cantidad" => $value["cantidad"]);
+                    ModeloArticulos::mdlRecuperarTaller($valor, $valor1);
 
-                ModeloArticulos::mdlActualizarStock( $datosArt);
+                    //Actualizamos Stock
+                    $item2 = "stock";
+                    $datosArt = array(
+                        "articulo" => $value["articulo"],
+                        "cantidad" => $value["cantidad"]
+                    );
 
-                
+                    ModeloArticulos::mdlActualizarStock($datosArt);
+                }
+            } else {
+                foreach ($detaOC as $value) {
 
+                    $tabla = "cierres_detallejf";
+
+                    $valor = $value["idcierre"];
+                    $articulo = $value["articulo"];
+
+                    //Actualizar Taller
+                    $item1 = "cantidad";
+                    $valor1 = $value["cantidad"];
+
+                    ModeloArticulos::mdlRecuperarUnCierre($tabla, $item1, $valor1, $valor);
+
+                    //Actualizamos Stock
+                    $item2 = "stock";
+                    $datosArt = array(
+                        "articulo" => $value["articulo"],
+                        "cantidad" => $value["cantidad"]
+                    );
+
+                    ModeloArticulos::mdlActualizarStock($datosArt);
+
+
+                    //Actualizamos servicio
+                    $valor2 = $value["cantidad"];
+                    ModeloArticulos::mdlRecuperarArticuloServicio($articulo, $valor2);
+                }
             }
-        }else{
-            foreach($detaOC as $value){
-
-                $tabla = "cierres_detallejf";
-
-                $valor = $value["idcierre"];
-                $articulo= $value["articulo"];
-                
-                //Actualizar Taller
-                $item1 = "cantidad";
-                $valor1 = $value["cantidad"];
-
-                ModeloArticulos::mdlRecuperarUnCierre($tabla, $item1, $valor1, $valor);
-
-                //Actualizamos Stock
-                $item2="stock";
-                $datosArt = array( "articulo" => $value["articulo"],
-                                    "cantidad" => $value["cantidad"]);
-
-                ModeloArticulos::mdlActualizarStock( $datosArt);
-
-
-                //Actualizamos servicio
-                $valor2=$value["cantidad"];
-                ModeloArticulos::mdlRecuperarArticuloServicio( $articulo, $valor2);
-            }
-        }
-
-        /* 
-        todo: Eliminamos la cabecera de Ingreso
-        */
-        $tablaOC = "movimientos_cabecerajf";
-        $itemOC = "id";
-        $valorOC = $_GET["idIngreso"];
-
-        $respuesta = ModeloIngresos::mdlEliminarDato($tablaOC, $itemOC, $valorOC);
-        $respuesta= ModeloIngresos::mdlEliminarDato("movimientosjf_2021","documento",$codigo);
-
-        if($respuesta == "ok"){
 
             /* 
+        todo: Eliminamos la cabecera de Ingreso
+        */
+            $tablaOC = "movimientos_cabecerajf";
+            $itemOC = "id";
+            $valorOC = $_GET["idIngreso"];
+
+            $respuesta = ModeloIngresos::mdlEliminarDato($tablaOC, $itemOC, $valorOC);
+            $respuesta = ModeloIngresos::mdlEliminarDato("movimientosjf_2023", "documento", $codigo);
+
+            if ($respuesta == "ok") {
+
+                /* 
             todo: Eliminamos el detalle de Orden de corte
             */
-            echo '<script>
+                echo '<script>
                                 swal({
                                     type: "success",
                                     title: "Felicitaciones",
@@ -873,81 +846,80 @@ class ControladorIngresos{
                                     if(result.value){
                                         window.location="ingresos";}
                                 });
-                            </script>';   
-           
-        }
+                            </script>';
+            }
 
-        return $respuesta;
+            return $respuesta;
         }
     }
 
     /* 
     *Método para eliminar las segundas
     */
-    static public function ctrEliminarSegunda(){
-        if(isset($_GET["documento"]) && isset($_GET["idSegunda"]) ){
-        $item = "documento";
-        $codigo=$_GET["documento"];
+    static public function ctrEliminarSegunda()
+    {
+        if (isset($_GET["documento"]) && isset($_GET["idSegunda"])) {
+            $item = "documento";
+            $codigo = $_GET["documento"];
 
-        $detaOC = ModeloIngresos::mdlMostarDetallesIngresos("movimientosjf_2021", "documento", $codigo);
-        #var_dump("detaOC", $detaOC);
-         
-        $cabeceraIngreso= ModeloIngresos::mdlMostarIngresos("movimientos_cabecerajf","id",$_GET["idSegunda"]);
-        /* 
+            $detaOC = ModeloIngresos::mdlMostarDetallesIngresos("movimientosjf_2023", "documento", $codigo);
+            #var_dump("detaOC", $detaOC);
+
+            $cabeceraIngreso = ModeloIngresos::mdlMostarIngresos("movimientos_cabecerajf", "id", $_GET["idSegunda"]);
+            /* 
         todo: Actualizamos cantidad de taller en articulojf
         */
-        if($cabeceraIngreso["taller"] == "T1" || $cabeceraIngreso["taller"] == "T3" || $cabeceraIngreso["taller"] == "T5"){
-            foreach($detaOC as $value){
+            if ($cabeceraIngreso["taller"] == "T1" || $cabeceraIngreso["taller"] == "T3" || $cabeceraIngreso["taller"] == "T5") {
+                foreach ($detaOC as $value) {
 
-                $tabla = "articulojf";
+                    $tabla = "articulojf";
 
-                $valor = $value["articulo"];
-                
-                //Actualizamos Taller
-                $item1 = "taller";
-                $valor1 = $value["cantidad"];
+                    $valor = $value["articulo"];
 
-                ModeloArticulos::mdlRecuperarTaller( $valor, $valor1);
+                    //Actualizamos Taller
+                    $item1 = "taller";
+                    $valor1 = $value["cantidad"];
 
+                    ModeloArticulos::mdlRecuperarTaller($valor, $valor1);
+                }
+            } else {
+                foreach ($detaOC as $value) {
+
+                    $tabla = "cierres_detallejf";
+
+                    $valor = $value["idcierre"];
+                    $articulo = $value["articulo"];
+
+                    //Actualizar Taller
+                    $item1 = "cantidad";
+                    $valor1 = $value["cantidad"];
+
+                    ModeloArticulos::mdlRecuperarUnCierre($tabla, $item1, $valor1, $valor);
+
+                    $valor2 = $value["cantidad"];
+
+                    //Actualizamos servicio
+
+                    ModeloArticulos::mdlRecuperarArticuloServicio($articulo, $valor2);
+                }
             }
-        }else{
-            foreach($detaOC as $value){
-
-                $tabla = "cierres_detallejf";
-
-                $valor = $value["idcierre"];
-                $articulo= $value["articulo"];
-                
-                //Actualizar Taller
-                $item1 = "cantidad";
-                $valor1 = $value["cantidad"];
-
-                ModeloArticulos::mdlRecuperarUnCierre($tabla, $item1, $valor1, $valor);
-
-                $valor2= $value["cantidad"];
-
-                //Actualizamos servicio
-                
-                ModeloArticulos::mdlRecuperarArticuloServicio( $articulo, $valor2);
-            }
-        }
-
-        /* 
-        todo: Eliminamos la cabecera de Ingreso Segunda
-        */
-        $tablaOC = "movimientos_cabecerajf";
-        $itemOC = "id";
-        $valorOC = $_GET["idSegunda"];
-
-        $respuesta = ModeloIngresos::mdlEliminarDato($tablaOC, $itemOC, $valorOC);
-        $respuesta= ModeloIngresos::mdlEliminarDato("movimientosjf_2021","documento",$codigo);
-
-        if($respuesta == "ok"){
 
             /* 
+        todo: Eliminamos la cabecera de Ingreso Segunda
+        */
+            $tablaOC = "movimientos_cabecerajf";
+            $itemOC = "id";
+            $valorOC = $_GET["idSegunda"];
+
+            $respuesta = ModeloIngresos::mdlEliminarDato($tablaOC, $itemOC, $valorOC);
+            $respuesta = ModeloIngresos::mdlEliminarDato("movimientosjf_2023", "documento", $codigo);
+
+            if ($respuesta == "ok") {
+
+                /* 
             todo: Eliminamos el detalle de ingreso segunda
             */
-            echo '<script>
+                echo '<script>
                                 swal({
                                     type: "success",
                                     title: "Felicitaciones",
@@ -958,64 +930,66 @@ class ControladorIngresos{
                                     if(result.value){
                                         window.location="ingresos";}
                                 });
-                            </script>';   
-           
-        }
+                            </script>';
+            }
 
-        return $respuesta;
+            return $respuesta;
         }
     }
-    
-	
+
+
     /*=============================================
 	RANGO FECHAS
-	=============================================*/	
+	=============================================*/
 
-	static public function ctrRangoFechasIngresos($fechaInicial, $fechaFinal){
+    static public function ctrRangoFechasIngresos($fechaInicial, $fechaFinal)
+    {
 
-		$tabla = "movimientos_cabecerajf";
+        $tabla = "movimientos_cabecerajf";
 
-		$respuesta = ModeloIngresos::mdlRangoFechasIngresos($tabla, $fechaInicial, $fechaFinal);
+        $respuesta = ModeloIngresos::mdlRangoFechasIngresos($tabla, $fechaInicial, $fechaFinal);
 
-		return $respuesta;
-		
+        return $respuesta;
     }
 
     /*=============================================
 	RANGO FECHAS PARA VISUALIZAR INGRESOS
-	=============================================*/	
-   
-    static public function ctrRangoFechasVerIngresos($fechaInicial, $fechaFinal){
+	=============================================*/
 
-		$tabla = "movimientos_cabecerajf";
+    static public function ctrRangoFechasVerIngresos($fechaInicial, $fechaFinal)
+    {
 
-		$respuesta = ModeloIngresos::mdlRangoFechasVerIngresos($tabla, $fechaInicial, $fechaFinal);
+        $tabla = "movimientos_cabecerajf";
 
-		return $respuesta;
-		
+        $respuesta = ModeloIngresos::mdlRangoFechasVerIngresos($tabla, $fechaInicial, $fechaFinal);
+
+        return $respuesta;
     }
 
     /* 
     * Actualizar FECHA
     */
-    static public function ctrActualizarFecha(){
+    static public function ctrActualizarFecha()
+    {
 
-        if(isset($_POST["cierre"])){
+        if (isset($_POST["cierre"])) {
 
             $tipo = $_POST["tipoIng"];
             $documento = $_POST["cierre"];
             $fecha = $_POST["fecha"];
 
-            $datos = array( "tipo" => $tipo,
-                            "documento" => $documento,
-                            "fecha" => $fecha);
+            $datos = array(
+                "tipo" => $tipo,
+                "documento" => $documento,
+                "fecha" => $fecha
+            );
 
             #var_dump($datos);
 
             $respuesta = ModeloIngresos::mdlActualizarFecha($datos);
             #var_dump($respuesta);
 
-            if($respuesta == "ok"){
+            if ($respuesta == "ok") {
 
                 echo '<script>
                 swal({
@@ -1028,20 +1002,16 @@ class ControladorIngresos{
                     if(result.value){
                         window.location="ingresos";}
                 });
-            </script>';  
-
+            </script>';
             }
-
-
         }
-
-
-    }    
+    }
 
     //* Editar Ingreso
-    static public function ctrEditarIngresoB(){
+    static public function ctrEditarIngresoB()
+    {
 
-        if(isset($_POST["codigo"])){
+        if (isset($_POST["codigo"])) {
 
             //*Datos
             $codigo     = $_POST["codigo"];
@@ -1052,22 +1022,22 @@ class ControladorIngresos{
             $sector     = $_POST["sector"];
             $idcierre   = $_POST["idcierre"];
             $usureg     = $_SESSION["nombre"];
-            $pcreg      = gethostbyaddr($_SERVER['REMOTE_ADDR']); 
+            $pcreg      = gethostbyaddr($_SERVER['REMOTE_ADDR']);
 
             $stock = ($cantidadO * -1) + $cantidad;
             $prod = $cantidadO - $cantidad;
 
-            if($sector = "externo"){
+            if ($sector = "externo") {
                 $actCierre = ModeloIngresos::mdlactualizarCierre($idcierre, $saldo);
             }
 
-            $actStock = ModeloIngresos::mdlactualizarStock($sector, $articulo, $stock, $prod);            
+            $actStock = ModeloIngresos::mdlactualizarStock($sector, $articulo, $stock, $prod);
 
             $actMov = ModeloIngresos::mdlactualizarMovimiento($codigo, $articulo, $cantidadO, $cantidad);
 
-            if($actMov == "ok"){
+            if ($actMov == "ok") {
 
-                echo'<script>
+                echo '<script>
 
                 swal({
                     type: "success",
@@ -1083,13 +1053,7 @@ class ControladorIngresos{
                             })
 
                 </script>';
-
             }
-
-
-
         }
-
-    }    
-
+    }
 }

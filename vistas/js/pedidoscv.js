@@ -423,6 +423,12 @@ $("#tdoc").change(function () {
     var tipoDoc = document.getElementById("tipDoc").value;
     //console.log(tipoDoc);
 
+    if (documento == "00") {
+        $("#GuiasDiv").removeClass("disable-div");
+    } else {
+        $("#GuiasDiv").addClass("disable-div");
+    }
+
     if (documento == "01" && tipoDoc == "DNI") {
         document.getElementById("tipDoc").style.background = "#FF6868";
         document.getElementById("tipDoc").style.color = "black";
@@ -510,7 +516,7 @@ $("#tdoc").change(function () {
 
     if (documento == "01" || documento == "03") {
         //console.log("aqui", documento);
-        document.getElementById("formaPago").disabled = false;
+        //document.getElementById("formaPago").disabled = false;
 
         var formaPago = $("#formaPago");
 
@@ -550,7 +556,7 @@ $("#tdoc").change(function () {
         });
     } else if (documento == "07") {
         //console.log("aqui", documento);
-        document.getElementById("formaPago").disabled = false;
+        //document.getElementById("formaPago").disabled = false;
 
         var formaPago = $("#formaPago");
 
@@ -589,7 +595,7 @@ $("#tdoc").change(function () {
             },
         });
     } else {
-        document.getElementById("formaPago").disabled = true;
+        //document.getElementById("formaPago").disabled = true;
 
         var formaPago = $("#formaPago");
         formaPago.find("option").remove();

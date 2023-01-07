@@ -337,6 +337,60 @@ class ModeloArticulos
 	}
 
 	/* 
+	* MOSTRAR ARTICULOS PARA LA TABLA DE SERVICIOS O VENTAS
+	*/
+	static public function mdlMostrarMPOC()
+	{
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+		dt.mat_pri,
+		p.codfab,
+		p.despro,
+		p.colpro,
+		(SELECT 
+		  des_larga 
+		FROM
+		  tabla_m_detalle t 
+		WHERE t.cod_tabla = 'TCOL' 
+		  AND p.colpro = t.cod_argumento) AS color,
+		p.talpro,
+		(SELECT 
+		  des_larga 
+		FROM
+		  tabla_m_detalle t 
+		WHERE t.cod_tabla = 'TTAL' 
+		  AND p.talpro = t.cod_argumento) AS talla,
+		p.undpro,
+		SUM(ao.cantidad * dt.consumo) AS consumo,
+		p.codalm01 AS stock
+	  FROM
+		articulosorden ao 
+		LEFT JOIN detalles_tarjetajf dt 
+		  ON ao.articulo = dt.articulo 
+		LEFT JOIN producto p 
+		  ON dt.mat_pri = p.codpro 
+		  WHERE LEFT(p.codfab, 3) IN (
+			'BLO',
+			'ELA',
+			'SES',
+			'TIR',
+			'TEL',
+			'MET',
+			'PLA',
+			'ETI'
+		) 		  
+	  GROUP BY dt.mat_pri ");
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	/* 
 	* MOSTRAR ARTICULOS PARA LA TABLA DE ORDENES DE CORTE
 	*/
 	static public function mdlMostrarArticulosTaller($sectorIngreso)

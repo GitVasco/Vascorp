@@ -70,7 +70,7 @@ $(".tablaArticulosOrdenCorte").DataTable({
     deferRender: true,
     retrieve: true,
     processing: true,
-    pageLength: 20,
+    pageLength: 15,
     language: {
         sProcessing: "Procesando...",
         sLengthMenu: "Mostrar _MENU_ registros",
@@ -247,7 +247,7 @@ $(".tablaArticulosOrdenCorte tbody").on(
                 // AGRUPAR PRODUCTOS EN FORMATO JSON
 
                 listarArticulosOC();
-                explosion();
+                //explosion();
 
                 // PONER FORMATO AL PRECIO DE LOS PRODUCTOS
             },
@@ -332,7 +332,7 @@ $(".formularioOrdenCorte").on("click", "button.quitarOC", function () {
         // AGRUPAR PRODUCTOS EN FORMATO JSON
 
         listarArticulosOC();
-        explosion();
+        //explosion();
     }
 });
 
@@ -382,7 +382,7 @@ $(".formularioOrdenCorte").on(
         // AGRUPAR PRODUCTOS EN FORMATO JSON
 
         listarArticulosOC();
-        explosion();
+        //explosion();
     }
 );
 
@@ -486,6 +486,25 @@ function listarArticulosOC() {
     /* console.log("listaArticulos", JSON.stringify(listaArticulos)); */
 
     $("#listaArticulosOC").val(JSON.stringify(listaArticulos));
+
+    var datos = new FormData();
+    datos.append("articulos", JSON.stringify(listaArticulos));
+
+    $.ajax({
+        url: "ajax/ordencorte.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuesta) {
+            console.log(
+                "🚀 ~ file: ordencorte.js:506 ~ listarArticulosOC ~ respuesta",
+                respuesta
+            );
+        },
+    });
 }
 
 /*
@@ -1300,6 +1319,7 @@ $(".tablaEditarDetalleOrdenCorte").DataTable({
     },
 });
 
+//*pro revisar
 function explosion() {
     var listaArticulos = [];
 
@@ -1334,3 +1354,52 @@ function explosion() {
         },
     });
 }
+
+function cargarMPOrdenCorte() {
+    $(".tablaMPOrdenCorte").DataTable({
+        ajax:
+            "ajax/produccion/tabla-mpordencorte.ajax.php?perfil=" +
+            $("#perfilOculto").val(),
+        deferRender: true,
+        retrieve: true,
+        processing: true,
+        order: [[1, "asc"]],
+        pageLength: 20,
+        lengthMenu: [
+            [20, 40, 60, -1],
+            [20, 40, 60, "Todos"],
+        ],
+        language: {
+            sProcessing: "Procesando...",
+            sLengthMenu: "Mostrar _MENU_ registros",
+            sZeroRecords: "No se encontraron resultados",
+            sEmptyTable: "Ningún dato disponible en esta tabla",
+            sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+            sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
+            sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+            sInfoPostFix: "",
+            sSearch: "Buscar:",
+            sUrl: "",
+            sInfoThousands: ",",
+            sLoadingRecords: "Cargando...",
+            oPaginate: {
+                sFirst: "Primero",
+                sLast: "Último",
+                sNext: "Siguiente",
+                sPrevious: "Anterior",
+            },
+            oAria: {
+                sSortAscending:
+                    ": Activar para ordenar la columna de manera ascendente",
+                sSortDescending:
+                    ": Activar para ordenar la columna de manera descendente",
+            },
+        },
+    });
+}
+
+$("#tablaMP").click(function () {
+    $(".tablaMPOrdenCorte").DataTable().destroy();
+
+    cargarMPOrdenCorte();
+});

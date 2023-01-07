@@ -1,22 +1,23 @@
 <?php
-   
-   require_once "conexion.php";
 
-class ModeloIngresos{
+require_once "conexion.php";
 
-	static public function mdlMostarIngresos($tabla, $item, $valor){
+class ModeloIngresos
+{
 
-		if($item != null){
+	static public function mdlMostarIngresos($tabla, $item, $valor)
+	{
+
+		if ($item != null) {
 
 			$stmt = Conexion::conectar()->prepare("SELECT mc.*, s.nom_sector,u.nombre  FROM  $tabla mc LEFT JOIN sectorjf s on mc.taller = s.cod_sector LEFT JOIN usuariosjf u ON mc.usuario = u.id WHERE mc.$item = :$item ");
 
-			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt->bindParam(":" . $item, $valor, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetch();
-
-		}else{
+			return $stmt->fetch();
+		} else {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 															mc.*,u.nombre
@@ -25,54 +26,49 @@ class ModeloIngresos{
 															LEFT JOIN usuariosjf u 
 																ON oc.usuario = u.id");
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
+			return $stmt->fetchAll();
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
-		$stmt = null;		
-
-
+		$stmt = null;
 	}
 
-	static public function mdlMostarDetallesIngresos($tabla, $item, $valor){
+	static public function mdlMostarDetallesIngresos($tabla, $item, $valor)
+	{
 
-		if($item != null){
+		if ($item != null) {
 
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item ");
 
-			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt->bindParam(":" . $item, $valor, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
-		}else{
+			return $stmt->fetchAll();
+		} else {
 
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ");
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
+			return $stmt->fetchAll();
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
-		$stmt = null;		
-
-
+		$stmt = null;
 	}
- 
+
 	/* 
 	* Guardar cabecera de ORDENES DE CORTE
 	*/
-	static public function mdlGuardarIngreso($tabla,$datos){
+	static public function mdlGuardarIngreso($tabla, $datos)
+	{
 
-		$sql="INSERT INTO $tabla (			tipo,
+		$sql = "INSERT INTO $tabla (			tipo,
 											usuario,
 											guia,
 											taller,
@@ -92,32 +88,31 @@ class ModeloIngresos{
 											:almacen
 											)";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->bindParam(":tipo",$datos["tipo"],PDO::PARAM_STR);
-        $stmt->bindParam(":usuario",$datos["usuario"],PDO::PARAM_INT);
-		$stmt->bindParam(":guia",$datos["guia"],PDO::PARAM_STR);
-        $stmt->bindParam(":taller",$datos["taller"],PDO::PARAM_STR);
-        $stmt->bindParam(":documento",$datos["documento"],PDO::PARAM_STR);
-		$stmt->bindParam(":total",$datos["total"],PDO::PARAM_INT);
-		$stmt->bindParam(":fecha",$datos["fecha"],PDO::PARAM_STR);
-		$stmt->bindParam(":almacen",$datos["almacen"],PDO::PARAM_STR);
+		$stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
+		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_INT);
+		$stmt->bindParam(":guia", $datos["guia"], PDO::PARAM_STR);
+		$stmt->bindParam(":taller", $datos["taller"], PDO::PARAM_STR);
+		$stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
+		$stmt->bindParam(":total", $datos["total"], PDO::PARAM_INT);
+		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+		$stmt->bindParam(":almacen", $datos["almacen"], PDO::PARAM_STR);
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-
 		}
 
-		$stmt=null;
+		$stmt = null;
 	}
-	static public function mdlGuardarSegunda($tabla,$datos){
+	static public function mdlGuardarSegunda($tabla, $datos)
+	{
 
-		$sql="INSERT INTO $tabla (			tipo,
+		$sql = "INSERT INTO $tabla (			tipo,
 											usuario,
 											taller,
 											guia,
@@ -139,37 +134,36 @@ class ModeloIngresos{
 											:trabajador
 											)";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->bindParam(":tipo",$datos["tipo"],PDO::PARAM_STR);
-        $stmt->bindParam(":usuario",$datos["usuario"],PDO::PARAM_INT);
-        $stmt->bindParam(":guia",$datos["guia"],PDO::PARAM_STR);
-		$stmt->bindParam(":taller",$datos["taller"],PDO::PARAM_STR);
-        $stmt->bindParam(":documento",$datos["documento"],PDO::PARAM_STR);
-		$stmt->bindParam(":total",$datos["total"],PDO::PARAM_INT);
-		$stmt->bindParam(":fecha",$datos["fecha"],PDO::PARAM_STR);
-		$stmt->bindParam(":almacen",$datos["almacen"],PDO::PARAM_STR);
-		$stmt->bindParam(":trabajador",$datos["trabajador"],PDO::PARAM_INT);
+		$stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
+		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_INT);
+		$stmt->bindParam(":guia", $datos["guia"], PDO::PARAM_STR);
+		$stmt->bindParam(":taller", $datos["taller"], PDO::PARAM_STR);
+		$stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
+		$stmt->bindParam(":total", $datos["total"], PDO::PARAM_INT);
+		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+		$stmt->bindParam(":almacen", $datos["almacen"], PDO::PARAM_STR);
+		$stmt->bindParam(":trabajador", $datos["trabajador"], PDO::PARAM_INT);
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-
 		}
 
-		$stmt=null;
+		$stmt = null;
 	}
 
 	/* 
 	* Guardar cabecera de ORDENES DE CORTE
 	*/
-	static public function mdlGuardarDetalleIngreso($tabla,$datos){
+	static public function mdlGuardarDetalleIngreso($tabla, $datos)
+	{
 
-		$sql="INSERT INTO $tabla (
+		$sql = "INSERT INTO $tabla (
 											tipo,
 											documento,
 											taller,
@@ -191,34 +185,33 @@ class ModeloIngresos{
 											:idcierre
 											)";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
-        $stmt->bindParam(":tipo",$datos["tipo"],PDO::PARAM_STR);
-		$stmt->bindParam(":documento",$datos["documento"],PDO::PARAM_STR);
-		$stmt->bindParam(":taller",$datos["taller"],PDO::PARAM_STR);
-        $stmt->bindParam(":fecha",$datos["fecha"],PDO::PARAM_STR);
-		$stmt->bindParam(":articulo",$datos["articulo"],PDO::PARAM_STR);
-		$stmt->bindParam(":cantidad",$datos["cantidad"],PDO::PARAM_INT);
-		$stmt->bindParam(":almacen",$datos["almacen"],PDO::PARAM_STR);
-		$stmt->bindParam(":idcierre",$datos["idcierre"],PDO::PARAM_INT);
+		$stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
+		$stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
+		$stmt->bindParam(":taller", $datos["taller"], PDO::PARAM_STR);
+		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+		$stmt->bindParam(":articulo", $datos["articulo"], PDO::PARAM_STR);
+		$stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_INT);
+		$stmt->bindParam(":almacen", $datos["almacen"], PDO::PARAM_STR);
+		$stmt->bindParam(":idcierre", $datos["idcierre"], PDO::PARAM_INT);
 
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-
 		}
 
-		$stmt=null;
+		$stmt = null;
 	}
-	
-	static public function mdlGuardarDetalleSegunda($tabla,$datos){
 
-		$sql="INSERT INTO $tabla (
+	static public function mdlGuardarDetalleSegunda($tabla, $datos)
+	{
+
+		$sql = "INSERT INTO $tabla (
 											tipo,
 											documento,
 											taller,
@@ -242,211 +235,206 @@ class ModeloIngresos{
 											:idcierre
 											)";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
-        $stmt->bindParam(":tipo",$datos["tipo"],PDO::PARAM_STR);
-		$stmt->bindParam(":documento",$datos["documento"],PDO::PARAM_STR);
-		$stmt->bindParam(":taller",$datos["taller"],PDO::PARAM_STR);
-        $stmt->bindParam(":fecha",$datos["fecha"],PDO::PARAM_STR);
-		$stmt->bindParam(":articulo",$datos["articulo"],PDO::PARAM_STR);
-		$stmt->bindParam(":cliente",$datos["cliente"],PDO::PARAM_STR);
-		$stmt->bindParam(":cantidad",$datos["cantidad"],PDO::PARAM_INT);
-		$stmt->bindParam(":almacen",$datos["almacen"],PDO::PARAM_STR);
-		$stmt->bindParam(":idcierre",$datos["idcierre"],PDO::PARAM_INT);
+		$stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
+		$stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
+		$stmt->bindParam(":taller", $datos["taller"], PDO::PARAM_STR);
+		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+		$stmt->bindParam(":articulo", $datos["articulo"], PDO::PARAM_STR);
+		$stmt->bindParam(":cliente", $datos["cliente"], PDO::PARAM_STR);
+		$stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_INT);
+		$stmt->bindParam(":almacen", $datos["almacen"], PDO::PARAM_STR);
+		$stmt->bindParam(":idcierre", $datos["idcierre"], PDO::PARAM_INT);
 
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-
 		}
 
-		$stmt=null;
+		$stmt = null;
 	}
-	
+
 	/* 
 	* Método para editar las ventas
 	*/
-	static public function mdlEditarIngreso($tabla,$datos){
+	static public function mdlEditarIngreso($tabla, $datos)
+	{
 
-		$sql="UPDATE $tabla SET usuario=:usuario, guia = :guia, taller=:taller, documento=:documento, total=:total, fecha=:fecha WHERE id=:id";
+		$sql = "UPDATE $tabla SET usuario=:usuario, guia = :guia, taller=:taller, documento=:documento, total=:total, fecha=:fecha WHERE id=:id";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->bindParam(":usuario",$datos["usuario"],PDO::PARAM_INT);
-		$stmt->bindParam(":guia",$datos["guia"],PDO::PARAM_STR);
-        $stmt->bindParam(":taller",$datos["taller"],PDO::PARAM_STR);
-        $stmt->bindParam(":documento",$datos["documento"],PDO::PARAM_STR);
-		$stmt->bindParam(":total",$datos["total"],PDO::PARAM_INT);
-        $stmt->bindParam(":fecha",$datos["fecha"],PDO::PARAM_STR);
-        $stmt->bindParam(":id",$datos["id"],PDO::PARAM_INT);
+		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_INT);
+		$stmt->bindParam(":guia", $datos["guia"], PDO::PARAM_STR);
+		$stmt->bindParam(":taller", $datos["taller"], PDO::PARAM_STR);
+		$stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
+		$stmt->bindParam(":total", $datos["total"], PDO::PARAM_INT);
+		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
 		}
 
-		$stmt=null;
-		
+		$stmt = null;
 	}
 
-	static public function mdlEditarSegunda($tabla,$datos){
+	static public function mdlEditarSegunda($tabla, $datos)
+	{
 
-		$sql="UPDATE $tabla SET usuario=:usuario, guia = :guia, taller=:taller, documento=:documento, total=:total, fecha=:fecha,trabajador=:trabajador WHERE id=:id";
+		$sql = "UPDATE $tabla SET usuario=:usuario, guia = :guia, taller=:taller, documento=:documento, total=:total, fecha=:fecha,trabajador=:trabajador WHERE id=:id";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->bindParam(":usuario",$datos["usuario"],PDO::PARAM_INT);
-		$stmt->bindParam(":guia",$datos["guia"],PDO::PARAM_STR);
-        $stmt->bindParam(":taller",$datos["taller"],PDO::PARAM_STR);
-		$stmt->bindParam(":documento",$datos["documento"],PDO::PARAM_STR);
-		$stmt->bindParam(":trabajador",$datos["trabajador"],PDO::PARAM_INT);
-		$stmt->bindParam(":total",$datos["total"],PDO::PARAM_INT);
-        $stmt->bindParam(":fecha",$datos["fecha"],PDO::PARAM_STR);
-        $stmt->bindParam(":id",$datos["id"],PDO::PARAM_INT);
+		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_INT);
+		$stmt->bindParam(":guia", $datos["guia"], PDO::PARAM_STR);
+		$stmt->bindParam(":taller", $datos["taller"], PDO::PARAM_STR);
+		$stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
+		$stmt->bindParam(":trabajador", $datos["trabajador"], PDO::PARAM_INT);
+		$stmt->bindParam(":total", $datos["total"], PDO::PARAM_INT);
+		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
 		}
 
-		$stmt=null;
-		
+		$stmt = null;
 	}
-/* 
+	/* 
 	* Método para eliminar los detalles de los ingresos
 	*/
-	static public function mdlEliminarDato($tabla,$item,$valor){
+	static public function mdlEliminarDato($tabla, $item, $valor)
+	{
 
-		$sql="DELETE FROM $tabla WHERE $item=:$item";
+		$sql = "DELETE FROM $tabla WHERE $item=:$item";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->bindParam(":".$item,$valor,PDO::PARAM_STR);
+		$stmt->bindParam(":" . $item, $valor, PDO::PARAM_STR);
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-		
-		}else{
+		} else {
 
 			return "error";
-		
 		}
 
-		$stmt=null;
+		$stmt = null;
 	}
 
 	/* 
 	* Método para eliminar la orden de corte
 	*/
-	static public function mdlEliminarIngreso($tabla, $item, $valor){
+	static public function mdlEliminarIngreso($tabla, $item, $valor)
+	{
 
 		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE $item = $valor");
 
-		if($stmt -> execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-		
-		}else{
+		} else {
 
-			return "error";	
-
+			return "error";
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
 	}
-	
 
 
-/*=============================================
+
+	/*=============================================
 	RANGO FECHAS
-	=============================================*/	
+	=============================================*/
 
-	static public function mdlRangoFechasIngresos($tabla, $fechaInicial, $fechaFinal){
+	static public function mdlRangoFechasIngresos($tabla, $fechaInicial, $fechaFinal)
+	{
 
-		if($fechaInicial == "null"){
+		if ($fechaInicial == "null") {
 
-			$stmt = Conexion::conectar()->prepare("SELECT mc.*,u.nombre FROM movimientos_cabecerajf mc LEFT JOIN usuariosjf u ON mc.usuario=u.id ORDER BY mc.id ASC");
+			$stmt = Conexion::conectar()->prepare("SELECT 
+						mc.*,
+						u.nombre 
+					FROM
+						movimientos_cabecerajf mc 
+						LEFT JOIN usuariosjf u 
+						ON mc.usuario = u.id 
+					WHERE mc.fecha = YEAR(NOW())
+					ORDER BY mc.id ASC ");
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();	
-
-
-		}else if($fechaInicial == $fechaFinal){
+			return $stmt->fetchAll();
+		} else if ($fechaInicial == $fechaFinal) {
 
 			$stmt = Conexion::conectar()->prepare("SELECT mc.*,u.nombre FROM movimientos_cabecerajf mc LEFT JOIN usuariosjf u ON mc.usuario=u.id WHERE mc.fecha like '%$fechaFinal%'");
 
-			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+			$stmt->bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
-		}else{
+			return $stmt->fetchAll();
+		} else {
 
 			$fechaActual = new DateTime();
-			$fechaActual ->add(new DateInterval("P1D"));
+			$fechaActual->add(new DateInterval("P1D"));
 			$fechaActualMasUno = $fechaActual->format("Y-m-d");
 
 			$fechaFinal2 = new DateTime($fechaFinal);
-			$fechaFinal2 ->add(new DateInterval("P1D"));
+			$fechaFinal2->add(new DateInterval("P1D"));
 			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
 
-			if($fechaFinalMasUno == $fechaActualMasUno){
+			if ($fechaFinalMasUno == $fechaActualMasUno) {
 
 				$stmt = Conexion::conectar()->prepare("SELECT mc.*,u.nombre FROM movimientos_cabecerajf mc LEFT JOIN usuariosjf u ON mc.usuario=u.id WHERE mc.fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'");
-
-			}else{
+			} else {
 
 
 				$stmt = Conexion::conectar()->prepare("SELECT mc.*,u.nombre FROM movimientos_cabecerajf mc LEFT JOIN usuariosjf u ON mc.usuario=u.id WHERE mc.fecha BETWEEN '$fechaInicial' AND '$fechaFinal'");
-
 			}
-		
-			$stmt -> execute();
 
-			return $stmt -> fetchAll();
+			$stmt->execute();
 
+			return $stmt->fetchAll();
 		}
-
 	}
 
-	static public function mdlUltimoIngreso($tabla){
+	static public function mdlUltimoIngreso($tabla)
+	{
 
-		$sql="SELECT COUNT(taller) + 1 AS ultimo_codigo FROM $tabla";
+		$sql = "SELECT COUNT(taller) + 1 AS ultimo_codigo FROM $tabla";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->execute();
 
 		return $stmt->fetch();
 
-		$stmt=null;
-
-
+		$stmt = null;
 	}
-	
+
 	//VISUALIZAR DETALLE INGRESO
-	static public function mdlVisualizarIngresoDetalle($valor){
-	
-		if($valor!=null){
+	static public function mdlVisualizarIngresoDetalle($valor)
+	{
+
+		if ($valor != null) {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			m.documento,
 			DATE(m.fecha) AS fechas,
@@ -514,7 +502,7 @@ class ModeloIngresos{
 			),0) AS t8,
 			FORMAT(SUM(m.cantidad),0) AS total 
 		  FROM
-			movimientosjf_2021 m 
+			movimientosjf_2023 m 
 			LEFT JOIN articulojf a 
 			  ON m.articulo = a.articulo 
 			LEFT JOIN sectorjf se 
@@ -525,14 +513,13 @@ class ModeloIngresos{
 			a.nombre,
 			a.cod_color,
 			a.color");
-	
-			$stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
-	
+
+			$stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
+
 			$stmt->execute();
-	
+
 			return $stmt->fetchAll();
-	
-		}else{
+		} else {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			m.documento,
 			DATE(m.fecha) AS fechas,
@@ -600,7 +587,7 @@ class ModeloIngresos{
 			),0) AS t8,
 			FORMAT(SUM(m.cantidad),0) AS total 
 		  FROM
-			movimientosjf_2021 m 
+			movimientosjf_2023 m 
 			LEFT JOIN articulojf a 
 			  ON m.articulo = a.articulo 
 			LEFT JOIN sectorjf se 
@@ -610,26 +597,25 @@ class ModeloIngresos{
 			a.nombre,
 			a.cod_color,
 			a.color");
-	
-			$stmt -> bindParam(":valor", $valor, PDO::PARAM_STR);
-	
+
+			$stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
+
 			$stmt->execute();
-	
+
 			return $stmt->fetchAll();
-	
-		}
-	
-			
-			$stmt=null;
-	
 		}
 
 
-		static public function mdlRangoFechasVerIngresos($tabla, $fechaInicial, $fechaFinal){
+		$stmt = null;
+	}
 
-			if($fechaInicial == "null"){
-	
-				$stmt = Conexion::conectar()->prepare("SELECT 
+
+	static public function mdlRangoFechasVerIngresos($tabla, $fechaInicial, $fechaFinal)
+	{
+
+		if ($fechaInicial == "null") {
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
 				m.documento,
 				DATE(m.fecha) AS fechas,
 				a.modelo,
@@ -721,7 +707,7 @@ class ModeloIngresos{
 				) AS t8,
 				FORMAT(SUM(m.cantidad), 0) AS total 
 			  FROM
-				movimientosjf_2021 m 
+				movimientosjf_2023 m 
 				LEFT JOIN articulojf a 
 				  ON m.articulo = a.articulo 
 				LEFT JOIN sectorjf se 
@@ -729,21 +715,19 @@ class ModeloIngresos{
 				LEFT JOIN movimientos_cabecerajf mc 
 				  ON m.tipo = mc.tipo 
 				  AND m.documento = mc.documento 
-			  WHERE m.tipo = 'E20' and YEAR(m.fecha)='2022'
+			  WHERE m.tipo = 'E20' and YEAR(m.fecha)= YEAR(NOW()) and month(m.fecha)= month(NOW())
 			  GROUP BY m.documento,
 				a.modelo,
 				a.nombre,
 				a.cod_color,
 				a.color");
-	
-				$stmt -> execute();
-	
-				return $stmt -> fetchAll();	
-	
-	
-			}else if($fechaInicial == $fechaFinal){
-	
-				$stmt = Conexion::conectar()->prepare("SELECT 
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		} else if ($fechaInicial == $fechaFinal) {
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
 				m.documento,
 				DATE(m.fecha) AS fechas,
 				a.modelo,
@@ -835,7 +819,7 @@ class ModeloIngresos{
 				) AS t8,
 				FORMAT(SUM(m.cantidad), 0) AS total 
 			  FROM
-				movimientosjf_2021 m 
+				movimientosjf_2023 m 
 				LEFT JOIN articulojf a 
 				  ON m.articulo = a.articulo 
 				LEFT JOIN sectorjf se 
@@ -850,26 +834,25 @@ class ModeloIngresos{
 				a.nombre,
 				a.cod_color,
 				a.color");
-	
-				$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
-	
-				$stmt -> execute();
-	
-				return $stmt -> fetchAll();
-	
-			}else{
-	
-				$fechaActual = new DateTime();
-				$fechaActual ->add(new DateInterval("P1D"));
-				$fechaActualMasUno = $fechaActual->format("Y-m-d");
-	
-				$fechaFinal2 = new DateTime($fechaFinal);
-				$fechaFinal2 ->add(new DateInterval("P1D"));
-				$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
-	
-				if($fechaFinalMasUno == $fechaActualMasUno){
-	
-					$stmt = Conexion::conectar()->prepare("SELECT 
+
+			$stmt->bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		} else {
+
+			$fechaActual = new DateTime();
+			$fechaActual->add(new DateInterval("P1D"));
+			$fechaActualMasUno = $fechaActual->format("Y-m-d");
+
+			$fechaFinal2 = new DateTime($fechaFinal);
+			$fechaFinal2->add(new DateInterval("P1D"));
+			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+
+			if ($fechaFinalMasUno == $fechaActualMasUno) {
+
+				$stmt = Conexion::conectar()->prepare("SELECT 
 					m.documento,
 					DATE(m.fecha) AS fechas,
 					a.modelo,
@@ -961,7 +944,7 @@ class ModeloIngresos{
 					) AS t8,
 					FORMAT(SUM(m.cantidad), 0) AS total 
 				  FROM
-					movimientosjf_2021 m 
+					movimientosjf_2023 m 
 					LEFT JOIN articulojf a 
 					  ON m.articulo = a.articulo 
 					LEFT JOIN sectorjf se 
@@ -976,11 +959,10 @@ class ModeloIngresos{
 					a.nombre,
 					a.cod_color,
 					a.color");
-	
-				}else{
-	
-	
-					$stmt = Conexion::conectar()->prepare("SELECT 
+			} else {
+
+
+				$stmt = Conexion::conectar()->prepare("SELECT 
 					m.documento,
 					DATE(m.fecha) AS fechas,
 					a.modelo,
@@ -1072,7 +1054,7 @@ class ModeloIngresos{
 					) AS t8,
 					FORMAT(SUM(m.cantidad), 0) AS total 
 				  FROM
-					movimientosjf_2021 m 
+					movimientosjf_2023 m 
 					LEFT JOIN articulojf a 
 					  ON m.articulo = a.articulo 
 					LEFT JOIN sectorjf se 
@@ -1087,52 +1069,49 @@ class ModeloIngresos{
 					a.nombre,
 					a.cod_color,
 					a.color ");
-	
-				}
-			
-				$stmt -> execute();
-	
-				return $stmt -> fetchAll();
-	
 			}
-	
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
 		}
+	}
 
 
 	//*ACTUALIZAR FECHA
-	static public function mdlActualizarFecha($datos){
+	static public function mdlActualizarFecha($datos)
+	{
 
-		$sql="UPDATE 
+		$sql = "UPDATE 
 					movimientos_cabecerajf mc 
-					LEFT JOIN movimientosjf_2021 m 
+					LEFT JOIN movimientosjf_2023 m 
 					ON mc.tipo = m.tipo 
 					AND mc.documento = m.documento SET mc.fecha = :fecha,
 					m.fecha = :fecha 
 				WHERE mc.tipo = :tipo 
 					AND mc.documento = :documento";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->bindParam(":tipo",$datos["tipo"],PDO::PARAM_INT);
-		$stmt->bindParam(":documento",$datos["documento"],PDO::PARAM_STR);
-		$stmt->bindParam(":fecha",$datos["fecha"],PDO::PARAM_STR);
+		$stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_INT);
+		$stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
+		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
 		}
 
-		$stmt=null;
-		
+		$stmt = null;
 	}
 
-	static public function editarDetalleIngreso($codigo){
+	static public function editarDetalleIngreso($codigo)
+	{
 
-		$sql="SELECT 
+		$sql = "SELECT 
 		m.articulo,
 		a.modelo,
 		a.nombre,
@@ -1149,108 +1128,99 @@ class ModeloIngresos{
 		  ELSE c.cantidad 
 		END AS saldo 
 	  FROM
-		movimientosjf_2021 m 
+		movimientosjf_2023 m 
 		LEFT JOIN articulojf a 
 		  ON m.articulo = a.articulo 
 		LEFT JOIN cierres_detallejf c 
 		  ON m.idcierre = c.id 
 	  WHERE m.documento = '$codigo'";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->execute();
 
 		return $stmt->fetchAll();
 
-		$stmt=null;
-
-
+		$stmt = null;
 	}
 
 	/* 
 	* ACTUALIZAR STOCK
 	*/
-	static public function mdlactualizarStock($sector, $articulo, $stock, $prod){
+	static public function mdlactualizarStock($sector, $articulo, $stock, $prod)
+	{
 
-		if($sector == "externo"){
+		if ($sector == "externo") {
 
-			$sql="UPDATE 
+			$sql = "UPDATE 
 					articulojf 
 					SET
 					stock = stock + $stock ,
 					servicio = servicio + $prod
 					WHERE articulo = '$articulo' ";
+		} else {
 
-		}else{
-			
-			$sql="UPDATE 
+			$sql = "UPDATE 
 					articulojf 
 					SET
 					stock = stock + $stock ,
 					alm_taller = alm_taller + $prod
 					WHERE articulo = '$articulo' ";
-
 		}
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
 		}
 
-		$stmt=null;
-		
+		$stmt = null;
 	}
 
 	/* 
 	* ACTUALIZAR CIERRE
 	*/
-	static public function mdlactualizarCierre($cierre, $saldo){
+	static public function mdlactualizarCierre($cierre, $saldo)
+	{
 
-		$sql="UPDATE cierres_detallejf SET cantidad = $saldo WHERE id='$cierre'";
+		$sql = "UPDATE cierres_detallejf SET cantidad = $saldo WHERE id='$cierre'";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
 		}
 
-		$stmt=null;
-		
-	}	
+		$stmt = null;
+	}
 
 
 	/* 
 	* ACTUALIZAR CIERRE
 	*/
-	static public function mdlactualizarMovimiento($codigo, $articulo, $cantidadO, $cantidad){
+	static public function mdlactualizarMovimiento($codigo, $articulo, $cantidadO, $cantidad)
+	{
 
-		$sql="UPDATE movimientosjf_2021 SET cantidad = $cantidad WHERE documento='$codigo' AND articulo='$articulo' AND cantidad=$cantidadO";
+		$sql = "UPDATE movimientosjf_2023 SET cantidad = $cantidad WHERE documento='$codigo' AND articulo='$articulo' AND cantidad=$cantidadO";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
 		}
 
-		$stmt=null;
-		
-	}	
-
-
+		$stmt = null;
+	}
 }

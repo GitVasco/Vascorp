@@ -568,8 +568,8 @@ class ModeloServicios
 			  ON s.codigo = sd.codigo
 			LEFT JOIN sectorjf se
 			  ON  s.taller=se.cod_sector
-			WHERE total > 0
-			AND sd.cerrar = 1 
+			WHERE saldo > 0
+			AND sd.cerrar = 0
 		  GROUP BY sd.codigo,
 			a.modelo,
 			a.nombre,
@@ -660,7 +660,9 @@ class ModeloServicios
                                           FROM
                                             pago_serviciosjf q 
                                             LEFT JOIN usuariosjf u 
-                                              ON q.usuario = u.id");
+                                              ON q.usuario = u.id
+											  YEAR(q.fecha) = YEAR(NOW())
+											  ");
 
 			$stmt->execute();
 
@@ -1233,7 +1235,18 @@ class ModeloServicios
 
 		if ($fechaInicial == "null") {
 
-			$stmt = Conexion::conectar()->prepare("SELECT se.*, s.nom_sector,u.nombre FROM  $tabla se LEFT JOIN sectorjf s on se.taller = s.cod_sector LEFT JOIN usuariosjf u ON se.usuario = u.id ORDER BY se.id ASC");
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			se.*,
+			s.nom_sector,
+			u.nombre 
+		  FROM
+			$tabla se 
+			LEFT JOIN sectorjf s 
+			  ON se.taller = s.cod_sector 
+			LEFT JOIN usuariosjf u 
+			  ON se.usuario = u.id 
+			  WHERE YEAR(se.fecha) = YEAR(NOW())
+		  ORDER BY se.id ASC ");
 
 			$stmt->execute();
 
@@ -1355,6 +1368,7 @@ class ModeloServicios
 			  ON sd.codigo = s.codigo 
 			LEFT JOIN sectorjf se 
 			  ON s.taller = se.cod_sector 
+			  WHERE YEAR(s.fecha) = YEAR(NOW())
 		  GROUP BY sd.codigo,
 			a.modelo,
 			a.nombre,

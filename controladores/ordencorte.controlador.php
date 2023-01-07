@@ -1,53 +1,59 @@
 <?php
 
-class ControladorOrdenCorte{
+class ControladorOrdenCorte
+{
 
     /* 
     * MOSTRAR DATOS DE LAS ORDENES DE CORTE
     */
-    static public function ctrMostrarOrdenCorte($item, $valor){
+    static public function ctrMostrarOrdenCorte($item, $valor)
+    {
 
         $tabla = "ordencortejf";
 
         $respuesta = ModeloOrdenCorte::mdlMostarOrdenCorte($tabla, $item, $valor);
 
         return $respuesta;
-
     }
 
     /* 
     * SACAR EL ULTIMO CODIGO
     */
-    static public function ctrUltimoCodigoOC(){
+    static public function ctrUltimoCodigoOC()
+    {
 
         $tabla = "ordencortejf";
 
         $respuesta = ModeloOrdenCorte::mdlUltimoCodigoOC($tabla);
 
         return $respuesta;
-
     }
 
     /* 
     * CREAR ORDEN DE CORTE
     */
-    static public function ctrCrearOrdenCorte(){
+    static public function ctrCrearOrdenCorte()
+    {
 
         /* 
         todo: Verificamos que traiga datos
         */
-        if( isset($_POST["nuevaOrdenCorte"]) &&
+        if (
+            isset($_POST["nuevaOrdenCorte"]) &&
             isset($_POST["idUsuario"]) &&
-            isset($_POST["configuracion"])){
+            isset($_POST["configuracion"])
+        ) {
 
-                #var_dump("nuevaOrdenCorte", $_POST["nuevaOrdenCorte"]);
+            #var_dump("nuevaOrdenCorte", $_POST["nuevaOrdenCorte"]);
 
-                if($_POST["listaArticulosOC"] == ""){
+            if ($_POST["listaArticulosOC"] == "") {
 
-                    /* 
+                ModeloOrdenCorte::mdlEliminarArticulo();
+
+                /* 
                     ? Mostramos una alerta suave si viene vacia
                     */
-                    echo '<script>
+                echo '<script>
                             swal({
                                 type: "error",
                                 title: "Error",
@@ -59,69 +65,70 @@ class ControladorOrdenCorte{
                                     window.location="crear-ordencorte";}
                             });
                         </script>';
+            } else {
 
-                }else{
-
-                    /* 
+                /* 
                     ? Actualizamos la cantidad de la orden de corte
                     */
 
-                    $listaArticulos = json_decode($_POST["listaArticulosOC"], true);
+                $listaArticulos = json_decode($_POST["listaArticulosOC"], true);
 
-                    var_dump("listaArticulos", $listaArticulos);
+                var_dump("listaArticulos", $listaArticulos);
 
-                    foreach($listaArticulos as $value){
+                foreach ($listaArticulos as $value) {
 
-                        $tabla = "articulojf";
+                    $tabla = "articulojf";
 
-                        $valor = $value["articulo"];
+                    $valor = $value["articulo"];
 
-                        $item1 = "ord_corte";
-                        $valor1 = $value["cantidad"];
+                    $item1 = "ord_corte";
+                    $valor1 = $value["cantidad"];
 
-                        ModeloArticulos::mdlActualizarUnDato($tabla, $item1, $valor1, $valor);
+                    ModeloArticulos::mdlActualizarUnDato($tabla, $item1, $valor1, $valor);
+                }
 
-                    }
-
-                    /* 
+                /* 
                     * GUARDAR LA ORDEN DE CORTE
                     */
 
-                    $datos = array( "usuario"=>$_POST["idUsuario"],
-                                    "codigo"=>$_POST["nuevaOrdenCorte"],
-                                    "configuracion"=>$_POST["configuracion"],
-                                    "total"=>$_POST["totalOrdenCorte"],
-                                    "saldo"=>$_POST["totalOrdenCorte"],
-                                    "estado"=>"Pendiente");
+                $datos = array(
+                    "usuario" => $_POST["idUsuario"],
+                    "codigo" => $_POST["nuevaOrdenCorte"],
+                    "configuracion" => $_POST["configuracion"],
+                    "total" => $_POST["totalOrdenCorte"],
+                    "saldo" => $_POST["totalOrdenCorte"],
+                    "estado" => "Pendiente"
+                );
 
-                    #var_dump("datos", $datos);
-                    
-                    $respuesta = ModeloOrdenCorte::mdlGuardarOrdenCorte("ordencortejf", $datos);
+                #var_dump("datos", $datos);
 
-                    if($respuesta == "ok"){
+                $respuesta = ModeloOrdenCorte::mdlGuardarOrdenCorte("ordencortejf", $datos);
 
-                        /* 
+                if ($respuesta == "ok") {
+
+                    /* 
                         * GUARDAR DETALLE DE ORDEN DE CORTE
                         */
 
-                        $ultimoId = ModeloOrdenCorte::mdlUltimoId();
-                        #var_dump("ultimoId", $ultimoId[0]["ult_codigo"]);
+                    $ultimoId = ModeloOrdenCorte::mdlUltimoId();
+                    #var_dump("ultimoId", $ultimoId[0]["ult_codigo"]);
 
-                        foreach($listaArticulos as $key=>$value){
+                    foreach ($listaArticulos as $key => $value) {
 
-                            $datosD = array("ordencorte"=>$ultimoId[0]["ult_codigo"],
-                                            "articulo"=>$value["articulo"],
-                                            "cantidad"=>$value["cantidad"],
-                                            "saldo"=>$value["cantidad"]);
+                        $datosD = array(
+                            "ordencorte" => $ultimoId[0]["ult_codigo"],
+                            "articulo" => $value["articulo"],
+                            "cantidad" => $value["cantidad"],
+                            "saldo" => $value["cantidad"]
+                        );
 
-                            #var_dump("datosD", $datosD);
+                        #var_dump("datosD", $datosD);
 
-                            ModeloOrdenCorte::mdlGuardarDetallesOrdenCorte("detalles_ordencortejf", $datosD);
-
-                        }
-
-                        # Mostramos una alerta suave
-                        echo '<script>
+                        ModeloOrdenCorte::mdlGuardarDetallesOrdenCorte("detalles_ordencortejf", $datosD);
+                    }
+                    ModeloOrdenCorte::mdlEliminarArticulo();
+                    # Mostramos una alerta suave
+                    echo '<script>
                         swal({
                             type: "success",
                             title: "Felicitaciones",
@@ -132,12 +139,11 @@ class ControladorOrdenCorte{
                             if(result.value){
                                 window.location="ordencorte";}
                         });
-                    </script>';                        
+                    </script>';
+                } else {
 
-                    }else{
-
-					# Mostramos una alerta suave
-					echo '<script>
+                    # Mostramos una alerta suave
+                    echo '<script>
 							swal({
 								type: "error",
 								title: "Error",
@@ -149,55 +155,49 @@ class ControladorOrdenCorte{
 									window.location="crear-ordencorte";}
 							});
 						</script>';
-
-                    }
-
-
-
                 }
-
+            }
         }
-
-
-    }
-
-	/* 
-	* MOSTRAR DATOS DEL DETALLE DE LAS TARJETAS
-	*/
-	static public function ctrMostrarDetallesOrdenCorte($item,$valor){
-
-		$tabla = "detalles_ordencortejf";
-
-		$respuesta = ModeloOrdenCorte::mdlMostraDetallesOrdenCorte($tabla,$item,$valor);
-
-		return $respuesta;
-
     }
 
     /* 
 	* MOSTRAR DATOS DEL DETALLE DE LAS TARJETAS
 	*/
-	static public function ctrMostrarDetalleOrdenCorte($item,$valor){
+    static public function ctrMostrarDetallesOrdenCorte($item, $valor)
+    {
 
-		$tabla = "detalles_ordencortejf";
+        $tabla = "detalles_ordencortejf";
 
-		$respuesta = ModeloOrdenCorte::mdlMostraDetalleOrdenCorte($tabla,$item,$valor);
+        $respuesta = ModeloOrdenCorte::mdlMostraDetallesOrdenCorte($tabla, $item, $valor);
 
-		return $respuesta;
+        return $respuesta;
+    }
 
+    /* 
+	* MOSTRAR DATOS DEL DETALLE DE LAS TARJETAS
+	*/
+    static public function ctrMostrarDetalleOrdenCorte($item, $valor)
+    {
+
+        $tabla = "detalles_ordencortejf";
+
+        $respuesta = ModeloOrdenCorte::mdlMostraDetalleOrdenCorte($tabla, $item, $valor);
+
+        return $respuesta;
     }
     /* 
     * Editar Orden de Corte
     */
-    static public function ctrEditarOrdenCorte(){
+    static public function ctrEditarOrdenCorte()
+    {
 
-        if(isset($_POST["editarCodigo"]) && isset($_POST["idUsuario"]) && isset($_POST["listaArticulosOC"])){
+        if (isset($_POST["editarCodigo"]) && isset($_POST["idUsuario"]) && isset($_POST["listaArticulosOC"])) {
 
             #var_dump($_POST["editarCodigo"], $_POST["idUsuario"],$_POST["listaArticulosOC"]);
 
-            if($_POST["listaArticulosOC"] == ""){
+            if ($_POST["listaArticulosOC"] == "") {
 
-				echo '<script>
+                echo '<script>
 						swal({
 							type: "error",
 							title: "Error",
@@ -206,11 +206,10 @@ class ControladorOrdenCorte{
 							confirmButtonText: "Cerrar"
 						}).then((result)=>{
 							if(result.value){
-								window.location="index.php?ruta=editar-ordencorte&codigo='.$_POST["codigoE"].'";}
+								window.location="index.php?ruta=editar-ordencorte&codigo=' . $_POST["codigoE"] . '";}
 						});
-					</script>';              
-
-            }else{
+					</script>';
+            } else {
 
                 /* 
                 todo: Traemos los datos del detalle de Orden de Corte
@@ -221,56 +220,54 @@ class ControladorOrdenCorte{
                 /* 
                 todo: Cabiamos los codigos de al lista por los codigos de articulos
                 */
-                foreach($detaOC as $key=>$value){
+                foreach ($detaOC as $key => $value) {
 
                     $infoArt = controladorArticulos::ctrMostrarArticulos($value["articulo"]);
-                    $detaOC[$key]["articulo"]=$infoArt["articulo"];
+                    $detaOC[$key]["articulo"] = $infoArt["articulo"];
                     #var_dump("detaOC", $detaOC[$key]["articulo"]);
 
                 }
 
-                if($_POST["listaArticulosOC"] == ""){
+                if ($_POST["listaArticulosOC"] == "") {
 
                     $listaArticulosOC = $detaOC;
                     $validarCambio = false;
-
-                }else{
+                } else {
 
                     $listaArticulosOC = json_decode($_POST["listaArticulosOC"], true);
                     $validarCambio = true;
-
                 }
 
-                if($validarCambio){
+                if ($validarCambio) {
 
                     /* 
                     todo: Actualizamos en articulos las ord_Corte
                     */
-                    foreach($listaArticulosOC as $key=>$value){
+                    foreach ($listaArticulosOC as $key => $value) {
 
                         $item1 = "ord_corte";
                         $valor1 = $value["ord_corte"];
                         $valor2 = $value["articulo"];
 
                         ModeloArticulos::mdlActualizarUnDato("articulojf", $item1, $valor1, $valor2);
-
                     }
-
                 }
 
                 /* 
                 todo: Editamos los cambios de la cabecera Orden de Corte
                 */
-                $datos = array( "codigo"=>$_POST["editarCodigo"],
-                                "usuario"=>$_POST["idUsuario"],
-                                "total"=>$_POST["totalOrdenCorte"],
-                                "saldo"=>$_POST["totalOrdenCorte"],
-                                "lastUpdate"=>$_POST["fechaActual"]);
+                $datos = array(
+                    "codigo" => $_POST["editarCodigo"],
+                    "usuario" => $_POST["idUsuario"],
+                    "total" => $_POST["totalOrdenCorte"],
+                    "saldo" => $_POST["totalOrdenCorte"],
+                    "lastUpdate" => $_POST["fechaActual"]
+                );
                 #var_dump("datos", $datos);
 
                 $respuesta = ModeloOrdenCorte::mdlEditarOrdenCorte("ordencortejf", $datos);
 
-                if($respuesta == "ok"){
+                if ($respuesta == "ok") {
 
                     /* 
                     todo: Editamos los cambios del detalle Ordenes de Corte, primero eliminamos los detalles
@@ -280,21 +277,22 @@ class ControladorOrdenCorte{
 
                     $eliminarDato = "ok";
 
-                    if($eliminarDato == "ok"){
+                    if ($eliminarDato == "ok") {
 
-                        foreach($listaArticulosOC as $key=>$value){
+                        foreach ($listaArticulosOC as $key => $value) {
 
                             #var_dump("listaArticulosOC", $listaArticulosOC);
 
-                            $datosD = array("ordencorte"=>$_POST["editarCodigo"],
-                                            "articulo"=>$value["articulo"],
-                                            "cantidad"=>$value["cantidad"],
-                                            "saldo"=>$value["cantidad"]);
+                            $datosD = array(
+                                "ordencorte" => $_POST["editarCodigo"],
+                                "articulo" => $value["articulo"],
+                                "cantidad" => $value["cantidad"],
+                                "saldo" => $value["cantidad"]
+                            );
 
                             #var_dump("datosD", $datosD);
 
                             ModeloOrdenCorte::mdlGuardarDetallesOrdenCorte("detalles_ordencortejf", $datosD);
-
                         }
 
                         # Mostramos una alerta suave
@@ -309,13 +307,11 @@ class ControladorOrdenCorte{
                                     if(result.value){
                                         window.location="ordencorte";}
                                 });
-                            </script>';                     
+                            </script>';
+                    } else {
 
-
-                    }else{
-
-					# Mostramos una alerta suave
-					echo '<script>
+                        # Mostramos una alerta suave
+                        echo '<script>
 							swal({
 								type: "error",
 								title: "Error",
@@ -327,13 +323,10 @@ class ControladorOrdenCorte{
 									window.location="ordencorte";}
 							});
 						</script>';
-
                     }
+                } else {
 
-
-                }else{
-
-				echo '<script>
+                    echo '<script>
 						swal({
 							type: "error",
 							title: "Error",
@@ -345,19 +338,16 @@ class ControladorOrdenCorte{
 								window.location="ordencorte";}
 						});
 					</script>';
-
-                }                                
-
+                }
             }
-
         }
-
     }
 
     /* 
     *Método para eliminar las ordenes de corte
     */
-    static public function ctrEliminarOrdenCorte($codigo){
+    static public function ctrEliminarOrdenCorte($codigo)
+    {
 
         $item = "codigo";
         $infoOC = ModeloOrdenCorte::mdlMostraDetallesOrdenCorte("ordencortejf", $item, $codigo);
@@ -369,7 +359,7 @@ class ControladorOrdenCorte{
         /* 
         todo: Actualizamos orden de corte en Articulojf
         */
-        foreach($detaOC as $key=>$value){
+        foreach ($detaOC as $key => $value) {
 
             $valorA = $value["articulo"];
             #var_dump("valorA", $valorA);
@@ -383,7 +373,6 @@ class ControladorOrdenCorte{
             #var_dump("ord_corte", $ord_corte);
 
             ModeloArticulos::mdlActualizarUnDato("articulojf", "ord_corte", $ord_corte, $value["articulo"]);
-
         }
 
         /* 
@@ -395,7 +384,7 @@ class ControladorOrdenCorte{
 
         $respuesta = ModeloOrdenCorte::mdlEliminarDato($tablaOC, $itemOC, $valorOC);
 
-        if($respuesta == "ok"){
+        if ($respuesta == "ok") {
 
             /* 
             todo: Eliminamos el detalle de Orden de corte
@@ -405,121 +394,126 @@ class ControladorOrdenCorte{
             $valorDOC = $codigo;
 
             ModeloOrdenCorte::mdlEliminarDato($tablaDOC, $itemDOC, $valorDOC);
-
         }
 
         return $respuesta;
-
     }
-    
-	/* 
+
+    /* 
 	* VISUALIZAR DATOS DE LA ORDEN DE CORTE - CABECERA
 	*/
-	static public function ctrVisualizaOrdenCorte($item, $valor){
+    static public function ctrVisualizaOrdenCorte($item, $valor)
+    {
 
-		$tabla = "ordencortejf";
+        $tabla = "ordencortejf";
 
         $respuesta = ModeloOrdenCorte::mdlVisualizaOrdenCorte($tabla, $item, $valor);
-        
-		return $respuesta;
 
+        return $respuesta;
     }
-    
-	/* 
+
+    /* 
 	* VISUALIZAR DATOS DE LA ORDEN DE CORTE DETALLE
 	*/
-	static public function ctrVisualizarOrdenCorteDetalle($item, $valor){
+    static public function ctrVisualizarOrdenCorteDetalle($item, $valor)
+    {
 
-		$tabla = "detalles_ordencortejf";
+        $tabla = "detalles_ordencortejf";
 
         $respuesta = ModeloOrdenCorte::mdlVisualizarOrdenCorteDetalle($tabla, $item, $valor);
-        
-		return $respuesta;
 
-    }   
+        return $respuesta;
+    }
 
 
     /* 
 	* VISUALIZAR DATOS DE LA ORDEN DE CORTE DETALLE
 	*/
-	static public function ctrVisualizarOrdenCorteDetalleCantidad($item, $valor){
+    static public function ctrVisualizarOrdenCorteDetalleCantidad($item, $valor)
+    {
 
-		$tabla = "detalles_ordencortejf";
+        $tabla = "detalles_ordencortejf";
 
         $respuesta = ModeloOrdenCorte::mdlVisualizarOrdenCorteDetalleCantidad($tabla, $item, $valor);
-        
-		return $respuesta;
 
-    }   
-    
+        return $respuesta;
+    }
+
     /*=============================================
 	RANGO FECHAS
-	=============================================*/	
+	=============================================*/
 
-	static public function ctrRangoFechasOrdenCortes($fechaInicial, $fechaFinal){
+    static public function ctrRangoFechasOrdenCortes($fechaInicial, $fechaFinal)
+    {
 
-		$tabla = "ordencortejf";
+        $tabla = "ordencortejf";
 
-		$respuesta = ModeloOrdenCorte::mdlRangoFechasOrdenCortes($tabla, $fechaInicial, $fechaFinal);
+        $respuesta = ModeloOrdenCorte::mdlRangoFechasOrdenCortes($tabla, $fechaInicial, $fechaFinal);
 
-		return $respuesta;
-		
+        return $respuesta;
     }
-    static public function ctrRangoFechasOrdenCortesGeneral($fechaInicial, $fechaFinal){
+    static public function ctrRangoFechasOrdenCortesGeneral($fechaInicial, $fechaFinal)
+    {
 
-		$tabla = "detalles_ordencortejf";
+        $tabla = "detalles_ordencortejf";
 
-		$respuesta = ModeloOrdenCorte::mdlRangoFechasOrdenCortesGeneral($tabla, $fechaInicial, $fechaFinal);
+        $respuesta = ModeloOrdenCorte::mdlRangoFechasOrdenCortesGeneral($tabla, $fechaInicial, $fechaFinal);
 
-		return $respuesta;
-		
-    }
-
-    static public function ctrRangoFechasOrdenCortesCantidad($fechaInicial, $fechaFinal){
-
-		$tabla = "detalles_ordencortejf";
-
-		$respuesta = ModeloOrdenCorte::mdlRangoFechasOrdenCortesCantidad($tabla, $fechaInicial, $fechaFinal);
-
-		return $respuesta;
-		
+        return $respuesta;
     }
 
-	/* 
+    static public function ctrRangoFechasOrdenCortesCantidad($fechaInicial, $fechaFinal)
+    {
+
+        $tabla = "detalles_ordencortejf";
+
+        $respuesta = ModeloOrdenCorte::mdlRangoFechasOrdenCortesCantidad($tabla, $fechaInicial, $fechaFinal);
+
+        return $respuesta;
+    }
+
+    /* 
 	* MOSTRAR ORDEN DE CORTE PENDIENTES Y ABIERTOS
 	*/
-	static public function ctrOCPend(){
+    static public function ctrOCPend()
+    {
 
-		$respuesta = ModeloOrdenCorte::mdlOCPend();
+        $respuesta = ModeloOrdenCorte::mdlOCPend();
 
-		return $respuesta;
-
-    }    
+        return $respuesta;
+    }
     /* 
     * CREAR ORDEN DE CORTE
     */
-    static public function ctrCrearDetalleOrdenCorte(){
-        if( isset($_POST["nuevoCodigo"]) && 
-            isset($_POST["articulo"]) && 
-            isset($_POST["cantidad"])){
+    static public function ctrCrearDetalleOrdenCorte()
+    {
+        if (
+            isset($_POST["nuevoCodigo"]) &&
+            isset($_POST["articulo"]) &&
+            isset($_POST["cantidad"])
+        ) {
 
-        $codigo=$_GET["codigo"];
-        $datosD = array("ordencorte"=>$_POST["nuevoCodigo"],
-                        "articulo"=>$_POST["articulo"],
-                        "cantidad"=>$_POST["cantidad"],
-                        "saldo"=>$_POST["cantidad"]);
+            $codigo = $_GET["codigo"];
+            $datosD = array(
+                "ordencorte" => $_POST["nuevoCodigo"],
+                "articulo" => $_POST["articulo"],
+                "cantidad" => $_POST["cantidad"],
+                "saldo" => $_POST["cantidad"]
+            );
 
-        $respuesta=ModeloOrdenCorte::mdlGuardarDetallesOrdenCorte("detalles_ordencortejf", $datosD);
+            $respuesta = ModeloOrdenCorte::mdlGuardarDetallesOrdenCorte("detalles_ordencortejf", $datosD);
 
-            if($respuesta=="ok"){
+            if ($respuesta == "ok") {
 
-                $datos = array("codigo"=>$_GET["codigo"],
-                                "usuario"=>$_POST["idUsuario"],                                
-                                "lastUpdate"=>$_POST["fechaActual"]);
+                $datos = array(
+                    "codigo" => $_GET["codigo"],
+                    "usuario" => $_POST["idUsuario"],
+                    "lastUpdate" => $_POST["fechaActual"]
+                );
                 // var_dump($datos);
                 ModeloOrdenCorte::mdlAgregarCantidadOC($datos);
 
-                ModeloArticulos::mdlSumOc($_POST["articulo"],$_POST["cantidad"]);
+                ModeloArticulos::mdlSumOc($_POST["articulo"], $_POST["cantidad"]);
 
                 echo '<script>
                                 swal({
@@ -530,13 +524,13 @@ class ControladorOrdenCorte{
                                     confirmButtonText: "Cerrar"
                                 }).then((result)=>{
                                     if(result.value){
-                                        window.location="index.php?ruta=editar-detalle-ordencorte&codigo='.$codigo.'";}
+                                        window.location="index.php?ruta=editar-detalle-ordencorte&codigo=' . $codigo . '";}
                                 });
                             </script>';
-            }else{
+            } else {
 
-            # Mostramos una alerta suave
-            echo '<script>
+                # Mostramos una alerta suave
+                echo '<script>
                     swal({
                         type: "error",
                         title: "Error",
@@ -545,10 +539,9 @@ class ControladorOrdenCorte{
                         confirmButtonText: "Cerrar"
                     }).then((result)=>{
                         if(result.value){
-                            window.location="index.php?ruta=editar-detalle-ordencorte&codigo='.$codigo.'";}
+                            window.location="index.php?ruta=editar-detalle-ordencorte&codigo=' . $codigo . '";}
                     });
                 </script>';
-
             }
         }
     }
@@ -556,32 +549,39 @@ class ControladorOrdenCorte{
     /* 
     * CREAR ORDEN DE CORTE
     */
-    static public function ctrEditarDetalleOrdenCorte(){
+    static public function ctrEditarDetalleOrdenCorte()
+    {
 
-        if( isset($_POST["idDetalle"]) && 
-            isset($_POST["editarArticulo"]) && 
+        if (
+            isset($_POST["idDetalle"]) &&
+            isset($_POST["editarArticulo"]) &&
             isset($_POST["editarCantidad"]) &&
-            isset($_POST["cambio"])){
+            isset($_POST["cambio"])
+        ) {
 
-            $codigo=$_GET["codigo"];
+            $codigo = $_GET["codigo"];
 
-            $datosD = array("id"=>$_POST["idDetalle"],
-                            "cantidad"=>$_POST["editarCantidad"],
-                            "saldo"=>$_POST["editarCantidad"]);
+            $datosD = array(
+                "id" => $_POST["idDetalle"],
+                "cantidad" => $_POST["editarCantidad"],
+                "saldo" => $_POST["editarCantidad"]
+            );
 
-            $respuesta=ModeloOrdenCorte::mdlEditarDetalleOrdenCorte("detalles_ordencortejf", $datosD);
+            $respuesta = ModeloOrdenCorte::mdlEditarDetalleOrdenCorte("detalles_ordencortejf", $datosD);
 
 
-            if($respuesta=="ok"){
+            if ($respuesta == "ok") {
 
-                $datos = array("codigo"=>$_GET["codigo"],
-                                "usuario"=>$_POST["idUsuario"],
-                                "cambio"=>$_POST["cambio"],
-                                "lastUpdate"=>$_POST["fechaActual"]);
+                $datos = array(
+                    "codigo" => $_GET["codigo"],
+                    "usuario" => $_POST["idUsuario"],
+                    "cambio" => $_POST["cambio"],
+                    "lastUpdate" => $_POST["fechaActual"]
+                );
                 //var_dump($datos);
                 ModeloOrdenCorte::mdlEditarCantidadOC($datos);
 
-                ModeloArticulos::mdlActualizarOrdenCorte($_POST["editarArticulo"],$_POST["cambio"]);
+                ModeloArticulos::mdlActualizarOrdenCorte($_POST["editarArticulo"], $_POST["cambio"]);
 
 
                 echo '<script>
@@ -593,13 +593,13 @@ class ControladorOrdenCorte{
                                     confirmButtonText: "Cerrar"
                                 }).then((result)=>{
                                     if(result.value){
-                                        window.location="index.php?ruta=editar-detalle-ordencorte&codigo='.$codigo.'";}
+                                        window.location="index.php?ruta=editar-detalle-ordencorte&codigo=' . $codigo . '";}
                                 });
                             </script>';
-            }else{
+            } else {
 
-            # Mostramos una alerta suave
-            echo '<script>
+                # Mostramos una alerta suave
+                echo '<script>
                     swal({
                         type: "error",
                         title: "Error",
@@ -608,28 +608,28 @@ class ControladorOrdenCorte{
                         confirmButtonText: "Cerrar"
                     }).then((result)=>{
                         if(result.value){
-                            window.location="index.php?ruta=editar-detalle-ordencorte&codigo='.$codigo.'";}
+                            window.location="index.php?ruta=editar-detalle-ordencorte&codigo=' . $codigo . '";}
                     });
                 </script>';
-
             }
         }
     }
-    static public function ctrEliminarDetalleOrdenCorte(){
-        if(isset($_GET["idDetalle"])){
+    static public function ctrEliminarDetalleOrdenCorte()
+    {
+        if (isset($_GET["idDetalle"])) {
 
-        $item="id";
-        $valor = $_GET["id"];
-        $codigo =$_GET["codigo"];
+            $item = "id";
+            $valor = $_GET["id"];
+            $codigo = $_GET["codigo"];
 
-        $respuesta=ModeloOrdenCorte::mdlEliminarDato("detalles_ordencortejf",$item,$valor);
+            $respuesta = ModeloOrdenCorte::mdlEliminarDato("detalles_ordencortejf", $item, $valor);
 
-        if($respuesta=="ok"){
+            if ($respuesta == "ok") {
 
-            ModeloArticulos::mdlSumOc($_GET["idDetalle"], $_GET["cantidad"]);
-            // var_dump($_GET["idDetalle"], $_GET["cantidad"]);
+                ModeloArticulos::mdlSumOc($_GET["idDetalle"], $_GET["cantidad"]);
+                // var_dump($_GET["idDetalle"], $_GET["cantidad"]);
 
-            echo '<script>
+                echo '<script>
                             swal({
                                 type: "success",
                                 title: "Felicitaciones",
@@ -638,11 +638,10 @@ class ControladorOrdenCorte{
                                 confirmButtonText: "Cerrar"
                             }).then((result)=>{
                                 if(result.value){
-                                    window.location="index.php?ruta=editar-detalle-ordencorte&codigo='.$codigo.'";}
+                                    window.location="index.php?ruta=editar-detalle-ordencorte&codigo=' . $codigo . '";}
                             });
                         </script>';
             }
-
         }
     }
 }

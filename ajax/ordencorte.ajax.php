@@ -83,6 +83,33 @@ class AjaxOrdenCorte
             echo json_encode($respuesta);
         }
     }
+
+    public function ajaxCargarArticulo()
+    {
+
+        $prueba = ModeloOrdenCorte::mdlEliminarArticulo();
+
+        $articulo = $this->articulo;
+
+        foreach ($articulo as $key => $value) {
+            if ($value["cantidad"] < 0) {
+
+                $cantidad = 0;
+            } else {
+                $cantidad = $value["cantidad"];
+            }
+            $datos = array(
+                "articulo" => $value["articulo"],
+                "cantidad" => $cantidad
+            );
+
+            ModeloOrdenCorte::mdlCargarArticulo($datos);
+        }
+
+        echo '<pre>';
+        print_r($prueba);
+        echo '</pre>';
+    }
 }
 
 /* 
@@ -130,4 +157,12 @@ if (isset($_POST["lista"])) {
     $mostrarOrdenCorteDetalle = new AjaxOrdenCorte();
     $mostrarOrdenCorteDetalle->lista = $_POST["lista"];
     $mostrarOrdenCorteDetalle->ajaxCargarTarjetas();
+}
+
+
+if (isset($_POST["articulos"])) {
+
+    $mostrarOrdenCorteDetalle = new AjaxOrdenCorte();
+    $mostrarOrdenCorteDetalle->articulo = json_decode($_POST["articulos"], true);
+    $mostrarOrdenCorteDetalle->ajaxCargarArticulo();
 }

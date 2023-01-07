@@ -91,6 +91,11 @@ class ControladorFacturacion
                     $docDest = str_replace('-', '', $docDestino);
                     //var_dump($docDest);
 
+                    $chofer = $_POST["chofer"];
+                    $movilidad = $_POST["carro"];
+                    $peso = $_POST["peso"];
+                    $bultos = $_POST["bultos"];
+
                     $usureg = $_SESSION["nombre"];
                     $pcreg = gethostbyaddr($_SERVER['REMOTE_ADDR']);
 
@@ -112,7 +117,11 @@ class ControladorFacturacion
                         "tipo_documento" => "GUIA REMISION",
                         "cuenta" => "",
                         "usureg" => $usureg,
-                        "pcreg" => $pcreg
+                        "pcreg" => $pcreg,
+                        "chofer" => $chofer,
+                        "carro" => $movilidad,
+                        "peso" => $peso,
+                        "bultos" => $bultos
                     );
                     //var_dump($datosD);
 
@@ -250,6 +259,11 @@ class ControladorFacturacion
                     $docDest = "";
                     //var_dump($docDest);
 
+                    $chofer = $_POST["chofer"];
+                    $movilidad = $_POST["carro"];
+                    $peso = $_POST["peso"];
+                    $bultos = $_POST["bultos"];
+
                     $usureg = $_SESSION["nombre"];
                     $pcreg = gethostbyaddr($_SERVER['REMOTE_ADDR']);
 
@@ -271,7 +285,11 @@ class ControladorFacturacion
                         "tipo_documento" => "FACTURA",
                         "cuenta" => $_POST["formaPago"],
                         "usureg" => $usureg,
-                        "pcreg" => $pcreg
+                        "pcreg" => $pcreg,
+                        "chofer" => $chofer,
+                        "carro" => $movilidad,
+                        "peso" => $peso,
+                        "bultos" => $bultos
                     );
                     //var_dump($datosD);
 
@@ -475,6 +493,11 @@ class ControladorFacturacion
                     $docDest = "";
                     //var_dump($docDest);
 
+                    $chofer = $_POST["chofer"];
+                    $movilidad = $_POST["carro"];
+                    $peso = $_POST["peso"];
+                    $bultos = $_POST["bultos"];
+
                     $usureg = $_SESSION["nombre"];
                     $pcreg = gethostbyaddr($_SERVER['REMOTE_ADDR']);
 
@@ -496,7 +519,11 @@ class ControladorFacturacion
                         "tipo_documento" => "BOLETA",
                         "cuenta" => $_POST["formaPago"],
                         "usureg" => $usureg,
-                        "pcreg" => $pcreg
+                        "pcreg" => $pcreg,
+                        "chofer" => $chofer,
+                        "carro" => $movilidad,
+                        "peso" => $peso,
+                        "bultos" => $bultos
                     );
                     //var_dump($datosD);
 
@@ -700,6 +727,11 @@ class ControladorFacturacion
                     $docDest = "";
                     //var_dump($docDest);
 
+                    $chofer = $_POST["chofer"];
+                    $movilidad = $_POST["carro"];
+                    $peso = $_POST["peso"];
+                    $bultos = $_POST["bultos"];
+
                     $usureg = $_SESSION["nombre"];
                     $pcreg = gethostbyaddr($_SERVER['REMOTE_ADDR']);
 
@@ -721,7 +753,11 @@ class ControladorFacturacion
                         "tipo_documento" => "PROFORMA",
                         "cuenta" => "",
                         "usureg" => $usureg,
-                        "pcreg" => $pcreg
+                        "pcreg" => $pcreg,
+                        "chofer" => $chofer,
+                        "carro" => $movilidad,
+                        "peso" => $peso,
+                        "bultos" => $bultos
                     );
                     //var_dump($datosD);
 
@@ -926,6 +962,11 @@ class ControladorFacturacion
                     $docDest = "";
                     //var_dump($docDest);
 
+                    $chofer = $_POST["chofer"];
+                    $movilidad = $_POST["carro"];
+                    $peso = $_POST["peso"];
+                    $bultos = $_POST["bultos"];
+
                     $usureg = $_SESSION["nombre"];
                     $pcreg = gethostbyaddr($_SERVER['REMOTE_ADDR']);
 
@@ -947,7 +988,11 @@ class ControladorFacturacion
                         "tipo_documento" => "NC",
                         "cuenta" => $_POST["formaPago"],
                         "usureg" => $usureg,
-                        "pcreg" => $pcreg
+                        "pcreg" => $pcreg,
+                        "chofer" => $chofer,
+                        "carro" => $movilidad,
+                        "peso" => $peso,
+                        "bultos" => $bultos
                     );
                     //var_dump($datosD);
 
@@ -3781,6 +3826,161 @@ class ControladorFacturacion
 
 
             //copy($origen,$destino);
+            rename($origen, $destino);
+        }
+
+        $respuesta = "okA";
+        return $respuesta;
+    }
+
+    //*GENERAR NUBE DEBITO
+    static public function ctrGenerarGuia()
+    {
+        if (isset($_POST["tipo"])) {
+            $datos = ModeloFacturacion::mdlFEGuia($_POST["tipo"], $_POST["documento"]);
+
+            //todo: FILA 1
+            $fila1 =    $datos["a1"] . ',' .
+                $datos["b1"] . ',' .
+                $datos["c1"] . ',' .
+                $datos["d1"] . ',' .
+                $datos["e1"] . ',' .
+                $datos["f1"] . ',' .
+                $datos["g1"] . ',' .
+                $datos["h1"] . ',' .
+                $datos["i1"] . ',';
+
+            //todo: FILA 2
+            $fila2 = ',,,,,,,,,,,,,,';
+
+            //todo: FILA 3
+            $fila3 =    $datos["a3"] . ',' .
+                $datos["b3"] . ',' .
+                $datos["c3"] . ',';
+
+            //todo: FILA 4
+            $fila4 =    $datos["a4"] . ',' .
+                $datos["b4"] . ',' .
+                $datos["c4"] . ',' .
+                $datos["d4"] . ',' .
+                $datos["e4"] . ',';
+
+            //todo: FILA 5
+            $fila5 =    $datos["a5"] . ',' .
+                $datos["b5"] . ',';
+
+            //todo: FILA 6
+            $fila6 = ',,,,';
+
+            //todo: FILA 7
+            $fila7 =    $datos["a7"] . ',' .
+                $datos["b7"] . ',' .
+                $datos["c7"] . ',' .
+                $datos["d7"] . ',' .
+                $datos["e7"] . ',' .
+                $datos["f7"] . ',' .
+                $datos["g7"] . ',' .
+                $datos["h7"] . ',' .
+                $datos["i7"] . ',' .
+                $datos["j7"] . ',';
+
+            //todo: FILA 8
+            $fila8 =    $datos["a8"] . ',' .
+                $datos["b8"] . ',' .
+                $datos["c8"] . ',' .
+                $datos["d8"] . ',' .
+                $datos["e8"] . ',' .
+                $datos["f8"] . ',' .
+                $datos["g8"] . ',' .
+                $datos["h8"] . ',' .
+                $datos["i8"] . ',' .
+                $datos["j8"] . ',' .
+                $datos["k8"] . ',';
+
+            //todo: FILA 9
+            $fila9 = ',,,,,,,,,,,,,,,,,,,,';
+
+            //todo: FILA 10
+            $fila10 =    $datos["a10"] . ',' .
+                $datos["b10"] . ',' .
+                $datos["c10"] . ',' .
+                $datos["d10"] . ',' .
+                $datos["e10"] . ',' .
+                $datos["f10"] . ',' .
+                $datos["g10"] . ',' .
+                $datos["h10"] . ',' .
+                $datos["i10"] . ',' .
+                $datos["j10"] . ',' .
+                $datos["k10"] . ',' .
+                $datos["l10"] . ',' .
+                $datos["m10"] . ',' .
+                $datos["n10"] . ',' .
+                $datos["o10"] . ',' .
+                $datos["p10"] . ',' .
+                $datos["q10"] . ',' .
+                $datos["r10"] . ',' .
+                $datos["s10"] . ',' .
+                $datos["t10"] . ',' .
+                $datos["u10"] . ',' .
+                $datos["v10"] . ',' .
+                $datos["w10"] . ',';
+
+            //todo: FILA 11
+            $fila11 =    $datos["a11"] . ',';
+
+            $nombre = '20513613939-' . $datos["c1"] . '-' . $datos["b1"];
+
+            $fp = fopen('../vistas/reportes_excel/csv_fe/' . $nombre . '.txt', 'w');
+
+            fwrite($fp, $fila1 . PHP_EOL);
+            fwrite($fp, $fila2 . PHP_EOL);
+            fwrite($fp, $fila3 . PHP_EOL);
+            fwrite($fp, $fila4 . PHP_EOL);
+            fwrite($fp, $fila5 . PHP_EOL);
+            fwrite($fp, $fila6 . PHP_EOL);
+            fwrite($fp, $fila7 . PHP_EOL);
+            fwrite($fp, $fila8 . PHP_EOL);
+            fwrite($fp, $fila9 . PHP_EOL);
+            fwrite($fp, $fila10 . PHP_EOL);
+            fwrite($fp, $fila11 . PHP_EOL);
+
+            $datosD = ModeloFacturacion::mdlFEGuiaDetA($_POST["tipo"], $_POST["documento"]);
+            //var_dump($datosD);
+
+            foreach ($datosD as $key => $value) {
+
+                if ($key < count($datosD) - 1) {
+
+                    fwrite($fp, ($key + 1) . ',' .
+                        $value["b12"] . ',' .
+                        $value["c12"] . ',' .
+                        $value["d12"] . ',' .
+                        $value["e12"] . ',' .
+                        $value["f12"] . ',' .
+                        "\r\n");
+                } else {
+
+                    fwrite($fp, ($key + 1) . ',' .
+                        $value["b12"] . ',' .
+                        $value["c12"] . ',' .
+                        $value["d12"] . ',' .
+                        $value["e12"] . ',' .
+                        $value["f12"] . ',' . PHP_EOL);
+                    fwrite($fp, 'FF00FF');
+                }
+            }
+
+            fclose($fp);
+
+            $origen = 'c:/xampp2/htdocs/vascorp/vistas/reportes_excel/csv_fe/' . $nombre . '.txt';
+
+            //?destino prueba
+            $destino = 'c:/prueba/guiaremision/' . $nombre . '.csv';
+
+            //!destino produccion
+            //!$destino = 'c:/daemonOSE21/documents/in/guiaremision/'.$nombre.'.csv';
+
+            //copy($origen, $destino);
             rename($origen, $destino);
         }
 
