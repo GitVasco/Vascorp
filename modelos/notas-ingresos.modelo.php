@@ -2,17 +2,19 @@
 
 require_once "conexion.php";
 
-class ModeloNotasIngresos{
+class ModeloNotasIngresos
+{
 
-    
-	/*=============================================
+
+    /*=============================================
 	RANGO FECHAS
-	=============================================*/	
-	static public function mdlRangoFechasNotasIngresos($fechaInicial, $fechaFinal){
+	=============================================*/
+    static public function mdlRangoFechasNotasIngresos($fechaInicial, $fechaFinal)
+    {
 
-		if($fechaInicial == "null"){
+        if ($fechaInicial == "null") {
 
-			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+            $stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
                                             TB1.Des_Larga AS tipodoc,
                                             nrooc,
                                             nroguiaasociada,
@@ -59,17 +61,15 @@ class ModeloNotasIngresos{
                                             Nea 
                                             WHERE Nea.EstReg = 'P' 
                                             AND Nea.`NroGuiaAsociada` != '') 
-                                            AND YEAR(nea.fecreg) IN ('2020', '2021','2022') 
+                                            AND YEAR(nea.fecreg) = YEAR(NOW())
                                         ORDER BY nNea DESC");
 
-			$stmt -> execute();
+            $stmt->execute();
 
-			return $stmt -> fetchAll();	
+            return $stmt->fetchAll();
+        } else if ($fechaInicial == $fechaFinal) {
 
-
-		}else if($fechaInicial == $fechaFinal){
-
-			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+            $stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
             TB1.Des_Larga AS tipodoc,
             nrooc,
             nroguiaasociada,
@@ -119,25 +119,24 @@ class ModeloNotasIngresos{
             AND DATE(nea.fecreg) like '%$fechaFinal%'
         ORDER BY nNea DESC");
 
-			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+            $stmt->bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 
-			$stmt -> execute();
+            $stmt->execute();
 
-			return $stmt -> fetchAll();
+            return $stmt->fetchAll();
+        } else {
 
-		}else{
+            $fechaActual = new DateTime();
+            $fechaActual->add(new DateInterval("P1D"));
+            $fechaActualMasUno = $fechaActual->format("Y-m-d");
 
-			$fechaActual = new DateTime();
-			$fechaActual ->add(new DateInterval("P1D"));
-			$fechaActualMasUno = $fechaActual->format("Y-m-d");
+            $fechaFinal2 = new DateTime($fechaFinal);
+            $fechaFinal2->add(new DateInterval("P1D"));
+            $fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
 
-			$fechaFinal2 = new DateTime($fechaFinal);
-			$fechaFinal2 ->add(new DateInterval("P1D"));
-			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+            if ($fechaFinalMasUno == $fechaActualMasUno) {
 
-			if($fechaFinalMasUno == $fechaActualMasUno){
-
-				$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+                $stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
                 TB1.Des_Larga AS tipodoc,
                 nrooc,
                 nroguiaasociada,
@@ -186,11 +185,10 @@ class ModeloNotasIngresos{
                 AND Nea.`NroGuiaAsociada` != '') 
                 AND DATE(nea.fecreg) BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'
             ORDER BY nNea DESC");
+            } else {
 
-			}else{
 
-
-				$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+                $stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
                 TB1.Des_Larga AS tipodoc,
                 nrooc,
                 nroguiaasociada,
@@ -239,25 +237,23 @@ class ModeloNotasIngresos{
                 AND Nea.`NroGuiaAsociada` != '') 
                 AND DATE(nea.fecreg) BETWEEN '$fechaInicial' AND '$fechaFinal'
             ORDER BY nNea DESC");
+            }
 
-			}
-		
-			$stmt -> execute();
+            $stmt->execute();
 
-			return $stmt -> fetchAll();
+            return $stmt->fetchAll();
+        }
+    }
 
-		}
-
-	}
-
-	/* 
+    /* 
 	* MOSTRAR MP PARA NOTA DE INGRESO CON O SIN OC
 	*/
-	static public function mdlMostrarMPOC($empresa, $oc){
+    static public function mdlMostrarMPOC($empresa, $oc)
+    {
 
-		if ($oc == "null" || $oc == "") {
+        if ($oc == "null" || $oc == "") {
 
-			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+            $stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
             pro.CodPro,
             pro.CodFab,
             DesPro,
@@ -464,14 +460,14 @@ class ModeloNotasIngresos{
             AND ocd.EstOco = '03' 
             AND ocd.CodRuc = $empresa");
 
-			$stmt->bindParam(":empresa", $empresa, PDO::PARAM_STR);
+            $stmt->bindParam(":empresa", $empresa, PDO::PARAM_STR);
 
-			$stmt->execute();
+            $stmt->execute();
 
-			return $stmt->fetchAll();
-		} else {
+            return $stmt->fetchAll();
+        } else {
 
-                                                $stmt = Conexion::conectar()->prepare("SELECT 
+            $stmt = Conexion::conectar()->prepare("SELECT 
                                                 ocd.CodPro,
                                                 pro.CodFab,
                                                 pro.DesPro,
@@ -517,22 +513,23 @@ class ModeloNotasIngresos{
             $stmt->bindParam(":empresa", $empresa, PDO::PARAM_STR);
             $stmt->bindParam(":oc", $oc, PDO::PARAM_STR);
 
-			$stmt->execute();
+            $stmt->execute();
 
-			return $stmt->fetchAll();
-		}
+            return $stmt->fetchAll();
+        }
 
-		$stmt->close();
+        $stmt->close();
 
-		$stmt = null;
-	}
+        $stmt = null;
+    }
 
-	/*
+    /*
 	* TIPOS DE DOC PARA NI
 	*/
-	static public function mdlDocNI(){
+    static public function mdlDocNI()
+    {
 
-		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+        $stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
                                     cod_argumento,
                                     cod_tabla,
                                     des_larga,
@@ -544,21 +541,22 @@ class ModeloNotasIngresos{
                                     AND Cod_Argumento IN ('12', '14', '15', '21') 
                                 ORDER BY Cod_Argumento DESC ");
 
-		$stmt->execute();
+        $stmt->execute();
 
-		return $stmt->fetchAll();
+        return $stmt->fetchAll();
 
-		$stmt->close();
+        $stmt->close();
 
-		$stmt = null;
-	}  
-    
-	/*
+        $stmt = null;
+    }
+
+    /*
 	* TIPOS DE DOC PARA NI
 	*/
-	static public function mdlOCProv($valor){
+    static public function mdlOCProv($valor)
+    {
 
-		$stmt = Conexion::conectar()->prepare("SELECT 
+        $stmt = Conexion::conectar()->prepare("SELECT 
                                         nro,
                                         DATE(fecemi) AS fecemi 
                                     FROM
@@ -567,25 +565,26 @@ class ModeloNotasIngresos{
                                         AND estoco = '03' 
                                         AND estac IN ('abi', 'par')");
 
-        $stmt->bindParam(":empresa", $valor, PDO::PARAM_STR);                                        
+        $stmt->bindParam(":empresa", $valor, PDO::PARAM_STR);
 
-		$stmt->execute();
+        $stmt->execute();
 
-		return $stmt->fetchAll();
+        return $stmt->fetchAll();
 
-		$stmt->close();
+        $stmt->close();
 
-		$stmt = null;
-	}     
+        $stmt = null;
+    }
 
-	/* 
+    /* 
 	* MP EN OC O SUELTA
 	*/
-	static public function mdlTraerMpOC($codpro, $orden, $codruc){
+    static public function mdlTraerMpOC($codpro, $orden, $codruc)
+    {
 
-		if ($orden == "null" || $orden == "") {
+        if ($orden == "null" || $orden == "") {
 
-			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+            $stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
                                                         pro.codpro,
                                                         pro.codfab,
                                                         despro,
@@ -773,16 +772,15 @@ class ModeloNotasIngresos{
                                                         AND pmp3.CodRuc3 = :codruc 
                                                         AND pro.codpro = :codpro");
 
-			$stmt->bindParam(":codruc", $codruc, PDO::PARAM_STR);
+            $stmt->bindParam(":codruc", $codruc, PDO::PARAM_STR);
             $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
 
-			$stmt->execute();
+            $stmt->execute();
 
-			return $stmt->fetch();
+            return $stmt->fetch();
+        } else {
 
-		} else {
-
-			$stmt = Conexion::conectar()->prepare("SELECT 
+            $stmt = Conexion::conectar()->prepare("SELECT 
           ocd.codpro,
           pro.codfab AS codfab,
           pro.despro AS despro,
@@ -832,46 +830,47 @@ class ModeloNotasIngresos{
             AND ocd.Nro = :orden 
             AND ocd.codpro = :codpro");
 
-$stmt->bindParam(":codruc", $codruc, PDO::PARAM_STR);
-$stmt->bindParam(":orden", $orden, PDO::PARAM_STR);
-$stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
+            $stmt->bindParam(":codruc", $codruc, PDO::PARAM_STR);
+            $stmt->bindParam(":orden", $orden, PDO::PARAM_STR);
+            $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
 
-			$stmt->execute();
+            $stmt->execute();
 
-			return $stmt->fetch();
-		}
+            return $stmt->fetch();
+        }
 
-		$stmt->close();
+        $stmt->close();
 
-		$stmt = null;
-	}    
+        $stmt = null;
+    }
 
     /* 
     *MOSTRAR CORRELATIVO SUBLINEA
     */
-    static public function mdlMostrarCorrelativoNotaIngreso(){
+    static public function mdlMostrarCorrelativoNotaIngreso()
+    {
 
-      $stmt = Conexion::conectar()->prepare("SELECT 
+        $stmt = Conexion::conectar()->prepare("SELECT 
                     LPAD(MAX(nnea) + 1, 6, '0') AS correlativo 
                   FROM
                     nea");
 
-      $stmt -> execute();
+        $stmt->execute();
 
-      return $stmt -> Fetch();
+        return $stmt->Fetch();
 
-      $stmt -> close();
+        $stmt->close();
 
-      $stmt = null;
+        $stmt = null;
+    }
 
-  }
-  
-  /* 
+    /* 
   * CREAR NOTA DE INGRESO - CABECERA
   */
-  static public function mdlGuardarNotaIngresoCab($datos){
+    static public function mdlGuardarNotaIngresoCab($datos)
+    {
 
-		$sql="INSERT INTO nea (
+        $sql = "INSERT INTO nea (
       cod_local,
       cod_entidad,
       codruc,
@@ -933,58 +932,56 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
         :pcreg
       )";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+        $stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->bindParam(":cod_local",$datos["cod_local"],PDO::PARAM_STR);
-    $stmt->bindParam(":cod_entidad",$datos["cod_entidad"],PDO::PARAM_STR);
-    $stmt->bindParam(":codruc",$datos["codruc"],PDO::PARAM_STR);
-    $stmt->bindParam(":tnea",$datos["tnea"],PDO::PARAM_STR);
-    $stmt->bindParam(":snea",$datos["snea"],PDO::PARAM_STR);
-    $stmt->bindParam(":nnea",$datos["nnea"],PDO::PARAM_STR);
-    $stmt->bindParam(":trguia",$datos["trguia"],PDO::PARAM_STR);
-    $stmt->bindParam(":serguia",$datos["serguia"],PDO::PARAM_STR);
-    $stmt->bindParam(":nroguia",$datos["nroguia"],PDO::PARAM_STR);
-    $stmt->bindParam(":fecemi",$datos["fecemi"],PDO::PARAM_STR);
-    $stmt->bindParam(":mo",$datos["mo"],PDO::PARAM_STR);
-    $stmt->bindParam(":obser",$datos["obser"],PDO::PARAM_STR);
-    $stmt->bindParam(":pigv",$datos["pigv"],PDO::PARAM_STR);
-    $stmt->bindParam(":subtotal",$datos["subtotal"],PDO::PARAM_STR);
-    $stmt->bindParam(":igv",$datos["igv"],PDO::PARAM_STR);
-    $stmt->bindParam(":total",$datos["total"],PDO::PARAM_STR);
-    $stmt->bindParam(":trdcto",$datos["trdcto"],PDO::PARAM_STR);
-    $stmt->bindParam(":srdcto",$datos["srdcto"],PDO::PARAM_STR);
-    $stmt->bindParam(":nrdcto",$datos["nrdcto"],PDO::PARAM_STR);
-    $stmt->bindParam(":fecven",$datos["fecven"],PDO::PARAM_STR);
-    $stmt->bindParam(":tipoc",$datos["tipoc"],PDO::PARAM_STR);
-    $stmt->bindParam(":seroc",$datos["seroc"],PDO::PARAM_STR);
-    $stmt->bindParam(":nrooc",$datos["nrooc"],PDO::PARAM_STR);
-    $stmt->bindParam(":codalm",$datos["codalm"],PDO::PARAM_STR);
-    $stmt->bindParam(":estreg",$datos["estreg"],PDO::PARAM_STR);
-    $stmt->bindParam(":codalm",$datos["codalm"],PDO::PARAM_STR);
-    $stmt->bindParam(":fecreg",$datos["fecreg"],PDO::PARAM_STR);
-    $stmt->bindParam(":usureg",$datos["usureg"],PDO::PARAM_STR);
-    $stmt->bindParam(":pcreg",$datos["pcreg"],PDO::PARAM_STR);
+        $stmt->bindParam(":cod_local", $datos["cod_local"], PDO::PARAM_STR);
+        $stmt->bindParam(":cod_entidad", $datos["cod_entidad"], PDO::PARAM_STR);
+        $stmt->bindParam(":codruc", $datos["codruc"], PDO::PARAM_STR);
+        $stmt->bindParam(":tnea", $datos["tnea"], PDO::PARAM_STR);
+        $stmt->bindParam(":snea", $datos["snea"], PDO::PARAM_STR);
+        $stmt->bindParam(":nnea", $datos["nnea"], PDO::PARAM_STR);
+        $stmt->bindParam(":trguia", $datos["trguia"], PDO::PARAM_STR);
+        $stmt->bindParam(":serguia", $datos["serguia"], PDO::PARAM_STR);
+        $stmt->bindParam(":nroguia", $datos["nroguia"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecemi", $datos["fecemi"], PDO::PARAM_STR);
+        $stmt->bindParam(":mo", $datos["mo"], PDO::PARAM_STR);
+        $stmt->bindParam(":obser", $datos["obser"], PDO::PARAM_STR);
+        $stmt->bindParam(":pigv", $datos["pigv"], PDO::PARAM_STR);
+        $stmt->bindParam(":subtotal", $datos["subtotal"], PDO::PARAM_STR);
+        $stmt->bindParam(":igv", $datos["igv"], PDO::PARAM_STR);
+        $stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
+        $stmt->bindParam(":trdcto", $datos["trdcto"], PDO::PARAM_STR);
+        $stmt->bindParam(":srdcto", $datos["srdcto"], PDO::PARAM_STR);
+        $stmt->bindParam(":nrdcto", $datos["nrdcto"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecven", $datos["fecven"], PDO::PARAM_STR);
+        $stmt->bindParam(":tipoc", $datos["tipoc"], PDO::PARAM_STR);
+        $stmt->bindParam(":seroc", $datos["seroc"], PDO::PARAM_STR);
+        $stmt->bindParam(":nrooc", $datos["nrooc"], PDO::PARAM_STR);
+        $stmt->bindParam(":codalm", $datos["codalm"], PDO::PARAM_STR);
+        $stmt->bindParam(":estreg", $datos["estreg"], PDO::PARAM_STR);
+        $stmt->bindParam(":codalm", $datos["codalm"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecreg", $datos["fecreg"], PDO::PARAM_STR);
+        $stmt->bindParam(":usureg", $datos["usureg"], PDO::PARAM_STR);
+        $stmt->bindParam(":pcreg", $datos["pcreg"], PDO::PARAM_STR);
 
-		if($stmt->execute()){
+        if ($stmt->execute()) {
 
-			return "ok";
+            return "ok";
+        } else {
 
-		}else{
+            return "error";
+        }
 
-			return "error";
+        $stmt = null;
+    }
 
-		}
-
-		$stmt=null;
-
-	}	
-
-  /* 
+    /* 
   * CREAR NOTA DE INGRESO - CABECERA
   */
-  static public function mdlGuardarNotaIngresoDet($datos){
+    static public function mdlGuardarNotaIngresoDet($datos)
+    {
 
-		$sql="INSERT INTO neadet (
+        $sql = "INSERT INTO neadet (
       cod_local,
       cod_entidad,
       item,
@@ -1036,78 +1033,74 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
         :fecemi
       )";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+        $stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->bindParam(":cod_local",$datos["cod_local"],PDO::PARAM_STR);
-    $stmt->bindParam(":cod_entidad",$datos["cod_entidad"],PDO::PARAM_STR);
-    $stmt->bindParam(":item",$datos["item"],PDO::PARAM_STR);
-    $stmt->bindParam(":codruc",$datos["codruc"],PDO::PARAM_STR);
-    $stmt->bindParam(":tnea",$datos["tnea"],PDO::PARAM_STR);
-    $stmt->bindParam(":snea",$datos["snea"],PDO::PARAM_STR);
-    $stmt->bindParam(":nnea",$datos["nnea"],PDO::PARAM_STR);    
-    $stmt->bindParam(":ndoc",$datos["ndoc"],PDO::PARAM_STR);
-    $stmt->bindParam(":cansol",$datos["cansol"],PDO::PARAM_STR);
-    $stmt->bindParam(":presol",$datos["presol"],PDO::PARAM_STR);
-    $stmt->bindParam(":codpro",$datos["codpro"],PDO::PARAM_STR);
-    $stmt->bindParam(":codalm",$datos["codalm"],PDO::PARAM_STR);
-    $stmt->bindParam(":p_unitario",$datos["p_unitario"],PDO::PARAM_STR);
-    $stmt->bindParam(":coscompra",$datos["coscompra"],PDO::PARAM_STR);
-    $stmt->bindParam(":total",$datos["total"],PDO::PARAM_STR);
-    $stmt->bindParam(":estreg",$datos["estreg"],PDO::PARAM_STR);
-    $stmt->bindParam(":fecreg",$datos["fecreg"],PDO::PARAM_STR);
-    $stmt->bindParam(":usureg",$datos["usureg"],PDO::PARAM_STR);
-    $stmt->bindParam(":pcreg",$datos["pcreg"],PDO::PARAM_STR);
-    $stmt->bindParam(":salpro",$datos["salpro"],PDO::PARAM_STR);
-    $stmt->bindParam(":excpro",$datos["excpro"],PDO::PARAM_STR);
-    $stmt->bindParam(":cantni",$datos["cantni"],PDO::PARAM_STR);
-    $stmt->bindParam(":fecemi",$datos["fecemi"],PDO::PARAM_STR);
+        $stmt->bindParam(":cod_local", $datos["cod_local"], PDO::PARAM_STR);
+        $stmt->bindParam(":cod_entidad", $datos["cod_entidad"], PDO::PARAM_STR);
+        $stmt->bindParam(":item", $datos["item"], PDO::PARAM_STR);
+        $stmt->bindParam(":codruc", $datos["codruc"], PDO::PARAM_STR);
+        $stmt->bindParam(":tnea", $datos["tnea"], PDO::PARAM_STR);
+        $stmt->bindParam(":snea", $datos["snea"], PDO::PARAM_STR);
+        $stmt->bindParam(":nnea", $datos["nnea"], PDO::PARAM_STR);
+        $stmt->bindParam(":ndoc", $datos["ndoc"], PDO::PARAM_STR);
+        $stmt->bindParam(":cansol", $datos["cansol"], PDO::PARAM_STR);
+        $stmt->bindParam(":presol", $datos["presol"], PDO::PARAM_STR);
+        $stmt->bindParam(":codpro", $datos["codpro"], PDO::PARAM_STR);
+        $stmt->bindParam(":codalm", $datos["codalm"], PDO::PARAM_STR);
+        $stmt->bindParam(":p_unitario", $datos["p_unitario"], PDO::PARAM_STR);
+        $stmt->bindParam(":coscompra", $datos["coscompra"], PDO::PARAM_STR);
+        $stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
+        $stmt->bindParam(":estreg", $datos["estreg"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecreg", $datos["fecreg"], PDO::PARAM_STR);
+        $stmt->bindParam(":usureg", $datos["usureg"], PDO::PARAM_STR);
+        $stmt->bindParam(":pcreg", $datos["pcreg"], PDO::PARAM_STR);
+        $stmt->bindParam(":salpro", $datos["salpro"], PDO::PARAM_STR);
+        $stmt->bindParam(":excpro", $datos["excpro"], PDO::PARAM_STR);
+        $stmt->bindParam(":cantni", $datos["cantni"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecemi", $datos["fecemi"], PDO::PARAM_STR);
 
-		if($stmt->execute()){
+        if ($stmt->execute()) {
 
-			return "ok";
+            return "ok";
+        } else {
 
-		}else{
+            return "error";
+        }
 
-			return "error";
+        $stmt = null;
+    }
 
-		}
+    // Método para actualizar EL STOCK DE MP
+    static public function mdlActualizarStock($codpro, $stock)
+    {
 
-		$stmt=null;
-    
-	}	  
-
-	// Método para actualizar EL STOCK DE MP
-	static public function mdlActualizarStock($codpro ,$stock){
-
-		$sql="UPDATE 
+        $sql = "UPDATE 
             producto 
           SET
             codalm01 = :stock 
           WHERE codpro = :codpro";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+        $stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->bindParam(":codpro",$codpro,PDO::PARAM_STR);
-		$stmt->bindParam(":stock",$stock,PDO::PARAM_STR);
+        $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
+        $stmt->bindParam(":stock", $stock, PDO::PARAM_STR);
 
-		if($stmt->execute()){
+        if ($stmt->execute()) {
 
-			return "ok";
+            return "ok";
+        } else {
 
-		}else{
+            return "error";
+        }
 
-			return "error";
+        $stmt = null;
+    }
 
-		}
+    // Método para actualizar EL SALDO Y ESTADO EN OC
+    static public function mdlActualizarCantOc($oc, $codpro, $estado, $cantidadRe)
+    {
 
-		$stmt=null;
-
-	}  
-
-	// Método para actualizar EL SALDO Y ESTADO EN OC
-	static public function mdlActualizarCantOc($oc,$codpro, $estado, $cantidadRe){
-
-		$sql="UPDATE 
+        $sql = "UPDATE 
                 ocomdet 
               SET
                 cantni = 
@@ -1129,61 +1122,59 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
               WHERE nro = :oc 
                 AND codpro = :codpro";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+        $stmt = Conexion::conectar()->prepare($sql);
 
-    $stmt->bindParam(":oc",$oc,PDO::PARAM_STR);
-		$stmt->bindParam(":codpro",$codpro,PDO::PARAM_STR);
-    $stmt->bindParam(":estado",$estado,PDO::PARAM_STR);
-    $stmt->bindParam(":cantidadRe",$cantidadRe,PDO::PARAM_STR);
-		
+        $stmt->bindParam(":oc", $oc, PDO::PARAM_STR);
+        $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
+        $stmt->bindParam(":estado", $estado, PDO::PARAM_STR);
+        $stmt->bindParam(":cantidadRe", $cantidadRe, PDO::PARAM_STR);
 
-		if($stmt->execute()){
 
-			return "ok";
+        if ($stmt->execute()) {
 
-		}else{
+            return "ok";
+        } else {
 
-			return "error";
+            return "error";
+        }
 
-		}
+        $stmt = null;
+    }
 
-		$stmt=null;
+    // Método para actualizar CABECERAS DE OC
+    static public function mdlActualizarEstCab($oc)
+    {
 
-	}    
-
-	// Método para actualizar CABECERAS DE OC
-	static public function mdlActualizarEstCab($oc){
-
-		$sql="UPDATE 
+        $sql = "UPDATE 
               ocompra 
             SET
               estac = 'PAR' 
             WHERE nro = :oc";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+        $stmt = Conexion::conectar()->prepare($sql);
 
-    $stmt->bindParam(":oc",$oc,PDO::PARAM_STR);
+        $stmt->bindParam(":oc", $oc, PDO::PARAM_STR);
 
-		if ($stmt->execute()) {
+        if ($stmt->execute()) {
 
-			return "ok";
-		} else {
+            return "ok";
+        } else {
 
-			return "error";
-		}
+            return "error";
+        }
 
-		$stmt->close();
+        $stmt->close();
 
-		$stmt = null;
+        $stmt = null;
+    }
 
-	}    
-
-	/*
+    /*
 	*Traer cabecera nota ingreso
 	*/
-	static public function mdlTraerNiCab($valor){
+    static public function mdlTraerNiCab($valor)
+    {
 
-		$stmt = Conexion::conectar()->prepare("SELECT 
+        $stmt = Conexion::conectar()->prepare("SELECT 
                       n.nnea AS ni,
                       DATE(n.fecreg) AS emi_ni,
                       n.codruc AS cod_prov,
@@ -1229,23 +1220,24 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
                         ON n.mo = m.cod_argumento 
                     WHERE n.nnea = :valor");
 
-    $stmt->bindParam(":valor",$valor,PDO::PARAM_STR);                    
+        $stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
 
-		$stmt->execute();
+        $stmt->execute();
 
-		return $stmt->fetch();
+        return $stmt->fetch();
 
-		$stmt->close();
+        $stmt->close();
 
-		$stmt = null;
-	}   
+        $stmt = null;
+    }
 
-	/*
+    /*
 	*Traer cabecera nota ingreso
 	*/
-	static public function mdlTraerNiDet($valor){
+    static public function mdlTraerNiDet($valor)
+    {
 
-		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+        $stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
     nd.item,
     nd.codpro,
     pro.despro,
@@ -1276,23 +1268,24 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
   WHERE nd.nNea = :valor 
   ORDER BY Item ASC");
 
-    $stmt->bindParam(":valor",$valor,PDO::PARAM_STR);                    
+        $stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
 
-		$stmt->execute();
+        $stmt->execute();
 
-		return $stmt->fetchAll();
+        return $stmt->fetchAll();
 
-		$stmt->close();
+        $stmt->close();
 
-		$stmt = null;
-	}   
+        $stmt = null;
+    }
 
-  /* 
+    /* 
   * CREAR NOTA DE INGRESO - CABECERA
   */
-  static public function mdlEditarNotaIngreso($datos){
+    static public function mdlEditarNotaIngreso($datos)
+    {
 
-		$sql="UPDATE 
+        $sql = "UPDATE 
               nea 
             SET
               trdcto = :trdcto,
@@ -1306,35 +1299,34 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
               obser = :obser 
             WHERE nnea = :nnea";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+        $stmt = Conexion::conectar()->prepare($sql);
 
-    $stmt->bindParam(":nnea",$datos["nnea"],PDO::PARAM_STR);
-    $stmt->bindParam(":trguia",$datos["trguia"],PDO::PARAM_STR);
-    $stmt->bindParam(":serguia",$datos["serguia"],PDO::PARAM_STR);
-    $stmt->bindParam(":nroguia",$datos["nroguia"],PDO::PARAM_STR);
-    $stmt->bindParam(":fecemi",$datos["fecemi"],PDO::PARAM_STR);
-    $stmt->bindParam(":obser",$datos["obser"],PDO::PARAM_STR);   
-    $stmt->bindParam(":trdcto",$datos["trdcto"],PDO::PARAM_STR);
-    $stmt->bindParam(":srdcto",$datos["srdcto"],PDO::PARAM_STR);
-    $stmt->bindParam(":nrdcto",$datos["nrdcto"],PDO::PARAM_STR);
-    $stmt->bindParam(":fecven",$datos["fecven"],PDO::PARAM_STR);
+        $stmt->bindParam(":nnea", $datos["nnea"], PDO::PARAM_STR);
+        $stmt->bindParam(":trguia", $datos["trguia"], PDO::PARAM_STR);
+        $stmt->bindParam(":serguia", $datos["serguia"], PDO::PARAM_STR);
+        $stmt->bindParam(":nroguia", $datos["nroguia"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecemi", $datos["fecemi"], PDO::PARAM_STR);
+        $stmt->bindParam(":obser", $datos["obser"], PDO::PARAM_STR);
+        $stmt->bindParam(":trdcto", $datos["trdcto"], PDO::PARAM_STR);
+        $stmt->bindParam(":srdcto", $datos["srdcto"], PDO::PARAM_STR);
+        $stmt->bindParam(":nrdcto", $datos["nrdcto"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecven", $datos["fecven"], PDO::PARAM_STR);
 
 
-		if($stmt->execute()){
+        if ($stmt->execute()) {
 
-			return "ok";
+            return "ok";
+        } else {
 
-		}else{
+            return "error";
+        }
+    }
 
-			return "error";
+    // Método para actualizar EL STOCK DE MP
+    static public function mdlCerrarOC($datos)
+    {
 
-		}
-  }
-
-	// Método para actualizar EL STOCK DE MP
-	static public function mdlCerrarOC($datos){
-
-		$sql="UPDATE 
+        $sql = "UPDATE 
               ocompra oc 
               LEFT JOIN ocomdet od 
                 ON oc.nro = od.nro SET oc.estac = 'CER',
@@ -1346,42 +1338,40 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
               od.ceroc = 'SI' 
             WHERE oc.nro = :oc";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+        $stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->bindParam(":oc",$datos["oc"],PDO::PARAM_STR);
-    $stmt->bindParam(":feccer",$datos["feccer"],PDO::PARAM_STR);
-    $stmt->bindParam(":usucer",$datos["usucer"],PDO::PARAM_STR);
-    $stmt->bindParam(":pccer",$datos["pccer"],PDO::PARAM_STR);
+        $stmt->bindParam(":oc", $datos["oc"], PDO::PARAM_STR);
+        $stmt->bindParam(":feccer", $datos["feccer"], PDO::PARAM_STR);
+        $stmt->bindParam(":usucer", $datos["usucer"], PDO::PARAM_STR);
+        $stmt->bindParam(":pccer", $datos["pccer"], PDO::PARAM_STR);
 
 
-		if($stmt->execute()){
+        if ($stmt->execute()) {
 
-			return "ok";
+            return "ok";
+        } else {
 
-		}else{
+            return "error";
+        }
 
-			return "error";
+        $stmt = null;
+    }
 
-		}
-
-		$stmt=null;
-
-	}    
-
-  /* 
+    /* 
 	* AQUI INICIA NOTA DE INGRESO POR SERVICIO
 	! AQUI INICIA NOTA DE INGRESO POR SERVICIO
 	? AQUI INICIA NOTA DE INGRESO POR SERVICIO
 	*/
 
-	/*=============================================
+    /*=============================================
 	RANGO FECHAS
-	=============================================*/	
-	static public function mdlRangoFechasNotasIngresosOS($fechaInicial, $fechaFinal){
+	=============================================*/
+    static public function mdlRangoFechasNotasIngresosOS($fechaInicial, $fechaFinal)
+    {
 
-		if($fechaInicial == "null"){
+        if ($fechaInicial == "null") {
 
-			$stmt = Conexion::conectar()->prepare("SELECT 
+            $stmt = Conexion::conectar()->prepare("SELECT 
                                               neo.tNeaOs AS tneaos,
                                               neo.CodRuc AS codruc,
                                               prov.RazPro AS proveedor,
@@ -1394,16 +1384,15 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
                                               nea_os neo 
                                               LEFT JOIN proveedor prov 
                                                 ON prov.CodRuc = neo.CodRuc 
-                                            WHERE neo.EstReg = 'P'");
+                                            WHERE neo.EstReg = 'P'
+                                                    AND YEAR(neo.FecEmi) = YEAR(NOW())");
 
-			$stmt -> execute();
+            $stmt->execute();
 
-			return $stmt -> fetchAll();	
+            return $stmt->fetchAll();
+        } else if ($fechaInicial == $fechaFinal) {
 
-
-		}else if($fechaInicial == $fechaFinal){
-
-			$stmt = Conexion::conectar()->prepare("SELECT 
+            $stmt = Conexion::conectar()->prepare("SELECT 
                                             neo.tNeaOs AS tneaos,
                                             neo.CodRuc AS codruc,
                                             prov.RazPro AS proveedor,
@@ -1419,25 +1408,24 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
                                           WHERE neo.EstReg = 'P' 
                                             AND DATE(fecemi) LIKE '%$fechaFinal%'");
 
-			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+            $stmt->bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 
-			$stmt -> execute();
+            $stmt->execute();
 
-			return $stmt -> fetchAll();
+            return $stmt->fetchAll();
+        } else {
 
-		}else{
+            $fechaActual = new DateTime();
+            $fechaActual->add(new DateInterval("P1D"));
+            $fechaActualMasUno = $fechaActual->format("Y-m-d");
 
-			$fechaActual = new DateTime();
-			$fechaActual ->add(new DateInterval("P1D"));
-			$fechaActualMasUno = $fechaActual->format("Y-m-d");
+            $fechaFinal2 = new DateTime($fechaFinal);
+            $fechaFinal2->add(new DateInterval("P1D"));
+            $fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
 
-			$fechaFinal2 = new DateTime($fechaFinal);
-			$fechaFinal2 ->add(new DateInterval("P1D"));
-			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+            if ($fechaFinalMasUno == $fechaActualMasUno) {
 
-			if($fechaFinalMasUno == $fechaActualMasUno){
-
-				$stmt = Conexion::conectar()->prepare("SELECT 
+                $stmt = Conexion::conectar()->prepare("SELECT 
                                             neo.tNeaOs AS tneaos,
                                             neo.CodRuc AS codruc,
                                             prov.RazPro AS proveedor,
@@ -1452,11 +1440,10 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
                                               ON prov.CodRuc = neo.CodRuc 
                                           WHERE neo.EstReg = 'P'
                                                     AND DATE(fecemi) BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'");
+            } else {
 
-			}else{
 
-
-				$stmt = Conexion::conectar()->prepare("SELECT 
+                $stmt = Conexion::conectar()->prepare("SELECT 
                                         neo.tNeaOs AS tneaos,
                                         neo.CodRuc AS codruc,
                                         prov.RazPro AS proveedor,
@@ -1471,24 +1458,22 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
                                           ON prov.CodRuc = neo.CodRuc 
                                       WHERE neo.EstReg = 'P'
                 AND DATE(fecemi) BETWEEN '$fechaInicial' AND '$fechaFinal'");
+            }
 
-			}
-		
-			$stmt -> execute();
+            $stmt->execute();
 
-			return $stmt -> fetchAll();
+            return $stmt->fetchAll();
+        }
+    }
 
-		}
-
-	}  
-
-	/* 
+    /* 
 	* MOSTRAR MP PARA NOTA DE INGRESO CON O SIN OS
 	*/
-	static public function mdlMostrarMPOS(){
+    static public function mdlMostrarMPOS()
+    {
 
 
-      $stmt = Conexion::conectar()->prepare("SELECT 
+        $stmt = Conexion::conectar()->prepare("SELECT 
                                             osd.Nro AS nro,
                                             CodProOrigen AS codproorigen,
                                             p1.DesPro AS desori,
@@ -1532,22 +1517,23 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
                                             AND osd.EstReg = '1' 
                                             AND osd.EstOS IN ('ABI', 'PAR')");
 
-			$stmt->execute();
+        $stmt->execute();
 
-			return $stmt->fetchAll();
+        return $stmt->fetchAll();
 
-      $stmt->close();
+        $stmt->close();
 
-      $stmt = null;
-	}  
+        $stmt = null;
+    }
 
-	/* 
+    /* 
 	* MOSTRAR MP PARA NOTA DE INGRESO EN OS AL HACER CLICK
 	*/
-	static public function mdlTraerMPOS($ordser, $codori, $coddes){
+    static public function mdlTraerMPOS($ordser, $codori, $coddes)
+    {
 
 
-    $stmt = Conexion::conectar()->prepare("SELECT 
+        $stmt = Conexion::conectar()->prepare("SELECT 
                                               osd.Nro AS nro,
                                               CodProOrigen AS codproorigen,
                                               p1.DesPro AS desori,
@@ -1595,46 +1581,46 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
                                               AND codproorigen = :codori
                                               AND codprodestino = :coddes");
 
-    $stmt -> bindParam(":ordser", $ordser, PDO::PARAM_STR);
-    $stmt -> bindParam(":codori", $codori, PDO::PARAM_STR);
-    $stmt -> bindParam(":coddes", $coddes, PDO::PARAM_STR);
+        $stmt->bindParam(":ordser", $ordser, PDO::PARAM_STR);
+        $stmt->bindParam(":codori", $codori, PDO::PARAM_STR);
+        $stmt->bindParam(":coddes", $coddes, PDO::PARAM_STR);
 
-    $stmt->execute();
+        $stmt->execute();
 
-    return $stmt->fetch();
+        return $stmt->fetch();
 
-    $stmt->close();
+        $stmt->close();
 
-    $stmt = null;
+        $stmt = null;
+    }
 
-  } 
-  
     /* 
     *MOSTRAR CORRELATIVO SUBLINEA
     */
-    static public function mdlMostrarCorrelativoNotaIngresoServicio(){
+    static public function mdlMostrarCorrelativoNotaIngresoServicio()
+    {
 
-      $stmt = Conexion::conectar()->prepare("SELECT 
+        $stmt = Conexion::conectar()->prepare("SELECT 
                 LPAD(MAX(nneaos) + 1, 6, '0') AS correlativo 
               FROM
                 nea_os");
 
-      $stmt -> execute();
+        $stmt->execute();
 
-      return $stmt -> Fetch();
+        return $stmt->Fetch();
 
-      $stmt -> close();
+        $stmt->close();
 
-      $stmt = null;
-
-  }  
+        $stmt = null;
+    }
 
     /* 
   * CREAR NOTA DE INGRESO - CABECERA OS
   */
-  static public function mdlGuardarNotaIngresoCabServicio($datos){
+    static public function mdlGuardarNotaIngresoCabServicio($datos)
+    {
 
-		$sql="INSERT INTO nea_os (
+        $sql = "INSERT INTO nea_os (
       cod_local,
       cod_entidad,
       codruc,
@@ -1666,42 +1652,40 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
         :pcreg
       )";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+        $stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->bindParam(":cod_local",$datos["cod_local"],PDO::PARAM_STR);
-    $stmt->bindParam(":cod_entidad",$datos["cod_entidad"],PDO::PARAM_STR);
-    $stmt->bindParam(":codruc",$datos["codruc"],PDO::PARAM_STR);
-    $stmt->bindParam(":tneaos",$datos["tneaos"],PDO::PARAM_STR);
-    $stmt->bindParam(":sneaos",$datos["sneaos"],PDO::PARAM_STR);
-    $stmt->bindParam(":nneaos",$datos["nneaos"],PDO::PARAM_STR);    
-    $stmt->bindParam(":fecemi",$datos["fecemi"],PDO::PARAM_STR);
-    $stmt->bindParam(":serdcto",$datos["serdcto"],PDO::PARAM_STR);
-    $stmt->bindParam(":nrodcto",$datos["nrodcto"],PDO::PARAM_STR);
-    $stmt->bindParam(":estreg",$datos["estreg"],PDO::PARAM_STR);
-    $stmt->bindParam(":fecreg",$datos["fecreg"],PDO::PARAM_STR);
-    $stmt->bindParam(":usureg",$datos["usureg"],PDO::PARAM_STR);
-    $stmt->bindParam(":pcreg",$datos["pcreg"],PDO::PARAM_STR);
+        $stmt->bindParam(":cod_local", $datos["cod_local"], PDO::PARAM_STR);
+        $stmt->bindParam(":cod_entidad", $datos["cod_entidad"], PDO::PARAM_STR);
+        $stmt->bindParam(":codruc", $datos["codruc"], PDO::PARAM_STR);
+        $stmt->bindParam(":tneaos", $datos["tneaos"], PDO::PARAM_STR);
+        $stmt->bindParam(":sneaos", $datos["sneaos"], PDO::PARAM_STR);
+        $stmt->bindParam(":nneaos", $datos["nneaos"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecemi", $datos["fecemi"], PDO::PARAM_STR);
+        $stmt->bindParam(":serdcto", $datos["serdcto"], PDO::PARAM_STR);
+        $stmt->bindParam(":nrodcto", $datos["nrodcto"], PDO::PARAM_STR);
+        $stmt->bindParam(":estreg", $datos["estreg"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecreg", $datos["fecreg"], PDO::PARAM_STR);
+        $stmt->bindParam(":usureg", $datos["usureg"], PDO::PARAM_STR);
+        $stmt->bindParam(":pcreg", $datos["pcreg"], PDO::PARAM_STR);
 
-		if($stmt->execute()){
+        if ($stmt->execute()) {
 
-			return "ok";
+            return "ok";
+        } else {
 
-		}else{
+            return "error";
+        }
 
-			return "error";
+        $stmt = null;
+    }
 
-		}
-
-		$stmt=null;
-
-	}	
-
-  /* 
+    /* 
   * CREAR NOTA DE INGRESO - DETALLE SERVICIO
   */
-  static public function mdlGuardarNotaIngresoDetServicio($datos){
+    static public function mdlGuardarNotaIngresoDetServicio($datos)
+    {
 
-		$sql="INSERT INTO nea_os_det (
+        $sql = "INSERT INTO nea_os_det (
       cod_local,
       cod_entidad,
       tneaos,
@@ -1739,45 +1723,43 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
         :pcreg
       )";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+        $stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->bindParam(":cod_local",$datos["cod_local"],PDO::PARAM_STR);
-    $stmt->bindParam(":cod_entidad",$datos["cod_entidad"],PDO::PARAM_STR);
-    $stmt->bindParam(":tneaos",$datos["tneaos"],PDO::PARAM_STR);
-    $stmt->bindParam(":sneaos",$datos["sneaos"],PDO::PARAM_STR);
-    $stmt->bindParam(":nneaos",$datos["nneaos"],PDO::PARAM_STR); 
-    $stmt->bindParam(":nroos",$datos["nroos"],PDO::PARAM_STR);
-    $stmt->bindParam(":fecemi",$datos["fecemi"],PDO::PARAM_STR);
-    $stmt->bindParam(":item",$datos["item"],PDO::PARAM_STR);
-    $stmt->bindParam(":codruc",$datos["codruc"],PDO::PARAM_STR);
-    $stmt->bindParam(":codproorigen",$datos["codproorigen"],PDO::PARAM_STR);
-    $stmt->bindParam(":codprodestino",$datos["codprodestino"],PDO::PARAM_STR);
-    $stmt->bindParam(":cansol",$datos["cansol"],PDO::PARAM_STR);
-    $stmt->bindParam(":estreg",$datos["estreg"],PDO::PARAM_STR);
-    $stmt->bindParam(":fecreg",$datos["fecreg"],PDO::PARAM_STR);
-    $stmt->bindParam(":usureg",$datos["usureg"],PDO::PARAM_STR);
-    $stmt->bindParam(":pcreg",$datos["pcreg"],PDO::PARAM_STR);
+        $stmt->bindParam(":cod_local", $datos["cod_local"], PDO::PARAM_STR);
+        $stmt->bindParam(":cod_entidad", $datos["cod_entidad"], PDO::PARAM_STR);
+        $stmt->bindParam(":tneaos", $datos["tneaos"], PDO::PARAM_STR);
+        $stmt->bindParam(":sneaos", $datos["sneaos"], PDO::PARAM_STR);
+        $stmt->bindParam(":nneaos", $datos["nneaos"], PDO::PARAM_STR);
+        $stmt->bindParam(":nroos", $datos["nroos"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecemi", $datos["fecemi"], PDO::PARAM_STR);
+        $stmt->bindParam(":item", $datos["item"], PDO::PARAM_STR);
+        $stmt->bindParam(":codruc", $datos["codruc"], PDO::PARAM_STR);
+        $stmt->bindParam(":codproorigen", $datos["codproorigen"], PDO::PARAM_STR);
+        $stmt->bindParam(":codprodestino", $datos["codprodestino"], PDO::PARAM_STR);
+        $stmt->bindParam(":cansol", $datos["cansol"], PDO::PARAM_STR);
+        $stmt->bindParam(":estreg", $datos["estreg"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecreg", $datos["fecreg"], PDO::PARAM_STR);
+        $stmt->bindParam(":usureg", $datos["usureg"], PDO::PARAM_STR);
+        $stmt->bindParam(":pcreg", $datos["pcreg"], PDO::PARAM_STR);
 
-		if($stmt->execute()){
+        if ($stmt->execute()) {
 
-			return "ok";
+            return "ok";
+        } else {
 
-		}else{
+            return $stmt->errorInfo();
+        }
 
-			return $stmt->errorInfo();
-
-		}
-
-		$stmt=null;
-    
-	}	   
+        $stmt = null;
+    }
 
     /* 
     *MOSTRAR MP EN ORDEN DE SERVICIO
     */
-    static public function mdlMpServicio($nro, $codori, $coddes){
+    static public function mdlMpServicio($nro, $codori, $coddes)
+    {
 
-      $stmt = Conexion::conectar()->prepare("SELECT 
+        $stmt = Conexion::conectar()->prepare("SELECT 
       nro,
       fecemi,
       item,
@@ -1794,24 +1776,24 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
       AND codproorigen = :codproorigen
       AND codprodestino = :codprodestino");
 
-      $stmt->bindParam(":nro",$nro,PDO::PARAM_STR);
-      $stmt->bindParam(":codproorigen",$codori,PDO::PARAM_STR);
-      $stmt->bindParam(":codprodestino",$coddes,PDO::PARAM_STR);
+        $stmt->bindParam(":nro", $nro, PDO::PARAM_STR);
+        $stmt->bindParam(":codproorigen", $codori, PDO::PARAM_STR);
+        $stmt->bindParam(":codprodestino", $coddes, PDO::PARAM_STR);
 
-      $stmt -> execute();
+        $stmt->execute();
 
-      return $stmt -> fetch();
+        return $stmt->fetch();
 
-      $stmt -> close();
+        $stmt->close();
 
-      $stmt = null;
+        $stmt = null;
+    }
 
-  }  
+    // Método para actualizar saldo, despacho y estado
+    static public function mdlActualizarServicio($nro, $codori, $coddes, $saldo, $despacho, $cerrar)
+    {
 
-	// Método para actualizar saldo, despacho y estado
-	static public function mdlActualizarServicio($nro, $codori, $coddes, $saldo, $despacho, $cerrar){
-
-		$sql="UPDATE 
+        $sql = "UPDATE 
                 oserviciodet 
               SET
                 saldo = :saldo,
@@ -1826,64 +1808,60 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
                 AND codproorigen = :codproorigen 
                 AND codprodestino = :codprodestino";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+        $stmt = Conexion::conectar()->prepare($sql);
 
-    $stmt->bindParam(":nro",$nro,PDO::PARAM_STR);
-    $stmt->bindParam(":codproorigen",$codori,PDO::PARAM_STR);
-    $stmt->bindParam(":codprodestino",$coddes,PDO::PARAM_STR);
-    $stmt->bindParam(":saldo",$saldo,PDO::PARAM_STR);
-    $stmt->bindParam(":despacho",$despacho,PDO::PARAM_STR);
-    $stmt->bindParam(":cerrar",$cerrar,PDO::PARAM_STR);
-		
+        $stmt->bindParam(":nro", $nro, PDO::PARAM_STR);
+        $stmt->bindParam(":codproorigen", $codori, PDO::PARAM_STR);
+        $stmt->bindParam(":codprodestino", $coddes, PDO::PARAM_STR);
+        $stmt->bindParam(":saldo", $saldo, PDO::PARAM_STR);
+        $stmt->bindParam(":despacho", $despacho, PDO::PARAM_STR);
+        $stmt->bindParam(":cerrar", $cerrar, PDO::PARAM_STR);
 
-		if($stmt->execute()){
 
-			return "ok";
+        if ($stmt->execute()) {
 
-		}else{
+            return "ok";
+        } else {
 
-			return $stmt->errorInfo();
+            return $stmt->errorInfo();
+        }
 
-		}
+        $stmt = null;
+    }
 
-		$stmt=null;
+    // Método para actualizar saldo, despacho y estado
+    static public function mdlActualizarCabOrdServicio($nro)
+    {
 
-	}   
-
-	// Método para actualizar saldo, despacho y estado
-	static public function mdlActualizarCabOrdServicio($nro){
-
-		$sql="UPDATE 
+        $sql = "UPDATE 
               oservicio 
             SET
               estos = 'PAR' 
             WHERE nro = :nro ";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+        $stmt = Conexion::conectar()->prepare($sql);
 
-    $stmt->bindParam(":nro",$nro,PDO::PARAM_STR);
-		
+        $stmt->bindParam(":nro", $nro, PDO::PARAM_STR);
 
-		if($stmt->execute()){
 
-			return "ok";
+        if ($stmt->execute()) {
 
-		}else{
+            return "ok";
+        } else {
 
-			return $stmt->errorInfo();
+            return $stmt->errorInfo();
+        }
 
-		}
+        $stmt = null;
+    }
 
-		$stmt=null;
-
-	}   
-
-/*
+    /*
 	*Traer cabecera nota ingreso
 	*/
-	static public function mdlTraerNiSCab($valor){
+    static public function mdlTraerNiSCab($valor)
+    {
 
-		$stmt = Conexion::conectar()->prepare("SELECT 
+        $stmt = Conexion::conectar()->prepare("SELECT 
     neo.tNeaOs AS tneaos,
     neo.CodRuc AS codruc,
     prov.RazPro AS proveedor,
@@ -1899,23 +1877,24 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
   WHERE neo.EstReg = 'P' 
     AND nNeaOs = :valor");
 
-    $stmt->bindParam(":valor",$valor,PDO::PARAM_STR);                    
+        $stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
 
-		$stmt->execute();
+        $stmt->execute();
 
-		return $stmt->fetch();
+        return $stmt->fetch();
 
-		$stmt->close();
+        $stmt->close();
 
-		$stmt = null;
-	}
-  
-	/*
+        $stmt = null;
+    }
+
+    /*
 	*Traer cabecera nota ingreso
 	*/
-	static public function mdlTraerNiSDet($valor){
+    static public function mdlTraerNiSDet($valor)
+    {
 
-		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+        $stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
     Item,
     CodProOrigen,
     pro.DesPro AS DesProOrigen,
@@ -1953,15 +1932,14 @@ $stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
     AND nod.nNeaOs = :valor
   ORDER BY nod.Item ASC");
 
-    $stmt->bindParam(":valor",$valor,PDO::PARAM_STR);                    
+        $stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
 
-		$stmt->execute();
+        $stmt->execute();
 
-		return $stmt->fetchAll();
+        return $stmt->fetchAll();
 
-		$stmt->close();
+        $stmt->close();
 
-		$stmt = null;
-	}    
-
+        $stmt = null;
+    }
 }

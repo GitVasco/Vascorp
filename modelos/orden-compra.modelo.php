@@ -174,7 +174,7 @@ class ModeloOrdenCompra
             AND Tabla_M_Detalle.Des_Corta = oCompra.Estac 
             AND Tabla_M_Detalle.Cod_tabla = 'EOC1' 
             AND EstOco = '03' 
-            AND YEAR(FecEmi) IN ('2020', '2021','2022') 
+            AND YEAR(FecEmi) = YEAR(NOW())
           ORDER BY Nro DESC ");
 
 			$stmt->execute();

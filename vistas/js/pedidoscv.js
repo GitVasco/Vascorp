@@ -764,7 +764,7 @@ $(
     $("#codVen").val(cod_ven);
 
     var datos = new FormData();
-    datos.append("codPedido", codPedido);
+    datos.append("codPedido", codigo);
 
     $.ajax({
         url: "ajax/pedidos.ajax.php",

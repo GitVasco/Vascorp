@@ -2495,7 +2495,7 @@ class ModeloMovimientos
          SUM(op_gravada) AS total 
       FROM
          temporaljf t 
-      WHERE YEAR(t.fecha) = YEAR(NOW()) -1
+      WHERE YEAR(t.fecha) = YEAR(NOW())
          AND t.estado IN ('APROBADO', 'APT', 'CONFIRMADO')");
 
          $stmt->execute();
@@ -2512,7 +2512,7 @@ class ModeloMovimientos
                                                 SUM(op_gravada) AS total 
                                              FROM
                                                 temporaljf t 
-                                             WHERE YEAR(t.fecha) = YEAR(NOW()) -1
+                                             WHERE YEAR(t.fecha) = YEAR(NOW())
                                                 AND t.estado IN ('APROBADO', 'APT', 'CONFIRMADO')");
 
          $stmt->execute();

@@ -30,7 +30,7 @@ class ModeloNotasSalidas
 			  ON vc.ruc = c.ruc 
 			LEFT JOIN tabla_m_detalle a 
 			  ON vc.codalm = a.cod_argumento 
-		  WHERE YEAR(fecemi) IN ('2020', '2021','2022') 
+		  WHERE YEAR(fecemi) = YEAR(NOW())
 			AND vc.EstVta NOT LIKE 'A' 
 			AND cod_tabla = 'talm' 
 		  ORDER BY Nro DESC ");
