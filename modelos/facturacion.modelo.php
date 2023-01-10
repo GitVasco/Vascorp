@@ -986,7 +986,7 @@ class ModeloFacturacion
   /*
     * MOSTRAR MODELO PARA NC , FACTURA Y BOLETA
     */
-  static public function mdlMostrarModeloImpresionV2($valor, $tipoDoc, $ini, $fin)
+  static public function mdlMostrarModeloImpresionV2($tabla, $valor, $tipoDoc, $ini, $fin)
   {
 
     $sql = "SELECT 
@@ -1002,7 +1002,7 @@ class ModeloFacturacion
             ROUND(m.dscto1, 2) AS dscto1,
             ROUND(SUM(m.cantidad * m.precio), 2) AS total 
             FROM
-            movimientosjf_2023 m 
+            $tabla m 
             LEFT JOIN articulojf a 
                 ON m.articulo = a.articulo 
             WHERE m.tipo = :tipo_doc 
@@ -1026,7 +1026,7 @@ class ModeloFacturacion
   /*
     * MOSTRAR MODELO PROFORMA IMPRESION
     */
-  static public function mdlMostrarModeloProforma($valor, $tipoDoc)
+  static public function mdlMostrarModeloProforma($tabla, $valor, $tipoDoc)
   {
 
     $sql = "SELECT 
@@ -1038,7 +1038,7 @@ class ModeloFacturacion
       ROUND(m.dscto1, 2) AS dscto1,
       ROUND(SUM(m.cantidad * m.precio) * 1.18, 2) AS total 
     FROM
-      movimientosjf_2023 m 
+      $tabla m 
       LEFT JOIN articulojf a 
         ON m.articulo = a.articulo
     WHERE m.tipo = :tipo_doc 

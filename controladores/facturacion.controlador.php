@@ -1235,9 +1235,9 @@ class ControladorFacturacion
     /*
     * MOSTRAR MODELO DE NOTAS PARA IMPRESION
     */
-    static public function ctrMostrarModeloImpresionV2($documento, $tipo, $ini, $fin)
+    static public function ctrMostrarModeloImpresionV2($tabla, $documento, $tipo, $ini, $fin)
     {
-        $respuesta = ModeloFacturacion::mdlMostrarModeloImpresionV2($documento, $tipo, $ini, $fin);
+        $respuesta = ModeloFacturacion::mdlMostrarModeloImpresionV2($tabla, $documento, $tipo, $ini, $fin);
 
         return $respuesta;
     }
@@ -1245,9 +1245,9 @@ class ControladorFacturacion
     /*
     * MOSTRAR MODELO DE PROFORMAS PARA IMPRESION
     */
-    static public function ctrMostrarModeloProforma($documento, $tipo)
+    static public function ctrMostrarModeloProforma($tabla, $documento, $tipo)
     {
-        $respuesta = ModeloFacturacion::mdlMostrarModeloProforma($documento, $tipo);
+        $respuesta = ModeloFacturacion::mdlMostrarModeloProforma($tabla, $documento, $tipo);
 
         return $respuesta;
     }

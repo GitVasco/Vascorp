@@ -16,7 +16,11 @@
     $tipo = $_GET["tipo"];
     $documento = $_GET["documento"];
     $venta = ControladorFacturacion::ctrMostrarVentaImpresion($documento, $tipo);
-    $modelo = ControladorFacturacion::ctrMostrarModeloImpresionV2($documento, $tipo, 0, 100);
+
+    $anno = date("Y", strtotime($venta["fecha_emision"]));
+    $tabla = "movimientosjf_" . $anno;
+
+    $modelo = ControladorFacturacion::ctrMostrarModeloImpresionV2($tabla, $documento, $tipo, 0, 100);
     $cantModelo = count($modelo);
     $subtotal = $venta["neto"] - $venta["dscto"];
     $monto_letra = CantidadEnLetra($venta["total"]);

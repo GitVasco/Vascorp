@@ -18,7 +18,7 @@ require_once "../../modelos/usuarios.modelo.php";
 /* 
 * LLAMAMOS A LA CONEXION
 */
-$con=ControladorUsuarios::ctrMostrarConexiones("id",1);
+$con = ControladorUsuarios::ctrMostrarConexiones("id", 1);
 
 $conexion = mysql_connect($con["ip"], $con["user"], $con["pwd"]) or die("No se pudo conectar: " . mysql_error());
 mysql_select_db($con["db"], $conexion);
@@ -47,201 +47,223 @@ $objPHPExcel->getProperties()->setTitle("00000020"); //titulo
 #negrita subrayado T-11
 $texto1 = new PHPExcel_Style();
 $texto1->applyFromArray(
-  array('alignment' => array(
-      'wrap' => false
-    ),
-    'font' => array(
-      'bold' => true,
-      'underline' =>true,
-      'size' => 11
+    array(
+        'alignment' => array(
+            'wrap' => false
+        ),
+        'font' => array(
+            'bold' => true,
+            'underline' => true,
+            'size' => 11
+        )
     )
-));
+);
 
 #negrita T-11
 $texto2 = new PHPExcel_Style();
 $texto2->applyFromArray(
-  array('alignment' => array(
-      'wrap' => false
-    ),
-    'font' => array(
-      'bold' => true,
-      'underline' =>false,
-      'size' => 11
+    array(
+        'alignment' => array(
+            'wrap' => false
+        ),
+        'font' => array(
+            'bold' => true,
+            'underline' => false,
+            'size' => 11
+        )
     )
-));
+);
 
 #bordes grueso: izquierda-arriba-derecha, color  GRIS NEGRITA T11
 $borde1 = new PHPExcel_Style();
 $borde1->applyFromArray(
-  array('alignment' => array( 
-      'wrap' => false,
-      'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
-    ),
-    'fill' => array(
-      'type' => PHPExcel_Style_Fill::FILL_SOLID,
-      'color' => array('rgb' => 'D7DBDD')
-    ),
-    'borders' => array(
-      'top' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
-      'right' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
-      'left' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM)
-    ),
-      'font' => array(
-      'bold' => true,
-      'size' => 11
+    array(
+        'alignment' => array(
+            'wrap' => false,
+            'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
+        ),
+        'fill' => array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'color' => array('rgb' => 'D7DBDD')
+        ),
+        'borders' => array(
+            'top' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
+            'right' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
+            'left' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM)
+        ),
+        'font' => array(
+            'bold' => true,
+            'size' => 11
+        )
     )
-));
+);
 
 #bordes grueso: izquierda-derecha, color  GRIS NEGRITA T11
 $borde2 = new PHPExcel_Style();
 $borde2->applyFromArray(
-  array('alignment' => array( 
-      'wrap' => false,
-      'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
-    ),
-    'fill' => array(
-      'type' => PHPExcel_Style_Fill::FILL_SOLID,
-      'color' => array('rgb' => 'D7DBDD')
-    ),
-    'borders' => array(
-      'right' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
-      'left' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM)
-    ),
-      'font' => array(
-      'bold' => true,
-      'size' => 11
+    array(
+        'alignment' => array(
+            'wrap' => false,
+            'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
+        ),
+        'fill' => array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'color' => array('rgb' => 'D7DBDD')
+        ),
+        'borders' => array(
+            'right' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
+            'left' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM)
+        ),
+        'font' => array(
+            'bold' => true,
+            'size' => 11
+        )
     )
-));
+);
 
 #bordes grueso: izquierda-derecha-abajo, color  GRIS NEGRITA T11
 $borde3 = new PHPExcel_Style();
 $borde3->applyFromArray(
-  array('alignment' => array( 
-      'wrap' => false,
-      'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
-    ),
-    'fill' => array(
-      'type' => PHPExcel_Style_Fill::FILL_SOLID,
-      'color' => array('rgb' => 'D7DBDD')
-    ),
-    'borders' => array(
-      'bottom' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
-      'right' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
-      'left' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM)
-    ),
-      'font' => array(
-      'bold' => true,
-      'size' => 11
+    array(
+        'alignment' => array(
+            'wrap' => false,
+            'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
+        ),
+        'fill' => array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'color' => array('rgb' => 'D7DBDD')
+        ),
+        'borders' => array(
+            'bottom' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
+            'right' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
+            'left' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM)
+        ),
+        'font' => array(
+            'bold' => true,
+            'size' => 11
+        )
     )
-));
+);
 
 #bordes derecho delgado / borde izquiedo grueso / borde abajo delgado
 $borde4 = new PHPExcel_Style();
 $borde4->applyFromArray(
-  array('alignment' => array( 
-      'wrap' => false,
-      'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
-    ),
-    'borders' => array(
-      'bottom' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
-      'right' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
-      'left' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM)
-    ),
-      'font' => array(
-      'bold' => false,
-      'size' => 10
+    array(
+        'alignment' => array(
+            'wrap' => false,
+            'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
+        ),
+        'borders' => array(
+            'bottom' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+            'right' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+            'left' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM)
+        ),
+        'font' => array(
+            'bold' => false,
+            'size' => 10
+        )
     )
-));
+);
 
 #bordes derecho delgado / borde izquiedo delgado / borde abajo delgado
 $borde5 = new PHPExcel_Style();
 $borde5->applyFromArray(
-  array('alignment' => array( 
-      'wrap' => false,
-      'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
-    ),
-    'borders' => array(
-      'bottom' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
-      'right' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
-      'left' => array('style' => PHPExcel_Style_Border::BORDER_THIN)
-    ),
-      'font' => array(
-      'bold' => false,
-      'size' => 10
+    array(
+        'alignment' => array(
+            'wrap' => false,
+            'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
+        ),
+        'borders' => array(
+            'bottom' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+            'right' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+            'left' => array('style' => PHPExcel_Style_Border::BORDER_THIN)
+        ),
+        'font' => array(
+            'bold' => false,
+            'size' => 10
+        )
     )
-));
+);
 
 #bordes derecho grueso / borde izquiedo delgado / borde abajo delgado
 $borde6 = new PHPExcel_Style();
 $borde6->applyFromArray(
-  array('alignment' => array( 
-      'wrap' => false,
-      'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
-    ),
-    'borders' => array(
-      'bottom' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
-      'right' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
-      'left' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM)
-    ),
-      'font' => array(
-      'bold' => false,
-      'size' => 10
+    array(
+        'alignment' => array(
+            'wrap' => false,
+            'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
+        ),
+        'borders' => array(
+            'bottom' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+            'right' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
+            'left' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM)
+        ),
+        'font' => array(
+            'bold' => false,
+            'size' => 10
+        )
     )
-));
+);
 
 #bordes grueso: izquierda-arriba-derecha, color  GRIS NEGRITA T11
 $borde7 = new PHPExcel_Style();
 $borde7->applyFromArray(
-  array('alignment' => array( 
-      'wrap' => false,
-      'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
-    ),
-    'fill' => array(
-      'type' => PHPExcel_Style_Fill::FILL_SOLID,
-      'color' => array('rgb' => 'D7DBDD')
-    ),
-    'borders' => array(
-      'top' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
-      'bottom' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
-      'right' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
-      'left' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM)
-    ),
-      'font' => array(
-      'bold' => true,
-      'size' => 11
+    array(
+        'alignment' => array(
+            'wrap' => false,
+            'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
+        ),
+        'fill' => array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'color' => array('rgb' => 'D7DBDD')
+        ),
+        'borders' => array(
+            'top' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
+            'bottom' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
+            'right' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
+            'left' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM)
+        ),
+        'font' => array(
+            'bold' => true,
+            'size' => 11
+        )
     )
-));
+);
 
 #bordes grueso: ABAJO
 $borde8 = new PHPExcel_Style();
 $borde8->applyFromArray(
-  array('borders' => array(
-      'bottom' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM)
+    array(
+        'borders' => array(
+            'bottom' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM)
+        )
     )
-));
+);
 
 #bordes grueso: izquierda-derecha-abajo-arriba, color  GRIS NEGRITA T10
 $borde9 = new PHPExcel_Style();
 $borde9->applyFromArray(
-  array('alignment' => array( 
-      'wrap' => false,
-      'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
-    ),
-    'fill' => array(
-      'type' => PHPExcel_Style_Fill::FILL_SOLID,
-      'color' => array('rgb' => 'D7DBDD')
-    ),
-    'borders' => array(
-      'bottom' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
-      'top' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
-      'right' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
-      'left' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM)
-    ),
-      'font' => array(
-      'bold' => true,
-      'size' => 10
+    array(
+        'alignment' => array(
+            'wrap' => false,
+            'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
+        ),
+        'fill' => array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'color' => array('rgb' => 'D7DBDD')
+        ),
+        'borders' => array(
+            'bottom' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
+            'top' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
+            'right' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM),
+            'left' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM)
+        ),
+        'font' => array(
+            'bold' => true,
+            'size' => 10
+        )
     )
-));
+);
 
 /* 
 * FIN DE ESTILOS
@@ -316,7 +338,7 @@ $objPHPExcel->getActiveSheet()->setSharedStyle($texto1, "K$fila:M$fila");
 $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 
-$fila = 5 ;
+$fila = 5;
 $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", 'ORDEN DE CORTE:');
 $objPHPExcel->getActiveSheet()->mergeCells("B$fila:C$fila");
 $objPHPExcel->getActiveSheet()->setSharedStyle($texto1, "B$fila:C$fila");
@@ -331,7 +353,7 @@ $objPHPExcel->getActiveSheet()->setSharedStyle($texto1, "F$fila:G$fila");
 $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", utf8_encode($respCabecera["estado"]));
 $objPHPExcel->getActiveSheet()->setSharedStyle($texto2, "H$fila");
 
-$fila = 6 ;
+$fila = 6;
 $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", 'FECHA:');
 $objPHPExcel->getActiveSheet()->mergeCells("B$fila:C$fila");
 $objPHPExcel->getActiveSheet()->setSharedStyle($texto1, "B$fila:C$fila");
@@ -339,7 +361,7 @@ $objPHPExcel->getActiveSheet()->setSharedStyle($texto1, "B$fila:C$fila");
 $objPHPExcel->getActiveSheet()->SetCellValue("D$fila", utf8_encode($respCabecera["fecha"]));
 $objPHPExcel->getActiveSheet()->setSharedStyle($texto2, "D$fila");
 
-$fila = 7 ;
+$fila = 7;
 $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", 'Cantidad Total:');
 $objPHPExcel->getActiveSheet()->mergeCells("B$fila:C$fila");
 $objPHPExcel->getActiveSheet()->setSharedStyle($texto1, "B$fila:C$fila");
@@ -588,122 +610,105 @@ $sqlCabecera = mysql_query("SELECT
                                     a.color") or die(mysql_error());
 
 $cont = 0;
-while($respCabecera = mysql_fetch_array($sqlCabecera)){
+while ($respCabecera = mysql_fetch_array($sqlCabecera)) {
 
-  if($respCabecera["t1"] > 0){
+    if ($respCabecera["t1"] > 0) {
 
-    $t1 = $respCabecera["t1"];
+        $t1 = $respCabecera["t1"];
+    } else {
 
-  }else{
+        $t1 = "";
+    }
 
-    $t1 = "";
+    if ($respCabecera["t2"] > 0) {
 
-  }
+        $t2 = $respCabecera["t2"];
+    } else {
 
-  if($respCabecera["t2"] > 0){
+        $t2 = "";
+    }
 
-    $t2 = $respCabecera["t2"];
+    if ($respCabecera["t3"] > 0) {
 
-  }else{
+        $t3 = $respCabecera["t3"];
+    } else {
 
-    $t2 = "";
+        $t3 = "";
+    }
 
-  }
-  
-  if($respCabecera["t3"] > 0){
+    if ($respCabecera["t4"] > 0) {
 
-    $t3 = $respCabecera["t3"];
+        $t4 = $respCabecera["t4"];
+    } else {
 
-  }else{
+        $t4 = "";
+    }
 
-    $t3 = "";
+    if ($respCabecera["t5"] > 0) {
 
-  }
-  
-  if($respCabecera["t4"] > 0){
+        $t5 = $respCabecera["t5"];
+    } else {
 
-    $t4 = $respCabecera["t4"];
+        $t5 = "";
+    }
 
-  }else{
+    if ($respCabecera["t6"] > 0) {
 
-    $t4 = "";
+        $t6 = $respCabecera["t6"];
+    } else {
 
-  }
-  
-  if($respCabecera["t5"] > 0){
+        $t6 = "";
+    }
 
-    $t5 = $respCabecera["t5"];
+    if ($respCabecera["t7"] > 0) {
 
-  }else{
+        $t7 = $respCabecera["t7"];
+    } else {
 
-    $t5 = "";
+        $t7 = "";
+    }
 
-  }
-  
-  if($respCabecera["t6"] > 0){
+    if ($respCabecera["t8"] > 0) {
 
-    $t6 = $respCabecera["t6"];
+        $t8 = $respCabecera["t8"];
+    } else {
 
-  }else{
-
-    $t6 = "";
-
-  }
-
-  if($respCabecera["t7"] > 0){
-
-    $t7 = $respCabecera["t7"];
-
-  }else{
-
-    $t7 = "";
-
-  }
-  
-  if($respCabecera["t8"] > 0){
-
-    $t8 = $respCabecera["t8"];
-
-  }else{
-
-    $t8 = "";
-
-  }  
+        $t8 = "";
+    }
 
 
 
-  $cont+=1;
+    $cont += 1;
 
-  $fila+=1;
-  $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", $cont);
-  $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", utf8_encode($respCabecera["modelo"]));
-  $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", utf8_encode($respCabecera["nombre"]));
-  $objPHPExcel->getActiveSheet()->SetCellValue("D$fila", utf8_encode($respCabecera["color"]));
-  $objPHPExcel->getActiveSheet()->SetCellValue("E$fila", $t1);
-  $objPHPExcel->getActiveSheet()->SetCellValue("F$fila", $t2);
-  $objPHPExcel->getActiveSheet()->SetCellValue("G$fila", $t3);
-  $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", $t4);
-  $objPHPExcel->getActiveSheet()->SetCellValue("I$fila", $t5);
-  $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", $t6);
-  $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", $t7);
-  $objPHPExcel->getActiveSheet()->SetCellValue("L$fila", $t8);
-  $objPHPExcel->getActiveSheet()->SetCellValue("M$fila", utf8_encode($respCabecera["subtotal"]));
+    $fila += 1;
+    $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", $cont);
+    $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", utf8_encode($respCabecera["modelo"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", utf8_encode($respCabecera["nombre"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("D$fila", utf8_encode($respCabecera["color"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("E$fila", $t1);
+    $objPHPExcel->getActiveSheet()->SetCellValue("F$fila", $t2);
+    $objPHPExcel->getActiveSheet()->SetCellValue("G$fila", $t3);
+    $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", $t4);
+    $objPHPExcel->getActiveSheet()->SetCellValue("I$fila", $t5);
+    $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", $t6);
+    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", $t7);
+    $objPHPExcel->getActiveSheet()->SetCellValue("L$fila", $t8);
+    $objPHPExcel->getActiveSheet()->SetCellValue("M$fila", utf8_encode($respCabecera["subtotal"]));
 
-  $objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "A$fila");
-  $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "B$fila");
-  $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
-  $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "D$fila");
-  $objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-  $objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
-  $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "F$fila");
-  $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "G$fila");
-  $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "H$fila");
-  $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "I$fila");
-  $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "J$fila");
-  $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "K$fila");
-  $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "L$fila");
-  $objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "M$fila");
-
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "A$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "B$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "D$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "E$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "F$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "G$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "H$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "I$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "J$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "K$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "L$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "M$fila");
 }
 
 /* 
@@ -728,7 +733,7 @@ $sqlTotal = mysql_query("SELECT
 
 $respTotal = mysql_fetch_array($sqlTotal);
 
-$fila+=1;
+$fila += 1;
 $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", '');
 $objPHPExcel->getActiveSheet()->mergeCells("A$fila:D$fila");
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde7, "A$fila:D$fila");
@@ -749,7 +754,7 @@ todo: FIN TOTAL
 /* 
 todo: INICIO FIRMA
 */
-$fila+=3;
+$fila += 3;
 $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", '');
 $objPHPExcel->getActiveSheet()->mergeCells("C$fila:D$fila");
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde8, "C$fila:D$fila");
@@ -758,7 +763,7 @@ $objPHPExcel->getActiveSheet()->SetCellValue("F$fila", '');
 $objPHPExcel->getActiveSheet()->mergeCells("F$fila:L$fila");
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde8, "F$fila:L$fila");
 
-$fila+=1;
+$fila += 1;
 $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", 'RESPONSABLE PRODUCCIÓN');
 $objPHPExcel->getActiveSheet()->mergeCells("C$fila:D$fila");
 $objPHPExcel->getActiveSheet()->setSharedStyle($texto2, "C$fila:D$fila");
@@ -857,7 +862,7 @@ $objPHPExcel->getActiveSheet()->setSharedStyle($texto1, "C$fila:E$fila");
 $objPHPExcel->getActiveSheet()->getStyle("C$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 $objPHPExcel->getActiveSheet()->getStyle("C$fila")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 
-$fila = 4 ;
+$fila = 4;
 $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", 'OC:');
 $objPHPExcel->getActiveSheet()->setSharedStyle($texto1, "A$fila");
 
@@ -867,14 +872,14 @@ $objPHPExcel->getActiveSheet()->setSharedStyle($texto2, "B$fila");
 $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", utf8_encode($respCabecera["estado"]));
 $objPHPExcel->getActiveSheet()->setSharedStyle($texto2, "C$fila");
 
-$fila = 5 ;
+$fila = 5;
 $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", 'FECHA:');
 $objPHPExcel->getActiveSheet()->setSharedStyle($texto1, "A$fila");
 
 $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", utf8_encode($respCabecera["fecha"]));
 $objPHPExcel->getActiveSheet()->setSharedStyle($texto2, "B$fila");
 
-$fila = 6 ;
+$fila = 6;
 $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", 'Cantidad Total:');
 $objPHPExcel->getActiveSheet()->setSharedStyle($texto1, "A$fila");
 
@@ -940,24 +945,23 @@ $sqlDetalle = mysql_query("SELECT
                                     LEFT JOIN articulojf a 
                                       ON doc.articulo = a.articulo 
                                     WHERE doc.ordencorte = $id 
-                                    AND dt.tej_princ = 'si' 
+                                    /* AND dt.tej_princ = 'si'  */
                                     ORDER BY doc.articulo") or die(mysql_error());
 
-while($respDetalle = mysql_fetch_array($sqlDetalle)){
+while ($respDetalle = mysql_fetch_array($sqlDetalle)) {
 
-$fila+= 1;
-$objPHPExcel->getActiveSheet()->SetCellValue("A$fila", utf8_encode($respDetalle["modelo"]));
-$objPHPExcel->getActiveSheet()->SetCellValue("B$fila", utf8_encode($respDetalle["articulo"]));
-$objPHPExcel->getActiveSheet()->SetCellValue("C$fila", utf8_encode($respDetalle["materiaprima"]));
-$objPHPExcel->getActiveSheet()->SetCellValue("D$fila", utf8_encode($respDetalle["cantidad"]));
-$objPHPExcel->getActiveSheet()->SetCellValue("E$fila", utf8_encode($respDetalle["consumo"]));
+    $fila += 1;
+    $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", utf8_encode($respDetalle["modelo"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", utf8_encode($respDetalle["articulo"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", utf8_encode($respDetalle["materiaprima"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("D$fila", utf8_encode($respDetalle["cantidad"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("E$fila", utf8_encode($respDetalle["consumo"]));
 
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "A$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "B$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "D$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "E$fila");
-
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "A$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "B$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "D$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "E$fila");
 }
 
 /* 
@@ -1228,43 +1232,60 @@ $objPHPExcel->getActiveSheet()->setSharedStyle($borde9, "D$fila");
 
 #query para sacar los datos del resumen
 $sqlResumen = mysql_query("SELECT 
-                                  DATE(oc.fecha) AS fecha,
-                                  mp.descripcion AS materiaprima,
-                                  SUM(ROUND((doc.cantidad * dt.consumo), 2)) AS consumo 
-                                  FROM
-                                  detalles_ordencortejf doc 
-                                  LEFT JOIN detalles_tarjetajf dt 
-                                    ON doc.articulo = dt.articulo 
-                                  LEFT JOIN 
-                                    (SELECT DISTINCT 
-                                      p.codpro,
-                                      CONCAT(p.DesPro, ' - ', tb.Des_Larga) AS descripcion 
-                                    FROM
-                                      producto AS p,
-                                      Tabla_M_Detalle AS tb 
-                                    WHERE tb.Cod_Tabla IN ('TCOL') 
-                                      AND tb.Cod_Argumento = p.ColPro 
-                                      AND p.estpro = '1' 
-                                    ORDER BY SUBSTRING(CodFab, 1, 6) ASC) AS mp 
-                                    ON dt.mat_pri = mp.codpro 
-                                  LEFT JOIN ordencortejf oc 
-                                    ON doc.ordencorte = oc.codigo 
-                                  WHERE doc.ordencorte = $id
-                                  AND dt.tej_princ = 'si' 
-                                  GROUP BY mp.descripcion 
-                                  ORDER BY doc.articulo") or die(mysql_error());
+                            DATE(oc.fecha) AS fecha,
+                            mp.descripcion AS materiaprima,
+                            SUM(ROUND((doc.cantidad * dt.consumo), 2)) AS consumo,
+                            mp.stock,
+                            CASE
+                            WHEN mp.stock > SUM(ROUND((doc.cantidad * dt.consumo), 2)) 
+                            THEN 'OK' 
+                            ELSE 'FALTANTE' 
+                            END AS estado 
+                            FROM
+                            detalles_ordencortejf doc 
+                            LEFT JOIN detalles_tarjetajf dt 
+                            ON doc.articulo = dt.articulo 
+                            LEFT JOIN 
+                            (SELECT DISTINCT 
+                                p.codpro,
+                                CONCAT(p.DesPro, ' - ', tb.Des_Larga) AS descripcion,
+                                p.codalm01 AS stock,
+                                p.codfab 
+                            FROM
+                                producto AS p,
+                                Tabla_M_Detalle AS tb 
+                            WHERE tb.Cod_Tabla IN ('TCOL') 
+                                AND tb.Cod_Argumento = p.ColPro 
+                                AND p.estpro = '1' 
+                            ORDER BY SUBSTRING(CodFab, 1, 6) ASC) AS mp 
+                            ON dt.mat_pri = mp.codpro 
+                            LEFT JOIN ordencortejf oc 
+                            ON doc.ordencorte = oc.codigo 
+                            WHERE doc.ordencorte = $id 
+                            /* AND dt.tej_princ = 'si'  */
+                            AND LEFT(mp.codfab, 3) IN (
+                            'BLO',
+                            'ELA',
+                            'SES',
+                            'TIR',
+                            'TEL',
+                            'MET',
+                            'PLA',
+                            'ETI'
+                            ) 
+                            GROUP BY mp.descripcion 
+                            ORDER BY mp.descripcion") or die(mysql_error());
 
-while($respResumen = mysql_fetch_array($sqlResumen)){
+while ($respResumen = mysql_fetch_array($sqlResumen)) {
 
-$fila+= 1;
-$objPHPExcel->getActiveSheet()->SetCellValue("B$fila", utf8_encode($respResumen["fecha"]));
-$objPHPExcel->getActiveSheet()->SetCellValue("C$fila", utf8_encode($respResumen["materiaprima"]));
-$objPHPExcel->getActiveSheet()->SetCellValue("D$fila", utf8_encode($respResumen["consumo"]));
+    $fila += 1;
+    $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", utf8_encode($respResumen["fecha"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", utf8_encode($respResumen["materiaprima"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("D$fila", utf8_encode($respResumen["consumo"]));
 
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "B$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "D$fila");
-
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "B$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "D$fila");
 }
 
 /* 
@@ -1343,7 +1364,7 @@ $sqlTotalResumen = mysql_query("SELECT
                                 LEFT JOIN detalles_tarjetajf dt 
                                   ON doc.articulo = dt.articulo 
                                 WHERE doc.ordencorte = $id
-                                AND dt.tej_princ = 'si' 
+                                /* AND dt.tej_princ = 'si'  */
                                 GROUP BY doc.ordencorte 
                                 ORDER BY doc.articulo") or die(mysql_error());
 
@@ -1369,6 +1390,151 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(30.72);
 $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(42.87);
 $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(8.57);
 $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(9.29);
+
+
+
+/* 
+* CONFIGURAMOS LA 3ERA HOJA
+*/
+$sqlHoja = mysql_query("SELECT 
+                                CONCAT('OC - ',codigo,' - RESUMEN') AS codigo
+                                FROM
+                                ordencortejf oc
+                                WHERE oc.codigo= $id") or die(mysql_error());
+
+$respHoja = mysql_fetch_array($sqlHoja);
+
+$objPHPExcel->createSheet(2);
+$objPHPExcel->setActiveSheetIndex(2);
+
+# Titulo de la hoja
+$objPHPExcel->getActiveSheet()->setTitle($respHoja["codigo"]);
+
+# Orientacion hoja
+$objPHPExcel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_PORTRAIT);
+
+# Tipo Papel
+$objPHPExcel->getActiveSheet()->getPageSetup()->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4);
+
+# Establecer impresion a pagina completa
+$objPHPExcel->getActiveSheet()->getPageSetup()->setFitToPage(true);
+$objPHPExcel->getActiveSheet()->getPageSetup()->setFitToWidth(1);
+$objPHPExcel->getActiveSheet()->getPageSetup()->setFitToHeight(0);
+
+# Establecer margenes
+$marginV = 0.5 / 3.54; // 0.5 centimetros
+
+$objPHPExcel->getActiveSheet()->getPageMargins()->setTop($marginV);
+$objPHPExcel->getActiveSheet()->getPageMargins()->setBottom($marginV);
+$objPHPExcel->getActiveSheet()->getPageMargins()->setLeft($marginV);
+$objPHPExcel->getActiveSheet()->getPageMargins()->setRight($marginV);
+
+# Incluir una imagen
+$objDrawing = new PHPExcel_Worksheet_Drawing();
+$objDrawing->setPath('img/jackyform_letras.png'); //ruta
+$objDrawing->setWidthAndHeight(200, 150);
+$objDrawing->setCoordinates('B1');
+$objDrawing->setWorksheet($objPHPExcel->getActiveSheet());
+
+/* 
+todo: INICIO CABECERA
+*/
+
+/* 
+todo: FIN CABECERA
+*/
+
+/* 
+todo: INICIO DE DETALLE
+*/
+
+$fila = 4;
+$objPHPExcel->getActiveSheet()->SetCellValue("A$fila", 'MATERIA PRIMA');
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde9, "A$fila");
+
+$objPHPExcel->getActiveSheet()->SetCellValue("B$fila", 'CONSUMO');
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde9, "B$fila");
+
+$objPHPExcel->getActiveSheet()->SetCellValue("C$fila", 'STOCK ACTUAL');
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde9, "C$fila");
+
+$objPHPExcel->getActiveSheet()->SetCellValue("D$fila", 'ESTADO');
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde9, "D$fila");
+
+#query para sacar los datos del detalle
+$sqlDetalle = mysql_query("SELECT 
+                    DATE(oc.fecha) AS fecha,
+                    mp.descripcion AS materiaprima,
+                    SUM(ROUND((doc.cantidad * dt.consumo), 2)) AS consumo,
+                    mp.stock,
+                    CASE
+                    WHEN mp.stock > SUM(ROUND((doc.cantidad * dt.consumo), 2)) 
+                    THEN 'OK' 
+                    ELSE 'FALTANTE' 
+                    END AS estado 
+                    FROM
+                    detalles_ordencortejf doc 
+                    LEFT JOIN detalles_tarjetajf dt 
+                    ON doc.articulo = dt.articulo 
+                    LEFT JOIN 
+                    (SELECT DISTINCT 
+                        p.codpro,
+                        CONCAT(p.DesPro, ' - ', tb.Des_Larga) AS descripcion,
+                        p.codalm01 AS stock,
+                        p.codfab 
+                    FROM
+                        producto AS p,
+                        Tabla_M_Detalle AS tb 
+                    WHERE tb.Cod_Tabla IN ('TCOL') 
+                        AND tb.Cod_Argumento = p.ColPro 
+                        AND p.estpro = '1' 
+                    ORDER BY SUBSTRING(CodFab, 1, 6) ASC) AS mp 
+                    ON dt.mat_pri = mp.codpro 
+                    LEFT JOIN ordencortejf oc 
+                    ON doc.ordencorte = oc.codigo 
+                    WHERE doc.ordencorte = $id
+                    /* AND dt.tej_princ = 'si'  */
+                    AND LEFT(mp.codfab, 3) IN (
+                    'BLO',
+                    'ELA',
+                    'SES',
+                    'TIR',
+                    'TEL',
+                    'MET',
+                    'PLA',
+                    'ETI'
+                    ) 
+                    GROUP BY mp.descripcion 
+                    ORDER BY mp.descripcion") or die(mysql_error());
+
+while ($respDetalle = mysql_fetch_array($sqlDetalle)) {
+
+    $fila += 1;
+    $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", utf8_encode($respDetalle["materiaprima"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", utf8_encode($respDetalle["consumo"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", utf8_encode($respDetalle["stock"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("D$fila", utf8_encode($respDetalle["estado"]));
+
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde4, "A$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "B$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "C$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde6, "D$fila");
+}
+
+/* 
+todo: FIN DE DETALLE
+*/
+
+
+# Ajustar el tamaño de las columnas
+$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(50.05);
+$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(10.01);
+$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(12.87);
+$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(8.58);
+
+
+
+
 
 
 

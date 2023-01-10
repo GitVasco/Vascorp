@@ -2843,7 +2843,7 @@ class ModeloMovimientos
                         FROM
                            temporaljf t 
                         WHERE t.estado IN ('APROBADO', 'APT', 'CONFIRMADO') 
-                           AND YEAR(t.fecha) = YEAR(NOW()) -1
+                           AND YEAR(t.fecha) = YEAR(NOW())
                         GROUP BY t.vendedor) AS p 
                         ON m.codigo = p.vendedor 
                         LEFT JOIN 
@@ -2888,7 +2888,7 @@ class ModeloMovimientos
                            FROM
                               temporaljf t 
                            WHERE t.estado IN ('APROBADO', 'APT', 'CONFIRMADO') 
-                              AND YEAR(t.fecha) = YEAR(NOW()) -1
+                              AND YEAR(t.fecha) = YEAR(NOW()) 
                            GROUP BY t.vendedor) AS p 
                            ON m.codigo = p.vendedor 
                            LEFT JOIN 
