@@ -489,7 +489,7 @@ LEFT JOIN notascd_jf n
   ON v.tipo = n.tipo 
   AND v.documento = n.documento 
 WHERE MONTH(v.fecha) = $mes
-AND YEAR(v.fecha) = YEAR(NOW()) -1
+AND YEAR(v.fecha) = YEAR(NOW())
 AND v.tipo NOT IN ('S70', 'S01') 
 ORDER BY tipo_doc DESC,
 v.fecha,

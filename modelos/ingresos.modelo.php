@@ -376,7 +376,7 @@ class ModeloIngresos
 						movimientos_cabecerajf mc 
 						LEFT JOIN usuariosjf u 
 						ON mc.usuario = u.id 
-					WHERE mc.fecha = YEAR(NOW())
+					WHERE YEAR(mc.fecha) = YEAR(NOW())
 					ORDER BY mc.id ASC ");
 
 			$stmt->execute();

@@ -956,6 +956,11 @@ $(".box").on("click", ".btnReporteOrdenC", function () {
     window.location = "vistas/reportes_excel/rpt_ordencorte_general.php";
 });
 
+//Reporte de Salidas
+$(".box").on("click", ".btnReporteOrdenMP", function () {
+    window.location = "vistas/reportes_excel/rpt_ordencorte_mp.php";
+});
+
 if (localStorage.getItem("capturarRango18") != null) {
     $("#daterange-btnGeneralCorte span").html(
         localStorage.getItem("capturarRango18")

@@ -175,14 +175,14 @@ class ControladorAbonos
 			$con = ControladorUsuarios::ctrMostrarConexiones("id", 1);
 			$conexion = mysql_connect($con["ip"], $con["user"], $con["pwd"]) or die("No se pudo conectar: " . mysql_error());
 			mysql_select_db($con["db"], $conexion);
-			for ($i = 9; $i <= $data->sheets[0]['numRows']; $i++) {
+			for ($i = 6; $i <= $data->sheets[0]['numRows']; $i++) {
 				for ($j = 1; $j <= 1; $j++) {
 					$fecha = $data->sheets[0]['cells'][$i][1];
 					$descripcion = $data->sheets[0]['cells'][$i][3];
 					$monto = $data->sheets[0]['cells'][$i][4];
 					$montoConv = str_replace(",", "", $monto);
-					$agencia = $data->sheets[0]['cells'][$i][5];
-					$operacion = $data->sheets[0]['cells'][$i][6];
+					$agencia = $data->sheets[0]['cells'][$i][6];
+					$operacion = $data->sheets[0]['cells'][$i][7];
 					if (substr($descripcion, 0, 3) != "LET") {
 						$sqlInsertar = mysql_query("INSERT INTO abonosjf (fecha,descripcion,monto,agencia,num_ope)  values('" . substr($fecha, 6, 4) . "-" . substr($fecha, 3, 2) . "-" . substr($fecha, 0, 2) . "','" . $descripcion . "'," . $montoConv . ",'" . $agencia . "','" . $operacion . "')");
 					}
