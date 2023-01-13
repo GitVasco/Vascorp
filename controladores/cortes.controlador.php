@@ -267,4 +267,120 @@ class ControladorCortes
 
         return $respuesta;
     }
+
+    /*
+    *MANDAR A CORTE A TALLER
+    */
+    static public function ctrMandarTallerTotal()
+    {
+        if (isset($_POST["listaTallas"])) {
+            //* registramos en la tabla taller cabecera para el código
+            if ($_POST["seleccionarSectorServicioTotal"] != "") {
+
+                $tallerCab = $_POST["seleccionarSectorServicioTotal"];
+            } else {
+
+                $tallerCab = "VC";
+            }
+            $listaTallas = json_decode($_POST["listaTallas"], true);
+
+            foreach ($listaTallas as $key => $value) {
+                $datosCab = array(
+                    "usuario"   => $_POST["usuario"],
+                    "articulo"  => $value["articulo"],
+                    "cantidad"  => $value["nuevaCantidad"],
+                    "estado"    => "0",
+                    "taller"    => $tallerCab
+                );
+
+                $respuestaCab = ModeloCortes::mdlMandarTallerCab($datosCab);
+
+                if ($respuestaCab == "ok") {
+                    //* ultimo codigo
+                    $ult_codigo = ModeloCortes::mdlUltCodigo();
+
+                    //* Registramos en la tabla taller detalle
+                    $datos = array(
+                        "usuario" => $_POST["usuario"],
+                        "articulo" => $value["articulo"],
+                        "cantidad" => $value["nuevaCantidad"],
+                        "codigo" => $ult_codigo["ult_codigo"]
+                    );
+
+                    $respuesta = ModeloCortes::mdlMandarTaller($datos);
+                    if ($respuesta == "ok") {
+
+                        $cod = $ult_codigo["ult_codigo"];
+
+                        //* Recibimos el checkbox del ticket y validamos si imprimira o no 
+                        $ticket = $_POST["ticketTotal"];
+
+                        if ($ticket == "1" || $_POST["seleccionarSectorServicioTotal"] == 'T1') {
+                            //* Actualizamos la cantidad que queda en corte y pasa al taller en el articulo
+                            $articulo  = $value["articulo"];
+                            $cantidad =  $value["nuevaCantidad"];
+
+                            $actualizaArticuloTaller = ModeloArticulos::mdlActualizarTallerCorte($articulo, $cantidad);
+
+                            //* Mandamos a imprimir con la orden de cut para cortar cada ticket 
+
+                            $nombre_impresora = "Star BSC10";
+
+                            $connector = new WindowsPrintConnector($nombre_impresora);
+                            $printer = new Printer($connector);
+
+                            $fecha = date("d-m-Y");
+
+                            if ($_POST["seleccionarSectorServicioTotal"] != 'T1') {
+                                $respuesta = ControladorCortes::ctrMostrarEnTalleres($cod);
+                                //Establecemos los datos de la empresa
+                                $empresa = "Corporacion Vasco S.A.C.";
+                                $documento = "20513613939";
+                            }
+                        } else {
+                            //* Actualizamos la cantidad que queda en corte y pasa al servicio en el articulo
+
+                            $articulo  = $value["articulo"];
+                            $cantidad =  $value["nuevaCantidad"];
+
+                            $actualizaArticuloServicio = ModeloArticulos::mdlActualizarServicioCorte($articulo, $cantidad);
+
+                            //* Traemos el codigo del servicio cabecera creado mediante el evento 
+                            $sector = $_POST["seleccionarSectorServicioTotal"];
+                            $primerServicio = ModeloServicios::mdlPrimerServicio($sector);
+                            $codigoServicio = $primerServicio["codigo"];
+
+                            //** Guardamos el detalle del servicio y lo asignamos a la cabecera con el codigo de servicio 
+                            $datosDetalle = array(
+                                "articulo" => $articulo,
+                                "cantidad" => $cantidad,
+                                "codigo" => $codigoServicio,
+                                "saldo" => $cantidad,
+                                "cabecera_taller" => $ult_codigo["ult_codigo"]
+                            );
+
+                            $respuestaDetalle = ModeloServicios::mdlGuardarDetallesServicios("servicios_detallejf", $datosDetalle);
+                        }
+                    }
+                }
+            }
+
+            echo '<script>
+
+            swal({
+                  type: "success",
+                  title: "Se mando a taller correctamente",
+                  showConfirmButton: true,
+                  confirmButtonText: "Cerrar"
+                  }).then(function(result){
+                            if (result.value) {
+
+                            window.location = "en-cortes";
+
+                            }
+                        })
+
+            </script>';
+        }
+    }
 }

@@ -40,7 +40,7 @@ class ModeloProduccion
                                                                 meses) AS m 
                                                             ON q.mes = m.codigo 
                                                         WHERE q.id = :valor
-                                                        AND YEAR(q.fecha) = YEAR(NOW()) ");
+                                                        AND YEAR(q.fecha_creacion) = YEAR(NOW()) ");
 
             $stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
 
@@ -92,7 +92,7 @@ class ModeloProduccion
                                             quincenasjf q 
                                             LEFT JOIN usuariosjf u 
                                               ON q.usuario = u.id
-                                              AND YEAR(q.fecha) = YEAR(NOW()) ");
+                                              where q.ano  = YEAR(NOW()) ");
 
             $stmt->execute();
 

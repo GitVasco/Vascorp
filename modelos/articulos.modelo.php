@@ -35,6 +35,27 @@ class ModeloArticulos
 		$stmt = null;
 	}
 
+	/* 
+	* MOSTRAR ARTICULOS
+	*/
+	static public function MostrarModCol($valor)
+	{
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+							* 
+						FROM
+							articulojf a 
+						WHERE a.articulo LIKE '%$valor%'");
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+
+		$stmt->close();
+
+		$stmt = null;
+	}
 	/*
 	* MOSTRAR CANTIDAD DE PEDIDOS
 	*/
