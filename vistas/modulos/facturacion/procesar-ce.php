@@ -495,7 +495,7 @@ MODAL REGISTRO DE VENTAS
 
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-                    <h4 class="modal-title">Registro del Mes</h4>
+                    <h4 class="modal-title">Registro de Ventas</h4>
 
                 </div>
 
@@ -510,37 +510,29 @@ MODAL REGISTRO DE VENTAS
 
                         <!-- ENTRADA PARA PORCENTAJE -->
 
-                        <div class="form-group">
+                        <div class="form-group col-lg-6">
 
-                            <div class="input-group">
+                            <label>Fecha Inicio</label>
 
-                                <span class="input-group-addon"><i class="fa fa-user-o"></i></span>
+                            <input type="date" id="fInicio" name="fInicio">
 
-                                <input type="hidden" id="usuario" name="usuario" value="<?php echo $_SESSION["id"] ?>">
+                        </div>
 
-                                <select class="form-control input-sm selectpicker" id="regMes" name="regMes" data-live-search="true" required>
+                        <div class="form-group col-lg-6">
 
-                                    <option value="">Seleccionar Mes</option>
+                            <label>Fecha Fin</label>
 
-                                    <option value="1">Enero</option>
-                                    <option value="2">Febrero</option>
-                                    <option value="3">Marzo</option>
-                                    <option value="4">Abril</option>
-                                    <option value="5">Mayo</option>
-                                    <option value="6">Junio</option>
-                                    <option value="7">Julio</option>
-                                    <option value="8">Agosto</option>
-                                    <option value="9">Septiembre</option>
-                                    <option value="10">Octubre</option>
-                                    <option value="11">Noviembre</option>
-                                    <option value="12">Diciembre</option>
+                            <input type="date" id="fFin" name="fFin">
 
+                        </div>
 
-
-                                </select>
-
+                        <div class="form-group col-lg-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="conGuias" name="conGuias" checked>
+                                <label class="form-check-label" for="conGuias">
+                                    Con Guias
+                                </label>
                             </div>
-
                         </div>
 
                     </div>

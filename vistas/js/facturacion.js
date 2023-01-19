@@ -2581,11 +2581,22 @@ $(".tablaFacturas, .tablaBoletas, .tablaProformas, .tablaGuiasRemision").on(
 );
 
 $("#formularioRegistro").on("click", "button.btnGenerarReg", function () {
-    var mes = (cod = document.getElementById("regMes").value);
-    //console.log(mes);
+    var inicio = document.getElementById("fInicio").value;
+    var fin = document.getElementById("fFin").value;
+    var conGuias = document.getElementById("conGuias");
 
+    if (conGuias.checked) {
+        var guias = "1";
+    } else {
+        var guias = "0";
+    }
     window.location =
-        "vistas/reportes_excel/rpt_registro_ventas.php?mes=" + mes;
+        "vistas/reportes_excel/rpt_registro_ventas.php?inicio=" +
+        inicio +
+        "&fin=" +
+        fin +
+        "&guias=" +
+        guias;
 });
 
 function checkSubmit() {

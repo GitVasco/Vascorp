@@ -1520,10 +1520,9 @@ class ModeloPedidos
 			temporaljf t 
 			LEFT JOIN detalle_temporal dt 
 			  ON t.codigo = dt.codigo 
-			  WHERE estado IN ('APROBADO', 'APT', 'CONFIRMADO') 
+		  WHERE estado IN ('APROBADO', 'APT', 'CONFIRMADO') 
 		  GROUP BY articulo) t 
-		  ON a.articulo = t.articulo SET a.pedidos = t.total 
-	  WHERE t.total > 0");
+		  ON a.articulo = t.articulo SET a.pedidos = IFNULL(t.total,0)");
 
 		if ($stmt->execute()) {
 

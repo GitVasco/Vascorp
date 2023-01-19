@@ -139,6 +139,7 @@ class ControladorProveedores
 		if (isset($_POST["editarRUC"])) {
 
 			$tabla = "proveedor";
+
 			$datos = array(
 				"CodRuc" => $_POST["editarCodigoPro"],
 				"TipPro" => $_POST["editarTipoProv"],
@@ -157,12 +158,26 @@ class ControladorProveedores
 				"TieEnt" => $_POST["editarTipoEntr"],
 				"ForPag" => $_POST["editarFormaPago"],
 				"Dia" => $_POST["editarDias"],
+
 				"Banco" => $_POST["editarBanco"],
 				"Moneda" => $_POST["editarMoneda"],
 				"NroCta" => $_POST["editarNroCuenta"],
+				"Cci" => $_POST["editarCci"],
+
 				"Banco1" => $_POST["editarBanco1"],
 				"Moneda1" => $_POST["editarMoneda1"],
-				"NroCta1" => $_POST["editarNroCuenta1"]
+				"NroCta1" => $_POST["editarNroCuenta1"],
+				"Cci1" => $_POST["editarCci1"],
+
+				"Banco2" => $_POST["editarBanco2"],
+				"Moneda2" => $_POST["editarMoneda2"],
+				"NroCta2" => $_POST["editarNroCuenta2"],
+				"Cci2" => $_POST["editarCci2"],
+
+				"Banco3" => $_POST["editarBanco3"],
+				"Moneda3" => $_POST["editarMoneda3"],
+				"NroCta3" => $_POST["editarNroCuenta3"],
+				"Cci3" => $_POST["editarCci3"]
 			);
 
 			$respuesta = ModeloProveedores::mdlEditarProveedor($tabla, $datos);

@@ -77,16 +77,34 @@ $(".tablaProveedores").on("click", ".btnEditarProveedor", function () {
             $("#editarFormaPago").val(respuesta["ForPag"]);
             $("#editarFormaPago").selectpicker("refresh");
             $("#editarDias").val(respuesta["Dia"]);
+
             $("#editarBanco").val(respuesta["Banco"]);
             $("#editarBanco").selectpicker("refresh");
             $("#editarMoneda").val(respuesta["Moneda"]);
             $("#editarMoneda").selectpicker("refresh");
             $("#editarNroCuenta").val(respuesta["NroCta"]);
+            $("#editarCci").val(respuesta["Cci"]);
+
             $("#editarBanco1").val(respuesta["Banco1"]);
             $("#editarBanco1").selectpicker("refresh");
             $("#editarMoneda1").val(respuesta["Moneda1"]);
             $("#editarMoneda1").selectpicker("refresh");
             $("#editarNroCuenta1").val(respuesta["NroCta1"]);
+            $("#editarCci1").val(respuesta["Cci1"]);
+
+            $("#editarBanco2").val(respuesta["Banco2"]);
+            $("#editarBanco2").selectpicker("refresh");
+            $("#editarMoneda2").val(respuesta["Moneda2"]);
+            $("#editarMoneda2").selectpicker("refresh");
+            $("#editarNroCuenta2").val(respuesta["NroCta2"]);
+            $("#editarCci2").val(respuesta["Cci2"]);
+
+            $("#editarBanco3").val(respuesta["Banco3"]);
+            $("#editarBanco3").selectpicker("refresh");
+            $("#editarMoneda3").val(respuesta["Moneda3"]);
+            $("#editarMoneda3").selectpicker("refresh");
+            $("#editarNroCuenta3").val(respuesta["NroCta3"]);
+            $("#editarCci3").val(respuesta["Cci3"]);
         },
     });
 });

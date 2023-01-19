@@ -828,10 +828,9 @@ MODAL EDITAR PROVEEDOR
                         </div>
 
                         <!-- ENTRADA PARA EL BANCO MONEDA Y NRO CUENTA-->
-
                         <div class="form-group" style="padding-top:25px">
                             <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">BANCO</label>
-                            <div class="col-lg-3 col-md-3 col-sm-3">
+                            <div class="col-lg-2 col-md-3 col-sm-3">
 
                                 <select class="form-control input-md selectpicker" data-live-search="true" name="editarBanco" id="editarBanco">
                                     <option value="">SELECCIONAR BANCO</option>
@@ -853,7 +852,7 @@ MODAL EDITAR PROVEEDOR
                             </div>
 
                             <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">MONEDA</label>
-                            <div class="col-lg-3 col-md-3 col-sm-3">
+                            <div class="col-lg-2 col-md-3 col-sm-3">
 
                                 <select class="form-control input-md selectpicker" data-live-search="true" name="editarMoneda" id="editarMoneda">
                                     <option value="">SELECCIONAR MONEDA</option>
@@ -869,20 +868,27 @@ MODAL EDITAR PROVEEDOR
                             </div>
 
                             <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">N° CTA</label>
-                            <div class="col-lg-3 col-md-3 col-sm-3">
+                            <div class="col-lg-2 col-md-3 col-sm-3">
 
 
                                 <input type="text" style="text-transform:uppercase;" class="form-control input-md" name="editarNroCuenta" id="editarNroCuenta">
 
                             </div>
 
+                            <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">N° CCI</label>
+                            <div class="col-lg-2 col-md-3 col-sm-3">
+
+
+                                <input type="text" style="text-transform:uppercase;" class="form-control input-md" name="editarCci" id="editarCci" placeholder="Ingresar nro CCI">
+
+                            </div>
+
                         </div>
 
                         <!-- ENTRADA PARA EL BANCO1 MONEDA1 Y NRO CUENTA1-->
-
                         <div class="form-group" style="padding-top:25px">
                             <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">BANCO1</label>
-                            <div class="col-lg-3 col-md-3 col-sm-3">
+                            <div class="col-lg-2 col-md-3 col-sm-3">
 
                                 <select class="form-control input-md selectpicker" data-live-search="true" name="editarBanco1" id="editarBanco1">
                                     <option value="">SELECCIONAR BANCO</option>
@@ -903,7 +909,7 @@ MODAL EDITAR PROVEEDOR
                             </div>
 
                             <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">MONEDA1</label>
-                            <div class="col-lg-3 col-md-3 col-sm-3">
+                            <div class="col-lg-2 col-md-3 col-sm-3">
 
                                 <select class="form-control input-md selectpicker" data-live-search="true" name="editarMoneda1" id="editarMoneda1">
                                     <option value="">SELECCIONAR MONEDA</option>
@@ -919,10 +925,132 @@ MODAL EDITAR PROVEEDOR
                             </div>
 
                             <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">N° CTA1</label>
-                            <div class="col-lg-3 col-md-3 col-sm-3">
+                            <div class="col-lg-2 col-md-3 col-sm-3">
 
 
                                 <input type="text" style="text-transform:uppercase;" class="form-control input-md" name="editarNroCuenta1" id="editarNroCuenta1">
+
+                            </div>
+
+                            <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">N° CCI1</label>
+                            <div class="col-lg-2 col-md-3 col-sm-3">
+
+
+                                <input type="text" style="text-transform:uppercase;" class="form-control input-md" name="editarCci1" id="editarCci1" placeholder="Ingresar nro CCI">
+
+                            </div>
+
+                        </div>
+
+                        <!-- ENTRADA PARA EL BANCO1 MONEDA1 Y NRO CUENTA2-->
+                        <div class="form-group" style="padding-top:25px">
+                            <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">BANCO2</label>
+                            <div class="col-lg-2 col-md-3 col-sm-3">
+
+                                <select class="form-control input-md selectpicker" data-live-search="true" name="editarBanco2" id="editarBanco2">
+                                    <option value="">SELECCIONAR BANCO</option>
+                                    <?php
+                                    $item = null;
+                                    $valor = null;
+
+                                    $bancos = ControladorBancos::ctrMostrarBancos($item, $valor);
+
+                                    foreach ($bancos as $key => $value) {
+
+                                        echo '<option value="' . $value["codigo"] . '">' . $value["codigo"] . ' - ' . $value["descripcion"] . '</option>';
+                                    }
+
+                                    ?>
+                                </select>
+
+                            </div>
+
+                            <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">MONEDA2</label>
+                            <div class="col-lg-2 col-md-3 col-sm-3">
+
+                                <select class="form-control input-md selectpicker" data-live-search="true" name="editarMoneda2" id="editarMoneda2">
+                                    <option value="">SELECCIONAR MONEDA</option>
+                                    <?php
+                                    $monedas = ControladorProveedores::ctrMostrarMonedas();
+                                    foreach ($monedas as $key => $value) {
+                                        echo '<option value="' . $value["Cod_Argumento"] . '">' . $value["Cod_Argumento"] . " - " . $value["Des_Larga"] . '</option>';
+                                    }
+                                    ?>
+                                </select>
+                                </select>
+
+                            </div>
+
+                            <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">N° CTA2</label>
+                            <div class="col-lg-2 col-md-3 col-sm-3">
+
+
+                                <input type="text" style="text-transform:uppercase;" class="form-control input-md" name="editarNroCuenta2" id="editarNroCuenta2">
+
+                            </div>
+
+                            <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">N° CCI2</label>
+                            <div class="col-lg-2 col-md-3 col-sm-3">
+
+
+                                <input type="text" style="text-transform:uppercase;" class="form-control input-md" name="editarCci2" id="editarCci2" placeholder="Ingresar nro CCI">
+
+                            </div>
+
+                        </div>
+
+                        <!-- ENTRADA PARA EL BANCO1 MONEDA1 Y NRO CUENTA3-->
+                        <div class="form-group" style="padding-top:25px">
+                            <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">BANCO3</label>
+                            <div class="col-lg-2 col-md-3 col-sm-3">
+
+                                <select class="form-control input-md selectpicker" data-live-search="true" name="editarBanco3" id="editarBanco3">
+                                    <option value="">SELECCIONAR BANCO</option>
+                                    <?php
+                                    $item = null;
+                                    $valor = null;
+
+                                    $bancos = ControladorBancos::ctrMostrarBancos($item, $valor);
+
+                                    foreach ($bancos as $key => $value) {
+
+                                        echo '<option value="' . $value["codigo"] . '">' . $value["codigo"] . ' - ' . $value["descripcion"] . '</option>';
+                                    }
+
+                                    ?>
+                                </select>
+
+                            </div>
+
+                            <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">MONEDA3</label>
+                            <div class="col-lg-2 col-md-3 col-sm-3">
+
+                                <select class="form-control input-md selectpicker" data-live-search="true" name="editarMoneda3" id="editarMoneda3">
+                                    <option value="">SELECCIONAR MONEDA</option>
+                                    <?php
+                                    $monedas = ControladorProveedores::ctrMostrarMonedas();
+                                    foreach ($monedas as $key => $value) {
+                                        echo '<option value="' . $value["Cod_Argumento"] . '">' . $value["Cod_Argumento"] . " - " . $value["Des_Larga"] . '</option>';
+                                    }
+                                    ?>
+                                </select>
+                                </select>
+
+                            </div>
+
+                            <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">N° CTA3</label>
+                            <div class="col-lg-2 col-md-3 col-sm-3">
+
+
+                                <input type="text" style="text-transform:uppercase;" class="form-control input-md" name="editarNroCuenta3" id="editarNroCuenta3">
+
+                            </div>
+
+                            <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">N° CCI3</label>
+                            <div class="col-lg-2 col-md-3 col-sm-3">
+
+
+                                <input type="text" style="text-transform:uppercase;" class="form-control input-md" name="editarCci3" id="editarCci3" placeholder="Ingresar nro CCI">
 
                             </div>
 

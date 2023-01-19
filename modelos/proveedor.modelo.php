@@ -218,7 +218,47 @@ class ModeloProveedores
 	static public function mdlEditarProveedor($tabla, $datos)
 	{
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET CodRuc = :CodRuc,TipPro  = :TipPro,RucPro  = :RucPro,RazPro  = UPPER(:RazPro),DirPro  = UPPER(:DirPro),UbiPro = :UbiPro,TelPro1 = :TelPro1,TelPro2 = :TelPro2,TelPro3 = :TelPro3,FaxPro = :FaxPro,ConPro = UPPER(:ConPro), EmaPro = UPPER(:EmaPro),EmaPro2 = UPPER(:EmaPro2),WebPro = UPPER(:WebPro),TieEnt = :TieEnt,ForPag = :ForPag,Dia = UPPER(:Dia),Banco = :Banco,Moneda = :Moneda,NroCta = :NroCta,Banco1 = :Banco1,Moneda1 = :Moneda1,NroCta1 = :NroCta1 WHERE CodRuc = :CodRuc");
+		$stmt = Conexion::conectar()->prepare("UPDATE 
+						$tabla 
+						SET
+							CodRuc = :CodRuc,
+							TipPro = :TipPro,
+							RucPro = :RucPro,
+							RazPro = UPPER(:RazPro),
+							DirPro = UPPER(:DirPro),
+							UbiPro = :UbiPro,
+							TelPro1 = :TelPro1,
+							TelPro2 = :TelPro2,
+							TelPro3 = :TelPro3,
+							FaxPro = :FaxPro,
+							ConPro = UPPER(:ConPro),
+							EmaPro = UPPER(:EmaPro),
+							EmaPro2 = UPPER(:EmaPro2),
+							WebPro = UPPER(:WebPro),
+							TieEnt = :TieEnt,
+							ForPag = :ForPag,
+							Dia = UPPER(:Dia),
+							Banco = :Banco,
+							Moneda = :Moneda,
+							NroCta = :NroCta,
+							Cci = :Cci,
+
+							Banco1 = :Banco1,
+							Moneda1 = :Moneda1,
+							NroCta1 = :NroCta1, 
+							Cci1 = :Cci1,
+
+							Banco2 = :Banco2,
+							Moneda2 = :Moneda2,
+							NroCta2 = :NroCta2, 
+							Cci2 = :Cci2,
+
+							Banco3 = :Banco3,
+							Moneda3 = :Moneda3,
+							NroCta3 = :NroCta3, 
+							Cci3 = :Cci3
+
+						WHERE CodRuc = :CodRuc");
 
 		$stmt->bindParam(":CodRuc", $datos["CodRuc"], PDO::PARAM_STR);
 		$stmt->bindParam(":TipPro", $datos["TipPro"], PDO::PARAM_STR);
@@ -237,19 +277,34 @@ class ModeloProveedores
 		$stmt->bindParam(":TieEnt", $datos["TieEnt"], PDO::PARAM_STR);
 		$stmt->bindParam(":ForPag", $datos["ForPag"], PDO::PARAM_STR);
 		$stmt->bindParam(":Dia", $datos["Dia"], PDO::PARAM_STR);
+
 		$stmt->bindParam(":Banco", $datos["Banco"], PDO::PARAM_STR);
 		$stmt->bindParam(":Moneda", $datos["Moneda"], PDO::PARAM_STR);
 		$stmt->bindParam(":NroCta", $datos["NroCta"], PDO::PARAM_STR);
+		$stmt->bindParam(":Cci", $datos["Cci"], PDO::PARAM_STR);
+
 		$stmt->bindParam(":Banco1", $datos["Banco1"], PDO::PARAM_STR);
 		$stmt->bindParam(":Moneda1", $datos["Moneda1"], PDO::PARAM_STR);
 		$stmt->bindParam(":NroCta1", $datos["NroCta1"], PDO::PARAM_STR);
+		$stmt->bindParam(":Cci1", $datos["Cci1"], PDO::PARAM_STR);
+
+		$stmt->bindParam(":Banco2", $datos["Banco2"], PDO::PARAM_STR);
+		$stmt->bindParam(":Moneda2", $datos["Moneda2"], PDO::PARAM_STR);
+		$stmt->bindParam(":NroCta2", $datos["NroCta2"], PDO::PARAM_STR);
+		$stmt->bindParam(":Cci2", $datos["Cci2"], PDO::PARAM_STR);
+
+		$stmt->bindParam(":Banco3", $datos["Banco3"], PDO::PARAM_STR);
+		$stmt->bindParam(":Moneda3", $datos["Moneda3"], PDO::PARAM_STR);
+		$stmt->bindParam(":NroCta3", $datos["NroCta3"], PDO::PARAM_STR);
+		$stmt->bindParam(":Cci3", $datos["Cci3"], PDO::PARAM_STR);
 
 		if ($stmt->execute()) {
 
 			return "ok";
 		} else {
 
-			return "error";
+			return $stmt->errorInfo();
+			//return $stmt;
 		}
 
 		$stmt->close();
