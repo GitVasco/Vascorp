@@ -1484,6 +1484,34 @@ class ModeloArticulos
 	}
 
 	/*
+	* ACTUALIZAR LA CANTIDAD DE TALLER DEL ARTICULO
+	*/
+	static public function mdlActualizarTallerIngreso($valor1, $valor2)
+	{
+
+		$stmt = Conexion::conectar()->prepare("UPDATE
+													articulojf
+												SET
+													taller = taller + :cantidad
+												WHERE articulo = :articulo");
+
+		$stmt->bindParam(":articulo", $valor1, PDO::PARAM_STR);
+		$stmt->bindParam(":cantidad", $valor2, PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+	}
+
+	/*
 	* ACTUALIZAR LA CANTIDAD DE SERVICOP DE ARTICULO
 	*/
 	static public function mdlActualizarArticuloServicio($valor1, $valor2)

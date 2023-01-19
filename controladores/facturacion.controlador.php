@@ -1693,183 +1693,207 @@ class ControladorFacturacion
 
         if (isset($_POST["codSalida"])) {
 
+            if ($_POST["tdoc"] == "E25") {
+                $tabla = "detalle_ing_sal";
 
-            /*
-                todo: BAJAR o subir EL STOCK
-                */
-            $tabla = "detalle_ing_sal";
+                $respuesta = ModeloSalidas::mdlMostraDetallesTemporal($tabla, $_POST["codSalida"]);
 
-            $respuesta = ModeloSalidas::mdlMostraDetallesTemporal($tabla, $_POST["codSalida"]);
-            //var_dump($respuesta);
-
-            foreach ($respuesta as $value) {
-
-                $datos = array(
-                    "articulo" => $value["articulo"],
-                    "cantidad" => $value["cantidad"]
-                );
-                #var_dump($datos);
-                $inicioTipo = substr($_POST["tdoc"], 0, 1);
-
-                if ($inicioTipo == 'E') {
-
-                    $respuestaGuia = ModeloArticulos::mdlActualizarStockIngreso($value["articulo"], $value["cantidad"]);
-                } else {
-
-                    $respuestaGuia = ModeloArticulos::mdlActualizarStock($datos);
-                }
-
-                #var_dump($respuestaGuia);
-
-            }
-
-            //var_dump($respuestaGuia);
-
-            #$respuestaGuia="ok";
-
-            /*
-                todo: registrar en movimientos
-                */
-            if ($respuestaGuia == "ok") {
-
-                $intoA = "";
-                $intoB = "";
                 foreach ($respuesta as $key => $value) {
-
-                    $tipo = $_POST["tdoc"];
-
-                    $documento = $_POST["serieSalida"];
-                    $doc = $tipo . $documento;
-                    //var_dump($doc);
-
-                    $cliente = $_POST["codCli"];
-                    //var_dump($cliente);
-
-                    $vendedor = $_POST["codVen"];
-                    //var_dump($vendedor);
-
-                    $dscto = 0;
-                    //var_dump($dscto);
-
-                    date_default_timezone_set("America/Lima");
-                    $fecha = date("Y-m-d");
-                    $nombre_tipo = "AJUSTES DE INV.";
-
-
-                    $total = $value["cantidad"] * $value["precio"] * ((100 - $dscto) / 100);
-                    //var_dump($total);
-
-                    if ($key < count($respuesta) - 1) {
-
-                        $intoA .= "('" . $tipo . "','" . $doc . "','" . $fecha . "','" . $value["articulo"] . "','" . $cliente . "','" . $vendedor . "'," . $value["cantidad"] . "," . $value["precio"] . ",0," . $dscto . "," . $total . ",'" . $nombre_tipo . "'),";
-                    } else {
-
-                        $intoB .= "('" . $tipo . "','" . $doc . "','" . $fecha . "','" . $value["articulo"] . "','" . $cliente . "','" . $vendedor . "'," . $value["cantidad"] . "," . $value["precio"] . ",0," . $dscto . "," . $total . ",'" . $nombre_tipo . "')";
-                    }
+                    $respuestaGuia = ModeloArticulos::mdlActualizarTallerIngreso($value["articulo"], $value["cantidad"]);
                 }
 
-                $detalle = $intoA . $intoB;
-                #var_dump("detalle", $detalle);
 
-                $respuestaMovimientos = ModeloFacturacion::mdlRegistrarMovimientos($detalle);
-                #var_dump($respuestaMovimientos);   
-                //var_dump($respuestaMovimientos);
-
-                /*
-                    todo: registrar en ventajf
-                    */
-                if ($respuestaMovimientos == "ok") {
-
-                    $respuestaDoc = ModeloSalidas::mdlMostrarSalidasCabecera($_POST["codSalida"]);
-                    //var_dump($respuestaDoc);
-
-                    $tipo = $_POST["tdoc"];
-
-                    $documento = $_POST["serieSalida"];
-                    $doc = $tipo . $documento;
-                    //var_dump($doc);
-
-                    $usuario = $_POST["idUsuario"];
-                    //var_dump($usuario);
-
-                    $docOrigen = $_POST["codSalida"];
-                    //var_dump("$docOrigen");
-
-                    $docDestino = $_POST["serieSeparado"];
-                    $docDest = str_replace('-', '', $docDestino);
-                    //var_dump($docDest);
-
-                    $datosD = array(
-                        "tipo" => $tipo,
-                        "documento" => $doc,
-                        "neto" => $respuestaDoc["op_gravada"],
-                        "igv" => $respuestaDoc["igv"],
-                        "dscto" => $respuestaDoc["descuento_total"],
-                        "total" => $respuestaDoc["total"],
-                        "cliente" => $respuestaDoc["cod_cli"],
-                        "vendedor" => $respuestaDoc["vendedor"],
-                        "agencia" => $respuestaDoc["agencia"],
-                        "lista_precios" => $respuestaDoc["lista"],
-                        "condicion_venta" => $respuestaDoc["condicion_venta"],
-                        "doc_destino" => $docDest,
-                        "doc_origen" => $docOrigen,
-                        "usuario" => $usuario,
-                        "tipo_documento" => $_POST["nomTipo"]
-                    );
-                    //var_dump($datosD);
-
-                    $respuestaDocumento = ModeloSalidas::mdlRegistrarDocumentoSalida($datosD);
-                }
-
-                var_dump($respuestaDocumento);
-
-                /* 
-                    todo: SUMAR 1 AL DOCUMENTO
-                    */
-                if ($respuestaDocumento == "ok") {
+                if ($respuestaGuia == "ok") {
 
                     $serie = $_POST["tdoc"];
-                    //var_dump($serie);
+                    ModeloSalidas::mdlActualizarArgumento($serie);
 
-                    $talonario = ModeloSalidas::mdlActualizarArgumento($serie);
+                    ModeloSalidas::mdlActualizarSalidaF($_POST["codSalida"]);
+
+                    echo '<script>
+
+                        swal({
+                            type: "success",
+                            title: "El perfil ha sido editado correctamente",
+                            showConfirmButton: true,
+                            confirmButtonText: "Cerrar"
+                            }).then(function(result) {
+                                        if (result.value) {
+
+                                        window.location = "salidas-varios";
+
+                                        }
+                                    })
+
+                        </script>';
+                }
+            } else {
+                //*todo: BAJAR o subir EL STOCK
+                $tabla = "detalle_ing_sal";
+
+                $respuesta = ModeloSalidas::mdlMostraDetallesTemporal($tabla, $_POST["codSalida"]);
+                //var_dump($respuesta);
+
+                foreach ($respuesta as $value) {
+
+                    $datos = array(
+                        "articulo" => $value["articulo"],
+                        "cantidad" => $value["cantidad"]
+                    );
+                    #var_dump($datos);
+                    $inicioTipo = substr($_POST["tdoc"], 0, 1);
+
+                    if ($inicioTipo == 'E') {
+
+                        $respuestaGuia = ModeloArticulos::mdlActualizarStockIngreso($value["articulo"], $value["cantidad"]);
+                    } else {
+
+                        $respuestaGuia = ModeloArticulos::mdlActualizarStock($datos);
+                    }
+
+                    #var_dump($respuestaGuia);
+
                 }
 
-                //var_dump($talonario);
 
-                /*
-                    todo: CAMBIAR EL ESTADO DEL PEDIDO
-                    */
-                if ($talonario == "ok") {
+                //*todo: registrar en movimientos
+                if ($respuestaGuia == "ok") {
 
-                    $estado = ModeloSalidas::mdlActualizarSalidaF($_POST["codSalida"]);
+                    $intoA = "";
+                    $intoB = "";
+                    foreach ($respuesta as $key => $value) {
 
-                    //var_dump($estado);
+                        $tipo = $_POST["tdoc"];
 
-                    if ($estado == "ok") {
+                        $documento = $_POST["serieSalida"];
+                        $doc = $tipo . $documento;
+                        //var_dump($doc);
 
-                        echo '<script>
+                        $cliente = $_POST["codCli"];
+                        //var_dump($cliente);
 
-                            swal({
-                                    type: "success",
-                                    title: "Se Genero el documento ' . $documento . '",
-                                    showConfirmButton: true,
-                                    confirmButtonText: "Cerrar"
-                            }).then(function(result){
-                                            if (result.value) {
+                        $vendedor = $_POST["codVen"];
+                        //var_dump($vendedor);
 
-                                            window.location = "salidas-varios";
+                        $dscto = 0;
+                        //var_dump($dscto);
 
-                                            }
-                                        })
+                        date_default_timezone_set("America/Lima");
+                        $fecha = date("Y-m-d");
+                        $nombre_tipo = "AJUSTES DE INV.";
 
-                            </script>';
+
+                        $total = $value["cantidad"] * $value["precio"] * ((100 - $dscto) / 100);
+                        //var_dump($total);
+
+                        if ($key < count($respuesta) - 1) {
+
+                            $intoA .= "('" . $tipo . "','" . $doc . "','" . $fecha . "','" . $value["articulo"] . "','" . $cliente . "','" . $vendedor . "'," . $value["cantidad"] . "," . $value["precio"] . ",0," . $dscto . "," . $total . ",'" . $nombre_tipo . "'),";
+                        } else {
+
+                            $intoB .= "('" . $tipo . "','" . $doc . "','" . $fecha . "','" . $value["articulo"] . "','" . $cliente . "','" . $vendedor . "'," . $value["cantidad"] . "," . $value["precio"] . ",0," . $dscto . "," . $total . ",'" . $nombre_tipo . "')";
+                        }
+                    }
+
+                    $detalle = $intoA . $intoB;
+                    #var_dump("detalle", $detalle);
+
+                    $respuestaMovimientos = ModeloFacturacion::mdlRegistrarMovimientos($detalle);
+                    #var_dump($respuestaMovimientos);   
+                    //var_dump($respuestaMovimientos);
+
+                    /*
+                        todo: registrar en ventajf
+                        */
+                    if ($respuestaMovimientos == "ok") {
+
+                        $respuestaDoc = ModeloSalidas::mdlMostrarSalidasCabecera($_POST["codSalida"]);
+                        //var_dump($respuestaDoc);
+
+                        $tipo = $_POST["tdoc"];
+
+                        $documento = $_POST["serieSalida"];
+                        $doc = $tipo . $documento;
+                        //var_dump($doc);
+
+                        $usuario = $_POST["idUsuario"];
+                        //var_dump($usuario);
+
+                        $docOrigen = $_POST["codSalida"];
+                        //var_dump("$docOrigen");
+
+                        $docDestino = $_POST["serieSeparado"];
+                        $docDest = str_replace('-', '', $docDestino);
+                        //var_dump($docDest);
+
+                        $datosD = array(
+                            "tipo" => $tipo,
+                            "documento" => $doc,
+                            "neto" => $respuestaDoc["op_gravada"],
+                            "igv" => $respuestaDoc["igv"],
+                            "dscto" => $respuestaDoc["descuento_total"],
+                            "total" => $respuestaDoc["total"],
+                            "cliente" => $respuestaDoc["cod_cli"],
+                            "vendedor" => $respuestaDoc["vendedor"],
+                            "agencia" => $respuestaDoc["agencia"],
+                            "lista_precios" => $respuestaDoc["lista"],
+                            "condicion_venta" => $respuestaDoc["condicion_venta"],
+                            "doc_destino" => $docDest,
+                            "doc_origen" => $docOrigen,
+                            "usuario" => $usuario,
+                            "tipo_documento" => $_POST["nomTipo"]
+                        );
+                        //var_dump($datosD);
+
+                        $respuestaDocumento = ModeloSalidas::mdlRegistrarDocumentoSalida($datosD);
+                    }
+
+                    var_dump($respuestaDocumento);
+
+                    /* 
+                        todo: SUMAR 1 AL DOCUMENTO
+                        */
+                    if ($respuestaDocumento == "ok") {
+
+                        $serie = $_POST["tdoc"];
+                        //var_dump($serie);
+
+                        $talonario = ModeloSalidas::mdlActualizarArgumento($serie);
+                    }
+
+                    //var_dump($talonario);
+
+                    /*
+                        todo: CAMBIAR EL ESTADO DEL PEDIDO
+                        */
+                    if ($talonario == "ok") {
+
+                        $estado = ModeloSalidas::mdlActualizarSalidaF($_POST["codSalida"]);
+
+                        //var_dump($estado);
+
+                        if ($estado == "ok") {
+
+                            echo '<script>
+    
+                                swal({
+                                        type: "success",
+                                        title: "Se Genero el documento ' . $documento . '",
+                                        showConfirmButton: true,
+                                        confirmButtonText: "Cerrar"
+                                }).then(function(result){
+                                                if (result.value) {
+    
+                                                window.location = "salidas-varios";
+    
+                                                }
+                                            })
+    
+                                </script>';
+                        }
                     }
                 }
             }
-        } else {
-
-            //var_dump("no");
-
         }
     }
 
