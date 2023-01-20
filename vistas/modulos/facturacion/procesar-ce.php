@@ -70,7 +70,7 @@
                 <button type="button" class="btn btn-success" id="regMesM" name="regMesM" data-toggle="modal" data-target="#modalRegMEs">Registro Ventas
                 </button>
 
-                <button type="button" class="btn btn-warning" id="transSistontClie" name="transSistontClie" data-toggle="modal" data-target="#modalSiscontClie">
+                <button type="button" class="btn btn-warning transSistontClie" id="transSistontClie" name="transSistontClie">
                     Transferir Clientes SISCONT
                 </button>
 
@@ -579,7 +579,7 @@ MODAL TRANSFERIR INFO SISCONT
 
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-                    <h4 class="modal-title">Tranferir Información</h4>
+                    <h4 class="modal-title">Tranferir Información VENTAS</h4>
 
                 </div>
 
@@ -611,6 +611,18 @@ MODAL TRANSFERIR INFO SISCONT
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 
                                 <input type="date" class="form-control input-md" name="finSiscont" id="finSiscont" required>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group col-lg-6" style="padding-left:0px">
+                            <label>Correlativo Inicio VENTAS 02</label>
+                            <div class="input-group">
+
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+
+                                <input type="text" class="form-control input-md" name="iniVentas" id="iniVentas" required>
 
                             </div>
 
@@ -704,6 +716,18 @@ MODAL TRANSFERIR CANJE DE LETRAS INFO SISCONT
 
                         </div>
 
+                        <div class="form-group col-lg-6" style="padding-left:0px">
+                            <label>Correlativo Inicio Canje 05</label>
+                            <div class="input-group">
+
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+
+                                <input type="text" class="form-control input-md" name="iniCanje" id="iniCanje" required>
+
+                            </div>
+
+                        </div>
+
                     </div>
 
                 </div>
@@ -787,6 +811,30 @@ MODAL TRANSFERIR CANCELACIONES INFO SISCONT
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 
                                 <input type="date" class="form-control input-md" name="finSiscontC" id="finSiscontC" required>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group col-lg-6" style="padding-left:0px">
+                            <label>Correlativo Inicio Cancelaciones 04</label>
+                            <div class="input-group">
+
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+
+                                <input type="text" class="form-control input-md" name="iniCance04" id="iniCance04" required>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group col-lg-6" style="padding-left:0px">
+                            <label>Correlativo Inicio Cancelaciones 08</label>
+                            <div class="input-group">
+
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+
+                                <input type="text" class="form-control input-md" name="iniCance08" id="iniCance08" required>
 
                             </div>
 

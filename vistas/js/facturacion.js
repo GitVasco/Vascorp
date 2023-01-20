@@ -2805,3 +2805,11 @@ $(".tablaFacturas, .tablaBoletas, .tablaNotaCredito").on(
 $(document).ready(function () {
     $("#GuiasDiv").addClass("disable-div");
 });
+
+$(".transSistontClie").click(function () {
+    window.open(
+        //"vistas/reportes_ticket/impresion_guia.php?codigo=" +
+        "vistas/reportes_excel/rpt_clientes_siscont.php",
+        "_blank"
+    );
+});

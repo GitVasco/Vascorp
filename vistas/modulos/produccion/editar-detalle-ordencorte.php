@@ -1,75 +1,77 @@
 <div class="content-wrapper">
 
-  <section class="content-header">
+    <section class="content-header">
 
-    <h1>
+        <h1>
 
-      Ordenes de Corte
+            Ordenes de Corte
 
-    </h1>
+        </h1>
 
-    <ol class="breadcrumb">
+        <ol class="breadcrumb">
 
-      <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
+            <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-      <li class="active">Ordenes de corte</li>
+            <li class="active">Ordenes de corte</li>
 
-    </ol>
+        </ol>
 
-  </section>
+    </section>
 
-  <section class="content">
+    <section class="content">
 
-    <div class="box">
+        <div class="box">
 
-      <div class="box-header with-border">
-          <a href="ordencorte">
-          <button class="btn btn-danger"> <i class="fa fa-arrow-left"></i> Volver</button>
+            <div class="box-header with-border">
+                <a href="ordencorte">
+                    <button class="btn btn-danger"> <i class="fa fa-arrow-left"></i> Volver</button>
 
-          </a>
-          
-
-
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarDetalleCorte">Agregar Orden de Corte</button>
+                </a>
 
 
-      </div>
 
-      
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarDetalleCorte">Agregar Orden de Corte</button>
 
 
-      <div class="box-body">
+            </div>
 
-        <input type="hidden" value="<?=$_SESSION["perfil"];?>" id="perfilOculto">
 
-        <input type="hidden" value="<?=$_GET["codigo"];?>" id="codigoOrdenCorte">
-        
-       <table class="table table-bordered table-striped dt-responsive tablaEditarDetalleOrdenCorte" width="100%">
-         
-        <thead>
-         
-         <tr>
-           <th>N°</th>
-           <th class="text-center" >Articulo</th>
-           <th class="text-center" >Nombre</th>
-           <th class="text-center" >Color</th>
-           <th class="text-center" >Talla</th>
-           <th class="text-center" >Marca</th>
-           <th><center>Cantidad Total</center></th>
-           <th class="text-center">Saldo</th> 
-           <th style="width:150px">Acciones</th>
 
-         </tr> 
 
-        </thead>
-        
-       </table>
+            <div class="box-body">
 
-      </div>
+                <input type="hidden" value="<?= $_SESSION["perfil"]; ?>" id="perfilOculto">
 
-    </div>
+                <input type="hidden" value="<?= $_GET["codigo"]; ?>" id="codigoOrdenCorte">
 
-  </section>
+                <table class="table table-bordered table-striped dt-responsive tablaEditarDetalleOrdenCorte" width="100%">
+
+                    <thead>
+
+                        <tr>
+                            <th>N°</th>
+                            <th class="text-center">Articulo</th>
+                            <th class="text-center">Nombre</th>
+                            <th class="text-center">Color</th>
+                            <th class="text-center">Talla</th>
+                            <th class="text-center">Marca</th>
+                            <th>
+                                <center>Cantidad Total</center>
+                            </th>
+                            <th class="text-center">Saldo</th>
+                            <th style="width:150px">Acciones</th>
+
+                        </tr>
+
+                    </thead>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </section>
 
 </div>
 
@@ -79,108 +81,108 @@ MODAL AGREGAR PARA
 ======================================-->
 
 <div id="modalAgregarDetalleCorte" class="modal fade" role="dialog">
-  
-  <div class="modal-dialog">
 
-    <div class="modal-content">
+    <div class="modal-dialog">
 
-      <form role="form" method="post">
+        <div class="modal-content">
 
-        <!--=====================================
+            <form role="form" method="post">
+
+                <!--=====================================
         CABEZA DEL MODAL
         ======================================-->
 
-        <div class="modal-header" style="background:#3c8dbc; color:white">
+                <div class="modal-header" style="background:#3c8dbc; color:white">
 
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title">Agregar Detalle Orden Corte</h4>
+                    <h4 class="modal-title">Agregar Detalle Orden Corte</h4>
 
-        </div>
+                </div>
 
-        <!--=====================================
+                <!--=====================================
         CUERPO DEL MODAL
         ======================================-->
 
-        <div class="modal-body">
+                <div class="modal-body">
 
-          <div class="box-body">
+                    <div class="box-body">
 
-            <!-- ENTRADA PARA EL NOMBRE -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              <?php
-              
-                date_default_timezone_set('America/Lima');
-                $ahora=date('Y/m/d h:i:s');
-              
-              ?>
+                        <!-- ENTRADA PARA EL NOMBRE -->
 
-                <input type="hidden" name="fechaActual" value="<?php echo $ahora; ?>">
-                <input type="hidden" name="idUsuario" value="<?php echo $_SESSION["id"]; ?>">
-                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+                        <div class="form-group">
 
-                <select  class="form-control selectpicker input-lg" name="articulo"  data-live-search="true" required>
-                    <option value="">Seleccionar Articulo</option>
-                    <?php
-                        $orden = $_GET["codigo"];
-                        $articulo=ControladorArticulos::ctrMostrarArticulosSimple($orden);
-                        foreach ($articulo as $key => $value) {
-                            echo '<option value="'.$value["articulo"].'">' . $value["packing"] .'</option>';
-                        }
-                    ?>
-                </select>
-                <input type="hidden" name="nuevoCodigo" id="nuevoCodigo" value="<?php echo $_GET["codigo"]?>">
-              </div>
+                            <div class="input-group">
+                                <?php
 
-            </div>
+                                date_default_timezone_set('America/Lima');
+                                $ahora = date('Y/m/d h:i:s');
 
-            <!-- ENTRADA PARA EL CANTIDAD -->
-                        
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+                                ?>
 
-                <input type="number" class="form-control input-lg" name="cantidad" id="cantidad" placeholder="Ingresar cantidad" required>
+                                <input type="hidden" name="fechaActual" value="<?php echo $ahora; ?>">
+                                <input type="hidden" name="idUsuario" value="<?php echo $_SESSION["id"]; ?>">
+                                <span class="input-group-addon"><i class="fa fa-th"></i></span>
+
+                                <select class="form-control selectpicker input-lg" name="articulo" data-live-search="true" required>
+                                    <option value="">Seleccionar Articulo</option>
+                                    <?php
+                                    $orden = $_GET["codigo"];
+                                    $articulo = ControladorArticulos::ctrMostrarArticulosSimple($orden);
+                                    foreach ($articulo as $key => $value) {
+                                        echo '<option value="' . $value["articulo"] . '">' . $value["packing"] . '</option>';
+                                    }
+                                    ?>
+                                </select>
+                                <input type="hidden" name="nuevoCodigo" id="nuevoCodigo" value="<?php echo $_GET["codigo"] ?>">
+                            </div>
+
+                        </div>
+
+                        <!-- ENTRADA PARA EL CANTIDAD -->
+
+                        <div class="form-group">
+
+                            <div class="input-group">
+
+                                <span class="input-group-addon"><i class="fa fa-th"></i></span>
+
+                                <input type="number" class="form-control input-lg" name="cantidad" id="cantidad" placeholder="Ingresar cantidad" required>
 
 
-              </div>
+                            </div>
 
-            </div>
-  
-          </div>
+                        </div>
 
-        </div>
+                    </div>
 
-        <!--=====================================
+                </div>
+
+                <!--=====================================
         PIE DEL MODAL
         ======================================-->
 
-        <div class="modal-footer">
+                <div class="modal-footer">
 
-          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" class="btn btn-primary">Guardar detalle</button>
+                    <button type="submit" class="btn btn-primary">Guardar detalle</button>
+
+                </div>
+
+                <?php
+
+                $crearDetalle = new ControladorOrdenCorte();
+                $crearDetalle->ctrCrearDetalleOrdenCorte();
+
+
+                ?>
+
+            </form>
 
         </div>
 
-        <?php
-
-          $crearDetalle = new ControladorOrdenCorte();
-          $crearDetalle -> ctrCrearDetalleOrdenCorte();
-
-
-        ?>
-
-      </form>
-
     </div>
-
-  </div>
 
 </div>
 
@@ -190,124 +192,124 @@ MODAL EDITAR PARA
 ======================================-->
 
 <div id="modalEditarDetalleCorte" class="modal fade" role="dialog">
-  
-  <div class="modal-dialog">
 
-    <div class="modal-content">
+    <div class="modal-dialog">
 
-      <form role="form" method="post">
+        <div class="modal-content">
 
-        <!--=====================================
+            <form role="form" method="post">
+
+                <!--=====================================
         CABEZA DEL MODAL
         ======================================-->
 
-        <div class="modal-header" style="background:#3c8dbc; color:white">
+                <div class="modal-header" style="background:#3c8dbc; color:white">
 
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title">Editar Detalle Orden Corte</h4>
+                    <h4 class="modal-title">Editar Detalle Orden Corte</h4>
 
-        </div>
+                </div>
 
-        <!--=====================================
+                <!--=====================================
         CUERPO DEL MODAL
         ======================================-->
 
-        <div class="modal-body">
+                <div class="modal-body">
 
-          <div class="box-body">
+                    <div class="box-body">
 
-            <!-- ENTRADA PARA EL NOMBRE -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+                        <!-- ENTRADA PARA EL NOMBRE -->
 
-                <input type="text" class="form-control  input-lg" name="editarArticulo" id="editarArticulo" readonly>
+                        <div class="form-group">
 
-                <?php
-                date_default_timezone_set('America/Lima');
-                $ahora=date('Y/m/d h:i:s');
-              
-                ?>
-                 <input type="hidden" name="fechaActual" value="<?php echo $ahora; ?>">
-                 <input type="hidden" name="idUsuario" value="<?php echo $_SESSION["id"]; ?>">
-                 <input type="hidden"  name="idDetalle" id="idDetalle" required>
-                 <input type="hidden" name="editarCodigo" id="editarCodigo" value="<?php echo $_GET["codigo"]?>">
-                 <?php
-                 
-                  $item = "codigo";
-                  $valor = $_GET["codigo"];
+                            <div class="input-group">
 
-                  $ordencorte = ControladorOrdenCorte::ctrMostrarOrdenCorte($item, $valor);
-                  //var_dump($ordencorte);
+                                <span class="input-group-addon"><i class="fa fa-th"></i></span>
 
-                  echo '<input type="hidden" name="totalOc" id="totalOc" value="'.$ordencorte["total"].'">';
+                                <input type="text" class="form-control  input-lg" name="editarArticulo" id="editarArticulo" readonly>
 
-                 
-                 ?>
+                                <?php
+                                date_default_timezone_set('America/Lima');
+                                $ahora = date('Y/m/d h:i:s');
 
-              </div>
+                                ?>
+                                <input type="hidden" name="fechaActual" value="<?php echo $ahora; ?>">
+                                <input type="hidden" name="idUsuario" value="<?php echo $_SESSION["id"]; ?>">
+                                <input type="hidden" name="idDetalle" id="idDetalle" required>
+                                <input type="hidden" name="editarCodigo" id="editarCodigo" value="<?php echo $_GET["codigo"] ?>">
+                                <?php
 
-            </div>
-  
-            <!-- ENTRADA PARA EL NOMBRE -->
-                        
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+                                $item = "codigo";
+                                $valor = $_GET["codigo"];
 
-                <input type="number" class="form-control  input-lg" name="editarCantidad" id="editarCantidad" required>
+                                $ordencorte = ControladorOrdenCorte::ctrMostrarOrdenCorte($item, $valor);
+                                //var_dump($ordencorte);
 
-                <input type="hidden" class="form-control  input-lg" name="cantOri" id="cantOri" required>
-
-                <input type="hidden" class="form-control  input-lg" name="cambio" id="cambio" required>
+                                echo '<input type="hidden" name="totalOc" id="totalOc" value="' . $ordencorte["total"] . '">';
 
 
-              </div>
+                                ?>
 
-            </div>
-  
-          </div>
+                            </div>
 
-        </div>
+                        </div>
 
-        <!--=====================================
+                        <!-- ENTRADA PARA EL NOMBRE -->
+
+                        <div class="form-group">
+
+                            <div class="input-group">
+
+                                <span class="input-group-addon"><i class="fa fa-th"></i></span>
+
+                                <input type="number" class="form-control  input-lg" name="editarCantidad" id="editarCantidad" required>
+
+                                <input type="hidden" class="form-control  input-lg" name="cantOri" id="cantOri" required>
+
+                                <input type="hidden" class="form-control  input-lg" name="cambio" id="cambio" required>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!--=====================================
         PIE DEL MODAL
         ======================================-->
 
-        <div class="modal-footer">
+                <div class="modal-footer">
 
-          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+
+                </div>
+
+                <?php
+
+                $editarDetalle = new ControladorOrdenCorte();
+                $editarDetalle->ctrEditarDetalleOrdenCorte();
+
+                ?>
+
+            </form>
 
         </div>
 
-        <?php
-
-          $editarDetalle = new ControladorOrdenCorte();
-          $editarDetalle -> ctrEditarDetalleOrdenCorte();
-
-        ?>
-
-      </form>
-
     </div>
-
-  </div>
 
 </div>
 
 <?php
-    $eliminarDetalle = new ControladorOrdenCorte();
-    $eliminarDetalle -> ctrEliminarDetalleOrdenCorte();
+$eliminarDetalle = new ControladorOrdenCorte();
+$eliminarDetalle->ctrEliminarDetalleOrdenCorte();
 ?>
 
 <script>
-window.document.title = "Editar orden de corte"
+    window.document.title = "Editar orden de corte"
 </script>

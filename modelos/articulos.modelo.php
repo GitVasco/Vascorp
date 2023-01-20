@@ -1320,7 +1320,7 @@ class ModeloArticulos
 			  detalles_ordencortejf o 
 			WHERE o.ordencorte = :orden) 
 			AND a.estado = 'Activo' 
-			AND id_marca IN ('1', '2', '3') ");
+			AND id_marca IN ('1', '2', '3','10','11','12') ");
 
 		$stmt->bindParam(":orden", $orden, PDO::PARAM_STR);
 
