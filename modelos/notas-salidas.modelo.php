@@ -113,7 +113,7 @@ class ModeloNotasSalidas
 				vc.ser,
 				vc.nro,
 				vc.EstNota,
-				vs.UsuReg,
+				vc.UsuReg,
 				DATE(fecemi) AS fecemi,
 				c.razcli,
 				a.des_larga AS almacen 

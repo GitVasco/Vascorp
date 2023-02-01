@@ -23,7 +23,6 @@ class AjaxFacturacion
         echo json_encode($respuesta);
     }
 
-
     /*=============================================
     CREAR DOCUMENTO DE VENTA
     =============================================*/
@@ -398,6 +397,42 @@ class AjaxFacturacion
 
         echo $respuesta;
     }
+
+    //*CORREGIR ERRORES
+    public function ajaxCorregir()
+    {
+
+        $tipo = $this->tipoC;
+        $documento = $this->documentoC;
+        $neto = $this->netoC;
+
+        $igv = round($neto * 0.18, 2);
+        $total = round($neto + $igv, 2);
+
+        if ($tipo == "S02") {
+
+            $tipoCte = "03";
+        } else if ($tipo == "S03") {
+            $tipoCte = "01";
+        } else if ($tipo == "E05") {
+            $tipoCte = "07";
+        } else if ($tipo == "S05") {
+            $tipoCte = "08";
+        }
+
+        $respuestaA = ModeloFacturacion::mdlCorregirVenta($tipo, $documento, $neto, $igv, $total);
+
+        $respuestaB = ModeloFacturacion::mdlCorregirCuenta($tipoCte, $documento, $total);
+
+        if ($respuestaA == "ok" && $respuestaB == "ok") {
+            $respuesta = "ok";
+        } else {
+            $respuesta = "no";
+        }
+
+
+        echo json_encode($respuesta);
+    }
 }
 
 
@@ -526,4 +561,17 @@ if (isset($_POST["guia"])) {
     $guia = new AjaxFacturacion();
     $guia->guia = $_POST["guia"];
     $guia->ajaxActualizarTalonariGuia();
+}
+
+
+/*=============================================
+corregir errores
+=============================================*/
+if (isset($_POST["tipoC"])) {
+
+    $activar = new AjaxFacturacion();
+    $activar->tipoC = $_POST["tipoC"];
+    $activar->documentoC = $_POST["documentoC"];
+    $activar->netoC = $_POST["netoC"];
+    $activar->ajaxCorregir();
 }

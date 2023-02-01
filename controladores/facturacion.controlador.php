@@ -157,21 +157,21 @@ class ControladorFacturacion
                     if ($estado == "ok") {
 
                         echo '<script>
-
-                            swal({
+                       
+                                swal({
                                     type: "success",
                                     title: "Se Genero la Guia de Remisión ' . $documento . '",
                                     showConfirmButton: true,
-                                    confirmButtonText: "Cerrar"
-                            }).then(function(result){
-                                            if (result.value) {
+                                    confirmButtonText: "Cerrar",
+                                }).then(function (result) {
+                                    if (result.value) {
+                                        window.open("vistas/reportes_ticket/guia_remision.php?codigo=' . $doc . '&tipo=S01","_blank");
+                
+                                        window.location = "pedidoscv";
+                                    }
+                                });                                        
 
-                                            window.location = "pedidoscv";
-
-                                            }
-                                        })
-
-                            </script>';
+                        </script>';
                     }
                 }
             }
@@ -391,18 +391,18 @@ class ControladorFacturacion
 
                             echo '<script>
 
-                            swal({
+                                swal({
                                     type: "success",
                                     title: "Se Genero la Factura ' . $documento . '",
                                     showConfirmButton: true,
-                                    confirmButtonText: "Cerrar"
-                            }).then(function(result){
-                                            if (result.value) {
-
-                                            window.location = "pedidoscv";
-
-                                            }
-                                        })
+                                    confirmButtonText: "Cerrar",
+                                }).then(function (result) {
+                                    if (result.value) {
+                                        
+                                        window.open("vistas/reportes_ticket/impresion_bolfact.php?tipo=S03&documento=' . $doc . '","_blank");
+                                        window.location = "pedidoscv";
+                                    }
+                                });                          
 
                             </script>';
                         }
@@ -410,7 +410,7 @@ class ControladorFacturacion
                 }
             }
 
-            //* BOLETA S01
+            //* BOLETA S02
             else if ($_POST["tdoc"] == "03") {
 
                 /*
@@ -625,18 +625,18 @@ class ControladorFacturacion
 
                             echo '<script>
 
-                            swal({
+                                swal({
                                     type: "success",
                                     title: "Se Genero la Boleta ' . $documento . '",
                                     showConfirmButton: true,
-                                    confirmButtonText: "Cerrar"
-                            }).then(function(result){
-                                            if (result.value) {
-
-                                            window.location = "pedidoscv";
-
-                                            }
-                                        })
+                                    confirmButtonText: "Cerrar",
+                                }).then(function (result) {
+                                    if (result.value) {
+                                        
+                                        window.open("vistas/reportes_ticket/impresion_bolfact.php?tipo=S02&documento=' . $doc . '","_blank");
+                                        window.location = "pedidoscv";
+                                    }
+                                });                          
 
                             </script>';
                         }
@@ -1495,17 +1495,18 @@ class ControladorFacturacion
                             echo '<script>
 
                             swal({
-                                    type: "success",
-                                    title: "Se Genero la ' . $nombre_tipo . ' N° ' . $docDestino . '",
-                                    showConfirmButton: true,
-                                    confirmButtonText: "Cerrar"
-                            }).then(function(result){
-                                            if (result.value) {
+                                type: "success",
+                                title: "Se Genero la ' . $nombre_tipo . ' N° ' . $docDestino . '",
+                                showConfirmButton: true,
+                                confirmButtonText: "Cerrar",
+                            }).then(function (result) {
+                                if (result.value) {
+                                    window.open("vistas/reportes_ticket/impresion_bolfact.php?tipo=' . $tipo . '&documento=' . $docDestino . '","_blank"
+                                    );
 
-                                            window.location = "guias-remision";
-
-                                            }
-                                        })
+                                    window.location = "guias-remision";
+                                }
+                            });
 
                             </script>';
                         }
@@ -1674,7 +1675,7 @@ class ControladorFacturacion
                                 }).then(function(result){
                                                 if (result.value) {
 
-                                                window.location = "guias-remision";
+                                                    window.open("vistas/reportes_ticket/impresion_bolfact.php?tipo=' . $tipo . '&documento=' . $docDestino . '","_blank")
 
                                                 }
                                             })
@@ -1732,7 +1733,6 @@ class ControladorFacturacion
                 $tabla = "detalle_ing_sal";
 
                 $respuesta = ModeloSalidas::mdlMostraDetallesTemporal($tabla, $_POST["codSalida"]);
-                //var_dump($respuesta);
 
                 foreach ($respuesta as $value) {
 
@@ -1822,8 +1822,8 @@ class ControladorFacturacion
                         $docOrigen = $_POST["codSalida"];
                         //var_dump("$docOrigen");
 
-                        $docDestino = $_POST["serieSeparado"];
-                        $docDest = str_replace('-', '', $docDestino);
+                        //$docDestino = $_POST["serieSeparado"];
+                        //$docDest = str_replace('-', '', $docDestino);
                         //var_dump($docDest);
 
                         $datosD = array(
@@ -1838,7 +1838,7 @@ class ControladorFacturacion
                             "agencia" => $respuestaDoc["agencia"],
                             "lista_precios" => $respuestaDoc["lista"],
                             "condicion_venta" => $respuestaDoc["condicion_venta"],
-                            "doc_destino" => $docDest,
+                            "doc_destino" => '',
                             "doc_origen" => $docOrigen,
                             "usuario" => $usuario,
                             "tipo_documento" => $_POST["nomTipo"]

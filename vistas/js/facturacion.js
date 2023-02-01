@@ -2813,3 +2813,77 @@ $(".transSistontClie").click(function () {
         "_blank"
     );
 });
+
+//*ERRORES
+$(".tablaErrores").DataTable({
+    ajax: "ajax/facturacion/tabla-errores.ajax.php",
+    deferRender: true,
+    retrieve: true,
+    processing: true,
+    order: [[0, "desc"]],
+    pageLength: 40,
+    lengthMenu: [
+        [40, 80, 120, -1],
+        [40, 80, 120, "Todos"],
+    ],
+    language: {
+        sProcessing: "Procesando...",
+        sLengthMenu: "Mostrar _MENU_ registros",
+        sZeroRecords: "No se encontraron resultados",
+        sEmptyTable: "Ningún dato disponible en esta tabla",
+        sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+        sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
+        sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+        sInfoPostFix: "",
+        sSearch: "Buscar:",
+        sUrl: "",
+        sInfoThousands: ",",
+        sLoadingRecords: "Cargando...",
+        oPaginate: {
+            sFirst: "Primero",
+            sLast: "Último",
+            sNext: "Siguiente",
+            sPrevious: "Anterior",
+        },
+        oAria: {
+            sSortAscending:
+                ": Activar para ordenar la columna de manera ascendente",
+            sSortDescending:
+                ": Activar para ordenar la columna de manera descendente",
+        },
+    },
+});
+
+$(".tablaErrores").on("click", ".btnCorregir", function () {
+    var tipo = $(this).attr("tipo");
+    console.log("🚀 ~ file: facturacion.js:2859 ~ tipo", tipo);
+    var documento = $(this).attr("documento");
+    console.log("🚀 ~ file: facturacion.js:2861 ~ documento", documento);
+
+    var neto = $(this).attr("neto_m");
+    console.log("🚀 ~ file: facturacion.js:2864 ~ neto", neto);
+
+    //VDOCUMENTO
+    var datos = new FormData();
+
+    datos.append("tipoC", tipo);
+    datos.append("documentoC", documento);
+    datos.append("netoC", neto);
+
+    $.ajax({
+        url: "ajax/facturacion.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuesta) {
+            if (respuesta == "ok") {
+                Command: toastr["success"]("Se realizo las correcciones");
+            } else {
+                Command: toastr["error"]("No se realizo las correcciones");
+            }
+        },
+    });
+});
