@@ -294,7 +294,7 @@ class ControladorIngresos
                     */
                 $fecha = new DateTime();
                 $datos = array(
-                    "tipo" => "E20",
+                    "tipo" => $_POST["tipoMovimiento"],
                     "usuario" => $_POST["idUsuario"],
                     "guia" => $_POST["nuevaGuiaIng"],
                     "taller" => $_POST["nuevoTalleres"],
@@ -315,7 +315,7 @@ class ControladorIngresos
                     foreach ($listaArticulos as $key => $value) {
 
                         $datosD = array(
-                            "tipo" => "E20",
+                            "tipo" => $_POST["tipoMovimiento"],
                             "documento" => $_POST["nuevoCodigo"],
                             "taller" => $_POST["nuevoTalleres"],
                             "fecha" => $_POST["nuevaFecha"],

@@ -564,20 +564,21 @@ class ModeloServicios
 			servicios_detallejf sd 
 			LEFT JOIN articulojf a 
 			  ON sd.articulo = a.articulo 
-			LEFT JOIN serviciosjf s
-			  ON s.codigo = sd.codigo
-			LEFT JOIN sectorjf se
-			  ON  s.taller=se.cod_sector
-			WHERE saldo > 0
-			AND sd.cerrar = 0
+			LEFT JOIN serviciosjf s 
+			  ON s.codigo = sd.codigo 
+			LEFT JOIN sectorjf se 
+			  ON s.taller = se.cod_sector 
+		  WHERE saldo > 0 
+			AND sd.cerrar = 0 
 		  GROUP BY sd.codigo,
 			a.modelo,
 			a.nombre,
 			a.cod_color,
 			a.color,
-			a.estado
-			HAVING SUM(sd.saldo) > 0
-			ORDER BY a.modelo ASC
+			a.estado 
+		  HAVING SUM(sd.saldo) > 0 
+		  ORDER BY a.modelo ASC,
+			a.cod_color
 		   ");
 
 			$stmt->bindParam(":valor", $valor, PDO::PARAM_STR);

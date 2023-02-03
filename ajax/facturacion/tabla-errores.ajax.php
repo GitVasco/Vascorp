@@ -52,7 +52,7 @@ class TablaErrores
                     $dif_total = "";
                 }
 
-                if ($errores[$i]["dif_total_cc"] != 0) {
+                if ($errores[$i]["dif_total_cc"] != 0 || $errores[$i]["monto"] == null) {
                     $dif_total_cc = "<span style='font-size:85%;' class='label label-danger'>ERROR</span>";
                 } else {
                     $dif_total_cc = "";

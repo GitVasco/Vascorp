@@ -868,6 +868,8 @@ class ControladorFacturacion
                             }).then(function(result){
                                             if (result.value) {
 
+                                                window.open("extensiones/tcpdf/pdf/reporte_proforma.php?tipo=S70&documento=' . $doc . '","_blank");
+
                                             window.location = "pedidoscv";
 
                                             }

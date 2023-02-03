@@ -1243,7 +1243,10 @@ $(".tablaArticulosPedidos").on("click", ".modificarArtPed", function () {
         processData: false,
         dataType: "json",
         success: function (respuestaLista) {
-            //console.log("respuesta",respuestaLista["precio"]);
+            console.log(
+                "🚀 ~ file: pedidoscv.js:1251 ~ respuestaLista",
+                respuestaLista
+            );
 
             $("#precioA").val(respuestaLista["precio"]);
         },
@@ -1570,7 +1573,9 @@ $(".modificarArtPedB").click(function () {
             processData: false,
             dataType: "json",
             success: function (respuestaLista) {
-                //console.log("respuesta",respuestaLista["precio"]);
+                if (respuestaLista["precio"] <= 0) {
+                    Command: toastr["error"]("El modelo no tiene precio");
+                }
 
                 $("#modeloModalA").val(respuestaLista["modelo"]);
 
