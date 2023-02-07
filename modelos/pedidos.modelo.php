@@ -715,6 +715,7 @@ class ModeloPedidos
 		$sql = "SELECT 
 						dt.codigo,
 						a.modelo,
+						dt.precio,
 						a.cod_color,
 						a.color,
 						SUM(
@@ -787,6 +788,7 @@ class ModeloPedidos
 					SELECT 
 						dt.codigo,
 						a.modelo,
+						'',
 						'99',
 						'',
 						'',

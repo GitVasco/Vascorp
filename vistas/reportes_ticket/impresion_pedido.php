@@ -270,7 +270,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -577,7 +577,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -824,7 +824,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -1131,7 +1131,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -1378,7 +1378,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -1625,7 +1625,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -1932,7 +1932,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -2179,7 +2179,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -2426,7 +2426,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -2673,7 +2673,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -2980,7 +2980,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -3227,7 +3227,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -3474,7 +3474,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -3721,7 +3721,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -3968,7 +3968,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -4275,7 +4275,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -4522,7 +4522,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -4769,7 +4769,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -5016,7 +5016,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -5263,7 +5263,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -5510,7 +5510,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -5817,7 +5817,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -6064,7 +6064,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -6311,7 +6311,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -6558,7 +6558,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -6805,7 +6805,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -7052,7 +7052,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -7299,7 +7299,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -7606,7 +7606,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -7853,7 +7853,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -8100,7 +8100,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -8347,7 +8347,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -8594,7 +8594,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -8841,7 +8841,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -9088,7 +9088,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -9335,7 +9335,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -9642,7 +9642,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -9889,7 +9889,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -10136,7 +10136,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -10383,7 +10383,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -10630,7 +10630,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -10877,7 +10877,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -11124,7 +11124,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -11371,7 +11371,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -11618,7 +11618,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -11925,7 +11925,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -12172,7 +12172,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -12419,7 +12419,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -12666,7 +12666,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -12913,7 +12913,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -13160,7 +13160,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -13407,7 +13407,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -13654,7 +13654,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -13901,7 +13901,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -14148,7 +14148,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
+                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>

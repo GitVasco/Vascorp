@@ -49,7 +49,7 @@ class AjaxProveedores
 		$curl = curl_init();
 
 		curl_setopt_array($curl, array(
-			CURLOPT_URL => 'http://apiperu.net.pe/api/ruc/' . $valor,
+			CURLOPT_URL => 'http://apiperu.net/api/ruc/' . $valor,
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_ENCODING => '',
 			CURLOPT_MAXREDIRS => 10,

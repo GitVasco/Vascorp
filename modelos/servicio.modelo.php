@@ -662,7 +662,7 @@ class ModeloServicios
                                             pago_serviciosjf q 
                                             LEFT JOIN usuariosjf u 
                                               ON q.usuario = u.id
-											  YEAR(q.fecha) = YEAR(NOW())
+											  where YEAR(q.fecha_creacion) = YEAR(NOW())
 											  ");
 
 			$stmt->execute();

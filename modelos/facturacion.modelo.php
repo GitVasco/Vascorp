@@ -6978,7 +6978,9 @@ class ModeloFacturacion
                         ON v.tipo = n.tipo 
                         AND v.documento = n.documento 
                     WHERE v.tipo = :tipo
-                        AND YEAR(v.fecha) = YEAR(NOW())";
+                        AND YEAR(v.fecha) = YEAR(NOW())
+                        ORDER BY v.fecha DESC,
+                        v.documento DESC";
 
             $stmt = Conexion::conectar()->prepare($sql);
 
@@ -6990,39 +6992,41 @@ class ModeloFacturacion
         } else if ($fechaInicial == $fechaFinal) {
 
             $sql = "SELECT
-      v.tipo,
-      v.tipo_documento,
-      v.documento,
-      v.total,
-      v.cliente,
-      c.nombre,
-      c.tipo_documento AS tip_doc,
-      c.documento AS num_doc,
-      v.vendedor,
-      v.fecha,
-      cv.descripcion,
-      v.doc_destino,
-      v.facturacion,
-      v.estado,
-      v.doc_origen as origen2,
-      IFNULL(a.nombre, '') AS agencia,
-      IFNULL(u.nom_ubi, '') AS ubigeo,
-      n.doc_origen
-  FROM
-      ventajf v
-      LEFT JOIN clientesjf c
-      ON v.cliente = c.codigo
-      LEFT JOIN condiciones_ventajf cv
-      ON v.condicion_venta = cv.id
-      LEFT JOIN agenciasjf a
-      ON v.agencia = a.id
-      LEFT JOIN ubigeojf u
-      ON c.ubigeo = u.cod_ubi
-      LEFT JOIN notascd_jf n 
-      ON v.tipo = n.tipo 
-      AND v.documento = n.documento 
-  WHERE v.tipo = :tipo
-      AND DATE(v.fecha)  like '%$fechaFinal%' ";
+                    v.tipo,
+                    v.tipo_documento,
+                    v.documento,
+                    v.total,
+                    v.cliente,
+                    c.nombre,
+                    c.tipo_documento AS tip_doc,
+                    c.documento AS num_doc,
+                    v.vendedor,
+                    v.fecha,
+                    cv.descripcion,
+                    v.doc_destino,
+                    v.facturacion,
+                    v.estado,
+                    v.doc_origen as origen2,
+                    IFNULL(a.nombre, '') AS agencia,
+                    IFNULL(u.nom_ubi, '') AS ubigeo,
+                    n.doc_origen
+                FROM
+                    ventajf v
+                    LEFT JOIN clientesjf c
+                    ON v.cliente = c.codigo
+                    LEFT JOIN condiciones_ventajf cv
+                    ON v.condicion_venta = cv.id
+                    LEFT JOIN agenciasjf a
+                    ON v.agencia = a.id
+                    LEFT JOIN ubigeojf u
+                    ON c.ubigeo = u.cod_ubi
+                    LEFT JOIN notascd_jf n 
+                    ON v.tipo = n.tipo 
+                    AND v.documento = n.documento 
+                WHERE v.tipo = :tipo
+                    AND DATE(v.fecha)  like '%$fechaFinal%' 
+                    ORDER BY v.fecha DESC,
+                    v.documento DESC";
 
             $stmt = Conexion::conectar()->prepare($sql);
 
@@ -7042,39 +7046,41 @@ class ModeloFacturacion
 
             if ($fechaFinalMasUno == $fechaActualMasUno) {
                 $sql = "SELECT
-        v.tipo,
-        v.tipo_documento,
-        v.documento,
-        v.total,
-        v.cliente,
-        c.nombre,
-        c.tipo_documento AS tip_doc,
-        c.documento AS num_doc,
-        v.vendedor,
-        v.fecha,
-        cv.descripcion,
-        v.doc_destino,
-        v.facturacion,
-        v.estado,
-        v.doc_origen as origen2,
-        IFNULL(a.nombre, '') AS agencia,
-        IFNULL(u.nom_ubi, '') AS ubigeo,
-        n.doc_origen
-    FROM
-        ventajf v
-        LEFT JOIN clientesjf c
-        ON v.cliente = c.codigo
-        LEFT JOIN condiciones_ventajf cv
-        ON v.condicion_venta = cv.id
-        LEFT JOIN agenciasjf a
-        ON v.agencia = a.id
-        LEFT JOIN ubigeojf u
-        ON c.ubigeo = u.cod_ubi
-        LEFT JOIN notascd_jf n 
-        ON v.tipo = n.tipo 
-        AND v.documento = n.documento 
-    WHERE v.tipo = :tipo
-        AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'";
+                        v.tipo,
+                        v.tipo_documento,
+                        v.documento,
+                        v.total,
+                        v.cliente,
+                        c.nombre,
+                        c.tipo_documento AS tip_doc,
+                        c.documento AS num_doc,
+                        v.vendedor,
+                        v.fecha,
+                        cv.descripcion,
+                        v.doc_destino,
+                        v.facturacion,
+                        v.estado,
+                        v.doc_origen as origen2,
+                        IFNULL(a.nombre, '') AS agencia,
+                        IFNULL(u.nom_ubi, '') AS ubigeo,
+                        n.doc_origen
+                    FROM
+                        ventajf v
+                        LEFT JOIN clientesjf c
+                        ON v.cliente = c.codigo
+                        LEFT JOIN condiciones_ventajf cv
+                        ON v.condicion_venta = cv.id
+                        LEFT JOIN agenciasjf a
+                        ON v.agencia = a.id
+                        LEFT JOIN ubigeojf u
+                        ON c.ubigeo = u.cod_ubi
+                        LEFT JOIN notascd_jf n 
+                        ON v.tipo = n.tipo 
+                        AND v.documento = n.documento 
+                    WHERE v.tipo = :tipo
+                        AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'
+                        ORDER BY v.fecha DESC,
+                        v.documento DESC";
 
                 $stmt = Conexion::conectar()->prepare($sql);
 
@@ -7086,39 +7092,41 @@ class ModeloFacturacion
             } else {
 
                 $sql = "SELECT
-        v.tipo,
-        v.tipo_documento,
-        v.documento,
-        v.total,
-        v.cliente,
-        c.nombre,
-        c.tipo_documento AS tip_doc,
-        c.documento AS num_doc,
-        v.vendedor,
-        v.fecha,
-        cv.descripcion,
-        v.doc_destino,
-        v.facturacion,
-        v.estado,
-        v.doc_origen as origen2,
-        IFNULL(a.nombre, '') AS agencia,
-        IFNULL(u.nom_ubi, '') AS ubigeo,
-        n.doc_origen
-    FROM
-        ventajf v
-        LEFT JOIN clientesjf c
-        ON v.cliente = c.codigo
-        LEFT JOIN condiciones_ventajf cv
-        ON v.condicion_venta = cv.id
-        LEFT JOIN agenciasjf a
-        ON v.agencia = a.id
-        LEFT JOIN ubigeojf u
-        ON c.ubigeo = u.cod_ubi
-        LEFT JOIN notascd_jf n 
-        ON v.tipo = n.tipo 
-        AND v.documento = n.documento 
-    WHERE v.tipo = :tipo
-        AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'";
+                        v.tipo,
+                        v.tipo_documento,
+                        v.documento,
+                        v.total,
+                        v.cliente,
+                        c.nombre,
+                        c.tipo_documento AS tip_doc,
+                        c.documento AS num_doc,
+                        v.vendedor,
+                        v.fecha,
+                        cv.descripcion,
+                        v.doc_destino,
+                        v.facturacion,
+                        v.estado,
+                        v.doc_origen as origen2,
+                        IFNULL(a.nombre, '') AS agencia,
+                        IFNULL(u.nom_ubi, '') AS ubigeo,
+                        n.doc_origen
+                    FROM
+                        ventajf v
+                        LEFT JOIN clientesjf c
+                        ON v.cliente = c.codigo
+                        LEFT JOIN condiciones_ventajf cv
+                        ON v.condicion_venta = cv.id
+                        LEFT JOIN agenciasjf a
+                        ON v.agencia = a.id
+                        LEFT JOIN ubigeojf u
+                        ON c.ubigeo = u.cod_ubi
+                        LEFT JOIN notascd_jf n 
+                        ON v.tipo = n.tipo 
+                        AND v.documento = n.documento 
+                    WHERE v.tipo = :tipo
+                        AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'
+                        ORDER BY v.fecha DESC,
+                        v.documento DESC";
 
                 $stmt = Conexion::conectar()->prepare($sql);
 
