@@ -1,112 +1,118 @@
 <div class="content-wrapper">
 
-  <section class="content-header">
+    <section class="content-header">
 
-    <h1>
+        <h1>
 
-      Ingresos
+            Ingresos
 
-    </h1>
+        </h1>
 
-    <ol class="breadcrumb">
+        <ol class="breadcrumb">
 
-      <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
+            <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-      <li class="active">Ingresos</li>
+            <li class="active">Ingresos</li>
 
-    </ol>
+        </ol>
 
-  </section>
+    </section>
 
-  <section class="content">
+    <section class="content">
 
-    <div class="box">
+        <div class="box">
 
-      <div class="box-header with-border">
+            <div class="box-header with-border">
 
-        <a href="crear-ingresos">
+                <a href="crear-ingresos">
 
-          <button class="btn btn-primary">
+                    <button class="btn btn-primary">
 
-            Agregar Ingresos
+                        Agregar Ingresos
 
-          </button>
+                    </button>
 
-        </a>
-        <a href="crear-segunda">
+                </a>
+                <a href="crear-segunda">
 
-          <button class="btn btn-danger">
+                    <button class="btn btn-danger">
 
-            Crear segunda
+                        Crear segunda
 
-          </button>
+                    </button>
 
-        </a>
+                </a>
 
-        <button class="btn btn-info btnIngresoDeta" data-toggle='modal' data-target='#modalVerIngresoDeta' codigoServicio><i class="fa fa-eye"></i> Ver ingresos</button>
-        <button class="btn btn-outline-success btnReporteIngresoM"  style="border:green 1px solid">
-                      <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Ingresos de stock  </button> 
-        <button type="button" class="btn btn-default pull-right" id="daterange-btnIngresoM">
-          <span>
-            <i class="fa fa-calendar"></i>
+                <button class="btn btn-info btnIngresoDeta" data-toggle='modal' data-target='#modalVerIngresoDeta' codigoServicio><i class="fa fa-eye"></i> Ver ingresos</button>
 
-            <?php
+                <?php if ($_SESSION["id"] == "6" || $_SESSION["id"] == "11") : ?>
 
-              if(isset($_GET["fechaInicial"])){
+                    <button class="btn btn-success btnAgregarTaller" data-toggle='modal' data-target='#modalAgregarTaller'><i class="fa fa-plus"></i> Agregar a Taller</button>
 
-                echo $_GET["fechaInicial"]." - ".$_GET["fechaFinal"];
-
-              }else{
-              
-                echo 'Rango de fecha';
-
-              }
-
-            ?>
-
-          </span>
-
-          <i class="fa fa-caret-down"></i>
-
-        </button>
-        
-      </div>
-
-      
+                <?php endif ?>
 
 
-      <div class="box-body">
+                <button class="btn btn-outline-success btnReporteIngresoM" style="border:green 1px solid">
+                    <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Ingresos de stock </button>
+                <button type="button" class="btn btn-default pull-right" id="daterange-btnIngresoM">
+                    <span>
+                        <i class="fa fa-calendar"></i>
 
-        <input type="hidden" value="<?=$_SESSION["perfil"];?>" id="perfilOculto">
-        <input type="hidden" value="<?= $_GET["ruta"]; ?>" id="rutaAcceso">
-       <table class="table table-bordered table-striped dt-responsive tablaIngresoM" width="100%">
-         
-        <thead>
-         
-         <tr>
-           
-           <th>N°</th>
-           <th>Tipo</th>
-           <th>Responsable</th>
-           <th>Taller</th>
-           <th>Documento</th> 
-           <th>Guia</th> 
-           <th>Total</th>
-           <th>Fecha</th>
-           <th>Almacen</th>
-           <th style="width:180px">Acciones</th>
+                        <?php
 
-         </tr> 
+                        if (isset($_GET["fechaInicial"])) {
 
-        </thead>
+                            echo $_GET["fechaInicial"] . " - " . $_GET["fechaFinal"];
+                        } else {
 
-       </table>
+                            echo 'Rango de fecha';
+                        }
 
-      </div>
+                        ?>
 
-    </div>
+                    </span>
 
-  </section>
+                    <i class="fa fa-caret-down"></i>
+
+                </button>
+
+            </div>
+
+
+
+
+            <div class="box-body">
+
+                <input type="hidden" value="<?= $_SESSION["perfil"]; ?>" id="perfilOculto">
+                <input type="hidden" value="<?= $_GET["ruta"]; ?>" id="rutaAcceso">
+                <table class="table table-bordered table-striped dt-responsive tablaIngresoM" width="100%">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>N°</th>
+                            <th>Tipo</th>
+                            <th>Responsable</th>
+                            <th>Taller</th>
+                            <th>Documento</th>
+                            <th>Guia</th>
+                            <th>Total</th>
+                            <th>Fecha</th>
+                            <th>Almacen</th>
+                            <th style="width:180px">Acciones</th>
+
+                        </tr>
+
+                    </thead>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </section>
 
 </div>
 <!--=====================================
@@ -114,237 +120,237 @@ MODAL VISUALIZAR INFORMACION
 ======================================-->
 
 <div id="modalVisualizarIngreso" class="modal fade" role="dialog">
-  
-  <div class="modal-dialog" style="width: 70% !important;">
 
-    <div class="modal-content">
+    <div class="modal-dialog" style="width: 70% !important;">
 
-      <form role="form" method="post">
+        <div class="modal-content">
 
-        <!--=====================================
+            <form role="form" method="post">
+
+                <!--=====================================
         CABEZA DEL MODAL
         ======================================-->
 
-        <div class="modal-header" style="background:#3c8dbc; color:white">
+                <div class="modal-header" style="background:#3c8dbc; color:white">
 
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title">Detalle del Ingreso</h4>
+                    <h4 class="modal-title">Detalle del Ingreso</h4>
 
-        </div>
+                </div>
 
-        <!--=====================================
+                <!--=====================================
         CUERPO DEL MODAL
         ======================================-->
 
-        <div class="modal-body">
+                <div class="modal-body">
 
-          <div class="box-body">
+                    <div class="box-body">
 
-            <!-- ENTRADA PARA CODIGO DEL OC-->
-            
-            <div class="form-group col-lg-2">
-              
-              <label>Ingreso</label>
+                        <!-- ENTRADA PARA CODIGO DEL OC-->
 
-              <div class="input-group">
+                        <div class="form-group col-lg-2">
 
-              <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+                            <label>Ingreso</label>
 
-                <strong><input type="text" class="form-control input-sm" name="cierre" id="cierre" required readonly></strong>
+                            <div class="input-group">
 
-                <input type="hidden" class="form-control input-sm" name="tipoIng" id="tipoIng">
+                                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-              </div>
+                                <strong><input type="text" class="form-control input-sm" name="cierre" id="cierre" required readonly></strong>
 
-            </div>
+                                <input type="hidden" class="form-control input-sm" name="tipoIng" id="tipoIng">
 
-            <!-- ENTRADA PARA LA GUIA-->
-            
-            <div class="form-group col-lg-2">
+                            </div>
 
-              <label>N° Guia</label>
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+                        </div>
 
-                <strong><input type="text" class="form-control input-sm" name="guia" id="guia" required readonly></strong>
+                        <!-- ENTRADA PARA LA GUIA-->
 
-              </div>
+                        <div class="form-group col-lg-2">
 
-            </div> 
+                            <label>N° Guia</label>
 
-            <!-- ENTRADA PARA LA FECHA-->
-            
-            <div class="form-group col-lg-2">
+                            <div class="input-group">
 
-              <label>Creación</label>
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+                                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                <strong><input type="text" class="form-control input-sm" name="fecha" id="fecha" required></strong>
+                                <strong><input type="text" class="form-control input-sm" name="guia" id="guia" required readonly></strong>
 
-              </div>
+                            </div>
 
-            </div>   
- 
-            <!-- ENTRADA PARA LA RESPONSABLE-->
-            
-            <div class="form-group col-lg-2">
+                        </div>
 
-              <label>Responsable</label>
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+                        <!-- ENTRADA PARA LA FECHA-->
 
-                <strong><input type="text" class="form-control input-sm" name="nombre" id="nombre" required readonly></strong>
+                        <div class="form-group col-lg-2">
 
-              </div>
+                            <label>Creación</label>
 
-            </div>            
-   
-            
-            <!-- ENTRADA PARA LA CANTIDAD-->
-            
-            <div class="form-group col-lg-2">
+                            <div class="input-group">
 
-              <label>Cantidad Total</label>
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+                                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                <strong><input type="text" class="form-control input-sm" name="cantidad" id="cantidad" required readonly></strong>
+                                <strong><input type="text" class="form-control input-sm" name="fecha" id="fecha" required></strong>
 
-              </div>
+                            </div>
 
-            </div>
-            
-            <!-- ENTRADA PARA EL ESTADO-->
-            
-            <div class="form-group col-lg-2">
+                        </div>
 
-              <label>Estado</label>
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+                        <!-- ENTRADA PARA LA RESPONSABLE-->
 
-                <strong><input type="text" class="form-control input-sm" name="estado" id="estado" required readonly></strong>
+                        <div class="form-group col-lg-2">
 
-              </div>
+                            <label>Responsable</label>
 
-            </div>
-                       
-            <!-- TABLA DE DETALLES -->
+                            <div class="input-group">
 
-            <div class="form-group col-lg-12">
-            <label>TABLA DETALLES</label>
-            </div>
+                                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-            <div class="box-body">
+                                <strong><input type="text" class="form-control input-sm" name="nombre" id="nombre" required readonly></strong>
 
-              <table class="table table-bordered table-striped dt-responsive tablaDetalleIngreso" width = "100%"> 
+                            </div>
 
-              <thead>
-
-                <tr>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th>S</th>
-                  <th>M</th>
-                  <th>L</th>
-                  <th>XL</th>
-                  <th>XXL</th>
-                  <th>XS</th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                </tr>
-
-                <tr>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th>28</th>
-                  <th>30</th>
-                  <th>32</th>
-                  <th>34</th>
-                  <th>36</th>
-                  <th>38</th>
-                  <th>40</th>
-                  <th>42</th>
-                  <th></th>
-                </tr>
-
-                <tr>
-                  <th>Taller</th>
-                  <th>Fecha</th>
-                  <th>Modelo</th>
-                  <th>Nombre</th>
-                  <th>Color</th>
-                  <th>3</th>
-                  <th>4</th>
-                  <th>6</th>
-                  <th>8</th>
-                  <th>10</th>
-                  <th>12</th>
-                  <th>14</th>
-                  <th>16</th>
-                  <th>Total</th>
-                </tr>
-
-                </thead>
-
-                <tbody>
+                        </div>
 
 
+                        <!-- ENTRADA PARA LA CANTIDAD-->
 
-                </tbody>
+                        <div class="form-group col-lg-2">
 
-              </table>
+                            <label>Cantidad Total</label>
 
-            </div>
+                            <div class="input-group">
 
-          </div>
+                                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-        </div>
+                                <strong><input type="text" class="form-control input-sm" name="cantidad" id="cantidad" required readonly></strong>
 
-        <!--=====================================
+                            </div>
+
+                        </div>
+
+                        <!-- ENTRADA PARA EL ESTADO-->
+
+                        <div class="form-group col-lg-2">
+
+                            <label>Estado</label>
+
+                            <div class="input-group">
+
+                                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
+
+                                <strong><input type="text" class="form-control input-sm" name="estado" id="estado" required readonly></strong>
+
+                            </div>
+
+                        </div>
+
+                        <!-- TABLA DE DETALLES -->
+
+                        <div class="form-group col-lg-12">
+                            <label>TABLA DETALLES</label>
+                        </div>
+
+                        <div class="box-body">
+
+                            <table class="table table-bordered table-striped dt-responsive tablaDetalleIngreso" width="100%">
+
+                                <thead>
+
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th>S</th>
+                                        <th>M</th>
+                                        <th>L</th>
+                                        <th>XL</th>
+                                        <th>XXL</th>
+                                        <th>XS</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th>28</th>
+                                        <th>30</th>
+                                        <th>32</th>
+                                        <th>34</th>
+                                        <th>36</th>
+                                        <th>38</th>
+                                        <th>40</th>
+                                        <th>42</th>
+                                        <th></th>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Taller</th>
+                                        <th>Fecha</th>
+                                        <th>Modelo</th>
+                                        <th>Nombre</th>
+                                        <th>Color</th>
+                                        <th>3</th>
+                                        <th>4</th>
+                                        <th>6</th>
+                                        <th>8</th>
+                                        <th>10</th>
+                                        <th>12</th>
+                                        <th>14</th>
+                                        <th>16</th>
+                                        <th>Total</th>
+                                    </tr>
+
+                                </thead>
+
+                                <tbody>
+
+
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!--=====================================
         PIE DEL MODAL
         ======================================-->
 
-        <div class="modal-footer">
+                <div class="modal-footer">
 
-          <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
+                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+
+                </div>
+
+
+
+            </form>
 
         </div>
+        <?php
 
+        $actualizar = new ControladorIngresos();
+        $actualizar->ctrActualizarFecha();
 
+        ?>
 
-      </form>
 
     </div>
-    <?php
-
-      $actualizar = new ControladorIngresos();
-      $actualizar -> ctrActualizarFecha();
-
-    ?>
-
-
-  </div>
 
 </div>
 
@@ -352,165 +358,255 @@ MODAL VISUALIZAR INFORMACION
 <!--=====================================
 MODAL VISUALIZAR INFORMACION
 ======================================-->
-
 <div id="modalVerIngresoDeta" class="modal fade" role="dialog">
-  
-  <div class="modal-dialog" style="width: 65% !important;">
 
-    <div class="modal-content">
+    <div class="modal-dialog" style="width: 65% !important;">
 
-      <form role="form" method="post">
+        <div class="modal-content">
 
-        <!--=====================================
+            <form role="form" method="post">
+
+                <!--=====================================
         CABEZA DEL MODAL
         ======================================-->
 
-        <div class="modal-header" style="background:#3c8dbc; color:white">
+                <div class="modal-header" style="background:#3c8dbc; color:white">
 
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title">Detalle del Ingreso</h4>
+                    <h4 class="modal-title">Detalle del Ingreso</h4>
 
-        </div>
+                </div>
 
-        <!--=====================================
+                <!--=====================================
         CUERPO DEL MODAL
         ======================================-->
-        
-        <div class="modal-body">
-          <div class="box-header width-border">
-            <button type="button" class="btn btn-default pull-right" id="daterange-btnVerIngresos">
-            <span>
-              <i class="fa fa-calendar"></i>
 
-              <?php
+                <div class="modal-body">
+                    <div class="box-header width-border">
+                        <button type="button" class="btn btn-default pull-right" id="daterange-btnVerIngresos">
+                            <span>
+                                <i class="fa fa-calendar"></i>
 
-                if(isset($_GET["fechaInicial"])){
+                                <?php
 
-                  echo $_GET["fechaInicial"]." - ".$_GET["fechaFinal"];
+                                if (isset($_GET["fechaInicial"])) {
 
-                }else{
-                
-                  echo 'Rango de fecha';
+                                    echo $_GET["fechaInicial"] . " - " . $_GET["fechaFinal"];
+                                } else {
 
-                }
+                                    echo 'Rango de fecha';
+                                }
 
-              ?>
+                                ?>
 
-            </span>
+                            </span>
 
-            <i class="fa fa-caret-down"></i>
+                            <i class="fa fa-caret-down"></i>
 
-          </button>
-          
-          </div>
-          
-          <div class="box-body">
-            <table class="table table-bordered table-striped  tablaDetalleIngresoTotal" width = "100%">
+                        </button>
 
-              <thead>
+                    </div>
 
-                <tr>
-                  <th style="width:100px"></th>
-                  <th></th>
-                  <th style="width:130px"></th>
-                  <th></th>
-                  <th></th>
-                  <th style="width:180px"></th>
-                  <th style="width:100px"></th>
-                  <th>S</th>
-                  <th>M</th>
-                  <th>L</th>
-                  <th>XL</th>
-                  <th>XXL</th>
-                  <th>XS</th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                </tr>
+                    <div class="box-body">
+                        <table class="table table-bordered table-striped  tablaDetalleIngresoTotal" width="100%">
 
-                <tr>
-                  <th style="width:100px"></th>
-                  <th></th>
-                  <th style="width:130px"></th>
-                  <th></th>
-                  <th></th>
-                  <th style="width:180px"></th>
-                  <th style="width:100px"></th>
-                  <th>28</th>
-                  <th>30</th>
-                  <th>32</th>
-                  <th>34</th>
-                  <th>36</th>
-                  <th>38</th>
-                  <th>40</th>
-                  <th>42</th>
-                  <th></th>
-                </tr>
+                            <thead>
 
-                <tr>
-                  <th style="width:100px">Taller</th>
-                  <th>Guia</th>
-                  <th style="width:130px">Fecha</th>
-                  <th>Documento</th>
-                  <th>Modelo</th>
-                  <th style="width:180px">Nombre</th>
-                  <th style="width:100px">Color</th>
-                  <th>3</th>
-                  <th>4</th>
-                  <th>6</th>
-                  <th>8</th>
-                  <th>10</th>
-                  <th>12</th>
-                  <th>14</th>
-                  <th>16</th>
-                  <th>Total</th>
-                </tr>
+                                <tr>
+                                    <th style="width:100px"></th>
+                                    <th></th>
+                                    <th style="width:130px"></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th style="width:180px"></th>
+                                    <th style="width:100px"></th>
+                                    <th>S</th>
+                                    <th>M</th>
+                                    <th>L</th>
+                                    <th>XL</th>
+                                    <th>XXL</th>
+                                    <th>XS</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
 
-                </thead>
+                                <tr>
+                                    <th style="width:100px"></th>
+                                    <th></th>
+                                    <th style="width:130px"></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th style="width:180px"></th>
+                                    <th style="width:100px"></th>
+                                    <th>28</th>
+                                    <th>30</th>
+                                    <th>32</th>
+                                    <th>34</th>
+                                    <th>36</th>
+                                    <th>38</th>
+                                    <th>40</th>
+                                    <th>42</th>
+                                    <th></th>
+                                </tr>
 
-                <tbody>
+                                <tr>
+                                    <th style="width:100px">Taller</th>
+                                    <th>Guia</th>
+                                    <th style="width:130px">Fecha</th>
+                                    <th>Documento</th>
+                                    <th>Modelo</th>
+                                    <th style="width:180px">Nombre</th>
+                                    <th style="width:100px">Color</th>
+                                    <th>3</th>
+                                    <th>4</th>
+                                    <th>6</th>
+                                    <th>8</th>
+                                    <th>10</th>
+                                    <th>12</th>
+                                    <th>14</th>
+                                    <th>16</th>
+                                    <th>Total</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
 
 
 
-                </tbody>
+                            </tbody>
 
-              </table>
-          </div>
-
-              
+                        </table>
+                    </div>
 
 
 
-        </div>
 
-        <!--=====================================
+
+                </div>
+
+                <!--=====================================
         PIE DEL MODAL
         ======================================-->
 
-        <div class="modal-footer">
+                <div class="modal-footer">
 
-          <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
+                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
+
+                </div>
+
+
+
+            </form>
 
         </div>
 
+    </div>
 
+</div>
 
-      </form>
+<!--=====================================
+AGREGAR CANTIDAD A TALLER
+======================================-->
+<div id="modalAgregarTaller" class="modal fade" role="dialog">
+
+    <div class="modal-dialog" style="width: 50% !important;">
+
+        <div class="modal-content">
+
+            <form role="form" method="post">
+
+                <!--=====================================
+                CABEZA DEL MODAL
+                ======================================-->
+
+                <div class="modal-header" style="background:#3c8dbc; color:white">
+
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                    <h4 class="modal-title">Agregar Cantidad a Taller</h4>
+
+                </div>
+
+                <!--=====================================
+                CUERPO DEL MODAL
+                ======================================-->
+
+                <div class="modal-body">
+                    <div class="box-body">
+
+                        <div class="form-group col-lg-6">
+                            <label for="">Articulo</label>
+                            <div class="input-group">
+
+                                <span class="input-group-addon input-lg"><i class="fa fa-hand-o-right"></i></span>
+                                <select class="form-control input-lg selectpicker" id="articulo" name="articulo" data-live-search="true" data-size="10" required>
+                                    <option value="">Seleccionar Articulo</option>
+                                    <?php
+
+                                    $articulo = controladorArticulos::ctrMostrarArticulosTicket();
+                                    foreach ($articulo as $key => $value) {
+                                        echo '<option value="' . $value["articulo"] . '">' . $value["modelo"] . " - " . $value["color"] . " - " . $value["talla"] . '</option>';
+                                    }
+                                    ?>
+                                </select>
+
+                                <input type="hidden" name="usuario" value="<?php echo $_SESSION["nombre"] ?>">
+
+                            </div>
+                        </div>
+
+                        <div class="form-group col-lg-6">
+                            <label for="">Cantidad</label>
+                            <div class="input-group">
+
+                                <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+
+                                <input type="number" class="form-control input-lg" name="cantidad" id="cantidad" required>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!--=====================================
+                PIE DEL MODAL
+                ======================================-->
+
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
+
+                    <button type="submit" class="btn btn-primary">Crear Ingreso</button>
+
+                </div>
+
+                <?php
+                $activar = new ControladorIngresos();
+                $activar->ctrAgregarTaller();
+
+                ?>
+
+            </form>
+
+        </div>
 
     </div>
 
-  </div>
-
 </div>
-<?php 
-  $eliminarIngreso = new ControladorIngresos();
-  $eliminarIngreso -> ctrEliminarIngreso();
 
-  $eliminarSegunda = new ControladorIngresos();
-  $eliminarSegunda -> ctrEliminarSegunda();
+<?php
+$eliminarIngreso = new ControladorIngresos();
+$eliminarIngreso->ctrEliminarIngreso();
+
+$eliminarSegunda = new ControladorIngresos();
+$eliminarSegunda->ctrEliminarSegunda();
 ?>
 
 <script>
-window.document.title = "Ingresos"
+    window.document.title = "Ingresos"
 </script>

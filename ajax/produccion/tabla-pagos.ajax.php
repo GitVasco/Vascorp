@@ -4,740 +4,639 @@ require_once "../../controladores/produccion.controlador.php";
 require_once "../../modelos/produccion.modelo.php";
 
 
-class TablaPagos{
+class TablaPagos
+{
 
     /*=============================================
     MOSTRAR LA TABLA DE ARTICULOS
-    =============================================*/ 
+    =============================================*/
 
-    public function mostrarTablaPagos(){
+    public function mostrarTablaPagos()
+    {
 
-        $pagos = ControladorProduccion::ctrMostrarPagos($_GET["inicio"], $_GET["fin"], $_GET["nquincena"], $_GET["id"],$_GET["sectorTra"]);	
+        $pagos = ControladorProduccion::ctrMostrarPagos($_GET["inicio"], $_GET["fin"], $_GET["nquincena"], $_GET["id"], $_GET["sectorTra"]);
 
-        if(count($pagos)>0){
+        if (count($pagos) > 0) {
 
-            if($_GET["nquincena"] == "1"){
+            if ($_GET["nquincena"] == "1") {
 
                 $datosJson = '{
                     "data": [';
-            
-                    for($i = 0; $i < count($pagos); $i++){
 
-                        $vino = "#8B0000";
-                        $azulino = "#0000FF";
-                        $verde = "#008000"; 
+                for ($i = 0; $i < count($pagos); $i++) {
 
-                        /* 
+                    $vino = "#8B0000";
+                    $azulino = "#0000FF";
+                    $verde = "#008000";
+
+                    /* 
                         *d1    
                         */
-                        if($pagos[$i]["d1"] > 0){
+                    if ($pagos[$i]["d1"] > 0) {
 
-                            $d1 = number_format($pagos[$i]["d1"],2);
+                        $d1 = number_format($pagos[$i]["d1"], 2);
+                    } else {
 
-                        }else{
+                        $d1 = '';
+                    }
 
-                            $d1 = '';
-
-                        }
-                        
-                        /* 
+                    /* 
                         *d2    
                         */
-                        if($pagos[$i]["d2"] > 0){
+                    if ($pagos[$i]["d2"] > 0) {
 
-                            $d2 = number_format($pagos[$i]["d2"],2);
+                        $d2 = number_format($pagos[$i]["d2"], 2);
+                    } else {
 
-                        }else{
+                        $d2 = '';
+                    }
 
-                            $d2 = '';
-
-                        } 
-                        
-                        /* 
+                    /* 
                         *d3   
                         */
-                        if($pagos[$i]["d3"] > 0){
+                    if ($pagos[$i]["d3"] > 0) {
 
-                            $d3 = number_format($pagos[$i]["d3"],2);
+                        $d3 = number_format($pagos[$i]["d3"], 2);
+                    } else {
 
-                        }else{
+                        $d3 = '';
+                    }
 
-                            $d3 = '';
-
-                        } 
-                        
-                        /* 
+                    /* 
                         *d4    
                         */
-                        if($pagos[$i]["d4"] > 0){
+                    if ($pagos[$i]["d4"] > 0) {
 
-                            $d4 = number_format($pagos[$i]["d4"],2);
+                        $d4 = number_format($pagos[$i]["d4"], 2);
+                    } else {
 
-                        }else{
+                        $d4 = '';
+                    }
 
-                            $d4 = '';
-
-                        } 
-                        
-                        /* 
+                    /* 
                         *d5    
                         */
-                        if($pagos[$i]["d5"] > 0){
+                    if ($pagos[$i]["d5"] > 0) {
 
-                            $d5 = number_format($pagos[$i]["d5"],2);
+                        $d5 = number_format($pagos[$i]["d5"], 2);
+                    } else {
 
-                        }else{
+                        $d5 = '';
+                    }
 
-                            $d5 = '';
-
-                        } 
-                        
-                        /* 
+                    /* 
                         *d6    
                         */
-                        if($pagos[$i]["d6"] > 0){
+                    if ($pagos[$i]["d6"] > 0) {
 
-                            $d6 = number_format($pagos[$i]["d6"],2);
+                        $d6 = number_format($pagos[$i]["d6"], 2);
+                    } else {
 
-                        }else{
+                        $d6 = '';
+                    }
 
-                            $d6 = '';
-
-                        } 
-
-                        /* 
+                    /* 
                         *d7    
                         */
-                        if($pagos[$i]["d7"] > 0){
+                    if ($pagos[$i]["d7"] > 0) {
 
-                            $d7 = number_format($pagos[$i]["d7"],2);
+                        $d7 = number_format($pagos[$i]["d7"], 2);
+                    } else {
 
-                        }else{
+                        $d7 = '';
+                    }
 
-                            $d7 = '';
-
-                        }  
-                        
-                        /* 
+                    /* 
                         *d8    
                         */
-                        if($pagos[$i]["d8"] > 0){
+                    if ($pagos[$i]["d8"] > 0) {
 
-                            $d8 = number_format($pagos[$i]["d8"],2);
+                        $d8 = number_format($pagos[$i]["d8"], 2);
+                    } else {
 
-                        }else{
+                        $d8 = '';
+                    }
 
-                            $d8 = '';
-
-                        }              
-                        
-                        /* 
+                    /* 
                         *d9    
                         */
-                        if($pagos[$i]["d9"] > 0){
+                    if ($pagos[$i]["d9"] > 0) {
 
-                            $d9 = number_format($pagos[$i]["d9"],2);
+                        $d9 = number_format($pagos[$i]["d9"], 2);
+                    } else {
 
-                        }else{
+                        $d9 = '';
+                    }
 
-                            $d9 = '';
-
-                        }    
-                        
-                        /* 
+                    /* 
                         *d10    
                         */
-                        if($pagos[$i]["d10"] > 0){
+                    if ($pagos[$i]["d10"] > 0) {
 
-                            $d10 = number_format($pagos[$i]["d10"],2);
+                        $d10 = number_format($pagos[$i]["d10"], 2);
+                    } else {
 
-                        }else{
+                        $d10 = '';
+                    }
 
-                            $d10 = '';
-
-                        }     
-                        
-                        /* 
+                    /* 
                         *d11    
                         */
-                        if($pagos[$i]["d11"] > 0){
+                    if ($pagos[$i]["d11"] > 0) {
 
-                            $d11 = number_format($pagos[$i]["d11"],2);
+                        $d11 = number_format($pagos[$i]["d11"], 2);
+                    } else {
 
-                        }else{
+                        $d11 = '';
+                    }
 
-                            $d11 = '';
-
-                        }  
-                        
-                        /* 
+                    /* 
                         *d12    
                         */
-                        if($pagos[$i]["d12"] > 0){
+                    if ($pagos[$i]["d12"] > 0) {
 
-                            $d12 = number_format($pagos[$i]["d12"],2);
+                        $d12 = number_format($pagos[$i]["d12"], 2);
+                    } else {
 
-                        }else{
+                        $d12 = '';
+                    }
 
-                            $d12 = '';
-
-                        }  
-                        
-                        /* 
+                    /* 
                         *d13    
                         */
-                        if($pagos[$i]["d13"] > 0){
+                    if ($pagos[$i]["d13"] > 0) {
 
-                            $d13 = number_format($pagos[$i]["d13"],2);
+                        $d13 = number_format($pagos[$i]["d13"], 2);
+                    } else {
 
-                        }else{
+                        $d13 = '';
+                    }
 
-                            $d13 = '';
-
-                        }                         
-                        
-                        /* 
+                    /* 
                         *d14    
                         */
-                        if($pagos[$i]["d14"] > 0){
+                    if ($pagos[$i]["d14"] > 0) {
 
-                            $d14 = number_format($pagos[$i]["d14"],2);
+                        $d14 = number_format($pagos[$i]["d14"], 2);
+                    } else {
 
-                        }else{
+                        $d14 = '';
+                    }
 
-                            $d14 = '';
-
-                        } 
-                        
-                        /* 
+                    /* 
                         *d15    
                         */
-                        if($pagos[$i]["d15"] > 0){
+                    if ($pagos[$i]["d15"] > 0) {
 
-                            $d15 = number_format($pagos[$i]["d15"],2);
+                        $d15 = number_format($pagos[$i]["d15"], 2);
+                    } else {
 
-                        }else{
+                        $d15 = '';
+                    }
 
-                            $d15 = '';
-
-                        }        
-                        
-                        /* 
+                    /* 
                         *d16    
                         */
-                        if($pagos[$i]["d16"] > 0){
+                    if ($pagos[$i]["d16"] > 0) {
 
-                            $d16 = number_format($pagos[$i]["d16"],2);
+                        $d16 = number_format($pagos[$i]["d16"], 2);
+                    } else {
 
-                        }else{
+                        $d16 = '';
+                    }
 
-                            $d16 = '';
-
-                        }
-                        
-                        /* 
+                    /* 
                         *d27
                         */
-                        if($pagos[$i]["d27"] > 0){
+                    if ($pagos[$i]["d27"] > 0) {
 
-                            $d27 = number_format($pagos[$i]["d27"],2);
+                        $d27 = number_format($pagos[$i]["d27"], 2);
+                    } else {
 
-                        }else{
+                        $d27 = '';
+                    }
 
-                            $d27 = '';
-
-                        }
-
-                        /* 
+                    /* 
                         *d28    
                         */
-                        if($pagos[$i]["d28"] > 0){
+                    if ($pagos[$i]["d28"] > 0) {
 
-                            $d28 = number_format($pagos[$i]["d28"],2);
+                        $d28 = number_format($pagos[$i]["d28"], 2);
+                    } else {
 
-                        }else{
+                        $d28 = '';
+                    }
 
-                            $d28 = '';
-
-                        }     
-                        
-                        /* 
+                    /* 
                         *d29    
                         */
-                        if($pagos[$i]["d29"] > 0){
+                    if ($pagos[$i]["d29"] > 0) {
 
-                            $d29 = number_format($pagos[$i]["d29"],2);
+                        $d29 = number_format($pagos[$i]["d29"], 2);
+                    } else {
 
-                        }else{
+                        $d29 = '';
+                    }
 
-                            $d29 = '';
-
-                        }               
-                        
-                        /* 
+                    /* 
                         *d30    
                         */
-                        if($pagos[$i]["d30"] > 0){
+                    if ($pagos[$i]["d30"] > 0) {
 
-                            $d30 = number_format($pagos[$i]["d30"],2);
+                        $d30 = number_format($pagos[$i]["d30"], 2);
+                    } else {
 
-                        }else{
+                        $d30 = '';
+                    }
 
-                            $d30 = '';
-
-                        }                         
-                        
-                        /* 
+                    /* 
                         *d31    
                         */
-                        if($pagos[$i]["d31"] > 0){
+                    if ($pagos[$i]["d31"] > 0) {
 
-                            $d31 = number_format($pagos[$i]["d31"],2);
+                        $d31 = number_format($pagos[$i]["d31"], 2);
+                    } else {
 
-                        }else{
+                        $d31 = '';
+                    }
 
-                            $d31 = '';
-
-                        }                         
-
-                        /* 
+                    /* 
                         *TOTALES
                         */
-                        if($pagos[$i]["total"] < $pagos[$i]["sueldo_total"]){
+                    if ($pagos[$i]["total"] < $pagos[$i]["sueldo_total"]) {
 
-                            $total = "<b class='guinda'>".number_format($pagos[$i]["total"],2)."</b>";
+                        $total = "<b class='guinda'>" . number_format($pagos[$i]["total"], 2) . "</b>";
+                    } else {
 
-                        }else{
+                        $total = "<b class='azul'>" . number_format($pagos[$i]["total"], 2) . "</b>";
+                    }
 
-                            $total = "<b class='azul'>".number_format($pagos[$i]["total"],2)."</b>";
-
-                        }
-
-                        /* 
+                    /* 
                         *TOTALES PENDIENTES
                         */
-                        
-                        $pendiente = $pagos[$i]["sueldo_total"] - $pagos[$i]["total"];
 
-                        if($pagos[$i]["total"] < $pagos[$i]["sueldo_total"]){
+                    $pendiente = $pagos[$i]["sueldo_total"] - $pagos[$i]["total"];
 
-                            $totalPendiente = "<b class='guinda'>".number_format($pendiente,2)."</b>";
+                    if ($pagos[$i]["total"] < $pagos[$i]["sueldo_total"]) {
 
-                        }else{
+                        $totalPendiente = "<b class='guinda'>" . number_format($pendiente, 2) . "</b>";
+                    } else {
 
-                            $totalPendiente = "<b class='azul'>".number_format($pendiente,2)."</b>";
-
-                        }                        
-            
-                        $datosJson .= '[
-                        "'.$pagos[$i]["trabajador"].'",
-                        "<b>'.$pagos[$i]["nom_tra"].'</b>",
-                        "<b>'.$d27.'</b>",
-                        "<b>'.$d28.'</b>",
-                        "<b>'.$d29.'</b>",
-                        "<b>'.$d30.'</b>",
-                        "<b>'.$d31.'</b>",
-                        "<b>'.$d1.'</b>",
-                        "<b>'.$d2.'</b>",
-                        "<b>'.$d3.'</b>",
-                        "<b>'.$d4.'</b>",
-                        "<b>'.$d5.'</b>",
-                        "<b>'.$d6.'</b>",
-                        "<b>'.$d7.'</b>",
-                        "<b>'.$d8.'</b>",
-                        "<b>'.$d9.'</b>",
-                        "<b>'.$d10.'</b>",
-                        "<b>'.$d11.'</b>",
-                        "<b>'.$d12.'</b>",
-                        "<b>'.$d13.'</b>",
-                        "<b>'.$d14.'</b>",
-                        "<b>'.$d15.'</b>",
-                        "<b>'.$d16.'</b>",
-                        "'.$total.'",
-                        "'.$totalPendiente.'"
-                        ],';  
-            
+                        $totalPendiente = "<b class='azul'>" . number_format($pendiente, 2) . "</b>";
                     }
-            
-                        $datosJson=substr($datosJson, 0, -1);
-            
-                        $datosJson .= '] 
+
+                    $datosJson .= '[
+                        "' . $pagos[$i]["trabajador"] . '",
+                        "<b>' . $pagos[$i]["nom_tra"] . '</b>",
+                        "<b>' . $d27 . '</b>",
+                        "<b>' . $d28 . '</b>",
+                        "<b>' . $d29 . '</b>",
+                        "<b>' . $d30 . '</b>",
+                        "<b>' . $d31 . '</b>",
+                        "<b>' . $d1 . '</b>",
+                        "<b>' . $d2 . '</b>",
+                        "<b>' . $d3 . '</b>",
+                        "<b>' . $d4 . '</b>",
+                        "<b>' . $d5 . '</b>",
+                        "<b>' . $d6 . '</b>",
+                        "<b>' . $d7 . '</b>",
+                        "<b>' . $d8 . '</b>",
+                        "<b>' . $d9 . '</b>",
+                        "<b>' . $d10 . '</b>",
+                        "<b>' . $d11 . '</b>",
+                        "<b>' . $d12 . '</b>",
+                        "<b>' . $d13 . '</b>",
+                        "<b>' . $d14 . '</b>",
+                        "<b>' . $d15 . '</b>",
+                        "<b>' . $d16 . '</b>",
+                        "' . $total . '",
+                        "' . $totalPendiente . '"
+                        ],';
+                }
+
+                $datosJson = substr($datosJson, 0, -1);
+
+                $datosJson .= '] 
             
                         }';
-            
-                    echo $datosJson;
 
-
-            }else{
+                echo $datosJson;
+            } else {
 
                 $datosJson = '{
                     "data": [';
-            
-                    for($i = 0; $i < count($pagos); $i++){
 
-                        $vino = "#8B0000";
-                        $azulino = "#0000FF";
-                        $verde = "#008000";
+                for ($i = 0; $i < count($pagos); $i++) {
 
-                        /* 
+                    $vino = "#8B0000";
+                    $azulino = "#0000FF";
+                    $verde = "#008000";
+
+                    /* 
                         *d1    
                         */
-                        if($pagos[$i]["d1"] > 0){
+                    if ($pagos[$i]["d1"] > 0) {
 
-                            $d1 = number_format($pagos[$i]["d1"],2);
+                        $d1 = number_format($pagos[$i]["d1"], 2);
+                    } else {
 
-                        }else{
+                        $d1 = '';
+                    }
 
-                            $d1 = '';
-
-                        }
-
-                        /* 
+                    /* 
                         *d12    
                         */
-                        if($pagos[$i]["d12"] > 0){
+                    if ($pagos[$i]["d12"] > 0) {
 
-                            $d12 = number_format($pagos[$i]["d12"],2);
+                        $d12 = number_format($pagos[$i]["d12"], 2);
+                    } else {
 
-                        }else{
+                        $d12 = '';
+                    }
 
-                            $d12 = '';
-
-                        } 
-
-                        /* 
+                    /* 
                         *d13    
                         */
-                        if($pagos[$i]["d13"] > 0){
+                    if ($pagos[$i]["d13"] > 0) {
 
-                            $d13 = number_format($pagos[$i]["d13"],2);
+                        $d13 = number_format($pagos[$i]["d13"], 2);
+                    } else {
 
-                        }else{
+                        $d13 = '';
+                    }
 
-                            $d13 = '';
-
-                        }  
-                        
-                        /* 
+                    /* 
                         *d14    
                         */
-                        if($pagos[$i]["d14"] > 0){
+                    if ($pagos[$i]["d14"] > 0) {
 
-                            $d14 = number_format($pagos[$i]["d14"],2);
+                        $d14 = number_format($pagos[$i]["d14"], 2);
+                    } else {
 
-                        }else{
+                        $d14 = '';
+                    }
 
-                            $d14 = '';
-
-                        }   
-                        
-                        /* 
+                    /* 
                         *d15    
                         */
-                        if($pagos[$i]["d15"] > 0){
+                    if ($pagos[$i]["d15"] > 0) {
 
-                            $d15 = number_format($pagos[$i]["d15"],2);
+                        $d15 = number_format($pagos[$i]["d15"], 2);
+                    } else {
 
-                        }else{
+                        $d15 = '';
+                    }
 
-                            $d15 = '';
-
-                        }       
-                        
-                        /* 
+                    /* 
                         *d16    
                         */
-                        if($pagos[$i]["d16"] > 0){
+                    if ($pagos[$i]["d16"] > 0) {
 
-                            $d16 = number_format($pagos[$i]["d16"],2);
+                        $d16 = number_format($pagos[$i]["d16"], 2);
+                    } else {
 
-                        }else{
+                        $d16 = '';
+                    }
 
-                            $d16 = '';
-
-                        }    
-                        
-                        /* 
+                    /* 
                         *d17    
                         */
-                        if($pagos[$i]["d17"] > 0){
+                    if ($pagos[$i]["d17"] > 0) {
 
-                            $d17 = number_format($pagos[$i]["d17"],2);
+                        $d17 = number_format($pagos[$i]["d17"], 2);
+                    } else {
 
-                        }else{
+                        $d17 = '';
+                    }
 
-                            $d17 = '';
-
-                        }       
-                        
-                        /* 
+                    /* 
                         *d18    
                         */
-                        if($pagos[$i]["d18"] > 0){
+                    if ($pagos[$i]["d18"] > 0) {
 
-                            $d18 = number_format($pagos[$i]["d18"],2);
+                        $d18 = number_format($pagos[$i]["d18"], 2);
+                    } else {
 
-                        }else{
+                        $d18 = '';
+                    }
 
-                            $d18 = '';
-
-                        }     
-                        
-                        /* 
+                    /* 
                         *d19    
                         */
-                        if($pagos[$i]["d19"] > 0){
+                    if ($pagos[$i]["d19"] > 0) {
 
-                            $d19 = number_format($pagos[$i]["d19"],2);
+                        $d19 = number_format($pagos[$i]["d19"], 2);
+                    } else {
 
-                        }else{
+                        $d19 = '';
+                    }
 
-                            $d19 = '';
-
-                        }      
-                        
-                        /* 
+                    /* 
                         *d20    
                         */
-                        if($pagos[$i]["d20"] > 0){
+                    if ($pagos[$i]["d20"] > 0) {
 
-                            $d20 = number_format($pagos[$i]["d20"],2);
+                        $d20 = number_format($pagos[$i]["d20"], 2);
+                    } else {
 
-                        }else{
+                        $d20 = '';
+                    }
 
-                            $d20 = '';
-
-                        }    
-                        
-                        /* 
+                    /* 
                         *d21    
                         */
-                        if($pagos[$i]["d21"] > 0){
+                    if ($pagos[$i]["d21"] > 0) {
 
-                            $d21 = number_format($pagos[$i]["d21"],2);
+                        $d21 = number_format($pagos[$i]["d21"], 2);
+                    } else {
 
-                        }else{
+                        $d21 = '';
+                    }
 
-                            $d21 = '';
-
-                        }     
-                        
-                        /* 
+                    /* 
                         *d22    
                         */
-                        if($pagos[$i]["d22"] > 0){
+                    if ($pagos[$i]["d22"] > 0) {
 
-                            $d22 = number_format($pagos[$i]["d22"],2);
+                        $d22 = number_format($pagos[$i]["d22"], 2);
+                    } else {
 
-                        }else{
+                        $d22 = '';
+                    }
 
-                            $d22 = '';
-
-                        }      
-                        
-                        /* 
+                    /* 
                         *d23    
                         */
-                        if($pagos[$i]["d23"] > 0){
+                    if ($pagos[$i]["d23"] > 0) {
 
-                            $d23 = number_format($pagos[$i]["d23"],2);
+                        $d23 = number_format($pagos[$i]["d23"], 2);
+                    } else {
 
-                        }else{
+                        $d23 = '';
+                    }
 
-                            $d23 = '';
-
-                        }    
-                        
-                        /* 
+                    /* 
                         *d24    
                         */
-                        if($pagos[$i]["d24"] > 0){
+                    if ($pagos[$i]["d24"] > 0) {
 
-                            $d24 = number_format($pagos[$i]["d24"],2);
+                        $d24 = number_format($pagos[$i]["d24"], 2);
+                    } else {
 
-                        }else{
+                        $d24 = '';
+                    }
 
-                            $d24 = '';
-
-                        }      
-                        
-                        /* 
+                    /* 
                         *d25    
                         */
-                        if($pagos[$i]["d25"] > 0){
+                    if ($pagos[$i]["d25"] > 0) {
 
-                            $d25 = number_format($pagos[$i]["d25"],2);
+                        $d25 = number_format($pagos[$i]["d25"], 2);
+                    } else {
 
-                        }else{
+                        $d25 = '';
+                    }
 
-                            $d25 = '';
-
-                        }  
-                        
-                        /* 
+                    /* 
                         *d26    
                         */
-                        if($pagos[$i]["d26"] > 0){
+                    if ($pagos[$i]["d26"] > 0) {
 
-                            $d26 = number_format($pagos[$i]["d26"],2);
+                        $d26 = number_format($pagos[$i]["d26"], 2);
+                    } else {
 
-                        }else{
+                        $d26 = '';
+                    }
 
-                            $d26 = '';
-
-                        }    
-                        
-                        /* 
+                    /* 
                         *d27    
                         */
-                        if($pagos[$i]["d27"] > 0){
+                    if ($pagos[$i]["d27"] > 0) {
 
-                            $d27 = number_format($pagos[$i]["d27"],2);
+                        $d27 = number_format($pagos[$i]["d27"], 2);
+                    } else {
 
-                        }else{
+                        $d27 = '';
+                    }
 
-                            $d27 = '';
-
-                        }                          
-
-                        /* 
+                    /* 
                         *d28    
                         */
-                        if($pagos[$i]["d28"] > 0){
+                    if ($pagos[$i]["d28"] > 0) {
 
-                            $d28 = number_format($pagos[$i]["d28"],2);
+                        $d28 = number_format($pagos[$i]["d28"], 2);
+                    } else {
 
-                        }else{
+                        $d28 = '';
+                    }
 
-                            $d28 = '';
-
-                        }     
-                        
-                        /* 
+                    /* 
                         *d29    
                         */
-                        if($pagos[$i]["d29"] > 0){
+                    if ($pagos[$i]["d29"] > 0) {
 
-                            $d29 = number_format($pagos[$i]["d29"],2);
+                        $d29 = number_format($pagos[$i]["d29"], 2);
+                    } else {
 
-                        }else{
+                        $d29 = '';
+                    }
 
-                            $d29 = '';
-
-                        }                          
-                                         
-                        /* 
+                    /* 
                         *d30    
                         */
-                        if($pagos[$i]["d30"] > 0){
+                    if ($pagos[$i]["d30"] > 0) {
 
-                            $d30 = number_format($pagos[$i]["d30"],2);
+                        $d30 = number_format($pagos[$i]["d30"], 2);
+                    } else {
 
-                        }else{
+                        $d30 = '';
+                    }
 
-                            $d30 = '';
-
-                        }           
-                        
-                        /* 
+                    /* 
                         *d31    
                         */
-                        if($pagos[$i]["d31"] > 0){
+                    if ($pagos[$i]["d31"] > 0) {
 
-                            $d31 = number_format($pagos[$i]["d31"],2);
+                        $d31 = number_format($pagos[$i]["d31"], 2);
+                    } else {
 
-                        }else{
+                        $d31 = '';
+                    }
 
-                            $d31 = '';
-
-                        }                          
-                                             
-                        /* 
+                    /* 
                         * TOTALES                        
                         */
-                        if($pagos[$i]["total"] < $pagos[$i]["sueldo_total"]){
+                    if ($pagos[$i]["total"] < $pagos[$i]["sueldo_total"]) {
 
-                            $total = "<b class='guinda'>".number_format($pagos[$i]["total"],2)."</b>";
+                        $total = "<b class='guinda'>" . number_format($pagos[$i]["total"], 2) . "</b>";
+                    } else {
 
-                        }else{
+                        $total = "<b class='azul'>" . number_format($pagos[$i]["total"], 2) . "</b>";
+                    }
 
-                            $total = "<b class='azul'>".number_format($pagos[$i]["total"],2)."</b>";
-
-                        }
-
-                        /* 
+                    /* 
                         *TOTALES PENDIENTES
                         */
-                        
-                        $pendiente = $pagos[$i]["sueldo_total"] - $pagos[$i]["total"];
 
-                        if($pagos[$i]["total"] < $pagos[$i]["sueldo_total"]){
+                    $pendiente = $pagos[$i]["sueldo_total"] - $pagos[$i]["total"];
 
-                            $totalPendiente = "<b class='guinda'>".number_format($pendiente,2)."</b>";
+                    if ($pagos[$i]["total"] < $pagos[$i]["sueldo_total"]) {
 
-                        }else{
+                        $totalPendiente = "<b class='guinda'>" . number_format($pendiente, 2) . "</b>";
+                    } else {
 
-                            $totalPendiente = "<b class='azul'>".number_format($pendiente,2)."</b>";
-
-                        } 
-
-                        $datosJson .= '[
-                        "'.$pagos[$i]["trabajador"].'",
-                        "<b>'.$pagos[$i]["nom_tra"].'</b>",
-                        "<b>'.$d12.'</b>",
-                        "<b>'.$d13.'</b>",
-                        "<b>'.$d14.'</b>",
-                        "<b>'.$d15.'</b>",
-                        "<b>'.$d16.'</b>",
-                        "<b>'.$d17.'</b>",
-                        "<b>'.$d18.'</b>",
-                        "<b>'.$d19.'</b>",
-                        "<b>'.$d20.'</b>",
-                        "<b>'.$d21.'</b>",
-                        "<b>'.$d22.'</b>",
-                        "<b>'.$d23.'</b>",
-                        "<b>'.$d24.'</b>",
-                        "<b>'.$d25.'</b>",
-                        "<b>'.$d26.'</b>",
-                        "<b>'.$d27.'</b>",
-                        "<b>'.$d28.'</b>",
-                        "<b>'.$d29.'</b>",
-                        "<b>'.$d30.'</b>",
-                        "<b>'.$d31.'</b>",
-                        "<b>'.$d1.'</b>",
-                        "'.$total.'",
-                        "'.$totalPendiente.'"
-                        ],';  
-            
+                        $totalPendiente = "<b class='azul'>" . number_format($pendiente, 2) . "</b>";
                     }
-            
-                        $datosJson=substr($datosJson, 0, -1);
-            
-                        $datosJson .= '] 
+
+                    $datosJson .= '[
+                        "' . $pagos[$i]["trabajador"] . '",
+                        "<b>' . $pagos[$i]["nom_tra"] . '</b>",
+                        "<b>' . $d12 . '</b>",
+                        "<b>' . $d13 . '</b>",
+                        "<b>' . $d14 . '</b>",
+                        "<b>' . $d15 . '</b>",
+                        "<b>' . $d16 . '</b>",
+                        "<b>' . $d17 . '</b>",
+                        "<b>' . $d18 . '</b>",
+                        "<b>' . $d19 . '</b>",
+                        "<b>' . $d20 . '</b>",
+                        "<b>' . $d21 . '</b>",
+                        "<b>' . $d22 . '</b>",
+                        "<b>' . $d23 . '</b>",
+                        "<b>' . $d24 . '</b>",
+                        "<b>' . $d25 . '</b>",
+                        "<b>' . $d26 . '</b>",
+                        "<b>' . $d27 . '</b>",
+                        "<b>' . $d28 . '</b>",
+                        "<b>' . $d29 . '</b>",
+                        "<b>' . $d30 . '</b>",
+                        "<b>' . $d31 . '</b>",
+                        "<b>' . $d1 . '</b>",
+                        "' . $total . '",
+                        "' . $totalPendiente . '"
+                        ],';
+                }
+
+                $datosJson = substr($datosJson, 0, -1);
+
+                $datosJson .= '] 
             
                         }';
-            
-                    echo $datosJson;
 
-
+                echo $datosJson;
             }
-
-
-
-        }else{
+        } else {
 
             echo '{
                 "data":[]
             }';
             return;
-
         }
     }
-
 }
 
 /*=============================================
 ACTIVAR TABLA DE ARTICULOS
-=============================================*/ 
+=============================================*/
 $activarArticulos = new TablaPagos();
-$activarArticulos -> mostrarTablaPagos();
+$activarArticulos->mostrarTablaPagos();

@@ -2535,4 +2535,23 @@ class ModeloProduccion
 
         $stmt = null;
     }
+
+    static public function mdlVerIngresos($documento, $articulo)
+    {
+
+        $stmt = Conexion::conectar()->prepare("SELECT 
+                                    * 
+                                FROM
+                                    movimientosjf_2023 
+                                WHERE documento = '$documento' 
+                                    AND articulo = '$articulo'");
+
+        $stmt->execute();
+
+        return $stmt->fetch();
+
+        $stmt->close();
+
+        $stmt = null;
+    }
 }

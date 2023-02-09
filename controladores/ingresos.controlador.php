@@ -1056,4 +1056,66 @@ class ControladorIngresos
             }
         }
     }
+
+    //* Agregar a Taller
+    static public function ctrAgregarTaller()
+    {
+
+        if (isset($_POST["articulo"])) {
+
+            date_default_timezone_set('America/Lima');
+            $fecreg             = new DateTime();
+            $pcreg                = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+            $usureg                = $_SESSION["nombre"];
+
+            $correlativo = ControladorSalidas::ctrMostrarArgumentoSalida("E49");
+
+            $numero = str_pad($correlativo["argumento"], 5, '0', STR_PAD_LEFT);
+
+            $documento = "E49" . $numero;
+
+            $datosD = array(
+                "tipo"      => "E49",
+                "documento" => $documento,
+                "taller"    => "T3",
+                "fecha"     => $fecreg->format("Y-m-d"),
+                "cliente"   => $_POST["usuario"],
+                "articulo"  => $_POST["articulo"],
+                "cantidad"  => $_POST["cantidad"],
+                "almacen"   => "02",
+                "idcierre"  => 0
+            );
+
+            $ingreso = ModeloIngresos::mdlGuardarDetalleSegunda("movimientosjf_2023", $datosD);
+
+            if ($ingreso == "ok") {
+                $agregar = ModeloArticulos::mdlActualizarTallerIngreso($_POST["articulo"], $_POST["cantidad"]);
+
+                echo '<script>
+
+                    swal({
+                        type: "success",
+                        title: "Se registro correctamente",
+                        showConfirmButton: true,
+                        confirmButtonText: "Cerrar"
+                        }).then(function(result) {
+                                    if (result.value) {
+
+                                    window.location = "ajuste-taller";
+
+                                    }
+                                })
+
+                </script>';
+            }
+        }
+    }
+
+    static public function ctrMostraAjustes()
+    {
+
+        $respuesta = ModeloIngresos::mdlMostraAjustes();
+
+        return $respuesta;
+    }
 }

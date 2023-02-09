@@ -559,7 +559,8 @@
                                         $_GET["ruta"] == "sublimados" ||
                                         $_GET["ruta"] == "seguimiento" ||
                                         $_GET["ruta"] == "enviados-taller" ||
-                                        $_GET["ruta"] == "listar-documento"
+                                        $_GET["ruta"] == "listar-documento" ||
+                                        $_GET["ruta"] == "ajuste-taller"
                                     ) echo 'active'; ?>">
 
                     <a href="#">
@@ -951,7 +952,8 @@
                         <li class="treeview <?php if (
                                                 $_GET["ruta"] == "salidas-varios" ||
                                                 $_GET["ruta"] == "listar-documento" ||
-                                                $_GET["ruta"] == "sublimados"
+                                                $_GET["ruta"] == "sublimados" ||
+                                                $_GET["ruta"] == "ajuste-taller"
                                             ) echo 'active'; ?>">
 
                             <a href="#"><i class="fa fa-bolt"></i> Procedimientos
@@ -982,6 +984,14 @@
 
                                     <a href="listar-documento">
                                         <i class="fa fa-circle-o"></i> Listar Documentos
+                                    </a>
+
+                                </li>
+
+                                <li class="<?php if ($_GET["ruta"] == "ajuste-taller") echo 'active'; ?>">
+
+                                    <a href="ajuste-taller">
+                                        <i class="fa fa-circle-o"></i> Ajustes de Taller
                                     </a>
 
                                 </li>

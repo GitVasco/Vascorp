@@ -64,7 +64,7 @@
                             <tr>
                         
                                 <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                                <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                                <td style="width:30%">' . $respuesta["pedido"] . '</td>
                                 <th colspan="6"></th>
                                 <th style="width:6%;text-align:left;">FECHA</th>
                                 <td colspan="2">' . $newDate . '</td>
@@ -102,7 +102,7 @@
                             <tr>
                         
                                 <th style="width:10%;text-align:left;">VENDEDOR</th>
-                                <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                                <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                                 <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                                 <td colspan="2">' . $respuesta["documento"] . '</td>
                                 <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -116,7 +116,7 @@
                             <tr>
                         
                                 <th style="width:10%"></th>
-                                <th style="width:20%"></th>
+                                <th style="width:30%"></th>
                                 <th style="width:6%"></th>
                                 <th style="width:6%"></th>
                                 <th style="width:6%"></th>
@@ -139,7 +139,7 @@
                     <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">S</th>
                         <th style="width:6%">M</th>
                         <th style="width:6%">L</th>
@@ -153,7 +153,7 @@
                 
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">28</th>
                         <th style="width:6%">30</th>
                         <th style="width:6%">32</th>
@@ -167,7 +167,7 @@
                 
                     <tr>
                         <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
+                        <th style="width:30%">Color</th>
                         <th style="width:6%">3</th>
                         <th style="width:6%">4</th>
                         <th style="width:6%">6</th>
@@ -255,7 +255,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                <th style="width:20%;text-align:left;">====================</th>
+                                <th style="width:30%;text-align:left;">====================</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
@@ -270,7 +270,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -292,7 +292,7 @@
                     </thead>                
                         <tr>               
                             <th style="width:10%;text-align:left;">TOTALES</th>
-                            <th style="width:20%;text-align:left;">PEDIDO</th>
+                            <th style="width:30%;text-align:left;">PEDIDO</th>
                             <th style="width:6%">' . $totales["t1"] . '</th>
                             <th style="width:6%">' . $totales["t2"] . '</th>
                             <th style="width:6%">' . $totales["t3"] . '</th>
@@ -314,7 +314,7 @@
                     
                         <tr>                    
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -328,7 +328,7 @@
                     
                         <tr>                    
                             <td style="width:10%;text-align:left;">TOTAL S/</td>
-                            <th style="width:20%;text-align:left;">' . number_format($pedidos["total"], 2) . '</th>
+                            <th style="width:30%;text-align:left;">' . number_format($pedidos["total"], 2) . '</th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -342,7 +342,7 @@
                     
                         <tr>                    
                             <td style="width:10%;text-align:left;">Forma de Pago</td>
-                            <th colspan="7" style="width:20%;text-align:left;">' . $pedidos["descripcion"] . '</th>
+                            <th colspan="7" style="width:30%;text-align:left;">' . $pedidos["descripcion"] . '</th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>               
@@ -369,7 +369,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                            <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                            <td style="width:30%">' . $respuesta["pedido"] . '</td>
                             <th colspan="6"></th>
                             <th style="width:6%;text-align:left;">FECHA</th>
                             <td colspan="2">' . $newDate . '</td>
@@ -407,7 +407,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">VENDEDOR</th>
-                            <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                            <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                             <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                             <td colspan="2">' . $respuesta["documento"] . '</td>
                             <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -421,7 +421,7 @@
                         <tr>
                     
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -444,7 +444,7 @@
                     <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">S</th>
                         <th style="width:6%">M</th>
                         <th style="width:6%">L</th>
@@ -458,7 +458,7 @@
                 
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">28</th>
                         <th style="width:6%">30</th>
                         <th style="width:6%">32</th>
@@ -472,7 +472,7 @@
                 
                     <tr>
                         <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
+                        <th style="width:30%">Color</th>
                         <th style="width:6%">3</th>
                         <th style="width:6%">4</th>
                         <th style="width:6%">6</th>
@@ -562,7 +562,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                <th style="width:20%;text-align:left;">====================</th>
+                                <th style="width:30%;text-align:left;">====================</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
@@ -577,7 +577,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -594,7 +594,7 @@
             echo '</table';
 
             //*RELLENO PAG 1                    
-            for ($i = 0; $i < 25; $i++) {
+            for ($i = 0; $i < 22; $i++) {
                 echo '<table border="0" align="left" width="900px">
                         <tr>
                             <td></td>
@@ -616,7 +616,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                            <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                            <td style="width:30%">' . $respuesta["pedido"] . '</td>
                             <th colspan="6"></th>
                             <th style="width:6%;text-align:left;">FECHA</th>
                             <td colspan="2">' . $newDate . '</td>
@@ -654,7 +654,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">VENDEDOR</th>
-                            <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                            <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                             <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                             <td colspan="2">' . $respuesta["documento"] . '</td>
                             <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -668,7 +668,7 @@
                         <tr>
                     
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -691,7 +691,7 @@
                     <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">S</th>
                         <th style="width:6%">M</th>
                         <th style="width:6%">L</th>
@@ -705,7 +705,7 @@
                 
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">28</th>
                         <th style="width:6%">30</th>
                         <th style="width:6%">32</th>
@@ -719,7 +719,7 @@
                 
                     <tr>
                         <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
+                        <th style="width:30%">Color</th>
                         <th style="width:6%">3</th>
                         <th style="width:6%">4</th>
                         <th style="width:6%">6</th>
@@ -809,7 +809,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                <th style="width:20%;text-align:left;">====================</th>
+                                <th style="width:30%;text-align:left;">====================</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
@@ -824,7 +824,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -846,7 +846,7 @@
                     </thead>                
                         <tr>               
                             <th style="width:10%;text-align:left;">TOTALES</th>
-                            <th style="width:20%;text-align:left;">PEDIDO</th>
+                            <th style="width:30%;text-align:left;">PEDIDO</th>
                             <th style="width:6%">' . $totales["t1"] . '</th>
                             <th style="width:6%">' . $totales["t2"] . '</th>
                             <th style="width:6%">' . $totales["t3"] . '</th>
@@ -868,7 +868,7 @@
                     
                         <tr>                    
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -882,7 +882,7 @@
                     
                         <tr>                    
                             <td style="width:10%;text-align:left;">TOTAL S/</td>
-                            <th style="width:20%;text-align:left;">' . number_format($pedidos["total"], 2) . '</th>
+                            <th style="width:30%;text-align:left;">' . number_format($pedidos["total"], 2) . '</th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -896,7 +896,7 @@
                     
                         <tr>                    
                             <td style="width:10%;text-align:left;">Forma de Pago</td>
-                            <th colspan="7" style="width:20%;text-align:left;">' . $pedidos["descripcion"] . '</th>
+                            <th colspan="7" style="width:30%;text-align:left;">' . $pedidos["descripcion"] . '</th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>               
@@ -923,7 +923,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                            <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                            <td style="width:30%">' . $respuesta["pedido"] . '</td>
                             <th colspan="6"></th>
                             <th style="width:6%;text-align:left;">FECHA</th>
                             <td colspan="2">' . $newDate . '</td>
@@ -961,7 +961,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">VENDEDOR</th>
-                            <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                            <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                             <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                             <td colspan="2">' . $respuesta["documento"] . '</td>
                             <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -975,7 +975,7 @@
                         <tr>
                     
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -998,7 +998,7 @@
                     <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">S</th>
                         <th style="width:6%">M</th>
                         <th style="width:6%">L</th>
@@ -1012,7 +1012,7 @@
                 
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">28</th>
                         <th style="width:6%">30</th>
                         <th style="width:6%">32</th>
@@ -1026,7 +1026,7 @@
                 
                     <tr>
                         <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
+                        <th style="width:30%">Color</th>
                         <th style="width:6%">3</th>
                         <th style="width:6%">4</th>
                         <th style="width:6%">6</th>
@@ -1116,7 +1116,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                <th style="width:20%;text-align:left;">====================</th>
+                                <th style="width:30%;text-align:left;">====================</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
@@ -1131,7 +1131,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -1170,7 +1170,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                            <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                            <td style="width:30%">' . $respuesta["pedido"] . '</td>
                             <th colspan="6"></th>
                             <th style="width:6%;text-align:left;">FECHA</th>
                             <td colspan="2">' . $newDate . '</td>
@@ -1208,7 +1208,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">VENDEDOR</th>
-                            <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                            <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                             <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                             <td colspan="2">' . $respuesta["documento"] . '</td>
                             <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -1222,7 +1222,7 @@
                         <tr>
                     
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -1245,7 +1245,7 @@
                     <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">S</th>
                         <th style="width:6%">M</th>
                         <th style="width:6%">L</th>
@@ -1259,7 +1259,7 @@
                 
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">28</th>
                         <th style="width:6%">30</th>
                         <th style="width:6%">32</th>
@@ -1273,7 +1273,7 @@
                 
                     <tr>
                         <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
+                        <th style="width:30%">Color</th>
                         <th style="width:6%">3</th>
                         <th style="width:6%">4</th>
                         <th style="width:6%">6</th>
@@ -1363,7 +1363,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                <th style="width:20%;text-align:left;">====================</th>
+                                <th style="width:30%;text-align:left;">====================</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
@@ -1378,7 +1378,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -1417,7 +1417,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                            <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                            <td style="width:30%">' . $respuesta["pedido"] . '</td>
                             <th colspan="6"></th>
                             <th style="width:6%;text-align:left;">FECHA</th>
                             <td colspan="2">' . $newDate . '</td>
@@ -1455,7 +1455,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">VENDEDOR</th>
-                            <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                            <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                             <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                             <td colspan="2">' . $respuesta["documento"] . '</td>
                             <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -1469,7 +1469,7 @@
                         <tr>
                     
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -1492,7 +1492,7 @@
                     <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">S</th>
                         <th style="width:6%">M</th>
                         <th style="width:6%">L</th>
@@ -1506,7 +1506,7 @@
                 
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">28</th>
                         <th style="width:6%">30</th>
                         <th style="width:6%">32</th>
@@ -1520,7 +1520,7 @@
                 
                     <tr>
                         <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
+                        <th style="width:30%">Color</th>
                         <th style="width:6%">3</th>
                         <th style="width:6%">4</th>
                         <th style="width:6%">6</th>
@@ -1610,7 +1610,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                <th style="width:20%;text-align:left;">====================</th>
+                                <th style="width:30%;text-align:left;">====================</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
@@ -1625,7 +1625,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -1647,7 +1647,7 @@
                     </thead>                
                         <tr>               
                             <th style="width:10%;text-align:left;">TOTALES</th>
-                            <th style="width:20%;text-align:left;">PEDIDO</th>
+                            <th style="width:30%;text-align:left;">PEDIDO</th>
                             <th style="width:6%">' . $totales["t1"] . '</th>
                             <th style="width:6%">' . $totales["t2"] . '</th>
                             <th style="width:6%">' . $totales["t3"] . '</th>
@@ -1669,7 +1669,7 @@
                     
                         <tr>                    
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -1683,7 +1683,7 @@
                     
                         <tr>                    
                             <td style="width:10%;text-align:left;">TOTAL S/</td>
-                            <th style="width:20%;text-align:left;">' . number_format($pedidos["total"], 2) . '</th>
+                            <th style="width:30%;text-align:left;">' . number_format($pedidos["total"], 2) . '</th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -1697,7 +1697,7 @@
                     
                         <tr>                    
                             <td style="width:10%;text-align:left;">Forma de Pago</td>
-                            <th colspan="7" style="width:20%;text-align:left;">' . $pedidos["descripcion"] . '</th>
+                            <th colspan="7" style="width:30%;text-align:left;">' . $pedidos["descripcion"] . '</th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>               
@@ -1724,7 +1724,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                            <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                            <td style="width:30%">' . $respuesta["pedido"] . '</td>
                             <th colspan="6"></th>
                             <th style="width:6%;text-align:left;">FECHA</th>
                             <td colspan="2">' . $newDate . '</td>
@@ -1762,7 +1762,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">VENDEDOR</th>
-                            <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                            <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                             <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                             <td colspan="2">' . $respuesta["documento"] . '</td>
                             <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -1776,7 +1776,7 @@
                         <tr>
                     
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -1799,7 +1799,7 @@
                     <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">S</th>
                         <th style="width:6%">M</th>
                         <th style="width:6%">L</th>
@@ -1813,7 +1813,7 @@
                 
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">28</th>
                         <th style="width:6%">30</th>
                         <th style="width:6%">32</th>
@@ -1827,7 +1827,7 @@
                 
                     <tr>
                         <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
+                        <th style="width:30%">Color</th>
                         <th style="width:6%">3</th>
                         <th style="width:6%">4</th>
                         <th style="width:6%">6</th>
@@ -1917,7 +1917,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                <th style="width:20%;text-align:left;">====================</th>
+                                <th style="width:30%;text-align:left;">====================</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
@@ -1932,7 +1932,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -1971,7 +1971,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                            <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                            <td style="width:30%">' . $respuesta["pedido"] . '</td>
                             <th colspan="6"></th>
                             <th style="width:6%;text-align:left;">FECHA</th>
                             <td colspan="2">' . $newDate . '</td>
@@ -2009,7 +2009,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">VENDEDOR</th>
-                            <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                            <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                             <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                             <td colspan="2">' . $respuesta["documento"] . '</td>
                             <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -2023,7 +2023,7 @@
                         <tr>
                     
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -2046,7 +2046,7 @@
                     <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">S</th>
                         <th style="width:6%">M</th>
                         <th style="width:6%">L</th>
@@ -2060,7 +2060,7 @@
                 
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">28</th>
                         <th style="width:6%">30</th>
                         <th style="width:6%">32</th>
@@ -2074,7 +2074,7 @@
                 
                     <tr>
                         <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
+                        <th style="width:30%">Color</th>
                         <th style="width:6%">3</th>
                         <th style="width:6%">4</th>
                         <th style="width:6%">6</th>
@@ -2164,7 +2164,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                <th style="width:20%;text-align:left;">====================</th>
+                                <th style="width:30%;text-align:left;">====================</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
@@ -2179,7 +2179,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -2218,7 +2218,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                            <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                            <td style="width:30%">' . $respuesta["pedido"] . '</td>
                             <th colspan="6"></th>
                             <th style="width:6%;text-align:left;">FECHA</th>
                             <td colspan="2">' . $newDate . '</td>
@@ -2256,7 +2256,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">VENDEDOR</th>
-                            <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                            <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                             <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                             <td colspan="2">' . $respuesta["documento"] . '</td>
                             <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -2270,7 +2270,7 @@
                         <tr>
                     
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -2293,7 +2293,7 @@
                     <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">S</th>
                         <th style="width:6%">M</th>
                         <th style="width:6%">L</th>
@@ -2307,7 +2307,7 @@
                 
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">28</th>
                         <th style="width:6%">30</th>
                         <th style="width:6%">32</th>
@@ -2321,7 +2321,7 @@
                 
                     <tr>
                         <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
+                        <th style="width:30%">Color</th>
                         <th style="width:6%">3</th>
                         <th style="width:6%">4</th>
                         <th style="width:6%">6</th>
@@ -2411,7 +2411,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                <th style="width:20%;text-align:left;">====================</th>
+                                <th style="width:30%;text-align:left;">====================</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
@@ -2426,7 +2426,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -2465,7 +2465,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                            <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                            <td style="width:30%">' . $respuesta["pedido"] . '</td>
                             <th colspan="6"></th>
                             <th style="width:6%;text-align:left;">FECHA</th>
                             <td colspan="2">' . $newDate . '</td>
@@ -2503,7 +2503,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">VENDEDOR</th>
-                            <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                            <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                             <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                             <td colspan="2">' . $respuesta["documento"] . '</td>
                             <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -2517,7 +2517,7 @@
                         <tr>
                     
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -2540,7 +2540,7 @@
                     <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">S</th>
                         <th style="width:6%">M</th>
                         <th style="width:6%">L</th>
@@ -2554,7 +2554,7 @@
                 
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">28</th>
                         <th style="width:6%">30</th>
                         <th style="width:6%">32</th>
@@ -2568,7 +2568,7 @@
                 
                     <tr>
                         <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
+                        <th style="width:30%">Color</th>
                         <th style="width:6%">3</th>
                         <th style="width:6%">4</th>
                         <th style="width:6%">6</th>
@@ -2658,7 +2658,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                <th style="width:20%;text-align:left;">====================</th>
+                                <th style="width:30%;text-align:left;">====================</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
@@ -2673,7 +2673,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -2695,7 +2695,7 @@
                     </thead>                
                         <tr>               
                             <th style="width:10%;text-align:left;">TOTALES</th>
-                            <th style="width:20%;text-align:left;">PEDIDO</th>
+                            <th style="width:30%;text-align:left;">PEDIDO</th>
                             <th style="width:6%">' . $totales["t1"] . '</th>
                             <th style="width:6%">' . $totales["t2"] . '</th>
                             <th style="width:6%">' . $totales["t3"] . '</th>
@@ -2717,7 +2717,7 @@
                     
                         <tr>                    
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -2731,7 +2731,7 @@
                     
                         <tr>                    
                             <td style="width:10%;text-align:left;">TOTAL S/</td>
-                            <th style="width:20%;text-align:left;">' . number_format($pedidos["total"], 2) . '</th>
+                            <th style="width:30%;text-align:left;">' . number_format($pedidos["total"], 2) . '</th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -2745,7 +2745,7 @@
                     
                         <tr>                    
                             <td style="width:10%;text-align:left;">Forma de Pago</td>
-                            <th colspan="7" style="width:20%;text-align:left;">' . $pedidos["descripcion"] . '</th>
+                            <th colspan="7" style="width:30%;text-align:left;">' . $pedidos["descripcion"] . '</th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>               
@@ -2756,7 +2756,7 @@
                 </table>';
         }
         //todo: 5 PAGINAS
-        else if ($cantidadArticulos > 200 && $cantidadArticulos <= 250) {
+        else if ($cantidadArticulos > 200 && $cantidadArticulos <= 220) {
 
             //*Cabecera GLOBAL PAG 1
             echo '<table border="0" align="left" width="900px">
@@ -2772,7 +2772,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                            <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                            <td style="width:30%">' . $respuesta["pedido"] . '</td>
                             <th colspan="6"></th>
                             <th style="width:6%;text-align:left;">FECHA</th>
                             <td colspan="2">' . $newDate . '</td>
@@ -2810,7 +2810,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">VENDEDOR</th>
-                            <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                            <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                             <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                             <td colspan="2">' . $respuesta["documento"] . '</td>
                             <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -2824,7 +2824,7 @@
                         <tr>
                     
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -2847,7 +2847,7 @@
                     <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">S</th>
                         <th style="width:6%">M</th>
                         <th style="width:6%">L</th>
@@ -2861,7 +2861,7 @@
                 
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">28</th>
                         <th style="width:6%">30</th>
                         <th style="width:6%">32</th>
@@ -2875,7 +2875,7 @@
                 
                     <tr>
                         <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
+                        <th style="width:30%">Color</th>
                         <th style="width:6%">3</th>
                         <th style="width:6%">4</th>
                         <th style="width:6%">6</th>
@@ -2965,7 +2965,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                <th style="width:20%;text-align:left;">====================</th>
+                                <th style="width:30%;text-align:left;">====================</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
@@ -2980,7 +2980,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -3019,7 +3019,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                            <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                            <td style="width:30%">' . $respuesta["pedido"] . '</td>
                             <th colspan="6"></th>
                             <th style="width:6%;text-align:left;">FECHA</th>
                             <td colspan="2">' . $newDate . '</td>
@@ -3057,7 +3057,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">VENDEDOR</th>
-                            <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                            <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                             <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                             <td colspan="2">' . $respuesta["documento"] . '</td>
                             <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -3071,7 +3071,7 @@
                         <tr>
                     
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -3094,7 +3094,7 @@
                     <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">S</th>
                         <th style="width:6%">M</th>
                         <th style="width:6%">L</th>
@@ -3108,7 +3108,7 @@
                 
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">28</th>
                         <th style="width:6%">30</th>
                         <th style="width:6%">32</th>
@@ -3122,7 +3122,7 @@
                 
                     <tr>
                         <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
+                        <th style="width:30%">Color</th>
                         <th style="width:6%">3</th>
                         <th style="width:6%">4</th>
                         <th style="width:6%">6</th>
@@ -3212,7 +3212,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                <th style="width:20%;text-align:left;">====================</th>
+                                <th style="width:30%;text-align:left;">====================</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
@@ -3227,7 +3227,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -3266,7 +3266,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                            <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                            <td style="width:30%">' . $respuesta["pedido"] . '</td>
                             <th colspan="6"></th>
                             <th style="width:6%;text-align:left;">FECHA</th>
                             <td colspan="2">' . $newDate . '</td>
@@ -3304,7 +3304,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">VENDEDOR</th>
-                            <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                            <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                             <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                             <td colspan="2">' . $respuesta["documento"] . '</td>
                             <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -3318,7 +3318,7 @@
                         <tr>
                     
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -3341,7 +3341,7 @@
                     <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">S</th>
                         <th style="width:6%">M</th>
                         <th style="width:6%">L</th>
@@ -3355,7 +3355,7 @@
                 
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">28</th>
                         <th style="width:6%">30</th>
                         <th style="width:6%">32</th>
@@ -3369,7 +3369,7 @@
                 
                     <tr>
                         <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
+                        <th style="width:30%">Color</th>
                         <th style="width:6%">3</th>
                         <th style="width:6%">4</th>
                         <th style="width:6%">6</th>
@@ -3459,7 +3459,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                <th style="width:20%;text-align:left;">====================</th>
+                                <th style="width:30%;text-align:left;">====================</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
@@ -3474,7 +3474,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -3513,7 +3513,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                            <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                            <td style="width:30%">' . $respuesta["pedido"] . '</td>
                             <th colspan="6"></th>
                             <th style="width:6%;text-align:left;">FECHA</th>
                             <td colspan="2">' . $newDate . '</td>
@@ -3551,7 +3551,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">VENDEDOR</th>
-                            <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                            <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                             <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                             <td colspan="2">' . $respuesta["documento"] . '</td>
                             <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -3565,7 +3565,7 @@
                         <tr>
                     
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -3588,7 +3588,7 @@
                     <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">S</th>
                         <th style="width:6%">M</th>
                         <th style="width:6%">L</th>
@@ -3602,7 +3602,7 @@
                 
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">28</th>
                         <th style="width:6%">30</th>
                         <th style="width:6%">32</th>
@@ -3616,7 +3616,7 @@
                 
                     <tr>
                         <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
+                        <th style="width:30%">Color</th>
                         <th style="width:6%">3</th>
                         <th style="width:6%">4</th>
                         <th style="width:6%">6</th>
@@ -3706,7 +3706,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                <th style="width:20%;text-align:left;">====================</th>
+                                <th style="width:30%;text-align:left;">====================</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
@@ -3721,7 +3721,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -3760,7 +3760,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                            <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                            <td style="width:30%">' . $respuesta["pedido"] . '</td>
                             <th colspan="6"></th>
                             <th style="width:6%;text-align:left;">FECHA</th>
                             <td colspan="2">' . $newDate . '</td>
@@ -3798,7 +3798,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">VENDEDOR</th>
-                            <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                            <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                             <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                             <td colspan="2">' . $respuesta["documento"] . '</td>
                             <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -3812,7 +3812,7 @@
                         <tr>
                     
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -3835,7 +3835,7 @@
                     <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">S</th>
                         <th style="width:6%">M</th>
                         <th style="width:6%">L</th>
@@ -3849,7 +3849,7 @@
                 
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">28</th>
                         <th style="width:6%">30</th>
                         <th style="width:6%">32</th>
@@ -3863,7 +3863,7 @@
                 
                     <tr>
                         <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
+                        <th style="width:30%">Color</th>
                         <th style="width:6%">3</th>
                         <th style="width:6%">4</th>
                         <th style="width:6%">6</th>
@@ -3953,7 +3953,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                <th style="width:20%;text-align:left;">====================</th>
+                                <th style="width:30%;text-align:left;">====================</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
@@ -3968,7 +3968,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -3990,7 +3990,7 @@
                     </thead>                
                         <tr>               
                             <th style="width:10%;text-align:left;">TOTALES</th>
-                            <th style="width:20%;text-align:left;">PEDIDO</th>
+                            <th style="width:30%;text-align:left;">PEDIDO</th>
                             <th style="width:6%">' . $totales["t1"] . '</th>
                             <th style="width:6%">' . $totales["t2"] . '</th>
                             <th style="width:6%">' . $totales["t3"] . '</th>
@@ -4012,7 +4012,7 @@
                     
                         <tr>                    
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -4026,7 +4026,7 @@
                     
                         <tr>                    
                             <td style="width:10%;text-align:left;">TOTAL S/</td>
-                            <th style="width:20%;text-align:left;">' . number_format($pedidos["total"], 2) . '</th>
+                            <th style="width:30%;text-align:left;">' . number_format($pedidos["total"], 2) . '</th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -4040,7 +4040,7 @@
                     
                         <tr>                    
                             <td style="width:10%;text-align:left;">Forma de Pago</td>
-                            <th colspan="7" style="width:20%;text-align:left;">' . $pedidos["descripcion"] . '</th>
+                            <th colspan="7" style="width:30%;text-align:left;">' . $pedidos["descripcion"] . '</th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>               
@@ -4051,7 +4051,7 @@
                 </table>';
         }
         //todo: 6 PAGINAS
-        else if ($cantidadArticulos > 250 && $cantidadArticulos <= 300) {
+        else if ($cantidadArticulos > 220 && $cantidadArticulos <= 300) {
 
             //*Cabecera GLOBAL PAG 1
             echo '<table border="0" align="left" width="900px">
@@ -4067,7 +4067,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                            <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                            <td style="width:30%">' . $respuesta["pedido"] . '</td>
                             <th colspan="6"></th>
                             <th style="width:6%;text-align:left;">FECHA</th>
                             <td colspan="2">' . $newDate . '</td>
@@ -4105,7 +4105,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">VENDEDOR</th>
-                            <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                            <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                             <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                             <td colspan="2">' . $respuesta["documento"] . '</td>
                             <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -4119,7 +4119,7 @@
                         <tr>
                     
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -4142,7 +4142,7 @@
                     <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">S</th>
                         <th style="width:6%">M</th>
                         <th style="width:6%">L</th>
@@ -4156,7 +4156,7 @@
                 
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">28</th>
                         <th style="width:6%">30</th>
                         <th style="width:6%">32</th>
@@ -4170,7 +4170,7 @@
                 
                     <tr>
                         <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
+                        <th style="width:30%">Color</th>
                         <th style="width:6%">3</th>
                         <th style="width:6%">4</th>
                         <th style="width:6%">6</th>
@@ -4260,7 +4260,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                <th style="width:20%;text-align:left;">====================</th>
+                                <th style="width:30%;text-align:left;">====================</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
@@ -4275,7 +4275,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -4314,7 +4314,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                            <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                            <td style="width:30%">' . $respuesta["pedido"] . '</td>
                             <th colspan="6"></th>
                             <th style="width:6%;text-align:left;">FECHA</th>
                             <td colspan="2">' . $newDate . '</td>
@@ -4352,7 +4352,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">VENDEDOR</th>
-                            <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                            <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                             <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                             <td colspan="2">' . $respuesta["documento"] . '</td>
                             <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -4366,7 +4366,7 @@
                         <tr>
                     
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -4389,7 +4389,7 @@
                     <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">S</th>
                         <th style="width:6%">M</th>
                         <th style="width:6%">L</th>
@@ -4403,7 +4403,7 @@
                 
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">28</th>
                         <th style="width:6%">30</th>
                         <th style="width:6%">32</th>
@@ -4417,7 +4417,7 @@
                 
                     <tr>
                         <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
+                        <th style="width:30%">Color</th>
                         <th style="width:6%">3</th>
                         <th style="width:6%">4</th>
                         <th style="width:6%">6</th>
@@ -4507,7 +4507,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                <th style="width:20%;text-align:left;">====================</th>
+                                <th style="width:30%;text-align:left;">====================</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
@@ -4522,7 +4522,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -4561,7 +4561,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                            <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                            <td style="width:30%">' . $respuesta["pedido"] . '</td>
                             <th colspan="6"></th>
                             <th style="width:6%;text-align:left;">FECHA</th>
                             <td colspan="2">' . $newDate . '</td>
@@ -4599,7 +4599,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">VENDEDOR</th>
-                            <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                            <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                             <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                             <td colspan="2">' . $respuesta["documento"] . '</td>
                             <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -4613,7 +4613,7 @@
                         <tr>
                     
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -4636,7 +4636,7 @@
                     <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">S</th>
                         <th style="width:6%">M</th>
                         <th style="width:6%">L</th>
@@ -4650,7 +4650,7 @@
                 
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">28</th>
                         <th style="width:6%">30</th>
                         <th style="width:6%">32</th>
@@ -4664,7 +4664,7 @@
                 
                     <tr>
                         <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
+                        <th style="width:30%">Color</th>
                         <th style="width:6%">3</th>
                         <th style="width:6%">4</th>
                         <th style="width:6%">6</th>
@@ -4754,7 +4754,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                <th style="width:20%;text-align:left;">====================</th>
+                                <th style="width:30%;text-align:left;">====================</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
@@ -4769,7 +4769,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -4808,7 +4808,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                            <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                            <td style="width:30%">' . $respuesta["pedido"] . '</td>
                             <th colspan="6"></th>
                             <th style="width:6%;text-align:left;">FECHA</th>
                             <td colspan="2">' . $newDate . '</td>
@@ -4846,7 +4846,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">VENDEDOR</th>
-                            <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                            <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                             <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                             <td colspan="2">' . $respuesta["documento"] . '</td>
                             <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -4860,7 +4860,7 @@
                         <tr>
                     
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -4883,7 +4883,7 @@
                     <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">S</th>
                         <th style="width:6%">M</th>
                         <th style="width:6%">L</th>
@@ -4897,7 +4897,7 @@
                 
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">28</th>
                         <th style="width:6%">30</th>
                         <th style="width:6%">32</th>
@@ -4911,7 +4911,7 @@
                 
                     <tr>
                         <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
+                        <th style="width:30%">Color</th>
                         <th style="width:6%">3</th>
                         <th style="width:6%">4</th>
                         <th style="width:6%">6</th>
@@ -5001,7 +5001,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                <th style="width:20%;text-align:left;">====================</th>
+                                <th style="width:30%;text-align:left;">====================</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
@@ -5016,7 +5016,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -5055,7 +5055,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                            <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                            <td style="width:30%">' . $respuesta["pedido"] . '</td>
                             <th colspan="6"></th>
                             <th style="width:6%;text-align:left;">FECHA</th>
                             <td colspan="2">' . $newDate . '</td>
@@ -5093,7 +5093,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">VENDEDOR</th>
-                            <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                            <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                             <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                             <td colspan="2">' . $respuesta["documento"] . '</td>
                             <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -5107,7 +5107,7 @@
                         <tr>
                     
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -5130,7 +5130,7 @@
                     <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">S</th>
                         <th style="width:6%">M</th>
                         <th style="width:6%">L</th>
@@ -5144,7 +5144,7 @@
                 
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">28</th>
                         <th style="width:6%">30</th>
                         <th style="width:6%">32</th>
@@ -5158,7 +5158,7 @@
                 
                     <tr>
                         <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
+                        <th style="width:30%">Color</th>
                         <th style="width:6%">3</th>
                         <th style="width:6%">4</th>
                         <th style="width:6%">6</th>
@@ -5248,7 +5248,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                <th style="width:20%;text-align:left;">====================</th>
+                                <th style="width:30%;text-align:left;">====================</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
@@ -5263,7 +5263,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -5302,7 +5302,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                            <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                            <td style="width:30%">' . $respuesta["pedido"] . '</td>
                             <th colspan="6"></th>
                             <th style="width:6%;text-align:left;">FECHA</th>
                             <td colspan="2">' . $newDate . '</td>
@@ -5340,7 +5340,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">VENDEDOR</th>
-                            <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                            <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                             <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                             <td colspan="2">' . $respuesta["documento"] . '</td>
                             <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -5354,7 +5354,7 @@
                         <tr>
                     
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -5377,7 +5377,7 @@
                     <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">S</th>
                         <th style="width:6%">M</th>
                         <th style="width:6%">L</th>
@@ -5391,7 +5391,7 @@
                 
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">28</th>
                         <th style="width:6%">30</th>
                         <th style="width:6%">32</th>
@@ -5405,7 +5405,7 @@
                 
                     <tr>
                         <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
+                        <th style="width:30%">Color</th>
                         <th style="width:6%">3</th>
                         <th style="width:6%">4</th>
                         <th style="width:6%">6</th>
@@ -5423,7 +5423,7 @@
             //*Cuerpo PAG 6
             echo '<table border="1" style="border:dashed" align="left" width="900px">';
 
-            $articulosP1 = ControladorPedidos::ctrPedidoImpresionB($codigo, 250, 50);
+            $articulosP1 = ControladorPedidos::ctrPedidoImpresionB($codigo, 220, 50);
 
             foreach ($articulosP1 as $key => $value) {
 
@@ -5495,7 +5495,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                <th style="width:20%;text-align:left;">====================</th>
+                                <th style="width:30%;text-align:left;">====================</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
@@ -5510,7 +5510,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -5532,7 +5532,7 @@
                     </thead>                
                         <tr>               
                             <th style="width:10%;text-align:left;">TOTALES</th>
-                            <th style="width:20%;text-align:left;">PEDIDO</th>
+                            <th style="width:30%;text-align:left;">PEDIDO</th>
                             <th style="width:6%">' . $totales["t1"] . '</th>
                             <th style="width:6%">' . $totales["t2"] . '</th>
                             <th style="width:6%">' . $totales["t3"] . '</th>
@@ -5554,7 +5554,7 @@
                     
                         <tr>                    
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -5568,7 +5568,7 @@
                     
                         <tr>                    
                             <td style="width:10%;text-align:left;">TOTAL S/</td>
-                            <th style="width:20%;text-align:left;">' . number_format($pedidos["total"], 2) . '</th>
+                            <th style="width:30%;text-align:left;">' . number_format($pedidos["total"], 2) . '</th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -5582,7 +5582,7 @@
                     
                         <tr>                    
                             <td style="width:10%;text-align:left;">Forma de Pago</td>
-                            <th colspan="7" style="width:20%;text-align:left;">' . $pedidos["descripcion"] . '</th>
+                            <th colspan="7" style="width:30%;text-align:left;">' . $pedidos["descripcion"] . '</th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>               
@@ -5609,7 +5609,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                                        <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                                        <td style="width:30%">' . $respuesta["pedido"] . '</td>
                                         <th colspan="6"></th>
                                         <th style="width:6%;text-align:left;">FECHA</th>
                                         <td colspan="2">' . $newDate . '</td>
@@ -5647,7 +5647,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">VENDEDOR</th>
-                                        <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                                        <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                                         <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                                         <td colspan="2">' . $respuesta["documento"] . '</td>
                                         <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -5661,7 +5661,7 @@
                                     <tr>
                                 
                                         <th style="width:10%"></th>
-                                        <th style="width:20%"></th>
+                                        <th style="width:30%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -5684,7 +5684,7 @@
                                 <thead>
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">S</th>
                                     <th style="width:6%">M</th>
                                     <th style="width:6%">L</th>
@@ -5698,7 +5698,7 @@
                             
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">28</th>
                                     <th style="width:6%">30</th>
                                     <th style="width:6%">32</th>
@@ -5712,7 +5712,7 @@
                             
                                 <tr>
                                     <th style="width:10%;text-align:left;">Modelo</th>
-                                    <th style="width:20%">Color</th>
+                                    <th style="width:30%">Color</th>
                                     <th style="width:6%">3</th>
                                     <th style="width:6%">4</th>
                                     <th style="width:6%">6</th>
@@ -5802,7 +5802,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                            <th style="width:20%;text-align:left;">====================</th>
+                                            <th style="width:30%;text-align:left;">====================</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
@@ -5817,7 +5817,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                            <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -5856,7 +5856,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                                        <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                                        <td style="width:30%">' . $respuesta["pedido"] . '</td>
                                         <th colspan="6"></th>
                                         <th style="width:6%;text-align:left;">FECHA</th>
                                         <td colspan="2">' . $newDate . '</td>
@@ -5894,7 +5894,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">VENDEDOR</th>
-                                        <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                                        <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                                         <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                                         <td colspan="2">' . $respuesta["documento"] . '</td>
                                         <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -5908,7 +5908,7 @@
                                     <tr>
                                 
                                         <th style="width:10%"></th>
-                                        <th style="width:20%"></th>
+                                        <th style="width:30%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -5931,7 +5931,7 @@
                                 <thead>
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">S</th>
                                     <th style="width:6%">M</th>
                                     <th style="width:6%">L</th>
@@ -5945,7 +5945,7 @@
                             
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">28</th>
                                     <th style="width:6%">30</th>
                                     <th style="width:6%">32</th>
@@ -5959,7 +5959,7 @@
                             
                                 <tr>
                                     <th style="width:10%;text-align:left;">Modelo</th>
-                                    <th style="width:20%">Color</th>
+                                    <th style="width:30%">Color</th>
                                     <th style="width:6%">3</th>
                                     <th style="width:6%">4</th>
                                     <th style="width:6%">6</th>
@@ -6049,7 +6049,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                            <th style="width:20%;text-align:left;">====================</th>
+                                            <th style="width:30%;text-align:left;">====================</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
@@ -6064,7 +6064,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                            <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -6103,7 +6103,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                                        <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                                        <td style="width:30%">' . $respuesta["pedido"] . '</td>
                                         <th colspan="6"></th>
                                         <th style="width:6%;text-align:left;">FECHA</th>
                                         <td colspan="2">' . $newDate . '</td>
@@ -6141,7 +6141,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">VENDEDOR</th>
-                                        <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                                        <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                                         <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                                         <td colspan="2">' . $respuesta["documento"] . '</td>
                                         <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -6155,7 +6155,7 @@
                                     <tr>
                                 
                                         <th style="width:10%"></th>
-                                        <th style="width:20%"></th>
+                                        <th style="width:30%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -6178,7 +6178,7 @@
                                 <thead>
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">S</th>
                                     <th style="width:6%">M</th>
                                     <th style="width:6%">L</th>
@@ -6192,7 +6192,7 @@
                             
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">28</th>
                                     <th style="width:6%">30</th>
                                     <th style="width:6%">32</th>
@@ -6206,7 +6206,7 @@
                             
                                 <tr>
                                     <th style="width:10%;text-align:left;">Modelo</th>
-                                    <th style="width:20%">Color</th>
+                                    <th style="width:30%">Color</th>
                                     <th style="width:6%">3</th>
                                     <th style="width:6%">4</th>
                                     <th style="width:6%">6</th>
@@ -6296,7 +6296,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                            <th style="width:20%;text-align:left;">====================</th>
+                                            <th style="width:30%;text-align:left;">====================</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
@@ -6311,7 +6311,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                            <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -6350,7 +6350,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                                        <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                                        <td style="width:30%">' . $respuesta["pedido"] . '</td>
                                         <th colspan="6"></th>
                                         <th style="width:6%;text-align:left;">FECHA</th>
                                         <td colspan="2">' . $newDate . '</td>
@@ -6388,7 +6388,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">VENDEDOR</th>
-                                        <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                                        <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                                         <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                                         <td colspan="2">' . $respuesta["documento"] . '</td>
                                         <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -6402,7 +6402,7 @@
                                     <tr>
                                 
                                         <th style="width:10%"></th>
-                                        <th style="width:20%"></th>
+                                        <th style="width:30%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -6425,7 +6425,7 @@
                                 <thead>
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">S</th>
                                     <th style="width:6%">M</th>
                                     <th style="width:6%">L</th>
@@ -6439,7 +6439,7 @@
                             
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">28</th>
                                     <th style="width:6%">30</th>
                                     <th style="width:6%">32</th>
@@ -6453,7 +6453,7 @@
                             
                                 <tr>
                                     <th style="width:10%;text-align:left;">Modelo</th>
-                                    <th style="width:20%">Color</th>
+                                    <th style="width:30%">Color</th>
                                     <th style="width:6%">3</th>
                                     <th style="width:6%">4</th>
                                     <th style="width:6%">6</th>
@@ -6543,7 +6543,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                            <th style="width:20%;text-align:left;">====================</th>
+                                            <th style="width:30%;text-align:left;">====================</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
@@ -6558,7 +6558,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                            <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -6597,7 +6597,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                                        <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                                        <td style="width:30%">' . $respuesta["pedido"] . '</td>
                                         <th colspan="6"></th>
                                         <th style="width:6%;text-align:left;">FECHA</th>
                                         <td colspan="2">' . $newDate . '</td>
@@ -6635,7 +6635,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">VENDEDOR</th>
-                                        <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                                        <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                                         <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                                         <td colspan="2">' . $respuesta["documento"] . '</td>
                                         <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -6649,7 +6649,7 @@
                                     <tr>
                                 
                                         <th style="width:10%"></th>
-                                        <th style="width:20%"></th>
+                                        <th style="width:30%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -6672,7 +6672,7 @@
                                 <thead>
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">S</th>
                                     <th style="width:6%">M</th>
                                     <th style="width:6%">L</th>
@@ -6686,7 +6686,7 @@
                             
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">28</th>
                                     <th style="width:6%">30</th>
                                     <th style="width:6%">32</th>
@@ -6700,7 +6700,7 @@
                             
                                 <tr>
                                     <th style="width:10%;text-align:left;">Modelo</th>
-                                    <th style="width:20%">Color</th>
+                                    <th style="width:30%">Color</th>
                                     <th style="width:6%">3</th>
                                     <th style="width:6%">4</th>
                                     <th style="width:6%">6</th>
@@ -6790,7 +6790,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                            <th style="width:20%;text-align:left;">====================</th>
+                                            <th style="width:30%;text-align:left;">====================</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
@@ -6805,7 +6805,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                            <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -6844,7 +6844,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                                        <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                                        <td style="width:30%">' . $respuesta["pedido"] . '</td>
                                         <th colspan="6"></th>
                                         <th style="width:6%;text-align:left;">FECHA</th>
                                         <td colspan="2">' . $newDate . '</td>
@@ -6882,7 +6882,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">VENDEDOR</th>
-                                        <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                                        <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                                         <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                                         <td colspan="2">' . $respuesta["documento"] . '</td>
                                         <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -6896,7 +6896,7 @@
                                     <tr>
                                 
                                         <th style="width:10%"></th>
-                                        <th style="width:20%"></th>
+                                        <th style="width:30%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -6919,7 +6919,7 @@
                                 <thead>
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">S</th>
                                     <th style="width:6%">M</th>
                                     <th style="width:6%">L</th>
@@ -6933,7 +6933,7 @@
                             
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">28</th>
                                     <th style="width:6%">30</th>
                                     <th style="width:6%">32</th>
@@ -6947,7 +6947,7 @@
                             
                                 <tr>
                                     <th style="width:10%;text-align:left;">Modelo</th>
-                                    <th style="width:20%">Color</th>
+                                    <th style="width:30%">Color</th>
                                     <th style="width:6%">3</th>
                                     <th style="width:6%">4</th>
                                     <th style="width:6%">6</th>
@@ -6965,7 +6965,7 @@
             //*Cuerpo PAG 6
             echo '<table border="1" style="border:dashed" align="left" width="900px">';
 
-            $articulosP1 = ControladorPedidos::ctrPedidoImpresionB($codigo, 250, 50);
+            $articulosP1 = ControladorPedidos::ctrPedidoImpresionB($codigo, 220, 50);
 
             foreach ($articulosP1 as $key => $value) {
 
@@ -7037,7 +7037,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                            <th style="width:20%;text-align:left;">====================</th>
+                                            <th style="width:30%;text-align:left;">====================</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
@@ -7052,7 +7052,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                            <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -7091,7 +7091,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                            <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                            <td style="width:30%">' . $respuesta["pedido"] . '</td>
                             <th colspan="6"></th>
                             <th style="width:6%;text-align:left;">FECHA</th>
                             <td colspan="2">' . $newDate . '</td>
@@ -7129,7 +7129,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">VENDEDOR</th>
-                            <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                            <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                             <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                             <td colspan="2">' . $respuesta["documento"] . '</td>
                             <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -7143,7 +7143,7 @@
                         <tr>
                     
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -7166,7 +7166,7 @@
                     <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">S</th>
                         <th style="width:6%">M</th>
                         <th style="width:6%">L</th>
@@ -7180,7 +7180,7 @@
                 
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">28</th>
                         <th style="width:6%">30</th>
                         <th style="width:6%">32</th>
@@ -7194,7 +7194,7 @@
                 
                     <tr>
                         <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
+                        <th style="width:30%">Color</th>
                         <th style="width:6%">3</th>
                         <th style="width:6%">4</th>
                         <th style="width:6%">6</th>
@@ -7284,7 +7284,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                <th style="width:20%;text-align:left;">====================</th>
+                                <th style="width:30%;text-align:left;">====================</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
@@ -7299,7 +7299,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -7321,7 +7321,7 @@
                                 </thead>                
                                     <tr>               
                                         <th style="width:10%;text-align:left;">TOTALES</th>
-                                        <th style="width:20%;text-align:left;">PEDIDO</th>
+                                        <th style="width:30%;text-align:left;">PEDIDO</th>
                                         <th style="width:6%">' . $totales["t1"] . '</th>
                                         <th style="width:6%">' . $totales["t2"] . '</th>
                                         <th style="width:6%">' . $totales["t3"] . '</th>
@@ -7343,7 +7343,7 @@
                                 
                                     <tr>                    
                                         <th style="width:10%"></th>
-                                        <th style="width:20%"></th>
+                                        <th style="width:30%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -7357,7 +7357,7 @@
                                 
                                     <tr>                    
                                         <td style="width:10%;text-align:left;">TOTAL S/</td>
-                                        <th style="width:20%;text-align:left;">' . number_format($pedidos["total"], 2) . '</th>
+                                        <th style="width:30%;text-align:left;">' . number_format($pedidos["total"], 2) . '</th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -7371,7 +7371,7 @@
                                 
                                     <tr>                    
                                         <td style="width:10%;text-align:left;">Forma de Pago</td>
-                                        <th colspan="7" style="width:20%;text-align:left;">' . $pedidos["descripcion"] . '</th>
+                                        <th colspan="7" style="width:30%;text-align:left;">' . $pedidos["descripcion"] . '</th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>               
@@ -7398,7 +7398,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                                        <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                                        <td style="width:30%">' . $respuesta["pedido"] . '</td>
                                         <th colspan="6"></th>
                                         <th style="width:6%;text-align:left;">FECHA</th>
                                         <td colspan="2">' . $newDate . '</td>
@@ -7436,7 +7436,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">VENDEDOR</th>
-                                        <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                                        <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                                         <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                                         <td colspan="2">' . $respuesta["documento"] . '</td>
                                         <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -7450,7 +7450,7 @@
                                     <tr>
                                 
                                         <th style="width:10%"></th>
-                                        <th style="width:20%"></th>
+                                        <th style="width:30%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -7473,7 +7473,7 @@
                                 <thead>
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">S</th>
                                     <th style="width:6%">M</th>
                                     <th style="width:6%">L</th>
@@ -7487,7 +7487,7 @@
                             
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">28</th>
                                     <th style="width:6%">30</th>
                                     <th style="width:6%">32</th>
@@ -7501,7 +7501,7 @@
                             
                                 <tr>
                                     <th style="width:10%;text-align:left;">Modelo</th>
-                                    <th style="width:20%">Color</th>
+                                    <th style="width:30%">Color</th>
                                     <th style="width:6%">3</th>
                                     <th style="width:6%">4</th>
                                     <th style="width:6%">6</th>
@@ -7591,7 +7591,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                            <th style="width:20%;text-align:left;">====================</th>
+                                            <th style="width:30%;text-align:left;">====================</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
@@ -7606,7 +7606,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                            <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -7645,7 +7645,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                                        <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                                        <td style="width:30%">' . $respuesta["pedido"] . '</td>
                                         <th colspan="6"></th>
                                         <th style="width:6%;text-align:left;">FECHA</th>
                                         <td colspan="2">' . $newDate . '</td>
@@ -7683,7 +7683,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">VENDEDOR</th>
-                                        <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                                        <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                                         <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                                         <td colspan="2">' . $respuesta["documento"] . '</td>
                                         <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -7697,7 +7697,7 @@
                                     <tr>
                                 
                                         <th style="width:10%"></th>
-                                        <th style="width:20%"></th>
+                                        <th style="width:30%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -7720,7 +7720,7 @@
                                 <thead>
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">S</th>
                                     <th style="width:6%">M</th>
                                     <th style="width:6%">L</th>
@@ -7734,7 +7734,7 @@
                             
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">28</th>
                                     <th style="width:6%">30</th>
                                     <th style="width:6%">32</th>
@@ -7748,7 +7748,7 @@
                             
                                 <tr>
                                     <th style="width:10%;text-align:left;">Modelo</th>
-                                    <th style="width:20%">Color</th>
+                                    <th style="width:30%">Color</th>
                                     <th style="width:6%">3</th>
                                     <th style="width:6%">4</th>
                                     <th style="width:6%">6</th>
@@ -7838,7 +7838,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                            <th style="width:20%;text-align:left;">====================</th>
+                                            <th style="width:30%;text-align:left;">====================</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
@@ -7853,7 +7853,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                            <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -7892,7 +7892,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                                        <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                                        <td style="width:30%">' . $respuesta["pedido"] . '</td>
                                         <th colspan="6"></th>
                                         <th style="width:6%;text-align:left;">FECHA</th>
                                         <td colspan="2">' . $newDate . '</td>
@@ -7930,7 +7930,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">VENDEDOR</th>
-                                        <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                                        <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                                         <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                                         <td colspan="2">' . $respuesta["documento"] . '</td>
                                         <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -7944,7 +7944,7 @@
                                     <tr>
                                 
                                         <th style="width:10%"></th>
-                                        <th style="width:20%"></th>
+                                        <th style="width:30%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -7967,7 +7967,7 @@
                                 <thead>
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">S</th>
                                     <th style="width:6%">M</th>
                                     <th style="width:6%">L</th>
@@ -7981,7 +7981,7 @@
                             
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">28</th>
                                     <th style="width:6%">30</th>
                                     <th style="width:6%">32</th>
@@ -7995,7 +7995,7 @@
                             
                                 <tr>
                                     <th style="width:10%;text-align:left;">Modelo</th>
-                                    <th style="width:20%">Color</th>
+                                    <th style="width:30%">Color</th>
                                     <th style="width:6%">3</th>
                                     <th style="width:6%">4</th>
                                     <th style="width:6%">6</th>
@@ -8085,7 +8085,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                            <th style="width:20%;text-align:left;">====================</th>
+                                            <th style="width:30%;text-align:left;">====================</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
@@ -8100,7 +8100,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                            <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -8139,7 +8139,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                                        <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                                        <td style="width:30%">' . $respuesta["pedido"] . '</td>
                                         <th colspan="6"></th>
                                         <th style="width:6%;text-align:left;">FECHA</th>
                                         <td colspan="2">' . $newDate . '</td>
@@ -8177,7 +8177,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">VENDEDOR</th>
-                                        <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                                        <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                                         <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                                         <td colspan="2">' . $respuesta["documento"] . '</td>
                                         <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -8191,7 +8191,7 @@
                                     <tr>
                                 
                                         <th style="width:10%"></th>
-                                        <th style="width:20%"></th>
+                                        <th style="width:30%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -8214,7 +8214,7 @@
                                 <thead>
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">S</th>
                                     <th style="width:6%">M</th>
                                     <th style="width:6%">L</th>
@@ -8228,7 +8228,7 @@
                             
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">28</th>
                                     <th style="width:6%">30</th>
                                     <th style="width:6%">32</th>
@@ -8242,7 +8242,7 @@
                             
                                 <tr>
                                     <th style="width:10%;text-align:left;">Modelo</th>
-                                    <th style="width:20%">Color</th>
+                                    <th style="width:30%">Color</th>
                                     <th style="width:6%">3</th>
                                     <th style="width:6%">4</th>
                                     <th style="width:6%">6</th>
@@ -8332,7 +8332,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                            <th style="width:20%;text-align:left;">====================</th>
+                                            <th style="width:30%;text-align:left;">====================</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
@@ -8347,7 +8347,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                            <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -8386,7 +8386,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                                        <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                                        <td style="width:30%">' . $respuesta["pedido"] . '</td>
                                         <th colspan="6"></th>
                                         <th style="width:6%;text-align:left;">FECHA</th>
                                         <td colspan="2">' . $newDate . '</td>
@@ -8424,7 +8424,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">VENDEDOR</th>
-                                        <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                                        <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                                         <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                                         <td colspan="2">' . $respuesta["documento"] . '</td>
                                         <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -8438,7 +8438,7 @@
                                     <tr>
                                 
                                         <th style="width:10%"></th>
-                                        <th style="width:20%"></th>
+                                        <th style="width:30%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -8461,7 +8461,7 @@
                                 <thead>
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">S</th>
                                     <th style="width:6%">M</th>
                                     <th style="width:6%">L</th>
@@ -8475,7 +8475,7 @@
                             
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">28</th>
                                     <th style="width:6%">30</th>
                                     <th style="width:6%">32</th>
@@ -8489,7 +8489,7 @@
                             
                                 <tr>
                                     <th style="width:10%;text-align:left;">Modelo</th>
-                                    <th style="width:20%">Color</th>
+                                    <th style="width:30%">Color</th>
                                     <th style="width:6%">3</th>
                                     <th style="width:6%">4</th>
                                     <th style="width:6%">6</th>
@@ -8579,7 +8579,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                            <th style="width:20%;text-align:left;">====================</th>
+                                            <th style="width:30%;text-align:left;">====================</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
@@ -8594,7 +8594,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                            <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -8633,7 +8633,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                                        <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                                        <td style="width:30%">' . $respuesta["pedido"] . '</td>
                                         <th colspan="6"></th>
                                         <th style="width:6%;text-align:left;">FECHA</th>
                                         <td colspan="2">' . $newDate . '</td>
@@ -8671,7 +8671,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">VENDEDOR</th>
-                                        <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                                        <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                                         <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                                         <td colspan="2">' . $respuesta["documento"] . '</td>
                                         <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -8685,7 +8685,7 @@
                                     <tr>
                                 
                                         <th style="width:10%"></th>
-                                        <th style="width:20%"></th>
+                                        <th style="width:30%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -8708,7 +8708,7 @@
                                 <thead>
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">S</th>
                                     <th style="width:6%">M</th>
                                     <th style="width:6%">L</th>
@@ -8722,7 +8722,7 @@
                             
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">28</th>
                                     <th style="width:6%">30</th>
                                     <th style="width:6%">32</th>
@@ -8736,7 +8736,7 @@
                             
                                 <tr>
                                     <th style="width:10%;text-align:left;">Modelo</th>
-                                    <th style="width:20%">Color</th>
+                                    <th style="width:30%">Color</th>
                                     <th style="width:6%">3</th>
                                     <th style="width:6%">4</th>
                                     <th style="width:6%">6</th>
@@ -8754,7 +8754,7 @@
             //*Cuerpo PAG 6
             echo '<table border="1" style="border:dashed" align="left" width="900px">';
 
-            $articulosP1 = ControladorPedidos::ctrPedidoImpresionB($codigo, 250, 50);
+            $articulosP1 = ControladorPedidos::ctrPedidoImpresionB($codigo, 220, 50);
 
             foreach ($articulosP1 as $key => $value) {
 
@@ -8826,7 +8826,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                            <th style="width:20%;text-align:left;">====================</th>
+                                            <th style="width:30%;text-align:left;">====================</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
@@ -8841,7 +8841,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                            <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -8880,7 +8880,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                            <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                            <td style="width:30%">' . $respuesta["pedido"] . '</td>
                             <th colspan="6"></th>
                             <th style="width:6%;text-align:left;">FECHA</th>
                             <td colspan="2">' . $newDate . '</td>
@@ -8918,7 +8918,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">VENDEDOR</th>
-                            <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                            <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                             <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                             <td colspan="2">' . $respuesta["documento"] . '</td>
                             <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -8932,7 +8932,7 @@
                         <tr>
                     
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -8955,7 +8955,7 @@
                     <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">S</th>
                         <th style="width:6%">M</th>
                         <th style="width:6%">L</th>
@@ -8969,7 +8969,7 @@
                 
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">28</th>
                         <th style="width:6%">30</th>
                         <th style="width:6%">32</th>
@@ -8983,7 +8983,7 @@
                 
                     <tr>
                         <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
+                        <th style="width:30%">Color</th>
                         <th style="width:6%">3</th>
                         <th style="width:6%">4</th>
                         <th style="width:6%">6</th>
@@ -9073,7 +9073,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                <th style="width:20%;text-align:left;">====================</th>
+                                <th style="width:30%;text-align:left;">====================</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
@@ -9088,7 +9088,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -9127,7 +9127,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                            <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                            <td style="width:30%">' . $respuesta["pedido"] . '</td>
                             <th colspan="6"></th>
                             <th style="width:6%;text-align:left;">FECHA</th>
                             <td colspan="2">' . $newDate . '</td>
@@ -9165,7 +9165,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">VENDEDOR</th>
-                            <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                            <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                             <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                             <td colspan="2">' . $respuesta["documento"] . '</td>
                             <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -9179,7 +9179,7 @@
                         <tr>
                     
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -9202,7 +9202,7 @@
                     <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">S</th>
                         <th style="width:6%">M</th>
                         <th style="width:6%">L</th>
@@ -9216,7 +9216,7 @@
                 
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">28</th>
                         <th style="width:6%">30</th>
                         <th style="width:6%">32</th>
@@ -9230,7 +9230,7 @@
                 
                     <tr>
                         <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
+                        <th style="width:30%">Color</th>
                         <th style="width:6%">3</th>
                         <th style="width:6%">4</th>
                         <th style="width:6%">6</th>
@@ -9320,7 +9320,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                <th style="width:20%;text-align:left;">====================</th>
+                                <th style="width:30%;text-align:left;">====================</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
@@ -9335,7 +9335,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -9357,7 +9357,7 @@
                                 </thead>                
                                     <tr>               
                                         <th style="width:10%;text-align:left;">TOTALES</th>
-                                        <th style="width:20%;text-align:left;">PEDIDO</th>
+                                        <th style="width:30%;text-align:left;">PEDIDO</th>
                                         <th style="width:6%">' . $totales["t1"] . '</th>
                                         <th style="width:6%">' . $totales["t2"] . '</th>
                                         <th style="width:6%">' . $totales["t3"] . '</th>
@@ -9379,7 +9379,7 @@
                                 
                                     <tr>                    
                                         <th style="width:10%"></th>
-                                        <th style="width:20%"></th>
+                                        <th style="width:30%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -9393,7 +9393,7 @@
                                 
                                     <tr>                    
                                         <td style="width:10%;text-align:left;">TOTAL S/</td>
-                                        <th style="width:20%;text-align:left;">' . number_format($pedidos["total"], 2) . '</th>
+                                        <th style="width:30%;text-align:left;">' . number_format($pedidos["total"], 2) . '</th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -9407,7 +9407,7 @@
                                 
                                     <tr>                    
                                         <td style="width:10%;text-align:left;">Forma de Pago</td>
-                                        <th colspan="7" style="width:20%;text-align:left;">' . $pedidos["descripcion"] . '</th>
+                                        <th colspan="7" style="width:30%;text-align:left;">' . $pedidos["descripcion"] . '</th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>               
@@ -9434,7 +9434,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                                        <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                                        <td style="width:30%">' . $respuesta["pedido"] . '</td>
                                         <th colspan="6"></th>
                                         <th style="width:6%;text-align:left;">FECHA</th>
                                         <td colspan="2">' . $newDate . '</td>
@@ -9472,7 +9472,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">VENDEDOR</th>
-                                        <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                                        <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                                         <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                                         <td colspan="2">' . $respuesta["documento"] . '</td>
                                         <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -9486,7 +9486,7 @@
                                     <tr>
                                 
                                         <th style="width:10%"></th>
-                                        <th style="width:20%"></th>
+                                        <th style="width:30%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -9509,7 +9509,7 @@
                                 <thead>
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">S</th>
                                     <th style="width:6%">M</th>
                                     <th style="width:6%">L</th>
@@ -9523,7 +9523,7 @@
                             
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">28</th>
                                     <th style="width:6%">30</th>
                                     <th style="width:6%">32</th>
@@ -9537,7 +9537,7 @@
                             
                                 <tr>
                                     <th style="width:10%;text-align:left;">Modelo</th>
-                                    <th style="width:20%">Color</th>
+                                    <th style="width:30%">Color</th>
                                     <th style="width:6%">3</th>
                                     <th style="width:6%">4</th>
                                     <th style="width:6%">6</th>
@@ -9627,7 +9627,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                            <th style="width:20%;text-align:left;">====================</th>
+                                            <th style="width:30%;text-align:left;">====================</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
@@ -9642,7 +9642,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                            <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -9681,7 +9681,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                                        <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                                        <td style="width:30%">' . $respuesta["pedido"] . '</td>
                                         <th colspan="6"></th>
                                         <th style="width:6%;text-align:left;">FECHA</th>
                                         <td colspan="2">' . $newDate . '</td>
@@ -9719,7 +9719,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">VENDEDOR</th>
-                                        <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                                        <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                                         <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                                         <td colspan="2">' . $respuesta["documento"] . '</td>
                                         <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -9733,7 +9733,7 @@
                                     <tr>
                                 
                                         <th style="width:10%"></th>
-                                        <th style="width:20%"></th>
+                                        <th style="width:30%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -9756,7 +9756,7 @@
                                 <thead>
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">S</th>
                                     <th style="width:6%">M</th>
                                     <th style="width:6%">L</th>
@@ -9770,7 +9770,7 @@
                             
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">28</th>
                                     <th style="width:6%">30</th>
                                     <th style="width:6%">32</th>
@@ -9784,7 +9784,7 @@
                             
                                 <tr>
                                     <th style="width:10%;text-align:left;">Modelo</th>
-                                    <th style="width:20%">Color</th>
+                                    <th style="width:30%">Color</th>
                                     <th style="width:6%">3</th>
                                     <th style="width:6%">4</th>
                                     <th style="width:6%">6</th>
@@ -9874,7 +9874,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                            <th style="width:20%;text-align:left;">====================</th>
+                                            <th style="width:30%;text-align:left;">====================</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
@@ -9889,7 +9889,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                            <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -9928,7 +9928,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                                        <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                                        <td style="width:30%">' . $respuesta["pedido"] . '</td>
                                         <th colspan="6"></th>
                                         <th style="width:6%;text-align:left;">FECHA</th>
                                         <td colspan="2">' . $newDate . '</td>
@@ -9966,7 +9966,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">VENDEDOR</th>
-                                        <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                                        <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                                         <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                                         <td colspan="2">' . $respuesta["documento"] . '</td>
                                         <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -9980,7 +9980,7 @@
                                     <tr>
                                 
                                         <th style="width:10%"></th>
-                                        <th style="width:20%"></th>
+                                        <th style="width:30%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -10003,7 +10003,7 @@
                                 <thead>
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">S</th>
                                     <th style="width:6%">M</th>
                                     <th style="width:6%">L</th>
@@ -10017,7 +10017,7 @@
                             
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">28</th>
                                     <th style="width:6%">30</th>
                                     <th style="width:6%">32</th>
@@ -10031,7 +10031,7 @@
                             
                                 <tr>
                                     <th style="width:10%;text-align:left;">Modelo</th>
-                                    <th style="width:20%">Color</th>
+                                    <th style="width:30%">Color</th>
                                     <th style="width:6%">3</th>
                                     <th style="width:6%">4</th>
                                     <th style="width:6%">6</th>
@@ -10121,7 +10121,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                            <th style="width:20%;text-align:left;">====================</th>
+                                            <th style="width:30%;text-align:left;">====================</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
@@ -10136,7 +10136,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                            <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -10175,7 +10175,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                                        <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                                        <td style="width:30%">' . $respuesta["pedido"] . '</td>
                                         <th colspan="6"></th>
                                         <th style="width:6%;text-align:left;">FECHA</th>
                                         <td colspan="2">' . $newDate . '</td>
@@ -10213,7 +10213,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">VENDEDOR</th>
-                                        <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                                        <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                                         <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                                         <td colspan="2">' . $respuesta["documento"] . '</td>
                                         <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -10227,7 +10227,7 @@
                                     <tr>
                                 
                                         <th style="width:10%"></th>
-                                        <th style="width:20%"></th>
+                                        <th style="width:30%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -10250,7 +10250,7 @@
                                 <thead>
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">S</th>
                                     <th style="width:6%">M</th>
                                     <th style="width:6%">L</th>
@@ -10264,7 +10264,7 @@
                             
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">28</th>
                                     <th style="width:6%">30</th>
                                     <th style="width:6%">32</th>
@@ -10278,7 +10278,7 @@
                             
                                 <tr>
                                     <th style="width:10%;text-align:left;">Modelo</th>
-                                    <th style="width:20%">Color</th>
+                                    <th style="width:30%">Color</th>
                                     <th style="width:6%">3</th>
                                     <th style="width:6%">4</th>
                                     <th style="width:6%">6</th>
@@ -10368,7 +10368,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                            <th style="width:20%;text-align:left;">====================</th>
+                                            <th style="width:30%;text-align:left;">====================</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
@@ -10383,7 +10383,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                            <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -10422,7 +10422,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                                        <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                                        <td style="width:30%">' . $respuesta["pedido"] . '</td>
                                         <th colspan="6"></th>
                                         <th style="width:6%;text-align:left;">FECHA</th>
                                         <td colspan="2">' . $newDate . '</td>
@@ -10460,7 +10460,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">VENDEDOR</th>
-                                        <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                                        <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                                         <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                                         <td colspan="2">' . $respuesta["documento"] . '</td>
                                         <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -10474,7 +10474,7 @@
                                     <tr>
                                 
                                         <th style="width:10%"></th>
-                                        <th style="width:20%"></th>
+                                        <th style="width:30%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -10497,7 +10497,7 @@
                                 <thead>
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">S</th>
                                     <th style="width:6%">M</th>
                                     <th style="width:6%">L</th>
@@ -10511,7 +10511,7 @@
                             
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">28</th>
                                     <th style="width:6%">30</th>
                                     <th style="width:6%">32</th>
@@ -10525,7 +10525,7 @@
                             
                                 <tr>
                                     <th style="width:10%;text-align:left;">Modelo</th>
-                                    <th style="width:20%">Color</th>
+                                    <th style="width:30%">Color</th>
                                     <th style="width:6%">3</th>
                                     <th style="width:6%">4</th>
                                     <th style="width:6%">6</th>
@@ -10615,7 +10615,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                            <th style="width:20%;text-align:left;">====================</th>
+                                            <th style="width:30%;text-align:left;">====================</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
@@ -10630,7 +10630,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                            <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -10669,7 +10669,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                                        <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                                        <td style="width:30%">' . $respuesta["pedido"] . '</td>
                                         <th colspan="6"></th>
                                         <th style="width:6%;text-align:left;">FECHA</th>
                                         <td colspan="2">' . $newDate . '</td>
@@ -10707,7 +10707,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">VENDEDOR</th>
-                                        <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                                        <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                                         <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                                         <td colspan="2">' . $respuesta["documento"] . '</td>
                                         <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -10721,7 +10721,7 @@
                                     <tr>
                                 
                                         <th style="width:10%"></th>
-                                        <th style="width:20%"></th>
+                                        <th style="width:30%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -10744,7 +10744,7 @@
                                 <thead>
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">S</th>
                                     <th style="width:6%">M</th>
                                     <th style="width:6%">L</th>
@@ -10758,7 +10758,7 @@
                             
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">28</th>
                                     <th style="width:6%">30</th>
                                     <th style="width:6%">32</th>
@@ -10772,7 +10772,7 @@
                             
                                 <tr>
                                     <th style="width:10%;text-align:left;">Modelo</th>
-                                    <th style="width:20%">Color</th>
+                                    <th style="width:30%">Color</th>
                                     <th style="width:6%">3</th>
                                     <th style="width:6%">4</th>
                                     <th style="width:6%">6</th>
@@ -10790,7 +10790,7 @@
             //*Cuerpo PAG 6
             echo '<table border="1" style="border:dashed" align="left" width="900px">';
 
-            $articulosP1 = ControladorPedidos::ctrPedidoImpresionB($codigo, 250, 50);
+            $articulosP1 = ControladorPedidos::ctrPedidoImpresionB($codigo, 220, 50);
 
             foreach ($articulosP1 as $key => $value) {
 
@@ -10862,7 +10862,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                            <th style="width:20%;text-align:left;">====================</th>
+                                            <th style="width:30%;text-align:left;">====================</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
@@ -10877,7 +10877,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                            <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -10916,7 +10916,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                            <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                            <td style="width:30%">' . $respuesta["pedido"] . '</td>
                             <th colspan="6"></th>
                             <th style="width:6%;text-align:left;">FECHA</th>
                             <td colspan="2">' . $newDate . '</td>
@@ -10954,7 +10954,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">VENDEDOR</th>
-                            <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                            <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                             <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                             <td colspan="2">' . $respuesta["documento"] . '</td>
                             <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -10968,7 +10968,7 @@
                         <tr>
                     
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -10991,7 +10991,7 @@
                     <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">S</th>
                         <th style="width:6%">M</th>
                         <th style="width:6%">L</th>
@@ -11005,7 +11005,7 @@
                 
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">28</th>
                         <th style="width:6%">30</th>
                         <th style="width:6%">32</th>
@@ -11019,7 +11019,7 @@
                 
                     <tr>
                         <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
+                        <th style="width:30%">Color</th>
                         <th style="width:6%">3</th>
                         <th style="width:6%">4</th>
                         <th style="width:6%">6</th>
@@ -11109,7 +11109,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                <th style="width:20%;text-align:left;">====================</th>
+                                <th style="width:30%;text-align:left;">====================</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
@@ -11124,7 +11124,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -11163,7 +11163,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                            <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                            <td style="width:30%">' . $respuesta["pedido"] . '</td>
                             <th colspan="6"></th>
                             <th style="width:6%;text-align:left;">FECHA</th>
                             <td colspan="2">' . $newDate . '</td>
@@ -11201,7 +11201,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">VENDEDOR</th>
-                            <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                            <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                             <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                             <td colspan="2">' . $respuesta["documento"] . '</td>
                             <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -11215,7 +11215,7 @@
                         <tr>
                     
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -11238,7 +11238,7 @@
                     <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">S</th>
                         <th style="width:6%">M</th>
                         <th style="width:6%">L</th>
@@ -11252,7 +11252,7 @@
                 
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">28</th>
                         <th style="width:6%">30</th>
                         <th style="width:6%">32</th>
@@ -11266,7 +11266,7 @@
                 
                     <tr>
                         <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
+                        <th style="width:30%">Color</th>
                         <th style="width:6%">3</th>
                         <th style="width:6%">4</th>
                         <th style="width:6%">6</th>
@@ -11356,7 +11356,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                <th style="width:20%;text-align:left;">====================</th>
+                                <th style="width:30%;text-align:left;">====================</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
@@ -11371,7 +11371,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -11410,7 +11410,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                            <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                            <td style="width:30%">' . $respuesta["pedido"] . '</td>
                             <th colspan="6"></th>
                             <th style="width:6%;text-align:left;">FECHA</th>
                             <td colspan="2">' . $newDate . '</td>
@@ -11448,7 +11448,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">VENDEDOR</th>
-                            <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                            <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                             <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                             <td colspan="2">' . $respuesta["documento"] . '</td>
                             <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -11462,7 +11462,7 @@
                         <tr>
                     
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -11485,7 +11485,7 @@
                     <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">S</th>
                         <th style="width:6%">M</th>
                         <th style="width:6%">L</th>
@@ -11499,7 +11499,7 @@
                 
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">28</th>
                         <th style="width:6%">30</th>
                         <th style="width:6%">32</th>
@@ -11513,7 +11513,7 @@
                 
                     <tr>
                         <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
+                        <th style="width:30%">Color</th>
                         <th style="width:6%">3</th>
                         <th style="width:6%">4</th>
                         <th style="width:6%">6</th>
@@ -11603,7 +11603,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                <th style="width:20%;text-align:left;">====================</th>
+                                <th style="width:30%;text-align:left;">====================</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
@@ -11618,7 +11618,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -11640,7 +11640,7 @@
                                 </thead>                
                                     <tr>               
                                         <th style="width:10%;text-align:left;">TOTALES</th>
-                                        <th style="width:20%;text-align:left;">PEDIDO</th>
+                                        <th style="width:30%;text-align:left;">PEDIDO</th>
                                         <th style="width:6%">' . $totales["t1"] . '</th>
                                         <th style="width:6%">' . $totales["t2"] . '</th>
                                         <th style="width:6%">' . $totales["t3"] . '</th>
@@ -11662,7 +11662,7 @@
                                 
                                     <tr>                    
                                         <th style="width:10%"></th>
-                                        <th style="width:20%"></th>
+                                        <th style="width:30%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -11676,7 +11676,7 @@
                                 
                                     <tr>                    
                                         <td style="width:10%;text-align:left;">TOTAL S/</td>
-                                        <th style="width:20%;text-align:left;">' . number_format($pedidos["total"], 2) . '</th>
+                                        <th style="width:30%;text-align:left;">' . number_format($pedidos["total"], 2) . '</th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -11690,7 +11690,7 @@
                                 
                                     <tr>                    
                                         <td style="width:10%;text-align:left;">Forma de Pago</td>
-                                        <th colspan="7" style="width:20%;text-align:left;">' . $pedidos["descripcion"] . '</th>
+                                        <th colspan="7" style="width:30%;text-align:left;">' . $pedidos["descripcion"] . '</th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>               
@@ -11717,7 +11717,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                                        <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                                        <td style="width:30%">' . $respuesta["pedido"] . '</td>
                                         <th colspan="6"></th>
                                         <th style="width:6%;text-align:left;">FECHA</th>
                                         <td colspan="2">' . $newDate . '</td>
@@ -11755,7 +11755,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">VENDEDOR</th>
-                                        <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                                        <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                                         <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                                         <td colspan="2">' . $respuesta["documento"] . '</td>
                                         <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -11769,7 +11769,7 @@
                                     <tr>
                                 
                                         <th style="width:10%"></th>
-                                        <th style="width:20%"></th>
+                                        <th style="width:30%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -11792,7 +11792,7 @@
                                 <thead>
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">S</th>
                                     <th style="width:6%">M</th>
                                     <th style="width:6%">L</th>
@@ -11806,7 +11806,7 @@
                             
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">28</th>
                                     <th style="width:6%">30</th>
                                     <th style="width:6%">32</th>
@@ -11820,7 +11820,7 @@
                             
                                 <tr>
                                     <th style="width:10%;text-align:left;">Modelo</th>
-                                    <th style="width:20%">Color</th>
+                                    <th style="width:30%">Color</th>
                                     <th style="width:6%">3</th>
                                     <th style="width:6%">4</th>
                                     <th style="width:6%">6</th>
@@ -11910,7 +11910,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                            <th style="width:20%;text-align:left;">====================</th>
+                                            <th style="width:30%;text-align:left;">====================</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
@@ -11925,7 +11925,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                            <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -11964,7 +11964,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                                        <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                                        <td style="width:30%">' . $respuesta["pedido"] . '</td>
                                         <th colspan="6"></th>
                                         <th style="width:6%;text-align:left;">FECHA</th>
                                         <td colspan="2">' . $newDate . '</td>
@@ -12002,7 +12002,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">VENDEDOR</th>
-                                        <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                                        <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                                         <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                                         <td colspan="2">' . $respuesta["documento"] . '</td>
                                         <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -12016,7 +12016,7 @@
                                     <tr>
                                 
                                         <th style="width:10%"></th>
-                                        <th style="width:20%"></th>
+                                        <th style="width:30%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -12039,7 +12039,7 @@
                                 <thead>
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">S</th>
                                     <th style="width:6%">M</th>
                                     <th style="width:6%">L</th>
@@ -12053,7 +12053,7 @@
                             
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">28</th>
                                     <th style="width:6%">30</th>
                                     <th style="width:6%">32</th>
@@ -12067,7 +12067,7 @@
                             
                                 <tr>
                                     <th style="width:10%;text-align:left;">Modelo</th>
-                                    <th style="width:20%">Color</th>
+                                    <th style="width:30%">Color</th>
                                     <th style="width:6%">3</th>
                                     <th style="width:6%">4</th>
                                     <th style="width:6%">6</th>
@@ -12157,7 +12157,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                            <th style="width:20%;text-align:left;">====================</th>
+                                            <th style="width:30%;text-align:left;">====================</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
@@ -12172,7 +12172,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                            <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -12211,7 +12211,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                                        <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                                        <td style="width:30%">' . $respuesta["pedido"] . '</td>
                                         <th colspan="6"></th>
                                         <th style="width:6%;text-align:left;">FECHA</th>
                                         <td colspan="2">' . $newDate . '</td>
@@ -12249,7 +12249,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">VENDEDOR</th>
-                                        <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                                        <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                                         <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                                         <td colspan="2">' . $respuesta["documento"] . '</td>
                                         <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -12263,7 +12263,7 @@
                                     <tr>
                                 
                                         <th style="width:10%"></th>
-                                        <th style="width:20%"></th>
+                                        <th style="width:30%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -12286,7 +12286,7 @@
                                 <thead>
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">S</th>
                                     <th style="width:6%">M</th>
                                     <th style="width:6%">L</th>
@@ -12300,7 +12300,7 @@
                             
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">28</th>
                                     <th style="width:6%">30</th>
                                     <th style="width:6%">32</th>
@@ -12314,7 +12314,7 @@
                             
                                 <tr>
                                     <th style="width:10%;text-align:left;">Modelo</th>
-                                    <th style="width:20%">Color</th>
+                                    <th style="width:30%">Color</th>
                                     <th style="width:6%">3</th>
                                     <th style="width:6%">4</th>
                                     <th style="width:6%">6</th>
@@ -12404,7 +12404,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                            <th style="width:20%;text-align:left;">====================</th>
+                                            <th style="width:30%;text-align:left;">====================</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
@@ -12419,7 +12419,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                            <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -12458,7 +12458,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                                        <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                                        <td style="width:30%">' . $respuesta["pedido"] . '</td>
                                         <th colspan="6"></th>
                                         <th style="width:6%;text-align:left;">FECHA</th>
                                         <td colspan="2">' . $newDate . '</td>
@@ -12496,7 +12496,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">VENDEDOR</th>
-                                        <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                                        <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                                         <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                                         <td colspan="2">' . $respuesta["documento"] . '</td>
                                         <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -12510,7 +12510,7 @@
                                     <tr>
                                 
                                         <th style="width:10%"></th>
-                                        <th style="width:20%"></th>
+                                        <th style="width:30%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -12533,7 +12533,7 @@
                                 <thead>
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">S</th>
                                     <th style="width:6%">M</th>
                                     <th style="width:6%">L</th>
@@ -12547,7 +12547,7 @@
                             
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">28</th>
                                     <th style="width:6%">30</th>
                                     <th style="width:6%">32</th>
@@ -12561,7 +12561,7 @@
                             
                                 <tr>
                                     <th style="width:10%;text-align:left;">Modelo</th>
-                                    <th style="width:20%">Color</th>
+                                    <th style="width:30%">Color</th>
                                     <th style="width:6%">3</th>
                                     <th style="width:6%">4</th>
                                     <th style="width:6%">6</th>
@@ -12651,7 +12651,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                            <th style="width:20%;text-align:left;">====================</th>
+                                            <th style="width:30%;text-align:left;">====================</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
@@ -12666,7 +12666,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                            <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -12705,7 +12705,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                                        <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                                        <td style="width:30%">' . $respuesta["pedido"] . '</td>
                                         <th colspan="6"></th>
                                         <th style="width:6%;text-align:left;">FECHA</th>
                                         <td colspan="2">' . $newDate . '</td>
@@ -12743,7 +12743,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">VENDEDOR</th>
-                                        <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                                        <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                                         <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                                         <td colspan="2">' . $respuesta["documento"] . '</td>
                                         <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -12757,7 +12757,7 @@
                                     <tr>
                                 
                                         <th style="width:10%"></th>
-                                        <th style="width:20%"></th>
+                                        <th style="width:30%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -12780,7 +12780,7 @@
                                 <thead>
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">S</th>
                                     <th style="width:6%">M</th>
                                     <th style="width:6%">L</th>
@@ -12794,7 +12794,7 @@
                             
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">28</th>
                                     <th style="width:6%">30</th>
                                     <th style="width:6%">32</th>
@@ -12808,7 +12808,7 @@
                             
                                 <tr>
                                     <th style="width:10%;text-align:left;">Modelo</th>
-                                    <th style="width:20%">Color</th>
+                                    <th style="width:30%">Color</th>
                                     <th style="width:6%">3</th>
                                     <th style="width:6%">4</th>
                                     <th style="width:6%">6</th>
@@ -12898,7 +12898,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                            <th style="width:20%;text-align:left;">====================</th>
+                                            <th style="width:30%;text-align:left;">====================</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
@@ -12913,7 +12913,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                            <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -12952,7 +12952,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                                        <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                                        <td style="width:30%">' . $respuesta["pedido"] . '</td>
                                         <th colspan="6"></th>
                                         <th style="width:6%;text-align:left;">FECHA</th>
                                         <td colspan="2">' . $newDate . '</td>
@@ -12990,7 +12990,7 @@
                                     <tr>
                                 
                                         <th style="width:10%;text-align:left;">VENDEDOR</th>
-                                        <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                                        <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                                         <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                                         <td colspan="2">' . $respuesta["documento"] . '</td>
                                         <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -13004,7 +13004,7 @@
                                     <tr>
                                 
                                         <th style="width:10%"></th>
-                                        <th style="width:20%"></th>
+                                        <th style="width:30%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -13027,7 +13027,7 @@
                                 <thead>
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">S</th>
                                     <th style="width:6%">M</th>
                                     <th style="width:6%">L</th>
@@ -13041,7 +13041,7 @@
                             
                                 <tr>
                                     <th style="width:10%"></th>
-                                    <th style="width:20%"></th>
+                                    <th style="width:30%"></th>
                                     <th style="width:6%">28</th>
                                     <th style="width:6%">30</th>
                                     <th style="width:6%">32</th>
@@ -13055,7 +13055,7 @@
                             
                                 <tr>
                                     <th style="width:10%;text-align:left;">Modelo</th>
-                                    <th style="width:20%">Color</th>
+                                    <th style="width:30%">Color</th>
                                     <th style="width:6%">3</th>
                                     <th style="width:6%">4</th>
                                     <th style="width:6%">6</th>
@@ -13073,7 +13073,7 @@
             //*Cuerpo PAG 6
             echo '<table border="1" style="border:dashed" align="left" width="900px">';
 
-            $articulosP1 = ControladorPedidos::ctrPedidoImpresionB($codigo, 250, 50);
+            $articulosP1 = ControladorPedidos::ctrPedidoImpresionB($codigo, 220, 50);
 
             foreach ($articulosP1 as $key => $value) {
 
@@ -13145,7 +13145,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                            <th style="width:20%;text-align:left;">====================</th>
+                                            <th style="width:30%;text-align:left;">====================</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
                                             <th style="width:6%;font-weight: normal;">===</th>
@@ -13160,7 +13160,7 @@
 
                     echo '<tr>
                                             <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                            <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                            <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -13199,7 +13199,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                            <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                            <td style="width:30%">' . $respuesta["pedido"] . '</td>
                             <th colspan="6"></th>
                             <th style="width:6%;text-align:left;">FECHA</th>
                             <td colspan="2">' . $newDate . '</td>
@@ -13237,7 +13237,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">VENDEDOR</th>
-                            <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                            <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                             <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                             <td colspan="2">' . $respuesta["documento"] . '</td>
                             <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -13251,7 +13251,7 @@
                         <tr>
                     
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -13274,7 +13274,7 @@
                     <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">S</th>
                         <th style="width:6%">M</th>
                         <th style="width:6%">L</th>
@@ -13288,7 +13288,7 @@
                 
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">28</th>
                         <th style="width:6%">30</th>
                         <th style="width:6%">32</th>
@@ -13302,7 +13302,7 @@
                 
                     <tr>
                         <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
+                        <th style="width:30%">Color</th>
                         <th style="width:6%">3</th>
                         <th style="width:6%">4</th>
                         <th style="width:6%">6</th>
@@ -13392,7 +13392,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                <th style="width:20%;text-align:left;">====================</th>
+                                <th style="width:30%;text-align:left;">====================</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
@@ -13407,7 +13407,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -13446,7 +13446,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                            <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                            <td style="width:30%">' . $respuesta["pedido"] . '</td>
                             <th colspan="6"></th>
                             <th style="width:6%;text-align:left;">FECHA</th>
                             <td colspan="2">' . $newDate . '</td>
@@ -13484,7 +13484,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">VENDEDOR</th>
-                            <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                            <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                             <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                             <td colspan="2">' . $respuesta["documento"] . '</td>
                             <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -13498,7 +13498,7 @@
                         <tr>
                     
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -13521,7 +13521,7 @@
                     <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">S</th>
                         <th style="width:6%">M</th>
                         <th style="width:6%">L</th>
@@ -13535,7 +13535,7 @@
                 
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">28</th>
                         <th style="width:6%">30</th>
                         <th style="width:6%">32</th>
@@ -13549,7 +13549,7 @@
                 
                     <tr>
                         <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
+                        <th style="width:30%">Color</th>
                         <th style="width:6%">3</th>
                         <th style="width:6%">4</th>
                         <th style="width:6%">6</th>
@@ -13639,7 +13639,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                <th style="width:20%;text-align:left;">====================</th>
+                                <th style="width:30%;text-align:left;">====================</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
@@ -13654,7 +13654,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -13693,7 +13693,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                            <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                            <td style="width:30%">' . $respuesta["pedido"] . '</td>
                             <th colspan="6"></th>
                             <th style="width:6%;text-align:left;">FECHA</th>
                             <td colspan="2">' . $newDate . '</td>
@@ -13731,7 +13731,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">VENDEDOR</th>
-                            <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                            <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                             <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                             <td colspan="2">' . $respuesta["documento"] . '</td>
                             <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -13745,7 +13745,7 @@
                         <tr>
                     
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -13768,7 +13768,7 @@
                     <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">S</th>
                         <th style="width:6%">M</th>
                         <th style="width:6%">L</th>
@@ -13782,7 +13782,7 @@
                 
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">28</th>
                         <th style="width:6%">30</th>
                         <th style="width:6%">32</th>
@@ -13796,7 +13796,7 @@
                 
                     <tr>
                         <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
+                        <th style="width:30%">Color</th>
                         <th style="width:6%">3</th>
                         <th style="width:6%">4</th>
                         <th style="width:6%">6</th>
@@ -13886,7 +13886,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                <th style="width:20%;text-align:left;">====================</th>
+                                <th style="width:30%;text-align:left;">====================</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
@@ -13901,7 +13901,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -13940,7 +13940,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                            <td style="width:20%">' . $respuesta["pedido"] . '</td>
+                            <td style="width:30%">' . $respuesta["pedido"] . '</td>
                             <th colspan="6"></th>
                             <th style="width:6%;text-align:left;">FECHA</th>
                             <td colspan="2">' . $newDate . '</td>
@@ -13978,7 +13978,7 @@
                         <tr>
                     
                             <th style="width:10%;text-align:left;">VENDEDOR</th>
-                            <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                            <td style="width:30%">' . $respuesta["vendedor"] . '</td>
                             <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
                             <td colspan="2">' . $respuesta["documento"] . '</td>
                             <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
@@ -13992,7 +13992,7 @@
                         <tr>
                     
                             <th style="width:10%"></th>
-                            <th style="width:20%"></th>
+                            <th style="width:30%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -14015,7 +14015,7 @@
                     <thead>
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">S</th>
                         <th style="width:6%">M</th>
                         <th style="width:6%">L</th>
@@ -14029,7 +14029,7 @@
                 
                     <tr>
                         <th style="width:10%"></th>
-                        <th style="width:20%"></th>
+                        <th style="width:30%"></th>
                         <th style="width:6%">28</th>
                         <th style="width:6%">30</th>
                         <th style="width:6%">32</th>
@@ -14043,7 +14043,7 @@
                 
                     <tr>
                         <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
+                        <th style="width:30%">Color</th>
                         <th style="width:6%">3</th>
                         <th style="width:6%">4</th>
                         <th style="width:6%">6</th>
@@ -14133,7 +14133,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">=====</th>
-                                <th style="width:20%;text-align:left;">====================</th>
+                                <th style="width:30%;text-align:left;">====================</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
                                 <th style="width:6%;font-weight: normal;">===</th>
@@ -14148,7 +14148,7 @@
 
                     echo '<tr>
                                 <th style="width:10%;font-weight: normal;text-align:left;">' . $value["modelo"] . '</th>
-                                <th style="width:20%;text-align:left;">' . $value["color"] . '- S/ ' . number_format($value["precio"] * 1.18, 2) . '</th>
+                                <th style="width:30%;text-align:left;font-family: Courier;">' . str_pad($value["color"], 22, ".", STR_PAD_RIGHT) . '- S/' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t3"] . '</th>
@@ -14170,7 +14170,7 @@
                                 </thead>                
                                     <tr>               
                                         <th style="width:10%;text-align:left;">TOTALES</th>
-                                        <th style="width:20%;text-align:left;">PEDIDO</th>
+                                        <th style="width:30%;text-align:left;">PEDIDO</th>
                                         <th style="width:6%">' . $totales["t1"] . '</th>
                                         <th style="width:6%">' . $totales["t2"] . '</th>
                                         <th style="width:6%">' . $totales["t3"] . '</th>
@@ -14192,7 +14192,7 @@
                                 
                                     <tr>                    
                                         <th style="width:10%"></th>
-                                        <th style="width:20%"></th>
+                                        <th style="width:30%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -14206,7 +14206,7 @@
                                 
                                     <tr>                    
                                         <td style="width:10%;text-align:left;">TOTAL S/</td>
-                                        <th style="width:20%;text-align:left;">' . number_format($pedidos["total"], 2) . '</th>
+                                        <th style="width:30%;text-align:left;">' . number_format($pedidos["total"], 2) . '</th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -14220,7 +14220,7 @@
                                 
                                     <tr>                    
                                         <td style="width:10%;text-align:left;">Forma de Pago</td>
-                                        <th colspan="7" style="width:20%;text-align:left;">' . $pedidos["descripcion"] . '</th>
+                                        <th colspan="7" style="width:30%;text-align:left;">' . $pedidos["descripcion"] . '</th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>               

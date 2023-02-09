@@ -1164,7 +1164,7 @@ class ModeloIngresos
 					articulojf 
 					SET
 					stock = stock + $stock ,
-					alm_taller = alm_taller + $prod
+					taller = taller + $prod
 					WHERE articulo = '$articulo' ";
 		}
 
@@ -1175,7 +1175,7 @@ class ModeloIngresos
 			return "ok";
 		} else {
 
-			return "error";
+			return $stmt->errorInfo();
 		}
 
 		$stmt = null;
@@ -1220,6 +1220,62 @@ class ModeloIngresos
 
 			return "error";
 		}
+
+		$stmt = null;
+	}
+
+	static public function mdlEliminarMovimiento($documento, $articulo, $cantidad)
+	{
+
+		$sql = "DELETE 
+					FROM
+					movimientosjf_2023 
+					WHERE documento = '$documento' AND
+					articulo = '$articulo' AND
+					cantidad = '$cantidad'";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return $stmt->errorInfo();
+		}
+
+		$stmt = null;
+	}
+
+	static public function mdlMostraAjustes()
+	{
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
+				m.tipo,
+				m.documento,
+				m.fecha,
+				m.articulo,
+				m.cantidad,
+				m.cliente,
+				'Ajuste de Taller' AS nombre_tipo,
+				a.modelo,
+				a.nombre,
+				a.cod_color,
+				a.color,
+				a.cod_talla,
+				a.talla 
+			FROM
+				movimientosjf_2023 m 
+				LEFT JOIN articulojf a 
+				ON m.articulo = a.articulo 
+			WHERE m.tipo = 'E49'");
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+
+		$stmt->close();
 
 		$stmt = null;
 	}

@@ -994,4 +994,21 @@ class ModeloCierres
 
 		$stmt = null;
 	}
+
+	static public function mdlVerDetalleCierres($valor)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT 
+							* 
+						FROM
+							cierres_detallejf 
+						WHERE id = '$valor'");
+
+		$stmt->execute();
+
+		return $stmt->fetch();
+
+		$stmt->close();
+
+		$stmt = null;
+	}
 }
