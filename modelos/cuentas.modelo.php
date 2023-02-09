@@ -2,13 +2,15 @@
 
 require_once "conexion.php";
 
-class ModeloCuentas{
+class ModeloCuentas
+{
 
 	/*=============================================
 	CREAR CUENTA
 	=============================================*/
 
-	static public function mdlIngresarCuenta($tabla,$datos){
+	static public function mdlIngresarCuenta($tabla, $datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (
 			tipo_doc,
@@ -102,22 +104,20 @@ class ModeloCuentas{
 		$stmt->bindParam(":fecha_ori", $datos["fecha_ori"], PDO::PARAM_STR);
 
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-		
 		}
 
 		$stmt->close();
 		$stmt = null;
+	}
 
-	}    
-
-	static public function mdlIngresarCuentaBckp($tabla,$datos){
+	static public function mdlIngresarCuentaBckp($tabla, $datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("INSERT INTO cuenta_cte_bkpjf 
 		(SELECT 
@@ -133,22 +133,20 @@ class ModeloCuentas{
 		$stmt->bindParam(":num_cta", $datos["num_cta"], PDO::PARAM_STR);
 
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-		
 		}
 
 		$stmt->close();
 		$stmt = null;
+	}
 
-	}    
-
-	static public function mdlIngresarCuentaBckp2($tabla,$datos){
+	static public function mdlIngresarCuentaBckp2($tabla, $datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("INSERT INTO cuenta_cte_bkpjf 
 		(SELECT 
@@ -166,55 +164,51 @@ class ModeloCuentas{
 		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_STR);
 
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return $stmt->errorInfo();
-		
 		}
 
 		$stmt->close();
 		$stmt = null;
-
-	}    
+	}
 
 
 	/*=============================================
 	MOSTRAR CUENTAS
 	=============================================*/
 
-	static public function mdlMostrarCuentas($tabla,$item,$valor){
+	static public function mdlMostrarCuentas($tabla, $item, $valor)
+	{
 
-		if($item != null){
+		if ($item != null) {
 
 			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.tip_mov ='+' AND c.$item = :$item ");
 
-			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt->bindParam(":" . $item, $valor, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetch();
-
-		}else{
+			return $stmt->fetch();
+		} else {
 
 			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.tip_mov ='+'");
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
+			return $stmt->fetchAll();
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
 	}
 
-	static public function mdlMostrarCuentasNroUnico($documento){
+	static public function mdlMostrarCuentasNroUnico($documento)
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
 		cc.tipo_doc,
@@ -233,24 +227,24 @@ class ModeloCuentas{
 		AND cc.banco = '02' 
 		AND REPLACE(num_cta, '-', '') = :documento");
 
-		$stmt -> bindParam(":documento", $documento, PDO::PARAM_STR);
+		$stmt->bindParam(":documento", $documento, PDO::PARAM_STR);
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetch();
+		return $stmt->fetch();
 
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-	}	
+	}
 
 	/*=============================================
 	MOSTRAR CUENTAS V2
 	=============================================*/
 
-	static public function mdlMostrarCuentasV2($numCta, $tipoDoc){
+	static public function mdlMostrarCuentasV2($numCta, $tipoDoc)
+	{
 
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
@@ -264,49 +258,49 @@ class ModeloCuentas{
 							AND c.num_cta = :numCta
 							AND c.tipo_doc = :tipoDoc");
 
-		$stmt -> bindParam(":numCta", $numCta, PDO::PARAM_STR);
-		$stmt -> bindParam(":tipoDoc", $tipoDoc, PDO::PARAM_STR);
+		$stmt->bindParam(":numCta", $numCta, PDO::PARAM_STR);
+		$stmt->bindParam(":tipoDoc", $tipoDoc, PDO::PARAM_STR);
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetch();
+		return $stmt->fetch();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-	}	
+	}
 
 	/*=============================================
 	VALIDAR CUENTA
 	=============================================*/
 
-	static public function mdlValidarCuenta($tabla,$item,$valor,$item2,$valor2){
-		
+	static public function mdlValidarCuenta($tabla, $item, $valor, $item2, $valor2)
+	{
+
 
 		$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.tip_mov ='+' AND c.$item = :$item AND c.$item2 = :$item2 ");
 
-		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
-		$stmt -> bindParam(":".$item2, $valor2, PDO::PARAM_STR);
+		$stmt->bindParam(":" . $item, $valor, PDO::PARAM_STR);
+		$stmt->bindParam(":" . $item2, $valor2, PDO::PARAM_STR);
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetch();
+		return $stmt->fetch();
 
-		
-		$stmt -> close();
+
+		$stmt->close();
 
 		$stmt = null;
-
 	}
 
 	/*=============================================
 	MOSTRAR CUENTAS LETRAS IMPRESION
 	=============================================*/
 
-	static public function mdlMostrarCuentasLetras($tabla,$item,$valor){
+	static public function mdlMostrarCuentasLetras($tabla, $item, $valor)
+	{
 
-		if($item != null){
+		if ($item != null) {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			c.num_cta,
@@ -361,35 +355,33 @@ class ModeloCuentas{
 			  WHERE c.tip_mov ='+' 
 			  AND c.$item = :$item ");
 
-			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt->bindParam(":" . $item, $valor, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetch();
-
-		}else{
+			return $stmt->fetch();
+		} else {
 
 			$stmt = Conexion::conectar()->prepare("SELECT c.num_cta,c.doc_origen,c.fecha_ven,c.fecha,c.monto,cli.nombre,cli.direccion,cli.documento,cli.telefono FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.tip_mov ='+'");
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
+			return $stmt->fetchAll();
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
 	}
 
 	/*=============================================
 	MOSTRAR CUENTAS GENERA LETRAS IMPRESION
 	=============================================*/
 
-	static public function mdlMostrarCuentasGeneradosLetras($tabla,$item,$valor){
+	static public function mdlMostrarCuentasGeneradosLetras($tabla, $item, $valor)
+	{
 
-		if($item != null){
+		if ($item != null) {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			c.num_cta,
@@ -443,35 +435,33 @@ class ModeloCuentas{
 			  WHERE c.tip_mov ='+' 
 			  AND c.$item = :$item ");
 
-			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt->bindParam(":" . $item, $valor, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
-		}else{
+			return $stmt->fetchAll();
+		} else {
 
 			$stmt = Conexion::conectar()->prepare("SELECT c.num_cta,c.doc_origen,c.fecha_ven,c.fecha,c.monto,cli.nombre,cli.direccion,cli.documento,cli.telefono FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.tip_mov ='+'");
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
+			return $stmt->fetchAll();
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
 	}
 
 	/*=============================================
 	MOSTRAR CUENTAS
 	=============================================*/
 
-	static public function mdlMostrarCuentasUnicos($tabla,$item,$valor){
+	static public function mdlMostrarCuentasUnicos($tabla, $item, $valor)
+	{
 
-		if($item != null){
+		if ($item != null) {
 			$stmt = Conexion::conectar()->prepare("SELECT c.*,CONCAT(
 				SUBSTR(c.fecha_ven, 9, 2),
 				SUBSTR(c.fecha_ven, 6, 2),
@@ -489,10 +479,10 @@ class ModeloCuentas{
 			AND c.tipo_doc = '85'
 			AND c.estado= 'PENDIENTE'
 			AND c.id = $valor");
-			$stmt -> execute();
-	
-			return $stmt -> fetch();
-		}else{
+			$stmt->execute();
+
+			return $stmt->fetch();
+		} else {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 												c.*,
 												REPLACE(
@@ -524,81 +514,77 @@ class ModeloCuentas{
 												OR c.num_unico = ''
 												) 
 												AND DATE(c.fecha_ven) > DATE(NOW())");
-	
-	
-			$stmt -> execute();
-	
-			return $stmt -> fetchAll();
+
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
 		}
 
-		
 
-		$stmt -> close();
+
+		$stmt->close();
 
 		$stmt = null;
-
 	}
 
-	
-	
-	static public function mdlMostrarPagos($tabla,$item,$valor){
 
-		if($item != null){
+
+	static public function mdlMostrarPagos($tabla, $item, $valor)
+	{
+
+		if ($item != null) {
 
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item ORDER BY codigo");
 
-			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt->bindParam(":" . $item, $valor, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
-		}else{
+			return $stmt->fetchAll();
+		} else {
 
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
+			return $stmt->fetchAll();
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
 	}
-	
-	static public function mdlMostrarCancelaciones($tabla,$item,$valor){
 
-		if($item != null){
+	static public function mdlMostrarCancelaciones($tabla, $item, $valor)
+	{
+
+		if ($item != null) {
 
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item AND tip_mov = '-'");
 
-			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt->bindParam(":" . $item, $valor, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
-		}else{
+			return $stmt->fetchAll();
+		} else {
 
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE tip_mov = '-' ");
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
+			return $stmt->fetchAll();
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
+	}
 
-    }
-	
 
-	static public function mdlMostrarCancelacionesV2($numCta, $codCta){
+	static public function mdlMostrarCancelacionesV2($numCta, $codCta)
+	{
 
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
@@ -609,41 +595,41 @@ class ModeloCuentas{
 													AND c.tipo_doc = :codCta 
 													AND c.tip_mov = '-'");
 
-		$stmt -> bindParam(":numCta", $numCta, PDO::PARAM_STR);
-		$stmt -> bindParam(":codCta", $codCta, PDO::PARAM_STR);
+		$stmt->bindParam(":numCta", $numCta, PDO::PARAM_STR);
+		$stmt->bindParam(":codCta", $codCta, PDO::PARAM_STR);
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetchAll();
+		return $stmt->fetchAll();
 
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
+	}
 
-    }	
-	
-	static public function mdlMostrarCancelacion($tabla,$item,$valor){
+	static public function mdlMostrarCancelacion($tabla, $item, $valor)
+	{
 
 
 		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item AND tip_mov = '-' ");
 
-		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+		$stmt->bindParam(":" . $item, $valor, PDO::PARAM_STR);
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetch();
+		return $stmt->fetch();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-    }
+	}
 	/*=============================================
 	EDITAR TIPO DE PAGO
 	=============================================*/
 
-	static public function mdlEditarCuenta($tabla,$datos){
+	static public function mdlEditarCuenta($tabla, $datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET tipo_doc=:tipo_doc,num_cta=:num_cta,cliente=:cliente,vendedor=:vendedor,fecha=:fecha,fecha_ven=:fecha_ven,fecha_cep=:fecha_cep,tip_mon=:tip_mon,monto=:monto,tip_cambio=:tip_cambio,estado=:estado,notas=:notas,cod_pago=:cod_pago,doc_origen=:doc_origen,renovacion=:renovacion,protesta=:protesta,usuario=:usuario,saldo=:saldo,ult_pago=:ult_pago,estado_doc=:estado_doc,banco=:banco,num_unico=:num_unico,fecha_envio=:fecha_envio,fecha_abono=:fecha_abono WHERE id = :id");
 
@@ -673,26 +659,24 @@ class ModeloCuentas{
 		$stmt->bindParam(":fecha_envio", $datos["fecha_envio"], PDO::PARAM_STR);
 		$stmt->bindParam(":fecha_abono", $datos["fecha_abono"], PDO::PARAM_STR);
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-		
 		}
 
 		$stmt->close();
 		$stmt = null;
-
-    }
+	}
 
 	/*=============================================
 	EDITAR TULTIMO PAGO
 	=============================================*/
 
-	static public function mdlEditarUltPago($numCta,$tipoDoc){
+	static public function mdlEditarUltPago($numCta, $tipoDoc)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE 
 								cuenta_ctejf c1 
@@ -716,22 +700,20 @@ class ModeloCuentas{
 		$stmt->bindParam(":tipoDoc", $tipoDoc, PDO::PARAM_STR);
 
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-		
 		}
 
 		$stmt->close();
 		$stmt = null;
+	}
 
-    }	
-	
-	static public function mdlEditarCancelacion($tabla,$datos){
+	static public function mdlEditarCancelacion($tabla, $datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE 
 												$tabla 
@@ -763,78 +745,72 @@ class ModeloCuentas{
 		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
 		$stmt->bindParam(":usureg", $datos["usureg"], PDO::PARAM_STR);
 		$stmt->bindParam(":pcreg", $datos["pcreg"], PDO::PARAM_STR);
-		
-		if($stmt->execute()){
+
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return $stmt->errorInfo();
-		
 		}
 
 		$stmt->close();
 		$stmt = null;
+	}
 
-    }	
-	
 	/*=============================================
 	ELIMINAR CUENTA
 	=============================================*/
 
-	static public function mdlEliminarCuenta($tabla,$datos){
+	static public function mdlEliminarCuenta($tabla, $datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
 
-		$stmt -> bindParam(":id", $datos, PDO::PARAM_INT);
+		$stmt->bindParam(":id", $datos, PDO::PARAM_INT);
 
-		if($stmt -> execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-		
-		}else{
+		} else {
 
-			return "error";	
-
+			return "error";
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-	}    
+	}
 
 	/*=============================================
 	ELIMINAR TIPO DE PAGO
 	=============================================*/
 
-	static public function mdlEliminarCuentaCancelacion($tabla,$datos){
+	static public function mdlEliminarCuentaCancelacion($tabla, $datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE num_cta = :num_cta");
 
-		$stmt -> bindParam(":num_cta", $datos, PDO::PARAM_STR);
+		$stmt->bindParam(":num_cta", $datos, PDO::PARAM_STR);
 
-		if($stmt -> execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-		
-		}else{
+		} else {
 
-			return "error";	
-
+			return "error";
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-	}    
+	}
 
 	/* 
 	* Método para actualizar un dato CON EL articulo
 	*/
-	static public function mdlActualizarUnDato($tabla, $item1, $valor1, $valor2){
+	static public function mdlActualizarUnDato($tabla, $item1, $valor1, $valor2)
+	{
 
 		$sql = "UPDATE $tabla SET $item1=:$item1 WHERE id=:id";
 
@@ -843,21 +819,20 @@ class ModeloCuentas{
 		$stmt->bindParam(":" . $item1, $valor1, PDO::PARAM_STR);
 		$stmt->bindParam(":id", $valor2, PDO::PARAM_STR);
 
-		if($stmt -> execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-		
-		}else{
+		} else {
 
-			return $stmt->errorInfo();	
-
+			return $stmt->errorInfo();
 		}
 
 		$stmt = null;
 	}
 
 	//* ACTUALIZAR ESTADO DE CUENTA
-	static public function mdlActualizarEstado($valor2){
+	static public function mdlActualizarEstado($valor2)
+	{
 
 		$sql = "UPDATE cuenta_ctejf SET estado='PENDIENTE' WHERE id=:id";
 
@@ -865,14 +840,12 @@ class ModeloCuentas{
 
 		$stmt->bindParam(":id", $valor2, PDO::PARAM_INT);
 
-		if($stmt -> execute()){
+		if ($stmt->execute()) {
 
 			return $sql;
-		
-		}else{
+		} else {
 
-			return $stmt->errorInfo();	
-
+			return $stmt->errorInfo();
 		}
 
 		$stmt = null;
@@ -881,9 +854,10 @@ class ModeloCuentas{
 	ELIMINAR TIPO DE PAGO
 	=============================================*/
 
-	static public function mdlMostrarCuentasPendientes($tabla,$saldo){
+	static public function mdlMostrarCuentasPendientes($tabla, $saldo)
+	{
 
-		if($saldo != "null" ){
+		if ($saldo != "null") {
 			$stmt = Conexion::conectar()->prepare("SELECT 
   c.saldo,
   c.monto,
@@ -947,11 +921,11 @@ class ModeloCuentas{
 		  WHERE saldo > 0 
 			AND tip_mov = '+' 
 		  ORDER BY c.saldo)");
-	
-			$stmt -> execute();
-	
-			return $stmt -> fetchAll();
-		}else{
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		} else {
 			$stmt = Conexion::conectar()->prepare("SELECT
 			c.id, 
 			c.tipo_doc,
@@ -971,11 +945,11 @@ class ModeloCuentas{
 			AND tip_mov ='+' 
 		ORDER BY saldo ASC ");
 
-			$stmt -> execute();
-	
-			return $stmt -> fetchAll();
+			$stmt->execute();
+
+			return $stmt->fetchAll();
 		}
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
 	}
@@ -984,9 +958,10 @@ class ModeloCuentas{
 	MOSTRAR CUENTAS
 	=============================================*/
 
-	static public function mdlMostrarTipoCuentas($tabla,$item,$valor){
+	static public function mdlMostrarTipoCuentas($tabla, $item, $valor)
+	{
 
-		if($valor != "null"){
+		if ($valor != "null") {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			c.*,cli.nombre,IFNULL(DATEDIFF(c.ult_pago, c.fecha_ven), 0) AS diferencia,
@@ -996,12 +971,12 @@ class ModeloCuentas{
 			FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo 
 			WHERE c.tip_mov ='+' AND c.$item = :$item ");
 
-			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt->bindParam(":" . $item, $valor, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-		}else{
+			return $stmt->fetchAll();
+		} else {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			c.*,
 			cli.nombre,
@@ -1015,106 +990,97 @@ class ModeloCuentas{
 			  ON c.cliente = cli.codigo 
 		  WHERE c.tip_mov = '+' 
 		  ORDER BY c.id ASC");
-	
-			$stmt -> execute();
-	
-			return $stmt -> fetchAll();
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
 	}
 
 	/*=============================================
 	RANGO FECHAS
-	=============================================*/	
+	=============================================*/
 
-	static public function mdlRangoFechasCuentas($tabla, $ano){
+	static public function mdlRangoFechasCuentas($tabla, $ano)
+	{
 
-		if($ano == "null"){
+		if ($ano == "null") {
 
 			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.tip_mov ='+'  AND YEAR(c.fecha) = '2022' ORDER BY c.id ASC");
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();	
+			return $stmt->fetchAll();
+		} else {
 
+			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE YEAR(c.fecha) = '" . $ano . "' AND c.tip_mov ='+'");
 
-		}else {
+			$stmt->bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 
-			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE YEAR(c.fecha) = '".$ano."' AND c.tip_mov ='+'");
+			$stmt->execute();
 
-			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
-
-			$stmt -> execute();
-
-			return $stmt -> fetchAll();
-
+			return $stmt->fetchAll();
 		}
-
 	}
 
 	/*=============================================
 	RANGO FECHAS
-	=============================================*/	
+	=============================================*/
 
-	static public function mdlRangoFechasCuentasPendientes($tabla, $ano){
+	static public function mdlRangoFechasCuentasPendientes($tabla, $ano)
+	{
 
-		if($ano == "null"){
+		if ($ano == "null") {
 
 			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.tip_mov ='+'  AND c.estado='PENDIENTE' ORDER BY c.id ASC");
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();	
+			return $stmt->fetchAll();
+		} else {
 
+			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE YEAR(c.fecha) = '" . $ano . "' AND c.tip_mov ='+' AND c.estado='PENDIENTE' ");
 
-		}else {
+			$stmt->bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 
-			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE YEAR(c.fecha) = '".$ano."' AND c.tip_mov ='+' AND c.estado='PENDIENTE' ");
+			$stmt->execute();
 
-			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
-
-			$stmt -> execute();
-
-			return $stmt -> fetchAll();
-
+			return $stmt->fetchAll();
 		}
-
 	}
 
 	/*=============================================
 	RANGO FECHAS
-	=============================================*/	
+	=============================================*/
 
-	static public function mdlRangoFechasCuentasAprobadas($tabla, $ano){
+	static public function mdlRangoFechasCuentasAprobadas($tabla, $ano)
+	{
 
-		if($ano == "null"){
+		if ($ano == "null") {
 
 			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.tip_mov ='+' AND c.estado='CANCELADO' AND YEAR(c.fecha) = YEAR(NOW())  ORDER BY id ASC");
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();	
+			return $stmt->fetchAll();
+		} else {
 
+			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE YEAR(c.fecha) = '" . $ano . "' AND c.tip_mov ='+' AND c.estado='CANCELADO' ");
 
-		}else{
+			$stmt->bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 
-			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE YEAR(c.fecha) = '".$ano."' AND c.tip_mov ='+' AND c.estado='CANCELADO' ");
+			$stmt->execute();
 
-			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
-
-			$stmt -> execute();
-
-			return $stmt -> fetchAll();
-
+			return $stmt->fetchAll();
 		}
-
 	}
 
-	static public function mdlMostrarCuentaCredito($tabla,$valor){
+	static public function mdlMostrarCuentaCredito($tabla, $valor)
+	{
 
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
@@ -1126,19 +1092,19 @@ class ModeloCuentas{
 		AND c.tip_mov = '+'
 		GROUP BY c.cliente ");
 
-		$stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
+		$stmt->bindParam(":cliente", $valor, PDO::PARAM_STR);
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetch();
+		return $stmt->fetch();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
+	}
 
-    }
-
-	static public function mdlMostrarCuentaDeuda($tabla,$valor){
+	static public function mdlMostrarCuentaDeuda($tabla, $valor)
+	{
 
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
@@ -1151,21 +1117,20 @@ class ModeloCuentas{
 		AND c.tip_mov = '+'
 		GROUP BY c.cliente ");
 
-		$stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
+		$stmt->bindParam(":cliente", $valor, PDO::PARAM_STR);
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetch();
+		return $stmt->fetch();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
+	}
 
 
-    }
-
-
-	static public function mdlMostrarCuentaDeudaVencida($tabla,$valor){
+	static public function mdlMostrarCuentaDeudaVencida($tabla, $valor)
+	{
 
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
@@ -1179,78 +1144,72 @@ class ModeloCuentas{
 		AND c.tip_mov = '+'
 		GROUP BY c.cliente  ");
 
-		$stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
+		$stmt->bindParam(":cliente", $valor, PDO::PARAM_STR);
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetch();
+		return $stmt->fetch();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-    }
+	}
 
 
 	/*=============================================
 	RANGO FECHAS ENVIOS DE CUENTAS
-	=============================================*/	
+	=============================================*/
 
-	static public function mdlRangoFechaEnvioCuentas($tabla, $fechaInicial, $fechaFinal){
+	static public function mdlRangoFechaEnvioCuentas($tabla, $fechaInicial, $fechaFinal)
+	{
 
-		if($fechaInicial == "null"){
+		if ($fechaInicial == "null") {
 
 			$stmt = Conexion::conectar()->prepare("SELECT e.*,u.nombre FROM $tabla e LEFT JOIN usuariosjf u ON e.usuario=u.id  ORDER BY e.id ASC");
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();	
-
-
-		}else if($fechaInicial == $fechaFinal){
+			return $stmt->fetchAll();
+		} else if ($fechaInicial == $fechaFinal) {
 
 			$stmt = Conexion::conectar()->prepare("SELECT e.*,u.nombre FROM $tabla e LEFT JOIN usuariosjf u ON e.usuario=u.id WHERE e.fecha like '%$fechaFinal%' ");
 
-			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+			$stmt->bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
-		}else{
+			return $stmt->fetchAll();
+		} else {
 
 			$fechaActual = new DateTime();
-			$fechaActual ->add(new DateInterval("P1D"));
+			$fechaActual->add(new DateInterval("P1D"));
 			$fechaActualMasUno = $fechaActual->format("Y-m-d");
 
 			$fechaFinal2 = new DateTime($fechaFinal);
-			$fechaFinal2 ->add(new DateInterval("P1D"));
+			$fechaFinal2->add(new DateInterval("P1D"));
 			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
 
-			if($fechaFinalMasUno == $fechaActualMasUno){
+			if ($fechaFinalMasUno == $fechaActualMasUno) {
 
 				$stmt = Conexion::conectar()->prepare("SELECT e.*,u.nombre FROM $tabla e LEFT JOIN usuariosjf u ON e.usuario=u.id  WHERE e.fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' ");
-
-			}else{
+			} else {
 
 
 				$stmt = Conexion::conectar()->prepare("SELECT e.*,u.nombre FROM $tabla e LEFT JOIN usuariosjf u ON e.usuario=u.id  WHERE e.fecha BETWEEN '$fechaInicial' AND '$fechaFinal'");
-
 			}
-		
-			$stmt -> execute();
 
-			return $stmt -> fetchAll();
+			$stmt->execute();
 
+			return $stmt->fetchAll();
 		}
-
 	}
 
 	/*=============================================
 	CREAR ENVIO LETRA CABECERA
 	=============================================*/
 
-	static public function mdlIngresarEnvioLetra($tabla,$datos){
+	static public function mdlIngresarEnvioLetra($tabla, $datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(codigo,fecha,usuario,cantidad,archivo) VALUES (:codigo,:fecha,:usuario,:cantidad,:archivo)");
 
@@ -1260,50 +1219,46 @@ class ModeloCuentas{
 		$stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_STR);
 		$stmt->bindParam(":archivo", $datos["archivo"], PDO::PARAM_STR);
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-		
 		}
 
 		$stmt->close();
 		$stmt = null;
-
-	} 
+	}
 
 	/*=============================================
 	CREAR ENVIO LETRA DETALLE
 	=============================================*/
 
-	static public function mdlIngresarEnvioLetraDetalle($tabla,$datos){
+	static public function mdlIngresarEnvioLetraDetalle($tabla, $datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(num_cta,codigo) VALUES (:num_cta,:codigo)");
 
 		$stmt->bindParam(":num_cta", $datos["num_cta"], PDO::PARAM_STR);
 		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-		
 		}
 
 		$stmt->close();
 		$stmt = null;
+	}
 
-	} 
+	static public function mdlMostrarReporteCobrar($tabla, $orden1, $orden2, $tip_doc, $cli, $vend, $banco, $fin)
+	{
 
-	static public function mdlMostrarReporteCobrar($tabla,$orden1,$orden2,$tip_doc,$cli,$vend,$banco, $fin){
-
-		if($orden1 == 'tipo' && $orden2 == 'ordNumCuenta' ){
+		if ($orden1 == 'tipo' && $orden2 == 'ordNumCuenta') {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.tipo_doc,
 			cc.num_cta,
@@ -1328,12 +1283,11 @@ class ModeloCuentas{
 			AND cc.estado = 'Pendiente' 
 		  ORDER BY cc.tipo_doc,
 			cc.num_cta ");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
+			$stmt->execute();
 
-		}else if($orden1 == 'tipo' && $orden2 == 'ordVencimiento'){
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'tipo' && $orden2 == 'ordVencimiento') {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.tipo_doc,
@@ -1359,12 +1313,11 @@ class ModeloCuentas{
 			AND cc.estado = 'Pendiente' 
 		  ORDER BY cc.tipo_doc,cc.num_cta,
 			cc.fecha_ven ");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
+			$stmt->execute();
 
-		}else if($orden1 == 'tipo' && $orden2 == 'ordCliente'){
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'tipo' && $orden2 == 'ordCliente') {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.tipo_doc,
 			cc.num_cta,
@@ -1389,11 +1342,11 @@ class ModeloCuentas{
 			AND cc.estado = 'Pendiente' 
 		  ORDER BY cc.tipo_doc,cc.num_cta,
 			cc.cliente ");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
-		}else if ($orden1 == 'cliente' && $orden2 == 'ordNumCuenta' && $cli != 'todo'){
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'cliente' && $orden2 == 'ordNumCuenta' && $cli != 'todo') {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.tipo_doc,
 			cc.num_cta,
@@ -1408,14 +1361,13 @@ class ModeloCuentas{
 			  ON cc.cliente = c.codigo 
 		  WHERE cc.tip_mov = '+' 
 			AND cc.estado = 'Pendiente' 
-			AND cc.cliente = '".$cli."' 
+			AND cc.cliente = '" . $cli . "' 
 		  ORDER BY cc.tipo_doc ");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
+			$stmt->execute();
 
-		}else if ($orden1 == 'cliente' && $orden2 == 'ordNumCuenta' && $cli == 'todo'){
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'cliente' && $orden2 == 'ordNumCuenta' && $cli == 'todo') {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.cliente,
 			cc.tipo_doc,
@@ -1491,12 +1443,11 @@ class ModeloCuentas{
 		  GROUP BY cc.cliente 
 		  ORDER BY cliente,
 			fecha ");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
+			$stmt->execute();
 
-		}else if ($orden1 == 'vendedor' && $orden2 == 'ordNumCuenta' && $vend == 'todo'){
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'vendedor' && $orden2 == 'ordNumCuenta' && $vend == 'todo') {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.tipo_doc,
 			cc.num_cta,
@@ -1521,11 +1472,11 @@ class ModeloCuentas{
 			AND cc.estado = 'Pendiente' 
 		  ORDER BY cc.tipo_doc,
 			cc.num_cta ");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
-		}else if ($orden1 == 'vendedor' && $orden2 == 'ordNumCuenta' && $vend != 'todo'){
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'vendedor' && $orden2 == 'ordNumCuenta' && $vend != 'todo') {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.tipo_doc,
 			cc.num_cta,
@@ -1553,14 +1504,13 @@ class ModeloCuentas{
 			  ON cc.vendedor = v.codigo 
 		  WHERE cc.tip_mov = '+' 
 			AND cc.estado = 'Pendiente' 
-			AND cc.vendedor = '".$vend."' 
+			AND cc.vendedor = '" . $vend . "' 
 		  ORDER BY cc.tipo_doc");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
+			$stmt->execute();
 
-		}else if ($orden1 == 'vendedor' && $orden2 == 'ordCliente' && $vend == 'todo'){
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'vendedor' && $orden2 == 'ordCliente' && $vend == 'todo') {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.tipo_doc,
 			cc.num_cta,
@@ -1587,12 +1537,11 @@ class ModeloCuentas{
 		  cc.cliente,
 		  cc.num_cta
 			 ");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
+			$stmt->execute();
 
-		}else if($orden1 == 'fecha_ven' && $orden2 == 'ordNumCuenta'){
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'fecha_ven' && $orden2 == 'ordNumCuenta') {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.tipo_doc,
 			cc.num_cta,
@@ -1618,12 +1567,11 @@ class ModeloCuentas{
 		  ORDER BY cc.tipo_doc,
 			cc.fecha_ven,
 			cc.num_cta ");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
-		
-		}else if($orden1 == 'fecha_ven' && $orden2 == 'ordVencimiento'){
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'fecha_ven' && $orden2 == 'ordVencimiento') {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.tipo_doc,
@@ -1660,25 +1608,22 @@ class ModeloCuentas{
 			$stmt->bindParam(":banco", $banco, PDO::PARAM_STR);
 			$stmt->bindParam(":fin", $fin, PDO::PARAM_STR);
 
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
+			$stmt->execute();
 
-
+			return $stmt->fetchAll();
 		}
 
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
+	}
 
+	static public function mdlMostrarReporteVencidos($tabla, $orden1, $orden2, $tip_doc, $cli, $vend, $banco)
+	{
 
-    }
-
-	static public function mdlMostrarReporteVencidos($tabla,$orden1,$orden2,$tip_doc,$cli,$vend,$banco){
-
-		if($orden1 == 'tipo' && $orden2 == 'ordNumCuenta' ){
+		if ($orden1 == 'tipo' && $orden2 == 'ordNumCuenta') {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.tipo_doc,
 			cc.num_cta,
@@ -1704,12 +1649,11 @@ class ModeloCuentas{
 		    AND NOW()>cc.fecha_ven  
 		  ORDER BY cc.tipo_doc,
 			cc.num_cta ");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
+			$stmt->execute();
 
-		}else if($orden1 == 'tipo' && $orden2 == 'ordVencimiento'){
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'tipo' && $orden2 == 'ordVencimiento') {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.tipo_doc,
@@ -1736,12 +1680,11 @@ class ModeloCuentas{
 		    AND NOW()>cc.fecha_ven 
 		  ORDER BY cc.tipo_doc,cc.num_cta,
 			cc.fecha_ven ");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
+			$stmt->execute();
 
-		}else if($orden1 == 'tipo' && $orden2 == 'ordCliente'){
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'tipo' && $orden2 == 'ordCliente') {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.tipo_doc,
 			cc.num_cta,
@@ -1767,11 +1710,11 @@ class ModeloCuentas{
 		    AND NOW()>cc.fecha_ven  
 		  ORDER BY cc.tipo_doc,cc.num_cta,
 			cc.cliente ");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
-		}else if ($orden1 == 'cliente' && $orden2 == 'ordNumCuenta' && $cli != 'todo'){
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'cliente' && $orden2 == 'ordNumCuenta' && $cli != 'todo') {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.tipo_doc,
 			cc.num_cta,
@@ -1786,15 +1729,14 @@ class ModeloCuentas{
 			  ON cc.cliente = c.codigo 
 		  WHERE cc.tip_mov = '+' 
 			AND cc.estado = 'Pendiente' 
-			AND cc.cliente = '".$cli."' 
+			AND cc.cliente = '" . $cli . "' 
 		    AND NOW()>cc.fecha_ven  
 		  ORDER BY cc.tipo_doc ");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
+			$stmt->execute();
 
-		}else if ($orden1 == 'cliente' && $orden2 == 'ordNumCuenta' && $cli == 'todo'){
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'cliente' && $orden2 == 'ordNumCuenta' && $cli == 'todo') {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.cliente,
 			cc.tipo_doc,
@@ -1871,11 +1813,11 @@ class ModeloCuentas{
 		  GROUP BY cc.cliente 
 		  ORDER BY cliente,
 			fecha ");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
-		}else if ($orden1 == 'vendedor' && $orden2 == 'ordNumCuenta' && $vend == 'todo'){
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'vendedor' && $orden2 == 'ordNumCuenta' && $vend == 'todo') {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.tipo_doc,
 			cc.num_cta,
@@ -1901,11 +1843,11 @@ class ModeloCuentas{
 		    AND NOW()>cc.fecha_ven 
 		  ORDER BY cc.tipo_doc,
 			cc.num_cta ");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
-		}else if ($orden1 == 'vendedor' && $orden2 == 'ordNumCuenta' && $vend != 'todo'){
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'vendedor' && $orden2 == 'ordNumCuenta' && $vend != 'todo') {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.tipo_doc,
 			cc.num_cta,
@@ -1933,14 +1875,14 @@ class ModeloCuentas{
 			  ON cc.vendedor = v.codigo 
 		  WHERE cc.tip_mov = '+' 
 			AND cc.estado = 'Pendiente' 
-			AND cc.vendedor = '".$vend."'  
+			AND cc.vendedor = '" . $vend . "'  
 		    AND NOW()>cc.fecha_ven 
 		  ORDER BY cc.tipo_doc");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
-		}else if ($orden1 == 'vendedor' && $orden2 == 'ordCliente' && $vend == 'todo'){
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'vendedor' && $orden2 == 'ordCliente' && $vend == 'todo') {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.tipo_doc,
 			cc.num_cta,
@@ -1968,11 +1910,11 @@ class ModeloCuentas{
 		  cc.cliente,
 		  cc.num_cta
 			 ");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
-		}else if($orden1 == 'fecha_ven' && $orden2 == 'ordNumCuenta'){
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'fecha_ven' && $orden2 == 'ordNumCuenta') {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.tipo_doc,
 			cc.num_cta,
@@ -1999,20 +1941,19 @@ class ModeloCuentas{
 		  ORDER BY cc.tipo_doc,
 			cc.fecha_ven,
 			cc.num_cta ");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
+			$stmt->execute();
+
+			return $stmt->fetchAll();
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
+	}
 
-
-    }
-
-	static public function mdlMostrarSaldosFecha($fin){
+	static public function mdlMostrarSaldosFecha($fin)
+	{
 
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
@@ -2050,23 +1991,22 @@ class ModeloCuentas{
 					WHERE cc.tip_mov = '+' 
 						AND cc.fecha <= '$fin' 
 						AND (cc.monto - IFNULL(cc1.monto, 0)) > 0");
-							
-						$stmt -> execute();
 
-						return $stmt -> fetchAll();
-	
+		$stmt->execute();
+
+		return $stmt->fetchAll();
 
 
-		$stmt -> close();
+
+		$stmt->close();
 
 		$stmt = null;
+	}
 
+	static public function mdlMostrarReporteNoVencidos($tabla, $orden1, $orden2, $tip_doc, $cli, $vend, $banco)
+	{
 
-    }	
-
-	static public function mdlMostrarReporteNoVencidos($tabla,$orden1,$orden2,$tip_doc,$cli,$vend,$banco){
-
-		if($orden1 == 'tipo' && $orden2 == 'ordNumCuenta' ){
+		if ($orden1 == 'tipo' && $orden2 == 'ordNumCuenta') {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.tipo_doc,
 			cc.num_cta,
@@ -2092,12 +2032,11 @@ class ModeloCuentas{
 		    AND NOW()<cc.fecha_ven  
 		  ORDER BY cc.tipo_doc,
 			cc.num_cta ");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
+			$stmt->execute();
 
-		}else if($orden1 == 'tipo' && $orden2 == 'ordVencimiento'){
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'tipo' && $orden2 == 'ordVencimiento') {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.tipo_doc,
@@ -2124,12 +2063,11 @@ class ModeloCuentas{
 		    AND NOW()<cc.fecha_ven 
 		  ORDER BY cc.tipo_doc,cc.num_cta,
 			cc.fecha_ven ");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
+			$stmt->execute();
 
-		}else if($orden1 == 'tipo' && $orden2 == 'ordCliente'){
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'tipo' && $orden2 == 'ordCliente') {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.tipo_doc,
 			cc.num_cta,
@@ -2155,11 +2093,11 @@ class ModeloCuentas{
 		    AND NOW()<cc.fecha_ven  
 		  ORDER BY cc.tipo_doc,cc.num_cta,
 			cc.cliente ");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
-		}else if ($orden1 == 'cliente' && $orden2 == 'ordNumCuenta' && $cli != 'todo'){
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'cliente' && $orden2 == 'ordNumCuenta' && $cli != 'todo') {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.tipo_doc,
 			cc.num_cta,
@@ -2174,15 +2112,14 @@ class ModeloCuentas{
 			  ON cc.cliente = c.codigo 
 		  WHERE cc.tip_mov = '+' 
 			AND cc.estado = 'Pendiente' 
-			AND cc.cliente = '".$cli."' 
+			AND cc.cliente = '" . $cli . "' 
 		    AND NOW()<cc.fecha_ven  
 		  ORDER BY cc.tipo_doc ");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
+			$stmt->execute();
 
-		}else if ($orden1 == 'cliente' && $orden2 == 'ordNumCuenta' && $cli == 'todo'){
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'cliente' && $orden2 == 'ordNumCuenta' && $cli == 'todo') {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.cliente,
 			cc.tipo_doc,
@@ -2259,11 +2196,11 @@ class ModeloCuentas{
 		  GROUP BY cc.cliente 
 		  ORDER BY cliente,
 			fecha ");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
-		}else if ($orden1 == 'vendedor' && $orden2 == 'ordNumCuenta' && $vend == 'todo'){
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'vendedor' && $orden2 == 'ordNumCuenta' && $vend == 'todo') {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.tipo_doc,
 			cc.num_cta,
@@ -2289,11 +2226,11 @@ class ModeloCuentas{
 		    AND NOW()<cc.fecha_ven 
 		  ORDER BY cc.tipo_doc,
 			cc.num_cta ");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
-		}else if ($orden1 == 'vendedor' && $orden2 == 'ordNumCuenta' && $vend != 'todo'){
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'vendedor' && $orden2 == 'ordNumCuenta' && $vend != 'todo') {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.tipo_doc,
 			cc.num_cta,
@@ -2321,14 +2258,14 @@ class ModeloCuentas{
 			  ON cc.vendedor = v.codigo 
 		  WHERE cc.tip_mov = '+' 
 			AND cc.estado = 'Pendiente' 
-			AND cc.vendedor = '".$vend."'  
+			AND cc.vendedor = '" . $vend . "'  
 		    AND NOW()<cc.fecha_ven 
 		  ORDER BY cc.tipo_doc");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
-		}else if ($orden1 == 'vendedor' && $orden2 == 'ordCliente' && $vend == 'todo'){
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'vendedor' && $orden2 == 'ordCliente' && $vend == 'todo') {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.tipo_doc,
 			cc.num_cta,
@@ -2356,11 +2293,11 @@ class ModeloCuentas{
 		  cc.cliente,
 		  cc.num_cta
 			 ");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
-		}else if($orden1 == 'fecha_ven' && $orden2 == 'ordNumCuenta'){
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'fecha_ven' && $orden2 == 'ordNumCuenta') {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.tipo_doc,
 			cc.num_cta,
@@ -2387,22 +2324,21 @@ class ModeloCuentas{
 		  ORDER BY cc.tipo_doc,
 			cc.fecha_ven,
 			cc.num_cta ");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
+			$stmt->execute();
+
+			return $stmt->fetchAll();
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
+	}
 
+	static public function mdlMostrarReporteProtestados($tabla, $orden1, $orden2, $tip_doc, $cli, $vend, $banco)
+	{
 
-    }
-
-	static public function mdlMostrarReporteProtestados($tabla,$orden1,$orden2,$tip_doc,$cli,$vend,$banco){
-
-		if($orden1 == 'tipo' && $orden2 == 'ordNumCuenta' ){
+		if ($orden1 == 'tipo' && $orden2 == 'ordNumCuenta') {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 							cc.tipo_doc,
@@ -2429,12 +2365,11 @@ class ModeloCuentas{
 							AND cc.protesta = 1  
 						ORDER BY cc.tipo_doc,
 							cc.num_cta ");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
+			$stmt->execute();
 
-		}else if($orden1 == 'tipo' && $orden2 == 'ordVencimiento'){
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'tipo' && $orden2 == 'ordVencimiento') {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 							cc.tipo_doc,
@@ -2461,12 +2396,11 @@ class ModeloCuentas{
 							AND cc.protesta = 1   
 						ORDER BY cc.tipo_doc,cc.num_cta,
 							cc.fecha_ven ");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
+			$stmt->execute();
 
-		}else if($orden1 == 'tipo' && $orden2 == 'ordCliente'){
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'tipo' && $orden2 == 'ordCliente') {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 							cc.tipo_doc,
 							cc.num_cta,
@@ -2492,11 +2426,11 @@ class ModeloCuentas{
 							AND cc.protesta = 1   
 						ORDER BY cc.tipo_doc,cc.num_cta,
 							cc.cliente ");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
-		}else if ($orden1 == 'cliente' && $orden2 == 'ordNumCuenta' && $cli != 'todo'){
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'cliente' && $orden2 == 'ordNumCuenta' && $cli != 'todo') {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 							cc.tipo_doc,
 							cc.num_cta,
@@ -2511,15 +2445,14 @@ class ModeloCuentas{
 							ON cc.cliente = c.codigo 
 						WHERE cc.tip_mov = '+' 
 							AND cc.estado = 'Pendiente' 
-							AND cc.cliente = '".$cli."'  
+							AND cc.cliente = '" . $cli . "'  
 							AND cc.protesta = 1  
 						ORDER BY cc.tipo_doc ");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
+			$stmt->execute();
 
-		}else if ($orden1 == 'cliente' && $orden2 == 'ordNumCuenta' && $cli == 'todo'){
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'cliente' && $orden2 == 'ordNumCuenta' && $cli == 'todo') {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 							cc.cliente,
 							cc.tipo_doc,
@@ -2596,14 +2529,13 @@ class ModeloCuentas{
 						GROUP BY cc.cliente 
 						ORDER BY cliente,
 							fecha ");
-							
-						$stmt -> execute();
 
-						return $stmt -> fetchAll();
-					
-		}else if ($orden1 == 'vendedor' && $orden2 == 'ordNumCuenta' && $vend == 'todo'){
+			$stmt->execute();
 
-							$stmt = Conexion::conectar()->prepare("SELECT 
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'vendedor' && $orden2 == 'ordNumCuenta' && $vend == 'todo') {
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
 											cc.tipo_doc,
 											cc.num_cta,
 											cc.banco,
@@ -2628,13 +2560,12 @@ class ModeloCuentas{
 											AND cc.protesta = 1   
 										ORDER BY cc.tipo_doc,
 											cc.num_cta ");
-							
-						$stmt -> execute();
 
-						return $stmt -> fetchAll();
+			$stmt->execute();
 
-		}else if ($orden1 == 'vendedor' && $orden2 == 'ordNumCuenta' && $vend != 'todo'){
-							$stmt = Conexion::conectar()->prepare("SELECT 
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'vendedor' && $orden2 == 'ordNumCuenta' && $vend != 'todo') {
+			$stmt = Conexion::conectar()->prepare("SELECT 
 											cc.tipo_doc,
 											cc.num_cta,
 											cc.banco,
@@ -2671,12 +2602,11 @@ class ModeloCuentas{
 											cc.tipo_doc,
 											cc.cliente,
 											cc.num_cta");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
+			$stmt->execute();
 
-		}else if ($orden1 == 'vendedor' && $orden2 == 'ordCliente' && $vend == 'todo'){
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'vendedor' && $orden2 == 'ordCliente' && $vend == 'todo') {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 							cc.tipo_doc,
 							cc.num_cta,
@@ -2704,11 +2634,11 @@ class ModeloCuentas{
 						cc.cliente,
 						cc.num_cta
 							");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
-		}else if($orden1 == 'fecha_ven' && $orden2 == 'ordNumCuenta'){
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		} else if ($orden1 == 'fecha_ven' && $orden2 == 'ordNumCuenta') {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 							cc.tipo_doc,
 							cc.num_cta,
@@ -2735,24 +2665,23 @@ class ModeloCuentas{
 						ORDER BY cc.tipo_doc,
 							cc.fecha_ven,
 							cc.num_cta ");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
+			$stmt->execute();
+
+			return $stmt->fetchAll();
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
+	}
 
+	static public function mdlMostrarReportePagos($tabla, $orden1, $orden2, $canc, $vend, $inicio, $fin)
+	{
 
-    }
+		if ($orden1 == "fecha_pag" && $orden2 == "ordNumCuenta" && $canc == "todo") {
 
-	static public function mdlMostrarReportePagos($tabla,$orden1,$orden2,$canc,$vend,$inicio,$fin){
-		
-	if($orden1 == "fecha_pag" && $orden2 == "ordNumCuenta" && $canc=="todo"){
-
-		$stmt = Conexion::conectar()->prepare("SELECT 
+			$stmt = Conexion::conectar()->prepare("SELECT 
 							'-1' AS tipo_doc,
 							'Fecha de pago:' AS num_cta,
 							cc.fecha,
@@ -2776,8 +2705,8 @@ class ModeloCuentas{
 							ON cc.vendedor = v.codigo 
 						WHERE cc.tip_mov = '-' 
 							AND (
-							cc.fecha BETWEEN '".$inicio."' 
-							AND '".$fin."'
+							cc.fecha BETWEEN '" . $inicio . "' 
+							AND '" . $fin . "'
 							) 
 						GROUP BY cc.fecha 
 						UNION
@@ -2813,8 +2742,8 @@ class ModeloCuentas{
 							ON cc.vendedor = v.codigo 
 						WHERE cc.tip_mov = '-' 
 							AND (
-							cc.fecha BETWEEN BETWEEN '".$inicio."' 
-							AND '".$fin."'
+							cc.fecha BETWEEN BETWEEN '" . $inicio . "' 
+							AND '" . $fin . "'
 							) 
 							UNION
 							SELECT 
@@ -2859,20 +2788,19 @@ class ModeloCuentas{
 								ON cc.vendedor = v.codigo 
 							WHERE cc.tip_mov = '-' 
 							AND (
-								cc.fecha BETWEEN BETWEEN '".$inicio."' 
-								AND '".$fin."'
+								cc.fecha BETWEEN BETWEEN '" . $inicio . "' 
+								AND '" . $fin . "'
 							) 
 							GROUP BY cc.fecha 
 							ORDER BY fecha,
 							tipo_doc");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
+			$stmt->execute();
 
-	}else if($orden1 == "vendedor" && $orden2 == "ordNumCuenta" ){
+			return $stmt->fetchAll();
+		} else if ($orden1 == "vendedor" && $orden2 == "ordNumCuenta") {
 
-		$stmt = Conexion::conectar()->prepare("SELECT 
+			$stmt = Conexion::conectar()->prepare("SELECT 
 							'-1' AS tipo_doc,
 							'Vendedor: ' AS num_cta,
 							CONCAT( m.codigo , ' ', m.descripcion) AS fecha,
@@ -2886,7 +2814,7 @@ class ModeloCuentas{
 						FROM
 							maestrajf m 
 						WHERE m.tipo_dato = 'tvend' 
-							AND m.codigo = '".$vend."' 
+							AND m.codigo = '" . $vend . "' 
 					UNION
 						SELECT 
 							cc.tipo_doc,
@@ -2920,10 +2848,10 @@ class ModeloCuentas{
 							ON cc.vendedor = v.codigo 
 						WHERE cc.tip_mov = '-' 
 							AND (
-							cc.fecha BETWEEN '".$inicio."' 
-							AND '".$fin."'
+							cc.fecha BETWEEN '" . $inicio . "' 
+							AND '" . $fin . "'
 							) 
-							AND cc.vendedor = '".$vend."'  
+							AND cc.vendedor = '" . $vend . "'  
 				UNION
 						SELECT 
 							'999' AS tipo_doc,
@@ -2967,152 +2895,151 @@ class ModeloCuentas{
 							ON cc.vendedor = v.codigo 
 						WHERE cc.tip_mov = '-' 
 							AND (
-							cc.fecha BETWEEN '".$inicio."' 
-							AND '".$fin."'
+							cc.fecha BETWEEN '" . $inicio . "' 
+							AND '" . $fin . "'
 							) 
-							AND cc.vendedor = '".$vend."' 
+							AND cc.vendedor = '" . $vend . "' 
 						GROUP BY cc.cod_pago 
 						ORDER BY cod_pago,
 							tipo_doc,
 							fecha,
 							num_cta ");
-			
-		  $stmt -> execute();
 
-		  return $stmt -> fetchAll();
-	}else if($orden1 == "fecha_pag" && $orden2 == "ordNumCuenta" && $canc != "todo"){
-		$stmt = Conexion::conectar()->prepare("SELECT 
-			cc.tipo_doc,
-			cc.num_cta,
-			cc.fecha,
-			cc.cliente,
-			c.nombre,
-			cc.cod_pago,
-			cc.doc_origen,
-			CASE
-			WHEN cc.tipo_doc IN ('01', '03', '09', '08', '07') 
-			THEN FORMAT(cc.monto, 2) 
-			ELSE '' 
-			END AS fact,
-			CASE
-			WHEN cc.tipo_doc IN ('85') 
-			THEN FORMAT(cc.monto, 2) 
-			ELSE '' 
-			END AS letra,
-			cc.notas 
-		FROM
-			cuenta_ctejf cc 
-			LEFT JOIN clientesjf c 
-			ON cc.cliente = c.codigo 
-			LEFT JOIN 
-			(SELECT 
-				* 
-			FROM
-				maestrajf 
-			WHERE tipo_dato = 'tvend') v 
-			ON cc.vendedor = v.codigo 
-		WHERE cc.tip_mov = '-' 
-			AND (
-			cc.fecha BETWEEN '".$inicio."' 
-			AND '".$fin."'
-			) 
-			AND cc.cod_pago = '".$canc."' 
-		UNION
-		SELECT 
-			'-1' AS tipo_doc,
-			'Fecha de pago:' AS num_cta,
-			cc.fecha,
-			'' AS cliente,
-			'' AS nombre,
-			'' AS cod_pago,
-			'' AS doc_origen,
-			'' AS fact,
-			'' AS letra,
-			'' as notas 
-		FROM
-			cuenta_ctejf cc 
-			LEFT JOIN clientesjf c 
-			ON cc.cliente = c.codigo 
-			LEFT JOIN 
-			(SELECT 
-				* 
-			FROM
-				maestrajf 
-			WHERE tipo_dato = 'tvend') v 
-			ON cc.vendedor = v.codigo 
-		WHERE cc.tip_mov = '-' 
-			AND (
-			cc.fecha BETWEEN '".$inicio."' 
-			AND '".$fin."'
-			) 
-			AND cc.cod_pago = '".$canc."' 
-		GROUP BY cc.fecha 
-		UNION
-		SELECT 
-			'999' AS tipo_doc,
-			'Fecha de pago:',
-			cc.fecha,
-			'',
-			'',
-			'',
-			'',
-			FORMAT(
-			SUM(
-				CASE
-				WHEN cc.tipo_doc IN ('01', '03', '09', '08', '07') 
-				THEN cc.monto 
-				ELSE '' 
-				END
-			),
-			2
-			) AS fact,
-			FORMAT(
-			SUM(
-				CASE
-				WHEN cc.tipo_doc IN ('85') 
-				THEN cc.monto 
-				ELSE '' 
-				END
-			),
-			2
-			) AS letra,
-			'' as notas 
-		FROM
-			cuenta_ctejf cc 
-			LEFT JOIN clientesjf c 
-			ON cc.cliente = c.codigo 
-			LEFT JOIN 
-			(SELECT 
-				* 
-			FROM
-				maestrajf 
-			WHERE tipo_dato = 'tvend') v 
-			ON cc.vendedor = v.codigo 
-		WHERE cc.tip_mov = '-' 
-			AND (
-			cc.fecha BETWEEN '".$inicio."' 
-			AND '".$fin."'
-			) 
-			AND cc.cod_pago = '".$canc."' 
-			GROUP BY cc.fecha 
-			ORDER BY fecha,
-			tipo_doc ");
-			
-		  $stmt -> execute();
+			$stmt->execute();
 
-		  return $stmt -> fetchAll();
-	}
+			return $stmt->fetchAll();
+		} else if ($orden1 == "fecha_pag" && $orden2 == "ordNumCuenta" && $canc != "todo") {
+			$stmt = Conexion::conectar()->prepare("SELECT 
+					cc.tipo_doc,
+					cc.num_cta,
+					cc.fecha,
+					cc.cliente,
+					c.nombre,
+					cc.cod_pago,
+					cc.doc_origen,
+					CASE
+					WHEN cc.tipo_doc IN ('01', '03', '09', '08', '07') 
+					THEN FORMAT(cc.monto, 2) 
+					ELSE '' 
+					END AS fact,
+					CASE
+					WHEN cc.tipo_doc IN ('85') 
+					THEN FORMAT(cc.monto, 2) 
+					ELSE '' 
+					END AS letra,
+					cc.notas 
+				FROM
+					cuenta_ctejf cc 
+					LEFT JOIN clientesjf c 
+					ON cc.cliente = c.codigo 
+					LEFT JOIN 
+					(SELECT 
+						* 
+					FROM
+						maestrajf 
+					WHERE tipo_dato = 'tvend') v 
+					ON cc.vendedor = v.codigo 
+				WHERE cc.tip_mov = '-' 
+					AND (
+					cc.fecha BETWEEN '" . $inicio . "' 
+					AND '" . $fin . "'
+					) 
+					AND cc.cod_pago = '" . $canc . "' 
+				UNION
+				SELECT 
+					'-1' AS tipo_doc,
+					'Fecha de pago:' AS num_cta,
+					cc.fecha,
+					'' AS cliente,
+					'' AS nombre,
+					'' AS cod_pago,
+					'' AS doc_origen,
+					'' AS fact,
+					'' AS letra,
+					'' as notas 
+				FROM
+					cuenta_ctejf cc 
+					LEFT JOIN clientesjf c 
+					ON cc.cliente = c.codigo 
+					LEFT JOIN 
+					(SELECT 
+						* 
+					FROM
+						maestrajf 
+					WHERE tipo_dato = 'tvend') v 
+					ON cc.vendedor = v.codigo 
+				WHERE cc.tip_mov = '-' 
+					AND (
+					cc.fecha BETWEEN '" . $inicio . "' 
+					AND '" . $fin . "'
+					) 
+					AND cc.cod_pago = '" . $canc . "' 
+				GROUP BY cc.fecha 
+				UNION
+				SELECT 
+					'999' AS tipo_doc,
+					'Fecha de pago:',
+					cc.fecha,
+					'',
+					'',
+					'',
+					'',
+					FORMAT(
+					SUM(
+						CASE
+						WHEN cc.tipo_doc IN ('01', '03', '09', '08', '07') 
+						THEN cc.monto 
+						ELSE '' 
+						END
+					),
+					2
+					) AS fact,
+					FORMAT(
+					SUM(
+						CASE
+						WHEN cc.tipo_doc IN ('85') 
+						THEN cc.monto 
+						ELSE '' 
+						END
+					),
+					2
+					) AS letra,
+					'' as notas 
+				FROM
+					cuenta_ctejf cc 
+					LEFT JOIN clientesjf c 
+					ON cc.cliente = c.codigo 
+					LEFT JOIN 
+					(SELECT 
+						* 
+					FROM
+						maestrajf 
+					WHERE tipo_dato = 'tvend') v 
+					ON cc.vendedor = v.codigo 
+				WHERE cc.tip_mov = '-' 
+					AND (
+					cc.fecha BETWEEN '" . $inicio . "' 
+					AND '" . $fin . "'
+					) 
+					AND cc.cod_pago = '" . $canc . "' 
+					GROUP BY cc.fecha 
+					ORDER BY fecha,
+					tipo_doc ");
 
-		$stmt -> close();
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		}
+
+		$stmt->close();
 
 		$stmt = null;
+	}
+
+	static public function mdlMostrarReporteTotalCobrar($tabla, $orden1, $orden2, $tip_doc, $cli, $vend, $banco)
+	{
 
 
-    }
-
-	static public function mdlMostrarReporteTotalCobrar($tabla,$orden1,$orden2,$tip_doc,$cli,$vend,$banco){
-
-		
 		$stmt = Conexion::conectar()->prepare("SELECT 
 		FORMAT(SUM(cc.saldo), 2) AS saldo_total 
 		FROM
@@ -3124,20 +3051,20 @@ class ModeloCuentas{
 		ORDER BY cc.tipo_doc ");
 		// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetch();
-		
+		return $stmt->fetch();
 
-		$stmt -> close();
+
+		$stmt->close();
 
 		$stmt = null;
+	}
 
-    }
+	static public function mdlMostrarReporteTotalOct($tip_doc, $banco, $fin)
+	{
 
-	static public function mdlMostrarReporteTotalOct($tip_doc,$banco,$fin){
 
-		
 		$stmt = Conexion::conectar()->prepare("SELECT 
 		FORMAT(SUM(cc.saldo), 2) AS saldo_total 
 	  FROM
@@ -3152,23 +3079,23 @@ class ModeloCuentas{
 	  GROUP BY '+'");
 
 
-		$stmt -> bindParam(":fin", $fin, PDO::PARAM_STR);
+		$stmt->bindParam(":fin", $fin, PDO::PARAM_STR);
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetch();
-		
+		return $stmt->fetch();
 
-		$stmt -> close();
+
+		$stmt->close();
 
 		$stmt = null;
+	}
 
-    }	
+	static public function mdlMostrarReporteTotalVencidos($tabla, $orden1, $orden2, $tip_doc, $cli, $vend, $banco)
+	{
 
-	static public function mdlMostrarReporteTotalVencidos($tabla,$orden1,$orden2,$tip_doc,$cli,$vend,$banco){
 
-			
-			$stmt = Conexion::conectar()->prepare("SELECT 
+		$stmt = Conexion::conectar()->prepare("SELECT 
 			FORMAT(SUM(cc.saldo), 2) AS saldo_total 
 			FROM
 			cuenta_ctejf cc 
@@ -3178,21 +3105,21 @@ class ModeloCuentas{
 			AND cc.estado = 'Pendiente' 
 		    AND NOW()>cc.fecha_ven  
 			ORDER BY cc.tipo_doc ");
-			// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
-	
-			$stmt -> execute();
-	
-			return $stmt -> fetch();
-	
-			$stmt -> close();
-	
-			$stmt = null;
-	
-		}
+		// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
 
-		static public function mdlMostrarReporteTotalNoVencidos($tabla,$orden1,$orden2,$tip_doc,$cli,$vend,$banco){
+		$stmt->execute();
 
-				$stmt = Conexion::conectar()->prepare("SELECT 
+		return $stmt->fetch();
+
+		$stmt->close();
+
+		$stmt = null;
+	}
+
+	static public function mdlMostrarReporteTotalNoVencidos($tabla, $orden1, $orden2, $tip_doc, $cli, $vend, $banco)
+	{
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
 				FORMAT(SUM(cc.saldo), 2) AS saldo_total 
 				FROM
 				cuenta_ctejf cc 
@@ -3202,23 +3129,23 @@ class ModeloCuentas{
 				AND cc.estado = 'Pendiente' 
 				AND NOW()<cc.fecha_ven  
 				ORDER BY cc.tipo_doc ");
-				// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
-		
-				$stmt -> execute();
-		
-				return $stmt -> fetch();
-				
-		
-				$stmt -> close();
-		
-				$stmt = null;
-		
-			}
+		// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
 
-			static public function mdlMostrarReporteTotalProtestados($tabla,$orden1,$orden2,$tip_doc,$cli,$vend,$banco){
+		$stmt->execute();
 
-		
-				$stmt = Conexion::conectar()->prepare("SELECT 
+		return $stmt->fetch();
+
+
+		$stmt->close();
+
+		$stmt = null;
+	}
+
+	static public function mdlMostrarReporteTotalProtestados($tabla, $orden1, $orden2, $tip_doc, $cli, $vend, $banco)
+	{
+
+
+		$stmt = Conexion::conectar()->prepare("SELECT 
 				FORMAT(SUM(cc.saldo), 2) AS saldo_total 
 				FROM
 				cuenta_ctejf cc 
@@ -3228,23 +3155,23 @@ class ModeloCuentas{
 				AND cc.estado = 'Pendiente'
 				AND cc.protesta = 1  
 				ORDER BY cc.tipo_doc ");
-				// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
-		
-				$stmt -> execute();
-		
-				return $stmt -> fetch();
-				
-		
-				$stmt -> close();
-		
-				$stmt = null;
-		
-			}
+		// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
 
-			static public function mdlMostrarReporteTotalPagos($tabla,$orden1,$orden2,$canc,$vend,$inicio,$fin){
+		$stmt->execute();
 
-				if($orden1 == "fecha_pag" && $orden2 == "ordNumCuenta"){
-					$stmt = Conexion::conectar()->prepare("SELECT 
+		return $stmt->fetch();
+
+
+		$stmt->close();
+
+		$stmt = null;
+	}
+
+	static public function mdlMostrarReporteTotalPagos($tabla, $orden1, $orden2, $canc, $vend, $inicio, $fin)
+	{
+
+		if ($orden1 == "fecha_pag" && $orden2 == "ordNumCuenta") {
+			$stmt = Conexion::conectar()->prepare("SELECT 
 					'Total General' AS total_gral,
 					FORMAT(
 					  SUM(
@@ -3279,16 +3206,16 @@ class ModeloCuentas{
 					  ON cc.vendedor = v.codigo 
 				  WHERE cc.tip_mov = '-' 
 					AND (
-					  cc.fecha BETWEEN '".$inicio."' 
-					 AND '".$fin."'
-					) AND cc.cod_pago = '".$canc."' ");
-					// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
-			
-					$stmt -> execute();
-			
-					return $stmt -> fetch();
-				}else if ($canc != "" && $orden2 == "ordNumCuenta"){
-					$stmt = Conexion::conectar()->prepare("SELECT 
+					  cc.fecha BETWEEN '" . $inicio . "' 
+					 AND '" . $fin . "'
+					) AND cc.cod_pago = '" . $canc . "' ");
+			// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
+
+			$stmt->execute();
+
+			return $stmt->fetch();
+		} else if ($canc != "" && $orden2 == "ordNumCuenta") {
+			$stmt = Conexion::conectar()->prepare("SELECT 
 					'Total General' AS total_gral,
 					cc.vendedor, 
 					FORMAT(
@@ -3324,28 +3251,28 @@ class ModeloCuentas{
 					  ON cc.vendedor = v.codigo 
 				  WHERE cc.tip_mov = '-' 
 					AND (
-					  cc.fecha BETWEEN '".$inicio."' 
-					 AND '".$fin."'
-					) AND cc.vendedor= '".$vend."'  
+					  cc.fecha BETWEEN '" . $inicio . "' 
+					 AND '" . $fin . "'
+					) AND cc.vendedor= '" . $vend . "'  
 				  GROUP BY cc.vendedor ");
-					// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
-			
-					$stmt -> execute();
-			
-					return $stmt -> fetch();
-				}
-				
-				
-		
-				$stmt -> close();
-		
-				$stmt = null;
-		
-			}
+			// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
 
-	static public function mdlMostrarReporteNombre($tabla,$cli,$vend){	
+			$stmt->execute();
 
-		if(isset($cli)){
+			return $stmt->fetch();
+		}
+
+
+
+		$stmt->close();
+
+		$stmt = null;
+	}
+
+	static public function mdlMostrarReporteNombre($tabla, $cli, $vend)
+	{
+
+		if (isset($cli)) {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.cliente,
 			c.nombre,
@@ -3356,16 +3283,16 @@ class ModeloCuentas{
 				ON cc.cliente = c.codigo 
 			WHERE cc.tip_mov = '+' 
 				AND cc.estado = 'Pendiente' 
-				AND cc.cliente = '".$cli."' 
+				AND cc.cliente = '" . $cli . "' 
 			GROUP BY cc.cliente 
 			  ORDER BY cc.tipo_doc");
-	
+
 			// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
-	
-			$stmt -> execute();
-	
-			return $stmt -> fetch();
-		}else{
+
+			$stmt->execute();
+
+			return $stmt->fetch();
+		} else {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.vendedor,
 			v.descripcion,
@@ -3383,27 +3310,27 @@ class ModeloCuentas{
 			  ON cc.vendedor = v.codigo 
 		  WHERE cc.tip_mov = '+' 
 			AND cc.estado = 'Pendiente' 
-			AND cc.vendedor = '".$vend."' 
+			AND cc.vendedor = '" . $vend . "' 
 		  GROUP BY cc.vendedor 
 		  ORDER BY cc.tipo_doc ");
-	
-			// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
-	
-			$stmt -> execute();
-	
-			return $stmt -> fetch();
-		}
-		
 
-		$stmt -> close();
+			// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
+
+			$stmt->execute();
+
+			return $stmt->fetch();
+		}
+
+
+		$stmt->close();
 
 		$stmt = null;
+	}
 
-    }
+	static public function mdlMostrarReporteNombreVencidos($tabla, $cli, $vend)
+	{
 
-	static public function mdlMostrarReporteNombreVencidos($tabla,$cli,$vend){	
-
-		if(isset($cli)){
+		if (isset($cli)) {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.cliente,
 			c.nombre,
@@ -3414,17 +3341,17 @@ class ModeloCuentas{
 				ON cc.cliente = c.codigo 
 			WHERE cc.tip_mov = '+' 
 				AND cc.estado = 'Pendiente' 
-				AND cc.cliente = '".$cli."' 
+				AND cc.cliente = '" . $cli . "' 
 		    	AND NOW()>cc.fecha_ven  
 			GROUP BY cc.cliente 
 			  ORDER BY cc.tipo_doc ");
-	
+
 			// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
-	
-			$stmt -> execute();
-	
-			return $stmt -> fetch();
-		}else{
+
+			$stmt->execute();
+
+			return $stmt->fetch();
+		} else {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.vendedor,
 			v.descripcion,
@@ -3442,28 +3369,28 @@ class ModeloCuentas{
 			  ON cc.vendedor = v.codigo 
 		  WHERE cc.tip_mov = '+' 
 			AND cc.estado = 'Pendiente' 
-			AND cc.vendedor = '".$vend."'
+			AND cc.vendedor = '" . $vend . "'
 			AND NOW()>cc.fecha_ven  
 		  GROUP BY cc.vendedor 
 		  ORDER BY cc.tipo_doc ;");
-	
-			// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
-	
-			$stmt -> execute();
-	
-			return $stmt -> fetch();
-		}
-		
 
-		$stmt -> close();
+			// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
+
+			$stmt->execute();
+
+			return $stmt->fetch();
+		}
+
+
+		$stmt->close();
 
 		$stmt = null;
+	}
 
-    }
+	static public function mdlMostrarReporteNombreNoVencidos($tabla, $cli, $vend)
+	{
 
-	static public function mdlMostrarReporteNombreNoVencidos($tabla,$cli,$vend){	
-
-		if(isset($cli)){
+		if (isset($cli)) {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.cliente,
 			c.nombre
@@ -3474,17 +3401,17 @@ class ModeloCuentas{
 				ON cc.cliente = c.codigo 
 			WHERE cc.tip_mov = '+' 
 				AND cc.estado = 'Pendiente' 
-				AND cc.cliente = '".$cli."' 
+				AND cc.cliente = '" . $cli . "' 
 				AND NOW()<cc.fecha_ven  
 			GROUP BY cc.cliente 
 			  ORDER BY cc.tipo_doc ");
-	
+
 			// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
-	
-			$stmt -> execute();
-	
-			return $stmt -> fetch();
-		}else{
+
+			$stmt->execute();
+
+			return $stmt->fetch();
+		} else {
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			cc.vendedor,
 			v.descripcion,
@@ -3502,28 +3429,28 @@ class ModeloCuentas{
 			  ON cc.vendedor = v.codigo 
 		  WHERE cc.tip_mov = '+' 
 			AND cc.estado = 'Pendiente' 
-			AND cc.vendedor = '".$vend."'
+			AND cc.vendedor = '" . $vend . "'
 			AND NOW()<cc.fecha_ven  
 		  GROUP BY cc.vendedor 
 		  ORDER BY cc.tipo_doc ;");
-	
-			// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
-	
-			$stmt -> execute();
-	
-			return $stmt -> fetch();
-		}
-		
 
-		$stmt -> close();
+			// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
+
+			$stmt->execute();
+
+			return $stmt->fetch();
+		}
+
+
+		$stmt->close();
 
 		$stmt = null;
+	}
 
-    }
+	static public function mdlMostrarReporteNombreProtestados($tabla, $cli, $vend)
+	{
 
-	static public function mdlMostrarReporteNombreProtestados($tabla,$cli,$vend){	
-
-		if(!empty($cli)){
+		if (!empty($cli)) {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 							cc.cliente,
@@ -3535,19 +3462,17 @@ class ModeloCuentas{
 								ON cc.cliente = c.codigo 
 							WHERE cc.tip_mov = '+' 
 								AND cc.estado = 'Pendiente' 
-								AND cc.cliente = '".$cli."'
+								AND cc.cliente = '" . $cli . "'
 								AND cc.protesta = 1   
 							GROUP BY cc.cliente 
 							ORDER BY cc.tipo_doc");
-					
-							// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
-					
-			$stmt -> execute();
-	
-			return $stmt -> fetch();
 
+			// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
 
-		}else{
+			$stmt->execute();
+
+			return $stmt->fetch();
+		} else {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 							cc.vendedor,
@@ -3566,30 +3491,30 @@ class ModeloCuentas{
 							ON cc.vendedor = v.codigo 
 						WHERE cc.tip_mov = '+' 
 							AND cc.estado = 'Pendiente' 
-							AND cc.vendedor = '".$vend."'
+							AND cc.vendedor = '" . $vend . "'
 							AND cc.protesta = 1   
 						GROUP BY cc.vendedor 
 						ORDER BY cc.tipo_doc ");
-	
-			// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
-	
-			$stmt -> execute();
-	
-			return $stmt -> fetch();
-		}
-		
 
-		$stmt -> close();
+			// $stmt -> bindParam(":cliente", $valor, PDO::PARAM_STR);
+
+			$stmt->execute();
+
+			return $stmt->fetch();
+		}
+
+
+		$stmt->close();
 
 		$stmt = null;
+	}
 
-    }
-	
-   
+
 	/*
 	* REGISTAR CANCELACION LETRAS 
 	*/
-	static public function mdlRegistrarCancelacionLetras($detalle){
+	static public function mdlRegistrarCancelacionLetras($detalle)
+	{
 
 		$stmt = Conexion::conectar()->prepare("INSERT INTO cuenta_ctejf (
 													tipo_doc,
@@ -3615,7 +3540,6 @@ class ModeloCuentas{
 		if ($stmt->execute()) {
 
 			return "ok";
-
 		} else {
 
 			return $stmt->errorInfo();
@@ -3624,13 +3548,13 @@ class ModeloCuentas{
 		$stmt->close();
 
 		$stmt = null;
-
-    }
+	}
 
 	//* ESTADO DE CEUNTA CABECERA
-	static public function ctrEstadoCuentaCab($cliente){	
+	static public function ctrEstadoCuentaCab($cliente)
+	{
 
-			$stmt = Conexion::conectar()->prepare("SELECT 
+		$stmt = Conexion::conectar()->prepare("SELECT 
 														cc.cliente,
 														c.nombre,
 														c.direccion,
@@ -3667,23 +3591,23 @@ class ModeloCuentas{
 																	AND cc.tip_mov = '+' 
 																	AND cc.estado = 'PENDIENTE' 
 																GROUP BY cc.cliente");
-	
-			$stmt -> bindParam(":cliente", $cliente, PDO::PARAM_STR);
-	
-			$stmt -> execute();
-	
-			return $stmt -> fetch();
 
-		
+		$stmt->bindParam(":cliente", $cliente, PDO::PARAM_STR);
 
-		$stmt -> close();
+		$stmt->execute();
+
+		return $stmt->fetch();
+
+
+
+		$stmt->close();
 
 		$stmt = null;
-
-    }	
+	}
 
 	//* DOCUMENTOS PENDIENTES CONTADO
-	static public function mdlContadoPendientes(){	
+	static public function mdlContadoPendientes()
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
 											cc.vendedor,
@@ -3724,20 +3648,20 @@ class ModeloCuentas{
 											AND cc.vendedor NOT IN ('08','99') 
 										ORDER BY cc.vendedor,
 											cc.fecha");
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetchAll();
+		return $stmt->fetchAll();
 
-	
 
-		$stmt -> close();
+
+		$stmt->close();
 
 		$stmt = null;
+	}
 
-	}	
-	
 	//* LETRAS POR ACEPTAR
-	static public function mdlLetrasAceptar($vendedor, $ini, $fin){	
+	static public function mdlLetrasAceptar($vendedor, $ini, $fin)
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
 												cc.tipo_doc,
@@ -3772,20 +3696,20 @@ class ModeloCuentas{
 												cc.fecha_ven
 												LIMIT $ini, $fin");
 
-		$stmt -> bindParam(":vendedor", $vendedor, PDO::PARAM_STR);
+		$stmt->bindParam(":vendedor", $vendedor, PDO::PARAM_STR);
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetchAll();	
+		return $stmt->fetchAll();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-	}	
+	}
 
 	//* LETRAS POR ACEPTAR
-	static public function mdlLetrasAceptarTotal($vendedor){	
+	static public function mdlLetrasAceptarTotal($vendedor)
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
 							cc.vendedor,
@@ -3810,20 +3734,20 @@ class ModeloCuentas{
 							cc.doc_origen,
 							cc.fecha_ven");
 
-		$stmt -> bindParam(":vendedor", $vendedor, PDO::PARAM_STR);
+		$stmt->bindParam(":vendedor", $vendedor, PDO::PARAM_STR);
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetch();	
+		return $stmt->fetch();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-	}		
+	}
 
 	//* ESTADO DE CEUNTA DETALLE
-	static public function ctrEstadoCuentaDet($cliente){	
+	static public function ctrEstadoCuentaDet($cliente)
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
 											CASE
@@ -3877,20 +3801,20 @@ class ModeloCuentas{
 												ORDER BY c.tipo_doc,
 													c.fecha_ven");
 
-		$stmt -> bindParam(":cliente", $cliente, PDO::PARAM_STR);
+		$stmt->bindParam(":cliente", $cliente, PDO::PARAM_STR);
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetchAll();
+		return $stmt->fetchAll();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-	}	
+	}
 
 	//* ESTADO DE CEUNTA DETALLE
-	static public function mdlProyeccionPagos(){	
+	static public function mdlProyeccionPagos()
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
 					YEAR(cc.fecha_ven) AS anno,
@@ -3921,18 +3845,18 @@ class ModeloCuentas{
 				GROUP BY YEAR(cc.fecha_ven),
 					WEEK(cc.fecha_ven)");
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetchAll();
+		return $stmt->fetchAll();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-	}		
+	}
 
 	//* ESTADO DE CEUNTA DETALLE PROTESTO
-	static public function mdlEstadoCuentaProt($num_cta){	
+	static public function mdlEstadoCuentaProt($num_cta)
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
 											CASE
@@ -3981,20 +3905,20 @@ class ModeloCuentas{
 												ORDER BY c.tipo_doc,
 													c.fecha_ven");
 
-		$stmt -> bindParam(":num_cta", $num_cta, PDO::PARAM_STR);
+		$stmt->bindParam(":num_cta", $num_cta, PDO::PARAM_STR);
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetch();
+		return $stmt->fetch();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-	}	
+	}
 
 	//* ESTADO DE CEUNTA VENDEDOR
-	static public function mdlEstadoCtaVdor($vendedor){	
+	static public function mdlEstadoCtaVdor($vendedor)
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
 									cc.tipo_doc,
@@ -4098,22 +4022,22 @@ class ModeloCuentas{
 								tipo_doc,
 								fecha_ven");
 
-		$stmt -> bindParam(":vendedor", $vendedor, PDO::PARAM_STR);
+		$stmt->bindParam(":vendedor", $vendedor, PDO::PARAM_STR);
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetchAll();
+		return $stmt->fetchAll();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-	}	
+	}
 
 	//* ESTADO DE CEUNTA VENDEDOR VENDIDOS POR ZONA
-	static public function mdlEstadoCtaVdorVdos($vendedor){	
+	static public function mdlEstadoCtaVdorVdos($vendedor)
+	{
 
-		if($vendedor == "08"){
+		if ($vendedor == "08") {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 						c.tipo_doc,
@@ -4183,13 +4107,12 @@ class ModeloCuentas{
 					GROUP BY c.vendedor 
 					ORDER BY fecha_ven");
 
-			$stmt -> bindParam(":vendedor", $vendedor, PDO::PARAM_STR);
+			$stmt->bindParam(":vendedor", $vendedor, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();			
-
-		}else{
+			return $stmt->fetchAll();
+		} else {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 						c.tipo_doc,
@@ -4261,24 +4184,23 @@ class ModeloCuentas{
 						cliente,
 						fecha_ven");
 
-			$stmt -> bindParam(":vendedor", $vendedor, PDO::PARAM_STR);
+			$stmt->bindParam(":vendedor", $vendedor, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
+			return $stmt->fetchAll();
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-	}	
+	}
 
 	//* ESTADO DE CEUNTA VENDEDOR NO VENDIDOS POR ZONA
-	static public function mdlEstadoCtaVdorNoVdos($vendedor){	
+	static public function mdlEstadoCtaVdorNoVdos($vendedor)
+	{
 
-		if($vendedor == "08"){
+		if ($vendedor == "08") {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 						c.tipo_doc,
@@ -4350,13 +4272,12 @@ class ModeloCuentas{
 					GROUP BY c.vendedor 
 					ORDER BY fecha_ven");
 
-			$stmt -> bindParam(":vendedor", $vendedor, PDO::PARAM_STR);
+			$stmt->bindParam(":vendedor", $vendedor, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();			
-
-		}else{
+			return $stmt->fetchAll();
+		} else {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 					c.tipo_doc,
@@ -4430,22 +4351,21 @@ class ModeloCuentas{
 					cliente,
 					fecha_ven");
 
-			$stmt -> bindParam(":vendedor", $vendedor, PDO::PARAM_STR);
+			$stmt->bindParam(":vendedor", $vendedor, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
+			return $stmt->fetchAll();
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-	}		
+	}
 
 	//* DOCUMENTOS ESTADO DE CUENTA
-	static public function mdlEstadoCuenta($fin){	
+	static public function mdlEstadoCuenta($fin)
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
 						'A' AS orden,
@@ -4518,20 +4438,20 @@ class ModeloCuentas{
 						fecha,
 						tip_mov");
 
-		$stmt -> bindParam(":fin", $fin, PDO::PARAM_STR);
+		$stmt->bindParam(":fin", $fin, PDO::PARAM_STR);
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetchAll();	
+		return $stmt->fetchAll();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-	}	
+	}
 
 	//* ESTADO DE CEUNTA DETALLE PROTESTO
-	static public function mdlControlFechas(){	
+	static public function mdlControlFechas()
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
 							MIN(fecha) AS inicio,
@@ -4543,17 +4463,17 @@ class ModeloCuentas{
 							AND YEAR(c.fecha) >= '2021'");
 
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetch();
+		return $stmt->fetch();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
+	}
 
-	}		
-
-	static public function mdlUltPagos($cliente){
+	static public function mdlUltPagos($cliente)
+	{
 
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
@@ -4599,20 +4519,19 @@ class ModeloCuentas{
 		  MONTH(c.fecha) DESC
 		  LIMIT 6");
 
-		$stmt -> bindParam(":cliente", $cliente, PDO::PARAM_STR);
+		$stmt->bindParam(":cliente", $cliente, PDO::PARAM_STR);
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetchAll();
+		return $stmt->fetchAll();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
+	}
 
-
-    }
-
-	static public function mdlSaldoFecha($inicio, $fin){
+	static public function mdlSaldoFecha($inicio, $fin)
+	{
 
 
 		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
@@ -4729,16 +4648,12 @@ class ModeloCuentas{
 								num_cta");
 
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetchAll();
+		return $stmt->fetchAll();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-
-    }
-
-
+	}
 }

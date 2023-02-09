@@ -59,7 +59,7 @@ class AjaxIngresos
 
 			$eliminar = ModeloIngresos::mdlEliminarMovimiento($documento, $articulo, $cantidad);
 
-			echo json_encode($actStock);
+			echo json_encode($eliminar);
 		}
 	}
 }
