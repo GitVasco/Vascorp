@@ -144,12 +144,7 @@ class ModeloClientes
 
 		if ($item != null) {
 
-			$stmt = Conexion::conectar()->prepare("SELECT 
-			* 
-		  FROM
-			clientesjf c 
-		  WHERE c.fecha BETWEEN '2021-01-01' 
-			AND '2023-02-01'");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item=:$item");
 
 			$stmt->bindParam(":" . $item, $valor, PDO::PARAM_STR);
 
