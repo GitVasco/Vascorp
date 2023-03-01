@@ -2,48 +2,50 @@
 
 require_once "conexion.php";
 
-class ModeloClientes{
+class ModeloClientes
+{
 
 
 	// Método para mostrar un Cliente de la BD
-	static public function mdlMostrarCliente($tabla,$item,$valor){
+	static public function mdlMostrarCliente($tabla, $item, $valor)
+	{
 
-		if($item!=null){
+		if ($item != null) {
 
-			$sql="SELECT * FROM $tabla WHERE $item=:$item";
+			$sql = "SELECT * FROM $tabla WHERE $item=:$item";
 
-			$stmt=Conexion::conectar()->prepare($sql);
+			$stmt = Conexion::conectar()->prepare($sql);
 
 
-			$stmt->bindParam(":".$item,$valor,PDO::PARAM_STR);
+			$stmt->bindParam(":" . $item, $valor, PDO::PARAM_STR);
 			$stmt->execute();
 
 			# Retornamos un fetch por ser una sola línea la que necesitamos devolver
 
 			return $stmt->fetch();
+		} else {
 
-		}else{
+			$sql = "SELECT * FROM $tabla ORDER BY nombre";
 
-			$sql="SELECT * FROM $tabla ORDER BY nombre";
-			
-			$stmt=Conexion::conectar()->prepare($sql);
+			$stmt = Conexion::conectar()->prepare($sql);
 
 			$stmt->execute();
-			
+
 			# Retornamos un fetchAll por ser más de una línea la que necesitamos devolver
 			return $stmt->fetchAll();
 		}
 
 		$stmt->close();
 
-		$stmt=null;
-	}	
+		$stmt = null;
+	}
 
 	/*=============================================
 	CREAR CLIENTE
 	=============================================*/
 
-	static public function mdlIngresarCliente($tabla, $datos){
+	static public function mdlIngresarCliente($tabla, $datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (
 											codigo,
@@ -120,39 +122,41 @@ class ModeloClientes{
 		$stmt->bindParam(":direccion_despacho", $datos["direccion_despacho"], PDO::PARAM_STR);
 		$stmt->bindParam(":ubigeo_despacho", $datos["ubigeo_despacho"], PDO::PARAM_STR);
 		$stmt->bindParam(":agencia", $datos["agencia"], PDO::PARAM_STR);
-		
-		if($stmt->execute()){
+
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return $stmt->errorInfo();
-		
 		}
 
 		$stmt->close();
 		$stmt = null;
-
-    }
+	}
 
 	/*=============================================
 	MOSTRAR CLIENTES
 	=============================================*/
 
-	static public function mdlMostrarClientes($tabla, $item, $valor){
+	static public function mdlMostrarClientes($tabla, $item, $valor)
+	{
 
-		if($item != null){
+		if ($item != null) {
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+			$stmt = Conexion::conectar()->prepare("SELECT 
+			* 
+		  FROM
+			clientesjf c 
+		  WHERE c.fecha BETWEEN '2021-01-01' 
+			AND '2023-02-01'");
 
-			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt->bindParam(":" . $item, $valor, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetch();
-
-		}else{
+			return $stmt->fetch();
+		} else {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			c.*,
@@ -171,25 +175,24 @@ class ModeloClientes{
 		  WHERE c.fecha IS NOT NULL AND c.estado=1
 		  ORDER BY id DESC ");
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
+			return $stmt->fetchAll();
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
 	}
 
 	/*=============================================
 	MOSTRAR CLIENTES
 	=============================================*/
 
-	static public function mdlMostrarClientesP($tabla, $item, $valor){
+	static public function mdlMostrarClientesP($tabla, $item, $valor)
+	{
 
-		if($item != null){
+		if ($item != null) {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 												c.id,
@@ -207,13 +210,12 @@ class ModeloClientes{
 												AND $item = :$item
 											ORDER BY c.nombre ASC");
 
-			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt->bindParam(":" . $item, $valor, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetch();
-
-		}else{
+			return $stmt->fetch();
+		} else {
 
 			$stmt = Conexion::conectar()->prepare("SELECT
 												c.id,
@@ -230,47 +232,47 @@ class ModeloClientes{
 											WHERE c.fecha IS NOT NULL
 											ORDER BY c.nombre ASC");
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
+			return $stmt->fetchAll();
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
 	}
 
 	/*=============================================
 	SACAR LISTA
 	=============================================*/
 
-	static public function mdlVerLista($valor){
+	static public function mdlVerLista($valor)
+	{
 
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
 										c.id,
-										c.lista_precios 
+										c.lista_precios,
+										c.vendedor
 									FROM
 										clientesjf c 
-									WHERE c.codigo = '".$valor."'");
+									WHERE c.codigo = '" . $valor . "'");
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetch();
+		return $stmt->fetch();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
+	}
 
-	}		
-	
 	/*=============================================
 	EDITAR CLIENTE
 	=============================================*/
 
-	static public function mdlEditarCliente($tabla, $datos){
+	static public function mdlEditarCliente($tabla, $datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE 
 											$tabla 
@@ -318,81 +320,75 @@ class ModeloClientes{
 		$stmt->bindParam(":agencia", $datos["agencia"], PDO::PARAM_STR);
 
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return $stmt->errorInfo();
-		
 		}
 
 		$stmt->close();
 		$stmt = null;
-
 	}
-	
-	
+
+
 	/*=============================================
 	ELIMINAR CLIENTE
 	=============================================*/
 
-	static public function mdlEliminarCliente($tabla, $datos){
+	static public function mdlEliminarCliente($tabla, $datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
 
-		$stmt -> bindParam(":id", $datos, PDO::PARAM_INT);
+		$stmt->bindParam(":id", $datos, PDO::PARAM_INT);
 
-		if($stmt -> execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-		
-		}else{
+		} else {
 
-			return "error";	
-
+			return "error";
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
 	}
-	
+
 	/*=============================================
 	ACTUALIZAR CLIENTE
 	=============================================*/
 
-	static public function mdlActualizarCliente($tabla, $item1, $valor1, $valor){
+	static public function mdlActualizarCliente($tabla, $item1, $valor1, $valor)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET $item1 = :$item1 WHERE id = :id");
 
-		$stmt -> bindParam(":".$item1, $valor1, PDO::PARAM_STR);
-		$stmt -> bindParam(":id", $valor, PDO::PARAM_STR);
+		$stmt->bindParam(":" . $item1, $valor1, PDO::PARAM_STR);
+		$stmt->bindParam(":id", $valor, PDO::PARAM_STR);
 
-		if($stmt -> execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-		
-		}else{
+		} else {
 
-			return "error";	
-
+			return "error";
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
 	}
-	
+
 	/* 
 	* MOSTRAR UBIGEOS
-	*/	
-	static public function mdlMostrarUbigeos($tabla){
+	*/
+	static public function mdlMostrarUbigeos($tabla)
+	{
 
-		$sql="SELECT 
+		$sql = "SELECT 
 						ub.codigo,
 						CONCAT(
 						ub.departamento,
@@ -405,34 +401,32 @@ class ModeloClientes{
 						$tabla ub 
 					WHERE ub.codigo NOT IN ('000000')";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->execute();
 
 		return $stmt->fetchAll();
 
-		$stmt=null;
+		$stmt = null;
+	}
 
-
-	}	
-
-/*=============================================
+	/*=============================================
 	MOSTRAR CLIENTES CUENTAS
 	=============================================*/
 
-	static public function mdlMostrarClientesCuentas($tabla, $item, $valor){
+	static public function mdlMostrarClientesCuentas($tabla, $item, $valor)
+	{
 
-		if($item != null){
+		if ($item != null) {
 
 			$stmt = Conexion::conectar()->prepare("SELECT codigo,nombre,documento FROM $tabla WHERE $item = :$item ORDER BY id ASC");
 
-			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt->bindParam(":" . $item, $valor, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetch();
-
-		}else{
+			return $stmt->fetch();
+		} else {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
 			codigo,nombre,documento
@@ -440,23 +434,22 @@ class ModeloClientes{
 			clientesjf 
 		  ORDER BY id DESC ");
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
+			return $stmt->fetchAll();
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
 	}
 
-		/*=============================================
+	/*=============================================
 	EDITAR TIPO DE PAGO
 	=============================================*/
 
-	static public function mdlEditarAval($tabla,$datos){
+	static public function mdlEditarAval($tabla, $datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET aval_nombre = :aval_nombre, aval_dir = :aval_dir,aval_postal = :aval_postal, aval_telf = :aval_telf,aval_ruc = :aval_ruc, aval_libreta = :aval_libreta WHERE codigo = :codigo");
 
@@ -468,21 +461,15 @@ class ModeloClientes{
 		$stmt->bindParam(":aval_ruc", $datos["aval_ruc"], PDO::PARAM_STR);
 		$stmt->bindParam(":aval_libreta", $datos["aval_libreta"], PDO::PARAM_STR);
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-		
 		}
 
 		$stmt->close();
 		$stmt = null;
-
-    }
-	
-
-    
-}    
+	}
+}

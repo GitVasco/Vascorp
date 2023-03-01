@@ -69,9 +69,12 @@ $("#seleccionarCliente").change(function () {
         processData: false,
         dataType: "json",
         success: function (respuestaDet) {
-            // console.log(respuestaDet);
-
-            $("#lista").val(respuestaDet["lista_precios"]);
+            if (respuestaDet["vendedor"] == "08") {
+                $("#lista").val(respuestaDet["lista_precios"]);
+                //$("#lista").val("precio2");
+            } else {
+                $("#lista").val(respuestaDet["lista_precios"]);
+            }
         },
     });
 });

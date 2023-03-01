@@ -1047,6 +1047,18 @@ $(".tablaEditarDetalleIngreso").on(
                             window.location = "ingresos";
                         }
                     });
+                } else {
+                    swal({
+                        type: "success",
+                        title: "¡Ok!",
+                        text: "¡La información fue Eliminada con éxito!",
+                        showConfirmButton: true,
+                        confirmButtonText: "Cerrar",
+                    }).then((result) => {
+                        if (result.value) {
+                            window.location = "ingresos";
+                        }
+                    });
                 }
             },
         });

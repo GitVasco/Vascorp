@@ -39,11 +39,11 @@ class TablaModelos
                 if ($modelos[$i]["estado"] == "Descontinuado" || $modelos[$i]["estado"] == "DESCONTINUADO") {
 
                     /* $estado = "<button class='btn btn-danger btn-xs btnActivar'>".$articulos[$i]["id"]."</button>"; */
-                    $estado = "<button class='btn btn-danger btn-xs btnActivar' idModelo='" . $modelos[$i]["modelo"] . "' estadoModelo='Activo'>Inactivo</button>";
+                    $estado = "<button class='btn btn-danger btn-xs btnActivar' idModelo='" . $modelos[$i]["modelo"] . "' estadoModelo='ACTIVO'>Inactivo</button>";
                 } else {
 
                     /* $estado = "<button class='btn btn-success btn-xs btnActivar'>".$articulos[$i]["id"]."</button>"; */
-                    $estado = "<button class='btn btn-success btn-xs btnActivar' idModelo='" . $modelos[$i]["modelo"] . "' estadoModelo='Descontinuado'>Activo</button>";
+                    $estado = "<button class='btn btn-success btn-xs btnActivar' idModelo='" . $modelos[$i]["modelo"] . "' estadoModelo='DESCONTINUADO'>Activo</button>";
                 }
 
                 /*=============================================

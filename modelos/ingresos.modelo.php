@@ -715,7 +715,8 @@ class ModeloIngresos
 				LEFT JOIN movimientos_cabecerajf mc 
 				  ON m.tipo = mc.tipo 
 				  AND m.documento = mc.documento 
-			  WHERE m.tipo = 'E20' and YEAR(m.fecha)= YEAR(NOW()) and month(m.fecha)= month(NOW())
+				  WHERE m.tipo IN ('S27', 'S26', 'S25', 'S16', 'E20') 
+				   and YEAR(m.fecha)= YEAR(NOW()) and month(m.fecha)= month(NOW())
 			  GROUP BY m.documento,
 				a.modelo,
 				a.nombre,
@@ -828,7 +829,7 @@ class ModeloIngresos
 				  ON m.tipo = mc.tipo 
 				  AND m.documento = mc.documento 
 				WHERE DATE(m.fecha) like '%$fechaFinal%'
-				AND m.tipo = 'E20' 
+				AND m.tipo IN ('S27', 'S26', 'S25', 'S16', 'E20') 
 				GROUP BY m.documento,
 				a.modelo,
 				a.nombre,
@@ -953,7 +954,7 @@ class ModeloIngresos
 					  ON m.tipo = mc.tipo 
 					  AND m.documento = mc.documento 
 					WHERE DATE(m.fecha) BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'
-					AND m.tipo = 'E20' 
+					AND m.tipo IN ('S27', 'S26', 'S25', 'S16', 'E20') 
 				  GROUP BY m.documento,
 					a.modelo,
 					a.nombre,
@@ -1063,7 +1064,7 @@ class ModeloIngresos
 					  ON m.tipo = mc.tipo 
 					  AND m.documento = mc.documento 
 					WHERE DATE(m.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'
-					AND m.tipo = 'E20' 
+					AND m.tipo IN ('S27', 'S26', 'S25', 'S16', 'E20') 
 					GROUP BY m.documento,
 					a.modelo,
 					a.nombre,
