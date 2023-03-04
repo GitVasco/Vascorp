@@ -598,6 +598,315 @@ class ModeloArticulos
 		$stmt = null;
 	}
 
+	/* 
+	* MOSTRAR ARTICULOS PARA LA TABLA URGENCIA MAESTRO
+	*/
+	static public function mdlMostrarUrgenciaMaestro($tipo)
+	{
+
+		if ($tipo == "prod") {
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+						a.articulo,
+						a.modelo,
+						a.nombre,
+						a.cod_color,
+						a.color,
+						a.cod_talla,
+						a.talla,
+						a.estado,
+						a.stock,
+						a.pedidos,
+						(a.stock - a.pedidos) AS stockB,
+						a.taller,
+						a.servicio,
+						a.alm_corte,
+						a.ord_corte,
+						a.ult_mes,
+						(a.ult_mes * a.urgencia / 100) AS configuracion,
+						a.urgencia,
+						ROUND(
+							(a.stock - a.pedidos) / (a.ult_mes * a.urgencia / 100),
+							2
+						) AS urd_prod,
+						ROUND(
+							(
+							(a.stock - a.pedidos) + a.taller + a.servicio
+							) / (a.ult_mes * a.urgencia / 100),
+							2
+						) AS urg_alm,
+						ROUND(
+							(
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte
+							) / (a.ult_mes * a.urgencia / 100),
+							2
+						) AS urg_corte,
+						ROUND(
+							(
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte
+							) / (a.ult_mes * a.urgencia / 100),
+							2
+						) AS urg_plan 
+					FROM
+						articulojf a 
+					WHERE a.estado = 'activo' 
+						AND ROUND((a.stock - a.pedidos) / (a.ult_mes * a.urgencia / 100), 2) <= 1 
+					ORDER BY a.articulo");
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		} else if ($tipo == "alm") {
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+						a.articulo,
+						a.modelo,
+						a.nombre,
+						a.cod_color,
+						a.color,
+						a.cod_talla,
+						a.talla,
+						a.estado,
+						a.stock,
+						a.pedidos,
+						(a.stock - a.pedidos) AS stockB,
+						a.taller,
+						a.servicio,
+						a.alm_corte,
+						a.ord_corte,
+						a.ult_mes,
+						(a.ult_mes * a.urgencia / 100) AS configuracion,
+						a.urgencia,
+						ROUND(
+							(a.stock - a.pedidos) / (a.ult_mes * a.urgencia / 100),
+							2
+						) AS urd_prod,
+						ROUND(
+							(
+							(a.stock - a.pedidos) + a.taller + a.servicio
+							) / (a.ult_mes * a.urgencia / 100),
+							2
+						) AS urg_alm,
+						ROUND(
+							(
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte
+							) / (a.ult_mes * a.urgencia / 100),
+							2
+						) AS urg_corte,
+						ROUND(
+							(
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte
+							) / (a.ult_mes * a.urgencia / 100),
+							2
+						) AS urg_plan 
+					FROM
+						articulojf a 
+					WHERE a.estado = 'activo' 
+						AND ROUND(
+						(
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte
+						) / (a.ult_mes * a.urgencia / 100),
+						2
+						) <= 1.5 
+					ORDER BY a.articulo");
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		} else if ($tipo == "corte") {
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+						a.articulo,
+						a.modelo,
+						a.nombre,
+						a.cod_color,
+						a.color,
+						a.cod_talla,
+						a.talla,
+						a.estado,
+						a.stock,
+						a.pedidos,
+						(a.stock - a.pedidos) AS stockB,
+						a.taller,
+						a.servicio,
+						a.alm_corte,
+						a.ord_corte,
+						a.ult_mes,
+						(a.ult_mes * a.urgencia / 100) AS configuracion,
+						a.urgencia,
+						ROUND(
+							(a.stock - a.pedidos) / (a.ult_mes * a.urgencia / 100),
+							2
+						) AS urd_prod,
+						ROUND(
+							(
+							(a.stock - a.pedidos) + a.taller + a.servicio
+							) / (a.ult_mes * a.urgencia / 100),
+							2
+						) AS urg_alm,
+						ROUND(
+							(
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte
+							) / (a.ult_mes * a.urgencia / 100),
+							2
+						) AS urg_corte,
+						ROUND(
+							(
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte
+							) / (a.ult_mes * a.urgencia / 100),
+							2
+						) AS urg_plan 
+					FROM
+						articulojf a 
+					WHERE a.estado = 'activo' 
+						AND ROUND(
+						(
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte
+						) / (a.ult_mes * a.urgencia / 100),
+						2
+						) <= 2 
+					ORDER BY a.articulo");
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		} else if ($tipo == "plan") {
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+						a.articulo,
+						a.modelo,
+						a.nombre,
+						a.cod_color,
+						a.color,
+						a.cod_talla,
+						a.talla,
+						a.estado,
+						a.stock,
+						a.pedidos,
+						(a.stock - a.pedidos) AS stockB,
+						a.taller,
+						a.servicio,
+						a.alm_corte,
+						a.ord_corte,
+						a.ult_mes,
+						(a.ult_mes * a.urgencia / 100) AS configuracion,
+						a.urgencia,
+						ROUND(
+							(a.stock - a.pedidos) / (a.ult_mes * a.urgencia / 100),
+							2
+						) AS urd_prod,
+						ROUND(
+							(
+							(a.stock - a.pedidos) + a.taller + a.servicio
+							) / (a.ult_mes * a.urgencia / 100),
+							2
+						) AS urg_alm,
+						ROUND(
+							(
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte
+							) / (a.ult_mes * a.urgencia / 100),
+							2
+						) AS urg_corte,
+						ROUND(
+							(
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte
+							) / (a.ult_mes * a.urgencia / 100),
+							2
+						) AS urg_plan 
+					FROM
+						articulojf a 
+					WHERE a.estado = 'activo' 
+						AND ROUND(
+						(
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte
+						) / (a.ult_mes * a.urgencia / 100),
+						2
+						) <= 3 
+					ORDER BY a.articulo");
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		} else {
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+						a.articulo,
+						a.modelo,
+						a.nombre,
+						a.cod_color,
+						a.color,
+						a.cod_talla,
+						a.talla,
+						a.estado,
+						a.stock,
+						a.pedidos,
+						(a.stock - a.pedidos) AS stockB,
+						a.taller,
+						a.servicio,
+						a.alm_corte,
+						a.ord_corte,
+						a.ult_mes,
+						(a.ult_mes * a.urgencia / 100) AS configuracion,
+						a.urgencia,
+						ROUND(
+							(a.stock - a.pedidos) / (a.ult_mes * a.urgencia / 100),
+							2
+						) AS urd_prod,
+						ROUND(
+							(
+							(a.stock - a.pedidos) + a.taller + a.servicio
+							) / (a.ult_mes * a.urgencia / 100),
+							2
+						) AS urg_alm,
+						ROUND(
+							(
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte
+							) / (a.ult_mes * a.urgencia / 100),
+							2
+						) AS urg_corte,
+						ROUND(
+							(
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte
+							) / (a.ult_mes * a.urgencia / 100),
+							2
+						) AS urg_plan 
+					FROM
+						articulojf a 
+					WHERE a.estado = 'activo' 
+						AND (
+							ROUND(
+							(a.stock - a.pedidos) / (a.ult_mes * a.urgencia / 100),
+							2
+							) <= 1 
+							OR ROUND(
+							(
+								(a.stock - a.pedidos) + a.taller + a.servicio
+							) / (a.ult_mes * a.urgencia / 100),
+							2
+							) <= 1.5 
+							OR ROUND(
+							(
+								(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte
+							) / (a.ult_mes * a.urgencia / 100),
+							2
+							) <= 2 
+							OR ROUND(
+							(
+								(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte
+							) / (a.ult_mes * a.urgencia / 100),
+							2
+							) <= 3
+						) 
+					ORDER BY a.articulo");
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
 
 	/* 
 	* MOSTRAR ARTICULOS PARA LA TABLA SEGUIMIENTO

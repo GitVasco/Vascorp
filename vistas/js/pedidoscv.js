@@ -2152,18 +2152,20 @@ function ValidarRuc() {
         processData: false,
         dataType: "json",
         success: function (jsonx) {
-            if (jsonx["condicion"] == "HABIDO") {
+            var data = jsonx["data"];
+
+            if (data["condicion"] == "HABIDO") {
                 Command: toastr["success"]("HABIDO");
             } else {
                 Command: toastr["error"]("NO HABIDO");
             }
 
-            if (jsonx["estado"] == "ACTIVO") {
+            if (data["estado"] == "ACTIVO") {
                 Command: toastr["success"]("ACTIVO");
             } else {
                 Command: toastr["error"]("NO ACTIVO");
             }
-            //console.log(jsonx["condicion"]);
+            //console.log(data["condicion"]);
         },
     });
 }

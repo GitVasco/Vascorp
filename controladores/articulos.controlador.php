@@ -598,6 +598,20 @@ class controladorArticulos
 
 
 	/* 
+	* MOSTRAR ARTICULOS PARA LA TABLA URGENCIA
+	*/
+	static public function ctrMostrarUrgenciaMaestro($tipo)
+	{
+
+		$tabla = "articulojf";
+
+		$respuesta = ModeloArticulos::mdlMostrarUrgenciaMaestro($tipo);
+
+		return $respuesta;
+	}
+
+
+	/* 
 	* MOSTRAR ARTICULOS PARA LA TABLA SEGUIMIENTO
 	*/
 	static public function ctrMostrarSeguimiento($valor)

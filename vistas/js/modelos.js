@@ -79,12 +79,12 @@ $(document).on("click", ".btnActivar", function () {
         $(this).removeClass("btn-success");
         $(this).addClass("btn-danger");
         $(this).html("Inactivo");
-        $(this).attr("estadoModelo", "ACTIVO");
+        $(this).attr("estadoModelo", "Activo");
     } else {
         $(this).addClass("btn-success");
         $(this).removeClass("btn-danger");
         $(this).html("Activo");
-        $(this).attr("estadoModelo", "DESCONTINUADO");
+        $(this).attr("estadoModelo", "Descontinuado");
     }
 });
 

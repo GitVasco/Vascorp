@@ -560,7 +560,12 @@
                                         $_GET["ruta"] == "seguimiento" ||
                                         $_GET["ruta"] == "enviados-taller" ||
                                         $_GET["ruta"] == "listar-documento" ||
-                                        $_GET["ruta"] == "ajuste-taller"
+                                        $_GET["ruta"] == "ajuste-taller" ||
+                                        $_GET["ruta"] == "urgencias-produccion" ||
+                                        $_GET["ruta"] == "urgencias-almacen" ||
+                                        $_GET["ruta"] == "urgencias-corte" ||
+                                        $_GET["ruta"] == "urgencias-plan" ||
+                                        $_GET["ruta"] == "urgencias-maestro"
                                     ) echo 'active'; ?>">
 
                     <a href="#">
@@ -803,7 +808,12 @@
                                                 $_GET["ruta"] == "urgencias" ||
                                                 $_GET["ruta"] == "urgenciasamp" ||
                                                 $_GET["ruta"] == "proyeccion-mp" ||
-                                                $_GET["ruta"] == "seguimiento"
+                                                $_GET["ruta"] == "seguimiento" ||
+                                                $_GET["ruta"] == "urgencias-produccion" ||
+                                                $_GET["ruta"] == "urgencias-almacen" ||
+                                                $_GET["ruta"] == "urgencias-corte" ||
+                                                $_GET["ruta"] == "urgencias-plan" ||
+                                                $_GET["ruta"] == "urgencias-maestro"
                                             ) echo 'active'; ?>">
 
                             <a href="#"><i class="fa fa-file-o"></i> Reportes
@@ -842,6 +852,46 @@
 
                                     <a href="proyeccion-mp">
                                         <i class="fa fa-circle-o"></i> Proyección AMP
+                                    </a>
+
+                                </li>
+
+                                <li class="<?php if ($_GET["ruta"] == "urgencias-maestro") echo 'active'; ?>">
+
+                                    <a href="urgencias-maestro">
+                                        <i class="fa fa-circle-o text-blue"></i> Urg. Maestro.
+                                    </a>
+
+                                </li>
+
+                                <li class="<?php if ($_GET["ruta"] == "urgencias-produccion") echo 'active'; ?>">
+
+                                    <a href="urgencias-produccion">
+                                        <i class="fa fa-circle-o text-red"></i> Urg. Prod.
+                                    </a>
+
+                                </li>
+
+                                <li class="<?php if ($_GET["ruta"] == "urgencias-almacen") echo 'active'; ?>">
+
+                                    <a href="urgencias-almacen">
+                                        <i class="fa fa-circle-o text-red"></i> Urg. Alm. Corte
+                                    </a>
+
+                                </li>
+
+                                <li class="<?php if ($_GET["ruta"] == "urgencias-corte") echo 'active'; ?>">
+
+                                    <a href="urgencias-corte">
+                                        <i class="fa fa-circle-o text-red"></i> Urg. Corte
+                                    </a>
+
+                                </li>
+
+                                <li class="<?php if ($_GET["ruta"] == "urgencias-plan") echo 'active'; ?>">
+
+                                    <a href="urgencias-plan">
+                                        <i class="fa fa-circle-o text-red"></i> Urg. Planificación
                                     </a>
 
                                 </li>

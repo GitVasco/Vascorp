@@ -1678,7 +1678,7 @@ class ControladorFacturacion
                                                 if (result.value) {
 
                                                     window.open("vistas/reportes_ticket/impresion_bolfact.php?tipo=' . $tipo . '&documento=' . $docDestino . '","_blank")
-
+                                                    window.location = "guias-remision";
                                                 }
                                             })
 

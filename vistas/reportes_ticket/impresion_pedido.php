@@ -2756,7 +2756,7 @@
                 </table>';
         }
         //todo: 5 PAGINAS
-        else if ($cantidadArticulos > 200 && $cantidadArticulos <= 220) {
+        else if ($cantidadArticulos > 200 && $cantidadArticulos <= 250) {
 
             //*Cabecera GLOBAL PAG 1
             echo '<table border="0" align="left" width="900px">
@@ -4051,7 +4051,7 @@
                 </table>';
         }
         //todo: 6 PAGINAS
-        else if ($cantidadArticulos > 220 && $cantidadArticulos <= 300) {
+        else if ($cantidadArticulos > 250 && $cantidadArticulos <= 300) {
 
             //*Cabecera GLOBAL PAG 1
             echo '<table border="0" align="left" width="900px">

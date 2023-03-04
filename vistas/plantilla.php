@@ -350,7 +350,12 @@ CUERPO DOCUMENTO
                 $_GET["ruta"] == "pago-servicio" ||
                 $_GET["ruta"] == "seguimiento" ||
                 $_GET["ruta"] == "enviados-taller" ||
-                $_GET["ruta"] == "ajuste-taller"
+                $_GET["ruta"] == "ajuste-taller" ||
+                $_GET["ruta"] == "urgencias-produccion" ||
+                $_GET["ruta"] == "urgencias-almacen" ||
+                $_GET["ruta"] == "urgencias-corte" ||
+                $_GET["ruta"] == "urgencias-plan" ||
+                $_GET["ruta"] == "urgencias-maestro"
             ) {
 
                 include "modulos/produccion/" . $_GET["ruta"] . ".php";
