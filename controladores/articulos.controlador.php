@@ -600,12 +600,12 @@ class controladorArticulos
 	/* 
 	* MOSTRAR ARTICULOS PARA LA TABLA URGENCIA
 	*/
-	static public function ctrMostrarUrgenciaMaestro($tipo)
+	static public function ctrMostrarUrgenciaMaestro($tipo, $mes)
 	{
 
 		$tabla = "articulojf";
 
-		$respuesta = ModeloArticulos::mdlMostrarUrgenciaMaestro($tipo);
+		$respuesta = ModeloArticulos::mdlMostrarUrgenciaMaestro($tipo, $mes);
 
 		return $respuesta;
 	}
@@ -1246,5 +1246,38 @@ class controladorArticulos
 		$respuesta = ModeloArticulos::mdlArticulosUrgencia();
 
 		return $respuesta;
+	}
+
+	static public function ctrConfigurarMesesUrgencia()
+	{
+		if (isset($_POST["prod"])) {
+
+			$rptProd = ModeloArticulos::mdlConfigurarMesesUrgencia("prod", $_POST["prod"]);
+
+			$rptAlm = ModeloArticulos::mdlConfigurarMesesUrgencia("alm", $_POST["alm"]);
+
+			$rptCorte = ModeloArticulos::mdlConfigurarMesesUrgencia("corte", $_POST["corte"]);
+
+			$rptPlan = ModeloArticulos::mdlConfigurarMesesUrgencia("plan", $_POST["plan"]);
+
+			if ($rptPlan == "ok") {
+				echo '<script>	
+
+				swal({
+					  type: "success",
+					  title: "Se guardo la configuración correctamente",
+					  showConfirmButton: true,
+					  confirmButtonText: "Cerrar"
+					  }).then(function(result){
+								if (result.value) {
+
+								window.location = "urgencias-maestro";
+
+								}
+							})
+
+				</script>';
+			}
+		}
 	}
 }

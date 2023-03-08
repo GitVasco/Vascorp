@@ -40,8 +40,8 @@
 
                                 <?php
 
-                                    date_default_timezone_set('America/Lima');
-                                    $ahora=date('Y/m/d h:i:s');
+                                date_default_timezone_set('America/Lima');
+                                $ahora = date('Y/m/d h:i:s');
 
                                 ?>
 
@@ -109,61 +109,9 @@
 
                                         <select class="form-control selectpicker" id="seleccionarCliente" name="seleccionarCliente" data-live-search="true" data-size="10" required>
 
-                                        <?php
-
-                                        $valor = $_GET["pedido"];
-
-                                        $pedido = ControladorPedidos::ctrMostrarTemporal($valor);
-                                        //var_dump("pedido", $pedido);
-
-                                        if ($pedido["codigo"] != "") {
-
-                                            $item = "codigo";
-                                            $valor = $pedido["cliente"];
-
-                                            $clientes = ControladorClientes::ctrMostrarClientesP($item, $valor);
-                                            //var_dump($clientes["nombreB"]);
-
-                                            echo '<option value="'.$clientes["codigo"].'">'.$clientes["nombreB"].'</option>';
-
-                                            $client2 = ControladorClientes::ctrMostrarClientesP(null, null);
-
-                                            //var_dump($client2);
-
-                                            foreach ($client2 as $key => $value) {
-
-                                            echo '<option value="'.$value["codigo"].'">'.$value["nombreB"].'</option>';
-
-                                            }
-
-                                        } else {
-
-                                            // $clientes = ControladorClientes::ctrMostrarClientesP(null, null);
-                                            // var_dump($clientes);
-
-                                            echo '<option value="">Seleccione Cliente</option>';
-                                            //var_dump($clientes);
-
-                                            // foreach ($clientes as $key => $value) {
-
-                                            //     echo '<option value="'.$value["codigo"].'">'.$value["nombreB"].'</option>';
-
-                                            // }
-
-                                        }
-
-
-                                        ?>
-
-                                        </select>
-
-                                        <?php
+                                            <?php
 
                                             $valor = $_GET["pedido"];
-
-                                            if($valor == ""){
-                                                echo "<button  type='button' class='btn btn-primary btnCargarCliente'> Cargar</button> ";
-                                            }
 
                                             $pedido = ControladorPedidos::ctrMostrarTemporal($valor);
                                             //var_dump("pedido", $pedido);
@@ -174,11 +122,61 @@
                                                 $valor = $pedido["cliente"];
 
                                                 $clientes = ControladorClientes::ctrMostrarClientesP($item, $valor);
+                                                //var_dump($clientes["nombreB"]);
 
-                                                echo '<input type="hidden" class="form-control input-sm" id="codCliente" name="codCliente" value="' . $clientes["codigo"] . '" readonly>';
+                                                echo '<option value="' . $clientes["codigo"] . '">' . $clientes["nombreB"] . '</option>';
 
-                                                echo '<input type="text" class="form-control input-sm" id="nomCliente" name="nomCliente" value="' . $clientes["nombre"] . '" readonly>';
+                                                $client2 = ControladorClientes::ctrMostrarClientesP(null, null);
+
+                                                //var_dump($client2);
+
+                                                foreach ($client2 as $key => $value) {
+
+                                                    echo '<option value="' . $value["codigo"] . '">' . $value["nombreB"] . '</option>';
+                                                }
+                                            } else {
+
+                                                // $clientes = ControladorClientes::ctrMostrarClientesP(null, null);
+                                                // var_dump($clientes);
+
+                                                echo '<option value="">Seleccione Cliente</option>';
+                                                //var_dump($clientes);
+
+                                                // foreach ($clientes as $key => $value) {
+
+                                                //     echo '<option value="'.$value["codigo"].'">'.$value["nombreB"].'</option>';
+
+                                                // }
+
                                             }
+
+
+                                            ?>
+
+                                        </select>
+
+                                        <?php
+
+                                        $valor = $_GET["pedido"];
+
+                                        if ($valor == "") {
+                                            echo "<button  type='button' class='btn btn-primary btnCargarCliente'> Cargar</button> ";
+                                        }
+
+                                        $pedido = ControladorPedidos::ctrMostrarTemporal($valor);
+                                        //var_dump("pedido", $pedido);
+
+                                        if ($pedido["codigo"] != "") {
+
+                                            $item = "codigo";
+                                            $valor = $pedido["cliente"];
+
+                                            $clientes = ControladorClientes::ctrMostrarClientesP($item, $valor);
+
+                                            echo '<input type="hidden" class="form-control input-sm" id="codCliente" name="codCliente" value="' . $clientes["codigo"] . '" readonly>';
+
+                                            echo '<input type="text" class="form-control input-sm" id="nomCliente" name="nomCliente" value="' . $clientes["nombre"] . '" readonly>';
+                                        }
 
                                         ?>
 
@@ -198,46 +196,42 @@
 
                                         <select class="form-control" id="seleccionarVendedor" name="seleccionarVendedor" required>
 
-                                        <?php
+                                            <?php
 
-                                        $valor = $_GET["pedido"];
+                                            $valor = $_GET["pedido"];
 
-                                        $pedido = ControladorPedidos::ctrMostrarTemporal($valor);
-                                        //var_dump("pedido", $pedido["vendedor"]);
+                                            $pedido = ControladorPedidos::ctrMostrarTemporal($valor);
+                                            //var_dump("pedido", $pedido["vendedor"]);
 
-                                        if ($pedido["vendedor"] != "") {
+                                            if ($pedido["vendedor"] != "") {
 
-                                            $vendedor = ControladorVendedores::ctrMostrarVendedores("codigo", $pedido["vendedor"]);
-                                            //var_dump($vendedor);
+                                                $vendedor = ControladorVendedores::ctrMostrarVendedores("codigo", $pedido["vendedor"]);
+                                                //var_dump($vendedor);
 
-                                            echo '<option value="'.$vendedor["codigo"].'">'.$vendedor["codigo"].' - '.$vendedor["descripcion"].'</option>';
+                                                echo '<option value="' . $vendedor["codigo"] . '">' . $vendedor["codigo"] . ' - ' . $vendedor["descripcion"] . '</option>';
 
-                                            $vend2 = ControladorVendedores::ctrMostrarVendedores(null, null);
+                                                $vend2 = ControladorVendedores::ctrMostrarVendedores(null, null);
 
-                                            //var_dump($vend2);
+                                                //var_dump($vend2);
 
-                                            foreach ($vend2 as $key => $value) {
+                                                foreach ($vend2 as $key => $value) {
 
-                                            echo '<option value="'.$value["codigo"].'">'.$value["codigo"].' - '.$value["descripcion"].'</option>';
+                                                    echo '<option value="' . $value["codigo"] . '">' . $value["codigo"] . ' - ' . $value["descripcion"] . '</option>';
+                                                }
+                                            } else {
 
+                                                $vendedor = ControladorVendedores::ctrMostrarVendedores(null, null);
+
+                                                echo '<option value="">Seleccione Vendedor</option>';
+                                                //var_dump($vendedor);
+
+                                                foreach ($vendedor as $key => $value) {
+
+                                                    echo '<option value="' . $value["codigo"] . '">' . $value["codigo"] . ' - ' . $value["descripcion"] . '</option>';
+                                                }
                                             }
 
-                                        } else {
-
-                                            $vendedor = ControladorVendedores::ctrMostrarVendedores(null, null);
-
-                                            echo '<option value="">Seleccione Vendedor</option>';
-                                            //var_dump($vendedor);
-
-                                            foreach ($vendedor as $key => $value) {
-
-                                                echo '<option value="'.$value["codigo"].'">'.$value["codigo"].' - '.$value["descripcion"].'</option>';
-
-                                            }
-
-                                        }
-
-                                        ?>
+                                            ?>
 
                                         </select>
 
@@ -249,28 +243,28 @@
                                 ENTRADA LA LISTA DE PRECIOS
                                 ======================================-->
 
-                                    <?php
+                                <?php
 
-                                    $valor = $_GET["pedido"];
+                                $valor = $_GET["pedido"];
 
-                                    $pedido = ControladorPedidos::ctrMostrarTemporal($valor);
-                                    #var_dump("pedido", $pedido);
+                                $pedido = ControladorPedidos::ctrMostrarTemporal($valor);
+                                #var_dump("pedido", $pedido);
 
-                                    if ($pedido["codigo"] != "") {
+                                if ($pedido["codigo"] != "") {
 
-                                        echo '<input type="hidden" class="form-control input-sm" id="seleccionarLista" name="seleccionarLista" value="' . $pedido["lista"] . '" readonly>';
-                                    } else {
+                                    echo '<input type="hidden" class="form-control input-sm" id="seleccionarLista" name="seleccionarLista" value="' . $pedido["lista"] . '" readonly>';
+                                } else {
 
-                                        echo '<input type="hidden" class="form-control input-sm" id="seleccionarLista" name="seleccionarLista" value="' . $pedido["lista"] . '" readonly>';
-                                    }
+                                    echo '<input type="hidden" class="form-control input-sm" id="seleccionarLista" name="seleccionarLista" value="' . $pedido["lista"] . '" readonly>';
+                                }
 
-                                    ?>
+                                ?>
                                 <div class=" form-group buscador" id="elid" style="padding-bottom:25px">
                                     <label for="" class="col-form-label col-lg-1">Buscar:</label>
                                     <div class="col-lg-11">
                                         <div class="input-group">
-                                            
-                                            <input type="text" class="form-control " id="buscador" name="buscador"/>
+
+                                            <input type="text" class="form-control " id="buscador" name="buscador" />
                                             <div class="input-group-addon"><i class="fa fa-search"></i></div>
                                         </div>
                                     </div>
@@ -305,7 +299,7 @@
 
                                                 <label for="">P. Unit</label>
 
-                                            </div>                                        
+                                            </div>
 
                                             <div class="col-xs-1">
 
@@ -317,33 +311,33 @@
 
                                                 <label for="">U. IGV</label>
 
-                                            </div>                                        
+                                            </div>
 
                                             <div class="col-xs-1">
 
                                                 <label for="">T. IGV</label>
 
-                                            </div>                                        
+                                            </div>
 
                                         </div>
 
                                     </div>
 
-                                    <div class="box box-primary"  id="updDiv">
-                                    <?php
+                                    <div class="box box-primary" id="updDiv">
+                                        <?php
 
-                                    #tremos la lista de items
-                                    $listaArtPed = ControladorPedidos::ctrMostrarDetallesTemporalB($_GET["pedido"]);
-                                    //var_dump("listaArtPed", $listaArtPed);
+                                        #tremos la lista de items
+                                        $listaArtPed = ControladorPedidos::ctrMostrarDetallesTemporalB($_GET["pedido"]);
+                                        //var_dump("listaArtPed", $listaArtPed);
 
-                                    foreach ($listaArtPed as $key => $value) {
+                                        foreach ($listaArtPed as $key => $value) {
 
-                                        //$infoArtPed = controladorArticulos::ctrMostrarArticulos($value["articulo"]);
+                                            //$infoArtPed = controladorArticulos::ctrMostrarArticulos($value["articulo"]);
 
-                                        $total_detalle = $value["cantidad"] * $value["precio"];
-                                        #var_dump("infoArtPed", $infoArtPed);
+                                            $total_detalle = $value["cantidad"] * $value["precio"];
+                                            #var_dump("infoArtPed", $infoArtPed);
 
-                                        echo '  <div class="row mundito" style="padding:5px 15px">
+                                            echo '  <div class="row mundito" style="padding:5px 15px">
 
                                                 <div class="col-xs-5" style="padding-right:0px">
 
@@ -363,7 +357,7 @@
 
                                                 <div class="col-xs-2">
 
-                                                    <input type="number" class="form-control nuevaCantidadArtPed input-sm" name="nuevaCantidadArtPed" min="1" value="' . $value["cantidad"] . '" artPed="'.$value["pedidos"].'" nuevoArtPed="0" required>
+                                                    <input type="number" class="form-control nuevaCantidadArtPed input-sm" name="nuevaCantidadArtPed" min="1" value="' . $value["cantidad"] . '" artPed="' . $value["pedidos"] . '" nuevoArtPed="0" required>
 
                                                 </div>
 
@@ -377,7 +371,7 @@
 
                                                     <div class="input-group">
 
-                                                        <input type="text" class="form-control nuevoPrecioArticulo input-sm" precioReal="' . $value["precio"] . '" name="nuevoPrecioArticulo" value="' . round($total_detalle,2) . '" readonly required>
+                                                        <input type="text" class="form-control nuevoPrecioArticulo input-sm" precioReal="' . $value["precio"] . '" name="nuevoPrecioArticulo" value="' . round($total_detalle, 2) . '" readonly required>
 
                                                     </div>
 
@@ -385,20 +379,20 @@
 
                                                 <div class="col-xs-1">
 
-                                                    <input type="text" class="form-control nuevoPunitC input-sm" name="nuevoPunitC" min="1" value="' . ($value["precio"]*1.18) . '" readonly>
+                                                    <input type="text" class="form-control nuevoPunitC input-sm" name="nuevoPunitC" min="1" value="' . ($value["precio"] * 1.18) . '" readonly>
 
                                                 </div> 
                                                 
                                                 <div class="col-xs-1">
 
-                                                    <input type="text" class="form-control nuevoTotalC input-sm" name="nuevoTotalC" min="1" value="' . round($total_detalle*1.18,2) . '" readonly>
+                                                    <input type="text" class="form-control nuevoTotalC input-sm" name="nuevoTotalC" min="1" value="' . round($total_detalle * 1.18, 2) . '" readonly>
 
                                                 </div>                                                 
 
                                             </div>';
-                                    }
+                                        }
 
-                                    ?>
+                                        ?>
 
                                     </div>
                                 </div>
@@ -427,7 +421,7 @@
                                             <div class="col-xs-3">
                                                 <div class="input-group pull-right">
 
-                                                <span class="form-control"><b>Op. Gravadas S/</b></span>
+                                                    <span class="form-control"><b>Op. Gravadas S/</b></span>
 
                                                 </div>
                                             </div>
@@ -442,7 +436,7 @@
 
                                                 <div class="input-group">
 
-                                                <?php
+                                                    <?php
 
                                                     $valor = $_GET["pedido"];
 
@@ -450,11 +444,11 @@
 
                                                     //var_dump($totalArt["totalArt"]);
 
-                                                    echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="nuevoSubTotalA" name="nuevoSubTotalA" value="'.number_format($totalArt["totalArt"],2).'" readonly required>';
+                                                    echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="nuevoSubTotalA" name="nuevoSubTotalA" value="' . number_format($totalArt["totalArt"], 2) . '" readonly required>';
 
-                                                    echo '<input type="hidden" id="nuevoSubTotal" name="nuevoSubTotal" value="'.$totalArt["totalArt"].'">';
+                                                    echo '<input type="hidden" id="nuevoSubTotal" name="nuevoSubTotal" value="' . $totalArt["totalArt"] . '">';
 
-                                                ?>
+                                                    ?>
 
 
 
@@ -475,7 +469,7 @@
                                             <div class="col-xs-3">
                                                 <div class="input-group pull-right">
 
-                                                <span class="form-control"><b>Descuento %</b></span>
+                                                    <span class="form-control"><b>Descuento %</b></span>
 
                                                 </div>
                                             </div>
@@ -489,31 +483,28 @@
                                                 $descuento = ControladorPedidos::ctrMostrarTemporal($valor);
                                                 //var_dump($descuento["descuento_total"]);
 
-                                                if($descuento == false){
+                                                if ($descuento == false) {
 
                                                     //var_dump("hola 0");
 
                                                     echo '<input type="number" step="any" class="form-control" min="0" id="descPer" name="descPer" value="0">';
-
-                                                }else if($descuento["descuento_total"] == "0"){
+                                                } else if ($descuento["descuento_total"] == "0") {
 
                                                     //var_dump("hola 1");
 
                                                     echo '<input type="number" step="any" class="form-control" min="0" id="descPer" name="descPer" value="0">';
-
-                                                }else{
+                                                } else {
 
                                                     //var_dump("hola 2");
 
-                                                    $subD= $descuento["op_gravada"];
-                                                    $descD= $descuento["descuento_total"];
+                                                    $subD = $descuento["op_gravada"];
+                                                    $descD = $descuento["descuento_total"];
 
                                                     $descN = $descD / $subD * 100;
 
                                                     //var_dump(round($descN,2));
 
-                                                    echo '<input type="number" step="any" class="form-control" min="0" id="descPer" name="descPer" value="'.round($descN,2).'">';
-
+                                                    echo '<input type="number" step="any" class="form-control" min="0" id="descPer" name="descPer" value="' . round($descN, 2) . '">';
                                                 }
 
                                                 ?>
@@ -525,34 +516,31 @@
 
                                                 <div class="input-group">
 
-                                                <?php
+                                                    <?php
 
-                                                $valor = $_GET["pedido"];
+                                                    $valor = $_GET["pedido"];
 
-                                                $descuento = ControladorPedidos::ctrMostrarTemporal($valor);
-                                                //var_dump($descuento["descuento_total"]);
+                                                    $descuento = ControladorPedidos::ctrMostrarTemporal($valor);
+                                                    //var_dump($descuento["descuento_total"]);
 
-                                                if($descuento == false){
+                                                    if ($descuento == false) {
 
-                                                    //var_dump("hola 0");
+                                                        //var_dump("hola 0");
 
-                                                    echo '<input type="text" style="text-align:right;" min="0" class="form-control" id="descTotal" name="descTotal" placeholder="0.00" readonly>';
+                                                        echo '<input type="text" style="text-align:right;" min="0" class="form-control" id="descTotal" name="descTotal" placeholder="0.00" readonly>';
+                                                    } else if ($descuento["descuento_total"] == "0") {
 
-                                                }else if($descuento["descuento_total"] == "0"){
+                                                        //var_dump("hola 1");
 
-                                                    //var_dump("hola 1");
+                                                        echo '<input type="text" style="text-align:right;" min="0" class="form-control" id="descTotal" name="descTotal" placeholder="0.00" readonly>';
+                                                    } else {
 
-                                                    echo '<input type="text" style="text-align:right;" min="0" class="form-control" id="descTotal" name="descTotal" placeholder="0.00" readonly>';
+                                                        $decuentoR = round($descuento["descuento_total"], 2);
 
-                                                }else{
+                                                        echo '<input type="text" style="text-align:right;" min="0" class="form-control" id="descTotal" name="descTotal" placeholder="0.00" value="' . $decuentoR . '" readonly>';
+                                                    }
 
-                                                    $decuentoR = round($descuento["descuento_total"],2);
-
-                                                    echo '<input type="text" style="text-align:right;" min="0" class="form-control" id="descTotal" name="descTotal" placeholder="0.00" value="'.$decuentoR.'" readonly>';
-
-                                                }
-
-                                                ?>
+                                                    ?>
 
 
                                                 </div>
@@ -572,7 +560,7 @@
                                             <div class="col-xs-3">
                                                 <div class="input-group pull-right">
 
-                                                <span class="form-control"><b>Sub Total S/</b></span>
+                                                    <span class="form-control"><b>Sub Total S/</b></span>
 
                                                 </div>
                                             </div>
@@ -587,32 +575,29 @@
 
                                                 <div class="input-group">
 
-                                                <?php
+                                                    <?php
 
-                                                $valor = $_GET["pedido"];
+                                                    $valor = $_GET["pedido"];
 
-                                                $subTotalA = ControladorPedidos::ctrMostrarTemporal($valor);
-                                                //var_dump($subTotalA["sub_total"]);
+                                                    $subTotalA = ControladorPedidos::ctrMostrarTemporal($valor);
+                                                    //var_dump($subTotalA["sub_total"]);
 
-                                                if($subTotalA == false){
+                                                    if ($subTotalA == false) {
 
-                                                    //var_dump("hola 0");
+                                                        //var_dump("hola 0");
 
-                                                    echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="subTotal" name="subTotal" value="0" readonly>';
+                                                        echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="subTotal" name="subTotal" value="0" readonly>';
+                                                    } else if ($subTotalA["descuento_total"] == "0") {
 
-                                                }else if($subTotalA["descuento_total"] == "0"){
+                                                        //var_dump("hola 1");
 
-                                                    //var_dump("hola 1");
+                                                        echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="subTotal" name="subTotal" value="0" readonly>';
+                                                    } else {
 
-                                                    echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="subTotal" name="subTotal" value="0" readonly>';
+                                                        echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="subTotal" name="subTotal" value="' . $subTotalA["sub_total"] . '" readonly>';
+                                                    }
 
-                                                }else{
-
-                                                    echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="subTotal" name="subTotal" value="'.$subTotalA["sub_total"].'" readonly>';
-
-                                                }
-
-                                                ?>
+                                                    ?>
 
                                                 </div>
 
@@ -631,7 +616,7 @@
                                             <div class="col-xs-3">
                                                 <div class="input-group pull-right">
 
-                                                <span class="form-control"><b>IGV %</b></span>
+                                                    <span class="form-control"><b>IGV %</b></span>
 
                                                 </div>
                                             </div>
@@ -646,36 +631,33 @@
 
                                                 <div class="input-group">
 
-                                                <?php
+                                                    <?php
 
-                                                $valor = $_GET["pedido"];
+                                                    $valor = $_GET["pedido"];
 
-                                                $igvA = ControladorPedidos::ctrMostrarTemporal($valor);
-                                                //var_dump($igvA["sub_total"]);
+                                                    $igvA = ControladorPedidos::ctrMostrarTemporal($valor);
+                                                    //var_dump($igvA["sub_total"]);
 
-                                                if($igvA == false){
+                                                    if ($igvA == false) {
 
-                                                    //var_dump("hola 0");
+                                                        //var_dump("hola 0");
 
-                                                    echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="impTotal" name="impTotal" value="0" readonly>';
+                                                        echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="impTotal" name="impTotal" value="0" readonly>';
+                                                    } else if ($igvA["descuento_total"] == "0") {
 
-                                                }else if($igvA["descuento_total"] == "0"){
+                                                        //var_dump("hola 1");
 
-                                                    //var_dump("hola 1");
+                                                        $neto = $totalArt["totalArt"] * 0.18;
 
-                                                    $neto = $totalArt["totalArt"] * 0.18;
+                                                        echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="impTotal" name="impTotal" value="' . round($neto, 2) . '" readonly>';
+                                                    } else {
 
-                                                    echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="impTotal" name="impTotal" value="'.round($neto,2).'" readonly>';
+                                                        //var_dump("hola 2");
 
-                                                }else{
+                                                        echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="impTotal" name="impTotal" value="' . $igvA["igv"] . '" readonly>';
+                                                    }
 
-                                                    //var_dump("hola 2");
-
-                                                    echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="impTotal" name="impTotal" value="'.$igvA["igv"].'" readonly>';
-
-                                                }
-
-                                                ?>
+                                                    ?>
 
                                                 </div>
 
@@ -694,7 +676,7 @@
                                             <div class="col-xs-3">
                                                 <div class="input-group pull-right">
 
-                                                <span class="form-control"><b>Total S/</b></span>
+                                                    <span class="form-control"><b>Total S/</b></span>
 
                                                 </div>
                                             </div>
@@ -709,36 +691,33 @@
 
                                                 <div class="input-group">
 
-                                                <?php
+                                                    <?php
 
-                                                $valor = $_GET["pedido"];
+                                                    $valor = $_GET["pedido"];
 
-                                                $totalA = ControladorPedidos::ctrMostrarTemporal($valor);
-                                                //var_dump($totalA["descuento_total"]);
+                                                    $totalA = ControladorPedidos::ctrMostrarTemporal($valor);
+                                                    //var_dump($totalA["descuento_total"]);
 
-                                                if($totalA == false){
+                                                    if ($totalA == false) {
 
-                                                    //var_dump("hola 0");
+                                                        //var_dump("hola 0");
 
-                                                    echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="nuevoTotal" name="nuevoTotal" value="0" readonly>';
+                                                        echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="nuevoTotal" name="nuevoTotal" value="0" readonly>';
+                                                    } else if ($totalA["descuento_total"] == "0") {
 
-                                                }else if($totalA["descuento_total"] == "0"){
+                                                        //var_dump("hola 1");
 
-                                                    //var_dump("hola 1");
+                                                        $neto = $totalArt["totalArt"] * 1.18;
 
-                                                    $neto = $totalArt["totalArt"] * 1.18;
+                                                        echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="nuevoTotal" name="nuevoTotal" value="' . round($neto, 2) . '" readonly>';
+                                                    } else {
 
-                                                    echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="nuevoTotal" name="nuevoTotal" value="'.round($neto,2).'" readonly>';
+                                                        //var_dump("hola 2");
 
-                                                }else{
+                                                        echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="nuevoTotal" name="nuevoTotal" value="' . $totalA["total"] . '" readonly>';
+                                                    }
 
-                                                    //var_dump("hola 2");
-
-                                                    echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="nuevoTotal" name="nuevoTotal" value="'.$totalA["total"].'" readonly>';
-
-                                                }
-
-                                                ?>
+                                                    ?>
 
                                                 </div>
 
@@ -757,64 +736,59 @@
 
                                 <div class="form-group">
 
-                                        <label >Condición de Venta</label>
+                                    <label>Condición de Venta</label>
 
-                                        <div class="input-group">
+                                    <div class="input-group">
 
-                                            <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                                        <span class="input-group-addon"><i class="fa fa-money"></i></span>
 
-                                            <select class="form-control selectpicker" id="condicionVenta" name="condicionVenta" data-live-search="true"  required>
+                                        <select class="form-control selectpicker" id="condicionVenta" name="condicionVenta" data-live-search="true" required>
 
-                                                <?php
-                                                    $valor = $_GET["pedido"];
+                                            <?php
+                                            $valor = $_GET["pedido"];
 
-                                                    $pedido = ControladorPedidos::ctrMostrarTemporal($valor);
-                                                    //var_dump("pedido", $pedido["condicion_venta"]);
+                                            $pedido = ControladorPedidos::ctrMostrarTemporal($valor);
+                                            //var_dump("pedido", $pedido["condicion_venta"]);
 
-                                                    if($pedido["condicion_venta"] > 0){
+                                            if ($pedido["condicion_venta"] > 0) {
 
-                                                        $item = "id";
-                                                        $valor = $pedido["condicion_venta"];
+                                                $item = "id";
+                                                $valor = $pedido["condicion_venta"];
 
-                                                        $condiciones = ControladorCondicionVentas::ctrMostrarCondicionVentas($item, $valor);
-                                                        //var_dump($condiciones["descripcion"]);
+                                                $condiciones = ControladorCondicionVentas::ctrMostrarCondicionVentas($item, $valor);
+                                                //var_dump($condiciones["descripcion"]);
 
-                                                        echo '<option value="'.$condiciones["id"].'">'.$condiciones["codigo"].' - '.$condiciones["descripcion"].'</option>';
+                                                echo '<option value="' . $condiciones["id"] . '">' . $condiciones["codigo"] . ' - ' . $condiciones["descripcion"] . '</option>';
 
-                                                        $cond2 = ControladorCondicionVentas::ctrMostrarCondicionVentas(null, null);
+                                                $cond2 = ControladorCondicionVentas::ctrMostrarCondicionVentas(null, null);
 
-                                                        //var_dump($cond2);
+                                                //var_dump($cond2);
 
-                                                        foreach ($cond2 as $key => $value) {
+                                                foreach ($cond2 as $key => $value) {
 
-                                                        echo '<option value="'.$value["id"].'">'.$value["codigo"].' - '.$value["descripcion"].'</option>';
+                                                    echo '<option value="' . $value["id"] . '">' . $value["codigo"] . ' - ' . $value["descripcion"] . '</option>';
+                                                }
+                                            } else {
 
-                                                        }
+                                                $item = null;
+                                                $valor = null;
 
+                                                $condiciones = ControladorCondicionVentas::ctrMostrarCondicionVentas($item, $valor);
 
-                                                    }else {
+                                                echo '<option value="">Seleccione método de pago</option>';
+                                                //var_dump($condiciones);
 
-                                                        $item = null;
-                                                        $valor = null;
+                                                foreach ($condiciones as $key => $value) {
 
-                                                        $condiciones = ControladorCondicionVentas::ctrMostrarCondicionVentas($item, $valor);
+                                                    echo '<option value="' . $value["id"] . '">' . $value["codigo"] . ' - ' . $value["descripcion"] . '</option>';
+                                                }
+                                            }
 
-                                                        echo '<option value="">Seleccione método de pago</option>';
-                                                        //var_dump($condiciones);
+                                            ?>
 
-                                                        foreach ($condiciones as $key => $value) {
+                                        </select>
 
-                                                            echo '<option value="'.$value["id"].'">'.$value["codigo"].' - '.$value["descripcion"].'</option>';
-
-                                                        }
-
-                                                    }
-
-                                                ?>
-
-                                            </select>
-
-                                        </div>
+                                    </div>
 
                                 </div>
 
@@ -824,77 +798,70 @@
 
                                 <div class="form-group">
 
-                                    <label >AGENCIA DE TRANSPORTES</label>
+                                    <label>AGENCIA DE TRANSPORTES</label>
 
                                     <div class="input-group">
 
                                         <span class="input-group-addon"><i class="fa fa-plane"></i></span>
 
-                                        
+
 
                                         <?php
 
-                                            
-
-                                            $valor = $_GET["pedido"];
-
-                                            $pedido = ControladorPedidos::ctrMostrarTemporal($valor);
-                                            //var_dump("pedido", $pedido["agencia"]);
-
-                                            if($pedido["agencia"] > 0){
-
-                                                echo '<select class="form-control selectpicker" id="agencia" name="agencia" data-live-search="true" required>';
-
-                                                $item = "id";
-                                                $valor = $pedido["agencia"];
-
-                                                $agencias = ControladorAgencias::ctrMostrarAgencias($item, $valor);
-
-                                                //var_dump($agencias["nombre"]);
-
-                                                echo '<option value="'.$agencias["id"].'">'.$agencias["id"].' - '.$agencias["nombre"].'</option>';
-
-                                                $cond2 = ControladorAgencias::ctrMostrarAgencias(null, null);
-
-                                                //var_dump($cond2);
-
-                                                foreach ($cond2 as $key => $value) {
-
-                                                echo '<option value="'.$value["id"].'">'.$value["id"].' - '.$value["nombre"].'</option>';
-
-                                                }
 
 
-                                            }else{
+                                        $valor = $_GET["pedido"];
 
-                                                echo '<select class="form-control selectpicker" id="agencia" name="agencia" data-live-search="true" required>';
+                                        $pedido = ControladorPedidos::ctrMostrarTemporal($valor);
+                                        //var_dump("pedido", $pedido["agencia"]);
 
-                                                $item = null;
-                                                $valor = null;
+                                        if ($pedido["agencia"] > 0) {
 
-                                                $agencias = ControladorAgencias::ctrMostrarAgencias($item, $valor);
+                                            echo '<select class="form-control selectpicker" id="agencia" name="agencia" data-live-search="true" required>';
 
-                                                //var_dump($agencias);
+                                            $item = "id";
+                                            $valor = $pedido["agencia"];
 
-                                                echo '<option value="">Seleccionar Agencia</option>';
+                                            $agencias = ControladorAgencias::ctrMostrarAgencias($item, $valor);
 
-                                                foreach ($agencias as $key => $value) {
+                                            //var_dump($agencias["nombre"]);
 
-                                                    echo '<option value="'.$value["id"].'">'.$value["id"].' - '.$value["nombre"].'</option>';
+                                            echo '<option value="' . $agencias["id"] . '">' . $agencias["id"] . ' - ' . $agencias["nombre"] . '</option>';
 
-                                                }
+                                            $cond2 = ControladorAgencias::ctrMostrarAgencias(null, null);
 
+                                            //var_dump($cond2);
+
+                                            foreach ($cond2 as $key => $value) {
+
+                                                echo '<option value="' . $value["id"] . '">' . $value["id"] . ' - ' . $value["nombre"] . '</option>';
                                             }
+                                        } else {
 
-                                                ?>
+                                            echo '<select class="form-control selectpicker" id="agencia" name="agencia" data-live-search="true" required>';
+
+                                            $item = null;
+                                            $valor = null;
+
+                                            $agencias = ControladorAgencias::ctrMostrarAgencias($item, $valor);
+
+                                            //var_dump($agencias);
+
+                                            echo '<option value="">Seleccionar Agencia</option>';
+
+                                            foreach ($agencias as $key => $value) {
+
+                                                echo '<option value="' . $value["id"] . '">' . $value["id"] . ' - ' . $value["nombre"] . '</option>';
+                                            }
+                                        }
+
+                                        ?>
 
                                         </select>
 
                                     </div>
 
-                                </div
-
-                                <br>
+                                </div <br>
 
                             </div>
 
@@ -905,30 +872,28 @@
                             <button onclick="history.back()" type="button" class="btn btn-danger pull-left">Cancelar
                             </button>
 
-                        <?php
+                            <?php
 
                             $valor = $_GET["pedido"];
 
                             $pedido = ControladorPedidos::ctrMostrarTemporal($valor);
                             //var_dump("pedido", $pedido["estado"]);
 
-                            if($pedido["estado"] == "GENERADO"){
+                            if ($pedido["estado"] == "GENERADO") {
 
                                 //var_dump("hola 1");
 
                                 echo '<button type="button" class="btn btn-primary pull-right crearPedido" id="modalito" name="modalito" data-toggle="modal" data-target="#modalGenerarPedido" disabled>Crear Pedido
                                 </button>';
-
-                            }else{
+                            } else {
 
                                 //var_dump("hola 2");
 
                                 echo '<button type="button" class="btn btn-default pull-right crearPedido" id="modalito" name="modalito" data-toggle="modal" data-target="#modalGenerarPedido" disabled>Crear Pedido
                                 </button>';
-
                             }
 
-                        ?>
+                            ?>
 
 
                         </div>
@@ -949,260 +914,242 @@
 
                     <div class="box-header with-border"></div>
 
-                        <div class="box-body">
-                            
-                            <label for="" class="col-form-label col-lg-2">Modelo</label>
-                            <div class="col-lg-4">
-                                <input type="text" class="form-control input-md" id='modelo' name='modelo'>
-                            </div>
-                            <div class="form-group col-lg-2">
-                                <button class='btn btn-primary btn-md modificarArtPedB' data-toggle='modal' data-target='#modalModificarClienteP'>Agregar</button>
-                            </div>   
-                            
-                            <div class="form-group col-lg-2">
-                                <button class='btn btn-success btn-md refreshDetalle' pedido='<?php echo $_GET["pedido"]; ?>' ><i class="fa fa-refresh"></i></button>
-                            </div>                              
-                        
-                        </div>                    
+                    <div class="box-body">
+
+                        <label for="" class="col-form-label col-lg-2">Modelo</label>
+                        <div class="col-lg-4">
+                            <input type="text" class="form-control input-md" id='modelo' name='modelo'>
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <button class='btn btn-primary btn-md modificarArtPedB' data-toggle='modal' data-target='#modalModificarClienteP'>Agregar</button>
+                        </div>
+
+                        <div class="form-group col-lg-2">
+                            <button class='btn btn-success btn-md refreshDetalle' pedido='<?php echo $_GET["pedido"]; ?>'><i class="fa fa-refresh"></i></button>
+                        </div>
+
+                    </div>
 
                     <div class="box-body" id="updDivB">
 
-                    <body>
-                    <?php
+                        <body>
+                            <?php
 
-                        require_once "controladores/pedidos.controlador.php";
-                        require_once "modelos/pedidos.modelo.php";
+                            require_once "controladores/pedidos.controlador.php";
+                            require_once "modelos/pedidos.modelo.php";
 
-                        /* 
+                            /* 
                         * TRAEMOS LOS DATOS DEL PEDIDO
                         */
-                        $codigo = $_GET["pedido"];
-                        //var_dump($codigo);
+                            $codigo = $_GET["pedido"];
+                            //var_dump($codigo);
 
-                        $respuesta = ControladorPedidos::ctrPedidoImpresionCab($codigo);
-                        //var_dump($respuesta["pedido"]);
-                        //var_dump($respuesta);
+                            $respuesta = ControladorPedidos::ctrPedidoImpresionCab($codigo);
+                            //var_dump($respuesta["pedido"]);
+                            //var_dump($respuesta);
 
-                        $totales = ControladorPedidos::ctrPedidoImpresionTotales($codigo);
-                        //var_dump($totales);
+                            $totales = ControladorPedidos::ctrPedidoImpresionTotales($codigo);
+                            //var_dump($totales);
 
-                        date_default_timezone_set("America/Lima");
+                            date_default_timezone_set("America/Lima");
 
-                        //var_dump($respuesta["fecha"]);
+                            //var_dump($respuesta["fecha"]);
 
-                        $originalDate = $respuesta["fecha"];
-                        $newDate = date("d/m/Y", strtotime($originalDate));
-                        //var_dump($newDate);
+                            $originalDate = $respuesta["fecha"];
+                            $newDate = date("d/m/Y", strtotime($originalDate));
+                            //var_dump($newDate);
 
-                    ?>
+                            ?>
 
-                        <div class="zona_impresion">
+                            <div class="zona_impresion">
 
-                        <table border="1" align="left" width="700px">
+                                <table border="1" align="left" width="700px">
 
-                        <thead>
-                        <tr>
-                        <th style="width:10%"></th>
-                        <th style="width:20%"></th>
-                        <th style="width:6%">S</th>
-                        <th style="width:6%">M</th>
-                        <th style="width:6%">L</th>
-                        <th style="width:6%">XL</th>
-                        <th style="width:6%">XXL</th>
-                        <th style="width:6%">XS</th>
-                        <th style="width:6%"></th>
-                        <th style="width:6%"></th>
-                        <th style="width:6%"></th>
-                        </tr>
+                                    <thead>
+                                        <tr>
+                                            <th style="width:10%"></th>
+                                            <th style="width:20%"></th>
+                                            <th style="width:6%">S</th>
+                                            <th style="width:6%">M</th>
+                                            <th style="width:6%">L</th>
+                                            <th style="width:6%">XL</th>
+                                            <th style="width:6%">XXL</th>
+                                            <th style="width:6%">XS</th>
+                                            <th style="width:6%"></th>
+                                            <th style="width:6%"></th>
+                                            <th style="width:6%"></th>
+                                        </tr>
 
-                        <tr>
-                        <th style="width:10%"></th>
-                        <th style="width:20%"></th>
-                        <th style="width:6%">28</th>
-                        <th style="width:6%">30</th>
-                        <th style="width:6%">32</th>
-                        <th style="width:6%">34</th>
-                        <th style="width:6%">36</th>
-                        <th style="width:6%">38</th>
-                        <th style="width:6%">40</th>
-                        <th style="width:6%">42</th>
-                        <th style="width:6%"></th>
-                        </tr>
+                                        <tr>
+                                            <th style="width:10%"></th>
+                                            <th style="width:20%"></th>
+                                            <th style="width:6%">28</th>
+                                            <th style="width:6%">30</th>
+                                            <th style="width:6%">32</th>
+                                            <th style="width:6%">34</th>
+                                            <th style="width:6%">36</th>
+                                            <th style="width:6%">38</th>
+                                            <th style="width:6%">40</th>
+                                            <th style="width:6%">42</th>
+                                            <th style="width:6%"></th>
+                                        </tr>
 
-                        <tr>
-                        <th style="width:10%;text-align:left;">Modelo</th>
-                        <th style="width:20%">Color</th>
-                        <th style="width:6%">3</th>
-                        <th style="width:6%">4</th>
-                        <th style="width:6%">6</th>
-                        <th style="width:6%">8</th>
-                        <th style="width:6%">10</th>
-                        <th style="width:6%">12</th>
-                        <th style="width:6%">14</th>
-                        <th style="width:6%">16</th>
-                        <th style="width:6%">TOTAL</th>
-                        </tr>
-                        </thead>
+                                        <tr>
+                                            <th style="width:10%;text-align:left;">Modelo</th>
+                                            <th style="width:20%">Color</th>
+                                            <th style="width:6%">3</th>
+                                            <th style="width:6%">4</th>
+                                            <th style="width:6%">6</th>
+                                            <th style="width:6%">8</th>
+                                            <th style="width:6%">10</th>
+                                            <th style="width:6%">12</th>
+                                            <th style="width:6%">14</th>
+                                            <th style="width:6%">16</th>
+                                            <th style="width:6%">TOTAL</th>
+                                        </tr>
+                                    </thead>
 
-                        </table>
+                                </table>
 
-                        <?php
+                                <?php
 
-                        $modelo = ControladorPedidos::ctrPedidoImpresionMod($codigo);
-                        //var_dump($modelo);
+                                $modelo = ControladorPedidos::ctrPedidoImpresionMod($codigo);
+                                //var_dump($modelo);
 
-                        foreach($modelo as $key => $value){
+                                foreach ($modelo as $key => $value) {
 
-                        echo '<table class="tablaVerPed" border="1" style="border:dashed" align="left" width="700px">';
+                                    echo '<table class="tablaVerPed" border="1" style="border:dashed" align="left" width="700px">';
 
-                        $respuesta = ControladorPedidos::ctrPedidoImpresion($codigo, $value["modelo"]);
+                                    $respuesta = ControladorPedidos::ctrPedidoImpresion($codigo, $value["modelo"]);
 
-                        foreach($respuesta as $key => $value2){
+                                    foreach ($respuesta as $key => $value2) {
 
-                        if($value2["t1"] <= 0){
+                                        if ($value2["t1"] <= 0) {
 
-                        $value2["t1"] = " ";
+                                            $value2["t1"] = " ";
+                                        } else {
 
-                        }else{
+                                            $value2["t1"];
+                                        }
 
-                        $value2["t1"];
+                                        if ($value2["t2"] <= 0) {
 
-                        }
+                                            $value2["t2"] = " ";
+                                        } else {
 
-                        if($value2["t2"] <= 0){
+                                            $value2["t2"];
+                                        }
 
-                        $value2["t2"] = " ";
+                                        if ($value2["t3"] <= 0) {
 
-                        }else{
+                                            $value2["t3"] = " ";
+                                        } else {
 
-                        $value2["t2"];
+                                            $value2["t3"];
+                                        }
 
-                        }
+                                        if ($value2["t4"] <= 0) {
 
-                        if($value2["t3"] <= 0){
+                                            $value2["t4"] = " ";
+                                        } else {
 
-                        $value2["t3"] = " ";
+                                            $value2["t4"];
+                                        }
 
-                        }else{
+                                        if ($value2["t5"] <= 0) {
 
-                        $value2["t3"];
+                                            $value2["t5"] = " ";
+                                        } else {
 
-                        }
+                                            $value2["t5"];
+                                        }
 
-                        if($value2["t4"] <= 0){
+                                        if ($value2["t6"] <= 0) {
 
-                        $value2["t4"] = " ";
+                                            $value2["t6"] = " ";
+                                        } else {
 
-                        }else{
+                                            $value2["t6"];
+                                        }
 
-                        $value2["t4"];
+                                        if ($value2["t7"] <= 0) {
 
-                        }
+                                            $value2["t7"] = " ";
+                                        } else {
 
-                        if($value2["t5"] <= 0){
+                                            $value2["t7"];
+                                        }
 
-                        $value2["t5"] = " ";
+                                        if ($value2["t8"] <= 0) {
 
-                        }else{
+                                            $value2["t8"] = " ";
+                                        } else {
 
-                        $value2["t5"];
+                                            $value2["t8"];
+                                        }
 
-                        }
+                                        echo '<tr>
+                        <th style="width:10%;font-weight: normal;text-align:left;"><buttton class="btn-link btnBorrarModelo" modelo="' . $value2["modelo"] . '" pedido="' . $_GET["pedido"] . '">' . $value2["modelo"] . '</button></th>
 
-                        if($value2["t6"] <= 0){
+                        <th style="width:20%;text-align:left;">' . $value2["color"] . '</th>
 
-                        $value2["t6"] = " ";
+                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="' . $value2["modelo"] . $value2["cod_color"] . '1" pedido="' . $_GET["pedido"] . '">' . $value2["t1"] . '</button></th>
 
-                        }else{
+                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="' . $value2["modelo"] . $value2["cod_color"] . '2" pedido="' . $_GET["pedido"] . '">' . $value2["t2"] . '</button></th>
 
-                        $value2["t6"];
+                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="' . $value2["modelo"] . $value2["cod_color"] . '3" pedido="' . $_GET["pedido"] . '">' . $value2["t3"] . '</button></th>
 
-                        }
+                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="' . $value2["modelo"] . $value2["cod_color"] . '4" pedido="' . $_GET["pedido"] . '">' . $value2["t4"] . '</button></th>
 
-                        if($value2["t7"] <= 0){
+                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="' . $value2["modelo"] . $value2["cod_color"] . '5" pedido="' . $_GET["pedido"] . '">' . $value2["t5"] . '</button></th>
 
-                        $value2["t7"] = " ";
-
-                        }else{
-
-                        $value2["t7"];
-
-                        }
-
-                        if($value2["t8"] <= 0){
-
-                        $value2["t8"] = " ";
-
-                        }else{
-
-                        $value2["t8"];
-
-                        }
-
-                        echo '<tr>
-                        <th style="width:10%;font-weight: normal;text-align:left;"><buttton class="btn-link btnBorrarModelo" modelo="'.$value2["modelo"].'" pedido="'.$_GET["pedido"].'">'.$value2["modelo"].'</button></th>
-
-                        <th style="width:20%;text-align:left;">'.$value2["color"].'</th>
-
-                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="'.$value2["modelo"].$value2["cod_color"].'1" pedido="'.$_GET["pedido"].'">'.$value2["t1"].'</button></th>
-
-                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="'.$value2["modelo"].$value2["cod_color"].'2" pedido="'.$_GET["pedido"].'">'.$value2["t2"].'</button></th>
-
-                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="'.$value2["modelo"].$value2["cod_color"].'3" pedido="'.$_GET["pedido"].'">'.$value2["t3"].'</button></th>
-
-                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="'.$value2["modelo"].$value2["cod_color"].'4" pedido="'.$_GET["pedido"].'">'.$value2["t4"].'</button></th>
-
-                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="'.$value2["modelo"].$value2["cod_color"].'5" pedido="'.$_GET["pedido"].'">'.$value2["t5"].'</button></th>
-
-                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="'.$value2["modelo"].$value2["cod_color"].'6" pedido="'.$_GET["pedido"].'">'.$value2["t6"].'</button></th>
+                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="' . $value2["modelo"] . $value2["cod_color"] . '6" pedido="' . $_GET["pedido"] . '">' . $value2["t6"] . '</button></th>
                         
-                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="'.$value2["modelo"].$value2["cod_color"].'7" pedido="'.$_GET["pedido"].'">'.$value2["t7"].'</button></th>
+                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="' . $value2["modelo"] . $value2["cod_color"] . '7" pedido="' . $_GET["pedido"] . '">' . $value2["t7"] . '</button></th>
 
-                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="'.$value2["modelo"].$value2["cod_color"].'8" pedido="'.$_GET["pedido"].'">'.$value2["t8"].'</button></th>
+                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="' . $value2["modelo"] . $value2["cod_color"] . '8" pedido="' . $_GET["pedido"] . '">' . $value2["t8"] . '</button></th>
 
-                        <th style="width:6%">'.$value2["total"].'</th>
+                        <th style="width:6%">' . $value2["total"] . '</th>
                         </tr>';
+                                    }
 
-                        }
+                                    echo '</table>';
+                                }
 
-                        echo '</table>';
+                                ?>
 
-                        }
+                                <table border="1" align="left" width="700px">
 
-                        ?>
+                                    </thead>
 
-                        <table border="1" align="left" width="700px">
+                                    <tr>
 
-                        </thead>
+                                        <th style="width:10%;text-align:left;">TOTALES</th>
+                                        <th style="width:20%;text-align:left;">PEDIDO</th>
+                                        <th style="width:6%"><?php echo $totales["t1"]; ?></th>
+                                        <th style="width:6%"><?php echo $totales["t2"]; ?></th>
+                                        <th style="width:6%"><?php echo $totales["t3"]; ?></th>
+                                        <th style="width:6%"><?php echo $totales["t4"]; ?></th>
+                                        <th style="width:6%"><?php echo $totales["t5"]; ?></th>
+                                        <th style="width:6%"><?php echo $totales["t6"]; ?></th>
+                                        <th style="width:6%"><?php echo $totales["t7"]; ?></th>
+                                        <th style="width:6%"><?php echo $totales["t8"]; ?></th>
+                                        <th style="width:6%"><?php echo $totales["total"]; ?></th>
 
-                        <tr>
+                                    </tr>
 
-                        <th style="width:10%;text-align:left;">TOTALES</th>
-                        <th style="width:20%;text-align:left;">PEDIDO</th>
-                        <th style="width:6%"><?php echo $totales["t1"]; ?></th>
-                        <th style="width:6%"><?php echo $totales["t2"]; ?></th>
-                        <th style="width:6%"><?php echo $totales["t3"]; ?></th>
-                        <th style="width:6%"><?php echo $totales["t4"]; ?></th>
-                        <th style="width:6%"><?php echo $totales["t5"]; ?></th>
-                        <th style="width:6%"><?php echo $totales["t6"]; ?></th>
-                        <th style="width:6%"><?php echo $totales["t7"]; ?></th>
-                        <th style="width:6%"><?php echo $totales["t8"]; ?></th>
-                        <th style="width:6%"><?php echo $totales["total"]; ?></th>
+                                    </thead>
 
-                        </tr>
+                                </table>
 
-                        </thead>
-
-                        </table>
-
-                        <br>
+                                <br>
 
 
 
-                        </div>
-                        <p>&nbsp;</p>
+                            </div>
+                            <p>&nbsp;</p>
 
-                    </body>
+                        </body>
 
                     </div>
 
@@ -1477,268 +1424,266 @@ MODAL PARA GENERAR EL PEDIDO
 
 <div id="modalGenerarPedido" class="modal fade" role="dialog">
 
-  <div class="modal-dialog">
+    <div class="modal-dialog">
 
-    <div class="modal-content">
+        <div class="modal-content">
 
-        <form role="form" method="post">
+            <form role="form" method="post">
 
-        <!--=====================================
+                <!--=====================================
         CABEZA DEL MODAL
         ======================================-->
 
-            <div class="modal-header" style="background:#008080; color:white">
+                <div class="modal-header" style="background:#008080; color:white">
 
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-                <h4 class="modal-title">Resumen de Pedido</h4>
+                    <h4 class="modal-title">Resumen de Pedido</h4>
 
-            </div>
+                </div>
 
-            <!--=====================================
+                <!--=====================================
             CUERPO DEL MODAL
             ======================================-->
 
-            <div class="modal-body">
+                <div class="modal-body">
 
-                <div class="box-body">
+                    <div class="box-body">
 
-                <!-- ENTRADA PARA EL CODIGO -->
+                        <!-- ENTRADA PARA EL CODIGO -->
 
-                <div class="form-group">
+                        <div class="form-group">
 
-                    <label>Código de Pedido</label>
+                            <label>Código de Pedido</label>
 
-                    <div class="input-group">
+                            <div class="input-group">
 
-                        <span class="input-group-addon"><i class="fa fa-certificate"></i></span>
+                                <span class="input-group-addon"><i class="fa fa-certificate"></i></span>
 
-                        <input type="text" class="form-control input-sm" name="codigoM" id="codigoM" required readonly>
+                                <input type="text" class="form-control input-sm" name="codigoM" id="codigoM" required readonly>
+
+                            </div>
+
+                        </div>
+
+                        <!-- ENTRADA PARA EL NOMBRE -->
+
+                        <div class="form-group">
+
+                            <label>Cliente</label>
+
+                            <div class="input-group">
+
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+
+                                <input type="text" class="form-control input-sm" name="codClienteM" id="codClienteM" required readonly>
+
+                                <input type="text" class="form-control input-sm" name="nomClienteM" id="nomClienteM" required readonly>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ENTRADA PARA EL VENDEDOR-->
+
+                        <div class="form-group">
+
+                            <label>Vendedor</label>
+
+                            <div class="input-group">
+
+                                <span class="input-group-addon"><i class="fa fa-child"></i></span>
+
+                                <input type="text" class="form-control input-sm" name="vendedorM" id="vendedorM" required readonly>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group col-lg-12 pull-right">
+
+                            <div>
+
+                                <h4>
+                                    <label>Totales</label>
+                                </h4>
+
+                            </div>
+
+                        </div>
+
+                        <!-- ENTRADA PARA LOS TOTALES-->
+
+                        <div class="form-group col-lg-7 pull-right">
+
+                            <div class="input-group">
+
+                                <span class="input-group-addon" style="width: 150px;">Op. Gravada <b>S/</b></span>
+
+                                <input type="text" class="form-control input-sm" style="text-align:right;" name="opGravadaM" id="opGravadaM" required readonly>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group col-lg-7 pull-right">
+
+                            <div class="input-group">
+
+                                <span class="input-group-addon" style="width: 150px;">Descuento <b>S/</b></span>
+
+                                <input type="text" class="form-control input-sm" style="text-align:right;" name="descuentoM" id="descuentoM" required readonly>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group col-lg-7 pull-right">
+
+                            <div class="input-group">
+
+                                <span class="input-group-addon" style="width: 150px;">Subtotal <b>S/</b></span>
+
+                                <input type="text" class="form-control input-sm" style="text-align:right;" name="subTotalM" id="subTotalM" required readonly>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group col-lg-7 pull-right">
+
+                            <div class="input-group">
+
+                                <span class="input-group-addon" style="width: 150px;">Igv <b>18%</b></span>
+
+                                <input type="text" class="form-control input-sm" style="text-align:right;" name="igvM" id="igvM" required readonly>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group col-lg-7 pull-right">
+
+                            <div class="input-group">
+
+                                <span class="input-group-addon" style="width: 150px;">Total <b>S/</b></span>
+
+                                <input type="text" class="form-control input-sm" style="text-align:right;" name="totalM" id="totalM" required readonly>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group col-lg-7 pull-right">
+
+                            <div class="input-group">
+
+                                <input type="hidden" class="form-control input-sm" style="text-align:right;" name="articulosM" id="articulosM" required readonly>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group col-lg-7 pull-right">
+
+                            <div class="input-group">
+
+                                <input type="hidden" class="form-control input-lg" style="text-align:right;" name="condicionVentaM" id="condicionVentaM" required readonly>
+
+                                <input type="hidden" class="form-control input-lg" style="text-align:right;" name="agenciaM" id="agenciaM" required readonly>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group col-lg-7 pull-right">
+
+                            <div class="input-group">
+
+                                <input type="hidden" class="form-control input-sm" name="usuarioM" id="usuarioM">
+
+                            </div>
+
+                        </div>
 
                     </div>
 
                 </div>
 
-                <!-- ENTRADA PARA EL NOMBRE -->
-
-                <div class="form-group">
-
-                    <label>Cliente</label>
-
-                    <div class="input-group">
-
-                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
-
-                        <input type="text" class="form-control input-sm" name="codClienteM" id="codClienteM" required readonly>
-
-                        <input type="text" class="form-control input-sm" name="nomClienteM" id="nomClienteM" required readonly>
-
-                    </div>
-
-                </div>
-
-
-                <!-- ENTRADA PARA EL VENDEDOR-->
-
-                <div class="form-group">
-
-                    <label>Vendedor</label>
-
-                    <div class="input-group">
-
-                        <span class="input-group-addon"><i class="fa fa-child"></i></span>
-
-                        <input type="text" class="form-control input-sm" name="vendedorM" id="vendedorM" required readonly>
-
-                    </div>
-
-                </div>
-
-                <div class="form-group col-lg-12 pull-right">
-
-                    <div>
-
-                        <h4>
-                            <label>Totales</label>
-                        </h4>
-
-                    </div>
-
-                </div>
-
-                <!-- ENTRADA PARA LOS TOTALES-->
-
-                <div class="form-group col-lg-7 pull-right">
-
-                    <div class="input-group">
-
-                        <span class="input-group-addon" style="width: 150px;">Op. Gravada <b>S/</b></span>
-
-                        <input type="text" class="form-control input-sm" style="text-align:right;" name="opGravadaM" id="opGravadaM" required readonly>
-
-                    </div>
-
-                </div>
-
-                <div class="form-group col-lg-7 pull-right">
-
-                    <div class="input-group">
-
-                        <span class="input-group-addon" style="width: 150px;">Descuento <b>S/</b></span>
-
-                        <input type="text" class="form-control input-sm" style="text-align:right;" name="descuentoM" id="descuentoM" required readonly>
-
-                    </div>
-
-                </div>
-
-                <div class="form-group col-lg-7 pull-right">
-
-                    <div class="input-group">
-
-                        <span class="input-group-addon" style="width: 150px;">Subtotal <b>S/</b></span>
-
-                        <input type="text" class="form-control input-sm" style="text-align:right;" name="subTotalM" id="subTotalM" required readonly>
-
-                    </div>
-
-                </div>
-
-                <div class="form-group col-lg-7 pull-right">
-
-                    <div class="input-group">
-
-                        <span class="input-group-addon" style="width: 150px;">Igv <b>18%</b></span>
-
-                        <input type="text" class="form-control input-sm" style="text-align:right;" name="igvM" id="igvM" required readonly>
-
-                    </div>
-
-                </div>
-
-                <div class="form-group col-lg-7 pull-right">
-
-                    <div class="input-group">
-
-                        <span class="input-group-addon" style="width: 150px;">Total <b>S/</b></span>
-
-                        <input type="text" class="form-control input-sm" style="text-align:right;" name="totalM" id="totalM" required readonly>
-
-                    </div>
-
-                </div>
-
-                <div class="form-group col-lg-7 pull-right">
-
-                    <div class="input-group">
-
-                        <input type="hidden" class="form-control input-sm" style="text-align:right;" name="articulosM" id="articulosM" required readonly>
-
-                    </div>
-
-                </div>
-
-                <div class="form-group col-lg-7 pull-right">
-
-                    <div class="input-group">
-
-                        <input type="hidden" class="form-control input-lg" style="text-align:right;" name="condicionVentaM" id="condicionVentaM" required readonly>
-
-                        <input type="hidden" class="form-control input-lg" style="text-align:right;" name="agenciaM" id="agenciaM" required readonly>
-
-                    </div>
-
-                </div>
-
-                <div class="form-group col-lg-7 pull-right">
-
-                    <div class="input-group">
-
-                    <input type="hidden" class="form-control input-sm" name="usuarioM" id="usuarioM">
-
-                    </div>
-
-                </div>
-
-                </div>
-
-            </div>
-
-            <!--=====================================
+                <!--=====================================
             PIE DEL MODAL
             ======================================-->
 
-            <div class="modal-footer">
+                <div class="modal-footer">
 
-                <button type="submit" class="btn btn-primary">Crear Pedido</button>
+                    <button type="submit" class="btn btn-primary">Crear Pedido</button>
 
-            </div>
+                </div>
 
-        </form>
+            </form>
 
 
-      <?php
+            <?php
 
-        $totalesPedido = new ControladorPedidos();
-        $totalesPedido -> ctrCrearPedidoTotales();
+            $totalesPedido = new ControladorPedidos();
+            $totalesPedido->ctrCrearPedidoTotales();
 
-      ?>
+            ?>
 
+
+        </div>
 
     </div>
-
-  </div>
 
 </div>
 
 <script>
-window.document.title = "Crear pedido"
+    window.document.title = "Crear pedido"
 </script>
 
 <script>
-$('.nuevoProductoPedido').ready(function(){
-    $('#buscador').keyup(function(){
+    $('.nuevoProductoPedido').ready(function() {
+        $('#buscador').keyup(function() {
 
-    //console.log("hola mundo")
+            //console.log("hola mundo")
 
-    var nombres = $('.nuevaDescripcionArticulo');
-    //console.log(nombres.val())
-    //console.log(nombres.length())
+            var nombres = $('.nuevaDescripcionArticulo');
+            //console.log(nombres.val())
+            //console.log(nombres.length())
 
-    var buscando = $(this).val();
-    //console.log(buscando.length);
+            var buscando = $(this).val();
+            //console.log(buscando.length);
 
-    var item='';
+            var item = '';
 
-       for( var i = 0; i < nombres.length; i++ ){
+            for (var i = 0; i < nombres.length; i++) {
 
-        item = $(nombres[i]).val();
-        item2 = $(nombres[i]).val().toLowerCase();
-        // console.log(item);
+                item = $(nombres[i]).val();
+                item2 = $(nombres[i]).val().toLowerCase();
+                // console.log(item);
 
-            for(var x = 0; x < item.length; x++ ){
+                for (var x = 0; x < item.length; x++) {
 
-                if( buscando.length == 0 || item.indexOf( buscando ) > -1 || item2.indexOf( buscando ) > -1 ){
+                    if (buscando.length == 0 || item.indexOf(buscando) > -1 || item2.indexOf(buscando) > -1) {
 
-                    $(nombres[i]).parents('.mundito').show(); 
+                        $(nombres[i]).parents('.mundito').show();
 
-                }else{
+                    } else {
 
-                    $(nombres[i]).parents('.mundito').hide();
+                        $(nombres[i]).parents('.mundito').hide();
 
+                    }
                 }
             }
-       }
+        });
     });
-  });
 
-  function anular(e){
+    function anular(e) {
 
-    tecla = (document.all) ? e.keyCode : e.which;
-    //console.log(tecla);
-    return (tecla != 13);
+        tecla = (document.all) ? e.keyCode : e.which;
+        //console.log(tecla);
+        return (tecla != 13);
 
-  }
-
-
+    }
 </script>

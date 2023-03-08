@@ -23,6 +23,14 @@
         <div class="box">
 
             <div class="box-header with-border">
+                <a href="vistas/reportes_excel/rpt_urgencias_maestro.php?tipo=prod" class="btn btn-default pull-right" style="border:green 1px solid">
+
+                    <img src="vistas/img/plantilla/excel.png" width="20px"> URGENCIAS PRODUCCIÓN
+
+                </a>
+            </div>
+
+            <div class="box-header with-border">
 
                 <div class="box-body">
 
@@ -44,6 +52,9 @@
                                 <th>Alm. Corte</th>
                                 <th>Ord. Corte</th>
                                 <th>Ult. Mes</th>
+                                <th>Duración</th>
+                                <th>Situación</th>
+                                <th>Sector</th>
 
                             </tr>
 
@@ -59,7 +70,7 @@
                 </div>
 
             </div>
-
+        </div>
     </section>
 
 </div>

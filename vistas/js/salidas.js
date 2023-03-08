@@ -2,7 +2,7 @@
  * VISUALIZAR DETALLEs QUE SE JALAN DEL PEDIDO
  */
 $(".tablaArticulosPedidos").on("click", ".agregarArtPed", function () {
-    var cliente = document.getElementById("seleccionarCliente").value;
+    var cliente = document.getElementById("seleccionarClienteS").value;
     var vendedor = document.getElementById("seleccionarVendedor").value;
     //var usuario = document.getElementById("idUsuario").value;
     var modLista = document.getElementById("lista").value;
@@ -332,8 +332,8 @@ $(".btnCalCant").click(function () {
     //console.log(totalCantidad);
 });
 
-$("#seleccionarCliente").change(function () {
-    var cliList = document.getElementById("seleccionarCliente").value;
+$("#seleccionarClienteS").change(function () {
+    var cliList = document.getElementById("seleccionarClienteS").value;
     // console.log(cliList);
 
     var datos = new FormData();
@@ -483,8 +483,8 @@ function listarArticulos() {
  * AL CAMBIAR LA CONDICION DE VENTA
  */
 
-$("#seleccionarCliente").change(function () {
-    var cliente = document.getElementById("seleccionarCliente").value;
+$("#seleccionarClienteS").change(function () {
+    var cliente = document.getElementById("seleccionarClienteS").value;
     //console.log(cliente);
     $("#codClienteM").val(cliente);
 
@@ -523,7 +523,7 @@ $(".crearSalidaVarios").click(function () {
     var codigo = document.getElementById("nuevoCodigo").value;
     $("#codigoM").val(codigo);
 
-    var cliente = document.getElementById("seleccionarCliente").value;
+    var cliente = document.getElementById("seleccionarClienteS").value;
     //console.log(cliente);
     $("#codClienteM").val(cliente);
 
@@ -874,12 +874,12 @@ $(".formularioSalidaVarios").on("click", ".btnCargarCliente", function () {
             $("#progressBar1").addClass("progress-bar");
             $("#progressBar1").text("100% - Carga realizada");
 
-            $("#seleccionarCliente").find("option").remove();
-            $("#seleccionarCliente").append(
+            $("#seleccionarClienteS").find("option").remove();
+            $("#seleccionarClienteS").append(
                 "<option value='' > Seleccionar cliente </option>"
             );
             for (let i = 0; i < respuesta2.length; i++) {
-                $("#seleccionarCliente").append(
+                $("#seleccionarClienteS").append(
                     "<option value='" +
                         respuesta2[i]["codigo"] +
                         "'>" +
@@ -889,7 +889,7 @@ $(".formularioSalidaVarios").on("click", ".btnCargarCliente", function () {
                         "</option>"
                 );
             }
-            $("#seleccionarCliente").selectpicker("refresh");
+            $("#seleccionarClienteS").selectpicker("refresh");
         },
     });
 });
@@ -977,7 +977,7 @@ $(".tablaArticulosSalidas").DataTable({
 $(".tablaArticulosSalidas").on("click", ".modificarArtSal", function () {
     //console.log("hola mundo");
 
-    var cliente = document.getElementById("seleccionarCliente").value;
+    var cliente = document.getElementById("seleccionarClienteS").value;
     var vendedor = document.getElementById("seleccionarVendedor").value;
     var salida = document.getElementById("nuevoCodigo").value;
     var modLista = document.getElementById("lista").value;

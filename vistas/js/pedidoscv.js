@@ -60,6 +60,21 @@ $("#seleccionarCliente").change(function () {
     var datos = new FormData();
     datos.append("cliList", cliList);
 
+    // Obtener la fecha actual
+    var fechaActual = new Date();
+
+    // Verificar si es el 8 de marzo de 2023
+    if (
+        fechaActual.getDate() === 9 &&
+        fechaActual.getMonth() === 2 &&
+        fechaActual.getFullYear() === 2023
+    ) {
+        var precio = "ok";
+        //console.log("Hoy es el 8 de marzo de 2023");
+    } else {
+        var precio = "no";
+        //console.log("Hoy no es el 8 de marzo de 2023");
+    }
     $.ajax({
         url: "ajax/pedidos.ajax.php",
         method: "POST",
@@ -69,11 +84,61 @@ $("#seleccionarCliente").change(function () {
         processData: false,
         dataType: "json",
         success: function (respuestaDet) {
-            if (respuestaDet["vendedor"] == "08") {
-                $("#lista").val(respuestaDet["lista_precios"]);
-                //$("#lista").val("precio2");
+            if (
+                (respuestaDet["vendedor"] == "08" ||
+                    respuestaDet["vendedor"] == "08R") &&
+                precio == "ok"
+            ) {
+                $("#lista").val("precio2");
+                console.log("precio especial");
             } else {
                 $("#lista").val(respuestaDet["lista_precios"]);
+                console.log("precio normal");
+            }
+        },
+    });
+});
+
+$("#seleccionarVendedor").change(function () {
+    var cliList = document.getElementById("seleccionarCliente").value;
+    console.log("🚀 ~ file: pedidoscv.js:104 ~ cliList:", cliList);
+
+    var vendedor = document.getElementById("seleccionarVendedor").value;
+    console.log("🚀 ~ file: pedidoscv.js:104 ~ vendedor:", vendedor);
+
+    var datos = new FormData();
+    datos.append("cliList", cliList);
+
+    // Obtener la fecha actual
+    var fechaActual = new Date();
+
+    // Verificar si es el 8 de marzo de 2023
+    if (
+        fechaActual.getDate() === 9 &&
+        fechaActual.getMonth() === 2 &&
+        fechaActual.getFullYear() === 2023
+    ) {
+        var precio = "ok";
+        //console.log("Hoy es el 8 de marzo de 2023");
+    } else {
+        var precio = "no";
+        //console.log("Hoy no es el 8 de marzo de 2023");
+    }
+    $.ajax({
+        url: "ajax/pedidos.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuestaDet) {
+            if ((vendedor == "08" || vendedor == "08R") && precio == "ok") {
+                $("#lista").val("precio2");
+                console.log("precio especial");
+            } else {
+                $("#lista").val(respuestaDet["lista_precios"]);
+                console.log("precio normal");
             }
         },
     });
@@ -1530,6 +1595,7 @@ $(".modificarArtPedB").click(function () {
         var vendedor = document.getElementById("seleccionarVendedor").value;
         var pedido = document.getElementById("nuevoCodigo").value;
         var modLista = document.getElementById("lista").value;
+        console.log("🚀 ~ file: pedidoscv.js:1548 ~ modLista:", modLista);
 
         var agencia = document.getElementById("agencia").value;
 
