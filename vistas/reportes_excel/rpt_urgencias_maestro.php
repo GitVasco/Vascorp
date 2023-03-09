@@ -524,8 +524,10 @@ for ($i = 0; $i < count($articulos) - 1; $i++) {
         $dura = $articulos[$i]["urg_plan"];
         if ($dura <= 2) {
             $situacion = "PRIORIDAD";
-        } else if ($dura > 2) {
+        } else if ($dura > 2 and $dura <= 2.5) {
             $situacion = "URGENTE";
+        } else {
+            $situacion = "NORMAL";
         }
     }
 
@@ -593,8 +595,10 @@ for ($i = 0; $i < count($articulos) - 1; $i++) {
 
     if ($situacion == "PRIORIDAD") {
         $objPHPExcel->getActiveSheet()->setSharedStyle($borde_8, "N$fila");
-    } else {
+    } else if ($situacion == "URGENTE") {
         $objPHPExcel->getActiveSheet()->setSharedStyle($borde_1, "N$fila");
+    } else {
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_2, "N$fila");
     }
 }
 

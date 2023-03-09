@@ -658,8 +658,7 @@ class ModeloArticulos
 						articulojf a 
 					WHERE a.estado = 'activo' 
 						AND ROUND((a.stock - a.pedidos) / (a.ult_mes), 2) <= $mes 
-					ORDER BY a.defecto_taller,
-						a.articulo");
+					ORDER BY a.articulo");
 
 			$stmt->execute();
 
@@ -719,12 +718,12 @@ class ModeloArticulos
 					WHERE a.estado = 'activo' 
 						AND ROUND(
 						(
-							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte
+							(a.stock - a.pedidos) + a.taller + a.servicio
 						) / (a.ult_mes),
 						2
 						) <= $mes 
-						ORDER BY a.defecto_taller,
-						a.articulo");
+						AND a.alm_corte > 0
+						ORDER BY a.articulo");
 
 			$stmt->execute();
 
@@ -788,8 +787,7 @@ class ModeloArticulos
 						) / (a.ult_mes),
 						2
 						) <= $mes
-						ORDER BY a.defecto_taller,
-						a.articulo");
+						ORDER BY a.articulo");
 
 			$stmt->execute();
 
@@ -847,14 +845,7 @@ class ModeloArticulos
 					FROM
 						articulojf a 
 					WHERE a.estado = 'activo' 
-						AND ROUND(
-						(
-							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte
-						) / (a.ult_mes),
-						2
-						) <= $mes
-						ORDER BY a.defecto_taller,
-						a.articulo");
+						ORDER BY a.articulo");
 
 			$stmt->execute();
 
@@ -936,8 +927,7 @@ class ModeloArticulos
 							2
 							) <= (SELECT m.argumento FROM maestrajf m WHERE m.tipo_dato='TURG' AND codigo = 'plan')
 						) 
-						ORDER BY a.defecto_taller,
-						a.articulo");
+						ORDER BY a.articulo");
 
 			$stmt->execute();
 

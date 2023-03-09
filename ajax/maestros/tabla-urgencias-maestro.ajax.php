@@ -345,8 +345,10 @@ class TablaUrgencias
 
                     if ($articulos[$i]["urg_plan"] <= 2) {
                         $situacion = "<center><b><span style='font-size:100%' class='text-danger'>PRIORIDAD</span></b></center>";
-                    } else if ($articulos[$i]["urg_plan"] > 2) {
+                    } else if ($articulos[$i]["urg_plan"] > 2 && $articulos[$i]["urg_plan"] <= 2.5) {
                         $situacion = "<center><b><span style='font-size:100%' class='text-yellow'>URGENTE</span></b></center>";
+                    } else {
+                        $situacion = "<center><b><span style='font-size:100%' class='text-primary'>NORMAL</span></b></center>";
                     }
                 }
 
