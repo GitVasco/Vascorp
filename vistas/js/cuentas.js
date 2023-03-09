@@ -2448,6 +2448,8 @@ $(".btnReporteCrediPagos").click(function () {
     var inicio = document.getElementById("fechaInicio").value;
     var final = document.getElementById("fechaFin").value;
 
+    var miCheckbox = document.getElementById("ctaNota");
+
     if (inicio == "") {
         var ini = document.getElementById("iniF").value;
     } else {
@@ -2460,13 +2462,19 @@ $(".btnReporteCrediPagos").click(function () {
         var fin = final;
     }
 
-    console.log(ini, fin);
-
-    window.location =
-        "vistas/reportes_excel/rpt_credipagos.php?inicio=" +
-        ini +
-        "&fin=" +
-        fin;
+    if (miCheckbox.checked) {
+        window.location =
+            "vistas/reportes_excel/rpt_credipagosb.php?inicio=" +
+            ini +
+            "&fin=" +
+            fin;
+    } else {
+        window.location =
+            "vistas/reportes_excel/rpt_credipagos.php?inicio=" +
+            ini +
+            "&fin=" +
+            fin;
+    }
 });
 
 //Reporte de Cuentas

@@ -3491,7 +3491,11 @@ class ControladorFacturacion
 
             fclose($fp);
 
-            $origen = 'c:/xampp2/htdocs/vascorp/vistas/reportes_excel/csv_fe/' . $nombre . '.txt';
+            //?origen prueba
+            //$origen = 'c:/xampp2/htdocs/vascorp/vistas/reportes_excel/csv_fe/' . $nombre . '.txt';
+
+            //!origen produccion
+            $origen = 'c:/xampp/htdocs/vascorp/vistas/reportes_excel/csv_fe/' . $nombre . '.txt';
 
             if ($datos["c1"] == "01") {
 
@@ -3611,7 +3615,9 @@ class ControladorFacturacion
                 substr($_POST["documento"], 0, 4) == "B001" ||
                 substr($_POST["documento"], 0, 4) == "F001" ||
                 substr($_POST["documento"], 0, 4) == "B003" ||
-                substr($_POST["documento"], 0, 4) == "F003"
+                substr($_POST["documento"], 0, 4) == "F003" ||
+                substr($_POST["documento"], 0, 4) == "FR01" ||
+                substr($_POST["documento"], 0, 4) == "BR01"
             ) {
 
                 //*Uniaades
@@ -3691,6 +3697,10 @@ class ControladorFacturacion
 
             fclose($fp);
 
+            //?origen prueba
+            //$origen = 'c:/xampp2/htdocs/vascorp/vistas/reportes_excel/csv_fe/' . $nombre . '.txt';
+
+            //!origen produccion
             $origen = 'c:/xampp/htdocs/vascorp/vistas/reportes_excel/csv_fe/' . $nombre . '.txt';
 
             //?destino prueba
@@ -3842,7 +3852,12 @@ class ControladorFacturacion
 
             fclose($fp);
 
-            $origen = 'c:/xampp2/htdocs/vascorp/vistas/reportes_excel/csv_fe/' . $nombre . '.txt';
+
+            //?origen prueba
+            //$origen = 'c:/xampp2/htdocs/vascorp/vistas/reportes_excel/csv_fe/' . $nombre . '.txt';
+
+            //!origen produccion
+            $origen = 'c:/xampp/htdocs/vascorp/vistas/reportes_excel/csv_fe/' . $nombre . '.txt';
 
             //?destino prueba
             $destino = 'c:/prueba/nd/' . $nombre . '.csv';

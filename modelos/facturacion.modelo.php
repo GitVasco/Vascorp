@@ -8705,7 +8705,7 @@ class ModeloFacturacion
     //*Tabla Errores
     static public function mdlErrores()
     {
-        $sql = "SELECT 
+        /* $sql = "SELECT 
                 v.tipo,
                 v.tipo_documento,
                 LEFT(v.documento, 4) AS serie,
@@ -8767,7 +8767,85 @@ class ModeloFacturacion
             ORDER BY v.fecha DESC,
                 tipo_documento,
                 serie,
-                v.documento DESC";
+                v.documento DESC
+        "; */
+
+        $sql = "SELECT 
+                    v.tipo,
+                    v.tipo_documento,
+                    LEFT(v.documento, 4) AS serie,
+                    RIGHT(v.documento, 5) AS numero,
+                    v.documento,
+                    v.fecha,
+                    v.estado,
+                    MONTH(v.fecha) AS mes,
+                    DAY(v.fecha) AS dia,
+                    ROUND(m.total - v.neto, 1) AS dif_m_v,
+                    ROUND(m.total, 2) AS total_m,
+                    v.neto,
+                    v.igv,
+                    ROUND((v.neto * 0.18) - v.igv, 1) AS dif_igv,
+                    v.total,
+                    ROUND((v.neto + v.igv) - v.total, 1) AS dif_total,
+                    cc.monto,
+                    (v.total - cc.monto) AS dif_total_cc,
+                    v.usureg 
+                FROM
+                    ventajf v 
+                    LEFT JOIN 
+                    (SELECT 
+                        m.tipo,
+                        m.documento,
+                        SUM(m.total) AS total 
+                    FROM
+                        movimientosjf_2023 m 
+                    WHERE m.tipo IN ('S02', 'S03', 'E05', 'S05') 
+                    GROUP BY m.tipo,
+                        m.documento) m 
+                    ON v.tipo = m.tipo 
+                    AND v.documento = m.documento 
+                    LEFT JOIN 
+                    (SELECT 
+                        cc.cod_pago,
+                        cc.doc_origen AS documento,
+                        SUM(cc.monto) AS monto 
+                    FROM
+                        cuenta_ctejf cc 
+                    WHERE cc.tip_mov = '+' 
+                        AND YEAR(cc.fecha) = '2023' 
+                    GROUP BY cc.tipo_doc,
+                        cc.doc_origen) AS cc 
+                    ON 
+                    CASE
+                        WHEN v.tipo = 'S02' 
+                        THEN '03' 
+                        WHEN v.tipo = 'S03' 
+                        THEN '01' 
+                        WHEN v.tipo = 'E05' 
+                        THEN '07' 
+                        WHEN v.tipo = 'S05' 
+                        THEN '08' 
+                        ELSE '09' 
+                    END = cc.cod_pago 
+                    AND v.documento = cc.documento 
+                WHERE v.fecha >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) 
+                    AND v.tipo IN ('S02', 'S03', 'E05', 'S05') 
+                    AND (
+                    ROUND(m.total - v.neto, 1) <> 0 
+                    OR ROUND((v.neto * 0.18) - v.igv, 1) <> 0 
+                    OR ROUND((v.neto + v.igv) - v.total, 1) <> 0 
+                    OR (v.total - cc.monto) <> 0 
+                    OR (
+                        v.tipo IN ('S02') 
+                        AND v.cliente <> 'VTAOFIC21' 
+                        AND cc.monto IS NULL
+                    )
+                    ) 
+                ORDER BY v.fecha DESC,
+                    tipo_documento,
+                    serie,
+                    v.documento DESC
+        ";
 
         $stmt = Conexion::conectar()->prepare($sql);
 

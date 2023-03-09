@@ -314,6 +314,32 @@ $borde_8->applyFromArray(
     )
 );
 
+#negrita-10-rojo/BLANCO
+$borde_9 = new PHPExcel_Style();
+$borde_9->applyFromArray(
+    array(
+        'alignment' => array(
+            'wrap' => false
+        ),
+        'fill' => array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'color' => array('rgb' => 'EEABAB')
+        ),
+        'borders' => array(
+            'bottom' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+            'top' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+            'right' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+            'left' => array('style' => PHPExcel_Style_Border::BORDER_THIN)
+        ),
+        'font' => array(
+            'bold' => true,
+            'underline' => false,
+            'color' => array('rgb' => 'FF0008'),
+            'size' => 8
+        )
+    )
+);
+
 /* 
 * FIN DE ESTILOS
 */
@@ -450,40 +476,46 @@ $objPHPExcel->getActiveSheet()->getStyle("I$fila")->getAlignment()->setHorizonta
 $objPHPExcel->getActiveSheet()->getStyle("I$fila")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 $objPHPExcel->getActiveSheet()->getStyle("I$fila")->getAlignment()->setWrapText(true);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("J$fila", 'ALM. CORTE');
+$objPHPExcel->getActiveSheet()->SetCellValue("J$fila", 'SERVICIO');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde_3, "J$fila");
 $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getAlignment()->setWrapText(true);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("K$fila", 'ORD. CORTE');
+$objPHPExcel->getActiveSheet()->SetCellValue("K$fila", 'ALM. CORTE');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde_3, "K$fila");
 $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setWrapText(true);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("L$fila", 'VTAS. ULT. 30 DIAS');
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde_4, "L$fila");
+$objPHPExcel->getActiveSheet()->SetCellValue("L$fila", 'ORD. CORTE');
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde_3, "L$fila");
 $objPHPExcel->getActiveSheet()->getStyle("L$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 $objPHPExcel->getActiveSheet()->getStyle("L$fila")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 $objPHPExcel->getActiveSheet()->getStyle("L$fila")->getAlignment()->setWrapText(true);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("M$fila", 'DURA.');
-$objPHPExcel->getActiveSheet()->setSharedStyle($borde_3, "M$fila");
+$objPHPExcel->getActiveSheet()->SetCellValue("M$fila", 'VTAS. ULT. 30 DIAS');
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde_4, "M$fila");
 $objPHPExcel->getActiveSheet()->getStyle("M$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 $objPHPExcel->getActiveSheet()->getStyle("M$fila")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 $objPHPExcel->getActiveSheet()->getStyle("M$fila")->getAlignment()->setWrapText(true);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("N$fila", 'SIT.');
+$objPHPExcel->getActiveSheet()->SetCellValue("N$fila", 'DURA.');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde_3, "N$fila");
 $objPHPExcel->getActiveSheet()->getStyle("N$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 $objPHPExcel->getActiveSheet()->getStyle("N$fila")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 $objPHPExcel->getActiveSheet()->getStyle("N$fila")->getAlignment()->setWrapText(true);
 
+$objPHPExcel->getActiveSheet()->SetCellValue("O$fila", 'SIT.');
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde_3, "O$fila");
+$objPHPExcel->getActiveSheet()->getStyle("O$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$objPHPExcel->getActiveSheet()->getStyle("O$fila")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+$objPHPExcel->getActiveSheet()->getStyle("O$fila")->getAlignment()->setWrapText(true);
+
 
 //$articulos  = ControladorArticulos::ctrArticulosUrgencia();
 
-for ($i = 0; $i < count($articulos) - 1; $i++) {
+for ($i = 0; $i < count($articulos); $i++) {
 
     $fila += 1;
     $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", utf8_encode($articulos[$i]["nom_taller"]));
@@ -495,9 +527,10 @@ for ($i = 0; $i < count($articulos) - 1; $i++) {
     $objPHPExcel->getActiveSheet()->SetCellValue("G$fila", utf8_encode($articulos[$i]["stockB"]));
     $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", utf8_encode($articulos[$i]["pedidos"]));
     $objPHPExcel->getActiveSheet()->SetCellValue("I$fila", utf8_encode($articulos[$i]["taller"]));
-    $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", utf8_encode($articulos[$i]["alm_corte"]));
-    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", utf8_encode($articulos[$i]["ord_corte"]));
-    $objPHPExcel->getActiveSheet()->SetCellValue("L$fila", utf8_encode($articulos[$i]["ult_mes"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", utf8_encode($articulos[$i]["servicio"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", utf8_encode($articulos[$i]["alm_corte"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("L$fila", utf8_encode($articulos[$i]["ord_corte"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("M$fila", utf8_encode($articulos[$i]["ult_mes"]));
 
     if ($tipo == "prod") {
         $dura = $articulos[$i]["urg_prod"];
@@ -531,8 +564,8 @@ for ($i = 0; $i < count($articulos) - 1; $i++) {
         }
     }
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("M$fila", number_format($dura, 2));
-    $objPHPExcel->getActiveSheet()->SetCellValue("N$fila", $situacion);
+    $objPHPExcel->getActiveSheet()->SetCellValue("N$fila", number_format($dura, 2));
+    $objPHPExcel->getActiveSheet()->SetCellValue("O$fila", $situacion);
 
 
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde_3, "A$fila");
@@ -571,34 +604,42 @@ for ($i = 0; $i < count($articulos) - 1; $i++) {
         $objPHPExcel->getActiveSheet()->setSharedStyle($borde_6, "I$fila");
     }
 
-    if (utf8_encode($articulos[$i]["alm_corte"]) <= 0) {
+    if (utf8_encode($articulos[$i]["servicio"]) <= 0) {
 
         $objPHPExcel->getActiveSheet()->setSharedStyle($borde_8, "J$fila");
-        $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
     } else {
 
         $objPHPExcel->getActiveSheet()->setSharedStyle($borde_6, "J$fila");
-        $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+    }
+
+    if (utf8_encode($articulos[$i]["alm_corte"]) <= 0) {
+
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_8, "K$fila");
+        $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+    } else {
+
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_6, "K$fila");
+        $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
     }
 
     if (utf8_encode($articulos[$i]["ord_corte"]) <= 0) {
 
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_1, "K$fila");
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_1, "L$fila");
     } else {
 
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_3, "K$fila");
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_3, "L$fila");
     }
 
-    $objPHPExcel->getActiveSheet()->setSharedStyle($borde_4, "L$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde_4, "M$fila");
 
-    $objPHPExcel->getActiveSheet()->setSharedStyle($borde_2, "M$fila");
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde_2, "N$fila");
 
     if ($situacion == "PRIORIDAD") {
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_8, "N$fila");
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_8, "O$fila");
     } else if ($situacion == "URGENTE") {
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_1, "N$fila");
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_1, "O$fila");
     } else {
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_2, "N$fila");
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_2, "O$fila");
     }
 }
 
@@ -622,6 +663,7 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(8.57);
 $objPHPExcel->getActiveSheet()->getColumnDimension('L')->setWidth(10);
 $objPHPExcel->getActiveSheet()->getColumnDimension('M')->setWidth(9);
 $objPHPExcel->getActiveSheet()->getColumnDimension('N')->setWidth(11);
+$objPHPExcel->getActiveSheet()->getColumnDimension('O')->setWidth(11);
 
 
 
