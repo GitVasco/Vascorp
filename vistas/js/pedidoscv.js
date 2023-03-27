@@ -2279,7 +2279,7 @@ $("#serie").change(function () {
     //console.log(tipo);
 
     var documento = document.getElementById("serie").value;
-    //console.log("documento", documento);
+    console.log("🚀 ~ file: pedidoscv.js:2282 ~ documento:", documento);
 
     if (tipo == "09") {
         var serie = documento.substring(0, 3);

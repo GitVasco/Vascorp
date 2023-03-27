@@ -25,7 +25,13 @@
             <div class="box-header with-border">
                 <a href="vistas/reportes_excel/rpt_urgencias_maestro.php?tipo=alm" class="btn btn-default pull-right" style="border:green 1px solid">
 
-                    <img src="vistas/img/plantilla/excel.png" width="20px"> URGENCIAS ALMACEN CORTE
+                    <img src="vistas/img/plantilla/excel.png" width="20px"> URGENCIAS ALMACEN CORTE RESUMEN
+
+                </a>
+
+                <a href="vistas/reportes_excel/rpt_urgencias_maestro_total.php?tipo=alm" class="btn btn-default pull-right" style="border:green 1px solid">
+
+                    <img src="vistas/img/plantilla/excel.png" width="20px"> URGENCIAS ALMACEN CORTE TOTAL
 
                 </a>
             </div>

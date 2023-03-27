@@ -8943,4 +8943,182 @@ class ModeloFacturacion
 
         $stmt = null;
     }
+
+    static public function mdlDocumentosCuadre($fecha)
+    {
+
+        $sql = "SELECT 
+                v.fecha,
+                v.tipo_documento,
+                v.tipo,
+                v.cliente,
+                c.nombre,
+                v.documento,
+                v.total,
+                v.tipo_entrega
+            FROM
+                ventajf v 
+                LEFT JOIN clientesjf c
+                ON v.cliente=c.codigo
+            WHERE DATE(v.fecha) = '$fecha' 
+                AND v.vendedor IN ('08') 
+                AND v.tipo IN ('S02', 'S03', 'S05', 'S70') 
+            ORDER BY v.tipo,
+                v.documento DESC ";
+
+        $stmt = Conexion::conectar()->prepare($sql);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+
+        $stmt = null;
+    }
+
+    static public function mdlDocumentosCuadrePagos($tipoDocumento, $documento)
+    {
+
+        $sql = "SELECT 
+                    * 
+                FROM
+                    cuadrar_caja cc 
+                WHERE cc.tipo_doc = '$tipoDocumento'
+                AND cc.num_cta = '$documento'";
+
+        $stmt = Conexion::conectar()->prepare($sql);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+
+        $stmt = null;
+    }
+
+    static public function mdlIngresarCuenta($tabla, $datos)
+    {
+
+        $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (
+			tipo_doc,
+			num_cta,
+			cliente,
+			vendedor,
+			fecha,
+			fecha_ven,
+			fecha_cep,
+			tip_mon,
+			monto,
+			tip_cambio,
+			estado,
+			notas,
+			cod_pago,
+			doc_origen,
+			renovacion,
+			protesta,
+			usuario,
+			saldo,
+			ult_pago,
+			estado_doc,
+			banco,
+			num_unico,
+			fecha_envio,
+			fecha_abono,
+			tip_mov,
+			usureg,
+			pcreg,
+			fecha_ori
+		  ) 
+		  VALUES
+			(
+			  :tipo_doc,
+			  :num_cta,
+			  :cliente,
+			  :vendedor,
+			  :fecha,
+			  :fecha_ven,
+			  :fecha_cep,
+			  :tip_mon,
+			  :monto,
+			  :tip_cambio,
+			  :estado,
+			  :notas,
+			  :cod_pago,
+			  :doc_origen,
+			  :renovacion,
+			  :protesta,
+			  :usuario,
+			  :saldo,
+			  :ult_pago,
+			  :estado_doc,
+			  :banco,
+			  :num_unico,
+			  :fecha_envio,
+			  :fecha_abono,
+			  :tip_mov,
+			  :usureg,
+			  :pcreg,
+			  :fecha_ori
+			)");
+
+        $stmt->bindParam(":tipo_doc", $datos["tipo_doc"], PDO::PARAM_STR);
+        $stmt->bindParam(":num_cta", $datos["num_cta"], PDO::PARAM_STR);
+        $stmt->bindParam(":cliente", $datos["cliente"], PDO::PARAM_STR);
+        $stmt->bindParam(":vendedor", $datos["vendedor"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecha_ven", $datos["fecha_ven"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecha_cep", $datos["fecha_cep"], PDO::PARAM_STR);
+        $stmt->bindParam(":tip_mon", $datos["tip_mon"], PDO::PARAM_STR);
+        $stmt->bindParam(":monto", $datos["monto"], PDO::PARAM_STR);
+        $stmt->bindParam(":tip_cambio", $datos["tip_cambio"], PDO::PARAM_STR);
+        $stmt->bindParam(":estado", $datos["estado"], PDO::PARAM_STR);
+        $stmt->bindParam(":notas", $datos["notas"], PDO::PARAM_STR);
+        $stmt->bindParam(":cod_pago", $datos["cod_pago"], PDO::PARAM_STR);
+        $stmt->bindParam(":doc_origen", $datos["doc_origen"], PDO::PARAM_STR);
+        $stmt->bindParam(":renovacion", $datos["renovacion"], PDO::PARAM_STR);
+        $stmt->bindParam(":protesta", $datos["protesta"], PDO::PARAM_STR);
+        $stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+        $stmt->bindParam(":saldo", $datos["saldo"], PDO::PARAM_STR);
+        $stmt->bindParam(":ult_pago", $datos["ult_pago"], PDO::PARAM_STR);
+        $stmt->bindParam(":estado_doc", $datos["estado_doc"], PDO::PARAM_STR);
+        $stmt->bindParam(":banco", $datos["banco"], PDO::PARAM_STR);
+        $stmt->bindParam(":num_unico", $datos["num_unico"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecha_envio", $datos["fecha_envio"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecha_abono", $datos["fecha_abono"], PDO::PARAM_STR);
+        $stmt->bindParam(":tip_mov", $datos["tip_mov"], PDO::PARAM_STR);
+        $stmt->bindParam(":usureg", $datos["usureg"], PDO::PARAM_STR);
+        $stmt->bindParam(":pcreg", $datos["pcreg"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecha_ori", $datos["fecha_ori"], PDO::PARAM_STR);
+
+
+        if ($stmt->execute()) {
+
+            return "ok";
+        } else {
+
+            return "error";
+        }
+
+        $stmt->close();
+        $stmt = null;
+    }
+
+    static public function mdlTotalCuadre($fechaCuadre)
+    {
+
+
+        $stmt = Conexion::conectar()->prepare("SELECT 
+                    cc.cod_pago,
+                    SUM(cc.monto) AS monto 
+                FROM
+                    cuadrar_caja cc 
+                WHERE cc.fecha = '$fechaCuadre' 
+                GROUP BY cc.cod_pago");
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+
+        $stmt->close();
+
+        $stmt = null;
+    }
 }

@@ -25,7 +25,12 @@
             <div class="box-header with-border">
                 <a href="vistas/reportes_excel/rpt_urgencias_maestro.php?tipo=corte" class="btn btn-default pull-right" style="border:green 1px solid">
 
-                    <img src="vistas/img/plantilla/excel.png" width="20px"> URGENCIAS CORTE
+                    <img src="vistas/img/plantilla/excel.png" width="20px"> URGENCIAS CORTE RESUMEN
+
+                </a>
+                <a href="vistas/reportes_excel/rpt_urgencias_maestro_total.php?tipo=corte" class="btn btn-default pull-right" style="border:green 1px solid">
+
+                    <img src="vistas/img/plantilla/excel.png" width="20px"> URGENCIAS CORTE TOTAL
 
                 </a>
             </div>

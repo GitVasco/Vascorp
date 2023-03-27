@@ -40,7 +40,7 @@ $fecha = "$fechaactual[mday]/$fechaactual[mon]/$fechaactual[year]";
 
 $tipo = $_GET["tipo"];
 $mes = ModeloArticulos::mdlConfUrgencias($tipo);
-$articulos = controladorArticulos::ctrMostrarUrgenciaMaestro($tipo, $mes["argumento"]);
+$articulos = controladorArticulos::ctrMostrarUrgenciaMaestroTotal($tipo, $mes["argumento"]);
 
 if ($tipo == "prod") {
 
@@ -530,24 +530,30 @@ if ($tipo != "prod") {
 
         if ($tipo == "prod") {
             $dura = $articulos[$i]["urg_prod"];
-            if ($dura <= 0.85) {
-                $situacion = "PRIORIDAD";
-            } else if ($dura > 0.85) {
+            if ($dura >= $mes["argumento"]) {
+                $situacion = "NORMAL";
+            } else if ($dura < $mes["argumento"] && $dura >= 0.85) {
                 $situacion = "URGENTE";
+            } else {
+                $situacion = "PRIORIDAD";
             }
         } else if ($tipo == "alm") {
             $dura = $articulos[$i]["urg_alm"];
-            if ($dura <= 0.85) {
-                $situacion = "PRIORIDAD";
-            } else if ($dura > 0.85) {
+            if ($dura >= $mes["argumento"]) {
+                $situacion = "NORMAL";
+            } else if ($dura < $mes["argumento"] && $dura >= 0.85) {
                 $situacion = "URGENTE";
+            } else {
+                $situacion = "PRIORIDAD";
             }
         } else if ($tipo == "corte") {
             $dura = $articulos[$i]["urg_corte"];
-            if ($dura <= 1) {
-                $situacion = "PRIORIDAD";
-            } else if ($dura > 1) {
+            if ($dura >= $mes["argumento"]) {
+                $situacion = "NORMAL";
+            } else if ($dura < $mes["argumento"] && $dura >= 0.85) {
                 $situacion = "URGENTE";
+            } else {
+                $situacion = "PRIORIDAD";
             }
         } else if ($tipo == "plan") {
             $dura = $articulos[$i]["urg_plan"];
@@ -776,10 +782,12 @@ if ($tipo != "prod") {
 
         if ($tipo == "prod") {
             $dura = $articulos[$i]["urg_prod"];
-            if ($dura <= 0.85) {
-                $situacion = "PRIORIDAD";
-            } else if ($dura > 0.85) {
+            if ($dura >= $mes["argumento"]) {
+                $situacion = "NORMAL";
+            } else if ($dura < $mes["argumento"] && $dura >= 0.85) {
                 $situacion = "URGENTE";
+            } else {
+                $situacion = "PRIORIDAD";
             }
         } else if ($tipo == "alm") {
             $dura = $articulos[$i]["urg_alm"];
@@ -929,7 +937,7 @@ header("Content-Type: application/vnd.ms-excel");
 */
 
 # Nombre del archivo
-header('Content-Disposition: attachment; filename="Urgencias- Resumen' . date('d-m-Y') . '.xls"');
+header('Content-Disposition: attachment; filename="Urgencias-Total ' . date('d-m-Y') . '.xls"');
 
 
 //forzar a descarga por el navegador

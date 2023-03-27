@@ -610,6 +610,19 @@ class controladorArticulos
 		return $respuesta;
 	}
 
+	/* 
+	* MOSTRAR ARTICULOS PARA LA TABLA URGENCIA
+	*/
+	static public function ctrMostrarUrgenciaMaestroTotal($tipo, $mes)
+	{
+
+		$tabla = "articulojf";
+
+		$respuesta = ModeloArticulos::mdlMostrarUrgenciaMaestroTotal($tipo, $mes);
+
+		return $respuesta;
+	}
+
 
 	/* 
 	* MOSTRAR ARTICULOS PARA LA TABLA SEGUIMIENTO

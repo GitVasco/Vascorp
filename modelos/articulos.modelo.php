@@ -607,144 +607,162 @@ class ModeloArticulos
 		if ($tipo == "prod") {
 
 			$stmt = Conexion::conectar()->prepare("SELECT 
-								a.articulo,
-								a.modelo,
-								a.nombre,
-								a.cod_color,
-								a.color,
-								a.cod_talla,
-								a.talla,
-								a.estado,
-								a.stock,
-								a.pedidos,
-								(a.stock - a.pedidos) AS stockB,
-								a.taller,
-								sc.servicio,
-								a.alm_corte,
-								a.ord_corte,
-								a.ult_mes,
-								(a.ult_mes * a.urgencia / 100) AS configuracion,
-								a.urgencia,
-								ROUND((a.stock - a.pedidos) / (a.ult_mes), 2) AS urg_prod,
-								ROUND(
-								(
-									(a.stock - a.pedidos) + a.taller + a.servicio
-								) / (a.ult_mes),
-								2
-								) AS urg_alm,
-								ROUND(
-								(
-									(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte
-								) / (a.ult_mes),
-								2
-								) AS urg_corte,
-								ROUND(
-								(
-									(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte
-								) / (a.ult_mes),
-								2
-								) AS urg_plan,
-								sc.taller as defecto_taller,
+							a.articulo,
+							a.modelo,
+							a.nombre,
+							a.cod_color,
+							a.color,
+							a.cod_talla,
+							a.talla,
+							a.estado,
+							a.stock,
+							a.pedidos,
+							(a.stock - a.pedidos) AS stockB,
+							a.taller,
+							sc.servicio,
+							sc.cierre,
+							a.alm_corte,
+							a.ord_corte,
+							a.ult_mes,
+							(a.ult_mes * a.urgencia / 100) AS configuracion,
+							a.urgencia,
+							ROUND((a.stock - a.pedidos) / (a.ult_mes), 2) AS urg_prod,
+							ROUND(
+							(
+								(a.stock - a.pedidos) + a.taller + a.servicio
+							) / (a.ult_mes),
+							2
+							) AS urg_alm,
+							ROUND(
+							(
+								(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte
+							) / (a.ult_mes),
+							2
+							) AS urg_corte,
+							ROUND(
+							(
+								(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte
+							) / (a.ult_mes),
+							2
+							) AS urg_plan,
+							sc.taller AS defecto_taller,
+							(SELECT 
+							CONCAT(s.cod_sector, '-', s.nom_sector) 
+							FROM
+							sectorjf s 
+							WHERE s.cod_sector = sc.taller) AS nom_taller,
+							a.mp_faltante,
+							's' AS tipo 
+						FROM
+							articulojf a 
+							LEFT JOIN 
+							(SELECT 
+								sc.taller,
+								sc.articulo,
+								SUM(
+								CASE
+									WHEN sc.tipo = 'S' 
+									THEN sc.servicio 
+									ELSE 0 
+								END
+								) AS servicio,
+								SUM(
+								CASE
+									WHEN sc.tipo = 'C' 
+									THEN sc.servicio 
+									ELSE 0 
+								END
+								) AS cierre 
+							FROM
 								(SELECT 
-								CONCAT(s.cod_sector, '-', s.nom_sector) 
-								FROM
-								sectorjf s 
-								WHERE s.cod_sector = sc.taller) AS nom_taller,
-								a.mp_faltante,
+								ss.taller,
+								s.articulo,
+								SUM(s.saldo) AS servicio,
 								's' AS tipo 
-							FROM
-								articulojf a 
-								LEFT JOIN 
-								(SELECT 
-									sc.taller,
-									sc.articulo,
-									SUM(sc.servicio) AS servicio 
 								FROM
-									(SELECT 
-									ss.taller,
-									s.articulo,
-									SUM(s.saldo) AS servicio,
-									's' AS tipo 
-									FROM
-									servicios_detallejf s 
-									LEFT JOIN serviciosjf ss 
-										ON s.codigo = ss.codigo 
-									WHERE s.saldo > 0 
-									AND s.cerrar = 0 
-									GROUP BY ss.taller,
-									s.articulo 
-									UNION
-									SELECT 
-									cc.taller,
-									c.articulo,
-									SUM(c.cantidad) AS cierre,
-									'c' AS tipo 
-									FROM
-									cierres_detallejf c 
-									LEFT JOIN cierresjf cc 
-										ON c.codigo = cc.codigo 
-									WHERE c.cantidad > 0 
-									GROUP BY cc.taller,
-									c.articulo) sc 
-								GROUP BY sc.taller,
-									sc.articulo) AS sc 
-								ON a.articulo = sc.articulo 
-							WHERE a.estado = 'activo' 
-								AND ROUND((a.stock - a.pedidos) / (a.ult_mes), 2) <= $mes 
-								AND a.servicio > 0 
-							UNION
-							SELECT 
-								a.articulo,
-								a.modelo,
-								a.nombre,
-								a.cod_color,
-								a.color,
-								a.cod_talla,
-								a.talla,
-								a.estado,
-								a.stock,
-								a.pedidos,
-								(a.stock - a.pedidos) AS stockB,
-								a.taller,
-								a.servicio,
-								a.alm_corte,
-								a.ord_corte,
-								a.ult_mes,
-								(a.ult_mes * a.urgencia / 100) AS configuracion,
-								a.urgencia,
-								ROUND((a.stock - a.pedidos) / (a.ult_mes), 2) AS urg_prod,
-								ROUND(
-								(
-									(a.stock - a.pedidos) + a.taller + a.servicio
-								) / (a.ult_mes),
-								2
-								) AS urg_alm,
-								ROUND(
-								(
-									(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte
-								) / (a.ult_mes),
-								2
-								) AS urg_corte,
-								ROUND(
-								(
-									(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte
-								) / (a.ult_mes),
-								2
-								) AS urg_plan,
-								a.defecto_taller,
-								(SELECT 
-								CONCAT(s.cod_sector, '-', s.nom_sector) 
+								servicios_detallejf s 
+								LEFT JOIN serviciosjf ss 
+									ON s.codigo = ss.codigo 
+								WHERE s.saldo > 0 
+								AND s.cerrar = 0 
+								GROUP BY ss.taller,
+								s.articulo 
+								UNION
+								SELECT 
+								cc.taller,
+								c.articulo,
+								SUM(c.cantidad) AS cierre,
+								'c' AS tipo 
 								FROM
-								sectorjf s 
-								WHERE s.cod_sector = a.defecto_taller) AS nom_taller,
-								a.mp_faltante,
-								't' AS tipo 
-							FROM
-								articulojf a 
-							WHERE a.estado = 'activo' 
-								AND ROUND((a.stock - a.pedidos) / (a.ult_mes), 2) <=  $mes 
-								AND servicio <= 0 
-							ORDER BY articulo ");
+								cierres_detallejf c 
+								LEFT JOIN cierresjf cc 
+									ON c.codigo = cc.codigo 
+								WHERE c.cantidad > 0 
+								GROUP BY cc.taller,
+								c.articulo) sc 
+							GROUP BY sc.taller,
+								sc.articulo) AS sc 
+							ON a.articulo = sc.articulo 
+						WHERE a.estado = 'activo' 
+							AND ROUND((a.stock - a.pedidos) / (a.ult_mes), 2) <= $mes 
+							AND a.servicio > 0 
+						UNION
+						SELECT 
+							a.articulo,
+							a.modelo,
+							a.nombre,
+							a.cod_color,
+							a.color,
+							a.cod_talla,
+							a.talla,
+							a.estado,
+							a.stock,
+							a.pedidos,
+							(a.stock - a.pedidos) AS stockB,
+							a.taller,
+							a.servicio,
+							0 AS cierre,
+							a.alm_corte,
+							a.ord_corte,
+							a.ult_mes,
+							(a.ult_mes * a.urgencia / 100) AS configuracion,
+							a.urgencia,
+							ROUND((a.stock - a.pedidos) / (a.ult_mes), 2) AS urg_prod,
+							ROUND(
+							(
+								(a.stock - a.pedidos) + a.taller + a.servicio
+							) / (a.ult_mes),
+							2
+							) AS urg_alm,
+							ROUND(
+							(
+								(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte
+							) / (a.ult_mes),
+							2
+							) AS urg_corte,
+							ROUND(
+							(
+								(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte
+							) / (a.ult_mes),
+							2
+							) AS urg_plan,
+							a.defecto_taller,
+							CASE
+							WHEN m.tipo IN ('brasier') 
+							THEN 'T1-BRASIER' 
+							ELSE 'T3-TRUSAS' 
+							END AS nom_taller,
+							a.mp_faltante,
+							't' AS tipo 
+						FROM
+							articulojf a 
+							LEFT JOIN modelojf m 
+							ON a.modelo = m.modelo 
+						WHERE a.estado = 'activo' 
+							AND ROUND((a.stock - a.pedidos) / (a.ult_mes), 2) <= $mes 
+							AND (a.servicio <= 0 
+							OR a.taller > 0) 
+						ORDER BY articulo");
 
 			$stmt->execute();
 
@@ -1023,6 +1041,455 @@ class ModeloArticulos
 		$stmt->close();
 		$stmt = null;
 	}
+
+
+	/* 
+	* MOSTRAR ARTICULOS PARA LA TABLA URGENCIA MAESTRO
+	*/
+	static public function mdlMostrarUrgenciaMaestroTotal($tipo, $mes)
+	{
+
+		if ($tipo == "prod") {
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+							a.articulo,
+							a.modelo,
+							a.nombre,
+							a.cod_color,
+							a.color,
+							a.cod_talla,
+							a.talla,
+							a.estado,
+							a.stock,
+							a.pedidos,
+							(a.stock - a.pedidos) AS stockB,
+							a.taller,
+							sc.servicio,
+							sc.cierre,
+							a.alm_corte,
+							a.ord_corte,
+							a.ult_mes,
+							(a.ult_mes * a.urgencia / 100) AS configuracion,
+							a.urgencia,
+							ROUND((a.stock - a.pedidos) / (a.ult_mes), 2) AS urg_prod,
+							ROUND(
+							(
+								(a.stock - a.pedidos) + a.taller + a.servicio
+							) / (a.ult_mes),
+							2
+							) AS urg_alm,
+							ROUND(
+							(
+								(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte
+							) / (a.ult_mes),
+							2
+							) AS urg_corte,
+							ROUND(
+							(
+								(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte
+							) / (a.ult_mes),
+							2
+							) AS urg_plan,
+							sc.taller AS defecto_taller,
+							(SELECT 
+							CONCAT(s.cod_sector, '-', s.nom_sector) 
+							FROM
+							sectorjf s 
+							WHERE s.cod_sector = sc.taller) AS nom_taller,
+							a.mp_faltante,
+							's' AS tipo 
+						FROM
+							articulojf a 
+							LEFT JOIN 
+							(SELECT 
+								sc.taller,
+								sc.articulo,
+								SUM(
+								CASE
+									WHEN sc.tipo = 'S' 
+									THEN sc.servicio 
+									ELSE 0 
+								END
+								) AS servicio,
+								SUM(
+								CASE
+									WHEN sc.tipo = 'C' 
+									THEN sc.servicio 
+									ELSE 0 
+								END
+								) AS cierre 
+							FROM
+								(SELECT 
+								ss.taller,
+								s.articulo,
+								SUM(s.saldo) AS servicio,
+								's' AS tipo 
+								FROM
+								servicios_detallejf s 
+								LEFT JOIN serviciosjf ss 
+									ON s.codigo = ss.codigo 
+								WHERE s.saldo > 0 
+								AND s.cerrar = 0 
+								GROUP BY ss.taller,
+								s.articulo 
+								UNION
+								SELECT 
+								cc.taller,
+								c.articulo,
+								SUM(c.cantidad) AS cierre,
+								'c' AS tipo 
+								FROM
+								cierres_detallejf c 
+								LEFT JOIN cierresjf cc 
+									ON c.codigo = cc.codigo 
+								WHERE c.cantidad > 0 
+								GROUP BY cc.taller,
+								c.articulo) sc 
+							GROUP BY sc.taller,
+								sc.articulo) AS sc 
+							ON a.articulo = sc.articulo 
+						WHERE a.estado = 'activo' 
+							/* AND ROUND((a.stock - a.pedidos) / (a.ult_mes), 2) <= $mes */ 
+							AND a.servicio > 0 
+							AND a.marca IN ('JACKYFORM','VASCO','GUAPITAS')
+						UNION
+						SELECT 
+							a.articulo,
+							a.modelo,
+							a.nombre,
+							a.cod_color,
+							a.color,
+							a.cod_talla,
+							a.talla,
+							a.estado,
+							a.stock,
+							a.pedidos,
+							(a.stock - a.pedidos) AS stockB,
+							a.taller,
+							a.servicio,
+							0 AS cierre,
+							a.alm_corte,
+							a.ord_corte,
+							a.ult_mes,
+							(a.ult_mes * a.urgencia / 100) AS configuracion,
+							a.urgencia,
+							ROUND((a.stock - a.pedidos) / (a.ult_mes), 2) AS urg_prod,
+							ROUND(
+							(
+								(a.stock - a.pedidos) + a.taller + a.servicio
+							) / (a.ult_mes),
+							2
+							) AS urg_alm,
+							ROUND(
+							(
+								(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte
+							) / (a.ult_mes),
+							2
+							) AS urg_corte,
+							ROUND(
+							(
+								(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte
+							) / (a.ult_mes),
+							2
+							) AS urg_plan,
+							a.defecto_taller,
+							CASE
+							WHEN m.tipo IN ('brasier') 
+							THEN 'T1-BRASIER' 
+							ELSE 'T3-TRUSAS' 
+							END AS nom_taller,
+							a.mp_faltante,
+							't' AS tipo 
+						FROM
+							articulojf a 
+							LEFT JOIN modelojf m 
+							ON a.modelo = m.modelo 
+						WHERE a.estado = 'activo' 
+							/* AND ROUND((a.stock - a.pedidos) / (a.ult_mes), 2) <= $mes  */
+							AND (a.servicio <= 0 
+							OR a.taller > 0) 
+							AND a.marca IN ('JACKYFORM','VASCO','GUAPITAS')
+						ORDER BY articulo");
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		} else if ($tipo == "alm") {
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+						a.articulo,
+						a.modelo,
+						a.nombre,
+						a.cod_color,
+						a.color,
+						a.cod_talla,
+						a.talla,
+						a.estado,
+						a.stock,
+						a.pedidos,
+						(a.stock - a.pedidos) AS stockB,
+						a.taller,
+						a.servicio,
+						a.alm_corte,
+						a.ord_corte,
+						a.ult_mes,
+						(a.ult_mes * a.urgencia / 100) AS configuracion,
+						a.urgencia,
+						ROUND(
+							(a.stock - a.pedidos) / (a.ult_mes),
+							2
+						) AS urg_prod,
+						ROUND(
+							(
+							(a.stock - a.pedidos) + a.taller + a.servicio
+							) / (a.ult_mes),
+							2
+						) AS urg_alm,
+						ROUND(
+							(
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte
+							) / (a.ult_mes),
+							2
+						) AS urg_corte,
+						ROUND(
+							(
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte
+							) / (a.ult_mes),
+							2
+						) AS urg_plan,
+						a.defecto_taller,
+						(SELECT 
+							CONCAT(s.cod_sector, '-', s.nom_sector) 
+						FROM
+							sectorjf s 
+						WHERE s.cod_sector = a.defecto_taller) AS nom_taller,
+						a.mp_faltante 						
+					FROM
+						articulojf a 
+					WHERE a.estado = 'activo' 
+						/* AND ROUND(
+						(
+							(a.stock - a.pedidos) + a.taller + a.servicio
+						) / (a.ult_mes),
+						2
+						) <= $mes 
+						AND a.alm_corte > 0 */
+						ORDER BY a.articulo");
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		} else if ($tipo == "corte") {
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+						a.articulo,
+						a.modelo,
+						a.nombre,
+						a.cod_color,
+						a.color,
+						a.cod_talla,
+						a.talla,
+						a.estado,
+						a.stock,
+						a.pedidos,
+						(a.stock - a.pedidos) AS stockB,
+						a.taller,
+						a.servicio,
+						a.alm_corte,
+						a.ord_corte,
+						a.ult_mes,
+						(a.ult_mes * a.urgencia / 100) AS configuracion,
+						a.urgencia,
+						ROUND(
+							(a.stock - a.pedidos) / (a.ult_mes),
+							2
+						) AS urg_prod,
+						ROUND(
+							(
+							(a.stock - a.pedidos) + a.taller + a.servicio
+							) / (a.ult_mes),
+							2
+						) AS urg_alm,
+						ROUND(
+							(
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte
+							) / (a.ult_mes),
+							2
+						) AS urg_corte,
+						ROUND(
+							(
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte
+							) / (a.ult_mes),
+							2
+						) AS urg_plan,
+						a.defecto_taller,
+						(SELECT 
+							CONCAT(s.cod_sector, '-', s.nom_sector) 
+						FROM
+							sectorjf s 
+						WHERE s.cod_sector = a.defecto_taller) AS nom_taller,
+						a.mp_faltante 						
+					FROM
+						articulojf a 
+					WHERE a.estado = 'activo' 
+						/* AND ROUND(
+						(
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte
+						) / (a.ult_mes),
+						2
+						) <= $mes */
+						ORDER BY a.articulo");
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		} else if ($tipo == "plan") {
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+						a.articulo,
+						a.modelo,
+						a.nombre,
+						a.cod_color,
+						a.color,
+						a.cod_talla,
+						a.talla,
+						a.estado,
+						a.stock,
+						a.pedidos,
+						(a.stock - a.pedidos) AS stockB,
+						a.taller,
+						a.servicio,
+						a.alm_corte,
+						a.ord_corte,
+						a.ult_mes,
+						(a.ult_mes * a.urgencia / 100) AS configuracion,
+						a.urgencia,
+						ROUND(
+							(a.stock - a.pedidos) / (a.ult_mes * a.urgencia / 100),
+							2
+						) AS urg_prod,
+						ROUND(
+							(
+							(a.stock - a.pedidos) + a.taller + a.servicio
+							) / (a.ult_mes),
+							2
+						) AS urg_alm,
+						ROUND(
+							(
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte
+							) / (a.ult_mes),
+							2
+						) AS urg_corte,
+						ROUND(
+							(
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte
+							) / (a.ult_mes),
+							2
+						) AS urg_plan ,
+						a.defecto_taller,
+						(SELECT 
+							CONCAT(s.cod_sector, '-', s.nom_sector) 
+						FROM
+							sectorjf s 
+						WHERE s.cod_sector = a.defecto_taller) AS nom_taller,
+						a.mp_faltante 						
+					FROM
+						articulojf a 
+					WHERE a.estado = 'activo' 
+						ORDER BY a.articulo");
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		} else {
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+						a.articulo,
+						a.modelo,
+						a.nombre,
+						a.cod_color,
+						a.color,
+						a.cod_talla,
+						a.talla,
+						a.estado,
+						a.stock,
+						a.pedidos,
+						(a.stock - a.pedidos) AS stockB,
+						a.taller,
+						a.servicio,
+						a.alm_corte,
+						a.ord_corte,
+						a.ult_mes,
+						(a.ult_mes * a.urgencia / 100) AS configuracion,
+						a.urgencia,
+						ROUND(
+							(a.stock - a.pedidos) / (a.ult_mes),
+							2
+						) AS urg_prod,
+						ROUND(
+							(
+							(a.stock - a.pedidos) + a.taller + a.servicio
+							) / (a.ult_mes),
+							2
+						) AS urg_alm,
+						ROUND(
+							(
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte
+							) / (a.ult_mes),
+							2
+						) AS urg_corte,
+						ROUND(
+							(
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte
+							) / (a.ult_mes),
+							2
+						) AS urg_plan,
+						a.defecto_taller,
+						(SELECT 
+							CONCAT(s.cod_sector, '-', s.nom_sector) 
+						FROM
+							sectorjf s 
+						WHERE s.cod_sector = a.defecto_taller) AS nom_taller,
+						a.mp_faltante 
+					FROM
+						articulojf a 
+					WHERE a.estado = 'activo' 
+						AND (
+							ROUND(
+							(a.stock - a.pedidos) / (a.ult_mes),
+							2
+							) <= (SELECT m.argumento FROM maestrajf m WHERE m.tipo_dato='TURG' AND codigo = 'prod')
+							OR ROUND(
+							(
+								(a.stock - a.pedidos) + a.taller + a.servicio
+							) / (a.ult_mes),
+							2
+							) <= (SELECT m.argumento FROM maestrajf m WHERE m.tipo_dato='TURG' AND codigo = 'alm') 
+							OR ROUND(
+							(
+								(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte
+							) / (a.ult_mes),
+							2
+							) <= (SELECT m.argumento FROM maestrajf m WHERE m.tipo_dato='TURG' AND codigo = 'corte') 
+							OR ROUND(
+							(
+								(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte
+							) / (a.ult_mes),
+							2
+							) <= (SELECT m.argumento FROM maestrajf m WHERE m.tipo_dato='TURG' AND codigo = 'plan')
+						) 
+						ORDER BY a.articulo");
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+
 
 	/* 
 	* MOSTRAR ARTICULOS PARA LA TABLA SEGUIMIENTO

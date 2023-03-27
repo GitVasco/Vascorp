@@ -2856,12 +2856,8 @@ $(".tablaErrores").DataTable({
 
 $(".tablaErrores").on("click", ".btnCorregir", function () {
     var tipo = $(this).attr("tipo");
-    console.log("🚀 ~ file: facturacion.js:2859 ~ tipo", tipo);
     var documento = $(this).attr("documento");
-    console.log("🚀 ~ file: facturacion.js:2861 ~ documento", documento);
-
     var neto = $(this).attr("neto_m");
-    console.log("🚀 ~ file: facturacion.js:2864 ~ neto", neto);
 
     //VDOCUMENTO
     var datos = new FormData();
@@ -2887,3 +2883,434 @@ $(".tablaErrores").on("click", ".btnCorregir", function () {
         },
     });
 });
+
+//cuentas  select ano
+$("#fechaCuadre").change(function () {
+    // Seleccionar todos los elementos que tengan la clase "borrame"
+    const elementosAEliminar = document.querySelectorAll(".borrarRes");
+
+    // Recorrer los elementos y eliminarlos
+    elementosAEliminar.forEach((elemento) => elemento.remove());
+
+    var fechaCuadre = document.getElementById("fechaCuadre").value;
+
+    localStorage.setItem("fechaCuadre", fechaCuadre);
+    $(".tablaCuadrarCaja").DataTable().destroy();
+    cargarTablaCuadre(fechaCuadre);
+
+    var datos = new FormData();
+    datos.append("fechaCuadre", localStorage.getItem("fechaCuadre"));
+
+    $.ajax({
+        url: "ajax/facturacion.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuesta) {
+            for (let i = 0; i < respuesta.length; i++) {
+                const elemento = respuesta[i];
+
+                if (elemento["cod_pago"] == "05") {
+                    var nombre = "05 - Deposito";
+                    var color = "blue";
+                    var icono = "bank";
+                    var monto = "S/ " + elemento["monto"];
+                } else if (elemento["cod_pago"] == "06") {
+                    var nombre = "06 - POS - YAPE";
+                    var color = "purple";
+                    var icono = "credit-card";
+                    var monto = "S/ " + elemento["monto"];
+                } else if (elemento["cod_pago"] == "80") {
+                    var nombre = "80 - EFECTIVO";
+                    var color = "green";
+                    var icono = "money";
+                    var monto = "S/ " + elemento["monto"];
+                }
+                if (i == 0) {
+                    $(".nuevoResumenMonto").append(
+                        '<div class="col-lg-12 borrarRes">' +
+                            '<div class="info-box">' +
+                            '<span class="info-box-icon bg-' +
+                            color +
+                            '"><i class="fa fa-' +
+                            icono +
+                            '"></i></span>' +
+                            '<div class="info-box-content">' +
+                            '<span class=""><b>' +
+                            nombre +
+                            "</b></span>" +
+                            '<span class="info-box-number" id="span0" style="text-align: right;">' +
+                            monto +
+                            "</span>" +
+                            "</div>" +
+                            "</div>" +
+                            "</div>"
+                    );
+                } else if (i == 1) {
+                    $(".nuevoResumenMonto").append(
+                        '<div class="col-lg-12 borrarRes">' +
+                            '<div class="info-box">' +
+                            '<span class="info-box-icon bg-' +
+                            color +
+                            '"><i class="fa fa-' +
+                            icono +
+                            '"></i></span>' +
+                            '<div class="info-box-content">' +
+                            '<span class=""><b>' +
+                            nombre +
+                            "</b></span>" +
+                            '<span class="info-box-number" id="span0" style="text-align: right;">' +
+                            monto +
+                            "</span>" +
+                            "</div>" +
+                            "</div>" +
+                            "</div>"
+                    );
+                } else if (i == 2) {
+                    $(".nuevoResumenMonto").append(
+                        '<div class="col-lg-12 borrarRes">' +
+                            '<div class="info-box">' +
+                            '<span class="info-box-icon bg-' +
+                            color +
+                            '"><i class="fa fa-' +
+                            icono +
+                            '"></i></span>' +
+                            '<div class="info-box-content">' +
+                            '<span class=""><b>' +
+                            nombre +
+                            "</b></span>" +
+                            '<span class="info-box-number" id="span0" style="text-align: right;">' +
+                            monto +
+                            "</span>" +
+                            "</div>" +
+                            "</div>" +
+                            "</div>"
+                    );
+                }
+            }
+        },
+    });
+});
+
+if (localStorage.getItem("fechaCuadre") != null) {
+    let dato = localStorage.getItem("fechaCuadre");
+    $("#fechaCuadre").val(localStorage.getItem("fechaCuadre"));
+
+    cargarTablaCuadre(localStorage.getItem("fechaCuadre"));
+
+    var datos = new FormData();
+    datos.append("fechaCuadre", localStorage.getItem("fechaCuadre"));
+
+    $.ajax({
+        url: "ajax/facturacion.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuesta) {
+            for (let i = 0; i < respuesta.length; i++) {
+                const elemento = respuesta[i];
+
+                if (elemento["cod_pago"] == "05") {
+                    var nombre = "05 - Deposito";
+                    var color = "blue";
+                    var icono = "bank";
+                    var monto = "S/ " + elemento["monto"];
+                } else if (elemento["cod_pago"] == "06") {
+                    var nombre = "06 - POS - YAPE";
+                    var color = "purple";
+                    var icono = "credit-card";
+                    var monto = "S/ " + elemento["monto"];
+                } else if (elemento["cod_pago"] == "80") {
+                    var nombre = "80 - EFECTIVO";
+                    var color = "green";
+                    var icono = "money";
+                    var monto = "S/ " + elemento["monto"];
+                }
+                if (i == 0) {
+                    $(".nuevoResumenMonto").append(
+                        '<div class="col-lg-12 borrarRes">' +
+                            '<div class="info-box">' +
+                            '<span class="info-box-icon bg-' +
+                            color +
+                            '"><i class="fa fa-' +
+                            icono +
+                            '"></i></span>' +
+                            '<div class="info-box-content">' +
+                            '<span class=""><b>' +
+                            nombre +
+                            "</b></span>" +
+                            '<span class="info-box-number" id="span0" style="text-align: right;">' +
+                            monto +
+                            "</span>" +
+                            "</div>" +
+                            "</div>" +
+                            "</div>"
+                    );
+                } else if (i == 1) {
+                    $(".nuevoResumenMonto").append(
+                        '<div class="col-lg-12 borrarRes">' +
+                            '<div class="info-box">' +
+                            '<span class="info-box-icon bg-' +
+                            color +
+                            '"><i class="fa fa-' +
+                            icono +
+                            '"></i></span>' +
+                            '<div class="info-box-content">' +
+                            '<span class=""><b>' +
+                            nombre +
+                            "</b></span>" +
+                            '<span class="info-box-number" id="span0" style="text-align: right;">' +
+                            monto +
+                            "</span>" +
+                            "</div>" +
+                            "</div>" +
+                            "</div>"
+                    );
+                } else if (i == 2) {
+                    $(".nuevoResumenMonto").append(
+                        '<div class="col-lg-12 borrarRes">' +
+                            '<div class="info-box">' +
+                            '<span class="info-box-icon bg-' +
+                            color +
+                            '"><i class="fa fa-' +
+                            icono +
+                            '"></i></span>' +
+                            '<div class="info-box-content">' +
+                            '<span class=""><b>' +
+                            nombre +
+                            "</b></span>" +
+                            '<span class="info-box-number" id="span0" style="text-align: right;">' +
+                            monto +
+                            "</span>" +
+                            "</div>" +
+                            "</div>" +
+                            "</div>"
+                    );
+                }
+            }
+        },
+    });
+} else {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = (today.getMonth() + 1).toString().padStart(2, "0");
+    const day = today.getDate().toString().padStart(2, "0");
+    const date = `${year}-${month}-${day}`;
+    cargarTablaCuadre(date);
+
+    var datos = new FormData();
+    datos.append("fechaCuadre", date);
+
+    $.ajax({
+        url: "ajax/facturacion.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuesta) {
+            for (let i = 0; i < respuesta.length; i++) {
+                const elemento = respuesta[i];
+
+                if (elemento["cod_pago"] == "05") {
+                    var nombre = "05 - Deposito";
+                    var color = "blue";
+                    var icono = "bank";
+                    var monto = "S/ " + elemento["monto"];
+                } else if (elemento["cod_pago"] == "06") {
+                    var nombre = "06 - POS - YAPE";
+                    var color = "purple";
+                    var icono = "credit-card";
+                    var monto = "S/ " + elemento["monto"];
+                } else if (elemento["cod_pago"] == "80") {
+                    var nombre = "80 - EFECTIVO";
+                    var color = "green";
+                    var icono = "money";
+                    var monto = "S/ " + elemento["monto"];
+                }
+                if (i == 0) {
+                    $(".nuevoResumenMonto").append(
+                        '<div class="col-lg-12 borrarRes">' +
+                            '<div class="info-box">' +
+                            '<span class="info-box-icon bg-' +
+                            color +
+                            '"><i class="fa fa-' +
+                            icono +
+                            '"></i></span>' +
+                            '<div class="info-box-content">' +
+                            '<span class=""><b>' +
+                            nombre +
+                            "</b></span>" +
+                            '<span class="info-box-number" id="span0" style="text-align: right;">' +
+                            monto +
+                            "</span>" +
+                            "</div>" +
+                            "</div>" +
+                            "</div>"
+                    );
+                } else if (i == 1) {
+                    $(".nuevoResumenMonto").append(
+                        '<div class="col-lg-12 borrarRes">' +
+                            '<div class="info-box">' +
+                            '<span class="info-box-icon bg-' +
+                            color +
+                            '"><i class="fa fa-' +
+                            icono +
+                            '"></i></span>' +
+                            '<div class="info-box-content">' +
+                            '<span class=""><b>' +
+                            nombre +
+                            "</b></span>" +
+                            '<span class="info-box-number" id="span0" style="text-align: right;">' +
+                            monto +
+                            "</span>" +
+                            "</div>" +
+                            "</div>" +
+                            "</div>"
+                    );
+                } else if (i == 2) {
+                    $(".nuevoResumenMonto").append(
+                        '<div class="col-lg-12 borrarRes">' +
+                            '<div class="info-box">' +
+                            '<span class="info-box-icon bg-' +
+                            color +
+                            '"><i class="fa fa-' +
+                            icono +
+                            '"></i></span>' +
+                            '<div class="info-box-content">' +
+                            '<span class=""><b>' +
+                            nombre +
+                            "</b></span>" +
+                            '<span class="info-box-number" id="span0" style="text-align: right;">' +
+                            monto +
+                            "</span>" +
+                            "</div>" +
+                            "</div>" +
+                            "</div>"
+                    );
+                }
+            }
+        },
+    });
+}
+
+//*TBLA DE CUADRE DE CAJA
+function cargarTablaCuadre(fechaCuadre) {
+    $(".tablaCuadrarCaja").DataTable({
+        ajax: "ajax/facturacion/tabla-cuadrecaja.ajax.php?fecha=" + fechaCuadre,
+        deferRender: true,
+        retrieve: true,
+        processing: true,
+        pageLength: 25,
+        lengthMenu: [
+            [25, 50, 75, -1],
+            [25, 50, 75, "Todos"],
+        ],
+        language: {
+            sProcessing: "Procesando...",
+            sLengthMenu: "Mostrar _MENU_ registros",
+            sZeroRecords: "No se encontraron resultados",
+            sEmptyTable: "Ningún dato disponible en esta tabla",
+            sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+            sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
+            sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+            sInfoPostFix: "",
+            sSearch: "Buscar:",
+            sUrl: "",
+            sInfoThousands: ",",
+            sLoadingRecords: "Cargando...",
+            oPaginate: {
+                sFirst: "Primero",
+                sLast: "Último",
+                sNext: "Siguiente",
+                sPrevious: "Anterior",
+            },
+            oAria: {
+                sSortAscending:
+                    ": Activar para ordenar la columna de manera ascendente",
+                sSortDescending:
+                    ": Activar para ordenar la columna de manera descendente",
+            },
+        },
+    });
+}
+
+$(".tablaCuadrarCaja").on("click", ".btnAgregarCobro", function () {
+    var numCta = $(this).attr("numCta");
+    var codCta = $(this).attr("codCta");
+
+    var datos = new FormData();
+    datos.append("numCta", numCta);
+    datos.append("codCta", codCta);
+
+    $.ajax({
+        url: "ajax/cuentas.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuesta) {
+            $("#idCuenta3").val(respuesta["id"]);
+            $("#cancelarTipoDocumento2").val(respuesta["tipo_doc"]);
+            $("#cancelarDocumento2").val(respuesta["num_cta"]);
+            $("#cancelarDocumentoOriginal2").val(respuesta["num_cta"]);
+            //$("#cancelarDocumento2").val(respuesta["num_cta"]);
+            $("#cancelarVendedor2").val(respuesta["vendedor"]);
+            $("#cancelarFechaOrigen2").val(respuesta["fecha"]);
+            $("#cancelarVencimientoOrigen2").val(respuesta["fecha_ven"]);
+            $("#cancelarCliente2").val(respuesta["cliente"]);
+            $("#cancelarClienteNomOrigen2").val(respuesta["nombre"]);
+            $("#cancelarSaldo2").val(respuesta["saldo"]);
+            $("#cancelarSaldoAntiguo2").val(respuesta["saldo"]);
+            $("#cancelarEstado2").val(respuesta["estado"]);
+            $("#cancelarNumUnico2").val(respuesta["estado"]);
+            $("#cancelarTotal2").val(respuesta["saldo"]);
+        },
+    });
+});
+
+// function cargarPagina() {
+//     if (localStorage.getItem("fechaCuadre") != null) {
+//         const fechaCuadre = localStorage.getItem("fechaCuadre");
+//     } else {
+//         const today = new Date();
+//         const year = today.getFullYear();
+//         const month = (today.getMonth() + 1).toString().padStart(2, "0");
+//         const day = today.getDate().toString().padStart(2, "0");
+//         const fechaCuadre = `${year}-${month}-${day}`;
+//     }
+
+//     var datos = new FormData();
+//     datos.append("fechaCuadre", fechaCuadre);
+
+//     $.ajax({
+//         url: "ajax/facturacion.ajax.php",
+//         method: "POST",
+//         data: datos,
+//         cache: false,
+//         contentType: false,
+//         processData: false,
+//         dataType: "json",
+//         success: function (respuesta) {
+//             console.log(
+//                 "🚀 ~ file: facturacion.js:3015 ~ cargarPagina ~ respuesta:",
+//                 respuesta
+//             );
+//         },
+//     });
+
+//     const miSpan = document.getElementById("mi-span");
+
+//     miSpan.textContent = "Hola Mundo";
+// }
+
+// document.addEventListener("DOMContentLoaded", cargarPagina);

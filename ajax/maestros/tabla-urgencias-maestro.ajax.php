@@ -15,7 +15,7 @@ class TablaUrgencias
 
         $tipo = $_GET["tipo"];
         $mes = ModeloArticulos::mdlConfUrgencias($tipo);
-        $articulos = controladorArticulos::ctrMostrarUrgenciaMaestro($tipo, $mes["argumento"]);
+        $articulos = controladorArticulos::ctrMostrarUrgenciaMaestroTotal($tipo, $mes["argumento"]);
 
 
         if (count($articulos) > 0) {
@@ -319,26 +319,32 @@ class TablaUrgencias
                 if ($tipo == "prod") {
                     $dura_tc = "<center><b><span style='color:" . $azulino . "; background-color:" . $bgblanco . " ;'>" . $articulos[$i]["urg_prod"] . "</span></b></center>";
 
-                    if ($articulos[$i]["urg_prod"] <= 0.85) {
-                        $situacion = "<center><b><span style='font-size:100%' class='text-danger'>PRIORIDAD</span></b></center>";
-                    } else if ($articulos[$i]["urg_prod"] > 0.85) {
+                    if ($articulos[$i]["urg_prod"] >= $mes["argumento"]) {
+                        $situacion = "<center><b><span style='font-size:100%' class='text-blue'>NORMAL</span></b></center>";
+                    } else if ($articulos[$i]["urg_prod"] < $mes["argumento"] && $articulos[$i]["urg_prod"] >= 0.85) {
                         $situacion = "<center><b><span style='font-size:100%' class='text-yellow'>URGENTE</span></b></center>";
+                    } else {
+                        $situacion = "<center><b><span style='font-size:100%' class='text-danger'>PRIORIDAD</span></b></center>";
                     }
                 } else if ($tipo == "alm") {
                     $dura_tc = "<center><b><span style='color:" . $azulino . "; background-color:" . $bgblanco . " ;'>" . $articulos[$i]["urg_alm"] . "</span></b></center>";
 
-                    if ($articulos[$i]["urg_alm"] <= 0.85) {
-                        $situacion = "<center><b><span style='font-size:100%' class='text-danger'>PRIORIDAD</span></b></center>";
-                    } else if ($articulos[$i]["urg_alm"] > 0.85) {
+                    if ($articulos[$i]["urg_alm"] >= $mes["argumento"]) {
+                        $situacion = "<center><b><span style='font-size:100%' class='text-blue'>NORMAL</span></b></center>";
+                    } else if ($articulos[$i]["urg_alm"] < $mes["argumento"] && $articulos[$i]["urg_alm"] >= 0.85) {
                         $situacion = "<center><b><span style='font-size:100%' class='text-yellow'>URGENTE</span></b></center>";
+                    } else {
+                        $situacion = "<center><b><span style='font-size:100%' class='text-danger'>PRIORIDAD</span></b></center>";
                     }
                 } else if ($tipo == "corte") {
                     $dura_tc = "<center><b><span style='color:" . $azulino . "; background-color:" . $bgblanco . " ;'>" . $articulos[$i]["urg_corte"] . "</span></b></center>";
 
-                    if ($articulos[$i]["urg_corte"] <= 1) {
-                        $situacion = "<center><b><span style='font-size:100%' class='text-danger'>PRIORIDAD</span></b></center>";
-                    } else if ($articulos[$i]["urg_corte"] > 1) {
+                    if ($articulos[$i]["urg_corte"] >= $mes["argumento"]) {
+                        $situacion = "<center><b><span style='font-size:100%' class='text-blue'>NORMAL</span></b></center>";
+                    } else if ($articulos[$i]["urg_corte"] < $mes["argumento"] && $articulos[$i]["urg_corte"] >= 1) {
                         $situacion = "<center><b><span style='font-size:100%' class='text-yellow'>URGENTE</span></b></center>";
+                    } else {
+                        $situacion = "<center><b><span style='font-size:100%' class='text-danger'>PRIORIDAD</span></b></center>";
                     }
                 } else if ($tipo == "plan") {
                     $dura_tc = "<center><b><span style='color:" . $azulino . "; background-color:" . $bgblanco . " ;'>" . $articulos[$i]["urg_plan"] . "</span></b></center>";
@@ -359,26 +365,7 @@ class TablaUrgencias
             */
                 //$botones =  "<div class='btn-group'><button class='btn btn-xs btn-info btnVerUrgencias' codigo='" . $articulos[$i]["articulo"] . "' data-toggle='modal' data-target='#modalVisualizarUrgencias'><i class='fa fa-eye'></i></button><button class='btn btn-xs btn-primary btnMpFaltante' codigo='" . $articulos[$i]["articulo"] . "' data-toggle='modal' data-target='#modalMpFaltante'><i class='fa fa-fire'></i></button></div>";
 
-                if ($tipo != "maestro") {
-                    $datosJson .= '[
-                        "' . $modelo . '",
-                        "' . $articulos[$i]["nombre"] . '",
-                        "' . $colores . '",
-                        "' . $articulos[$i]["talla"] . '",
-                        "' . $estado . '",
-                        "' . $stock . '",
-                        "' . $pedidos . '",
-                        "' . $taller . '",
-                        "' . $servicio . '",
-                        "' . $alm_corte . '",
-                        "' . $ord_corte . '",
-                        "' . $ult_mes . '",
-                        "' . $dura_tc . '",
-                        "' . $situacion . '",
-                        "' . $articulos[$i]["nom_taller"] . '"
-                        ],';
-                } else {
-
+                if ($tipo == "maestro") {
                     if ($articulos[$i]["urg_prod"] <= 1) {
                         $produccion = "<button class='btn btn-xs btn-danger'>Prod</button>";
                     } else {
@@ -417,6 +404,58 @@ class TablaUrgencias
                         "' . $ord_corte . '",
                         "' . $ult_mes . '",
                         "' . $produccion . " " . $almcorte . " " .  $corte . " " .  $plan . '",
+                        "' . $articulos[$i]["nom_taller"] . '"
+                        ],';
+                } else if ($tipo == "prod") {
+
+                    /* 
+            todo: Servicio
+            */
+                    if ($articulos[$i]["cierre"] <= 0) {
+
+                        $cierreI = number_format($articulos[$i]["cierre"], 0);
+                        $cierre = "<center><b><span style='font-size:100%' class='text-danger'>" . $cierreI . "</span></b></center>";
+                    } else {
+
+                        $cierreI = number_format($articulos[$i]["cierre"], 0);
+                        $cierre = "<center><b><span style='font-size:100%' class='text-primary'>" . $cierreI . "</span></b></center>";
+                    }
+
+                    $datosJson .= '[
+                        "' . $modelo . '",
+                        "' . $articulos[$i]["nombre"] . '",
+                        "' . $colores . '",
+                        "' . $articulos[$i]["talla"] . '",
+                        "' . $estado . '",
+                        "' . $stock . '",
+                        "' . $pedidos . '",
+                        "' . $taller . '",
+                        "' . $servicio . '",
+                        "' . $cierre . '",
+                        "' . $alm_corte . '",
+                        "' . $ord_corte . '",
+                        "' . $ult_mes . '",
+                        "' . $dura_tc . '",
+                        "' . $situacion . '",
+                        "' . $articulos[$i]["nom_taller"] . '"
+                        ],';
+                } else {
+
+                    $datosJson .= '[
+                        "' . $modelo . '",
+                        "' . $articulos[$i]["nombre"] . '",
+                        "' . $colores . '",
+                        "' . $articulos[$i]["talla"] . '",
+                        "' . $estado . '",
+                        "' . $stock . '",
+                        "' . $pedidos . '",
+                        "' . $taller . '",
+                        "' . $servicio . '",
+                        "' . $alm_corte . '",
+                        "' . $ord_corte . '",
+                        "' . $ult_mes . '",
+                        "' . $dura_tc . '",
+                        "' . $situacion . '",
                         "' . $articulos[$i]["nom_taller"] . '"
                         ],';
                 }

@@ -404,7 +404,8 @@ CUERPO DOCUMENTO
                 $_GET["ruta"] == "reportes-ventas" ||
                 $_GET["ruta"] == "procesar-ce" ||
                 $_GET["ruta"] == "boletas" ||
-                $_GET["ruta"] == "errores"
+                $_GET["ruta"] == "errores" ||
+                $_GET["ruta"] == "cuadre-caja"
             ) {
 
 

@@ -433,6 +433,16 @@ class AjaxFacturacion
 
         echo json_encode($respuesta);
     }
+
+    public function ajaxTotalCuadre()
+    {
+
+        $fechaCuadre = $this->fechaCuadre;
+
+        $respuesta = ModeloFacturacion::mdlTotalCuadre($fechaCuadre);
+
+        echo json_encode($respuesta);
+    }
 }
 
 
@@ -574,4 +584,15 @@ if (isset($_POST["tipoC"])) {
     $activar->documentoC = $_POST["documentoC"];
     $activar->netoC = $_POST["netoC"];
     $activar->ajaxCorregir();
+}
+
+
+/*=============================================
+VER TOTALES
+=============================================*/
+if (isset($_POST["fechaCuadre"])) {
+
+    $cancelaCuenta = new AjaxFacturacion();
+    $cancelaCuenta->fechaCuadre = $_POST["fechaCuadre"];
+    $cancelaCuenta->ajaxTotalCuadre();
 }

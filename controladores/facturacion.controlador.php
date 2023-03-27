@@ -4415,4 +4415,59 @@ class ControladorFacturacion
             }
         }
     }
+
+    static public function ctrCancelarCuenta3()
+    {
+
+        if (isset($_POST["cancelarDocumento2"])) {
+
+            $tabla = "cuadrar_caja";
+            $usureg = $_SESSION["nombre"];
+            $pcreg = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+
+            $datos = array(
+                "id"            => $_POST["idCuenta3"],
+                "tipo_doc"      => $_POST["cancelarTipoDocumento2"],
+                "num_cta"       => $_POST["cancelarDocumentoOriginal2"],
+                "cliente"       => $_POST["cancelarCliente2"],
+                "vendedor"      => $_POST["cancelarVendedor2"],
+                "monto"         => $_POST["cancelarMonto3"],
+                "notas"         => $_POST["cancelarNota2"],
+                "usuario"       => $_POST["cancelarUsuario2"],
+                "fecha"         => $_POST["cancelarFechaUltima2"],
+                "fecha_ven"     => $_POST["cancelarVencimientoOrigen2"],
+                "cod_pago"      => $_POST["cancelarCodigo2"],
+                "doc_origen"    => $_POST["cancelarDocumento2"],
+                "saldo"         => 0,
+                "tip_mov"       => "-",
+                "usureg"        => $usureg,
+                "pcreg"         => $pcreg,
+                "fecha_ori"     => $_POST["cancelarFechaOrigen2"]
+            );
+
+            $cuenta = ControladorCuentas::ctrMostrarCuentas("id", $_POST["idCuenta3"]);
+
+            $respuesta = ModeloFacturacion::mdlIngresarCuenta($tabla, $datos);
+
+            if ($respuesta == "ok") {
+
+                echo '<script>	
+
+            		swal({
+            			  type: "success",
+            			  title: "Se registro el pado correctamente",
+            			  showConfirmButton: true,
+            			  confirmButtonText: "Cerrar"
+            			  }).then(function(result){
+            						if (result.value) {
+
+            						window.location = "cuadre-caja";
+
+            						}
+            					})
+
+            		</script>';
+            }
+        }
+    }
 }

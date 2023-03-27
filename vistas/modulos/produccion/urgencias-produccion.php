@@ -25,7 +25,13 @@
             <div class="box-header with-border">
                 <a href="vistas/reportes_excel/rpt_urgencias_maestro.php?tipo=prod" class="btn btn-default pull-right" style="border:green 1px solid">
 
-                    <img src="vistas/img/plantilla/excel.png" width="20px"> URGENCIAS PRODUCCIÓN
+                    <img src="vistas/img/plantilla/excel.png" width="20px"> URGENCIAS PRODUCCIÓN RESUMEN
+
+                </a>
+
+                <a href="vistas/reportes_excel/rpt_urgencias_maestro_total.php?tipo=prod" class="btn btn-default pull-right" style="border:green 1px solid">
+
+                    <img src="vistas/img/plantilla/excel.png" width="20px"> URGENCIAS PRODUCCIÓN TOTAL
 
                 </a>
             </div>
@@ -49,6 +55,7 @@
                                 <th>Pedidos</th>
                                 <th>Taller</th>
                                 <th>Servicio</th>
+                                <th>Cierre</th>
                                 <th>Alm. Corte</th>
                                 <th>Ord. Corte</th>
                                 <th>Ult. Mes</th>

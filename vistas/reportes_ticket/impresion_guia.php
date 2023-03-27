@@ -16,7 +16,7 @@
     $tipo = $_GET["tipo"];
     $documento = $_GET["codigo"];
     $venta = ControladorFacturacion::ctrMostrarVentaImpresion($documento, $tipo);
-    $modelo = ControladorFacturacion::ctrMostrarModeloImpresionV2($documento, $tipo, 0, 100);
+    $modelo = ControladorFacturacion::ctrMostrarModeloImpresionV2("movimientosjf_2023", $documento, $tipo, 0, 100);
     $cantModelo = count($modelo);
     $subtotal = $venta["neto"] - $venta["dscto"];
     $monto_letra = CantidadEnLetra($venta["total"]);

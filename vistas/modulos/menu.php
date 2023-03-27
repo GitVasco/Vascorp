@@ -1364,7 +1364,8 @@
                                         $_GET["ruta"] == "procesar-ce" ||
                                         $_GET["ruta"] == "reportes-ventas" ||
                                         $_GET["ruta"] == "notas-credito" ||
-                                        $_GET["ruta"] == "errores"
+                                        $_GET["ruta"] == "errores" ||
+                                        $_GET["ruta"] == "cuadre-caja"
                                     ) echo 'active'; ?>">
 
                     <a href="#">
@@ -1439,7 +1440,8 @@
                                                 $_GET["ruta"] == "proformas" ||
                                                 $_GET["ruta"] == "ver-nota-credito" ||
                                                 $_GET["ruta"] == "notas-credito" ||
-                                                $_GET["ruta"] == "errores"
+                                                $_GET["ruta"] == "errores" ||
+                                                $_GET["ruta"] == "cuadre-caja"
                                             ) echo 'active'; ?>">
 
                             <a href="#"><i class="fa fa-clipboard"></i> Documentos
@@ -1451,10 +1453,6 @@
                             </a>
 
                             <ul class="treeview-menu">
-
-
-
-
 
                                 <li class="<?php if ($_GET["ruta"] == "guias-remision") echo 'active'; ?>">
 
@@ -1517,6 +1515,17 @@
 
                                         <i class="fa fa-exclamation-circle text-red"></i>
                                         <span>Errores</span>
+
+                                    </a>
+
+                                </li>
+
+                                <li class="<?php if ($_GET["ruta"] == "cuadre-caja") echo 'active'; ?>">
+
+                                    <a href="cuadre-caja">
+
+                                        <i class="fa fa-calculator text-primary"></i>
+                                        <span>Cudrar caja</span>
 
                                     </a>
 
