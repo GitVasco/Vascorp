@@ -443,6 +443,16 @@ class AjaxFacturacion
 
         echo json_encode($respuesta);
     }
+
+    public function ajaxVerGuia()
+    {
+
+        $documentoG = $this->documentoG;
+
+        $respuesta = ModeloFacturacion::mdlMostrarVentaImpresion($documentoG, "S01");
+
+        echo json_encode($respuesta);
+    }
 }
 
 
@@ -595,4 +605,16 @@ if (isset($_POST["fechaCuadre"])) {
     $cancelaCuenta = new AjaxFacturacion();
     $cancelaCuenta->fechaCuadre = $_POST["fechaCuadre"];
     $cancelaCuenta->ajaxTotalCuadre();
+}
+
+
+
+/*=============================================
+ACTUALIZAR GUIA
+=============================================*/
+if (isset($_POST["documentoG"])) {
+
+    $cancelaCuenta = new AjaxFacturacion();
+    $cancelaCuenta->documentoG = $_POST["documentoG"];
+    $cancelaCuenta->ajaxVerGuia();
 }

@@ -11,7 +11,7 @@ if (!isset($_SESSION)) {
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
+    <meta name="google" content="notranslate">
     <title>Vasco System</title>
 
     <!-- Tell the browser to be responsive to screen width -->
@@ -355,7 +355,9 @@ CUERPO DOCUMENTO
                 $_GET["ruta"] == "urgencias-almacen" ||
                 $_GET["ruta"] == "urgencias-corte" ||
                 $_GET["ruta"] == "urgencias-plan" ||
-                $_GET["ruta"] == "urgencias-maestro"
+                $_GET["ruta"] == "urgencias-maestro" ||
+                $_GET["ruta"] == "transferencias-apt" ||
+                $_GET["ruta"] == "crear-transferencias-apt"
             ) {
 
                 include "modulos/produccion/" . $_GET["ruta"] . ".php";
@@ -551,6 +553,7 @@ CUERPO DOCUMENTO
     <script src="vistas/js/ingresoscaja.js"></script>
     <script src="vistas/js/compras.js"></script>
     <script src="vistas/js/mantenimiento.js"></script>
+    <script src="vistas/js/transferencia.js"></script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {

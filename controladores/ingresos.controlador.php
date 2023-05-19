@@ -1021,17 +1021,18 @@ class ControladorIngresos
             $saldo      = $_POST["saldo"];
             $sector     = $_POST["sector"];
             $idcierre   = $_POST["idcierre"];
+            $almacen   = $_POST["almacen"];
             $usureg     = $_SESSION["nombre"];
             $pcreg      = gethostbyaddr($_SERVER['REMOTE_ADDR']);
 
             $stock = ($cantidadO * -1) + $cantidad;
             $prod = $cantidadO - $cantidad;
 
-            if ($sector = "externo") {
-                $actCierre = ModeloIngresos::mdlactualizarCierre($idcierre, $saldo);
-            }
+            // if ($sector = "externo") {
+            //     $actCierre = ModeloIngresos::mdlactualizarCierre($idcierre, $saldo);
+            // }
 
-            $actStock = ModeloIngresos::mdlactualizarStock($sector, $articulo, $stock, $prod);
+            $actStock = ModeloIngresos::mdlactualizarStock($sector, $articulo, $stock, $prod, $almacen);
 
             $actMov = ModeloIngresos::mdlactualizarMovimiento($codigo, $articulo, $cantidadO, $cantidad);
 
@@ -1047,7 +1048,7 @@ class ControladorIngresos
                     }).then(function(result){
                                 if (result.value) {
 
-                                window.location = "ingresos+";
+                                window.location = "ingresos";
 
                                 }
                             })
@@ -1086,10 +1087,10 @@ class ControladorIngresos
                 "idcierre"  => 0
             );
 
-            $ingreso = ModeloIngresos::mdlGuardarDetalleSegunda("movimientosjf_2023", $datosD);
+            // $ingreso = ModeloIngresos::mdlGuardarDetalleSegunda("movimientosjf_2023", $datosD);
 
-            if ($ingreso == "ok") {
-                $agregar = ModeloArticulos::mdlActualizarTallerIngreso($_POST["articulo"], $_POST["cantidad"]);
+            $agregar = ModeloArticulos::mdlActualizarTallerIngreso($_POST["articulo"], $_POST["cantidad"]);
+            if ($agregar == "ok") {
 
                 echo '<script>
 
@@ -1117,5 +1118,149 @@ class ControladorIngresos
         $respuesta = ModeloIngresos::mdlMostraAjustes();
 
         return $respuesta;
+    }
+
+
+    static public function ctrCrearIngresoC()
+    {
+
+        if (isset($_POST["nuevoTalleres"]) && isset($_POST["idUsuario"])) {
+
+            if ($_POST["listaArticulosIngreso"] == "") {
+                self::mostrarAlertaError("¡No se seleccionó ningún artículo. Por favor, intenteló de nuevo!", "crear-ingresos");
+            } else {
+                $listaArticulos = json_decode($_POST["listaArticulosIngreso"], true);
+
+                if ($_POST["nuevoTipoSector"] == "0") {
+                    self::actualizarArticulos($listaArticulos);
+                } else {
+                    self::actualizarCierresDetalle($listaArticulos);
+                }
+
+                $respuesta = self::guardarIngreso($_POST);
+
+                if ($respuesta == "ok") {
+                    self::guardarDetallesIngreso($listaArticulos, $_POST);
+                    self::mostrarAlertaExito("¡La información fue registrada con éxito!", "ingresos");
+                } else {
+                    self::mostrarAlertaError("¡La información presento problemas y no se registro adecuadamente. Por favor, intenteló de nuevo!", "crear-ingresos");
+                }
+            }
+        }
+    }
+
+    private function mostrarAlertaError($texto, $redireccion)
+    {
+        echo '<script>
+                swal({
+                    type: "error",
+                    title: "Error",
+                    text: "' . $texto . '",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+                }).then((result)=>{
+                    if(result.value){
+                        window.location="' . $redireccion . '";}
+                });
+            </script>';
+    }
+
+    private function mostrarAlertaExito($texto, $redireccion)
+    {
+        echo '<script>
+                swal({
+                    type: "success",
+                    title: "Felicitaciones",
+                    text: "' . $texto . '",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+                }).then((result)=>{
+                    if(result.value){
+                        window.location="' . $redireccion . '";}
+                });
+            </script>';
+    }
+
+    private function actualizarArticulos($listaArticulos)
+    {
+        foreach ($listaArticulos as $value) {
+            $tabla = "articulojf";
+            $valor = $value["articulo"];
+
+            // Actualizamos Taller
+            $item1 = "taller";
+            $valor1 = $value["taller"];
+
+            ModeloArticulos::mdlActualizarUnDato($tabla, $item1, $valor1, $valor);
+
+            // Actualizamos Stock
+            $item2 = "stock";
+            $valor2 = $value["cantidad"];
+
+            ModeloArticulos::mdlActualizarStockIngreso($valor, $valor2);
+            ModeloArticulos::mdlActualizarStockIngreso01($valor, $valor2);
+        }
+    }
+
+    private function actualizarCierresDetalle($listaArticulos)
+    {
+        foreach ($listaArticulos as $value) {
+            $tabla = "cierres_detallejf";
+
+            $valor = $value["idCierre"];
+            $articulo = $value["articulo"];
+
+            // Actualizar Taller
+            $item1 = "cantidad";
+            $valor1 = $value["taller"];
+
+            ModeloArticulos::mdlActualizarUnCierre($tabla, $item1, $valor1, $valor);
+
+            // Actualizamos Stock
+            $item2 = "stock";
+            $valor2 = $value["cantidad"];
+
+            ModeloArticulos::mdlActualizarStockIngreso($articulo, $valor2);
+
+            // Actualizamos servicio
+            ModeloArticulos::mdlActualizarArticuloServicio($articulo, $valor2);
+        }
+    }
+
+    private function guardarIngreso($postData)
+    {
+        $fecha = $postData["nuevaFecha"];
+        $datos = array(
+            "tipo" => "E20",
+            "usuario" => $postData["idUsuario"],
+            "guia" => $postData["nuevaGuiaIng"],
+            "taller" => $postData["nuevoTalleres"],
+            "documento" => $postData["nuevoCodigo"],
+            "total" => $postData["totalTaller"],
+            "fecha" => $fecha,
+            "almacen" => "01"
+        );
+
+        return ModeloIngresos::mdlGuardarIngreso("movimientos_cabecerajf", $datos);
+    }
+
+    private function guardarDetallesIngreso($listaArticulos, $postData)
+    {
+        $fecha = $postData["nuevaFecha"];
+
+        foreach ($listaArticulos as $key => $value) {
+            $datosD = array(
+                "tipo" => "E20",
+                "documento" => $postData["nuevoCodigo"],
+                "taller" => $postData["nuevoTalleres"],
+                "fecha" => $fecha,
+                "articulo" => $value["articulo"],
+                "cantidad" => $value["cantidad"],
+                "almacen" => "01",
+                "idcierre" => $value["idCierre"]
+            );
+
+            ModeloIngresos::mdlGuardarDetalleIngreso("movimientosjf_2023", $datosD);
+        }
     }
 }

@@ -61,15 +61,41 @@
 
                 </div>
 
+                <?php
+                function displayMissingCorrelatives($tipo, $series)
+                {
+                    $prueba = ModeloFacturacion::mdlMaxMin($tipo, $series);
+
+                    $numr = array();
+                    foreach ($prueba as $sql) {
+                        $numr = array_merge($numr, range($prueba['minnum'], $prueba['maxnum']));
+                    }
+
+                    $res_recibo = ModeloFacturacion::mdlTodos($tipo, $series);;
+                    $arr_recibo = array();
+                    foreach ($res_recibo as $key => $value) {
+                        $arr_recibo[] = $value["numero"];
+                    }
+
+                    $dif_recibos = array_unique(array_diff($numr, $arr_recibo));
+
+                    echo '<div class="box-body">';
+                    echo '<strong><i class="fa fa-pencil margin-r-5"></i> ' . $series . '</strong>';
+
+                    foreach ($dif_recibos as $key => $value) {
+                        if ($value != "0") {
+                            echo '<p><span class="label label-danger">' . $value . '</span></p>';
+                        }
+                    }
+
+                    echo '</div>';
+                }
+                ?>
+
                 <div class="col-lg-3 row">
-                    <h2>
-
-                        Correlativos Faltantes
-
-                    </h2>
+                    <h2>Correlativos Faltantes</h2>
 
                     <div class="col-lg-12">
-
                         <div class="col-lg-6">
                             <div class="box box-primary">
                                 <div class="box-header with-border">
@@ -77,230 +103,70 @@
                                 </div>
 
                                 <?php
-
                                 $tipo = "S03";
                                 $talonario = ModeloTalonarios::mdlMostrarTalonariosB('01');
-
                                 foreach ($talonario as $key => $value) {
                                     $series = $value["serie_factura"];
-
-                                    $prueba = ModeloFacturacion::mdlMaxMin($tipo, $series);
-
-                                    $numr = array();
-
-                                    foreach ($prueba as $sql) {
-                                        $numr = array_merge($numr, range($prueba['minnum'], $prueba['maxnum']));
-                                    }
-
-                                    $res_recibo = ModeloFacturacion::mdlTodos($tipo, $series);;
-
-                                    foreach ($res_recibo as $key => $value) {
-                                        $arr_recibo[] = $value["numero"];
-                                    }
-
-                                    $dif_recibos = array_unique(array_diff($numr, $arr_recibo));
-
-                                    echo '<div class="box-body">
-                                    <strong><i class="fa fa-pencil margin-r-5"></i> ' . $series . '</strong>';
-
-                                    foreach ($dif_recibos as $key => $value) {
-
-                                        if ($value == "0") {
-
-                                            echo '';
-                                        } else {
-
-                                            echo '<p>
-                                                <span class="label label-danger">' . $value . '</span>
-                                            </p>';
-                                        }
-                                    }
-
-
-                                    echo '</div>';
+                                    displayMissingCorrelatives($tipo, $series);
                                 }
-
                                 ?>
-
                             </div>
                         </div>
 
                         <div class="col-lg-6">
-
                             <div class="box box-primary">
                                 <div class="box-header with-border">
                                     <h3 class="box-title">Boletas</h3>
                                 </div>
 
                                 <?php
-
                                 $tipo = "S02";
                                 $talonario = ModeloTalonarios::mdlMostrarTalonariosB('03');
-
                                 foreach ($talonario as $key => $value) {
                                     $series = $value["serie_boletas"];
-
-                                    $prueba = ModeloFacturacion::mdlMaxMin($tipo, $series);
-
-                                    $numr = array();
-
-                                    foreach ($prueba as $sql) {
-                                        $numr = array_merge($numr, range($prueba['minnum'], $prueba['maxnum']));
-                                    }
-
-                                    $res_recibo = ModeloFacturacion::mdlTodos($tipo, $series);;
-
-                                    foreach ($res_recibo as $key => $value) {
-                                        $arr_recibo[] = $value["numero"];
-                                    }
-
-                                    $dif_recibos = array_unique(array_diff($numr, $arr_recibo));
-
-                                    echo '<div class="box-body">
-                                    <strong><i class="fa fa-pencil margin-r-5"></i> ' . $series . '</strong>';
-
-                                    foreach ($dif_recibos as $key => $value) {
-
-                                        if ($value == "0") {
-
-                                            echo '';
-                                        } else {
-
-                                            echo '<p>
-                                                <span class="label label-danger">' . $value . '</span>
-                                            </p>';
-                                        }
-                                    }
-
-
-                                    echo '</div>';
+                                    displayMissingCorrelatives($tipo, $series);
                                 }
-
                                 ?>
-
-
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-12">
-
                         <div class="col-lg-6">
-
                             <div class="box box-primary">
                                 <div class="box-header with-border">
                                     <h3 class="box-title">NC</h3>
                                 </div>
 
                                 <?php
-
                                 $tipo = "E05";
                                 $talonario = ModeloTalonarios::mdlMostrarTalonariosB('07');
-
                                 foreach ($talonario as $key => $value) {
                                     $series = $value["serie_nc"];
-
-                                    $prueba = ModeloFacturacion::mdlMaxMin($tipo, $series);
-
-                                    $numr = array();
-
-                                    foreach ($prueba as $sql) {
-                                        $numr = array_merge($numr, range($prueba['minnum'], $prueba['maxnum']));
-                                    }
-
-                                    $res_recibo = ModeloFacturacion::mdlTodos($tipo, $series);;
-
-                                    foreach ($res_recibo as $key => $value) {
-                                        $arr_recibo[] = $value["numero"];
-                                    }
-
-                                    $dif_recibos = array_unique(array_diff($numr, $arr_recibo));
-
-                                    echo '<div class="box-body">
-                                    <strong><i class="fa fa-pencil margin-r-5"></i> ' . $series . '</strong>';
-
-                                    foreach ($dif_recibos as $key => $value) {
-                                        if ($value == "0") {
-
-                                            echo '';
-                                        } else {
-
-                                            echo '<p>
-                                                <span class="label label-danger">' . $value . '</span>
-                                            </p>';
-                                        }
-                                    }
-
-
-                                    echo '</div>';
+                                    displayMissingCorrelatives($tipo, $series);
                                 }
-
                                 ?>
-
-
                             </div>
                         </div>
-
                         <div class="col-lg-6">
-
                             <div class="box box-primary">
                                 <div class="box-header with-border">
                                     <h3 class="box-title">ND</h3>
                                 </div>
 
                                 <?php
-
                                 $tipo = "S05";
                                 $talonario = ModeloTalonarios::mdlMostrarTalonariosB('08');
-
                                 foreach ($talonario as $key => $value) {
                                     $series = $value["serie_nd"];
-
-                                    $prueba = ModeloFacturacion::mdlMaxMin($tipo, $series);
-
-                                    $numr = array();
-
-                                    foreach ($prueba as $sql) {
-                                        $numr = array_merge($numr, range($prueba['minnum'], $prueba['maxnum']));
-                                    }
-
-                                    $res_recibo = ModeloFacturacion::mdlTodos($tipo, $series);;
-
-                                    foreach ($res_recibo as $key => $value) {
-                                        $arr_recibo[] = $value["numero"];
-                                    }
-
-                                    $dif_recibos = array_unique(array_diff($numr, $arr_recibo));
-
-                                    echo '<div class="box-body">
-                                    <strong><i class="fa fa-pencil margin-r-5"></i> ' . $series . '</strong>';
-
-                                    foreach ($dif_recibos as $key => $value) {
-
-                                        if ($value == "0") {
-
-                                            echo '';
-                                        } else {
-
-                                            echo '<p>
-                                                <span class="label label-danger">' . $value . '</span>
-                                            </p>';
-                                        }
-                                    }
-
-
-                                    echo '</div>';
+                                    displayMissingCorrelatives($tipo, $series);
                                 }
-
                                 ?>
-
-
                             </div>
                         </div>
                     </div>
-
-
-
                 </div>
+
+
             </div>
 
 

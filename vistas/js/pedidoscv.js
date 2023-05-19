@@ -181,105 +181,25 @@ $("#seleccionarCliente").change(function () {
 });
 
 $("#seleccionarVendedor").change(function () {
-    var cliList = document.getElementById("seleccionarCliente").value;
-    console.log("🚀 ~ file: pedidoscv.js:104 ~ cliList:", cliList);
+    const cliList = $("#seleccionarCliente").val();
+    const vendedor = $("#seleccionarVendedor").val();
 
-    var vendedor = document.getElementById("seleccionarVendedor").value;
-    console.log("🚀 ~ file: pedidoscv.js:104 ~ vendedor:", vendedor);
+    console.log("Cliente seleccionado: ", cliList);
+    console.log("Vendedor seleccionado: ", vendedor);
 
-    var datos = new FormData();
+    const datos = new FormData();
     datos.append("cliList", cliList);
 
-    // Obtener la fecha actual
-    var fechaActual = new Date();
+    const fechaActual = new Date();
 
-    // Verificar si es el 8 de marzo de 2023
-    if (
-        fechaActual.getDate() === 9 &&
-        fechaActual.getMonth() === 2 &&
-        fechaActual.getFullYear() === 2023
-    ) {
-        var precio = "ok";
-        //console.log("Hoy es el 8 de marzo de 2023");
-    } else {
-        var precio = "no";
-        //console.log("Hoy no es el 8 de marzo de 2023");
-    }
+    const esFechaEspecial =
+        fechaActual.getDate() === 11 &&
+        fechaActual.getMonth() === 4 &&
+        fechaActual.getFullYear() === 2023;
 
-    let pedidos = [
-        "572034804",
-        "742034851",
-        "572034859",
-        "742034880",
-        "752034899",
-        "752034900",
-        "572034971",
-        "752035090",
-        "752035106",
-        "752035187",
-        "752035189",
-        "742035234",
-        "752035238",
-        "752035253",
-        "652035317",
-        "742035346",
-        "752035360",
-        "752035364",
-        "752035387",
-        "572035707",
-        "682035745",
-        "572035773",
-        "752036206",
-        "652036211",
-        "742036218",
-        "752036238",
-        "752036277",
-        "692036296",
-        "752036299",
-        "652036304",
-        "752036336",
-        "652036338",
-        "752036339",
-        "652036385",
-        "652036476",
-        "752036547",
-        "752036575",
-        "742036648",
-        "652036686",
-        "752036726",
-        "752036736",
-        "752036816",
-        "752036832",
-        "752036883",
-        "652036885",
-        "742036899",
-        "752036928",
-        "652036957",
-        "752036965",
-        "742036972",
-        "652037006",
-        "752037015",
-        "752037017",
-        "652037018",
-        "752037064",
-        "752037071",
-        "752037186",
-        "652037193",
-        "752037211",
-        "752037215",
-        "752037268",
-        "752037272",
-        "682037277",
-        "752037283",
-        "752037285",
-        "752037291",
-        "742037292",
-        "752037297",
-        "752037298",
-        "752037318",
-        "62037323",
-        "742037329",
-    ];
+    const pedidos = ["572034804"];
+
+    const vendedoresEspeciales = new Set(["08", "08C", "08D", "08DR", "08R"]);
 
     $.ajax({
         url: "ajax/pedidos.ajax.php",
@@ -290,19 +210,20 @@ $("#seleccionarVendedor").change(function () {
         processData: false,
         dataType: "json",
         success: function (respuestaDet) {
-            if (pedidos.includes(nuevoCodigo)) {
-                $("#lista").val(respuestaDet["lista_precios"]);
-                console.log("precio normal");
-            } else if (
-                (vendedor == "08" || vendedor == "08R") &&
-                precio == "ok"
+            let listaPrecio = respuestaDet["lista_precios"];
+
+            if (
+                !pedidos.includes(nuevoCodigo) &&
+                vendedoresEspeciales.has(vendedor) &&
+                esFechaEspecial
             ) {
-                $("#lista").val("precio2");
+                listaPrecio = "precio2";
                 console.log("precio especial");
             } else {
-                $("#lista").val(respuestaDet["lista_precios"]);
                 console.log("precio normal");
             }
+
+            $("#lista").val(listaPrecio);
         },
     });
 });
@@ -318,7 +239,7 @@ $(".formularioPedidoCV").on("click", "button.quitarArtPed", function () {
 
     sumarTotalesPreciosA();
     cambioDescuento();
-    listarArticulos();
+    listarArticulosPed();
 });
 
 /*
@@ -328,7 +249,7 @@ $(".formularioPedidoCV").on("click", "button.quitarArtPed", function () {
 $("#descPer").change(function () {
     sumarTotalesPreciosA();
     cambioDescuento();
-    listarArticulos();
+    listarArticulosPed();
 });
 
 function cambioDescuento() {
@@ -380,7 +301,7 @@ $(".formularioPedidoCV").on("change", "input.nuevaCantidadArtPed", function () {
 
     sumarTotalesPreciosA();
     cambioDescuento();
-    listarArticulos();
+    listarArticulosPed();
 });
 
 /*
@@ -414,10 +335,14 @@ function sumarTotalesPreciosA() {
  * ARRAY CON TODOS LOS ARTICULOS
  */
 
-function listarArticulos() {
+function listarArticulosPed() {
     var listaArticulos = [];
 
     var descripcion = $(".nuevaDescripcionArticulo");
+    console.log(
+        "🚀 ~ file: pedidoscv.js:421 ~ listarArticulos ~ descripcion:",
+        descripcion
+    );
     var cantidad = $(".nuevaCantidadArtPed");
     var precio = $(".nuevoPrecioArticulo");
 
@@ -431,8 +356,7 @@ function listarArticulos() {
         });
     }
 
-    //console.log("listaArticulos", JSON.stringify(listaArticulos));
-
+    console.log("listaArticulos", JSON.stringify(listaArticulos));
     $("#listaProductosPedidos").val(JSON.stringify(listaArticulos));
 }
 
@@ -445,7 +369,7 @@ $("#condicionVenta").change(function () {
 
     sumarTotalesPreciosA();
     //cambioDescuento();
-    listarArticulos();
+    listarArticulosPed();
 
     $("#modalito").removeAttr("disabled");
     $("#modalito").removeClass("btn-default");
@@ -457,7 +381,7 @@ $("#seleccionarCliente").change(function () {
 
     //sumarTotalesPreciosA();
     //cambioDescuento();
-    //listarArticulos();
+    //listarArticulosPed();
 
     var cliente = document.getElementById("seleccionarCliente").value;
     //console.log(cliente);
@@ -493,7 +417,7 @@ $("#seleccionarCliente").change(function () {
 $(".crearPedido").click(function () {
     sumarTotalesPreciosA();
     //cambioDescuento();
-    listarArticulos();
+    listarArticulosPed();
 
     var codigo = document.getElementById("nuevoCodigo").value;
     $("#codigoM").val(codigo);
@@ -624,6 +548,22 @@ $(
 ).on("click", ".btnImprimirPedido", function () {
     var codigo = $(this).attr("codigo");
     //console.log(codigo);
+
+    var datos = new FormData();
+    datos.append("codPedido", codigo);
+
+    $.ajax({
+        url: "ajax/pedidos.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuesta) {
+            console.log("🚀 ~ file: pedidoscv.js:776 ~ respuesta", respuesta);
+        },
+    });
 
     window.open(
         "vistas/reportes_ticket/impresion_pedido.php?codigo=" + codigo,
@@ -1752,17 +1692,14 @@ $(".tablaArticulosPedidos").on("click", ".modificarArtPed", function () {
 //*OPCION B GENERAR PEDIDO
 $(".modificarArtPedB").click(function () {
     var modelo = document.getElementById("modelo").value;
+    console.log("🚀 ~ file: pedidoscv.js:1755 ~ modelo:", modelo);
 
     if (modelo != "") {
         var cliente = document.getElementById("seleccionarCliente").value;
         var vendedor = document.getElementById("seleccionarVendedor").value;
         var pedido = document.getElementById("nuevoCodigo").value;
         var modLista = document.getElementById("lista").value;
-        console.log("🚀 ~ file: pedidoscv.js:1548 ~ modLista:", modLista);
-
         var agencia = document.getElementById("agencia").value;
-
-        // console.log(pedido);
 
         if (modLista == "") {
             var modLista1 = document.getElementById("seleccionarLista").value;
@@ -1782,15 +1719,12 @@ $(".modificarArtPedB").click(function () {
         $("#vendedorA").val(vendedor);
         $("#agenciaA").val(agencia);
 
-        /*
-         *datos para la cabecera
-         */
-
-        var mod = document.getElementById("modelo").value;
+        //*datos para la cabecera
+        //var mod = document.getElementById("modelo").value;
         //var mod = $(this).attr("modelo");
         //console.log(mod);
 
-        //$("#modeloModalA").val(mod);
+        $("#modeloModalA").val(modelo);
 
         //var datos = new FormData();
         datos.append("mod", mod);
@@ -2400,3 +2334,222 @@ function ValidarRuc() {
 }
 
 $("#BGBGG").change(function () {});
+
+//************************************************** */
+
+function updateModLista(modLista = "") {
+    return modLista === "" ? $("#seleccionarLista").val() : modLista;
+}
+
+function updateFormData(datos, key, value) {
+    datos.append(key, value);
+}
+
+function getTallaHtml(tallaIndex, id, isEnabled, value) {
+    return isEnabled
+        ? `<td><input style="width:100%" class="pruebaA" type="text" name="${id.modelo}${id.cod_color}${tallaIndex}" id="${id.modelo}${id.cod_color}${tallaIndex}" value="${value}" min="0" autocomplete="off"></td>`
+        : `<td><input style="width:100%" type="text" name="${id.modelo}${id.cod_color}${tallaIndex}" id="${id.modelo}${id.cod_color}${tallaIndex}" readonly autocomplete="off"></td>`;
+}
+
+function createFila(id) {
+    return (
+        '<tr class="detalleCT">' +
+        `<td>${id.modelo}</td>` +
+        `<td>${id.color}</td>` +
+        getTallaHtml(1, id, id.t1 == 1, id.v1) +
+        getTallaHtml(2, id, id.t2 == 1, id.v2) +
+        getTallaHtml(3, id, id.t3 == 1, id.v3) +
+        getTallaHtml(4, id, id.t4 == 1, id.v4) +
+        getTallaHtml(5, id, id.t5 == 1, id.v5) +
+        getTallaHtml(6, id, id.t6 == 1, id.v6) +
+        getTallaHtml(7, id, id.t7 == 1, id.v7) +
+        getTallaHtml(8, id, id.t8 == 1, id.v8) +
+        "</tr>"
+    );
+}
+
+$(".modificarArtPedC").click(function () {
+    const modelo = $("#modelo").val();
+
+    if (modelo !== "") {
+        const cliente = $("#seleccionarCliente").val();
+        const vendedor = $("#seleccionarVendedor").val();
+        const pedido = $("#nuevoCodigo").val();
+        const modLista = $("#lista").val();
+        const agencia = $("#agencia").val();
+        const listaValue = updateModLista(modLista);
+
+        $("#nLista").val(listaValue);
+        $("#clienteA").val(cliente);
+        $("#vendedorA").val(vendedor);
+        $("#agenciaA").val(agencia);
+
+        const datos = new FormData();
+        updateFormData(datos, "modLista", listaValue);
+        updateFormData(datos, "mod", modelo);
+
+        $.ajax({
+            url: "ajax/pedidos.ajax.php",
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function (respuestaLista) {
+                if (respuestaLista["precio"] <= 0) {
+                    Command: toastr["error"]("El modelo no tiene precio");
+                }
+
+                $("#modeloModalA").val(respuestaLista["modelo"]);
+                $("#precioA").val(respuestaLista["precio"]);
+            },
+        });
+
+        const datosPedido = new FormData();
+        updateFormData(datosPedido, "modeloA", modelo);
+        updateFormData(datosPedido, "pedido", pedido);
+
+        $.ajax({
+            url: "ajax/pedidos.ajax.php",
+            method: "POST",
+            data: datosPedido,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function (respuestaA) {
+                $(".detalleCT").remove();
+
+                for (var id of respuestaA) {
+                    const fila = createFila(id);
+                    $(".tablaColTal").append(fila);
+                }
+
+                const inputs = $("form :text");
+                let i = 25;
+
+                inputs.on("keypress", function (event) {
+                    const code = event.keyCode || event.which;
+                    if (code === 13) {
+                        event.preventDefault();
+                        i = i === inputs.length - 12 ? 26 : ++i;
+                        inputs[i].focus();
+                        inputs[i].select();
+                    }
+                });
+            },
+        });
+    }
+});
+
+//*nuevo modelo de guardar modelos por ajax
+
+$("#guardarModelo").click(function () {
+    const tableInputsJson = JSON.stringify(getTableInputsData());
+
+    let pedidoN = document.getElementById("pedido").value;
+    const nuevoPedidoN = document.getElementById("nuevoCodigo").value;
+    const clienteN = document.getElementById("clienteA").value;
+    const vendedorN = document.getElementById("vendedorA").value;
+    const listaN = document.getElementById("nLista").value;
+    const agenciaN = document.getElementById("agenciaA").value;
+    const modeloN = document.getElementById("modeloModalA").value;
+    const precioN = document.getElementById("precioA").value;
+
+    var datos = new FormData();
+    datos.append("pedidoN", pedidoN);
+    datos.append("nuevoPedidoN", nuevoPedidoN);
+    datos.append("clienteN", clienteN);
+    datos.append("vendedorN", vendedorN);
+    datos.append("listaN", listaN);
+    datos.append("agenciaN", agenciaN);
+    datos.append("modeloN", modeloN);
+    datos.append("precioN", precioN);
+    datos.append("articulosN", tableInputsJson);
+
+    $.ajax({
+        url: "ajax/pedidos.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuestaDet) {
+            if (respuestaDet == "toast") {
+                $("#modelo").val("");
+                $("#totalCantidadA").val("");
+                $("#totalSolesA").val("");
+
+                $(".detalleCT").remove();
+                $("#modalModificarClienteP").modal("hide");
+
+                Command: toastr["success"]("El modelo fue registrado");
+                $("#updDivB").load(" #updDivB"); //actualizas el div
+                $("#updDivC").load(" #updDivC"); //actualizas el div
+                $("#updDiv").load(" #updDiv"); //actualizas el div
+            } else {
+                window.location.href =
+                    "index.php?ruta=crear-pedidocv&pedido=" + respuestaDet;
+
+                console.log(
+                    "🚀 ~ file: pedidoscv.js:2563 ~ respuestaDet:",
+                    respuestaDet
+                );
+            }
+        },
+    });
+});
+
+// Aquí puedes agregar el código para enviar o guardar el JSON en el lugar que necesites
+function getTableInputsData() {
+    const tableInputsData = [];
+    const tableInputs = $(".tablaColTal input");
+
+    tableInputs.each(function () {
+        const inputName = $(this).attr("name");
+        const inputValue = $(this).val();
+
+        tableInputsData.push({
+            name: inputName,
+            value: inputValue,
+        });
+    });
+
+    return tableInputsData;
+}
+
+//* boton cambiar precio
+$(".tablaPedidosCV").on("click", ".btnPrecio", function () {
+    var pedido = $(this).attr("codigo");
+    console.log("🚀 ~ file: pedidoscv.js:2590 ~ pedido:", pedido);
+
+    var numero = window.prompt(
+        "Digite el número de la lista de precios para cambiar el pedido " +
+            pedido
+    );
+
+    var parsedNumero = parseInt(numero);
+    if (!isNaN(parsedNumero)) {
+        console.log("🚀 ~ file: pedidoscv.js:2592 ~ numero:", parsedNumero);
+
+        const datosPrecio = new FormData();
+        updateFormData(datosPrecio, "pedidoL", pedido);
+        updateFormData(datosPrecio, "listaL", parsedNumero);
+        $.ajax({
+            url: "ajax/precios.ajax.php",
+            method: "POST",
+            data: datosPrecio,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function (respuestaA) {
+                if (respuestaA == "ok") {
+                    Command: toastr["success"]("Se actualizo los precios");
+                }
+            },
+        });
+    }
+});

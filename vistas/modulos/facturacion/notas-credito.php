@@ -198,8 +198,13 @@
                     <div class="input-group">
 
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <?php
+                        $today = date("Y-m-d");
+                        $oneYearAgo = date("Y-m-d", strtotime("-1 year"));
+                        ?>
 
-                        <input type="date" class="form-control input-md" name="notaFechaFactura" id="notaFechaFactura" required>
+
+                        <input type="date" class="form-control input-md" name="notaFechaFactura" id="notaFechaFactura" min="<?php echo $oneYearAgo; ?>" max="<?php echo $today; ?>" required>
 
                     </div>
                 </div>
@@ -354,24 +359,22 @@
 </script>
 
 <script>
-    /*
-     * CONFIRMAR CANCELACIÓN DE ABONO
-     */
-    $(".notaTexto").change(function() {
-
+    $(".notaTexto").on("input", function() {
         var origen = $(this).val();
+        console.log("🚀 ~ file: editar-nota-credito.php:431 ~ $ ~ origen:", origen)
 
-        var comas = origen.search(/,/g);
+        // Reemplaza las comas con un espacio vacío
+        var destino = origen.replace(/,/g, "");
 
-        if (comas > 0) {
-            var destino = origen.replace(/,/g, " ");
+        // Elimina los saltos de línea
+        destino = destino.replace(/(\r\n|\n|\r)/gm, "");
 
-            Command: toastr["error"](
-                "Se reemplazaron las comas(,) "
-            );
-
-            $("#notaTexto").val(destino);
+        // Muestra el mensaje de error si se eliminaron las comas
+        if (origen !== destino) {
+            Command: toastr["error"]("Se eliminaron las comas(,)");
         }
 
+        // Actualiza el contenido del textarea
+        $("#notaTexto").val(destino);
     });
 </script>

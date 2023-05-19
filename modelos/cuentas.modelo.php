@@ -2945,7 +2945,7 @@ class ModeloCuentas
 					AND '" . $fin . "'
 					) 
 					AND cc.cod_pago = '" . $canc . "' 
-				UNION
+				UNION ALL
 				SELECT 
 					'-1' AS tipo_doc,
 					'Fecha de pago:' AS num_cta,
@@ -2975,7 +2975,7 @@ class ModeloCuentas
 					) 
 					AND cc.cod_pago = '" . $canc . "' 
 				GROUP BY cc.fecha 
-				UNION
+				UNION ALL
 				SELECT 
 					'999' AS tipo_doc,
 					'Fecha de pago:',
@@ -3024,7 +3024,8 @@ class ModeloCuentas
 					AND cc.cod_pago = '" . $canc . "' 
 					GROUP BY cc.fecha 
 					ORDER BY fecha,
-					tipo_doc ");
+					tipo_doc,
+					num_cta ");
 
 			$stmt->execute();
 
@@ -3645,7 +3646,7 @@ class ModeloCuentas
 											AND cc.estado = 'PENDIENTE' 
 											AND cc.tipo_doc <> '85' 
 											AND cc.fecha = cc.fecha_ven 
-											AND cc.vendedor NOT IN ('08','99') 
+											AND cc.vendedor NOT IN ('08','08C','08D','08DR','08R','06','06A','06B','99') 
 										ORDER BY cc.vendedor,
 											cc.fecha");
 		$stmt->execute();

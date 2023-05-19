@@ -283,4 +283,24 @@ class ModeloTalonarios
 
         $stmt = null;
     }
+
+    static public function mdlMostrarTalonariosC($valor)
+    {
+
+        $sql = "SELECT 
+                    * 
+                FROM
+                    correlativos 
+                WHERE codigo='$valor'            
+        ";
+
+        $stmt = Conexion::conectar()->prepare($sql);
+
+        $stmt->execute();
+
+        return $stmt->fetch();
+
+
+        $stmt = null;
+    }
 }

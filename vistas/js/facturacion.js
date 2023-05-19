@@ -2532,9 +2532,14 @@ $(".tablaGuiasRemision").on("click", ".btnImprimirGuia", function () {
     var tipo = $(this).attr("tip_doc");
     //console.log(tipo);
 
+    const impresion =
+        codigo.substring(0, 1) === "0" ? "guia_remision" : "impresion_guia";
+
     window.open(
         //"vistas/reportes_ticket/impresion_guia.php?codigo=" +
-        "vistas/reportes_ticket/guia_remision.php?codigo=" +
+        "vistas/reportes_ticket/" +
+            impresion +
+            ".php?codigo=" +
             codigo +
             "&tipo=" +
             tipo,
@@ -3314,3 +3319,46 @@ $(".tablaCuadrarCaja").on("click", ".btnAgregarCobro", function () {
 // }
 
 // document.addEventListener("DOMContentLoaded", cargarPagina);
+
+$(".tablaGuiasRemision tbody").on(
+    "click",
+    "button.btnEditarGRemision",
+    function () {
+        var codigo = $(this).attr("documento");
+        var cod_cli = $(this).attr("cod_cli");
+        var nom_cli = $(this).attr("nom_cli");
+        var tip_doc = $(this).attr("tip_doc");
+        var nro_doc = $(this).attr("nro_doc");
+        var cod_ven = $(this).attr("cod_ven");
+
+        $("#codPedidoC").val(codigo);
+        $("#codCliC").val(cod_cli);
+        $("#nomCliC").val(nom_cli);
+        $("#tipDocC").val(tip_doc);
+        $("#nroDocC").val(nro_doc);
+        $("#codVenC").val(cod_ven);
+
+        var datos = new FormData();
+        datos.append("documentoG", codigo);
+
+        $.ajax({
+            url: "ajax/facturacion.ajax.php",
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function (respuesta) {
+                $("#chofer").val(respuesta["cod_chofer"]);
+                $("#chofer").selectpicker("refresh");
+
+                $("#carro").val(respuesta["cod_carro"]);
+                $("#carro").selectpicker("refresh");
+
+                $("#bultos").val(respuesta["bultos"]);
+                $("#peso").val(respuesta["peso"]);
+            },
+        });
+    }
+);

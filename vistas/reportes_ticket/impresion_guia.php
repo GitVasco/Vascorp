@@ -207,7 +207,10 @@
                                     <td style="width:120px;font-weight: bold;">R.U.C:</td>
                                     <td>' . $venta["ruc_agencia"] . '</td>
                                 </tr>
-                                
+                                <tr>
+                                    <td style="width:120px;font-weight: bold;">M.T.C.</td>
+                                    <td>' . $venta["mtc_agencia"] . '</td>
+                                </tr>
                             </table>
                         </td>
                     </tr>
@@ -215,7 +218,6 @@
                 </thead>
             </table>';
         }
-
 
         $cabDet = '<table style="width:100%;">
 
@@ -255,210 +257,39 @@
             </thead>
         </table>';
 
-        //todo: 1 página
-        if ($cantModelo <= 25) {
-
+        function generarPagina($modelo, $inicio, $fin, $cabecera, $cliente, $envio, $transporte, $cabDet, $pie)
+        {
             echo $cabecera;
-
             echo $cliente;
-
             echo $envio;
-
             echo $transporte;
-
             echo $cabDet;
 
             echo '<table style="width:100%;">';
 
-            foreach ($modelo as $key => $value) {
-
-                echo '<tr>
-                    <td style="width:80px; border-right: 1px solid; text-align:center;">' . $value["modelo"] . '</td>
-                    <td style="width:250px; border-right: 1px solid;">' . $value["nombre"] . '</td>
-                    <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["cantidad"] . '</td>
-                    <td style="width:50px; border-right: 1px solid; text-align:center;">' . $value["unidad"] . '</td>
-                    </tr>';
+            for ($i = $inicio; $i < $fin; $i++) {
+                if (isset($modelo[$i])) {
+                    $value = $modelo[$i];
+                    echo '<tr>
+                <td style="width:80px; border-right: 1px solid; text-align:center;">' . $value["modelo"] . '</td>
+                <td style="width:250px; border-right: 1px solid;">' . $value["nombre"] . '</td>
+                <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["cantidad"] . '</td>
+                <td style="width:50px; border-right: 1px solid; text-align:center;">' . $value["unidad"] . '</td>
+            </tr>';
+                }
             }
 
             echo '</table>';
-
             echo $pie;
         }
 
-        //todo: 2 Páginas
-        else if ($cantModelo > 25 && $cantModelo <= 50) {
+        $cantModelo = count($modelo);
+        $paginas = ceil($cantModelo / 25);
 
-            echo $cabecera;
-
-            echo $cliente;
-
-            echo $envio;
-
-            echo $transporte;
-
-            echo $cabDet;
-
-            echo '<table style="width:100%;">';
-
-            foreach ($modelo as $key => $value) {
-
-                if ($key <= 25) {
-
-                    echo '<tr>
-                        <td style="width:80px; border-right: 1px solid; text-align:center;">' . $value["modelo"] . '</td>
-                        <td style="width:250px; border-right: 1px solid;">' . $value["nombre"] . '</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["cantidad"] . '</td>
-                        <td style="width:50px; border-right: 1px solid; text-align:center;">' . $value["unidad"] . '</td>
-                        </tr>';
-                }
-            }
-
-            echo '</table>';
-
-            for ($i = 0; $i < 15; $i++) {
-
-                echo '<table>
-                    <tr>
-                        <td></td>
-                    </tr>
-                </table>';
-            }
-
-            //*PAGINA 2
-            echo $cabecera;
-
-            echo $cliente;
-
-            echo $envio;
-
-            echo $transporte;
-
-            echo $cabDet;
-
-            echo '<table style="width:100%;">';
-
-            foreach ($modelo as $key => $value) {
-
-                if ($key > 25) {
-
-                    echo '<tr>
-                        <td style="width:80px; border-right: 1px solid; text-align:center;">' . $value["modelo"] . '</td>
-                        <td style="width:250px; border-right: 1px solid;">' . $value["nombre"] . '</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["cantidad"] . '</td>
-                        <td style="width:50px; border-right: 1px solid; text-align:center;">' . $value["unidad"] . '</td>
-                        </tr>';
-                }
-            }
-
-            echo '</table>';
-
-            echo $pie;
-        }
-
-        //todo: 3 Páginas
-        else if ($cantModelo > 50 && $cantModelo <= 75) {
-
-            echo $cabecera;
-
-            echo $cliente;
-
-            echo $envio;
-
-            echo $transporte;
-
-            echo $cabDet;
-
-            echo '<table style="width:100%;">';
-
-            foreach ($modelo as $key => $value) {
-
-                if ($key <= 25) {
-
-                    echo '<tr>
-                        <td style="width:80px; border-right: 1px solid; text-align:center;">' . $value["modelo"] . '</td>
-                        <td style="width:250px; border-right: 1px solid;">' . $value["nombre"] . '</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["cantidad"] . '</td>
-                        <td style="width:50px; border-right: 1px solid; text-align:center;">' . $value["unidad"] . '</td>
-                        </tr>';
-                }
-            }
-
-            echo '</table>';
-
-            for ($i = 0; $i < 15; $i++) {
-
-                echo '<table>
-                    <tr>
-                        <td></td>
-                    </tr>
-                </table>';
-            }
-
-            //*PAGINA 2
-            echo $cabecera;
-
-            echo $cliente;
-
-            echo $envio;
-
-            echo $transporte;
-
-            echo $cabDet;
-
-            echo '<table style="width:100%;">';
-
-            foreach ($modelo as $key => $value) {
-
-                if ($key > 25 && $key <= 50) {
-
-                    echo '<tr>
-                        <td style="width:80px; border-right: 1px solid; text-align:center;">' . $value["modelo"] . '</td>
-                        <td style="width:250px; border-right: 1px solid;">' . $value["nombre"] . '</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["cantidad"] . '</td>
-                        <td style="width:50px; border-right: 1px solid; text-align:center;">' . $value["unidad"] . '</td>
-                        </tr>';
-                }
-            }
-
-            echo '</table>';
-
-            for ($i = 0; $i < 20; $i++) {
-
-                echo '<table>
-                    <tr>
-                        <td></td>
-                    </tr>
-                </table>';
-            }
-            //*PAGINA 3
-            echo $cabecera;
-
-            echo $cliente;
-
-            echo $envio;
-
-            echo $transporte;
-
-            echo $cabDet;
-
-            echo '<table style="width:100%;">';
-
-            foreach ($modelo as $key => $value) {
-
-                if ($key > 50 && $key <= 75) {
-
-                    echo '<tr>
-                        <td style="width:80px; border-right: 1px solid; text-align:center;">' . $value["modelo"] . '</td>
-                        <td style="width:250px; border-right: 1px solid;">' . $value["nombre"] . '</td>
-                        <td style="width:80px; border-right: 1px solid; text-align:right;">' . $value["cantidad"] . '</td>
-                        <td style="width:50px; border-right: 1px solid; text-align:center;">' . $value["unidad"] . '</td>
-                        </tr>';
-                }
-            }
-
-            echo '</table>';
-
-            echo $pie;
+        for ($i = 0; $i < $paginas; $i++) {
+            $inicio = $i * 25;
+            $fin = $inicio + 25;
+            generarPagina($modelo, $inicio, $fin, $cabecera, $cliente, $envio, $transporte, $cabDet, $pie);
         }
 
 

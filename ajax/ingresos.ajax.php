@@ -46,7 +46,7 @@ class AjaxIngresos
 
 			$stock = $cantidad * -1;
 
-			$actStock = ModeloIngresos::mdlactualizarStock("externo", $articulo, $stock, $cantidad);
+			$actStock = ModeloIngresos::mdlactualizarStock("externo", $articulo, $stock, $cantidad, "stock01");
 
 			$eliminar = ModeloIngresos::mdlEliminarMovimiento($documento, $articulo, $cantidad);
 
@@ -55,7 +55,7 @@ class AjaxIngresos
 
 			$stock = $cantidad * -1;
 
-			$actStock = ModeloIngresos::mdlactualizarStock("interno", $articulo, $stock, $cantidad);
+			$actStock = ModeloIngresos::mdlactualizarStock("interno", $articulo, $stock, $cantidad, "stock01");
 
 			$eliminar = ModeloIngresos::mdlEliminarMovimiento($documento, $articulo, $cantidad);
 

@@ -105,7 +105,7 @@ $(".tablaArticulosOrdenCorte").DataTable({
 
 $(".tablaArticulosOrdenCorte tbody").on(
     "click",
-    "button.agregarArt",
+    "button.agregarArtA",
     function () {
         var articuloOC = $(this).attr("articuloOC");
         var arriba = $(this).attr("arriba");
@@ -1407,4 +1407,166 @@ $("#tablaMP").click(function () {
     $(".tablaMPOrdenCorte").DataTable().destroy();
 
     cargarMPOrdenCorte();
+});
+
+//**nueva version */
+$(".tablaArticulosOrdenCorte tbody").on(
+    "click",
+    "button.agregarArt",
+    function () {
+        var articuloOC = $(this).attr("articuloOC");
+        var arriba = $(this).attr("arriba");
+        var abajo = $(this).attr("abajo");
+        var ventasG = $(this).attr("ventasG");
+        var faltantes = $(this).attr("faltantes");
+        var mes = $(this).attr("mes");
+
+        $(this).removeClass("btn-primary agregarArt");
+        $(this).addClass("btn-default");
+
+        var datos = new FormData();
+        datos.append("articuloOC", articuloOC);
+
+        $.ajax({
+            url: "ajax/articulos.ajax.php",
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function (respuesta) {
+                var articulo = respuesta["articulo"];
+                var packing = respuesta["packingB"];
+                var ord_corte = respuesta["ord_corte"];
+                var stockG = respuesta["stockG"];
+
+                var faltas = createFaltasInput(
+                    faltantes,
+                    ord_corte,
+                    articulo,
+                    arriba,
+                    abajo
+                );
+
+                var newRow =
+                    '<div class="row munditoOC" style="padding:5px 15px">' +
+                    "<!-- Descripción del Articulo -->" +
+                    '<div class="col-xs-8" style="padding-right:0px">' +
+                    '<div class="input-group">' +
+                    '<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarOC" articuloOC="' +
+                    articuloOC +
+                    '"><i class="fa fa-times"></i></button></span>' +
+                    '<input type="text" class="form-control nuevaDescripcionProducto input-sm" articuloOC="' +
+                    articuloOC +
+                    '" name="agregarOC" value="' +
+                    packing +
+                    '" codigoAC="' +
+                    articulo +
+                    '" readonly required>' +
+                    "</div>" +
+                    "</div>" +
+                    "<!-- Cantidad de la Orden de Corte -->" +
+                    '<div class="col-xs-2">' +
+                    faltas +
+                    "</div>" +
+                    "<!-- Cantidad de meses que va a durar -->" +
+                    '<div class="col-xs-2 mes">' +
+                    '<input style="color:#8B0000; background-color:white;" type="text" class="form-control nuevoMes input-sm" name="' +
+                    articulo +
+                    '" id="' +
+                    articulo +
+                    "M" +
+                    '" value="' +
+                    mes +
+                    '" mesReal="' +
+                    mes +
+                    '" stockG="' +
+                    stockG +
+                    '" ventasG="' +
+                    Number(ventasG) +
+                    '" readonly>' +
+                    "</div>" +
+                    "</div>";
+
+                $(".nuevoArticuloOC").append(newRow);
+
+                // Agregar evento keydown a los inputs
+                $("input.nuevaCantidadArticuloOC").on(
+                    "keydown",
+                    handleUpDownNavigation
+                );
+
+                // SUMAR TOTAL DE UNIDADES
+                sumarTotalOC();
+
+                // AGRUPAR PRODUCTOS EN FORMATO JSON
+                listarArticulosOC();
+            },
+        });
+    }
+);
+
+function createFaltasInput(faltantes, ord_corte, articulo, arriba, abajo) {
+    if (faltantes <= 0) {
+        return (
+            '<input type="text" style="color:#8B0000; background-color:pink;" class="form-control nuevaCantidadArticuloOC input-sm" name="nuevaCantidadArticuloOC" id="nuevaCantidadArticuloOC" min="1" value="' +
+            faltantes +
+            '" ord_corte="' +
+            ord_corte +
+            '" articulo="' +
+            articulo +
+            '" nuevoOrdCorte="' +
+            (Number(ord_corte) + Number(faltantes)) +
+            '" arriba="' +
+            arriba +
+            '" abajo="' +
+            abajo +
+            '" required>'
+        );
+    } else {
+        return (
+            '<input type="text" class="form-control nuevaCantidadArticuloOC input-sm" name="nuevaCantidadArticuloOC" id="nuevaCantidadArticuloOC" min="1" value="' +
+            faltantes +
+            '" ord_corte="' +
+            ord_corte +
+            '" articulo="' +
+            articulo +
+            '" nuevoOrdCorte="' +
+            (Number(ord_corte) + Number(faltantes)) +
+            '" arriba="' +
+            arriba +
+            '" abajo="' +
+            abajo +
+            '" required>'
+        );
+    }
+}
+
+function handleUpDownNavigation(event) {
+    var keyCode = event.keyCode;
+    var currentInput = $(this);
+
+    if (keyCode === 38) {
+        // Flecha arriba
+        currentInput
+            .closest(".munditoOC")
+            .prev()
+            .find(".nuevaCantidadArticuloOC")
+            .focus();
+    } else if (keyCode === 40) {
+        // Flecha abajo
+        currentInput
+            .closest(".munditoOC")
+            .next()
+            .find(".nuevaCantidadArticuloOC")
+            .focus();
+    }
+}
+
+// Agregar controlador de eventos keyup para seleccionar el texto en el input al presionar las teclas de flecha
+$(document).on("keyup", ".nuevaCantidadArticuloOC", function (e) {
+    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+        $(this).select();
+    }
 });

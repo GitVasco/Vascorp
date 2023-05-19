@@ -2,43 +2,43 @@
 
 require_once "conexion.php";
 
-class ModeloMateriaPrima{
+class ModeloMateriaPrima
+{
 
 	/* 
 	* MOSTRAR DATOS DE LA MATERIA PRIMA
 	*/
-	static public function mdlMostrarMateriaPrima($valor){
+	static public function mdlMostrarMateriaPrima($valor)
+	{
 
-		if($valor != null){
+		if ($valor != null) {
 
 			$stmt = Conexion::conectar()->prepare("CALL sp_1028_consulta_mp_p($valor)");
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetch();
-
-		}else{
+			return $stmt->fetch();
+		} else {
 
 			$stmt = Conexion::conectar()->prepare("CALL sp_1029_consulta_mp()");
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
+			return $stmt->fetchAll();
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
+	}
 
-    }    
-    
 	/* 
 	* MOSTRAR DATOS DE LA MATERIA PRIMA
 	*/
-	static public function mdlMostrarMateriaPrima2($valor){
+	static public function mdlMostrarMateriaPrima2($valor)
+	{
 
-		if($valor != null){
+		if ($valor != null) {
 
 			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
 			p.codpro,
@@ -82,13 +82,12 @@ class ModeloMateriaPrima{
 			  AND (tbcol.Cod_Tabla = 'TCOL') 
 		  WHERE p.estpro = '1' 
 		  AND p.CodPro = :codpro");
-		  $stmt->bindParam(":codpro", $valor, PDO::PARAM_STR);
+			$stmt->bindParam(":codpro", $valor, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetch();
-
-		}else{
+			return $stmt->fetch();
+		} else {
 
 			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
 			'MP' AS Mp,
@@ -159,22 +158,21 @@ class ModeloMateriaPrima{
 		  GROUP BY pro.CodPro 
 		  ORDER BY pro.CodPro DESC");
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
+			return $stmt->fetchAll();
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
+	}
 
-    }    
-    
 	/* 
 	* MOSTRAR DATOS DE LA MATERIA PRIMA
 	*/
-	static public function mdlMostrarMateriaPrima3(){
+	static public function mdlMostrarMateriaPrima3()
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
 		CodPro AS codpro,
@@ -198,37 +196,37 @@ class ModeloMateriaPrima{
 	  WHERE Pro.EstPro = '1'
 	  ORDER BY pro.codfab ");
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetchAll();
+		return $stmt->fetchAll();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
+	}
 
-    } 	
-	
 	/* 
 	* Método para vizualizar detalle de la materia prima
 	*/
-	static public function mdlVisualizarMateriaPrimaDetalle($valor){
+	static public function mdlVisualizarMateriaPrimaDetalle($valor)
+	{
 
-		$sql="CALL sp_1031_articulos_x_mp_p($valor)";
+		$sql = "CALL sp_1031_articulos_x_mp_p($valor)";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->execute();
 
 		return $stmt->fetchAll();
 
-		$stmt=null;
-
+		$stmt = null;
 	}
-	
+
 	/* 
 	* EDITAR COSTO DE LA MATERIA PRIMA
 	*/
-	static public function mdlEditarMateriaPrimaCosto($tabla, $datos){
+	static public function mdlEditarMateriaPrimaCosto($tabla, $datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("CALL sp_1032_update_mp_costo_p(:cospro,:valor)");
 
@@ -236,25 +234,23 @@ class ModeloMateriaPrima{
 		$stmt->bindParam(":valor", $datos["codpro"], PDO::PARAM_STR);
 
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-		
 		}
 
-		$stmt -> close();
+		$stmt->close();
 		$stmt = null;
-
 	}
-	
+
 	/* 
 	* MOSTRAR MATERIA PRIMA PARA LA TABLA URGENCIA
 	*/
-	static public function mdlMostrarUrgenciaAMP($valor){
+	static public function mdlMostrarUrgenciaAMP($valor)
+	{
 
 		if ($valor == null) {
 
@@ -275,47 +271,48 @@ class ModeloMateriaPrima{
 		$stmt->close();
 		$stmt = null;
 	}
-	
+
 	/* 
 	* MOSTRAR EL DETALLE DE LAS URGENCIAS TABLA ORDEN DE COMPRA
 	*/
-	static public function mdlVisualizarUrgenciasAMPDetalleOC($valor){
+	static public function mdlVisualizarUrgenciasAMPDetalleOC($valor)
+	{
 
-		$sql="CALL sp_1034_mp_en_oc_p($valor)";
+		$sql = "CALL sp_1034_mp_en_oc_p($valor)";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->execute();
 
 		return $stmt->fetchAll();
 
-		$stmt=null;
-
+		$stmt = null;
 	}
-	
+
 	/* 
 	* MOSTRAR EL DETALLE DE LAS URGENCIAS TABLA ORDEN DE COMPRA
 	*/
-	static public function mdlVisualizarUrgenciasAMPDetalleART($valor){
+	static public function mdlVisualizarUrgenciasAMPDetalleART($valor)
+	{
 
-		$sql="CALL sp_1035_art_mp_urg_p($valor)";
+		$sql = "CALL sp_1035_art_mp_urg_p($valor)";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->execute();
 
 		return $stmt->fetchAll();
 
-		$stmt=null;
+		$stmt = null;
+	}
 
-	}	
+	// Método para mostrar el Rango de Fechas de Ventas
+	static public function mdlProyMp($mp)
+	{
 
-   // Método para mostrar el Rango de Fechas de Ventas
-	static public function mdlProyMp($mp){
+		if ($mp == "null") {
 
-		if($mp=="null"){
-
-			$sql="SELECT 
+			$sql = "SELECT 
 						mp.linea,
 						mp.codsublinea,
 						mp.codpro,
@@ -430,17 +427,16 @@ class ModeloMateriaPrima{
 					WHERE o.estado NOT IN ('Cerrado') 
 					GROUP BY mp.codpro 
 					ORDER BY mp.linea";
-			
-			$stmt=Conexion::conectar()->prepare($sql);
+
+			$stmt = Conexion::conectar()->prepare($sql);
 
 			$stmt->execute();
-			
+
 			# Retornamos un fetchAll por ser más de una línea la que necesitamos devolver
 			return $stmt->fetchAll();
+		} else {
 
-      	}else{
-
-			$sql="SELECT 
+			$sql = "SELECT 
 			mp.linea,
 			mp.codsublinea,
 			mp.codpro,
@@ -557,26 +553,26 @@ class ModeloMateriaPrima{
 		  GROUP BY mp.codpro 
 		  ORDER BY mp.linea";
 
-			$stmt=Conexion::conectar()->prepare($sql);
-			
+			$stmt = Conexion::conectar()->prepare($sql);
+
 			$stmt->bindParam(":mp", $mp, PDO::PARAM_STR);
 
 			$stmt->execute();
 
 			# Retornamos un fetchAll por ser más de una línea la que necesitamos devolver
 			return $stmt->fetchAll();
-         
-      	}
-      
-		$stmt=null;
-   }      	
+		}
 
-   /* 
+		$stmt = null;
+	}
+
+	/* 
 	* MOSTRAR MATERIA PRIMA POR ARTICULO
 	*/
-	static public function mdlMostrarMateriaArticulo($valor){
+	static public function mdlMostrarMateriaArticulo($valor)
+	{
 
-		$sql="SELECT DISTINCT 
+		$sql = "SELECT DISTINCT 
 		dt.mat_pri,
 		mp.descripcion,
 		mp.unidad,
@@ -622,10 +618,10 @@ class ModeloMateriaPrima{
 		  WHERE p.estpro = '1' 
 			AND tblin.des_larga IN ('BLONDA', 'ELASTICO', 'TELA')) AS mp 
 		  ON dt.mat_pri = mp.codpro 
-	  WHERE dt.articulo LIKE '%".$valor."%' 
+	  WHERE dt.articulo LIKE '%" . $valor . "%' 
 		AND mp.descripcion IS NOT NULL ";
 
-		$stmt=Conexion::conectar()->prepare($sql);
+		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->bindParam(":articulo", $valor, PDO::PARAM_STR);
 
@@ -633,348 +629,338 @@ class ModeloMateriaPrima{
 
 		return $stmt->fetchAll();
 
-		$stmt=null;
-
+		$stmt = null;
 	}
 
 	/*=============================================
 	MOSTRAR LINEAS
 	=============================================*/
 
-	static public function mdlMostrarLineas(){
+	static public function mdlMostrarLineas()
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT distinct * FROM Tabla_M_Detalle WHERE  Cod_Tabla = 'TLIN' and Cod_Argumento not like '000'");
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetchAll();
+		return $stmt->fetchAll();
 
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-    }
+	}
 
 	/*=============================================
 	MOSTRAR SUBLINEAS
 	=============================================*/
 
-	static public function mdlMostrarSubLineas($valor){
-		if($valor == null){
+	static public function mdlMostrarSubLineas($valor)
+	{
+		if ($valor == null) {
 
 			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT * FROM Tabla_M_Detalle WHERE Cod_Tabla = 'TSUB' ");
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
+			return $stmt->fetchAll();
+		} else {
+			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT * FROM Tabla_M_Detalle WHERE Cod_Tabla = 'TSUB' AND Des_Corta = '" . $valor . "' ORDER BY Valor_3 ASC");
 
-		}else{
-			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT * FROM Tabla_M_Detalle WHERE Cod_Tabla = 'TSUB' AND Des_Corta = '".$valor."' ORDER BY Valor_3 ASC");
+			$stmt->execute();
 
-			$stmt -> execute();
-	
-			return $stmt -> fetchAll();
+			return $stmt->fetchAll();
 		}
 
-		
 
 
-		$stmt -> close();
+
+		$stmt->close();
 
 		$stmt = null;
-
-    }
+	}
 
 	/*=============================================
 	MOSTRAR SUBLINEAS 2
 	=============================================*/
 
-	static public function mdlMostrarSubLineas2($valor,$valor2){
-		
-		$stmt = Conexion::conectar()->prepare("SELECT  Valor_3, Des_Larga FROM Tabla_M_Detalle WHERE Cod_Tabla = 'TSUB' AND Des_Corta = '".$valor."' AND Valor_3 = '".$valor2."'  ");
+	static public function mdlMostrarSubLineas2($valor, $valor2)
+	{
 
-		$stmt -> execute();
+		$stmt = Conexion::conectar()->prepare("SELECT  Valor_3, Des_Larga FROM Tabla_M_Detalle WHERE Cod_Tabla = 'TSUB' AND Des_Corta = '" . $valor . "' AND Valor_3 = '" . $valor2 . "'  ");
 
-		return $stmt -> fetch();
+		$stmt->execute();
 
-		
+		return $stmt->fetch();
 
 
-		$stmt -> close();
+
+
+		$stmt->close();
 
 		$stmt = null;
-
-    }
+	}
 
 	/*=============================================
 	MOSTRAR TALLAS
 	=============================================*/
 
-	static public function mdlMostrarTallas(){
+	static public function mdlMostrarTallas()
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT  distinct * FROM Tabla_M_Detalle WHERE  Cod_Tabla = 'TTAL'");
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetchAll();
+		return $stmt->fetchAll();
 
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-    }
+	}
 
 	/*=============================================
 	MOSTRAR COLORES
 	=============================================*/
 
-	static public function mdlMostrarColores(){
+	static public function mdlMostrarColores()
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT  distinct * FROM Tabla_M_Detalle WHERE  Cod_Tabla = 'TCOL' and Cod_Argumento not like '0000' ");
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetchAll();
+		return $stmt->fetchAll();
 
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-    }
+	}
 
 	/*=============================================
 	MOSTRAR COLORES
 	=============================================*/
 
-	static public function mdlMostrarUndMedida(){
+	static public function mdlMostrarUndMedida()
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT distinct * FROM Tabla_M_Detalle WHERE  Cod_Tabla = 'TUND' and Cod_Argumento not like '000'  ");
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetchAll();
+		return $stmt->fetchAll();
 
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-    }
+	}
 
 	/*=============================================
 	CREAR PRECIO DE MATERIA PRIMA
 	=============================================*/
 
-	static public function mdlIngresarPrecioMP($tabla,$datos){
+	static public function mdlIngresarPrecioMP($tabla, $datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(Cod_Local,Cod_Entidad,CodPro, CodProv1, PreProv1,MonProv1,ObsProv1,CodProv2, PreProv2,MonProv2,ObsProv2,CodProv3,PreProv3,MonProv3,ObsProv3,FecReg,UsuReg,PcReg) VALUES (:Cod_Local,:Cod_Entidad,:CodPro,:CodProv1, :PreProv1,:MonProv1,UPPER(:ObsProv1),:CodProv2,:PreProv2,:MonProv2,UPPER(:ObsProv2),:CodProv3,:PreProv3,:MonProv3,UPPER(:ObsProv3),:FecReg,UPPER(:UsuReg),UPPER(:PcReg))");
 
 		$stmt->bindParam(":Cod_Local", $datos["Cod_Local"], PDO::PARAM_STR);
 		$stmt->bindParam(":Cod_Entidad", $datos["Cod_Entidad"], PDO::PARAM_STR);
-        $stmt->bindParam(":CodPro", $datos["CodPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":CodPro", $datos["CodPro"], PDO::PARAM_STR);
 		$stmt->bindParam(":CodProv1", $datos["CodProv1"], PDO::PARAM_STR);
-        $stmt->bindParam(":PreProv1", $datos["PreProv1"], PDO::PARAM_STR);
-        $stmt->bindParam(":MonProv1", $datos["MonProv1"], PDO::PARAM_STR);
-        $stmt->bindParam(":ObsProv1", $datos["ObsProv1"], PDO::PARAM_STR);
-        $stmt->bindParam(":CodProv2", $datos["CodProv2"], PDO::PARAM_STR);
-        $stmt->bindParam(":PreProv2", $datos["PreProv2"], PDO::PARAM_STR);
-        $stmt->bindParam(":MonProv2", $datos["MonProv2"], PDO::PARAM_STR);
-        $stmt->bindParam(":ObsProv2", $datos["ObsProv2"], PDO::PARAM_STR);
-        $stmt->bindParam(":CodProv3", $datos["CodProv3"], PDO::PARAM_STR);
-        $stmt->bindParam(":PreProv3", $datos["PreProv3"], PDO::PARAM_STR);
-        $stmt->bindParam(":MonProv3", $datos["MonProv3"], PDO::PARAM_STR);
-        $stmt->bindParam(":ObsProv3", $datos["ObsProv3"], PDO::PARAM_STR);
-        $stmt->bindParam(":FecReg", $datos["FecReg"], PDO::PARAM_STR);
-        $stmt->bindParam(":PcReg", $datos["PcReg"], PDO::PARAM_STR);
-        $stmt->bindParam(":UsuReg", $datos["UsuReg"], PDO::PARAM_STR);
+		$stmt->bindParam(":PreProv1", $datos["PreProv1"], PDO::PARAM_STR);
+		$stmt->bindParam(":MonProv1", $datos["MonProv1"], PDO::PARAM_STR);
+		$stmt->bindParam(":ObsProv1", $datos["ObsProv1"], PDO::PARAM_STR);
+		$stmt->bindParam(":CodProv2", $datos["CodProv2"], PDO::PARAM_STR);
+		$stmt->bindParam(":PreProv2", $datos["PreProv2"], PDO::PARAM_STR);
+		$stmt->bindParam(":MonProv2", $datos["MonProv2"], PDO::PARAM_STR);
+		$stmt->bindParam(":ObsProv2", $datos["ObsProv2"], PDO::PARAM_STR);
+		$stmt->bindParam(":CodProv3", $datos["CodProv3"], PDO::PARAM_STR);
+		$stmt->bindParam(":PreProv3", $datos["PreProv3"], PDO::PARAM_STR);
+		$stmt->bindParam(":MonProv3", $datos["MonProv3"], PDO::PARAM_STR);
+		$stmt->bindParam(":ObsProv3", $datos["ObsProv3"], PDO::PARAM_STR);
+		$stmt->bindParam(":FecReg", $datos["FecReg"], PDO::PARAM_STR);
+		$stmt->bindParam(":PcReg", $datos["PcReg"], PDO::PARAM_STR);
+		$stmt->bindParam(":UsuReg", $datos["UsuReg"], PDO::PARAM_STR);
 
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-		
 		}
 
 		$stmt->close();
 		$stmt = null;
-
-	}    
+	}
 
 
 	/*=============================================
 	CREAR MATERIA PRIMA
 	=============================================*/
 
-	static public function mdlIngresarMateriaPrima($tabla,$datos){
+	static public function mdlIngresarMateriaPrima($tabla, $datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(CodAlt,Cod_Local,Cod_Entidad,CodPro,CodFab,DesPro,ColPro,UndPro,Mo,PaiPro,PrePro,PreFob,CosPro,Por_AdVal,Por_Seg,PesPro,Stk_Act,Stk_Min,Stk_Max,EstPro,TalPro,FamPro, Proveedor, CodAlm01, FecReg, UsuReg, PcReg) VALUES (:CodAlt,:Cod_Local,:Cod_Entidad,:CodPro,:CodFab,UPPER(:DesPro),:ColPro,:UndPro,:Mo,:PaiPro,:PrePro,:PreFob,:CosPro,:Por_AdVal,:Por_Seg,:PesPro,:Stk_Act,:Stk_Min,:Stk_Max,:EstPro,:TalPro,:FamPro,:Proveedor,:CodAlm01,:FecReg,UPPER(:UsuReg),UPPER(:PcReg))");
 
 		$stmt->bindParam(":CodAlt", $datos["CodAlt"], PDO::PARAM_STR);
 		$stmt->bindParam(":Cod_Local", $datos["Cod_Local"], PDO::PARAM_STR);
 		$stmt->bindParam(":Cod_Entidad", $datos["Cod_Entidad"], PDO::PARAM_STR);
-        $stmt->bindParam(":CodPro", $datos["CodPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":CodPro", $datos["CodPro"], PDO::PARAM_STR);
 		$stmt->bindParam(":CodFab", $datos["CodFab"], PDO::PARAM_STR);
-        $stmt->bindParam(":DesPro", $datos["DesPro"], PDO::PARAM_STR);
-        $stmt->bindParam(":ColPro", $datos["ColPro"], PDO::PARAM_STR);
-        $stmt->bindParam(":UndPro", $datos["UndPro"], PDO::PARAM_STR);
-        $stmt->bindParam(":Mo", $datos["Mo"], PDO::PARAM_STR);
-        $stmt->bindParam(":PaiPro", $datos["PaiPro"], PDO::PARAM_STR);
-        $stmt->bindParam(":PrePro", $datos["PrePro"], PDO::PARAM_STR);
-        $stmt->bindParam(":PreFob", $datos["PreFob"], PDO::PARAM_STR);
-        $stmt->bindParam(":CosPro", $datos["CosPro"], PDO::PARAM_STR);
-        $stmt->bindParam(":Por_AdVal", $datos["Por_AdVal"], PDO::PARAM_STR);
-        $stmt->bindParam(":Por_Seg", $datos["Por_Seg"], PDO::PARAM_STR);
-        $stmt->bindParam(":PesPro", $datos["PesPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":DesPro", $datos["DesPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":ColPro", $datos["ColPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":UndPro", $datos["UndPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":Mo", $datos["Mo"], PDO::PARAM_STR);
+		$stmt->bindParam(":PaiPro", $datos["PaiPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":PrePro", $datos["PrePro"], PDO::PARAM_STR);
+		$stmt->bindParam(":PreFob", $datos["PreFob"], PDO::PARAM_STR);
+		$stmt->bindParam(":CosPro", $datos["CosPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":Por_AdVal", $datos["Por_AdVal"], PDO::PARAM_STR);
+		$stmt->bindParam(":Por_Seg", $datos["Por_Seg"], PDO::PARAM_STR);
+		$stmt->bindParam(":PesPro", $datos["PesPro"], PDO::PARAM_STR);
 		$stmt->bindParam(":Stk_Act", $datos["Stk_Act"], PDO::PARAM_STR);
-        $stmt->bindParam(":Stk_Min", $datos["Stk_Min"], PDO::PARAM_STR);
-        $stmt->bindParam(":Stk_Max", $datos["Stk_Max"], PDO::PARAM_STR);
-        $stmt->bindParam(":EstPro", $datos["EstPro"], PDO::PARAM_STR);
-        $stmt->bindParam(":TalPro", $datos["TalPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":Stk_Min", $datos["Stk_Min"], PDO::PARAM_STR);
+		$stmt->bindParam(":Stk_Max", $datos["Stk_Max"], PDO::PARAM_STR);
+		$stmt->bindParam(":EstPro", $datos["EstPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":TalPro", $datos["TalPro"], PDO::PARAM_STR);
 		$stmt->bindParam(":FamPro", $datos["FamPro"], PDO::PARAM_STR);
-        $stmt->bindParam(":Proveedor", $datos["Proveedor"], PDO::PARAM_STR);
-        $stmt->bindParam(":CodAlm01", $datos["CodAlm01"], PDO::PARAM_STR);
-        $stmt->bindParam(":FecReg", $datos["FecReg"], PDO::PARAM_STR);
-        $stmt->bindParam(":PcReg", $datos["PcReg"], PDO::PARAM_STR);
-        $stmt->bindParam(":UsuReg", $datos["UsuReg"], PDO::PARAM_STR);
+		$stmt->bindParam(":Proveedor", $datos["Proveedor"], PDO::PARAM_STR);
+		$stmt->bindParam(":CodAlm01", $datos["CodAlm01"], PDO::PARAM_STR);
+		$stmt->bindParam(":FecReg", $datos["FecReg"], PDO::PARAM_STR);
+		$stmt->bindParam(":PcReg", $datos["PcReg"], PDO::PARAM_STR);
+		$stmt->bindParam(":UsuReg", $datos["UsuReg"], PDO::PARAM_STR);
 
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-		
 		}
 
 		$stmt->close();
 		$stmt = null;
-
-	}    
+	}
 
 
 	/*=============================================
 	VALIDAR CODIGO DE FABRICA MATERIA PRIMA
 	=============================================*/
 
-	static public function mdlMostrarMateriaFabrica($valor){
+	static public function mdlMostrarMateriaFabrica($valor)
+	{
 
-		$stmt = Conexion::conectar()->prepare("SELECT  * FROM producto WHERE  CodFab = '".$valor."'");
+		$stmt = Conexion::conectar()->prepare("SELECT  * FROM producto WHERE  CodFab = '" . $valor . "'");
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetch();
+		return $stmt->fetch();
 
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-    }
+	}
 
 	/*=============================================
 	MOSTRAR ULTIMO CODIGOPRO DE MATERIA PRIMA
 	=============================================*/
 
-	static public function mdlMostrarUltimoCodPro(){
+	static public function mdlMostrarUltimoCodPro()
+	{
 
 
 		$stmt = Conexion::conectar()->prepare("SELECT MAX(CodPro) AS CodPro FROM producto");
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetch();
+		return $stmt->fetch();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-    }
+	}
 
 
 	/*=============================================
 	EDITAR PRECIO DE MATERIA PRIMA
 	=============================================*/
 
-	static public function mdlEditarPrecioMP($tabla,$datos){
+	static public function mdlEditarPrecioMP($tabla, $datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE preciomp SET CodProv1=:CodProv1,MonProv1=:MonProv1,PreProv1=:PreProv1, ObsProv1=UPPER(:ObsProv1),CodProv2=:CodProv2,MonProv2=:MonProv2,PreProv2=:PreProv2,ObsProv2=UPPER(:ObsProv2),CodProv3=:CodProv3,MonProv3=:MonProv3,PreProv3=:PreProv3,ObsProv3=UPPER(:ObsProv3),UsuMod=UPPER(:UsuMod),FecMod=:FecMod,PcMod=UPPER(:PcMod) WHERE CodPro = :CodPro");
 
-        $stmt->bindParam(":CodPro", $datos["CodPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":CodPro", $datos["CodPro"], PDO::PARAM_STR);
 		$stmt->bindParam(":CodProv1", $datos["CodProv1"], PDO::PARAM_STR);
-        $stmt->bindParam(":PreProv1", $datos["PreProv1"], PDO::PARAM_STR);
-        $stmt->bindParam(":MonProv1", $datos["MonProv1"], PDO::PARAM_STR);
-        $stmt->bindParam(":ObsProv1", $datos["ObsProv1"], PDO::PARAM_STR);
-        $stmt->bindParam(":CodProv2", $datos["CodProv2"], PDO::PARAM_STR);
-        $stmt->bindParam(":PreProv2", $datos["PreProv2"], PDO::PARAM_STR);
-        $stmt->bindParam(":MonProv2", $datos["MonProv2"], PDO::PARAM_STR);
-        $stmt->bindParam(":ObsProv2", $datos["ObsProv2"], PDO::PARAM_STR);
-        $stmt->bindParam(":CodProv3", $datos["CodProv3"], PDO::PARAM_STR);
-        $stmt->bindParam(":PreProv3", $datos["PreProv3"], PDO::PARAM_STR);
-        $stmt->bindParam(":MonProv3", $datos["MonProv3"], PDO::PARAM_STR);
-        $stmt->bindParam(":ObsProv3", $datos["ObsProv3"], PDO::PARAM_STR);
-        $stmt->bindParam(":FecMod", $datos["FecMod"], PDO::PARAM_STR);
-        $stmt->bindParam(":PcMod", $datos["PcMod"], PDO::PARAM_STR);
-        $stmt->bindParam(":UsuMod", $datos["UsuMod"], PDO::PARAM_STR);
+		$stmt->bindParam(":PreProv1", $datos["PreProv1"], PDO::PARAM_STR);
+		$stmt->bindParam(":MonProv1", $datos["MonProv1"], PDO::PARAM_STR);
+		$stmt->bindParam(":ObsProv1", $datos["ObsProv1"], PDO::PARAM_STR);
+		$stmt->bindParam(":CodProv2", $datos["CodProv2"], PDO::PARAM_STR);
+		$stmt->bindParam(":PreProv2", $datos["PreProv2"], PDO::PARAM_STR);
+		$stmt->bindParam(":MonProv2", $datos["MonProv2"], PDO::PARAM_STR);
+		$stmt->bindParam(":ObsProv2", $datos["ObsProv2"], PDO::PARAM_STR);
+		$stmt->bindParam(":CodProv3", $datos["CodProv3"], PDO::PARAM_STR);
+		$stmt->bindParam(":PreProv3", $datos["PreProv3"], PDO::PARAM_STR);
+		$stmt->bindParam(":MonProv3", $datos["MonProv3"], PDO::PARAM_STR);
+		$stmt->bindParam(":ObsProv3", $datos["ObsProv3"], PDO::PARAM_STR);
+		$stmt->bindParam(":FecMod", $datos["FecMod"], PDO::PARAM_STR);
+		$stmt->bindParam(":PcMod", $datos["PcMod"], PDO::PARAM_STR);
+		$stmt->bindParam(":UsuMod", $datos["UsuMod"], PDO::PARAM_STR);
 
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-		
 		}
 
 		$stmt->close();
 		$stmt = null;
-
-	}    
+	}
 
 	/*=============================================
 	EDITAR MATERIA PRIMA
 	=============================================*/
-	static public function mdlEditarMateriaPrima($datos){
+	static public function mdlEditarMateriaPrima($datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE producto SET CodAlt=UPPER(:CodAlt),DesPro=UPPER(:DesPro),UndPro=UPPER(:UndPro),Por_AdVal=:Por_AdVal,Por_Seg=:Por_Seg,PesPro=:PesPro,Stk_Min=:Stk_Min,Stk_Max=:Stk_Max,UsuMod=UPPER(:UsuMod),FecMod=:FecMod,PcMod=UPPER(:PcMod) WHERE CodPro = :CodPro");
 
 		$stmt->bindParam(":CodAlt", $datos["CodAlt"], PDO::PARAM_STR);
-        $stmt->bindParam(":CodPro", $datos["CodPro"], PDO::PARAM_STR);
-        $stmt->bindParam(":DesPro", $datos["DesPro"], PDO::PARAM_STR);
-        $stmt->bindParam(":UndPro", $datos["UndPro"], PDO::PARAM_STR);
-        $stmt->bindParam(":Por_AdVal", $datos["Por_AdVal"], PDO::PARAM_STR);
-        $stmt->bindParam(":Por_Seg", $datos["Por_Seg"], PDO::PARAM_STR);
-        $stmt->bindParam(":PesPro", $datos["PesPro"], PDO::PARAM_STR);
-        $stmt->bindParam(":Stk_Min", $datos["Stk_Min"], PDO::PARAM_STR);
-        $stmt->bindParam(":Stk_Max", $datos["Stk_Max"], PDO::PARAM_STR);
-        $stmt->bindParam(":FecMod", $datos["FecMod"], PDO::PARAM_STR);
-        $stmt->bindParam(":PcMod", $datos["PcMod"], PDO::PARAM_STR);
-        $stmt->bindParam(":UsuMod", $datos["UsuMod"], PDO::PARAM_STR);
+		$stmt->bindParam(":CodPro", $datos["CodPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":DesPro", $datos["DesPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":UndPro", $datos["UndPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":Por_AdVal", $datos["Por_AdVal"], PDO::PARAM_STR);
+		$stmt->bindParam(":Por_Seg", $datos["Por_Seg"], PDO::PARAM_STR);
+		$stmt->bindParam(":PesPro", $datos["PesPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":Stk_Min", $datos["Stk_Min"], PDO::PARAM_STR);
+		$stmt->bindParam(":Stk_Max", $datos["Stk_Max"], PDO::PARAM_STR);
+		$stmt->bindParam(":FecMod", $datos["FecMod"], PDO::PARAM_STR);
+		$stmt->bindParam(":PcMod", $datos["PcMod"], PDO::PARAM_STR);
+		$stmt->bindParam(":UsuMod", $datos["UsuMod"], PDO::PARAM_STR);
 
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-		
 		}
 
-		$stmt -> close();
+		$stmt->close();
 		$stmt = null;
-
 	}
 
 
@@ -982,55 +968,54 @@ class ModeloMateriaPrima{
 	MOSTRAR ULTIMO CODIGOPRO DE MATERIA PRIMA
 	=============================================*/
 
-	static public function mdlMostrarExisteMateria($valor){
+	static public function mdlMostrarExisteMateria($valor)
+	{
 
 
-		$stmt = Conexion::conectar()->prepare("SELECT CodPro FROM producto WHERE CodFab = '".$valor."'");
+		$stmt = Conexion::conectar()->prepare("SELECT CodPro FROM producto WHERE CodFab = '" . $valor . "'");
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetch();
+		return $stmt->fetch();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-    }
+	}
 
 	/*=============================================
 	ANULAR MATERIA PRIMA
 	=============================================*/
 
-	static public function mdlAnularMateriaPrima($datos){
+	static public function mdlAnularMateriaPrima($datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE producto SET EstPro=:EstPro,UsuAnu=UPPER(:UsuAnu),FecAnu=:FecAnu,PcAnu=UPPER(:PcAnu) WHERE CodPro = :CodPro");
 
-        $stmt->bindParam(":CodPro", $datos["CodPro"], PDO::PARAM_STR);
+		$stmt->bindParam(":CodPro", $datos["CodPro"], PDO::PARAM_STR);
 		$stmt->bindParam(":EstPro", $datos["EstPro"], PDO::PARAM_STR);
-        $stmt->bindParam(":FecAnu", $datos["FecAnu"], PDO::PARAM_STR);
-        $stmt->bindParam(":PcAnu", $datos["PcAnu"], PDO::PARAM_STR);
-        $stmt->bindParam(":UsuAnu", $datos["UsuAnu"], PDO::PARAM_STR);
+		$stmt->bindParam(":FecAnu", $datos["FecAnu"], PDO::PARAM_STR);
+		$stmt->bindParam(":PcAnu", $datos["PcAnu"], PDO::PARAM_STR);
+		$stmt->bindParam(":UsuAnu", $datos["UsuAnu"], PDO::PARAM_STR);
 
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-		
 		}
 
 		$stmt->close();
 		$stmt = null;
+	}
 
-	} 
-	
 	/* 
 	* MOSTRAR DATOS DE LA MATERIA PRIMA
 	*/
-	static public function mdlMostrarKardexMP($codigo, $ano, $ano_ant){
+	static public function mdlMostrarKardexMP($codigo, $ano, $ano_ant)
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
 		DATE(FecReg) AS FecEmi,
@@ -1244,22 +1229,22 @@ class ModeloMateriaPrima{
 		AND md.codigo = $codigo
 		ORDER BY Fecha DESC ");
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetchAll();
+		return $stmt->fetchAll();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-    } 	
+	}
 
 	/* 
 	* MOSTRAR DATOS DE LA MATERIA PRIMA ALMACEN 01
 	*/
-	static public function mdlMostrarAlmacen01($tipo){
+	static public function mdlMostrarAlmacen01($tipo)
+	{
 
-		if($tipo == "CUA" || $tipo== "COP"){
+		if ($tipo == "CUA" || $tipo == "COP") {
 
 			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
 			pro.codpro,
@@ -1294,13 +1279,12 @@ class ModeloMateriaPrima{
 			AND LEFT(pro.fampro, 3) = :tipo
 		ORDER BY pro.codfab ASC");
 
-		$stmt->bindParam(":tipo", $tipo, PDO::PARAM_STR);
+			$stmt->bindParam(":tipo", $tipo, PDO::PARAM_STR);
 
-		$stmt -> execute();
+			$stmt->execute();
 
-		return $stmt -> fetchAll();
-
-		}else{
+			return $stmt->fetchAll();
+		} else {
 
 			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
 			pro.codpro,
@@ -1336,24 +1320,23 @@ class ModeloMateriaPrima{
 			ORDER BY pro.codfab ASC");
 
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
+			return $stmt->fetchAll();
 		}
 
 
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-    } 	
+	}
 
 	/* 
 	* MOSTRAR DATOS DE LA MATERIA PRIMA
 	*/
-	static public function mdlAlmacen01Agregar($codpro){
+	static public function mdlAlmacen01Agregar($codpro)
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
 							CodPro AS codpro,
@@ -1384,21 +1367,21 @@ class ModeloMateriaPrima{
 
 		$stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetchAll();
+		return $stmt->fetchAll();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
+	}
 
-    } 	
-	
 	/*=============================================
 	ANULAR MATERIA PRIMA
 	=============================================*/
 
-	static public function mdlAgregarCuadro($cuadro, $codpro){
+	static public function mdlAgregarCuadro($cuadro, $codpro)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE 
 							producto 
@@ -1406,28 +1389,26 @@ class ModeloMateriaPrima{
 							cuadro = :cuadro 
 						WHERE codpro = :codpro ");
 
-        $stmt->bindParam(":cuadro", $cuadro, PDO::PARAM_STR);
+		$stmt->bindParam(":cuadro", $cuadro, PDO::PARAM_STR);
 		$stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-		
 		}
 
 		$stmt->close();
 		$stmt = null;
-
-	} 
+	}
 
 	/* 
 	* MOSTRAR DATOS DE LA MATERIA PRIMA
 	*/
-	static public function mdlAlmacen01Quitar($codpro){
+	static public function mdlAlmacen01Quitar($codpro)
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
 							CodPro AS codpro,
@@ -1455,21 +1436,21 @@ class ModeloMateriaPrima{
 
 		$stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetchAll();
+		return $stmt->fetchAll();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
+	}
 
-    }	
-	
 	/*=============================================
 	ANULAR MATERIA PRIMA
 	=============================================*/
 
-	static public function mdlQuitarCuadro($codpro){
+	static public function mdlQuitarCuadro($codpro)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE 
 							producto 
@@ -1479,25 +1460,23 @@ class ModeloMateriaPrima{
 
 		$stmt->bindParam(":codpro", $codpro, PDO::PARAM_STR);
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-		
 		}
 
 		$stmt->close();
 		$stmt = null;
-
-	} 	
+	}
 
 	/* 
 	* MOSTRAR DATOS DE LA MATERIA PRIMA
 	*/
-	static public function mdlCorrelativoNuevo($tipo){
+	static public function mdlCorrelativoNuevo($tipo)
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
 							LPAD(IFNULL(MAX(documento), 0) + 1, 6, '0') AS correlativo 
@@ -1507,20 +1486,20 @@ class ModeloMateriaPrima{
 
 		$stmt->bindParam(":tipo", $tipo, PDO::PARAM_STR);
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetch();
+		return $stmt->fetch();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-    }	
+	}
 
 	/* 
 	* MOSTAR MP DE ALMACEN01 
 	*/
-	static public function mdlSelectAlmacen01($valor){
+	static public function mdlSelectAlmacen01($valor)
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
 		pro.codpro,
@@ -1557,20 +1536,20 @@ class ModeloMateriaPrima{
 
 		$stmt->bindParam(":codpro", $valor, PDO::PARAM_STR);
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetch();
+		return $stmt->fetch();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-    }	
+	}
 
 	/*
 	* GUARDAR PRODUCCION EN MAESTRA
 	*/
-	static public function mdlGuardarProduccionCab($datos){
+	static public function mdlGuardarProduccionCab($datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("INSERT INTO maestra_prod_cab (
 			tipo,
@@ -1599,35 +1578,33 @@ class ModeloMateriaPrima{
 			)");
 
 		$stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
-        $stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
-        $stmt->bindParam(":valor1", $datos["valor1"], PDO::PARAM_STR);
-        $stmt->bindParam(":valor2", $datos["valor2"], PDO::PARAM_STR);
-        $stmt->bindParam(":valor3", $datos["valor3"], PDO::PARAM_STR);
-        $stmt->bindParam(":valor4", $datos["valor4"], PDO::PARAM_STR);
-        $stmt->bindParam(":valor5", $datos["valor5"], PDO::PARAM_STR);
-        $stmt->bindParam(":usureg", $datos["usureg"], PDO::PARAM_STR);
-        $stmt->bindParam(":fecreg", $datos["fecreg"], PDO::PARAM_STR);
-        $stmt->bindParam(":pcreg", $datos["pcreg"], PDO::PARAM_STR);
+		$stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
+		$stmt->bindParam(":valor1", $datos["valor1"], PDO::PARAM_STR);
+		$stmt->bindParam(":valor2", $datos["valor2"], PDO::PARAM_STR);
+		$stmt->bindParam(":valor3", $datos["valor3"], PDO::PARAM_STR);
+		$stmt->bindParam(":valor4", $datos["valor4"], PDO::PARAM_STR);
+		$stmt->bindParam(":valor5", $datos["valor5"], PDO::PARAM_STR);
+		$stmt->bindParam(":usureg", $datos["usureg"], PDO::PARAM_STR);
+		$stmt->bindParam(":fecreg", $datos["fecreg"], PDO::PARAM_STR);
+		$stmt->bindParam(":pcreg", $datos["pcreg"], PDO::PARAM_STR);
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-		
 		}
 
-		$stmt -> close();
+		$stmt->close();
 		$stmt = null;
-
-	}	
+	}
 
 	/*
 	* GUARDAR PRODUCCION EN MAESTRA
 	*/
-	static public function mdlGuardarProduccionDet($datos){
+	static public function mdlGuardarProduccionDet($datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("INSERT INTO maestra_prod_det (
 						tipo,
@@ -1660,37 +1637,35 @@ class ModeloMateriaPrima{
 						)");
 
 		$stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
-        $stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
+		$stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
 		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
-        $stmt->bindParam(":valor1", $datos["valor1"], PDO::PARAM_STR);
-        $stmt->bindParam(":valor2", $datos["valor2"], PDO::PARAM_STR);
-        $stmt->bindParam(":valor3", $datos["valor3"], PDO::PARAM_STR);
-        $stmt->bindParam(":valor4", $datos["valor4"], PDO::PARAM_STR);
-        $stmt->bindParam(":valor5", $datos["valor5"], PDO::PARAM_STR);
-        $stmt->bindParam(":usureg", $datos["usureg"], PDO::PARAM_STR);
-        $stmt->bindParam(":fecreg", $datos["fecreg"], PDO::PARAM_STR);
-        $stmt->bindParam(":pcreg", $datos["pcreg"], PDO::PARAM_STR);
+		$stmt->bindParam(":valor1", $datos["valor1"], PDO::PARAM_STR);
+		$stmt->bindParam(":valor2", $datos["valor2"], PDO::PARAM_STR);
+		$stmt->bindParam(":valor3", $datos["valor3"], PDO::PARAM_STR);
+		$stmt->bindParam(":valor4", $datos["valor4"], PDO::PARAM_STR);
+		$stmt->bindParam(":valor5", $datos["valor5"], PDO::PARAM_STR);
+		$stmt->bindParam(":usureg", $datos["usureg"], PDO::PARAM_STR);
+		$stmt->bindParam(":fecreg", $datos["fecreg"], PDO::PARAM_STR);
+		$stmt->bindParam(":pcreg", $datos["pcreg"], PDO::PARAM_STR);
 		$stmt->bindParam(":condicion", $datos["condicion"], PDO::PARAM_STR);
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-		
 		}
 
-		$stmt -> close();
+		$stmt->close();
 		$stmt = null;
-
 	}
-	
+
 	/*
 	* GUARDAR PRODUCCION EN MAESTRA
 	*/
-	static public function mdlActualizarStockMP($codpro, $cantidad){
+	static public function mdlActualizarStockMP($codpro, $cantidad)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE 
 		producto 
@@ -1702,25 +1677,23 @@ class ModeloMateriaPrima{
 		$stmt->bindParam(":cantidad", $cantidad, PDO::PARAM_STR);
 
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-		
 		}
 
-		$stmt -> close();
+		$stmt->close();
 		$stmt = null;
-
-	}	
+	}
 
 	/*
 	* GUARDAR PRODUCCION EN MAESTRA
 	*/
-	static public function mdlDescontarStockMP($codpro, $cantidad){
+	static public function mdlDescontarStockMP($codpro, $cantidad)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE 
 		producto 
@@ -1732,25 +1705,23 @@ class ModeloMateriaPrima{
 		$stmt->bindParam(":cantidad", $cantidad, PDO::PARAM_STR);
 
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-		
 		}
 
-		$stmt -> close();
+		$stmt->close();
 		$stmt = null;
-
-	}	
+	}
 
 	/* 
 	* MOSTRAR DATOS DE LA MATERIA PRIMA
 	*/
-	static public function mdlMostrarMateriaOrdenCompra($valor1,$valor2){
+	static public function mdlMostrarMateriaOrdenCompra($valor1, $valor2)
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
 		p.codpro,
@@ -1800,91 +1771,87 @@ class ModeloMateriaPrima{
 		AND p.CodPro = :codpro ");
 
 		$stmt->bindParam(":codpro", $valor1, PDO::PARAM_STR);
-        $stmt->bindParam(":codruc", $valor2, PDO::PARAM_STR);
+		$stmt->bindParam(":codruc", $valor2, PDO::PARAM_STR);
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetch();
+		return $stmt->fetch();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-    } 	
+	}
 
 	/*=============================================
 	EDITAR DETALLE DE MAESTRA MP
 	=============================================*/
 
-	static public function mdlEditarDetalleMP($datos){
+	static public function mdlEditarDetalleMP($datos)
+	{
 
-		$stmt = Conexion::conectar()->prepare("UPDATE maestra_prod_det SET valor1=:cantidad,usumod=:usumod,fecmod=:fecmod,pcmod=:pcmod WHERE codigo = :codigo and documento = :documento and tipo=:tipo" );
+		$stmt = Conexion::conectar()->prepare("UPDATE maestra_prod_det SET valor1=:cantidad,usumod=:usumod,fecmod=:fecmod,pcmod=:pcmod WHERE codigo = :codigo and documento = :documento and tipo=:tipo");
 
-        $stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
+		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
 		$stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
 		$stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
 		$stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_STR);
-        $stmt->bindParam(":fecmod", $datos["fecmod"], PDO::PARAM_STR);
-        $stmt->bindParam(":pcmod", $datos["pcmod"], PDO::PARAM_STR);
-        $stmt->bindParam(":usumod", $datos["usumod"], PDO::PARAM_STR);
+		$stmt->bindParam(":fecmod", $datos["fecmod"], PDO::PARAM_STR);
+		$stmt->bindParam(":pcmod", $datos["pcmod"], PDO::PARAM_STR);
+		$stmt->bindParam(":usumod", $datos["usumod"], PDO::PARAM_STR);
 
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-		
 		}
 
 		$stmt->close();
 		$stmt = null;
-
-	} 
+	}
 
 	/*=============================================
 	ANULAR DETALLE DE MAESTRA MP
 	=============================================*/
 
-	static public function mdlAnularDetalleMP($datos){
+	static public function mdlAnularDetalleMP($datos)
+	{
 
-		$stmt = Conexion::conectar()->prepare("UPDATE maestra_prod_det SET estado=:estado,visible=:visible,usumod=:usumod,fecmod=:fecmod,pcmod=:pcmod WHERE codigo = :codigo and documento = :documento and tipo=:tipo" );
+		$stmt = Conexion::conectar()->prepare("UPDATE maestra_prod_det SET estado=:estado,visible=:visible,usumod=:usumod,fecmod=:fecmod,pcmod=:pcmod WHERE codigo = :codigo and documento = :documento and tipo=:tipo");
 
-        $stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
+		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
 		$stmt->bindParam(":documento", $datos["documento"], PDO::PARAM_STR);
 		$stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
 		$stmt->bindParam(":estado", $datos["estado"], PDO::PARAM_STR);
 		$stmt->bindParam(":visible", $datos["visible"], PDO::PARAM_STR);
-        $stmt->bindParam(":fecmod", $datos["fecmod"], PDO::PARAM_STR);
-        $stmt->bindParam(":pcmod", $datos["pcmod"], PDO::PARAM_STR);
-        $stmt->bindParam(":usumod", $datos["usumod"], PDO::PARAM_STR);
+		$stmt->bindParam(":fecmod", $datos["fecmod"], PDO::PARAM_STR);
+		$stmt->bindParam(":pcmod", $datos["pcmod"], PDO::PARAM_STR);
+		$stmt->bindParam(":usumod", $datos["usumod"], PDO::PARAM_STR);
 
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-		
 		}
 
 		$stmt->close();
 		$stmt = null;
-
-	} 
+	}
 
 
 	/* 
 	* SELECT PARA AGREGAR ITEM DE DETALLE MP
 	*/
-	static public function mdlSelectMateriaTipo($tipo,$documento){
+	static public function mdlSelectMateriaTipo($tipo, $documento)
+	{
 
 
-			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
 			pro.codpro,
 			pro.codfab,
 			pro.despro,
@@ -1927,54 +1894,52 @@ class ModeloMateriaPrima{
 		$stmt->bindParam(":tipo", $tipo, PDO::PARAM_STR);
 		$stmt->bindParam(":documento", $documento, PDO::PARAM_STR);
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetchAll();
-
-
+		return $stmt->fetchAll();
 
 
-		$stmt -> close();
+
+
+		$stmt->close();
 
 		$stmt = null;
-
-    } 	
+	}
 
 	/*=============================================
 	EDITAR COPA MP
 	=============================================*/
 
-	static public function mdlEditarCopaMP($datos){
+	static public function mdlEditarCopaMP($datos)
+	{
 
-		$stmt = Conexion::conectar()->prepare("UPDATE producto SET cuadro=:cuadro,UsuMod=:UsuMod,FecMod=:FecMod,PcMod=:PcMod WHERE CodPro = :codigo " );
+		$stmt = Conexion::conectar()->prepare("UPDATE producto SET cuadro=:cuadro,UsuMod=:UsuMod,FecMod=:FecMod,PcMod=:PcMod WHERE CodPro = :codigo ");
 
-        $stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
+		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
 		$stmt->bindParam(":cuadro", $datos["cuadro"], PDO::PARAM_STR);
-        $stmt->bindParam(":FecMod", $datos["FecMod"], PDO::PARAM_STR);
-        $stmt->bindParam(":PcMod", $datos["PcMod"], PDO::PARAM_STR);
-        $stmt->bindParam(":UsuMod", $datos["UsuMod"], PDO::PARAM_STR);
+		$stmt->bindParam(":FecMod", $datos["FecMod"], PDO::PARAM_STR);
+		$stmt->bindParam(":PcMod", $datos["PcMod"], PDO::PARAM_STR);
+		$stmt->bindParam(":UsuMod", $datos["UsuMod"], PDO::PARAM_STR);
 
 
-		if($stmt->execute()){
+		if ($stmt->execute()) {
 
 			return "ok";
-
-		}else{
+		} else {
 
 			return "error";
-		
 		}
 
 		$stmt->close();
 		$stmt = null;
-
-	} 
+	}
 
 
 	/* 
 	* MOSTRAR DATOS DE LA MATERIA PRIMA
 	*/
-	static public function mdlGlobalMaestra($valor){
+	static public function mdlGlobalMaestra($valor)
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
 						t.cod_argumento,
@@ -1987,14 +1952,12 @@ class ModeloMateriaPrima{
 
 		$stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetchAll();
+		return $stmt->fetchAll();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
-
-    } 		
-
+	}
 }

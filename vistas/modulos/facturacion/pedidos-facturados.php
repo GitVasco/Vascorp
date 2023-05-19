@@ -143,7 +143,7 @@ MODAL FACTURAR
 
 <div id="modalFacturar" class="modal fade" role="dialog">
 
-    <div class="modal-dialog" style="width: 50% !important;">
+    <div class="modal-dialog" style="width: 70% !important;">
 
         <div class="modal-content">
 
@@ -417,15 +417,13 @@ MODAL FACTURAR
 
                         </div>
 
-                        <div class="box box-warning col-lg-12 ">
+                        <!-- <div class="box box-warning col-lg-12 ">
 
                             <div class="box-header">
 
                                 <b>Forma de Pago</b>
 
                             </div>
-
-                            <!-- ENTRADA PARA TIPO DE DOCUMENTO -->
 
                             <div class="form-group col-lg-6">
 
@@ -442,6 +440,102 @@ MODAL FACTURAR
 
                             </div>
 
+
+                        </div> -->
+
+                        <div class="box box-warning col-lg-12" id="GuiasDiv">
+
+                            <div class="box-header">
+
+                                <b>Datos para la Guia de Remisión</b>
+
+                            </div>
+
+                            <!-- ENTRADA PARA TIPO DE DOCUMENTO -->
+
+                            <div class="form-group col-lg-4">
+
+                                <label>Chofer</label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="fa fa-share-square-o"></i></span>
+                                    <select type="text" class="form-control input-sm" name="chofer" id="chofer">
+                                        <option value="">Seleccionar Chofer</option>
+                                        <?php
+
+                                        $valor = "tcho";
+
+                                        $documentos = ModeloPedidos::MostrarDatos($valor);
+
+                                        foreach ($documentos as $key => $value) {
+                                            echo '<option value="' . $value["Cod_Argumento"] . '">' . $value["Cod_Argumento"] . " - " . $value["Des_Larga"] . '</option>';
+                                        }
+
+                                        ?>
+
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-group col-lg-4">
+
+                                <label>Movilidad</label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="fa fa-share-square-o"></i></span>
+                                    <select type="text" class="form-control input-sm" name="carro" id="carro">
+                                        <option value="">Seleccionar Movilidad</option>
+                                        <?php
+
+                                        $valor = "tcar";
+
+                                        $documentos = ModeloPedidos::MostrarDatos($valor);
+
+                                        foreach ($documentos as $key => $value) {
+                                            echo '<option value="' . $value["Cod_Argumento"] . '">' . $value["Cod_Argumento"] . " - " . $value["Des_Larga"] . '</option>';
+                                        }
+
+                                        ?>
+
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-group col-lg-2">
+
+                                <label>Peso Bruto Kg.</label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
+
+                                    <input type="text" class="form-control input-sm" id="peso" name="peso" placeholder="Peso KG">
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-group col-lg-2">
+
+                                <label>N° Bultos</label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
+
+                                    <input type="text" class="form-control input-sm" id="bultos" name="bultos" placeholder="# Bultos">
+
+                                </div>
+
+                            </div>
 
                         </div>
 
@@ -466,7 +560,7 @@ MODAL FACTURAR
             <?php
 
             $facturar = new controladorFacturacion();
-            $facturar->ctrFacturar();
+            $facturar->ctrFacturarN();
 
             ?>
 

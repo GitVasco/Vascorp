@@ -1982,6 +1982,292 @@ class ModeloArticulos
 	}
 
 	/* 
+	* MOSTRAR COLORES Y CANTIDADES
+	*/
+	static public function mdlVerColoresCantidadesB($pedido, $modelo)
+	{
+
+		if ($pedido != null) {
+
+			$sql = "SELECT 
+					a.modelo,
+					a.cod_color,
+					a.color,
+					SUM(
+					CASE
+						WHEN a.cod_talla = '1' 
+						THEN '1' 
+						ELSE '0' 
+					END
+					) AS t1,
+					SUM(
+					CASE
+						WHEN a.cod_talla = '2' 
+						THEN '1' 
+						ELSE '0' 
+					END
+					) AS t2,
+					SUM(
+					CASE
+						WHEN a.cod_talla = '3' 
+						THEN '1' 
+						ELSE '0' 
+					END
+					) AS t3,
+					SUM(
+					CASE
+						WHEN a.cod_talla = '4' 
+						THEN '1' 
+						ELSE '0' 
+					END
+					) AS t4,
+					SUM(
+					CASE
+						WHEN a.cod_talla = '5' 
+						THEN '1' 
+						ELSE '0' 
+					END
+					) AS t5,
+					SUM(
+					CASE
+						WHEN a.cod_talla = '6' 
+						THEN '1' 
+						ELSE '0' 
+					END
+					) AS t6,
+					SUM(
+					CASE
+						WHEN a.cod_talla = '7' 
+						THEN '1' 
+						ELSE '0' 
+					END
+					) AS t7,
+					SUM(
+					CASE
+						WHEN a.cod_talla = '8' 
+						THEN '1' 
+						ELSE '0' 
+					END
+					) AS t8,
+					SUM(
+					CASE
+						WHEN a.cod_talla = '1' 
+						THEN t.cantidad 
+						ELSE '0' 
+					END
+					) AS v1,
+					SUM(
+					CASE
+						WHEN a.cod_talla = '2' 
+						THEN t.cantidad 
+						ELSE '0' 
+					END
+					) AS v2,
+					SUM(
+					CASE
+						WHEN a.cod_talla = '3' 
+						THEN t.cantidad 
+						ELSE '0' 
+					END
+					) AS v3,
+					SUM(
+					CASE
+						WHEN a.cod_talla = '4' 
+						THEN t.cantidad 
+						ELSE '0' 
+					END
+					) AS v4,
+					SUM(
+					CASE
+						WHEN a.cod_talla = '5' 
+						THEN t.cantidad 
+						ELSE '0' 
+					END
+					) AS v5,
+					SUM(
+					CASE
+						WHEN a.cod_talla = '6' 
+						THEN t.cantidad 
+						ELSE '0' 
+					END
+					) AS v6,
+					SUM(
+					CASE
+						WHEN a.cod_talla = '7' 
+						THEN t.cantidad 
+						ELSE '0' 
+					END
+					) AS v7,
+					SUM(
+					CASE
+						WHEN a.cod_talla = '8' 
+						THEN t.cantidad 
+						ELSE '0' 
+					END
+					) AS v8 
+				FROM
+					articulojf a 
+					LEFT JOIN 
+					(SELECT 
+						* 
+					FROM
+						detalle_ing_sal t 
+					WHERE codigo = :pedido) AS t 
+					ON a.articulo = t.articulo 
+				WHERE a.modelo LIKE '%" . $modelo . "%'
+					/* AND a.estado = 'activo'  */
+				GROUP BY a.modelo,
+					a.cod_color,
+					a.color";
+
+			$stmt = Conexion::conectar()->prepare($sql);
+
+			$stmt->bindParam(":pedido", $pedido, PDO::PARAM_STR);
+			//$stmt->bindParam(":modelo",$modelo,PDO::PARAM_STR);
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		} else {
+
+			$sql = "SELECT 
+			a.modelo,
+			a.cod_color,
+			a.color,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '1' 
+				THEN '1' 
+				ELSE '0' 
+			  END
+			) AS t1,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '2' 
+				THEN '1' 
+				ELSE '0' 
+			  END
+			) AS t2,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '3' 
+				THEN '1' 
+				ELSE '0' 
+			  END
+			) AS t3,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '4' 
+				THEN '1' 
+				ELSE '0' 
+			  END
+			) AS t4,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '5' 
+				THEN '1' 
+				ELSE '0' 
+			  END
+			) AS t5,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '6' 
+				THEN '1' 
+				ELSE '0' 
+			  END
+			) AS t6,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '7' 
+				THEN '1' 
+				ELSE '0' 
+			  END
+			) AS t7,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '8' 
+				THEN '1' 
+				ELSE '0' 
+			  END
+			) AS t8,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '1' 
+				THEN '0' 
+				ELSE '0' 
+			  END
+			) AS v1,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '2' 
+				THEN '0' 
+				ELSE '0' 
+			  END
+			) AS v2,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '3' 
+				THEN '0' 
+				ELSE '0' 
+			  END
+			) AS v3,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '4' 
+				THEN '0' 
+				ELSE '0' 
+			  END
+			) AS v4,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '5' 
+				THEN '0' 
+				ELSE '0' 
+			  END
+			) AS v5,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '6' 
+				THEN '0' 
+				ELSE '0' 
+			  END
+			) AS v6,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '7' 
+				THEN '0' 
+				ELSE '0' 
+			  END
+			) AS v7,
+			SUM(
+			  CASE
+				WHEN a.cod_talla = '8' 
+				THEN '0' 
+				ELSE '0' 
+			  END
+			) AS v8 
+		  FROM
+			articulojf a 
+		  WHERE a.modelo LIKE '%" . $modelo . "%'
+			/* AND a.estado = 'activo' */ 
+		  GROUP BY a.modelo,
+			a.cod_color,
+			a.color";
+
+			$stmt = Conexion::conectar()->prepare($sql);
+
+			$stmt->bindParam(":modelo", $modelo, PDO::PARAM_STR);
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		}
+
+
+		$stmt = null;
+	}
+
+	/* 
 	* MOSTRAR ARTICULOS PARA PEDIDOS
 	*/
 	static public function mdlVerArticulos($valor)
@@ -2319,6 +2605,30 @@ class ModeloArticulos
 		$stmt = null;
 	}
 
+	static public function mdlActualizarStock01($almacen, $articulo, $cantidad)
+	{
+
+		$stmt = Conexion::conectar()->prepare("UPDATE
+													articulojf
+												SET
+													$almacen = $almacen - $cantidad
+												WHERE articulo = '$cantidad'");
+
+
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+	}
+
 	/*
 	* ACTUALIZAR LA CANTIDAD DE STOCK DEL ARTICULO
 	*/
@@ -2361,6 +2671,56 @@ class ModeloArticulos
 
 		$stmt->bindParam(":articulo", $valor1, PDO::PARAM_STR);
 		$stmt->bindParam(":cantidad", $valor2, PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+	}
+
+	/*
+	* ACTUALIZAR LA CANTIDAD DE STOCK DEL ARTICULO
+	*/
+	static public function mdlActualizarStockIngreso01($valor1, $valor2)
+	{
+
+		$stmt = Conexion::conectar()->prepare("UPDATE
+													articulojf
+												SET
+													stock01 = stock01 + :cantidad
+												WHERE articulo = :articulo");
+
+		$stmt->bindParam(":articulo", $valor1, PDO::PARAM_STR);
+		$stmt->bindParam(":cantidad", $valor2, PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+	}
+
+	static public function mdlActualizarStockIngreso01Almacen($almacen, $articulo, $cantidad)
+	{
+
+		$stmt = Conexion::conectar()->prepare("UPDATE
+													articulojf
+												SET
+													$almacen = $almacen + $cantidad
+												WHERE articulo = '$articulo'");
 
 		if ($stmt->execute()) {
 
@@ -2860,7 +3220,7 @@ class ModeloArticulos
 	/*
 	* BAJAR EL STOCK y CANT EN PEDIDO
 	*/
-	static public function mdlActualizarStockPedido($codigo)
+	static public function mdlActualizarStockPedido($codigo, $almacen)
 	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE 
@@ -2872,7 +3232,9 @@ class ModeloArticulos
 									FROM
 										detalle_temporal 
 									WHERE codigo = :codigo) AS dt 
-									ON a.articulo = dt.articulo SET a.stock = a.stock - dt.cantidad,
+									ON a.articulo = dt.articulo 
+									SET a.stock = a.stock - dt.cantidad,
+									$almacen = $almacen - dt.cantidad,
 									a.pedidos = a.pedidos - dt.cantidad WHERE dt.articulo IS NOT NULL");
 
 		$stmt->bindParam(":codigo", $codigo, PDO::PARAM_STR);
@@ -3250,6 +3612,31 @@ class ModeloArticulos
 		} else {
 
 			return $stmt->errorInfo();
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+	}
+
+	//todo: TRANSFERENCIAS
+	static public function mdlActualizarStockTransferencia($articulo, $cantidad, $origen, $destino)
+	{
+
+		$stmt = Conexion::conectar()->prepare("UPDATE 
+											articulojf 
+										SET
+											$origen = $origen - $cantidad,
+											$destino = $destino + $cantidad 
+										WHERE articulo = '$articulo'");
+
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return $stmt;
 		}
 
 		$stmt->close();

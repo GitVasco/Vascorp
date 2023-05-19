@@ -392,18 +392,18 @@ class ControladorContabilidad
                 }
             }
 
-            $correlativo = ModeloContabilidad::mdlActualizarCorrelativo($añoI, $mesI, $corr, "valor_2");
+            //$correlativo = ModeloContabilidad::mdlActualizarCorrelativo($añoI, $mesI, $corr, "valor_2");
 
             $letrasB = ModeloContabilidad::mdlLetrasConfiguradasB($fechaInicio, $fechaFin);
             $voucherB = ModeloContabilidad::mdlVoucherSiscont($añoI, $mesI);
             #var_dump($letrasB);
 
-            $corrB = $voucherB["correlativoL"];
+            #$corrB = $voucherB["correlativoL"];
             #var_dump("inicio", $corr);       
 
             foreach ($letrasB as $key => $value) {
 
-                $corrB++;
+                $corr++;
 
                 $documento = ModeloContabilidad::mdlLetrasSiscontB($value["cliente"], $fechaInicio, $fechaFin);
 
@@ -412,7 +412,7 @@ class ControladorContabilidad
                 foreach ($documento as $key => $value2) {
 
                     $origen     = str_pad($value2["t"], 2);
-                    $voucher    = str_pad($corrB, 5, '0', STR_PAD_LEFT);
+                    $voucher    = str_pad($corr, 5, '0', STR_PAD_LEFT);
                     $fecha      = str_pad($value2["fecha"], 8);
                     $cuenta     = str_pad($value2["cuenta"], 10);
                     $debe       = str_pad($value2["debe"], 12, '0', STR_PAD_LEFT);
@@ -536,11 +536,11 @@ class ControladorContabilidad
 
             #var_dump($corr);
 
-            $correlativo = ModeloContabilidad::mdlActualizarCorrelativo($añoI, $mesI, $corrB, "valor_2");
+            #$correlativo = ModeloContabilidad::mdlActualizarCorrelativo($añoI, $mesI, $corrB, "valor_2");
             #var_dump($correlativo);
 
-            if ($correlativo == "ok") {
-                echo '<script>
+
+            echo '<script>
                     swal({
                         type: "success",
                         title: "Se genero el archivo correctamente",
@@ -556,7 +556,6 @@ class ControladorContabilidad
                         })
         
                     </script>';
-            }
         }
     }
 

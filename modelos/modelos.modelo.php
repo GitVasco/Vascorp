@@ -8,29 +8,28 @@ class ModeloModelos
 	/* 
 	* MOSTRAR MODELOS
 	*/
-	static public function mdlMostrarModelos($tabla,$item,$valor){
+	static public function mdlMostrarModelos($tabla, $item, $valor)
+	{
 
-		if($item != null){
+		if ($item != null) {
 
 			$stmt = Conexion::conectar()->prepare("SELECT t.id_modelo,t.modelo,t.nombre,t.estado,t.tipo,t.linea,t.operaciones,t.imagen,t.id_marca,m.marca FROM $tabla t LEFT JOIN marcasjf m on t.id_marca=m.id WHERE $item = :$item");
 
-			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt->bindParam(":" . $item, $valor, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetch();
-
-		}else{
+			return $stmt->fetch();
+		} else {
 
 			$stmt = Conexion::conectar()->prepare("SELECT t.id_modelo,t.modelo,t.nombre,t.estado,t.tipo,t.linea,t.operaciones,t.imagen,t.articulos,m.marca FROM $tabla t LEFT JOIN marcasjf m on t.id_marca=m.id ORDER BY id_modelo ASC");
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
+			return $stmt->fetchAll();
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
 	}
@@ -38,21 +37,22 @@ class ModeloModelos
 	/* 
 	* MOSTRAR MODELOS
 	*/
-	static public function mdlMostrarModelosActivos(){
+	static public function mdlMostrarModelosActivos()
+	{
 
-			$stmt = Conexion::conectar()->prepare("SELECT 
+		$stmt = Conexion::conectar()->prepare("SELECT 
 			modelo,
 			CONCAT(modelo, ' - ', nombre) AS nombre 
 		  FROM
 			modelojf 
 		  WHERE estado = 'activo' ORDER BY modelo");
 
-			$stmt -> execute();
+		$stmt->execute();
 
-			return $stmt -> fetchAll();
+		return $stmt->fetchAll();
 
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
 	}
@@ -60,7 +60,8 @@ class ModeloModelos
 	/*
 	* REGISTRO DE MODELO
 	*/
-	static public function mdlIngresarModelo($tabla, $datos){
+	static public function mdlIngresarModelo($tabla, $datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(modelo,nombre,estado,tipo,imagen,id_marca) VALUES (:modelo,:nombre,:estado,:tipo, :imagen,:id_marca)");
 
@@ -86,7 +87,8 @@ class ModeloModelos
 	/* 
 	* EDITAR MODELO
 	*/
-	static public function mdlEditarModelo($tabla, $datos){
+	static public function mdlEditarModelo($tabla, $datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET modelo = :modelo, nombre = :nombre, tipo = :tipo, imagen=:imagen, id_marca = :id_marca  WHERE modelo = :modelo");
 		$stmt->bindParam(":modelo", $datos["modelo"], PDO::PARAM_STR);
@@ -107,10 +109,11 @@ class ModeloModelos
 		$stmt->close();
 		$stmt = null;
 	}
-		/* 
+	/* 
 	* Método para activar y desactivar un MODELO con articulos
 	*/
-	static public function mdlActualizarModelo($tabla,$tabla2,$valor1, $valor2){
+	static public function mdlActualizarModelo($tabla, $tabla2, $valor1, $valor2)
+	{
 
 		$sql = "UPDATE $tabla m INNER JOIN $tabla2 a ON m.modelo=a.modelo SET m.estado = :estado, a.estado = :estado WHERE m.modelo=:valor";
 
@@ -129,12 +132,13 @@ class ModeloModelos
 
 		$stmt = null;
 	}
-	
+
 
 	/* 
 	* BORRAR MODELO
 	*/
-	static public function mdlEliminarModelo($tabla,$datos){
+	static public function mdlEliminarModelo($tabla, $datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id_modelo = :id");
 
@@ -156,14 +160,15 @@ class ModeloModelos
 	/*=============================================
 	MOSTRAR MODELOS CON ARTICULOS
 	=============================================*/
-	static public function mdlMostrarModeloArticulo($tabla,$item,$valor){
+	static public function mdlMostrarModeloArticulo($tabla, $item, $valor)
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT t.id_modelo,t.modelo,t.nombre,t.estado,t.tipo,t.linea,t.operaciones,t.imagen,a.color,a.talla FROM $tabla t LEFT JOIN articulojf a on t.modelo=a.modelo WHERE t.modelo = $valor");
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetchAll();
+		return $stmt->fetchAll();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
 	}
@@ -171,47 +176,47 @@ class ModeloModelos
 	/* 
 	* MOSTRAR TALLAS
 	*/
-	static public function mdlMostrarTallas($tabla,$item,$valor){
+	static public function mdlMostrarTallas($tabla, $item, $valor)
+	{
 
-		if($item != null){
+		if ($item != null) {
 
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
 
-			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt->bindParam(":" . $item, $valor, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
-		}else{
+			return $stmt->fetchAll();
+		} else {
 
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla  ORDER BY id ASC");
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
+			return $stmt->fetchAll();
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
 	}
 	/* 
 	* MOSTRAR TALLA CON GRUPO
 	*/
-	static public function mdlMostrarTallaGrupo($tabla,$item,$valor,$valor2){
+	static public function mdlMostrarTallaGrupo($tabla, $item, $valor, $valor2)
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item AND nombre_grupo= :valor");
 
-		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
-		$stmt -> bindParam(":valor", $valor2, PDO::PARAM_STR);
+		$stmt->bindParam(":" . $item, $valor, PDO::PARAM_STR);
+		$stmt->bindParam(":valor", $valor2, PDO::PARAM_STR);
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetch();
+		return $stmt->fetch();
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
 	}
@@ -219,7 +224,8 @@ class ModeloModelos
 	/* 
 	* ACTUALIZAR MODELO
 	*/
-	static public function mdlModeloPrecios($tabla, $datos){
+	static public function mdlModeloPrecios($tabla, $datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET descuentos = :descuentos, precios = :precios, efectos_desc = :efectos_desc, efectos_igv=:efectos_igv, articulos=:articulos WHERE modelo = :modelo");
 		$stmt->bindParam(":modelo", $datos["modelo"], PDO::PARAM_STR);
@@ -244,7 +250,8 @@ class ModeloModelos
 	/*
 	* REGISTRO DE PRECIOS
 	*/
-	static public function mdlIngresarPrecio($tabla, $datos){
+	static public function mdlIngresarPrecio($tabla, $datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(modelo,precio1,precio2,precio3,precio4,precio5,precio6,precio7,precio8,precio9,precio10) VALUES (:modelo,:precio1,:precio2,:precio3,:precio4,:precio5,:precio6,:precio7,:precio8,:precio9,:precio10)");
 
@@ -275,7 +282,8 @@ class ModeloModelos
 	/*
 	* REGISTRO DE MODELO
 	*/
-	static public function mdlEditarPrecio($tabla, $datos){
+	static public function mdlEditarPrecio($tabla, $datos)
+	{
 
 		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET precio1=:precio1,precio2=:precio2,precio3=:precio3,precio4=:precio4,precio5=:precio5,precio6=:precio6,precio7=:precio7,precio8=:precio8,precio9=:precio9,precio10=:precio10,precio11=:precio11 WHERE modelo = :modelo");
 
@@ -306,29 +314,28 @@ class ModeloModelos
 	/* 
 	* MOSTRAR PRECIOS
 	*/
-	static public function mdlMostrarPrecios($tabla,$item,$valor){
+	static public function mdlMostrarPrecios($tabla, $item, $valor)
+	{
 
-		if($item != null){
+		if ($item != null) {
 
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla  WHERE modelo = :modelo");
 
-			$stmt -> bindParam(":modelo", $valor, PDO::PARAM_STR);
+			$stmt->bindParam(":modelo", $valor, PDO::PARAM_STR);
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetch();
-
-		}else{
+			return $stmt->fetch();
+		} else {
 
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
 
-			$stmt -> execute();
+			$stmt->execute();
 
-			return $stmt -> fetchAll();
-
+			return $stmt->fetchAll();
 		}
 
-		$stmt -> close();
+		$stmt->close();
 
 		$stmt = null;
 	}
@@ -336,7 +343,8 @@ class ModeloModelos
 	/* 
 	* MOSTRAR MODELOS
 	*/
-	static public function mdlMostrarColorModelo($valor){
+	static public function mdlMostrarColorModelo($valor)
+	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT DISTINCT
 		  a.modelo,
@@ -347,16 +355,63 @@ class ModeloModelos
 		  articulojf a 
 		WHERE a.modelo = :modelo");
 
-		$stmt -> bindParam(":modelo", $valor, PDO::PARAM_STR);
+		$stmt->bindParam(":modelo", $valor, PDO::PARAM_STR);
 
-		$stmt -> execute();
+		$stmt->execute();
 
-		return $stmt -> fetchAll();
+		return $stmt->fetchAll();
 
 
-	$stmt -> close();
+		$stmt->close();
 
-	$stmt = null;
-}
+		$stmt = null;
+	}
 
+	//* Actualizar Detalle
+	static public function mdlActualizarDetallePedido($pedido, $lista)
+	{
+
+		$stmt = Conexion::conectar()->prepare("UPDATE 
+					detalle_temporal dt 
+					LEFT JOIN articulojf a 
+					ON dt.articulo = a.articulo 
+					LEFT JOIN preciojf p 
+					ON a.modelo = p.modelo 
+					SET dt.precio = p.precio{$lista},
+					dt.total = dt.cantidad * p.precio{$lista}
+				WHERE dt.codigo=  '$pedido'");
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	//* Actualizar Detalle
+	static public function mdlActualizarCabeceraPedido($pedido, $lista)
+	{
+
+		$stmt = Conexion::conectar()->prepare("UPDATE 
+							temporaljf 
+						SET
+							lista = 'precio{$lista}' 
+						WHERE codigo = '$pedido'");
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
 }

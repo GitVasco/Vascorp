@@ -4,24 +4,21 @@
 
         <?php
 
-            if($_SESSION["id"] == "70" || $_SESSION["id"] == "6"){
+        if ($_SESSION["id"] == "70" || $_SESSION["id"] == "6") {
 
-                echo '<h1>
+            echo '<h1>
 
                         Administrar Guias de Remisión <button class="btn btn-primary btn-xs btnActualizarTalonarios" title="Correlativo">Cambiar Correlativo</button>
             
                     </h1>';
+        } else {
 
-
-            }else{
-
-                echo '<h1>
+            echo '<h1>
 
                         Administrar Guias de Remisión
             
                     </h1>';
-
-            }
+        }
 
 
         ?>
@@ -190,8 +187,7 @@ MODAL FACTURAR A
                                     <span class="input-group-addon"><i class="fa fa-key"></i></span>
 
                                     <input type="text" class="form-control input-sm" id="nroDoc" name="nroDoc" readonly>
-                                    <input type="hidden" class="form-control input-sm" name="codVen" id="codVen"
-                                        readonly>
+                                    <input type="hidden" class="form-control input-sm" name="codVen" id="codVen" readonly>
                                     <input type="hidden" name="idUsuario" id="idUsuario" value="<?php echo $_SESSION["id"]; ?>">
 
                                 </div>
@@ -275,239 +271,487 @@ MODAL FACTURAR A
 <!--=====================================
 MODAL FACTURAR B
 ======================================-->
-
 <div id="modalFacturarB" class="modal fade" role="dialog">
 
-  <div class="modal-dialog" style="width: 50% !important;">
+    <div class="modal-dialog" style="width: 50% !important;">
 
-    <div class="modal-content">
+        <div class="modal-content">
 
-      <form role="form" method="post" onsubmit="return checkSubmit();">
+            <form role="form" method="post" onsubmit="return checkSubmit();">
 
-        <!--=====================================
+                <!--=====================================
         CABEZA DEL MODAL
         ======================================-->
 
-        <div class="modal-header" style="background:#3c8dbc; color:white">
+                <div class="modal-header" style="background:#3c8dbc; color:white">
 
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title">Pasar Pedido a:</h4>
+                    <h4 class="modal-title">Pasar Pedido a:</h4>
 
-        </div>
+                </div>
 
-        <!--=====================================
+                <!--=====================================
         CUERPO DEL MODAL
         ======================================-->
 
-        <div class="modal-body">
+                <div class="modal-body">
 
-          <div class="box-body">
+                    <div class="box-body">
 
-          <div class="box box-primary col-lg-12 ">
+                        <div class="box box-primary col-lg-12 ">
 
-            <div class="box-header">
+                            <div class="box-header">
 
-              <b>Datos Principales</b>
+                                <b>Datos Principales</b>
 
-            </div>
+                            </div>
 
-              <!-- ENTRADA PARA EL CODIGO DEL PEDIDO-->
+                            <!-- ENTRADA PARA EL CODIGO DEL PEDIDO-->
 
-              <div class="form-group col-lg-3">
+                            <div class="form-group col-lg-3">
 
-                  <label>Cod. Pedido</label>
+                                <label>Cod. Pedido</label>
 
-                  <div class="input-group">
+                                <div class="input-group">
 
-                      <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
 
-                      <input type="text" class="form-control input-sm" id="codPedidoB" name="codPedidoB" readonly>
+                                    <input type="text" class="form-control input-sm" id="codPedidoB" name="codPedidoB" readonly>
 
-                  </div>
+                                </div>
 
-              </div>
+                            </div>
 
-              <!-- ENTRADA PARA EL NOMBRE DEL CLIENTE-->
+                            <!-- ENTRADA PARA EL NOMBRE DEL CLIENTE-->
 
-              <div class="form-group col-lg-9">
+                            <div class="form-group col-lg-9">
 
-                  <label>Cliente</label>
+                                <label>Cliente</label>
 
-                  <div class="input-group">
+                                <div class="input-group">
 
-                      <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
 
-                      <input type="text" class="form-control input-sm" id="nomCliB" name="nomCliB" readonly>
+                                    <input type="text" class="form-control input-sm" id="nomCliB" name="nomCliB" readonly>
 
-                  </div>
+                                </div>
 
-              </div>
+                            </div>
 
-              <!-- ENTRADA PARA EL codigo DEL CLIENTE-->
+                            <!-- ENTRADA PARA EL codigo DEL CLIENTE-->
 
-              <div class="form-group col-lg-4">
+                            <div class="form-group col-lg-4">
 
-                  <label>Cod. Cliente</label>
+                                <label>Cod. Cliente</label>
 
-                  <div class="input-group">
+                                <div class="input-group">
 
-                      <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
 
-                      <input type="text" class="form-control input-sm" id="codCliB" name="codCliB" readonly>
+                                    <input type="text" class="form-control input-sm" id="codCliB" name="codCliB" readonly>
 
-                  </div>
+                                </div>
 
-              </div>
+                            </div>
 
-              <!-- ENTRADA PARA EL TIPO DOCUMENTO DEL CLIENTE-->
+                            <!-- ENTRADA PARA EL TIPO DOCUMENTO DEL CLIENTE-->
 
-              <div class="form-group col-lg-4">
+                            <div class="form-group col-lg-4">
 
-                  <label>Tipo Documento</label>
+                                <label>Tipo Documento</label>
 
-                  <div class="input-group">
+                                <div class="input-group">
 
-                      <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
 
-                      <input type="text" class="form-control input-sm" id="tipDocB" name="tipDocB" readonly>
+                                    <input type="text" class="form-control input-sm" id="tipDocB" name="tipDocB" readonly>
 
-                  </div>
+                                </div>
 
-              </div>
+                            </div>
 
-              <!-- ENTRADA PARA EL NUMERO DOCUMENTO DEL CLIENTE-->
+                            <!-- ENTRADA PARA EL NUMERO DOCUMENTO DEL CLIENTE-->
 
-              <div class="form-group col-lg-4">
+                            <div class="form-group col-lg-4">
 
-                  <label>Nro. Documento</label>
+                                <label>Nro. Documento</label>
 
-                  <div class="input-group">
+                                <div class="input-group">
 
-                      <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
 
-                      <input type="text" class="form-control input-sm" id="nroDocB" name="nroDocB" readonly>
-                      <input type="hidden" class="form-control input-sm" name="codVenB" id="codVenB" readonly>
-                      <input type="hidden" name="idUsuarioB" id="idUsuarioB" value="<?php echo $_SESSION["id"]; ?>">
+                                    <input type="text" class="form-control input-sm" id="nroDocB" name="nroDocB" readonly>
+                                    <input type="hidden" class="form-control input-sm" name="codVenB" id="codVenB" readonly>
+                                    <input type="hidden" name="idUsuarioB" id="idUsuarioB" value="<?php echo $_SESSION["id"]; ?>">
 
-                  </div>
+                                </div>
 
-              </div>
+                            </div>
 
-            </div>
+                        </div>
 
-          <div class="box box-success col-lg-12 ">
+                        <div class="box box-success col-lg-12 ">
 
-            <div class="box-header">
+                            <div class="box-header">
 
-              <b>Documento Destino</b>
+                                <b>Documento Destino</b>
 
-            </div>
+                            </div>
 
-            <!-- CHECKBOX PARA SEPARAR DOCUMENTO -->
+                            <!-- CHECKBOX PARA SEPARAR DOCUMENTO -->
 
-            <div class="form-group col-lg-6">
+                            <div class="form-group col-lg-6">
 
-              <div class="form-group">
+                                <div class="form-group">
 
-                <label>
-                  <input class="chkFacturaB" type="checkbox" id="chkFacturaB" name="chkFacturaB">
-                  Separar Factura
-                </label>
+                                    <label>
+                                        <input class="chkFacturaB" type="checkbox" id="chkFacturaB" name="chkFacturaB">
+                                        Separar Factura
+                                    </label>
 
-                <label>
-                  <input class="chkBoletaB" type="checkbox" id="chkBoletaB" name="chkBoletaB">
-                  Separar Boleta
-                </label>
+                                    <label>
+                                        <input class="chkBoletaB" type="checkbox" id="chkBoletaB" name="chkBoletaB">
+                                        Separar Boleta
+                                    </label>
 
-              </div>
+                                </div>
 
-            </div>
+                            </div>
 
-            <!-- ENTRADA PARA NUMERO DE SERIE DEL DOCUMENTO SEPARADO-->
+                            <!-- ENTRADA PARA NUMERO DE SERIE DEL DOCUMENTO SEPARADO-->
 
-            <div class="form-group col-lg-6">
+                            <div class="form-group col-lg-6">
 
-              <div class="input-group">
+                                <div class="input-group">
 
-                <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                <select type="text" class="form-control input-md" name="serieSeparadoB" id="serieSeparadoB" required disabled>
-                  <option value="">Seleccionar Serie</option>
+                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                    <select type="text" class="form-control input-md" name="serieSeparadoB" id="serieSeparadoB" required disabled>
+                                        <option value="">Seleccionar Serie</option>
 
-                </select>
+                                    </select>
 
-              </div>
+                                </div>
 
-            </div>
+                            </div>
 
-          </div>
+                        </div>
 
-          <div class="box box-warning col-lg-12 ">
+                        <div class="box box-warning col-lg-12 ">
 
-            <div class="box-header">
+                            <div class="box-header">
 
-              <b>Forma de Pago</b>
+                                <b>Forma de Pago</b>
 
-            </div>
+                            </div>
 
-            <!-- ENTRADA PARA TIPO DE DOCUMENTO -->
+                            <!-- ENTRADA PARA TIPO DE DOCUMENTO -->
 
-            <div class="form-group col-lg-6">
+                            <div class="form-group col-lg-6">
 
-              <div class="input-group">
+                                <div class="input-group">
 
-                <span class="input-group-addon"><i class="fa fa-share-square-o"></i></span>
-                <select type="text" class="form-control input-sm" name="formaPago" id="formaPago" disabled>
-                  <option value="">Seleccionar Forma de Pago</option>
+                                    <span class="input-group-addon"><i class="fa fa-share-square-o"></i></span>
+                                    <select type="text" class="form-control input-sm" name="formaPago" id="formaPago" disabled>
+                                        <option value="">Seleccionar Forma de Pago</option>
 
 
-                </select>
+                                    </select>
 
-              </div>
+                                </div>
 
-            </div>
+                            </div>
 
 
-          </div>  
+                        </div>
 
-          </div>
+                    </div>
 
-        </div>
+                </div>
 
-        <!--=====================================
+                <!--=====================================
         PIE DEL MODAL
         ======================================-->
 
-        <div class="modal-footer">
+                <div class="modal-footer">
 
-          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" id="btnGenerarDoc"  class="btn btn-primary">Generar Documento</button>
+                    <button type="submit" id="btnGenerarDoc" class="btn btn-primary">Generar Documento</button>
+
+                </div>
+
+            </form>
+
+            <?php
+
+            $facturarB = new controladorFacturacion();
+            $facturarB->ctrFacturarB();
+
+            ?>
 
         </div>
 
-      </form>
-
-      <?php
-
-      $facturarB = new controladorFacturacion();
-      $facturarB->ctrFacturarB();
-
-      ?>
-
     </div>
 
-  </div>
+</div>
+
+<!--=====================================
+EDITAR GUIA
+======================================-->
+<div id="modalGremision" class="modal fade" role="dialog">
+
+    <div class="modal-dialog" style="width: 70% !important;">
+
+        <div class="modal-content">
+
+            <form role="form" method="post" onsubmit="return checkSubmit();">
+
+                <!--=====================================
+        CABEZA DEL MODAL
+        ======================================-->
+
+                <div class="modal-header" style="background:#3c8dbc; color:white">
+
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                    <h4 class="modal-title">Pasar Pedido a:</h4>
+
+                </div>
+
+                <!--=====================================
+        CUERPO DEL MODAL
+        ======================================-->
+
+                <div class="modal-body">
+
+                    <div class="box-body">
+
+                        <div class="box box-primary col-lg-12 ">
+
+                            <div class="box-header">
+
+                                <b>Datos Principales</b>
+
+                            </div>
+
+                            <!-- ENTRADA PARA EL CODIGO DEL PEDIDO-->
+
+                            <div class="form-group col-lg-3">
+
+                                <label>Guia de Remision</label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
+
+                                    <input type="text" class="form-control input-sm" id="codPedidoC" name="codPedidoC" readonly>
+
+                                </div>
+
+                            </div>
+
+                            <!-- ENTRADA PARA EL NOMBRE DEL CLIENTE-->
+
+                            <div class="form-group col-lg-9">
+
+                                <label>Cliente</label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
+
+                                    <input type="text" class="form-control input-sm" id="nomCliC" name="nomCliC" readonly>
+
+                                </div>
+
+                            </div>
+
+                            <!-- ENTRADA PARA EL codigo DEL CLIENTE-->
+
+                            <div class="form-group col-lg-4">
+
+                                <label>Cod. Cliente</label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
+
+                                    <input type="text" class="form-control input-sm" id="codCliC" name="codCliC" readonly>
+
+                                </div>
+
+                            </div>
+
+                            <!-- ENTRADA PARA EL TIPO DOCUMENTO DEL CLIENTE-->
+
+                            <div class="form-group col-lg-4">
+
+                                <label>Tipo Documento</label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
+
+                                    <input type="text" class="form-control input-sm" id="tipDocC" name="tipDocC" readonly>
+
+                                </div>
+
+                            </div>
+
+                            <!-- ENTRADA PARA EL NUMERO DOCUMENTO DEL CLIENTE-->
+
+                            <div class="form-group col-lg-4">
+
+                                <label>Nro. Documento</label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
+
+                                    <input type="text" class="form-control input-sm" id="nroDocC" name="nroDocC" readonly>
+                                    <input type="hidden" class="form-control input-sm" name="codVenC" id="codVenC" readonly>
+                                    <input type="hidden" name="idUsuarioC" id="idUsuarioC" value="<?php echo $_SESSION["id"]; ?>">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="box box-warning col-lg-12">
+
+                            <div class="box-header">
+
+                                <b>Datos para la Guia de Remisión</b>
+
+                            </div>
+
+                            <!-- ENTRADA PARA TIPO DE DOCUMENTO -->
+
+                            <div class="form-group col-lg-4">
+
+                                <label>Chofer</label>
+                                <div class="input-group">
+
+
+                                    <span class="input-group-addon"><i class="fa fa-share-square-o"></i></span>
+                                    <select type="text" class="form-control input-sm" name="chofer" id="chofer">
+                                        <option value="">Seleccionar Chofer</option>
+                                        <?php
+
+                                        $valor = "tcho";
+
+                                        $documentos = ModeloPedidos::MostrarDatos($valor);
+
+                                        foreach ($documentos as $key => $value) {
+                                            echo '<option value="' . $value["Cod_Argumento"] . '">' . $value["Cod_Argumento"] . " - " . $value["Des_Larga"] . '</option>';
+                                        }
+
+                                        ?>
+
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-group col-lg-4">
+
+                                <label>Movilidad</label>
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="fa fa-share-square-o"></i></span>
+                                    <select type="text" class="form-control input-sm" name="carro" id="carro">
+                                        <option value="">Seleccionar Movilidad</option>
+                                        <?php
+
+                                        $valor = "tcar";
+
+                                        $documentos = ModeloPedidos::MostrarDatos($valor);
+
+                                        foreach ($documentos as $key => $value) {
+                                            echo '<option value="' . $value["Cod_Argumento"] . '">' . $value["Cod_Argumento"] . " - " . $value["Des_Larga"] . '</option>';
+                                        }
+
+                                        ?>
+
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-group col-lg-2">
+
+                                <label>Peso Bruto Kg.</label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
+
+                                    <input type="text" class="form-control input-sm" id="peso" name="peso" placeholder="Peso KG">
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-group col-lg-2">
+
+                                <label>N° Bultos</label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
+
+                                    <input type="text" class="form-control input-sm" id="bultos" name="bultos" placeholder="# Bultos">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!--=====================================
+        PIE DEL MODAL
+        ======================================-->
+
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+                    <button type="submit" id="btnGenerarDoc" class="btn btn-primary">Actualizar Documento</button>
+
+                </div>
+
+            </form>
+
+            <?php
+
+            $facturarB = new controladorFacturacion();
+            $facturarB->ctrActualizarGuiaRemision();
+
+            ?>
+
+        </div>
+
+    </div>
 
 </div>
 
 <?php
 
 $anularDocumento = new ControladorFacturacion();
-$anularDocumento -> ctrAnularDocumento();
+$anularDocumento->ctrAnularDocumento();
 
 $eliminarDocumento = new ControladorFacturacion();
-$eliminarDocumento -> ctrEliminarDocumento();
+$eliminarDocumento->ctrEliminarDocumento();
 ?>
 
 <script>

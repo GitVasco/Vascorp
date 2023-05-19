@@ -261,7 +261,7 @@
                     <?php
 
                     $guardarIngreso = new ControladorIngresos();
-                    $guardarIngreso->ctrCrearIngreso();
+                    $guardarIngreso->ctrCrearIngresoC();
 
                     ?>
 

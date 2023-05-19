@@ -282,3 +282,25 @@ function fncFormatInputs() {
         window.history.replaceState(null, null, window.location.href);
     }
 }
+
+//* Función para crear Url's
+function createCorrelativo(event, name) {
+    var codigo = name;
+    var data = new FormData();
+    data.append("codigo", codigo);
+
+    $.ajax({
+        url: "ajax/correlativo.ajax.php",
+        method: "POST",
+        data: data,
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function (response) {
+            console.log(
+                "🚀 ~ file: forms.js ~ line 224 ~ createCorrelativo ~ response",
+                response
+            );
+        },
+    });
+}

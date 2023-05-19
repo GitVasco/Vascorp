@@ -10,7 +10,7 @@ class ModeloSalidas
 	static public function mdlMostrarTemporal($tabla, $valor)
 	{
 
-		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE codigo = $valor ORDER BY id ASC");
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE codigo = '$valor' ORDER BY id ASC");
 
 		$stmt->execute();
 
@@ -49,7 +49,7 @@ class ModeloSalidas
 	static public function mdlMostraDetallesTemporal($tabla, $valor)
 	{
 
-		$sql = "SELECT * FROM $tabla WHERE codigo=$valor ORDER BY id ASC";
+		$sql = "SELECT * FROM $tabla WHERE codigo='$valor' ORDER BY id ASC";
 
 		$stmt = Conexion::conectar()->prepare($sql);
 
@@ -67,12 +67,13 @@ class ModeloSalidas
 	{
 
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (codigo, cliente, vendedor, lista) VALUES (:codigo, :cliente, :vendedor, :lista)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (codigo, cliente, vendedor, lista,usuario) VALUES (:codigo, :cliente, :vendedor, :lista,:usuario)");
 
 		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
 		$stmt->bindParam(":cliente", $datos["cliente"], PDO::PARAM_STR);
 		$stmt->bindParam(":vendedor", $datos["vendedor"], PDO::PARAM_STR);
 		$stmt->bindParam(":lista", $datos["lista"], PDO::PARAM_STR);
+		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
 
 		if ($stmt->execute()) {
 
@@ -280,6 +281,8 @@ class ModeloSalidas
 					t.id,
 					t.codigo,
 					c.codigo AS cod_cli,
+					t.cliente AS cli_tra,
+  					t.vendedor AS ven_tra,
 					c.nombre,
 					c.tipo_documento,
 					c.documento,
@@ -311,7 +314,7 @@ class ModeloSalidas
 					ON t.condicion_venta = cv.id
 					LEFT JOIN usuariosjf u
 					ON t.usuario = u.id
-				WHERE t.codigo = $valor";
+				WHERE t.codigo = '$valor'";
 
 			$stmt = Conexion::conectar()->prepare($sql);
 
@@ -426,7 +429,7 @@ class ModeloSalidas
 			ON dt.articulo = a.articulo
 			LEFT JOIN modelojf m
 			ON a.modelo = m.modelo
-		WHERE dt.codigo = $valor
+		WHERE dt.codigo = '$valor'
 		GROUP BY m.id_modelo
 		ORDER BY m.modelo";
 
@@ -449,6 +452,7 @@ class ModeloSalidas
 					t.codigo AS pedido,
 					DATE(t.fecha) AS fecha,
 					c.codigo,
+					t.cliente,
 					c.nombre,
 					c.direccion,
 					c.ubigeo,
@@ -464,7 +468,7 @@ class ModeloSalidas
 					ON c.ubigeo = u.cod_ubi
 					LEFT JOIN tipo_documentojf td
     				ON td.cod_doc = c.tipo_documento
-				WHERE t.codigo = $valor";
+				WHERE t.codigo = '$valor'";
 
 		$stmt = Conexion::conectar()->prepare($sql);
 
@@ -545,7 +549,7 @@ class ModeloSalidas
 					detalle_ing_sal dt
 					LEFT JOIN articulojf a
 					ON dt.articulo = a.articulo
-				WHERE dt.codigo = $valor";
+				WHERE dt.codigo = '$valor'";
 
 		$stmt = Conexion::conectar()->prepare($sql);
 
@@ -569,6 +573,8 @@ class ModeloSalidas
 						t.id,
 						t.codigo,
 						c.codigo AS cod_cli,
+						t.cliente AS cli_tra,
+  						t.vendedor AS ven_tra,
 						c.nombre,
 						c.tipo_documento,
 						c.documento,

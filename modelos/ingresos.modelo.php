@@ -715,7 +715,7 @@ class ModeloIngresos
 				LEFT JOIN movimientos_cabecerajf mc 
 				  ON m.tipo = mc.tipo 
 				  AND m.documento = mc.documento 
-				  WHERE m.tipo IN ('S27', 'S26', 'S25', 'S16', 'E20') 
+				  WHERE m.tipo IN ('S27', 'S26', 'S25', 'E20') 
 				   and YEAR(m.fecha)= YEAR(NOW()) and month(m.fecha)= month(NOW())
 			  GROUP BY m.documento,
 				a.modelo,
@@ -829,7 +829,7 @@ class ModeloIngresos
 				  ON m.tipo = mc.tipo 
 				  AND m.documento = mc.documento 
 				WHERE DATE(m.fecha) like '%$fechaFinal%'
-				AND m.tipo IN ('S27', 'S26', 'S25', 'S16', 'E20') 
+				AND m.tipo IN ('S27', 'S26', 'S25', 'E20') 
 				GROUP BY m.documento,
 				a.modelo,
 				a.nombre,
@@ -954,7 +954,7 @@ class ModeloIngresos
 					  ON m.tipo = mc.tipo 
 					  AND m.documento = mc.documento 
 					WHERE DATE(m.fecha) BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'
-					AND m.tipo IN ('S27', 'S26', 'S25', 'S16', 'E20') 
+					AND m.tipo IN ('S27', 'S26', 'S25', 'E20') 
 				  GROUP BY m.documento,
 					a.modelo,
 					a.nombre,
@@ -1064,7 +1064,7 @@ class ModeloIngresos
 					  ON m.tipo = mc.tipo 
 					  AND m.documento = mc.documento 
 					WHERE DATE(m.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'
-					AND m.tipo IN ('S27', 'S26', 'S25', 'S16', 'E20') 
+					AND m.tipo IN ('S27', 'S26', 'S25', 'E20') 
 					GROUP BY m.documento,
 					a.modelo,
 					a.nombre,
@@ -1127,7 +1127,8 @@ class ModeloIngresos
 		  WHEN m.idcierre = 0 
 		  THEN a.alm_corte 
 		  ELSE c.cantidad 
-		END AS saldo 
+		END AS saldo,
+		m.almacen 
 	  FROM
 		movimientosjf_2023 m 
 		LEFT JOIN articulojf a 
@@ -1148,7 +1149,7 @@ class ModeloIngresos
 	/* 
 	* ACTUALIZAR STOCK
 	*/
-	static public function mdlactualizarStock($sector, $articulo, $stock, $prod)
+	static public function mdlactualizarStock($sector, $articulo, $stock, $prod, $almacen)
 	{
 
 		if ($sector == "externo") {
@@ -1157,6 +1158,7 @@ class ModeloIngresos
 					articulojf 
 					SET
 					stock = stock + $stock ,
+					$almacen = $almacen + $stock,
 					servicio = servicio + $prod
 					WHERE articulo = '$articulo' ";
 		} else {
@@ -1165,6 +1167,7 @@ class ModeloIngresos
 					articulojf 
 					SET
 					stock = stock + $stock ,
+					$almacen = $almacen + $stock,
 					taller = taller + $prod
 					WHERE articulo = '$articulo' ";
 		}

@@ -133,8 +133,8 @@ $(".TablaKardexCostos").DataTable({
     deferRender: true,
     retrieve: true,
     processing: true,
-    searching: false,
-    lengthChange: false,
+    searching: true,
+    lengthChange: true,
     order: [[2, "asc"]],
     pageLength: 20,
     lengthMenu: [

@@ -46,6 +46,20 @@ class AjaxPedidos
     /* 
 	* VISUALIZAR COLORES
 	*/
+    public function ajaxVerColoresCantidadesB()
+    {
+
+        $pedido = $this->pedidoT;
+        $modelo = $this->modeloT;
+
+        $respuesta = controladorArticulos::ctrVerColoresCantidadesB($pedido, $modelo);
+
+        echo json_encode($respuesta);
+    }
+
+    /* 
+	* VISUALIZAR COLORES
+	*/
     public function ajaxVerDatos()
     {
 
@@ -180,6 +194,81 @@ class AjaxPedidos
 
         echo json_encode($respuesta);
     }
+
+    /* 
+	* VER TALONARIO
+	*/
+    public function ajaxNuevoGuardarPedido()
+    {
+
+        $pedidoN = $this->pedidoN;
+        $nuevoPedidoN = $this->nuevoPedidoN;
+        $clienteN = $this->clienteN;
+        $vendedorN = $this->vendedorN;
+        $listaN = $this->listaN;
+        $agenciaN = $this->agenciaN;
+        $modeloN = $this->modeloN;
+        $precioN = $this->precioN;
+        $articulosN = $this->articulosN;
+
+        $articulosN = json_decode($_POST["articulosN"], true);
+
+        if (count($articulosN) > 0) {
+
+            if ($pedidoN === "") {
+
+                $numero = ControladorMovimientos::ctrMostrarTalonario();
+                $talonario = $numero["pedido"] + 1;
+                ModeloPedidos::mdlActualizarTalonario();
+
+                $usuario = $_SESSION["id"];
+                $talonarioN = $usuario . $talonario;
+
+                $datos = array(
+                    "codigo"    => $talonarioN,
+                    "cliente"   => $clienteN,
+                    "vendedor"  => $vendedorN,
+                    "lista"     => $listaN,
+                    "usuario"   => $usuario,
+                    "agencia"   => $agenciaN
+                );
+
+                $cab = ModeloPedidos::mdlGuardarTemporal("temporaljf", $datos);
+
+                foreach ($articulosN as $key => $value) {
+                    if ($value["value"] > 0) {
+                        $datosDetalle = array(
+                            "codigo"    => $talonarioN,
+                            "articulo"  => $value["name"],
+                            "cantidad"  => $value["value"],
+                            "precio"    => $precioN
+                        );
+                        $respuesta = ModeloPedidos::mdlGuardarTemporalDetalle("detalle_temporal", $datosDetalle);
+                    }
+                }
+
+                if ($cab == "ok") {
+                    echo json_encode($talonarioN);
+                }
+            } else {
+                $limpiar = ModeloPedidos::mdlEliminarDetalleTemporalB("detalle_temporal", $pedidoN, $modeloN);
+
+                foreach ($articulosN as $key => $value) {
+                    if ($value["value"] > 0) {
+                        $datosDetalle = array(
+                            "codigo"    => $pedidoN,
+                            "articulo"  => $value["name"],
+                            "cantidad"  => $value["value"],
+                            "precio"    => $precioN
+                        );
+                        $respuesta = ModeloPedidos::mdlGuardarTemporalDetalle("detalle_temporal", $datosDetalle);
+                    }
+                }
+
+                echo json_encode("toast");
+            }
+        }
+    }
 }
 
 /* 
@@ -201,6 +290,17 @@ if (isset($_POST["pedido"])) {
     $verColoresyCantidades->pedido = $_POST["pedido"];
     $verColoresyCantidades->modeloA = $_POST["modeloA"];
     $verColoresyCantidades->ajaxVerColoresCantidades();
+}
+
+/* 
+ * VISUALIZAR COLORES Y MODIFICAR
+*/
+if (isset($_POST["pedidoT"])) {
+
+    $verColoresyCantidades = new AjaxPedidos();
+    $verColoresyCantidades->pedidoT = $_POST["pedidoT"];
+    $verColoresyCantidades->modeloT = $_POST["modeloT"];
+    $verColoresyCantidades->ajaxVerColoresCantidadesB();
 }
 
 /* 
@@ -297,4 +397,23 @@ if (isset($_POST["codPedido"])) {
     $verColoresyCantidades = new AjaxPedidos();
     $verColoresyCantidades->codPedido = $_POST["codPedido"];
     $verColoresyCantidades->ajaxActualizarTotales();
+}
+
+
+/* 
+ * Guardar Modelo Nuevo
+*/
+if (isset($_POST["pedidoN"])) {
+
+    $activar = new AjaxPedidos();
+    $activar->pedidoN = $_POST["pedidoN"];
+    $activar->nuevoPedidoN = $_POST["nuevoPedidoN"];
+    $activar->clienteN = $_POST["clienteN"];
+    $activar->vendedorN = $_POST["vendedorN"];
+    $activar->listaN = $_POST["listaN"];
+    $activar->agenciaN = $_POST["agenciaN"];
+    $activar->modeloN = $_POST["modeloN"];
+    $activar->precioN = $_POST["precioN"];
+    $activar->articulosN = $_POST["articulosN"];
+    $activar->ajaxNuevoGuardarPedido();
 }

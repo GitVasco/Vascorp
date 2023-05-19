@@ -366,7 +366,7 @@ $(".formularioSalidaVarios").on("click", "button.quitarArtPed", function () {
 
     sumarTotalesPreciosA();
     cambioDescuento();
-    listarArticulos();
+    listarArticulosS();
 });
 
 /*
@@ -376,7 +376,7 @@ $(".formularioSalidaVarios").on("click", "button.quitarArtPed", function () {
 $("#descPer").change(function () {
     sumarTotalesPreciosA();
     cambioDescuento();
-    listarArticulos();
+    listarArticulosS();
 });
 
 function cambioDescuento() {
@@ -414,7 +414,7 @@ $(".formularioSalidaVarios").on(
             .children()
             .children(".nuevoPrecioArticulo");
 
-        //console.log("precio", precio.val());
+        console.log("precio", precio.val());
 
         var precioFinal = $(this).val() * precio.attr("precioReal");
 
@@ -422,7 +422,7 @@ $(".formularioSalidaVarios").on(
 
         sumarTotalesPreciosA();
         cambioDescuento();
-        listarArticulos();
+        listarArticulosS();
     }
 );
 
@@ -457,10 +457,14 @@ function sumarTotalesPreciosA() {
  * ARRAY CON TODOS LOS ARTICULOS
  */
 
-function listarArticulos() {
+function listarArticulosS() {
     var listaArticulos = [];
 
     var descripcion = $(".nuevaDescripcionArticulo");
+    console.log(
+        "🚀 ~ file: salidas.js:464 ~ listarArticulos ~ descripcion:",
+        descripcion
+    );
     var cantidad = $(".nuevaCantidadArtPed");
     var precio = $(".nuevoPrecioArticulo");
 
@@ -518,7 +522,7 @@ $("#seleccionarClienteS").change(function () {
 $(".crearSalidaVarios").click(function () {
     sumarTotalesPreciosA();
     cambioDescuento();
-    listarArticulos();
+    listarArticulosS();
 
     var codigo = document.getElementById("nuevoCodigo").value;
     $("#codigoM").val(codigo);

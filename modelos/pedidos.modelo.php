@@ -10,7 +10,7 @@ class ModeloPedidos
 	static public function mdlMostrarTemporal($tabla, $valor)
 	{
 
-		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE codigo = $valor ORDER BY id ASC");
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE codigo = '$valor' ORDER BY id ASC");
 
 		$stmt->execute();
 
@@ -316,6 +316,24 @@ class ModeloPedidos
 		} else {
 
 			return "error";
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+	}
+
+	static public function mdlEliminarDetalleTemporalB($tabla, $pedido, $modelo)
+	{
+
+		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE codigo = '$pedido' AND articulo like '%$modelo%'");
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return $stmt->errorInfo();
 		}
 
 		$stmt->close();
@@ -693,6 +711,94 @@ class ModeloPedidos
 						ON a.modelo = m.modelo
 					WHERE dt.codigo = '" . $codigo . "'
 						AND m.modelo = '" . $modelo . "'
+					GROUP BY m.modelo,
+						a.cod_color,
+						a.color";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt = null;
+	}
+
+	/*
+    * MOSTRAR LOS DATOS PARA LA IMPRESION
+    */
+	static public function mdlPedidoImpresionC($codigo)
+	{
+
+		$sql = "SELECT 
+						m.id_modelo,
+						m.modelo,
+						a.cod_color,
+						a.color,
+						SUM(
+						CASE
+							WHEN a.cod_talla = '1'
+							THEN dt.cantidad
+							ELSE 0
+						END
+						) AS t1,
+						SUM(
+						CASE
+							WHEN a.cod_talla = '2'
+							THEN dt.cantidad
+							ELSE 0
+						END
+						) AS t2,
+						SUM(
+						CASE
+							WHEN a.cod_talla = '3'
+							THEN dt.cantidad
+							ELSE 0
+						END
+						) AS t3,
+						SUM(
+						CASE
+							WHEN a.cod_talla = '4'
+							THEN dt.cantidad
+							ELSE 0
+						END
+						) AS t4,
+						SUM(
+						CASE
+							WHEN a.cod_talla = '5'
+							THEN dt.cantidad
+							ELSE 0
+						END
+						) AS t5,
+						SUM(
+						CASE
+							WHEN a.cod_talla = '6'
+							THEN dt.cantidad
+							ELSE 0
+						END
+						) AS t6,
+						SUM(
+						CASE
+							WHEN a.cod_talla = '7'
+							THEN dt.cantidad
+							ELSE 0
+						END
+						) AS t7,
+						SUM(
+						CASE
+							WHEN a.cod_talla = '8'
+							THEN dt.cantidad
+							ELSE 0
+						END
+						) AS t8,
+						SUM(dt.cantidad) AS total
+					FROM
+						detalle_temporal dt
+						LEFT JOIN articulojf a
+						ON dt.articulo = a.articulo
+						LEFT JOIN modelojf m
+						ON a.modelo = m.modelo
+					WHERE dt.codigo = '$codigo'
 					GROUP BY m.modelo,
 						a.cod_color,
 						a.color";

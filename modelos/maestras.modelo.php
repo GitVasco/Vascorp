@@ -463,4 +463,30 @@ class ModeloMaestras
 
         $stmt = null;
     }
+
+
+    /* 
+    * CREAR SUBLINEAS
+    */
+    static public function mdlActualizarCorrelativo($codigo)
+    {
+
+        $stmt = Conexion::conectar()->prepare("UPDATE 
+                            correlativos 
+                        SET
+                            actual = actual + 1 
+                        WHERE codigo = '$codigo'");
+
+
+        if ($stmt->execute()) {
+
+            return "ok";
+        } else {
+
+            return "error";
+        }
+
+        $stmt->close();
+        $stmt = null;
+    }
 }

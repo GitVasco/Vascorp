@@ -8,6 +8,8 @@ class ControladorFacturacion
 
         if (isset($_POST["codPedido"])) {
 
+            $almacen = $_SESSION["almacen"];
+
             if ($_POST["tdoc"] == "00") {
 
                 /*
@@ -18,7 +20,7 @@ class ControladorFacturacion
                 $respuesta = ModeloPedidos::mdlMostraDetallesTemporal($tabla, $_POST["codPedido"]);
                 //var_dump($respuesta);
 
-                $respuestaFactura = ModeloArticulos::mdlActualizarStockPedido($_POST["codPedido"]);
+                $respuestaFactura = ModeloArticulos::mdlActualizarStockPedido($_POST["codPedido"], "01");
                 //var_dump($respuestaFactura);
 
                 /*
@@ -41,6 +43,7 @@ class ControladorFacturacion
 
                     $tipo = "S01";
                     $nombre_tipo = "GUIA REMISION";
+                    $almacen = "01";
 
                     date_default_timezone_set("America/Lima");
                     $fecha = date("Y-m-d");
@@ -54,10 +57,10 @@ class ControladorFacturacion
 
                         if ($key < count($respuesta) - 1) {
 
-                            $intoA .= "('" . $tipo . "','" . $doc . "','" . $fecha . "','" . $value["articulo"] . "','" . $cliente . "','" . $vendedor . "'," . $value["cantidad"] . "," . $value["precio"] . ",0," . $dscto . "," . $total . ",'" . $nombre_tipo . "'),";
+                            $intoA .= "('" . $tipo . "','" . $doc . "','" . $fecha . "','" . $value["articulo"] . "','" . $cliente . "','" . $vendedor . "'," . $value["cantidad"] . "," . $value["precio"] . ",0," . $dscto . "," . $total . ",'" . $nombre_tipo . "','" . $almacen . "'),";
                         } else {
 
-                            $intoB .= "('" . $tipo . "','" . $doc . "','" . $fecha . "','" . $value["articulo"] . "','" . $cliente . "','" . $vendedor . "'," . $value["cantidad"] . "," . $value["precio"] . ",0," . $dscto . "," . $total . ",'" . $nombre_tipo . "')";
+                            $intoB .= "('" . $tipo . "','" . $doc . "','" . $fecha . "','" . $value["articulo"] . "','" . $cliente . "','" . $vendedor . "'," . $value["cantidad"] . "," . $value["precio"] . ",0," . $dscto . "," . $total . ",'" . $nombre_tipo . "','" . $almacen . "')";
                         }
                     }
 
@@ -187,7 +190,7 @@ class ControladorFacturacion
                 $respuesta = ModeloPedidos::mdlMostraDetallesTemporal($tabla, $_POST["codPedido"]);
                 //var_dump($respuesta);
 
-                $respuestaFactura = ModeloArticulos::mdlActualizarStockPedido($_POST["codPedido"]);
+                $respuestaFactura = ModeloArticulos::mdlActualizarStockPedido($_POST["codPedido"], "01");
                 //var_dump($respuestaFactura);
 
                 /*
@@ -223,10 +226,10 @@ class ControladorFacturacion
 
                         if ($key < count($respuesta) - 1) {
 
-                            $intoA .= "('" . $tipo . "','" . $doc . "','" . $fecha . "','" . $value["articulo"] . "','" . $cliente . "','" . $vendedor . "'," . $value["cantidad"] . "," . $value["precio"] . ",0," . $dscto . "," . $total . ",'" . $nombre_tipo . "'),";
+                            $intoA .= "('" . $tipo . "','" . $doc . "','" . $fecha . "','" . $value["articulo"] . "','" . $cliente . "','" . $vendedor . "'," . $value["cantidad"] . "," . $value["precio"] . ",0," . $dscto . "," . $total . ",'" . $nombre_tipo . "','" . $almacen . "'),";
                         } else {
 
-                            $intoB .= "('" . $tipo . "','" . $doc . "','" . $fecha . "','" . $value["articulo"] . "','" . $cliente . "','" . $vendedor . "'," . $value["cantidad"] . "," . $value["precio"] . ",0," . $dscto . "," . $total . ",'" . $nombre_tipo . "')";
+                            $intoB .= "('" . $tipo . "','" . $doc . "','" . $fecha . "','" . $value["articulo"] . "','" . $cliente . "','" . $vendedor . "'," . $value["cantidad"] . "," . $value["precio"] . ",0," . $dscto . "," . $total . ",'" . $nombre_tipo . "','" . $almacen . "')";
                         }
                     }
 
@@ -421,7 +424,7 @@ class ControladorFacturacion
                 $respuesta = ModeloPedidos::mdlMostraDetallesTemporal($tabla, $_POST["codPedido"]);
                 //var_dump($respuesta);
 
-                $respuestaBoleta = ModeloArticulos::mdlActualizarStockPedido($_POST["codPedido"]);
+                $respuestaBoleta = ModeloArticulos::mdlActualizarStockPedido($_POST["codPedido"], "01");
                 //var_dump($respuestaBoleta);
 
                 /*
@@ -457,10 +460,10 @@ class ControladorFacturacion
 
                         if ($key < count($respuesta) - 1) {
 
-                            $intoA .= "('" . $tipo . "','" . $doc . "','" . $fecha . "','" . $value["articulo"] . "','" . $cliente . "','" . $vendedor . "'," . $value["cantidad"] . "," . $value["precio"] . ",0," . $dscto . "," . $total . ",'" . $nombre_tipo . "'),";
+                            $intoA .= "('" . $tipo . "','" . $doc . "','" . $fecha . "','" . $value["articulo"] . "','" . $cliente . "','" . $vendedor . "'," . $value["cantidad"] . "," . $value["precio"] . ",0," . $dscto . "," . $total . ",'" . $nombre_tipo . "','" . $almacen . "'),";
                         } else {
 
-                            $intoB .= "('" . $tipo . "','" . $doc . "','" . $fecha . "','" . $value["articulo"] . "','" . $cliente . "','" . $vendedor . "'," . $value["cantidad"] . "," . $value["precio"] . ",0," . $dscto . "," . $total . ",'" . $nombre_tipo . "')";
+                            $intoB .= "('" . $tipo . "','" . $doc . "','" . $fecha . "','" . $value["articulo"] . "','" . $cliente . "','" . $vendedor . "'," . $value["cantidad"] . "," . $value["precio"] . ",0," . $dscto . "," . $total . ",'" . $nombre_tipo . "','" . $almacen . "')";
                         }
                     }
 
@@ -655,7 +658,7 @@ class ControladorFacturacion
                 $respuesta = ModeloPedidos::mdlMostraDetallesTemporal($tabla, $_POST["codPedido"]);
                 //var_dump($respuesta);
 
-                $respuestaProforma = ModeloArticulos::mdlActualizarStockPedido($_POST["codPedido"]);
+                $respuestaProforma = ModeloArticulos::mdlActualizarStockPedido($_POST["codPedido"], "01");
                 //var_dump($respuestaProforma);
 
                 /*
@@ -691,10 +694,10 @@ class ControladorFacturacion
 
                         if ($key < count($respuesta) - 1) {
 
-                            $intoA .= "('" . $tipo . "','" . $doc . "','" . $fecha . "','" . $value["articulo"] . "','" . $cliente . "','" . $vendedor . "'," . $value["cantidad"] . "," . $value["precio"] . ",0," . $dscto . "," . $total . ",'" . $nombre_tipo . "'),";
+                            $intoA .= "('" . $tipo . "','" . $doc . "','" . $fecha . "','" . $value["articulo"] . "','" . $cliente . "','" . $vendedor . "'," . $value["cantidad"] . "," . $value["precio"] . ",0," . $dscto . "," . $total . ",'" . $nombre_tipo . "','" . $almacen . "'),";
                         } else {
 
-                            $intoB .= "('" . $tipo . "','" . $doc . "','" . $fecha . "','" . $value["articulo"] . "','" . $cliente . "','" . $vendedor . "'," . $value["cantidad"] . "," . $value["precio"] . ",0," . $dscto . "," . $total . ",'" . $nombre_tipo . "')";
+                            $intoB .= "('" . $tipo . "','" . $doc . "','" . $fecha . "','" . $value["articulo"] . "','" . $cliente . "','" . $vendedor . "'," . $value["cantidad"] . "," . $value["precio"] . ",0," . $dscto . "," . $total . ",'" . $nombre_tipo . "','" . $almacen . "')";
                         }
                     }
 
@@ -928,10 +931,10 @@ class ControladorFacturacion
 
                         if ($key < count($respuesta) - 1) {
 
-                            $intoA .= "('" . $tipo . "','" . $doc . "','" . $fecha . "','" . $value["articulo"] . "','" . $cliente . "','" . $vendedor . "',-" . $value["cantidad"] . "," . $value["precio"] . ",0," . $dscto . ",-" . $total . ",'" . $nombre_tipo . "'),";
+                            $intoA .= "('" . $tipo . "','" . $doc . "','" . $fecha . "','" . $value["articulo"] . "','" . $cliente . "','" . $vendedor . "',-" . $value["cantidad"] . "," . $value["precio"] . ",0," . $dscto . ",-" . $total . ",'" . $nombre_tipo . "','" . $almacen . "'),";
                         } else {
 
-                            $intoB .= "('" . $tipo . "','" . $doc . "','" . $fecha . "','" . $value["articulo"] . "','" . $cliente . "','" . $vendedor . "',-" . $value["cantidad"] . "," . $value["precio"] . ",0," . $dscto . ",-" . $total . ",'" . $nombre_tipo . "')";
+                            $intoB .= "('" . $tipo . "','" . $doc . "','" . $fecha . "','" . $value["articulo"] . "','" . $cliente . "','" . $vendedor . "',-" . $value["cantidad"] . "," . $value["precio"] . ",0," . $dscto . ",-" . $total . ",'" . $nombre_tipo . "','" . $almacen . "')";
                         }
                     }
 
@@ -1736,6 +1739,8 @@ class ControladorFacturacion
 
                 $respuesta = ModeloSalidas::mdlMostraDetallesTemporal($tabla, $_POST["codSalida"]);
 
+                $almacen = $_SESSION["almacen"] == "01" ? "stock01" : "stock05";
+
                 foreach ($respuesta as $value) {
 
                     $datos = array(
@@ -1748,9 +1753,11 @@ class ControladorFacturacion
                     if ($inicioTipo == 'E') {
 
                         $respuestaGuia = ModeloArticulos::mdlActualizarStockIngreso($value["articulo"], $value["cantidad"]);
+                        $respuestaGuia = ModeloArticulos::mdlActualizarStockIngreso01Almacen($almacen, $value["articulo"], $value["cantidad"]);
                     } else {
 
                         $respuestaGuia = ModeloArticulos::mdlActualizarStock($datos);
+                        $respuestaGuia = ModeloArticulos::mdlActualizarStock01($almacen, $value["articulo"], $value["cantidad"]);
                     }
 
                     #var_dump($respuestaGuia);
@@ -1782,18 +1789,22 @@ class ControladorFacturacion
 
                         date_default_timezone_set("America/Lima");
                         $fecha = date("Y-m-d");
-                        $nombre_tipo = "AJUSTES DE INV.";
 
+                        $tipoMov = ModeloMovimientos::mdlCodigoMaestra("ttop", $tipo);
+
+                        $nombre_tipo = $tipoMov["descripcion"];
+
+                        $almacen = $_SESSION["almacen"];
 
                         $total = $value["cantidad"] * $value["precio"] * ((100 - $dscto) / 100);
                         //var_dump($total);
 
                         if ($key < count($respuesta) - 1) {
 
-                            $intoA .= "('" . $tipo . "','" . $doc . "','" . $fecha . "','" . $value["articulo"] . "','" . $cliente . "','" . $vendedor . "'," . $value["cantidad"] . "," . $value["precio"] . ",0," . $dscto . "," . $total . ",'" . $nombre_tipo . "'),";
+                            $intoA .= "('" . $tipo . "','" . $doc . "','" . $fecha . "','" . $value["articulo"] . "','" . $cliente . "','" . $vendedor . "'," . $value["cantidad"] . "," . $value["precio"] . ",0," . $dscto . "," . $total . ",'" . $nombre_tipo . "','" . $almacen . "'),";
                         } else {
 
-                            $intoB .= "('" . $tipo . "','" . $doc . "','" . $fecha . "','" . $value["articulo"] . "','" . $cliente . "','" . $vendedor . "'," . $value["cantidad"] . "," . $value["precio"] . ",0," . $dscto . "," . $total . ",'" . $nombre_tipo . "')";
+                            $intoB .= "('" . $tipo . "','" . $doc . "','" . $fecha . "','" . $value["articulo"] . "','" . $cliente . "','" . $vendedor . "'," . $value["cantidad"] . "," . $value["precio"] . ",0," . $dscto . "," . $total . ",'" . $nombre_tipo . "','" . $almacen . "')";
                         }
                     }
 
@@ -3889,7 +3900,8 @@ class ControladorFacturacion
                 $datos["f1"] . ',' .
                 $datos["g1"] . ',' .
                 $datos["h1"] . ',' .
-                $datos["i1"] . ',';
+                $datos["i1"] . ',' .
+                $datos["j1"] . ',';
 
             //todo: FILA 2
             $fila2 = ',,,,,,,,,,,,,,';
@@ -3897,18 +3909,24 @@ class ControladorFacturacion
             //todo: FILA 3
             $fila3 =    $datos["a3"] . ',' .
                 $datos["b3"] . ',' .
-                $datos["c3"] . ',';
+                $datos["c3"] . ',' .
+                $datos["d3"] . ',' .
+                $datos["e3"] . ',';
 
             //todo: FILA 4
             $fila4 =    $datos["a4"] . ',' .
                 $datos["b4"] . ',' .
                 $datos["c4"] . ',' .
                 $datos["d4"] . ',' .
-                $datos["e4"] . ',';
+                $datos["e4"] . ',' .
+                $datos["f4"] . ',';
 
             //todo: FILA 5
             $fila5 =    $datos["a5"] . ',' .
-                $datos["b5"] . ',';
+                $datos["b5"] . ',' .
+                $datos["c5"] . ',' .
+                $datos["d5"] . ',' .
+                $datos["e5"] . ',';
 
             //todo: FILA 6
             $fila6 = ',,,,';
@@ -3964,10 +3982,16 @@ class ControladorFacturacion
                 $datos["t10"] . ',' .
                 $datos["u10"] . ',' .
                 $datos["v10"] . ',' .
-                $datos["w10"] . ',';
+                $datos["w10"] . ',,,,' .
+                $datos["aa10"] . ',,,,,,,,,,,,,' .
+                $datos["ao10"] . ',';
 
             //todo: FILA 11
-            $fila11 =    $datos["a11"] . ',';
+            $fila11 =    $datos["a11"] . ',' .
+                $datos["b11"] . ',' .
+                $datos["c11"] . ',' .
+                $datos["d11"] . ',' .
+                $datos["e11"] . ',';
 
             $nombre = '20513613939-' . $datos["c1"] . '-' . $datos["b1"];
 
@@ -4013,16 +4037,26 @@ class ControladorFacturacion
 
             fclose($fp);
 
+            //?origen prueba
             $origen = 'c:/xampp2/htdocs/vascorp/vistas/reportes_excel/csv_fe/' . $nombre . '.txt';
 
+            //!origen produccion
+            //!$origen = 'c:/xampp/htdocs/vascorp/vistas/reportes_excel/csv_fe/' . $nombre . '.txt';
+
             //?destino prueba
-            $destino = 'c:/prueba/guiaremision/' . $nombre . '.csv';
+            //$destino = 'c:/prueba/guiaremision/' . $nombre . '.csv';
+            //$destino = '\\\\jackydc\\pedidos\\' . $nombre . '.csv';
+            //$destino = '\\\\jackydc\\daemonOSE21\\documents\\in\\guia-remision\\' . $nombre . '.csv';
+
 
             //!destino produccion
             //!$destino = 'c:/daemonOSE21/documents/in/guiaremision/'.$nombre.'.csv';
+            $destino = '\\\\Facturacion-pc\\d\\guias-remision\\' . $nombre . '.csv';
 
-            //copy($origen, $destino);
-            rename($origen, $destino);
+
+
+            copy($origen, $destino);
+            //rename($origen, $destino);
         }
 
         $respuesta = "okA";
@@ -4467,6 +4501,302 @@ class ControladorFacturacion
             					})
 
             		</script>';
+            }
+        }
+    }
+
+    //**NUEVA VERSION DE FATURACION */
+    static public function ctrFacturarN()
+    {
+        if (isset($_POST["codPedido"])) {
+
+            // Datos
+            $codigo = $_POST["codPedido"];
+            $tipoDocumento = $_POST["tdoc"];
+            $almacen = $_SESSION["almacen"] == "01" ? "stock01" : "stock05";
+            $codigoAlmacen = $_SESSION["almacen"] == "01" ? "01" : "05";
+            $documento = str_replace('-', '', $_POST["serie"]);
+            $cliente = $_POST["codCli"];
+            $vendedor = $_POST["codVen"];
+            $dscto = $_POST["dscto"];
+            $usuario = $_POST["idUsuario"];
+            $docOrigen = $_POST["codPedido"];
+
+            $docDestino = !empty($_POST['serieSeparado']) ? $_POST['serieSeparado'] : null;
+            $docDest = $docDestino ? str_replace('-', '', $docDestino) : '';
+
+            $chofer = !empty($_POST['chofer']) ? $_POST['chofer'] : null;
+            $movilidad = !empty($_POST['carro']) ? $_POST['carro'] : null;
+            $peso = !empty($_POST['peso']) ? $_POST['peso'] : null;
+            $bultos = !empty($_POST['bultos']) ? $_POST['bultos'] : null;
+
+            $tipNota = !empty($_POST['tdocorigen']) ? $_POST['tdocorigen'] : null;
+            $origenVenta = !empty($_POST['serieOrigen']) ? $_POST['serieOrigen'] : null;
+            $fechaOrigen = !empty($_POST['fechaOrigen']) ? $_POST['fechaOrigen'] : null;
+            $notaMotivo = !empty($_POST['notaMotivo']) ? $_POST['notaMotivo'] : null;
+
+            $usureg = $_SESSION["nombre"];
+            $pcreg = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+
+            // Determinar tipo y nombreTipo según tipoDocumento
+            switch ($tipoDocumento) {
+                case "00":
+                    $tipo = "S01";
+                    $nombreTipo = "GUIA REMISION";
+                    $stock = ModeloArticulos::mdlActualizarStockPedido($codigo, $almacen);
+                    $serie = (substr($documento, 0, 1) == "0") ? substr($documento, 0, 3) : substr($documento, 0, 4);
+                    ModeloFacturacion::mdlActualizarTalonarioGuia($serie);
+                    break;
+                case "01":
+                    $tipo = "S03";
+                    $nombreTipo = "FACTURA";
+                    $stock = ModeloArticulos::mdlActualizarStockPedido($codigo, $almacen);
+                    $serie = substr($documento, 0, 4);
+                    ModeloFacturacion::mdlActualizarTalonarioFactura($serie);
+                    $cuentas = self::ctrRegistrarCuentaCorriente($codigo, $tipoDocumento, $documento, $usuario, $usureg, $pcreg);
+                    break;
+                case "03":
+                    $tipo = "S02";
+                    $nombreTipo = "BOLETA";
+                    $stock = ModeloArticulos::mdlActualizarStockPedido($codigo, $almacen);
+                    $serie = substr($documento, 0, 4);
+                    ModeloFacturacion::mdlActualizarTalonarioBoleta($serie);
+                    $cuentas = self::ctrRegistrarCuentaCorriente($codigo, $tipoDocumento, $documento, $usuario, $usureg, $pcreg);
+                    break;
+                case "09":
+                    $tipo = "S70";
+                    $nombreTipo = "PROFORMA";
+                    $stock = ModeloArticulos::mdlActualizarStockPedido($codigo, $almacen);
+                    $serie = substr($documento, 0, 3);
+                    ModeloFacturacion::mdlActualizarTalonarioProforma($serie);
+                    $cuentas = self::ctrRegistrarCuentaCorriente($codigo, $tipoDocumento, $documento, $usuario, $usureg, $pcreg);
+                    break;
+                case "07":
+                    $tipo = "E05";
+                    $nombreTipo = "NTCD";
+                    $stock = ModeloArticulos::mdlActualizarStockPedidoB($codigo, $almacen);
+                    $serie = substr($documento, 0, 4);
+                    ModeloFacturacion::mdlActualizarNotaSerie("nota_credito", "serie_nc", $serie);
+                    $nota = self::ctrRegistrarNotaCredito($documento, $tipNota, $origenVenta, $fechaOrigen, $notaMotivo, $usuario);
+                    break;
+                default:
+                    throw new Exception("Tipo de documento desconocido.");
+            }
+
+            if ($stock == "ok") {
+                $movimientos = self::ctrRegistrarMovimientos($codigo, $tipo, $documento, $cliente, $vendedor, $dscto, $nombreTipo, $codigoAlmacen);
+
+                $ventas = self::ctrRegistrarVentas($codigo, $tipo, $documento, $docDest, $docOrigen, $usuario, $nombreTipo, $usureg, $pcreg, $chofer, $movilidad, $peso, $bultos);
+
+                ModeloFacturacion::mdlActualizarPedidoF($codigo);
+                ModeloFacturacion::mdlActualizarPedidoB($codigo);
+                self::ctrConfirmacion($tipo, $documento);
+            }
+
+            //return $movimientos;
+            // echo '<pre>';
+            // print_r($nota);
+            // echo '</pre>';
+        }
+    }
+
+    static public function ctrRegistrarMovimientos($codigo, $tipo, $documento, $cliente, $vendedor, $dscto, $nombreTipo, $codigoAlmacen)
+    {
+        date_default_timezone_set("America/Lima");
+        $fecha = date("Y-m-d");
+
+        $respuesta = ModeloPedidos::mdlMostraDetallesTemporal("detalle_temporal", $codigo);
+
+        $detalle = "";
+        foreach ($respuesta as $key => $value) {
+            $total = $value["cantidad"] * $value["precio"] * ((100 - $dscto) / 100);
+            $cantidad = ($tipo == "E05") ? -$value["cantidad"] : $value["cantidad"];
+
+            $detalle .= "('" . $tipo . "','" . $documento . "','" . $fecha . "','" . $value["articulo"] . "','" . $cliente . "','" . $vendedor . "'," . $cantidad . "," . $value["precio"] . ",0," . $dscto . "," . $total . ",'" . $nombreTipo . "','" . $codigoAlmacen . "')";
+
+            if ($key < count($respuesta) - 1) {
+                $detalle .= ",";
+            }
+        }
+
+        $rptMovimientos = ModeloFacturacion::mdlRegistrarMovimientos($detalle);
+
+        return $rptMovimientos;
+    }
+
+    static public function ctrRegistrarVentas($codigo, $tipo, $documento, $docDest, $docOrigen, $usuario, $nombreTipo, $usureg, $pcreg, $chofer, $movilidad, $peso, $bultos)
+    {
+        $respuestaDoc = ModeloPedidos::mdlMostraPedidosCabecera($codigo);
+
+        $signo = $tipo == "E05" ? -1 : 1;
+
+        $datosD = array(
+            "tipo" => $tipo,
+            "documento" => $documento,
+            "neto" => $signo * $respuestaDoc["op_gravada"],
+            "igv" => $signo * $respuestaDoc["igv"],
+            "dscto" => $signo * $respuestaDoc["descuento_total"],
+            "total" => $signo * $respuestaDoc["total"],
+            "cliente" => $respuestaDoc["cod_cli"],
+            "vendedor" => $respuestaDoc["vendedor"],
+            "agencia" => $respuestaDoc["agencia"],
+            "lista_precios" => $respuestaDoc["lista"],
+            "condicion_venta" => $respuestaDoc["condicion_venta"],
+            "doc_destino" => $docDest,
+            "doc_origen" => $docOrigen,
+            "usuario" => $usuario,
+            "tipo_documento" => $nombreTipo,
+            "cuenta" => "",
+            "usureg" => $usureg,
+            "pcreg" => $pcreg,
+            "chofer" => $chofer,
+            "carro" => $movilidad,
+            "peso" => $peso,
+            "bultos" => $bultos
+        );
+
+        $respuestaVentas = ModeloFacturacion::mdlRegistrarDocumento($datosD);
+
+        return $respuestaVentas;
+    }
+
+    static public function ctrRegistrarCuentaCorriente($codigo, $tipoDocumento, $documento, $usuario, $usureg, $pcreg)
+    {
+        $respuestaDoc = ModeloPedidos::mdlMostraPedidosCabecera($codigo);
+
+        date_default_timezone_set("America/Lima");
+        $fecha = date("Y-m-d");
+        $fecha_ven = date("Y-m-d", strtotime($fecha . "+ " .  $respuestaDoc["dias"] . " day"));
+
+        $datos = array(
+            "tipo_doc" => $tipoDocumento,
+            "num_cta" => $documento,
+            "cliente" => $respuestaDoc["cod_cli"],
+            "vendedor" => $respuestaDoc["vendedor"],
+            "fecha_ven" => $fecha_ven,
+            "monto" => $respuestaDoc["total"],
+            "cod_pago" => $tipoDocumento,
+            "usuario" => $usuario,
+            "saldo" => $respuestaDoc["total"],
+            "usureg" => $usureg,
+            "pcreg" => $pcreg
+        );
+
+        $respuestaCuenta = ModeloFacturacion::mdlGenerarCtaCte($datos);
+
+        return $respuestaCuenta;
+    }
+
+    static public function ctrRegistrarNotaCredito($documento, $tipNota, $origenVenta, $fechaOrigen, $notaMotivo, $usuario)
+    {
+        $arregloNota = array(
+            "tipo" => 'E05',
+            "documento" => $documento,
+            "tipo_doc" => $tipNota,
+            "doc_origen" => $origenVenta,
+            "fecha_origen" => $fechaOrigen,
+            "motivo" => $notaMotivo,
+            "tip_cont" => 'NTCD',
+            "observacion" => '',
+            "usuario" => $usuario
+        );
+
+        $notaCredito = ModeloFacturacion::mdlIngresarNotaCD($arregloNota);
+        return $notaCredito;
+    }
+
+    static public function ctrConfirmacion($tipo, $documento)
+    {
+
+        $impresion = (substr($documento, 0, 1) == "0") ? "guia_remision" : "impresion_guia";
+
+        $config = array(
+            "S01" => array(
+                "title" => "Se Genero la Guia de Remisión $documento",
+                //"url" => "vistas/reportes_ticket/guia_remision.php?codigo=$documento&tipo=S01"
+                "url" => "vistas/reportes_ticket/$impresion.php?codigo=$documento&tipo=S01"
+            ),
+            "S02" => array(
+                "title" => "Se Genero la Boleta $documento",
+                "url" => "vistas/reportes_ticket/impresion_bolfact.php?tipo=S02&documento=$documento"
+            ),
+            "S03" => array(
+                "title" => "Se Genero la Factura $documento",
+                "url" => "vistas/reportes_ticket/impresion_bolfact.php?tipo=S03&documento=$documento"
+            ),
+            "S70" => array(
+                "title" => "Se Genero la Proforma $documento",
+                "url" => "extensiones/tcpdf/pdf/reporte_proforma.php?tipo=S70&documento=$documento"
+            ),
+            "E05" => array(
+                "title" => "Se Genero la Nota cred. $documento",
+                "url" => ""
+            )
+        );
+
+        if (isset($config[$tipo])) {
+            echo self::generateConfirmationScript($config[$tipo]["title"], $config[$tipo]["url"]);
+        } else {
+            throw new Exception("Tipo de documento desconocido.");
+        }
+    }
+
+    static private function generateConfirmationScript($title, $url)
+    {
+        $script = '<script>
+        swal({
+            type: "success",
+            title: "' . $title . '",
+            showConfirmButton: true,
+            confirmButtonText: "Cerrar"
+        }).then(function (result) {
+            if (result.value) {';
+
+        if (!empty($url)) {
+            $script .= 'window.open("' . $url . '", "_blank");';
+        }
+
+        $script .= 'window.location = "pedidoscv";
+                }
+            });
+        </script>';
+
+        return $script;
+    }
+
+    static public function ctrActualizarGuiaRemision()
+    {
+        if (isset($_POST["codPedidoC"])) {
+
+            $datos = array(
+                "tipo" => "S01",
+                "documento" => $_POST["codPedidoC"],
+                "chofer" => $_POST["chofer"],
+                "carro" => $_POST["carro"],
+                "peso" => $_POST["peso"],
+                "bultos" => $_POST["bultos"],
+            );
+
+            $respuesta = ModeloFacturacion::mdlActualizarGuiaRemision($datos);
+            if ($respuesta == "ok") {
+
+                echo '<script>
+
+                swal({
+                    type: "success",
+                    title: "El documento ha sido anulada correctamente",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar",
+                    closeOnConfirm: false
+                    }).then(function(result){
+                        if (result.value) {
+
+                        window.location = "guias-remision";
+
+                        }
+                    })
+    
+                </script>';
             }
         }
     }

@@ -565,7 +565,9 @@
                                         $_GET["ruta"] == "urgencias-almacen" ||
                                         $_GET["ruta"] == "urgencias-corte" ||
                                         $_GET["ruta"] == "urgencias-plan" ||
-                                        $_GET["ruta"] == "urgencias-maestro"
+                                        $_GET["ruta"] == "urgencias-maestro" ||
+                                        $_GET["ruta"] == "transferencia-apt" ||
+                                        $_GET["ruta"] == "crear-transferencias-apt"
                                     ) echo 'active'; ?>">
 
                     <a href="#">
@@ -1046,6 +1048,18 @@
 
                                 </li>
                             </ul>
+                        </li>
+
+                        <li class="<?php if (
+                                        $_GET["ruta"] == "transferencias-apt" ||
+                                        $_GET["ruta"] == "crear-transferencias-apt"
+                                    ) echo 'active'; ?>">
+
+                            <a href="transferencias-apt">
+                                <i class="fa fa-circle-o text-green"></i>
+                                <span>Transferencias</span>
+                            </a>
+
                         </li>
 
                     </ul>

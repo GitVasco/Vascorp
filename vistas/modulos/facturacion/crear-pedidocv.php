@@ -111,44 +111,25 @@
 
                                             <?php
 
-                                            $valor = $_GET["pedido"];
-
-                                            $pedido = ControladorPedidos::ctrMostrarTemporal($valor);
-                                            //var_dump("pedido", $pedido);
+                                            $pedidoCodigo = $_GET["pedido"];
+                                            $pedido = ControladorPedidos::ctrMostrarTemporal($pedidoCodigo);
 
                                             if ($pedido["codigo"] != "") {
-
                                                 $item = "codigo";
                                                 $valor = $pedido["cliente"];
+                                                $clienteSeleccionado = ControladorClientes::ctrMostrarClientesP($item, $valor);
 
-                                                $clientes = ControladorClientes::ctrMostrarClientesP($item, $valor);
-                                                //var_dump($clientes["nombreB"]);
+                                                echo '<option value="' . $clienteSeleccionado["codigo"] . '">' . $clienteSeleccionado["nombreB"] . '</option>';
 
-                                                echo '<option value="' . $clientes["codigo"] . '">' . $clientes["nombreB"] . '</option>';
+                                                $todosLosClientes = ControladorClientes::ctrMostrarClientesP(null, null);
 
-                                                $client2 = ControladorClientes::ctrMostrarClientesP(null, null);
-
-                                                //var_dump($client2);
-
-                                                foreach ($client2 as $key => $value) {
-
-                                                    echo '<option value="' . $value["codigo"] . '">' . $value["nombreB"] . '</option>';
+                                                foreach ($todosLosClientes as $cliente) {
+                                                    echo '<option value="' . $cliente["codigo"] . '">' . $cliente["nombreB"] . '</option>';
                                                 }
                                             } else {
-
-                                                // $clientes = ControladorClientes::ctrMostrarClientesP(null, null);
-                                                // var_dump($clientes);
-
                                                 echo '<option value="">Seleccione Cliente</option>';
-                                                //var_dump($clientes);
-
-                                                // foreach ($clientes as $key => $value) {
-
-                                                //     echo '<option value="'.$value["codigo"].'">'.$value["nombreB"].'</option>';
-
-                                                // }
-
                                             }
+
 
 
                                             ?>
@@ -199,37 +180,28 @@
                                             <?php
 
                                             $valor = $_GET["pedido"];
-
                                             $pedido = ControladorPedidos::ctrMostrarTemporal($valor);
-                                            //var_dump("pedido", $pedido["vendedor"]);
 
                                             if ($pedido["vendedor"] != "") {
-
                                                 $vendedor = ControladorVendedores::ctrMostrarVendedores("codigo", $pedido["vendedor"]);
-                                                //var_dump($vendedor);
-
                                                 echo '<option value="' . $vendedor["codigo"] . '">' . $vendedor["codigo"] . ' - ' . $vendedor["descripcion"] . '</option>';
 
-                                                $vend2 = ControladorVendedores::ctrMostrarVendedores(null, null);
-
-                                                //var_dump($vend2);
-
-                                                foreach ($vend2 as $key => $value) {
-
-                                                    echo '<option value="' . $value["codigo"] . '">' . $value["codigo"] . ' - ' . $value["descripcion"] . '</option>';
-                                                }
+                                                $vendedores = ControladorVendedores::ctrMostrarVendedores(null, null);
                                             } else {
-
-                                                $vendedor = ControladorVendedores::ctrMostrarVendedores(null, null);
-
                                                 echo '<option value="">Seleccione Vendedor</option>';
-                                                //var_dump($vendedor);
-
-                                                foreach ($vendedor as $key => $value) {
-
-                                                    echo '<option value="' . $value["codigo"] . '">' . $value["codigo"] . ' - ' . $value["descripcion"] . '</option>';
-                                                }
+                                                $vendedores = ControladorVendedores::ctrMostrarVendedores(null, null);
                                             }
+
+                                            // Ordenamos los vendedores por descripción alfabéticamente
+                                            usort($vendedores, function ($a, $b) {
+                                                return strcmp($a["codigo"], $b["codigo"]);
+                                            });
+
+                                            // Ahora generamos las opciones ya ordenadas
+                                            foreach ($vendedores as $key => $value) {
+                                                echo '<option value="' . $value["codigo"] . '">' . $value["codigo"] . ' - ' . $value["descripcion"] . '</option>';
+                                            }
+
 
                                             ?>
 
@@ -326,69 +298,37 @@
                                     <div class="box box-primary" id="updDiv">
                                         <?php
 
-                                        #tremos la lista de items
                                         $listaArtPed = ControladorPedidos::ctrMostrarDetallesTemporalB($_GET["pedido"]);
-                                        //var_dump("listaArtPed", $listaArtPed);
 
-                                        foreach ($listaArtPed as $key => $value) {
+                                        foreach ($listaArtPed as $articuloPedido) {
+                                            $total_detalle = $articuloPedido["cantidad"] * $articuloPedido["precio"];
 
-                                            //$infoArtPed = controladorArticulos::ctrMostrarArticulos($value["articulo"]);
-
-                                            $total_detalle = $value["cantidad"] * $value["precio"];
-                                            #var_dump("infoArtPed", $infoArtPed);
-
-                                            echo '  <div class="row mundito" style="padding:5px 15px">
-
+                                            echo '<div class="row mundito" style="padding:5px 15px">
                                                 <div class="col-xs-5" style="padding-right:0px">
-
                                                     <div class="input-group">
-
                                                         <span class="input-group-addon">
-
-                                                            <button type="button" class="btn btn-danger btn-xs quitarArtPed" articulo="' . $value["articulo"] . '"><i class="fa fa-times"></i></button>
-
+                                                            <button type="button" class="btn btn-danger btn-xs quitarArtPed" articulo="' . $articuloPedido["articulo"] . '"><i class="fa fa-times"></i></button>
                                                         </span>
-
-                                                        <input type="text" class="form-control nuevaDescripcionArticulo input-sm" articulo="' . $value["articulo"] . '" name="agregarProducto" value="' . $value["packing"] . '" articuloP="' . $value["articulo"] . '" readonly required>
-
+                                                        <input type="text" class="form-control nuevaDescripcionArticulo input-sm" articulo="' . $articuloPedido["articulo"] . '" name="agregarProducto" value="' . $articuloPedido["packing"] . '" articuloP="' . $articuloPedido["articulo"] . '" readonly required>
                                                     </div>
-
                                                 </div>
-
                                                 <div class="col-xs-2">
-
-                                                    <input type="number" class="form-control nuevaCantidadArtPed input-sm" name="nuevaCantidadArtPed" min="1" value="' . $value["cantidad"] . '" artPed="' . $value["pedidos"] . '" nuevoArtPed="0" required>
-
+                                                    <input type="number" class="form-control nuevaCantidadArtPed input-sm" name="nuevaCantidadArtPed" min="1" value="' . $articuloPedido["cantidad"] . '" artPed="' . $articuloPedido["pedidos"] . '" nuevoArtPed="0" required>
                                                 </div>
-
                                                 <div class="col-xs-2">
-
-                                                    <input type="text" class="form-control nuevoPunit input-sm" name="nuevoPunit" min="1" value="' . $value["precio"] . '" readonly>
-
+                                                    <input type="text" class="form-control nuevoPunit input-sm" name="nuevoPunit" min="1" value="' . $articuloPedido["precio"] . '" readonly>
                                                 </div>                                                
-
                                                 <div class="col-xs-1 ingresoPrecio" style="padding-left:0px">
-
                                                     <div class="input-group">
-
-                                                        <input type="text" class="form-control nuevoPrecioArticulo input-sm" precioReal="' . $value["precio"] . '" name="nuevoPrecioArticulo" value="' . round($total_detalle, 2) . '" readonly required>
-
+                                                        <input type="text" class="form-control nuevoPrecioArticulo input-sm" precioReal="' . $articuloPedido["precio"] . '" name="nuevoPrecioArticulo" value="' . round($total_detalle, 2) . '" readonly required>
                                                     </div>
-
                                                 </div>
-
                                                 <div class="col-xs-1">
-
-                                                    <input type="text" class="form-control nuevoPunitC input-sm" name="nuevoPunitC" min="1" value="' . ($value["precio"] * 1.18) . '" readonly>
-
-                                                </div> 
-                                                
+                                                    <input type="text" class="form-control nuevoPunitC input-sm" name="nuevoPunitC" min="1" value="' . ($articuloPedido["precio"] * 1.18) . '" readonly>
+                                                </div>
                                                 <div class="col-xs-1">
-
                                                     <input type="text" class="form-control nuevoTotalC input-sm" name="nuevoTotalC" min="1" value="' . round($total_detalle * 1.18, 2) . '" readonly>
-
-                                                </div>                                                 
-
+                                                </div>
                                             </div>';
                                         }
 
@@ -921,7 +861,7 @@
                             <input type="text" class="form-control input-md" id='modelo' name='modelo'>
                         </div>
                         <div class="form-group col-lg-2">
-                            <button class='btn btn-primary btn-md modificarArtPedB' data-toggle='modal' data-target='#modalModificarClienteP'>Agregar</button>
+                            <button class='btn btn-primary btn-md modificarArtPedC' data-toggle='modal' data-target='#modalModificarClienteP'>Agregar</button>
                         </div>
 
                         <div class="form-group col-lg-2">
@@ -1012,111 +952,39 @@
                                 </table>
 
                                 <?php
-
-                                $modelo = ControladorPedidos::ctrPedidoImpresionMod($codigo);
-                                //var_dump($modelo);
-
-                                foreach ($modelo as $key => $value) {
-
-                                    echo '<table class="tablaVerPed" border="1" style="border:dashed" align="left" width="700px">';
-
-                                    $respuesta = ControladorPedidos::ctrPedidoImpresion($codigo, $value["modelo"]);
-
-                                    foreach ($respuesta as $key => $value2) {
-
-                                        if ($value2["t1"] <= 0) {
-
-                                            $value2["t1"] = " ";
-                                        } else {
-
-                                            $value2["t1"];
-                                        }
-
-                                        if ($value2["t2"] <= 0) {
-
-                                            $value2["t2"] = " ";
-                                        } else {
-
-                                            $value2["t2"];
-                                        }
-
-                                        if ($value2["t3"] <= 0) {
-
-                                            $value2["t3"] = " ";
-                                        } else {
-
-                                            $value2["t3"];
-                                        }
-
-                                        if ($value2["t4"] <= 0) {
-
-                                            $value2["t4"] = " ";
-                                        } else {
-
-                                            $value2["t4"];
-                                        }
-
-                                        if ($value2["t5"] <= 0) {
-
-                                            $value2["t5"] = " ";
-                                        } else {
-
-                                            $value2["t5"];
-                                        }
-
-                                        if ($value2["t6"] <= 0) {
-
-                                            $value2["t6"] = " ";
-                                        } else {
-
-                                            $value2["t6"];
-                                        }
-
-                                        if ($value2["t7"] <= 0) {
-
-                                            $value2["t7"] = " ";
-                                        } else {
-
-                                            $value2["t7"];
-                                        }
-
-                                        if ($value2["t8"] <= 0) {
-
-                                            $value2["t8"] = " ";
-                                        } else {
-
-                                            $value2["t8"];
-                                        }
-
-                                        echo '<tr>
-                        <th style="width:10%;font-weight: normal;text-align:left;"><buttton class="btn-link btnBorrarModelo" modelo="' . $value2["modelo"] . '" pedido="' . $_GET["pedido"] . '">' . $value2["modelo"] . '</button></th>
-
-                        <th style="width:20%;text-align:left;">' . $value2["color"] . '</th>
-
-                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="' . $value2["modelo"] . $value2["cod_color"] . '1" pedido="' . $_GET["pedido"] . '">' . $value2["t1"] . '</button></th>
-
-                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="' . $value2["modelo"] . $value2["cod_color"] . '2" pedido="' . $_GET["pedido"] . '">' . $value2["t2"] . '</button></th>
-
-                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="' . $value2["modelo"] . $value2["cod_color"] . '3" pedido="' . $_GET["pedido"] . '">' . $value2["t3"] . '</button></th>
-
-                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="' . $value2["modelo"] . $value2["cod_color"] . '4" pedido="' . $_GET["pedido"] . '">' . $value2["t4"] . '</button></th>
-
-                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="' . $value2["modelo"] . $value2["cod_color"] . '5" pedido="' . $_GET["pedido"] . '">' . $value2["t5"] . '</button></th>
-
-                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="' . $value2["modelo"] . $value2["cod_color"] . '6" pedido="' . $_GET["pedido"] . '">' . $value2["t6"] . '</button></th>
-                        
-                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="' . $value2["modelo"] . $value2["cod_color"] . '7" pedido="' . $_GET["pedido"] . '">' . $value2["t7"] . '</button></th>
-
-                        <th style="width:6%;font-weight: normal;"><buttton class="btn-link btnBorrarModelo" modelo="' . $value2["modelo"] . $value2["cod_color"] . '8" pedido="' . $_GET["pedido"] . '">' . $value2["t8"] . '</button></th>
-
-                        <th style="width:6%">' . $value2["total"] . '</th>
-                        </tr>';
+                                $respuestas = ModeloPedidos::mdlPedidoImpresionC($codigo);
+                                // Comienza a crear la tabla HTML
+                                echo "<table border='1' class='tablaVerPed' style='border:dashed' align='left' width='700px'>";
+                                $prevModelo = null;
+                                foreach ($respuestas as $row) {
+                                    // Verifica si el modelo ha cambiado
+                                    if ($prevModelo !== null && $prevModelo != $row['modelo']) {
+                                        // Agrega una línea indicando el cambio de modelo
+                                        echo "<tr><td colspan='13' style='background-color: black; height: 5px;'></td></tr>";
                                     }
 
-                                    echo '</table>';
+                                    // Muestra la información en una nueva fila
+                                    echo "<tr>
+                                        <td style='width:10%;font-weight: normal;'>" . $row['modelo'] . "</td>
+                                        <td style='width:20%;font-weight: normal;'>" . $row['color'] . "</td>
+                                        <td style='width:6%;font-weight: bold;'>" . ($row['t1'] == 0 ? '' : $row['t1']) . "</td>
+                                        <td style='width:6%;font-weight: bold;'>" . ($row['t2'] == 0 ? '' : $row['t2']) . "</td>
+                                        <td style='width:6%;font-weight: bold;'>" . ($row['t3'] == 0 ? '' : $row['t3']) . "</td>
+                                        <td style='width:6%;font-weight: bold;'>" . ($row['t4'] == 0 ? '' : $row['t4']) . "</td>
+                                        <td style='width:6%;font-weight: bold;'>" . ($row['t5'] == 0 ? '' : $row['t5']) . "</td>
+                                        <td style='width:6%;font-weight: bold;'>" . ($row['t6'] == 0 ? '' : $row['t6']) . "</td>
+                                        <td style='width:6%;font-weight: bold;'>" . ($row['t7'] == 0 ? '' : $row['t7']) . "</td>
+                                        <td style='width:6%;font-weight: bold;'>" . ($row['t8'] == 0 ? '' : $row['t8']) . "</td>
+                                        <td style='width:6%;font-weight: bold;'>" . $row['total'] . "</td>
+                                    </tr>";
+
+                                    // Actualiza el valor previo del modelo
+                                    $prevModelo = $row['modelo'];
                                 }
 
+                                echo "</table>";
                                 ?>
+
 
                                 <table border="1" align="left" width="700px">
 
@@ -1174,7 +1042,7 @@ MODAL MODIFICAR ARTICULOS
         <div class="modal-content">
 
             <!-- <form role="form" method="post" class="formularioPedido"> -->
-            <form role="form" method="post" class="formularioPedido" onkeypress="return anular(event)">
+            <form role="form" method="post" class="formularioPedido">
 
                 <!--=====================================
                 CABEZA DEL MODAL
@@ -1388,7 +1256,6 @@ MODAL MODIFICAR ARTICULOS
 
                 </div>
 
-
                 <!--=====================================
                 PIE DEL MODAL
                 ======================================-->
@@ -1397,7 +1264,7 @@ MODAL MODIFICAR ARTICULOS
 
                     <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
 
-                    <button type="submit" class="btn btn-primary">Guardar Modelo</button>
+                    <button type="button" id="guardarModelo" class="btn btn-primary">Guardar Modelo</button>
 
                 </div>
 
@@ -1407,8 +1274,8 @@ MODAL MODIFICAR ARTICULOS
 
             <?php
 
-            $crearPedido = new ControladorPedidos();
-            $crearPedido->ctrCrearPedido();
+            /* $crearPedido = new ControladorPedidos();
+            $crearPedido->ctrCrearPedido(); */
 
             ?>
 
@@ -1678,12 +1545,4 @@ MODAL PARA GENERAR EL PEDIDO
             }
         });
     });
-
-    function anular(e) {
-
-        tecla = (document.all) ? e.keyCode : e.which;
-        //console.log(tecla);
-        return (tecla != 13);
-
-    }
 </script>

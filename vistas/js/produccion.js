@@ -979,6 +979,7 @@ $(".tablaEditarDetalleIngreso ").on(
         var saldo = $(this).attr("saldo");
         var idcierre = $(this).attr("idcierre");
         var sector = $(this).attr("sector");
+        var almacen = $(this).attr("almacen");
 
         var maximo = Number(cantidad) + Number(saldo);
         document.getElementById("cantidad").setAttribute("max", maximo);
@@ -995,6 +996,7 @@ $(".tablaEditarDetalleIngreso ").on(
         $("#codigo").val(codigo);
         $("#idcierre").val(idcierre);
         $("#sector").val(sector);
+        $("#almacen").val(almacen);
     }
 );
 

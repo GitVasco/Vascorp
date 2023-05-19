@@ -35,6 +35,14 @@
 
                 </div>
 
+                <div class="col-lg-2 form-group">
+                    <button class="btn btn-primary  btnFacturados" title="Ver Pedidos FACTURADOS">
+
+                        FACTURADOS
+
+                    </button>
+                </div>
+
             </div>
 
             <div class="box-body">

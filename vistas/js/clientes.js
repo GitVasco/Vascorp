@@ -42,10 +42,20 @@ $(".tablaClientes").DataTable({
     },
 });
 // VALIDACIÓN DE UN DOCUMENTO EXISTENTE EN LA BD AL REGISTRAR
-$("#documentoCliente").change(function () {
-    var documento = $(this).val();
+function validarDocumento(documento, tipo) {
+    if (tipo === "1" && documento.length === 8) {
+        return true;
+    } else if (tipo === "6" && documento.length === 11) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function verificarDocumentoExistente(documento, tipo) {
     var datos = new FormData();
     datos.append("documento", documento);
+
     $.ajax({
         url: "ajax/clientes.ajax.php",
         type: "POST",
@@ -56,17 +66,43 @@ $("#documentoCliente").change(function () {
         dataType: "json",
         success: function (respuesta) {
             if (respuesta) {
-                Command: toastr["error"](
-                    "El DNI ya existe!, por favor ingresar otro"
+                toastr["error"](
+                    "El documento ya existe!, por favor ingresar otro"
                 );
-                $("#documentoCliente").val("");
-                $("#documentoCliente").focus();
+                $("#documentoCliente").val("").focus();
                 $("#tipo_persona").val("");
-            } else {
+                $("#ape_paterno").val("");
+                $("#ape_materno").val("");
+                $("#nombres").val("");
+                $("#nuevaDireccion").val("");
+
+                $("#nuevoUbiPro").val("");
+                $("#nuevoUbiPro").selectpicker("refresh");
             }
         },
     });
+}
+
+$("#documentoCliente").change(function () {
+    var documento = $(this).val();
+    var tipo = $("#tipo_documento").val();
+
+    if (validarDocumento(documento, tipo)) {
+        verificarDocumentoExistente(documento, tipo);
+    } else {
+        toastr["error"]("Revisar la cantidad de dígitos del documento");
+        $("#documentoCliente").val("").focus();
+        $("#tipo_persona").val("");
+        $("#ape_paterno").val("");
+        $("#ape_materno").val("");
+        $("#nombres").val("");
+        $("#nuevaDireccion").val("");
+
+        $("#nuevoUbiPro").val("");
+        $("#nuevoUbiPro").selectpicker("refresh");
+    }
 });
+
 // VALIDACIÓN DE select tipo cliente AL REGISTRAR
 $("#documentoCliente").keyup(function () {
     var documento = $(this).val();
@@ -106,6 +142,16 @@ $("#codigoCliente").change(function () {
                 );
                 $("#codigoCliente").val("");
                 $("#codigoCliente").focus();
+
+                /* $("#documentoCliente").val("").focus();
+                $("#tipo_persona").val("");
+                $("#ape_paterno").val("");
+                $("#ape_materno").val("");
+                $("#nombres").val("");
+                $("#nuevaDireccion").val("");
+
+                $("#nuevoUbiPro").val("");
+                $("#nuevoUbiPro").selectpicker("refresh"); */
             } else {
                 $(".msgError").remove();
             }

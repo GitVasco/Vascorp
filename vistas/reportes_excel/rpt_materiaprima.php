@@ -34,6 +34,7 @@ $linea = $_GET["linea"];
 $objPHPExcel = new PHPExcel();
 
 /* 
+
 * CONFIGURAMOS AL CREADOR DEL ARCHIVO
 */
 $objPHPExcel->getProperties()->setCreator("Corp. Vasco"); //autor
@@ -342,7 +343,7 @@ $objPHPExcel->getActiveSheet()->SetCellValue("B$fila", 'CODIGO');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "B$fila");
 $objPHPExcel->getActiveSheet()->getStyle("B$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("C$fila", 'COD. LINEA');
+$objPHPExcel->getActiveSheet()->SetCellValue("C$fila", 'COD. FABRICA');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "C$fila");
 $objPHPExcel->getActiveSheet()->getStyle("C$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
@@ -484,7 +485,7 @@ while ($respDetalle = mysql_fetch_array($sqlDetalle)) {
 
     $objPHPExcel->getActiveSheet()->setCellValueExplicit("B$fila", utf8_encode($respDetalle["codigo"]), PHPExcel_Cell_DataType::TYPE_STRING);
 
-    $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", utf8_encode($respDetalle["codlinea"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", utf8_encode($respDetalle["CodFab"]));
 
     $objPHPExcel->getActiveSheet()->SetCellValue("D$fila", utf8_encode($respDetalle["linea"]));
 

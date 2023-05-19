@@ -36,9 +36,9 @@
 
                     echo '<button class="btn btn-primary  btnCrearPedido" pedido="' . $pedido . '" title="Crear Pedido">
 
-                  Crear Pedido
+                        Crear Pedido
 
-                </button>';
+                    </button>';
 
 
                     ?>
@@ -159,7 +159,7 @@
                             <th>Estado</th>
                             <th>Usuario</th>
                             <th>Fecha</th>
-                            <th width="200px">Acciones</th>
+                            <th width="240px">Acciones</th>
                         </tr>
 
                     </thead>
@@ -180,7 +180,7 @@ MODAL FACTURAR
 
 <div id="modalFacturar" class="modal fade" role="dialog">
 
-    <div class="modal-dialog" style="width: 50% !important;">
+    <div class="modal-dialog" style="width: 70% !important;">
 
         <div class="modal-content">
 
@@ -404,6 +404,8 @@ MODAL FACTURAR
 
                             <div class="form-group col-lg-4">
 
+                                <label>Chofer</label>
+
                                 <div class="input-group">
 
                                     <span class="input-group-addon"><i class="fa fa-share-square-o"></i></span>
@@ -429,6 +431,8 @@ MODAL FACTURAR
                             </div>
 
                             <div class="form-group col-lg-4">
+
+                                <label>Movilidad</label>
 
                                 <div class="input-group">
 
@@ -456,6 +460,8 @@ MODAL FACTURAR
 
                             <div class="form-group col-lg-2">
 
+                                <label>Peso Bruto Kg.</label>
+
                                 <div class="input-group">
 
                                     <span class="input-group-addon"><i class="fa fa-key"></i></span>
@@ -468,6 +474,8 @@ MODAL FACTURAR
 
                             <div class="form-group col-lg-2">
 
+                                <label>N° Bultos</label>
+
                                 <div class="input-group">
 
                                     <span class="input-group-addon"><i class="fa fa-key"></i></span>
@@ -479,8 +487,6 @@ MODAL FACTURAR
                             </div>
 
                         </div>
-
-
 
                     </div>
 
@@ -503,7 +509,7 @@ MODAL FACTURAR
             <?php
 
             $facturar = new controladorFacturacion();
-            $facturar->ctrFacturar();
+            $facturar->ctrFacturarN();
 
             ?>
 

@@ -89,6 +89,8 @@
 
                             <input type="hidden" class="form-control input-md" name="idcierre" id="idcierre">
 
+                            <input type="hidden" class="form-control input-md" name="almacen" id="almacen">
+
                             <label for="" class="col-form-label col-lg-1 col-md-3 col-sm-3">Artículo</label>
                             <div class="col-lg-2">
 
