@@ -235,54 +235,10 @@ class ControladorPedidos
             );
 
             $respuestaA = ModeloPedidos::mdlActualizarTotalesPedido($datos);
-            echo '<pre>';
-            print_r($datos);
-            echo '</pre>';
             //$respuestaB = ModeloPedidos::mdlEliminarDetalleTemporalTotal($datos);
             //var_dump($respuesta);
 
             if ($respuestaA == "ok") {
-
-                // $articulosM = json_decode($_POST["articulosM"], true);
-                // //var_dump($articulosM);
-
-                // $intoA = "";
-                // $intoB = "";
-                // foreach ($articulosM as $key => $value) {
-
-                //     if ($key < count($articulosM) - 1) {
-
-                //         $intoA .= "(" . $_POST["codigoM"] . ",'" . $value["articulo"] . "'," . $value["cantidad"] . "," . $value["precio"] . "," . $value["total"] . "),";
-                //     } else {
-
-                //         $intoB .= "(" . $_POST["codigoM"] . ",'" . $value["articulo"] . "'," . $value["cantidad"] . "," . $value["precio"] . "," . $value["total"] . ")";
-                //     }
-
-                //     //var_dump("intoA", $intoA.$intoB);                    
-
-                // }
-
-                // $detalle = $intoA . $intoB;
-                // //var_dump("intoB", $detalle);
-
-                // $resp = ModeloPedidos::mdlGuardarTemporalDetalleB($detalle);
-                // //$resp = "no";
-                // //var_dump($resp);
-
-                // if ($resp == "ok") {
-
-                //     ModeloPedidos::mdlActualizarTotalPedido();
-
-                //     # Mostramos una alerta suave
-                //     echo '<script>
-                //              Command: toastr["success"]("El pedido fue registrado");
-                //                     window.location="pedidoscv";
-                //         </script>';
-                // } else {
-
-                //     var_dump("no llego aqui");
-                // }
-
 
                 ModeloPedidos::mdlActualizarTotalPedido();
 

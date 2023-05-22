@@ -309,25 +309,25 @@
                                                             <span class="input-group-addon">
                                                                 <button type="button" class="btn btn-danger btn-xs quitarArtPed" articulo="' . $articuloPedido["articulo"] . '" disabled><i class="fa fa-times"></i></button>
                                                             </span>
-                                                            <input type="text" class="form-control nuevaDescripcionArticulo input-sm" articulo="' . $articuloPedido["articulo"] . '" name="agregarProducto" value="' . $articuloPedido["packing"] . '" articuloP="' . $articuloPedido["articulo"] . '" readonly required>
+                                                            <input type="text" class="form-control nuevaDescripcionArticulo input-sm" articulo="' . $articuloPedido["articulo"] . '"  value="' . $articuloPedido["packing"] . '" articuloP="' . $articuloPedido["articulo"] . '" readonly required>
                                                         </div>
                                                     </div>
                                                     <div class="col-xs-2">
-                                                        <input type="number" class="form-control nuevaCantidadArtPed input-sm" name="nuevaCantidadArtPed" min="1" value="' . $articuloPedido["cantidad"] . '" artPed="' . $articuloPedido["pedidos"] . '" nuevoArtPed="0" required readonly>
+                                                        <input type="number" class="form-control nuevaCantidadArtPed input-sm"  min="1" value="' . $articuloPedido["cantidad"] . '" artPed="' . $articuloPedido["pedidos"] . '" nuevoArtPed="0" required readonly>
                                                     </div>
                                                     <div class="col-xs-2">
-                                                        <input type="text" class="form-control nuevoPunit input-sm" name="nuevoPunit" min="1" value="' . $articuloPedido["precio"] . '" readonly>
+                                                        <input type="text" class="form-control nuevoPunit input-sm"  min="1" value="' . $articuloPedido["precio"] . '" readonly>
                                                     </div>                                                
                                                     <div class="col-xs-1 ingresoPrecio" style="padding-left:0px">
                                                         <div class="input-group">
-                                                            <input type="text" class="form-control nuevoPrecioArticulo input-sm" precioReal="' . $articuloPedido["precio"] . '" name="nuevoPrecioArticulo" value="' . round($total_detalle, 2) . '" readonly required>
+                                                            <input type="text" class="form-control nuevoPrecioArticulo input-sm" precioReal="' . $articuloPedido["precio"] . '"  value="' . round($total_detalle, 2) . '" readonly required>
                                                         </div>
                                                     </div>
                                                     <div class="col-xs-1">
-                                                        <input type="text" class="form-control nuevoPunitC input-sm" name="nuevoPunitC" min="1" value="' . ($articuloPedido["precio"] * 1.18) . '" readonly>
+                                                        <input type="text" class="form-control nuevoPunitC input-sm"  min="1" value="' . ($articuloPedido["precio"] * 1.18) . '" readonly>
                                                     </div>
                                                     <div class="col-xs-1">
-                                                        <input type="text" class="form-control nuevoTotalC input-sm" name="nuevoTotalC" min="1" value="' . round($total_detalle * 1.18, 2) . '" readonly>
+                                                        <input type="text" class="form-control nuevoTotalC input-sm"  min="1" value="' . round($total_detalle * 1.18, 2) . '" readonly>
                                                     </div>
                                                 </div>';
                                         }
