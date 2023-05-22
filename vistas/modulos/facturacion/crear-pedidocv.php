@@ -32,7 +32,7 @@
 
                     <div class="box-header with-border"></div>
 
-                    <form role="form" metohd="post" class="formularioPedidoCV">
+                    <form role="form" method="post" class="formularioPedidoCV">
 
                         <div class="box-body">
 
@@ -304,32 +304,32 @@
                                             $total_detalle = $articuloPedido["cantidad"] * $articuloPedido["precio"];
 
                                             echo '<div class="row mundito" style="padding:5px 15px">
-                                                <div class="col-xs-5" style="padding-right:0px">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                            <button type="button" class="btn btn-danger btn-xs quitarArtPed" articulo="' . $articuloPedido["articulo"] . '"><i class="fa fa-times"></i></button>
-                                                        </span>
-                                                        <input type="text" class="form-control nuevaDescripcionArticulo input-sm" articulo="' . $articuloPedido["articulo"] . '" name="agregarProducto" value="' . $articuloPedido["packing"] . '" articuloP="' . $articuloPedido["articulo"] . '" readonly required>
+                                                    <div class="col-xs-5" style="padding-right:0px">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <button type="button" class="btn btn-danger btn-xs quitarArtPed" articulo="' . $articuloPedido["articulo"] . '" disabled><i class="fa fa-times"></i></button>
+                                                            </span>
+                                                            <input type="text" class="form-control nuevaDescripcionArticulo input-sm" articulo="' . $articuloPedido["articulo"] . '" name="agregarProducto" value="' . $articuloPedido["packing"] . '" articuloP="' . $articuloPedido["articulo"] . '" readonly required>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-xs-2">
-                                                    <input type="number" class="form-control nuevaCantidadArtPed input-sm" name="nuevaCantidadArtPed" min="1" value="' . $articuloPedido["cantidad"] . '" artPed="' . $articuloPedido["pedidos"] . '" nuevoArtPed="0" required>
-                                                </div>
-                                                <div class="col-xs-2">
-                                                    <input type="text" class="form-control nuevoPunit input-sm" name="nuevoPunit" min="1" value="' . $articuloPedido["precio"] . '" readonly>
-                                                </div>                                                
-                                                <div class="col-xs-1 ingresoPrecio" style="padding-left:0px">
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control nuevoPrecioArticulo input-sm" precioReal="' . $articuloPedido["precio"] . '" name="nuevoPrecioArticulo" value="' . round($total_detalle, 2) . '" readonly required>
+                                                    <div class="col-xs-2">
+                                                        <input type="number" class="form-control nuevaCantidadArtPed input-sm" name="nuevaCantidadArtPed" min="1" value="' . $articuloPedido["cantidad"] . '" artPed="' . $articuloPedido["pedidos"] . '" nuevoArtPed="0" required readonly>
                                                     </div>
-                                                </div>
-                                                <div class="col-xs-1">
-                                                    <input type="text" class="form-control nuevoPunitC input-sm" name="nuevoPunitC" min="1" value="' . ($articuloPedido["precio"] * 1.18) . '" readonly>
-                                                </div>
-                                                <div class="col-xs-1">
-                                                    <input type="text" class="form-control nuevoTotalC input-sm" name="nuevoTotalC" min="1" value="' . round($total_detalle * 1.18, 2) . '" readonly>
-                                                </div>
-                                            </div>';
+                                                    <div class="col-xs-2">
+                                                        <input type="text" class="form-control nuevoPunit input-sm" name="nuevoPunit" min="1" value="' . $articuloPedido["precio"] . '" readonly>
+                                                    </div>                                                
+                                                    <div class="col-xs-1 ingresoPrecio" style="padding-left:0px">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control nuevoPrecioArticulo input-sm" precioReal="' . $articuloPedido["precio"] . '" name="nuevoPrecioArticulo" value="' . round($total_detalle, 2) . '" readonly required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-1">
+                                                        <input type="text" class="form-control nuevoPunitC input-sm" name="nuevoPunitC" min="1" value="' . ($articuloPedido["precio"] * 1.18) . '" readonly>
+                                                    </div>
+                                                    <div class="col-xs-1">
+                                                        <input type="text" class="form-control nuevoTotalC input-sm" name="nuevoTotalC" min="1" value="' . round($total_detalle * 1.18, 2) . '" readonly>
+                                                    </div>
+                                                </div>';
                                         }
 
                                         ?>
@@ -757,7 +757,7 @@
 
                                         if ($pedido["agencia"] > 0) {
 
-                                            echo '<select class="form-control selectpicker" id="agencia" name="agencia" data-live-search="true" required>';
+                                            echo '<select class="form-control selectpicker" id="agencia" name="agencia" data-live-search="true">';
 
                                             $item = "id";
                                             $valor = $pedido["agencia"];
@@ -778,7 +778,7 @@
                                             }
                                         } else {
 
-                                            echo '<select class="form-control selectpicker" id="agencia" name="agencia" data-live-search="true" required>';
+                                            echo '<select class="form-control selectpicker" id="agencia" name="agencia" data-live-search="true">';
 
                                             $item = null;
                                             $valor = null;
@@ -812,33 +812,19 @@
                             <button onclick="history.back()" type="button" class="btn btn-danger pull-left">Cancelar
                             </button>
 
-                            <?php
-
-                            $valor = $_GET["pedido"];
-
-                            $pedido = ControladorPedidos::ctrMostrarTemporal($valor);
-                            //var_dump("pedido", $pedido["estado"]);
-
-                            if ($pedido["estado"] == "GENERADO") {
-
-                                //var_dump("hola 1");
-
-                                echo '<button type="button" class="btn btn-primary pull-right crearPedido" id="modalito" name="modalito" data-toggle="modal" data-target="#modalGenerarPedido" disabled>Crear Pedido
-                                </button>';
-                            } else {
-
-                                //var_dump("hola 2");
-
-                                echo '<button type="button" class="btn btn-default pull-right crearPedido" id="modalito" name="modalito" data-toggle="modal" data-target="#modalGenerarPedido" disabled>Crear Pedido
-                                </button>';
-                            }
-
-                            ?>
+                            <button type="submit" class="btn btn-primary pull-right">Crear Pedido</button>
 
 
                         </div>
 
                     </form>
+
+                    <?php
+
+                    $totalesPedido = new ControladorPedidos();
+                    $totalesPedido->ctrCrearPedidoTotales();
+
+                    ?>
 
                 </div>
 
@@ -879,8 +865,8 @@
                             require_once "modelos/pedidos.modelo.php";
 
                             /* 
-                        * TRAEMOS LOS DATOS DEL PEDIDO
-                        */
+                            * TRAEMOS LOS DATOS DEL PEDIDO
+                            */
                             $codigo = $_GET["pedido"];
                             //var_dump($codigo);
 
@@ -909,42 +895,42 @@
                                         <tr>
                                             <th style="width:10%"></th>
                                             <th style="width:20%"></th>
-                                            <th style="width:6%">S</th>
-                                            <th style="width:6%">M</th>
-                                            <th style="width:6%">L</th>
-                                            <th style="width:6%">XL</th>
-                                            <th style="width:6%">XXL</th>
-                                            <th style="width:6%">XS</th>
-                                            <th style="width:6%"></th>
-                                            <th style="width:6%"></th>
-                                            <th style="width:6%"></th>
+                                            <th style="width:6%;text-align:center;">S</th>
+                                            <th style="width:6%;text-align:center;">M</th>
+                                            <th style="width:6%;text-align:center;">L</th>
+                                            <th style="width:6%;text-align:center;">XL</th>
+                                            <th style="width:6%;text-align:center;">XXL</th>
+                                            <th style="width:6%;text-align:center;">XS</th>
+                                            <th style="width:6%;text-align:center;"></th>
+                                            <th style="width:6%;text-align:center;"></th>
+                                            <th style="width:6%;text-align:center;"></th>
                                         </tr>
 
                                         <tr>
                                             <th style="width:10%"></th>
                                             <th style="width:20%"></th>
-                                            <th style="width:6%">28</th>
-                                            <th style="width:6%">30</th>
-                                            <th style="width:6%">32</th>
-                                            <th style="width:6%">34</th>
-                                            <th style="width:6%">36</th>
-                                            <th style="width:6%">38</th>
-                                            <th style="width:6%">40</th>
-                                            <th style="width:6%">42</th>
-                                            <th style="width:6%"></th>
+                                            <th style="width:6%;text-align:center;">28</th>
+                                            <th style="width:6%;text-align:center;">30</th>
+                                            <th style="width:6%;text-align:center;">32</th>
+                                            <th style="width:6%;text-align:center;">34</th>
+                                            <th style="width:6%;text-align:center;">36</th>
+                                            <th style="width:6%;text-align:center;">38</th>
+                                            <th style="width:6%;text-align:center;">40</th>
+                                            <th style="width:6%;text-align:center;">42</th>
+                                            <th style="width:6%;text-align:center;"></th>
                                         </tr>
 
                                         <tr>
                                             <th style="width:10%;text-align:left;">Modelo</th>
                                             <th style="width:20%">Color</th>
-                                            <th style="width:6%">3</th>
-                                            <th style="width:6%">4</th>
-                                            <th style="width:6%">6</th>
-                                            <th style="width:6%">8</th>
-                                            <th style="width:6%">10</th>
-                                            <th style="width:6%">12</th>
-                                            <th style="width:6%">14</th>
-                                            <th style="width:6%">16</th>
+                                            <th style="width:6%;text-align:center;">3</th>
+                                            <th style="width:6%;text-align:center;">4</th>
+                                            <th style="width:6%;text-align:center;">6</th>
+                                            <th style="width:6%;text-align:center;">8</th>
+                                            <th style="width:6%;text-align:center;">10</th>
+                                            <th style="width:6%;text-align:center;">12</th>
+                                            <th style="width:6%;text-align:center;">14</th>
+                                            <th style="width:6%;text-align:center;">16</th>
                                             <th style="width:6%">TOTAL</th>
                                         </tr>
                                     </thead>
@@ -953,32 +939,33 @@
 
                                 <?php
                                 $respuestas = ModeloPedidos::mdlPedidoImpresionC($codigo);
-                                // Comienza a crear la tabla HTML
+
                                 echo "<table border='1' class='tablaVerPed' style='border:dashed' align='left' width='700px'>";
+
                                 $prevModelo = null;
+                                $buttonId = 0;
                                 foreach ($respuestas as $row) {
-                                    // Verifica si el modelo ha cambiado
                                     if ($prevModelo !== null && $prevModelo != $row['modelo']) {
-                                        // Agrega una línea indicando el cambio de modelo
                                         echo "<tr><td colspan='13' style='background-color: black; height: 5px;'></td></tr>";
                                     }
 
-                                    // Muestra la información en una nueva fila
-                                    echo "<tr>
-                                        <td style='width:10%;font-weight: normal;'>" . $row['modelo'] . "</td>
-                                        <td style='width:20%;font-weight: normal;'>" . $row['color'] . "</td>
-                                        <td style='width:6%;font-weight: bold;'>" . ($row['t1'] == 0 ? '' : $row['t1']) . "</td>
-                                        <td style='width:6%;font-weight: bold;'>" . ($row['t2'] == 0 ? '' : $row['t2']) . "</td>
-                                        <td style='width:6%;font-weight: bold;'>" . ($row['t3'] == 0 ? '' : $row['t3']) . "</td>
-                                        <td style='width:6%;font-weight: bold;'>" . ($row['t4'] == 0 ? '' : $row['t4']) . "</td>
-                                        <td style='width:6%;font-weight: bold;'>" . ($row['t5'] == 0 ? '' : $row['t5']) . "</td>
-                                        <td style='width:6%;font-weight: bold;'>" . ($row['t6'] == 0 ? '' : $row['t6']) . "</td>
-                                        <td style='width:6%;font-weight: bold;'>" . ($row['t7'] == 0 ? '' : $row['t7']) . "</td>
-                                        <td style='width:6%;font-weight: bold;'>" . ($row['t8'] == 0 ? '' : $row['t8']) . "</td>
-                                        <td style='width:6%;font-weight: bold;'>" . $row['total'] . "</td>
-                                    </tr>";
+                                    echo "<tr>";
+                                    echo "<td style='width:10%;font-weight: bold;' class='text-left'><button style='margin:0; padding:0; font-size: 1.2em;' class='btn btn-link' id='modeloButton$buttonId' pedido='{$codigo}' modelo='{$row["modelo"]}'>" . $row['modelo'] . "</button></td>";
+                                    echo "<td style='width:20%;font-weight: normal;'>" . $row['color'] . "</td>";
 
-                                    // Actualiza el valor previo del modelo
+                                    for ($i = 1; $i <= 8; $i++) {
+                                        $key = 't' . $i;
+                                        if ($row[$key] != 0) {
+                                            echo "<td style='width:6%;font-weight: bold;' class='text-center'><button style='margin:0; padding:0; font-size: 1.2em;' class='btn btn-link' id='button$buttonId' pedido='{$codigo}' articulo='{$row["modelo"]}{$row["cod_color"]}{$i}'>" . $row[$key] . "</button></td>";
+                                            $buttonId++;
+                                        } else {
+                                            echo "<td style='width:6%;font-weight: bold;'></td>";
+                                        }
+                                    }
+
+                                    echo "<td style='width:6%;font-weight: bold;'>" . $row['total'] . "</td>";
+                                    echo "</tr>";
+
                                     $prevModelo = $row['modelo'];
                                 }
 
@@ -1493,8 +1480,8 @@ MODAL PARA GENERAR EL PEDIDO
 
             <?php
 
-            $totalesPedido = new ControladorPedidos();
-            $totalesPedido->ctrCrearPedidoTotales();
+            /* $totalesPedido = new ControladorPedidos();
+            $totalesPedido->ctrCrearPedidoTotales(); */
 
             ?>
 
@@ -1510,6 +1497,69 @@ MODAL PARA GENERAR EL PEDIDO
 </script>
 
 <script>
+    $(document).ready(function() {
+        $(document).on('click', '.btn-link', function() {
+            let buttonId = $(this).attr('id');
+            let articulo = $(this).attr('articulo');
+            let modelo = $(this).attr('modelo');
+            let pedido = $(this).attr('pedido');
+
+            if (articulo && buttonId) {
+                var datos = new FormData();
+                datos.append("articuloC", articulo);
+                datos.append("pedidoC", pedido);
+
+                $.ajax({
+                    url: "ajax/pedidos.ajax.php",
+                    method: "POST",
+                    data: datos,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    dataType: "json",
+                    success: function(respuesta) {
+                        console.log("respuesta", respuesta);
+                        if (respuesta == "ok") {
+                            Command: toastr["error"]("El articulo fue eliminado");
+                            $("#updDiv").load(" #updDiv"); //actualizas el div
+                            $("#updDivC").load(" #updDivC"); //actualizas el div
+                            $("#updDivB").load(" #updDivB"); //actualizas el div
+                        }
+                    },
+                });
+            }
+
+            if (modelo && pedido) {
+                console.log("🚀 ~ file: crear-pedidocv.php:1524 ~ $ ~ modelo:", modelo)
+                var datos = new FormData();
+                datos.append("modeloB", modelo);
+                datos.append("pedidoB", pedido);
+
+                $.ajax({
+                    url: "ajax/pedidos.ajax.php",
+                    method: "POST",
+                    data: datos,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    dataType: "json",
+                    success: function(respuesta) {
+                        console.log("respuesta", respuesta);
+                        if (respuesta == "ok") {
+                            Command: toastr["error"]("El modelo fue eliminado");
+                            $("#updDiv").load(" #updDiv"); //actualizas el div
+                            $("#updDivC").load(" #updDivC"); //actualizas el div
+                            $("#updDivB").load(" #updDivB"); //actualizas el div
+                        }
+                    },
+                });
+            }
+        });
+    });
+
+
+
+
     $('.nuevoProductoPedido').ready(function() {
         $('#buscador').keyup(function() {
 

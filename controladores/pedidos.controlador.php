@@ -213,72 +213,84 @@ class ControladorPedidos
     static public function ctrCrearPedidoTotales()
     {
 
-        if (isset($_POST["codigoM"])) {
+        if (isset($_POST["nuevoCodigo"])) {
 
             /*
             * ACTUALIZAMOS LOS TOTALES DEL PEDIDO
             */
-            $dscto = round($_POST["descuentoM"] / $_POST["opGravadaM"] * 100, 2);
+            $dscto = round($_POST["descTotal"] / $_POST["nuevoSubTotalA"] * 100, 2);
             $datos = array(
-                "cliente" => $_POST["codClienteM"],
-                "codigo" => $_POST["codigoM"],
-                "op_gravada" => $_POST["opGravadaM"],
-                "descuento_total" => $_POST["descuentoM"],
-                "sub_total" => $_POST["subTotalM"],
-                "impuesto" => $_POST["igvM"],
-                "total" => $_POST["totalM"],
-                "vendedor" => $_POST["vendedorM"],
-                "usuario" => $_POST["usuarioM"],
-                "condicion_venta" => $_POST["condicionVentaM"],
-                "agencia" => $_POST["agenciaM"],
+                "cliente" => $_POST["seleccionarCliente"],
+                "codigo" => $_POST["nuevoCodigo"],
+                "op_gravada" => $_POST["nuevoSubTotalA"],
+                "descuento_total" => $_POST["descTotal"],
+                "sub_total" => $_POST["subTotal"],
+                "impuesto" => $_POST["impTotal"],
+                "total" => $_POST["nuevoTotal"],
+                "vendedor" => $_POST["seleccionarVendedor"],
+                "usuario" => $_POST["idUsuario"],
+                "condicion_venta" => $_POST["condicionVenta"],
+                "agencia" => $_POST["agencia"],
                 "dscto" => $dscto
             );
 
             $respuestaA = ModeloPedidos::mdlActualizarTotalesPedido($datos);
-            $respuestaB = ModeloPedidos::mdlEliminarDetalleTemporalTotal($datos);
+            echo '<pre>';
+            print_r($datos);
+            echo '</pre>';
+            //$respuestaB = ModeloPedidos::mdlEliminarDetalleTemporalTotal($datos);
             //var_dump($respuesta);
 
             if ($respuestaA == "ok") {
 
-                $articulosM = json_decode($_POST["articulosM"], true);
-                //var_dump($articulosM);
+                // $articulosM = json_decode($_POST["articulosM"], true);
+                // //var_dump($articulosM);
 
-                $intoA = "";
-                $intoB = "";
-                foreach ($articulosM as $key => $value) {
+                // $intoA = "";
+                // $intoB = "";
+                // foreach ($articulosM as $key => $value) {
 
-                    if ($key < count($articulosM) - 1) {
+                //     if ($key < count($articulosM) - 1) {
 
-                        $intoA .= "(" . $_POST["codigoM"] . ",'" . $value["articulo"] . "'," . $value["cantidad"] . "," . $value["precio"] . "," . $value["total"] . "),";
-                    } else {
+                //         $intoA .= "(" . $_POST["codigoM"] . ",'" . $value["articulo"] . "'," . $value["cantidad"] . "," . $value["precio"] . "," . $value["total"] . "),";
+                //     } else {
 
-                        $intoB .= "(" . $_POST["codigoM"] . ",'" . $value["articulo"] . "'," . $value["cantidad"] . "," . $value["precio"] . "," . $value["total"] . ")";
-                    }
+                //         $intoB .= "(" . $_POST["codigoM"] . ",'" . $value["articulo"] . "'," . $value["cantidad"] . "," . $value["precio"] . "," . $value["total"] . ")";
+                //     }
 
-                    //var_dump("intoA", $intoA.$intoB);                    
+                //     //var_dump("intoA", $intoA.$intoB);                    
 
-                }
+                // }
 
-                $detalle = $intoA . $intoB;
-                //var_dump("intoB", $detalle);
+                // $detalle = $intoA . $intoB;
+                // //var_dump("intoB", $detalle);
 
-                $resp = ModeloPedidos::mdlGuardarTemporalDetalleB($detalle);
-                //$resp = "no";
-                //var_dump($resp);
+                // $resp = ModeloPedidos::mdlGuardarTemporalDetalleB($detalle);
+                // //$resp = "no";
+                // //var_dump($resp);
 
-                if ($resp == "ok") {
+                // if ($resp == "ok") {
 
-                    ModeloPedidos::mdlActualizarTotalPedido();
+                //     ModeloPedidos::mdlActualizarTotalPedido();
 
-                    # Mostramos una alerta suave
-                    echo '<script>
-                             Command: toastr["success"]("El pedido fue registrado");
-                                    window.location="pedidoscv";
-                        </script>';
-                } else {
+                //     # Mostramos una alerta suave
+                //     echo '<script>
+                //              Command: toastr["success"]("El pedido fue registrado");
+                //                     window.location="pedidoscv";
+                //         </script>';
+                // } else {
 
-                    var_dump("no llego aqui");
-                }
+                //     var_dump("no llego aqui");
+                // }
+
+
+                ModeloPedidos::mdlActualizarTotalPedido();
+
+                # Mostramos una alerta suave
+                echo '<script>
+                         Command: toastr["success"]("El pedido fue registrado");
+                                window.location="pedidoscv";
+                    </script>';
             } else {
 
                 var_dump("no llego aqui");

@@ -356,8 +356,8 @@ function listarArticulosPed() {
         });
     }
 
-    console.log("listaArticulos", JSON.stringify(listaArticulos));
-    $("#listaProductosPedidos").val(JSON.stringify(listaArticulos));
+    //console.log("listaArticulos", JSON.stringify(listaArticulos));
+    //$("#listaProductosPedidos").val(JSON.stringify(listaArticulos));
 }
 
 /*

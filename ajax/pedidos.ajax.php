@@ -98,6 +98,21 @@ class AjaxPedidos
         echo json_encode($respuesta);
     }
 
+
+    /* 
+	* SACAR LA LISTA DE PRECIOS ASIGNADA
+	*/
+    public function ajaxBorrarArticulo()
+    {
+
+        $articulo = $this->articulo;
+        $pedido = $this->pedido;
+
+        $respuesta = ModeloPedidos::mdlBorrarArticulo($articulo, $pedido);
+
+        echo json_encode($respuesta);
+    }
+
     /* 
 	* VER TALONARIO
 	*/
@@ -333,6 +348,14 @@ if (isset($_POST["modeloB"])) {
     $borrarModelo->modelo = $_POST["modeloB"];
     $borrarModelo->pedido = $_POST["pedidoB"];
     $borrarModelo->ajaxBorrarModelo();
+}
+
+if (isset($_POST["articuloC"])) {
+
+    $borrarModelo = new AjaxPedidos();
+    $borrarModelo->articulo = $_POST["articuloC"];
+    $borrarModelo->pedido = $_POST["pedidoC"];
+    $borrarModelo->ajaxBorrarArticulo();
 }
 
 /* 
