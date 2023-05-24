@@ -4573,7 +4573,7 @@ class ControladorFacturacion
                     break;
                 case "07":
                     $tipo = "E05";
-                    $nombreTipo = "NTCD";
+                    $nombreTipo = "NC";
                     $stock = ModeloArticulos::mdlActualizarStockPedidoB($codigo, $almacen);
                     $serie = substr($documento, 0, 4);
                     ModeloFacturacion::mdlActualizarNotaSerie("nota_credito", "serie_nc", $serie);
@@ -4605,8 +4605,8 @@ class ControladorFacturacion
         date_default_timezone_set("America/Lima");
         $fecha = date("Y-m-d");
 
-        $respuesta = ModeloPedidos::mdlMostraDetallesTemporal("detalle_temporal", $codigo);
 
+        $respuesta = ModeloPedidos::mdlMostraDetallesTemporal("detalle_temporal", $codigo);
         $detalle = "";
         foreach ($respuesta as $key => $value) {
             $total = ($tipo == "E05") ?  ($value["cantidad"] * $value["precio"] * ((100 - $dscto) / 100)) * -1 : $value["cantidad"] * $value["precio"] * ((100 - $dscto) / 100);
@@ -4633,10 +4633,10 @@ class ControladorFacturacion
         $datosD = array(
             "tipo" => $tipo,
             "documento" => $documento,
-            "neto" => $respuestaDoc["op_gravada"],
-            "igv" => $respuestaDoc["igv"],
-            "dscto" => $respuestaDoc["descuento_total"],
-            "total" => $respuestaDoc["total"],
+            "neto" => $signo * $respuestaDoc["op_gravada"],
+            "igv" => $signo * $respuestaDoc["igv"],
+            "dscto" => $signo * $respuestaDoc["descuento_total"],
+            "total" => $signo * $respuestaDoc["total"],
             "cliente" => $respuestaDoc["cod_cli"],
             "vendedor" => $respuestaDoc["vendedor"],
             "agencia" => $respuestaDoc["agencia"],
