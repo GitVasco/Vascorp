@@ -253,7 +253,7 @@
                         $today = date("Y-m-d");
                         $oneYearAgo = date("Y-m-d", strtotime("-1 year"));
                         ?>
-                        <input type="date" class="form-control input-md" name="notaFechaFactura" id="notaFechaFactura" min="<?php echo $oneYearAgo; ?>" max="<?php echo $today; ?>" required>
+                        <input type="date" class="form-control input-md" name="notaFechaFactura" id="notaFechaFactura" min="<?php echo $oneYearAgo; ?>" max="<?php echo $today; ?>" value="<?php echo $venta["fecha_origen"] ?>" required>
                     </div>
                 </div>
 

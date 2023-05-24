@@ -1,72 +1,73 @@
 <div class="content-wrapper">
 
-  <section class="content-header">
-    
-    <h1>
-      
-      Administrar agencias
-    
-    </h1>
+    <section class="content-header">
 
-    <ol class="breadcrumb">
-      
-      <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
-      
-      <li class="active">Administrar agencias</li>
-    
-    </ol>
+        <h1>
 
-  </section>
+            Administrar agencias
 
-  <section class="content">
+        </h1>
 
-    <div class="box">
+        <ol class="breadcrumb">
 
-      <div class="box-header with-border">
-  
-        <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarAgencia">
-          
-          Agregar agencia
+            <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-        </button>
+            <li class="active">Administrar agencias</li>
 
-        <div class="pull-right">
-          <button class="btn btn-outline-success " style="border:green 1px solid">
-          <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Agencias  </button>
+        </ol>
+
+    </section>
+
+    <section class="content">
+
+        <div class="box">
+
+            <div class="box-header with-border">
+
+                <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarAgencia">
+
+                    Agregar agencia
+
+                </button>
+
+                <div class="pull-right">
+                    <button class="btn btn-outline-success " style="border:green 1px solid">
+                        <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Agencias </button>
+                </div>
+            </div>
+
+            <div class="box-body">
+
+                <table class="table table-bordered table-striped dt-responsive tablaAgencias" width="100%">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Codigo</th>
+                            <th>Nombre</th>
+                            <th>RUC</th>
+                            <th>Dirección</th>
+                            <th>Ubigeo</th>
+                            <th>MTC</th>
+                            <th>Telefono</th>
+                            <th>Acciones</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
         </div>
-      </div>
-        
-      <div class="box-body">
-        
-       <table class="table table-bordered table-striped dt-responsive tablaAgencias" width="100%">
-         
-        <thead>
-         
-         <tr>
-           
-           <th>Codigo</th>
-           <th>Nombre</th>
-           <th>RUC</th>
-           <th>Dirección</th>
-           <th>Ubigeo</th>
-           <th>Telefono</th>
-           <th>Acciones</th>
 
-         </tr> 
-
-        </thead>
-
-        <tbody>
-
-        </tbody>
-
-       </table>
-
-      </div>
-
-    </div>
-
-  </section>
+    </section>
 
 </div>
 
@@ -75,165 +76,174 @@ MODAL AGREGAR COLOR
 ======================================-->
 
 <div id="modalAgregarAgencia" class="modal fade" role="dialog">
-  
-  <div class="modal-dialog">
 
-    <div class="modal-content">
+    <div class="modal-dialog">
 
-      <form role="form" method="post">
+        <div class="modal-content">
 
-        <!--=====================================
-        CABEZA DEL MODAL
-        ======================================-->
+            <form role="form" method="post">
 
-        <div class="modal-header" style="background:#3c8dbc; color:white">
+                <!--=====================================
+                CABEZA DEL MODAL
+                ======================================-->
 
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div class="modal-header" style="background:#3c8dbc; color:white">
 
-          <h4 class="modal-title">Agregar Agencia</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                    <h4 class="modal-title">Agregar Agencia</h4>
+
+                </div>
+
+                <!--=====================================
+                CUERPO DEL MODAL
+                ======================================-->
+
+                <div class="modal-body">
+
+                    <div class="box-body">
+
+                        <!-- ENTRADA PARA EL CODIGO -->
+
+                        <div class="form-group">
+
+                            <div class="input-group">
+
+                                <span class="input-group-addon"><i class="fa fa-key"></i></span>
+
+                                <input type="text" class="form-control input-lg" name="nuevoCodAgencia" placeholder="Ingresar codigo de agencia" required>
+
+                            </div>
+
+                        </div>
+
+                        <!-- ENTRADA PARA EL RUC -->
+
+                        <div class="form-group">
+
+                            <div class="input-group">
+                                <input type="number" class="form-control" name="nuevoRUC" id="nuevoRUC" placeholder="NRO. DOCUMENTO" required>
+                                <span class="input-group-addon" style="padding:0px !important;border: 0px !important"><button type="button" class="btn btn-default" onclick="ObtenerDatosClienteAgencia()"><i class="fa fa-search "></i></button> </span>
+
+                            </div>
+
+                        </div>
+
+                        <!-- ENTRADA PARA EL NOMBRE -->
+
+                        <div class="form-group">
+
+                            <div class="input-group">
+
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+
+                                <input type="text" class="form-control input-lg" name="nuevaDescripcion" id="nuevaDescripcion" placeholder="Ingresar agencia" required>
+
+                            </div>
+
+                        </div>
+
+                        <!-- ENTRADA PARA EL DIRECCION -->
+
+                        <div class="form-group">
+
+                            <div class="input-group">
+
+                                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+
+                                <input type="text" class="form-control input-lg" name="nuevaDireccion" id="nuevaDireccion" placeholder="Ingresar Dirección">
+
+                            </div>
+
+                        </div>
+
+                        <!-- ENTRADA PARA EL UBIGEO -->
+
+                        <div class="form-group">
+
+                            <div class="input-group">
+
+                                <span class="input-group-addon"><i class="fa fa-map"></i></span>
+
+                                <select class="form-control input-lg selectpicker" data-live-search="true" name="nuevoUbigeo" id="nuevoUbigeo" data-size="10">
+                                    <option value="">Ubigeo</option>
+
+                                    <?php
+
+                                    $ubigeo = ControladorClientes::ctrMostrarUbigeos();
+                                    #var_dump("ubigeo", $ubigeo);
+                                    foreach ($ubigeo as $key => $value) {
+
+                                        echo '<option value="' . $value["codigo"] . '">' . $value["codigo"] . ' - ' . $value["ubigeo"] . '</option>';
+                                    }
+
+
+                                    ?>
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                        <!-- ENTRADA PARA EL MTC -->
+
+                        <div class="form-group">
+
+                            <div class="input-group">
+
+                                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+
+                                <input type="text" class="form-control input-lg" name="nuevaMtc" id="nuevaMtc" placeholder="Ingresar Codigo MTC">
+
+                            </div>
+
+                        </div>
+
+                        <!-- ENTRADA PARA EL TELEFONO -->
+
+                        <div class="form-group">
+
+                            <div class="input-group">
+
+                                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+
+                                <input type="text" min="0" class="form-control input-lg" name="nuevoTelefono" placeholder="Ingresar telefono">
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+                <!--=====================================
+                PIE DEL MODAL
+                ======================================-->
+
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+                    <button type="submit" class="btn btn-primary">Guardar agencia</button>
+
+                </div>
+
+            </form>
+
+
+            <?php
+
+            $crearAgencia = new ControladorAgencias();
+            $crearAgencia->ctrCrearAgencia();
+
+            ?>
+
 
         </div>
-
-        <!--=====================================
-        CUERPO DEL MODAL
-        ======================================-->
-
-        <div class="modal-body">
-
-          <div class="box-body">
-
-            
-          <!-- ENTRADA PARA EL CODIGO -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
-
-                <input type="text" class="form-control input-lg" name="nuevoCodAgencia" placeholder="Ingresar codigo de agencia" required>
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA EL NOMBRE -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
-
-                <input type="text" class="form-control input-lg" name="nuevaDescripcion" placeholder="Ingresar agencia" required>
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA EL DIRECCION -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span> 
-
-                <input type="text" class="form-control input-lg" name="nuevaDireccion" placeholder="Ingresar Dirección" >
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA EL UBIGEO -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-map"></i></span> 
-
-                <select  class="form-control input-lg selectpicker" data-live-search="true" name="nuevoUbigeo"  data-size="10">
-                  <option value="">Ubigeo</option>
-
-                    <?php
-                    
-                    $ubigeo = ControladorClientes::ctrMostrarUbigeos();
-                    #var_dump("ubigeo", $ubigeo);
-                    foreach ($ubigeo as $key => $value) {
-
-                      echo '<option value="' . $value["codigo"] . '">' . $value["codigo"] . ' - ' . $value["ubigeo"] . '</option>';
-
-                    }
-
-                    
-                    ?>
-                </select>
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA EL RUC -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-id-card-o"></i></span> 
-
-                <input type="text" min="0" class="form-control input-lg" name="nuevoRUC" placeholder="Ingresar RUC" >
-
-              </div>
-
-            </div>          
-
-
-            <!-- ENTRADA PARA EL TELEFONO -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-phone"></i></span> 
-
-                <input type="text" min="0" class="form-control input-lg" name="nuevoTelefono" placeholder="Ingresar telefono" >
-
-              </div>
-
-            </div>          
-
- 
-          </div>
-
-        </div>
-
-        <!--=====================================
-        PIE DEL MODAL
-        ======================================-->
-
-        <div class="modal-footer">
-
-          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
-
-          <button type="submit" class="btn btn-primary">Guardar agencia</button>
-
-        </div>
-
-      </form>
-
-
-      <?php
-
-        $crearAgencia = new ControladorAgencias();
-        $crearAgencia -> ctrCrearAgencia();
-
-      ?>
-
 
     </div>
-
-  </div>
 
 </div>
 
@@ -243,171 +253,184 @@ MODAL EDITAR AGENCIA
 ======================================-->
 
 <div id="modalEditarAgencia" class="modal fade" role="dialog">
-  
-  <div class="modal-dialog">
 
-    <div class="modal-content">
+    <div class="modal-dialog">
 
-      <form role="form" method="post">
+        <div class="modal-content">
 
-        <!--=====================================
+            <form role="form" method="post">
+
+                <!--=====================================
         CABEZA DEL MODAL
         ======================================-->
 
-        <div class="modal-header" style="background:#3c8dbc; color:white">
+                <div class="modal-header" style="background:#3c8dbc; color:white">
 
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title">Editar agencia</h4>
+                    <h4 class="modal-title">Editar agencia</h4>
 
-        </div>
+                </div>
 
-        <!--=====================================
+                <!--=====================================
         CUERPO DEL MODAL
         ======================================-->
 
-        <div class="modal-body">
+                <div class="modal-body">
 
-          <div class="box-body">
+                    <div class="box-body">
 
-          
-            <!-- ENTRADA PARA EL CODIGO -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
-                <input type="text" class="form-control input-lg" name="editarCodAgencia" id="editarCodAgencia" required>
+                        <!-- ENTRADA PARA EL CODIGO -->
 
-              </div>
+                        <div class="form-group">
 
-            </div>
+                            <div class="input-group">
 
-            <!-- ENTRADA PARA EL NOMBRE -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+                                <span class="input-group-addon"><i class="fa fa-key"></i></span>
 
-                <input type="text" class="form-control input-lg" name="editarDescripcion" id="editarDescripcion" required>
-                <input type="hidden" id="idAgencia" name="idAgencia">
-              </div>
+                                <input type="text" class="form-control input-lg" name="editarCodAgencia" id="editarCodAgencia" required>
 
-            </div>
+                            </div>
 
-            <!-- ENTRADA PARA LA DIRECCION -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span> 
+                        </div>
 
-                <input type="text" class="form-control input-lg" name="editarDireccion" id="editarDireccion" >
-              </div>
+                        <!-- ENTRADA PARA EL RUC -->
 
-            </div>
+                        <div class="form-group">
 
-            <!-- ENTRADA PARA EL UBIGEO -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-map"></i></span> 
+                            <div class="input-group">
 
-                <select  class="form-control input-lg selectpicker" data-live-search="true" name="editarUbigeo" id="editarUbigeo" data-size="10">
-                  <option value="">Ubigeo</option>
+                                <span class="input-group-addon"><i class="fa fa-id-card-o"></i></span>
 
-                    <?php
-                    
-                    $ubigeo = ControladorClientes::ctrMostrarUbigeos();
-                    #var_dump("ubigeo", $ubigeo);
-                    foreach ($ubigeo as $key => $value) {
+                                <input type="number" min="0" class="form-control input-lg" name="editarRUC" id="editarRUC">
 
-                      echo '<option value="' . $value["codigo"] . '">' . $value["codigo"] . ' - ' . $value["ubigeo"] . '</option>';
+                            </div>
 
-                    }
+                        </div>
 
-                    
-                    ?>
-                </select>
-              </div>
+                        <!-- ENTRADA PARA EL NOMBRE -->
 
-            </div>
+                        <div class="form-group">
 
-            <!-- ENTRADA PARA EL RUC -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-id-card-o"></i></span> 
+                            <div class="input-group">
 
-                <input type="number" min="0" class="form-control input-lg" name="editarRUC" id="editarRUC" >
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
 
-              </div>
+                                <input type="text" class="form-control input-lg" name="editarDescripcion" id="editarDescripcion" required>
+                                <input type="hidden" id="idAgencia" name="idAgencia">
+                            </div>
 
-            </div>
+                        </div>
 
-            <!-- ENTRADA PARA EL TELEFONO  -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-phone"></i></span> 
+                        <!-- ENTRADA PARA LA DIRECCION -->
 
-                <input type="text" min="0" class="form-control input-lg" name="editarTelefono" id="editarTelefono" >
+                        <div class="form-group">
 
-              </div>
+                            <div class="input-group">
 
-            </div>
-  
-          </div>
+                                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
 
-        </div>
+                                <input type="text" class="form-control input-lg" name="editarDireccion" id="editarDireccion">
+                            </div>
 
-        <!--=====================================
+                        </div>
+
+                        <!-- ENTRADA PARA EL UBIGEO -->
+
+                        <div class="form-group">
+
+                            <div class="input-group">
+
+                                <span class="input-group-addon"><i class="fa fa-map"></i></span>
+
+                                <select class="form-control input-lg selectpicker" data-live-search="true" name="editarUbigeo" id="editarUbigeo" data-size="10">
+                                    <option value="">Ubigeo</option>
+
+                                    <?php
+
+                                    $ubigeo = ControladorClientes::ctrMostrarUbigeos();
+                                    #var_dump("ubigeo", $ubigeo);
+                                    foreach ($ubigeo as $key => $value) {
+
+                                        echo '<option value="' . $value["codigo"] . '">' . $value["codigo"] . ' - ' . $value["ubigeo"] . '</option>';
+                                    }
+
+
+                                    ?>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <!-- ENTRADA PARA EL MTC -->
+
+                        <div class="form-group">
+
+                            <div class="input-group">
+
+                                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+
+                                <input type="text" class="form-control input-lg" name="editarMtc" id="editarMtc" placeholder="Ingresar Codigo MTC">
+
+                            </div>
+
+                        </div>
+
+                        <!-- ENTRADA PARA EL TELEFONO  -->
+
+                        <div class="form-group">
+
+                            <div class="input-group">
+
+                                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+
+                                <input type="text" min="0" class="form-control input-lg" name="editarTelefono" id="editarTelefono">
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!--=====================================
         PIE DEL MODAL
         ======================================-->
 
-        <div class="modal-footer">
+                <div class="modal-footer">
 
-          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+
+                </div>
+
+            </form>
+
+            <?php
+
+            $editarAgencia = new ControladorAgencias();
+            $editarAgencia->ctrEditarAgencia();
+
+            ?>
+
 
         </div>
 
-      </form>
-
-      <?php
-
-        $editarAgencia = new ControladorAgencias();
-        $editarAgencia -> ctrEditarAgencia();
-
-      ?>   
-
-
     </div>
-
-  </div>
 
 </div>
 
 
 <?php
 
-  $eliminarAgencia = new ControladorAgencias();
-  $eliminarAgencia -> ctrEliminarAgencia();
+$eliminarAgencia = new ControladorAgencias();
+$eliminarAgencia->ctrEliminarAgencia();
 
 ?>
 
 <script>
-window.document.title = "Agencias"
+    window.document.title = "Agencias"
 </script>

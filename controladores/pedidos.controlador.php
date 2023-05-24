@@ -215,6 +215,7 @@ class ControladorPedidos
 
         if (isset($_POST["nuevoCodigo"])) {
 
+
             /*
             * ACTUALIZAMOS LOS TOTALES DEL PEDIDO
             */
@@ -240,7 +241,9 @@ class ControladorPedidos
 
             if ($respuestaA == "ok") {
 
-                ModeloPedidos::mdlActualizarTotalPedido();
+                //ModeloPedidos::mdlActualizarTotalPedido();
+
+                ModeloPedidos::mdlActualizarTotales($_POST["nuevoCodigo"]);
 
                 # Mostramos una alerta suave
                 echo '<script>

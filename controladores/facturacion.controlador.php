@@ -4609,7 +4609,7 @@ class ControladorFacturacion
 
         $detalle = "";
         foreach ($respuesta as $key => $value) {
-            $total = $value["cantidad"] * $value["precio"] * ((100 - $dscto) / 100);
+            $total = ($tipo == "E05") ?  ($value["cantidad"] * $value["precio"] * ((100 - $dscto) / 100)) * -1 : $value["cantidad"] * $value["precio"] * ((100 - $dscto) / 100);
             $cantidad = ($tipo == "E05") ? -$value["cantidad"] : $value["cantidad"];
 
             $detalle .= "('" . $tipo . "','" . $documento . "','" . $fecha . "','" . $value["articulo"] . "','" . $cliente . "','" . $vendedor . "'," . $cantidad . "," . $value["precio"] . ",0," . $dscto . "," . $total . ",'" . $nombreTipo . "','" . $codigoAlmacen . "')";
