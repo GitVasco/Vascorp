@@ -4524,6 +4524,15 @@ class ControladorFacturacion
 
             $docDestino = !empty($_POST['serieSeparado']) ? $_POST['serieSeparado'] : null;
             $docDest = $docDestino ? str_replace('-', '', $docDestino) : '';
+            $checkBoleta = !empty($_POST['chkBoleta']) ? $_POST['chkBoleta'] : null;
+            $checkFactura = !empty($_POST['chkFactura']) ? $_POST['chkFactura'] : null;
+            if ($checkBoleta == "on" && $checkFactura == null) {
+                $tipoDestino = "S02";
+                $nombresDestino = "BOLETA";
+            } else {
+                $tipoDestino = "S03";
+                $nombresDestino = "FACTURA";
+            }
 
             $chofer = !empty($_POST['chofer']) ? $_POST['chofer'] : null;
             $movilidad = !empty($_POST['carro']) ? $_POST['carro'] : null;
@@ -4546,6 +4555,23 @@ class ControladorFacturacion
                     $stock = ModeloArticulos::mdlActualizarStockPedido($codigo, $almacen);
                     $serie = (substr($documento, 0, 1) == "0") ? substr($documento, 0, 3) : substr($documento, 0, 4);
                     ModeloFacturacion::mdlActualizarTalonarioGuia($serie);
+
+                    if ($checkBoleta == "on" || $checkFactura == "on") {
+
+                        $movimientosDestino = self::ctrRegistrarMovimientos($codigo, $tipoDestino, $docDest, $cliente, $vendedor, $dscto, $nombresDestino, $codigoAlmacen);
+
+                        $ventasDestino = self::ctrRegistrarVentas($codigo, $tipoDestino, $docDest, "", $documento, $usuario, $nombresDestino, $usureg, $pcreg, $chofer, $movilidad, $peso, $bultos);
+
+                        $serieDestino = (substr($docDest, 0, 1) == "0") ? substr($docDest, 0, 3) : substr($docDest, 0, 4);
+                        if ($checkBoleta == "on" && $checkFactura == null) {
+                            ModeloFacturacion::mdlActualizarTalonarioBoleta($serieDestino);
+                        } else {
+                            ModeloFacturacion::mdlActualizarTalonarioFactura($serieDestino);
+                        }
+
+                        $cuentas = self::ctrRegistrarCuentaCorriente($codigo, $tipoDestino, $docDest, $usuario, $usureg, $pcreg);
+                    }
+
                     break;
                 case "01":
                     $tipo = "S03";
@@ -4590,13 +4616,14 @@ class ControladorFacturacion
 
                 ModeloFacturacion::mdlActualizarPedidoF($codigo);
                 ModeloFacturacion::mdlActualizarPedidoB($codigo);
-                self::ctrConfirmacion($tipo, $documento);
-            }
+                //self::ctrConfirmacion($tipo, $documento);
 
-            //return $movimientos;
-            // echo '<pre>';
-            // print_r($nota);
-            // echo '</pre>';
+                if ($checkBoleta == "on" || $checkFactura == "on") {
+                    self::ctrConfirmacion($tipo, $documento, $tipoDestino, $docDest);
+                } else {
+                    self::ctrConfirmacion($tipo, $documento, null, null);
+                }
+            }
         }
     }
 
@@ -4604,7 +4631,6 @@ class ControladorFacturacion
     {
         date_default_timezone_set("America/Lima");
         $fecha = date("Y-m-d");
-
 
         $respuesta = ModeloPedidos::mdlMostraDetallesTemporal("detalle_temporal", $codigo);
         $detalle = "";
@@ -4705,7 +4731,7 @@ class ControladorFacturacion
         return $notaCredito;
     }
 
-    static public function ctrConfirmacion($tipo, $documento)
+    static public function ctrConfirmacion($tipo, $documento, $tipoAdicional = null, $documentoAdicional = null)
     {
 
         $impresion = (substr($documento, 0, 1) == "0") ? "guia_remision" : "impresion_guia";
@@ -4713,16 +4739,15 @@ class ControladorFacturacion
         $config = array(
             "S01" => array(
                 "title" => "Se Genero la Guia de Remisión $documento",
-                //"url" => "vistas/reportes_ticket/guia_remision.php?codigo=$documento&tipo=S01"
-                "url" => "vistas/reportes_ticket/$impresion.php?codigo=$documento&tipo=S01"
+                "url" => "vistas/reportes_ticket/$impresion.php?codigo="
             ),
             "S02" => array(
                 "title" => "Se Genero la Boleta $documento",
-                "url" => "vistas/reportes_ticket/impresion_bolfact.php?tipo=S02&documento=$documento"
+                "url" => "vistas/reportes_ticket/impresion_bolfact.php?tipo=S02&documento="
             ),
             "S03" => array(
                 "title" => "Se Genero la Factura $documento",
-                "url" => "vistas/reportes_ticket/impresion_bolfact.php?tipo=S03&documento=$documento"
+                "url" => "vistas/reportes_ticket/impresion_bolfact.php?tipo=S03&documento="
             ),
             "S70" => array(
                 "title" => "Se Genero la Proforma $documento",
@@ -4734,32 +4759,41 @@ class ControladorFacturacion
             )
         );
 
+        // Si se proporcionó un tipo adicional y un documento adicional, añadir la URL a la lista de URLs a abrir.
+        $urls = [];
+        if ($tipoAdicional && isset($config[$tipoAdicional]) && $documentoAdicional) {
+            $urls[] = $config[$tipoAdicional]["url"] . $documentoAdicional;
+        }
+
         if (isset($config[$tipo])) {
-            echo self::generateConfirmationScript($config[$tipo]["title"], $config[$tipo]["url"]);
+            $urls[] = $config[$tipo]["url"] . $documento;
+            echo self::generateConfirmationScript($config[$tipo]["title"], $urls);
         } else {
             throw new Exception("Tipo de documento desconocido.");
         }
     }
 
-    static private function generateConfirmationScript($title, $url)
+    static private function generateConfirmationScript($title, array $urls)
     {
         $script = '<script>
-        swal({
-            type: "success",
-            title: "' . $title . '",
-            showConfirmButton: true,
-            confirmButtonText: "Cerrar"
-        }).then(function (result) {
-            if (result.value) {';
+            swal({
+                type: "success",
+                title: "' . $title . '",
+                showConfirmButton: true,
+                confirmButtonText: "Cerrar"
+            }).then(function (result) {
+                if (result.value) {';
 
-        if (!empty($url)) {
-            $script .= 'window.open("' . $url . '", "_blank");';
+        foreach ($urls as $url) {
+            if (!empty($url)) {
+                $script .= 'window.open("' . $url . '", "_blank");';
+            }
         }
 
         $script .= 'window.location = "pedidoscv";
-                }
-            });
-        </script>';
+                    }
+                });
+            </script>';
 
         return $script;
     }

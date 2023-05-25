@@ -866,6 +866,7 @@ class ModeloFacturacion
         DATE_ADD(v.fecha, INTERVAL cv.dias DAY),
         '%d/%m/%Y'
       ) AS fecha_vencimiento,
+      V.doc_origen AS doc_guia,
       v.doc_destino,
       v.agencia,
       (SELECT 
@@ -885,7 +886,7 @@ class ModeloFacturacion
       WHERE v.agencia = a.id) AS ruc_agencia,
       v.chofer as cod_chofer,
       (SELECT 
-    des_larga 
+      CONCAT(t.des_larga,' ',t.des_corta)
   FROM
     tabla_m_detalle t 
   WHERE t.cod_tabla = 'TCHO' 
@@ -7476,12 +7477,20 @@ class ModeloFacturacion
             v.total AS bj1,
             /*v.dscto AS bh1,*/
             /*FILA 3*/
-            CONCAT(
-              '0',
-              LEFT(v.doc_origen, 3),
-              '-0',
-              RIGHT(v.doc_origen, 7)
-            ) AS a3,
+            CASE
+                WHEN LENGTH(v.doc_origen) = 12 
+                THEN CONCAT(
+                LEFT(v.doc_origen, 4),
+                '-',
+                RIGHT(v.doc_origen, 8)
+                ) 
+                ELSE CONCAT(
+                '0',
+                LEFT(v.doc_origen, 3),
+                '-0',
+                RIGHT(v.doc_origen, 7)
+                ) 
+            END AS a3,
             '09' AS b3,
             CASE
               WHEN v.condicion_venta IN ('1', '2') 
@@ -7746,7 +7755,7 @@ class ModeloFacturacion
                         '01' AS a10,
                         'VENTA' AS b10,
                         '' AS c10,
-                        v.peso AS d10,
+                        ROUND(v.peso,3) AS d10,
                         'KGM' AS e10,
                         CASE
                             WHEN v.agencia = 0 

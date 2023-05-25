@@ -13,7 +13,7 @@
     require_once "../../modelos/facturacion.modelo.php";
     require_once "../../extensiones/cantidad_en_letras.php";
 
-    $tipo = $_GET["tipo"];
+    $tipo = "S01";
     $documento = $_GET["codigo"];
     $venta = ControladorFacturacion::ctrMostrarVentaImpresion($documento, $tipo);
     $modelo = ControladorFacturacion::ctrMostrarModeloImpresionV2("movimientosjf_2023", $documento, $tipo, 0, 100);
