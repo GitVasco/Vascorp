@@ -4735,40 +4735,40 @@ class ControladorFacturacion
 
     static public function ctrConfirmacion($tipo, $documento, $tipoAdicional = null, $documentoAdicional = null)
     {
-
         $impresion = (substr($documento, 0, 1) == "0") ? "guia_remision" : "impresion_guia";
 
         $config = array(
             "S01" => array(
-                "title" => "Se Genero la Guia de Remisión $documento",
+                "title" => "Se Genero la Guia de Remisión ",
                 "url" => "vistas/reportes_ticket/$impresion.php?codigo="
             ),
             "S02" => array(
-                "title" => "Se Genero la Boleta $documento",
+                "title" => "Se Genero la Boleta ",
                 "url" => "vistas/reportes_ticket/impresion_bolfact.php?tipo=S02&documento="
             ),
             "S03" => array(
-                "title" => "Se Genero la Factura $documento",
+                "title" => "Se Genero la Factura ",
                 "url" => "vistas/reportes_ticket/impresion_bolfact.php?tipo=S03&documento="
             ),
             "S70" => array(
-                "title" => "Se Genero la Proforma $documento",
-                "url" => "extensiones/tcpdf/pdf/reporte_proforma.php?tipo=S70&documento=$documento"
+                "title" => "Se Genero la Proforma ",
+                "url" => "extensiones/tcpdf/pdf/reporte_proforma.php?tipo=S70&documento="
             ),
             "E05" => array(
-                "title" => "Se Genero la Nota cred. $documento",
+                "title" => "Se Genero la Nota cred. ",
                 "url" => ""
             )
         );
 
-        // Si se proporcionó un tipo adicional y un documento adicional, añadir la URL a la lista de URLs a abrir.
         $urls = [];
         if ($tipoAdicional && isset($config[$tipoAdicional]) && $documentoAdicional) {
             $urls[] = $config[$tipoAdicional]["url"] . $documentoAdicional;
+            $config[$tipoAdicional]["title"] .= $documentoAdicional;
         }
 
         if (isset($config[$tipo])) {
             $urls[] = $config[$tipo]["url"] . $documento;
+            $config[$tipo]["title"] .= $documento;
             echo self::generateConfirmationScript($config[$tipo]["title"], $urls);
         } else {
             throw new Exception("Tipo de documento desconocido.");
