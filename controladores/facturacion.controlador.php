@@ -4529,9 +4529,11 @@ class ControladorFacturacion
             if ($checkBoleta == "on" && $checkFactura == null) {
                 $tipoDestino = "S02";
                 $nombresDestino = "BOLETA";
+                $tipoCuenta = "03";
             } else {
                 $tipoDestino = "S03";
                 $nombresDestino = "FACTURA";
+                $tipoCuenta = "01";
             }
 
             $chofer = !empty($_POST['chofer']) ? $_POST['chofer'] : null;
@@ -4569,7 +4571,7 @@ class ControladorFacturacion
                             ModeloFacturacion::mdlActualizarTalonarioFactura($serieDestino);
                         }
 
-                        $cuentas = self::ctrRegistrarCuentaCorriente($codigo, $tipoDestino, $docDest, $usuario, $usureg, $pcreg);
+                        $cuentas = self::ctrRegistrarCuentaCorriente($codigo, $tipoCuenta, $docDest, $usuario, $usureg, $pcreg);
                     }
 
                     break;
