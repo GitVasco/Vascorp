@@ -7713,7 +7713,7 @@ class ModeloFacturacion
                             valor_3 
                             FROM
                             tabla_m_detalle t 
-                            WHERE v.chofer = t.cod_argumento 
+                            WHERE v.carro = t.cod_argumento 
                             AND t.cod_tabla = 'TCAR') 
                         END AS a5,
                         '' AS b5,
