@@ -1,0 +1,248 @@
+{
+    "10010": [
+        {
+            "area": "CORTE",
+            "costo": 0.07
+        },
+        {
+            "area": "COSTURA, HABILITADO Y LIMPIEZA",
+            "costo": 0.5829
+        },
+        {
+            "area": "ETIQUETADO",
+            "costo": 0.02
+        },
+        {
+            "area": "HANG TAG",
+            "costo": 0.025
+        },
+        {
+            "area": "ELASTICOS",
+            "costo": 0
+        }
+    ],
+    "10012": [
+        {
+            "area": "CORTE",
+            "costo": 0.15
+        },
+        {
+            "area": "COSTURA, HABILITADO Y LIMPIEZA",
+            "costo": 0.7149
+        },
+        {
+            "area": "ETIQUETADO",
+            "costo": 0.02
+        },
+        {
+            "area": "HANG TAG",
+            "costo": 0.025
+        },
+        {
+            "area": "ELASTICOS",
+            "costo": 0
+        }
+    ],
+    "10026": [
+        {
+            "area": "CORTE",
+            "costo": 0.075
+        },
+        {
+            "area": "COSTURA, HABILITADO Y LIMPIEZA",
+            "costo": 0.5693
+        },
+        {
+            "area": "ETIQUETADO",
+            "costo": 0.02
+        },
+        {
+            "area": "HANG TAG",
+            "costo": 0.025
+        },
+        {
+            "area": "ELASTICOS",
+            "costo": 0
+        }
+    ],
+    "10029": [
+        {
+            "area": "CORTE",
+            "costo": 0.1125
+        },
+        {
+            "area": "COSTURA, HABILITADO Y LIMPIEZA",
+            "costo": 0.8704
+        },
+        {
+            "area": "ETIQUETADO",
+            "costo": 0.02
+        },
+        {
+            "area": "HANG TAG",
+            "costo": 0.025
+        },
+        {
+            "area": "ELASTICOS",
+            "costo": 0
+        }
+    ],
+    "10040": [
+        {
+            "area": "CORTE",
+            "costo": 0.1
+        },
+        {
+            "area": "COSTURA, HABILITADO Y LIMPIEZA",
+            "costo": 0.7365
+        },
+        {
+            "area": "ETIQUETADO",
+            "costo": 0.02
+        },
+        {
+            "area": "HANG TAG",
+            "costo": 0.025
+        },
+        {
+            "area": "ELASTICOS",
+            "costo": 0
+        }
+    ],
+    "10041": [
+        {
+            "area": "CORTE",
+            "costo": 0.075
+        },
+        {
+            "area": "COSTURA, HABILITADO Y LIMPIEZA",
+            "costo": 0.5676
+        },
+        {
+            "area": "ETIQUETADO",
+            "costo": 0.02
+        },
+        {
+            "area": "HANG TAG",
+            "costo": 0.025
+        },
+        {
+            "area": "ELASTICOS",
+            "costo": 0
+        }
+    ],
+    "10045": [
+        {
+            "area": "CORTE",
+            "costo": 0.15
+        },
+        {
+            "area": "COSTURA, HABILITADO Y LIMPIEZA",
+            "costo": 0.6434
+        },
+        {
+            "area": "ETIQUETADO",
+            "costo": 0.02
+        },
+        {
+            "area": "HANG TAG",
+            "costo": 0.025
+        },
+        {
+            "area": "ELASTICOS",
+            "costo": 0
+        }
+    ],
+    "10051": [
+        {
+            "area": "CORTE",
+            "costo": 0.075
+        },
+        {
+            "area": "COSTURA, HABILITADO Y LIMPIEZA",
+            "costo": 0.505
+        },
+        {
+            "area": "ETIQUETADO",
+            "costo": 0.02
+        },
+        {
+            "area": "HANG TAG",
+            "costo": 0.025
+        },
+        {
+            "area": "ELASTICOS",
+            "costo": 0
+        }
+    ],
+    "10057": [
+        {
+            "area": "CORTE",
+            "costo": 0.075
+        },
+        {
+            "area": "COSTURA, HABILITADO Y LIMPIEZA",
+            "costo": 0.5898
+        },
+        {
+            "area": "ETIQUETADO",
+            "costo": 0.02
+        },
+        {
+            "area": "HANG TAG",
+            "costo": 0.025
+        },
+        {
+            "area": "ELASTICOS",
+            "costo": 0
+        }
+    ],
+    "10060": [
+        {
+            "area": "CORTE",
+            "costo": 0.075
+        },
+        {
+            "area": "COSTURA, HABILITADO Y LIMPIEZA",
+            "costo": 0.6446
+        },
+        {
+            "area": "ETIQUETADO",
+            "costo": 0.02
+        },
+        {
+            "area": "HANG TAG",
+            "costo": 0.025
+        },
+        {
+            "area": "ELASTICOS",
+            "costo": 0
+        }
+    ],
+    "10061": [
+        {
+            "area": "CORTE",
+            "costo": 0.075
+        },
+        {
+            "area": "ESTAMPADO",
+            "costo": 0.1
+        },
+        {
+            "area": "COSTURA, HABILITADO Y LIMPIEZA",
+            "costo": 0.6321
+        },
+        {
+            "area": "ETIQUETADO",
+            "costo": 0.02
+        },
+        {
+            "area": "HANG TAG",
+            "costo": 0.025
+        },
+        {
+            "area": "ELASTICOS",
+            "costo": 0
+        }
+    ]
+}

@@ -472,6 +472,7 @@ class ModeloFacturacion
                         v.cliente,
                         c.nombre,
                         c.tipo_documento AS tip_doc,
+                        v.facturacion,
                         (SELECT 
                           tipo_doc 
                         FROM
@@ -498,7 +499,9 @@ class ModeloFacturacion
                         LEFT JOIN ubigeojf u
                         ON c.ubigeo = u.cod_ubi
                     WHERE v.tipo='S01' AND v.estado in ('GENERADO','FACTURADO','ENVIADO')
-                    AND YEAR(v.fecha) = YEAR(NOW())";
+                    AND YEAR(v.fecha) = YEAR(NOW())
+                    ORDER BY v.fecha DESC,
+                    v.documento DESC";
 
         $stmt = Conexion::conectar()->prepare($sql);
 

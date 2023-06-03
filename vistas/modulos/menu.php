@@ -1803,7 +1803,9 @@
                                         $_GET["ruta"] == "centro-costos" ||
                                         $_GET["ruta"] == "diario" ||
                                         $_GET["ruta"] == "diario-alerta" ||
-                                        $_GET["ruta"] == "compras-reg"
+                                        $_GET["ruta"] == "compras-reg" ||
+                                        $_GET["ruta"] == "costos-modelo" ||
+                                        $_GET["ruta"] == "costos-versus"
                                     ) echo 'active'; ?>">
 
                     <a href="#">
@@ -1872,6 +1874,28 @@
 
                                 <i class="fa fa-search text-white"></i>
                                 <span>Validar</span>
+
+                            </a>
+
+                        </li>
+
+                        <li class="<?php if ($_GET["ruta"] == "costos-modelo") echo 'active'; ?>">
+
+                            <a href="costos-modelo">
+
+                                <i class="fa fa-star text-yellow"></i>
+                                <span>Costos Por Modelo</span>
+
+                            </a>
+
+                        </li>
+
+                        <li class="<?php if ($_GET["ruta"] == "costos-versus") echo 'active'; ?>">
+
+                            <a href="costos-versus">
+
+                                <i class="fa fa-star text-white"></i>
+                                <span>Comparación de Costos</span>
 
                             </a>
 

@@ -750,7 +750,7 @@ class ControladorContabilidad
                 }  */
 
 
-                $cuentas = array('104101');
+                $cuentas = array('104101', '104103');
 
                 if (in_array($cancelaciones08[$i]["cuenta"], $cuentas)) {
                     $codFin = 'O101';

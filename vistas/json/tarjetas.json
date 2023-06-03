@@ -1,0 +1,920 @@
+{
+    "10010": [
+        {
+            "materia_prima": "TEL0010",
+            "moneda": "S/",
+            "precio": 42.3729,
+            "descripcion": "TELA JERSEY ALGODON LICRADO 30/40 3 %",
+            "consumo": 0.0263,
+            "unidad": "KG"
+        },
+        {
+            "materia_prima": "TEL0050",
+            "moneda": "S/",
+            "precio": 33.8983,
+            "descripcion": "TELA JERSEY 30/1  ",
+            "consumo": 0.0019,
+            "unidad": "KG"
+        },
+        {
+            "materia_prima": "ELA0120",
+            "moneda": "$",
+            "precio": 0.144,
+            "descripcion": "ELASTICO LISTADO XND58 /83C39013",
+            "consumo": 0.24,
+            "unidad": "MTS"
+        },
+        {
+            "materia_prima": "SES0190",
+            "moneda": "S/",
+            "precio": 0.2441,
+            "descripcion": "SESGO 15MM EP1258",
+            "consumo": 1.25,
+            "unidad": "MTS"
+        },
+        {
+            "materia_prima": "SES0300",
+            "moneda": "$",
+            "precio": 0.1089,
+            "descripcion": "SESGO FLAT 20MM",
+            "consumo": 0.75,
+            "unidad": "MTS"
+        },
+        {
+            "materia_prima": "ETI0031",
+            "moneda": "$",
+            "precio": 0.0085,
+            "descripcion": "ETIQUETA ANCHA",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "HTG0010",
+            "moneda": "S/",
+            "precio": 0.07,
+            "descripcion": "HANG TAG 1 NEGRO(TRUSA) - SECTORIZADO",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "CAJ0100",
+            "moneda": "S/",
+            "precio": 0.2185,
+            "descripcion": "CAJA 10010",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "BAL0020",
+            "moneda": "S/",
+            "precio": 0.0008,
+            "descripcion": "BALIN 15MM PARA TRUSAS",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "ADH0070",
+            "moneda": "$",
+            "precio": 3.75,
+            "descripcion": "AUTOADHESIVO BLANCO DE 20 MM X 30MM",
+            "consumo": 0.0002,
+            "unidad": "ROL"
+        },
+        {
+            "materia_prima": "HTG0140",
+            "moneda": "$",
+            "precio": 16.9,
+            "descripcion": "HANG TAG 35X63-6000E C/P H T3 3COL. C/ESP S/AD.",
+            "consumo": 0.0002,
+            "unidad": "ROL"
+        }
+    ],
+    "10012": [
+        {
+            "materia_prima": "TEL0010",
+            "moneda": "S/",
+            "precio": 42.3729,
+            "descripcion": "TELA JERSEY ALGODON LICRADO 30/40 3 %",
+            "consumo": 0.0179,
+            "unidad": "KG"
+        },
+        {
+            "materia_prima": "TEL0050",
+            "moneda": "S/",
+            "precio": 33.8983,
+            "descripcion": "TELA JERSEY 30/1  ",
+            "consumo": 0.0021,
+            "unidad": "KG"
+        },
+        {
+            "materia_prima": "BLO0350",
+            "moneda": "$",
+            "precio": 0.3772,
+            "descripcion": "BLONDA INCONTRI 4D 200053 0006",
+            "consumo": 0.26,
+            "unidad": "MTRS"
+        },
+        {
+            "materia_prima": "ELA1010",
+            "moneda": "$",
+            "precio": 0.132,
+            "descripcion": "ELASTICO ORLA TRICOT 12MM - S280",
+            "consumo": 0.76,
+            "unidad": "MTRS"
+        },
+        {
+            "materia_prima": "SES0190",
+            "moneda": "S/",
+            "precio": 0.2441,
+            "descripcion": "SESGO 15MM EP1258",
+            "consumo": 1.25,
+            "unidad": "MTRS"
+        },
+        {
+            "materia_prima": "ETI0031",
+            "moneda": "$",
+            "precio": 0.0085,
+            "descripcion": "ETIQUETA ANCHA",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "CIN0020",
+            "moneda": "S/",
+            "precio": 0.0636,
+            "descripcion": "CINTA BEBE SATINADA 3MM",
+            "consumo": 0.15,
+            "unidad": "MTRS"
+        },
+        {
+            "materia_prima": "HTG0010",
+            "moneda": "S/",
+            "precio": 0.07,
+            "descripcion": "HANG TAG 1 NEGRO(TRUSA) - SECTORIZADO",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "CAJ0120",
+            "moneda": "S/",
+            "precio": 0.2185,
+            "descripcion": "CAJA 10012",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "BAL0020",
+            "moneda": "S/",
+            "precio": 0.0008,
+            "descripcion": "BALIN 15MM PARA TRUSAS",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "ADH0070",
+            "moneda": "$",
+            "precio": 3.75,
+            "descripcion": "AUTOADHESIVO BLANCO DE 20 MM X 30MM",
+            "consumo": 0.0002,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "HTG0140",
+            "moneda": "$",
+            "precio": 16.9,
+            "descripcion": "HANG TAG 35X63-6000E C/P H T3 3COL. C/ESP S/AD.",
+            "consumo": 0.0002,
+            "unidad": "UND"
+        }
+    ],
+    "10026": [
+        {
+            "materia_prima": "TEL0040",
+            "moneda": "S/",
+            "precio": 46.6102,
+            "descripcion": "TELA GAMUSA PIMA 50/1",
+            "consumo": 0.0208,
+            "unidad": "KG"
+        },
+        {
+            "materia_prima": "TEL0050",
+            "moneda": "S/",
+            "precio": 33.8983,
+            "descripcion": "TELA JERSEY 30/1  ",
+            "consumo": 0.002,
+            "unidad": "KG"
+        },
+        {
+            "materia_prima": "SES0300",
+            "moneda": "$",
+            "precio": 0.1089,
+            "descripcion": "SESGO FLAT 20MM",
+            "consumo": 1.85,
+            "unidad": "MTRS"
+        },
+        {
+            "materia_prima": "ETI0073",
+            "moneda": "S/",
+            "precio": 0.0254,
+            "descripcion": "ETIQUETA PESTAÑA PALOMITA",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "ETI0031",
+            "moneda": "$",
+            "precio": 0.0085,
+            "descripcion": "ETIQUETA ANCHA",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "HTG0010",
+            "moneda": "S/",
+            "precio": 0.07,
+            "descripcion": "HANG TAG 1 NEGRO(TRUSA) - SECTORIZADO",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "CAJ0260",
+            "moneda": "S/",
+            "precio": 0.2185,
+            "descripcion": "CAJA 10026",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "BAL0020",
+            "moneda": "S/",
+            "precio": 0.0008,
+            "descripcion": "BALIN 15MM PARA TRUSAS",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "ADH0070",
+            "moneda": "$",
+            "precio": 3.75,
+            "descripcion": "AUTOADHESIVO BLANCO DE 20 MM X 30MM",
+            "consumo": 0.0002,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "HTG0140",
+            "moneda": "$",
+            "precio": 16.9,
+            "descripcion": "HANG TAG 35X63-6000E C/P H T3 3COL. C/ESP S/AD.",
+            "consumo": 0.0002,
+            "unidad": "UND"
+        }
+    ],
+    "10029": [
+        {
+            "materia_prima": "TEL0010",
+            "moneda": "S/",
+            "precio": 42.3729,
+            "descripcion": "TELA JERSEY ALGODON LICRADO 30/40 3 %",
+            "consumo": 0.0417,
+            "unidad": "KG"
+        },
+        {
+            "materia_prima": "TEL0050",
+            "moneda": "S/",
+            "precio": 33.8983,
+            "descripcion": "TELA JERSEY 30/1  ",
+            "consumo": 0.007,
+            "unidad": "KG"
+        },
+        {
+            "materia_prima": "ELA0850",
+            "moneda": "$",
+            "precio": 0.1793,
+            "descripcion": "ELASTICO ORLA TRICOT 20MM BRILLANTE",
+            "consumo": 0.75,
+            "unidad": "MTRS"
+        },
+        {
+            "materia_prima": "SES0300",
+            "moneda": "$",
+            "precio": 0.1089,
+            "descripcion": "SESGO FLAT 20MM",
+            "consumo": 1.15,
+            "unidad": "MTRS"
+        },
+        {
+            "materia_prima": "ETI0031",
+            "moneda": "$",
+            "precio": 0.0085,
+            "descripcion": "ETIQUETA ANCHA",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "HTG0010",
+            "moneda": "S/",
+            "precio": 0.07,
+            "descripcion": "HANG TAG 1 NEGRO(TRUSA) - SECTORIZADO",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "CAJ0021",
+            "moneda": "S/",
+            "precio": 0.2836,
+            "descripcion": "CAJA FUCCIA RECT. DELGADA -TRUSAS",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "BAL0020",
+            "moneda": "S/",
+            "precio": 0.0008,
+            "descripcion": "BALIN 15MM PARA TRUSAS",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "ADH0070",
+            "moneda": "$",
+            "precio": 3.75,
+            "descripcion": "AUTOADHESIVO BLANCO DE 20 MM X 30MM",
+            "consumo": 0.0002,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "HTG0140",
+            "moneda": "$",
+            "precio": 16.9,
+            "descripcion": "HANG TAG 35X63-6000E C/P H T3 3COL. C/ESP S/AD.",
+            "consumo": 0.0002,
+            "unidad": "UND"
+        }
+    ],
+    "10040": [
+        {
+            "materia_prima": "TEL0040",
+            "moneda": "S/",
+            "precio": 46.6102,
+            "descripcion": "TELA GAMUSA PIMA 50/1",
+            "consumo": 0.0053,
+            "unidad": "KG"
+        },
+        {
+            "materia_prima": "TEL0040",
+            "moneda": "S/",
+            "precio": 46.6102,
+            "descripcion": "TELA GAMUSA PIMA 50/1",
+            "consumo": 0.001,
+            "unidad": "KG"
+        },
+        {
+            "materia_prima": "BLO0340",
+            "moneda": "$",
+            "precio": 0.2795,
+            "descripcion": "BLONDA ENCAJE KARLYN 4D 200099 0001 U336035",
+            "consumo": 0.68,
+            "unidad": "MTRS"
+        },
+        {
+            "materia_prima": "SES0010",
+            "moneda": "$",
+            "precio": 0.1188,
+            "descripcion": "SESGO MATE FOLD OVER 16MM DC001",
+            "consumo": 0.85,
+            "unidad": "MTRS"
+        },
+        {
+            "materia_prima": "ETI0031",
+            "moneda": "$",
+            "precio": 0.0085,
+            "descripcion": "ETIQUETA ANCHA",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "HTG0010",
+            "moneda": "S/",
+            "precio": 0.07,
+            "descripcion": "HANG TAG 1 NEGRO(TRUSA) - SECTORIZADO",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "CAJ0400",
+            "moneda": "S/",
+            "precio": 0.2185,
+            "descripcion": "CAJA 10040",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "BAL0020",
+            "moneda": "S/",
+            "precio": 0.0008,
+            "descripcion": "BALIN 15MM PARA TRUSAS",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "ADH0070",
+            "moneda": "$",
+            "precio": 3.75,
+            "descripcion": "AUTOADHESIVO BLANCO DE 20 MM X 30MM",
+            "consumo": 0.0002,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "HTG0140",
+            "moneda": "$",
+            "precio": 16.9,
+            "descripcion": "HANG TAG 35X63-6000E C/P H T3 3COL. C/ESP S/AD.",
+            "consumo": 0.0002,
+            "unidad": "UND"
+        }
+    ],
+    "10041": [
+        {
+            "materia_prima": "TEL0040",
+            "moneda": "S/",
+            "precio": 46.6102,
+            "descripcion": "TELA GAMUSA PIMA 50/1",
+            "consumo": 0.0196,
+            "unidad": "KG"
+        },
+        {
+            "materia_prima": "TEL0050",
+            "moneda": "S/",
+            "precio": 33.8983,
+            "descripcion": "TELA JERSEY 30/1  ",
+            "consumo": 0.002,
+            "unidad": "KG"
+        },
+        {
+            "materia_prima": "SES0310",
+            "moneda": "$",
+            "precio": 0.121,
+            "descripcion": "SESGO CORAZON 17MM",
+            "consumo": 1.15,
+            "unidad": "MTRS"
+        },
+        {
+            "materia_prima": "ELA0850",
+            "moneda": "$",
+            "precio": 0.1793,
+            "descripcion": "ELASTICO ORLA TRICOT 20MM BRILLANTE",
+            "consumo": 0.8,
+            "unidad": "MTRS"
+        },
+        {
+            "materia_prima": "ETI0073",
+            "moneda": "S/",
+            "precio": 0.0254,
+            "descripcion": "ETIQUETA PESTAÑA PALOMITA",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "ETI0031",
+            "moneda": "$",
+            "precio": 0.0085,
+            "descripcion": "ETIQUETA ANCHA",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "HTG0010",
+            "moneda": "S/",
+            "precio": 0.07,
+            "descripcion": "HANG TAG 1 NEGRO(TRUSA) - SECTORIZADO",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "CAJ0410",
+            "moneda": "S/",
+            "precio": 0.2185,
+            "descripcion": "CAJA 10041",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "BAL0020",
+            "moneda": "S/",
+            "precio": 0.0008,
+            "descripcion": "BALIN 15MM PARA TRUSAS",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "ADH0070",
+            "moneda": "$",
+            "precio": 3.75,
+            "descripcion": "AUTOADHESIVO BLANCO DE 20 MM X 30MM",
+            "consumo": 0.0002,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "HTG0140",
+            "moneda": "$",
+            "precio": 16.9,
+            "descripcion": "HANG TAG 35X63-6000E C/P H T3 3COL. C/ESP S/AD.",
+            "consumo": 0.0002,
+            "unidad": "UND"
+        }
+    ],
+    "10045": [
+        {
+            "materia_prima": "TEL0770",
+            "moneda": "S/",
+            "precio": 44.9153,
+            "descripcion": "TELA JERSEY FULL LICRA 30/30",
+            "consumo": 0.025,
+            "unidad": "KG"
+        },
+        {
+            "materia_prima": "TEL0050",
+            "moneda": "S/",
+            "precio": 33.8983,
+            "descripcion": "TELA JERSEY 30/1  ",
+            "consumo": 0.0017,
+            "unidad": "KG"
+        },
+        {
+            "materia_prima": "BLO0340",
+            "moneda": "$I",
+            "precio": 0.2795,
+            "descripcion": "BLONDA ENCAJE KARLYN 4D 200099 0001 U336035",
+            "consumo": 1.05,
+            "unidad": "MTRS"
+        },
+        {
+            "materia_prima": "ELA0850",
+            "moneda": "$",
+            "precio": 0.1793,
+            "descripcion": "ELASTICO ORLA TRICOT 20MM BRILLANTE",
+            "consumo": 0.75,
+            "unidad": "MTRS"
+        },
+        {
+            "materia_prima": "ETI0031",
+            "moneda": "$",
+            "precio": 0.0085,
+            "descripcion": "ETIQUETA ANCHA",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "HTG0010",
+            "moneda": "S/",
+            "precio": 0.07,
+            "descripcion": "HANG TAG 1 NEGRO(TRUSA) - SECTORIZADO",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "CAJ0450",
+            "moneda": "S/",
+            "precio": 0.2185,
+            "descripcion": "CAJA 10045",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "BAL0020",
+            "moneda": "S/",
+            "precio": 0.0008,
+            "descripcion": "BALIN 15MM PARA TRUSAS",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "ADH0070",
+            "moneda": "$",
+            "precio": 3.75,
+            "descripcion": "AUTOADHESIVO BLANCO DE 20 MM X 30MM",
+            "consumo": 0.0002,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "HTG0140",
+            "moneda": "$",
+            "precio": 16.9,
+            "descripcion": "HANG TAG 35X63-6000E C/P H T3 3COL. C/ESP S/AD.",
+            "consumo": 0.0002,
+            "unidad": "UND"
+        }
+    ],
+    "10051": [
+        {
+            "materia_prima": "TEL0770",
+            "moneda": "S/",
+            "precio": 44.9153,
+            "descripcion": "TELA JERSEY FULL LICRA 30/30",
+            "consumo": 0.027,
+            "unidad": "KG"
+        },
+        {
+            "materia_prima": "TEL0050",
+            "moneda": "S/",
+            "precio": 33.8983,
+            "descripcion": "TELA JERSEY 30/1  ",
+            "consumo": 0.0014,
+            "unidad": "KG"
+        },
+        {
+            "materia_prima": "ELA0040",
+            "moneda": "$",
+            "precio": 0.3,
+            "descripcion": "ELASTICO PERSONALIZADO 15 MM EJ0398HILO BOXER",
+            "consumo": 0.72,
+            "unidad": "MTRS"
+        },
+        {
+            "materia_prima": "ETI0031",
+            "moneda": "$",
+            "precio": 0.0085,
+            "descripcion": "ETIQUETA ANCHA",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "HTG0010",
+            "moneda": "S/",
+            "precio": 0.07,
+            "descripcion": "HANG TAG 1 NEGRO(TRUSA) - SECTORIZADO",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "CAJ0510",
+            "moneda": "S/",
+            "precio": 0.2185,
+            "descripcion": "CAJA 10051",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "BAL0020",
+            "moneda": "S/",
+            "precio": 0.0008,
+            "descripcion": "BALIN 15MM PARA TRUSAS",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "ADH0070",
+            "moneda": "$",
+            "precio": 3.75,
+            "descripcion": "AUTOADHESIVO BLANCO DE 20 MM X 30MM",
+            "consumo": 0.0002,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "HTG0140",
+            "moneda": "$",
+            "precio": 16.9,
+            "descripcion": "HANG TAG 35X63-6000E C/P H T3 3COL. C/ESP S/AD.",
+            "consumo": 0.0002,
+            "unidad": "UND"
+        }
+    ],
+    "10057": [
+        {
+            "materia_prima": "TEL0040",
+            "moneda": "S/",
+            "precio": 46.6102,
+            "descripcion": "TELA GAMUSA PIMA 50/1",
+            "consumo": 0.0222,
+            "unidad": "KG"
+        },
+        {
+            "materia_prima": "TEL0050",
+            "moneda": "S/",
+            "precio": 33.8983,
+            "descripcion": "TELA JERSEY 30/1  ",
+            "consumo": 0.002,
+            "unidad": "KG"
+        },
+        {
+            "materia_prima": "SES0010",
+            "moneda": "$",
+            "precio": 0.1188,
+            "descripcion": "SESGO MATE FOLD OVER 16MM DC001",
+            "consumo": 1.25,
+            "unidad": "MTRS"
+        },
+        {
+            "materia_prima": "ELA0060",
+            "moneda": "$",
+            "precio": 0.368,
+            "descripcion": "ELASTICO PERSONALIZADO 20MM EJ0550",
+            "consumo": 0.75,
+            "unidad": "MTRS"
+        },
+        {
+            "materia_prima": "ETI0031",
+            "moneda": "$",
+            "precio": 0.0085,
+            "descripcion": "ETIQUETA ANCHA",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "HTG0010",
+            "moneda": "S/",
+            "precio": 0.07,
+            "descripcion": "HANG TAG 1 NEGRO(TRUSA) - SECTORIZADO",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "CAJ0570",
+            "moneda": "S/",
+            "precio": 0.2185,
+            "descripcion": "CAJA 10057",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "BAL0020",
+            "moneda": "S/",
+            "precio": 0.0008,
+            "descripcion": "BALIN 15MM PARA TRUSAS",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "ADH0070",
+            "moneda": "$",
+            "precio": 3.75,
+            "descripcion": "AUTOADHESIVO BLANCO DE 20 MM X 30MM",
+            "consumo": 0.0002,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "HTG0140",
+            "moneda": "$",
+            "precio": 16.9,
+            "descripcion": "HANG TAG 35X63-6000E C/P H T3 3COL. C/ESP S/AD.",
+            "consumo": 0.0002,
+            "unidad": "UND"
+        }
+    ],
+    "10060": [
+        {
+            "materia_prima": "TEL0010",
+            "moneda": "S/",
+            "precio": 42.3729,
+            "descripcion": "TELA JERSEY ALGODON LICRADO 30/40 3 %",
+            "consumo": 0.0435,
+            "unidad": "KG"
+        },
+        {
+            "materia_prima": "TEL0050",
+            "moneda": "S/",
+            "precio": 33.8983,
+            "descripcion": "TELA JERSEY 30/1  ",
+            "consumo": 0.0029,
+            "unidad": "KG"
+        },
+        {
+            "materia_prima": "ELA0010",
+            "moneda": "$",
+            "precio": 0.192,
+            "descripcion": "ELASTICO PERS. BRILLANTE 20MM EJ0536",
+            "consumo": 0.75,
+            "unidad": "MTRS"
+        },
+        {
+            "materia_prima": "SES0300",
+            "moneda": "$",
+            "precio": 0.1089,
+            "descripcion": "SESGO FLAT 20MM",
+            "consumo": 1.25,
+            "unidad": "MTRS"
+        },
+        {
+            "materia_prima": "ETI0031",
+            "moneda": "$",
+            "precio": 0.0085,
+            "descripcion": "ETIQUETA ANCHA",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "HTG0010",
+            "moneda": "S/",
+            "precio": 0.07,
+            "descripcion": "HANG TAG 1 NEGRO(TRUSA) - SECTORIZADO",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "CAJ0021",
+            "moneda": "S/",
+            "precio": 0.2836,
+            "descripcion": "CAJA FUCCIA RECT. DELGADA -TRUSAS",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "BAL0020",
+            "moneda": "S/",
+            "precio": 0.0008,
+            "descripcion": "BALIN 15MM PARA TRUSAS",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "ADH0070",
+            "moneda": "$",
+            "precio": 3.75,
+            "descripcion": "AUTOADHESIVO BLANCO DE 20 MM X 30MM",
+            "consumo": 0.0002,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "HTG0140",
+            "moneda": "$",
+            "precio": 16.9,
+            "descripcion": "HANG TAG 35X63-6000E C/P H T3 3COL. C/ESP S/AD.",
+            "consumo": 0.0002,
+            "unidad": "UND"
+        }
+    ],
+    "10061": [
+        {
+            "materia_prima": "TEL0770",
+            "moneda": "S/",
+            "precio": 44.9153,
+            "descripcion": "TELA JERSEY FULL LICRA 30/30",
+            "consumo": 0.0333,
+            "unidad": "KG"
+        },
+        {
+            "materia_prima": "TEL0050",
+            "moneda": "S/",
+            "precio": 33.8983,
+            "descripcion": "TELA JERSEY 30/1  ",
+            "consumo": 0.0037,
+            "unidad": "KG"
+        },
+        {
+            "materia_prima": "ELA0090",
+            "moneda": "$",
+            "precio": 0.2051,
+            "descripcion": "ELASTICO BICOLOR EP0420",
+            "consumo": 0.75,
+            "unidad": "MTRS"
+        },
+        {
+            "materia_prima": "ETI0031",
+            "moneda": "$",
+            "precio": 0.0085,
+            "descripcion": "ETIQUETA ANCHA",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "HTG0010",
+            "moneda": "S/",
+            "precio": 0.07,
+            "descripcion": "HANG TAG 1 NEGRO(TRUSA) - SECTORIZADO",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "CAJ0610",
+            "moneda": "S/",
+            "precio": 0.2289,
+            "descripcion": "CAJA 10061",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "BAL0020",
+            "moneda": "S/",
+            "precio": 0.0008,
+            "descripcion": "BALIN 15MM PARA TRUSAS",
+            "consumo": 1,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "ADH0070",
+            "moneda": "$",
+            "precio": 3.75,
+            "descripcion": "AUTOADHESIVO BLANCO DE 20 MM X 30MM",
+            "consumo": 0.0002,
+            "unidad": "UND"
+        },
+        {
+            "materia_prima": "HTG0140",
+            "moneda": "$",
+            "precio": 16.9,
+            "descripcion": "HANG TAG 35X63-6000E C/P H T3 3COL. C/ESP S/AD.",
+            "consumo": 0.0002,
+            "unidad": "UND"
+        }
+    ]
+}
