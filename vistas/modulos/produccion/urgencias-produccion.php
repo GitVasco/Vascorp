@@ -53,6 +53,7 @@
                                 <th>Estado</th>
                                 <th>Stock</th>
                                 <th>Pedidos</th>
+                                <th>Stock Min</th>
                                 <th>Taller</th>
                                 <th>Servicio</th>
                                 <th>Cierre</th>

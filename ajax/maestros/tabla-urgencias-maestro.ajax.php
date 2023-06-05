@@ -244,14 +244,27 @@ class TablaUrgencias
                 }
 
                 /* 
-            todo: Pedidos
-            */
+                todo: Pedidos
+                */
                 $pedidosI = number_format($articulos[$i]["pedidos"], 0);
                 $pedidos = "<center><b><span style='font-size:100%' class='text-default'>" . $pedidosI . "</span></b></center>";
 
                 /* 
-            todo: Taller
-            */
+                todo: stock min
+                */
+                if ($articulos[$i]["stockmin"] >= $articulos[$i]["stockB"]) {
+
+                    $stockminI = number_format($articulos[$i]["stockmin"], 0);
+                    $stockmin = "<center><b><span style='font-size:100%' class='text-danger'>" . $stockminI . "</span></b></center>";
+                } else {
+
+                    $stockminI = number_format($articulos[$i]["stockmin"], 0);
+                    $stockmin = "<center><b><span style='font-size:100%' class='text-primary'>" . $stockminI . "</span></b></center>";
+                }
+
+                /* 
+                todo: Taller
+                */
                 if ($articulos[$i]["taller"] <= 0) {
 
                     $tallerI = number_format($articulos[$i]["taller"], 0);
@@ -398,6 +411,7 @@ class TablaUrgencias
                         "' . $estado . '",
                         "' . $stock . '",
                         "' . $pedidos . '",
+                        "' . $stockmin . '",
                         "' . $taller . '",
                         "' . $servicio . '",
                         "' . $alm_corte . '",
@@ -409,8 +423,8 @@ class TablaUrgencias
                 } else if ($tipo == "prod") {
 
                     /* 
-            todo: Servicio
-            */
+                    todo: Servicio
+                    */
                     if ($articulos[$i]["cierre"] <= 0) {
 
                         $cierreI = number_format($articulos[$i]["cierre"], 0);
@@ -429,6 +443,7 @@ class TablaUrgencias
                         "' . $estado . '",
                         "' . $stock . '",
                         "' . $pedidos . '",
+                        "' . $stockmin . '",
                         "' . $taller . '",
                         "' . $servicio . '",
                         "' . $cierre . '",
@@ -449,6 +464,7 @@ class TablaUrgencias
                         "' . $estado . '",
                         "' . $stock . '",
                         "' . $pedidos . '",
+                        "' . $stockmin . '",
                         "' . $taller . '",
                         "' . $servicio . '",
                         "' . $alm_corte . '",
