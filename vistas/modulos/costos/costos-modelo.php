@@ -51,7 +51,7 @@
             $modelo = $item['modelo'];
             $imagen = $item['imagen'];
             $costo = $item['costo_total'];
-            $precio = $item['precio_venta'];
+            $precio_venta = $item['precio_venta'];
             $utilidad = $item['utilidad'];
             $mpprincipal = $item['mp_principal'];
             $mpd = $item['materia_prima_directa'];
@@ -207,7 +207,9 @@
                                             <b>Costo 2022 S/</b> <a class="pull-right"><?php echo round($costo, 2); ?></a>
                                         </li>
                                         <li class="list-group-item">
-                                            <b>Precio 2022 S/</b> <a class="pull-right"><?php echo round($precio, 2); ?></a>
+                                            <b>Precio 2022 S/</b> <a class="pull-right"><?php echo round($precio_venta, 2); ?></a>
+
+
                                         </li>
                                         <li class="list-group-item">
                                             <b>Utilidad 2022 %</b> <a class="pull-right"><?php echo round($utilidad * 100, 0); ?></a>

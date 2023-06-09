@@ -43,7 +43,7 @@
     },
     {
         "Línea_MP": "TELA",
-        "Código_MP": "TEL0040",
+        "Código_MP": "TEL0040a",
         "Descripcón_Materia prima": "GAMUSA PIMA 40/1",
         "Proveedor": "TELAS VASCO",
         "Tipo": "PROMEDIO",
@@ -59,8 +59,8 @@
         "agosto": 11.01,
         "setiembre": 11.01,
         "octubre": 11.01,
-        "noviembre": 11.01,
-        "diciembre": 11.01
+        "noviembre": 12.2658,
+        "diciembre": 12.2658
     },
     {
         "Línea_MP": "TELA",
@@ -69,19 +69,19 @@
         "Proveedor": "TELAS VASCO",
         "Tipo": "OSCURO",
         "Und": "KG",
-        "Mon": "S/.",
-        "enero": null,
-        "febrero": null,
-        "marzo": null,
-        "abril": null,
-        "mayo": null,
-        "junio": 49,
-        "julio": 49,
-        "agosto": 49,
-        "setiembre": 49,
-        "octubre": 49,
-        "noviembre": 49,
-        "diciembre": 49
+        "Mon": "$",
+        "enero": 11.01,
+        "febrero": 11.01,
+        "marzo": 11.01,
+        "abril": 11.01,
+        "mayo": 11.01,
+        "junio": 11.01,
+        "julio": 11.01,
+        "agosto": 11.01,
+        "setiembre": 11.01,
+        "octubre": 11.01,
+        "noviembre": 12.2658,
+        "diciembre": 12.2658
     },
     {
         "Línea_MP": "TELA",
