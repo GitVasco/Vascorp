@@ -630,20 +630,29 @@ $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setWrapText(
 
 
 $sqlDetalle = mysql_query("SELECT 
-et.trabajador AS id_trabajador,
-CONCAT(t.nom_tra,' ',t.ape_pat_tra,' ',t.ape_mat_tra) AS nombre,
-COUNT(DISTINCT DATE(et.fecha_terminado)) AS dias,
-ROUND(SUM(et.total_precio),2) AS produccion,
-ROUND(t.sueldo_total / 2,2) AS sueldo_quincena,
-CASE
-  WHEN SUM(et.total_precio) >= 600 
-  THEN 'A' 
-  WHEN SUM(et.total_precio) < 600 
-  AND SUM(et.total_precio) >= 550 
-  THEN 'B' 
-  ELSE 'C' 
-END categoria,
-CASE
+  et.trabajador AS id_trabajador,
+  CONCAT(
+    t.nom_tra,
+    ' ',
+    t.ape_pat_tra,
+    ' ',
+    t.ape_mat_tra
+  ) AS nombre,
+  COUNT(DISTINCT DATE(et.fecha_terminado)) AS dias,
+  ROUND(SUM(et.total_precio), 2) AS produccion,
+  ROUND(t.sueldo_total / 2, 2) AS sueldo_quincena,
+  CASE
+    WHEN SUM(et.total_precio) >= 600 
+    THEN 'A' 
+    WHEN SUM(et.total_precio) < 600 
+    AND SUM(et.total_precio) >= 550 
+    THEN 'B' 
+    WHEN SUM(et.total_precio) < 550 
+    AND SUM(et.total_precio) >= 500 
+    THEN 'C' 
+    ELSE 'D' 
+  END categoria,
+  CASE
     WHEN (
       SUM(et.total_precio) - (t.sueldo_total / 2)
     ) > 0 
@@ -653,16 +662,30 @@ CASE
       2
     ) 
   END AS diferencia,
-CASE
-  WHEN (SUM(et.total_precio) - (t.sueldo_total / 2) > 0) 
-  AND  (t.sueldo_total / 2)>= 600 
-  THEN 125
-  WHEN (SUM(et.total_precio) - (t.sueldo_total / 2) > 0) 
-  AND  ((t.sueldo_total / 2) < 600 
-  AND  (t.sueldo_total / 2) >= 550 )
-  THEN 110
-  ELSE 0
-END AS incentivo 
+  CASE
+    WHEN (
+      SUM(et.total_precio) - (t.sueldo_total / 2) > 0
+    ) 
+    AND (t.sueldo_total / 2) >= 600 
+    THEN 125 
+    WHEN (
+      SUM(et.total_precio) - (t.sueldo_total / 2) > 0
+    ) 
+    AND (
+      (t.sueldo_total / 2) < 600 
+      AND (t.sueldo_total / 2) >= 550
+    ) 
+    THEN 110 
+    WHEN (
+      SUM(et.total_precio) - (t.sueldo_total / 2) > 0
+    ) 
+    AND (
+      (t.sueldo_total / 2) < 550 
+      AND (t.sueldo_total / 2) >= 500
+    ) 
+    THEN 100 
+    ELSE 0 
+  END AS incentivo 
 FROM
 entallerjf et 
 LEFT JOIN trabajadorjf t 
