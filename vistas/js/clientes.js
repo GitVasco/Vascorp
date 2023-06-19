@@ -90,8 +90,8 @@ $("#documentoCliente").change(function () {
     if (validarDocumento(documento, tipo)) {
         verificarDocumentoExistente(documento, tipo);
     } else {
-        toastr["error"]("Revisar la cantidad de dígitos del documento");
-        $("#documentoCliente").val("").focus();
+        //toastr["error"]("Revisar la cantidad de dígitos del documento");
+        $("#documentoCliente").focus();
         $("#tipo_persona").val("");
         $("#ape_paterno").val("");
         $("#ape_materno").val("");

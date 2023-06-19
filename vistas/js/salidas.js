@@ -514,7 +514,7 @@ $("#seleccionarClienteS").change(function () {
     console.log(nomCliente);
     $("#nomClienteM").val(nomCliente); */
 
-    var vendedor = document.getElementById("seleccionarVendedor").value;
+    var vendedor = document.getElementById("seleccionarVendedorS").value;
     //console.log(vendedor)
     $("#vendedorM").val(vendedor);
 });
@@ -549,7 +549,7 @@ $(".crearSalidaVarios").click(function () {
         },
     });
 
-    var vendedor = document.getElementById("seleccionarVendedor").value;
+    var vendedor = document.getElementById("seleccionarVendedorS").value;
     $("#vendedorM").val(vendedor);
 
     var lista = document.getElementById("seleccionarLista").value;
@@ -982,7 +982,7 @@ $(".tablaArticulosSalidas").on("click", ".modificarArtSal", function () {
     //console.log("hola mundo");
 
     var cliente = document.getElementById("seleccionarClienteS").value;
-    var vendedor = document.getElementById("seleccionarVendedor").value;
+    var vendedor = document.getElementById("seleccionarVendedorS").value;
     var salida = document.getElementById("nuevoCodigo").value;
     var modLista = document.getElementById("lista").value;
 

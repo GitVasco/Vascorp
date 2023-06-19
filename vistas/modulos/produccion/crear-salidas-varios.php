@@ -196,7 +196,7 @@
 
                                         <span class="input-group-addon"><i class="fa fa-shopping-cart"></i></span>
 
-                                        <select class="form-control" id="seleccionarVendedor" name="seleccionarVendedor" required>
+                                        <select class="form-control" id="seleccionarVendedorS" name="seleccionarVendedorS" required>
 
                                             <?php
 
