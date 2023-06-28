@@ -95,7 +95,7 @@ $pdf->setPage(1, true);
 $pdf->SetFont('helvetica', 'A', 8);
 $pdf->Ln(16);
 foreach ($modelo as $key => $value) {
-    $pdf->Ln(5);
+    $pdf->Ln(4.5);
     $pdf->Cell(35, 5, $value["modelo"], 0, false, 'C', 0, '', 0, false, 'T', 'M');
     $pdf->Cell(47, 5, $value["nombre"], 0, false, 'L', 0, '', 0, false, 'T', 'M');
     $pdf->Cell(30, 5, $value["cantidad"], 0, false, 'R', 0, '', 0, false, 'T', 'M');
@@ -110,9 +110,6 @@ $pdf->Cell(110, 7, '', 0, false, 'C', 0, '', 0, false, false, false);
 $pdf->Cell(44, 7, 'Total General S/', 0, false, 'R', 0, '', 0, false, false, false);
 $pdf->Cell(29, 7, number_format($venta["total"], 2), 0, false, 'R', 0, '', 0, false, false, false);
 // convert TTF font to TCPDF format and store it on the fonts folder
-
-
-
 
 // ---------------------------------------------------------
 //SALIDA DEL ARCHIVO 
