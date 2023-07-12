@@ -1,12 +1,14 @@
 <?php
 require_once "conexion.php";
 
-class ModeloContabilidad{
+class ModeloContabilidad
+{
 
 
-    static public function mdlVentasSiscont($tipo, $documento, $inicio){
+    static public function mdlVentasSiscont($tipo, $documento, $inicio)
+    {
 
-        $sql="SELECT 
+        $sql = "SELECT 
                 '02' AS origen,
                 DATE_FORMAT(v.fecha, '%d/%m/%y') AS fecha,
                 v.tipo,
@@ -161,25 +163,25 @@ class ModeloContabilidad{
                 AND v.documento = :documento 
                 AND v.tipo IN ('S02', 'S03', 'S05', 'E05') 
             ORDER BY v.documento,
-                tm.cuenta";                
+                tm.cuenta";
 
-        $stmt=Conexion::conectar()->prepare($sql);
+        $stmt = Conexion::conectar()->prepare($sql);
 
-        $stmt -> bindParam(":tipo", $tipo, PDO::PARAM_STR);
-        $stmt -> bindParam(":documento", $documento, PDO::PARAM_STR);   
-        $stmt -> bindParam(":inicio", $inicio, PDO::PARAM_STR);   
+        $stmt->bindParam(":tipo", $tipo, PDO::PARAM_STR);
+        $stmt->bindParam(":documento", $documento, PDO::PARAM_STR);
+        $stmt->bindParam(":inicio", $inicio, PDO::PARAM_STR);
 
         $stmt->execute();
 
         return $stmt->fetchAll();
 
-        $stmt=null;
-
+        $stmt = null;
     }
 
-    static public function mdlVentasSiscontB($inicio, $fin){
+    static public function mdlVentasSiscontB($inicio, $fin)
+    {
 
-        $sql="SELECT 
+        $sql = "SELECT 
                     '02' AS t,
                     DATE_FORMAT(v.fecha, '%d/%m/%y') AS fecha,
                     v.tipo,
@@ -471,24 +473,24 @@ class ModeloContabilidad{
                         AND '$fin' 
                         AND v.tipo IN ('S02', 'S03', 'E05', 'S05') 
                     ORDER BY documento,
-                        cuenta";                
+                        cuenta";
 
-        $stmt=Conexion::conectar()->prepare($sql);
- 
-        $stmt -> bindParam(":inicio", $inicio, PDO::PARAM_STR);   
-        $stmt -> bindParam(":fin", $fin, PDO::PARAM_STR);   
+        $stmt = Conexion::conectar()->prepare($sql);
+
+        $stmt->bindParam(":inicio", $inicio, PDO::PARAM_STR);
+        $stmt->bindParam(":fin", $fin, PDO::PARAM_STR);
 
         $stmt->execute();
 
         return $stmt->fetchAll();
 
-        $stmt=null;
+        $stmt = null;
+    }
 
-    }    
+    static public function mdlVoucherSiscont($ano, $mes)
+    {
 
-    static public function mdlVoucherSiscont($ano, $mes){
-
-        $sql="SELECT 
+        $sql = "SELECT 
                     tm.cod_argumento AS nmes,
                     tm.cod_tabla AS tabla,
                     tm.des_larga AS mes,
@@ -503,22 +505,22 @@ class ModeloContabilidad{
                     AND tm.cod_argumento = :mes 
                     AND tm.des_corta = :ano";
 
-        $stmt=Conexion::conectar()->prepare($sql);
+        $stmt = Conexion::conectar()->prepare($sql);
 
         $stmt->bindParam(":ano", $ano, PDO::PARAM_STR);
-		$stmt->bindParam(":mes", $mes, PDO::PARAM_STR);
+        $stmt->bindParam(":mes", $mes, PDO::PARAM_STR);
 
         $stmt->execute();
 
         return $stmt->fetch();
 
-        $stmt=null;
-
+        $stmt = null;
     }
 
-    static public function mdlVentasConfiguradas($fechaInicio, $fechaFin){
+    static public function mdlVentasConfiguradas($fechaInicio, $fechaFin)
+    {
 
-        $sql="SELECT 
+        $sql = "SELECT 
                     v.tipo,
                     v.documento 
                 FROM
@@ -530,22 +532,22 @@ class ModeloContabilidad{
                     v.tipo,
                     v.documento";
 
-        $stmt=Conexion::conectar()->prepare($sql);
+        $stmt = Conexion::conectar()->prepare($sql);
 
         $stmt->bindParam(":fechaInicio", $fechaInicio, PDO::PARAM_STR);
-		$stmt->bindParam(":fechaFin", $fechaFin, PDO::PARAM_STR);
+        $stmt->bindParam(":fechaFin", $fechaFin, PDO::PARAM_STR);
 
         $stmt->execute();
 
         return $stmt->fetchAll();
 
-        $stmt=null;
+        $stmt = null;
+    }
 
-    }    
+    static public function mdlActualizarCorrelativo($ano, $mes, $correlativo, $valor)
+    {
 
-	static public function mdlActualizarCorrelativo($ano, $mes, $correlativo, $valor){
-
-		$stmt = Conexion::conectar()->prepare("UPDATE 
+        $stmt = Conexion::conectar()->prepare("UPDATE 
                                     tabla_m_detalle 
                                 SET
                                     $valor = :correlativo
@@ -553,28 +555,26 @@ class ModeloContabilidad{
                                     AND cod_argumento = :mes 
                                     AND des_corta = :ano");
 
-		$stmt->bindParam(":ano", $ano, PDO::PARAM_STR);
-		$stmt->bindParam(":mes", $mes, PDO::PARAM_STR);
+        $stmt->bindParam(":ano", $ano, PDO::PARAM_STR);
+        $stmt->bindParam(":mes", $mes, PDO::PARAM_STR);
         $stmt->bindParam(":correlativo", $correlativo, PDO::PARAM_STR);
-        
-		if($stmt->execute()){
 
-			return "ok";
+        if ($stmt->execute()) {
 
-		}else{
+            return "ok";
+        } else {
 
-			return $stmt -> errorInfo();
-		
-		}
+            return $stmt->errorInfo();
+        }
 
-		#$stmt->close();
-		$stmt = null;
+        #$stmt->close();
+        $stmt = null;
+    }
 
-    }    
+    static public function mdlLetrasConfiguradas($fechaInicio, $fechaFin)
+    {
 
-    static public function mdlLetrasConfiguradas($fechaInicio, $fechaFin){
-
-        $sql="SELECT 
+        $sql = "SELECT 
                         cc.cod_pago,
                         cc.doc_origen
                     FROM
@@ -586,22 +586,22 @@ class ModeloContabilidad{
                         AND cc.cod_pago <> '85'
                     GROUP BY cc.doc_origen";
 
-        $stmt=Conexion::conectar()->prepare($sql);
+        $stmt = Conexion::conectar()->prepare($sql);
 
         $stmt->bindParam(":fechaInicio", $fechaInicio, PDO::PARAM_STR);
-		$stmt->bindParam(":fechaFin", $fechaFin, PDO::PARAM_STR);
+        $stmt->bindParam(":fechaFin", $fechaFin, PDO::PARAM_STR);
 
         $stmt->execute();
 
         return $stmt->fetchAll();
 
-        $stmt=null;
+        $stmt = null;
+    }
 
-    }     
+    static public function mdlLetrasConfiguradasB($fechaInicio, $fechaFin)
+    {
 
-    static public function mdlLetrasConfiguradasB($fechaInicio, $fechaFin){
-
-        $sql="SELECT 
+        $sql = "SELECT 
                         cc.cliente 
                     FROM
                         cuenta_ctejf cc 
@@ -612,22 +612,22 @@ class ModeloContabilidad{
                         AND cc.tip_mov = '+' 
                     GROUP BY cc.cliente ";
 
-        $stmt=Conexion::conectar()->prepare($sql);
+        $stmt = Conexion::conectar()->prepare($sql);
 
         $stmt->bindParam(":fechaInicio", $fechaInicio, PDO::PARAM_STR);
-		$stmt->bindParam(":fechaFin", $fechaFin, PDO::PARAM_STR);
+        $stmt->bindParam(":fechaFin", $fechaFin, PDO::PARAM_STR);
 
         $stmt->execute();
 
         return $stmt->fetchAll();
 
-        $stmt=null;
+        $stmt = null;
+    }
 
-    }      
-    
-    static public function mdlLetrasSiscont($documento){
+    static public function mdlLetrasSiscont($documento)
+    {
 
-        $sql="SELECT 
+        $sql = "SELECT 
                     '05' AS t,
                     DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fecha,
                     cc.tipo_doc,
@@ -719,23 +719,23 @@ class ModeloContabilidad{
                 GROUP BY cc.doc_origen 
                 ORDER BY doc_origen,
                     cuenta DESC,
-                    num_cta";                
+                    num_cta";
 
-        $stmt=Conexion::conectar()->prepare($sql);
+        $stmt = Conexion::conectar()->prepare($sql);
 
-        $stmt -> bindParam(":documento", $documento, PDO::PARAM_STR);   
+        $stmt->bindParam(":documento", $documento, PDO::PARAM_STR);
 
         $stmt->execute();
 
         return $stmt->fetchAll();
 
-        $stmt=null;
+        $stmt = null;
+    }
 
-    }    
+    static public function mdlLetrasSiscontB($cliente, $fechaInicio, $fechaFin)
+    {
 
-    static public function mdlLetrasSiscontB($cliente, $fechaInicio, $fechaFin){
-
-        $sql="SELECT 
+        $sql = "SELECT 
                         '05' AS t,
                         DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fecha,
                         cc.tipo_doc,
@@ -837,299 +837,299 @@ class ModeloContabilidad{
                         AND cc.tip_mov = '-' 
                         AND cc.cod_pago IN ('85', 'RF') 
                     ORDER BY ruc,
-                        debe DESC";                
+                        debe DESC";
 
-        $stmt=Conexion::conectar()->prepare($sql);
+        $stmt = Conexion::conectar()->prepare($sql);
 
-        $stmt -> bindParam(":cliente", $cliente, PDO::PARAM_STR);   
-        $stmt -> bindParam(":fechaInicio", $fechaInicio, PDO::PARAM_STR);
-		$stmt -> bindParam(":fechaFin", $fechaFin, PDO::PARAM_STR); 
+        $stmt->bindParam(":cliente", $cliente, PDO::PARAM_STR);
+        $stmt->bindParam(":fechaInicio", $fechaInicio, PDO::PARAM_STR);
+        $stmt->bindParam(":fechaFin", $fechaFin, PDO::PARAM_STR);
 
         $stmt->execute();
 
         return $stmt->fetchAll();
 
-        $stmt=null;
+        $stmt = null;
+    }
 
-    }       
+    static public function mdlCancelacionesSiscont04($fechaInicio, $fechaFin)
+    {
 
-    static public function mdlCancelacionesSiscont04($fechaInicio, $fechaFin){
-
-        $sql="SELECT 
-                        c1.codigos_pago,
-                        DATE_FORMAT(c1.fecha, '%d/%m/%y') AS fecha,
+        $sql = "SELECT 
+                c1.codigos_pago,
+                DATE_FORMAT(c1.fecha, '%d/%m/%y') AS fecha,
+                cc.tipo_doc,
+                cc.num_cta,
+                cc.doc_origen,
+                cc.cod_pago,
+                CASE
+                WHEN c1.codigos_pago = '04' 
+                THEN '101100' 
+                ELSE '121201' 
+                END AS cuenta,
+                ROUND(c1.monto, 2) AS debe,
+                0 AS haber,
+                'S' AS moneda,
+                ROUND(cc.tip_cambio, 7) AS tc,
+                /******/  
+                CASE
+                WHEN c1.cod_pago IN ('96', '97') 
+                THEN '07' 
+                WHEN c1.cod_pago IN ('85', 'RF') 
+                THEN 'LE' 
+                WHEN c1.tipo_doc = '85' 
+                THEN 'LE' 
+                ELSE cc.tipo_doc 
+                END AS doc,
+                /***********/
+                CASE
+                WHEN c1.cod_pago IN ('96', '97') 
+                THEN c1.doc_origen 
+                WHEN c1.cod_pago IN ('85', 'RF') 
+                THEN c1.num_cta 
+                WHEN c1.tipo_doc = '85' 
+                THEN c1.num_cta 
+                ELSE cc.num_cta 
+                END AS numero,
+                /*********/
+                DATE_FORMAT(
+                CASE
+                    WHEN c1.cod_pago IN ('96', '97') 
+                    THEN c1.fechab 
+                    WHEN c1.cod_pago IN ('85', 'RF') 
+                    THEN cc.fecha 
+                    WHEN c1.tipo_doc = '85' 
+                    THEN cc.fecha 
+                    ELSE cc.fecha 
+                END,
+                '%d/%m/%y'
+                ) AS fechad,
+                DATE_FORMAT(
+                CASE
+                    WHEN c1.cod_pago IN ('96', '97') 
+                    THEN c1.fechab 
+                    WHEN c1.cod_pago IN ('85', 'RF') 
+                    THEN cc.fecha_ven 
+                    WHEN c1.tipo_doc = '85' 
+                    THEN cc.fecha_ven 
+                    ELSE cc.fecha_ven 
+                END,
+                '%d/%m/%y'
+                ) AS fechav,
+                /***********/
+                cc.cliente,
+                c.documento AS codigo,
+                CASE
+                WHEN cc.tipo_doc = '85' 
+                THEN 'CANCELACION DE LETRAS' 
+                ELSE 'CANCELACION DE DOCUMENTOS' 
+                END AS glosa,
+                c.documento AS ruc,
+                '2' AS tipo,
+                c.nombre AS rs,
+                c.ape_paterno AS ape1,
+                c.ape_materno AS ape2,
+                c.nombres AS nombre,
+                c.tipo_documento AS tdoci 
+            FROM
+                cuenta_ctejf cc 
+                LEFT JOIN clientesjf c 
+                ON cc.cliente = c.codigo 
+                LEFT JOIN 
+                /*******/
+                (SELECT 
+                    cc.tipo_doc,
+                    cc.num_cta,
+                    cc.cod_pago,
+                    cc.doc_origen,
+                    c1.fecha,
+                    cc.fecha AS fechab,
+                    cc.cliente,
+                    GROUP_CONCAT(
+                    DISTINCT 
+                    CASE
+                        WHEN cc.cod_pago = '80' 
+                        THEN '04' 
+                        WHEN cc.cod_pago IN ('05', '00', '06', '14','15','16') 
+                        THEN '08' 
+                        ELSE 'CD' 
+                    END 
+                    ORDER BY 
+                    CASE
+                        WHEN cc.cod_pago = '80' 
+                        THEN '04' 
+                        WHEN cc.cod_pago IN ('05', '00', '06', '14','15','16') 
+                        THEN '08' 
+                        ELSE 'CD' 
+                    END
+                    ) AS codigos_pago,
+                    c1.codigos_pago AS origen,
+                    SUM(cc.monto) AS monto 
+                FROM
+                    cuenta_ctejf cc 
+                    LEFT JOIN 
+                    (SELECT 
                         cc.tipo_doc,
                         cc.num_cta,
-                        cc.doc_origen,
-                        cc.cod_pago,
+                        cc.fecha,
+                        GROUP_CONCAT(
+                        DISTINCT 
                         CASE
-                        WHEN c1.codigos_pago = '04' 
-                        THEN '101100' 
-                        ELSE '121201' 
-                        END AS cuenta,
-                        ROUND(c1.monto, 2) AS debe,
-                        0 AS haber,
-                        'S' AS moneda,
-                        ROUND(cc.tip_cambio, 7) AS tc,
-                        /******/
+                            WHEN cc.cod_pago = '80' 
+                            THEN '04' 
+                            WHEN cc.cod_pago IN ('05', '00', '06', '14','15','16')  
+                            THEN '08' 
+                            ELSE 'CD' 
+                        END 
+                        ORDER BY 
                         CASE
-                        WHEN c1.cod_pago IN ('96', '97') 
-                        THEN '07' 
-                        WHEN c1.cod_pago IN ('85', 'RF') 
-                        THEN 'LE' 
-                        WHEN c1.tipo_doc = '85' 
-                        THEN 'LE' 
-                        ELSE cc.tipo_doc 
-                        END AS doc,
-                        /***********/
-                        CASE
-                        WHEN c1.cod_pago IN ('96', '97') 
-                        THEN c1.doc_origen 
-                        WHEN c1.cod_pago IN ('85', 'RF') 
-                        THEN c1.num_cta 
-                        WHEN c1.tipo_doc = '85' 
-                        THEN c1.num_cta 
-                        ELSE cc.num_cta 
-                        END AS numero,
-                        /*********/
-                        DATE_FORMAT(
-                        CASE
-                            WHEN c1.cod_pago IN ('96', '97') 
-                            THEN c1.fechab 
-                            WHEN c1.cod_pago IN ('85', 'RF') 
-                            THEN cc.fecha 
-                            WHEN c1.tipo_doc = '85' 
-                            THEN cc.fecha 
-                            ELSE cc.fecha 
-                        END,
-                        '%d/%m/%y'
-                        ) AS fechad,
-                        DATE_FORMAT(
-                        CASE
-                            WHEN c1.cod_pago IN ('96', '97') 
-                            THEN c1.fechab 
-                            WHEN c1.cod_pago IN ('85', 'RF') 
-                            THEN cc.fecha_ven 
-                            WHEN c1.tipo_doc = '85' 
-                            THEN cc.fecha_ven 
-                            ELSE cc.fecha_ven 
-                        END,
-                        '%d/%m/%y'
-                        ) AS fechav,
-                        /***********/
-                        cc.cliente,
-                        c.documento AS codigo,
-                        CASE
-                        WHEN cc.tipo_doc = '85' 
-                        THEN 'CANCELACION DE LETRAS' 
-                        ELSE 'CANCELACION DE DOCUMENTOS' 
-                        END AS glosa,
-                        c.documento AS ruc,
-                        '2' AS tipo,
-                        c.nombre AS rs,
-                        c.ape_paterno AS ape1,
-                        c.ape_materno AS ape2,
-                        c.nombres AS nombre,
-                        c.tipo_documento AS tdoci 
+                            WHEN cc.cod_pago = '80' 
+                            THEN '04' 
+                            WHEN cc.cod_pago IN ('05', '00', '06', '14','15','16')  
+                            THEN '08' 
+                            ELSE 'CD' 
+                        END
+                        ) AS codigos_pago,
+                        SUM(cc.monto) AS monto 
                     FROM
                         cuenta_ctejf cc 
-                        LEFT JOIN clientesjf c 
-                        ON cc.cliente = c.codigo 
-                        LEFT JOIN 
-                        /*******/
-                        (SELECT 
-                            cc.tipo_doc,
-                            cc.num_cta,
-                            cc.cod_pago,
-                            cc.doc_origen,
-                            c1.fecha,
-                            cc.fecha AS fechab,
-                            cc.cliente,
-                            GROUP_CONCAT(
-                            DISTINCT 
-                            CASE
-                                WHEN cc.cod_pago = '80' 
-                                THEN '04' 
-                                WHEN cc.cod_pago IN ('05', '00', '06', '14') 
-                                THEN '08' 
-                                ELSE 'CD' 
-                            END 
-                            ORDER BY 
-                            CASE
-                                WHEN cc.cod_pago = '80' 
-                                THEN '04' 
-                                WHEN cc.cod_pago IN ('05', '00', '06', '14') 
-                                THEN '08' 
-                                ELSE 'CD' 
-                            END
-                            ) AS codigos_pago,
-                            c1.codigos_pago AS origen,
-                            SUM(cc.monto) AS monto 
-                        FROM
-                            cuenta_ctejf cc 
-                            LEFT JOIN 
-                            (SELECT 
-                                cc.tipo_doc,
-                                cc.num_cta,
-                                cc.fecha,
-                                GROUP_CONCAT(
-                                DISTINCT 
-                                CASE
-                                    WHEN cc.cod_pago = '80' 
-                                    THEN '04' 
-                                    WHEN cc.cod_pago IN ('05', '00', '06', '14') 
-                                    THEN '08' 
-                                    ELSE 'CD' 
-                                END 
-                                ORDER BY 
-                                CASE
-                                    WHEN cc.cod_pago = '80' 
-                                    THEN '04' 
-                                    WHEN cc.cod_pago IN ('05', '00', '06', '14') 
-                                    THEN '08' 
-                                    ELSE 'CD' 
-                                END
-                                ) AS codigos_pago,
-                                SUM(cc.monto) AS monto 
-                            FROM
-                                cuenta_ctejf cc 
-                            WHERE cc.fecha BETWEEN :fechaInicio 
-                                AND :fechaFin 
-                                AND cc.tip_mov = '-' 
-                                AND cc.tipo_doc IN ('01', '03', '07', '08', '85') 
-                            GROUP BY cc.num_cta) AS c1 
-                            ON cc.tipo_doc = c1.tipo_doc 
-                            AND cc.num_cta = c1.num_cta 
-                        WHERE cc.fecha BETWEEN :fechaInicio 
-                            AND :fechaFin 
-                            AND cc.tip_mov = '-' 
-                            AND cc.tipo_doc IN ('01', '03', '07', '08', '85') 
-                        GROUP BY cc.num_cta,
-                            cc.cod_pago,
-                            CASE
-                            WHEN cc.cod_pago IN ('97', '98') 
-                            THEN cc.doc_origen 
-                            END) AS c1 
-                        /**********/
-                        ON cc.tipo_doc = c1.tipo_doc 
-                        AND cc.num_cta = c1.num_cta 
-                    WHERE cc.tip_mov = '+' 
-                        AND c1.num_cta IS NOT NULL 
-                        AND c1.origen IN (
-                        '04',
-                        '04,CD',
-                        'CD',
-                        '04,08,CD',
-                        '04,08'
-                        ) -- order by cc.num_cta ;
-                UNION
-                        /**************************SOLO 04- HABER*/                      
-                        SELECT 
-                        c1.codigos_pago,
-                        DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fecha,
-                        cc.tipo_doc,
-                        cc.num_cta,
-                        cc.doc_origen,
-                        cc.cod_pago,
-                        CASE
-                            WHEN cc.tipo_doc = '85' 
-                            THEN '123201' 
-                            ELSE '121201' 
-                        END AS cuenta,
-                        ROUND('0.00', 2) AS debe,
-                        cc.monto AS haber,
-                        'S' AS moneda,
-                        ROUND(cc.tip_cambio, 7) AS tc,
-                        CASE
-                            WHEN cc.tipo_doc = '85' 
-                            THEN 'LE' 
-                            ELSE cc.tipo_doc 
-                        END AS doc,
-                        cc.num_cta AS numero,
-                        DATE_FORMAT(c1.fecha_ori, '%d/%m/%y') AS fechad,
-                        DATE_FORMAT(c1.fecha_ori_ven, '%d/%m/%y') AS fechav,
-                        cc.cliente,
-                        c.documento AS codigo,
-                        CASE
-                            WHEN cc.tipo_doc = '85' 
-                            THEN 'CANCELACION DE LETRAS' 
-                            ELSE 'CANCELACION DE DOCUMENTOS' 
-                        END AS glosa,
-                        c.documento AS ruc,
-                        '2' AS tipo,
-                        c.nombre AS rs,
-                        c.ape_paterno AS ape1,
-                        c.ape_materno AS ape2,
-                        c.nombres AS nombre,
-                        c.tipo_documento AS tdoci 
-                        FROM
-                        cuenta_ctejf cc 
-                        LEFT JOIN clientesjf c 
-                            ON cc.cliente = c.codigo 
-                        LEFT JOIN 
-                            /*******/
-                            (SELECT 
-                            cc.tipo_doc,
-                            cc.num_cta,
-                            GROUP_CONCAT(
-                            DISTINCT 
-                            CASE
-                                WHEN cc.cod_pago = '80' 
-                                THEN '04' 
-                                WHEN cc.cod_pago IN ('05', '00', '06', '14') 
-                                THEN '08' 
-                                ELSE 'CD' 
-                            END 
-                            ORDER BY 
-                            CASE
-                                WHEN cc.cod_pago = '80' 
-                                THEN '04' 
-                                WHEN cc.cod_pago IN ('05', '00', '06', '14') 
-                                THEN '08' 
-                                ELSE 'CD' 
-                            END
-                            ) AS codigos_pago,
-                            SUM(monto) AS monto ,
-                            cc.fecha_ori,
-                            cc.fecha_ori_ven
-                        FROM
-                            cuenta_ctejf cc 
-                        WHERE cc.fecha BETWEEN :fechaInicio 
-                            AND :fechaFin 
-                            AND cc.tip_mov = '-' 
-                            AND cc.tipo_doc IN ('01', '03', '07', '08', '85') 
-                        GROUP BY cc.num_cta) AS c1 
-                            /*****/
-                            ON cc.tipo_doc = c1.tipo_doc 
-                            AND cc.num_cta = c1.num_cta 
-                        WHERE cc.tip_mov = '-' 
-                        AND cc.fecha BETWEEN :fechaInicio 
+                    WHERE cc.fecha BETWEEN :fechaInicio 
                         AND :fechaFin 
-                        AND c1.codigos_pago IN (
-                            '04',
-                            '04,CD',
-                            'CD',
-                            '04,08,CD',
-                            '04,08'
-                        ) 
-                        ORDER BY num_cta";                
+                        AND cc.tip_mov = '-' 
+                        AND cc.tipo_doc IN ('01', '03', '07', '08', '85') 
+                    GROUP BY cc.num_cta) AS c1 
+                    ON cc.tipo_doc = c1.tipo_doc 
+                    AND cc.num_cta = c1.num_cta 
+                WHERE cc.fecha BETWEEN :fechaInicio 
+                    AND :fechaFin 
+                    AND cc.tip_mov = '-' 
+                    AND cc.tipo_doc IN ('01', '03', '07', '08', '85') 
+                GROUP BY cc.num_cta,
+                    cc.cod_pago,
+                    CASE
+                    WHEN cc.cod_pago IN ('97', '98') 
+                    THEN cc.doc_origen 
+                    END) AS c1 
+                /**********/
+                ON cc.tipo_doc = c1.tipo_doc 
+                AND cc.num_cta = c1.num_cta 
+            WHERE cc.tip_mov = '+' 
+                AND c1.num_cta IS NOT NULL 
+                AND c1.origen IN (
+                '04',
+                '04,CD',
+                'CD',
+                '04,08,CD',
+                '04,08'
+                ) -- order by cc.num_cta ;
+                UNION
+                /**************************SOLO 04- HABER*/
+                SELECT 
+                c1.codigos_pago,
+                DATE_FORMAT(cc.fecha, '%d/%m/%y') AS fecha,
+                cc.tipo_doc,
+                cc.num_cta,
+                cc.doc_origen,
+                cc.cod_pago,
+                CASE
+                    WHEN cc.tipo_doc = '85' 
+                    THEN '123201' 
+                    ELSE '121201' 
+                END AS cuenta,
+                ROUND('0.00', 2) AS debe,
+                cc.monto AS haber,
+                'S' AS moneda,
+                ROUND(cc.tip_cambio, 7) AS tc,
+                CASE
+                    WHEN cc.tipo_doc = '85' 
+                    THEN 'LE' 
+                    ELSE cc.tipo_doc 
+                END AS doc,
+                cc.num_cta AS numero,
+                DATE_FORMAT(c1.fecha_ori, '%d/%m/%y') AS fechad,
+                DATE_FORMAT(c1.fecha_ori_ven, '%d/%m/%y') AS fechav,
+                cc.cliente,
+                c.documento AS codigo,
+                CASE
+                    WHEN cc.tipo_doc = '85' 
+                    THEN 'CANCELACION DE LETRAS' 
+                    ELSE 'CANCELACION DE DOCUMENTOS' 
+                END AS glosa,
+                c.documento AS ruc,
+                '2' AS tipo,
+                c.nombre AS rs,
+                c.ape_paterno AS ape1,
+                c.ape_materno AS ape2,
+                c.nombres AS nombre,
+                c.tipo_documento AS tdoci 
+                FROM
+                cuenta_ctejf cc 
+                LEFT JOIN clientesjf c 
+                    ON cc.cliente = c.codigo 
+                LEFT JOIN 
+                    /*******/
+                    (SELECT 
+                    cc.tipo_doc,
+                    cc.num_cta,
+                    GROUP_CONCAT(
+                        DISTINCT 
+                        CASE
+                        WHEN cc.cod_pago = '80' 
+                        THEN '04' 
+                        WHEN cc.cod_pago IN ('05', '00', '06', '14','15','16')  
+                        THEN '08' 
+                        ELSE 'CD' 
+                        END 
+                        ORDER BY 
+                        CASE
+                        WHEN cc.cod_pago = '80' 
+                        THEN '04' 
+                        WHEN cc.cod_pago IN ('05', '00', '06', '14','15','16')  
+                        THEN '08' 
+                        ELSE 'CD' 
+                        END
+                    ) AS codigos_pago,
+                    SUM(monto) AS monto,
+                    cc.fecha_ori,
+                    cc.fecha_ori_ven 
+                    FROM
+                    cuenta_ctejf cc 
+                    WHERE cc.fecha BETWEEN :fechaInicio 
+                    AND :fechaFin 
+                    AND cc.tip_mov = '-' 
+                    AND cc.tipo_doc IN ('01', '03', '07', '08', '85') 
+                    GROUP BY cc.num_cta) AS c1 
+                    /*****/
+                    ON cc.tipo_doc = c1.tipo_doc 
+                    AND cc.num_cta = c1.num_cta 
+                WHERE cc.tip_mov = '-' 
+                AND cc.fecha BETWEEN :fechaInicio 
+                AND :fechaFin 
+                AND c1.codigos_pago IN (
+                    '04',
+                    '04,CD',
+                    'CD',
+                    '04,08,CD',
+                    '04,08'
+                ) 
+                ORDER BY num_cta ";
 
-        $stmt=Conexion::conectar()->prepare($sql);
+        $stmt = Conexion::conectar()->prepare($sql);
 
-        $stmt -> bindParam(":fechaInicio", $fechaInicio, PDO::PARAM_STR);
-		$stmt -> bindParam(":fechaFin", $fechaFin, PDO::PARAM_STR); 
+        $stmt->bindParam(":fechaInicio", $fechaInicio, PDO::PARAM_STR);
+        $stmt->bindParam(":fechaFin", $fechaFin, PDO::PARAM_STR);
 
         $stmt->execute();
 
         return $stmt->fetchAll();
 
-        $stmt=null;
+        $stmt = null;
+    }
 
-    }      
-    
-    static public function mdlCancelacionesSiscont08($fechaInicio, $fechaFin){
+    static public function mdlCancelacionesSiscont08($fechaInicio, $fechaFin)
+    {
 
-        $sql="SELECT DISTINCT 
+        $sql = "SELECT DISTINCT 
                     c1.codigos_pago,
                     DATE_FORMAT(c1.fecha, '%d/%m/%y') AS fecha,
                     cc.tipo_doc,
@@ -1139,7 +1139,7 @@ class ModeloContabilidad{
                     CASE
                     WHEN c1.cod_pago IN ('05', '00') 
                     THEN '104101' 
-                    WHEN c1.cod_pago IN ('06', '14') 
+                    WHEN c1.cod_pago IN ('06', '14','15','16') 
                     THEN '104103' 
                     ELSE '121201' 
                     END AS cuenta,
@@ -1226,7 +1226,7 @@ class ModeloContabilidad{
                         CASE
                             WHEN cc.cod_pago = '80' 
                             THEN '04' 
-                            WHEN cc.cod_pago IN ('05', '00', '06', '14') 
+                            WHEN cc.cod_pago IN ('05', '00', '06', '14','15','16') 
                             THEN '08' 
                             ELSE 'CD' 
                         END 
@@ -1234,7 +1234,7 @@ class ModeloContabilidad{
                         CASE
                             WHEN cc.cod_pago = '80' 
                             THEN '04' 
-                            WHEN cc.cod_pago IN ('05', '00', '06', '14') 
+                            WHEN cc.cod_pago IN ('05', '00', '06', '14','15','16') 
                             THEN '08' 
                             ELSE 'CD' 
                         END
@@ -1253,7 +1253,7 @@ class ModeloContabilidad{
                             CASE
                                 WHEN cc.cod_pago = '80' 
                                 THEN '04' 
-                                WHEN cc.cod_pago IN ('05', '00', '06', '14') 
+                                WHEN cc.cod_pago IN ('05', '00', '06', '14','15','16')  
                                 THEN '08' 
                                 ELSE 'CD' 
                             END 
@@ -1261,7 +1261,7 @@ class ModeloContabilidad{
                             CASE
                                 WHEN cc.cod_pago = '80' 
                                 THEN '04' 
-                                WHEN cc.cod_pago IN ('05', '00', '06', '14') 
+                                WHEN cc.cod_pago IN ('05', '00', '06', '14','15','16')  
                                 THEN '08' 
                                 ELSE 'CD' 
                             END
@@ -1346,7 +1346,7 @@ class ModeloContabilidad{
                             CASE
                             WHEN cc.cod_pago = '80' 
                             THEN '04' 
-                            WHEN cc.cod_pago IN ('05', '00', '06', '14') 
+                            WHEN cc.cod_pago IN ('05', '00', '06', '14','15','16') 
                             THEN '08' 
                             ELSE 'CD' 
                             END 
@@ -1354,7 +1354,7 @@ class ModeloContabilidad{
                             CASE
                             WHEN cc.cod_pago = '80' 
                             THEN '04' 
-                            WHEN cc.cod_pago IN ('05', '00', '06', '14') 
+                            WHEN cc.cod_pago IN ('05', '00', '06', '14','15','16') 
                             THEN '08' 
                             ELSE 'CD' 
                             END
@@ -1376,24 +1376,26 @@ class ModeloContabilidad{
                     AND cc.fecha BETWEEN :fechaInicio 
                     AND :fechaFin 
                     AND c1.codigos_pago IN ('08', '08,CD') 
-                    ORDER BY num_cta";                
+                    ORDER BY num_cta 
+      
+      ";
 
-        $stmt=Conexion::conectar()->prepare($sql);
+        $stmt = Conexion::conectar()->prepare($sql);
 
-        $stmt -> bindParam(":fechaInicio", $fechaInicio, PDO::PARAM_STR);
-		$stmt -> bindParam(":fechaFin", $fechaFin, PDO::PARAM_STR); 
+        $stmt->bindParam(":fechaInicio", $fechaInicio, PDO::PARAM_STR);
+        $stmt->bindParam(":fechaFin", $fechaFin, PDO::PARAM_STR);
 
         $stmt->execute();
 
         return $stmt->fetchAll();
 
-        $stmt=null;
+        $stmt = null;
+    }
 
-    }  
+    static public function mdlClientes($fechaInicio, $fechaFin)
+    {
 
-    static public function mdlClientes($fechaInicio, $fechaFin){
-
-        $sql="SELECT 
+        $sql = "SELECT 
                     c.documento AS ruc,
                     '2' AS tipo,
                     c.nombre AS rs,
@@ -1408,19 +1410,17 @@ class ModeloContabilidad{
                 FROM
                     clientesjf c 
                 WHERE DATE(c.fecha) BETWEEN :fechaInicio
-                    AND :fechaFin";                
+                    AND :fechaFin";
 
-        $stmt=Conexion::conectar()->prepare($sql);
+        $stmt = Conexion::conectar()->prepare($sql);
 
-        $stmt -> bindParam(":fechaInicio", $fechaInicio, PDO::PARAM_STR);
-		$stmt -> bindParam(":fechaFin", $fechaFin, PDO::PARAM_STR); 
+        $stmt->bindParam(":fechaInicio", $fechaInicio, PDO::PARAM_STR);
+        $stmt->bindParam(":fechaFin", $fechaFin, PDO::PARAM_STR);
 
         $stmt->execute();
 
         return $stmt->fetchAll();
 
-        $stmt=null;
-
-    }      
-
+        $stmt = null;
+    }
 }

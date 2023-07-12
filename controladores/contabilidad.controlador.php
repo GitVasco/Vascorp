@@ -618,7 +618,7 @@ class ControladorContabilidad
                     $codFin = "";
                 } */
 
-                $cuentas = array('');
+                $cuentas = array('101100');
 
                 if (in_array($cancelaciones04[$i]["cuenta"], $cuentas)) {
                     $codFin = 'O101';
@@ -749,7 +749,8 @@ class ControladorContabilidad
                     $codFin = "";
                 }  */
 
-
+                // TODO: Yudy pide quitar el codigo 101100 y agregar 104103
+                // FIXME: YUDY PIDE AGREGAR EL CODIGO 101100
                 $cuentas = array('104101', '104103');
 
                 if (in_array($cancelaciones08[$i]["cuenta"], $cuentas)) {
