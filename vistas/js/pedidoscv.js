@@ -190,16 +190,16 @@ $("#seleccionarVendedor").change(function () {
     const datos = new FormData();
     datos.append("cliList", cliList);
 
-    const fechaActual = new Date();
+    // const fechaActual = new Date();
 
-    const esFechaEspecial =
-        fechaActual.getDate() === 11 &&
-        fechaActual.getMonth() === 4 &&
-        fechaActual.getFullYear() === 2023;
+    // const esFechaEspecial =
+    //     fechaActual.getDate() === 11 &&
+    //     fechaActual.getMonth() === 4 &&
+    //     fechaActual.getFullYear() === 2023;
 
     const pedidos = ["572034804"];
 
-    const vendedoresEspeciales = new Set(["08", "08C", "08D", "08DR", "08R"]);
+    const vendedoresEspeciales = new Set(["08L"]);
 
     $.ajax({
         url: "ajax/pedidos.ajax.php",
@@ -214,8 +214,7 @@ $("#seleccionarVendedor").change(function () {
 
             if (
                 !pedidos.includes(nuevoCodigo) &&
-                vendedoresEspeciales.has(vendedor) &&
-                esFechaEspecial
+                vendedoresEspeciales.has(vendedor)
             ) {
                 listaPrecio = "precio2";
                 console.log("precio especial");
