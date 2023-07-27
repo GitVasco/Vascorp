@@ -131,7 +131,7 @@ $(".tablaAbonosCancelar").DataTable({
     deferRender: true,
     retrieve: true,
     processing: true,
-    order: [[0, "asc"]],
+    order: [[0, "desc"]],
     pageLength: 20,
     lengthMenu: [
         [20, 40, 60, -1],

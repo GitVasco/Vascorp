@@ -4814,25 +4814,12 @@ class ControladorFacturacion
             );
 
             $respuesta = ModeloFacturacion::mdlActualizarGuiaRemision($datos);
+
+            $impresion = (substr($_POST["codPedidoC"], 0, 1) == "0") ? "guia_remision" : "impresion_guia";
+
             if ($respuesta == "ok") {
 
-                echo '<script>
-
-                swal({
-                    type: "success",
-                    title: "El documento ha sido anulada correctamente",
-                    showConfirmButton: true,
-                    confirmButtonText: "Cerrar",
-                    closeOnConfirm: false
-                    }).then(function(result){
-                        if (result.value) {
-
-                        window.location = "guias-remision";
-
-                        }
-                    })
-    
-                </script>';
+                self::ctrConfirmacion("S01", $_POST["codPedidoC"], null, null);
             }
         }
     }

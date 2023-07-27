@@ -704,8 +704,8 @@ entallerjf et
 LEFT JOIN trabajadorjf t 
   ON et.trabajador = t.cod_tra 
 WHERE (
-  DATE(et.fecha_terminado) BETWEEN '2023-06-15' 
-  AND '2023-06-29'
+  DATE(et.fecha_terminado) BETWEEN '$inicio' 
+  AND '$fin'
 ) 
 AND t.cod_tip_tra = 1 
 GROUP BY et.trabajador 
