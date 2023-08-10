@@ -573,15 +573,19 @@ $(
 /*
  * BOTON  IMPRIMIR TICKET
  */
-$(".tablaPedidosConfirmados").on("click", ".btnCotizarPedido", function () {
-    var codigo = $(this).attr("codigo");
-    //console.log(codigo);
+$(".tablaPedidosConfirmados, .tablaPedidosGenerados").on(
+    "click",
+    ".btnCotizarPedido",
+    function () {
+        var codigo = $(this).attr("codigo");
+        //console.log(codigo);
 
-    window.open(
-        "vistas/reportes_ticket/pedido_cotizar.php?codigo=" + codigo,
-        "_blank"
-    );
-});
+        window.open(
+            "vistas/reportes_ticket/pedido_cotizar.php?codigo=" + codigo,
+            "_blank"
+        );
+    }
+);
 
 /*
  * AL CAMBIAR EL SELECT DE DOCUMENTO
@@ -2136,51 +2140,55 @@ $(".refreshDetalle").click(function () {
 /*
  *ANULAR PEDIDOS
  */
-$(".tablaPedidosConfirmados").on("click", ".btnDuplicarPedido", function () {
-    var codDup = $(this).attr("codigo");
-    console.log(codDup);
+$(".tablaPedidosConfirmados, .tablaPedidosGenerados").on(
+    "click",
+    ".btnDuplicarPedido",
+    function () {
+        var codDup = $(this).attr("codigo");
+        console.log(codDup);
 
-    // Capturamos el id de la orden de compra
-    swal({
-        title: "¿Está seguro de duplicar el pedido?",
-        text: "¡Si no lo está puede cancelar la acción!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        cancelButtonText: "Cancelar",
-        confirmButtonText: "Si, duplicar pedido!",
-    }).then(function (result) {
-        if (result.value) {
-            var datos = new FormData();
-            datos.append("codDup", codDup);
+        // Capturamos el id de la orden de compra
+        swal({
+            title: "¿Está seguro de duplicar el pedido?",
+            text: "¡Si no lo está puede cancelar la acción!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "Cancelar",
+            confirmButtonText: "Si, duplicar pedido!",
+        }).then(function (result) {
+            if (result.value) {
+                var datos = new FormData();
+                datos.append("codDup", codDup);
 
-            $.ajax({
-                url: "ajax/pedidos.ajax.php",
-                method: "POST",
-                data: datos,
-                cache: false,
-                contentType: false,
-                processData: false,
-                dataType: "json",
-                success: function (respuesta) {
-                    if (respuesta == "ok") {
-                        swal({
-                            type: "success",
-                            title: "Se duplico el pedido",
-                            showConfirmButton: true,
-                            confirmButtonText: "Cerrar",
-                        }).then(function (result) {
-                            if (result.value) {
-                                window.location = "pedidoscv";
-                            }
-                        });
-                    }
-                },
-            });
-        }
-    });
-});
+                $.ajax({
+                    url: "ajax/pedidos.ajax.php",
+                    method: "POST",
+                    data: datos,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    dataType: "json",
+                    success: function (respuesta) {
+                        if (respuesta == "ok") {
+                            swal({
+                                type: "success",
+                                title: "Se duplico el pedido",
+                                showConfirmButton: true,
+                                confirmButtonText: "Cerrar",
+                            }).then(function (result) {
+                                if (result.value) {
+                                    window.location = "pedidoscv";
+                                }
+                            });
+                        }
+                    },
+                });
+            }
+        });
+    }
+);
 
 // BUSCAR AGENCIA DE TRANSPORTES
 $("#seleccionarCliente").change(function () {
