@@ -53,7 +53,8 @@ class ModeloMaestras
                                                     valor_9 
                                                 FROM
                                                     tabla_m_detalle 
-                                                WHERE cod_Tabla = :valor");
+                                                WHERE cod_Tabla = :valor
+                                                ");
 
         $stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
 
