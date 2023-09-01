@@ -168,8 +168,6 @@ $pdf->AddPage('P', 'A4');
 $pdf->setPage(1, true);
 
 
-
-
 // use the font
 $pdf->SetFont('Helvetica', 'A', 8);
 //---------------------------------------------------------
@@ -179,7 +177,7 @@ $texto = $venta["observacion"];
 $monto_letra = CantidadEnLetra(($venta["total"]));
 $pdf->Ln(72);
 
-if ($serie == "B002" || $serie == "F002" || $serie == "B004" || $serie == "F004") {
+if ($serie == "B002" || $serie == "F002" || $serie == "B004" || $serie == "F004" || $serie = "FR02") {
     $pdf->Ln(5);
     $pdf->Cell(100, 5, $texto, '', false, 'L', 0, '', 0, false, 'T', 'M');
     $pdf->Ln(15);

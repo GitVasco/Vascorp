@@ -567,7 +567,8 @@
                                         $_GET["ruta"] == "urgencias-plan" ||
                                         $_GET["ruta"] == "urgencias-maestro" ||
                                         $_GET["ruta"] == "transferencia-apt" ||
-                                        $_GET["ruta"] == "crear-transferencias-apt"
+                                        $_GET["ruta"] == "crear-transferencias-apt" ||
+                                        $_GET["ruta"] == "estampado"
                                     ) echo 'active'; ?>">
 
                     <a href="#">
@@ -657,6 +658,15 @@
                                 </li>
 
                             </ul>
+
+                        </li>
+
+                        <li class="<?php if ($_GET["ruta"] == "estampado") echo 'active'; ?>">
+
+                            <a href="estampado">
+                                <i class="fa fa-scissors"></i>
+                                <span>Estampado</span>
+                            </a>
 
                         </li>
 

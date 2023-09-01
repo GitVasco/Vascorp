@@ -97,33 +97,39 @@ class ModeloOrdenCompra
 			return $stmt->fetchAll();
 		} else {
 			$stmt = Conexion::conectar()->prepare("SELECT 
-			odet.CodPro AS id,
-			odet.ColProv AS colorprov,
-			odet.UndPro AS unidad,
-			odet.CanPro AS cantidad,
-			odet.PrePro AS precio,
-			odet.DscPro AS descuento,
-			odet.ImpPro AS total, 
-			tbcol.des_larga AS color,
-			odet.Nro,
-			p.codfab,
-			p.despro,
-			CASE
-				WHEN odet.estac = 'ABI' 
-				THEN 'ABIERTA' 
-				WHEN odet.estac = 'CER' 
-				THEN 'CERRADA' 
-				ELSE 'PARCIAL' 
-			END AS estado,
-			CONCAT(
-				(SUBSTRING(p.CodFab, 1, 6)),
-				' - ',
-				p.DesPro,
-				' - ',
-				tbcol.des_larga,
-				' - ',
-				odet.UndPro
-			  ) AS descripcion
+				odet.CodPro AS id,
+				odet.ColProv AS colorprov,
+				odet.UndPro AS unidad,
+				odet.CanPro AS cantidad,
+				(odet.canpro - odet.cantni) AS recibido,
+				CASE
+					WHEN odet.estac = 'CER' 
+					THEN 0 
+					ELSE odet.cantni 
+				END AS pendiente,
+				odet.PrePro AS precio,
+				odet.DscPro AS descuento,
+				odet.ImpPro AS total,
+				tbcol.des_larga AS color,
+				odet.Nro,
+				p.codfab,
+				p.despro,
+				CASE
+					WHEN odet.estac = 'ABI' 
+					THEN 'ABIERTA' 
+					WHEN odet.estac = 'CER' 
+					THEN 'CERRADA' 
+					ELSE 'PARCIAL' 
+				END AS estado,
+				CONCAT(
+					(SUBSTRING(p.CodFab, 1, 6)),
+					' - ',
+					p.DesPro,
+					' - ',
+					tbcol.des_larga,
+					' - ',
+					odet.UndPro
+				) AS descripcion
 		  FROM
 			ocomdet odet 
 			LEFT JOIN producto p 
