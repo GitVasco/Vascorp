@@ -383,4 +383,84 @@ class ControladorCortes
             </script>';
         }
     }
+
+    //* REGISTRAR ESTAMPADO DE LA VISTA estampado.php
+    static public function ctrRegistrarEstampado()
+    {
+
+        if (isset($_POST["id_articulo"])) {
+
+            date_default_timezone_set('America/Lima');
+            $fecreg                 = new DateTime();
+            $id_articulo            = $_POST["id_articulo"];
+            $cortesEstampado        = $_POST["cortesEstampado"];
+            $articulosCorte         = $_POST["articulo"];
+            $cantidadOrigen         = $_POST["cantidadOrigen"];
+            $cantidadEstampado      = $_POST["cantidadEstampado"];
+            $cantidadMerma          = $_POST["cantidadMerma"];
+            $cantidadSaldo          = $_POST["cantidadSaldo"];
+            $fechaEstampado         = $_POST["fechaEstampado"];
+            $operarioEstampado      = $_POST["operarioEstampado"];
+            $cerrarCorte            = $_POST["cerrarCorte"];
+            $inicioPreparacion      = $_POST["inicioPreparacion"];
+            $finPreparacion         = $_POST["finPreparacion"];
+            $inicioProduccion       = $_POST["inicioProduccion"];
+            $finProduccion          = $_POST["finProduccion"];
+            $usuario                = $_SESSION["nombre"];
+            $pcreg                  = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+            $fecreg =
+
+                $datos = array(
+                    "corte"             => $cortesEstampado,
+                    "almacencorte"      => $id_articulo,
+                    "articulo"          => $articulosCorte,
+                    "cantorigen"        => $cantidadOrigen,
+                    "cantestampado"     => $cantidadEstampado,
+                    "cantmerma"         => $cantidadMerma,
+                    "cantsaldo"         => $cantidadSaldo,
+                    "fecha"             => $fechaEstampado,
+                    "operario"          => $operarioEstampado,
+                    "cerrar"            => $cerrarCorte,
+                    "iniprep"           => $inicioPreparacion,
+                    "finprep"           => $finPreparacion,
+                    "iniprod"           => $inicioProduccion,
+                    "finprod"           => $finProduccion,
+                    "usuario"           => $usuario,
+                    "pcreg"             => $pcreg,
+                    "fecreg"            => $fecreg->format('Y-m-d H:i:s')
+                );
+
+            $respuesta = ModeloCortes::mdlRegistrarEstampado($datos);
+
+            if ($respuesta == "ok") {
+
+                if ($cerrarCorte == "SI" || $cantidadSaldo == 0) {
+                    $estampado = 1;
+                } else {
+                    $estampado = 0;
+                }
+
+                $datos = array(
+                    "id"        => $id_articulo,
+                    "estampado" => $estampado,
+                    "saldo"     => $cantidadSaldo
+                );
+
+                $rptEstampado = ModeloCortes::mdlActualizarAlmacenCorte($datos);
+
+                echo '<script>
+				swal({
+                    type: "success",
+                    title: "El estampado fue creado correctamente",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+                    }).then(function(result){
+                        if (result.value) {
+                        window.location = "estampado";
+                        }
+                    })
+				</script>';
+            }
+        }
+    }
 }

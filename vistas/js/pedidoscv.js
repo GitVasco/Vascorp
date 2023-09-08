@@ -57,8 +57,6 @@ $("#seleccionarCliente").change(function () {
     var cliList = document.getElementById("seleccionarCliente").value;
 
     var nuevoCodigo = document.getElementById("nuevoCodigo").value;
-    console.log("🚀 ~ file: pedidoscv.js:60 ~ nuevoCodigo:", nuevoCodigo);
-
     var datos = new FormData();
     datos.append("cliList", cliList);
 
@@ -338,10 +336,6 @@ function listarArticulosPed() {
     var listaArticulos = [];
 
     var descripcion = $(".nuevaDescripcionArticulo");
-    console.log(
-        "🚀 ~ file: pedidoscv.js:421 ~ listarArticulos ~ descripcion:",
-        descripcion
-    );
     var cantidad = $(".nuevaCantidadArtPed");
     var precio = $(".nuevoPrecioArticulo");
 
@@ -559,9 +553,7 @@ $(
         contentType: false,
         processData: false,
         dataType: "json",
-        success: function (respuesta) {
-            console.log("🚀 ~ file: pedidoscv.js:776 ~ respuesta", respuesta);
-        },
+        success: function (respuesta) {},
     });
 
     window.open(
@@ -948,9 +940,7 @@ $(
         contentType: false,
         processData: false,
         dataType: "json",
-        success: function (respuesta) {
-            console.log("🚀 ~ file: pedidoscv.js:776 ~ respuesta", respuesta);
-        },
+        success: function (respuesta) {},
     });
 });
 
@@ -1417,11 +1407,6 @@ $(".tablaArticulosPedidos").on("click", ".modificarArtPed", function () {
         processData: false,
         dataType: "json",
         success: function (respuestaLista) {
-            console.log(
-                "🚀 ~ file: pedidoscv.js:1251 ~ respuestaLista",
-                respuestaLista
-            );
-
             $("#precioA").val(respuestaLista["precio"]);
         },
     });
@@ -1695,8 +1680,6 @@ $(".tablaArticulosPedidos").on("click", ".modificarArtPed", function () {
 //*OPCION B GENERAR PEDIDO
 $(".modificarArtPedB").click(function () {
     var modelo = document.getElementById("modelo").value;
-    console.log("🚀 ~ file: pedidoscv.js:1755 ~ modelo:", modelo);
-
     if (modelo != "") {
         var cliente = document.getElementById("seleccionarCliente").value;
         var vendedor = document.getElementById("seleccionarVendedor").value;
@@ -2220,8 +2203,6 @@ $("#serie").change(function () {
     //console.log(tipo);
 
     var documento = document.getElementById("serie").value;
-    console.log("🚀 ~ file: pedidoscv.js:2282 ~ documento:", documento);
-
     if (tipo == "09") {
         var serie = documento.substring(0, 3);
         var talonario = documento.substr(-7);
@@ -2454,7 +2435,6 @@ $(".modificarArtPedC").click(function () {
 
 $("#guardarModelo").click(function () {
     const tableInputsJson = JSON.stringify(getTableInputsData());
-
     let pedidoN = document.getElementById("pedido").value;
     const nuevoPedidoN = document.getElementById("nuevoCodigo").value;
     const clienteN = document.getElementById("clienteA").value;
@@ -2499,11 +2479,6 @@ $("#guardarModelo").click(function () {
             } else {
                 window.location.href =
                     "index.php?ruta=crear-pedidocv&pedido=" + respuestaDet;
-
-                console.log(
-                    "🚀 ~ file: pedidoscv.js:2563 ~ respuestaDet:",
-                    respuestaDet
-                );
             }
         },
     });
@@ -2530,8 +2505,6 @@ function getTableInputsData() {
 //* boton cambiar precio
 $(".tablaPedidosCV").on("click", ".btnPrecio", function () {
     var pedido = $(this).attr("codigo");
-    console.log("🚀 ~ file: pedidoscv.js:2590 ~ pedido:", pedido);
-
     var numero = window.prompt(
         "Digite el número de la lista de precios para cambiar el pedido " +
             pedido
@@ -2539,8 +2512,6 @@ $(".tablaPedidosCV").on("click", ".btnPrecio", function () {
 
     var parsedNumero = parseInt(numero);
     if (!isNaN(parsedNumero)) {
-        console.log("🚀 ~ file: pedidoscv.js:2592 ~ numero:", parsedNumero);
-
         const datosPrecio = new FormData();
         updateFormData(datosPrecio, "pedidoL", pedido);
         updateFormData(datosPrecio, "listaL", parsedNumero);

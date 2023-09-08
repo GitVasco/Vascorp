@@ -223,6 +223,8 @@ $(".tablaCuentasCancelar").on("click", ".chkCancelar", function () {
 $(".btnCancelarAbono").click(function () {
     var idCuenta = $(this).attr("idCuenta");
     var idAbono = $(this).attr("idAbono");
+
+    // Get the account information
     var datos = new FormData();
     datos.append("idCuenta", idCuenta);
 
@@ -235,8 +237,7 @@ $(".btnCancelarAbono").click(function () {
         processData: false,
         dataType: "json",
         success: function (respuesta) {
-            console.log(respuesta);
-
+            // Display the account information in the edit form
             $("#idCuenta4").val(respuesta["id"]);
             $("#editarTipo").val(respuesta["tipo_doc"]);
             $("#editarCuenta").val(respuesta["num_cta"]);

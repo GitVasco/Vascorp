@@ -117,7 +117,7 @@ class ControladorAgencias
 			$datos = $_GET["idAgencia"];
 			date_default_timezone_set('America/Lima');
 			$fecha = new DateTime();
-			$agencia = ControladorAgencias::ctrMostrarAgencias($datos);
+			$agencia = ControladorAgencias::ctrMostrarAgencias('id', $datos);
 			$usuario = $_SESSION["nombre"];
 			$para      = 'notificacionesvascorp@gmail.com';
 			$asunto    = 'Se elimino una agencia';

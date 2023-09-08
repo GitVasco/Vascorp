@@ -6,104 +6,109 @@ require_once '../modelos/almacencorte.modelo.php';
 require_once '../controladores/articulos.controlador.php';
 require_once '../modelos/articulos.modelo.php';
 
-class AjaxAlmacenCorte{
+class AjaxAlmacenCorte
+{
 
-    /* 
+	/* 
 	* VISUALIZAR LA CABECERA DEL CORTE
 	*/
-    public function ajaxVisualizarAlmacen(){
+	// no tengo la variable $codigoAC
+	public $codigoAC;
+	public function ajaxVisualizarAlmacen()
+	{
 
-        $valor = $this->codigoAC;
+		$valor = $this->codigoAC;
 
-        $respuesta = ControladorAlmacenCorte::ctrMostrarAlmacenCorte($valor);
+		$respuesta = ControladorAlmacenCorte::ctrMostrarAlmacenCorte($valor);
 
-        echo json_encode($respuesta);
-
-    }
+		echo json_encode($respuesta);
+	}
 
 	/* 
 	* VISUALIZAR DETALLE DEL CORTE
 	*/
-	public function ajaxVisualizarAlmacenDetalle(){
+	// no tengo la variable $codigoDAC
+	public $codigoDAC;
 
-        $valor = $this->codigoDAC;
+	public function ajaxVisualizarAlmacenDetalle()
+	{
+		// Se obtiene el código del almacén
+		$codigoAlmacen = $this->codigoDAC;
 
-        $respuestaDetalle = ControladorAlmacenCorte::ctrVisualizarAlmacenCorteDetalle($valor);
+		// Se obtiene el detalle del almacén
+		$respuestaDetalle = ControladorAlmacenCorte::ctrVisualizarAlmacenCorteDetalle($codigoAlmacen);
 
-        echo json_encode($respuestaDetalle);
-    }
-    
+		// Se devuelve el detalle del almacén
+		echo json_encode($respuestaDetalle);
+	}
+
 	/* 
 	* ESTADO CORTE
 	*/
-	public function ajaxEstadoCorte(){
+	public function ajaxEstadoCorte()
+	{
 
-        $valor=$this->activarId;
-        
-        $valor1=$this->activarAM;
+		$valor = $this->activarId;
+
+		$valor1 = $this->activarAM;
 
 		$respuesta = ModeloAlmacenCorte::mdlEstadoCorte($valor, $valor1);
 
 		echo $respuesta;
-	}    
+	}
 
-	 /* 
+	/* 
 	* VISUALIZAR LA CABECERA DEL CORTE
 	*/
-    public function ajaxEditarAlmacen(){
+	public function ajaxEditarAlmacen()
+	{
 
-        $valor = $this->codigo;
+		$valor = $this->codigo;
 
-        $respuesta = ControladorAlmacenCorte::ctrMostrarTelasAlmacenCorte($valor);
+		$respuesta = ControladorAlmacenCorte::ctrMostrarTelasAlmacenCorte($valor);
 
-        echo json_encode($respuesta);
-
-    }
-
+		echo json_encode($respuesta);
+	}
 }
 
 
 /* 
  * VISUALIZAR LA CABECERA DEL CORTE
 */
-if(isset($_POST["codigoAC"])){
+if (isset($_POST["codigoAC"])) {
 
 	$visualizarAlmacenCorte = new AjaxAlmacenCorte();
-	$visualizarAlmacenCorte -> codigoAC = $_POST["codigoAC"];
-	$visualizarAlmacenCorte -> ajaxVisualizarAlmacen();
-  
+	$visualizarAlmacenCorte->codigoAC = $_POST["codigoAC"];
+	$visualizarAlmacenCorte->ajaxVisualizarAlmacen();
 }
 
 /* 
  * VISUALIZAR DETALLE DE LA ORDEN DE CORTE
 */
-if(isset($_POST["codigoDAC"])){
+if (isset($_POST["codigoDAC"])) {
 
-    $visualizarAlmacenCorteDetalle = new AjaxAlmacenCorte();
-    $visualizarAlmacenCorteDetalle -> codigoDAC = $_POST["codigoDAC"];
-    $visualizarAlmacenCorteDetalle -> ajaxVisualizarAlmacenDetalle();
-
+	$visualizarAlmacenCorteDetalle = new AjaxAlmacenCorte();
+	$visualizarAlmacenCorteDetalle->codigoDAC = $_POST["codigoDAC"];
+	$visualizarAlmacenCorteDetalle->ajaxVisualizarAlmacenDetalle();
 }
 
 /* 
 * PROCESADO Y PEDIR REVISAR A SISTEMAS
 */
-if(isset($_POST["activarId"])){
+if (isset($_POST["activarId"])) {
 
 	$activar = new AjaxAlmacenCorte();
-	$activar -> activarId = $_POST["activarId"];
-	$activar -> activarAM=  $_POST["activarAM"];
-    $activar -> ajaxEstadoCorte();
-    
+	$activar->activarId = $_POST["activarId"];
+	$activar->activarAM =  $_POST["activarAM"];
+	$activar->ajaxEstadoCorte();
 }
 
 /* 
  * VISUALIZAR LA CABECERA DEL CORTE
 */
-if(isset($_POST["codigo"])){
+if (isset($_POST["codigo"])) {
 
 	$editarAlmacenCorte = new AjaxAlmacenCorte();
-	$editarAlmacenCorte -> codigo = $_POST["codigo"];
-	$editarAlmacenCorte -> ajaxEditarAlmacen();
-  
+	$editarAlmacenCorte->codigo = $_POST["codigo"];
+	$editarAlmacenCorte->ajaxEditarAlmacen();
 }

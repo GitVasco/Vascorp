@@ -863,7 +863,7 @@ class ModeloContabilidad
                 cc.doc_origen,
                 cc.cod_pago,
                 CASE
-                WHEN c1.codigos_pago = '04' 
+                WHEN c1.codigos_pago IN ('04','08')
                 THEN '101100' 
                 ELSE '121201' 
                 END AS cuenta,

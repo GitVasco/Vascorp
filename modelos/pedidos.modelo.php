@@ -326,7 +326,7 @@ class ModeloPedidos
 	static public function mdlEliminarDetalleTemporalB($tabla, $pedido, $modelo)
 	{
 
-		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE codigo = '$pedido' AND articulo like '%$modelo%'");
+		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE codigo = '$pedido' AND articulo like '$modelo%'");
 
 		if ($stmt->execute()) {
 

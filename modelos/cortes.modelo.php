@@ -630,4 +630,221 @@ class ModeloCortes
 
         $stmt = null;
     }
+
+    //* mostrar todos los cortes registrados del año
+    static public function mdlMostrarCortesLista()
+    {
+        $stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
+                    al.guia,
+                    DATE(al.fecha) AS fecha 
+                FROM
+                    almacencortejf al 
+                    LEFT JOIN almacencorte_detallejf ac 
+                    ON al.guia = ac.almacencorte 
+                    LEFT JOIN articulojf a 
+                    ON ac.articulo = a.articulo 
+                WHERE YEAR(al.fecha) = YEAR(NOW()) 
+                    AND a.estampado = 1 
+                    AND ac.estampado = 0 
+                ORDER BY al.id DESC
+        ");
+
+        $stmt->execute();
+        return $stmt->fetchAll();
+
+        $stmt = null;
+    }
+
+    static public function ctrMostrarCortesArticulos($corte, $articulo)
+    {
+        if ($articulo == null) {
+
+            $stmt = Conexion::conectar()->prepare("SELECT 
+                    ac.id,
+                    ac.almacencorte,
+                    ac.articulo,
+                    ac.cantidad,
+                    ac.estampado,
+                    a.modelo,
+                    a.nombre,
+                    a.cod_color,
+                    a.color,
+                    a.cod_talla,
+                    a.talla 
+                FROM
+                    almacencorte_detallejf ac 
+                    LEFT JOIN articulojf a 
+                    ON ac.articulo = a.articulo 
+                WHERE ac.almacencorte = '$corte' 
+                    AND a.estampado = 1 
+                    AND ac.estampado = 0
+            ");
+
+            $stmt->execute();
+            return $stmt->fetchAll();
+
+            $stmt = null;
+        } else {
+            $stmt = Conexion::conectar()->prepare("SELECT 
+                        ac.id,
+                        ac.almacencorte,
+                        ac.articulo,
+                        ac.cantidad,
+                        ac.estampado,
+                        a.modelo,
+                        a.nombre,
+                        a.cod_color,
+                        a.color,
+                        a.cod_talla,
+                        a.talla 
+                    FROM
+                        almacencorte_detallejf ac 
+                        LEFT JOIN articulojf a 
+                        ON ac.articulo = a.articulo 
+                    WHERE ac.id = '$articulo' 
+            ");
+
+            $stmt->execute();
+            return $stmt->fetch();
+
+            $stmt = null;
+        }
+    }
+
+    static public function mdlRegistrarEstampado($datos)
+    {
+        $stmt = Conexion::conectar()->prepare("INSERT INTO estampado (
+            corte,
+            almacencorte,
+            articulo,
+            cantorigen,
+            cantestampado,
+            cantmerma,
+            cantsaldo,
+            fecha,
+            operario,
+            cerrar,
+            iniprep,
+            finprep,
+            iniprod,
+            finprod,
+            usuario,
+            pcreg,
+            fecreg
+        ) VALUES (
+            :corte,
+            :almacencorte,
+            :articulo,
+            :cantorigen,
+            :cantestampado,
+            :cantmerma,
+            :cantsaldo,
+            :fecha,
+            :operario,
+            :cerrar,
+            :iniprep,
+            :finprep,
+            :iniprod,
+            :finprod,
+            :usuario,
+            :pcreg,
+            :fecreg
+        )");
+
+        $stmt->bindParam(":corte", $datos["corte"], PDO::PARAM_STR);
+        $stmt->bindParam(":almacencorte", $datos["almacencorte"], PDO::PARAM_STR);
+        $stmt->bindParam(":articulo", $datos["articulo"], PDO::PARAM_STR);
+        $stmt->bindParam(":cantorigen", $datos["cantorigen"], PDO::PARAM_STR);
+        $stmt->bindParam(":cantestampado", $datos["cantestampado"], PDO::PARAM_STR);
+        $stmt->bindParam(":cantmerma", $datos["cantmerma"], PDO::PARAM_STR);
+        $stmt->bindParam(":cantsaldo", $datos["cantsaldo"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+        $stmt->bindParam(":operario", $datos["operario"], PDO::PARAM_STR);
+        $stmt->bindParam(":cerrar", $datos["cerrar"], PDO::PARAM_STR);
+        $stmt->bindParam(":iniprep", $datos["iniprep"], PDO::PARAM_STR);
+        $stmt->bindParam(":finprep", $datos["finprep"], PDO::PARAM_STR);
+        $stmt->bindParam(":iniprod", $datos["iniprod"], PDO::PARAM_STR);
+        $stmt->bindParam(":finprod", $datos["finprod"], PDO::PARAM_STR);
+        $stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+        $stmt->bindParam(":pcreg", $datos["pcreg"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecreg", $datos["fecreg"], PDO::PARAM_STR);
+
+        if ($stmt->execute()) {
+            return "ok";
+        } else {
+            return $stmt->errorInfo();
+        }
+    }
+
+    static public function mdlActualizarAlmacenCorte($datos)
+    {
+        $stmt = Conexion::conectar()->prepare("UPDATE almacencorte_detallejf SET estampado = :estampado, saldo = :saldo WHERE id = :id");
+
+        $stmt->bindParam(":id", $datos["id"], PDO::PARAM_STR);
+        $stmt->bindParam(":estampado", $datos["estampado"], PDO::PARAM_STR);
+        $stmt->bindParam(":saldo", $datos["saldo"], PDO::PARAM_STR);
+
+        if ($stmt->execute()) {
+            return "ok";
+        } else {
+            return $stmt->errorInfo();
+        }
+    }
+
+    static public function mdlMostrarEstampados($estampado)
+    {
+        if ($estampado == null) {
+
+            $stmt = Conexion::conectar()->prepare("SELECT 
+                        e.id,
+                        e.fecha,
+                        a.modelo,
+                        a.nombre,
+                        a.color,
+                        a.talla,
+                        e.operario,
+                        e.cantestampado 
+                    FROM
+                        estampado e 
+                        LEFT JOIN articulojf a 
+                        ON e.articulo = a.articulo");
+
+            $stmt->execute();
+            return $stmt->fetchAll();
+
+            $stmt = null;
+        } else {
+
+            $stmt = Conexion::conectar()->prepare("SELECT 
+                        * 
+                    FROM
+                        estampado e 
+                    WHERE id = '$estampado'");
+
+            $stmt->execute();
+            return $stmt->fetch();
+
+            $stmt = null;
+        }
+    }
+
+    static public function mdlActualizarEstampado($id, $corte, $articulo, $id_articulo, $cantidadOrigen, $cantidadEstampado, $cantidadMerma, $cantidadSaldo, $fecha, $operario, $cerrar, $inicioPreparacion, $finPreparacion, $inicioProduccion, $finProduccion)
+    {
+        $stmt = Conexion::conectar()->prepare("UPDATE estampado set corte= '$corte', almacencorte = '$id_articulo', articulo = '$articulo', cantorigen = '$cantidadOrigen', cantestampado = '$cantidadEstampado', cantmerma = '$cantidadMerma', cantsaldo = '$cantidadSaldo', fecha = '$fecha', operario = '$operario', cerrar = '$cerrar', iniprep = '$inicioPreparacion', finprep = '$finPreparacion', iniprod = '$inicioProduccion', finprod = '$finProduccion' WHERE id = '$id'");
+        if ($stmt->execute()) {
+            return "ok";
+        } else {
+            return $stmt->errorInfo();
+        }
+    }
+
+    static public function mdlEliminarEstampado($id)
+    {
+        $stmt = Conexion::conectar()->prepare("DELETE FROM estampado WHERE id = '$id'");
+        if ($stmt->execute()) {
+            return "ok";
+        } else {
+            return $stmt->errorInfo();
+        }
+    }
 }

@@ -176,8 +176,6 @@ $(".tablaCortes tbody").on("click", "button.btnMandarTallerTotal", function () {
     var color = $(this).attr("color");
 
     var modcol = $(this).attr("modcol");
-    console.log("🚀 ~ file: cortes.js:177 ~ modcol", modcol);
-
     $("#nuevoModeloT").val(modelo);
     $("#nuevoColorT").val(color);
 
@@ -331,3 +329,301 @@ $("#imprimirTicket").change(function () {
         $(".campoSector").addClass("hidden");
     }
 });
+
+//* Generar la lista de articulos del corte con ajax, se activa al seleccionar el cortes en el select
+$("#cortesEstampado").change(function () {
+    $("#articulosCorte").html("");
+    $("#articulosCorte").selectpicker("refresh");
+
+    const corte = $(this).val();
+    const datos = new FormData();
+    datos.append("corte", corte);
+
+    $.ajax({
+        url: "ajax/cortes.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuesta) {
+            let contenido = "";
+            respuesta.forEach((articulo) => {
+                contenido += `<option value="${articulo.id}">${articulo.modelo} - ${articulo.nombre} - ${articulo.color} - ${articulo.talla}</option>`;
+            });
+            $("#articulosCorte").html(contenido);
+            $("#articulosCorte").selectpicker("refresh");
+
+            //en el input cantidadOrigen ponemos la cantidad del corte del primer articulo
+            $("#cantidadOrigen").val(respuesta[0].cantidad);
+
+            // en el input id_articulo debemos poner id_articulo para poder guardarlo en la bd
+            $("#id_articulo").val(respuesta[0].id);
+            $("#articulo").val(respuesta[0].articulo);
+        },
+    });
+});
+
+$("#articulosCorte").change(function () {
+    const id_articulo = $(this).val();
+    const datos = new FormData();
+    datos.append("id_articulo", id_articulo);
+    $.ajax({
+        url: "ajax/cortes.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuesta) {
+            $("#cantidadOrigen").val(respuesta.cantidad);
+
+            $("#id_articulo").val(id_articulo);
+            $("#articulo").val(respuesta.articulo);
+        },
+    });
+});
+
+$("#cantidadEstampado").change(function () {
+    const cantidadEstampado = $(this).val();
+    const cantidadOrigen = $("#cantidadOrigen").val();
+    if (cantidadEstampado > cantidadOrigen) {
+        Command: toastr["error"](
+            "La cantidad estampada no puede ser mayor a la cantidad original"
+        );
+
+        $(this).val("");
+        $("#cantidadSaldo").val("");
+    } else {
+        const cantidadSaldo = cantidadOrigen - cantidadEstampado;
+        $("#cantidadSaldo").val(cantidadSaldo);
+    }
+});
+
+$("#cantidadMerma").change(function () {
+    const cantidadMerma = $(this).val();
+    const cantidadEstampado = $("#cantidadEstampado").val();
+    const cantidadOrigen = $("#cantidadOrigen").val();
+
+    const cantidadEstampadoFinal =
+        parseInt(cantidadEstampado) + parseInt(cantidadMerma);
+    const cantidadSaldo = cantidadOrigen - cantidadEstampadoFinal;
+    if (cantidadSaldo < 0) {
+        Command: toastr["error"](
+            "La cantidad estampada no puede ser mayor a la cantidad original"
+        );
+
+        $(this).val("");
+        $("#cantidadSaldo").val("");
+        $("#cantidadEstampado").val("");
+    } else {
+        $("#cantidadEstampado").val(cantidadEstampadoFinal);
+        $("#cantidadSaldo").val(cantidadSaldo);
+    }
+});
+
+$(".tablaEstampado").DataTable({
+    ajax: "ajax/produccion/tabla-estampado.ajax.php",
+    deferRender: true,
+    retrieve: true,
+    processing: true,
+    order: [[0, "asc"]],
+    pageLength: 20,
+    lengthMenu: [
+        [20, 40, 60, -1],
+        [20, 40, 60, "Todos"],
+    ],
+    language: {
+        sProcessing: "Procesando...",
+        sLengthMenu: "Mostrar _MENU_ registros",
+        sZeroRecords: "No se encontraron resultados",
+        sEmptyTable: "Ningún dato disponible en esta tabla",
+        sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+        sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
+        sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+        sInfoPostFix: "",
+        sSearch: "Buscar:",
+        sUrl: "",
+        sInfoThousands: ",",
+        sLoadingRecords: "Cargando...",
+        oPaginate: {
+            sFirst: "Primero",
+            sLast: "Último",
+            sNext: "Siguiente",
+            sPrevious: "Anterior",
+        },
+        oAria: {
+            sSortAscending:
+                ": Activar para ordenar la columna de manera ascendente",
+            sSortDescending:
+                ": Activar para ordenar la columna de manera descendente",
+        },
+    },
+});
+
+$(".tablaEstampado tbody").on(
+    "click",
+    "button.btnEditarEstampado",
+    function () {
+        const estampado = $(this).attr("idEstampado");
+        const datos = new FormData();
+        datos.append("estampado", estampado);
+
+        $.ajax({
+            url: "ajax/cortes.ajax.php",
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function (respuesta) {
+                $("#cortesEstampado").val(respuesta.corte);
+                $("#cortesEstampado").selectpicker("refresh");
+
+                $("#cortesEstampado").attr("disabled", true);
+
+                const datos = new FormData();
+                datos.append("id_articulo", respuesta.almacencorte);
+                $.ajax({
+                    url: "ajax/cortes.ajax.php",
+                    method: "POST",
+                    data: datos,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    dataType: "json",
+                    success: function (respuesta) {
+                        const contenido = `<option value="${respuesta.id}">${respuesta.modelo} - ${respuesta.nombre} - ${respuesta.color} - ${respuesta.talla}</option>`;
+
+                        $("#articulosCorte").html(contenido);
+                        $("#articulosCorte").selectpicker("refresh");
+                    },
+                });
+
+                $("#cantidadOrigen").val(respuesta.cantorigen);
+
+                $("#cantidadEstampado").val(respuesta.cantestampado);
+
+                $("#cantidadMerma").val(respuesta.cantmerma);
+
+                $("#cantidadSaldo").val(respuesta.cantsaldo);
+
+                $("#id_articulo").val(respuesta.almacencorte);
+                $("#articulo").val(respuesta.articulo);
+                $("#estampado").val(respuesta.id);
+
+                $("#fechaEstampado").val(respuesta.fecha);
+
+                $("#operarioEstampado").val(respuesta.operario);
+                $("#operarioEstampado").selectpicker("refresh");
+
+                $("#cerrarCorte").val(respuesta.cerrar);
+                $("#cerrarCorte").selectpicker("refresh");
+
+                $("#inicioPreparacion").val(respuesta.iniprep);
+                $("#finPreparacion").val(respuesta.finprep);
+                $("#inicioProduccion").val(respuesta.iniprod);
+                $("#finProduccion").val(respuesta.finprod);
+            },
+        });
+
+        // Obtener referencia a los botones
+        const btnGuardar = document.getElementById("btnGuardarEstampado");
+        const btnActualizar = document.getElementById("btnActualizarEstampado");
+
+        // Ocultar btnGuardar
+        btnGuardar.style.display = "none";
+
+        // Mostrar btnActualizar
+        btnActualizar.style.display = "inline";
+    }
+);
+
+$("#btnActualizarEstampado").click(function () {
+    const datos = new FormData();
+    datos.append("upd_id", $("#estampado").val());
+    datos.append("upd_corte", $("#cortesEstampado").val());
+    datos.append("upd_articulo", $("#articulo").val());
+    datos.append("upd_id_articulo", $("#id_articulo").val());
+    datos.append("upd_cantidadOrigen", $("#cantidadOrigen").val());
+    datos.append("upd_cantidadEstampado", $("#cantidadEstampado").val());
+    datos.append("upd_cantidadMerma", $("#cantidadMerma").val());
+    datos.append("upd_cantidadSaldo", $("#cantidadSaldo").val());
+    datos.append("upd_fecha", $("#fechaEstampado").val());
+    datos.append("upd_operario", $("#operarioEstampado").val());
+    datos.append("upd_cerrar", $("#cerrarCorte").val());
+    datos.append("upd_inicioPreparacion", $("#inicioPreparacion").val());
+    datos.append("upd_finPreparacion", $("#finPreparacion").val());
+    datos.append("upd_inicioProduccion", $("#inicioProduccion").val());
+    datos.append("upd_finProduccion", $("#finProduccion").val());
+
+    $.ajax({
+        url: "ajax/cortes.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuesta) {
+            if (respuesta == "ok") {
+                Command: toastr["success"](
+                    "El registro ha sido actualizado correctamente"
+                );
+
+                $(".tablaEstampado").DataTable().ajax.reload();
+
+                $("#formEstampado")[0].reset();
+
+                // Ocultar btnActualizar
+                btnActualizar.style.display = "none";
+
+                // Mostrar btnGuardar
+                btnGuardar.style.display = "inline";
+            }
+        },
+    });
+});
+
+$(".tablaEstampado tbody").on(
+    "click",
+    "button.btnEliminarEstampado",
+    function () {
+        const estampado = $(this).attr("idEstampado");
+        swal({
+            title: "¿Está seguro de borrar el registro?",
+            text: "¡Si no lo está puede cancelar la acción!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "Cancelar",
+            confirmButtonText: "Si, borrar color!",
+        }).then(function (result) {
+            if (result.value) {
+                const datos = new FormData();
+                datos.append("eliminarEstampado", estampado);
+                $.ajax({
+                    url: "ajax/cortes.ajax.php",
+                    method: "POST",
+                    data: datos,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    dataType: "json",
+                    success: function (respuesta) {
+                        if (respuesta == "ok") {
+                            Command: toastr["success"](
+                                "El registro ha sido eliminado correctamente"
+                            );
+                            $(".tablaEstampado").DataTable().ajax.reload();
+                        }
+                    },
+                });
+            }
+        });
+    }
+);

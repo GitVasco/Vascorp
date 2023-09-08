@@ -178,7 +178,7 @@
 
                                 </div>
 
-                                <input type="text" id="listaArticulosAC" name="listaArticulosAC">
+                                <input type="hidden" id="listaArticulosAC" name="listaArticulosAC">
                                 <input type="hidden" id="listArticulo" name="listArticulo">
                                 <input type="hidden" id="listCantidad" name="listCantidad">
 
