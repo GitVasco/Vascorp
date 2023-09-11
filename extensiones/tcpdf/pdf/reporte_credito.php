@@ -19,6 +19,7 @@ $documento = $_GET["documento"];
 $venta = ControladorFacturacion::ctrMostrarVentaImpresion($documento, $tipo);
 
 $serie = substr($venta["documento"], 0, 4);
+
 $modelo = ControladorFacturacion::ctrMostrarModeloImpresion($documento, $tipo);
 $unidad = ControladorFacturacion::ctrMostrarUnidadesImpresion($documento, $tipo);
 // var_dump($modelo);
@@ -177,7 +178,8 @@ $texto = $venta["observacion"];
 $monto_letra = CantidadEnLetra(($venta["total"]));
 $pdf->Ln(72);
 
-if ($serie == "B002" || $serie == "F002" || $serie == "B004" || $serie == "F004" || $serie = "FR02") {
+if ($serie == "B002" || $serie == "F002" || $serie == "B004" || $serie == "F004" || $serie == "FR02") {
+
     $pdf->Ln(5);
     $pdf->Cell(100, 5, $texto, '', false, 'L', 0, '', 0, false, 'T', 'M');
     $pdf->Ln(15);
@@ -186,6 +188,9 @@ if ($serie == "B002" || $serie == "F002" || $serie == "B004" || $serie == "F004"
     $image_file = K_PATH_IMAGES . 'borde4.png';
     $image_file2 = K_PATH_IMAGES . 'borde2.png';
 } else {
+
+
+
     foreach ($modelo as $key => $value) {
         $pdf->Ln(4);
         $pdf->SetFillColor(0, 240, 240);

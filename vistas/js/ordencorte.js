@@ -498,12 +498,7 @@ function listarArticulosOC() {
         contentType: false,
         processData: false,
         dataType: "json",
-        success: function (respuesta) {
-            console.log(
-                "🚀 ~ file: ordencorte.js:506 ~ listarArticulosOC ~ respuesta",
-                respuesta
-            );
-        },
+        success: function (respuesta) {},
     });
 }
 
@@ -1351,12 +1346,7 @@ function explosion() {
         contentType: false,
         processData: false,
         dataType: "json",
-        success: function (respuesta) {
-            console.log(
-                "🚀 ~ file: ordencorte.js:1333 ~ explosion ~ respuesta",
-                respuesta
-            );
-        },
+        success: function (respuesta) {},
     });
 }
 
