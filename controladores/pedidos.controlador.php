@@ -459,144 +459,109 @@ class ControladorPedidos
     {
 
         if (isset($_POST["importPedTxt"])) {
+            $filename = $_FILES['archivoPedTxt']['name'];
 
-            #var_dump($_FILES['archivoPedTxt']['name']);
-            if ($_FILES['archivoPedTxt']['name'] != "") {
 
+            if (!empty($filename)) {
                 $ruta = "vistas/pedidos/leer/";
-                $subir_archivo = $ruta . basename($_FILES['archivoPedTxt']['name']);
-                #var_dump($subir_archivo);
+                $filepath = $ruta . basename($filename);
 
-                move_uploaded_file($_FILES['archivoPedTxt']['tmp_name'], $subir_archivo);
+                if (move_uploaded_file($_FILES['archivoPedTxt']['tmp_name'], $filepath)) {
+                    $contenido = file_get_contents($filepath);
+                    $lineas = explode("\n", $contenido);
 
-                $archivo = fopen($subir_archivo, "r");
+                    $detalleEntries = [];
+                    $cEntries = [];
+                    $fecha = "";
+                    $vend = "";
 
-                $contenido = file_get_contents($subir_archivo);
-                $lineas = explode("\n", $contenido); // this is your array of words
+                    $unique_codes = array_unique(array_column(array_map(function ($line) {
+                        return explode("|", $line);
+                    }, $lineas), 1));
 
-                $intoA = "";
-                $intoB = "";
-                foreach ($lineas as $key => $value) {
+                    $existentCodes = ModeloPedidos::mdlMostrarTemporalMultiple("temporaljf", $unique_codes);
 
-                    $partes = explode("|", $value);
-                    $existeC = ModeloPedidos::mdlMostrarTemporal("temporaljf", $partes[1]);
-                    #var_dump($existeC["codigo"]);
+                    foreach ($lineas as $key => $value) {
+                        $partes = explode("|", $value);
 
-                    if ($existeC == null) {
+                        if (isset($partes[1]) && !in_array($partes[1], $existentCodes)) {
+                            if ($partes[0] === "D") {
+                                $detalleEntries[] = "(" . implode(",", array_slice($partes, 1, 5)) . ")";
+                            } elseif ($partes[0] === "C") {
+                                $datosC = array(
+                                    "codigo"            => $partes[1],
+                                    "cliente"           => $partes[2],
+                                    "vendedor"          => $partes[3],
+                                    "lista"             => $partes[4],
+                                    "op_gravada"        => $partes[5],
+                                    "descuento_total"   => $partes[6],
+                                    "sub_total"         => $partes[7],
+                                    "igv"               => $partes[8],
+                                    "total"             => $partes[9],
+                                    "condicion_venta"   => $partes[10],
+                                    "estado"            => $partes[11],
+                                    "fecha"             => $partes[12],
+                                    "usuario"           => $partes[13],
+                                    "agencia"           => $partes[14],
+                                    "usuario_estado"    => $partes[15],
+                                    "dscto"             => $partes[16]
+                                );
 
-                        if ($partes[0] == "D") {
-
-                            if ($key < count($lineas) - 1) {
-
-                                $intoA .= "(" . $partes[1] . ",'" . $partes[2] . "'," . $partes[3] . "," . $partes[4] . "," . $partes[5] . "),";
-                            } else {
-
-                                $intoB .= "(" . $partes[1] . ",'" . $partes[2] . "'," . $partes[3] . "," . $partes[4] . "," . $partes[5] . ")";
+                                $respuestaC = ModeloPedidos::mdlLeerPedidoC($datosC);
+                            } elseif ($partes[0] === "F") {
+                                $fecha = $partes[1];
+                                $vend = $partes[2];
                             }
                         }
                     }
 
-                    #var_dump("intoA", $intoA.$intoB); 
+                    $detalleString = implode(",", $detalleEntries);
 
-                }
+                    $respuestaD = ModeloPedidos::mdlLeerPedidoD($detalleString);
 
-                $detalle = $intoA . $intoB;
-                #var_dump("intoB", $detalle);
-
-                $resp = ModeloPedidos::mdlLeerPedidoD($detalle);
-                #var_dump($resp);
-
-                foreach ($lineas as $key => $value) {
-
-                    $partes = explode("|", $value);
-                    $existeC = ModeloPedidos::mdlMostrarTemporal("temporaljf", $partes[1]);
-                    #var_dump($existeC["codigo"]);
-
-                    if ($existeC == null) {
-
-                        if ($partes[0] == "C") {
-
-                            $datosC = array(
-                                "codigo"            => $partes[1],
-                                "cliente"           => $partes[2],
-                                "vendedor"          => $partes[3],
-                                "lista"             => $partes[4],
-                                "op_gravada"        => $partes[5],
-                                "descuento_total"   => $partes[6],
-                                "sub_total"         => $partes[7],
-                                "igv"               => $partes[8],
-                                "total"             => $partes[9],
-                                "condicion_venta"   => $partes[10],
-                                "estado"            => $partes[11],
-                                "fecha"             => $partes[12],
-                                "usuario"           => $partes[13],
-                                "agencia"           => $partes[14],
-                                "usuario_estado"    => $partes[15],
-                                "dscto"             => $partes[16]
-                            );
-                            #var_dump($datosC); 
-
-                            $respuestaC = ModeloPedidos::mdlLeerPedidoC($datosC);
-                        }
-                    }
-                }
-
-                #$fecha = "";
-                #$vend = "";
-                foreach ($lineas as $key => $value) {
-
-                    $partes = explode("|", $value);
-
-                    if ($partes[0] == "F") {
-
-                        $fecha = $partes[1];
-                        $vend = $partes[2];
-                    }
-                }
-
-                #var_dump($fecha, $vend);
-
-                echo '<script>
-
-                    window.open("vistas/reportes_ticket/pedidos_prov.php?fecha=' . $fecha . '&vend=' . trim($vend) . '","_blank");
-
-                </script>';
-
-                echo '<script>
-
-                swal({
-                      type: "success",
-                      title: "Los pedidos han sido ingresados",
-                      showConfirmButton: true,
-                      confirmButtonText: "Cerrar"
-                      }).then(function(result){
-                                if (result.value) {
-
+                    // Todo salió bien: mostrar mensaje de éxito y redirigir
+                    echo '<script>
+                        window.open("vistas/reportes_ticket/pedidos_prov.php?fecha=' . $fecha . '&vend=' . trim($vend) . '","_blank");
+                        swal({
+                            type: "success",
+                            title: "Los pedidos han sido ingresados",
+                            showConfirmButton: true,
+                            confirmButtonText: "Cerrar"
+                        }).then(function(result){
+                            if (result.value) {
                                 window.location = "pedidoscv";
-
-                                }
-                            })
-
-                </script>';
+                            }
+                        });
+                    </script>';
+                } else {
+                    // Fallo al mover el archivo: mostrar mensaje de error
+                    echo '<script>
+                        swal({
+                            type: "error",
+                            title: "¡Error al subir el archivo!",
+                            showConfirmButton: true,
+                            confirmButtonText: "Cerrar"
+                        }).then(function(result){
+                            if (result.value) {
+                                window.location = "pedidoscv";
+                            }
+                        });
+                    </script>';
+                }
             } else {
-
+                // No se seleccionó ningún archivo: mostrar mensaje de error
                 echo '<script>
-
-                swal({
-
-                    type: "error",
-                    title: "¡Error, debe seleccionar un archivo!",
-                    showConfirmButton: true,
-                    confirmButtonText: "Cerrar"
-                    }).then(function(result){
-                        if (result.value) {
-
-                        window.location = "pedidoscv";
-
-                        }
-                    })
-
-                </script>';
+                        swal({
+                            type: "error",
+                            title: "¡Error, debe seleccionar un archivo!",
+                            showConfirmButton: true,
+                            confirmButtonText: "Cerrar"
+                        }).then(function(result){
+                            if (result.value) {
+                                window.location = "pedidoscv";
+                            }
+                        });
+                    </script>';
             }
         }
     }

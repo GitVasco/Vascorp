@@ -1,149 +1,153 @@
 <?php
 
-class ControladorModelos{
+class ControladorModelos
+{
 
 	/* 
 	* MOSTRAR MODELOS
 	*/
-	static public function ctrMostrarModelos($item,$valor){
+	static public function ctrMostrarModelos($item, $valor)
+	{
 
-        $tabla = "modelojf";
+		$tabla = "modelojf";
 
-		$respuesta = ModeloModelos::mdlMostrarModelos($tabla, $item,$valor);
+		$respuesta = ModeloModelos::mdlMostrarModelos($tabla, $item, $valor);
 
 		return $respuesta;
-
 	}
-	
+
 	/* 
 	* MOSTRAR MODELOS Activos
 	*/
-	static public function ctrMostrarModelosActivos(){
+	static public function ctrMostrarModelosActivos()
+	{
 
 
 		$respuesta = ModeloModelos::mdlMostrarModelosActivos();
 
 		return $respuesta;
-
-    }	
+	}
 
 	/* 
 	* MOSTRAR COLORES DE MODELOS
 	*/
-	static public function ctrMostrarColorModelo($valor){
+	static public function ctrMostrarColorModelo($valor)
+	{
 
 
 		$respuesta = ModeloModelos::mdlMostrarColorModelo($valor);
 
 		return $respuesta;
-
 	}
-    
+
 	/* 
 	* CREAR ARTICULO
 	*/
-	static public function ctrCrearModelo(){
+	static public function ctrCrearModelo()
+	{
 
-        if(isset($_POST["nuevaDescripcion"])){
+		if (isset($_POST["nuevaDescripcion"])) {
 
-			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevaDescripcion"]) &&
-			   preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevoModelo"])){
+			if (
+				preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevaDescripcion"]) &&
+				preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevoModelo"])
+			) {
 
-		   		/*=============================================
+				/*=============================================
 				VALIDAR IMAGEN
 				=============================================*/
 
 				$ruta = "vistas/img/modelos/default/anonymous.png";
 
-				if(isset($_FILES["nuevaImagen"]["tmp_name"])){
+				if (isset($_FILES["nuevaImagen"]["tmp_name"])) {
 
-				 list($ancho, $alto) = getimagesize($_FILES["nuevaImagen"]["tmp_name"]);
+					list($ancho, $alto) = getimagesize($_FILES["nuevaImagen"]["tmp_name"]);
 
-				 $nuevoAncho = 500;
-				 $nuevoAlto = 500;
+					$nuevoAncho = 500;
+					$nuevoAlto = 500;
 
-				 /*=============================================
+					/*=============================================
 				 CREAMOS EL DIRECTORIO DONDE VAMOS A GUARDAR LA FOTO DEL USUARIO
 				 =============================================*/
 
-				 $directorio = "vistas/img/modelos/".$_POST["nuevoModelo"];
+					$directorio = "vistas/img/modelos/" . $_POST["nuevoModelo"];
 
-				 mkdir($directorio, 0755);
+					mkdir($directorio, 0755);
 
-				 /*=============================================
+					/*=============================================
 				 DE ACUERDO AL TIPO DE IMAGEN APLICAMOS LAS FUNCIONES POR DEFECTO DE PHP
 				 =============================================*/
 
-				 if($_FILES["nuevaImagen"]["type"] == "image/jpeg"){
+					if ($_FILES["nuevaImagen"]["type"] == "image/jpeg") {
 
-					 /*=============================================
+						/*=============================================
 					 GUARDAMOS LA IMAGEN EN EL DIRECTORIO
 					 =============================================*/
 
-					 $aleatorio = mt_rand(100,999);
+						$aleatorio = mt_rand(100, 999);
 
-					 $ruta = "vistas/img/modelos/".$_POST["nuevoModelo"]."/".$aleatorio.".jpg";
+						$ruta = "vistas/img/modelos/" . $_POST["nuevoModelo"] . "/" . $aleatorio . ".jpg";
 
-					 $origen = imagecreatefromjpeg($_FILES["nuevaImagen"]["tmp_name"]);						
+						$origen = imagecreatefromjpeg($_FILES["nuevaImagen"]["tmp_name"]);
 
-					 $destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
+						$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
 
-					 imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
+						imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
 
-					 imagejpeg($destino, $ruta);
+						imagejpeg($destino, $ruta);
+					}
 
-				 }
+					if ($_FILES["nuevaImagen"]["type"] == "image/png") {
 
-				 if($_FILES["nuevaImagen"]["type"] == "image/png"){
-
-					 /*=============================================
+						/*=============================================
 					 GUARDAMOS LA IMAGEN EN EL DIRECTORIO
 					 =============================================*/
 
-					 $aleatorio = mt_rand(100,999);
+						$aleatorio = mt_rand(100, 999);
 
-					 $ruta = "vistas/img/modelos/".$_POST["nuevoModelo"]."/".$aleatorio.".png";
+						$ruta = "vistas/img/modelos/" . $_POST["nuevoModelo"] . "/" . $aleatorio . ".png";
 
-					 $origen = imagecreatefrompng($_FILES["nuevaImagen"]["tmp_name"]);						
+						$origen = imagecreatefrompng($_FILES["nuevaImagen"]["tmp_name"]);
 
-					 $destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
+						$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
 
-					 imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
+						imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
 
-					 imagepng($destino, $ruta);
+						imagepng($destino, $ruta);
+					}
+				}
+				$tabla2 = "preciojf";
+				$datosPrecio = array(
+					"modelo" => $_POST["nuevoModelo"],
+					"precio1" => 0,
+					"precio2" => 0,
+					"precio3" => 0,
+					"precio4" => 0,
+					"precio5" => 0,
+					"precio6" => 0,
+					"precio7" => 0,
+					"precio8" => 0,
+					"precio9" => 0,
+					"precio10" => 0
+				);
 
-				 }
+				$precio = ModeloModelos::mdlIngresarPrecio($tabla2, $datosPrecio);
+				$tabla = "modelojf";
 
-			 }				
-				$tabla2="preciojf";
-				$datosPrecio = array("modelo"=>$_POST["nuevoModelo"],
-							   "precio1"=>0,
-							   "precio2"=>0,
-							   "precio3"=>0,
-							   "precio4"=>0,
-							   "precio5"=>0,
-							   "precio6"=>0,
-							   "precio7"=>0,
-							   "precio8"=>0,
-							   "precio9"=>0,
-							   "precio10"=>0
-							);
+				$datos = array(
+					"id_marca" => $_POST["nuevaMarca"],
+					"modelo" => $_POST["nuevoModelo"],
+					"descripcion" => $_POST["nuevaDescripcion"],
+					"tipo" => $_POST["nuevoTipo"],
+					"imagen" => $ruta,
+					"estado" => "ACTIVO"
+				);
 
-				$precio = ModeloModelos::mdlIngresarPrecio($tabla2,$datosPrecio);
-                $tabla = "modelojf";
+				$respuesta = ModeloModelos::mdlIngresarModelo($tabla, $datos);
 
-				$datos = array("id_marca" => $_POST["nuevaMarca"],
-							   "modelo" => $_POST["nuevoModelo"],
-							   "descripcion" => $_POST["nuevaDescripcion"],
-							   "tipo" => $_POST["nuevoTipo"],
-							   "imagen" => $ruta,
-							   "estado" => "ACTIVO");
+				if ($respuesta == "ok") {
 
-                $respuesta = ModeloModelos::mdlIngresarModelo($tabla, $datos);
-                
-				if($respuesta == "ok"){
-
-					echo'<script>
+					echo '<script>
 
 						swal({
 							  type: "success",
@@ -159,13 +163,10 @@ class ControladorModelos{
 									})
 
 						</script>';
+				}
+			} else {
 
-				}                
-
-
-			}else{
-
-				echo'<script>
+				echo '<script>
 
 					swal({
 						  type: "error",
@@ -183,18 +184,17 @@ class ControladorModelos{
 			  	</script>';
 			}
 		}
-
-
 	}
 
 	/* 
 	* EDITAR MODELO
 	*/
-	static public function ctrEditarModelo(){
+	static public function ctrEditarModelo()
+	{
 
-		if(isset($_POST["editarDescripcion"])){
+		if (isset($_POST["editarDescripcion"])) {
 
-			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["editarDescripcion"])){
+			if (preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["editarDescripcion"])) {
 
 				/*=============================================
 				VALIDAR IMAGEN
@@ -202,8 +202,10 @@ class ControladorModelos{
 
 				$ruta = $_POST["imagenActual"];
 
-				if(	isset($_FILES["editarImagen"]["tmp_name"]) && 
-					!empty($_FILES["editarImagen"]["tmp_name"])){
+				if (
+					isset($_FILES["editarImagen"]["tmp_name"]) &&
+					!empty($_FILES["editarImagen"]["tmp_name"])
+				) {
 
 					list($ancho, $alto) = getimagesize($_FILES["editarImagen"]["tmp_name"]);
 
@@ -214,78 +216,75 @@ class ControladorModelos{
 					CREAMOS EL DIRECTORIO DONDE VAMOS A GUARDAR LA FOTO DEL USUARIO
 					=============================================*/
 
-					$directorio = "vistas/img/modelos/".$_POST["editarModelo"];
+					$directorio = "vistas/img/modelos/" . $_POST["editarModelo"];
 
 					/*=============================================
 					PRIMERO PREGUNTAMOS SI EXISTE OTRA IMAGEN EN LA BD
 					=============================================*/
 
-					if(!empty($_POST["imagenActual"]) && $_POST["imagenActual"] != "vistas/img/modelos/default/anonymous.png"){
+					if (!empty($_POST["imagenActual"]) && $_POST["imagenActual"] != "vistas/img/modelos/default/anonymous.png") {
 
 						unlink($_POST["imagenActual"]);
+					} else {
 
-					}else{
-
-						mkdir($directorio, 0755);	
-					
+						mkdir($directorio, 0755);
 					}
-					
+
 					/*=============================================
 					DE ACUERDO AL TIPO DE IMAGEN APLICAMOS LAS FUNCIONES POR DEFECTO DE PHP
 					=============================================*/
 
-					if($_FILES["editarImagen"]["type"] == "image/jpeg"){
+					if ($_FILES["editarImagen"]["type"] == "image/jpeg") {
 
 						/*=============================================
 						GUARDAMOS LA IMAGEN EN EL DIRECTORIO
 						=============================================*/
 
-						$aleatorio = mt_rand(100,999);
+						$aleatorio = mt_rand(100, 999);
 
-						$ruta = "vistas/img/modelos/".$_POST["editarModelo"]."/".$aleatorio.".jpg";
+						$ruta = "vistas/img/modelos/" . $_POST["editarModelo"] . "/" . $aleatorio . ".jpg";
 
-						$origen = imagecreatefromjpeg($_FILES["editarImagen"]["tmp_name"]);						
+						$origen = imagecreatefromjpeg($_FILES["editarImagen"]["tmp_name"]);
 
 						$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
 
 						imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
 
 						imagejpeg($destino, $ruta);
-
 					}
 
-					if($_FILES["editarImagen"]["type"] == "image/png"){
+					if ($_FILES["editarImagen"]["type"] == "image/png") {
 
 						/*=============================================
 						GUARDAMOS LA IMAGEN EN EL DIRECTORIO
 						=============================================*/
 
-						$aleatorio = mt_rand(100,999);
+						$aleatorio = mt_rand(100, 999);
 
-						$ruta = "vistas/img/modelos/".$_POST["editarModelo"]."/".$aleatorio.".png";
+						$ruta = "vistas/img/modelos/" . $_POST["editarModelo"] . "/" . $aleatorio . ".png";
 
-						$origen = imagecreatefrompng($_FILES["editarImagen"]["tmp_name"]);						
+						$origen = imagecreatefrompng($_FILES["editarImagen"]["tmp_name"]);
 
 						$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
 
 						imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
 
 						imagepng($destino, $ruta);
-
 					}
-
 				}
-				$tabla="modelojf";
-				$datos = array("descripcion" => $_POST["editarDescripcion"],
-							"modelo" => $_POST["editarModelo"],
-							"id_marca"=>$_POST["editarMarca"],
-							"tipo" => $_POST["editarTipo"],
-							"imagen" => $ruta);
+				$tabla = "modelojf";
+				$datos = array(
+					"descripcion" => $_POST["editarDescripcion"],
+					"modelo" => $_POST["editarModelo"],
+					"id_marca" => $_POST["editarMarca"],
+					"tipo" => $_POST["editarTipo"],
+					"imagen" => $ruta
+				);
 
-				$respuesta=ModeloModelos::mdlEditarModelo($tabla,$datos);
-				if($respuesta == "ok"){
+				$respuesta = ModeloModelos::mdlEditarModelo($tabla, $datos);
+				if ($respuesta == "ok") {
 
-					echo'<script>
+					echo '<script>
 
 						swal({
 							type: "success",
@@ -301,13 +300,10 @@ class ControladorModelos{
 									})
 
 						</script>';
-
 				}
+			} else {
 
-
-			}else{
-
-				echo'<script>
+				echo '<script>
 
 					swal({
 						type: "error",
@@ -325,38 +321,40 @@ class ControladorModelos{
 				</script>';
 			}
 		}
-
-	}	
+	}
 
 	/* 
 	* BORRAR MODELO
 	*/
-	static public function ctrEliminarModelo(){
+	static public function ctrEliminarModelo()
+	{
 
-		if(isset($_GET["idModelo"])){
+		if (isset($_GET["idModelo"])) {
 			date_default_timezone_set('America/Lima');
 			$fecha = new DateTime();
 			$datos = $_GET["idModelo"];
-			$tabla="modelojf";
-			$modelo=ControladorModelos::ctrMostrarModelos("id_modelo",$datos);
-			$usuario= $_SESSION["nombre"];
+			$tabla = "modelojf";
+			$modelo = ControladorModelos::ctrMostrarModelos("id_modelo", $datos);
+			$usuario = $_SESSION["nombre"];
 			$para      = 'notificacionesvascorp@gmail.com';
 			$asunto    = 'Se elimino un modelo';
-			$descripcion   = 'El usuario '.$usuario.' elimino el modelo '.$modelo["modelo"].' - '.$modelo["nombre"];
+			$descripcion   = 'El usuario ' . $usuario . ' elimino el modelo ' . $modelo["modelo"] . ' - ' . $modelo["nombre"];
 			$de = 'From: notificacionesvascorp@gmail.com';
-			if($_SESSION["correo"] == 1){
+			if ($_SESSION["correo"] == 1) {
 				mail($para, $asunto, $descripcion, $de);
 			}
-			if($_SESSION["datos"] == 1){
-				$datos2= array( "usuario" => $usuario,
-								"concepto" => $descripcion,
-								"fecha" => $fecha->format("Y-m-d H:i:s"));
-				$auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
+			if ($_SESSION["datos"] == 1) {
+				$datos2 = array(
+					"usuario" => $usuario,
+					"concepto" => $descripcion,
+					"fecha" => $fecha->format("Y-m-d H:i:s")
+				);
+				$auditoria = ModeloUsuarios::mdlIngresarAuditoria("auditoriajf", $datos2);
 			}
-			$respuesta = ModeloModelos::mdlEliminarModelo($tabla,$datos);
-			if($respuesta == "ok"){
+			$respuesta = ModeloModelos::mdlEliminarModelo($tabla, $datos);
+			if ($respuesta == "ok") {
 
-				echo'<script>
+				echo '<script>
 
 				swal({
 					  type: "success",
@@ -372,68 +370,67 @@ class ControladorModelos{
 							})
 
 				</script>';
-
-			}		
+			}
 		}
+	}
 
 
-	}	
-
-	
 	/* 
 	* MOSTRAR MODELOS x ARTICULO
 	*/
-	static public function ctrMostrarModeloArticulo($item,$valor){
+	static public function ctrMostrarModeloArticulo($item, $valor)
+	{
 
-        $tabla = "modelojf";
+		$tabla = "modelojf";
 
-		$respuesta = ModeloModelos::mdlMostrarModeloArticulo($tabla, $item,$valor);
+		$respuesta = ModeloModelos::mdlMostrarModeloArticulo($tabla, $item, $valor);
 
 		return $respuesta;
-
-    }
+	}
 
 	/* 
 	* MOSTRAR TALLAS
 	*/
-	static public function ctrMostrarTallas($item,$valor){
+	static public function ctrMostrarTallas($item, $valor)
+	{
 
-        $tabla = "tallajf";
+		$tabla = "tallajf";
 
-		$respuesta = ModeloModelos::mdlMostrarTallas($tabla, $item,$valor);
+		$respuesta = ModeloModelos::mdlMostrarTallas($tabla, $item, $valor);
 
 		return $respuesta;
-
 	}
-	
+
 	/*=============================================
 	CREAR PRECIO
 	=============================================*/
 
-	static public function ctrCrearPrecio(){
+	static public function ctrCrearPrecio()
+	{
 
-		if(isset($_POST["modelo"])){
-				
-				$tabla="preciojf";
-			   	$datos = array("modelo"=>$_POST["modelo"],
-							   "precio1"=>$_POST["precio1"],
-							   "precio2"=>$_POST["precio2"],
-							   "precio3"=>$_POST["precio3"],
-							   "precio4"=>$_POST["precio4"],
-							   "precio5"=>$_POST["precio5"],
-							   "precio6"=>$_POST["precio6"],
-							   "precio7"=>$_POST["precio7"],
-							   "precio8"=>$_POST["precio8"],
-							   "precio9"=>$_POST["precio9"],
-							   "precio10"=>$_POST["precio10"]
-							);
+		if (isset($_POST["modelo"])) {
 
-				   $respuesta = ModeloModelos::mdlIngresarPrecio($tabla,$datos);
-				   
+			$tabla = "preciojf";
+			$datos = array(
+				"modelo" => $_POST["modelo"],
+				"precio1" => $_POST["precio1"],
+				"precio2" => $_POST["precio2"],
+				"precio3" => $_POST["precio3"],
+				"precio4" => $_POST["precio4"],
+				"precio5" => $_POST["precio5"],
+				"precio6" => $_POST["precio6"],
+				"precio7" => $_POST["precio7"],
+				"precio8" => $_POST["precio8"],
+				"precio9" => $_POST["precio9"],
+				"precio10" => $_POST["precio10"]
+			);
 
-			   	if($respuesta == "ok"){
+			$respuesta = ModeloModelos::mdlIngresarPrecio($tabla, $datos);
 
-					echo'<script>
+
+			if ($respuesta == "ok") {
+
+				echo '<script>
 
 					swal({
 						  type: "success",
@@ -449,44 +446,41 @@ class ControladorModelos{
 								})
 
 					</script>';
-
-				}
-
-			
-
+			}
 		}
-
 	}
 
 	/*=============================================
 	EDITAR PRECIO
 	=============================================*/
 
-	static public function ctrEditarPrecio(){
+	static public function ctrEditarPrecio()
+	{
 
-		if(isset($_POST["modelo"])){
-				
-				$tabla="preciojf";
-			   	$datos = array("modelo"=>$_POST["modelo"],
-							   "precio1"=>$_POST["precio1"],
-							   "precio2"=>$_POST["precio2"],
-							   "precio3"=>$_POST["precio3"],
-							   "precio4"=>$_POST["precio4"],
-							   "precio5"=>$_POST["precio5"],
-							   "precio6"=>$_POST["precio6"],
-							   "precio7"=>$_POST["precio7"],
-							   "precio8"=>$_POST["precio8"],
-							   "precio9"=>$_POST["precio9"],
-							   "precio10"=>$_POST["precio10"],
-							   "precio11"=>$_POST["precio11"]
-							);
+		if (isset($_POST["modelo"])) {
 
-				   $respuesta = ModeloModelos::mdlEditarPrecio($tabla,$datos);
-				   
+			$tabla = "preciojf";
+			$datos = array(
+				"modelo" => $_POST["modelo"],
+				"precio1" => $_POST["precio1"],
+				"precio2" => $_POST["precio2"],
+				"precio3" => $_POST["precio3"],
+				"precio4" => $_POST["precio4"],
+				"precio5" => $_POST["precio5"],
+				"precio6" => $_POST["precio6"],
+				"precio7" => $_POST["precio7"],
+				"precio8" => $_POST["precio8"],
+				"precio9" => $_POST["precio9"],
+				"precio10" => $_POST["precio10"],
+				"precio11" => $_POST["precio11"]
+			);
 
-			   	if($respuesta == "ok"){
+			$respuesta = ModeloModelos::mdlEditarPrecio($tabla, $datos);
 
-					echo'<script>
+
+			if ($respuesta == "ok") {
+
+				echo '<script>
 
 					swal({
 						  type: "success",
@@ -502,27 +496,20 @@ class ControladorModelos{
 								})
 
 					</script>';
-
-				}
-
-			
-
+			}
 		}
-
 	}
-	
+
 	/* 
 	* MOSTRAR PRECIOS
 	*/
-	static public function ctrMostrarPrecios($item,$valor){
+	static public function ctrMostrarPrecios($item, $valor)
+	{
 
-        $tabla = "preciojf";
+		$tabla = "preciojf";
 
-		$respuesta = ModeloModelos::mdlMostrarPrecios($tabla, $item,$valor);
+		$respuesta = ModeloModelos::mdlMostrarPrecios($tabla, $item, $valor);
 
 		return $respuesta;
-
 	}
-    
 }
-

@@ -21,6 +21,19 @@ class ModeloPedidos
 		$stmt = null;
 	}
 
+
+	// Nueva función para buscar múltiples registros en una sola consulta
+	static public function mdlMostrarTemporalMultiple($tabla, $valores)
+	{
+		$placeholders = implode(',', array_fill(0, count($valores), '?'));
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE codigo IN ($placeholders) ORDER BY id ASC");
+
+		$stmt->execute($valores);
+
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+
 	/*
     * MOSTRAR TEMPORAL CABECERA
     */

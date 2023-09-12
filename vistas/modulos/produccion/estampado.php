@@ -4,7 +4,7 @@
 
         <h1>
 
-            Articulos Enviados a Taller / Servicio
+            Estampado
 
         </h1>
 
@@ -12,7 +12,7 @@
 
             <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-            <li class="active">Articulos Enviados a Taller / Servicio</li>
+            <li class="active">Estampado</li>
 
         </ol>
 

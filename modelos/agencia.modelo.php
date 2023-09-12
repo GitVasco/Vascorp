@@ -53,7 +53,7 @@ class ModeloAgencias
 			return $stmt->fetch();
 		} else {
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla  /* ORDER BY id LIMIT 0,266 */");
 
 			$stmt->execute();
 
