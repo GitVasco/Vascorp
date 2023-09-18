@@ -457,10 +457,8 @@ class ControladorPedidos
 
     static public function ctrLeerPedido()
     {
-
         if (isset($_POST["importPedTxt"])) {
             $filename = $_FILES['archivoPedTxt']['name'];
-
 
             if (!empty($filename)) {
                 $ruta = "vistas/pedidos/leer/";
@@ -471,7 +469,6 @@ class ControladorPedidos
                     $lineas = explode("\n", $contenido);
 
                     $detalleEntries = [];
-                    $cEntries = [];
                     $fecha = "";
                     $vend = "";
 
@@ -479,7 +476,8 @@ class ControladorPedidos
                         return explode("|", $line);
                     }, $lineas), 1));
 
-                    $existentCodes = ModeloPedidos::mdlMostrarTemporalMultiple("temporaljf", $unique_codes);
+                    $existentCodeArrays = ModeloPedidos::mdlMostrarTemporalMultiple("temporaljf", $unique_codes);
+                    $existentCodes = array_column($existentCodeArrays, 'codigo');
 
                     foreach ($lineas as $key => $value) {
                         $partes = explode("|", $value);
@@ -519,7 +517,7 @@ class ControladorPedidos
 
                     $respuestaD = ModeloPedidos::mdlLeerPedidoD($detalleString);
 
-                    // Todo salió bien: mostrar mensaje de éxito y redirigir
+                    // Mostrar mensaje de éxito y redirigir
                     echo '<script>
                         window.open("vistas/reportes_ticket/pedidos_prov.php?fecha=' . $fecha . '&vend=' . trim($vend) . '","_blank");
                         swal({
@@ -534,37 +532,38 @@ class ControladorPedidos
                         });
                     </script>';
                 } else {
-                    // Fallo al mover el archivo: mostrar mensaje de error
+                    // Mostrar mensaje de error
                     echo '<script>
-                        swal({
-                            type: "error",
-                            title: "¡Error al subir el archivo!",
-                            showConfirmButton: true,
-                            confirmButtonText: "Cerrar"
-                        }).then(function(result){
-                            if (result.value) {
-                                window.location = "pedidoscv";
-                            }
-                        });
+                            swal({
+                                type: "error",
+                                title: "¡Error al subir el archivo!",
+                                showConfirmButton: true,
+                                confirmButtonText: "Cerrar"
+                            }).then(function(result){
+                                if (result.value) {
+                                    window.location = "pedidoscv";
+                                }
+                            });
                     </script>';
                 }
             } else {
-                // No se seleccionó ningún archivo: mostrar mensaje de error
+                // Mostrar mensaje de error
                 echo '<script>
-                        swal({
-                            type: "error",
-                            title: "¡Error, debe seleccionar un archivo!",
-                            showConfirmButton: true,
-                            confirmButtonText: "Cerrar"
-                        }).then(function(result){
-                            if (result.value) {
-                                window.location = "pedidoscv";
-                            }
-                        });
-                    </script>';
+                    swal({
+                        type: "error",
+                        title: "¡Error, debe seleccionar un archivo!",
+                        showConfirmButton: true,
+                        confirmButtonText: "Cerrar"
+                    }).then(function(result){
+                        if (result.value) {
+                            window.location = "pedidoscv";
+                        }
+                    });
+                </script>';
             }
         }
     }
+
 
 
     /*

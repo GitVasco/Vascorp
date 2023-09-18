@@ -3715,10 +3715,10 @@ class ControladorFacturacion
             $origen = 'c:/xampp/htdocs/vascorp/vistas/reportes_excel/csv_fe/' . $nombre . '.txt';
 
             //?destino prueba
-            $destino = 'c:/prueba/nc/' . $nombre . '.csv';
+            //$destino = 'c:/prueba/nc/' . $nombre . '.csv';
 
             //!destino produccion
-            //!$destino = 'c:/daemonOSE21/documents/in/creditnote/'.$nombre.'.csv';
+            $destino = 'c:/daemonOSE21/documents/in/creditnote/' . $nombre . '.csv';
 
 
             //copy($origen, $destino);

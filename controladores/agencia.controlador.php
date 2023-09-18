@@ -111,9 +111,7 @@ class ControladorAgencias
 
 	static public function ctrEliminarAgencia()
 	{
-
 		if (isset($_GET["idAgencia"])) {
-
 			$datos = $_GET["idAgencia"];
 			date_default_timezone_set('America/Lima');
 			$fecha = new DateTime();
@@ -137,24 +135,18 @@ class ControladorAgencias
 			$tabla = "agenciasjf";
 			$respuesta = ModeloAgencias::mdlEliminarAgencia($tabla, $datos);
 			if ($respuesta == "ok") {
-
-
 				echo '<script>
-
-				swal({
-					  type: "success",
-					  title: "La agencia ha sido borrada correctamente",
-					  showConfirmButton: true,
-					  confirmButtonText: "Cerrar",
-					  closeOnConfirm: false
-					  }).then(function(result){
-								if (result.value) {
-
-								window.location = "agencias";
-
-								}
-							})
-
+					swal({
+						type: "success",
+						title: "La agencia ha sido borrada correctamente",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar",
+						closeOnConfirm: false
+						}).then(function(result){
+									if (result.value) {
+									window.location = "agencias";
+									}
+								})
 				</script>';
 			}
 		}

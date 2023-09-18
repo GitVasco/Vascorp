@@ -1787,7 +1787,8 @@ class ModeloCentroCostos
     /*
 	* Mostrar Centro de Costos
 	*/
-    static public function mdlMostrarKardex($valor){
+    static public function mdlMostrarKardex($valor)
+    {
 
         if ($valor != null) {
 
@@ -1798,7 +1799,6 @@ class ModeloCentroCostos
             $stmt->execute();
 
             return $stmt->fetch();
-
         } else {
 
             $stmt = Conexion::conectar()->prepare("SELECT * FROM kardex_cabjf");
@@ -1806,7 +1806,6 @@ class ModeloCentroCostos
             $stmt->execute();
 
             return $stmt->fetchAll();
-
         }
 
         $stmt->close();
@@ -1817,9 +1816,10 @@ class ModeloCentroCostos
     /* 
     * CREAR GASTOS DE CAJA
     */
-    static public function mdlIngresarKardexCab($datos){
+    static public function mdlIngresarKardexCab($datos)
+    {
 
-    $stmt = Conexion::conectar()->prepare("INSERT INTO kardex_cabjf (
+        $stmt = Conexion::conectar()->prepare("INSERT INTO kardex_cabjf (
                                                         tipo,
                                                         codigo,
                                                         anno,
@@ -1847,40 +1847,38 @@ class ModeloCentroCostos
                                                         :fecreg
                                                         )");
 
-    $stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
-    $stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
-    $stmt->bindParam(":anno", $datos["anno"], PDO::PARAM_STR);
-    $stmt->bindParam(":mes", $datos["mes"], PDO::PARAM_STR);
-    $stmt->bindParam(":saldo_inicial", $datos["saldo_inicial"], PDO::PARAM_STR);
-    $stmt->bindParam(":ingreso", $datos["ingreso"], PDO::PARAM_STR);
-    $stmt->bindParam(":salida", $datos["salida"], PDO::PARAM_STR);
-    $stmt->bindParam(":saldo_final", $datos["saldo_final"], PDO::PARAM_STR);
-    $stmt->bindParam(":usureg", $datos["usureg"], PDO::PARAM_STR);
-    $stmt->bindParam(":pcreg", $datos["pcreg"], PDO::PARAM_STR);
-    $stmt->bindParam(":fecreg", $datos["fecreg"], PDO::PARAM_STR);
-    
+        $stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
+        $stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
+        $stmt->bindParam(":anno", $datos["anno"], PDO::PARAM_STR);
+        $stmt->bindParam(":mes", $datos["mes"], PDO::PARAM_STR);
+        $stmt->bindParam(":saldo_inicial", $datos["saldo_inicial"], PDO::PARAM_STR);
+        $stmt->bindParam(":ingreso", $datos["ingreso"], PDO::PARAM_STR);
+        $stmt->bindParam(":salida", $datos["salida"], PDO::PARAM_STR);
+        $stmt->bindParam(":saldo_final", $datos["saldo_final"], PDO::PARAM_STR);
+        $stmt->bindParam(":usureg", $datos["usureg"], PDO::PARAM_STR);
+        $stmt->bindParam(":pcreg", $datos["pcreg"], PDO::PARAM_STR);
+        $stmt->bindParam(":fecreg", $datos["fecreg"], PDO::PARAM_STR);
 
-    if ($stmt->execute()){
 
-        return "ok";
+        if ($stmt->execute()) {
 
-    } else {
+            return "ok";
+        } else {
 
-        return $stmt->errorInfo();
-        
-    }
+            return $stmt->errorInfo();
+        }
 
         $stmt->close();
         $stmt = null;
+    }
 
-    }    
-
-	/*
+    /*
 	* REGISTAR DETALLEES DEL KARDEX
 	*/
-	static public function mdlIngresarKardexDet($detalle){
+    static public function mdlIngresarKardexDet($detalle)
+    {
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO kardex_detjf (
+        $stmt = Conexion::conectar()->prepare("INSERT INTO kardex_detjf (
                                                             cod_cabecera,
                                                             fecha,
                                                             t_tabla,
@@ -1905,25 +1903,20 @@ class ModeloCentroCostos
                                                 )
                                                 VALUES
                                                     $detalle");
-		if ($stmt->execute()) {
+        if ($stmt->execute()) {
 
-			return "ok";
+            return "ok";
+        } else {
 
-		} else {
-
-			return $stmt->errorInfo();
-		}
-
-		$stmt->close();
-
-		$stmt = null;
-
-    }    
+            return $stmt->errorInfo();
+        }
+    }
 
     /*
 	* Mostrar Centro de Costos
 	*/
-    static public function mdlVerItems($valor){
+    static public function mdlVerItems($valor)
+    {
 
         $stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
                         k.item,
@@ -1943,13 +1936,13 @@ class ModeloCentroCostos
         $stmt->close();
 
         $stmt = null;
-
     }
 
     /*
 	* Mostrar Centro de Costos
 	*/
-    static public function mdlVerItemsDet($codigo, $item){
+    static public function mdlVerItemsDet($codigo, $item)
+    {
 
         $stmt = Conexion::conectar()->prepare("SELECT 
                             k.cod_cabecera,
@@ -1989,8 +1982,5 @@ class ModeloCentroCostos
         $stmt->close();
 
         $stmt = null;
-
-    }    
-
-
+    }
 }
