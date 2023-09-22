@@ -214,7 +214,7 @@ $("#seleccionarVendedor").change(function () {
                 !pedidos.includes(nuevoCodigo) &&
                 vendedoresEspeciales.has(vendedor)
             ) {
-                listaPrecio = "precio2";
+                listaPrecio = "precio3";
                 console.log("precio especial");
             } else {
                 console.log("precio normal");
