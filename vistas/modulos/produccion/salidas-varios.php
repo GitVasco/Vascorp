@@ -225,7 +225,7 @@ MODAL FACTURAR
                                         $item = "tipo_dato";
                                         $valor = "TTOP";
 
-                                        $array = array('E01', 'E02', 'E05', 'E20', 'E25', 'E30', 'E49', 'E50', 'S01', 'S02', 'S03', 'S04', 'S25', 'S26', 'S27', 'S28', 'S30', 'S55', 'S60', 'S70', 'S96', 'S16');
+                                        $array = array('E01', 'E02', 'E05', 'E20', 'E30', 'E49', 'E50', 'S01', 'S02', 'S03', 'S04', 'S25', 'S26', 'S27', 'S28', 'S30', 'S55', 'S60', 'S70', 'S96', 'S16');
 
                                         $documentos = ControladorCuentas::ctrMostrarPagos($item, $valor);
 

@@ -402,12 +402,26 @@ $objPHPExcel->getActiveSheet()->getPageMargins()->setRight(0);
 
 //establecer titulos de impresion en cada hoja
 //$objPHPExcel->getActiveSheet()->getPageSetup()->setRowsToRepeatAtTopByStartAndEnd(1, 4);
+
+// Evaluar la condición una vez y almacenar el resultado en una variable
+$establecimiento = '';
+if (substr($codigo, 0, 3) == "APT") {
+	$establecimiento = '003 ALMACEN PRODUCTO TERMINADO';
+} else if (substr($codigo, 0, 3) == "AMP") {
+	$establecimiento = '001  ALMACEN GENERAL';
+} else {
+	$establecimiento = '002 ALMACEN PRODUCTO EN PROCESO';
+}
+
+
 $fila = 1;
 $objPHPExcel->getActiveSheet()->getRowDimension($fila)->setRowHeight(12.01);
 
 $item = ControladorCentroCostos::ctrVerItems($codigo);
 
-for ($i = 0; $i < count($item); $i++) {
+$itemCount = count($item);
+
+for ($i = 0; $i < $itemCount; $i++) {
 
 	$fila += 1;
 	$objPHPExcel->getActiveSheet()->getRowDimension($fila)->setRowHeight(12.01);
@@ -478,16 +492,8 @@ for ($i = 0; $i < count($item); $i++) {
 	$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", '     :');
 	$objPHPExcel->getActiveSheet()->getStyle("G$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 
-	if (substr($codigo, 0, 3) == "APT") {
-		$objPHPExcel->getActiveSheet()->SetCellValue("H$fila", '003 ALMACEN PRODUCTO TERMINADO');
-		$objPHPExcel->getActiveSheet()->setSharedStyle($texto_3, "H$fila");
-	} else if (substr($codigo, 0, 3) == "AMP") {
-		$objPHPExcel->getActiveSheet()->SetCellValue("H$fila", '001  ALMACEN GENERAL');
-		$objPHPExcel->getActiveSheet()->setSharedStyle($texto_3, "H$fila");
-	} else {
-		$objPHPExcel->getActiveSheet()->SetCellValue("H$fila", '002 ALMACEN PRODUCTO EN PROCESO');
-		$objPHPExcel->getActiveSheet()->setSharedStyle($texto_3, "H$fila");
-	}
+	$objPHPExcel->getActiveSheet()->SetCellValue("H$fila", $establecimiento);
+	$objPHPExcel->getActiveSheet()->setSharedStyle($texto_3, "H$fila");
 
 	$objPHPExcel->getActiveSheet()->setSharedStyle($borde_3B, "N$fila");
 
@@ -711,12 +717,17 @@ for ($i = 0; $i < count($item); $i++) {
 
 
 
+	// Almacenar la hoja activa y el número de detalles y columnas para evitar llamadas repetidas
+	$activeSheet = $objPHPExcel->getActiveSheet();
 	$detalle = ControladorCentroCostos::ctrVerItemsDet($codigo, $item[$i]["item"]);
+	$detalleCount = count($detalle);
+	$columns = ["A", "B", "C", "D", "E"];
+	$columnsCount = count($columns);
 
-	for ($j = 0; $j < count($detalle); $j++) {
+	for ($j = 0; $j < $detalleCount; $j++) {
 		$fila += 1;
-		$objPHPExcel->getActiveSheet()->getRowDimension($fila)->setRowHeight(12.01);
-		$columns = ["A", "B", "C", "D", "E"];
+		$activeSheet->getRowDimension($fila)->setRowHeight(12.01);
+
 		$values = [
 			$detalle[$j]["fecha"],
 			utf8_decode($detalle[$j]["t_tabla"]),
@@ -725,12 +736,13 @@ for ($i = 0; $i < count($item); $i++) {
 			utf8_decode($detalle[$j]["ctm"])
 		];
 
-		for ($k = 0; $k < count($columns); $k++) {
-			$objPHPExcel->getActiveSheet()->setCellValueExplicit($columns[$k] . $fila, $values[$k], PHPExcel_Cell_DataType::TYPE_STRING);
-			applyBorderStyle($objPHPExcel->getActiveSheet(), $columns[$k] . $fila);
+		for ($k = 0; $k < $columnsCount; $k++) {
+			$cell = $columns[$k] . $fila;
+			$activeSheet->setCellValueExplicit($cell, $values[$k], PHPExcel_Cell_DataType::TYPE_STRING);
+			applyBorderStyle($activeSheet, $cell);
 		}
 
-		$objPHPExcel->getActiveSheet()->getStyle("E$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$activeSheet->getStyle("E$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 		$columnData = [
 			"F" => $detalle[$j]["cantidad_a"],
@@ -745,10 +757,12 @@ for ($i = 0; $i < count($item); $i++) {
 		];
 
 		foreach ($columnData as $column => $value) {
-			applyNumberFormat($objPHPExcel->getActiveSheet(), $column . $fila, $value);
-			applyBorderStyle($objPHPExcel->getActiveSheet(), $column . $fila);
+			$cell = $column . $fila;
+			applyNumberFormat($activeSheet, $cell, $value);
+			applyBorderStyle($activeSheet, $cell);
 		}
 	}
+
 
 	$fila += 1;
 }

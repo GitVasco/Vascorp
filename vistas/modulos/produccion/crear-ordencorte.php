@@ -32,7 +32,7 @@
 
                     <div class="box-header with-border"></div>
 
-                    <form role="form" method="post" class="formularioOrdenCorte">
+                    <form role="form" method="post" class="formularioOrdenCorte" id="formOrdenCorte">
 
                         <div class="box-body">
 
@@ -476,6 +476,16 @@ MODAL CONFIGURAR % DE URGENCIAS
 
                     }
                 }
+            }
+        });
+    });
+
+    // COPILOT: evitar que haga submit al presionar enter el formulario de crear orden de corte
+    $(document).ready(function() {
+        $(window).keydown(function(event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                return false;
             }
         });
     });
