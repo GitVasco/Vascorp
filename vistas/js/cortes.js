@@ -365,31 +365,37 @@ $("#cortesEstampado").change(function () {
     });
 });
 
-$("#articulosCorte").change(function () {
-    const id_articulo = $(this).val();
-    const datos = new FormData();
-    datos.append("id_articulo", id_articulo);
-    $.ajax({
-        url: "ajax/cortes.ajax.php",
-        method: "POST",
-        data: datos,
-        cache: false,
-        contentType: false,
-        processData: false,
-        dataType: "json",
-        success: function (respuesta) {
-            $("#cantidadOrigen").val(respuesta.cantidad);
+// $("#articulosCorte").change(function () {
+//     const id_articulo = $(this).val();
+//     const datos = new FormData();
+//     datos.append("id_articulo", id_articulo);
+//     $.ajax({
+//         url: "ajax/cortes.ajax.php",
+//         method: "POST",
+//         data: datos,
+//         cache: false,
+//         contentType: false,
+//         processData: false,
+//         dataType: "json",
+//         success: function (respuesta) {
+//             $("#cantidadOrigen").val(respuesta.cantidad);
 
-            $("#id_articulo").val(id_articulo);
-            $("#articulo").val(respuesta.articulo);
-        },
-    });
-});
+//             $("#id_articulo").val(id_articulo);
+//             $("#articulo").val(respuesta.articulo);
+//         },
+//     });
+// });
 
 $("#cantidadEstampado").change(function () {
     const cantidadEstampado = $(this).val();
+    console.log(
+        "🚀 ~ file: cortes.js:391 ~ cantidadEstampado:",
+        cantidadEstampado
+    );
     const cantidadOrigen = $("#cantidadOrigen").val();
-    if (cantidadEstampado > cantidadOrigen) {
+    console.log("🚀 ~ file: cortes.js:396 ~ cantidadOrigen:", cantidadOrigen);
+
+    if (Number(cantidadEstampado) > Number(cantidadOrigen)) {
         Command: toastr["error"](
             "La cantidad estampada no puede ser mayor a la cantidad original"
         );

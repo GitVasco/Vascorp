@@ -393,8 +393,8 @@ class ControladorCortes
             date_default_timezone_set('America/Lima');
             $fecreg                 = new DateTime();
             $id_articulo            = $_POST["id_articulo"];
-            $cortesEstampado        = $_POST["cortesEstampado"];
-            $articulosCorte         = $_POST["articulo"];
+            $cortesEstampado        = isset($_POST["cortesEstampado"]) ? $_POST["cortesEstampado"] : null;
+            $articulosCorte         = $_POST["articulosCorte"];
             $cantidadOrigen         = $_POST["cantidadOrigen"];
             $cantidadEstampado      = $_POST["cantidadEstampado"];
             $cantidadMerma          = $_POST["cantidadMerma"];
@@ -408,27 +408,27 @@ class ControladorCortes
             $finProduccion          = $_POST["finProduccion"];
             $usuario                = $_SESSION["nombre"];
             $pcreg                  = gethostbyaddr($_SERVER['REMOTE_ADDR']);
-            $fecreg =
 
-                $datos = array(
-                    "corte"             => $cortesEstampado,
-                    "almacencorte"      => $id_articulo,
-                    "articulo"          => $articulosCorte,
-                    "cantorigen"        => $cantidadOrigen,
-                    "cantestampado"     => $cantidadEstampado,
-                    "cantmerma"         => $cantidadMerma,
-                    "cantsaldo"         => $cantidadSaldo,
-                    "fecha"             => $fechaEstampado,
-                    "operario"          => $operarioEstampado,
-                    "cerrar"            => $cerrarCorte,
-                    "iniprep"           => $inicioPreparacion,
-                    "finprep"           => $finPreparacion,
-                    "iniprod"           => $inicioProduccion,
-                    "finprod"           => $finProduccion,
-                    "usuario"           => $usuario,
-                    "pcreg"             => $pcreg,
-                    "fecreg"            => $fecreg->format('Y-m-d H:i:s')
-                );
+            $datos = array(
+                "corte"             => $cortesEstampado,
+                "almacencorte"      => $id_articulo,
+                "articulo"          => $articulosCorte,
+                "cantorigen"        => $cantidadOrigen,
+                "cantestampado"     => $cantidadEstampado,
+                "cantmerma"         => $cantidadMerma,
+                "cantsaldo"         => $cantidadSaldo,
+                "fecha"             => $fechaEstampado,
+                "operario"          => $operarioEstampado,
+                "cerrar"            => $cerrarCorte,
+                "iniprep"           => $inicioPreparacion,
+                "finprep"           => $finPreparacion,
+                "iniprod"           => $inicioProduccion,
+                "finprod"           => $finProduccion,
+                "usuario"           => $usuario,
+                "pcreg"             => $pcreg,
+                "fecreg"            => $fecreg->format('Y-m-d')
+            );
+
 
             $respuesta = ModeloCortes::mdlRegistrarEstampado($datos);
 
@@ -449,16 +449,16 @@ class ControladorCortes
                 $rptEstampado = ModeloCortes::mdlActualizarAlmacenCorte($datos);
 
                 echo '<script>
-				swal({
-                    type: "success",
-                    title: "El estampado fue creado correctamente",
-                    showConfirmButton: true,
-                    confirmButtonText: "Cerrar"
-                    }).then(function(result){
-                        if (result.value) {
-                        window.location = "estampado";
-                        }
-                    })
+				// swal({
+                //     type: "success",
+                //     title: "El estampado fue creado correctamente",
+                //     showConfirmButton: true,
+                //     confirmButtonText: "Cerrar"
+                //     }).then(function(result){
+                //         if (result.value) {
+                //         window.location = "estampado";
+                //         }
+                //     })
 				</script>';
             }
         }

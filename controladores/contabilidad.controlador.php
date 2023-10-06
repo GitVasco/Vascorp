@@ -751,7 +751,7 @@ class ControladorContabilidad
 
                 // TODO: Yudy pide quitar el codigo 101100 y agregar 104103
                 // FIXME: YUDY PIDE AGREGAR EL CODIGO 101100
-                $cuentas = array('104101', '104103');
+                $cuentas = array('104101', '104103', '104105');
 
                 if (in_array($cancelaciones08[$i]["cuenta"], $cuentas)) {
                     $codFin = 'O101';

@@ -1141,6 +1141,8 @@ class ModeloContabilidad
                     THEN '104101' 
                     WHEN c1.cod_pago IN ('06', '14','15','16') 
                     THEN '104103' 
+                    WHEN c1.cod_pago IN ('17','18')
+                    THEN '104105'
                     ELSE '121201' 
                     END AS cuenta,
                     ROUND(c1.monto, 2) AS debe,
@@ -1226,7 +1228,7 @@ class ModeloContabilidad
                         CASE
                             WHEN cc.cod_pago = '80' 
                             THEN '04' 
-                            WHEN cc.cod_pago IN ('05', '00', '06', '14','15','16') 
+                            WHEN cc.cod_pago IN ('05', '00', '06', '14', '15', '16','17','18') 
                             THEN '08' 
                             ELSE 'CD' 
                         END 
@@ -1234,7 +1236,7 @@ class ModeloContabilidad
                         CASE
                             WHEN cc.cod_pago = '80' 
                             THEN '04' 
-                            WHEN cc.cod_pago IN ('05', '00', '06', '14','15','16') 
+                            WHEN cc.cod_pago IN ('05', '00', '06', '14', '15', '16','17','18') 
                             THEN '08' 
                             ELSE 'CD' 
                         END
@@ -1253,7 +1255,7 @@ class ModeloContabilidad
                             CASE
                                 WHEN cc.cod_pago = '80' 
                                 THEN '04' 
-                                WHEN cc.cod_pago IN ('05', '00', '06', '14','15','16')  
+                                WHEN cc.cod_pago IN ('05', '00', '06', '14', '15', '16','17','18')   
                                 THEN '08' 
                                 ELSE 'CD' 
                             END 
@@ -1261,7 +1263,7 @@ class ModeloContabilidad
                             CASE
                                 WHEN cc.cod_pago = '80' 
                                 THEN '04' 
-                                WHEN cc.cod_pago IN ('05', '00', '06', '14','15','16')  
+                                WHEN cc.cod_pago IN ('05', '00', '06', '14', '15', '16','17','18')   
                                 THEN '08' 
                                 ELSE 'CD' 
                             END
@@ -1346,7 +1348,7 @@ class ModeloContabilidad
                             CASE
                             WHEN cc.cod_pago = '80' 
                             THEN '04' 
-                            WHEN cc.cod_pago IN ('05', '00', '06', '14','15','16') 
+                            WHEN cc.cod_pago IN ('05', '00', '06', '14', '15', '16','17','18')  
                             THEN '08' 
                             ELSE 'CD' 
                             END 
@@ -1354,7 +1356,7 @@ class ModeloContabilidad
                             CASE
                             WHEN cc.cod_pago = '80' 
                             THEN '04' 
-                            WHEN cc.cod_pago IN ('05', '00', '06', '14','15','16') 
+                            WHEN cc.cod_pago IN ('05', '00', '06', '14', '15', '16','17','18')  
                             THEN '08' 
                             ELSE 'CD' 
                             END

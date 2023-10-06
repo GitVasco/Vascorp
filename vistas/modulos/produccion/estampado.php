@@ -75,7 +75,7 @@
                                         $corte = ModeloCortes::mdlMostrarCortesLista();
                                         ?>
 
-                                        <select class="form-control input-sm selectpicker" name="cortesEstampado" id="cortesEstampado" data-live-search="true" data-size="10" required>
+                                        <select class="form-control input-sm selectpicker" name="cortesEstampado" id="cortesEstampado" data-live-search="true" data-size="10" disabled>
                                             <option value="">Corte</option>
                                             <?php foreach ($corte as $key => $value) : ?>
                                                 <option value="<?php echo $value['guia']; ?>"><?php echo $value['guia'] . ' - ' . $value['fecha']; ?></option>
@@ -96,7 +96,16 @@
                                         <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
 
                                         <select class="form-control input-sm selectpicker" name="articulosCorte" id="articulosCorte" data-live-search="true" data-size="10" required>
+                                            <option value="">Seleccionar Artículo</option>
+                                            <?php
 
+                                            $estampado = ModeloCortes::mdlArticulosEstampado(null);
+
+                                            foreach ($estampado as $key => $value) :
+                                            ?>
+
+                                                <option value="<?php echo $value['articulo']; ?>"><?php echo $value['modelo'] . ' - ' . $value['nombre'] . ' - ' . $value['color'] . ' - ' . $value['talla']; ?></option>
+                                            <?php endforeach ?>
                                         </select>
 
                                         <input type="hidden" id="id_articulo" name="id_articulo">
@@ -115,7 +124,7 @@
 
                                         <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
 
-                                        <input type="text" class="form-control" id="cantidadOrigen" name="cantidadOrigen" readonly />
+                                        <input type="text" class="form-control" id="cantidadOrigen" name="cantidadOrigen" />
 
                                     </div>
                                 </div>

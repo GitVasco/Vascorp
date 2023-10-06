@@ -711,6 +711,36 @@ class ModeloCortes
         }
     }
 
+    static public function mdlArticulosEstampado($articulo)
+    {
+        if ($articulo == null) {
+            $stmt = Conexion::conectar()->prepare("SELECT 
+                    * 
+                FROM
+                    articulojf a 
+                WHERE a.estampado = 1
+            ");
+
+            $stmt->execute();
+            return $stmt->fetchAll();
+
+            $stmt = null;
+        } else {
+            $stmt = Conexion::conectar()->prepare("SELECT 
+                    * 
+                FROM
+                    articulojf a 
+                WHERE a.estampado = 1 
+                    AND a.articulo = '$articulo'
+            ");
+
+            $stmt->execute();
+            return $stmt->fetch();
+
+            $stmt = null;
+        }
+    }
+
     static public function mdlRegistrarEstampado($datos)
     {
         $stmt = Conexion::conectar()->prepare("INSERT INTO estampado (
