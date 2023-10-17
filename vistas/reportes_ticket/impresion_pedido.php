@@ -6965,7 +6965,7 @@
             //*Cuerpo PAG 6
             echo '<table border="1" style="border:dashed" align="left" width="900px">';
 
-            $articulosP1 = ControladorPedidos::ctrPedidoImpresionB($codigo, 220, 50);
+            $articulosP1 = ControladorPedidos::ctrPedidoImpresionB($codigo, 250, 50);
 
             foreach ($articulosP1 as $key => $value) {
 
@@ -8754,7 +8754,7 @@
             //*Cuerpo PAG 6
             echo '<table border="1" style="border:dashed" align="left" width="900px">';
 
-            $articulosP1 = ControladorPedidos::ctrPedidoImpresionB($codigo, 220, 50);
+            $articulosP1 = ControladorPedidos::ctrPedidoImpresionB($codigo, 250, 50);
 
             foreach ($articulosP1 as $key => $value) {
 
@@ -10790,7 +10790,7 @@
             //*Cuerpo PAG 6
             echo '<table border="1" style="border:dashed" align="left" width="900px">';
 
-            $articulosP1 = ControladorPedidos::ctrPedidoImpresionB($codigo, 220, 50);
+            $articulosP1 = ControladorPedidos::ctrPedidoImpresionB($codigo, 250, 50);
 
             foreach ($articulosP1 as $key => $value) {
 
@@ -13073,7 +13073,7 @@
             //*Cuerpo PAG 6
             echo '<table border="1" style="border:dashed" align="left" width="900px">';
 
-            $articulosP1 = ControladorPedidos::ctrPedidoImpresionB($codigo, 220, 50);
+            $articulosP1 = ControladorPedidos::ctrPedidoImpresionB($codigo, 250, 50);
 
             foreach ($articulosP1 as $key => $value) {
 
