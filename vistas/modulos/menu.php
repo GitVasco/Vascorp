@@ -1080,6 +1080,248 @@
             }
             ?>
 
+            <!-- Produccion VERSION NUEVA-->
+            <?php if ($_SESSION["produccion"] == 1) : ?>
+
+                <?php
+                $rutasActivasProduccion = [
+                    "ordencorte", "crear-ordencorte", "editar-detalle-ordencorte", "almacencorte",
+                    "crear-almacencorte", "en-cortes", "en-taller", "marcar-taller", "en-tallert",
+                    "en-tallerp", "ingresos", "crear-ingresos", "crear-segunda", "asistencia",
+                    "quincena", "eficiencia-global", "produccion-trusas", "produccion-brasier",
+                    "produccion-vasco", "urgencias", "urgenciasamp", "proyeccion-mp", "servicios",
+                    "crear-servicio", "cierres", "crear-cierre", "precio-servicio", "pago-servicio",
+                    "salidas-varios", "crear-salidas-varios", "operacion-taller", "sublimados",
+                    "seguimiento", "enviados-taller", "listar-documento", "ajuste-taller",
+                    "urgencias-produccion", "urgencias-almacen", "urgencias-corte", "urgencias-plan",
+                    "urgencias-maestro", "transferencias-apt", "crear-transferencias-apt", "estampado"
+                ];
+
+                $isActiveProduccion = in_array($_GET["ruta"], $rutasActivasProduccion) ? 'active' : '';
+                ?>
+                <li class="treeview <?= $isActiveProduccion; ?>">
+
+                    <a href="#">
+                        <i class="fa fa-cogs"></i> <span>Producción <label class="text-danger">TEST</label></span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+
+                        <?php
+                        $rutasActivasProgramación = ["ordencorte", "almacencorte", "servicios", "cierres", "ingresos"];
+                        $isActiveProgramación = in_array($_GET["ruta"], $rutasActivasProgramación) ? 'active' : '';
+                        ?>
+
+                        <!-- PROGRAMACIÓN -->
+                        <li class="treeview <?= $isActiveProgramación; ?>">
+                            <a href=" #"><i class="fa fa-circle-o"></i> Programación
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+
+                                <!-- ORDEN DE CORTE -->
+                                <li class="<?= $_GET['ruta'] == 'ordencorte' ? 'active' : '' ?>">
+                                    <a href="ordencorte"><i class="fa fa-circle-o"></i> Ord. Corte</a>
+                                </li>
+
+                                <!-- CORTES -->
+                                <li class="<?= $_GET['ruta'] == 'almacencorte' ? 'active' : '' ?>">
+                                    <a href="almacencorte"><i class="fa fa-circle-o"></i> Cortes</a>
+                                </li>
+
+                                <!-- SERVICIOS -->
+                                <li class="<?= $_GET['ruta'] == 'servicios' ? 'active' : '' ?>">
+                                    <a href="servicios"><i class="fa fa-circle-o"></i> Servicios</a>
+                                </li>
+
+                                <!-- CIERRES -->
+                                <li class="<?= $_GET['ruta'] == 'cierres' ? 'active' : '' ?>">
+                                    <a href="cierres"><i class="fa fa-circle-o"></i> Cierres</a>
+                                </li>
+
+                                <!-- INGRESOS -->
+                                <li class="<?= $_GET['ruta'] == 'ingresos' ? 'active' : '' ?>">
+                                    <a href="ingresos"><i class="fa fa-circle-o"></i> Ingresos</a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        <!-- TALLER VASCO -->
+                        <?php
+                        $rutasActivasTallerVasco = ["en-taller", "marcar-taller", "en-tallert", "en-tallerp", "quincena"];
+                        $isActiveTallerVasco = in_array($_GET["ruta"], $rutasActivasTallerVasco) ? 'active' : '';
+                        ?>
+                        <li class="treeview <?= $isActiveTallerVasco; ?>">
+                            <a href=" #"><i class="fa fa-circle-o"></i> Taller Vasco
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="<?= $_GET['ruta'] == 'en-taller' ? 'active' : '' ?>">
+                                    <a href="en-taller"><i class="fa fa-circle-o"></i> Taller Gral</a>
+                                </li>
+                                <li class="<?= $_GET['ruta'] == 'marcar-taller' ? 'active' : '' ?>">
+                                    <a href="marcar-taller"><i class="fa fa-circle-o"></i> Registrar</a>
+                                </li>
+                                <li class="<?= $_GET['ruta'] == 'en-tallerp' ? 'active' : '' ?>">
+                                    <a href="en-tallerp"><i class="fa fa-circle-o"></i> Generados</a>
+                                </li>
+                                <li class="<?= $_GET['ruta'] == 'en-tallert' ? 'active' : '' ?>">
+                                    <a href="en-tallert"><i class="fa fa-circle-o"></i> Terminados</a>
+                                </li>
+                                <li class="<?= $_GET['ruta'] == 'quincena' ? 'active' : '' ?>">
+                                    <a href="quincena"><i class="fa fa-circle-o"></i> Quincenas</a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        <!-- GASTOS -->
+                        <?php
+                        $rutasActivasGastos = ["precio-servicio", "pago-servicio"];
+                        $isActiveGastos = in_array($_GET["ruta"], $rutasActivasGastos) ? 'active' : '';
+                        ?>
+                        <li class="treeview <?= $isActiveGastos; ?>">
+                            <a href=" #"><i class="fa fa-circle-o"></i> Gastos
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="<?= $_GET['ruta'] == 'precio-servicio' ? 'active' : '' ?>">
+                                    <a href="precio-servicio"><i class="fa fa-circle-o"></i> Precios</a>
+                                </li>
+                                <li class="<?= $_GET['ruta'] == 'pago-servicio' ? 'active' : '' ?>">
+                                    <a href="pago-servicio"><i class="fa fa-circle-o"></i> Pagos</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- RESUMEN -->
+                        <?php
+                        $rutasActivasResumen = ["en-cortes", "enviados-taller"];
+                        $isActiveResumen = in_array($_GET["ruta"], $rutasActivasResumen) ? 'active' : '';
+                        ?>
+                        <li class="treeview <?= $isActiveResumen; ?>">
+                            <a href="#"><i class="fa fa-circle-o"></i> Resumen
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="<?= $_GET['ruta'] == 'en-cortes' ? 'active' : '' ?>">
+                                    <a href="en-cortes"><i class="fa fa-circle-o"></i> Alm. Corte</a>
+                                </li>
+                                <li class="<?= $_GET['ruta'] == 'enviados-taller' ? 'active' : '' ?>">
+                                    <a href="enviados-taller"><i class="fa fa-circle-o"></i> Env. Taller</a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        <!-- CONTROLES -->
+                        <?php
+                        $rutasActivasControles = ["estampado", "salidas-varios", "listar-documento", "transferencias-apt"];
+                        $isActiveControles = in_array($_GET["ruta"], $rutasActivasControles) ? 'active' : '';
+                        ?>
+                        <li class="treeview <?= $isActiveControles; ?>">
+                            <a href="#"><i class="fa fa-circle-o"></i> Controles
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="<?= $_GET['ruta'] == 'estampado' ? 'active' : '' ?>">
+                                    <a href="estampado"><i class="fa fa-circle-o"></i> Estampados</a>
+                                </li>
+                                <?php
+                                $rutasActivasMovimientos = ["salidas-varios", "listar-documento"];
+                                $isActiveMovimientos = in_array($_GET["ruta"], $rutasActivasMovimientos) ? 'active' : '';
+                                ?>
+                                <li class="treeview <?= $isActiveMovimientos; ?>">
+                                    <a href="#"><i class="fa fa-circle-o"></i> Movimientos
+                                        <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                                    </a>
+                                    <ul class="treeview-menu">
+                                        <li class="<?= $_GET['ruta'] == 'salidas-varios' ? 'active' : '' ?>">
+                                            <a href="salidas-varios"><i class="fa fa-circle-o"></i> Registros</a>
+                                        </li>
+                                        <li class="<?= $_GET['ruta'] == 'listar-documento' ? 'active' : '' ?>">
+                                            <a href="listar-documento"><i class="fa fa-circle-o"></i> Documentos</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="<?= $_GET['ruta'] == 'transferencias-apt' ? 'active' : '' ?>">
+                                    <a href="transferencias-apt"><i class="fa fa-circle-o"></i> Transferencias</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- REPORTES -->
+                        <?php
+                        $rutasActivasResumen = ["seguimiento", 'urgencias', 'urgencias-maestro', 'urgencias-produccion', 'urgencias-almacen', 'urgencias-corte', 'urgencias-plan'];
+                        $isActiveResumen = in_array($_GET["ruta"], $rutasActivasResumen) ? 'active' : '';
+                        ?>
+                        <li class="treeview <?= $isActiveResumen; ?>">
+                            <a href="#"><i class="fa fa-circle-o"></i> Reportes
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="<?= $_GET['ruta'] == 'seguimiento' ? 'active' : '' ?>">
+                                    <a href="seguimiento"><i class="fa fa-circle-o"></i> Seguimiento</a>
+                                </li>
+                                <?php
+                                $rutasActivasUrgencia = ['urgencias', 'urgencias-maestro', 'urgencias-produccion', 'urgencias-almacen', 'urgencias-corte', 'urgencias-plan'];
+                                $isActiveUrgencia = in_array($_GET["ruta"], $rutasActivasUrgencia) ? 'active' : '';
+                                ?>
+                                <li class="treeview <?= $isActiveUrgencia; ?>">
+                                    <a href="#"><i class="fa fa-circle-o"></i> Urgencias
+                                        <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                                    </a>
+                                    <ul class="treeview-menu">
+                                        <li class="<?= $_GET['ruta'] == 'urgencias' ? 'active' : '' ?>">
+                                            <a href="urgencias"><i class="fa fa-circle-o"></i> Urgencia APT</a>
+                                        </li>
+                                        <li class="<?= $_GET['ruta'] == 'urgencias-maestro' ? 'active' : '' ?>">
+                                            <a href="urgencias-maestro"><i class="fa fa-circle-o"></i> Urg. Maestro</a>
+                                        </li>
+                                        <li class="<?= $_GET['ruta'] == 'urgencias-produccion' ? 'active' : '' ?>">
+                                            <a href="urgencias-produccion"><i class="fa fa-circle-o"></i> Urg. Prod.</a>
+                                        </li>
+                                        <li class="<?= $_GET['ruta'] == 'urgencias-almacen' ? 'active' : '' ?>">
+                                            <a href="urgencias-almacen"><i class="fa fa-circle-o"></i> Urg. A. Corte</a>
+                                        </li>
+                                        <li class="<?= $_GET['ruta'] == 'urgencias-corte' ? 'active' : '' ?>">
+                                            <a href="urgencias-corte"><i class="fa fa-circle-o"></i> Urg. Corte</a>
+                                        </li>
+                                        <li class="<?= $_GET['ruta'] == 'urgencias-plan' ? 'active' : '' ?>">
+                                            <a href="urgencias-plan"><i class="fa fa-circle-o"></i> Urg. Plan</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
+
+
+                    </ul>
+                </li>
+
+
+            <?php endif ?>
+
             <!-- Tarjetas-->
             <?php
             if ($_SESSION["tarjetas"] == 1) {

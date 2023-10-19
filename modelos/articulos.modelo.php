@@ -1518,6 +1518,7 @@ class ModeloArticulos
 			a.nombre,
 			a.cod_color,
 			a.color,
+			a.cod_talla,
 			a.talla,
 			a.proyeccion,
 			ROUND(IFNULL(a.prod, 0), 0) AS prod,

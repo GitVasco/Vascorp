@@ -1,100 +1,104 @@
 <div class="content-wrapper">
 
-  <section class="content-header">
-    
-    <h1>
-      
-      Seguimiento
-    
-    </h1>
+    <section class="content-header">
 
-    <ol class="breadcrumb">
-      
-      <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
-      
-      <li class="active">Urgencias</li>
-    
-    </ol>
+        <h1>
 
-  </section>
+            Seguimiento
 
-  <section class="content">
+        </h1>
 
-    <div class="box">
+        <ol class="breadcrumb">
 
-      <div class="box-header with-border">
+            <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-      <div class="col-lg-2">
-                <select name="selectArticuloUrgenciaSeg" id="selectArticuloUrgenciaSeg" class="form-control input-lg selectpicker" data-live-search="true" data-size="10">
-                <option value="">--------Seleccionar articulo-------</option>
-                <?php
-                    $modelos =controladorModelos::ctrMostrarModelosActivos();
-                    // var_dump($modelos);
-                    foreach ($modelos as $key => $value) {
-                            echo '<option value="'.$value["modelo"].'">'.$value["nombre"].'</option>';
+            <li class="active">Urgencias</li>
 
-                    }
+        </ol>
 
-                ?>
-                </select>
+    </section>
+
+    <section class="content">
+
+        <div class="box">
+
+            <div class="box-header with-border">
+
+                <div class="col-lg-2">
+                    <select name="selectArticuloUrgenciaSeg" id="selectArticuloUrgenciaSeg" class="form-control input-lg selectpicker" data-live-search="true" data-size="10">
+                        <option value="">--------Seleccionar articulo-------</option>
+                        <?php
+                        $modelos = controladorModelos::ctrMostrarModelosActivos();
+                        // var_dump($modelos);
+                        foreach ($modelos as $key => $value) {
+                            echo '<option value="' . $value["modelo"] . '">' . $value["nombre"] . '</option>';
+                        }
+
+                        ?>
+                    </select>
+                </div>
+
+                <div class="col-lg-1">
+                    <button class="btn btn-primary btnLimpiarArticuloUrgenciaSeg" name="btnLimpiarArticuloUrgenciaSeg"><i class="fa fa-refresh"></i> Limpiar</button>
+                </div>
+                <a href="vistas/reportes_excel/rpt_seguimiento.php" class="btn btn-default pull-right" style="border:green 1px solid">
+
+                    <img src="vistas/img/plantilla/excel.png" width="20px"> SEGUIMIENTO
+
+                </a>
+
+
             </div>
 
-            <div class="col-lg-1">
-                <button class="btn btn-primary btnLimpiarArticuloUrgenciaSeg"  name="btnLimpiarArticuloUrgenciaSeg"><i class="fa fa-refresh"></i> Limpiar</button>
+            <div class="box-body">
+
+                <input type="hidden" value="<?= $_SESSION["perfil"]; ?>" id="perfilOculto">
+
+                <table class="table table-bordered table-striped dt-responsive tablaSeguimiento" width="100%">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Modelo</th>
+                            <th>Nombre</th>
+                            <th>Color</th>
+                            <th>Talla</th>
+                            <th>Estado</th>
+                            <th>Proyección</th>
+                            <th>% Avance</th>
+                            <th>Stock</th>
+                            <th>Pedidos</th>
+                            <th>En Taller</th>
+                            <th>En Servicio</th>
+                            <th>Alm. Corte</th>
+                            <th>Ord. Corte</th>
+                            <th>Ult 30d</th>
+                            <th>Duración Mes</th>
+                            <th>Und. Faltantes</th>
+                            <th>MP Faltante</th>
+                            <th>Acciones</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+
+                    </tbody>
+
+                </table>
+
             </div>
 
+        </div>
 
-      </div>
-
-      <div class="box-body">
-
-        <input type="hidden" value="<?=$_SESSION["perfil"];?>" id="perfilOculto"> 
-
-       <table class="table table-bordered table-striped dt-responsive tablaSeguimiento" width="100%">
-         
-        <thead>
-
-          <tr>
-           
-           <th>Modelo</th>
-           <th>Nombre</th>
-           <th>Color</th>
-           <th>Talla</th>
-           <th>Estado</th>
-           <th>Proyección</th>
-           <th>% Avance</th>
-           <th>Stock</th>
-           <th>Pedidos</th>
-           <th>En Taller</th>
-           <th>En Servicio</th>
-           <th>Alm. Corte</th>
-           <th>Ord. Corte</th>
-           <th>Ult 30d</th>           
-           <th>Duración Mes</th>
-           <th>Und. Faltantes</th>
-           <th>MP Faltante</th>
-           <th>Acciones</th>
-
-         </tr>
-
-        </thead>
-
-        <tbody>
-
-        
-        </tbody>
-
-       </table>
-
-      </div>
-
-    </div>
-
-  </section>
+    </section>
 
 </div>
 
 
 <script>
-window.document.title = "Seguimiento"
+    window.document.title = "Seguimiento"
 </script>
