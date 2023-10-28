@@ -221,37 +221,41 @@ $(".tablaUrgenciasAMP").on("click", ".btnVerUrgenciasAMP", function () {
 /*
  * BOTON VISUALIZAR URGENCIAS APT
  */
-$(".tablaUrgencias").on("click", ".btnMpFaltante", function () {
-    var codigo = $(this).attr("codigo");
-    //console.log("codigo", codigo);
+$(".tablaUrgencias, .tablaSeguimiento ").on(
+    "click",
+    ".btnMpFaltante",
+    function () {
+        var codigo = $(this).attr("codigo");
+        //console.log("codigo", codigo);
 
-    var datos = new FormData();
-    datos.append("codigo", codigo);
+        var datos = new FormData();
+        datos.append("codigo", codigo);
 
-    $.ajax({
-        url: "ajax/urgencias.ajax.php",
-        method: "POST",
-        data: datos,
-        cache: false,
-        contentType: false,
-        processData: false,
-        dataType: "json",
-        success: function (respuesta) {
-            //console.log("respuesta", respuesta);
+        $.ajax({
+            url: "ajax/urgencias.ajax.php",
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function (respuesta) {
+                //console.log("respuesta", respuesta);
 
-            $("#articuloA").val(respuesta["articulo"]);
-            $("#modeloA").val(respuesta["modelo"]);
-            $("#nombreA").val(respuesta["nombre"]);
-            $("#cod_color").val(respuesta["cod_color"]);
-            $("#colorA").val(respuesta["color"]);
-            $("#tallaA").val(respuesta["talla"]);
-            $("#stockA").val(respuesta["stockB"]);
-            $("#pedidosA").val(respuesta["pedidos"]);
-            $("#estadoA").val(respuesta["estado"]);
-            $("#mpFaltante").val(respuesta["mp_faltante"]);
-        },
-    });
-});
+                $("#articuloA").val(respuesta["articulo"]);
+                $("#modeloA").val(respuesta["modelo"]);
+                $("#nombreA").val(respuesta["nombre"]);
+                $("#cod_color").val(respuesta["cod_color"]);
+                $("#colorA").val(respuesta["color"]);
+                $("#tallaA").val(respuesta["talla"]);
+                $("#stockA").val(respuesta["stockB"]);
+                $("#pedidosA").val(respuesta["pedidos"]);
+                $("#estadoA").val(respuesta["estado"]);
+                $("#mpFaltante").val(respuesta["mp_faltante"]);
+            },
+        });
+    }
+);
 
 //*Urgencias produccion
 /*

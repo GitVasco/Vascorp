@@ -360,10 +360,10 @@ class TablaUrgencias
 
                 if ($articulos[$i]["alerta"] == "0") {
 
-                    $botones =  "<div class='btn-group'><button class='btn btn-xs btn-primary btnCorteI' title='Corte Incompleto' codigo='" . $articulos[$i]["articulo"] . "' estado='1'>Completo</button></div>";
+                    $botones =  "<div class='btn-group'><button class='btn btn-xs btn-primary btnCorteI' title='Corte Incompleto' codigo='" . $articulos[$i]["articulo"] . "' estado='1'>Completo</button><button class='btn btn-xs btn-info btnMpFaltante' codigo='" . $articulos[$i]["articulo"] . "' data-toggle='modal' data-target='#modalMpFaltante'><i class='fa fa-fire'></i></button></div>";
                 } else {
 
-                    $botones =  "<div class='btn-group'><button class='btn btn-xs btn-danger btnCorteI' title='Corte Incompleto' codigo='" . $articulos[$i]["articulo"] . "' estado='0'>Incompleto</button></div>";
+                    $botones =  "<div class='btn-group'><button class='btn btn-xs btn-danger btnCorteI' title='Corte Incompleto' codigo='" . $articulos[$i]["articulo"] . "' estado='0'>Incompleto</button><button class='btn btn-xs btn-info btnMpFaltante' codigo='" . $articulos[$i]["articulo"] . "' data-toggle='modal' data-target='#modalMpFaltante'><i class='fa fa-fire'></i></button></div>";
                 }
 
 
