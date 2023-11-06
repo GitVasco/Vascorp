@@ -1482,6 +1482,9 @@ MODAL DIVIDIR LETRA
                                 <input type="text" class="form-control input-lg" name="dividirCliente" id="dividirCliente" readonly>
                                 <input type="hidden" name="dividirVendedor" id="dividirVendedor">
 
+                                <input type="hidden" name="dividirNumUnico" id="dividirNumUnico">
+                                <input type="hidden" name="dividirFechaCep" id="dividirFechaCep">
+
 
                             </div>
 

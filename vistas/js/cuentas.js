@@ -1251,7 +1251,11 @@ $(".tablaCuentas").on("click", ".btnDividirLetra", function () {
         processData: false,
         dataType: "json",
         success: function (respuesta) {
-            console.log(respuesta);
+            console.log(
+                "🚀 ~ file: cuentas.js:1254 ~ respuesta:",
+                respuesta["num_unico"]
+            );
+
             $("#idCuenta4").val(respuesta["id"]);
             $("#dividirDocumento").val(respuesta["tipo_doc"]);
             $("#dividirNroDocumento").val(respuesta["num_cta"]);
@@ -1263,6 +1267,10 @@ $(".tablaCuentas").on("click", ".btnDividirLetra", function () {
             $("#dividirNomCliente").val(cliente);
             $("#dividirFecha2").val(respuesta["fecha_ven"]);
             $("#dividirNroDocumento2").val(respuesta["num_cta"]);
+
+            $("#dividirNumUnico").val(respuesta["num_unico"]);
+
+            $("#dividirFechaCep").val(respuesta["fecha_cep"]);
 
             var fecha = new Date(respuesta["fecha_ven"]);
             fecha.setDate(fecha.getDate() + 31);

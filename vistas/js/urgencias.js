@@ -221,13 +221,11 @@ $(".tablaUrgenciasAMP").on("click", ".btnVerUrgenciasAMP", function () {
 /*
  * BOTON VISUALIZAR URGENCIAS APT
  */
-$(".tablaUrgencias, .tablaSeguimiento ").on(
+$(".tablaUrgencias, .tablaSeguimiento").on(
     "click",
     ".btnMpFaltante",
     function () {
         var codigo = $(this).attr("codigo");
-        //console.log("codigo", codigo);
-
         var datos = new FormData();
         datos.append("codigo", codigo);
 

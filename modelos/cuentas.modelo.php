@@ -3665,36 +3665,40 @@ class ModeloCuentas
 	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
-												cc.tipo_doc,
-												cc.num_cta,
-												cc.cod_pago,
-												cc.doc_origen,
-												cc.fecha,
-												cc.fecha_ven,
-												cc.monto,
-												cc.saldo,
-												cc.cliente,
-												c.nombre,
-												cc.vendedor 
-											FROM
-												cuenta_ctejf cc 
-												LEFT JOIN clientesjf c 
-												ON cc.cliente = c.codigo 
-											WHERE cc.tipo_doc = '85' 
-												AND cc.estado = 'PENDIENTE' 
-												AND cc.tip_mov = '+' 
-												AND (cc.banco <> '02' 
-												OR cc.banco IS NULL) 
-												AND (
-												cc.num_unico = '' 
-												OR cc.num_unico IS NULL
-												) 
-												AND cc.protesta <> '1'
-												AND cc.vendedor = :vendedor 
-											ORDER BY cc.vendedor,
-												cc.cliente,
-												cc.doc_origen,
-												cc.fecha_ven
+													cc.tipo_doc,
+													cc.num_cta,
+													cc.cod_pago,
+													cc.doc_origen,
+													cc.fecha,
+													cc.fecha_ven,
+													cc.monto,
+													cc.saldo,
+													cc.cliente,
+													c.nombre,
+													c.ubigeo,
+													u.nombre AS nom_ubigeo,
+													cc.vendedor 
+												FROM
+													cuenta_ctejf cc 
+													LEFT JOIN clientesjf c 
+													ON cc.cliente = c.codigo 
+													LEFT JOIN ubigeo u 
+													ON c.ubigeo = u.codigo 
+												WHERE cc.tipo_doc = '85' 
+													AND cc.estado = 'PENDIENTE' 
+													AND cc.tip_mov = '+' 
+													AND (cc.banco <> '02' 
+													OR cc.banco IS NULL) 
+													AND (
+													cc.num_unico = '' 
+													OR cc.num_unico IS NULL
+													) 
+													AND cc.protesta <> '1' 
+													AND cc.vendedor = :vendedor 
+												ORDER BY cc.vendedor,
+													cc.cliente,
+													cc.doc_origen,
+													cc.fecha_ven
 												LIMIT $ini, $fin");
 
 		$stmt->bindParam(":vendedor", $vendedor, PDO::PARAM_STR);

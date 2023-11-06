@@ -75,14 +75,15 @@
 
                 <tr>
 
-                    <th style="width:5%;text-align:center;">TIPO</th>
-                    <th style="width:10%;text-align:left;">NRO DOC</th>
-                    <th style="width:8%;text-align:left;">FECHA EMI</th>
-                    <th style="width:8%;text-align:left;">FECHA VEN.</th>
-                    <th style="width:5%;text-align:left;">VEND.</th>
-                    <th style="width:8%;text-align:left;">COD. CLIENTE</th>
-                    <th style="width:30%;text-align:left;">CLIENTE</th>
+                    <th style="width:4%;text-align:left;">TIPO</th>
+                    <th style="width:8%;text-align:left;">NRO DOC</th>
+                    <th style="width:7%;text-align:left;">FECHA EMI</th>
+                    <th style="width:7%;text-align:left;">FECHA VEN.</th>
+                    <th style="width:4%;text-align:left;">VEND.</th>
+                    <th style="width:7%;text-align:left;">C. CLIENTE</th>
+                    <th style="width:25%;text-align:left;">CLIENTE</th>
                     <th style="width:7%;text-align:left;">MONTO</th>
+                    <th style="width:12%;text-align:left;">UBIGEO</th>
 
                     
                 </tr>
@@ -106,15 +107,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
-                        
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
 
                         </tr>';
             }
@@ -136,14 +137,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
 
                         </tr>';
@@ -172,14 +174,15 @@
 
                 echo '<tr>
                             
-                        <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                        <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                        <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                        <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                        <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                        <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                        <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
-                        <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                     
 
                     </tr>';
@@ -203,14 +206,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
 
                         </tr>';
@@ -239,14 +243,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
 
                         </tr>';
@@ -275,14 +280,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
 
                         </tr>';
@@ -306,14 +312,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
 
                         </tr>';
@@ -342,14 +349,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
     
                         </tr>';
@@ -378,14 +386,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
 
                         </tr>';
@@ -414,14 +423,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
 
                         </tr>';
@@ -431,7 +441,7 @@
         }
 
         //*todo: 5 paginas
-        else if ($cantidadLetras > 240 && $cantidadLetras <= 300) {
+        else if ($cantidadLetras > 240 && $cantidadLetras <= 250) {
 
             echo $cabeceraGlobal;
 
@@ -445,14 +455,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
 
                         </tr>';
@@ -481,14 +492,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
     
                         </tr>';
@@ -517,14 +529,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
 
                         </tr>';
@@ -553,14 +566,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
 
                         </tr>';
@@ -590,14 +604,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
 
                         </tr>';
@@ -607,7 +622,7 @@
         }
 
         //*todo: 6 paginas
-        else if ($cantidadLetras > 300 && $cantidadLetras <= 360) {
+        else if ($cantidadLetras > 250 && $cantidadLetras <= 360) {
 
             echo $cabeceraGlobal;
 
@@ -621,14 +636,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
 
                         </tr>';
@@ -657,14 +673,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
     
                         </tr>';
@@ -693,14 +710,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
 
                         </tr>';
@@ -729,14 +747,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
 
                         </tr>';
@@ -765,14 +784,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
 
                         </tr>';
@@ -795,20 +815,21 @@
 
             echo '<table border="1" align="left" width="980px">';
 
-            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 300, 60);
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 250, 60);
 
             foreach ($letrasP2 as $key => $value) {
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
 
                         </tr>';
@@ -832,14 +853,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
 
                         </tr>';
@@ -868,14 +890,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
     
                         </tr>';
@@ -904,14 +927,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
 
                         </tr>';
@@ -940,14 +964,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
 
                         </tr>';
@@ -976,14 +1001,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
 
                         </tr>';
@@ -1006,20 +1032,21 @@
 
             echo '<table border="1" align="left" width="980px">';
 
-            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 300, 60);
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 250, 60);
 
             foreach ($letrasP2 as $key => $value) {
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
 
                         </tr>';
@@ -1048,14 +1075,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
 
                         </tr>';
@@ -1079,14 +1107,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
 
                         </tr>';
@@ -1115,14 +1144,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
     
                         </tr>';
@@ -1151,14 +1181,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
 
                         </tr>';
@@ -1187,14 +1218,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
 
                         </tr>';
@@ -1223,14 +1255,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
 
                         </tr>';
@@ -1253,20 +1286,21 @@
 
             echo '<table border="1" align="left" width="980px">';
 
-            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 300, 60);
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 250, 60);
 
             foreach ($letrasP2 as $key => $value) {
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
 
                         </tr>';
@@ -1295,14 +1329,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
 
                         </tr>';
@@ -1331,14 +1366,15 @@
 
                 echo '<tr>
                                 
-                            <td style="width:5%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
-                            <td style="width:10%;text-align:left;">' . $value["num_cta"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
-                            <td style="width:8%;text-align:left;">' . $value["fecha_ven"] . '</td>
-                            <td style="width:5%;text-align:left;">' . $value["vendedor"] . '</td>
-                            <td style="width:8%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
-                            <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                            <td style="width:4%;text-align:center;"><b>' . $value["tipo_doc"] . '</b></td>
+                            <td style="width:8%;text-align:left;">' . $value["num_cta"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["fecha"] . '</b></td>
+                            <td style="width:7%;text-align:left;">' . $value["fecha_ven"] . '</td>
+                            <td style="width:4%;text-align:left;">' . $value["vendedor"] . '</td>
+                            <td style="width:7%;text-align:left;"><b>' . $value["cliente"] . '</b></td>
+                            <td style="width:25%;text-align:left;">' . $value["nombre"] . '</td>
                             <td style="width:7%;text-align:right;"><b>S/ ' . number_format($value["saldo"], 2) . '</b></td>
+                            <td style="width:12%;text-align:left;">' . $value["nom_ubigeo"] . '</td>
                         
 
                         </tr>';
@@ -1355,15 +1391,15 @@
 
         echo '<tr>
                                 
-            <td style="width:5%;text-align:center;"><b></b></td>
-            <td style="width:10%;text-align:left;"></td>
-            <td style="width:8%;text-align:left;"><b></b></td>
+            <td style="width:4%;text-align:center;"><b></b></td>
             <td style="width:8%;text-align:left;"></td>
-            <td style="width:5%;text-align:left;"></td>
-            <td style="width:8%;text-align:left;"><b></b></td>
-            <th style="width:30%;text-align:left;">TOTAL VENDEDOR</th>
+            <td style="width:7%;text-align:left;"><b></b></td>
+            <td style="width:7%;text-align:left;"></td>
+            <td style="width:4%;text-align:left;"></td>
+            <td style="width:7%;text-align:left;"><b></b></td>
+            <th style="width:25%;text-align:left;">TOTAL VENDEDOR</th>
             <th style="width:7%;text-align:right;"><b>S/ ' . number_format($total["saldo"], 2) . '</b></th>
-        
+            <td style="width:12%;text-align:left;"><b></b></td>
 
         </tr>';
 

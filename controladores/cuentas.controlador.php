@@ -1102,6 +1102,8 @@ class ControladorCuentas
 				"estado"		=> "PENDIENTE",
 				"notas"			=> "Renovación",
 				"fecha_ven"		=> $_POST["dividirFechaVencimiento2"],
+				"fecha_cep"		=> $_POST["dividirNumUnico"],
+				"num_unico"		=> $_POST["dividirNumUnico"],
 				"cod_pago" 		=> $_POST["dividirDocumento"],
 				"doc_origen" 	=> $_POST["dividirNroDocumento"],
 				"tip_mon" 		=> "Soles",
