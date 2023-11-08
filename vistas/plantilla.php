@@ -358,7 +358,8 @@ CUERPO DOCUMENTO
                 $_GET["ruta"] == "urgencias-maestro" ||
                 $_GET["ruta"] == "transferencias-apt" ||
                 $_GET["ruta"] == "crear-transferencias-apt" ||
-                $_GET["ruta"] == "estampado"
+                $_GET["ruta"] == "estampado" ||
+                $_GET["ruta"] == "tampografia"
             ) {
 
                 include "modulos/produccion/" . $_GET["ruta"] . ".php";

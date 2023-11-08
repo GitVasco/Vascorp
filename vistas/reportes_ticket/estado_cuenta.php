@@ -143,6 +143,8 @@
 
             if ($value["vendedor"] == "18A" || $value["vendedor"] == "24") {
                 $linea = "ROSALINDA";
+            } else if ($value["vendedor"] == "18") {
+                $linea = "VASCO";
             } else {
                 $linea = "JACKYFORM";
             }

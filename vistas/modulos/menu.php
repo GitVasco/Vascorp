@@ -1094,7 +1094,7 @@
                     "salidas-varios", "crear-salidas-varios", "operacion-taller", "sublimados",
                     "seguimiento", "enviados-taller", "listar-documento", "ajuste-taller",
                     "urgencias-produccion", "urgencias-almacen", "urgencias-corte", "urgencias-plan",
-                    "urgencias-maestro", "transferencias-apt", "crear-transferencias-apt", "estampado"
+                    "urgencias-maestro", "transferencias-apt", "crear-transferencias-apt", "estampado", "tampografia"
                 ];
 
                 $isActiveProduccion = in_array($_GET["ruta"], $rutasActivasProduccion) ? 'active' : '';
@@ -1239,6 +1239,9 @@
                             <ul class="treeview-menu">
                                 <li class="<?= $_GET['ruta'] == 'estampado' ? 'active' : '' ?>">
                                     <a href="estampado"><i class="fa fa-circle-o"></i> Estampados</a>
+                                </li>
+                                <li class="<?= $_GET['ruta'] == 'tampografia' ? 'active' : '' ?>">
+                                    <a href="tampografia"><i class="fa fa-circle-o"></i> Tampografia</a>
                                 </li>
                                 <?php
                                 $rutasActivasMovimientos = ["salidas-varios", "listar-documento"];
