@@ -145,6 +145,8 @@
                 $linea = "ROSALINDA";
             } else if ($value["vendedor"] == "18") {
                 $linea = "VASCO";
+            } else if ($value["vendedor"] == "23") {
+                $linea = "ELASTICOS";
             } else {
                 $linea = "JACKYFORM";
             }
