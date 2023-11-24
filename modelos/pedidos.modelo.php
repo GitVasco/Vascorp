@@ -584,7 +584,9 @@ class ModeloPedidos
 			temporaljf t 
 			LEFT JOIN clientesjf c 
 			  ON t.cliente = c.codigo 
-		  WHERE t.estado NOT IN ('FACTURADOS', 'ANULADO') 
+			  WHERE t.estado NOT IN ('FACTURADOS', 'ANULADO') 
+				AND t.cliente <> '' 
+				AND t.vendedor NOT LIKE '%08%' 
 		  ORDER BY t.vendedor,
 					t.estado,
 					c.ubigeo,

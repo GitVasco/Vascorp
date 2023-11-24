@@ -430,16 +430,18 @@ if ($guias == 0) {
     $sqlDetalle = mysql_query("SELECT 
     DATE_FORMAT(v.fecha, '%d-%m-%Y') AS fecha,
     CASE
-      WHEN v.tipo = 's03' 
-      THEN '1' 
-      WHEN v.tipo = 's02' 
-      THEN '3' 
-      WHEN v.tipo = 'e05' 
-      THEN '7' 
-      WHEN v.tipo = 's05' 
-      THEN '8' 
-      ELSE '9' 
-    END AS tipo_doc,
+    WHEN v.tipo = 's03' 
+    THEN '1' 
+    WHEN v.tipo = 's02' 
+    THEN '3' 
+    WHEN v.tipo = 'e05' 
+    THEN '7' 
+    WHEN v.tipo = 's05' 
+    THEN '8' 
+     WHEN v.tipo = 's01' 
+    THEN '9' 
+    ELSE '0' 
+  END AS tipo_doc,
     CASE
       WHEN LEFT(v.documento, 1) = '0' 
       THEN CONCAT(
@@ -504,7 +506,7 @@ if ($guias == 0) {
       AND v.documento = n.documento 
   WHERE v.fecha BETWEEN '$inicio' 
     AND '$fin' 
-    AND v.tipo IN ('S02', 'S03', 'S05', 'E05') 
+    AND v.tipo IN ('S02', 'S03', 'S05', 'E05','S01') 
   ORDER BY tipo_doc DESC,
     v.fecha,
     v.documento") or die(mysql_error());
@@ -513,17 +515,19 @@ if ($guias == 0) {
     $sqlDetalle = mysql_query("SELECT 
     DATE_FORMAT(v.fecha, '%d-%m-%Y') AS fecha,
     CASE
-      WHEN v.tipo = 's03' 
-      THEN '1' 
-      WHEN v.tipo = 's02' 
-      THEN '3' 
-      WHEN v.tipo = 'e05' 
-      THEN '7' 
-      WHEN v.tipo = 's05' 
-      THEN '8' 
-      ELSE '9' 
-    END AS tipo_doc,
-    CASE
+    WHEN v.tipo = 's03' 
+    THEN '1' 
+    WHEN v.tipo = 's02' 
+    THEN '3' 
+    WHEN v.tipo = 'e05' 
+    THEN '7' 
+    WHEN v.tipo = 's05' 
+    THEN '8' 
+     WHEN v.tipo = 's01' 
+    THEN '9' 
+    ELSE '0' 
+  END AS tipo_doc,
+  CASE
       WHEN LEFT(v.documento, 1) = '0' 
       THEN CONCAT(
         LEFT(v.documento, 3),
@@ -587,7 +591,7 @@ if ($guias == 0) {
       AND v.documento = n.documento 
   WHERE v.fecha BETWEEN '$inicio' 
     AND '$fin' 
-    AND v.tipo IN ('S02', 'S03', 'S05', 'E05', 'S70') 
+    AND v.tipo IN ('S02', 'S03', 'S05', 'E05', 'S70','S01') 
   ORDER BY tipo_doc DESC,
     v.fecha,
     v.documento") or die(mysql_error());
