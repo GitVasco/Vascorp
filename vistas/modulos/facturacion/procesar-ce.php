@@ -535,6 +535,16 @@ MODAL REGISTRO DE VENTAS
                             </div>
                         </div>
 
+
+                        <div class="form-group col-lg-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="soloRemision" name="soloRemision" unchecked>
+                                <label class="form-check-label" for="soloRemision">
+                                    Solo Guias de Remisión
+                                </label>
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>

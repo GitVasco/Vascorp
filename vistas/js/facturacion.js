@@ -2586,22 +2586,24 @@ $(".tablaFacturas, .tablaBoletas, .tablaProformas, .tablaGuiasRemision").on(
 );
 
 $("#formularioRegistro").on("click", "button.btnGenerarReg", function () {
-    var inicio = document.getElementById("fInicio").value;
-    var fin = document.getElementById("fFin").value;
-    var conGuias = document.getElementById("conGuias");
+    var inicio = $("#fInicio").val();
+    var fin = $("#fFin").val();
+    var guias = $("#conGuias").is(":checked") ? "1" : "0";
+    var remision = $("#soloRemision").is(":checked") ? "1" : "0";
 
-    if (conGuias.checked) {
-        var guias = "1";
-    } else {
-        var guias = "0";
+    window.location = `vistas/reportes_excel/rpt_registro_ventas.php?inicio=${inicio}&fin=${fin}&guias=${guias}&remision=${remision}`;
+});
+
+$("#soloRemision").click(function () {
+    if ($(this).is(":checked")) {
+        $("#conGuias").prop("checked", false);
     }
-    window.location =
-        "vistas/reportes_excel/rpt_registro_ventas.php?inicio=" +
-        inicio +
-        "&fin=" +
-        fin +
-        "&guias=" +
-        guias;
+});
+
+$("#conGuias").click(function () {
+    if ($(this).is(":checked")) {
+        $("#soloRemision").prop("checked", false);
+    }
 });
 
 function checkSubmit() {

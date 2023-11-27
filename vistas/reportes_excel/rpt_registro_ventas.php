@@ -24,6 +24,18 @@ mysql_select_db($con["db"], $conexion);
 $inicio = $_GET["inicio"];
 $fin = $_GET["fin"];
 $guias = $_GET["guias"];
+$remision = $_GET["remision"];
+
+if ($guias == "1") {
+
+    $where = "('S02', 'S03', 'S05', 'E05', 'S70')";
+} else if ($remision == "1") {
+
+    $where = "('S01')";
+} else {
+
+    $where = "('S02', 'S03', 'S05', 'E05')";
+}
 
 
 
@@ -425,9 +437,7 @@ $objPHPExcel->getActiveSheet()->setSharedStyle($borde3, "P$fila");
 $objPHPExcel->getActiveSheet()->SetCellValue("Q$fila", 'ESTADO');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde3, "Q$fila");
 
-if ($guias == 0) {
-
-    $sqlDetalle = mysql_query("SELECT 
+$sqlDetalle = mysql_query("SELECT 
     DATE_FORMAT(v.fecha, '%d-%m-%Y') AS fecha,
     CASE
     WHEN v.tipo = 's03' 
@@ -439,8 +449,8 @@ if ($guias == 0) {
     WHEN v.tipo = 's05' 
     THEN '8' 
      WHEN v.tipo = 's01' 
-    THEN '9' 
-    ELSE '0' 
+    THEN '0' 
+    ELSE '9' 
   END AS tipo_doc,
     CASE
       WHEN LEFT(v.documento, 1) = '0' 
@@ -506,97 +516,10 @@ if ($guias == 0) {
       AND v.documento = n.documento 
   WHERE v.fecha BETWEEN '$inicio' 
     AND '$fin' 
-    AND v.tipo IN ('S02', 'S03', 'S05', 'E05','S01') 
+    AND v.tipo IN $where
   ORDER BY tipo_doc DESC,
     v.fecha,
     v.documento") or die(mysql_error());
-} else {
-
-    $sqlDetalle = mysql_query("SELECT 
-    DATE_FORMAT(v.fecha, '%d-%m-%Y') AS fecha,
-    CASE
-    WHEN v.tipo = 's03' 
-    THEN '1' 
-    WHEN v.tipo = 's02' 
-    THEN '3' 
-    WHEN v.tipo = 'e05' 
-    THEN '7' 
-    WHEN v.tipo = 's05' 
-    THEN '8' 
-     WHEN v.tipo = 's01' 
-    THEN '9' 
-    ELSE '0' 
-  END AS tipo_doc,
-  CASE
-      WHEN LEFT(v.documento, 1) = '0' 
-      THEN CONCAT(
-        LEFT(v.documento, 3),
-        '-',
-        RIGHT(v.documento, 9)
-      ) 
-      ELSE CONCAT(
-        LEFT(v.documento, 4),
-        '-',
-        RIGHT(v.documento, 8)
-      ) 
-    END AS doc,
-    c.documento,
-    n.tipo_doc AS tipo_origen,
-    n.doc_origen AS documento_origen,
-    DATE(n.fecha_origen) AS fecha_origen,
-    c.nombre,
-    CASE
-      WHEN v.tipo_moneda = '1' 
-      THEN 0 
-      ELSE v.neto 
-    END AS vtausd,
-    v.tipo_cambio,
-    CASE
-      WHEN v.tipo_moneda = '1' 
-      THEN ROUND(v.neto, 2) 
-      ELSE ROUND(v.neto * v.tipo_cambio, 2) 
-    END AS neto,
-    v.dscto,
-    CASE
-      WHEN v.tipo_moneda = '1' 
-      THEN ROUND(v.neto - v.dscto, 2) 
-      ELSE ROUND((v.neto - v.dscto) * v.tipo_cambio, 2) 
-    END AS subtotal,
-    CASE
-      WHEN v.tipo_moneda = '1' 
-      THEN ROUND(ROUND((v.neto - v.dscto) * 0.18, 2), 2) 
-      ELSE ROUND(
-        (v.neto - v.dscto) * 0.18 * v.tipo_cambio,
-        2
-      ) 
-    END AS igv,
-    CASE
-      WHEN v.tipo_moneda = '1' 
-      THEN ROUND(v.total, 2) 
-      ELSE ROUND(
-        ROUND((v.neto - v.dscto) * v.tipo_cambio, 2) + ROUND(
-          (v.neto - v.dscto) * 0.18 * v.tipo_cambio,
-          2
-        ),
-        2
-      ) 
-    END AS total,
-    v.estado 
-  FROM
-    ventajf v 
-    LEFT JOIN clientesjf c 
-      ON v.cliente = c.codigo 
-    LEFT JOIN notascd_jf n 
-      ON v.tipo = n.tipo 
-      AND v.documento = n.documento 
-  WHERE v.fecha BETWEEN '$inicio' 
-    AND '$fin' 
-    AND v.tipo IN ('S02', 'S03', 'S05', 'E05', 'S70','S01') 
-  ORDER BY tipo_doc DESC,
-    v.fecha,
-    v.documento") or die(mysql_error());
-}
-
 
 $vtausd = 0;
 $neto = 0;
