@@ -95,7 +95,7 @@ $pdf->setPage(1, true);
 $pdf->SetFont('helvetica', 'A', 8);
 $pdf->Ln(16);
 foreach ($modelo as $key => $value) {
-    $pdf->Ln(4.5);
+    $pdf->Ln(4);
     $pdf->Cell(35, 5, $value["modelo"], 0, false, 'C', 0, '', 0, false, 'T', 'M');
     $pdf->Cell(47, 5, $value["nombre"], 0, false, 'L', 0, '', 0, false, 'T', 'M');
     $pdf->Cell(30, 5, $value["cantidad"], 0, false, 'R', 0, '', 0, false, 'T', 'M');

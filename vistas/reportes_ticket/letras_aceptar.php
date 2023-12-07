@@ -441,7 +441,7 @@
         }
 
         //*todo: 5 paginas
-        else if ($cantidadLetras > 240 && $cantidadLetras <= 250) {
+        else if ($cantidadLetras > 240 && $cantidadLetras <= 300) {
 
             echo $cabeceraGlobal;
 
@@ -622,7 +622,7 @@
         }
 
         //*todo: 6 paginas
-        else if ($cantidadLetras > 250 && $cantidadLetras <= 360) {
+        else if ($cantidadLetras > 300 && $cantidadLetras <= 360) {
 
             echo $cabeceraGlobal;
 
@@ -815,7 +815,7 @@
 
             echo '<table border="1" align="left" width="980px">';
 
-            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 250, 60);
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 300, 60);
 
             foreach ($letrasP2 as $key => $value) {
 
@@ -1032,7 +1032,7 @@
 
             echo '<table border="1" align="left" width="980px">';
 
-            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 250, 60);
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 300, 60);
 
             foreach ($letrasP2 as $key => $value) {
 
@@ -1286,7 +1286,7 @@
 
             echo '<table border="1" align="left" width="980px">';
 
-            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 250, 60);
+            $letrasP2 = Controladorcuentas::ctrLetrasAceptar($vendedor, 300, 60);
 
             foreach ($letrasP2 as $key => $value) {
 
