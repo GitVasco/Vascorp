@@ -1248,6 +1248,16 @@ class ControladorFacturacion
     }
 
     /*
+    * MOSTRAR MODELO DE NOTAS PARA IMPRESION
+    */
+    static public function ctrMostrarModeloImpresionV3($tabla, $documento, $tipo, $ini, $fin)
+    {
+        $respuesta = ModeloFacturacion::mdlMostrarModeloImpresionV3($tabla, $documento, $tipo, $ini, $fin);
+
+        return $respuesta;
+    }
+
+    /*
     * MOSTRAR MODELO DE PROFORMAS PARA IMPRESION
     */
     static public function ctrMostrarModeloProforma($tabla, $documento, $tipo)
@@ -4518,7 +4528,8 @@ class ControladorFacturacion
             $documento = str_replace('-', '', $_POST["serie"]);
             $cliente = $_POST["codCli"];
             $vendedor = $_POST["codVen"];
-            $dscto = $_POST["dscto"];
+            $dscto = $_POST["dscto"] == "" ? 0 : $_POST["dscto"];
+
             $usuario = $_POST["idUsuario"];
             $docOrigen = $_POST["codPedido"];
 
@@ -4526,6 +4537,7 @@ class ControladorFacturacion
             $docDest = $docDestino ? str_replace('-', '', $docDestino) : '';
             $checkBoleta = !empty($_POST['chkBoleta']) ? $_POST['chkBoleta'] : null;
             $checkFactura = !empty($_POST['chkFactura']) ? $_POST['chkFactura'] : null;
+
             if ($checkBoleta == "on" && $checkFactura == null) {
                 $tipoDestino = "S02";
                 $nombresDestino = "BOLETA";
@@ -4557,11 +4569,9 @@ class ControladorFacturacion
                     $stock = ModeloArticulos::mdlActualizarStockPedido($codigo, $almacen);
                     $serie = (substr($documento, 0, 1) == "0") ? substr($documento, 0, 3) : substr($documento, 0, 4);
                     ModeloFacturacion::mdlActualizarTalonarioGuia($serie);
-
                     if ($checkBoleta == "on" || $checkFactura == "on") {
 
                         $movimientosDestino = self::ctrRegistrarMovimientos($codigo, $tipoDestino, $docDest, $cliente, $vendedor, $dscto, $nombresDestino, $codigoAlmacen);
-
                         $ventasDestino = self::ctrRegistrarVentas($codigo, $tipoDestino, $docDest, "", $documento, $usuario, $nombresDestino, $usureg, $pcreg, $chofer, $movilidad, $peso, $bultos);
 
                         $serieDestino = (substr($docDest, 0, 1) == "0") ? substr($docDest, 0, 3) : substr($docDest, 0, 4);
@@ -4613,7 +4623,6 @@ class ControladorFacturacion
 
             if ($stock == "ok") {
                 $movimientos = self::ctrRegistrarMovimientos($codigo, $tipo, $documento, $cliente, $vendedor, $dscto, $nombreTipo, $codigoAlmacen);
-
                 $ventas = self::ctrRegistrarVentas($codigo, $tipo, $documento, $docDest, $docOrigen, $usuario, $nombreTipo, $usureg, $pcreg, $chofer, $movilidad, $peso, $bultos);
 
                 ModeloFacturacion::mdlActualizarPedidoF($codigo);

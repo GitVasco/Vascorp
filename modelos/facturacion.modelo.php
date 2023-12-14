@@ -819,129 +819,135 @@ class ModeloFacturacion
     {
 
         $sql = "SELECT 
-      v.tipo,
-      v.documento,
-      v.neto,
-      v.igv,
-      v.dscto,
-      v.total,
-      n.observacion,
-      n.tipo_doc,
-      n.tip_cont,
-      n.doc_origen,
-      n.motivo,
-      (SELECT 
-        descripcion 
-      FROM
-        maestrajf m 
-      WHERE m.tipo_dato = 'TMOT' 
-        AND n.motivo = m.codigo) AS nom_motivo,
-      DATE_FORMAT(n.fecha_origen, '%Y-%m-%d') AS fecha_origen,
-      v.cliente,
-      c.nombre,
-      c.documento AS dni,
-      CASE
-        WHEN v.tipo = 'S01' 
-        AND c.direccion_despacho <> '' 
-        THEN c.direccion_despacho 
-        ELSE c.direccion 
-      END AS direccion,
-      c.email,
-      CASE
-        WHEN c.tipo_moneda = '1' 
-        THEN 'S/' 
-        ELSE 'US$' 
-      END AS tipo_moneda,
-      CONCAT(u.distrito, ' / ', u.provincia) AS nom_ubigeo,
-      u.departamento,
-      c.ubigeo,
-      v.agencia,
-      DATE_FORMAT(v.fecha, '%d/%m/%Y') AS fecha,
-      v.fecha AS fecha_emision,
-      v.tipo_documento,
-      v.lista_precios,
-      v.condicion_venta,
-      cv.descripcion,
-      v.vendedor,
-      ven.descripcion AS nom_vendedor,
-      cv.dias,
-      DATE_FORMAT(
-        DATE_ADD(v.fecha, INTERVAL cv.dias DAY),
-        '%d/%m/%Y'
-      ) AS fecha_vencimiento,
-      V.doc_origen AS doc_guia,
-      v.doc_destino,
-      v.agencia,
-      (SELECT 
-        a.mtc 
-      FROM
-        agenciasjf a 
-      WHERE v.agencia = a.id) AS mtc_agencia,
-      (SELECT 
-        a.nombre 
-      FROM
-        agenciasjf a 
-      WHERE v.agencia = a.id) AS nom_agencia,
-      (SELECT 
-        a.ruc 
-      FROM
-        agenciasjf a 
-      WHERE v.agencia = a.id) AS ruc_agencia,
-      v.chofer as cod_chofer,
-      (SELECT 
-      CONCAT(t.des_larga,' ',t.des_corta)
-  FROM
-    tabla_m_detalle t 
-  WHERE t.cod_tabla = 'TCHO' 
-    AND v.chofer = t.cod_argumento) AS chofer,
-  (SELECT 
-    valor_3 
-  FROM
-    tabla_m_detalle t 
-  WHERE t.cod_tabla = 'TCHO' 
-    AND v.chofer = t.cod_argumento) AS dni_chofer,
-  (SELECT 
-    valor_4 
-  FROM
-    tabla_m_detalle t 
-  WHERE t.cod_tabla = 'TCHO' 
-    AND v.chofer = t.cod_argumento) AS brevete_chofer,
-    v.carro as cod_carro,
-  (SELECT 
-    valor_3 
-  FROM
-    tabla_m_detalle t 
-  WHERE t.cod_tabla = 'TCAR' 
-    AND v.carro = t.cod_argumento) AS carro,
-  v.peso,
-  v.bultos  
-    FROM
-      ventajf v 
-      LEFT JOIN condiciones_ventajf cv 
-        ON v.condicion_venta = cv.id 
-      LEFT JOIN clientesjf c 
-        ON v.cliente = c.codigo 
-      LEFT JOIN ubigeo u 
-        ON 
-        CASE
-          WHEN v.tipo = 'S01' 
-          AND c.direccion_despacho <> '' 
-          THEN c.ubigeo_despacho 
-          ELSE c.ubigeo 
-        END = u.codigo 
-      LEFT JOIN notascd_jf n 
-        ON v.documento = n.documento 
-        AND v.tipo = n.tipo 
-      LEFT JOIN 
-        (SELECT 
-          codigo,
-          descripcion 
-        FROM
-          maestrajf m 
-        WHERE m.tipo_dato = 'TVEND') ven 
-        ON v.vendedor = ven.codigo
-    WHERE v.documento = :codigo 
-      AND v.tipo = :tipo_doc";
+                v.tipo,
+                v.documento,
+                v.neto,
+                v.igv,
+                v.dscto,
+                v.total,
+                n.observacion,
+                n.tipo_doc,
+                n.tip_cont,
+                n.doc_origen,
+                n.motivo,
+                (SELECT 
+                    descripcion 
+                FROM
+                    maestrajf m 
+                WHERE m.tipo_dato = 'TMOT' 
+                    AND n.motivo = m.codigo) AS nom_motivo,
+                DATE_FORMAT(n.fecha_origen, '%Y-%m-%d') AS fecha_origen,
+                v.cliente,
+                c.nombre,
+                c.documento AS dni,
+                CASE
+                    WHEN v.tipo = 'S01' 
+                    AND c.direccion_despacho <> '' 
+                    THEN c.direccion_despacho 
+                    ELSE c.direccion 
+                END AS direccion,
+                c.email,
+                CASE
+                    WHEN c.tipo_moneda = '1' 
+                    THEN 'S/' 
+                    ELSE 'US$' 
+                END AS tipo_moneda,
+                CONCAT(u.distrito, ' / ', u.provincia) AS nom_ubigeo,
+                u.departamento,
+                c.ubigeo,
+                v.agencia,
+                DATE_FORMAT(v.fecha, '%d/%m/%Y') AS fecha,
+                v.fecha AS fecha_emision,
+                v.tipo_documento,
+                v.lista_precios,
+                v.condicion_venta,
+                cv.descripcion,
+                v.vendedor,
+                ven.descripcion AS nom_vendedor,
+                cv.dias,
+                DATE_FORMAT(
+                    DATE_ADD(v.fecha, INTERVAL cv.dias DAY),
+                    '%d/%m/%Y'
+                ) AS fecha_vencimiento,
+                V.doc_origen AS doc_guia,
+                v.doc_destino,
+                v.agencia,
+                (SELECT 
+                    a.mtc 
+                FROM
+                    agenciasjf a 
+                WHERE v.agencia = a.id) AS mtc_agencia,
+                (SELECT 
+                    a.nombre 
+                FROM
+                    agenciasjf a 
+                WHERE v.agencia = a.id) AS nom_agencia,
+                (SELECT 
+                    a.ruc 
+                FROM
+                    agenciasjf a 
+                WHERE v.agencia = a.id) AS ruc_agencia,
+                v.chofer AS cod_chofer,
+                (SELECT 
+                    CONCAT(t.des_larga, ' ', t.des_corta) 
+                FROM
+                    tabla_m_detalle t 
+                WHERE t.cod_tabla = 'TCHO' 
+                    AND v.chofer = t.cod_argumento) AS chofer,
+                (SELECT 
+                    valor_3 
+                FROM
+                    tabla_m_detalle t 
+                WHERE t.cod_tabla = 'TCHO' 
+                    AND v.chofer = t.cod_argumento) AS dni_chofer,
+                (SELECT 
+                    valor_4 
+                FROM
+                    tabla_m_detalle t 
+                WHERE t.cod_tabla = 'TCHO' 
+                    AND v.chofer = t.cod_argumento) AS brevete_chofer,
+                v.carro AS cod_carro,
+                (SELECT 
+                    valor_3 
+                FROM
+                    tabla_m_detalle t 
+                WHERE t.cod_tabla = 'TCAR' 
+                    AND v.carro = t.cod_argumento) AS carro,
+                v.peso,
+                v.bultos,
+                (SELECT 
+                    t.des_larga 
+                FROM
+                    tabla_m_detalle t 
+                WHERE t.cod_tabla = 'TGUI' 
+                    AND v.tipo_guia = t.cod_argumento) AS tipo_guia 
+                FROM
+                ventajf v 
+                LEFT JOIN condiciones_ventajf cv 
+                    ON v.condicion_venta = cv.id 
+                LEFT JOIN clientesjf c 
+                    ON v.cliente = c.codigo 
+                LEFT JOIN ubigeo u 
+                    ON 
+                    CASE
+                    WHEN v.tipo = 'S01' 
+                    AND c.direccion_despacho <> '' 
+                    THEN c.ubigeo_despacho 
+                    ELSE c.ubigeo 
+                    END = u.codigo 
+                LEFT JOIN notascd_jf n 
+                    ON v.documento = n.documento 
+                    AND v.tipo = n.tipo 
+                LEFT JOIN 
+                    (SELECT 
+                    codigo,
+                    descripcion 
+                    FROM
+                    maestrajf m 
+                    WHERE m.tipo_dato = 'TVEND') ven 
+                    ON v.vendedor = ven.codigo 
+                    WHERE v.documento = :codigo 
+                    AND v.tipo = :tipo_doc";
 
         $stmt = Conexion::conectar()->prepare($sql);
 
@@ -1007,6 +1013,8 @@ class ModeloFacturacion
             CASE
                 WHEN a.marca = 'ELASTICOS'
                 THEN 'MTR' 
+                WHEN a.marca = 'TELAS'
+                THEN 'KGM'
                 ELSE 'C62' 
             END AS unidad,
             a.nombre,
@@ -1020,6 +1028,39 @@ class ModeloFacturacion
             WHERE m.tipo = :tipo_doc 
             AND m.documento = :codigo 
             GROUP BY a.modelo 
+            LIMIT $ini, $fin";
+
+        $stmt = Conexion::conectar()->prepare($sql);
+
+        $stmt->bindParam(":codigo", $valor, PDO::PARAM_STR);
+        $stmt->bindParam(":tipo_doc", $tipoDoc, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+
+
+        $stmt = null;
+    }
+
+
+    static public function mdlMostrarModeloImpresionV3($tabla, $valor, $tipoDoc, $ini, $fin)
+    {
+
+        $sql = "SELECT 
+            LEFT(a.articulo,8) as modelo,
+            ROUND(cantidad,2) AS cantidad,
+            'KGM' AS unidad,
+            CONCAT(a.nombre,' - ',a.color) AS nombre,
+            ROUND(m.precio, 2) AS precio,
+            ROUND(m.dscto1, 2) AS dscto1,
+            ROUND(m.cantidad * m.precio, 2) AS total 
+            FROM
+            $tabla m 
+            LEFT JOIN articulojf a 
+                ON m.articulo = a.articulo 
+            WHERE m.tipo = :tipo_doc 
+            AND m.documento = :codigo 
             LIMIT $ini, $fin";
 
         $stmt = Conexion::conectar()->prepare($sql);

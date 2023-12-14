@@ -2493,16 +2493,15 @@ $(".box").on("click", ".btnDocContado", function () {
 //Reporte de Cuentas
 $(".box").on("click", ".btnPorAceptar", function () {
     var vendedor = prompt("Ingrese el codigo del vendedor", "");
-    //console.log(vendedor);
+    var mes = prompt("Ingrese el mes a consultar (ejemplo: 01 para Enero)", "");
+    var url = "vistas/reportes_ticket/letras_aceptar.php?vendedor=" + vendedor;
 
     if (vendedor != "") {
-        window.open(
-            "vistas/reportes_ticket/letras_aceptar.php?vendedor=" + vendedor,
-            "_blank"
-        );
+        if (mes != "") {
+            url += "&mes=" + mes;
+        }
+        window.open(url, "_blank");
     }
-
-    //window.open("vistas/reportes_ticket/letras_aceptar.php","_blank");
 });
 
 $(".box").on("click", ".btnProyeccionPagos", function () {

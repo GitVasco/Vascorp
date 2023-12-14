@@ -16,11 +16,16 @@
     $tipo = "S01";
     $documento = $_GET["codigo"];
     $venta = ControladorFacturacion::ctrMostrarVentaImpresion($documento, $tipo);
-    $modelo = ControladorFacturacion::ctrMostrarModeloImpresionV2("movimientosjf_2023", $documento, $tipo, 0, 100);
+
+    if ($venta["tipo_guia"] != "VENTA") {
+        $modelo = ControladorFacturacion::ctrMostrarModeloImpresionV3("movimientosjf_2023", $documento, $tipo, 0, 100);
+    } else {
+        $modelo = ControladorFacturacion::ctrMostrarModeloImpresionV2("movimientosjf_2023", $documento, $tipo, 0, 100);
+    }
+
     $cantModelo = count($modelo);
     $subtotal = $venta["neto"] - $venta["dscto"];
     $monto_letra = CantidadEnLetra($venta["total"]);
-    //var_dump($venta);
 
     if ($venta["agencia"] == 0) {
         $tipo_transporte = "Privado";
@@ -121,7 +126,7 @@
                             </tr>                        
                             <tr>
                                 <td style="width:120px;font-weight: bold;">Tipo de envío:</td>
-                                <td>VENTA</td>           
+                                <td>' . $venta["tipo_guia"] . '</td>           
                                 
                                 <td style="width:120px;font-weight: bold;">Fecha de envío:</td>
                                 <td>' . $venta["fecha"] . '</td>     
@@ -236,8 +241,10 @@
 
         if (substr($venta["doc_destino"], 0, 1) == "F") {
             $doc_destino = 'FACTURA';
-        } else {
+        } else if (substr($venta["doc_destino"], 0, 1) == "B") {
             $doc_destino = 'BOLETA';
+        } else {
+            $doc_destino = '';
         }
 
         $pie = '<table style="width:100%;">
@@ -291,8 +298,6 @@
             $fin = $inicio + 25;
             generarPagina($modelo, $inicio, $fin, $cabecera, $cliente, $envio, $transporte, $cabDet, $pie);
         }
-
-
 
         ?>
 

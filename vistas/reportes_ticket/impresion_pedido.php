@@ -293,15 +293,15 @@
                         <tr>               
                             <th style="width:10%;text-align:left;">TOTALES</th>
                             <th style="width:30%;text-align:left;">PEDIDO</th>
-                            <th style="width:6%">' . $totales["t1"] . '</th>
-                            <th style="width:6%">' . $totales["t2"] . '</th>
-                            <th style="width:6%">' . $totales["t3"] . '</th>
-                            <th style="width:6%">' . $totales["t4"] . '</th>
-                            <th style="width:6%">' . $totales["t5"] . '</th>
-                            <th style="width:6%">' . $totales["t6"] . '</th>
-                            <th style="width:6%">' . $totales["t7"] . '</th>
-                            <th style="width:6%">' . $totales["t8"] . '</th>
-                            <th style="width:6%">' . $totales["total"] . '</th>                
+                            <th style="width:6%">' . number_format($totales["t1"], 0) . '</th>
+                            <th style="width:6%">' . number_format($totales["t2"], 0) . '</th>
+                            <th style="width:6%">' . number_format($totales["t3"], 0) . '</th>
+                            <th style="width:6%">' . number_format($totales["t4"], 0) . '</th>
+                            <th style="width:6%">' . number_format($totales["t5"], 0) . '</th>
+                            <th style="width:6%">' . number_format($totales["t6"], 0) . '</th>
+                            <th style="width:6%">' . number_format($totales["t7"], 0) . '</th>
+                            <th style="width:6%">' . number_format($totales["t8"], 0) . '</th>
+                            <th style="width:6%">' . number_format($totales["total"], 0) . '</th>              
                         </tr>                
                     </thead>
             

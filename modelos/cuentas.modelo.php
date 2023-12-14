@@ -3661,10 +3661,11 @@ class ModeloCuentas
 	}
 
 	//* LETRAS POR ACEPTAR
-	static public function mdlLetrasAceptar($vendedor, $ini, $fin)
+	static public function mdlLetrasAceptar($vendedor, $mes, $ini, $fin)
 	{
 
-		$stmt = Conexion::conectar()->prepare("SELECT 
+		if ($mes == null) {
+			$stmt = Conexion::conectar()->prepare("SELECT 
 													cc.tipo_doc,
 													cc.num_cta,
 													cc.cod_pago,
@@ -3700,6 +3701,45 @@ class ModeloCuentas
 													cc.doc_origen,
 													cc.fecha_ven
 												LIMIT $ini, $fin");
+		} else {
+			$stmt = Conexion::conectar()->prepare("SELECT 
+						cc.tipo_doc,
+						cc.num_cta,
+						cc.cod_pago,
+						cc.doc_origen,
+						cc.fecha,
+						cc.fecha_ven,
+						cc.monto,
+						cc.saldo,
+						cc.cliente,
+						c.nombre,
+						c.ubigeo,
+						u.nombre AS nom_ubigeo,
+						cc.vendedor 
+					FROM
+						cuenta_ctejf cc 
+						LEFT JOIN clientesjf c 
+						ON cc.cliente = c.codigo 
+						LEFT JOIN ubigeo u 
+						ON c.ubigeo = u.codigo 
+					WHERE cc.tipo_doc = '85' 
+						AND cc.estado = 'PENDIENTE' 
+						AND cc.tip_mov = '+' 
+						AND (cc.banco <> '02' 
+						OR cc.banco IS NULL) 
+						AND (
+						cc.num_unico = '' 
+						OR cc.num_unico IS NULL
+						) 
+						AND cc.protesta <> '1' 
+						AND cc.vendedor = :vendedor 
+						and MONTH(cc.fecha) = '$mes'
+					ORDER BY cc.vendedor,
+						cc.cliente,
+						cc.doc_origen,
+						cc.fecha_ven
+					LIMIT $ini, $fin");
+		}
 
 		$stmt->bindParam(":vendedor", $vendedor, PDO::PARAM_STR);
 
@@ -3713,10 +3753,11 @@ class ModeloCuentas
 	}
 
 	//* LETRAS POR ACEPTAR
-	static public function mdlLetrasAceptarTotal($vendedor)
+	static public function mdlLetrasAceptarTotal($vendedor, $mes)
 	{
 
-		$stmt = Conexion::conectar()->prepare("SELECT 
+		if ($mes === null) {
+			$stmt = Conexion::conectar()->prepare("SELECT 
 							cc.vendedor,
 							SUM(cc.saldo) AS saldo 
 						FROM
@@ -3738,6 +3779,33 @@ class ModeloCuentas
 							cc.cliente,
 							cc.doc_origen,
 							cc.fecha_ven");
+		} else {
+
+			$stmt = Conexion::conectar()->prepare("SELECT 
+							cc.vendedor,
+							SUM(cc.saldo) AS saldo 
+						FROM
+							cuenta_ctejf cc 
+							LEFT JOIN clientesjf c 
+							ON cc.cliente = c.codigo 
+						WHERE cc.tipo_doc = '85' 
+							AND cc.estado = 'PENDIENTE' 
+							AND cc.tip_mov = '+' 
+							AND (cc.banco <> '02' 
+							OR cc.banco IS NULL) 
+							AND (
+							cc.num_unico = '' 
+							OR cc.num_unico IS NULL
+							) 
+							AND cc.protesta <> '1' 
+							AND cc.vendedor = '$vendedor'
+							and MONTH(cc.fecha) = '$mes'	
+						ORDER BY cc.vendedor,
+							cc.cliente,
+							cc.doc_origen,
+							cc.fecha_ven");
+		}
+
 
 		$stmt->bindParam(":vendedor", $vendedor, PDO::PARAM_STR);
 

@@ -172,7 +172,7 @@ MODAL FACTURAR
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-key"></i></span>
                                     <input type="text" class="form-control input-sm" id="nroDoc" name="nroDoc" readonly>
-                                    <input type="hidden" class="form-control input-sm" name="dscto" id="dscto" readonly>
+                                    <input type="hidden" class="form-control input-sm" name="dscto" id="dscto" readonly value="0">
                                     <input type="hidden" class="form-control input-sm" name="formapago" id="formapago" readonly>
                                     <input type="hidden" class="form-control input-sm" name="codVen" id="codVen" readonly>
                                     <input type="hidden" name="idUsuario" id="idUsuario" value="<?php echo $_SESSION["id"]; ?>">

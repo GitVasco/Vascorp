@@ -1513,10 +1513,10 @@ class ControladorCuentas
 	/*=============================================
 	DOCUMENTOS CONTADO PENDIENTES
 	=============================================*/
-	static public function ctrLetrasAceptar($vendedor, $ini, $fin)
+	static public function ctrLetrasAceptar($vendedor, $mes, $ini, $fin)
 	{
 
-		$respuesta = ModeloCuentas::mdlLetrasAceptar($vendedor, $ini, $fin);
+		$respuesta = ModeloCuentas::mdlLetrasAceptar($vendedor, $mes, $ini, $fin);
 
 		return $respuesta;
 	}
@@ -1524,10 +1524,10 @@ class ControladorCuentas
 	/*=============================================
 	DOCUMENTOS CONTADO PENDIENTES
 	=============================================*/
-	static public function ctrLetrasAceptarTotal($vendedor)
+	static public function ctrLetrasAceptarTotal($vendedor, $mes)
 	{
 
-		$respuesta = ModeloCuentas::mdlLetrasAceptarTotal($vendedor);
+		$respuesta = ModeloCuentas::mdlLetrasAceptarTotal($vendedor, $mes);
 
 		return $respuesta;
 	}
