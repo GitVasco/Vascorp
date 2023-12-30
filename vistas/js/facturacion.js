@@ -1,44 +1,44 @@
 /*
  * cargamos la tabla para guais de remision
  */
-$(".tablaGuiasRemision").DataTable({
-    ajax: "ajax/facturacion/tabla-guiasremision.ajax.php",
-    deferRender: true,
-    retrieve: true,
-    processing: true,
-    order: [[6, "desc"]],
-    pageLength: 20,
-    lengthMenu: [
-        [20, 40, 60, -1],
-        [20, 40, 60, "Todos"],
-    ],
-    language: {
-        sProcessing: "Procesando...",
-        sLengthMenu: "Mostrar _MENU_ registros",
-        sZeroRecords: "No se encontraron resultados",
-        sEmptyTable: "Ningún dato disponible en esta tabla",
-        sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
-        sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
-        sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
-        sInfoPostFix: "",
-        sSearch: "Buscar:",
-        sUrl: "",
-        sInfoThousands: ",",
-        sLoadingRecords: "Cargando...",
-        oPaginate: {
-            sFirst: "Primero",
-            sLast: "Último",
-            sNext: "Siguiente",
-            sPrevious: "Anterior",
-        },
-        oAria: {
-            sSortAscending:
-                ": Activar para ordenar la columna de manera ascendente",
-            sSortDescending:
-                ": Activar para ordenar la columna de manera descendente",
-        },
-    },
-});
+// $(".tablaGuiasRemision").DataTable({
+//     ajax: "ajax/facturacion/tabla-guiasremision.ajax.php",
+//     deferRender: true,
+//     retrieve: true,
+//     processing: true,
+//     order: [[6, "desc"]],
+//     pageLength: 20,
+//     lengthMenu: [
+//         [20, 40, 60, -1],
+//         [20, 40, 60, "Todos"],
+//     ],
+//     language: {
+//         sProcessing: "Procesando...",
+//         sLengthMenu: "Mostrar _MENU_ registros",
+//         sZeroRecords: "No se encontraron resultados",
+//         sEmptyTable: "Ningún dato disponible en esta tabla",
+//         sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+//         sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
+//         sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+//         sInfoPostFix: "",
+//         sSearch: "Buscar:",
+//         sUrl: "",
+//         sInfoThousands: ",",
+//         sLoadingRecords: "Cargando...",
+//         oPaginate: {
+//             sFirst: "Primero",
+//             sLast: "Último",
+//             sNext: "Siguiente",
+//             sPrevious: "Anterior",
+//         },
+//         oAria: {
+//             sSortAscending:
+//                 ": Activar para ordenar la columna de manera ascendente",
+//             sSortDescending:
+//                 ": Activar para ordenar la columna de manera descendente",
+//         },
+//     },
+// });
 
 /*
  * cargamos la tabla para FACTURAS
@@ -3364,3 +3364,174 @@ $(".tablaGuiasRemision tbody").on(
         });
     }
 );
+
+/*
+ * cargamos la tabla para GUIAS DE REMISION
+ */
+if (localStorage.getItem("capturarRangoGuia") != null) {
+    $("#daterange-btnGuiaRem span").html(
+        localStorage.getItem("capturarRangoGuia")
+    );
+    cargarTablaGuiaRemision(
+        localStorage.getItem("fechaInicial"),
+        localStorage.getItem("fechaFinal")
+    );
+} else {
+    $("#daterange-btnGuiaRem span").html(
+        '<i class="fa fa-calendar"></i> Rango de Fecha '
+    );
+    cargarTablaGuiaRemision(null, null);
+}
+
+function cargarTablaGuiaRemision(fechaInicial, fechaFinal) {
+    $(".tablaGuiasRemision").DataTable({
+        ajax:
+            "ajax/facturacion/tabla-guiasremision.ajax.php?perfil=" +
+            $("#perfilOculto").val() +
+            "&fechaInicial=" +
+            fechaInicial +
+            "&fechaFinal=" +
+            fechaFinal,
+        deferRender: true,
+        retrieve: true,
+        processing: true,
+        order: [[6, "desc"]],
+        pageLength: 20,
+        lengthMenu: [
+            [20, 40, 60, -1],
+            [20, 40, 60, "Todos"],
+        ],
+        language: {
+            sProcessing: "Procesando...",
+            sLengthMenu: "Mostrar _MENU_ registros",
+            sZeroRecords: "No se encontraron resultados",
+            sEmptyTable: "Ningún dato disponible en esta tabla",
+            sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+            sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
+            sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+            sInfoPostFix: "",
+            sSearch: "Buscar:",
+            sUrl: "",
+            sInfoThousands: ",",
+            sLoadingRecords: "Cargando...",
+            oPaginate: {
+                sFirst: "Primero",
+                sLast: "Último",
+                sNext: "Siguiente",
+                sPrevious: "Anterior",
+            },
+            oAria: {
+                sSortAscending:
+                    ": Activar para ordenar la columna de manera ascendente",
+                sSortDescending:
+                    ": Activar para ordenar la columna de manera descendente",
+            },
+        },
+    });
+}
+
+/*=============================================
+RANGO DE FECHAS GUIAS DE REMISION
+=============================================*/
+
+$("#daterange-btnGuiaRem").daterangepicker(
+    {
+        cancelClass: "CancelarGuiaRem",
+        locale: {
+            daysOfWeek: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
+            monthNames: [
+                "Enero",
+                "Febrero",
+                "Marzo",
+                "Abril",
+                "Mayo",
+                "Junio",
+                "Julio",
+                "Agosto",
+                "Septiembre",
+                "Octubre",
+                "Noviembre",
+                "Diciembre",
+            ],
+        },
+        ranges: {
+            Hoy: [moment(), moment()],
+            Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+            "Últimos 7 días": [moment().subtract(6, "days"), moment()],
+            "Últimos 30 días": [moment().subtract(29, "days"), moment()],
+            "Este mes": [moment().startOf("month"), moment().endOf("month")],
+            "Último mes": [
+                moment().subtract(1, "month").startOf("month"),
+                moment().subtract(1, "month").endOf("month"),
+            ],
+        },
+
+        startDate: moment(),
+        endDate: moment(),
+    },
+    function (start, end) {
+        $("#daterange-btnGuiaRem span").html(
+            start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
+        );
+
+        var fechaInicial = start.format("YYYY-MM-DD");
+
+        var fechaFinal = end.format("YYYY-MM-DD");
+
+        var capturarRangoGuia = $("#daterange-btnGuiaRem span").html();
+
+        localStorage.setItem("capturarRangoGuia", capturarRangoGuia);
+        localStorage.setItem("fechaInicial", fechaInicial);
+        localStorage.setItem("fechaFinal", fechaFinal);
+
+        // Recargamos la tabla con la información para ser mostrada en la tabla
+        $(".tablaGuiasRemision").DataTable().destroy();
+        cargarTablaGuiaRemision(fechaInicial, fechaFinal);
+    }
+);
+
+/*=============================================
+  CANCELAR RANGO DE FECHAS
+  =============================================*/
+
+$(".daterangepicker.opensleft .range_inputs .CancelarGuiaRem").on(
+    "click",
+    function () {
+        localStorage.removeItem("capturarRangoGuia");
+        localStorage.removeItem("fechaInicial");
+        localStorage.removeItem("fechaFinal");
+        localStorage.clear();
+        window.location = "guias-remision";
+    }
+);
+
+/*=============================================
+  CAPTURAR HOY
+  =============================================*/
+
+$(".daterangepicker.opensleft .ranges li").on("click", function () {
+    var textoHoy = $(this).attr("data-range-key");
+    var ruta = $("#rutaAcceso").val();
+
+    if (ruta == "guias-remision") {
+        if (textoHoy == "Hoy") {
+            var d = new Date();
+
+            var dia = d.getDate();
+            var mes = d.getMonth() + 1;
+            var año = d.getFullYear();
+
+            dia = ("0" + dia).slice(-2);
+            mes = ("0" + mes).slice(-2);
+
+            var fechaInicial = año + "-" + mes + "-" + dia;
+            var fechaFinal = año + "-" + mes + "-" + dia;
+            localStorage.setItem("capturarRangoGuia", "Hoy");
+            localStorage.setItem("fechaInicial", fechaInicial);
+            localStorage.setItem("fechaFinal", fechaFinal);
+            // Recargamos la tabla con la información para ser mostrada en la tabla
+            $(".tablaGuiasRemision").DataTable().destroy();
+            cargarTablaGuiaRemision(fechaInicial, fechaFinal);
+        }
+    }
+});

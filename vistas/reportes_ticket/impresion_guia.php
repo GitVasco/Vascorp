@@ -17,10 +17,10 @@
     $documento = $_GET["codigo"];
     $venta = ControladorFacturacion::ctrMostrarVentaImpresion($documento, $tipo);
 
-    if ($venta["tipo_guia"] != "VENTA") {
-        $modelo = ControladorFacturacion::ctrMostrarModeloImpresionV3("movimientosjf_2023", $documento, $tipo, 0, 100);
-    } else {
+    if ($venta["tipo_guia"] === "VENTA"  || $venta["tipo_guia"] === "VENTA CON ENTREGA A TERCEROS") {
         $modelo = ControladorFacturacion::ctrMostrarModeloImpresionV2("movimientosjf_2023", $documento, $tipo, 0, 100);
+    } else {
+        $modelo = ControladorFacturacion::ctrMostrarModeloImpresionV3("movimientosjf_2023", $documento, $tipo, 0, 100);
     }
 
     $cantModelo = count($modelo);

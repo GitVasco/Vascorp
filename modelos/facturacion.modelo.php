@@ -1820,42 +1820,42 @@ class ModeloFacturacion
         if ($fechaInicial == "null") {
 
             $sql = "SELECT
-      v.tipo,
-      v.tipo_documento,
-      v.documento,
-      v.total,
-      v.cliente,
-      c.nombre,
-      c.tipo_documento AS tip_doc,
-      v.cuenta,
-      c.documento AS num_doc,
-      v.vendedor,
-      v.fecha,
-      cv.descripcion,
-      v.doc_destino,
-      v.facturacion,
-      LEFT(v.doc_destino,4) AS serie_dest,
-      SUBSTR(v.doc_destino,5,8) AS nro_dest,
-      v.estado,
-      IFNULL(a.nombre, '') AS agencia,
-      IFNULL(u.nom_ubi, '') AS ubigeo,
-      v.usureg,
-      v.cargo,
-      v.recepcion
-  FROM
-      ventajf v
-      LEFT JOIN clientesjf c
-      ON v.cliente = c.codigo
-      LEFT JOIN condiciones_ventajf cv
-      ON v.condicion_venta = cv.id
-      LEFT JOIN agenciasjf a
-      ON v.agencia = a.id
-      LEFT JOIN ubigeojf u
-      ON c.ubigeo = u.cod_ubi
-  WHERE v.tipo = 'S02'
-      AND YEAR(v.fecha) = YEAR(NOW())
-      ORDER BY v.fecha DESC,
-  v.documento DESC";
+                    v.tipo,
+                    v.tipo_documento,
+                    v.documento,
+                    v.total,
+                    v.cliente,
+                    c.nombre,
+                    c.tipo_documento AS tip_doc,
+                    v.cuenta,
+                    c.documento AS num_doc,
+                    v.vendedor,
+                    v.fecha,
+                    cv.descripcion,
+                    v.doc_destino,
+                    v.facturacion,
+                    LEFT(v.doc_destino,4) AS serie_dest,
+                    SUBSTR(v.doc_destino,5,8) AS nro_dest,
+                    v.estado,
+                    IFNULL(a.nombre, '') AS agencia,
+                    IFNULL(u.nom_ubi, '') AS ubigeo,
+                    v.usureg,
+                    v.cargo,
+                    v.recepcion
+                FROM
+                    ventajf v
+                    LEFT JOIN clientesjf c
+                    ON v.cliente = c.codigo
+                    LEFT JOIN condiciones_ventajf cv
+                    ON v.condicion_venta = cv.id
+                    LEFT JOIN agenciasjf a
+                    ON v.agencia = a.id
+                    LEFT JOIN ubigeojf u
+                    ON c.ubigeo = u.cod_ubi
+                WHERE v.tipo = 'S02'
+                    AND YEAR(v.fecha) = YEAR(NOW())
+                    ORDER BY v.fecha DESC,
+                v.documento DESC";
 
             $stmt = Conexion::conectar()->prepare($sql);
 
@@ -1865,42 +1865,42 @@ class ModeloFacturacion
         } else if ($fechaInicial == $fechaFinal) {
 
             $sql = "SELECT
-      v.tipo,
-      v.tipo_documento,
-      v.documento,
-      v.total,
-      v.cliente,
-      c.nombre,
-      c.tipo_documento AS tip_doc,
-      v.cuenta,
-      c.documento AS num_doc,
-      v.vendedor,
-      v.fecha,
-      cv.descripcion,
-      v.doc_destino,
-      v.facturacion,
-      LEFT(v.doc_destino,4) AS serie_dest,
-      SUBSTR(v.doc_destino,5,8) AS nro_dest,
-      v.estado,
-      IFNULL(a.nombre, '') AS agencia,
-      IFNULL(u.nom_ubi, '') AS ubigeo,
-      v.usureg,
-      v.cargo,
-      v.recepcion
-  FROM
-      ventajf v
-      LEFT JOIN clientesjf c
-      ON v.cliente = c.codigo
-      LEFT JOIN condiciones_ventajf cv
-      ON v.condicion_venta = cv.id
-      LEFT JOIN agenciasjf a
-      ON v.agencia = a.id
-      LEFT JOIN ubigeojf u
-      ON c.ubigeo = u.cod_ubi
-  WHERE v.tipo = 'S02'
-      AND DATE(v.fecha)  like '%$fechaFinal%' 
-      ORDER BY v.fecha DESC,
-  v.documento DESC";
+                    v.tipo,
+                    v.tipo_documento,
+                    v.documento,
+                    v.total,
+                    v.cliente,
+                    c.nombre,
+                    c.tipo_documento AS tip_doc,
+                    v.cuenta,
+                    c.documento AS num_doc,
+                    v.vendedor,
+                    v.fecha,
+                    cv.descripcion,
+                    v.doc_destino,
+                    v.facturacion,
+                    LEFT(v.doc_destino,4) AS serie_dest,
+                    SUBSTR(v.doc_destino,5,8) AS nro_dest,
+                    v.estado,
+                    IFNULL(a.nombre, '') AS agencia,
+                    IFNULL(u.nom_ubi, '') AS ubigeo,
+                    v.usureg,
+                    v.cargo,
+                    v.recepcion
+                FROM
+                    ventajf v
+                    LEFT JOIN clientesjf c
+                    ON v.cliente = c.codigo
+                    LEFT JOIN condiciones_ventajf cv
+                    ON v.condicion_venta = cv.id
+                    LEFT JOIN agenciasjf a
+                    ON v.agencia = a.id
+                    LEFT JOIN ubigeojf u
+                    ON c.ubigeo = u.cod_ubi
+                WHERE v.tipo = 'S02'
+                    AND DATE(v.fecha)  like '%$fechaFinal%' 
+                    ORDER BY v.fecha DESC,
+                v.documento DESC";
 
             $stmt = Conexion::conectar()->prepare($sql);
 
@@ -1920,42 +1920,42 @@ class ModeloFacturacion
 
             if ($fechaFinalMasUno == $fechaActualMasUno) {
                 $sql = "SELECT
-        v.tipo,
-        v.tipo_documento,
-        v.documento,
-        v.total,
-        v.cliente,
-        c.nombre,
-        c.tipo_documento AS tip_doc,
-        v.cuenta,
-        c.documento AS num_doc,
-        v.vendedor,
-        v.fecha,
-        cv.descripcion,
-        v.doc_destino,
-        v.facturacion,
-        LEFT(v.doc_destino,4) AS serie_dest,
-        SUBSTR(v.doc_destino,5,8) AS nro_dest,
-        v.estado,
-        IFNULL(a.nombre, '') AS agencia,
-        IFNULL(u.nom_ubi, '') AS ubigeo,
-        v.usureg,
-        v.cargo,
-      v.recepcion
-    FROM
-        ventajf v
-        LEFT JOIN clientesjf c
-        ON v.cliente = c.codigo
-        LEFT JOIN condiciones_ventajf cv
-        ON v.condicion_venta = cv.id
-        LEFT JOIN agenciasjf a
-        ON v.agencia = a.id
-        LEFT JOIN ubigeojf u
-        ON c.ubigeo = u.cod_ubi
-    WHERE v.tipo = 'S02'
-        AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'
-        ORDER BY v.fecha DESC,
-  v.documento DESC";
+                        v.tipo,
+                        v.tipo_documento,
+                        v.documento,
+                        v.total,
+                        v.cliente,
+                        c.nombre,
+                        c.tipo_documento AS tip_doc,
+                        v.cuenta,
+                        c.documento AS num_doc,
+                        v.vendedor,
+                        v.fecha,
+                        cv.descripcion,
+                        v.doc_destino,
+                        v.facturacion,
+                        LEFT(v.doc_destino,4) AS serie_dest,
+                        SUBSTR(v.doc_destino,5,8) AS nro_dest,
+                        v.estado,
+                        IFNULL(a.nombre, '') AS agencia,
+                        IFNULL(u.nom_ubi, '') AS ubigeo,
+                        v.usureg,
+                        v.cargo,
+                    v.recepcion
+                    FROM
+                        ventajf v
+                        LEFT JOIN clientesjf c
+                        ON v.cliente = c.codigo
+                        LEFT JOIN condiciones_ventajf cv
+                        ON v.condicion_venta = cv.id
+                        LEFT JOIN agenciasjf a
+                        ON v.agencia = a.id
+                        LEFT JOIN ubigeojf u
+                        ON c.ubigeo = u.cod_ubi
+                    WHERE v.tipo = 'S02'
+                        AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'
+                        ORDER BY v.fecha DESC,
+                v.documento DESC";
 
                 $stmt = Conexion::conectar()->prepare($sql);
 
@@ -1967,42 +1967,42 @@ class ModeloFacturacion
             } else {
 
                 $sql = "SELECT
-        v.tipo,
-        v.tipo_documento,
-        v.documento,
-        v.total,
-        v.cliente,
-        c.nombre,
-        c.tipo_documento AS tip_doc,
-        v.cuenta,
-        c.documento AS num_doc,
-        v.vendedor,
-        v.fecha,
-        cv.descripcion,
-        v.doc_destino,
-        v.facturacion,
-        LEFT(v.doc_destino,4) AS serie_dest,
-        SUBSTR(v.doc_destino,5,8) AS nro_dest,
-        v.estado,
-        IFNULL(a.nombre, '') AS agencia,
-        IFNULL(u.nom_ubi, '') AS ubigeo,
-        v.usureg,
-        v.cargo,
-      v.recepcion
-    FROM
-        ventajf v
-        LEFT JOIN clientesjf c
-        ON v.cliente = c.codigo
-        LEFT JOIN condiciones_ventajf cv
-        ON v.condicion_venta = cv.id
-        LEFT JOIN agenciasjf a
-        ON v.agencia = a.id
-        LEFT JOIN ubigeojf u
-        ON c.ubigeo = u.cod_ubi
-    WHERE v.tipo = 'S02'
-        AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'
-        ORDER BY v.fecha DESC,
-  v.documento DESC";
+                    v.tipo,
+                    v.tipo_documento,
+                    v.documento,
+                    v.total,
+                    v.cliente,
+                    c.nombre,
+                    c.tipo_documento AS tip_doc,
+                    v.cuenta,
+                    c.documento AS num_doc,
+                    v.vendedor,
+                    v.fecha,
+                    cv.descripcion,
+                    v.doc_destino,
+                    v.facturacion,
+                    LEFT(v.doc_destino,4) AS serie_dest,
+                    SUBSTR(v.doc_destino,5,8) AS nro_dest,
+                    v.estado,
+                    IFNULL(a.nombre, '') AS agencia,
+                    IFNULL(u.nom_ubi, '') AS ubigeo,
+                    v.usureg,
+                    v.cargo,
+                v.recepcion
+                FROM
+                    ventajf v
+                    LEFT JOIN clientesjf c
+                    ON v.cliente = c.codigo
+                    LEFT JOIN condiciones_ventajf cv
+                    ON v.condicion_venta = cv.id
+                    LEFT JOIN agenciasjf a
+                    ON v.agencia = a.id
+                    LEFT JOIN ubigeojf u
+                    ON c.ubigeo = u.cod_ubi
+                WHERE v.tipo = 'S02'
+                    AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'
+                    ORDER BY v.fecha DESC,
+            v.documento DESC";
 
                 $stmt = Conexion::conectar()->prepare($sql);
 
@@ -9267,6 +9267,229 @@ class ModeloFacturacion
         } else {
 
             return "error";
+        }
+
+        $stmt = null;
+    }
+
+    static public function mdlRangoFechasGuiaRemision($fechaInicial, $fechaFinal)
+    {
+
+        if ($fechaInicial == "null") {
+
+            $sql = "SELECT
+                    v.tipo,
+                    v.tipo_documento,
+                    v.documento,
+                    v.total,
+                    v.cliente,
+                    c.nombre,
+                    c.tipo_documento AS tip_doc,
+                    (SELECT 
+                          tipo_doc 
+                        FROM
+                          tipo_documentojf td 
+                        WHERE c.tipo_documento = td.cod_doc) AS tipo_doc,	
+                    v.cuenta,
+                    c.documento AS num_doc,
+                    v.vendedor,
+                    v.fecha,
+                    cv.descripcion,
+                    v.doc_destino,
+                    v.facturacion,
+                    LEFT(v.doc_destino,4) AS serie_dest,
+                    SUBSTR(v.doc_destino,5,8) AS nro_dest,
+                    v.estado,
+                    IFNULL(a.nombre, '') AS agencia,
+                    IFNULL(u.nom_ubi, '') AS ubigeo,
+                    v.usureg,
+                    v.cargo,
+                    v.recepcion
+                FROM
+                    ventajf v
+                    LEFT JOIN clientesjf c
+                    ON v.cliente = c.codigo
+                    LEFT JOIN condiciones_ventajf cv
+                    ON v.condicion_venta = cv.id
+                    LEFT JOIN agenciasjf a
+                    ON v.agencia = a.id
+                    LEFT JOIN ubigeojf u
+                    ON c.ubigeo = u.cod_ubi
+                WHERE v.tipo = 'S01'
+                    AND YEAR(v.fecha) = YEAR(NOW())
+                    ORDER BY v.fecha DESC,
+                v.documento DESC";
+
+            $stmt = Conexion::conectar()->prepare($sql);
+
+            $stmt->execute();
+
+            return $stmt->fetchAll();
+        } else if ($fechaInicial == $fechaFinal) {
+
+            $sql = "SELECT
+                    v.tipo,
+                    v.tipo_documento,
+                    v.documento,
+                    v.total,
+                    v.cliente,
+                    c.nombre,
+                    c.tipo_documento AS tip_doc,
+                    (SELECT 
+                          tipo_doc 
+                        FROM
+                          tipo_documentojf td 
+                        WHERE c.tipo_documento = td.cod_doc) AS tipo_doc,	
+                    v.cuenta,
+                    c.documento AS num_doc,
+                    v.vendedor,
+                    v.fecha,
+                    cv.descripcion,
+                    v.doc_destino,
+                    v.facturacion,
+                    LEFT(v.doc_destino,4) AS serie_dest,
+                    SUBSTR(v.doc_destino,5,8) AS nro_dest,
+                    v.estado,
+                    IFNULL(a.nombre, '') AS agencia,
+                    IFNULL(u.nom_ubi, '') AS ubigeo,
+                    v.usureg,
+                    v.cargo,
+                    v.recepcion
+                FROM
+                    ventajf v
+                    LEFT JOIN clientesjf c
+                    ON v.cliente = c.codigo
+                    LEFT JOIN condiciones_ventajf cv
+                    ON v.condicion_venta = cv.id
+                    LEFT JOIN agenciasjf a
+                    ON v.agencia = a.id
+                    LEFT JOIN ubigeojf u
+                    ON c.ubigeo = u.cod_ubi
+                WHERE v.tipo = 'S01'
+                    AND DATE(v.fecha)  like '%$fechaFinal%' 
+                    ORDER BY v.fecha DESC,
+                v.documento DESC";
+
+            $stmt = Conexion::conectar()->prepare($sql);
+
+            $stmt->bindParam(":mes", $mes, PDO::PARAM_STR);
+
+            $stmt->execute();
+
+            return $stmt->fetchAll();
+        } else {
+            $fechaActual = new DateTime();
+            $fechaActual->add(new DateInterval("P1D"));
+            $fechaActualMasUno = $fechaActual->format("Y-m-d");
+
+            $fechaFinal2 = new DateTime($fechaFinal);
+            $fechaFinal2->add(new DateInterval("P1D"));
+            $fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+
+            if ($fechaFinalMasUno == $fechaActualMasUno) {
+                $sql = "SELECT
+                        v.tipo,
+                        v.tipo_documento,
+                        v.documento,
+                        v.total,
+                        v.cliente,
+                        c.nombre,
+                        c.tipo_documento AS tip_doc,
+                        (SELECT 
+                          tipo_doc 
+                        FROM
+                          tipo_documentojf td 
+                        WHERE c.tipo_documento = td.cod_doc) AS tipo_doc,	
+                        v.cuenta,
+                        c.documento AS num_doc,
+                        v.vendedor,
+                        v.fecha,
+                        cv.descripcion,
+                        v.doc_destino,
+                        v.facturacion,
+                        LEFT(v.doc_destino,4) AS serie_dest,
+                        SUBSTR(v.doc_destino,5,8) AS nro_dest,
+                        v.estado,
+                        IFNULL(a.nombre, '') AS agencia,
+                        IFNULL(u.nom_ubi, '') AS ubigeo,
+                        v.usureg,
+                        v.cargo,
+                    v.recepcion
+                    FROM
+                        ventajf v
+                        LEFT JOIN clientesjf c
+                        ON v.cliente = c.codigo
+                        LEFT JOIN condiciones_ventajf cv
+                        ON v.condicion_venta = cv.id
+                        LEFT JOIN agenciasjf a
+                        ON v.agencia = a.id
+                        LEFT JOIN ubigeojf u
+                        ON c.ubigeo = u.cod_ubi
+                    WHERE v.tipo = 'S01'
+                        AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'
+                        ORDER BY v.fecha DESC,
+                v.documento DESC";
+
+                $stmt = Conexion::conectar()->prepare($sql);
+
+                $stmt->bindParam(":mes", $mes, PDO::PARAM_STR);
+
+                $stmt->execute();
+
+                return $stmt->fetchAll();
+            } else {
+
+                $sql = "SELECT
+                    v.tipo,
+                    v.tipo_documento,
+                    v.documento,
+                    v.total,
+                    v.cliente,
+                    c.nombre,
+                    c.tipo_documento AS tip_doc,
+                    (SELECT 
+                          tipo_doc 
+                        FROM
+                          tipo_documentojf td 
+                        WHERE c.tipo_documento = td.cod_doc) AS tipo_doc,	
+                    v.cuenta,
+                    c.documento AS num_doc,
+                    v.vendedor,
+                    v.fecha,
+                    cv.descripcion,
+                    v.doc_destino,
+                    v.facturacion,
+                    LEFT(v.doc_destino,4) AS serie_dest,
+                    SUBSTR(v.doc_destino,5,8) AS nro_dest,
+                    v.estado,
+                    IFNULL(a.nombre, '') AS agencia,
+                    IFNULL(u.nom_ubi, '') AS ubigeo,
+                    v.usureg,
+                    v.cargo,
+                v.recepcion
+                FROM
+                    ventajf v
+                    LEFT JOIN clientesjf c
+                    ON v.cliente = c.codigo
+                    LEFT JOIN condiciones_ventajf cv
+                    ON v.condicion_venta = cv.id
+                    LEFT JOIN agenciasjf a
+                    ON v.agencia = a.id
+                    LEFT JOIN ubigeojf u
+                    ON c.ubigeo = u.cod_ubi
+                WHERE v.tipo = 'S01'
+                    AND DATE(v.fecha) BETWEEN '$fechaInicial' AND '$fechaFinal'
+                    ORDER BY v.fecha DESC,
+            v.documento DESC";
+
+                $stmt = Conexion::conectar()->prepare($sql);
+
+                $stmt->bindParam(":mes", $mes, PDO::PARAM_STR);
+
+                $stmt->execute();
+
+                return $stmt->fetchAll();
+            }
         }
 
         $stmt = null;

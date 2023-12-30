@@ -14,7 +14,7 @@ class TablaGuiasRemision
     {
 
 
-        $gremision = ControladorFacturacion::ctrMostrarTablasB();
+        $gremision = ModeloFacturacion::mdlRangoFechasGuiaRemision($_GET["fechaInicial"], $_GET["fechaFinal"]);
 
         if (count($gremision) > 0) {
 
