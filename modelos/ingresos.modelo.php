@@ -502,7 +502,7 @@ class ModeloIngresos
 			),0) AS t8,
 			FORMAT(SUM(m.cantidad),0) AS total 
 		  FROM
-			movimientosjf_2023 m 
+			movimientosjf_2024 m 
 			LEFT JOIN articulojf a 
 			  ON m.articulo = a.articulo 
 			LEFT JOIN sectorjf se 
@@ -587,7 +587,7 @@ class ModeloIngresos
 			),0) AS t8,
 			FORMAT(SUM(m.cantidad),0) AS total 
 		  FROM
-			movimientosjf_2023 m 
+			movimientosjf_2024 m 
 			LEFT JOIN articulojf a 
 			  ON m.articulo = a.articulo 
 			LEFT JOIN sectorjf se 
@@ -707,7 +707,7 @@ class ModeloIngresos
 				) AS t8,
 				FORMAT(SUM(m.cantidad), 0) AS total 
 			  FROM
-				movimientosjf_2023 m 
+				movimientosjf_2024 m 
 				LEFT JOIN articulojf a 
 				  ON m.articulo = a.articulo 
 				LEFT JOIN sectorjf se 
@@ -820,7 +820,7 @@ class ModeloIngresos
 				) AS t8,
 				FORMAT(SUM(m.cantidad), 0) AS total 
 			  FROM
-				movimientosjf_2023 m 
+				movimientosjf_2024 m 
 				LEFT JOIN articulojf a 
 				  ON m.articulo = a.articulo 
 				LEFT JOIN sectorjf se 
@@ -945,7 +945,7 @@ class ModeloIngresos
 					) AS t8,
 					FORMAT(SUM(m.cantidad), 0) AS total 
 				  FROM
-					movimientosjf_2023 m 
+					movimientosjf_2024 m 
 					LEFT JOIN articulojf a 
 					  ON m.articulo = a.articulo 
 					LEFT JOIN sectorjf se 
@@ -1055,7 +1055,7 @@ class ModeloIngresos
 					) AS t8,
 					FORMAT(SUM(m.cantidad), 0) AS total 
 				  FROM
-					movimientosjf_2023 m 
+					movimientosjf_2024 m 
 					LEFT JOIN articulojf a 
 					  ON m.articulo = a.articulo 
 					LEFT JOIN sectorjf se 
@@ -1085,7 +1085,7 @@ class ModeloIngresos
 
 		$sql = "UPDATE 
 					movimientos_cabecerajf mc 
-					LEFT JOIN movimientosjf_2023 m 
+					LEFT JOIN movimientosjf_2024 m 
 					ON mc.tipo = m.tipo 
 					AND mc.documento = m.documento SET mc.fecha = :fecha,
 					m.fecha = :fecha 
@@ -1130,7 +1130,7 @@ class ModeloIngresos
 		END AS saldo,
 		m.almacen 
 	  FROM
-		movimientosjf_2023 m 
+		movimientosjf_2024 m 
 		LEFT JOIN articulojf a 
 		  ON m.articulo = a.articulo 
 		LEFT JOIN cierres_detallejf c 
@@ -1213,7 +1213,7 @@ class ModeloIngresos
 	static public function mdlactualizarMovimiento($codigo, $articulo, $cantidadO, $cantidad)
 	{
 
-		$sql = "UPDATE movimientosjf_2023 SET cantidad = $cantidad WHERE documento='$codigo' AND articulo='$articulo' AND cantidad=$cantidadO";
+		$sql = "UPDATE movimientosjf_2024 SET cantidad = $cantidad WHERE documento='$codigo' AND articulo='$articulo' AND cantidad=$cantidadO";
 
 		$stmt = Conexion::conectar()->prepare($sql);
 
@@ -1233,7 +1233,7 @@ class ModeloIngresos
 
 		$sql = "DELETE 
 					FROM
-					movimientosjf_2023 
+					movimientosjf_2024 
 					WHERE documento = '$documento' AND
 					articulo = '$articulo' AND
 					cantidad = '$cantidad'";
@@ -1269,7 +1269,7 @@ class ModeloIngresos
 				a.cod_talla,
 				a.talla 
 			FROM
-				movimientosjf_2023 m 
+				movimientosjf_2024 m 
 				LEFT JOIN articulojf a 
 				ON m.articulo = a.articulo 
 			WHERE m.tipo = 'E49'");

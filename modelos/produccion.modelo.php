@@ -5,15 +5,15 @@ require_once "conexion.php";
 class ModeloProduccion
 {
 
-    /* 
+  /* 
 	* MOSTRAR PRODUCCION
 	*/
-    static public function mdlMostrarQuincenas($valor)
-    {
+  static public function mdlMostrarQuincenas($valor)
+  {
 
-        if ($valor != null) {
+    if ($valor != null) {
 
-            $stmt = Conexion::conectar()->prepare("SELECT 
+      $stmt = Conexion::conectar()->prepare("SELECT 
                                                             q.id,
                                                             q.ano,
                                                             m.mes,
@@ -42,14 +42,14 @@ class ModeloProduccion
                                                         WHERE q.id = :valor
                                                         AND YEAR(q.fecha_creacion) = YEAR(NOW()) ");
 
-            $stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
+      $stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
 
-            $stmt->execute();
+      $stmt->execute();
 
-            return $stmt->fetch();
-        } else {
+      return $stmt->fetch();
+    } else {
 
-            $stmt = Conexion::conectar()->prepare("SELECT 
+      $stmt = Conexion::conectar()->prepare("SELECT 
                                             q.id,
                                             q.ano,
                                             CASE
@@ -94,23 +94,23 @@ class ModeloProduccion
                                               ON q.usuario = u.id
                                               where q.ano  = YEAR(NOW()) ");
 
-            $stmt->execute();
+      $stmt->execute();
 
-            return $stmt->fetchAll();
-        }
-
-        $stmt->close();
-
-        $stmt = null;
+      return $stmt->fetchAll();
     }
 
-    /*
+    $stmt->close();
+
+    $stmt = null;
+  }
+
+  /*
 	* CREAR QUINCENA
 	*/
-    static public function mdlCrearQuincenas($datos)
-    {
+  static public function mdlCrearQuincenas($datos)
+  {
 
-        $stmt = Conexion::conectar()->prepare("INSERT INTO quincenasjf (
+    $stmt = Conexion::conectar()->prepare("INSERT INTO quincenasjf (
                                                 ano,
                                                 mes,
                                                 quincena,
@@ -128,29 +128,29 @@ class ModeloProduccion
                                                 :usuario
                                                 )");
 
-        $stmt->bindParam(":ano", $datos["ano"], PDO::PARAM_STR);
-        $stmt->bindParam(":mes", $datos["mes"], PDO::PARAM_STR);
-        $stmt->bindParam(":quincena", $datos["quincena"], PDO::PARAM_STR);
-        $stmt->bindParam(":inicio", $datos["inicio"], PDO::PARAM_STR);
-        $stmt->bindParam(":fin", $datos["fin"], PDO::PARAM_STR);
-        $stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+    $stmt->bindParam(":ano", $datos["ano"], PDO::PARAM_STR);
+    $stmt->bindParam(":mes", $datos["mes"], PDO::PARAM_STR);
+    $stmt->bindParam(":quincena", $datos["quincena"], PDO::PARAM_STR);
+    $stmt->bindParam(":inicio", $datos["inicio"], PDO::PARAM_STR);
+    $stmt->bindParam(":fin", $datos["fin"], PDO::PARAM_STR);
+    $stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
 
-        if ($stmt->execute()) {
+    if ($stmt->execute()) {
 
-            return "ok";
-        } else {
+      return "ok";
+    } else {
 
-            return "error";
-        }
-
-        $stmt->close();
-        $stmt = null;
+      return "error";
     }
 
-    static public function mdlEditarQuincenas($datos)
-    {
+    $stmt->close();
+    $stmt = null;
+  }
 
-        $stmt = Conexion::conectar()->prepare("UPDATE 
+  static public function mdlEditarQuincenas($datos)
+  {
+
+    $stmt = Conexion::conectar()->prepare("UPDATE 
                                                     quincenasjf 
                                                 SET
                                                     ano = :ano,
@@ -161,36 +161,36 @@ class ModeloProduccion
                                                     usuario = :usuario 
                                                 WHERE id = :id");
 
-        $stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
-        $stmt->bindParam(":ano", $datos["ano"], PDO::PARAM_STR);
-        $stmt->bindParam(":mes", $datos["mes"], PDO::PARAM_STR);
-        $stmt->bindParam(":quincena", $datos["quincena"], PDO::PARAM_STR);
-        $stmt->bindParam(":inicio", $datos["inicio"], PDO::PARAM_STR);
-        $stmt->bindParam(":fin", $datos["fin"], PDO::PARAM_STR);
-        $stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+    $stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
+    $stmt->bindParam(":ano", $datos["ano"], PDO::PARAM_STR);
+    $stmt->bindParam(":mes", $datos["mes"], PDO::PARAM_STR);
+    $stmt->bindParam(":quincena", $datos["quincena"], PDO::PARAM_STR);
+    $stmt->bindParam(":inicio", $datos["inicio"], PDO::PARAM_STR);
+    $stmt->bindParam(":fin", $datos["fin"], PDO::PARAM_STR);
+    $stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
 
-        if ($stmt->execute()) {
+    if ($stmt->execute()) {
 
-            return "ok";
-        } else {
+      return "ok";
+    } else {
 
-            return "error";
-        }
-
-        $stmt->close();
-        $stmt = null;
+      return "error";
     }
 
-    /*
+    $stmt->close();
+    $stmt = null;
+  }
+
+  /*
 	* Método para la eficiencia por mes
 	*/
-    static public function mdlMostrarEficiencia($inicio, $fin, $nquincena, $id, $sector)
-    {
-        if ($sector != "null") {
+  static public function mdlMostrarEficiencia($inicio, $fin, $nquincena, $id, $sector)
+  {
+    if ($sector != "null") {
 
-            if ($nquincena == "1") {
+      if ($nquincena == "1") {
 
-                $sql = "SELECT 
+        $sql = "SELECT 
           et.trabajador,
           CONCAT(t.nom_tra,' ', t.ape_pat_tra) AS nom_tra,
           SUM(
@@ -371,18 +371,18 @@ class ModeloProduccion
         AND t.sector = '" . $sector . "'
         GROUP BY et.trabajador";
 
-                $stmt = Conexion::conectar()->prepare($sql);
+        $stmt = Conexion::conectar()->prepare($sql);
 
-                $stmt->bindParam(":inicio", $inicio, PDO::PARAM_STR);
-                $stmt->bindParam(":fin", $fin, PDO::PARAM_STR);
-                $stmt->bindParam(":id", $id, PDO::PARAM_STR);
+        $stmt->bindParam(":inicio", $inicio, PDO::PARAM_STR);
+        $stmt->bindParam(":fin", $fin, PDO::PARAM_STR);
+        $stmt->bindParam(":id", $id, PDO::PARAM_STR);
 
-                $stmt->execute();
+        $stmt->execute();
 
-                return $stmt->fetchAll();
-            } else {
+        return $stmt->fetchAll();
+      } else {
 
-                $sql = "SELECT 
+        $sql = "SELECT 
           et.trabajador,
           CONCAT(t.nom_tra,' ', t.ape_pat_tra) AS nom_tra,
           SUM(
@@ -563,21 +563,21 @@ class ModeloProduccion
         AND t.sector = '" . $sector . "'
         GROUP BY et.trabajador";
 
-                $stmt = Conexion::conectar()->prepare($sql);
+        $stmt = Conexion::conectar()->prepare($sql);
 
-                $stmt->bindParam(":inicio", $inicio, PDO::PARAM_STR);
-                $stmt->bindParam(":fin", $fin, PDO::PARAM_STR);
-                $stmt->bindParam(":id", $id, PDO::PARAM_STR);
+        $stmt->bindParam(":inicio", $inicio, PDO::PARAM_STR);
+        $stmt->bindParam(":fin", $fin, PDO::PARAM_STR);
+        $stmt->bindParam(":id", $id, PDO::PARAM_STR);
 
-                $stmt->execute();
+        $stmt->execute();
 
-                return $stmt->fetchAll();
-            }
-        } else {
+        return $stmt->fetchAll();
+      }
+    } else {
 
-            if ($nquincena == "1") {
+      if ($nquincena == "1") {
 
-                $sql = "SELECT 
+        $sql = "SELECT 
           et.trabajador,
           CONCAT(t.nom_tra,' ', t.ape_pat_tra) AS nom_tra,
           SUM(
@@ -757,18 +757,18 @@ class ModeloProduccion
           AND :fin
         GROUP BY et.trabajador";
 
-                $stmt = Conexion::conectar()->prepare($sql);
+        $stmt = Conexion::conectar()->prepare($sql);
 
-                $stmt->bindParam(":inicio", $inicio, PDO::PARAM_STR);
-                $stmt->bindParam(":fin", $fin, PDO::PARAM_STR);
-                $stmt->bindParam(":id", $id, PDO::PARAM_STR);
+        $stmt->bindParam(":inicio", $inicio, PDO::PARAM_STR);
+        $stmt->bindParam(":fin", $fin, PDO::PARAM_STR);
+        $stmt->bindParam(":id", $id, PDO::PARAM_STR);
 
-                $stmt->execute();
+        $stmt->execute();
 
-                return $stmt->fetchAll();
-            } else {
+        return $stmt->fetchAll();
+      } else {
 
-                $sql = "SELECT 
+        $sql = "SELECT 
           et.trabajador,
           CONCAT(t.nom_tra,' ', t.ape_pat_tra) AS nom_tra,
           SUM(
@@ -948,30 +948,30 @@ class ModeloProduccion
           AND :fin 
         GROUP BY et.trabajador";
 
-                $stmt = Conexion::conectar()->prepare($sql);
+        $stmt = Conexion::conectar()->prepare($sql);
 
-                $stmt->bindParam(":inicio", $inicio, PDO::PARAM_STR);
-                $stmt->bindParam(":fin", $fin, PDO::PARAM_STR);
-                $stmt->bindParam(":id", $id, PDO::PARAM_STR);
+        $stmt->bindParam(":inicio", $inicio, PDO::PARAM_STR);
+        $stmt->bindParam(":fin", $fin, PDO::PARAM_STR);
+        $stmt->bindParam(":id", $id, PDO::PARAM_STR);
 
-                $stmt->execute();
+        $stmt->execute();
 
-                return $stmt->fetchAll();
-            }
-        }
-
-        $stmt = null;
+        return $stmt->fetchAll();
+      }
     }
 
-    /*
+    $stmt = null;
+  }
+
+  /*
 	* Método para los pagos por mes
 	*/
-    static public function mdlMostrarPagos($inicio, $fin, $nquincena, $id, $sector)
-    {
-        if ($sector != "null") {
-            if ($nquincena == "1") {
+  static public function mdlMostrarPagos($inicio, $fin, $nquincena, $id, $sector)
+  {
+    if ($sector != "null") {
+      if ($nquincena == "1") {
 
-                $sql = "SELECT 
+        $sql = "SELECT 
               et.trabajador,
               CONCAT(t.nom_tra, ' ', t.ape_pat_tra) AS nom_tra,
               SUM(
@@ -1154,18 +1154,18 @@ class ModeloProduccion
             AND t.sector = '" . $sector . "'
             GROUP BY et.trabajador";
 
-                $stmt = Conexion::conectar()->prepare($sql);
+        $stmt = Conexion::conectar()->prepare($sql);
 
-                $stmt->bindParam(":inicio", $inicio, PDO::PARAM_STR);
-                $stmt->bindParam(":fin", $fin, PDO::PARAM_STR);
-                $stmt->bindParam(":id", $id, PDO::PARAM_STR);
+        $stmt->bindParam(":inicio", $inicio, PDO::PARAM_STR);
+        $stmt->bindParam(":fin", $fin, PDO::PARAM_STR);
+        $stmt->bindParam(":id", $id, PDO::PARAM_STR);
 
-                $stmt->execute();
+        $stmt->execute();
 
-                return $stmt->fetchAll();
-            } else {
+        return $stmt->fetchAll();
+      } else {
 
-                $sql = "SELECT 
+        $sql = "SELECT 
                 et.trabajador,
                 CONCAT(t.nom_tra, ' ', t.ape_pat_tra) AS nom_tra,
                 SUM(
@@ -1348,20 +1348,20 @@ class ModeloProduccion
               AND t.sector = '" . $sector . "'
               GROUP BY et.trabajador";
 
-                $stmt = Conexion::conectar()->prepare($sql);
+        $stmt = Conexion::conectar()->prepare($sql);
 
-                $stmt->bindParam(":inicio", $inicio, PDO::PARAM_STR);
-                $stmt->bindParam(":fin", $fin, PDO::PARAM_STR);
-                $stmt->bindParam(":id", $id, PDO::PARAM_STR);
+        $stmt->bindParam(":inicio", $inicio, PDO::PARAM_STR);
+        $stmt->bindParam(":fin", $fin, PDO::PARAM_STR);
+        $stmt->bindParam(":id", $id, PDO::PARAM_STR);
 
-                $stmt->execute();
+        $stmt->execute();
 
-                return $stmt->fetchAll();
-            }
-        } else {
-            if ($nquincena == "1") {
+        return $stmt->fetchAll();
+      }
+    } else {
+      if ($nquincena == "1") {
 
-                $sql = "SELECT 
+        $sql = "SELECT 
               et.trabajador,
               CONCAT(t.nom_tra, ' ', t.ape_pat_tra) AS nom_tra,
               SUM(
@@ -1543,18 +1543,18 @@ class ModeloProduccion
               AND :fin
             GROUP BY et.trabajador";
 
-                $stmt = Conexion::conectar()->prepare($sql);
+        $stmt = Conexion::conectar()->prepare($sql);
 
-                $stmt->bindParam(":inicio", $inicio, PDO::PARAM_STR);
-                $stmt->bindParam(":fin", $fin, PDO::PARAM_STR);
-                $stmt->bindParam(":id", $id, PDO::PARAM_STR);
+        $stmt->bindParam(":inicio", $inicio, PDO::PARAM_STR);
+        $stmt->bindParam(":fin", $fin, PDO::PARAM_STR);
+        $stmt->bindParam(":id", $id, PDO::PARAM_STR);
 
-                $stmt->execute();
+        $stmt->execute();
 
-                return $stmt->fetchAll();
-            } else {
+        return $stmt->fetchAll();
+      } else {
 
-                $sql = "SELECT 
+        $sql = "SELECT 
                 et.trabajador,
                 CONCAT(t.nom_tra, ' ', t.ape_pat_tra) AS nom_tra,
                 SUM(
@@ -1736,52 +1736,52 @@ class ModeloProduccion
                 AND :fin 
               GROUP BY et.trabajador";
 
-                $stmt = Conexion::conectar()->prepare($sql);
+        $stmt = Conexion::conectar()->prepare($sql);
 
-                $stmt->bindParam(":inicio", $inicio, PDO::PARAM_STR);
-                $stmt->bindParam(":fin", $fin, PDO::PARAM_STR);
-                $stmt->bindParam(":id", $id, PDO::PARAM_STR);
-
-                $stmt->execute();
-
-                return $stmt->fetchAll();
-            }
-        }
-
-
-        $stmt = null;
-    }
-
-    /* 
-	* BORRAR QUINCENA
-	*/
-    static public function mdlEliminarQuincena($id)
-    {
-
-        $stmt = Conexion::conectar()->prepare("DELETE FROM quincenasjf WHERE id = :id ");
-
+        $stmt->bindParam(":inicio", $inicio, PDO::PARAM_STR);
+        $stmt->bindParam(":fin", $fin, PDO::PARAM_STR);
         $stmt->bindParam(":id", $id, PDO::PARAM_STR);
 
-        if ($stmt->execute()) {
+        $stmt->execute();
 
-            return "ok";
-        } else {
-
-            return "error";
-        }
-
-        $stmt->close();
-
-        $stmt = null;
+        return $stmt->fetchAll();
+      }
     }
 
-    /* 
+
+    $stmt = null;
+  }
+
+  /* 
+	* BORRAR QUINCENA
+	*/
+  static public function mdlEliminarQuincena($id)
+  {
+
+    $stmt = Conexion::conectar()->prepare("DELETE FROM quincenasjf WHERE id = :id ");
+
+    $stmt->bindParam(":id", $id, PDO::PARAM_STR);
+
+    if ($stmt->execute()) {
+
+      return "ok";
+    } else {
+
+      return "error";
+    }
+
+    $stmt->close();
+
+    $stmt = null;
+  }
+
+  /* 
 	* ACTUALIZAR QUINCENA
 	*/
-    static public function mdlActualizarPrecioTiempo($inicio, $fin)
-    {
+  static public function mdlActualizarPrecioTiempo($inicio, $fin)
+  {
 
-        $stmt = Conexion::conectar()->prepare("UPDATE 
+    $stmt = Conexion::conectar()->prepare("UPDATE 
     entallerjf e 
     LEFT JOIN articulojf a 
       ON e.articulo = a.articulo 
@@ -1791,30 +1791,30 @@ class ModeloProduccion
   WHERE DATE(e.fecha_terminado) BETWEEN :inicio
     AND :fin ");
 
-        $stmt->bindParam(":inicio", $inicio, PDO::PARAM_STR);
-        $stmt->bindParam(":fin", $fin, PDO::PARAM_STR);
+    $stmt->bindParam(":inicio", $inicio, PDO::PARAM_STR);
+    $stmt->bindParam(":fin", $fin, PDO::PARAM_STR);
 
-        if ($stmt->execute()) {
+    if ($stmt->execute()) {
 
-            return "ok";
-        } else {
+      return "ok";
+    } else {
 
-            return "error";
-        }
-
-        $stmt->close();
-
-        $stmt = null;
+      return "error";
     }
 
+    $stmt->close();
 
-    /* 
+    $stmt = null;
+  }
+
+
+  /* 
 	* MOSTRAR PRODUCCION
 	*/
-    static public function mdlMostrarAvances($inicio, $fin)
-    {
+  static public function mdlMostrarAvances($inicio, $fin)
+  {
 
-        $stmt = Conexion::conectar()->prepare("SELECT 
+    $stmt = Conexion::conectar()->prepare("SELECT 
     a.id_trabajador,
     CONCAT(t.nom_tra, ' ', t.ape_pat_tra) AS nombre,
     FORMAT(ROUND(et.produccion, 2), 2) AS produccion,
@@ -1935,23 +1935,23 @@ class ModeloProduccion
     END DESC");
 
 
-        $stmt->execute();
+    $stmt->execute();
 
-        return $stmt->fetchAll();
+    return $stmt->fetchAll();
 
 
-        $stmt->close();
+    $stmt->close();
 
-        $stmt = null;
-    }
+    $stmt = null;
+  }
 
-    /* 
+  /* 
 	* MOSTRAR PRODUCCION
 	*/
-    static public function mdlMostrarTrabTaller($taller)
-    {
+  static public function mdlMostrarTrabTaller($taller)
+  {
 
-        $stmt = Conexion::conectar()->prepare("SELECT 
+    $stmt = Conexion::conectar()->prepare("SELECT 
               t.cod_tra,
               CONCAT(
                 t.nom_tra,
@@ -1967,26 +1967,26 @@ class ModeloProduccion
             WHERE t.sector = :taller
               AND t.estado = 'Activo'");
 
-        $stmt->bindParam(":taller", $taller, PDO::PARAM_STR);
+    $stmt->bindParam(":taller", $taller, PDO::PARAM_STR);
 
-        $stmt->execute();
+    $stmt->execute();
 
-        return $stmt->fetchAll();
+    return $stmt->fetchAll();
 
-        $stmt->close();
+    $stmt->close();
 
-        $stmt = null;
-    }
+    $stmt = null;
+  }
 
-    /* 
+  /* 
 	* MOSTRAR PRODUCCION
 	*/
-    static public function mdlTablaEficienciaGlobal($taller)
-    {
+  static public function mdlTablaEficienciaGlobal($taller)
+  {
 
-        if ($taller == "null") {
+    if ($taller == "null") {
 
-            $stmt = Conexion::conectar()->prepare("SELECT 
+      $stmt = Conexion::conectar()->prepare("SELECT 
                                         t.sector,
                                         t.cod_tra,
                                         CONCAT(t.nom_tra, ' ', t.ape_pat_tra) AS nom_tra,
@@ -2252,12 +2252,12 @@ class ModeloProduccion
                                         AND t.cod_tra NOT IN ('24', '79') 
                                         GROUP BY q.trabajador");
 
-            $stmt->execute();
+      $stmt->execute();
 
-            return $stmt->fetchAll();
-        } else {
+      return $stmt->fetchAll();
+    } else {
 
-            $stmt = Conexion::conectar()->prepare("SELECT 
+      $stmt = Conexion::conectar()->prepare("SELECT 
       t.sector,
       t.cod_tra,
       CONCAT(t.nom_tra, ' ', t.ape_pat_tra) AS nom_tra,
@@ -2524,34 +2524,34 @@ class ModeloProduccion
       AND t.sector = :taller
       GROUP BY q.trabajador");
 
-            $stmt->bindParam(":taller", $taller, PDO::PARAM_STR);
+      $stmt->bindParam(":taller", $taller, PDO::PARAM_STR);
 
-            $stmt->execute();
+      $stmt->execute();
 
-            return $stmt->fetchAll();
-        }
-
-        $stmt->close();
-
-        $stmt = null;
+      return $stmt->fetchAll();
     }
 
-    static public function mdlVerIngresos($documento, $articulo)
-    {
+    $stmt->close();
 
-        $stmt = Conexion::conectar()->prepare("SELECT 
+    $stmt = null;
+  }
+
+  static public function mdlVerIngresos($documento, $articulo)
+  {
+
+    $stmt = Conexion::conectar()->prepare("SELECT 
                                     * 
                                 FROM
-                                    movimientosjf_2023 
+                                    movimientosjf_2024 
                                 WHERE documento = '$documento' 
                                     AND articulo = '$articulo'");
 
-        $stmt->execute();
+    $stmt->execute();
 
-        return $stmt->fetch();
+    return $stmt->fetch();
 
-        $stmt->close();
+    $stmt->close();
 
-        $stmt = null;
-    }
+    $stmt = null;
+  }
 }

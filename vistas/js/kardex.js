@@ -68,7 +68,7 @@ $(".btnFiltrar").click(function () {
     var ano = document.getElementById("ano").value;
 
     if (ano == "") {
-        ano = 2023;
+        ano = 2024;
     }
 
     var ano_ant = Number(ano) - 1;
