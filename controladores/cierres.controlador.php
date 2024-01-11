@@ -5,51 +5,55 @@ use Mike42\Escpos\EscposImage;
 use Mike42\Escpos\PrintConnectors\FilePrintConnector;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 
-class ControladorCierres{
+class ControladorCierres
+{
 
 	/*=============================================
 	MOSTRAR CIERRES
 	=============================================*/
 
-	static public function ctrMostrarCierres($item, $valor){
+	static public function ctrMostrarCierres($item, $valor)
+	{
 
 		$tabla = "cierresjf";
 
 		$respuesta = ModeloCierres::mdlMostrarCierres($tabla, $item, $valor);
 
 		return $respuesta;
-
 	}
 
 	/*=============================================
 	MOSTRAR CIERRES DETALLE
 	=============================================*/
 
-	static public function ctrMostrarDetallesCierres($item, $valor){
+	static public function ctrMostrarDetallesCierres($item, $valor)
+	{
 
 		$tabla = "cierres_detallejf";
 
 		$respuesta = ModeloCierres::mdlMostraDetallesCierres($tabla, $item, $valor);
 
 		return $respuesta;
-
 	}
 
 	/*=============================================
 	CREAR CIERRE
 	=============================================*/
 
-	static public function ctrCrearCierre(){
+	static public function ctrCrearCierre()
+	{
 
 		/* veriaficamos que venta traiga datos */
 
-		if(isset($_POST["nuevoCierre"]) && 
-		   isset($_POST["seleccionarSector"]) && 
-		   isset($_POST["listaProductos"])){
+		if (
+			isset($_POST["nuevoCierre"]) &&
+			isset($_POST["seleccionarSector"]) &&
+			isset($_POST["listaProductos"])
+		) {
 
 			/* alerta  si la lista de productos viene vacia  */
 
-			if($_POST["listaProductos"]==""){
+			if ($_POST["listaProductos"] == "") {
 				# Mostramos una alerta suave
 				echo '<script>
 						swal({
@@ -63,65 +67,68 @@ class ControladorCierres{
 								window.location="crear-cierre";}
 						});
 					</script>';
-			}else{
+			} else {
 
 				# Modificamos la información de los productos comprados en un array
 
-				$listaProductos=json_decode($_POST["listaProductos"],true);
-				
-				$comprasTotales=0;
+				$listaProductos = json_decode($_POST["listaProductos"], true);
 
-				foreach($listaProductos as $key=>$value){
+				$comprasTotales = 0;
 
-					$tabla="articulojf";
-					$valor=$value["articulo"];
-					$respuestaProducto=ModeloArticulos::mdlMostrarArticulos($valor);
+				foreach ($listaProductos as $key => $value) {
+
+					$tabla = "articulojf";
+					$valor = $value["articulo"];
+					$respuestaProducto = ModeloArticulos::mdlMostrarArticulos($valor);
 					$item1 = "servicio";
-					$valor1 = $respuestaProducto["servicio"]-$value["cantidad"];
+					$valor1 = $respuestaProducto["servicio"] - $value["cantidad"];
 					//ModeloArticulos::mdlActualizarUnDato($tabla, $item1, $valor1, $valor);
-					$tabla2="servicios_detallejf";
+					$tabla2 = "servicios_detallejf";
 					$item2 = "saldo";
-					$valor2 = $value["saldo"] - $value["cantidad"];
-					$idServicio=$value["codServicio"];
-					$saldoServicio=ModeloCierres::mdlActualizarUnDato($tabla2, $item2, $valor2, $idServicio);
-					
-
+					$valor2 =  $value["saldo"] < $value["cantidad"] ? 0 : $value["saldo"] - $value["cantidad"];
+					$idServicio = $value["codServicio"];
+					$saldoServicio = ModeloCierres::mdlActualizarUnDato($tabla2, $item2, $valor2, $idServicio);
 				}
 
-			
+
 
 				# Actualizamos ultima_compra en la tabla Clientes
 				date_default_timezone_set('America/Lima');
-				$fecha=new DateTime();
-				
+				$fecha = new DateTime();
+
 				/* ==============================================
 				GUARDAMOS LA VENTA
 				============================================== */
 
-				$datos=array("codigo"=>$_POST["nuevoCierre"],
-							 "guia"=>$_POST["nuevaGuia"],
-							 "taller"=>$_POST["seleccionarSector"],
-							 "usuario"=>$_POST["idVendedor"],
-							 "total"=>$_POST["totalVenta"],
-							 "fecha"=>$_POST["nuevaFecha"],
-							 "estado"=>"ACTIVO");
+				$datos = array(
+					"codigo" => $_POST["nuevoCierre"],
+					"guia" => $_POST["nuevaGuia"],
+					"taller" => $_POST["seleccionarSector"],
+					"usuario" => $_POST["idVendedor"],
+					"total" => $_POST["totalVenta"],
+					"fecha" => $_POST["nuevaFecha"],
+					"estado" => "ACTIVO"
+				);
 
-				$respuesta=ModeloCierres::mdlGuardarCierres("cierresjf",$datos);
+				$respuesta = ModeloCierres::mdlGuardarCierres("cierresjf", $datos);
 
-				if($respuesta=="ok"){
+				if ($respuesta == "ok") {
 
 
-					foreach($listaProductos as $key=>$value){
+					foreach ($listaProductos as $key => $value) {
 
-						$datos=array("articulo"=>$value["articulo"],
-									 "cantidad"=>$value["cantidad"],
-									 "inicio"=>$value["cantidad"],
-									 "codigo"=>$_POST["nuevoCierre"],
-									 "cod_servicio"=>$value["codServicio"]);
+						$datos = array(
+							"articulo" => $value["articulo"],
+							"cantidad" => $value["cantidad"],
+							"inicio" => $value["cantidad"],
+							"codigo" => $_POST["nuevoCierre"],
+							"cod_servicio" => $value["codServicio"]
+						);
 
-									 ModeloCierres::mdlGuardarDetallesCierres("cierres_detallejf",$datos);
-					
+						ModeloCierres::mdlGuardarDetallesCierres("cierres_detallejf", $datos);
 					}
+
+					ModeloCierres::mdlActualizarServicioTotal();
 
 					# Mostramos una alerta suave
 					echo '<script>
@@ -136,7 +143,7 @@ class ControladorCierres{
 									window.location="cierres";}
 							});
 						</script>';
-					}else{
+				} else {
 
 					# Mostramos una alerta suave
 					echo '<script>
@@ -151,108 +158,105 @@ class ControladorCierres{
 									window.location="crear-cierre";}
 							});
 						</script>';
-					}				
-			}			
+				}
+			}
 		}
-
-	}	
+	}
 
 	/*=============================================
 	EDITAR CIERRE
 	=============================================*/
 
-	public function ctrEditarCierres(){
+	public function ctrEditarCierres()
+	{
 
-		if(isset($_POST["editarCierre"]) && isset($_POST["idSectorVenta"]) && isset($_POST["listaProductos"])){
+		if (isset($_POST["editarCierre"]) && isset($_POST["idSectorVenta"]) && isset($_POST["listaProductos"])) {
 
 			# Formateamos la tabla de Productos y de Clientes
 			# Traemos los detalles asociados a la venta a editar
-		
-			$detaProductos=ModeloCierres::mdlMostraDetallesCierres("cierres_detallejf","codigo",$_POST["editarCierre"]);
-		
+
+			$detaProductos = ModeloCierres::mdlMostraDetallesCierres("cierres_detallejf", "codigo", $_POST["editarCierre"]);
+
 			# Cambiamos los id de la lista por los id de los Productos
-			foreach($detaProductos as $key=>$value){
+			foreach ($detaProductos as $key => $value) {
 
-				$infoPro=controladorArticulos::ctrMostrarArticulos($value["articulo"]);
-				$detaProductos[$key]["articulo"]=$infoPro["articulo"];
-				
-			
-			}	
-
-			if($_POST["listaProductos"]==""){
-
-				$listaProductos=$detaProductos;
-				$validarCambio=false;
-
-			}else{
-
-				$listaProductos=json_decode($_POST["listaProductos"],true);
-				$validarCambio=true;
-
+				$infoPro = controladorArticulos::ctrMostrarArticulos($value["articulo"]);
+				$detaProductos[$key]["articulo"] = $infoPro["articulo"];
 			}
-			
-			if($validarCambio){
+
+			if ($_POST["listaProductos"] == "") {
+
+				$listaProductos = $detaProductos;
+				$validarCambio = false;
+			} else {
+
+				$listaProductos = json_decode($_POST["listaProductos"], true);
+				$validarCambio = true;
+			}
+
+			if ($validarCambio) {
 
 
-				foreach($listaProductos as $key=>$value){
+				foreach ($listaProductos as $key => $value) {
 					# Traemos los productos por ID en cada interacción
-					$valor=$value["articulo"];
+					$valor = $value["articulo"];
 
-					$respuestaProducto=ModeloArticulos::mdlMostrarArticulos($valor);
+					$respuestaProducto = ModeloArticulos::mdlMostrarArticulos($valor);
 
 
 					# Actualizamos las ventas en la tabla productos
-					$item1="servicio";
-					$valor1=$value["servicio"]-$value["cantidad"];
+					$item1 = "servicio";
+					$valor1 = $value["servicio"] - $value["cantidad"];
 
 					ModeloArticulos::mdlActualizarUnDato("articulojf", $item1, $valor1, $valor);
-					$tabla2="servicios_detallejf";
+					$tabla2 = "servicios_detallejf";
 					$item2 = "saldo";
-					$idServicio=$value["codServicio"];
-					$saldoServicio=ModeloCierres::mdlActualizarUnDato($tabla2, $item2, $valor1, $idServicio);
+					$idServicio = $value["codServicio"];
+					$saldoServicio = ModeloCierres::mdlActualizarUnDato($tabla2, $item2, $valor1, $idServicio);
 				}
 
 
 				# Actualizamos ultima_compra en la tabla Clientes
 				date_default_timezone_set('America/Lima');
-				$fecha= new DateTime();
-
+				$fecha = new DateTime();
 			}
-			
+
 			/* ==============================================
 			EDITAMOS LOS CAMBIOS DE LA VENTA listaMetodoPago
 			============================================== */
-			$datos=array("codigo"=>$_POST["editarCierre"],
-						 "guia"=>$_POST["editarGuia"],
-						 "usuario"=>$_POST["idVendedor"],
-						 "taller"=>$_POST["idSectorVenta"],
-						 "total"=>$_POST["totalVenta"],
-						 "fecha"=>$fecha->format("Y-m-d H:i:s"));
-						 						
+			$datos = array(
+				"codigo" => $_POST["editarCierre"],
+				"guia" => $_POST["editarGuia"],
+				"usuario" => $_POST["idVendedor"],
+				"taller" => $_POST["idSectorVenta"],
+				"total" => $_POST["totalVenta"],
+				"fecha" => $fecha->format("Y-m-d H:i:s")
+			);
 
-			$respuesta=ModeloCierres::mdlEditarCierres("cierresjf",$datos);
+
+			$respuesta = ModeloCierres::mdlEditarCierres("cierresjf", $datos);
 
 
 			/* var_dump("datos", $datos); */
 
-			if($respuesta=="ok"){
+			if ($respuesta == "ok") {
 
 				# Eliminamos los detalles de la venta
-				$eliminarDeta=ModeloCierres::mdlEliminarDato("cierres_detallejf","codigo",$_POST["editarCierre"]);
+				$eliminarDeta = ModeloCierres::mdlEliminarDato("cierres_detallejf", "codigo", $_POST["editarCierre"]);
 
-				if($eliminarDeta=="ok"){
+				if ($eliminarDeta == "ok") {
 
 					# Guardamos los nuevos detalles de la venta
-					foreach($listaProductos as $key=>$value){
+					foreach ($listaProductos as $key => $value) {
 
-						$datos=array("codigo"=>$_POST["editarCierre"],
-									 "articulo"=>$value["articulo"],
-									 "cantidad"=>$value["cantidad"],
-									 "cod_servicio"=>$value["codServicio"]);
+						$datos = array(
+							"codigo" => $_POST["editarCierre"],
+							"articulo" => $value["articulo"],
+							"cantidad" => $value["cantidad"],
+							"cod_servicio" => $value["codServicio"]
+						);
 
-									 ModeloCierres::mdlGuardarDetallesCierres("cierres_detallejf",$datos);
-					
-					
+						ModeloCierres::mdlGuardarDetallesCierres("cierres_detallejf", $datos);
 					}
 					# Mostramos una alerta suave
 					echo '<script>
@@ -267,7 +271,7 @@ class ControladorCierres{
 									window.location="cierres";}
 							});
 						</script>';
-				}else{
+				} else {
 					# Mostramos una alerta suave
 					echo '<script>
 							swal({
@@ -282,8 +286,7 @@ class ControladorCierres{
 							});
 						</script>';
 				}
-					
-			}else{
+			} else {
 				# Mostramos una alerta suave
 				echo '<script>
 						swal({
@@ -297,172 +300,165 @@ class ControladorCierres{
 								window.location="cierres";}
 						});
 					</script>';
-				
-			}			
-
-
-
-		}		
-	} 
+			}
+		}
+	}
 
 
 	/*=============================================
 	ELIMINAR CIERRE
 	=============================================*/
 
-	static public function ctrEliminarCierre($codigo){
+	static public function ctrEliminarCierre($codigo)
+	{
 
 		$item = "codigo";
-        $infoCierre = ModeloCierres::mdlMostrarCierres("cierresjf", $item, $codigo);
-    	
+		$infoCierre = ModeloCierres::mdlMostrarCierres("cierresjf", $item, $codigo);
 
-        $detaCierre = ModeloCierres::mdlMostraDetallesCierres("cierres_detallejf", "codigo", $codigo);
-        
 
-        /* 
+		$detaCierre = ModeloCierres::mdlMostraDetallesCierres("cierres_detallejf", "codigo", $codigo);
+
+
+		/* 
         todo: Actualizamos orden de corte en Articulojf
         */
-        foreach($detaCierre as $key=>$value){
+		foreach ($detaCierre as $key => $value) {
 
-            $valorA = $value["articulo"];
+			$valorA = $value["articulo"];
 
-            $infoA = ModeloArticulos::mdlMostrarArticulos($valorA);
-            // var_dump("infoA", $infoA);
-            #var_dump("infoA", $infoA["ord_corte"]);
-            #var_dump("cantidad", $value["cantidad"]);
+			$infoA = ModeloArticulos::mdlMostrarArticulos($valorA);
+			// var_dump("infoA", $infoA);
+			#var_dump("infoA", $infoA["ord_corte"]);
+			#var_dump("cantidad", $value["cantidad"]);
 
-            $servicio = $infoA["servicio"] + $value["cantidad"];
-            #var_dump("ord_corte", $ord_corte);
+			$servicio = $infoA["servicio"] + $value["cantidad"];
+			#var_dump("ord_corte", $ord_corte);
 
 			ModeloArticulos::mdlActualizarUnDato("articulojf", "servicio", $servicio, $value["articulo"]);
 
-			$tabla2="servicios_detallejf";
+			$tabla2 = "servicios_detallejf";
 			$item2 = "saldo";
-			$saldoServicio=ModeloArticulos::mdlActualizarUnDato($tabla2, $item2, $servicio, $value["articulo"]);
+			$saldoServicio = ModeloArticulos::mdlActualizarUnDato($tabla2, $item2, $servicio, $value["articulo"]);
+		}
 
-		
-        }
-
-        /* 
+		/* 
         todo: Eliminamos la cabecera de Orden de corte
         */
-        $tablaCierre = "cierresjf";
-        $itemCierre = "codigo";
-        $valorCierre = $codigo;
+		$tablaCierre = "cierresjf";
+		$itemCierre = "codigo";
+		$valorCierre = $codigo;
 
-        $respuesta = ModeloCierres::mdlEliminarDato($tablaCierre, $itemCierre, $valorCierre);
+		$respuesta = ModeloCierres::mdlEliminarDato($tablaCierre, $itemCierre, $valorCierre);
 
-        if($respuesta == "ok"){
+		if ($respuesta == "ok") {
 
-            /* 
+			/* 
             todo: Eliminamos el detalle de Orden de corte
             */
-            $tablaDSer = "cierres_detallejf";
-            $itemDSer = "codigo";
-            $valorDSer = $codigo;
+			$tablaDSer = "cierres_detallejf";
+			$itemDSer = "codigo";
+			$valorDSer = $codigo;
 
-            ModeloCierres::mdlEliminarDato($tablaDSer, $itemDSer, $valorDSer);
+			ModeloCierres::mdlEliminarDato($tablaDSer, $itemDSer, $valorDSer);
+		}
 
-        }
-
-        return $respuesta;
-
-
+		return $respuesta;
 	}
 
 	/*=============================================
 	SUMA TOTAL VENTAS
 	=============================================*/
 
-	public function ctrSumaTotalVentas(){
+	public function ctrSumaTotalVentas()
+	{
 
 		$tabla = "cierresjf";
 
 		$respuesta = ModeloCierres::mdlSumaTotalCierres($tabla);
 
 		return $respuesta;
-
 	}
 
 	/*=============================================
 	MOSTRAR ULTIMO SERVICIOS
 	=============================================*/
 
-	static public function ctrMostrarUltimoCierre(){
+	static public function ctrMostrarUltimoCierre()
+	{
 
 		$tabla = "cierresjf";
 
 		$respuesta = ModeloCierres::mdlUltimoCierre($tabla);
 
 		return $respuesta;
-
 	}
 
 	/*=============================================
 	MOSTRAR ULTIMO SERVICIOS
 	=============================================*/
 
-	static public function ctrMostrarArticulosCierre($sectorCierre){
+	static public function ctrMostrarArticulosCierre($sectorCierre)
+	{
 
 
 		$respuesta = ModeloCierres::mdlMostrarArticulosCiere($sectorCierre);
 
 		return $respuesta;
-
 	}
 	// VISUALIZAR CIERRE DETALLE
-	static public function ctrVisualizarCierrreDetalle($valor){
+	static public function ctrVisualizarCierrreDetalle($valor)
+	{
 
-        $respuesta = ModeloCierres::mdlVisualizarCierreDetalle($valor);
-        
+		$respuesta = ModeloCierres::mdlVisualizarCierreDetalle($valor);
+
 		return $respuesta;
-
-	} 
+	}
 
 	/*=============================================
 	RANGO FECHAS
-	=============================================*/	
+	=============================================*/
 
-	static public function ctrRangoFechasCierres($fechaInicial, $fechaFinal){
+	static public function ctrRangoFechasCierres($fechaInicial, $fechaFinal)
+	{
 
 		$tabla = "cierresjf";
 
 		$respuesta = ModeloCierres::mdlRangoFechasCierres($tabla, $fechaInicial, $fechaFinal);
 
 		return $respuesta;
-		
 	}
-	
+
 	/*=============================================
 	RANGO FECHAS
-	=============================================*/	
+	=============================================*/
 
-	static public function ctrRangoFechasVerCierres($fechaInicial, $fechaFinal){
+	static public function ctrRangoFechasVerCierres($fechaInicial, $fechaFinal)
+	{
 
 		$tabla = "cierresjf";
 
 		$respuesta = ModeloCierres::mdlRangoFechasVerCierres($tabla, $fechaInicial, $fechaFinal);
 
 		return $respuesta;
-		
-    }
+	}
 
 	/*=============================================
 	CAMBIAR FEHA CIERRE
 	=============================================*/
 
-	static public function ctrCambiarFechaCierre(){
+	static public function ctrCambiarFechaCierre()
+	{
 
-		if(isset($_POST["idCierre"])){
+		if (isset($_POST["idCierre"])) {
 
-				$tabla="cierresjf";
-				$valor1=$_POST["fecha"];
-				$valor2 = $_POST["idCierre"];
+			$tabla = "cierresjf";
+			$valor1 = $_POST["fecha"];
+			$valor2 = $_POST["idCierre"];
 
-			   	$respuesta = ModeloCierres::mdlActualizarUnDato($tabla,"fecha",$valor1,$valor2);
+			$respuesta = ModeloCierres::mdlActualizarUnDato($tabla, "fecha", $valor1, $valor2);
 
 
-					echo'<script>
+			echo '<script>
 
 					swal({
 						  type: "success",
@@ -478,12 +474,6 @@ class ControladorCierres{
 								})
 
 					</script>';
-
-
-			
-
 		}
-
-    }
-    
+	}
 }

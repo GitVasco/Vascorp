@@ -1141,6 +1141,7 @@ class ControladorIngresos
 
                 if ($respuesta == "ok") {
                     self::guardarDetallesIngreso($listaArticulos, $_POST);
+                    ModeloCierres::mdlActualizarServicioTotal();
                     self::mostrarAlertaExito("¡La información fue registrada con éxito!", "ingresos");
                 } else {
                     self::mostrarAlertaError("¡La información presento problemas y no se registro adecuadamente. Por favor, intenteló de nuevo!", "crear-ingresos");
@@ -1189,7 +1190,7 @@ class ControladorIngresos
 
             // Actualizamos Taller
             $item1 = "taller";
-            $valor1 = $value["taller"];
+            $valor1 = $value["taller"] < 0 ? 0 : $value["taller"];
 
             ModeloArticulos::mdlActualizarUnDato($tabla, $item1, $valor1, $valor);
 
@@ -1205,6 +1206,7 @@ class ControladorIngresos
     private function actualizarCierresDetalle($listaArticulos)
     {
         foreach ($listaArticulos as $value) {
+
             $tabla = "cierres_detallejf";
 
             $valor = $value["idCierre"];
@@ -1212,7 +1214,7 @@ class ControladorIngresos
 
             // Actualizar Taller
             $item1 = "cantidad";
-            $valor1 = $value["taller"];
+            $valor1 = $value["taller"] < 0 ? 0 : $value["taller"];
 
             ModeloArticulos::mdlActualizarUnCierre($tabla, $item1, $valor1, $valor);
 
@@ -1220,6 +1222,7 @@ class ControladorIngresos
             $item2 = "stock";
             $valor2 = $value["cantidad"];
 
+            ModeloArticulos::mdlActualizarStockIngreso($articulo, $valor2);
             ModeloArticulos::mdlActualizarStockIngreso($articulo, $valor2);
 
             // Actualizamos servicio

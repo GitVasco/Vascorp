@@ -28,7 +28,7 @@
       <div class="box-header">
         <div class="pull-right">
           <button class="btn btn-outline-success btnReporteArt" style="border:green 1px solid">
-          <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Articulos  </button>
+            <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Articulos </button>
         </div>
       </div>
       <div class="box-body">
@@ -52,6 +52,8 @@
               <th>Tipo</th>
               <th>Estado</th>
               <th>Stock</th>
+              <th>Stock 01</th>
+              <th>Stock 05</th>
               <th>Promedio</th>
               <th>Tarjeta</th>
             </tr>
@@ -338,7 +340,7 @@ MODAL AGREGAR ARTICULO
         </div>
 
       </form>
-      
+
       <?php
 
       $crearArticulo = new ControladorArticulos();
@@ -397,18 +399,17 @@ MODAL EDITAR ARTICULO
 
                 <select class="form-control input-lg selectpicker" id="editarMarca" name="editarMarca" data-live-search="true" required readonly>
 
-                <?php
-                    $valor = null;
-                    $marcas = ControladorMarcas::ctrMostrarMarcas($valor);
-                    //var_dump("marcas", $marcas);
+                  <?php
+                  $valor = null;
+                  $marcas = ControladorMarcas::ctrMostrarMarcas($valor);
+                  //var_dump("marcas", $marcas);
 
-                    foreach ($marcas as $key => $value) {
+                  foreach ($marcas as $key => $value) {
 
-                      echo '<option value="' . $value["id"] . '">' . $value["marca"] . '</option>';
+                    echo '<option value="' . $value["id"] . '">' . $value["marca"] . '</option>';
+                  }
 
-                    }
-
-                    ?>
+                  ?>
 
                 </select>
 
@@ -454,7 +455,7 @@ MODAL EDITAR ARTICULO
 
                 <select class="form-control input-lg" name="editarColor" required readonly>
 
-                <option id="editarColor"></option>
+                  <option id="editarColor"></option>
 
 
                 </select>
@@ -583,5 +584,5 @@ $eliminarArticulo->ctrEliminarArticulo();
 ?>
 
 <script>
-window.document.title = "Articulos"
+  window.document.title = "Articulos"
 </script>

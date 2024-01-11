@@ -2430,31 +2430,35 @@ function getTableInputsData() {
 }
 
 //* boton cambiar precio
-$(".tablaPedidosCV").on("click", ".btnPrecio", function () {
-    var pedido = $(this).attr("codigo");
-    var numero = window.prompt(
-        "Digite el número de la lista de precios para cambiar el pedido " +
-            pedido
-    );
+$(".tablaPedidosCV, .tablaPedidosAprobados").on(
+    "click",
+    ".btnPrecio",
+    function () {
+        var pedido = $(this).attr("codigo");
+        var numero = window.prompt(
+            "Digite el número de la lista de precios para cambiar el pedido " +
+                pedido
+        );
 
-    var parsedNumero = parseInt(numero);
-    if (!isNaN(parsedNumero)) {
-        const datosPrecio = new FormData();
-        updateFormData(datosPrecio, "pedidoL", pedido);
-        updateFormData(datosPrecio, "listaL", parsedNumero);
-        $.ajax({
-            url: "ajax/precios.ajax.php",
-            method: "POST",
-            data: datosPrecio,
-            cache: false,
-            contentType: false,
-            processData: false,
-            dataType: "json",
-            success: function (respuestaA) {
-                if (respuestaA == "ok") {
-                    Command: toastr["success"]("Se actualizo los precios");
-                }
-            },
-        });
+        var parsedNumero = parseInt(numero);
+        if (!isNaN(parsedNumero)) {
+            const datosPrecio = new FormData();
+            updateFormData(datosPrecio, "pedidoL", pedido);
+            updateFormData(datosPrecio, "listaL", parsedNumero);
+            $.ajax({
+                url: "ajax/precios.ajax.php",
+                method: "POST",
+                data: datosPrecio,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: "json",
+                success: function (respuestaA) {
+                    if (respuestaA == "ok") {
+                        Command: toastr["success"]("Se actualizo los precios");
+                    }
+                },
+            });
+        }
     }
-});
+);

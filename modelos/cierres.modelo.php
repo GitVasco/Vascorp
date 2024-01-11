@@ -80,6 +80,59 @@ class ModeloCierres
 		$stmt = null;
 	}
 
+	// Método para actualizar los servicios totales
+	static public function mdlActualizarServicioTotal()
+	{
+
+		$sql = "UPDATE 
+					articulojf a 
+					LEFT JOIN 
+					(SELECT 
+						a.articulo,
+						a.servicio AS servicio_total,
+						IFNULL(s.servicio, 0) AS servicio,
+						IFNULL(c.cierre, 0) AS cierre,
+						(
+						IFNULL(s.servicio, 0) + IFNULL(c.cierre, 0)
+						) AS servicio_real 
+					FROM
+						articulojf a 
+						LEFT JOIN 
+						(SELECT 
+							s.articulo,
+							SUM(s.saldo) AS servicio 
+						FROM
+							servicios_detallejf s 
+						WHERE s.cerrar = 0 
+							AND s.saldo > 0 
+						GROUP BY s.articulo) s 
+						ON a.articulo = s.articulo 
+						LEFT JOIN 
+						(SELECT 
+							c.articulo,
+							SUM(c.cantidad) AS cierre 
+						FROM
+							cierres_detallejf c 
+						WHERE c.cantidad > 0 
+						GROUP BY c.articulo) c 
+						ON a.articulo = c.articulo 
+					HAVING servicio_total <> servicio_real) s 
+					ON a.articulo = s.articulo SET a.servicio = IFNULL(s.servicio_real, 0) 
+				WHERE a.servicio <> s.servicio_real";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt = null;
+	}
+
 	// Método para guardar las ventas
 	static public function mdlGuardarDetallesCierres($tabla, $datos)
 	{
