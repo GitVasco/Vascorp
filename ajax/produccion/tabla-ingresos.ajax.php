@@ -49,6 +49,10 @@ class TablaIngresos
 
                         $nombreTipo = "Prenda Incompleta";
                         $estado = "<span style='font-size:85%' class='label label-danger'>" . $nombreTipo . "</span>";
+                    } else if ($ingreso[$i]["tipo"] == "S32") {
+
+                        $nombreTipo = "Salida por arreglo - Solo Producción";
+                        $estado = "<span style='font-size:85%' class='label label-danger'>" . $nombreTipo . "</span>";
                     } else {
                         $nombreTipo = "Segundas";
                         $estado = "<span style='font-size:85%' class='label label-danger'>" . $nombreTipo . "</span>";

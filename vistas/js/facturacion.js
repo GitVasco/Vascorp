@@ -3322,11 +3322,12 @@ $(".tablaCuadrarCaja").on("click", ".btnAgregarCobro", function () {
 
 // document.addEventListener("DOMContentLoaded", cargarPagina);
 
-$(".tablaGuiasRemision tbody").on(
+$(".tablaGuiasRemision ").on(
     "click",
-    "button.btnEditarGRemision",
+    ".btnEditarGRemision",
     function () {
         var codigo = $(this).attr("documento");
+        console.log("🚀 ~ codigo:", codigo);
         var cod_cli = $(this).attr("cod_cli");
         var nom_cli = $(this).attr("nom_cli");
         var tip_doc = $(this).attr("tip_doc");

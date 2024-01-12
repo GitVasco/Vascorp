@@ -492,7 +492,7 @@ $(
 /*
  * BOTON  IMPRIMIR TICKET
  */
-$(".tablaPedidosConfirmados, .tablaPedidosGenerados").on(
+$(".tablaPedidosConfirmados, .tablaPedidosGenerados, .tablaPedidosCV").on(
     "click",
     ".btnCotizarPedido",
     function () {

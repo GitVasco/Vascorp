@@ -175,7 +175,7 @@
                                             $item = "tipo_dato";
                                             $valor = "TTOP";
 
-                                            $codigos = array("S16", "S25", "S26", "S27");
+                                            $codigos = array("S16", "S25", "S26", "S27", "S32");
 
                                             $documentos = ControladorCuentas::ctrMostrarPagos($item, $valor);
                                             foreach ($documentos as $key => $value) {

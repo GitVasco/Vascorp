@@ -96,7 +96,7 @@
                             <th>Estado</th>
                             <th>Usuario</th>
                             <th>Fecha</th>
-                            <th width="240px">Acciones</th>
+                            <th width="280px">Acciones</th>
                         </tr>
                     </thead>
 
