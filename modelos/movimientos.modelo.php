@@ -2710,7 +2710,7 @@ class ModeloMovimientos
    }
 
 
-   static public function mdlMostrarResumenVtasB($mes)
+   static public function mdlMostrarResumenVtasB($año, $mes)
    {
 
       if ($mes == "null" || $mes == "TODO") {
@@ -2724,7 +2724,7 @@ class ModeloMovimientos
                   ROUND(SUM(CASE WHEN v.tipo_moneda = '1' THEN v.total ELSE v.total * v.tipo_cambio END),2) AS total 
                      FROM
                         ventajf v 
-                     WHERE YEAR(v.fecha) = YEAR(NOW())
+                     WHERE YEAR(v.fecha) = $año
                         AND v.tipo IN ('E05', 'S02', 'S03', 'S05') 
                      GROUP BY v.tipo,
                         v.tipo_documento 
@@ -2748,7 +2748,7 @@ class ModeloMovimientos
                      ROUND(SUM(CASE WHEN v.tipo_moneda = '1' THEN v.total ELSE v.total * v.tipo_cambio END),2) AS total 
                      FROM
                         ventajf v 
-                     WHERE YEAR(v.fecha) = YEAR(NOW()) 
+                     WHERE YEAR(v.fecha) = $año
                         AND MONTH(v.fecha) = $mes 
                         AND v.tipo IN ('E05', 'S02', 'S03', 'S05') 
                      GROUP BY v.tipo,

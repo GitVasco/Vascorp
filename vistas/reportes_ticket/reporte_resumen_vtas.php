@@ -18,7 +18,8 @@
     */
 
     $mes = $_GET["mes"];
-    $movimientos = ControladorMovimientos::ctrMostrarResumenVtasB($mes);
+    $año = $_GET["año"];
+    $movimientos = ControladorMovimientos::ctrMostrarResumenVtasB($año, $mes);
     #var_dump($movimientos);
 
     switch ($mes) {

@@ -17,11 +17,15 @@
     $documento = $_GET["codigo"];
     $venta = ControladorFacturacion::ctrMostrarVentaImpresion($documento, $tipo);
 
+    $anno = date("Y", strtotime($venta["fecha_emision"]));
+    $tabla = "movimientosjf_" . $anno;
+
     if ($venta["tipo_guia"] === "VENTA"  || $venta["tipo_guia"] === "VENTA CON ENTREGA A TERCEROS") {
-        $modelo = ControladorFacturacion::ctrMostrarModeloImpresionV2("movimientosjf_2024", $documento, $tipo, 0, 100);
+        $modelo = ControladorFacturacion::ctrMostrarModeloImpresionV2($tabla, $documento, $tipo, 0, 100);
     } else {
-        $modelo = ControladorFacturacion::ctrMostrarModeloImpresionV3("movimientosjf_2024", $documento, $tipo, 0, 100);
+        $modelo = ControladorFacturacion::ctrMostrarModeloImpresionV3($tabla, $documento, $tipo, 0, 100);
     }
+
 
     $cantModelo = count($modelo);
     $subtotal = $venta["neto"] - $venta["dscto"];

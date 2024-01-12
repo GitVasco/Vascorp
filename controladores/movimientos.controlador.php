@@ -1,44 +1,46 @@
 <?php
 
-class ControladorMovimientos{
+class ControladorMovimientos
+{
 
     /* 
     * total unidades vendidas del mes actual y pasado
     */
-    static public function ctrTotUndVen($valor){
+    static public function ctrTotUndVen($valor)
+    {
 
         $respuesta = ModeloMovimientos::mdlTotUndVen($valor);
 
         return $respuesta;
-
     }
 
     /* 
     * total unidades producidas del mes actual y pasado
     */
-    static public function ctrTotUndProd($valor){
+    static public function ctrTotUndProd($valor)
+    {
 
         $respuesta = ModeloMovimientos::mdlTotUndProd($valor);
 
         return $respuesta;
-
     }
 
     /* 
     * sacar los meses codigo y nombre
     */
-    static public function ctrMesesMov(){
+    static public function ctrMesesMov()
+    {
 
         $respuesta = ModeloMovimientos::mldMesesMov();
 
         return $respuesta;
-
     }
 
     /* 
     * sacamos los totales de ventas por mes
     */
-    static public function ctrTotalMesVent(){
+    static public function ctrTotalMesVent()
+    {
 
         $respuesta = ModeloMovimientos::mdlTotalMesVent();
 
@@ -48,352 +50,353 @@ class ControladorMovimientos{
     /* 
     * sacamos los totales de produccion por mes
     */
-    static public function ctrTotalMesProd(){
+    static public function ctrTotalMesProd()
+    {
 
         $respuesta = ModeloMovimientos::mdlTotalMesProd();
 
         return $respuesta;
-    } 
-    
+    }
+
     /* 
     * sacamos los totales por mes de la  nueva tabla TOTALES
     */
-    static public function ctrMostrarTotales(){
+    static public function ctrMostrarTotales()
+    {
 
         $respuesta = ModeloMovimientos::mldMostrarTotales();
 
         return $respuesta;
-
     }
 
     /* 
     * sacamos los datos de mov del dia
     */
-    static public function ctrMostrarDias(){
+    static public function ctrMostrarDias()
+    {
 
         $respuesta = ModeloMovimientos::mldMostrarDias();
 
         return $respuesta;
-
-    }    
-
-    /* 
-    * sacamos los totales por mes de la  nueva tabla TOTALES
-    */
-    static public function ctrTotalesSolesVenta(){
-
-        $respuesta = ModeloMovimientos::mdlTotalesSolesVenta();
-
-        return $respuesta;
-
     }
 
     /* 
     * sacamos los totales por mes de la  nueva tabla TOTALES
     */
-    static public function ctrTotalesSolesPagos(){
+    static public function ctrTotalesSolesVenta()
+    {
+
+        $respuesta = ModeloMovimientos::mdlTotalesSolesVenta();
+
+        return $respuesta;
+    }
+
+    /* 
+    * sacamos los totales por mes de la  nueva tabla TOTALES
+    */
+    static public function ctrTotalesSolesPagos()
+    {
 
         $respuesta = ModeloMovimientos::mdlTotalesSolesPagos();
 
         return $respuesta;
-
     }
 
     /* 
     * sacamos los totales vencidos por vendedor
     */
-    static public function ctrTotalesVencidosVendedor($inicio, $lineas){
+    static public function ctrTotalesVencidosVendedor($inicio, $lineas)
+    {
 
         $respuesta = ModeloMovimientos::mdlTotalesVencidosVendedor($inicio, $lineas);
 
         return $respuesta;
-
-    }    
+    }
 
     /* 
     * total de dias con produccion del mes pasado
     */
-    static public function ctrTotDiasProd($valor){
+    static public function ctrTotDiasProd($valor)
+    {
 
         $respuesta = ModeloMovimientos::mdlTotDiasProd($valor);
 
         return $respuesta;
-
     }
 
     /* 
     * top 10 de ventas modelos
     */
-    static public function ctrMovMes($valor){
+    static public function ctrMovMes($valor)
+    {
 
         $respuesta = ModeloMovimientos::mdlMovMes($valor);
 
         return $respuesta;
-
     }
 
     /* 
     * top 12 de ventas modelos fotos
     */
-    static public function ctrMovMesFoto(){
+    static public function ctrMovMesFoto()
+    {
 
         $respuesta = ModeloMovimientos::mdlMovMesFoto();
 
         return $respuesta;
-
     }
 
     /* 
     * sacamos los totales por mes de la  nueva tabla TOTALES
     */
-    static public function ctrSumaUnd($valor){
+    static public function ctrSumaUnd($valor)
+    {
 
         $respuesta = ModeloMovimientos::mdlSumaUnd($valor);
 
         return $respuesta;
-
     }
-    
+
     /* 
     * MOSTRAR ULTIMO NUMERO DE TALONARIO
     */
-    static public function ctrMostrarTalonario(){
+    static public function ctrMostrarTalonario()
+    {
 
         $respuesta = ModeloMovimientos::mdlMostrarTalonario();
 
         return $respuesta;
+    }
 
-    }      
-
-     /* 
+    /* 
     * MOSTRAR ULTIMO NUMERO DE TALONARIO SALIDA
     */
-    static public function ctrMostrarTalonarioSalida(){
+    static public function ctrMostrarTalonarioSalida()
+    {
 
         $respuesta = ModeloMovimientos::mdlMostrarTalonarioSalida();
 
         return $respuesta;
+    }
 
-    }  
-    
     /* 
     * MOSTRAR LOS MOVIMIENTOS DE PRODUCCION POR MODELO
     */
-    static public function ctrMovProdMod($modelo){
+    static public function ctrMovProdMod($modelo)
+    {
 
         $respuesta = ModeloMovimientos::mdlMovProdMod($modelo);
 
         return $respuesta;
-
     }
-    
+
     /* 
     * MOSTRAR LOS MOVIMIENTOS DE VENTAS POR MODELO
     */
-    static public function ctrMovVtaMod($modelo){
+    static public function ctrMovVtaMod($modelo)
+    {
 
         $respuesta = ModeloMovimientos::mdlMovVtaMod($modelo);
 
         return $respuesta;
+    }
 
-    }    
-    
 
     /* 
     * MOSTRAR LOS MOVIMIENTOS DE VENTAS POR MODELO
     */
-    static public function ctrLineaMP(){
+    static public function ctrLineaMP()
+    {
 
         $respuesta = ModeloMovimientos::mdlLineaMP();
 
         return $respuesta;
-
     }
-    
+
     /* 
     * MOSTRAR LOS INGRESOS POR MATERIA PRIMA
     */
-    static public function ctrMovIngMp($inea){
+    static public function ctrMovIngMp($inea)
+    {
 
         $respuesta = ModeloMovimientos::mdlMovIngMp($inea);
 
         return $respuesta;
-
-    }       
+    }
 
     /* 
     * MOSTRAR LAS SALIDAS POR MATERIA PRIMA
     */
-    static public function ctrMovSalMp($linea){
+    static public function ctrMovSalMp($linea)
+    {
 
         $respuesta = ModeloMovimientos::mdlMovSalMp($linea);
 
         return $respuesta;
+    }
 
-    }      
-    
     /* 
     * MOSTRAR TOTALES DEL MES VTAS - PAGOS
     */
-    static public function ctrTotalesSoles($mes){
+    static public function ctrTotalesSoles($mes)
+    {
 
         $respuesta = ModeloMovimientos::mdlTotalesSoles($mes);
 
         return $respuesta;
+    }
 
-    }       
-    
     /* 
     * MOSTRAR TOTALES DEL MES PEDIDOS
     */
-    static public function ctrTotalesSolesPedidos($mes){
+    static public function ctrTotalesSolesPedidos($mes)
+    {
 
         $respuesta = ModeloMovimientos::mdlTotalesSolesPedidos($mes);
 
         return $respuesta;
-
-    }     
+    }
 
     /* 
     * MOSTRAR TOTALES VENCIDOS
     */
-    static public function ctrTotalVencidos(){
+    static public function ctrTotalVencidos()
+    {
 
         $respuesta = ModeloMovimientos::mdlTotalVencidos();
 
         return $respuesta;
+    }
 
-    }   
-    
     /* 
     * MOSTRAR TOTALES VENCIDOS
     */
-    static public function ctrTotalVencidosInc(){
+    static public function ctrTotalVencidosInc()
+    {
 
         $respuesta = ModeloMovimientos::mdlTotalVencidosInc();
 
         return $respuesta;
+    }
 
-    }   
-    
     /* 
     * MOSTRAR TOTALES VENCIDOS
     */
-    static public function ctrTotalVencidos180(){
+    static public function ctrTotalVencidos180()
+    {
 
         $respuesta = ModeloMovimientos::mdlTotalVencidos180();
 
         return $respuesta;
+    }
 
-    }     
-    
     /* 
     * MOSTRAR RESUMEN DE VENTAS
     */
-    static public function ctrMostrarResumenVtas($mes){
+    static public function ctrMostrarResumenVtas($mes)
+    {
 
         $respuesta = ModeloMovimientos::mdlMostrarResumenVtas($mes);
 
         return $respuesta;
-
-    }     
+    }
 
     /* 
     * MOSTRAR RESUMEN DE VENTAS
     */
-    static public function ctrMostrarResumenVtasB($mes){
+    static public function ctrMostrarResumenVtasB($año, $mes)
+    {
 
-        $respuesta = ModeloMovimientos::mdlMostrarResumenVtasB($mes);
+        $respuesta = ModeloMovimientos::mdlMostrarResumenVtasB($año, $mes);
 
         return $respuesta;
-
     }
 
     /*
     * MOSTRAR RESUMEN DE VENTAS
     */
-    static public function ctrMostrarResumenCobs($mes){
+    static public function ctrMostrarResumenCobs($mes)
+    {
 
         $respuesta = ModeloMovimientos::mdlMostrarResumenCobs($mes);
 
         return $respuesta;
-
     }
 
     /* 
     * MOSTRAR RESUMEN DE VENTAS POR VENDEDOR
     */
-    static public function ctrMostrarResumenVdor($mes){
+    static public function ctrMostrarResumenVdor($mes)
+    {
 
         $respuesta = ModeloMovimientos::mdlMostrarResumenVdor($mes);
 
         return $respuesta;
-
-    }     
+    }
 
     /* 
     * MOSTRAR RANGOS
     */
-    static public function ctrMostrarRangos($mes){
+    static public function ctrMostrarRangos($mes)
+    {
 
         $respuesta = ModeloMovimientos::mdlMostrarRangos($mes);
 
         return $respuesta;
-
-    }     
+    }
 
     /* 
     * sacamos los totales por mes de la  nueva tabla TOTALES
     */
-    static public function ctrMostrarCtasVdor(){
+    static public function ctrMostrarCtasVdor()
+    {
 
         $respuesta = ModeloMovimientos::mldMostrarCtasVdor();
 
         return $respuesta;
+    }
 
-    }  
-    
     /* 
     * rangos por meses
     */
-    static public function ctrMostrarRangosDias(){
+    static public function ctrMostrarRangosDias()
+    {
 
         $respuesta = ModeloMovimientos::mldMostrarRangosDias();
 
         return $respuesta;
-
-    }     
+    }
 
     /* 
     * MOSTRAR TOTALES EN FACTURAS
     */
-    static public function ctrFacturas($mes){
+    static public function ctrFacturas($mes)
+    {
 
         $respuesta = ModeloMovimientos::mdlFacturas($mes);
 
         return $respuesta;
-
-    }  
+    }
 
     /* 
     * MOSTRAR TOTALES EN PROFORMAS
     */
-    static public function ctrProformas($mes){
+    static public function ctrProformas($mes)
+    {
 
         $respuesta = ModeloMovimientos::mdlProformas($mes);
 
         return $respuesta;
-
-    }  
+    }
 
     /* 
     * sacamos los totales de produccion por mes
     */
-    static public function ctrModelosMovimientos($modelo){
+    static public function ctrModelosMovimientos($modelo)
+    {
 
         $respuesta = ModeloMovimientos::mdlModelosMovimientos($modelo);
 
         return $respuesta;
-    }     
-    
+    }
 }
