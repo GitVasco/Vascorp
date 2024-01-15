@@ -32,7 +32,22 @@ class TablaPedidosCV
                     $estado = "<button class='btn btn-basic btn-xs btnAprobarPedido' codigo='" . $pedidos[$i]["codigo"] . "' estadoPedido='APROBADO'>GENERADO</button>";
                 } else if ($pedidos[$i]["estado"] == "APROBADO") {
 
-                    $estado = "<button class='btn btn-warning btn-xs btnAptear' codigo='" . $pedidos[$i]["codigo"] . "' estadoPedido='APT'>APROBADO</button>";
+                    // si la fecha es menos a 3 dias de la fecha actual la clase debe ser danger de lo contrario warning
+                    $fechaActual = strtotime(date("Y-m-d"));
+                    $fechaPedido = strtotime($pedidos[$i]["fecha"]);
+                    $diferencia =  $fechaActual - $fechaPedido;
+                    $dias = floor($diferencia / (60 * 60 * 24));
+
+                    if ($dias > 3) {
+
+                        $estado = "<button class='btn btn-danger btn-xs btnAptear' codigo='" . $pedidos[$i]["codigo"] . "' estadoPedido='APT'>APROBADO</button>";
+                    } else {
+
+                        $estado = "<button class='btn btn-warning btn-xs btnAptear' codigo='" . $pedidos[$i]["codigo"] . "' estadoPedido='APT'>APROBADO</button>";
+                    }
+
+
+                    //$estado = "<button class='btn btn-warning btn-xs btnAptear' codigo='" . $pedidos[$i]["codigo"] . "' estadoPedido='APT'>APROBADO</button>";
                 } else if ($pedidos[$i]["estado"] == "APT") {
 
                     $estado = "<button class='btn btn-default btn-xs btn  btnConfirmar' codigo='" . $pedidos[$i]["codigo"] . "' estadoPedido='CONFIRMADO'>APT</button>";

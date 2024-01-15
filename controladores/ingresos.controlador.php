@@ -1223,7 +1223,7 @@ class ControladorIngresos
             $valor2 = $value["cantidad"];
 
             ModeloArticulos::mdlActualizarStockIngreso($articulo, $valor2);
-            ModeloArticulos::mdlActualizarStockIngreso($articulo, $valor2);
+            ModeloArticulos::mdlActualizarStockIngreso01($articulo, $valor2);
 
             // Actualizamos servicio
             ModeloArticulos::mdlActualizarArticuloServicio($articulo, $valor2);
