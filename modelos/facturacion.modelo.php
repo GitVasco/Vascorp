@@ -7643,268 +7643,270 @@ class ModeloFacturacion
     {
 
         $sql = "SELECT 
-                    /*FILA 1*/
-                    v.fecha AS a1,
-                    CONCAT(
-                        LEFT(v.documento, 4),
-                        '-',
-                        RIGHT(v.documento, 8)
-                    ) AS b1,
-                    '09' AS c1,
-                    COUNT(m.modelo) AS d1,
-                    '' AS e1,
-                    '1' AS f1,
-                    CASE
-                        WHEN v.agencia <> '0' 
-                        THEN '' 
-                        ELSE '1' 
-                    END AS g1,
-                    CASE
-                        WHEN v.agencia <> '0' 
-                        THEN '' 
-                        ELSE '1' 
-                    END AS h1,
-                    '' AS i1,
-                    TIME(v.fecha_creacion) AS j1,
-                    /*FILA 3*/
-                    CASE
-                        WHEN v.doc_destino IS NOT NULL 
-                        OR v.doc_destino <> '' 
-                        THEN CONCAT(
-                        LEFT(v.doc_destino, 4),
-                        '-',
-                        RIGHT(v.doc_destino, 8)
-                        ) 
-                        ELSE '' 
-                    END AS a3,
-                    CASE
-                        WHEN LEFT(v.doc_destino, 1) = 'F' 
-                        THEN '01' 
-                        WHEN LEFT(v.doc_destino, 1) = 'B' 
-                        THEN '03' 
-                        ELSE '' 
-                    END AS b3,
-                    CASE
-                        WHEN LEFT(v.doc_destino, 1) = 'F' 
-                        THEN 'FACTURA ELECTRONICA' 
-                        WHEN LEFT(v.doc_destino, 1) = 'B' 
-                        THEN 'BOLETA ELECTRONICA' 
-                        ELSE '' 
-                    END AS c3,
-                    '20513613939' AS d3,
-                    'ATTACH_DOC' AS e3,
-                    /*FILA 4*/
-                    CASE
-                        WHEN v.agencia <> '0' 
-                        THEN '' 
-                        ELSE 
-                        (SELECT 
-                        valor_3 
-                        FROM
-                        tabla_m_detalle t 
-                        WHERE v.chofer = t.cod_argumento 
-                        AND t.cod_tabla = 'tcho') 
-                    END AS a4,
-                    CASE
-                        WHEN v.agencia <> '0' 
-                        THEN '' 
-                        ELSE '1' 
-                    END AS b4,
-                    CASE
-                        WHEN v.agencia <> '0' 
-                        THEN '' 
-                        ELSE 
-                        (SELECT 
-                        des_larga 
-                        FROM
-                        tabla_m_detalle t 
-                        WHERE v.chofer = t.cod_argumento 
-                        AND t.cod_tabla = 'tcho') 
-                    END AS c4,
-                    CASE
-                        WHEN v.agencia <> '0' 
-                        THEN '' 
-                        ELSE 
-                        (SELECT 
-                        des_corta 
-                        FROM
-                        tabla_m_detalle t 
-                        WHERE v.chofer = t.cod_argumento 
-                        AND t.cod_tabla = 'tcho') 
-                    END AS d4,
-                    CASE
-                        WHEN v.agencia <> '0' 
-                        THEN '' 
-                        ELSE 
-                        (SELECT 
-                        valor_4 
-                        FROM
-                        tabla_m_detalle t 
-                        WHERE v.chofer = t.cod_argumento 
-                        AND t.cod_tabla = 'tcho') 
-                    END AS e4,
-                    CASE
-                        WHEN v.agencia <> '0' 
-                        THEN '' 
-                        ELSE 'ATTACH_DOC' 
-                    END AS f4,
-                    /*FILA 5*/
-                    CASE
-                        WHEN v.agencia <> '0' 
-                        THEN '' 
-                        ELSE 
-                        (SELECT 
-                        valor_3 
-                        FROM
-                        tabla_m_detalle t 
-                        WHERE v.carro = t.cod_argumento 
-                        AND t.cod_tabla = 'TCAR') 
-                    END AS a5,
-                    '' AS b5,
-                    '' AS c5,
-                    '' AS d5,
-                    CASE
-                        WHEN v.agencia <> '0' 
-                        THEN '' 
-                        ELSE 'ATTACH_DOC' 
-                    END AS e5,
-                    /*FILA 7*/
-                    'Corporacion Vasco S.A.C.' AS a7,
-                    '6' AS b7,
-                    '20513613939' AS c7,
-                    '150135' AS d7,
-                    'CAL.SANTO TORIBIO NRO. 259' AS e7,
-                    'URB.SANTA LUISA 1RA ETAPA' AS f7,
-                    'LIMA' AS g7,
-                    'LIMA' AS h7,
-                    'SAN MARTIN DE PORRES' AS i7,
-                    'PE' AS j7,
-                    /*FILA 8*/
-                    c.nombre AS a8,
-                    c.tipo_documento AS b8,
-                    c.documento AS c8,
-                    CASE
-                        WHEN LENGTH(c.ubigeo) = 6 
-                        THEN c.ubigeo 
-                        ELSE '' 
-                    END AS d8,
-                    c.direccion AS e8,
-                    '-' AS f8,
-                    u.departamento AS g8,
-                    u.provincia AS h8,
-                    u.distrito AS i8,
-                    'PE' AS j8,
-                    c.email AS k8,
-                    /*FILA 10*/
-                    '01' AS a10,
-                    'VENTA' AS b10,
-                    '' AS c10,
-                    ROUND(v.peso, 3) AS d10,
-                    'KGM' AS e10,
-                    CASE
-                        WHEN v.agencia = 0 
-                        THEN '02' 
-                        ELSE '01' 
-                    END AS f10,
-                    v.fecha AS g10,
-                    CASE
-                        WHEN v.agencia = 0 
-                        THEN '' 
-                        ELSE 
-                        (SELECT 
-                        nombre 
-                        FROM
-                        agenciasjf a 
-                        WHERE v.agencia = a.id) 
-                    END AS h10,
-                    CASE
-                        WHEN v.agencia = 0 
-                        THEN '' 
-                        ELSE '6' 
-                    END AS i10,
-                    CASE
-                        WHEN v.agencia = 0 
-                        THEN '' 
-                        ELSE 
-                        (SELECT 
-                        ruc 
-                        FROM
-                        agenciasjf a 
-                        WHERE v.agencia = a.id) 
-                    END AS j10,
-                    '150135' AS k10,
-                    'CAL.SANTO TORIBIO NRO. 259' AS l10,
-                    'URB.SANTA LUISA 1RA ETAPA' AS m10,
-                    'LIMA' AS n10,
-                    'LIMA' AS o10,
-                    'SAN MARTIN DE PORRES' AS p10,
-                    CASE
-                        WHEN LENGTH(c.ubigeo) = 6 
-                        THEN c.ubigeo 
-                        ELSE '' 
-                    END AS q10,
-                    CASE
-                        WHEN v.tipo = 'S01' 
-                        AND c.direccion_despacho <> '' 
-                        THEN c.direccion_despacho 
-                        ELSE c.direccion 
-                    END AS r10,
-                    '-' AS s10,
-                    u.departamento AS t10,
-                    u.provincia AS u10,
-                    u.distrito AS v10,
-                    v.bultos AS w10,
-                    CASE
-                        WHEN v.agencia = 0 
-                        THEN '' 
-                        ELSE 
-                        (SELECT 
-                        mtc 
-                        FROM
-                        agenciasjf a 
-                        WHERE v.agencia = a.id) 
-                    END AS aa10,
-                    CASE
-                        WHEN v.agencia = 0 
-                        THEN '' 
-                        ELSE '' 
-                    END AS ao10,
-                    /*FILA 11*/
-                    'TALLAS Y COLORES SURTIDOS' AS a11,
-                    v.cliente AS b11,
-                    CONCAT(v.vendedor, ' - ', ma.descripcion) AS c11,
-                    v.bultos AS d11,
-                    v.peso AS e11 
-                    FROM
-                    ventajf v 
-                    LEFT JOIN 
-                        (SELECT 
-                        m.tipo,
-                        m.documento,
-                        a.modelo,
-                        SUM(m.cantidad) AS cantidad 
-                        FROM
-                        movimientosjf_2024 m 
-                        LEFT JOIN articulojf a 
-                            ON m.articulo = a.articulo 
-                        WHERE m.tipo = 'S01' 
-                        AND m.documento = 'TV0100001482' 
-                        GROUP BY m.tipo,
-                        m.documento,
-                        a.modelo) AS m 
-                        ON v.tipo = m.tipo 
-                        AND v.documento = m.documento 
-                    LEFT JOIN clientesjf c 
-                        ON v.cliente = c.codigo 
-                    LEFT JOIN ubigeo u 
-                        ON c.ubigeo = u.codigo 
-                    LEFT JOIN condiciones_ventajf cv 
-                        ON v.condicion_venta = cv.id 
-                    LEFT JOIN maestrajf ma 
-                        ON ma.tipo_dato = 'TVEND' 
-                        AND v.vendedor = ma.codigo 
-                                WHERE v.tipo = 'S01' 
-                AND v.documento = :documento";
+        /*FILA 1*/
+        v.fecha AS a1,
+        CONCAT(
+          LEFT(v.documento, 4),
+          '-',
+          RIGHT(v.documento, 8)
+        ) AS b1,
+        '09' AS c1,
+        COUNT(m.modelo) AS d1,
+        '' AS e1,
+        '1' AS f1,
+        CASE
+          WHEN v.agencia <> '0' 
+          THEN '' 
+          ELSE '1' 
+        END AS g1,
+        CASE
+          WHEN v.agencia <> '0' 
+          THEN '' 
+          ELSE '1' 
+        END AS h1,
+        '' AS i1,
+        TIME(v.fecha_creacion) AS j1,
+        /*FILA 3*/
+        CASE
+          WHEN v.doc_destino IS NOT NULL 
+          OR v.doc_destino <> '' 
+          THEN CONCAT(
+            LEFT(v.doc_destino, 4),
+            '-',
+            RIGHT(v.doc_destino, 8)
+          ) 
+          ELSE '' 
+        END AS a3,
+        CASE
+          WHEN LEFT(v.doc_destino, 1) = 'F' 
+          THEN '01' 
+          WHEN LEFT(v.doc_destino, 1) = 'B' 
+          THEN '03' 
+          ELSE '' 
+        END AS b3,
+        CASE
+          WHEN LEFT(v.doc_destino, 1) = 'F' 
+          THEN 'FACTURA ELECTRONICA' 
+          WHEN LEFT(v.doc_destino, 1) = 'B' 
+          THEN 'BOLETA ELECTRONICA' 
+          ELSE '' 
+        END AS c3,
+        '20513613939' AS d3,
+        'ATTACH_DOC' AS e3,
+        /*FILA 4*/
+        CASE
+          WHEN v.agencia <> '0' 
+          THEN '' 
+          ELSE 
+          (SELECT 
+            valor_3 
+          FROM
+            tabla_m_detalle t 
+          WHERE v.chofer = t.cod_argumento 
+            AND t.cod_tabla = 'tcho') 
+        END AS a4,
+        CASE
+          WHEN v.agencia <> '0' 
+          THEN '' 
+          ELSE '1' 
+        END AS b4,
+        CASE
+          WHEN v.agencia <> '0' 
+          THEN '' 
+          ELSE 
+          (SELECT 
+            des_larga 
+          FROM
+            tabla_m_detalle t 
+          WHERE v.chofer = t.cod_argumento 
+            AND t.cod_tabla = 'tcho') 
+        END AS c4,
+        CASE
+          WHEN v.agencia <> '0' 
+          THEN '' 
+          ELSE 
+          (SELECT 
+            des_corta 
+          FROM
+            tabla_m_detalle t 
+          WHERE v.chofer = t.cod_argumento 
+            AND t.cod_tabla = 'tcho') 
+        END AS d4,
+        CASE
+          WHEN v.agencia <> '0' 
+          THEN '' 
+          ELSE 
+          (SELECT 
+            valor_4 
+          FROM
+            tabla_m_detalle t 
+          WHERE v.chofer = t.cod_argumento 
+            AND t.cod_tabla = 'tcho') 
+        END AS e4,
+        CASE
+          WHEN v.agencia <> '0' 
+          THEN '' 
+          ELSE 'ATTACH_DOC' 
+        END AS f4,
+        /*FILA 5*/
+        CASE
+          WHEN v.agencia <> '0' 
+          THEN '' 
+          ELSE 
+          (SELECT 
+            valor_3 
+          FROM
+            tabla_m_detalle t 
+          WHERE v.carro = t.cod_argumento 
+            AND t.cod_tabla = 'TCAR') 
+        END AS a5,
+        '' AS b5,
+        '' AS c5,
+        '' AS d5,
+        CASE
+          WHEN v.agencia <> '0' 
+          THEN '' 
+          ELSE 'ATTACH_DOC' 
+        END AS e5,
+        /*FILA 7*/
+        'Corporacion Vasco S.A.C.' AS a7,
+        '6' AS b7,
+        '20513613939' AS c7,
+        '150135' AS d7,
+        'CAL.SANTO TORIBIO NRO. 259' AS e7,
+        'URB.SANTA LUISA 1RA ETAPA' AS f7,
+        'LIMA' AS g7,
+        'LIMA' AS h7,
+        'SAN MARTIN DE PORRES' AS i7,
+        'PE' AS j7,
+        /*FILA 8*/
+        c.nombre AS a8,
+        c.tipo_documento AS b8,
+        c.documento AS c8,
+        CASE
+          WHEN LENGTH(c.ubigeo) = 6 
+          THEN c.ubigeo 
+          ELSE '' 
+        END AS d8,
+        c.direccion AS e8,
+        '-' AS f8,
+        u.departamento AS g8,
+        u.provincia AS h8,
+        u.distrito AS i8,
+        'PE' AS j8,
+        c.email AS k8,
+        /*FILA 10*/
+        '01' AS a10,
+        'VENTA' AS b10,
+        '' AS c10,
+        ROUND(v.peso, 3) AS d10,
+        'KGM' AS e10,
+        CASE
+          WHEN v.agencia = 0 
+          THEN '02' 
+          ELSE '01' 
+        END AS f10,
+        v.fecha AS g10,
+        CASE
+          WHEN v.agencia = 0 
+          THEN '' 
+          ELSE 
+          (SELECT 
+            nombre 
+          FROM
+            agenciasjf a 
+          WHERE v.agencia = a.id) 
+        END AS h10,
+        CASE
+          WHEN v.agencia = 0 
+          THEN '' 
+          ELSE '6' 
+        END AS i10,
+        CASE
+          WHEN v.agencia = 0 
+          THEN '' 
+          ELSE 
+          (SELECT 
+            ruc 
+          FROM
+            agenciasjf a 
+          WHERE v.agencia = a.id) 
+        END AS j10,
+        '150135' AS k10,
+        'CAL.SANTO TORIBIO NRO. 259' AS l10,
+        'URB.SANTA LUISA 1RA ETAPA' AS m10,
+        'LIMA' AS n10,
+        'LIMA' AS o10,
+        'SAN MARTIN DE PORRES' AS p10,
+        CASE
+          WHEN LENGTH(c.ubigeo) = 6 
+          THEN c.ubigeo 
+          ELSE '' 
+        END AS q10,
+        CASE
+          WHEN v.tipo = 'S01' 
+          AND c.direccion_despacho <> '' 
+          THEN c.direccion_despacho 
+          ELSE c.direccion 
+        END AS r10,
+        '-' AS s10,
+        u.departamento AS t10,
+        u.provincia AS u10,
+        u.distrito AS v10,
+        v.bultos AS w10,
+        CASE
+          WHEN v.agencia = 0 
+          THEN '' 
+          ELSE 
+          (SELECT 
+            mtc 
+          FROM
+            agenciasjf a 
+          WHERE v.agencia = a.id) 
+        END AS aa10,
+        CASE
+          WHEN v.agencia = 0 
+          THEN '' 
+          ELSE '' 
+        END AS ao10,
+        /*FILA 11*/
+        'TALLAS Y COLORES SURTIDOS' AS a11,
+        v.cliente AS b11,
+        CONCAT(v.vendedor, ' - ', ma.descripcion) AS c11,
+        v.bultos AS d11,
+        v.peso AS e11 
+      FROM
+        ventajf v 
+        LEFT JOIN 
+          (SELECT 
+            m.tipo,
+            m.documento,
+            a.modelo,
+            SUM(m.cantidad) AS cantidad 
+          FROM
+            movimientosjf_2024 m 
+            LEFT JOIN articulojf a 
+              ON m.articulo = a.articulo 
+          WHERE m.tipo = 'S01' 
+            AND m.documento = :documento 
+          GROUP BY m.tipo,
+            m.documento,
+            a.modelo) AS m 
+          ON v.tipo = m.tipo 
+          AND v.documento = m.documento 
+        LEFT JOIN clientesjf c 
+          ON v.cliente = c.codigo 
+        LEFT JOIN ubigeo u 
+          ON c.ubigeo = u.codigo 
+        LEFT JOIN condiciones_ventajf cv 
+          ON v.condicion_venta = cv.id 
+        LEFT JOIN maestrajf ma 
+          ON ma.tipo_dato = 'TVEND' 
+          AND v.vendedor = ma.codigo 
+      WHERE v.tipo = 'S01' 
+        AND v.documento = :documento ;
+      
+      ";
 
         $stmt = Conexion::conectar()->prepare($sql);
 
