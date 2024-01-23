@@ -52,6 +52,9 @@ class TablaNotasCD
                 } else if ($notas[$i]["facturacion"] == "4") {
 
                     $estado = "<span class='btn btn-danger btn-xs btn btnEliminarDocumento' documento='" . $notas[$i]["documento"] . "' tipo='" . $notas[$i]["tipo"] . "' pagina='facturas'>ANULADO</span>";
+                } else {
+
+                    $estado = "<span style='font-size:85%' class='label label-danger'>ERROR</span>";
                 }
 
 

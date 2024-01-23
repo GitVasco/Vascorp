@@ -2412,7 +2412,10 @@ class ModeloTalleres
                                                         WHERE et.estado = '1' AND
                                                         et.articulo = '" . $articuloTaller . "'
                                                         AND et.total_precio > 0
-                                                        AND YEAR(et.fecha) = YEAR(NOW())");
+                                                        /* AND YEAR(et.fecha) = YEAR(NOW()) */
+                                                        AND DATE(et.fecha) BETWEEN '2023-11-01' AND NOW()
+                                                        
+                                                        ");
 
             $stmt->execute();
 
