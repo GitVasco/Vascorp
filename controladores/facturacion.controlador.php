@@ -3970,6 +3970,9 @@ class ControladorFacturacion
             $fila9 = ',,,,,,,,,,,,,,,,,,,,';
 
             //todo: FILA 10
+            //r10 debe reemplazar las "," por espacios en blanco
+            $datos["r10"] = str_replace(",", "", $datos["r10"]);
+
             $fila10 =    $datos["a10"] . ',' .
                 $datos["b10"] . ',' .
                 $datos["c10"] . ',' .

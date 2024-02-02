@@ -420,8 +420,8 @@ if ($linea == "TODOS") {
             AND tb2.Cod_Argumento = p.UndPro 
             AND LEFT(p.CodFab, 3) = tb4.Des_Corta 
             AND SUBSTRING(p.CodFab, 4, 3) = tb1.Valor_3 
-            AND tb4.Des_Corta = tb1.Des_Corta 
-            /* AND p.estpro = '1'  */
+            -- AND tb4.Des_Corta = tb1.Des_Corta 
+            -- AND p.estpro = '1'
             ORDER BY SUBSTRING(p.CodFab, 1, 6) ASC") or die(mysql_error());
 } else {
     $sqlDetalle = mysql_query("SELECT DISTINCT 
@@ -466,8 +466,8 @@ if ($linea == "TODOS") {
     AND tb2.Cod_Argumento = p.UndPro 
     AND LEFT(p.CodFab, 3) = tb4.Des_Corta 
     AND SUBSTRING(p.CodFab, 4, 3) = tb1.Valor_3 
-    AND tb4.Des_Corta = tb1.Des_Corta 
-    /*AND p.estpro = '1' */
+    -- AND tb4.Des_Corta = tb1.Des_Corta 
+    -- AND p.estpro = '1'
     AND LEFT(p.codfab,3)='$linea'
     ORDER BY SUBSTRING(p.CodFab, 1, 6) ASC") or die(mysql_error());
 }

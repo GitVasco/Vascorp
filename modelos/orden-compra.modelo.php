@@ -1211,8 +1211,7 @@ class ModeloOrdenCompra
 			pro.undpro,
 			pro.ColPro 
 		  FROM
-			producto pro 
-		  WHERE pro.estpro = '1') AS p 
+			producto pro ) AS p 
 		  ON ocd.codpro = p.codpro 
 		LEFT JOIN proveedor AS prov 
 		  ON prov.codruc = ocd.codruc 

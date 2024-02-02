@@ -45,7 +45,7 @@
 
                 <button class="btn btn-info btnIngresoDeta" data-toggle='modal' data-target='#modalVerIngresoDeta' codigoServicio><i class="fa fa-eye"></i> Ver ingresos</button>
 
-                <?php if ($_SESSION["id"] == "6" || $_SESSION["id"] == "11") : ?>
+                <?php if ($_SESSION["id"] == "6" || $_SESSION["id"] == "11" || $_SESSION["id"] == "7") : ?>
 
                     <button class="btn btn-success btnAgregarTaller" data-toggle='modal' data-target='#modalAgregarTaller'><i class="fa fa-plus"></i> Agregar a Taller</button>
 

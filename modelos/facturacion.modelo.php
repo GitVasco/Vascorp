@@ -8933,7 +8933,7 @@ class ModeloFacturacion
                     FROM
                         cuenta_ctejf cc 
                     WHERE cc.tip_mov = '+' 
-                        AND YEAR(cc.fecha) = '2023' 
+                        AND YEAR(cc.fecha) = '2024' 
                     GROUP BY cc.tipo_doc,
                         cc.doc_origen) AS cc 
                     ON 
