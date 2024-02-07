@@ -3,67 +3,76 @@
 require_once "../../controladores/materiaprima.controlador.php";
 require_once "../../modelos/materiaprima.modelo.php";
 
-class TablaMateriaPrima{
+class TablaMateriaPrima
+{
 
     /*=============================================
     MOSTRAR LA TABLA DE MATERIA PRIMA
-    =============================================*/ 
+    =============================================*/
 
-    public function mostrarTablaMateriaPrima(){
+    public function mostrarTablaMateriaPrima()
+    {
 
         $valor = null;
 
-        $materiaprima = ControladorMateriaPrima::ctrMostrarMateriaPrima2($valor);	
-        if(count($materiaprima)>0){
+        $materiaprima = ControladorMateriaPrima::ctrMostrarMateriaPrima2($valor);
+        if (count($materiaprima) > 0) {
 
-        $datosJson = '{
+            $datosJson = '{
             "data": [';
-    
-            for($i = 0; $i < count($materiaprima); $i++){
 
-            $descripcion = str_replace('"','',$materiaprima[$i]["DesPro"]);
-         
-       
-            /*=============================================
-            TRAEMOS LAS ACCIONES
-            =============================================*/         
+            for ($i = 0; $i < count($materiaprima); $i++) {
 
-                $botones = "<div class='btn-group'><button class='btn btn-xs btn-info btnVisualizarArticulos' title='Visualizar Articulos' data-toggle='modal' data-target='#modalVisualizarArticulos' articuloMP='".$materiaprima[$i]["CodPro"]."'><i class='fa fa-eye'></i></button><button class='btn btn-xs btn-warning btnEditarMateriaPrima' idMateriaPrima='".$materiaprima[$i]["CodPro"]."' data-toggle='modal' data-target='#modalEditarMateriaPrima' title='Editar Materia Prima'><i class='fa fa-pencil'></i></button><button class='btn btn-xs btn-success btnDuplicarMateriaPrima' idMateriaPrima='".$materiaprima[$i]["CodPro"]."' data-toggle='modal' data-target='#modalDuplicarMateriaPrima' title='Nuevo Color'><i class='fa fa-clone'></i></button><button class='btn btn-xs btn-primary btnEditarCosto' title='Visualizar Costo' data-toggle='modal' data-target='#modalEditarCostos' materiaPrima='".$materiaprima[$i]["CodPro"]."'><i class='fa fa-money'></i></button><button class='btn btn-xs btn-danger btnAnularMateriaPrima' title='Anular Materia Prima' idMateriaPrima='".$materiaprima[$i]["CodPro"]."'><i class='fa fa-times'></i></button></div>";
-    
-                $datosJson .= '[
-                "'.$materiaprima[$i]["CodPro"].'",
-                "'.$materiaprima[$i]["CodFab"].'",
-                "'.$descripcion.'",
-                "'.$materiaprima[$i]["Color"].'",
-                "'.$materiaprima[$i]["Talla"].'",
-                "'.$materiaprima[$i]["Unidad"].'",
-                "'.$materiaprima[$i]["Proveedores"].'",
-                "'.$materiaprima[$i]["CodAlm01"].'",
-                "'.$botones.'"
-                ],';        
+                $descripcion = str_replace('"', '', $materiaprima[$i]["DesPro"]);
+
+                //estado de la materia prima
+                if ($materiaprima[$i]["estpro"] == "Inactivo") {
+
+                    $estado = "<span style='font-size:85%' class='label label-danger'>" . $materiaprima[$i]["estpro"] . "</span>";
+
+                    $botones = "<div class='btn-group'><button class='btn btn-xs btn-info btnVisualizarArticulos' title='Visualizar Articulos' data-toggle='modal' data-target='#modalVisualizarArticulos' articuloMP='" . $materiaprima[$i]["CodPro"] . "'><i class='fa fa-eye'></i></button><button class='btn btn-xs btn-warning btnEditarMateriaPrima' idMateriaPrima='" . $materiaprima[$i]["CodPro"] . "' data-toggle='modal' data-target='#modalEditarMateriaPrima' title='Editar Materia Prima'><i class='fa fa-pencil'></i></button><button class='btn btn-xs btn-success btnDuplicarMateriaPrima' idMateriaPrima='" . $materiaprima[$i]["CodPro"] . "' data-toggle='modal' data-target='#modalDuplicarMateriaPrima' title='Nuevo Color'><i class='fa fa-clone'></i></button><button class='btn btn-xs btn-primary btnEditarCosto' title='Visualizar Costo' data-toggle='modal' data-target='#modalEditarCostos' materiaPrima='" . $materiaprima[$i]["CodPro"] . "'><i class='fa fa-money'></i></button><button class='btn btn-xs btn-danger btnAnularMateriaPrima' title='Anular Materia Prima' idMateriaPrima='" . $materiaprima[$i]["CodPro"] . "'><i class='fa fa-times'></i></button></div>";
+                } else {
+
+                    $estado = "<span style='font-size:85%' class='label label-success'>" . $materiaprima[$i]["estpro"] . "</span>";
+
+                    $botones = "<div class='btn-group'><button class='btn btn-xs btn-info btnVisualizarArticulos' title='Visualizar Articulos' data-toggle='modal' data-target='#modalVisualizarArticulos' articuloMP='" . $materiaprima[$i]["CodPro"] . "'><i class='fa fa-eye'></i></button></div>";
                 }
-    
-                $datosJson=substr($datosJson, 0, -1);
-    
-                $datosJson .= '] 
+
+
+                $datosJson .= '[
+                "' . $materiaprima[$i]["CodPro"] . '",
+                "' . $materiaprima[$i]["CodFab"] . '",
+                "' . $descripcion . '",
+                "' . $materiaprima[$i]["Color"] . '",
+                "' . $materiaprima[$i]["Talla"] . '",
+                "' . $materiaprima[$i]["Unidad"] . '",
+                "' . $materiaprima[$i]["Proveedores"] . '",
+                "' . $materiaprima[$i]["CodAlm01"] . '",
+                "' . $estado . '",
+                "' . $botones . '"
+                ],';
+            }
+
+            $datosJson = substr($datosJson, 0, -1);
+
+            $datosJson .= '] 
     
                 }';
-    
-            echo $datosJson;
-            }else{
 
-                echo '{
+            echo $datosJson;
+        } else {
+
+            echo '{
                     "data":[]
                 }';
-                return;
-
-            }
-    }    
+            return;
+        }
+    }
 }
 
 
 /*=============================================
 ACTIVAR TABLA DE MATERIA PRIMA
-=============================================*/ 
+=============================================*/
 $activarMateriaPrima = new TablaMateriaPrima();
-$activarMateriaPrima -> mostrarTablaMateriaPrima();
+$activarMateriaPrima->mostrarTablaMateriaPrima();

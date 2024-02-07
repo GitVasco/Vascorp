@@ -90,73 +90,75 @@ class ModeloMateriaPrima
 		} else {
 
 			$stmt = Conexion::conectar()->prepare("SELECT DISTINCT 
-			'MP' AS Mp,
-			pro.CodAlt,
-			pro.CodFab,
-			pro.DesPro,
-			pro.CodPro,
-			pro.CodAlm01,
-			pro.Stk_Min,
-			pro.Stk_Max,
-			TbUnd.Des_Corta AS Unidad,
-			TbCol.Cod_Argumento AS CodigoColor,
-			TbCol.Des_Larga AS Color,
-			pro.TalPro,
-			TbTal.Des_larga AS Talla,
-			pmp.Proveedores,
-			IFNULL(pmp.precio, 0.000000) AS precio 
-		  FROM
-			Producto pro 
-			LEFT JOIN 
-			  (SELECT DISTINCT 
-				p.codpro,
-				CONCAT_WS(
-				  ' - ',
-				  IFNULL(p1.razpro, ''),
-				  IFNULL(p2.razpro, ''),
-				  IFNULL(p3.razpro, '')
-				) AS proveedores,
-				GREATEST(
-				  p.preprov1,
-				  p.preprov2,
-				  p.preprov2
-				) AS precio 
-			  FROM
-				preciomp p 
-				LEFT JOIN 
-				  (SELECT DISTINCT 
-					codruc,
-					razpro 
-				  FROM
-					proveedor prov) AS p1 
-				  ON p.codprov1 = p1.codruc 
-				LEFT JOIN 
-				  (SELECT DISTINCT 
-					codruc,
-					razpro 
-				  FROM
-					proveedor prov) AS p2 
-				  ON p.codprov2 = p2.codruc 
-				LEFT JOIN 
-				  (SELECT DISTINCT 
-					codruc,
-					razpro 
-				  FROM
-					proveedor prov) AS p3 
-				  ON p.codprov3 = p3.codruc) AS pmp 
-			  ON pmp.CodPro = pro.CodPro 
-			INNER JOIN Tabla_M_Detalle AS TbUnd 
-			  ON pro.UndPro = TbUnd.Cod_Argumento 
-			  AND (TbUnd.Cod_Tabla = 'TUND') 
-			INNER JOIN Tabla_M_Detalle AS TbCol 
-			  ON pro.ColPro = TbCol.Cod_Argumento 
-			  AND (TbCol.Cod_Tabla = 'TCOL') 
-			INNER JOIN Tabla_M_Detalle AS TbTal 
-			  ON pro.TalPro = TbTal.Cod_Argumento 
-			  AND (TbTal.Cod_Tabla = 'TTAL') 
-		  WHERE pro.estpro = '1' 
-		  GROUP BY pro.CodPro 
-		  ORDER BY pro.CodPro DESC");
+					'MP' AS Mp,
+					pro.CodAlt,
+					pro.CodFab,
+					pro.DesPro,
+					pro.CodPro,
+					pro.CodAlm01,
+					pro.Stk_Min,
+					pro.Stk_Max,
+					TbUnd.Des_Corta AS Unidad,
+					TbCol.Cod_Argumento AS CodigoColor,
+					TbCol.Des_Larga AS Color,
+					pro.TalPro,
+					TbTal.Des_larga AS Talla,
+					pmp.Proveedores,
+					IFNULL(pmp.precio, 0.000000) AS precio,
+					CASE
+					WHEN pro.estpro = 1 THEN 'Activo'
+					ELSE 'Inactivo'END AS estpro
+				FROM
+					Producto pro 
+					LEFT JOIN 
+					(SELECT DISTINCT 
+						p.codpro,
+						CONCAT_WS(
+						' - ',
+						IFNULL(p1.razpro, ''),
+						IFNULL(p2.razpro, ''),
+						IFNULL(p3.razpro, '')
+						) AS proveedores,
+						GREATEST(
+						p.preprov1,
+						p.preprov2,
+						p.preprov2
+						) AS precio 
+					FROM
+						preciomp p 
+						LEFT JOIN 
+						(SELECT DISTINCT 
+							codruc,
+							razpro 
+						FROM
+							proveedor prov) AS p1 
+						ON p.codprov1 = p1.codruc 
+						LEFT JOIN 
+						(SELECT DISTINCT 
+							codruc,
+							razpro 
+						FROM
+							proveedor prov) AS p2 
+						ON p.codprov2 = p2.codruc 
+						LEFT JOIN 
+						(SELECT DISTINCT 
+							codruc,
+							razpro 
+						FROM
+							proveedor prov) AS p3 
+						ON p.codprov3 = p3.codruc) AS pmp 
+					ON pmp.CodPro = pro.CodPro 
+					INNER JOIN Tabla_M_Detalle AS TbUnd 
+					ON pro.UndPro = TbUnd.Cod_Argumento 
+					AND (TbUnd.Cod_Tabla = 'TUND') 
+					INNER JOIN Tabla_M_Detalle AS TbCol 
+					ON pro.ColPro = TbCol.Cod_Argumento 
+					AND (TbCol.Cod_Tabla = 'TCOL') 
+					INNER JOIN Tabla_M_Detalle AS TbTal 
+					ON pro.TalPro = TbTal.Cod_Argumento 
+					AND (TbTal.Cod_Tabla = 'TTAL') 
+				GROUP BY pro.CodPro 
+				ORDER BY pro.CodPro DESC");
 
 			$stmt->execute();
 
