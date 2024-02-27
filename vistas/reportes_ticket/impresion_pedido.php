@@ -21,6 +21,8 @@
     //var_dump($respuesta["pedido"]);
     //var_dump($respuesta);
 
+    $moneda = $respuesta["lista"] == "precio1" ? " $ " : " S/ ";
+
     $totales = ControladorPedidos::ctrPedidoImpresionTotales($codigo);
     //var_dump($totales);
 
@@ -269,7 +271,7 @@
                 } else {
 
                     echo '<tr>
-                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($respuesta["lista"] == "precio1" ? $value["precio"] : $value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -576,7 +578,7 @@
                 } else {
 
                     echo '<tr>
-                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -823,7 +825,7 @@
                 } else {
 
                     echo '<tr>
-                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -1130,7 +1132,7 @@
                 } else {
 
                     echo '<tr>
-                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -1377,7 +1379,7 @@
                 } else {
 
                     echo '<tr>
-                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -1624,7 +1626,7 @@
                 } else {
 
                     echo '<tr>
-                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -1931,7 +1933,7 @@
                 } else {
 
                     echo '<tr>
-                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -2178,7 +2180,7 @@
                 } else {
 
                     echo '<tr>
-                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -2425,7 +2427,7 @@
                 } else {
 
                     echo '<tr>
-                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -2672,7 +2674,7 @@
                 } else {
 
                     echo '<tr>
-                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -2979,7 +2981,7 @@
                 } else {
 
                     echo '<tr>
-                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -3226,7 +3228,7 @@
                 } else {
 
                     echo '<tr>
-                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -3473,7 +3475,7 @@
                 } else {
 
                     echo '<tr>
-                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -3720,7 +3722,7 @@
                 } else {
 
                     echo '<tr>
-                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -3967,7 +3969,7 @@
                 } else {
 
                     echo '<tr>
-                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -4274,7 +4276,7 @@
                 } else {
 
                     echo '<tr>
-                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -4521,7 +4523,7 @@
                 } else {
 
                     echo '<tr>
-                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -4768,7 +4770,7 @@
                 } else {
 
                     echo '<tr>
-                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -5015,7 +5017,7 @@
                 } else {
 
                     echo '<tr>
-                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -5262,7 +5264,7 @@
                 } else {
 
                     echo '<tr>
-                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -5509,7 +5511,7 @@
                 } else {
 
                     echo '<tr>
-                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -5816,7 +5818,7 @@
                 } else {
 
                     echo '<tr>
-                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -6063,7 +6065,7 @@
                 } else {
 
                     echo '<tr>
-                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -6310,7 +6312,7 @@
                 } else {
 
                     echo '<tr>
-                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -6557,7 +6559,7 @@
                 } else {
 
                     echo '<tr>
-                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -6804,7 +6806,7 @@
                 } else {
 
                     echo '<tr>
-                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -7051,7 +7053,7 @@
                 } else {
 
                     echo '<tr>
-                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -7298,7 +7300,7 @@
                 } else {
 
                     echo '<tr>
-                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -7605,7 +7607,7 @@
                 } else {
 
                     echo '<tr>
-                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -7852,7 +7854,7 @@
                 } else {
 
                     echo '<tr>
-                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -8099,7 +8101,7 @@
                 } else {
 
                     echo '<tr>
-                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -8346,7 +8348,7 @@
                 } else {
 
                     echo '<tr>
-                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -8593,7 +8595,7 @@
                 } else {
 
                     echo '<tr>
-                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -8840,7 +8842,7 @@
                 } else {
 
                     echo '<tr>
-                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -9087,7 +9089,7 @@
                 } else {
 
                     echo '<tr>
-                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -9334,7 +9336,7 @@
                 } else {
 
                     echo '<tr>
-                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -9641,7 +9643,7 @@
                 } else {
 
                     echo '<tr>
-                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -9888,7 +9890,7 @@
                 } else {
 
                     echo '<tr>
-                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -10135,7 +10137,7 @@
                 } else {
 
                     echo '<tr>
-                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -10382,7 +10384,7 @@
                 } else {
 
                     echo '<tr>
-                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -10629,7 +10631,7 @@
                 } else {
 
                     echo '<tr>
-                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -10876,7 +10878,7 @@
                 } else {
 
                     echo '<tr>
-                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -11123,7 +11125,7 @@
                 } else {
 
                     echo '<tr>
-                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -11370,7 +11372,7 @@
                 } else {
 
                     echo '<tr>
-                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -11617,7 +11619,7 @@
                 } else {
 
                     echo '<tr>
-                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -11924,7 +11926,7 @@
                 } else {
 
                     echo '<tr>
-                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -12171,7 +12173,7 @@
                 } else {
 
                     echo '<tr>
-                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -12418,7 +12420,7 @@
                 } else {
 
                     echo '<tr>
-                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -12665,7 +12667,7 @@
                 } else {
 
                     echo '<tr>
-                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -12912,7 +12914,7 @@
                 } else {
 
                     echo '<tr>
-                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -13159,7 +13161,7 @@
                 } else {
 
                     echo '<tr>
-                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                            <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                             <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                             <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -13406,7 +13408,7 @@
                 } else {
 
                     echo '<tr>
-                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -13653,7 +13655,7 @@
                 } else {
 
                     echo '<tr>
-                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -13900,7 +13902,7 @@
                 } else {
 
                     echo '<tr>
-                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>
@@ -14147,7 +14149,7 @@
                 } else {
 
                     echo '<tr>
-                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b> S/ ' . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
+                                <th style="width:15%;font-weight: normal;text-align:left;"><b>' . str_pad($value["modelo"], 10, "-", STR_PAD_RIGHT) . '</b>' . $moneda . str_pad(number_format($value["precio"] * 1.18, 2), 5, " ", STR_PAD_LEFT) . '</th>
                                 <th style="width:20%;text-align:left;">' . $value["color"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t1"] . '</th>
                                 <th style="width:6%;font-weight: normal;">' . $value["t2"] . '</th>

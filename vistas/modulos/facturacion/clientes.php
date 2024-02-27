@@ -130,6 +130,10 @@ MODAL AGREGAR CLIENTE
                                         <option value="6">RUC</option>
                                         <option value="7">PASAPORTE</option>
                                         <option value="A">C. Diplom.</option>
+                                        <option value="B">Doc.Pais Residencia</option>
+                                        <option value="C">Tax Identification Number</option>
+                                        <option value="D">Identification Number</option>
+                                        <option value="E">Tarjeta Andina de Migracion</option>
 
                                     </select>
 
@@ -145,7 +149,7 @@ MODAL AGREGAR CLIENTE
 
 
 
-                                    <input type="number" class="form-control input-sm" name="documento" id="documentoCliente" placeholder="NRO. DOCUMENTO" required>
+                                    <input type="text" class="form-control input-sm" name="documento" id="documentoCliente" placeholder="NRO. DOCUMENTO" required>
                                     <span class="input-group-addon" style="padding:0px !important;border: 0px !important"><button type="button" class="btn btn-sm btn-default" onclick="ObtenerDatosCliente()"><i class="fa fa-search "></i></button> </span>
                                 </div>
 
@@ -665,6 +669,10 @@ MODAL EDITAR CLIENTE
                                         <option value="6">RUC</option>
                                         <option value="7">PASAPORTE</option>
                                         <option value="A">C. Diplom.</option>
+                                        <option value="B">Doc.Pais Residencia</option>
+                                        <option value="C">Tax Identification Number</option>
+                                        <option value="D">Identification Number</option>
+                                        <option value="E">Tarjeta Andina de Migracion</option>
 
                                     </select>
 

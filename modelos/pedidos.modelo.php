@@ -989,6 +989,7 @@ class ModeloPedidos
 					t.igv,
 					t.total,
 					t.dscto,
+					t.lista,
 					CONCAT(
 						t.vendedor,
 						'-',
@@ -2037,8 +2038,18 @@ class ModeloPedidos
 						detalle_temporal dt 
 					WHERE dt.codigo = '$codPedido') AS dt 
 					ON t.codigo = dt.codigo SET t.op_gravada = dt.op_gravada,
-					t.igv = dt.igv,
-					t.total = dt.total 
+					t.igv = 
+					CASE
+					WHEN t.lista = 'precio1' 
+					THEN 0 
+					ELSE dt.igv 
+					END,
+					t.total = 
+					CASE
+					WHEN t.lista = 'precio1' 
+					THEN t.op_gravada 
+					ELSE dt.total 
+					END
 				WHERE t.codigo = '$codPedido'";
 
 		$stmt = Conexion::conectar()->prepare($sql);

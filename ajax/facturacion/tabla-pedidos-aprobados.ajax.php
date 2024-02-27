@@ -24,6 +24,9 @@ class TablaPedidosCV
 
             for ($i = 0; $i < count($pedidos); $i++) {
 
+                //* moneda
+                $moneda = $pedidos[$i]["lista"] == "precio1" ? "$ " : "S/ ";
+
                 /*
             * ESTADOS
             */
@@ -80,7 +83,7 @@ class TablaPedidosCV
             "' . $codigo . '",
             "<b>' . $pedidos[$i]["nombre"] . '</b>",
             "' . $pedidos[$i]["vendedor"] . '",
-            "<b>S/ ' . $pedidos[$i]["total"] . '</b>",
+            "<b>' . $moneda . $pedidos[$i]["total"] . '</b>",
             "' . $pedidos[$i]["descripcion"] . '",
             "' . $estado . '",
             "' . $pedidos[$i]["nom_usu"] . '",

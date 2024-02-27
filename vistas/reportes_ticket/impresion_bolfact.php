@@ -17,13 +17,22 @@
     $documento = $_GET["documento"];
     $venta = ControladorFacturacion::ctrMostrarVentaImpresion($documento, $tipo);
 
+    $moneda = $venta["tipo_moneda"] == "1" ? "S/" : "$";
+    $exportacion = $venta["exportacion"];
+
+    $gravadas = $exportacion == 1 ? "0.00" : number_format($venta["neto"], 2);
+    $exonerada = $exportacion == 1 ? number_format($venta["neto"], 2) : "0.00";
+
     $anno = date("Y", strtotime($venta["fecha_emision"]));
     $tabla = "movimientosjf_" . $anno;
 
     $modelo = ControladorFacturacion::ctrMostrarModeloImpresionV2($tabla, $documento, $tipo, 0, 100);
     $cantModelo = count($modelo);
     $subtotal = $venta["neto"] - $venta["dscto"];
-    $monto_letra = CantidadEnLetra($venta["total"]);
+
+    $monto_letra = $venta["tipo_moneda"] == "1" ? CantidadEnLetra($venta["total"]) : str_replace("SOLES", "DOLARES AMERICANOS", CantidadEnLetra($venta["total"]));
+
+    //$monto_letra = CantidadEnLetra($venta["total"]);
     //var_dump($venta);
     ?>
 
@@ -153,39 +162,39 @@
                 <td style="width:220px; border-radius: 10px;  border: 1px solid #000000;  padding: 1px;">
                     <table>
                         <tr>
-                            <td style="width:170px;">Op. Gravadas S/</td>
-                            <td style="width:50px; text-align:right;">' . number_format($venta["neto"], 2) . '</td>
+                            <td style="width:170px;">Op. Gravadas ' . $moneda . '</td>
+                            <td style="width:50px; text-align:right;">' . $gravadas . '</td>
                         </tr>
                         <tr>
-                            <td style="width:170px;">Op. Inafecta</td>
+                            <td style="width:170px;">Op. Inafecta ' . $moneda . '</td>
                             <td style="width:50px; text-align:right;">0.00</td>
                         </tr>           
                         <tr>
-                            <td style="width:170px;">Op. Exonerada</td>
+                            <td style="width:170px;">Op. Exonerada ' . $moneda . '</td>
+                            <td style="width:50px; text-align:right;">' . $exonerada . '</td>
+                        </tr> 
+                        <tr>
+                            <td style="width:170px;">Total Op. Gratuitas ' . $moneda . '</td>
                             <td style="width:50px; text-align:right;">0.00</td>
                         </tr> 
                         <tr>
-                            <td style="width:170px;">Total Op. Gratuitas</td>
-                            <td style="width:50px; text-align:right;">0.00</td>
-                        </tr> 
-                        <tr>
-                            <td style="width:170px;">Descuentos Totales</td>
+                            <td style="width:170px;">Descuentos Totales ' . $moneda . '</td>
                             <td style="width:50px; text-align:right;">' . number_format($venta["dscto"], 2) . '</td>
                         </tr> 
                         <tr>
-                            <td style="width:170px;">Sub Totales</td>
+                            <td style="width:170px;">Sub Totales ' . $moneda . '</td>
                             <td style="width:50px; text-align:right;">' . number_format($subtotal, 2) . '</td>
                         </tr> 
                         <tr>
-                            <td style="width:170px;">ISC</td>
+                            <td style="width:170px;">ISC ' . $moneda . '</td>
                             <td style="width:50px; text-align:right;">0.00</td>
                         </tr> 
                         <tr>
-                            <td style="width:170px;">IGV</td>
+                            <td style="width:170px;">IGV ' . $moneda . '</td>
                             <td style="width:50px; text-align:right;">' . number_format($venta["igv"], 2) . '</td>
                         </tr> 
                         <tr>
-                            <td style="width:170px;">TOTAL S/</td>
+                            <td style="width:170px;">TOTAL ' . $moneda . '</td>
                             <td style="width:50px; text-align:right;">' . number_format($venta["total"], 2) . '</td>
                         </tr> 
                     </table>

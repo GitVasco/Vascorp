@@ -571,33 +571,25 @@
 
                                                 <div class="input-group">
 
+
                                                     <?php
-
                                                     $valor = $_GET["pedido"];
-
                                                     $igvA = ControladorPedidos::ctrMostrarTemporal($valor);
-                                                    //var_dump($igvA["sub_total"]);
 
-                                                    if ($igvA == false) {
+                                                    $impTotal = 0;
 
-                                                        //var_dump("hola 0");
-
-                                                        echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="impTotal" name="impTotal" value="0" readonly>';
-                                                    } else if ($igvA["descuento_total"] == "0") {
-
-                                                        //var_dump("hola 1");
-
-                                                        $neto = $totalArt["totalArt"] * 0.18;
-
-                                                        echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="impTotal" name="impTotal" value="' . round($neto, 2) . '" readonly>';
-                                                    } else {
-
-                                                        //var_dump("hola 2");
-
-                                                        echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="impTotal" name="impTotal" value="' . $igvA["igv"] . '" readonly>';
+                                                    if ($igvA !== false) {
+                                                        if ($igvA["descuento_total"] == "0") {
+                                                            $neto = $igvA["lista"] == "precio1" ? 0 : $totalArt["totalArt"] * 0.18;
+                                                            $impTotal = round($neto, 2);
+                                                        } else {
+                                                            $impTotal = $igvA["igv"];
+                                                        }
                                                     }
 
+                                                    echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="impTotal" name="impTotal" value="' . $impTotal . '" readonly>';
                                                     ?>
+
 
                                                 </div>
 
@@ -631,33 +623,23 @@
 
                                                 <div class="input-group">
 
+
                                                     <?php
-
                                                     $valor = $_GET["pedido"];
-
                                                     $totalA = ControladorPedidos::ctrMostrarTemporal($valor);
-                                                    //var_dump($totalA["descuento_total"]);
 
                                                     if ($totalA == false) {
-
-                                                        //var_dump("hola 0");
-
-                                                        echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="nuevoTotal" name="nuevoTotal" value="0" readonly>';
+                                                        $nuevoTotal = 0;
                                                     } else if ($totalA["descuento_total"] == "0") {
-
-                                                        //var_dump("hola 1");
-
-                                                        $neto = $totalArt["totalArt"] * 1.18;
-
-                                                        echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="nuevoTotal" name="nuevoTotal" value="' . round($neto, 2) . '" readonly>';
+                                                        $neto = $totalA["lista"] == "precio1" ? $totalArt["totalArt"] : $totalArt["totalArt"] * 1.18;
+                                                        $nuevoTotal = round($neto, 2);
                                                     } else {
-
-                                                        //var_dump("hola 2");
-
-                                                        echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="nuevoTotal" name="nuevoTotal" value="' . $totalA["total"] . '" readonly>';
+                                                        $nuevoTotal = $totalA["total"];
                                                     }
 
+                                                    echo '<input type="text" style="text-align:right;" min="1" class="form-control" id="nuevoTotal" name="nuevoTotal" value="' . $nuevoTotal . '" readonly>';
                                                     ?>
+
 
                                                 </div>
 

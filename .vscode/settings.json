@@ -20,5 +20,10 @@
         "commandCenter.border": "#15202b99",
         "sash.hoverBorder": "#98c1e6"
     },
-    "peacock.color": "#6fa8dc"
+    "peacock.color": "#6fa8dc",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "[php]": {
+        "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
+    }
 }
