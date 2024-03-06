@@ -2123,7 +2123,7 @@ class ControladorFacturacion
             }
 
             //$monto_letras = convertir($datos["n1"]);
-            $fila6 =    $monto_letras . ',,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,';
+            $fila6 =    $monto_letra . ',,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,';
 
             //todo: FILA 7
             $fila7 =    $datos["a7"] . ',,,' .
@@ -2416,27 +2416,25 @@ class ControladorFacturacion
             fclose($fp);
 
             //?origen prueba
-            $origen = 'c:/xampp2/htdocs/vascorp/vistas/reportes_excel/csv_fe/' . $nombre . '.txt';
+            //$origen = 'c:/xampp2/htdocs/vascorp/vistas/reportes_excel/csv_fe/' . $nombre . '.txt';
 
             //!origen produccion
-            //$origen = 'c:/xampp/htdocs/vascorp/vistas/reportes_excel/csv_fe/' . $nombre . '.txt';
+            $origen = 'c:/xampp/htdocs/vascorp/vistas/reportes_excel/csv_fe/' . $nombre . '.txt';
 
             if ($datos["c1"] == "01") {
 
                 //?destino prueba
-                $destino = 'c:/prueba/invoice/' . $nombre . '.csv';
+                //$destino = 'c:/prueba/invoice/' . $nombre . '.csv';
 
                 //!destino produccion
-                //!$destino = 'c:/daemonOSE21/documents/in/invoice/'.$nombre.'.csv';
-
+                $destino = 'c:/daemonOSE21/documents/in/invoice/' . $nombre . '.csv';
             } else {
 
                 //?destino prueba
-                $destino = 'c:/prueba/boleta/' . $nombre . '.csv';
+                //$destino = 'c:/prueba/boleta/' . $nombre . '.csv';
 
                 //!destino produccion
-                //!$destino = 'c:/daemonOSE21/documents/in/boleta/'.$nombre.'.csv';
-
+                $destino = 'c:/daemonOSE21/documents/in/boleta/' . $nombre . '.csv';
             }
 
             //copy($origen,$destino);
