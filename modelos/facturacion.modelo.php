@@ -1,6 +1,8 @@
 <?php
 require_once "conexion.php";
 
+date_default_timezone_set('America/Lima'); // Reemplaza 'America/Lima' con tu zona horaria
+
 class ModeloFacturacion
 {
 
@@ -1712,6 +1714,7 @@ class ModeloFacturacion
 
       return $stmt->fetchAll();
     } else {
+
       $fechaActual = new DateTime();
       $fechaActual->add(new DateInterval("P1D"));
       $fechaActualMasUno = $fechaActual->format("Y-m-d");

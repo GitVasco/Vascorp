@@ -36,6 +36,8 @@ class TablaPedidosCV
                 } else if ($pedidos[$i]["estado"] == "APROBADO") {
 
                     // si la fecha es menos a 3 dias de la fecha actual la clase debe ser danger de lo contrario warning
+                    date_default_timezone_set('America/Lima'); // Reemplaza 'America/Lima' con tu zona horaria
+
                     $fechaActual = strtotime(date("Y-m-d"));
                     $fechaPedido = strtotime($pedidos[$i]["fecha"]);
                     $diferencia =  $fechaActual - $fechaPedido;

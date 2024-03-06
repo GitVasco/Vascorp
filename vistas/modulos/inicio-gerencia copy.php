@@ -90,7 +90,6 @@
 
         </div>
 
-        <!-- Ventas por documento -->
         <div class="row">
 
             <div class="col-lg-3">
@@ -120,14 +119,36 @@
 
                 <?php
 
-                $mes = isset($_GET["mes"]) && $_GET["mes"] != "TODO" ? $_GET["mes"] : null;
+                if (isset($_GET["mes"]) && $_GET["mes"] != "TODO") {
+
+                    $mes = $_GET["mes"];
+                } else {
+
+                    $mes = null;
+                }
 
                 $totales = ControladorMovimientos::ctrTotalesSoles($mes);
+
                 $facturas = ControladorMovimientos::ctrFacturas($mes);
+
                 $proformas = ControladorMovimientos::ctrProformas($mes);
 
-                $totalFacturas = $totales["vtas_soles"] != 0 ? ($facturas["neto"] / $totales["vtas_soles"]) * 100 : 0;
-                $totalProformas = $totales["vtas_soles"] != 0 ? ($proformas["neto"] / $totales["vtas_soles"]) * 100 : 0;
+
+                if ($facturas["neto"] == 0 || $totales["vtas_soles"] == 0) {
+                    $totalFacturas = 0;
+                } else {
+                    $totalFacturas = $facturas["neto"] / $totales["vtas_soles"] * 100;
+                    #var_dump($totalFacturas);
+
+                }
+
+                if ($proformas["neto"] == 0 || $totales["vtas_soles"] == 0) {
+                    $totalProformas = 0;
+                } else {
+
+                    $totalProformas = $proformas["neto"] / $totales["vtas_soles"] * 100;
+                    #var_dump($totalProformas);
+                }
 
                 ?>
 
@@ -179,7 +200,6 @@
 
         </div>
 
-        <!-- Ventas por pedido y vendedor -->
         <div class="col-lg-4">
 
             <div class="box box-danger">
@@ -216,9 +236,12 @@
 
             </div>
 
+
+
+
+
         </div>
 
-        <!-- Cuentas por vendedor -->
         <div class="col-lg-5">
 
             <div class="box box-danger">
@@ -245,9 +268,10 @@
 
             </div>
 
+
+
         </div>
 
-        <!-- Resumen de gestion -->
         <div class="col-lg-7">
 
             <div class="box box-primary">
@@ -263,13 +287,13 @@
                                 <th>Ventas</th>
                                 <th>Cobranza</th>
                                 <th>Vencidos</th>
-                                <th>2014-2018</th>
+                                <th>2014-2017</th>
+                                <th>2018</th>
                                 <th>2019</th>
                                 <th>2020</th>
                                 <th>2021</th>
                                 <th>2022</th>
                                 <th>2023</th>
-                                <th>2024</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -293,9 +317,10 @@
 
             </div>
 
+
+
         </div>
 
-        <!-- Rango dias -->
         <div class="col-lg-5">
 
             <div class="box box-primary">
@@ -341,7 +366,6 @@
 
         </div>
 
-        <!-- Graficos -->
         <div class="row">
 
             <div class="col-lg-6">

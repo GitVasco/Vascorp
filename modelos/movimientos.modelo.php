@@ -2564,24 +2564,7 @@ class ModeloMovimientos
    static public function mdlTotalVencidosInc()
    {
 
-      $stmt = Conexion::conectar()->prepare("SELECT 
-                        c.tip_mov,
-                        SUM(c.saldo) AS saldo 
-                     FROM
-                        cuenta_ctejf c 
-                     WHERE c.tip_mov = '+' 
-                        AND c.estado = 'PENDIENTE' 
-                        AND c.fecha_ven < DATE(NOW()) 
-                        AND c.vendedor IN (
-                        '00A',
-                        '01',
-                        '03',
-                        '05A',
-                        '07A',
-                        '14',
-                        '15'
-                        ) 
-                     GROUP BY c.tip_mov ");
+      $stmt = Conexion::conectar()->prepare("select * from totalesjf t where date(t.fecha)=date(now())");
 
       $stmt->execute();
 
@@ -2614,6 +2597,20 @@ class ModeloMovimientos
                            ) 
                            AND TIMESTAMPDIFF(DAY, c.fecha_ven, NOW()) > 180 
                         GROUP BY c.tip_mov ");
+
+      $stmt->execute();
+
+      return $stmt->fetch();
+
+      $stmt->close();
+
+      $stmt = null;
+   }
+
+   static public function mdlTotalesInicio()
+   {
+
+      $stmt = Conexion::conectar()->prepare("select * from totalesjf t where date(t.fecha)=date(now())");
 
       $stmt->execute();
 
@@ -2961,6 +2958,7 @@ class ModeloMovimientos
                                     IFNULL(p.a2021, 0) AS 'p21',
                                     IFNULL(p.a2022, 0) AS 'p22',
                                     IFNULL(p.a2023, 0) AS 'p23',
+                                    IFNULL(p.a2024, 0) AS 'p24',
                                     IFNULL(p.total, 0) AS 'total' 
                                  FROM
                                     maestrajf m 
@@ -3071,6 +3069,13 @@ class ModeloMovimientos
                                             ELSE 0 
                                             END
                                         ) AS 'a2023',
+                                        SUM(
+                                            CASE
+                                            WHEN YEAR(c.fecha_ven) = '2024' 
+                                            THEN c.saldo 
+                                            ELSE 0 
+                                            END
+                                        ) AS 'a2024',
                                         SUM(c.saldo) AS total 
                                     FROM
                                        cuenta_ctejf c 
@@ -3110,6 +3115,7 @@ class ModeloMovimientos
                                             IFNULL(p.a2021, 0) AS 'p21',
                                             IFNULL(p.a2022, 0) AS 'p22',
                                             IFNULL(p.a2023, 0) AS 'p23',
+                                            IFNULL(p.a2024, 0) AS 'p24',
                                             IFNULL(p.total, 0) AS 'total'  
                                        FROM
                                           maestrajf m 
@@ -3222,6 +3228,13 @@ class ModeloMovimientos
                                                 ELSE 0 
                                                 END
                                             ) AS 'a2023',
+                                            SUM(
+                                                CASE
+                                                WHEN YEAR(c.fecha_ven) = '2024' 
+                                                THEN c.saldo 
+                                                ELSE 0 
+                                                END
+                                            ) AS 'a2024',
                                             SUM(c.saldo) AS total 
                                           FROM
                                              cuenta_ctejf c 
@@ -3419,7 +3432,7 @@ class ModeloMovimientos
                                     ventajf v 
                                  WHERE YEAR(v.fecha) = YEAR(NOW()) 
                                     AND v.tipo IN ('S02', 'S03', 'E05', 'S05') 
-                                    AND v.vendedor <> '99' 
+                                    AND v.vendedor NOT IN ('23','99') 
                                  GROUP BY YEAR(NOW())");
 
          $stmt->execute();
@@ -3438,7 +3451,7 @@ class ModeloMovimientos
                               WHERE YEAR(v.fecha) = YEAR(NOW()) 
                                  AND MONTH(v.fecha) = $mes 
                                  AND v.tipo IN ('S02', 'S03', 'E05', 'S05')
-                                 AND v.vendedor <> '99' 
+                                 AND v.vendedor NOT IN ('23','99') 
                               GROUP BY MONTH(v.fecha)");
 
          $stmt->execute();
@@ -3462,7 +3475,7 @@ class ModeloMovimientos
                                     ventajf v 
                                  WHERE YEAR(v.fecha) = YEAR(NOW()) 
                                     AND v.tipo IN ('S70') 
-                                    AND v.vendedor <> '99' 
+                                    AND v.vendedor NOT IN ('23','99') 
                                  GROUP BY YEAR(NOW())");
 
          $stmt->execute();
@@ -3481,7 +3494,7 @@ class ModeloMovimientos
                               WHERE YEAR(v.fecha) = YEAR(NOW()) 
                                  AND MONTH(v.fecha) = $mes 
                                  AND v.tipo IN ('S70')
-                                 AND v.vendedor <> '99' 
+                                 AND v.vendedor NOT IN ('23','99') 
                               GROUP BY MONTH(v.fecha)");
 
          $stmt->execute();

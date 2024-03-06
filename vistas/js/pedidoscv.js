@@ -105,26 +105,14 @@ $("#seleccionarCliente").change(function () {
     });
 });
 
+const vendedoresEspeciales = new Set(["08L"]);
+
 $("#seleccionarVendedor").change(function () {
     const cliList = $("#seleccionarCliente").val();
     const vendedor = $("#seleccionarVendedor").val();
 
-    console.log("Cliente seleccionado: ", cliList);
-    console.log("Vendedor seleccionado: ", vendedor);
-
     const datos = new FormData();
     datos.append("cliList", cliList);
-
-    // const fechaActual = new Date();
-
-    // const esFechaEspecial =
-    //     fechaActual.getDate() === 11 &&
-    //     fechaActual.getMonth() === 4 &&
-    //     fechaActual.getFullYear() === 2023;
-
-    const pedidos = ["572034804"];
-
-    const vendedoresEspeciales = new Set(["08L"]);
 
     $.ajax({
         url: "ajax/pedidos.ajax.php",
@@ -135,19 +123,11 @@ $("#seleccionarVendedor").change(function () {
         processData: false,
         dataType: "json",
         success: function (respuestaDet) {
-            let listaPrecio = respuestaDet["lista_precios"];
-
-            if (
-                !pedidos.includes(nuevoCodigo) &&
-                vendedoresEspeciales.has(vendedor)
-            ) {
-                listaPrecio = "precio5";
-                console.log("precio especial");
-            } else {
-                console.log("precio normal");
-            }
-
+            const listaPrecio = vendedoresEspeciales.has(vendedor)
+                ? "precio4"
+                : respuestaDet["lista_precios"];
             $("#lista").val(listaPrecio);
+            console.log("🚀 ~ listaPrecio:", listaPrecio);
         },
     });
 });

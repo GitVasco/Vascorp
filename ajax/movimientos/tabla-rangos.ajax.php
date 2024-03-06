@@ -111,7 +111,16 @@ class TablaMovimientos
                     $p23 = "<div style='text-align:right !important; color:blue'>0</div>";
                 }
 
-                $p1417 = "<div style='text-align:right !important; color:red'>" . number_format($movimientos[$i]["p14"] + $movimientos[$i]["p15"] + $movimientos[$i]["p16"] + $movimientos[$i]["p17"], 2) . "</div>";
+                if ($movimientos[$i]["p24"] > 0) {
+
+                    $p24 = "<div style='text-align:right !important; color:blue'>" . number_format($movimientos[$i]["p24"], 2) . "</div>";
+                } else {
+
+                    $p24 = "<div style='text-align:right !important; color:blue'>0</div>";
+                }
+
+
+                $p1418 = "<div style='text-align:right !important; color:red'>" . number_format($movimientos[$i]["p14"] + $movimientos[$i]["p15"] + $movimientos[$i]["p16"] + $movimientos[$i]["p17"] + $movimientos[$i]["p18"], 2) . "</div>";
 
                 $datosJson .= '[
                 "' . $movimientos[$i]["codigo"] . '",
@@ -119,13 +128,13 @@ class TablaMovimientos
                 "<b>' . $ventas . '</b>",
                 "<b>' . $cobranza . '</b>",
                 "<b>' . $saldo . '</b>",
-                "' . $p1417 . '",
-                "' . $p18 . '",
+                "' . $p1418 . '",
                 "' . $p19 . '",
                 "' . $p20 . '",
                 "' . $p21 . '",
                 "' . $p22 . '",
-                "' . $p23 . '"
+                "' . $p23 . '",
+                "' . $p24 . '"
                 ],';
             }
 
