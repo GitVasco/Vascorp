@@ -484,7 +484,14 @@ class ControladorPedidos
 
                         if (isset($partes[1]) && !in_array($partes[1], $existentCodes)) {
                             if ($partes[0] === "D") {
-                                $detalleEntries[] = "(" . implode(",", array_slice($partes, 1, 5)) . ")";
+                                // $detalleEntries[] = "(" . implode(",", array_slice($partes, 1, 5)) . ")";
+
+                                // Agregar comillas simples alrededor de los elementos de texto
+                                $detalleWithQuotes = array_map(function ($elem, $index) {
+                                    return $index == 1 ? "'" . $elem . "'" : $elem;
+                                }, array_slice($partes, 1, 5), array_keys(array_slice($partes, 1, 5)));
+
+                                $detalleEntries[] = "(" . implode(",", $detalleWithQuotes) . ")";
                             } elseif ($partes[0] === "C") {
                                 $datosC = array(
                                     "codigo"            => $partes[1],

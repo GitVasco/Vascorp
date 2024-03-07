@@ -1589,7 +1589,7 @@ class ModeloPedidos
 			return "ok";
 		} else {
 
-			return "error";
+			return $stmt->errorInfo();
 		}
 
 		$stmt = null;

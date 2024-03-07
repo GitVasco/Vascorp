@@ -13,6 +13,9 @@
 
     require_once "../../extensiones/cantidad_en_letras.php";
 
+    //declaramos la zona horaria
+    date_default_timezone_set('America/Lima');
+
     /* 
     todo: traemos todos lso datos para el ticket
     */
@@ -25,6 +28,8 @@
     #var_dump($ctaDet);
 
     $hoy = date("d-m-y");
+
+    $montoTotal = 0;
 
     ?>
     <div class="<!-- zona_impresion -->">
@@ -141,6 +146,8 @@
 
         foreach ($ctaDet as $key => $value) {
 
+            $montoTotal += $value["monto"];
+
             if ($value["vendedor"] == "18A" || $value["vendedor"] == "24") {
                 $linea = "ROSALINDA";
             } else if ($value["vendedor"] == "18") {
@@ -197,7 +204,7 @@
                         <th style="width:12%;text-align:left;"></th>
                         <th style="width:8%;text-align:left;"></th>
                         <th style="width:8%;text-align:left;"></th>
-                        <th style="width:8%;text-align:left;"></th>
+                        <th style="width:8%;text-align:right;">S/ ' . number_format($montoTotal, 2) . '</th>
                         <th style="width:8%;text-align:right;">S/ ' . number_format($ctaCab["saldo"], 2) . '</th>
                         <th style="width:7%;text-align:right;">S/ ' . number_format($ctaCab["gastos"], 2) . '</th>
                         <th style="width:8%;text-align:right;">S/ ' . number_format($ctaCab["monto_total"], 2) . '</th>

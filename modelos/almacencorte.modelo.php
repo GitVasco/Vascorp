@@ -1286,4 +1286,58 @@ class ModeloAlmacenCorte
 
 		$stmt = null;
 	}
+
+	// ver el lote
+	static public function mdlVerLotes($ac)
+	{
+
+		$stmt = Conexion::conectar()->prepare("SELECT
+				ad.almacencorte ,
+				date(ad.fecha) as fecha,
+				concat(a.modelo, a.cod_color) as articulo,
+				a.modelo ,
+				a.nombre ,
+				a.cod_color ,
+				a.color ,
+				sum(ad.cantidad) as cantidad,
+				ad.lote
+			from
+				almacencorte_detallejf ad
+			left join articulojf a 
+				on
+				ad.articulo = a.articulo
+			where
+				ad.almacencorte = $ac
+			group by
+				concat(a.modelo, a.cod_color)
+	");
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt = null;
+	}
+
+	// actualizamos el lote
+	static public function mdlActualizarLotes($articulo, $lote)
+	{
+
+		$stmt = Conexion::conectar()->prepare("UPDATE
+					almacencorte_detallejf
+				set
+					lote = '$lote'
+				where
+					SUBSTRING(articulo , 1, length(articulo) - 1) = '$articulo'");
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return $stmt->errorInfo();
+		}
+
+		$stmt = null;
+	}
 }

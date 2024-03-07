@@ -7992,6 +7992,8 @@ class ModeloFacturacion
                 ROUND(m.precio, 2) AS t9,
                 ROUND(ROUND(m.precio, 2) * SUM(m.cantidad), 2) AS u9,
                 ROUND(ROUND(m.precio, 2) * SUM(m.cantidad), 2) AS x9,
+                '' as ak9,
+                '' as al9,
                 ROUND(
                     ROUND(m.precio * SUM(m.cantidad), 2) * 0.18,
                     2

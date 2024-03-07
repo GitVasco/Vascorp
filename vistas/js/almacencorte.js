@@ -1449,3 +1449,81 @@ $(".tablaAlmacenCorte").on("click", "button.btnEditarCorteP", function () {
     // console.log(codigo);
     window.location = "index.php?ruta=editar-almacencorte&codigo=" + codigo;
 });
+
+$(".tablaAlmacenCorte").on("click", "button.btnEditarLote", function () {
+    var codigo = $(this).attr("codigoAC");
+    window.location =
+        "index.php?ruta=editar-almacencorte-lote&codigo=" + codigo;
+});
+
+//actualizar lote
+$("#guardarCambios").click(function (e) {
+    e.preventDefault();
+
+    var datosArray = $(".loteCorte")
+        .map(function () {
+            return {
+                lote: $(this).val(),
+                almacencorte: $(this).attr("ac"),
+                articulo: $(this).attr("articulo"),
+            };
+        })
+        .get();
+
+    console.log("🚀 ~ datosArray:", datosArray);
+
+    var datosForm = new FormData();
+    datosForm.append("guardarCambios", JSON.stringify(datosArray)); // Convierte el array a JSON y lo añade al objeto FormData
+
+    $.ajax({
+        url: "ajax/almacencorte.ajax.php",
+        method: "POST",
+        data: datosForm, // Usa el objeto FormData actualizado
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (response) {
+            console.log("🚀 ~ response:", response);
+
+            // si respuesta es "ok" mostramos un toastr de éxito
+            if (response == "ok") {
+                Command: toastr["success"]("Lotes actualizados con éxito");
+            } else {
+                Command: toastr["error"]("No se pudo actualizar los lotes");
+            }
+        },
+    });
+});
+
+// navegar por lotes
+document.addEventListener("DOMContentLoaded", function () {
+    // Selecciona todos los inputs de lote
+    var inputsLote = document.querySelectorAll(".loteCorte");
+
+    // Añade el manejador de eventos a cada input
+    inputsLote.forEach(function (input, index) {
+        input.addEventListener("keydown", function (event) {
+            // Tecla de flecha hacia abajo
+            if (event.keyCode === 40) {
+                // Evita el comportamiento predeterminado
+                event.preventDefault();
+                // Cambia el foco al siguiente input si existe
+                var nextInput = inputsLote[index + 1];
+                if (nextInput) {
+                    nextInput.focus();
+                }
+            }
+            // Tecla de flecha hacia arriba
+            else if (event.keyCode === 38) {
+                // Evita el comportamiento predeterminado
+                event.preventDefault();
+                // Cambia el foco al input anterior si existe
+                var prevInput = inputsLote[index - 1];
+                if (prevInput) {
+                    prevInput.focus();
+                }
+            }
+        });
+    });
+});

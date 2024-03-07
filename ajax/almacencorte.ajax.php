@@ -69,6 +69,25 @@ class AjaxAlmacenCorte
 
 		echo json_encode($respuesta);
 	}
+
+	// guardar lotes
+	public $guardarCambios;
+	public function ajaxGuardarLote()
+	{
+		// Obtén la cadena JSON enviada a través de FormData y decodifícala
+		$valorJson = isset($_POST['guardarCambios']) ? $_POST['guardarCambios'] : null;
+		$valor = json_decode($valorJson, true);
+
+		if (is_array($valor)) {
+			foreach ($valor as $key => $value) {
+				$lote = ModeloAlmacenCorte::mdlActualizarLotes($value["articulo"], $value["lote"]);
+			}
+			echo json_encode($lote);
+		} else {
+			// Manejo de error si $valor no es un array
+			echo json_encode(array("error" => "Datos no válidos"));
+		}
+	}
 }
 
 
@@ -111,4 +130,12 @@ if (isset($_POST["codigo"])) {
 	$editarAlmacenCorte = new AjaxAlmacenCorte();
 	$editarAlmacenCorte->codigo = $_POST["codigo"];
 	$editarAlmacenCorte->ajaxEditarAlmacen();
+}
+
+//* guardar Lotes
+if (isset($_POST["guardarCambios"])) {
+
+	$guardarLote = new AjaxAlmacenCorte();
+	$guardarLote->guardarCambios = $_POST["guardarCambios"];
+	$guardarLote->ajaxGuardarLote();
 }
