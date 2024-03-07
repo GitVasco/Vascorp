@@ -1251,6 +1251,10 @@ class ControladorIngresos
     {
         $fecha = $postData["nuevaFecha"];
 
+        // de $postData["nuevoTalleres"] quitamos la T del inicio y dejamos lo q queda de la cadena
+        $taller = substr($postData["nuevoTalleres"], 1);
+        $fechaEncode = self::convertirFechaExcel($fecha);
+
         foreach ($listaArticulos as $key => $value) {
             $datosD = array(
                 "tipo" => "E20",
@@ -1260,10 +1264,41 @@ class ControladorIngresos
                 "articulo" => $value["articulo"],
                 "cantidad" => $value["cantidad"],
                 "almacen" => "01",
-                "idcierre" => $value["idCierre"]
+                "idcierre" => $value["idCierre"],
+                "corte" => strtoupper($taller . $value["corte"]) . $fechaEncode
             );
 
             ModeloIngresos::mdlGuardarDetalleIngreso("movimientosjf_2024", $datosD);
         }
+    }
+
+    static public function convertirFechaExcel($fecha)
+    {
+        // Intenta convertir usando el formato Y-m-d primero
+        $fechaObjeto = DateTime::createFromFormat('Y-m-d', $fecha);
+
+        // Si falla, intenta con el formato d/m/Y
+        if (!$fechaObjeto) {
+            $fechaObjeto = DateTime::createFromFormat('d/m/Y', $fecha);
+        }
+
+        // Si aún falla, maneja el error adecuadamente
+        if (!$fechaObjeto) {
+            throw new Exception("Formato de fecha inválido: " . $fecha);
+        }
+
+        // Fecha base de Excel (1 de enero de 1900)
+        $fechaBase = DateTime::createFromFormat('d/m/Y', '01/01/1900');
+
+        // Calcular la diferencia en días
+        $diferencia = $fechaBase->diff($fechaObjeto)->days;
+
+        // Excel cuenta el día 29 de febrero de 1900, que técnicamente no existió
+        // Como estamos iniciando desde el 0, debemos ajustar agregando 2 en lugar de 1
+        if ($fechaObjeto > DateTime::createFromFormat('d/m/Y', '28/02/1900')) {
+            $diferencia += 2;
+        }
+
+        return $diferencia;
     }
 }

@@ -1181,86 +1181,71 @@ $(".tablaArticulosTalleres tbody").on(
                 var packing = respuesta["packingB"];
                 var taller = respuesta["taller"];
 
-                /* 
-            todo: AGREGAR LOS CAMPOS
-            */
+                // todo: AGREGAR LOS CAMPOS
+
                 if (idCierre == "") {
-                    $(".nuevoArticuloIngreso").append(
-                        '<div class="row munditoIngreso" style="padding:5px 15px">' +
-                            "<!-- Descripción del Articulo -->" +
-                            '<div class="col-xs-6" style="padding-right:0px">' +
-                            '<div class="input-group">' +
-                            '<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarTaller" articuloIngreso="' +
-                            articuloIngreso +
-                            '"><i class="fa fa-times"></i></button></span>' +
-                            '<input type="text" class="form-control nuevaDescripcionProducto input-sm" articuloIngreso="' +
-                            articuloIngreso +
-                            '" name="agregarT" value="' +
-                            packing +
-                            '" codigoAC="' +
-                            articulo +
-                            '" idCierre= "' +
-                            idCierre +
-                            '" readonly required>' +
-                            "</div>" +
-                            "</div>" +
-                            "<!-- Cantidad de la Orden de Corte -->" +
-                            '<div class="col-xs-3">' +
-                            '<input type="number" class="form-control nuevaCantidadArticuloIngreso input-sm" name="nuevaCantidadArticuloIngreso" id="nuevaCantidadArticuloIngreso" min="1" value="0" taller="' +
-                            talleres +
-                            '" articulo="' +
-                            articulo +
-                            '" nuevoTaller="' +
-                            talleres +
-                            '" cantidad = "" nuevaCantidad = "0" required>' +
-                            "</div>" +
-                            "<!-- saldo de la Orden de Corte -->" +
-                            '<div class="col-xs-3 divSaldoIngreso">' +
-                            '<input type="number" class="form-control nuevoSaldoIngreso input-sm" name="nuevoSaldoIngreso" id="nuevoSaldoIngreso" value="' +
-                            taller +
-                            '" readonly>' +
-                            "</div>" +
-                            "</div>"
-                    );
+                    $(".nuevoArticuloIngreso").append(`
+                    <div class="row munditoIngreso" style="padding:5px 15px">
+                        <!-- Descripción del Articulo -->
+                        <div class="col-xs-6" style="padding-right:0px">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <button type="button" class="btn btn-danger btn-xs quitarTaller" articuloIngreso="${articuloIngreso}">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </span>
+                                <input type="text" class="form-control nuevaDescripcionProducto input-sm" articuloIngreso="${articuloIngreso}" name="agregarT" value="${packing}" codigoAC="${articulo}" idCierre="${idCierre}" readonly required>
+                            </div>
+                        </div>
+                        <!-- Cantidad de la Orden de Corte -->
+                        <div class="col-xs-2">
+                            <input type="number" class="form-control nuevaCantidadArticuloIngreso input-sm" name="nuevaCantidadArticuloIngreso" id="nuevaCantidadArticuloIngreso" min="1" value="0" taller="${talleres}" articulo="${articulo}" nuevoTaller="${talleres}" cantidad="" nuevaCantidad="0" required>
+                        </div>
+                        <!-- saldo de la Orden de Corte -->
+                        <div class="col-xs-2 divSaldoIngreso">
+                            <input type="number" class="form-control nuevoSaldoIngreso input-sm" name="nuevoSaldoIngreso" id="nuevoSaldoIngreso" value="${taller}" readonly>
+                        </div>
+                        <!-- corte -->
+                        <div class="col-xs-2 divCorte">
+                            <input type="text" class="form-control nuevoCorteIngreso input-sm" name="nuevoCorteIngreso" id="nuevoCorteIngreso" value="">
+                        </div>
+                    </div>`);
                 } else {
-                    $(".nuevoArticuloIngreso").append(
-                        '<div class="row munditoIngreso" style="padding:5px 15px">' +
-                            "<!-- Descripción del Articulo -->" +
-                            '<div class="col-xs-6" style="padding-right:0px">' +
-                            '<div class="input-group">' +
-                            '<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarTaller" articuloIngreso="' +
-                            idCierre +
-                            '"><i class="fa fa-times"></i></button></span>' +
-                            '<input type="text" class="form-control nuevaDescripcionProducto input-sm" articuloIngreso="' +
-                            idCierre +
-                            '" name="agregarT" value="' +
-                            packing +
-                            '" codigoAC="' +
-                            articulo +
-                            '" idCierre= "' +
-                            idCierre +
-                            '" readonly required>' +
-                            "</div>" +
-                            "</div>" +
-                            "<!-- Cantidad de la Orden de Corte -->" +
-                            '<div class="col-xs-3">' +
-                            '<input type="number" class="form-control nuevaCantidadArticuloIngreso input-sm" name="nuevaCantidadArticuloIngreso" id="nuevaCantidadArticuloIngreso" min="1" value="0" taller="' +
-                            talleres +
-                            '" articulo="' +
-                            articulo +
-                            '" nuevoTaller="' +
-                            talleres +
-                            '" cantidad = "" nuevaCantidad="0"  required>' +
-                            "</div>" +
-                            "<!-- saldo de la Orden de Corte -->" +
-                            '<div class="col-xs-3 divSaldoIngreso">' +
-                            '<input type="number" class="form-control nuevoSaldoIngreso input-sm" name="nuevoSaldoIngreso" id="nuevoSaldoIngreso" value="' +
-                            talleres +
-                            '" readonly>' +
-                            "</div>" +
-                            "</div>"
-                    );
+                    $(".nuevoArticuloIngreso").append(`
+                    <div class="row munditoIngreso" style="padding:5px 15px">
+                        <!-- Descripción del Articulo -->
+                        <div class="col-xs-6" style="padding-right:0px">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <button type="button" class="btn btn-danger btn-xs quitarTaller" articuloIngreso="${idCierre}">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </span>
+                                <input type="text" class="form-control nuevaDescripcionProducto input-sm" articuloIngreso="${idCierre}" name="agregarT" value="${packing}" codigoAC="${articulo}" idCierre="${idCierre}" readonly required>
+                            </div>
+                        </div>
+                        <!-- Cantidad de la Orden de Corte -->
+                        <div class="col-xs-2">
+                            <input type="number" class="form-control nuevaCantidadArticuloIngreso input-sm" name="nuevaCantidadArticuloIngreso" id="nuevaCantidadArticuloIngreso" min="1" value="0" taller="${talleres}" articulo="${articulo}" nuevoTaller="${talleres}" cantidad="" nuevaCantidad="0" required>
+                        </div>
+                        <!-- saldo de la Orden de Corte -->
+                        <div class="col-xs-2 divSaldoIngreso">
+                            <input type="number" class="form-control nuevoSaldoIngreso input-sm" name="nuevoSaldoIngreso" id="nuevoSaldoIngreso" value="${talleres}" readonly>
+                        </div>
+                        <!-- corte -->
+                        <div class="col-xs-2 divCorte">
+                            <input type="text" class="form-control nuevoCorteIngreso input-sm" name="nuevoCorteIngreso" id="nuevoCorteIngreso" value="">
+                        </div>
+                    </div>`);
                 }
+
+                // Después de agregar los inputs al DOM, agregamos el manejador de eventos para el foco
+                $(".nuevoArticuloIngreso")
+                    .find(".nuevaCantidadArticuloIngreso")
+                    .last()
+                    .focus(function () {
+                        $(this).select();
+                    });
 
                 // SUMAR TOTAL DE UNIDADES
 
@@ -1277,6 +1262,12 @@ $(".tablaArticulosTalleres tbody").on(
         });
     }
 );
+
+// Además, para manejar el foco en elementos agregados dinámicamente después del primer clic,
+// puedes agregar un manejador de evento focus global para todos los elementos actuales y futuros.
+$(document).on("focus", ".nuevaCantidadArticuloIngreso", function () {
+    $(this).select();
+});
 
 /*
  * CUANDO CARGUE LA TABLA CADA VEZ QUE NAVEGUE EN ELLA
@@ -1464,6 +1455,12 @@ $(".formularioIngreso").on(
     }
 );
 
+//modificar el corte
+$(".formularioIngreso").on("change", "input.nuevoCorteIngreso", function () {
+    sumarTotalIngreso();
+    listarArticulosIngreso();
+});
+
 /*
  * SUMAR EL TOTAL DE LAS ORDENES DE CORTE
  */
@@ -1508,6 +1505,8 @@ function listarArticulosIngreso() {
 
     var cantidad = $(".nuevaCantidadArticuloIngreso");
 
+    var corte = $(".nuevoCorteIngreso");
+
     for (var i = 0; i < descripcion.length; i++) {
         listaArticulos.push({
             id: $(descripcion[i]).attr("articuloIngreso"),
@@ -1516,9 +1515,14 @@ function listarArticulosIngreso() {
             nuevaCant: $(cantidad[i]).val(),
             taller: $(cantidad[i]).attr("nuevoTaller"),
             idCierre: $(descripcion[i]).attr("idCierre"),
+            corte: $(corte[i]).val(),
         });
     }
 
+    console.log(
+        "🚀 ~ listarArticulosIngreso ~ listaArticulos:",
+        listaArticulos
+    );
     // console.log("listaArticulos", JSON.stringify(listaArticulos));
 
     $("#listaArticulosIngreso").val(JSON.stringify(listaArticulos));

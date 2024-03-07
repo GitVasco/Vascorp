@@ -171,7 +171,8 @@ class ModeloIngresos
 											articulo,
 											cantidad,
 											almacen,
-											idcierre
+											idcierre,
+											corte
 										) 
 										VALUES
 											(
@@ -182,7 +183,8 @@ class ModeloIngresos
 											:articulo,
 											:cantidad,
 											:almacen,
-											:idcierre
+											:idcierre,
+											:corte
 											)";
 
 		$stmt = Conexion::conectar()->prepare($sql);
@@ -195,6 +197,7 @@ class ModeloIngresos
 		$stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_INT);
 		$stmt->bindParam(":almacen", $datos["almacen"], PDO::PARAM_STR);
 		$stmt->bindParam(":idcierre", $datos["idcierre"], PDO::PARAM_INT);
+		$stmt->bindParam(":corte", $datos["corte"], PDO::PARAM_INT);
 
 
 		if ($stmt->execute()) {
@@ -202,7 +205,7 @@ class ModeloIngresos
 			return "ok";
 		} else {
 
-			return "error";
+			return $stmt->errorInfo();
 		}
 
 		$stmt = null;

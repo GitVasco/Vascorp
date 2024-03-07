@@ -26,7 +26,7 @@
       EL FORMULARIO
       ======================================-->
 
-            <div class="col-lg-5 col-xs-12">
+            <div class="col-lg-6 col-xs-12">
 
                 <div class="box box-success">
 
@@ -117,10 +117,16 @@
 
                                             <?php
 
+                                            // creamos un array para configurar los talleres
+                                            $taller = ["T1", "T2", "T3", "T4", "T5", "T6", "T8", "T9", "TA", "TB"];
+
                                             $sector = ControladorSectores::ctrMostrarSectores(null);
                                             foreach ($sector as $key => $value) {
 
-                                                echo '<option value="' . $value["cod_sector"] . '">' . $value["cod_sector"] . "-" . $value["nom_sector"] . '</option>';
+                                                // validamos que el sector sea un taller 
+                                                if (in_array($value["cod_sector"], $taller)) {
+                                                    echo '<option value="' . $value["cod_sector"] . '">' . $value["cod_sector"] . "-" . $value["nom_sector"] . '</option>';
+                                                }
                                             }
 
 
@@ -163,15 +169,22 @@
 
                                         </div>
 
-                                        <div class="col-xs-3">
+                                        <div class="col-xs-2">
 
                                             <label for="">En Taller</label>
 
                                         </div>
 
-                                        <div class="col-xs-3">
+                                        <div class="col-xs-2">
 
                                             <label for="">Saldo</label>
+
+                                        </div>
+
+
+                                        <div class="col-xs-2">
+
+                                            <label for="">Corte</label>
 
                                         </div>
 
@@ -274,7 +287,7 @@
       LA TABLA DE ARTICULOS
       ======================================-->
 
-            <div class="col-lg-7 hidden-md hidden-sm hidden-xs">
+            <div class="col-lg-6 hidden-md hidden-sm hidden-xs">
 
                 <div class="box box-warning">
 
