@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+    app:
+        build: .
+        ports:
+            - "8090:80"
+        environment:
+            - DB_HOST=ip_de_tu_base_de_datos
+            - DB_USER=tu_usuario
+            - DB_PASSWORD=tu_contraseña
+            - DB_NAME=tu_base_de_datos
+        volumes:
+            - /Users/joel/Proyectos/vascorp:/var/www/html

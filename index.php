@@ -122,6 +122,8 @@ require_once "controladores/evaluacion.controlador.php";
 
 require_once "controladores/transferencias.controlador.php";
 
+require_once "controladores/config.php";
+
 /* 
 * MODELOS
 */

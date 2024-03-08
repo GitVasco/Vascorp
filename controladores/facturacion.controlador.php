@@ -2345,7 +2345,7 @@ class ControladorFacturacion
                 $datos["l5"] . ',';
 
             //todo: FILA 6
-            require_once("/../extensiones/cantidad_en_letras_v2.php");
+            require_once("../extensiones/cantidad_en_letras_v2.php");
 
             if ($datos["d1"] == "PEN") {
 
@@ -2415,33 +2415,30 @@ class ControladorFacturacion
 
             fclose($fp);
 
-            //?origen prueba
-            //$origen = 'c:/xampp2/htdocs/vascorp/vistas/reportes_excel/csv_fe/' . $nombre . '.txt';
+            require_once("config.php");
 
-            //!origen produccion
-            $origen = 'c:/xampp/htdocs/vascorp/vistas/reportes_excel/csv_fe/' . $nombre . '.txt';
+            $origen = ORIGEN . $nombre . '.txt';
 
             if ($datos["c1"] == "01") {
-
-                //?destino prueba
-                //$destino = 'c:/prueba/invoice/' . $nombre . '.csv';
-
-                //!destino produccion
-                $destino = 'c:/daemonOSE21/documents/in/invoice/' . $nombre . '.csv';
+                $destino = DESTINO_INVOICE . $nombre . '.csv';
             } else {
-
-                //?destino prueba
-                //$destino = 'c:/prueba/boleta/' . $nombre . '.csv';
-
-                //!destino produccion
-                $destino = 'c:/daemonOSE21/documents/in/boleta/' . $nombre . '.csv';
+                $destino = DESTINO_BOLETA . $nombre . '.csv';
             }
 
-            //copy($origen,$destino);
-            rename($origen, $destino);
+            // $copy = copy($origen, $destino);
+            if (file_exists($origen)) {
+                $rename = rename($origen, $destino);
+
+                if ($rename) {
+                    $respuesta = "okA";
+                } else {
+                    $respuesta = "error";
+                }
+            } else {
+                echo 'El archivo no existe en la ruta especificada.';
+            }
         }
 
-        $respuesta = "okA";
         return $respuesta;
     }
 
