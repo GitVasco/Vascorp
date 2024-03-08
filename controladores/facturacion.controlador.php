@@ -2384,32 +2384,29 @@ class ControladorFacturacion
             //var_dump($datosD);
 
             foreach ($datosD as $key => $value) {
+                $fila = ($key + 1) . ',' .
+                    $value["b9"] . ',' .
+                    $value["c9"] . ',' .
+                    $value["d9"] . ',' .
+                    $value["e9"] . ',' .
+                    $value["f9"] . ',,,' .
+                    $value["i9"] . ',' .
+                    $value["j9"] . ',' .
+                    $value["k9"] . ',' .
+                    $value["l9"] . ',' .
+                    $value["m9"] . ',,,,,,' .
+                    $value["s9"] . ',' .
+                    $value["t9"] . ',' .
+                    $value["u9"] . ',,,' .
+                    $value["x9"] . ',,,,,,,,,,,,,' .
+                    $value["ak9"] . ',' .
+                    $value["al9"] . ',,,,' .
+                    $value["ap9"] . ',,,,,,,,,,,,,,,,,,,,,' . PHP_EOL;
 
-                foreach ($datosD as $key => $value) {
-                    $fila = ($key + 1) . ',' .
-                        $value["b9"] . ',' .
-                        $value["c9"] . ',' .
-                        $value["d9"] . ',' .
-                        $value["e9"] . ',' .
-                        $value["f9"] . ',,,' .
-                        $value["i9"] . ',' .
-                        $value["j9"] . ',' .
-                        $value["k9"] . ',' .
-                        $value["l9"] . ',' .
-                        $value["m9"] . ',,,,,,' .
-                        $value["s9"] . ',' .
-                        $value["t9"] . ',' .
-                        $value["u9"] . ',,,' .
-                        $value["x9"] . ',,,,,,,,,,,,,' .
-                        $value["ak9"] . ',' .
-                        $value["al9"] . ',,,,' .
-                        $value["ap9"] . ',,,,,,,,,,,,,,,,,,,,,' . PHP_EOL;
-
-                    if ($key < count($datosD) - 1) {
-                        fwrite($fp, $fila);
-                    } else {
-                        fwrite($fp, $fila . 'FF00FF');
-                    }
+                if ($key < count($datosD) - 1) {
+                    fwrite($fp, $fila);
+                } else {
+                    fwrite($fp, $fila . 'FF00FF');
                 }
             }
 
