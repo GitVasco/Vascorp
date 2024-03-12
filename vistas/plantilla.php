@@ -361,7 +361,8 @@ CUERPO DOCUMENTO
                 $_GET["ruta"] == "transferencias-apt" ||
                 $_GET["ruta"] == "crear-transferencias-apt" ||
                 $_GET["ruta"] == "estampado" ||
-                $_GET["ruta"] == "tampografia"
+                $_GET["ruta"] == "tampografia" ||
+                $_GET["ruta"] == "prehormado"
             ) {
 
                 include "modulos/produccion/" . $_GET["ruta"] . ".php";

@@ -607,7 +607,7 @@ $(".tablaEstampado tbody").on(
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             cancelButtonText: "Cancelar",
-            confirmButtonText: "Si, borrar color!",
+            confirmButtonText: "Si, borrar!",
         }).then(function (result) {
             if (result.value) {
                 const datos = new FormData();

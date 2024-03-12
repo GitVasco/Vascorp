@@ -1265,6 +1265,7 @@ class ModeloMateriaPrima
 				producto 
 			WHERE codpro = pro.cuadro) AS cuadro_nom,
 			pro.usureg,
+			pro.fampro,
 			LEFT(pro.fampro, 3) AS fam 
 		FROM
 			Producto pro 
@@ -1305,6 +1306,7 @@ class ModeloMateriaPrima
 				producto 
 			WHERE codpro = pro.cuadro) AS cuadro_nom,
 			pro.usureg,
+			pro.fampro,
 			LEFT(pro.fampro, 3) AS fam 
 			FROM
 				Producto pro 

@@ -1,52 +1,57 @@
 <?php
+
 use Mike42\Escpos\Printer;
 use Mike42\Escpos\EscposImage;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 
-class ControladorProduccion{
+class ControladorProduccion
+{
 
     /* 
     *MOSTRAR QUINCENAS
     */
-    static public function ctrMostrarQuincenas($valor){
+    static public function ctrMostrarQuincenas($valor)
+    {
 
-		$respuesta = ModeloProduccion::mdlMostrarQuincenas($valor);
+        $respuesta = ModeloProduccion::mdlMostrarQuincenas($valor);
 
-		return $respuesta;
-
-	}
-
-  /* 
-    *MOSTRAR AVANCES
-    */
-    static public function ctrMostrarAvances($inicio,$fin){
-
-      $respuesta = ModeloProduccion::mdlMostrarAvances($inicio,$fin);
-  
-      return $respuesta;
-  
+        return $respuesta;
     }
 
-	/* 
+    /* 
+    *MOSTRAR AVANCES
+    */
+    static public function ctrMostrarAvances($inicio, $fin)
+    {
+
+        $respuesta = ModeloProduccion::mdlMostrarAvances($inicio, $fin);
+
+        return $respuesta;
+    }
+
+    /* 
 	* CREAR QUINCENA
 	*/
-	static public function ctrCrearQuincenas(){
+    static public function ctrCrearQuincenas()
+    {
 
-        if(isset($_POST["mes"])){
+        if (isset($_POST["mes"])) {
 
-            $datos = array( "ano" => $_POST["año"],
-                            "mes" => $_POST["mes"],
-                            "quincena" => $_POST["quincena"],
-                            "inicio" => $_POST["inicio"],
-                            "fin" => $_POST["fin"],
-                            "usuario" => $_POST["usuario"]);
+            $datos = array(
+                "ano" => $_POST["año"],
+                "mes" => $_POST["mes"],
+                "quincena" => $_POST["quincena"],
+                "inicio" => $_POST["inicio"],
+                "fin" => $_POST["fin"],
+                "usuario" => $_POST["usuario"]
+            );
             //var_dump($datos);
 
             $respuesta = ModeloProduccion::mdlCrearQuincenas($datos);
-                
-            if($respuesta == "ok"){
 
-                echo'<script>
+            if ($respuesta == "ok") {
+
+                echo '<script>
 
                     swal({
                           type: "success",
@@ -62,36 +67,35 @@ class ControladorProduccion{
                                 })
 
                     </script>';
-
-            }  
-
-
-		}
-
+            }
+        }
     }
-    
+
     /* 
     *EDITAR QUINCENA
     */
 
-	static public function ctrEditarQuincenas(){
+    static public function ctrEditarQuincenas()
+    {
 
-		if(isset($_POST["editarMes"])){
+        if (isset($_POST["editarMes"])) {
 
-            $datos = array( "id" => $_POST["id"],
-                            "ano" => $_POST["editarAño"],
-                            "mes" => $_POST["editarMes"],
-                            "quincena" => $_POST["editarQuincena"],
-                            "inicio" => $_POST["editarInicio"],
-                            "fin" => $_POST["editarFin"],
-                            "usuario" => $_POST["editarUsuario"]);
-            
+            $datos = array(
+                "id" => $_POST["id"],
+                "ano" => $_POST["editarAño"],
+                "mes" => $_POST["editarMes"],
+                "quincena" => $_POST["editarQuincena"],
+                "inicio" => $_POST["editarInicio"],
+                "fin" => $_POST["editarFin"],
+                "usuario" => $_POST["editarUsuario"]
+            );
+
 
             $respuesta = ModeloProduccion::mdlEditarQuincenas($datos);
 
-            if($respuesta == "ok"){
+            if ($respuesta == "ok") {
 
-                echo'<script>
+                echo '<script>
 
                 swal({
                       type: "success",
@@ -107,64 +111,62 @@ class ControladorProduccion{
                             })
 
                 </script>';
-
             }
-
-		}
-
-    }    
+        }
+    }
 
     /* 
     *MOSTRAR EFICIENCIA QUINCENAL
     */
-    static public function ctrMostrarEficiencia($inicio, $fin, $nquincena, $id ,$sector ){
+    static public function ctrMostrarEficiencia($inicio, $fin, $nquincena, $id, $sector)
+    {
 
-		$respuesta = ModeloProduccion::mdlMostrarEficiencia($inicio, $fin, $nquincena, $id,$sector);
+        $respuesta = ModeloProduccion::mdlMostrarEficiencia($inicio, $fin, $nquincena, $id, $sector);
 
-		return $respuesta;
-
-    } 
+        return $respuesta;
+    }
 
     /* 
     *MOSTRAR EFICIENCIA QUINCENAL
     */
-    static public function ctrTablaEficienciaGlobal($taller){
+    static public function ctrTablaEficienciaGlobal($taller)
+    {
 
-      $respuesta = ModeloProduccion::mdlTablaEficienciaGlobal($taller);
-  
-      return $respuesta;
-  
-      }     
-    
+        $respuesta = ModeloProduccion::mdlTablaEficienciaGlobal($taller);
+
+        return $respuesta;
+    }
+
     /* 
     *MOSTRAR PAGOS QUINCENAL
     */
-    static public function ctrMostrarPagos($inicio, $fin, $nquincena, $id,$sector ){
+    static public function ctrMostrarPagos($inicio, $fin, $nquincena, $id, $sector)
+    {
 
-		$respuesta = ModeloProduccion::mdlMostrarPagos($inicio, $fin, $nquincena,$id, $sector);
+        $respuesta = ModeloProduccion::mdlMostrarPagos($inicio, $fin, $nquincena, $id, $sector);
 
-		return $respuesta;
+        return $respuesta;
+    }
 
-  }     
-  
-	/* 
+    /* 
 	* BORRAR ARTICULO
 	*/
-	static public function ctrEliminarQuincena(){
+    static public function ctrEliminarQuincena()
+    {
 
-		if(isset($_GET["idQuincena"])){
+        if (isset($_GET["idQuincena"])) {
 
-      //var_dump($_GET["idQuincena"]);
+            //var_dump($_GET["idQuincena"]);
 
-			$id = $_GET["idQuincena"];
+            $id = $_GET["idQuincena"];
 
-			$respuesta = ModeloProduccion::mdlEliminarQuincena($id);
+            $respuesta = ModeloProduccion::mdlEliminarQuincena($id);
 
-			if($respuesta == "ok"){
+            if ($respuesta == "ok") {
 
-        //var_dump($respuesta);
-				
-				echo'<script>
+                //var_dump($respuesta);
+
+                echo '<script>
 
 				swal({
 					  type: "success",
@@ -180,101 +182,95 @@ class ControladorProduccion{
 							})
 
 				</script>';
+            }
+        }
+    }
 
-			}		
-		}
+    static public function ctrImprimirAvance()
+    {
 
-
-	}	  
-
-  static public function ctrImprimirAvance(){
-
-    if(isset($_GET["inicioQuincena"] ) && isset($_GET["finQuincena"])){
+        if (isset($_GET["inicioQuincena"]) && isset($_GET["finQuincena"])) {
 
             $inicio = $_GET["inicioQuincena"];
 
             $fin = $_GET["finQuincena"];
-        
 
-            $nombre_impresora = "Star BSC10"; 
+
+            $nombre_impresora = "Star BSC10";
 
             $connector = new WindowsPrintConnector($nombre_impresora);
             $printer = new Printer($connector);
 
             $fecha = date("d-m-Y");
 
-            $respuesta = ControladorProduccion::ctrMostrarAvances($inicio,$fin);
+            $respuesta = ControladorProduccion::ctrMostrarAvances($inicio, $fin);
             //Establecemos los datos de la empresa
             $empresa = "Corporacion Vasco S.A.C.";
             $documento = "20513613939";
 
             foreach ($respuesta as $key => $value) {
-                
-                $printer -> setFont(Printer::FONT_B);
-                $printer -> setJustification(Printer::JUSTIFY_CENTER);
-                $printer -> setTextSize(1, 1);
+
+                $printer->setFont(Printer::FONT_B);
+                $printer->setJustification(Printer::JUSTIFY_CENTER);
+                $printer->setTextSize(1, 1);
                 //Activamos negrita
 
                 $printer->setPrintLeftMargin(0); // margen 0
                 $printer->setEmphasis(true);
-                $printer -> text("AVANCE PAGO DE ".$inicio." AL ".$fin."\n");//Nombre de la empresa
+                $printer->text("AVANCE PAGO DE " . $inicio . " AL " . $fin . "\n"); //Nombre de la empresa
 
-                $printer -> text("======================================="."\n");//Dirección de la empresa
+                $printer->text("=======================================" . "\n"); //Dirección de la empresa
                 //Quitamos negrita
-                
-                
-                $printer -> setJustification(Printer::JUSTIFY_LEFT);
 
-                $printer -> text("ID:".$value["id_trabajador"]."\n");
+
+                $printer->setJustification(Printer::JUSTIFY_LEFT);
+
+                $printer->text("ID:" . $value["id_trabajador"] . "\n");
 
                 $printer->setEmphasis(false);
 
-                $printer -> text("Nombre:     ".$value["nombre"]."\n");
+                $printer->text("Nombre:     " . $value["nombre"] . "\n");
 
-                $printer -> text("Produccion:                 ".$value["produccion"]."\n");
+                $printer->text("Produccion:                 " . $value["produccion"] . "\n");
 
-                $printer -> text("Sueldo:                     ".$value["sueldo"]."\n");
+                $printer->text("Sueldo:                     " . $value["sueldo"] . "\n");
 
-                $diferencia = substr($value["diferencia"],0,1);
+                $diferencia = substr($value["diferencia"], 0, 1);
                 $tamano = strlen($value["diferencia"]);
 
-                if($diferencia == "-"){
-                  if($tamano == 7){
-                    $printer -> text("Diferencia:                ".$value["diferencia"]."\n");
-                  }else{
-                    $printer -> text("Diferencia:                 ".$value["diferencia"]."\n");
-                  }
-                  
+                if ($diferencia == "-") {
+                    if ($tamano == 7) {
+                        $printer->text("Diferencia:                " . $value["diferencia"] . "\n");
+                    } else {
+                        $printer->text("Diferencia:                 " . $value["diferencia"] . "\n");
+                    }
+                } else {
 
-                }else{
-
-                  $printer -> text("Incentivo:                  ".$value["incentivo"]."\n");
-
+                    $printer->text("Incentivo:                  " . $value["incentivo"] . "\n");
                 }
 
-                
 
-                
+
+
 
                 //Activamos negrita
                 $printer->setEmphasis(true);
 
-                $printer -> text("---------------------------------------"."\n");//Divisor Total
-            
-                $printer -> text("Total:                      ".$value["total"]."\n");
+                $printer->text("---------------------------------------" . "\n"); //Divisor Total
 
-                
-                $printer -> text("---------------------------------------"."\n");//Divisor Total
+                $printer->text("Total:                      " . $value["total"] . "\n");
 
-                $printer -> feed(1);
-                
-                $printer -> cut();
-        
-                }
 
-            $printer -> close();
+                $printer->text("---------------------------------------" . "\n"); //Divisor Total
 
-            echo'<script>
+                $printer->feed(1);
+
+                $printer->cut();
+            }
+
+            $printer->close();
+
+            echo '<script>
 
             swal({
                   type: "success",
@@ -290,19 +286,96 @@ class ControladorProduccion{
                         })
 
             </script>';
-        }      
-
-  }
+        }
+    }
 
     /* 
     *MOSTRAR TRABAJADORES POR TALLER
     */
-    static public function ctrMostrarTrabTaller($taller){
+    static public function ctrMostrarTrabTaller($taller)
+    {
 
-      $respuesta = ModeloProduccion::mdlMostrarTrabTaller($taller);
-  
-      return $respuesta;
-  
+        $respuesta = ModeloProduccion::mdlMostrarTrabTaller($taller);
+
+        return $respuesta;
     }
 
+    // prehormado
+    static public function ctrCrearPrehormado()
+    {
+        if (isset($_POST["tipoPrehormado"])) {
+
+            // declaramos las variables
+            $tipo = $_POST["tipoPrehormado"];
+            $fecha_registro = $_POST["fechaPrehormado"];
+            $articulo = $_POST["articulosPrehormado"];
+            $cantidad = $_POST["cantidadPrehormado"];
+            $usureg = $_SESSION["usuario"];
+            $fecreg = date("Y-m-d");
+            $pcreg = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+
+            // creamos el array
+            $datos = array(
+                "tipo" => $tipo,
+                "fecha_registro" => $fecha_registro,
+                "articulo" => $articulo,
+                "cantidad" => $cantidad,
+                "usureg" => $usureg,
+                "fecreg" => $fecreg,
+                "pcreg" => $pcreg
+            );
+
+            $respuesta = ModeloProduccion::mdlCrearPrehormado($datos);
+
+            if ($respuesta == "ok") {
+
+                echo '<script>
+
+                // toast de exito
+                Command: toastr["success"](
+                    "Editado de materia prima exitosamente!"
+                );
+                window.location = "prehormado";
+
+                </script>';
+            }
+        }
+    }
+
+    static public function ctrEditarPrehormado($id)
+    {
+        if (isset($_POST["idPrehormado"])) {
+
+            // declaramos las variables
+            $id = $_POST["idPrehormado"];
+            $tipo = $_POST["tipoPrehormado"];
+            $fecha_registro = $_POST["fechaPrehormado"];
+            $articulo = $_POST["articulosPrehormado"];
+            $cantidad = $_POST["cantidadPrehormado"];
+
+            // creamos el array
+            $datos = array(
+                "id" => $id,
+                "tipo" => $tipo,
+                "fecha_registro" => $fecha_registro,
+                "articulo" => $articulo,
+                "cantidad" => $cantidad
+            );
+
+            $respuesta = ModeloProduccion::mdlEditarPrehormado($datos);
+
+            if ($respuesta == "ok") {
+
+                echo '<script>
+
+                // toast de exito
+                Command: toastr["success"](
+                    "Editado de materia prima exitosamente!"
+                );
+                window.location = "prehormado";
+
+                </script>';
+            }
+        }
+    }
 }

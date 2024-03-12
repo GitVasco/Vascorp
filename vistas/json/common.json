@@ -1,0 +1,6 @@
+{
+    "tipo_prehormado": [
+        { "id": "01", "nombre": "Servicio" },
+        { "id": "02", "nombre": "Produccion" }
+    ]
+}

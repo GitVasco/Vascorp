@@ -519,6 +519,568 @@
             }
             ?>
 
+            <!-- Produccion -->
+            <?php
+            if ($_SESSION["produccion"] == 1) {
+            ?>
+
+                <li class="treeview <?php if (
+                                        $_GET["ruta"] == "ordencorte" ||
+                                        $_GET["ruta"] == "crear-ordencorte" ||
+                                        $_GET["ruta"] == "editar-detalle-ordencorte" ||
+                                        $_GET["ruta"] == "almacencorte" ||
+                                        $_GET["ruta"] == "crear-almacencorte" ||
+                                        $_GET["ruta"] == "en-cortes" ||
+                                        $_GET["ruta"] == "en-taller" ||
+                                        $_GET["ruta"] == "marcar-taller" ||
+                                        $_GET["ruta"] == "en-tallert" ||
+                                        $_GET["ruta"] == "en-tallerp" ||
+                                        $_GET["ruta"] == "ingresos" ||
+                                        $_GET["ruta"] == "crear-ingresos" ||
+                                        $_GET["ruta"] == "crear-segunda" ||
+                                        $_GET["ruta"] == "asistencia" ||
+                                        $_GET["ruta"] == "quincena" ||
+                                        $_GET["ruta"] == "eficiencia-global" ||
+                                        $_GET["ruta"] == "produccion-trusas" ||
+                                        $_GET["ruta"] == "produccion-brasier" ||
+                                        $_GET["ruta"] == "produccion-vasco" ||
+                                        $_GET["ruta"] == "urgencias" ||
+                                        $_GET["ruta"] == "urgenciasamp" ||
+                                        $_GET["ruta"] == "proyeccion-mp" ||
+                                        $_GET["ruta"] == "servicios" ||
+                                        $_GET["ruta"] == "crear-servicio" ||
+                                        $_GET["ruta"] == "cierres" ||
+                                        $_GET["ruta"] == "crear-cierre" ||
+                                        $_GET["ruta"] == "precio-servicio" ||
+                                        $_GET["ruta"] == "pago-servicio" ||
+                                        $_GET["ruta"] == "salidas-varios" ||
+                                        $_GET["ruta"] == "crear-salidas-varios" ||
+                                        $_GET["ruta"] == "operacion-taller" ||
+                                        $_GET["ruta"] == "sublimados" ||
+                                        $_GET["ruta"] == "seguimiento" ||
+                                        $_GET["ruta"] == "enviados-taller" ||
+                                        $_GET["ruta"] == "listar-documento" ||
+                                        $_GET["ruta"] == "ajuste-taller" ||
+                                        $_GET["ruta"] == "urgencias-produccion" ||
+                                        $_GET["ruta"] == "urgencias-almacen" ||
+                                        $_GET["ruta"] == "urgencias-corte" ||
+                                        $_GET["ruta"] == "urgencias-plan" ||
+                                        $_GET["ruta"] == "urgencias-maestro" ||
+                                        $_GET["ruta"] == "transferencia-apt" ||
+                                        $_GET["ruta"] == "crear-transferencias-apt" ||
+                                        $_GET["ruta"] == "estampado" ||
+                                        $_GET["ruta"] == "prehormado"
+                                    ) echo 'active'; ?>">
+
+                    <a href="#">
+
+                        <i class="fa fa-cogs"></i> <span>Producción</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+
+                    </a>
+
+                    <ul class="treeview-menu">
+
+                        <li class="treeview <?php if (
+                                                $_GET["ruta"] == "ordencorte" ||
+                                                $_GET["ruta"] == "crear-ordencorte"
+                                            ) echo 'active'; ?>">
+
+                            <a href="#"><i class="fa fa-scissors"></i> Ordenes de Corte
+
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+
+                            </a>
+
+                            <ul class="treeview-menu">
+
+                                <li class="<?php if ($_GET["ruta"] == "ordencorte") echo 'active'; ?>">
+
+                                    <a href="ordencorte">
+                                        <i class="fa fa-circle-o"></i> Ord. de Corte
+                                    </a>
+
+                                </li>
+
+                                <li class="<?php if ($_GET["ruta"] == "crear-ordencorte") echo 'active'; ?>">
+
+                                    <a href="crear-ordencorte">
+                                        <i class="fa fa-circle-o"></i> Crear Ord. de Corte
+                                    </a>
+
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                        <li class="treeview  <?php if (
+                                                    $_GET["ruta"] == "almacencorte" ||
+                                                    $_GET["ruta"] == "crear-almacencorte" ||
+                                                    $_GET["ruta"] == "consumo-telas"
+                                                ) echo 'active'; ?>">
+
+                            <a href="#"><i class="fa fa-scissors"></i> Corte
+
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+
+                            </a>
+
+                            <ul class="treeview-menu">
+
+                                <li class="<?php if ($_GET["ruta"] == "almacencorte") echo 'active'; ?>">
+
+                                    <a href="almacencorte">
+                                        <i class="fa fa-circle-o"></i> Corte
+                                    </a>
+
+                                </li>
+
+                                <li class="<?php if ($_GET["ruta"] == "crear-almacencorte") echo 'active'; ?>">
+
+                                    <a href="crear-almacencorte">
+                                        <i class="fa fa-circle-o"></i> Crear Corte
+                                    </a>
+
+                                </li>
+
+                                <li class="<?php if ($_GET["ruta"] == "consumo-telas") echo 'active'; ?>">
+
+                                    <a href="consumo-telas">
+                                        <i class="fa fa-circle-o"></i> Consumo telas
+                                    </a>
+
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                        <li class="<?php if ($_GET["ruta"] == "estampado") echo 'active'; ?>">
+
+                            <a href="estampado">
+                                <i class="fa fa-scissors"></i>
+                                <span>Estampado</span>
+                            </a>
+
+                        </li>
+
+                        <li class="<?php if ($_GET["ruta"] == "en-cortes") echo 'active'; ?>">
+
+                            <a href="en-cortes">
+                                <i class="fa fa-scissors"></i>
+                                <span>Almacén de corte</span>
+                            </a>
+
+                        </li>
+
+                        <li class="<?php if ($_GET["ruta"] == "enviados-taller") echo 'active'; ?>">
+
+                            <a href="enviados-taller">
+                                <i class="fa fa-scissors"></i>
+                                <span>Env. a Taller</span>
+                            </a>
+
+                        </li>
+
+                        <li class="treeview <?php if (
+                                                $_GET["ruta"] == "en-taller" ||
+                                                $_GET["ruta"] == "marcar-taller" ||
+                                                $_GET["ruta"] == "en-tallert" ||
+                                                $_GET["ruta"] == "en-tallerp"
+                                            ) echo 'active'; ?>">
+
+                            <a href="#"><i class="fa fa-scissors"></i> En Talleres
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+
+                            <ul class="treeview-menu">
+
+                                <li class="<?php if ($_GET["ruta"] == "en-taller") echo 'active'; ?>">
+
+                                    <a href="en-taller">
+                                        <i class="fa fa-circle-o"></i>Taller General
+                                    </a>
+
+                                </li>
+
+                                <li class="<?php if ($_GET["ruta"] == "marcar-taller") echo 'active'; ?>">
+
+                                    <a href="marcar-taller">
+                                        <i class="fa fa-circle-o"></i>Registar Tareas
+                                    </a>
+
+                                </li>
+
+                                <li class="<?php if ($_GET["ruta"] == "en-tallert") echo 'active'; ?>">
+
+                                    <a href="en-tallert">
+                                        <i class="fa fa-circle-o"></i>Taller Terminados
+                                    </a>
+
+                                </li>
+
+                                <li class="<?php if ($_GET["ruta"] == "en-tallerp") echo 'active'; ?>">
+
+                                    <a href="en-tallerp">
+                                        <i class="fa fa-circle-o"></i>Taller Generados
+                                    </a>
+
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                        <li class="<?php if ($_GET["ruta"] == "ingresos") echo 'active'; ?>">
+
+                            <a href="ingresos">
+                                <i class="fa fa-scissors"></i>
+                                <span>Ingresos</span>
+                            </a>
+
+                        </li>
+
+                        <li class="<?php if ($_GET["ruta"] == "asistencia") echo 'active'; ?>">
+
+                            <a href="asistencia">
+                                <i class="fa fa-calendar"></i>Asistencias
+                            </a>
+
+                        </li>
+
+                        <li class="treeview <?php if (
+                                                $_GET["ruta"] == "quincena" ||
+                                                $_GET["ruta"] == "eficiencia-global" ||
+                                                $_GET["ruta"] == "produccion-trusas" ||
+                                                $_GET["ruta"] == "produccion-brasier" ||
+                                                $_GET["ruta"] == "produccion-vasco"
+                                            ) echo 'active'; ?>">
+
+                            <a href="#"><i class="fa fa-scissors"></i> Producción
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+
+                            <ul class="treeview-menu">
+
+                                <li class="<?php if ($_GET["ruta"] == "quincena") echo 'active'; ?>">
+
+                                    <a href="quincena">
+                                        <i class="fa fa-circle-o"></i>Quincenas
+                                    </a>
+
+                                </li>
+
+                                <li class="<?php if ($_GET["ruta"] == "eficiencia-global") echo 'active'; ?>">
+
+                                    <a href="eficiencia-global">
+                                        <i class="fa fa-circle-o"></i>Eficiencia Global
+                                    </a>
+
+                                </li>
+
+                                <li class="<?php if ($_GET["ruta"] == "produccion-trusas") echo 'active'; ?>">
+
+                                    <a href="produccion-trusas">
+                                        <i class="fa fa-circle-o"></i> Producción Trusas
+                                    </a>
+
+                                </li>
+
+                                <li class="<?php if ($_GET["ruta"] == "produccion-brasier") echo 'active'; ?>">
+
+                                    <a href="produccion-brasier">
+                                        <i class="fa fa-circle-o"></i> Producción Brasier
+                                    </a>
+
+                                </li>
+
+                                <li class="<?php if ($_GET["ruta"] == "produccion-vasco") echo 'active'; ?>">
+
+                                    <a href="produccion-vasco">
+                                        <i class="fa fa-circle-o"></i> Producción Vasco
+                                    </a>
+
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                        <li class="treeview <?php if (
+                                                $_GET["ruta"] == "urgencias" ||
+                                                $_GET["ruta"] == "urgenciasamp" ||
+                                                $_GET["ruta"] == "proyeccion-mp" ||
+                                                $_GET["ruta"] == "seguimiento" ||
+                                                $_GET["ruta"] == "urgencias-produccion" ||
+                                                $_GET["ruta"] == "urgencias-almacen" ||
+                                                $_GET["ruta"] == "urgencias-corte" ||
+                                                $_GET["ruta"] == "urgencias-plan" ||
+                                                $_GET["ruta"] == "urgencias-maestro"
+                                            ) echo 'active'; ?>">
+
+                            <a href="#"><i class="fa fa-file-o"></i> Reportes
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+
+                            <ul class="treeview-menu">
+
+                                <li class="<?php if ($_GET["ruta"] == "urgencias") echo 'active'; ?>">
+
+                                    <a href="urgencias">
+                                        <i class="fa fa-circle-o"></i> Urgencias APT
+                                    </a>
+
+                                </li>
+
+                                <li class="<?php if ($_GET["ruta"] == "seguimiento") echo 'active'; ?>">
+
+                                    <a href="seguimiento">
+                                        <i class="fa fa-circle-o"></i> Seguimiento
+                                    </a>
+
+                                </li>
+
+                                <li class="<?php if ($_GET["ruta"] == "urgenciasamp") echo 'active'; ?>">
+
+                                    <a href="urgenciasamp">
+                                        <i class="fa fa-circle-o"></i> Urgencias AMP
+                                    </a>
+
+                                </li>
+
+                                <li class="<?php if ($_GET["ruta"] == "proyeccion-mp") echo 'active'; ?>">
+
+                                    <a href="proyeccion-mp">
+                                        <i class="fa fa-circle-o"></i> Proyección AMP
+                                    </a>
+
+                                </li>
+
+                                <li class="<?php if ($_GET["ruta"] == "urgencias-maestro") echo 'active'; ?>">
+
+                                    <a href="urgencias-maestro">
+                                        <i class="fa fa-circle-o text-blue"></i> Urg. Maestro.
+                                    </a>
+
+                                </li>
+
+                                <li class="<?php if ($_GET["ruta"] == "urgencias-produccion") echo 'active'; ?>">
+
+                                    <a href="urgencias-produccion">
+                                        <i class="fa fa-circle-o text-red"></i> Urg. Prod.
+                                    </a>
+
+                                </li>
+
+                                <li class="<?php if ($_GET["ruta"] == "urgencias-almacen") echo 'active'; ?>">
+
+                                    <a href="urgencias-almacen">
+                                        <i class="fa fa-circle-o text-red"></i> Urg. Alm. Corte
+                                    </a>
+
+                                </li>
+
+                                <li class="<?php if ($_GET["ruta"] == "urgencias-corte") echo 'active'; ?>">
+
+                                    <a href="urgencias-corte">
+                                        <i class="fa fa-circle-o text-red"></i> Urg. Corte
+                                    </a>
+
+                                </li>
+
+                                <li class="<?php if ($_GET["ruta"] == "urgencias-plan") echo 'active'; ?>">
+
+                                    <a href="urgencias-plan">
+                                        <i class="fa fa-circle-o text-red"></i> Urg. Planificación
+                                    </a>
+
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                        <li class="treeview <?php if (
+                                                $_GET["ruta"] == "servicios" ||
+                                                $_GET["ruta"] == "crear-servicio"
+                                            ) echo 'active'; ?>">
+
+                            <a href="#"><i class="fa fa-list-ul"></i> Servicios
+
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+
+                            </a>
+
+                            <ul class="treeview-menu">
+
+                                <li class="<?php if ($_GET["ruta"] == "servicios") echo 'active'; ?>">
+
+                                    <a href="servicios">
+                                        <i class="fa fa-circle-o"></i> Servicios
+                                    </a>
+
+                                </li>
+
+                                <li class="<?php if ($_GET["ruta"] == "crear-servicio") echo 'active'; ?>">
+
+                                    <a href="crear-servicio">
+                                        <i class="fa fa-circle-o"></i> Crear servicio
+                                    </a>
+
+                                </li>
+
+                            </ul>
+
+                        </li>
+                        <li class="treeview <?php if (
+                                                $_GET["ruta"] == "cierres" ||
+                                                $_GET["ruta"] == "crear-cierre"
+                                            ) echo 'active'; ?>">
+
+                            <a href="#"><i class="fa fa-list-ul"></i> Cierres
+
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+
+                            </a>
+
+                            <ul class="treeview-menu">
+
+                                <li class="<?php if ($_GET["ruta"] == "cierres") echo 'active'; ?>">
+
+                                    <a href="cierres">
+                                        <i class="fa fa-circle-o"></i> Cierres
+                                    </a>
+
+                                </li>
+
+                                <li class="<?php if ($_GET["ruta"] == "crear-cierre") echo 'active'; ?>">
+
+                                    <a href="crear-cierre">
+                                        <i class="fa fa-circle-o"></i> Crear cierre
+                                    </a>
+
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="treeview <?php if (
+                                                $_GET["ruta"] == "precio-servicio" ||
+                                                $_GET["ruta"] == "pago-servicio"
+                                            ) echo 'active'; ?>">
+
+                            <a href="#"><i class="fa fa-list-ul"></i> Pagos
+
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+
+                            </a>
+
+                            <ul class="treeview-menu">
+
+                                <li class="<?php if ($_GET["ruta"] == "precio-servicio") echo 'active'; ?>">
+
+                                    <a href="precio-servicio">
+                                        <i class="fa fa-circle-o"></i> Precio servicio
+                                    </a>
+
+                                </li>
+
+                                <li class="<?php if ($_GET["ruta"] == "pago-servicio") echo 'active'; ?>">
+
+                                    <a href="pago-servicio">
+                                        <i class="fa fa-circle-o"></i> Pago servicio
+                                    </a>
+
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="treeview <?php if (
+                                                $_GET["ruta"] == "salidas-varios" ||
+                                                $_GET["ruta"] == "listar-documento" ||
+                                                $_GET["ruta"] == "sublimados" ||
+                                                $_GET["ruta"] == "ajuste-taller"
+                                            ) echo 'active'; ?>">
+
+                            <a href="#"><i class="fa fa-bolt"></i> Procedimientos
+
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="<?php if ($_GET["ruta"] == "sublimados") echo 'active'; ?>">
+
+                                    <a href="sublimados">
+                                        <i class="fa fa-circle-o"></i> Sublimados
+                                    </a>
+
+                                </li>
+
+                                <li class="<?php if ($_GET["ruta"] == "salidas-varios") echo 'active'; ?>">
+
+                                    <a href="salidas-varios">
+                                        <i class="fa fa-circle-o"></i> Ingresos y Salidas
+                                    </a>
+
+                                </li>
+
+                                <li class="<?php if ($_GET["ruta"] == "listar-documento") echo 'active'; ?>">
+
+                                    <a href="listar-documento">
+                                        <i class="fa fa-circle-o"></i> Listar Documentos
+                                    </a>
+
+                                </li>
+
+                                <li class="<?php if ($_GET["ruta"] == "ajuste-taller") echo 'active'; ?>">
+
+                                    <a href="ajuste-taller">
+                                        <i class="fa fa-circle-o"></i> Ajustes de Taller
+                                    </a>
+
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="<?php if (
+                                        $_GET["ruta"] == "transferencias-apt" ||
+                                        $_GET["ruta"] == "crear-transferencias-apt"
+                                    ) echo 'active'; ?>">
+
+                            <a href="transferencias-apt">
+                                <i class="fa fa-circle-o text-green"></i>
+                                <span>Transferencias</span>
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+                </li>
+
+            <?php
+            }
+            ?>
+
             <!-- Produccion VERSION NUEVA-->
             <?php if ($_SESSION["produccion"] == 1) : ?>
 
@@ -533,7 +1095,7 @@
                     "salidas-varios", "crear-salidas-varios", "operacion-taller", "sublimados",
                     "seguimiento", "enviados-taller", "listar-documento", "ajuste-taller",
                     "urgencias-produccion", "urgencias-almacen", "urgencias-corte", "urgencias-plan",
-                    "urgencias-maestro", "transferencias-apt", "crear-transferencias-apt", "estampado", "tampografia", "prehormado"
+                    "urgencias-maestro", "transferencias-apt", "crear-transferencias-apt", "estampado", "tampografia"
                 ];
 
                 $isActiveProduccion = in_array($_GET["ruta"], $rutasActivasProduccion) ? 'active' : '';
@@ -666,7 +1228,7 @@
 
                         <!-- CONTROLES -->
                         <?php
-                        $rutasActivasControles = ["estampado", "salidas-varios", "listar-documento", "transferencias-apt", "prehormado"];
+                        $rutasActivasControles = ["estampado", "salidas-varios", "listar-documento", "transferencias-apt"];
                         $isActiveControles = in_array($_GET["ruta"], $rutasActivasControles) ? 'active' : '';
                         ?>
                         <li class="treeview <?= $isActiveControles; ?>">
@@ -681,9 +1243,6 @@
                                 </li>
                                 <li class="<?= $_GET['ruta'] == 'tampografia' ? 'active' : '' ?>">
                                     <a href="tampografia"><i class="fa fa-circle-o"></i> Tampografia</a>
-                                </li>
-                                <li class="<?= $_GET['ruta'] == 'prehormado' ? 'active' : '' ?>">
-                                    <a href="prehormado"><i class="fa fa-circle-o"></i> Prehormado</a>
                                 </li>
                                 <?php
                                 $rutasActivasMovimientos = ["salidas-varios", "listar-documento"];
