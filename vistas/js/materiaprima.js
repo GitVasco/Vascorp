@@ -1067,11 +1067,14 @@ $("#formDuplicarMateriaPrima").submit(function (e) {
         success: function (respuesta) {
             // console.log(respuesta);
             if (respuesta == "ok") {
-                $(".tablaMateriaPrima").DataTable().ajax.reload(null, false);
-                $("#modalDuplicarMateriaPrima").modal("hide");
-                Command: toastr["success"](
-                    "Se creo nuevo color de materia prima exitosamente!"
-                );
+                //recargamos la pagina
+                location.reload();
+
+                // $(".tablaMateriaPrima").DataTable().ajax.reload(null, false);
+                // $("#modalDuplicarMateriaPrima").modal("hide");
+                // Command: toastr["success"](
+                //     "Se creo nuevo color de materia prima exitosamente!"
+                // );
             } else {
                 Command: toastr["error"]("No se realizo ningun cambio!");
                 $("#modalDuplicarMateriaPrima").modal("hide");

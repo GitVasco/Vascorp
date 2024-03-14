@@ -454,7 +454,7 @@ function cargarArticulos(tipoPrehormado, select) {
                 const item = respuesta[i];
                 if (tipoPrehormado != "02" || familias.includes(item.fampro)) {
                     const codigo =
-                        tipoPrehormado == "01" ? item.articulo : item.codpro;
+                        tipoPrehormado == "01" ? item.articulo : item.codfab;
                     const articulo =
                         tipoPrehormado == "01"
                             ? `${item.modelo} - ${item.nombre} - ${item.color} - ${item.talla}`
@@ -500,7 +500,7 @@ function cargarTablaPrehormado() {
         deferRender: true,
         retrieve: true,
         processing: true,
-        order: [[0, "asc"]],
+        order: [[0, "desc"]],
         pageLength: 20,
         lengthMenu: [
             [20, 40, 60, -1],

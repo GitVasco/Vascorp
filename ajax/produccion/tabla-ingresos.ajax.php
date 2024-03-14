@@ -3,6 +3,9 @@
 require_once "../../controladores/ingresos.controlador.php";
 require_once "../../modelos/ingresos.modelo.php";
 
+// declaramos la zona horaria
+date_default_timezone_set('America/Lima');
+
 class TablaIngresos
 {
 

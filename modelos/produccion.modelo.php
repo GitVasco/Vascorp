@@ -2697,7 +2697,7 @@ class ModeloProduccion
                             order by
                                 pro.codfab asc) as p1
                     on
-                    p.articulo = p1.codpro
+                    p.articulo = p1.codfab
                 where
                     p.tipo <> '01'
                 order by

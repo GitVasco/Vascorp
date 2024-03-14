@@ -158,7 +158,8 @@ class ModeloMateriaPrima
 					ON pro.TalPro = TbTal.Cod_Argumento 
 					AND (TbTal.Cod_Tabla = 'TTAL') 
 				GROUP BY pro.CodPro 
-				ORDER BY pro.CodPro DESC");
+				ORDER BY pro.CodPro DESC
+				");
 
 			$stmt->execute();
 
