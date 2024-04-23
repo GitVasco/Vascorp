@@ -7,7 +7,7 @@ class Conexion
 	{
 
 		$link = new PDO(
-			"mysql:host=192.168.1.64;dbname=vasco",
+			"mysql:host=192.168.1.75;dbname=vasco",
 			"admin",
 			"joel123"
 		);

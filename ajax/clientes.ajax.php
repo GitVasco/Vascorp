@@ -72,6 +72,7 @@ class AjaxClientes
 				'Authorization: Bearer RFn95FIYnAIMEFW8rwKhldz0XhYB6jVWuVSdnV3n5hYioSxbff',
 				'Cookie: apiperu_session=A6AHDx3uMmcwmJC0NYIlwIFBk7pg9N8v1ogr6eBP'
 			),
+			CURLOPT_SSL_VERIFYPEER => false, // Desactivar la verificación de SSL
 		));
 		$response = curl_exec($curl);
 		$err = curl_error($curl);

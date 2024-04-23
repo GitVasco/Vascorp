@@ -72,21 +72,6 @@ class ControladorOrdenCorte
                     */
 
                 $listaArticulos = json_decode($_POST["listaArticulosOC"], true);
-
-                var_dump("listaArticulos", $listaArticulos);
-
-                foreach ($listaArticulos as $value) {
-
-                    $tabla = "articulojf";
-
-                    $valor = $value["articulo"];
-
-                    $item1 = "ord_corte";
-                    $valor1 = $value["cantidad"];
-
-                    ModeloArticulos::mdlActualizarUnDato($tabla, $item1, $valor1, $valor);
-                }
-
                 /* 
                     * GUARDAR LA ORDEN DE CORTE
                     */
@@ -123,8 +108,8 @@ class ControladorOrdenCorte
                         );
 
                         #var_dump("datosD", $datosD);
-
                         ModeloOrdenCorte::mdlGuardarDetallesOrdenCorte("detalles_ordencortejf", $datosD);
+                        ModeloArticulos::mdlSumarOrdCorte($value["cantidad"], $value["articulo"]);
                     }
                     ModeloOrdenCorte::mdlEliminarArticulo();
                     # Mostramos una alerta suave

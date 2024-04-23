@@ -228,6 +228,17 @@ class ModeloArticulos
 		$stmt = null;
 	}
 
+	static public function mdlSumarOrdCorte($cantidad, $articulo)
+	{
+		$sql = "UPDATE articulojf set ord_corte = ord_corte + $cantidad where articulo ='$articulo'";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->execute();
+
+		$stmt = null;
+	}
+
 	/* 
 	* Método para actualizar el  taller en ingresos
 	*/

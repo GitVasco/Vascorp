@@ -148,7 +148,7 @@
 
             $montoTotal += $value["monto"];
 
-            if ($value["vendedor"] == "18A" || $value["vendedor"] == "24") {
+            if ($value["vendedor"] == "18A" || $value["vendedor"] == "24" || $value["vendedor"] == "26") {
                 $linea = "ROSALINDA";
             } else if ($value["vendedor"] == "18") {
                 $linea = "VASCO";

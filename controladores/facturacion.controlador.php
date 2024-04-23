@@ -2439,6 +2439,191 @@ class ControladorFacturacion
         return $respuesta;
     }
 
+    //* facturacion para exportacion
+    static public function ctrGenerarFEFacBolB()
+    {
+
+        if (isset($_POST["tipo"])) {
+            $datos = ModeloFacturacion::mdlFEFacturaCabB($_POST["documento"]);
+
+            // FILA 1
+            $fila1 = $datos["a1"] . ',' .
+                $datos["b1"] . ',' .
+                $datos["c1"] . ',' .
+                $datos["d1"] . ',' .
+                $datos["e1"] . ',' .
+                $datos["f1"] . ',' .
+                $datos["g1"] . self::calcularComas('g', 'n') .
+                $datos["n1"] . ',' .
+                $datos["o1"] . self::calcularComas('o', 'q') .
+                $datos["q1"] . self::calcularComas('q', 'u') .
+                $datos["u1"] . self::calcularComas('u', 'z') .
+                $datos["z1"] . self::calcularComas('z', 'ap') .
+                $datos["ap1"] . self::calcularComas('ap', 'as') .
+                $datos["as1"] . self::calcularComas('as', 'bh') .
+                $datos["bh1"] . ',' .
+                $datos["bi1"] . ',' .
+                $datos["bj1"] . self::calcularComas('bj', 'br'); // 'end' es un marcador para el final de tu fila, ajusta según tu necesidad.
+
+            // FILA 2
+            $fila2 = ',,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,';
+
+            // FILA 3
+            $fila3 = ',,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,';
+
+            // FILA 4
+            //$fila4 = ',,,,,,';
+
+            // FILA 5
+            $fila5 =    $datos["a5"] . ',' .
+                $datos["b5"] . ',' .
+                $datos["c5"] . ',' .
+                $datos["d5"] . ',' .
+                $datos["e5"] . ',' .
+                $datos["f5"] . ',' .
+                $datos["g5"] . ',' .
+                $datos["h5"] . ',' .
+                $datos["i5"] . ',' .
+                $datos["j5"] . ',' .
+                $datos["k5"] . ',' .
+                $datos["l5"] . ',' .
+                $datos["m5"] . ',';
+
+            // FILA 6
+            $fila6 =    $datos["a6"] . ',' .
+                $datos["b6"] . ',' .
+                $datos["c6"] . ',' .
+                $datos["d6"] . ',' .
+                $datos["e6"] . ',' .
+                $datos["f6"] . ',' .
+                $datos["g6"] . ',' .
+                $datos["h6"] . ',' .
+                $datos["i6"] . ',' .
+                $datos["j6"] . ',' .
+                $datos["k6"] . ',' .
+                $datos["l6"] . ',';
+
+            // FILA 7
+            require_once("../extensiones/cantidad_en_letras_v2.php");
+            $monto_letras = str_replace("SOLES", "DOLARES AMERICANOS", convertir($datos["n1"]));
+
+            $fila7 =    $monto_letras . ',,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,';
+
+            // FILA 8
+            $fila8 =    $datos["a8"] . ',,' .
+                $datos["g3"] . ',' .
+                $datos["d8"] . ',' .
+                $datos["e8"] . ',' .
+                $datos["f8"] . ',' .
+                $datos["g8"] . ',,,,,,';
+
+            $nombre = '20513613939-' . $datos["c1"] . '-' . $datos["b1"];
+
+            $fp = fopen('../vistas/reportes_excel/csv_fe/' . $nombre . '.txt', 'w');
+            fwrite($fp, $fila1 . PHP_EOL);
+            fwrite($fp, $fila2 . PHP_EOL);
+            fwrite($fp, $fila3 . PHP_EOL);
+            //fwrite($fp, $fila4 . PHP_EOL);
+            fwrite($fp, $fila5 . PHP_EOL);
+            fwrite($fp, $fila6 . PHP_EOL);
+            fwrite($fp, $fila7 . PHP_EOL);
+            fwrite($fp, $fila8 . PHP_EOL);
+
+            // FILA 9
+            $datosD = ModeloFacturacion::mdlFEFacturaDetAExportacion($_POST["documento"]);
+            require_once("config.php");
+
+            foreach ($datosD as $key => $value) {
+
+
+                // Verificar si el tipo de producto existe en el arreglo $codigo_arancel
+                if (array_key_exists($value["linea"], $codigo_arancel)) {
+                    // Obtener el código arancelario basado en el tipo de producto
+                    $codigo = $codigo_arancel[$value["linea"]];
+                    // $codigo = "";
+                } else {
+                    // Manejar el caso en que el tipo de producto no se encuentre en el arreglo
+                    $codigo = "No encontrado"; // O cualquier otro manejo de error que prefieras
+                }
+
+                $fila = ($key + 1) . ',' .
+                    $value["b9"] . ',' .
+                    $value["c9"] . ',' .
+                    $value["d9"] . ',' .
+                    $value["e9"] . ',' .
+                    $value["f9"] . self::calcularComas('f', 'i') .
+                    $value["i9"] . ',' .
+                    $value["j9"] . ',' .
+                    $value["k9"] . ',' .
+                    $value["l9"] . ',' .
+                    $value["m9"] . self::calcularComas('m', 'r') .
+                    $codigo . ',' .
+                    $value["s9"] . ',' .
+                    $value["t9"] . ',' .
+                    $value["u9"] . self::calcularComas('u', 'w') .
+                    $value["w9"] . ',' .
+                    $value["x9"] . self::calcularComas('x', 'ak') .
+                    $value["ak9"] . ',' .
+                    $value["al9"] . self::calcularComas('al', 'ap') .
+                    $value["ap9"] . self::calcularComas('ap', 'ar') . PHP_EOL;
+
+                if ($key < count($datosD) - 1) {
+                    fwrite($fp, $fila);
+                } else {
+                    fwrite($fp, $fila . 'FF00FF');
+                }
+            }
+
+            fclose($fp);
+
+            $origen = ORIGEN . $nombre . '.txt';
+
+            if ($datos["c1"] == "01") {
+                $destino = DESTINO_INVOICE . $nombre . '.csv';
+            } else {
+                $destino = DESTINO_BOLETA . $nombre . '.csv';
+            }
+
+            // $copy = copy($origen, $destino);
+            if (file_exists($origen)) {
+                $rename = rename($origen, $destino);
+
+                if ($rename) {
+                    $respuesta = "okA";
+                } else {
+                    $respuesta = "error";
+                }
+            } else {
+                echo 'El archivo no existe en la ruta especificada.';
+            }
+
+            return $respuesta;
+        }
+    }
+
+    static public function letraAIndice($letra)
+    {
+        $letra = strtolower($letra);
+        $indice = 0;
+        $longitud = strlen($letra);
+        for ($i = 0; $i < $longitud; $i++) {
+            $indice *= 26;
+            $indice += ord($letra[$i]) - ord('a') + 1;
+        }
+        return $indice;
+    }
+
+    static public function calcularComas($letraInicio, $letraFin)
+    {
+        $inicio = self::letraAIndice($letraInicio);
+        $fin = self::letraAIndice($letraFin);
+
+        // La lógica para determinar el número de comas se mantiene,
+        // pero ahora se aplica a los índices numéricos.
+        $numComas = max(0, $fin - $inicio);
+        return str_repeat(',', $numComas);
+    }
+
     //*GENERAR NUBE NOTA CREDITO
     static public function ctrGenerarFENCA()
     {
@@ -2496,7 +2681,7 @@ class ControladorFacturacion
                 $datos["l4"] . ',';
 
             //todo: FILA 5
-            require_once("/../extensiones/cantidad_en_letras_v2.php");
+            require_once("../extensiones/cantidad_en_letras_v2.php");
             $monto_letras = convertir($datos["m1"]);
             $fila5 =    $monto_letras . ',,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,';
 
@@ -2546,40 +2731,40 @@ class ControladorFacturacion
                     if ($key < count($datosD) - 1) {
 
                         fwrite($fp, ($key + 1) . ',' .
-                            $value["b9"] . ',' .
-                            $value["c9"] . ',' .
-                            $value["d9"] . ',' .
-                            $value["e9"] . ',' .
-                            $value["f9"] . ',,,' .
-                            $value["i9"] . ',' .
-                            $value["j9"] . ',' .
-                            $value["k9"] . ',' .
-                            $value["l9"] . ',' .
-                            $value["m9"] . ',,,,,,' .
-                            $value["s9"] . ',' .
-                            $value["t9"] . ',' .
-                            $value["u9"] . ',,,' .
-                            $value["x9"] . ',,,,,,' .
-                            $value["ad9"] . ',,,,,,' .
+                            trim($value["b9"]) . ',' .
+                            trim($value["c9"]) . ',' .
+                            trim($value["d9"]) . ',' .
+                            trim($value["e9"]) . ',' .
+                            trim($value["f9"]) . ',,,' .
+                            trim($value["i9"]) . ',' .
+                            trim($value["j9"]) . ',' .
+                            trim($value["k9"]) . ',' .
+                            trim($value["l9"]) . ',' .
+                            trim($value["m9"]) . ',,,,,,' .
+                            trim($value["s9"]) . ',' .
+                            trim($value["t9"]) . ',' .
+                            trim($value["u9"]) . ',,,' .
+                            trim($value["x9"]) . ',,,,,,' .
+                            trim($value["ad9"]) . ',,,,,,' .
                             "\r\n");
                     } else {
 
                         fwrite($fp, ($key + 1) . ',' .
-                            $value["b9"] . ',' .
-                            $value["c9"] . ',' .
-                            $value["d9"] . ',' .
-                            $value["e9"] . ',' .
-                            $value["f9"] . ',,,' .
-                            $value["i9"] . ',' .
-                            $value["j9"] . ',' .
-                            $value["k9"] . ',' .
-                            $value["l9"] . ',' .
-                            $value["m9"] . ',,,,,,' .
-                            $value["s9"] . ',' .
-                            $value["t9"] . ',' .
-                            $value["u9"] . ',,,' .
-                            $value["x9"] . ',,,,,,' .
-                            $value["ad9"] . ',,,,,,' . PHP_EOL);
+                            trim($value["b9"]) . ',' .
+                            trim($value["c9"]) . ',' .
+                            trim($value["d9"]) . ',' .
+                            trim($value["e9"]) . ',' .
+                            trim($value["f9"]) . ',,,' .
+                            trim($value["i9"]) . ',' .
+                            trim($value["j9"]) . ',' .
+                            trim($value["k9"]) . ',' .
+                            trim($value["l9"]) . ',' .
+                            trim($value["m9"]) . ',,,,,,' .
+                            trim($value["s9"]) . ',' .
+                            trim($value["t9"]) . ',' .
+                            trim($value["u9"]) . ',,,' .
+                            trim($value["x9"]) . ',,,,,,' .
+                            trim($value["ad9"]) . ',,,,,,' . PHP_EOL);
                         fwrite($fp, 'FF00FF');
                     }
                 }
@@ -2613,24 +2798,26 @@ class ControladorFacturacion
 
             fclose($fp);
 
-            //?origen prueba
-            //$origen = 'c:/xampp2/htdocs/vascorp/vistas/reportes_excel/csv_fe/' . $nombre . '.txt';
+            require_once("config.php");
 
-            //!origen produccion
-            $origen = 'c:/xampp/htdocs/vascorp/vistas/reportes_excel/csv_fe/' . $nombre . '.txt';
+            $origen = ORIGEN . $nombre . '.txt';
 
-            //?destino prueba
-            //$destino = 'c:/prueba/nc/' . $nombre . '.csv';
+            $destino = DESTINO_NOTA_CREDITO . $nombre . '.csv';
 
-            //!destino produccion
-            $destino = 'c:/daemonOSE21/documents/in/creditnote/' . $nombre . '.csv';
+            // $copy = copy($origen, $destino);
+            if (file_exists($origen)) {
+                $rename = rename($origen, $destino);
 
-
-            //copy($origen, $destino);
-            rename($origen, $destino);
+                if ($rename) {
+                    $respuesta = "okA";
+                } else {
+                    $respuesta = "error";
+                }
+            } else {
+                echo 'El archivo no existe en la ruta especificada.';
+            }
         }
 
-        $respuesta = "okA";
         return $respuesta;
     }
 
@@ -2691,7 +2878,7 @@ class ControladorFacturacion
                 $datos["l4"] . ',';
 
             //todo: FILA 5
-            require_once("/../extensiones/cantidad_en_letras_v2.php");
+            require_once("../extensiones/cantidad_en_letras_v2.php");
             $monto_letras = convertir($datos["m1"]);
             $fila5 =    $monto_letras . ',,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,';
 
@@ -2768,29 +2955,30 @@ class ControladorFacturacion
 
             fclose($fp);
 
+            require_once("config.php");
 
-            //?origen prueba
-            //$origen = 'c:/xampp2/htdocs/vascorp/vistas/reportes_excel/csv_fe/' . $nombre . '.txt';
+            $origen = ORIGEN . $nombre . '.txt';
 
-            //!origen produccion
-            $origen = 'c:/xampp/htdocs/vascorp/vistas/reportes_excel/csv_fe/' . $nombre . '.txt';
+            $destino = DESTINO_NOTA_DEBITO . $nombre . '.csv';
 
-            //?destino prueba
-            $destino = 'c:/prueba/nd/' . $nombre . '.csv';
+            // $copy = copy($origen, $destino);
+            if (file_exists($origen)) {
+                $rename = rename($origen, $destino);
 
-            //!destino produccion
-            //!$destino = 'c:/daemonOSE21/documents/in/debitnote/'.$nombre.'.csv';
-
-
-            //copy($origen,$destino);
-            rename($origen, $destino);
+                if ($rename) {
+                    $respuesta = "okA";
+                } else {
+                    $respuesta = "error";
+                }
+            } else {
+                echo 'El archivo no existe en la ruta especificada.';
+            }
         }
 
-        $respuesta = "okA";
         return $respuesta;
     }
 
-    //*GENERAR NUBE DEBITO
+    //*GENERAR NUBE GRR
     static public function ctrGenerarGuia()
     {
         if (isset($_POST["tipo"])) {
@@ -2945,29 +3133,26 @@ class ControladorFacturacion
 
             fclose($fp);
 
-            //?origen prueba
-            $origen = 'c:/xampp2/htdocs/vascorp/vistas/reportes_excel/csv_fe/' . $nombre . '.txt';
+            require_once("config.php");
 
-            //!origen produccion
-            //!$origen = 'c:/xampp/htdocs/vascorp/vistas/reportes_excel/csv_fe/' . $nombre . '.txt';
+            $origen = ORIGEN . $nombre . '.txt';
 
-            //?destino prueba
-            //$destino = 'c:/prueba/guiaremision/' . $nombre . '.csv';
-            //$destino = '\\\\jackydc\\pedidos\\' . $nombre . '.csv';
-            //$destino = '\\\\jackydc\\daemonOSE21\\documents\\in\\guia-remision\\' . $nombre . '.csv';
+            $destino = DESTINO_GUIA_REMISION . $nombre . '.csv';
 
+            // $copy = copy($origen, $destino);
+            if (file_exists($origen)) {
+                $rename = rename($origen, $destino);
 
-            //!destino produccion
-            //!$destino = 'c:/daemonOSE21/documents/in/guiaremision/'.$nombre.'.csv';
-            $destino = '\\\\Facturacion-pc\\d\\guias-remision\\' . $nombre . '.csv';
-
-
-
-            copy($origen, $destino);
-            //rename($origen, $destino);
+                if ($rename) {
+                    $respuesta = "okA";
+                } else {
+                    $respuesta = "error";
+                }
+            } else {
+                echo 'El archivo no existe en la ruta especificada.';
+            }
         }
 
-        $respuesta = "okA";
         return $respuesta;
     }
 

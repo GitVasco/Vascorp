@@ -775,17 +775,20 @@ $(".tablaDatosDia").on("click", ".btnActualizarMes", function () {
         processData: false,
         success: function (respuesta) {
             if (respuesta == "ok") {
-                swal({
-                    type: "success",
-                    title: "¡Ok!",
-                    text: "¡La información fue Actualizada con éxito!",
-                    showConfirmButton: true,
-                    confirmButtonText: "Cerrar",
-                }).then((result) => {
-                    if (result.value) {
-                        window.location = "datos-dia";
-                    }
-                });
+                //toast de confirmacion
+                Command: toastr["success"]("Se actualizo el TC: " + fecha);
+
+                // swal({
+                //     type: "success",
+                //     title: "¡Ok!",
+                //     text: "¡La información fue Actualizada con éxito!",
+                //     showConfirmButton: true,
+                //     confirmButtonText: "Cerrar",
+                // }).then((result) => {
+                //     if (result.value) {
+                //         window.location = "datos-dia";
+                //     }
+                // });
             } else {
                 Command: toastr["error"]("No se encontro el tipo de cambio");
             }

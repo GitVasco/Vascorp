@@ -140,23 +140,6 @@ $(".tablaArticulosOrdenCorte tbody").on(
                 var ord_corte = respuesta["ord_corte"];
                 var stockG = respuesta["stockG"];
 
-                //var mes = (Number(stockG) + 50) / (Number(ventasG * 1.3)) ;
-                //console.log(mes.toFixed(2));
-
-                /* 
-            !PENDIENTE DE PRPYECCION 
-            */
-                /* if(Number(Number(proyeccion) - Number(sumprog)  - 50 ) > 0){
-
-                var pen = '<input style="color:#008000; background-color:white;" type="text" class="form-control nuevoPendienteProy input-sm" name="'+ articulo +'" id="'+ articulo +'"  value="' + Number(Number(proyeccion) - Number(sumprog)  - 50 ) + '" pendienteReal="' + Number(Number(proyeccion) - Number(sumprog)) + '" readonly></input>';
-
-
-            }else{
-
-                var pen = '<input style="color:#FF0000; background-color:pink;" type="text" class="form-control nuevoPendienteProy input-sm" name="'+ articulo +'" id="'+ articulo +'"  value="' + Number(Number(proyeccion) - Number(sumprog)  - 50 ) + '" pendienteReal="' + Number(Number(proyeccion) - Number(sumprog)) + '" readonly></input>';
-
-            } */
-
                 /* 
             ! DURACION DEL MES
             */
@@ -1480,6 +1463,15 @@ $(".tablaArticulosOrdenCorte tbody").on(
                     "</div>";
 
                 $(".nuevoArticuloOC").append(newRow);
+
+                // Añadir evento click para seleccionar el contenido del input al hacer clic
+                $(document).on(
+                    "click",
+                    ".nuevaCantidadArticuloOC",
+                    function () {
+                        this.select();
+                    }
+                );
 
                 // Agregar evento keydown a los inputs
                 $("input.nuevaCantidadArticuloOC").on(

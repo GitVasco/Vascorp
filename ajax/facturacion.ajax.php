@@ -378,8 +378,14 @@ class AjaxFacturacion
 
         if ($tipo == "S02"  || $tipo == "S03") {
 
-            $respuesta = ControladorFacturacion::ctrGenerarFEFacBolA($tipo, $documento);
-
+            // validamos si el $documento empieza con FX
+            if (strpos($documento, 'FX') === 0) {
+                // El documento comienza con 'FX'
+                $respuesta = ControladorFacturacion::ctrGenerarFEFacBolB($tipo, $documento);
+            } else {
+                // El documento no comienza con 'FX'
+                $respuesta = ControladorFacturacion::ctrGenerarFEFacBolA($tipo, $documento);
+            }
             ModeloFacturacion::mdlEnviarTXT($tipo, $documento);
         } elseif ($tipo == "E05") {
 

@@ -6,35 +6,38 @@ require_once "../../../modelos/cuentas.modelo.php";
 require_once "../../../controladores/vendedor.controlador.php";
 require_once "../../../modelos/vendedor.modelo.php";
 
+//declarar zona horaria lima
+date_default_timezone_set('America/Lima');
 
 //REQUERIMOS LA CLASE TCPDF
 
 require_once('tcpdf_include.php');
-$fecha=new Datetime();
-$fechaActual=$fecha->format("d / m / Y");
-$fechaCabecera= "Fecha:".$fechaActual;
-class MYPDF extends TCPDF {
+$fecha = new Datetime();
+$fechaActual = $fecha->format("d / m / Y");
+$fechaCabecera = "Fecha:" . $fechaActual;
+class MYPDF extends TCPDF
+{
 
     //Page header
-    public function Header() {
+    public function Header()
+    {
         // Set font
-        $fecha=new Datetime();
-        $fechaActual=$fecha->format("d/m/Y");
-        $fechaCabecera= "Fecha:".$fechaActual;
+        $fecha = new Datetime();
+        $fechaActual = $fecha->format("d/m/Y");
+        $fechaCabecera = "Fecha:" . $fechaActual;
         $this->SetFont('helvetica', 'B', 8);
         // Title
-        $this->Cell(0, 8, 'CORPORACIÓN VASCO S.A.C.', 0, false, 'L', 0, '', 0, false, false, false );
-        $this->Cell(0, 8, $fechaCabecera, 0, false, 'R', 0, '', 0, false, false, false );
-        
+        $this->Cell(0, 8, 'CORPORACIÓN VASCO S.A.C.', 0, false, 'L', 0, '', 0, false, false, false);
+        $this->Cell(0, 8, $fechaCabecera, 0, false, 'R', 0, '', 0, false, false, false);
+
         $this->Ln(2);
-        $this->Cell(0, 15, 'DOCUMENTOS VENCIDOS - '.$fechaActual, 0, false, 'C', 0, '', 0, false, false, false );
-        
+        $this->Cell(0, 15, 'DOCUMENTOS VENCIDOS - ' . $fechaActual, 0, false, 'C', 0, '', 0, false, false, false);
+
         $this->Ln(7);
         $this->SetFont('helvetica', 'B', 12);
-        $this->Cell(0, 9, 'T.    Nro. doc.          F. Emi           F. Ven          Origen              Cod.            Cliente                                                 Saldo          Zona                         Prot.', 0, 1, 'C', 0, '', 0, false, false, false );
-        
-        $this->Cell(0, 0, '========================================================================================================================', 0, 1, 'L', 0, '', 0, false, 'M', 'M' );
+        $this->Cell(0, 9, 'T.    Nro. doc.          F. Emi           F. Ven          Origen              Cod.            Cliente                                                 Saldo          Zona                         Prot.', 0, 1, 'C', 0, '', 0, false, false, false);
 
+        $this->Cell(0, 0, '========================================================================================================================', 0, 1, 'L', 0, '', 0, false, 'M', 'M');
     }
 }
 
@@ -45,19 +48,19 @@ $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PD
 // set default monospaced font
 $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 // set header and footer fonts
-$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+$pdf->setHeaderFont(array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
 // set margins
 $pdf->SetMargins(5, PDF_MARGIN_TOP, 5);
 $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
 
 $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
 
-$pdf->AddPage('L','A4');
+$pdf->AddPage('L', 'A4');
 $pdf->setPage(1, true);
 
 
 //parametros GET
-$vendedor= $_GET["vendedor"];
+$vendedor = $_GET["vendedor"];
 
 $cuentas = ControladorCuentas::ctrEstadoCtaVdorVdos($vendedor);
 $vendedor = ControladorVendedores::ctrMostrarVendedores("codigo", $vendedor);
@@ -77,8 +80,8 @@ $bloque1 = '<table style="text-center" >
                 <tbody>
                     <tr>
                         <td style="width:26px"></td>
-                        <td style="width:60px">Cod: '.$_GET["vendedor"].'</td>
-                        <td style="width:242px"><strong>'.$vendedor["descripcion"].'</strong></td>
+                        <td style="width:60px">Cod: ' . $_GET["vendedor"] . '</td>
+                        <td style="width:242px"><strong>' . $vendedor["descripcion"] . '</strong></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -104,18 +107,18 @@ $bloque1 = '<table style="text-center" >
                 </tbody>
             </table>';
 
-$pdf->writeHTML($bloque1, false, false, false, false, '');   
+$pdf->writeHTML($bloque1, false, false, false, false, '');
 
 $pdf->SetFont($fontname, '', 10, '', false);
 
-foreach ($cuentas as $key => $value){
+foreach ($cuentas as $key => $value) {
 
-    if($value["tipo_doc"] == "ZZ"){
+    if ($value["tipo_doc"] == "ZZ") {
 
         $pdf->SetFont($fontname, '', 12, '', false);
-        $nombre = substr($value["nombre"],0,30);
+        $nombre = substr($value["nombre"], 0, 30);
 
-        $nom_ubigeo = substr($value["nom_ubigeo"],0,15);
+        $nom_ubigeo = substr($value["nom_ubigeo"], 0, 15);
 
         $bloque3 = '<table style="text-center" >
         <tbody>
@@ -142,51 +145,41 @@ foreach ($cuentas as $key => $value){
                 <td style="width:85px"></td>
                 <td style="width:70px"></td>
                 <td style="width:185px"><b>Total Vencidos S/</b></td>
-                <td style="width:80px;text-align:right"><b>'.number_format($value["saldo"],2).'</b></td>
+                <td style="width:80px;text-align:right"><b>' . number_format($value["saldo"], 2) . '</b></td>
                 <td style="width:120px"></td>
                 <td style="width:35px"></td>
             </tr>
         </tbody>
     </table>';
+    } else {
 
+        $nombre = substr($value["nombre"], 0, 30);
 
-        
-    }else {
-        
-        $nombre = substr($value["nombre"],0,30);
-
-        $nom_ubigeo = substr($value["nom_ubigeo"],0,15);
+        $nom_ubigeo = substr($value["nom_ubigeo"], 0, 15);
 
         $bloque3 = '<table style="text-center" >
         <tbody>
             <tr>
-                <td style="width:25px">'.$value["tipo_doc"].'</td>
-                <td style="width:85px">'.$value["num_cta"].'</td>
-                <td style="width:70px">'.$value["fecha"].'</td>
-                <td style="width:70px">'.$value["fecha_ven"].'</td>
-                <td style="width:85px">'.$value["doc_origen"].'</td>
-                <td style="width:70px">'.$value["cliente"].'</td>
-                <td style="width:190px">'.$nombre.'</td>
-                <td style="width:75px;text-align:right">'.number_format($value["saldo"],2).'</td>
-                <td style="width:120px">'.$nom_ubigeo.'</td>
-                <td style="width:35px">'.$value["protesta"].'</td>
+                <td style="width:25px">' . $value["tipo_doc"] . '</td>
+                <td style="width:85px">' . $value["num_cta"] . '</td>
+                <td style="width:70px">' . $value["fecha"] . '</td>
+                <td style="width:70px">' . $value["fecha_ven"] . '</td>
+                <td style="width:85px">' . $value["doc_origen"] . '</td>
+                <td style="width:70px">' . $value["cliente"] . '</td>
+                <td style="width:190px">' . $nombre . '</td>
+                <td style="width:75px;text-align:right">' . number_format($value["saldo"], 2) . '</td>
+                <td style="width:120px">' . $nom_ubigeo . '</td>
+                <td style="width:35px">' . $value["protesta"] . '</td>
             </tr>
         </tbody>
-    </table>';        
-
-
+    </table>';
     }
 
 
 
 
 
-$pdf->writeHTML($bloque3, false, false, false, false, '');
-
-
-
-
-
+    $pdf->writeHTML($bloque3, false, false, false, false, '');
 }
 
 // ---------------------------------------------------------
@@ -194,5 +187,3 @@ $pdf->writeHTML($bloque3, false, false, false, false, '');
 
 //$pdf->Output('factura.pdf', 'D');
 $pdf->Output('reporte_cuenta.pdf');
-
-?>
