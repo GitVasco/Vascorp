@@ -20,9 +20,6 @@ require_once "../../modelos/usuarios.modelo.php";
 * LLAMAMOS A LA CONEXION
 */
 $con = ControladorUsuarios::ctrMostrarConexiones("id", 1);
-echo '<pre>';
-print_r($con);
-echo '</pre>';
 
 $conexion = mysql_connect($con["ip"], $con["user"], $con["pwd"]) or die("No se pudo conectar: " . mysql_error());
 mysql_select_db($con["db"], $conexion);
