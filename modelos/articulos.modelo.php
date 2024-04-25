@@ -1169,7 +1169,7 @@ class ModeloArticulos
 						WHERE a.estado = 'activo' 
 							/* AND ROUND((a.stock - a.pedidos) / (a.ult_mes), 2) <= $mes */ 
 							AND a.servicio > 0 
-							AND a.marca IN ('JACKYFORM','VASCO','GUAPITAS')
+							AND a.marca IN ('JACKYFORM','VASCO','GUAPITAS','ROSALINDA','ROSITAS','JOSXX')
 						UNION
 						SELECT 
 							a.articulo,
@@ -1227,7 +1227,7 @@ class ModeloArticulos
 							/* AND ROUND((a.stock - a.pedidos) / (a.ult_mes), 2) <= $mes  */
 							AND (a.servicio <= 0 
 							OR a.taller > 0) 
-							AND a.marca IN ('JACKYFORM','VASCO','GUAPITAS')
+							AND a.marca IN ('JACKYFORM','VASCO','GUAPITAS','ROSALINDA','ROSITAS','JOSXX')
 						ORDER BY articulo");
 
 			$stmt->execute();
