@@ -419,6 +419,7 @@ CUERPO DOCUMENTO
                 include "modulos/facturacion/" . $_GET["ruta"] . ".php";
             } else if (
                 $_GET["ruta"] == "cuentas" ||
+                $_GET["ruta"] == "modal-cuentas" ||
                 $_GET["ruta"] == "ver-cuentas" ||
                 $_GET["ruta"] == "ver-cuentas-consultar" ||
                 $_GET["ruta"] == "envio-letras" ||

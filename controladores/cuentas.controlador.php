@@ -686,7 +686,8 @@ class ControladorCuentas
 			date_default_timezone_set('America/Lima');
 			$fecha = new DateTime();
 			$cancelacion = ModeloCuentas::mdlMostrarCancelacion($tabla, "id", $datos);
-			#var_dump($cancelacion["tipo_doc"]);
+
+			$rutas = $_GET["rutas"];
 
 			$usuario = $_SESSION["nombre"];
 			$para      = 'notificacionesvascorp@gmail.com';
@@ -750,7 +751,7 @@ class ControladorCuentas
 					  }).then(function(result){
 								if (result.value) {
 
-								window.location = "index.php?ruta=ver-cuentas&numCta=' . $origen["num_cta"] . '&codCuenta=' . $cancelacion["tipo_doc"] . '";
+								window.location = "index.php?ruta=ver-cuentas&numCta=' . $origen["num_cta"] . '&codCuenta=' . $cancelacion["tipo_doc"] . '&rutas=' . $rutas . '";
 
 								}
 							})
@@ -1025,6 +1026,7 @@ class ControladorCuentas
 			$tabla = "cuenta_ctejf";
 			$usureg = $_SESSION["nombre"];
 			$pcreg = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+			$rutas = $_POST["rutas"];
 
 			$datos = array(
 				"id" 		=> $_POST["idCuenta3"],
@@ -1046,18 +1048,18 @@ class ControladorCuentas
 				"fecha_ori" => 	$_POST["cancelarFechaOrigen2"]
 			);
 
-			$cuenta = ControladorCuentas::ctrMostrarCuentas("id", $_POST["idCuenta3"]);
-			$saldoNuevo = $cuenta["saldo"] - $_POST["cancelarMonto3"];
-			if ($saldoNuevo >= -0.5 && $saldoNuevo <= 0.5) {
-				$estado = ModeloCuentas::mdlActualizarUnDato($tabla, "estado", "CANCELADO", $_POST["idCuenta3"]);
-			}
-			$ultimo_pago = ModeloCuentas::mdlActualizarUnDato($tabla, "ult_pago", $_POST["cancelarFechaUltima2"], $_POST["idCuenta3"]);
-			$actualizado = ModeloCuentas::mdlActualizarUnDato($tabla, "saldo", $saldoNuevo, $_POST["idCuenta3"]);
+			$saldoNuevo = $_POST["cancelarSaldo2"];
+			$estado = $saldoNuevo >= -0.5 && $saldoNuevo <= 0.5 ? "CANCELADO" : "PENDIENTE";
+			$ult_pago = $_POST["cancelarFechaUltima2"];
+			$id = $_POST["idCuenta3"];
+
+			$actualizado = ModeloCuentas::mdlActualizarCuenta($saldoNuevo, $estado, $ult_pago, $id);
+
 			$respuesta = ModeloCuentas::mdlIngresarCuenta($tabla, $datos);
 
 			if ($respuesta == "ok") {
 
-				$ultimo_pago = ModeloCuentas::mdlEditarUltPago($cuenta["num_cta"], $cuenta["tipo_doc"]);
+				$ultimo_pago = ModeloCuentas::mdlEditarUltPago($_POST["cancelarDocumentoOriginal2"], $_POST["cancelarTipoDocumento2"]);
 
 				echo '<script>	
 
@@ -1069,7 +1071,7 @@ class ControladorCuentas
 						  }).then(function(result){
 									if (result.value) {
 
-									window.location = "index.php?ruta=ver-cuentas&numCta=' . $cuenta["num_cta"] . '&codCuenta=' . $cuenta["tipo_doc"] . '";
+									window.location = "index.php?ruta=ver-cuentas&numCta=' . $_POST["cancelarDocumentoOriginal2"] . '&codCuenta=' . $_POST["cancelarTipoDocumento2"] . '&rutas=' . $rutas . '";
 
 									}
 								})

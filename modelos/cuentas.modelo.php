@@ -248,8 +248,19 @@ class ModeloCuentas
 
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
-							c.*,
-							cli.nombre 
+						c.id,
+						c.num_cta,
+						c.tipo_doc,
+						c.num_cta,
+						c.fecha,
+						c.fecha_ven,
+						c.cliente,
+						cli.nombre ,
+						c.vendedor ,
+						c.estado,
+						c.saldo ,
+						c.num_unico ,
+						c.monto
 						FROM
 							cuenta_ctejf c 
 							LEFT JOIN clientesjf cli 
@@ -588,12 +599,17 @@ class ModeloCuentas
 
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
-													* 
+													c.id,
+													c.cod_pago,
+													c.doc_origen,
+													c.fecha,
+													c.notas,
+													c.monto
 												FROM
 													cuenta_ctejf c 
-												WHERE c.num_cta = :numCta
+												WHERE c.tip_mov = '-' 
 													AND c.tipo_doc = :codCta 
-													AND c.tip_mov = '-'");
+													AND c.num_cta = :numCta");
 
 		$stmt->bindParam(":numCta", $numCta, PDO::PARAM_STR);
 		$stmt->bindParam(":codCta", $codCta, PDO::PARAM_STR);
@@ -691,7 +707,8 @@ class ModeloCuentas
 									AND tipo_doc = :tipoDoc 
 									AND tip_mov = '-') AS c2 
 								ON c1.num_cta = c2.num_cta 
-								AND c1.tipo_doc = c2.tipo_doc SET c1.ult_pago = c2.ult_pago 
+								AND c1.tipo_doc = c2.tipo_doc 
+								SET c1.ult_pago = c2.ult_pago 
 							WHERE c1.num_cta = :numCta 
 								AND c1.tipo_doc = :tipoDoc 
 								AND c1.tip_mov = '+'");
@@ -828,6 +845,26 @@ class ModeloCuentas
 		}
 
 		$stmt = null;
+	}
+
+	static public function mdlActualizarCuenta($saldoNuevo, $estado, $ult_pago, $id)
+	{
+		$sql = "UPDATE cuenta_ctejf SET saldo=:saldoNuevo, estado=:estado, ult_pago=:ult_pago WHERE id=:id";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":saldoNuevo", $saldoNuevo, PDO::PARAM_STR);
+		$stmt->bindParam(":estado", $estado, PDO::PARAM_STR);
+		$stmt->bindParam(":ult_pago", $ult_pago, PDO::PARAM_STR);
+		$stmt->bindParam(":id", $id, PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return $stmt->errorInfo();
+		}
 	}
 
 	//* ACTUALIZAR ESTADO DE CUENTA
@@ -1010,7 +1047,39 @@ class ModeloCuentas
 
 		if ($ano == "null") {
 
-			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.tip_mov ='+'  AND YEAR(c.fecha) = '2022' ORDER BY c.id ASC");
+			$stmt = Conexion::conectar()->prepare("SELECT 
+				c.id,
+				c.tipo_doc,
+				c.num_cta ,
+				c.cod_pago ,
+				c.doc_origen ,
+				c.fecha,
+				c.fecha_ven,
+				c.monto,
+				c.saldo ,
+				c.tip_cambio ,
+				c.ult_pago ,
+				c.cliente ,
+				c.vendedor ,
+				c.notas,
+				c.fecha_cep ,
+				c.banco ,
+				c.num_unico ,
+				c.renovacion ,
+				c.protesta ,
+				c.usuario ,
+				c.tip_mon ,
+				c.estado ,
+				c.estado_doc ,
+				c.fecha_envio ,
+				c.fecha_abono ,
+				c.fecha_creacion ,
+				c.usureg ,
+				c.pcreg ,
+				c.fecha_ori ,
+				c.fecha_ori_ven,
+				cli.nombre 
+			FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE c.tip_mov ='+'  AND YEAR(c.fecha) = '2022' ORDER BY c.id ASC");
 
 			$stmt->execute();
 
@@ -1043,7 +1112,39 @@ class ModeloCuentas
 			return $stmt->fetchAll();
 		} else {
 
-			$stmt = Conexion::conectar()->prepare("SELECT c.*,cli.nombre FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE YEAR(c.fecha) = '" . $ano . "' AND c.tip_mov ='+' AND c.estado='PENDIENTE' ");
+			$stmt = Conexion::conectar()->prepare("SELECT 
+				c.id,
+				c.tipo_doc,
+				c.num_cta ,
+				c.cod_pago ,
+				c.doc_origen ,
+				c.fecha,
+				c.fecha_ven,
+				c.monto,
+				c.saldo ,
+				c.tip_cambio ,
+				c.ult_pago ,
+				c.cliente ,
+				c.vendedor ,
+				c.notas,
+				c.fecha_cep ,
+				c.banco ,
+				c.num_unico ,
+				c.renovacion ,
+				c.protesta ,
+				c.usuario ,
+				c.tip_mon ,
+				c.estado ,
+				c.estado_doc ,
+				c.fecha_envio ,
+				c.fecha_abono ,
+				c.fecha_creacion ,
+				c.usureg ,
+				c.pcreg ,
+				c.fecha_ori ,
+				c.fecha_ori_ven,
+				cli.nombre
+			FROM $tabla c LEFT JOIN clientesjf cli ON c.cliente=cli.codigo WHERE YEAR(c.fecha) = '" . $ano . "' AND c.tip_mov ='+' AND c.estado='PENDIENTE' ");
 
 			$stmt->bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 

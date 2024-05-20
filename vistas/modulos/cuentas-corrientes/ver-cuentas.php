@@ -10,7 +10,7 @@
 
                 $cuentas = ControladorCuentas::ctrMostrarCuentasV2($_GET["numCta"], $_GET["codCuenta"]);
 
-                $cliente = ControladorClientes::ctrMostrarClientes("codigo", $cuentas["cliente"]);
+                //$cliente = ControladorClientes::ctrMostrarClientes("codigo", $cuentas["cliente"]);
             } else {
 
                 $cuentas = '';
@@ -54,15 +54,8 @@
             <div class="box box-success">
                 <div class="box-body">
                     <div class="col-md-3" style="margin-bottom:10px">
-                        <?php
-                        if ($_GET["ruta"] == "cuentas-pendientes") {
-                            echo '<a href="cuentas-pendientes" class="btn btn-danger"><i class ="fa fa-arrow-left"> Atrás </i></a>';
-                        } else if ($_GET["ruta"] == "cuentas-canceladas") {
-                            echo '<a href="cuentas-canceladas" class="btn btn-danger"><i class ="fa fa-arrow-left"> Atrás </i></a>';
-                        } else {
-                            echo '<a href="cuentas" class="btn btn-danger"><i class ="fa fa-arrow-left"> Atrás </i></a>';
-                        }
-                        ?>
+
+                        <a href="<?php echo $_GET["rutas"] ?>" class="btn btn-danger"><i class="fa fa-arrow-left"> Atrás </i></a>
 
                     </div>
                     <div class="col-md-12"></div>
@@ -94,7 +87,7 @@
 
                     <div class="col-md-6">
                         <div style="margin-top:25px"></div>
-                        <input type="text" class="form-control" value="<?php echo $cliente["nombre"]; ?>" readonly>
+                        <input type="text" class="form-control" value="<?php echo $cuentas["nombre"]; ?>" readonly>
                     </div>
 
                     <div class="col-md-3">
@@ -324,8 +317,6 @@ MODAL EDITAR TIPO PAGO
 
 </div>
 
-
-
 <!--=====================================
 MODAL CANCELAR CUENTA
 ======================================-->
@@ -337,6 +328,7 @@ MODAL CANCELAR CUENTA
         <div class="modal-content">
 
             <form role="form" method="post" onsubmit="return checkSubmitGC();">
+                <input type="hidden" id="rutas" name="rutas" value="<?php echo $_GET["rutas"]; ?>">
 
                 <!--=====================================
         CABEZA DEL MODAL
@@ -367,7 +359,7 @@ MODAL CANCELAR CUENTA
 
                                 <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
 
-                                <input type="text" class="form-control input-md" name="cancelarTipoDocumento2" id="cancelarTipoDocumento2" readonly>
+                                <input type="text" class="form-control input-md" name="cancelarTipoDocumento2" id="cancelarTipoDocumento2" value="<?php echo $cuentas["tipo_doc"]; ?>" readonly>
 
                             </div>
 
@@ -380,7 +372,7 @@ MODAL CANCELAR CUENTA
 
                                 <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
 
-                                <input type="text" class="form-control input-md" name="cancelarDocumentoOriginal2" id="cancelarDocumentoOriginal2" readonly>
+                                <input type="text" class="form-control input-md" name="cancelarDocumentoOriginal2" id="cancelarDocumentoOriginal2" value="<?php echo $cuentas["num_cta"]; ?>" readonly>
 
                             </div>
 
@@ -393,7 +385,7 @@ MODAL CANCELAR CUENTA
 
                                 <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
 
-                                <input type="date" class="form-control input-md" name="cancelarFechaOrigen2" id="cancelarFechaOrigen2" readonly>
+                                <input type="date" class="form-control input-md" name="cancelarFechaOrigen2" id="cancelarFechaOrigen2" value="<?php echo $cuentas["fecha"]; ?>" readonly>
 
                             </div>
 
@@ -406,7 +398,7 @@ MODAL CANCELAR CUENTA
 
                                 <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
 
-                                <input type="date" class="form-control input-md" name="cancelarVencimientoOrigen2" id="cancelarVencimientoOrigen2" readonly>
+                                <input type="date" class="form-control input-md" name="cancelarVencimientoOrigen2" id="cancelarVencimientoOrigen2" value="<?php echo $cuentas["fecha_ven"]; ?>" readonly>
 
                             </div>
 
@@ -418,7 +410,7 @@ MODAL CANCELAR CUENTA
 
                                 <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
 
-                                <input type="text" class="form-control input-md" name="cancelarCliente2" id="cancelarCliente2" readonly>
+                                <input type="text" class="form-control input-md" name="cancelarCliente2" id="cancelarCliente2" value="<?php echo $cuentas["cliente"]; ?>" readonly>
 
                             </div>
 
@@ -430,7 +422,7 @@ MODAL CANCELAR CUENTA
 
                                 <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
 
-                                <input type="text" class="form-control input-md" name="cancelarClienteNomOrigen2" id="cancelarClienteNomOrigen2" readonly>
+                                <input type="text" class="form-control input-md" name="cancelarClienteNomOrigen2" id="cancelarClienteNomOrigen2" value="<?php echo $cuentas["nombre"]; ?>" readonly>
 
                             </div>
 
@@ -442,7 +434,7 @@ MODAL CANCELAR CUENTA
 
                                 <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
 
-                                <input type="text" class="form-control input-md" name="cancelarVendedor2" id="cancelarVendedor2" readonly>
+                                <input type="text" class="form-control input-md" name="cancelarVendedor2" id="cancelarVendedor2" value="<?php echo $cuentas["vendedor"]; ?>" readonly>
 
                             </div>
 
@@ -454,7 +446,7 @@ MODAL CANCELAR CUENTA
 
                                 <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
 
-                                <input type="text" class="form-control input-md" name="cancelarEstado2" id="cancelarEstado2" readonly>
+                                <input type="text" class="form-control input-md" name="cancelarEstado2" id="cancelarEstado2" value="<?php echo $cuentas["estado"]; ?>" readonly>
 
                             </div>
 
@@ -466,7 +458,7 @@ MODAL CANCELAR CUENTA
 
                                 <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
 
-                                <input type="number" class="form-control input-md" name="cancelarSaldoAntiguo2" id="cancelarSaldoAntiguo2" readonly>
+                                <input type="number" class="form-control input-md" name="cancelarSaldoAntiguo2" id="cancelarSaldoAntiguo2" value="<?php echo $cuentas["saldo"]; ?>" readonly>
 
                             </div>
 
@@ -478,7 +470,7 @@ MODAL CANCELAR CUENTA
 
                                 <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
 
-                                <input type="number" class="form-control input-md" name="cancelarNumUnico2" id="cancelarNumUnico2" readonly>
+                                <input type="number" class="form-control input-md" name="cancelarNumUnico2" id="cancelarNumUnico2" value="<?php echo $cuentas["estado"]; ?>" readonly>
 
                             </div>
 
@@ -491,7 +483,7 @@ MODAL CANCELAR CUENTA
 
                                 <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
 
-                                <input type="number" class="form-control input-md" name="cancelarTotal2" id="cancelarTotal2" readonly>
+                                <input type="number" class="form-control input-md" name="cancelarTotal2" id="cancelarTotal2" value="<?php echo $cuentas["saldo"]; ?>" readonly>
 
                             </div>
 
@@ -524,7 +516,7 @@ MODAL CANCELAR CUENTA
                                     ?>
                                 </select>
                                 <input type="hidden" id="cancelarUsuario2" name="cancelarUsuario2" value="<?php echo $_SESSION["id"] ?>">
-                                <input type="hidden" id="idCuenta3" name="idCuenta3">
+                                <input type="hidden" id="idCuenta3" name="idCuenta3" value="<?php echo $cuentas["id"]; ?>">
                             </div>
 
                         </div>
@@ -538,7 +530,7 @@ MODAL CANCELAR CUENTA
 
                                 <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
 
-                                <input type="text" class="form-control input-md" name="cancelarDocumento2" id="cancelarDocumento2" placeholder="Documento origen">
+                                <input type="text" class="form-control input-md" name="cancelarDocumento2" id="cancelarDocumento2" value="<?php echo $cuentas["num_cta"]; ?>" placeholder="Documento origen">
                             </div>
 
                         </div>
@@ -597,7 +589,7 @@ MODAL CANCELAR CUENTA
 
                                 <span class="input-group-addon"><i class="fa fa-text-width"></i></span>
 
-                                <input type="number" min="0" step="any" class="form-control input-md" name="cancelarSaldo2" id="cancelarSaldo2" value="0" readonly>
+                                <input type="number" min="0" step="any" class="form-control input-md" name="cancelarSaldo2" id="cancelarSaldo2" value="<?php echo $cuentas["saldo"]; ?>" readonly>
 
                             </div>
 
@@ -638,7 +630,7 @@ MODAL CANCELAR CUENTA
 <?php
 
 $eliminarCancelacion = new ControladorCuentas();
-$eliminarCancelacion->ctrEliminarCancelacion();
+$eliminarCancelacion->ctrEliminarCancelacion($_GET["rutas"]);
 
 ?>
 

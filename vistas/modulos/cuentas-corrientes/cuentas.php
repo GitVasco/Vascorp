@@ -990,9 +990,6 @@ MODAL EDITAR TIPO PAGO
 
 </div>
 
-
-
-
 <div id="modalAgregarLetras" class="modal fade" role="dialog">
 
     <div class="modal-dialog" style="width: 55% !important;">

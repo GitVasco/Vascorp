@@ -102,7 +102,7 @@ function cargarTablaCuentasPendientes(ano) {
         deferRender: true,
         retrieve: true,
         processing: true,
-        order: [[0, "asc"]],
+        order: [[4, "desc"]],
         pageLength: 20,
         lengthMenu: [
             [20, 40, 60, -1],
@@ -640,11 +640,18 @@ $(".tablaCuentas").on("click", ".btnVisualizarCuenta", function () {
 });
 
 $(".tablaCuentasPendientes").on("click", ".btnVisualizarCuenta", function () {
+    var codCuenta = $(this).attr("codCta");
     var numCuenta = $(this).attr("numCta");
     localStorage.setItem("numCta2", numCuenta);
+    localStorage.setItem("codCta2", codCuenta);
     var rutas = "cuentas-pendientes";
     window.location =
-        "index.php?ruta=ver-cuentas&numCta=" + numCuenta + "&rutas=" + rutas;
+        "index.php?ruta=ver-cuentas&numCta=" +
+        numCuenta +
+        "&codCuenta=" +
+        codCuenta +
+        "&rutas=" +
+        rutas;
 });
 
 $(".tablaCuentasAprobadas").on("click", ".btnVisualizarCuenta", function () {
@@ -678,6 +685,9 @@ ELIMINAR TIPO DE PAGO
 =============================================*/
 $(".tablaVerCuentas").on("click", ".btnEliminarCancelacion", function () {
     var idCancelacion = $(this).attr("idCancelacion");
+    const rutas = document.getElementById("rutas").value;
+    console.log("🚀 ~ rutas:", rutas);
+
     swal({
         title: "¿Está seguro de borrar la cancelación?",
         text: "¡Si no lo está puede cancelar la acción!",
@@ -690,7 +700,10 @@ $(".tablaVerCuentas").on("click", ".btnEliminarCancelacion", function () {
     }).then(function (result) {
         if (result.value) {
             window.location =
-                "index.php?ruta=ver-cuentas&idCancelacion=" + idCancelacion;
+                "index.php?ruta=ver-cuentas&idCancelacion=" +
+                idCancelacion +
+                "&rutas=" +
+                rutas;
         }
     });
 });
@@ -1011,40 +1024,40 @@ $(".btnLimpiarLetra").click(function () {
     $(".letraCuenta").remove();
 });
 
-$(".btnCancelarCuenta2").click(function () {
-    var numCta = $(this).attr("numCta");
-    var codCta = $(this).attr("codCta");
-    var datos = new FormData();
-    datos.append("numCta", numCta);
-    datos.append("codCta", codCta);
+// $(".btnCancelarCuenta2").click(function () {
+//     var numCta = $(this).attr("numCta");
+//     var codCta = $(this).attr("codCta");
+//     var datos = new FormData();
+//     datos.append("numCta", numCta);
+//     datos.append("codCta", codCta);
 
-    $.ajax({
-        url: "ajax/cuentas.ajax.php",
-        method: "POST",
-        data: datos,
-        cache: false,
-        contentType: false,
-        processData: false,
-        dataType: "json",
-        success: function (respuesta) {
-            $("#idCuenta3").val(respuesta["id"]);
-            $("#cancelarTipoDocumento2").val(respuesta["tipo_doc"]);
-            $("#cancelarDocumento2").val(respuesta["num_cta"]);
-            $("#cancelarDocumentoOriginal2").val(respuesta["num_cta"]);
-            //$("#cancelarDocumento2").val(respuesta["num_cta"]);
-            $("#cancelarVendedor2").val(respuesta["vendedor"]);
-            $("#cancelarFechaOrigen2").val(respuesta["fecha"]);
-            $("#cancelarVencimientoOrigen2").val(respuesta["fecha_ven"]);
-            $("#cancelarCliente2").val(respuesta["cliente"]);
-            $("#cancelarClienteNomOrigen2").val(respuesta["nombre"]);
-            $("#cancelarSaldo2").val(respuesta["saldo"]);
-            $("#cancelarSaldoAntiguo2").val(respuesta["saldo"]);
-            $("#cancelarEstado2").val(respuesta["estado"]);
-            $("#cancelarNumUnico2").val(respuesta["estado"]);
-            $("#cancelarTotal2").val(respuesta["saldo"]);
-        },
-    });
-});
+//     $.ajax({
+//         url: "ajax/cuentas.ajax.php",
+//         method: "POST",
+//         data: datos,
+//         cache: false,
+//         contentType: false,
+//         processData: false,
+//         dataType: "json",
+//         success: function (respuesta) {
+//             // $("#idCuenta3").val(respuesta["id"]);
+//             // $("#cancelarTipoDocumento2").val(respuesta["tipo_doc"]);
+//             // $("#cancelarDocumento2").val(respuesta["num_cta"]);
+//             // $("#cancelarDocumentoOriginal2").val(respuesta["num_cta"]);
+//             //// $("#cancelarDocumento2").val(respuesta["num_cta"]);
+//             // $("#cancelarVendedor2").val(respuesta["vendedor"]);
+//             // $("#cancelarFechaOrigen2").val(respuesta["fecha"]);
+//             // $("#cancelarVencimientoOrigen2").val(respuesta["fecha_ven"]);
+//             // $("#cancelarCliente2").val(respuesta["cliente"]);
+//             // $("#cancelarClienteNomOrigen2").val(respuesta["nombre"]);
+//             // $("#cancelarSaldo2").val(respuesta["saldo"]);
+//             // $("#cancelarSaldoAntiguo2").val(respuesta["saldo"]);
+//             // $("#cancelarEstado2").val(respuesta["estado"]);
+//             // $("#cancelarNumUnico2").val(respuesta["estado"]);
+//             $("#cancelarTotal2").val(respuesta["saldo"]);
+//         },
+//     });
+// });
 
 $("#cancelarMonto3").change(function () {
     var saldo = $(this).val();
