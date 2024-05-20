@@ -1,3 +1,12 @@
+<?php
+$pedidoCodigo = $_GET["pedido"];
+
+$pedido = ControladorPedidos::ctrMostrarTemporal($pedidoCodigo);
+$item = "codigo";
+$valor = $pedido["cliente"];
+$clientes = ControladorClientes::ctrMostrarClientesP($item, $valor);
+
+?>
 <div class="content-wrapper">
 
     <section class="content-header">
@@ -77,15 +86,7 @@
 
                                         <span class="input-group-addon"><i class="fa fa-key"></i></span>
 
-                                        <?php
-
-                                        $pedido = $_GET["pedido"];
-                                        #var_dump("pedido", $pedido);
-
-                                        echo '<input type="text" class="form-control input-sm" id="nuevoCodigo" name="nuevoCodigo" value="' . $pedido . '" readonly>';
-
-                                        ?>
-
+                                        <?= '<input type="text" class="form-control input-sm" id="nuevoCodigo" name="nuevoCodigo" value="' . $pedidoCodigo . '" readonly>'; ?>
 
 
                                     </div>
@@ -102,68 +103,16 @@
                                 </div>
 
                                 <div class="form-group">
-
                                     <div class="input-group">
-
                                         <span class="input-group-addon"><i class="fa fa-users"></i></span>
-
+                                        <input type="hidden" class="form-control input-sm" id="codCliente" name="codCliente" value="<?= $pedido["cliente"] ?>">
                                         <select class="form-control selectpicker" id="seleccionarCliente" name="seleccionarCliente" data-live-search="true" data-size="10" required>
-
-                                            <?php
-
-                                            $pedidoCodigo = $_GET["pedido"];
-                                            $pedido = ControladorPedidos::ctrMostrarTemporal($pedidoCodigo);
-
-                                            if ($pedido["codigo"] != "") {
-                                                $item = "codigo";
-                                                $valor = $pedido["cliente"];
-                                                $clienteSeleccionado = ControladorClientes::ctrMostrarClientesP($item, $valor);
-
-                                                echo '<option value="' . $clienteSeleccionado["codigo"] . '">' . $clienteSeleccionado["nombreB"] . '</option>';
-
-                                                $todosLosClientes = ControladorClientes::ctrMostrarClientesP(null, null);
-
-                                                foreach ($todosLosClientes as $cliente) {
-                                                    echo '<option value="' . $cliente["codigo"] . '">' . $cliente["nombreB"] . '</option>';
-                                                }
-                                            } else {
-                                                echo '<option value="">Seleccione Cliente</option>';
-                                            }
-
-
-
-                                            ?>
-
+                                            <option value="">Seleccionar Cliente</option>
                                         </select>
-
-                                        <?php
-
-                                        $valor = $_GET["pedido"];
-
-                                        if ($valor == "") {
-                                            echo "<button  type='button' class='btn btn-primary btnCargarCliente'> Cargar</button> ";
-                                        }
-
-                                        $pedido = ControladorPedidos::ctrMostrarTemporal($valor);
-                                        //var_dump("pedido", $pedido);
-
-                                        if ($pedido["codigo"] != "") {
-
-                                            $item = "codigo";
-                                            $valor = $pedido["cliente"];
-
-                                            $clientes = ControladorClientes::ctrMostrarClientesP($item, $valor);
-
-                                            echo '<input type="hidden" class="form-control input-sm" id="codCliente" name="codCliente" value="' . $clientes["codigo"] . '" readonly>';
-
-                                            echo '<input type="text" class="form-control input-sm" id="nomCliente" name="nomCliente" value="' . $clientes["nombre"] . '" readonly>';
-                                        }
-
-                                        ?>
-
+                                        <button type='button' class='btn btn-primary btnCargarCliente'> Cargar</button>
                                     </div>
-
                                 </div>
+
 
                                 <!--=====================================
                                 ENTRADA DEL VENDEDOR

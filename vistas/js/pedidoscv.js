@@ -1216,54 +1216,76 @@ $(".tablaPedidosAPT").on("click", ".btnConfirmar", function () {
     });
 });
 
-$(".formularioPedidoCV").on("click", ".btnCargarCliente", function () {
-    var clienteCuenta = "1";
+$(document).ready(function () {
+    const codClienteElement = document.getElementById("codCliente");
 
-    var datos = new FormData();
-    datos.append("clienteCuenta", clienteCuenta);
-    $.ajax({
-        url: "ajax/clientes.ajax.php",
-        method: "POST",
-        data: datos,
-        cache: false,
-        contentType: false,
-        processData: false,
-        dataType: "json",
-        xhr: function () {
-            var xhr = $.ajaxSettings.xhr();
-            xhr.upload.onprogress = function (event) {
-                var perc = Math.round((event.loaded / event.total) * 100);
-                $("#progressBar1").html("Cargando clientes..");
-                $("#progressBar1").css("width", perc + "%");
-            };
-            return xhr;
-        },
-        beforeSend: function (xhr) {
-            $("#progressBar1").text("0%");
-            $("#progressBar1").css("width", "0%");
-        },
-        success: function (respuesta2) {
-            $("#progressBar1").addClass("progress-bar");
-            $("#progressBar1").text("100% - Carga realizada");
+    if (codClienteElement) {
+        const clientSelected = codClienteElement.value;
 
-            $("#seleccionarCliente").find("option").remove();
-            $("#seleccionarCliente").append(
-                "<option value='' > Seleccionar cliente </option>"
-            );
-            for (let i = 0; i < respuesta2.length; i++) {
-                $("#seleccionarCliente").append(
-                    "<option value='" +
-                        respuesta2[i]["codigo"] +
-                        "'>" +
-                        respuesta2[i]["codigo"] +
-                        " - " +
-                        respuesta2[i]["nombre"] +
-                        "</option>"
-                );
-            }
-            $("#seleccionarCliente").selectpicker("refresh");
-        },
+        if (clientSelected !== "") {
+            // Cargar clientes automáticamente si codCliente tiene un valor (editar pedido)
+            cargarClientes(clientSelected);
+        }
+    }
+
+    $(".formularioPedidoCV").on("click", ".btnCargarCliente", function () {
+        // Cargar clientes al hacer clic en el botón (crear pedido)
+        cargarClientes("1");
     });
+
+    function cargarClientes(clienteCuenta) {
+        var datos = new FormData();
+        datos.append("clienteCuenta", clienteCuenta);
+
+        $.ajax({
+            url: "ajax/clientes.ajax.php",
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            xhr: function () {
+                var xhr = $.ajaxSettings.xhr();
+                xhr.upload.onprogress = function (event) {
+                    var perc = Math.round((event.loaded / event.total) * 100);
+                    $("#progressBar1").html("Cargando clientes..");
+                    $("#progressBar1").css("width", perc + "%");
+                };
+                return xhr;
+            },
+            beforeSend: function (xhr) {
+                $("#progressBar1").text("0%");
+                $("#progressBar1").css("width", "0%");
+            },
+            success: function (respuesta2) {
+                $("#progressBar1").addClass("progress-bar");
+                $("#progressBar1").text("100% - Carga realizada");
+
+                $("#seleccionarCliente").find("option").remove();
+                $("#seleccionarCliente").append(
+                    "<option value='' >Seleccionar cliente</option>"
+                );
+                for (let i = 0; i < respuesta2.length; i++) {
+                    $("#seleccionarCliente").append(
+                        "<option value='" +
+                            respuesta2[i]["codigo"] +
+                            "'>" +
+                            respuesta2[i]["codigo"] +
+                            " - " +
+                            respuesta2[i]["nombre"] +
+                            "</option>"
+                    );
+                }
+
+                // Seleccionar el cliente que estaba previamente seleccionado si se está editando
+                if (clienteCuenta !== "1") {
+                    $("#seleccionarCliente").val(clienteCuenta);
+                }
+                $("#seleccionarCliente").selectpicker("refresh");
+            },
+        });
+    }
 });
 
 $(".tablaArticulosPedidos").on("click", ".modificarArtPed", function () {
