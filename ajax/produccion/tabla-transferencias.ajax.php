@@ -56,6 +56,11 @@ class TablaSalidas
                                 "' . $estado . '",
                                 "' . $botones . '"
                                 ],';
+                } else {
+                    echo '{
+                        "data":[]
+                    }';
+                    return;
                 }
             }
 

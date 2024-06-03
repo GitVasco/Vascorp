@@ -45,8 +45,8 @@ class ControladorModelos
 	*/
 	static public function ctrCrearModelo()
 	{
-
 		if (isset($_POST["nuevaDescripcion"])) {
+
 
 			if (
 				preg_match('/^[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\/\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúüÁÉÍÓÚÜ ]{1,}$/', $_POST["nuevaDescripcion"]) &&
@@ -59,7 +59,7 @@ class ControladorModelos
 
 				$ruta = "vistas/img/modelos/default/anonymous.png";
 
-				if (isset($_FILES["nuevaImagen"]["tmp_name"])) {
+				if (isset($_FILES["nuevaImagen"]["tmp_name"]) && !empty($_FILES["nuevaImagen"]["tmp_name"])) {
 
 					list($ancho, $alto) = getimagesize($_FILES["nuevaImagen"]["tmp_name"]);
 
@@ -67,22 +67,24 @@ class ControladorModelos
 					$nuevoAlto = 500;
 
 					/*=============================================
-				 CREAMOS EL DIRECTORIO DONDE VAMOS A GUARDAR LA FOTO DEL USUARIO
-				 =============================================*/
+					CREAMOS EL DIRECTORIO DONDE VAMOS A GUARDAR LA FOTO DEL USUARIO
+					=============================================*/
 
 					$directorio = "vistas/img/modelos/" . $_POST["nuevoModelo"];
 
-					mkdir($directorio, 0755);
+					if (!file_exists($directorio)) {
+						mkdir($directorio, 0755);
+					}
 
 					/*=============================================
-				 DE ACUERDO AL TIPO DE IMAGEN APLICAMOS LAS FUNCIONES POR DEFECTO DE PHP
-				 =============================================*/
+					DE ACUERDO AL TIPO DE IMAGEN APLICAMOS LAS FUNCIONES POR DEFECTO DE PHP
+					=============================================*/
 
 					if ($_FILES["nuevaImagen"]["type"] == "image/jpeg") {
 
 						/*=============================================
-					 GUARDAMOS LA IMAGEN EN EL DIRECTORIO
-					 =============================================*/
+						GUARDAMOS LA IMAGEN EN EL DIRECTORIO
+						=============================================*/
 
 						$aleatorio = mt_rand(100, 999);
 
@@ -100,8 +102,8 @@ class ControladorModelos
 					if ($_FILES["nuevaImagen"]["type"] == "image/png") {
 
 						/*=============================================
-					 GUARDAMOS LA IMAGEN EN EL DIRECTORIO
-					 =============================================*/
+						GUARDAMOS LA IMAGEN EN EL DIRECTORIO
+						=============================================*/
 
 						$aleatorio = mt_rand(100, 999);
 
@@ -116,6 +118,7 @@ class ControladorModelos
 						imagepng($destino, $ruta);
 					}
 				}
+
 				$tabla2 = "preciojf";
 				$datosPrecio = array(
 					"modelo" => $_POST["nuevoModelo"],
@@ -148,7 +151,7 @@ class ControladorModelos
 				if ($respuesta == "ok") {
 
 					echo '<script>
-
+	
 						swal({
 							  type: "success",
 							  title: "El modelo ha sido guardado correctamente",
@@ -156,18 +159,35 @@ class ControladorModelos
 							  confirmButtonText: "Cerrar"
 							  }).then(function(result){
 										if (result.value) {
-
+	
 										window.location = "modelosjf";
-
+	
 										}
 									})
-
+	
+						</script>';
+				} else {
+					echo '<script>
+	
+						swal({
+							  type: "error",
+							  title: "¡El modelo no puede ir con los campos vacíos o llevar caracteres especiales!",
+							  showConfirmButton: true,
+							  confirmButtonText: "Cerrar"
+							  }).then(function(result){
+										if (result.value) {
+	
+										window.location = "modelosjf";
+	
+										}
+									})
+	
 						</script>';
 				}
 			} else {
 
 				echo '<script>
-
+	
 					swal({
 						  type: "error",
 						  title: "¡El modelo no puede ir con los campos vacíos o llevar caracteres especiales!",
@@ -175,16 +195,17 @@ class ControladorModelos
 						  confirmButtonText: "Cerrar"
 						  }).then(function(result){
 							if (result.value) {
-
+	
 							window.location = "modelosjf";
-
+	
 							}
 						})
-
-			  	</script>';
+	
+				  </script>';
 			}
 		}
 	}
+
 
 	/* 
 	* EDITAR MODELO

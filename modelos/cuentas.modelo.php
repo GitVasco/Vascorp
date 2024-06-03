@@ -3653,46 +3653,47 @@ class ModeloCuentas
 	}
 
 	//* ESTADO DE CEUNTA CABECERA
-	static public function ctrEstadoCuentaCab($cliente)
+	static public function ctrEstadoCuentaCab($cliente, $vendedor)
 	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
-														cc.cliente,
-														c.nombre,
-														c.direccion,
-														c.ubigeo,
-														(SELECT 
-															nombre 
+												cc.cliente,
+												c.nombre,
+												c.direccion,
+												c.ubigeo,
+												(SELECT 
+													nombre 
+												FROM
+													ubigeo u 
+												WHERE c.ubigeo = u.codigo) AS nom_ubigeo,
+												c.documento,
+												c.telefono,
+												SUM(cc.saldo) AS saldo,
+												SUM(
+													CASE
+													WHEN cc.protesta = '1' 
+													THEN 85 
+													ELSE 0 
+													END
+												) AS gastos,
+												(
+													SUM(cc.saldo) + SUM(
+													CASE
+														WHEN cc.protesta = '1' 
+														THEN 85 
+														ELSE 0 
+													END
+													)
+												) AS monto_total 
 														FROM
-															ubigeo u 
-														WHERE c.ubigeo = u.codigo) AS nom_ubigeo,
-														c.documento,
-														c.telefono,
-														SUM(cc.saldo) AS saldo,
-														SUM(
-															CASE
-															WHEN cc.protesta = '1' 
-															THEN 85 
-															ELSE 0 
-															END
-														) AS gastos,
-														(
-															SUM(cc.saldo) + SUM(
-															CASE
-																WHEN cc.protesta = '1' 
-																THEN 85 
-																ELSE 0 
-															END
-															)
-														) AS monto_total 
-																FROM
-																	cuenta_ctejf cc 
-																	LEFT JOIN clientesjf c 
-																	ON cc.cliente = c.codigo 
-																WHERE cc.cliente = :cliente 
-																	AND cc.tip_mov = '+' 
-																	AND cc.estado = 'PENDIENTE' 
-																GROUP BY cc.cliente");
+															cuenta_ctejf cc 
+															LEFT JOIN clientesjf c 
+															ON cc.cliente = c.codigo 
+														WHERE cc.cliente = :cliente 
+															AND cc.tip_mov = '+' 
+															AND cc.estado = 'PENDIENTE'
+															AND cc.vendedor IN ($vendedor)
+														GROUP BY cc.cliente");
 
 		$stmt->bindParam(":cliente", $cliente, PDO::PARAM_STR);
 
@@ -3920,7 +3921,7 @@ class ModeloCuentas
 	}
 
 	//* ESTADO DE CEUNTA DETALLE
-	static public function ctrEstadoCuentaDet($cliente)
+	static public function ctrEstadoCuentaDet($cliente, $vendedor)
 	{
 
 		$stmt = Conexion::conectar()->prepare("SELECT 
@@ -3971,7 +3972,8 @@ class ModeloCuentas
 													cuenta_ctejf c 
 												WHERE c.cliente = :cliente 
 													AND c.tip_mov = '+' 
-													AND c.estado = 'PENDIENTE' 
+													AND c.estado = 'PENDIENTE'
+													AND c.vendedor IN ($vendedor) 
 												ORDER BY c.tipo_doc,
 													c.fecha_ven");
 

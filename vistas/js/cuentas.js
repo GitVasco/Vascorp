@@ -2397,10 +2397,27 @@ $(".tablaClientes").on("click", ".btnImprimirEstadoCuenta", function () {
     var cliente = $(this).attr("cliente");
     //console.log(cliente);
 
-    window.open(
-        "vistas/reportes_ticket/estado_cuenta.php?cliente=" + cliente,
-        "_blank"
+    // creamos un promp para que el usuario ingrese la linea a consultar 1. JackyForm 2. Rosalinda 3. Ambos, validamos que no sea vacio y sea un numero de las opciones
+    var linea = prompt(
+        "Ingrese la linea a consultar 1. JackyForm 2. Rosalinda 3. Ambos",
+        ""
     );
+
+    if (linea != "") {
+        if (linea == "1" || linea == "2" || linea == "3") {
+            window.open(
+                "vistas/reportes_ticket/estado_cuenta.php?cliente=" +
+                    cliente +
+                    "&linea=" +
+                    linea,
+                "_blank"
+            );
+        } else {
+            alert("Ingrese una opción válida");
+        }
+    } else {
+        alert("Ingrese una opción válida");
+    }
 });
 
 /*

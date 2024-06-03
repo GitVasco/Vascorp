@@ -109,7 +109,9 @@ $clientes = ControladorClientes::ctrMostrarClientesP($item, $valor);
                                         <select class="form-control selectpicker" id="seleccionarCliente" name="seleccionarCliente" data-live-search="true" data-size="10" required>
                                             <option value="">Seleccionar Cliente</option>
                                         </select>
-                                        <button type='button' class='btn btn-primary btnCargarCliente'> Cargar</button>
+                                        <?php if ($pedidoCodigo == "") : ?>
+                                            <button type='button' class='btn btn-primary btnCargarCliente'> Cargar</button>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
 

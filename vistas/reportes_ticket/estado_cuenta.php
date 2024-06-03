@@ -20,12 +20,24 @@
     todo: traemos todos lso datos para el ticket
     */
     $cliente = $_GET["cliente"];
+    $linea = $_GET["linea"];
     #var_dump($cliente);
 
-    $ctaCab = Controladorcuentas::ctrEstadoCuentaCab($cliente);
+    if ($linea == "1") {
+        $vendedor = "'00','00A','01','02','03','04','05','06','06A','06B','07','07A','08','08C','08D','08DR','08L','14','15','18','19','21','22','23','25'";
+    } else if ($linea == "2") {
+        $vendedor = "'18A','24','26'";
+    } else {
+        $vendedor  = "'00','00A','01','02','03','04','05','06','06A','06B','07','07A','08','08C','08D','08DR','08L','14','15','18','19','21','22','23','25','18A','24','26'";
+    }
+
+    $ctaCab = Controladorcuentas::ctrEstadoCuentaCab($cliente, $vendedor);
     #var_dump($ctaCab);
-    $ctaDet = Controladorcuentas::ctrEstadoCuentaDet($cliente);
+    $ctaDet = Controladorcuentas::ctrEstadoCuentaDet($cliente, $vendedor);
     #var_dump($ctaDet);
+
+
+
 
     $hoy = date("d-m-y");
 

@@ -77,7 +77,7 @@ class ModeloModelos
 			return "ok";
 		} else {
 
-			return "error";
+			return $stmt->errorInfo();
 		}
 
 		$stmt->close();
