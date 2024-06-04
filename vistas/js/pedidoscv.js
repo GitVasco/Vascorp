@@ -1218,6 +1218,7 @@ $(".tablaPedidosAPT").on("click", ".btnConfirmar", function () {
 
 $(document).ready(function () {
     const codClienteElement = document.getElementById("codCliente");
+    const codAgenciaElement = document.getElementById("agencia");
 
     if (codClienteElement) {
         const clientSelected = codClienteElement.value;
@@ -1283,6 +1284,29 @@ $(document).ready(function () {
                     $("#seleccionarCliente").val(clienteCuenta);
                 }
                 $("#seleccionarCliente").selectpicker("refresh");
+            },
+        });
+    }
+
+    /*******************************
+     * Funcion para cargar agencia
+     *******************************/
+    function cargarAgencia(codigo) {
+        var datos = new FormData();
+        datos.append("codigo", codigo);
+
+        $.ajax({
+            url: "ajax/clientes.ajax.php",
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function (respuesta) {
+                if (respuesta["agencia"] != "")
+                    $("#agencia").val(respuesta["agencia"]);
+                $("#agencia").selectpicker("refresh");
             },
         });
     }
@@ -2105,7 +2129,6 @@ $(".tablaPedidosConfirmados, .tablaPedidosGenerados").on(
 // BUSCAR AGENCIA DE TRANSPORTES
 $("#seleccionarCliente").change(function () {
     var codigo = document.getElementById("seleccionarCliente").value;
-    //console.log("codigo", codigo);
 
     var datos = new FormData();
     datos.append("codigo", codigo);
@@ -2119,9 +2142,10 @@ $("#seleccionarCliente").change(function () {
         processData: false,
         dataType: "json",
         success: function (respuesta) {
-            if (respuesta["agencia"] != "")
+            if (respuesta["agencia"] != "") {
                 $("#agencia").val(respuesta["agencia"]);
-            $("#agencia").selectpicker("refresh");
+                $("#agencia").selectpicker("refresh");
+            }
         },
     });
 });
