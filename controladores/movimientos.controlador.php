@@ -58,6 +58,25 @@ class ControladorMovimientos
         return $respuesta;
     }
 
+    static public function ctrTotalMesCorte()
+    {
+
+        $respuesta = ModeloMovimientos::mdlTotalMesCorte();
+
+        return $respuesta;
+    }
+
+    /***************************************
+     * Produccion por mes y taller
+     ***************************************/
+    static public function ctrTotalMesProdTaller($taller)
+    {
+
+        $respuesta = ModeloMovimientos::mdlTotalMesProdTaller($taller);
+
+        return $respuesta;
+    }
+
     /* 
     * sacamos los totales por mes de la  nueva tabla TOTALES
     */

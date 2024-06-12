@@ -434,6 +434,7 @@ $sqlDetalle = mysql_query("SELECT
                             WHERE cc.tip_mov = '+' 
                             AND cc.estado = 'Pendiente' 
                             AND TIMESTAMPDIFF(DAY, cc.fecha_ven, NOW()) > 180 
+                            And (cc.vendedor not like '%06%' and cc.vendedor not like '%08%') 
                             ORDER BY cc.vendedor,
                             cc.cliente,
                             cc.fecha_ven") or die(mysql_error());

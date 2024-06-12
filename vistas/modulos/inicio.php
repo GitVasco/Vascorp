@@ -90,7 +90,17 @@ $respuesta = ControladorMantenimiento::ctrTraerCalendario($valor);
 
                 <?php
 
-                //include "reportes/vtas-modA.php";
+                include "reportes/corte-prod.php";
+
+                ?>
+
+            </div>
+
+            <div class="col-lg-6">
+
+                <?php
+
+                include "reportes/prod-taller.php";
 
                 ?>
 

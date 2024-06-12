@@ -24,10 +24,13 @@
     #var_dump($cliente);
 
     if ($linea == "1") {
-        $vendedor = "'00','00A','01','02','03','04','05','06','06A','06B','07','07A','08','08C','08D','08DR','08L','14','15','18','19','21','22','23','25'";
+        $logo = "jackyform_paloma2.png";
+        $vendedor = "'00','00A','01','02','03','04','05','06','06A','06B','07','07A','08','08C','08D','08DR','08L','14','15','19','21','22','23','25'";
     } else if ($linea == "2") {
-        $vendedor = "'18A','24','26'";
+        $logo = "rosalinda.png";
+        $vendedor = "'18','18A','24','26'";
     } else {
+        $logo = "jackyform_paloma2.png";
         $vendedor  = "'00','00A','01','02','03','04','05','06','06A','06B','07','07A','08','08C','08D','08DR','08L','14','15','18','19','21','22','23','25','18A','24','26'";
     }
 
@@ -35,9 +38,6 @@
     #var_dump($ctaCab);
     $ctaDet = Controladorcuentas::ctrEstadoCuentaDet($cliente, $vendedor);
     #var_dump($ctaDet);
-
-
-
 
     $hoy = date("d-m-y");
 
@@ -56,7 +56,7 @@
                             <tr>
                         
                                 <th style="text-align:left;" colspan="11">CORPORACION VASCO S.A.C.</th>
-                                <img src="../../vistas/img/plantilla/jackyform_paloma2.png" width="200px" height="100px">
+                                <img src="../../vistas/img/plantilla/' . $logo . '" width="200px" height="100px">
                         
                             </tr>
 

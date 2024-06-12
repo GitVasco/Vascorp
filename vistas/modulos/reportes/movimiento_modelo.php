@@ -1,30 +1,29 @@
 <?php
 
-    if(isset($_GET["modelo"])){
-        $modelo = $_GET["modelo"];
-    }else{
+if (isset($_GET["modelo"])) {
+    $modelo = $_GET["modelo"];
+} else {
 
-        $modelo = null;
-    }
-    
-    #var_dump($modelo);
+    $modelo = null;
+}
 
-    $movimientos = ControladorMovimientos::ctrModelosMovimientos($modelo);
-    #var_dump("movimiento", $movimientos); 
+#var_dump($modelo);
 
-    $arrayMeses = array();
-    $arrayCantidad = array();
-    foreach($movimientos as $key => $value){
-    
-        $fecha = $value["nom_mes"];
-        array_push($arrayMeses, $fecha);
+$movimientos = ControladorMovimientos::ctrModelosMovimientos($modelo);
+#var_dump("movimiento", $movimientos); 
 
-        $cantidad = $value["cantidad"];
-        array_push($arrayCantidad, $cantidad);
+$arrayMeses = array();
+$arrayCantidad = array();
+foreach ($movimientos as $key => $value) {
 
-    }
+    $fecha = $value["nom_mes"];
+    array_push($arrayMeses, $fecha);
 
-    #var_dump($arrayCantidad);
+    $cantidad = $value["cantidad"];
+    array_push($arrayCantidad, $cantidad);
+}
+
+#var_dump($arrayCantidad);
 
 ?>
 
@@ -34,23 +33,23 @@
 
         <h3 class="box-title">Movimiento por Modelo</h3>
         <select name="ModelMov" id="ModelMov" class="form-control input-lg selectpicker" data-live-search="true" data-size="10">
-        <option value="">--------Seleccionar modelo-------</option>
-        <?php 
-        $item=null;
-        $valor=null;
+            <option value="">--------Seleccionar modelo-------</option>
+            <?php
+            $item = null;
+            $valor = null;
 
-        $modelo =ControladorModelos::ctrMostrarModelosActivos($item,$valor);
-        foreach ($modelo as $key => $value) {
-            echo '<option value="'.$value["modelo"].'">'. $value["nombre"].'</option>';
-        }
-        ?>
-    </select>
+            $modelo = ControladorModelos::ctrMostrarModelosActivos($item, $valor);
+            foreach ($modelo as $key => $value) {
+                echo '<option value="' . $value["modelo"] . '">' . $value["nombre"] . '</option>';
+            }
+            ?>
+        </select>
     </div>
 
     <div class="box-body">
 
         <div class="chart">
-        <canvas id="grafica" style="height:500px"></canvas>
+            <canvas id="grafica" style="height:300px"></canvas>
         </div>
 
     </div>
@@ -59,7 +58,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@latest/dist/Chart.min.js"></script>
 <script>
-
     const URLactual = window.location.search;
 
     const urlParamsM = new URLSearchParams(URLactual);
@@ -67,9 +65,9 @@
     var modelo = urlParamsM.get('modelo');
     //console.log(modelo);
 
-    if(modelo === null){
-        var titulo= "10197";
-    }else{
+    if (modelo === null) {
+        var titulo = "10197";
+    } else {
         var titulo = modelo;
     }
 
@@ -80,20 +78,17 @@
 
         <?php
 
-            $conteoMes = count($arrayMeses);
-            foreach($arrayMeses as $key => $value){
+        $conteoMes = count($arrayMeses);
+        foreach ($arrayMeses as $key => $value) {
 
-                if($key != $conteoMes-1){
+            if ($key != $conteoMes - 1) {
 
-                    echo "'$value',";
-    
-                }else{
+                echo "'$value',";
+            } else {
 
-                    echo "'$value'";
-
-                }
-
+                echo "'$value'";
             }
+        }
 
         ?>
 
@@ -103,33 +98,30 @@
         label: "Ventas por mes " + titulo,
         data: [
 
-        <?php
+            <?php
 
             $conteoMes = count($arrayCantidad);
-            foreach($arrayCantidad as $key => $value){
+            foreach ($arrayCantidad as $key => $value) {
 
-                if($key != $conteoMes-1){
+                if ($key != $conteoMes - 1) {
 
                     echo "$value,";
-    
-                }else{
+                } else {
 
                     echo "$value";
-
                 }
-
             }
 
-        ?>
-    
-    
-    ], // La data es un arreglo que debe tener la misma cantidad de valores que la cantidad de etiquetas
+            ?>
+
+
+        ], // La data es un arreglo que debe tener la misma cantidad de valores que la cantidad de etiquetas
         backgroundColor: 'rgba(54, 162, 235, 0.2)', // Color de fondo
         borderColor: 'rgba(54, 162, 235, 1)', // Color del borde
-        borderWidth: 1,// Ancho del borde
+        borderWidth: 1, // Ancho del borde
     };
     new Chart($grafica, {
-        type: 'line',// Tipo de gráfica
+        type: 'line', // Tipo de gráfica
         data: {
             labels: etiquetas,
             datasets: [

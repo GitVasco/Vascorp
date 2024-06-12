@@ -127,6 +127,10 @@ if (!isset($_SESSION)) {
     <!-- ChartJS http://www.chartjs.org/-->
     <script src="vistas/bower_components/Chart.js/Chart.js"></script>
 
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script> -->
+
+
     <!-- Libreria de suma datatable-->
     <script src="vistas/bower_components/sumas/sum().js"></script>
 
@@ -198,6 +202,18 @@ if (!isset($_SESSION)) {
         .disable-div {
             pointer-events: none;
         }
+
+        /* #areaChart {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .chartjs-render-monitor {
+            font-family: 'Arial', sans-serif;
+            font-size: 12px;
+            font-weight: bold;
+            color: #333;
+        } */
     </style>
 </head>
 
