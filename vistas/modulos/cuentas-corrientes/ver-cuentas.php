@@ -168,6 +168,7 @@ MODAL EDITAR TIPO PAGO
         <div class="modal-content">
 
             <form role="form" method="post" onsubmit="return checkSubmitG();">
+                <input type="hidden" id="rutas" name="rutas" value="<?php echo $_GET["rutas"]; ?>">
 
                 <!--=====================================
         CABEZA DEL MODAL

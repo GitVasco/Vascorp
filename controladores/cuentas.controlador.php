@@ -587,6 +587,7 @@ class ControladorCuentas
 			$tabla = "cuenta_ctejf";
 			$usureg = $_SESSION["nombre"];
 			$pcreg = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+			$rutas = $_POST["rutas"];
 
 			$datos = array(
 				"id" => $_POST["idCuenta2"],
@@ -662,7 +663,7 @@ class ControladorCuentas
 						  }).then(function(result){
 									if (result.value) {
 
-									window.location = "index.php?ruta=ver-cuentas&numCta=' . $_POST["docEditar"] . '&codCuenta=' . $_POST["tipEditar"] . '";
+									window.location = "index.php?ruta=ver-cuentas&numCta=' . $_POST["docEditar"] . '&codCuenta=' . $_POST["tipEditar"] . '&rutas=' . $rutas . '";
 
 									}
 								})
