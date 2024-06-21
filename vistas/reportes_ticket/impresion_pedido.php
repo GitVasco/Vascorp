@@ -329,7 +329,7 @@
                         </tr>
                     
                         <tr>                    
-                            <td style="width:10%;text-align:left;">TOTAL S/</td>
+                            <td style="width:10%;text-align:left;">TOTAL ' . $moneda . '</td>
                             <th style="width:30%;text-align:left;">' . number_format($pedidos["total"], 2) . '</th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -883,7 +883,7 @@
                         </tr>
                     
                         <tr>                    
-                            <td style="width:10%;text-align:left;">TOTAL S/</td>
+                            <td style="width:10%;text-align:left;">TOTAL ' . $moneda . '</td>
                             <th style="width:30%;text-align:left;">' . number_format($pedidos["total"], 2) . '</th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -1684,7 +1684,7 @@
                         </tr>
                     
                         <tr>                    
-                            <td style="width:10%;text-align:left;">TOTAL S/</td>
+                            <td style="width:10%;text-align:left;">TOTAL ' . $moneda . '</td>
                             <th style="width:30%;text-align:left;">' . number_format($pedidos["total"], 2) . '</th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -2732,7 +2732,7 @@
                         </tr>
                     
                         <tr>                    
-                            <td style="width:10%;text-align:left;">TOTAL S/</td>
+                            <td style="width:10%;text-align:left;">TOTAL ' . $moneda . '</td>
                             <th style="width:30%;text-align:left;">' . number_format($pedidos["total"], 2) . '</th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -4027,7 +4027,7 @@
                         </tr>
                     
                         <tr>                    
-                            <td style="width:10%;text-align:left;">TOTAL S/</td>
+                            <td style="width:10%;text-align:left;">TOTAL ' . $moneda . '</td>
                             <th style="width:30%;text-align:left;">' . number_format($pedidos["total"], 2) . '</th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -5569,7 +5569,7 @@
                         </tr>
                     
                         <tr>                    
-                            <td style="width:10%;text-align:left;">TOTAL S/</td>
+                            <td style="width:10%;text-align:left;">TOTAL ' . $moneda . '</td>
                             <th style="width:30%;text-align:left;">' . number_format($pedidos["total"], 2) . '</th>
                             <th style="width:6%"></th>
                             <th style="width:6%"></th>
@@ -7358,7 +7358,7 @@
                                     </tr>
                                 
                                     <tr>                    
-                                        <td style="width:10%;text-align:left;">TOTAL S/</td>
+                                        <td style="width:10%;text-align:left;">TOTAL ' . $moneda . '</td>
                                         <th style="width:30%;text-align:left;">' . number_format($pedidos["total"], 2) . '</th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -9394,7 +9394,7 @@
                                     </tr>
                                 
                                     <tr>                    
-                                        <td style="width:10%;text-align:left;">TOTAL S/</td>
+                                        <td style="width:10%;text-align:left;">TOTAL ' . $moneda . '</td>
                                         <th style="width:30%;text-align:left;">' . number_format($pedidos["total"], 2) . '</th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -11677,7 +11677,7 @@
                                     </tr>
                                 
                                     <tr>                    
-                                        <td style="width:10%;text-align:left;">TOTAL S/</td>
+                                        <td style="width:10%;text-align:left;">TOTAL ' . $moneda . '</td>
                                         <th style="width:30%;text-align:left;">' . number_format($pedidos["total"], 2) . '</th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
@@ -14207,7 +14207,7 @@
                                     </tr>
                                 
                                     <tr>                    
-                                        <td style="width:10%;text-align:left;">TOTAL S/</td>
+                                        <td style="width:10%;text-align:left;">TOTAL ' . $moneda . '</td>
                                         <th style="width:30%;text-align:left;">' . number_format($pedidos["total"], 2) . '</th>
                                         <th style="width:6%"></th>
                                         <th style="width:6%"></th>
