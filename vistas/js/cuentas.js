@@ -2191,16 +2191,16 @@ $(".btnGenerarReporteCuenta").click(function () {
     var fin = $(this).attr("fin");
     var impresion = $(this).attr("impresion");
 
-    console.log("consulta", consulta);
-    console.log("orden1", orden1);
-    console.log("orden2", orden2);
-    console.log("tip_doc", tip_doc);
-    console.log("canc", canc);
-    console.log("cli", cli);
-    console.log("vend", vend);
-    console.log("banco", banco);
-    console.log("inicio", inicio);
-    console.log("fin", fin);
+    // console.log("consulta", consulta);
+    // console.log("orden1", orden1);
+    // console.log("orden2", orden2);
+    // console.log("tip_doc", tip_doc);
+    // console.log("canc", canc);
+    // console.log("cli", cli);
+    // console.log("vend", vend);
+    // console.log("banco", banco);
+    // console.log("inicio", inicio);
+    // console.log("fin", fin);
 
     if (impresion == "pantalla") {
         if (
@@ -2386,7 +2386,8 @@ $(".btnGenerarReporteCuenta").click(function () {
                     fin,
                 "_blank"
             );
-        } else if ($consulta == "pendiente") {
+        } else if (consulta == "pendiente") {
+            console.log("pendiente");
             window.open("vistas/reportes_excel/rpt_ctas_ctes.php", "_blank");
         }
     }

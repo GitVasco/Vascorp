@@ -24,8 +24,8 @@ mysql_select_db($con["db"], $conexion);
 date_default_timezone_set('America/Lima');
 $fechaactual = getdate();
 
-$fechaInicial = $_GET["inicio"];
-$fechaFinal = $_GET["fin"];
+// $fechaInicial = $_GET["inicio"];
+// $fechaFinal = $_GET["fin"];
 
 $fecha = date("d-m-Y");
 
@@ -291,7 +291,7 @@ $objPHPExcel->createSheet(0);
 $objPHPExcel->setActiveSheetIndex(0);
 
 # Titulo de la hoja
-$objPHPExcel->getActiveSheet()->setTitle("PARAS -" . $fecha);
+$objPHPExcel->getActiveSheet()->setTitle("Ctas Ctes -" . $fecha);
 
 # Orientacion hoja
 $objPHPExcel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_PORTRAIT);
@@ -431,7 +431,7 @@ header("Content-Type: application/vnd.ms-excel");
 
 
 # Nombre del archivo
-header('Content-Disposition: attachment; filename=" PAGOS - ' . $fechaInicial . '-' . $fechaFinal . '.xls"');
+header('Content-Disposition: attachment; filename=" Ctas Ctes - ' . $fecha . '.xls"');
 
 
 //forzar a descarga por el navegador
