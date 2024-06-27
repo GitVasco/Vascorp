@@ -2386,6 +2386,8 @@ $(".btnGenerarReporteCuenta").click(function () {
                     fin,
                 "_blank"
             );
+        } else if ($consulta == "pendiente") {
+            window.open("vistas/reportes_excel/rpt_ctas_ctes.php", "_blank");
         }
     }
 });
