@@ -848,6 +848,7 @@ class ModeloFacturacion
                 DATE_FORMAT(n.fecha_origen, '%Y-%m-%d') AS fecha_origen,
                 v.cliente,
                 c.nombre,
+                c.tipo_documento as tip_doc_cli,
                 c.documento AS dni,
                 CASE
                     WHEN v.tipo = 'S01' 
@@ -8673,11 +8674,21 @@ class ModeloFacturacion
                 v.neto AS f6,
                 CONCAT(ma.codigo, '   ', ma.descripcion) AS g6,
                 /*FILA 7*/
+                case
+                    when left(n.doc_origen,
+                    3) = '001' then 
                 CONCAT(
-                  LEFT(n.doc_origen, 4),
-                  '-',
-                  RIGHT(n.doc_origen, 8)
-                ) AS a7,
+                            left(n.doc_origen, 3),
+                            '-',
+                            right(n.doc_origen, 7)
+                            )
+                    else 
+                CONCAT(
+                            left(n.doc_origen, 4),
+                            '-',
+                            right(n.doc_origen, 8)
+                            )
+                end as a7,
                 n.tipo_doc AS b7,
                 (SELECT 
                   argumento 

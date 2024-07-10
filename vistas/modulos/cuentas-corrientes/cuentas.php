@@ -111,7 +111,7 @@
                             <th style="width:100px">Nro. unico</th>
                             <th>Prote.</th>
                             <th>Doc. origen</th>
-                            <th style="width:280px">Acciones</th>
+                            <th>Acciones</th>
 
                         </tr>
 
@@ -1696,6 +1696,7 @@ $eliminarCuenta->ctrEliminarCuenta();
 
 ?>
 
+<script src="vistas/modulos/cuentas-corrientes/cuentas.js"></script>
 <script>
     window.document.title = "Cuentas"
 </script>

@@ -4,7 +4,7 @@
 
         <h1>
 
-            Salidas Varios General
+            Movimientos Varios General
 
         </h1>
 
@@ -12,7 +12,7 @@
 
             <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-            <li class="active">Salidas Varios General</li>
+            <li class="active">Movimientos Varios General</li>
 
         </ol>
 
@@ -96,7 +96,7 @@ MODAL FACTURAR
 
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-                    <h4 class="modal-title">Pasar salida a:</h4>
+                    <h4 class="modal-title">Pasar Movimiento a:</h4>
 
                 </div>
 
@@ -120,7 +120,7 @@ MODAL FACTURAR
 
                             <div class="form-group col-lg-3">
 
-                                <label>Cod. Salida</label>
+                                <label>Cod. Movimiento</label>
 
                                 <div class="input-group">
 

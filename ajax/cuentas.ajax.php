@@ -36,7 +36,7 @@ class AjaxCuentas
     }
 
     public $numCta;
-
+    public $codCta;
     public function ajaxCancelarCuenta()
     {
 
@@ -236,12 +236,82 @@ class AjaxCuentas
         echo json_encode($respuesta);
     }
 
+    public $clientePagos;
     public function ajaxUltPagos()
     {
 
         $cliente = $this->clientePagos;
 
         $respuesta = ControladorCuentas::ctrUltPagos($cliente);
+
+        echo json_encode($respuesta);
+    }
+
+    public $idCta;
+    public $tipo_doc;
+    public $num_cta;
+    public $cliente;
+    public $vendedor;
+    public $monto;
+    public $saldo;
+    public $fecha;
+    public $fecha_ven;
+    public $doc_origen;
+    public $codigoCancelacion;
+    public $fechaCancelacion;
+    public $montoCancelacion;
+
+    public function ajaxCancelarDocumento()
+    {
+        $idCta = $this->idCta;
+        $tipo_doc = $this->tipo_doc;
+        $num_cta = $this->num_cta;
+        $cliente = $this->cliente;
+        $vendedor = $this->vendedor;
+        $monto = $this->monto;
+        $saldo = $this->saldo;
+        $fecha = $this->fecha;
+        $fecha_ven = $this->fecha_ven;
+        $doc_origen = $this->doc_origen;
+        $codigoCancelacion = $this->codigoCancelacion;
+        $fechaCancelacion = $this->fechaCancelacion;
+        $montoCancelacion = $this->montoCancelacion;
+
+        $tabla = "cuenta_ctejf";
+        $usureg = $_SESSION["nombre"];
+        $pcreg = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+
+        $datos = [
+            "id"            => $idCta,
+            "tipo_doc"      => $tipo_doc,
+            "num_cta"       => $num_cta,
+            "cliente"       => $cliente,
+            "vendedor"      => $vendedor,
+            "monto"         => $montoCancelacion,
+            "notas"         => "",
+            "usuario"       => $_SESSION["id"],
+            "fecha"         => $fechaCancelacion,
+            "fecha_ven"     => $fecha_ven,
+            "cod_pago"      => $codigoCancelacion,
+            "doc_origen"    => $num_cta,
+            "saldo"         => 0,
+            "tip_mov"       => "-",
+            "usureg"        => $usureg,
+            "pcreg"         => $pcreg,
+            "fecha_ori"     => $fecha
+        ];
+
+        $saldoNuevo = $saldo - $montoCancelacion;
+        $estado = $saldoNuevo >= -0.5 && $saldoNuevo <= 0.5 ? "CANCELADO" : "PENDIENTE";
+        $ultPago = $fechaCancelacion;
+        $id = $idCta;
+
+        $actualizar = ModeloCuentas::mdlActualizarCuenta($saldoNuevo, $estado, $ultPago, $id);
+        if ($actualizar == "ok") {
+            $respuesta = ModeloCuentas::mdlIngresarCuenta($tabla, $datos);
+        } else {
+            $respuesta = "error";
+        }
 
         echo json_encode($respuesta);
     }
@@ -375,4 +445,26 @@ if (isset($_POST["clientePagos"])) {
     $ult_pagos = new AjaxCuentas();
     $ult_pagos->clientePagos = $_POST["clientePagos"];
     $ult_pagos->ajaxUltPagos();
+}
+
+
+/***************************************
+ * Cancelar documento con ajax
+ ***************************************/
+if (isset($_POST["idCta"])) {
+    $cancelaCuenta = new AjaxCuentas();
+    $cancelaCuenta->idCta = $_POST["idCta"];
+    $cancelaCuenta->tipo_doc = $_POST["tipo_doc"];
+    $cancelaCuenta->num_cta = $_POST["num_cta"];
+    $cancelaCuenta->cliente = $_POST["cliente"];
+    $cancelaCuenta->vendedor = $_POST["vendedor"];
+    $cancelaCuenta->monto = $_POST["monto"];
+    $cancelaCuenta->saldo = $_POST["saldo"];
+    $cancelaCuenta->fecha = $_POST["fecha"];
+    $cancelaCuenta->fecha_ven = $_POST["fecha_ven"];
+    $cancelaCuenta->doc_origen = $_POST["doc_origen"];
+    $cancelaCuenta->codigoCancelacion = $_POST["codigoCancelacion"];
+    $cancelaCuenta->fechaCancelacion = $_POST["fechaCancelacion"];
+    $cancelaCuenta->montoCancelacion = $_POST["montoCancelacion"];
+    $cancelaCuenta->ajaxCancelarDocumento();
 }

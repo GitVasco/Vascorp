@@ -1,18 +1,20 @@
 <?php
 
-class ControladorClientes{
+class ControladorClientes
+{
 
 	/*=============================================
 	CREAR CLIENTES
 	=============================================*/
 
-	static public function ctrCrearCliente(){
+	static public function ctrCrearCliente()
+	{
 
-		if(isset($_POST["codigoCliente"])){
-			
+		if (isset($_POST["codigoCliente"])) {
+
 
 			$tabla = "clientesjf";
-			$interruptores= array("'",'"',"´");
+			$interruptores = array("'", '"', "´");
 			$codigo 			= str_replace($interruptores, "", $_POST["codigoCliente"]);
 			$nombre 			= str_replace($interruptores, "", $_POST["nombre"]);
 			$ape_pat 			= str_replace($interruptores, "", $_POST["ape_paterno"]);
@@ -30,38 +32,40 @@ class ControladorClientes{
 			$pcreg				= gethostbyaddr($_SERVER['REMOTE_ADDR']);
 			$usureg				= $_SESSION["nombre"];
 
-			$datos = array(	"codigoCliente"		=> $codigo,
-							"nombre"			=> $nombre,
-							"tipo_documento"	=> $_POST["tipo_documento"],
-							"documento"			=> $_POST["documento"],
-							"tipo_persona"		=> $_POST["tipo_persona"],
-							"ape_paterno"		=> $ape_pat,
-							"ape_materno"		=> $ape_mat,
-							"nombres"			=> $nombres,
-							"direccion"			=> $direccion,
-							"ubigeo"			=> $_POST["ubigeo"],
-							"direccion_despacho"=> $direccionDespacho,
-							"ubigeo_despacho"	=> $_POST["ubigeoDespacho"],
-							"telefono"			=> $telefono1,
-							"telefono2"			=> $telefono2,
-							"email"				=> $email,
-							"contacto"			=> $contacto,
-							"vendedor"			=> $_POST["vendedor"],
-							"grupo"				=> $_POST["grupo"],
-							"lista_precios"		=> $_POST["lista_precios"],
-							"agencia"			=> $_POST["agencia"],
-							"usureg"            => $usureg,
-                            "pcreg"             => $pcreg,
-                            "fecreg"            => $fecreg->format("Y-m-d H:i:s"));
+			$datos = array(
+				"codigoCliente"		=> trim($codigo),
+				"nombre"			=> trim($nombre),
+				"tipo_documento"	=> $_POST["tipo_documento"],
+				"documento"			=> trim($_POST["documento"]),
+				"tipo_persona"		=> $_POST["tipo_persona"],
+				"ape_paterno"		=> trim($ape_pat),
+				"ape_materno"		=> trim($ape_mat),
+				"nombres"			=> trim($nombres),
+				"direccion"			=> trim($direccion),
+				"ubigeo"			=> $_POST["ubigeo"],
+				"direccion_despacho" => trim($direccionDespacho),
+				"ubigeo_despacho"	=> $_POST["ubigeoDespacho"],
+				"telefono"			=> trim($telefono1),
+				"telefono2"			=> trim($telefono2),
+				"email"				=> trim($email),
+				"contacto"			=> trim($contacto),
+				"vendedor"			=> $_POST["vendedor"],
+				"grupo"				=> $_POST["grupo"],
+				"lista_precios"		=> $_POST["lista_precios"],
+				"agencia"			=> $_POST["agencia"],
+				"usureg"            => $usureg,
+				"pcreg"             => $pcreg,
+				"fecreg"            => $fecreg->format("Y-m-d H:i:s")
+			);
 			#var_dump("datos", $datos);
 
 			$respuesta = ModeloClientes::mdlIngresarCliente($tabla, $datos);
 			#var_dump($respuesta);
 			#$respuesta = "no";
 
-			if($respuesta == "ok"){
+			if ($respuesta == "ok") {
 
-				echo'<script>
+				echo '<script>
 
 				swal({
 					  type: "success",
@@ -77,127 +81,125 @@ class ControladorClientes{
 							})
 
 				</script>';
-
 			}
-
-
 		}
+	}
 
-    }   
-    
 	/*=============================================
 	MOSTRAR CLIENTES
 	=============================================*/
 
-	static public function ctrMostrarClientes($item, $valor){
+	static public function ctrMostrarClientes($item, $valor)
+	{
 
 		$tabla = "clientesjf";
 
 		$respuesta = ModeloClientes::mdlMostrarClientes($tabla, $item, $valor);
 
 		return $respuesta;
-
 	}
 
 	/*=============================================
 	MOSTRAR CLIENTES CUENTAS
 	=============================================*/
 
-	static public function ctrMostrarClientesCuentas($item, $valor){
+	static public function ctrMostrarClientesCuentas($item, $valor)
+	{
 
 		$tabla = "clientesjf";
 
 		$respuesta = ModeloClientes::mdlMostrarClientesCuentas($tabla, $item, $valor);
 
 		return $respuesta;
-
 	}
 
 	/*=============================================
 	MOSTRAR CLIENTES P
 	=============================================*/
 
-	static public function ctrMostrarClientesP($item, $valor){
+	static public function ctrMostrarClientesP($item, $valor)
+	{
 
 		$tabla = "clientesjf";
 
 		$respuesta = ModeloClientes::mdlMostrarClientesP($tabla, $item, $valor);
 
 		return $respuesta;
-
-	}	
+	}
 
 	/*=============================================
 	SACAR LISTA
 	=============================================*/
 
-	static public function ctrVerLista($valor){
+	static public function ctrVerLista($valor)
+	{
 
 		$respuesta = ModeloClientes::mdlVerLista($valor);
 
 		return $respuesta;
-
-	}		
+	}
 
 	/*=============================================
 	EDITAR CLIENTE
 	=============================================*/
 
-	static public function ctrEditarCliente(){
+	static public function ctrEditarCliente()
+	{
 
-		if(isset($_POST["editarCodigoCliente"])){			
+		if (isset($_POST["editarCodigoCliente"])) {
 
-			   	$tabla = "clientesjf";
-				$interruptores= array("'",'"',"´");
-				$codigo 				= str_replace($interruptores, "", $_POST["editarCodigoCliente"]);
-				$nombre 				= str_replace($interruptores, "", $_POST["editarNombre"]);
-				$ape_pat 				= str_replace($interruptores, "", $_POST["editarApe_paterno"]);
-				$ape_mat 				= str_replace($interruptores, "", $_POST["editarApe_materno"]);
-				$nombres 				= str_replace($interruptores, "", $_POST["editarNombres"]);
-				$direccion 				= str_replace($interruptores, "", $_POST["editarDireccion"]);
-				$direccionDespacho 		= str_replace($interruptores, "", $_POST["editarDireccionDespacho"]);
-				$telefono1 				= str_replace($interruptores, "", $_POST["editarTelefono"]);
-				$telefono2 				= str_replace($interruptores, "", $_POST["editarTelefono2"]);
-				$email 					= str_replace($interruptores, "", $_POST["editarEmail"]);
-				$contacto 				= str_replace($interruptores, "", $_POST["editarContacto"]);
+			$tabla = "clientesjf";
+			$interruptores = array("'", '"', "´");
+			$codigo 				= str_replace($interruptores, "", $_POST["editarCodigoCliente"]);
+			$nombre 				= str_replace($interruptores, "", $_POST["editarNombre"]);
+			$ape_pat 				= str_replace($interruptores, "", $_POST["editarApe_paterno"]);
+			$ape_mat 				= str_replace($interruptores, "", $_POST["editarApe_materno"]);
+			$nombres 				= str_replace($interruptores, "", $_POST["editarNombres"]);
+			$direccion 				= str_replace($interruptores, "", $_POST["editarDireccion"]);
+			$direccionDespacho 		= str_replace($interruptores, "", $_POST["editarDireccionDespacho"]);
+			$telefono1 				= str_replace($interruptores, "", $_POST["editarTelefono"]);
+			$telefono2 				= str_replace($interruptores, "", $_POST["editarTelefono2"]);
+			$email 					= str_replace($interruptores, "", $_POST["editarEmail"]);
+			$contacto 				= str_replace($interruptores, "", $_POST["editarContacto"]);
 
-				if(!isset($_POST["editarUbigeoDespacho"])){
-					$editarUbigeoDespacho = '';
-				}else{
-					$editarUbigeoDespacho = $_POST["editarUbigeoDespacho"];
-				}
+			if (!isset($_POST["editarUbigeoDespacho"])) {
+				$editarUbigeoDespacho = '';
+			} else {
+				$editarUbigeoDespacho = $_POST["editarUbigeoDespacho"];
+			}
 
 
-				$datos = array(	"codigoCliente"		=>$codigo,
-								"nombre"			=>$nombre,
-								"tipo_documento"	=>$_POST["editarTipo_documento"],
-								"documento"			=>$_POST["editarDocumento"],
-								"tipo_persona"		=>$_POST["editarTipo_persona"],
-								"ape_paterno"		=>$ape_pat,
-								"ape_materno"		=>$ape_mat,
-								"nombres"			=>$nombres,
-								"direccion"			=>$direccion,
-								"direccion_despacho"=>$direccionDespacho,
-								"ubigeo"			=>$_POST["editarUbigeo"],
-								"ubigeo_despacho"	=>$editarUbigeoDespacho,
-								"telefono"			=>$telefono1,
-								"telefono2"			=>$telefono2,
-								"email"				=>$email,
-								"contacto"			=>$contacto,
-								"vendedor"			=>$_POST["editarVendedor"],
-								"grupo"				=>$_POST["editarGrupo"],
-								"lista_precios"		=>$_POST["editarLista_precios"],
-								"agencia"			=>$_POST["editarAgencia"]);
-				#var_dump("datos", $datos);
+			$datos = array(
+				"codigoCliente"		=> trim($codigo),
+				"nombre"			=> trim($nombre),
+				"tipo_documento"	=> trim($_POST["editarTipo_documento"]),
+				"documento"			=> trim($_POST["editarDocumento"]),
+				"tipo_persona"		=> trim($_POST["editarTipo_persona"]),
+				"ape_paterno"		=> trim($ape_pat),
+				"ape_materno"		=> trim($ape_mat),
+				"nombres"			=> trim($nombres),
+				"direccion"			=> trim($direccion),
+				"direccion_despacho" => trim($direccionDespacho),
+				"ubigeo"			=> trim($_POST["editarUbigeo"]),
+				"ubigeo_despacho"	=> trim($editarUbigeoDespacho),
+				"telefono"			=> trim($telefono1),
+				"telefono2"			=> trim($telefono2),
+				"email"				=> trim($email),
+				"contacto"			=> trim($contacto),
+				"vendedor"			=> trim($_POST["editarVendedor"]),
+				"grupo"				=> trim($_POST["editarGrupo"]),
+				"lista_precios"		=> trim($_POST["editarLista_precios"]),
+				"agencia"			=> trim($_POST["editarAgencia"])
+			);
+			#var_dump("datos", $datos);
 
-			   	$respuesta = ModeloClientes::mdlEditarCliente($tabla, $datos);
-				#var_dump($respuesta);
-				#$respuesta = "false";
+			$respuesta = ModeloClientes::mdlEditarCliente($tabla, $datos);
+			#var_dump($respuesta);
+			#$respuesta = "false";
 
-			   	if($respuesta == "ok"){
+			if ($respuesta == "ok") {
 
-					echo'<script>
-
+				echo '<script>
 					swal({
 						  type: "success",
 						  title: "El cliente ha sido cambiado correctamente",
@@ -210,33 +212,28 @@ class ControladorClientes{
 
 									}
 								})
-
 					</script>';
-
-				}
-
-			
-
+			}
 		}
-
-	}	
+	}
 
 	/*=============================================
 	ELIMINAR CLIENTE
 	=============================================*/
 
-	static public function ctrEliminarCliente(){
+	static public function ctrEliminarCliente()
+	{
 
-		if(isset($_GET["idCliente"])){
+		if (isset($_GET["idCliente"])) {
 
-			$tabla ="clientesjf";
+			$tabla = "clientesjf";
 			$datos = $_GET["idCliente"];
 
 			$respuesta = ModeloClientes::mdlEliminarCliente($tabla, $datos);
 
-			if($respuesta == "ok"){
+			if ($respuesta == "ok") {
 
-				echo'<script>
+				echo '<script>
 
 				swal({
 					  type: "success",
@@ -253,62 +250,62 @@ class ControladorClientes{
 							})
 
 				</script>';
-
-			}		
-
+			}
 		}
-
 	}
-	
+
 	/* 
 	* MOSTRAR UBIGEOS
 	*/
-	static public function ctrMostrarUbigeos(){
+	static public function ctrMostrarUbigeos()
+	{
 
 		$tabla = "ubigeo";
 
 		$respuesta = ModeloClientes::mdlMostrarUbigeos($tabla);
 
 		return $respuesta;
-
 	}
-	
+
 	/*=============================================
 	CREAR CLIENTES PARA PEDIDOS
 	=============================================*/
 
-	static public function ctrCrearClienteP(){
+	static public function ctrCrearClienteP()
+	{
 
-		if(isset($_POST["codigoCliente"])){
-			
-			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚüÜ ]+$/', $_POST["nombre"])){
+		if (isset($_POST["codigoCliente"])) {
 
-			   $tabla = "clientesjf";
+			if (preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚüÜ ]+$/', $_POST["nombre"])) {
 
-			   $datos = array("codigoCliente"=>$_POST["codigoCliente"],
-						   "nombre"=>$_POST["nombre"],
-						   "tipo_documento"=>$_POST["tipo_documento"],
-						   "documento"=>$_POST["documento"],
-						   "tipo_persona"=>$_POST["tipo_persona"],
-						   "ape_paterno"=>$_POST["ape_paterno"],
-						   "ape_materno"=>$_POST["ape_materno"],
-						   "nombres"=>$_POST["nombres"],
-						   "direccion"=>$_POST["direccion"],
-						   "ubigeo"=>$_POST["ubigeo"],
-						   "telefono"=>$_POST["telefono"],
-						   "telefono2"=>$_POST["telefono2"],
-						   "email"=>$_POST["email"],
-						   "contacto"=>$_POST["contacto"],
-						   "vendedor"=>$_POST["vendedor"],
-						   "grupo"=>$_POST["grupo"],
-						   "lista_precios"=>$_POST["lista_precios"]);
-			#var_dump("datos", $datos);
+				$tabla = "clientesjf";
 
-			$respuesta = ModeloClientes::mdlIngresarCliente($tabla, $datos);
+				$datos = array(
+					"codigoCliente" => $_POST["codigoCliente"],
+					"nombre" => $_POST["nombre"],
+					"tipo_documento" => $_POST["tipo_documento"],
+					"documento" => $_POST["documento"],
+					"tipo_persona" => $_POST["tipo_persona"],
+					"ape_paterno" => $_POST["ape_paterno"],
+					"ape_materno" => $_POST["ape_materno"],
+					"nombres" => $_POST["nombres"],
+					"direccion" => $_POST["direccion"],
+					"ubigeo" => $_POST["ubigeo"],
+					"telefono" => $_POST["telefono"],
+					"telefono2" => $_POST["telefono2"],
+					"email" => $_POST["email"],
+					"contacto" => $_POST["contacto"],
+					"vendedor" => $_POST["vendedor"],
+					"grupo" => $_POST["grupo"],
+					"lista_precios" => $_POST["lista_precios"]
+				);
+				#var_dump("datos", $datos);
 
-			if($respuesta == "ok"){
+				$respuesta = ModeloClientes::mdlIngresarCliente($tabla, $datos);
 
-				echo'<script>
+				if ($respuesta == "ok") {
+
+					echo '<script>
 
 				swal({
 					  type: "success",
@@ -324,14 +321,10 @@ class ControladorClientes{
 							})
 
 				</script>';
+				}
+			} else {
 
-			}
-
-
-
-			}else{
-
-				echo'<script>
+				echo '<script>
 
 					swal({
 						type: "error",
@@ -347,39 +340,36 @@ class ControladorClientes{
 						})
 
 				</script>';
-
-
-
 			}
-
-
 		}
+	}
 
-    } 	
-
-    /*=============================================
+	/*=============================================
 	EDITAR TIPO DE PAGO
 	=============================================*/
 
-	static public function ctrEditarAval(){
+	static public function ctrEditarAval()
+	{
 
-		if(isset($_POST["editarAvalNombre"])){
+		if (isset($_POST["editarAvalNombre"])) {
 
-				$tabla="clientesjf";
-				   $datos = array("codigo"=>$_POST["avalCliente"],
-				   				"aval_nombre"=> $_POST["editarAvalNombre"],
-                               "aval_dir"=>$_POST["editarAvalDir"],
-							   "aval_postal"=> $_POST["editarAvalPostal"],
-                               "aval_telf"=>$_POST["editarAvalTelf"],
-							   "aval_ruc"=> $_POST["editarAvalRuc"],
-                               "aval_libreta"=>$_POST["editarAvalLibreta"]);
-			   	$respuesta = ModeloClientes::mdlEditarAval($tabla,$datos);
-				// var_dump($datos);
-				// var_dump($respuesta);
+			$tabla = "clientesjf";
+			$datos = array(
+				"codigo" => $_POST["avalCliente"],
+				"aval_nombre" => $_POST["editarAvalNombre"],
+				"aval_dir" => $_POST["editarAvalDir"],
+				"aval_postal" => $_POST["editarAvalPostal"],
+				"aval_telf" => $_POST["editarAvalTelf"],
+				"aval_ruc" => $_POST["editarAvalRuc"],
+				"aval_libreta" => $_POST["editarAvalLibreta"]
+			);
+			$respuesta = ModeloClientes::mdlEditarAval($tabla, $datos);
+			// var_dump($datos);
+			// var_dump($respuesta);
 
-			   	if($respuesta == "ok"){
+			if ($respuesta == "ok") {
 
-					echo'<script>
+				echo '<script>
 
 					swal({
 						  type: "success",
@@ -395,11 +385,7 @@ class ControladorClientes{
 								})
 
 					</script>';
-
-
 			}
 		}
-
-    }
-
-}    
+	}
+}

@@ -23,6 +23,22 @@
     $gravadas = $exportacion == 1 ? "0.00" : number_format($venta["neto"], 2);
     $exonerada = $exportacion == 1 ? number_format($venta["neto"], 2) : "0.00";
 
+
+    switch ($venta["tip_doc_cli"]) {
+        case '1':
+            $tip_doc_cli = "DNI";
+            break;
+        case '6':
+            $tip_doc_cli = "RUC";
+            break;
+        default:
+            $tip_doc_cli = "Sin Doc.";
+            break;
+    }
+
+    $documentoCliente = $exportacion == 1 ? "00000000" : $venta["dni"];
+
+
     $anno = date("Y", strtotime($venta["fecha_emision"]));
     $tabla = "movimientosjf_" . $anno;
 
@@ -91,8 +107,8 @@
                     <td>' . $venta["nom_ubigeo"] . '</td>
                 </tr>
                 <tr>
-                    <td style="width:80px;">Nro RUC:</td>
-                    <td>' . $venta["dni"] . '</td>                        
+                    <td style="width:80px;">' . $tip_doc_cli . '</td>
+                    <td>' . $documentoCliente . '</td>                        
                 </tr>
                 <tr>
                     <td style="width:80px;">Cod. Cliente:</td>
