@@ -45,8 +45,8 @@ class MYPDF extends TCPDF
 
         $inicialOrigen = substr($venta["doc_origen"], 0, 1);
 
-        $serieOrigen = substr($venta["doc_origen"], 0, 4);
-        $documentoOrigen = substr($venta["doc_origen"], 4, 12);
+        $serieOrigen = substr($venta["doc_origen"], 0, 3) == "001" ? substr($venta["doc_origen"], 0, 3) : substr($venta["doc_origen"], 0, 4);
+        $documentoOrigen = substr($venta["doc_origen"], 0, 3) == "001" ? substr($venta["doc_origen"], 3, 11) : substr($venta["doc_origen"], 4, 12);
 
         if ($inicialOrigen == 'B' || $serieOrigen == "EB01") {
             $tipoOrigen = 'Boleta de ventas';
