@@ -19,6 +19,9 @@
     //var_dump($codigo);
 
     $respuesta = ControladorPedidos::ctrPedidoImpresionCab($codigo);
+    echo '<pre>';
+    print_r($respuesta);
+    echo '</pre>';
     //var_dump($respuesta["pedido"]);
     #var_dump($respuesta);
     $moneda = $respuesta["lista"] == "precio1" ? " $ " : " S/ ";
@@ -193,8 +196,8 @@
                     <th style="width:10%;text-align:center;"></th>
                     <th style="width:10%;text-align:center;"></th>
                     <th style="width:10%;text-align:right;">' . $moneda . ' ' . number_format($respuesta["op_gravada"], 2) . '</th>
-                    <th style="width:10%;text-align:right;">' . ($moneda == " $ " ? " $ 0.00" : " S/ 0.00") . '</th>
-                    <th style="width:10%;text-align:right;">' . ($moneda == " $ " ? $moneda . ' ' . number_format($respuesta["op_gravada"], 2) : " S/ 0.00") . '</th>
+                    <th style="width:10%;text-align:right;">' . ($moneda == " $ " ? " $ 0.00" : $moneda . ' ' . number_format($respuesta["igv"], 2)) . '</th>
+                    <th style="width:10%;text-align:right;">' . ($moneda == " $ " ? " $ 0.00" : $moneda . ' ' . number_format($respuesta["total"], 2)) . '</th>
 
                     
                 </tr>
