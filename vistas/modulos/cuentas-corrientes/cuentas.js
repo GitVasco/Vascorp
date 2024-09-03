@@ -65,8 +65,10 @@ $(".tablaCuentas").on("click", ".btnCancelacionDirecta", function () {
                         </select>
                         <label for="fecha">Fecha:</label>
                         <input type="date" id="fecha" class="swal2-input" placeholder="YYYY-MM-DD" value='${fechaActual}'>
+                        <label for"nota">Nota:</label>
+                        <input type="text" id="nota" class="swal2-input" placeholder="Nota">
                         <label for="monto">Monto:</label>
-                        <input type="number" id="monto" class="swal2-input" placeholder="Monto" max='${saldo}' min='0' value='${saldo}'>
+                        <input type="number" step="any" id="monto" class="swal2-input" placeholder="Monto" max='${saldo}' min='0' value='${saldo}'>
                     </div>`
                 ),
 
@@ -78,10 +80,12 @@ $(".tablaCuentas").on("click", ".btnCancelacionDirecta", function () {
                     const codigoCancelacion = $("#codigoCancelacion").val();
                     const fechaCancelacion = $("#fecha").val();
                     const montoCancelacion = $("#monto").val();
+                    const notaCancelacion = $("#nota").val();
                     if (
                         !codigoCancelacion ||
                         !fechaCancelacion ||
-                        !montoCancelacion
+                        !montoCancelacion ||
+                        !notaCancelacion
                     ) {
                         toastr["error"]("Debes completar todos los campos.");
                         return false;
@@ -90,6 +94,7 @@ $(".tablaCuentas").on("click", ".btnCancelacionDirecta", function () {
                         codigoCancelacion: codigoCancelacion,
                         fechaCancelacion: fechaCancelacion,
                         montoCancelacion: montoCancelacion,
+                        notaCancelacion: notaCancelacion,
                     };
                 },
             }).then((result) => {
@@ -99,10 +104,12 @@ $(".tablaCuentas").on("click", ".btnCancelacionDirecta", function () {
                         codigoCancelacion,
                         fechaCancelacion,
                         montoCancelacion,
+                        notaCancelacion,
                     } = result.value;
                     console.log("Código de Cancelación:", codigoCancelacion);
                     console.log("Fecha de Cancelación:", fechaCancelacion);
                     console.log("Monto de Cancelación:", montoCancelacion);
+                    console.log("Nota de Cancelación:", notaCancelacion);
 
                     const formdata = new FormData();
                     formdata.append("idCta", idCta);
@@ -118,6 +125,7 @@ $(".tablaCuentas").on("click", ".btnCancelacionDirecta", function () {
                     formdata.append("codigoCancelacion", codigoCancelacion);
                     formdata.append("fechaCancelacion", fechaCancelacion);
                     formdata.append("montoCancelacion", montoCancelacion);
+                    formdata.append("notaCancelacion", notaCancelacion);
 
                     // Aquí puedes enviar los datos usando AJAX
                     $.ajax({

@@ -260,6 +260,7 @@ class AjaxCuentas
     public $codigoCancelacion;
     public $fechaCancelacion;
     public $montoCancelacion;
+    public $notaCancelacion;
 
     public function ajaxCancelarDocumento()
     {
@@ -276,6 +277,7 @@ class AjaxCuentas
         $codigoCancelacion = $this->codigoCancelacion;
         $fechaCancelacion = $this->fechaCancelacion;
         $montoCancelacion = $this->montoCancelacion;
+        $notaCancelacion = $this->notaCancelacion;
 
         $tabla = "cuenta_ctejf";
         $usureg = $_SESSION["nombre"];
@@ -288,7 +290,7 @@ class AjaxCuentas
             "cliente"       => $cliente,
             "vendedor"      => $vendedor,
             "monto"         => $montoCancelacion,
-            "notas"         => "",
+            "notas"         => $notaCancelacion,
             "usuario"       => $_SESSION["id"],
             "fecha"         => $fechaCancelacion,
             "fecha_ven"     => $fecha_ven,
@@ -466,5 +468,6 @@ if (isset($_POST["idCta"])) {
     $cancelaCuenta->codigoCancelacion = $_POST["codigoCancelacion"];
     $cancelaCuenta->fechaCancelacion = $_POST["fechaCancelacion"];
     $cancelaCuenta->montoCancelacion = $_POST["montoCancelacion"];
+    $cancelaCuenta->notaCancelacion = $_POST["notaCancelacion"];
     $cancelaCuenta->ajaxCancelarDocumento();
 }

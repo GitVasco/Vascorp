@@ -1,13 +1,13 @@
 <html>
 
-    <head>
+<head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <link href="css/ticket_v2.css" target="_blank" rel="stylesheet" type="text/css">
-    </head>
+</head>
 
 <body>
-<!-- <body onload="window.print();"> -->
-<?php
+    <!-- <body onload="window.print();"> -->
+    <?php
 
     require_once "../../controladores/pedidos.controlador.php";
     require_once "../../modelos/pedidos.modelo.php";
@@ -21,6 +21,7 @@
     $respuesta = ControladorPedidos::ctrPedidoImpresionCab($codigo);
     //var_dump($respuesta["pedido"]);
     #var_dump($respuesta);
+    $moneda = $respuesta["lista"] == "precio1" ? " $ " : " S/ ";
 
     $totales = ControladorPedidos::ctrPedidoImpresionTotales($codigo);
     //var_dump($totales);
@@ -46,13 +47,13 @@
     $cantidadArticulos = count($articulos);
     #var_dump(count($articulos));
 
-?>
+    ?>
     <div class="zona_impresion">
-    <!-- codigo imprimir -->
+        <!-- codigo imprimir -->
 
         <?php
 
-                echo' <table border="0" align="left" width="900px">
+        echo ' <table border="0" align="left" width="900px">
 
                         <thead>
                     
@@ -65,20 +66,20 @@
                             <tr>
                         
                                 <th style="width:10%;text-align:left;">Nro. PEDIDO</th>
-                                <td style="width:20%">'.$respuesta["pedido"].'</td>
+                                <td style="width:20%">' . $respuesta["pedido"] . '</td>
                                 <th colspan="6"></th>
                                 <th style="width:6%;text-align:left;">FECHA</th>
-                                <td colspan="2">'.$newDate.'</td>
+                                <td colspan="2">' . $newDate . '</td>
                         
                             </tr>
                         
                             <tr>
                         
                                 <th style="width:10%;text-align:left;">CLIENTE:</th>
-                                <td colspan="4">'.$respuesta["nombre"].'</td>
+                                <td colspan="4">' . $respuesta["nombre"] . '</td>
                                 <th colspan="2"></th>
                                 <th style="width:6%">Cod:</th>
-                                <td colspan="2">'.$respuesta["codigo"].'</td>
+                                <td colspan="2">' . $respuesta["codigo"] . '</td>
                                 <th style="width:6%"></th>
                         
                             </tr>
@@ -86,15 +87,15 @@
                             <tr>
                         
                                 <th style="width:10%;text-align:left;">DIRECCIÓN:</th>
-                                <td colspan="10">'.$respuesta["direccion"].'</td>
+                                <td colspan="10">' . $respuesta["direccion"] . '</td>
                         
                             </tr>
                         
                             <tr>
                         
                                 <th style="width:10%"></th>
-                                <td colspan="6">'.$respuesta["nom_ubi"].'</td>
-                                <th style="width:10%;text-align:left;" colspan="2">'.$respuesta["ubigeo"].'</th>
+                                <td colspan="6">' . $respuesta["nom_ubi"] . '</td>
+                                <th style="width:10%;text-align:left;" colspan="2">' . $respuesta["ubigeo"] . '</th>
                                 <th style="width:6%"></th>
                                 <th style="width:6%"></th>
                         
@@ -103,10 +104,10 @@
                             <tr>
                         
                                 <th style="width:10%;text-align:left;">VENDEDOR</th>
-                                <td style="width:20%">'.$respuesta["vendedor"].'</td>
-                                <th style="width:6%;text-align:left;">'.$respuesta["tipo_doc"].'</th>
-                                <td colspan="2">'.$respuesta["documento"].'</td>
-                                <th style="width:50%">'.$respuesta["nom_agencia"].'</th>
+                                <td style="width:20%">' . $respuesta["vendedor"] . '</td>
+                                <th style="width:6%;text-align:left;">' . $respuesta["tipo_doc"] . '</th>
+                                <td colspan="2">' . $respuesta["documento"] . '</td>
+                                <th style="width:50%">' . $respuesta["nom_agencia"] . '</th>
                                 <th style="width:1%"></th>
                                 <th style="width:1%"></th>
                                 <th style="width:1%"></th>
@@ -134,7 +135,7 @@
                     
                 </table>';
 
-                echo '<table border="1" align="left" width="900px">
+        echo '<table border="1" align="left" width="900px">
 
                 <thead>
                     <tr></tr>
@@ -154,49 +155,53 @@
             
                 </thead>
         
-            </table>';   
+            </table>';
+
+        echo '<table border="1" align="left" width="900px">';
+
+        foreach ($modelos as $key => $value) {
+            $igv = $value["igv"];
+            $total = $value["total"];
+
+            if ($moneda == " $ ") {
+                $igv = 0;
+                $total = $value["neto"];
+            }
+
+            echo '<tr>
+                <td style="width:10%;text-align:left;">' . $value["modelo"] . '</td>
+                <td style="width:30%;text-align:left;">' . $value["nombre"] . '</td>
+                <td style="width:10%;text-align:center;">' . number_format($value["precio"], 2) . '</td>
+                <td style="width:10%;text-align:center;">' . $value["cantidad"] . '</td>
+                <td style="width:10%;text-align:right;">' . $moneda . ' ' . number_format($value["neto"], 2) . '</td>
+                <td style="width:10%;text-align:right;">' . $moneda . ' ' . number_format($igv, 2) . '</td>
+                <td style="width:10%;text-align:right;">' . $moneda . ' ' . number_format($total, 2) . '</td>
+            </tr>';
+        }
+
+        echo '</table>';
+
+        echo '<table border="1" align="left" width="900px">
+
+                <thead>
+                <tr></tr>
+
+                <tr>
+
+                    <th style="width:10%"></th>
+                    <th style="width:30%;text-align:left;"></th>
+                    <th style="width:10%;text-align:center;"></th>
+                    <th style="width:10%;text-align:center;"></th>
+                    <th style="width:10%;text-align:right;">' . $moneda . ' ' . number_format($respuesta["op_gravada"], 2) . '</th>
+                    <th style="width:10%;text-align:right;">' . ($moneda == " $ " ? " $ 0.00" : " S/ 0.00") . '</th>
+                    <th style="width:10%;text-align:right;">' . ($moneda == " $ " ? $moneda . ' ' . number_format($respuesta["op_gravada"], 2) : " S/ 0.00") . '</th>
+
+                    
+                </tr>
             
-            echo '<table border="1" align="left" width="900px">';
-
-                foreach($modelos as $key => $value){
-
-                    echo '<tr>
-                                
-                                <td style="width:10%;text-align:left;">'.$value["modelo"].'</td>
-                                <td style="width:30%;text-align:left;">'.$value["nombre"].'</td>
-                                <td style="width:10%;text-align:center;">'.number_format($value["precio"],2).'</td>
-                                <td style="width:10%;text-align:center;">'.$value["cantidad"].'</td>
-                                <td style="width:10%;text-align:right;">S/ '.number_format($value["neto"],2).'</td>
-                                <td style="width:10%;text-align:right;">S/ '.number_format($value["igv"],2).'</td>
-                                <td style="width:10%;text-align:right;">S/ '.number_format($value["total"],2).'</td>
-
-                        </tr>';                    
-
-                }
-
-            echo '</table>';   
+                </thead>
             
-            echo '<table border="1" align="left" width="900px">
-
-                    <thead>
-                        <tr></tr>
-
-                        <tr>
-
-                            <th style="width:10%"></th>
-                            <th style="width:30%;text-align:left;"></th>
-                            <th style="width:10%;text-align:center;"></th>
-                            <th style="width:10%;text-align:center;"></th>
-                            <th style="width:10%;text-align:right;">S/ '.number_format($respuesta["op_gravada"],2).'</th>
-                            <th style="width:10%;text-align:right;">S/ '.number_format($respuesta["igv"],2).'</th>
-                            <th style="width:10%;text-align:right;">S/ '.number_format($respuesta["total"],2).'</th>
-
-                            
-                        </tr>
-                
-                    </thead>
-            
-                </table>';             
+            </table>';
 
         ?>
 
@@ -207,7 +212,3 @@
 </body>
 
 </html>
-
-
-
-
