@@ -19,9 +19,6 @@
     //var_dump($codigo);
 
     $respuesta = ControladorPedidos::ctrPedidoImpresionCab($codigo);
-    echo '<pre>';
-    print_r($respuesta);
-    echo '</pre>';
     //var_dump($respuesta["pedido"]);
     #var_dump($respuesta);
     $moneda = $respuesta["lista"] == "precio1" ? " $ " : " S/ ";
