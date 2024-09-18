@@ -404,38 +404,41 @@ $objPHPExcel->getActiveSheet()->setSharedStyle($borde3, "E$fila");
 $objPHPExcel->getActiveSheet()->SetCellValue("F$fila", 'FEC ORI');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde3, "F$fila");
 
-$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", 'No. RUC');
+$objPHPExcel->getActiveSheet()->SetCellValue("G$fila", 'TIP NOT');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde3, "G$fila");
 
-$objPHPExcel->getActiveSheet()->SetCellValue("H$fila", 'CLIENTE');
+$objPHPExcel->getActiveSheet()->SetCellValue("H$fila", 'No. RUC');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde3, "H$fila");
 
-$objPHPExcel->getActiveSheet()->SetCellValue("I$fila", 'VTAS. US$');
+$objPHPExcel->getActiveSheet()->SetCellValue("I$fila", 'CLIENTE');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde3, "I$fila");
 
-$objPHPExcel->getActiveSheet()->SetCellValue("J$fila", 'T/C');
+$objPHPExcel->getActiveSheet()->SetCellValue("J$fila", 'VTAS. US$');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde3, "J$fila");
 
-$objPHPExcel->getActiveSheet()->SetCellValue("K$fila", 'VTAS. S/');
+$objPHPExcel->getActiveSheet()->SetCellValue("K$fila", 'T/C');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde3, "K$fila");
 
-$objPHPExcel->getActiveSheet()->SetCellValue("L$fila", 'DSCTOS');
+$objPHPExcel->getActiveSheet()->SetCellValue("L$fila", 'VTAS. S/');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde3, "L$fila");
 
-$objPHPExcel->getActiveSheet()->SetCellValue("M$fila", 'EXONERADO');
+$objPHPExcel->getActiveSheet()->SetCellValue("M$fila", 'DSCTOS');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde3, "M$fila");
 
-$objPHPExcel->getActiveSheet()->SetCellValue("N$fila", 'BASE IMP.');
+$objPHPExcel->getActiveSheet()->SetCellValue("N$fila", 'EXONERADO');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde3, "N$fila");
 
-$objPHPExcel->getActiveSheet()->SetCellValue("O$fila", 'IMPUESTO');
+$objPHPExcel->getActiveSheet()->SetCellValue("O$fila", 'BASE IMP.');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde3, "O$fila");
 
-$objPHPExcel->getActiveSheet()->SetCellValue("P$fila", 'TOTAL');
+$objPHPExcel->getActiveSheet()->SetCellValue("P$fila", 'IMPUESTO');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde3, "P$fila");
 
-$objPHPExcel->getActiveSheet()->SetCellValue("Q$fila", 'ESTADO');
+$objPHPExcel->getActiveSheet()->SetCellValue("Q$fila", 'TOTAL');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde3, "Q$fila");
+
+$objPHPExcel->getActiveSheet()->SetCellValue("R$fila", 'ESTADO');
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde3, "R$fila");
 
 $sqlDetalle = mysql_query("SELECT 
     DATE_FORMAT(v.fecha, '%d-%m-%Y') AS fecha,
@@ -469,6 +472,11 @@ $sqlDetalle = mysql_query("SELECT
     n.tipo_doc AS tipo_origen,
     n.doc_origen AS documento_origen,
     DATE(n.fecha_origen) AS fecha_origen,
+    	case 
+		when v.tipo = 'E05' then (select descripcion from maestrajf m where m.tipo_dato ='TMOT' and n.motivo=codigo)
+		when v.tipo = 'S05' then (select descripcion from maestrajf m where m.tipo_dato ='TMOTD' and n.motivo=codigo)
+		else ''
+	end as tipo_nota,
     c.nombre,
     CASE
       WHEN v.tipo_moneda = '1' 
@@ -539,30 +547,30 @@ while ($respDetalle = mysql_fetch_array($sqlDetalle)) {
     $objPHPExcel->getActiveSheet()->SetCellValue("D$fila", $respDetalle["tipo_origen"]);
     $objPHPExcel->getActiveSheet()->SetCellValue("E$fila", $respDetalle["documento_origen"]);
     $objPHPExcel->getActiveSheet()->SetCellValue("F$fila", $respDetalle["fecha_origen"]);
-    //$objPHPExcel->getActiveSheet()->SetCellValue("D$fila", $respDetalle["documento"]);
-    $objPHPExcel->getActiveSheet()->setCellValueExplicit("G$fila", utf8_encode($respDetalle["documento"]), PHPExcel_Cell_DataType::TYPE_STRING);
-    $objPHPExcel->getActiveSheet()->SetCellValue("H$fila", utf8_encode($respDetalle["nombre"]));
-    $objPHPExcel->getActiveSheet()->SetCellValue("I$fila", $respDetalle["vtausd"]);
-    $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", $respDetalle["tipo_cambio"]);
-    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", $respDetalle["neto"]);
-    $objPHPExcel->getActiveSheet()->SetCellValue("L$fila", $respDetalle["dscto"]);
-    $objPHPExcel->getActiveSheet()->SetCellValue("M$fila", "0");
-    $objPHPExcel->getActiveSheet()->SetCellValue("N$fila", $respDetalle["subtotal"]);
-    $objPHPExcel->getActiveSheet()->SetCellValue("O$fila", $respDetalle["igv"]);
-    $objPHPExcel->getActiveSheet()->SetCellValue("P$fila", $respDetalle["total"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("G$fila", $respDetalle["tipo_nota"]);
+    $objPHPExcel->getActiveSheet()->setCellValueExplicit("H$fila", utf8_encode($respDetalle["documento"]), PHPExcel_Cell_DataType::TYPE_STRING);
+    $objPHPExcel->getActiveSheet()->SetCellValue("I$fila", utf8_encode($respDetalle["nombre"]));
+    $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", $respDetalle["vtausd"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", $respDetalle["tipo_cambio"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("L$fila", $respDetalle["neto"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("M$fila", $respDetalle["dscto"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("N$fila", "0");
+    $objPHPExcel->getActiveSheet()->SetCellValue("O$fila", $respDetalle["subtotal"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("P$fila", $respDetalle["igv"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("Q$fila", $respDetalle["total"]);
 
     if ($respDetalle["estado"] == "GENERADO") {
 
-        $objPHPExcel->getActiveSheet()->SetCellValue("Q$fila", $respDetalle["estado"]);
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_1, "Q$fila");
+        $objPHPExcel->getActiveSheet()->SetCellValue("R$fila", $respDetalle["estado"]);
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_1, "R$fila");
     } else if ($respDetalle["estado"] == "ANULADO") {
 
-        $objPHPExcel->getActiveSheet()->SetCellValue("Q$fila", $respDetalle["estado"]);
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "Q$fila");
+        $objPHPExcel->getActiveSheet()->SetCellValue("R$fila", $respDetalle["estado"]);
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "R$fila");
     } else {
 
-        $objPHPExcel->getActiveSheet()->SetCellValue("Q$fila", $respDetalle["estado"]);
-        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_5, "Q$fila");
+        $objPHPExcel->getActiveSheet()->SetCellValue("R$fila", $respDetalle["estado"]);
+        $objPHPExcel->getActiveSheet()->setSharedStyle($borde_5, "R$fila");
     }
     $vtausd += $respDetalle["vtausd"];
     $neto += $respDetalle["neto"];
@@ -576,14 +584,14 @@ while ($respDetalle = mysql_fetch_array($sqlDetalle)) {
 $fila += 1;
 $fila += 1;
 
-$objPHPExcel->getActiveSheet()->SetCellValue("I$fila", $vtausd);
-$objPHPExcel->getActiveSheet()->SetCellValue("J$fila", "0");
-$objPHPExcel->getActiveSheet()->SetCellValue("K$fila", $neto);
-$objPHPExcel->getActiveSheet()->SetCellValue("L$fila", $dscto);
-$objPHPExcel->getActiveSheet()->SetCellValue("M$fila", "0");
-$objPHPExcel->getActiveSheet()->SetCellValue("N$fila", $base);
-$objPHPExcel->getActiveSheet()->SetCellValue("O$fila", $igv);
-$objPHPExcel->getActiveSheet()->SetCellValue("P$fila", $total);
+$objPHPExcel->getActiveSheet()->SetCellValue("J$fila", $vtausd);
+$objPHPExcel->getActiveSheet()->SetCellValue("K$fila", "0");
+$objPHPExcel->getActiveSheet()->SetCellValue("L$fila", $neto);
+$objPHPExcel->getActiveSheet()->SetCellValue("M$fila", $dscto);
+$objPHPExcel->getActiveSheet()->SetCellValue("N$fila", "0");
+$objPHPExcel->getActiveSheet()->SetCellValue("O$fila", $base);
+$objPHPExcel->getActiveSheet()->SetCellValue("P$fila", $igv);
+$objPHPExcel->getActiveSheet()->SetCellValue("Q$fila", $total);
 
 
 # Ajustar el tamaño de las columnas
@@ -603,7 +611,8 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('M')->setWidth(13.71);
 $objPHPExcel->getActiveSheet()->getColumnDimension('N')->setWidth(13.71);
 $objPHPExcel->getActiveSheet()->getColumnDimension('O')->setWidth(13.71);
 $objPHPExcel->getActiveSheet()->getColumnDimension('P')->setWidth(13.71);
-$objPHPExcel->getActiveSheet()->getColumnDimension('Q')->setWidth(15);
+$objPHPExcel->getActiveSheet()->getColumnDimension('Q')->setWidth(13.71);
+$objPHPExcel->getActiveSheet()->getColumnDimension('R')->setWidth(13.71);
 
 /* 
 * CREAR EL ARCHIVO

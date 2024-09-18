@@ -586,7 +586,7 @@ class ModeloPedidos
 			  ON t.cliente = c.codigo 
 			  WHERE t.estado NOT IN ('FACTURADOS', 'ANULADO') 
 				AND t.cliente <> '' 
-				AND t.vendedor NOT LIKE '%08%' 
+				AND (t.vendedor NOT LIKE '%08%' and t.vendedor NOT LIKE '%06%')
 		  ORDER BY t.vendedor,
 					t.estado,
 					c.ubigeo,
