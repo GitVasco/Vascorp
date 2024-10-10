@@ -513,3 +513,18 @@ $(".tablaArticuloColores").DataTable({
         },
     },
 });
+
+//#region Saldos
+
+$("#formularioSaldosArticulos").on(
+    "click",
+    "button.btnGenerarSaldoArt",
+    function () {
+        console.log("Generar Saldo");
+
+        let fin = $("#fFin").val();
+        let guias = $("#conGuias").is(":checked") ? "1" : "0";
+
+        window.location = `vistas/reportes_excel/saldos_articulos.php?fin=${fin}&guias=${guias}`;
+    }
+);

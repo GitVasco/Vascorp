@@ -3667,4 +3667,62 @@ class ModeloArticulos
 
 		$stmt = null;
 	}
+
+	#region Saldos
+	static public function mdlSaldosArticulos($tabla, $fecha, $where)
+	{
+
+		$stmt = Conexion::conectar()->prepare("SELECT
+			a.articulo ,
+			a.marca ,
+			a.modelo ,
+			a.nombre ,
+			a.cod_color ,
+			a.color ,
+			a.cod_talla ,
+			a.talla ,
+			a.estado ,
+			m.ingresos,
+			m.salidas,
+			(m.ingresos - m.salidas) as saldo
+		from
+			articulojf a
+		left join 
+			(
+			select
+				m.articulo ,
+				sum(
+			case 
+				when left(m.tipo, 1) = 'E' and m.tipo <> 'E05' then m.cantidad 
+				when m.tipo = 'E05' then m.cantidad * -1
+				else 0
+			end
+			) as ingresos,
+				sum(
+			case 
+				when left(m.tipo, 1) = 'S' then m.cantidad 
+				else 0
+			end
+			) as salidas
+			from
+				$tabla m
+			where
+				m.tipo not in $where
+				-- and m.fecha < '2024-09-30'
+				and m.fecha < '$fecha'
+				and m.almacen = '01'
+			group by
+				m.articulo
+			) as m
+		on
+			a.articulo = m.articulo");
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt->close();
+
+		$stmt = null;
+	}
 }
