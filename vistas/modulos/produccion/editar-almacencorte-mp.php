@@ -3,17 +3,12 @@
     <section class="content-header">
 
         <h1>
-
-            Editar lote Corte
-
+            Editar Materia prima por Corte
         </h1>
 
         <ol class="breadcrumb">
-
             <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
-
-            <li class="active">Editar lote corte</li>
-
+            <li class="active">Editar Materia prima por Corte</li>
         </ol>
 
     </section>
@@ -28,7 +23,7 @@
 
                     <div class="box-header with-border">
 
-                        <h4 class="box-title">Editar lote corte</h4>
+                        <h4 class="box-title">Editar Materia prima por Corte</h4>
 
                         <div class="row">
 
@@ -134,10 +129,6 @@
 
                         <!-- Creamos un boton guardar, pero q solo vaya a la pagina almacencorte -->
                         <div class="box-footer">
-
-                            <!--------------------------------
-                            * Boton Atras
-                            --------------------------------->
                             <a href="almacencorte" class="btn btn-danger">Atrás</a>
                             <button id="guardarCambios" class="btn btn-primary">Guardar Cambios</button>
 
@@ -155,5 +146,5 @@
 </div>
 
 <script>
-    window.document.title = "Editar cortes x Lote"
+    window.document.title = "Editar mp x Corte"
 </script>

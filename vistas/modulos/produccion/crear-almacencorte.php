@@ -62,7 +62,7 @@
 
                                         <span class="input-group-addon"><i class="fa fa-file-text"></i></span>
 
-                                        <input type="text" class="form-control" id="nuevaGuia" name="nuevaGuia" placeholder="Guia de Corte.." required>
+                                        <input type="number" class="form-control" id="nuevaGuia" name="nuevaGuia" placeholder="Guia de Corte.." required>
 
                                     </div>
 

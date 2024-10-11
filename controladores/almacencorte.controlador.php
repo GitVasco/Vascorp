@@ -208,7 +208,11 @@ class ControladorAlmacenCorte
                         ModeloAlmacenCorte::mdlGuardarDetallesAlmacenCorte($datosD);
                     }
 
-                    ModeloAlmacenCorte::mdlGuardarDetallesAlmacenCorteMP($ultimoId["ultimo_codigo"]);
+                    $mp = ModeloAlmacenCorte::mdlGuardarDetallesAlmacenCorteMP($ultimoId["ultimo_codigo"]);
+                    echo '<pre>';
+                    print_r($mp);
+                    echo '</pre>';
+
 
                     ModeloAlmacenCorte::mdlActualizarOrdCorteSaldo();
 
@@ -222,18 +226,18 @@ class ControladorAlmacenCorte
                     ModeloAlmacenCorte::mdlActualizarOrdCorteEstadoCerrado();
 
                     # Mostramos una alerta suave
-                    echo '<script>
-                        swal({
-                            type: "success",
-                            title: "Felicitaciones",
-                            text: "¡La información fue registrada con éxito!",
-                            showConfirmButton: true,
-                            confirmButtonText: "Cerrar"
-                        }).then((result)=>{
-                            if(result.value){
-                                window.location="almacencorte";}
-                        });
-                    </script>';
+                    // echo '<script>
+                    //     swal({
+                    //         type: "success",
+                    //         title: "Felicitaciones",
+                    //         text: "¡La información fue registrada con éxito!",
+                    //         showConfirmButton: true,
+                    //         confirmButtonText: "Cerrar"
+                    //     }).then((result)=>{
+                    //         if(result.value){
+                    //             window.location="almacencorte";}
+                    //     });
+                    // </script>';
                 } else {
 
                     # Mostramos una alerta suave

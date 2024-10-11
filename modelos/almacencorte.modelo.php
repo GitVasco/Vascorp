@@ -264,7 +264,7 @@ class ModeloAlmacenCorte
 		  LEFT JOIN detalles_tarjetajf dt 
 			ON ac.articulo = dt.articulo 
 		WHERE ac.almacencorte = :id 
-		  AND dt.tej_princ = 'si' 
+		  -- AND dt.tej_princ = 'si' 
 		GROUP BY dt.mat_pri)";
 
 		$stmt = Conexion::conectar()->prepare($sql);
