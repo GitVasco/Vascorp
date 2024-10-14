@@ -2059,7 +2059,7 @@ class ModeloMateriaPrima
 	static public function mdlMPIngresosOS($anio, $fecha)
 	{
 		$stmt = Conexion::conectar()->prepare("SELECT
-				codprodestino,
+				codprodestino as codpro,
 				sum(cansol) as cantidad
 			from
 				nea_os_det
@@ -2101,7 +2101,7 @@ class ModeloMateriaPrima
 	static public function mdlMPSalidasOS($anio, $fecha)
 	{
 		$stmt = Conexion::conectar()->prepare("SELECT
-				codproorigen,
+				codproorigen as codpro,
 				sum(cantidadini) as cantidad
 			from
 				oserviciodet

@@ -30,17 +30,9 @@ $resultadoFinal = [];
 // Convertir los arrays de las otras consultas en arrays asociativos para un acceso rápido por codpro
 $stockInicialMap = array_column($stockInicial, 'cantidad', 'codpro');
 $ingresosMap = array_column($ingresos, 'cantidad', 'codpro');
-$ingresosOSMap = array_column($ingresosOS, 'cantidad', 'codprodestino');
+$ingresosOSMap = array_column($ingresosOS, 'cantidad', 'codpro');
 $salidasMap = array_column($salidas, 'cantidad', 'codpro');
-// Verifica que salidasOS no sea null y sea un array
-if ($salidasOS && is_array($salidasOS)) {
-    // Utiliza 'codproorigen' y 'cantidad' como claves para el array
-    $salidasOSMap = array_column($salidasOS, 'cantidad', 'codproorigen');
-} else {
-    // Si no hay resultados, asigna un array vacío
-    $salidasOSMap = [];
-}
-
+$salidasOSMap = array_column($salidasOs, 'cantidad', 'codpro');
 
 // Recorrer la lista de productos y combinar los datos
 foreach ($materiaprima as $producto) {
