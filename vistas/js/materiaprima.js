@@ -1818,3 +1818,16 @@ function listarCopas() {
 
     $("#listaCopaMp").val(JSON.stringify(listaCopas));
 }
+
+$("#formularioSaldosMatPri").on(
+    "click",
+    "button.btnGenerarSaldoMatPri",
+    function () {
+        console.log("Generar Saldo");
+
+        let fin = $("#fFin").val();
+        let guias = $("#conGuias").is(":checked") ? "1" : "0";
+
+        window.location = `vistas/reportes_excel/saldos_materiaprima.php?fin=${fin}`;
+    }
+);

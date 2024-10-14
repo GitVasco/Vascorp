@@ -33,6 +33,10 @@
 
                     <button class="btn btn-outline-success btnReporteMateria" style="border:green 1px solid">
                         <img src="vistas/img/plantilla/excel.png" width="20px"> Reporte Materia Prima </button>
+
+                    <button type="button" class="btn btn-success" id="saldosMatPri" name="saldosMatPri" data-toggle="modal" data-target="#modalSaldosMesMP">
+                        Saldos a una Fecha
+                    </button>
                 </div>
             </div>
             <div class="box-body">
@@ -1934,6 +1938,71 @@ MODAL EDITAR COSTOS
     </div>
 
 </div>
+
+<!--------------------------------
+* Modal para saldos
+--------------------------------->
+<div id="modalSaldosMesMP" class="modal fade" role="dialog">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+
+            <form role="form" method="post" id="formularioSaldosMatPri">
+
+                <!--=====================================
+                CABEZA DEL MODAL
+                ======================================-->
+
+                <div class="modal-header" style="background:#3c8dbc; color:white">
+
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                    <h4 class="modal-title">Saldos a una fecha</h4>
+
+                </div>
+
+                <!--=====================================
+                CUERPO DEL MODAL
+                ======================================-->
+
+                <div class="modal-body">
+
+                    <div class="box-body">
+
+
+                        <div class="form-group col-lg-6">
+
+                            <label>Fecha Fin</label>
+
+                            <input type="date" class="form-control" id="fFin" name="fFin" min="2021-01-01" value="<?= date('Y-m-d') ?>">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!--=====================================
+                PIE DEL MODAL
+                ======================================-->
+
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Salir</button>
+
+                    <button type="button" id="generarSaldoMatPri" name="generarSaldoMatPri" class="btn btn-primary btnGenerarSaldoMatPri">Exportar</button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
 
 <?php
 

@@ -1965,4 +1965,157 @@ class ModeloMateriaPrima
 
 		$stmt = null;
 	}
+
+	#region Saldos
+	static public function mdlMPSaldos()
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT
+			distinct 
+					pro.codpro,
+					pro.codfab,
+					pro.despro,
+					pro.CodAlm01 as stock,
+					pro.undpro,
+					TbUnd.Des_Corta as unidad,
+					pro.colpro,
+					TbCol.Des_Larga as color,
+					pro.talpro,
+					TbTal.Des_larga as talla,
+					left(pro.fampro,
+			3) as fam,
+			tblin.Des_Larga as linea
+		from
+					Producto pro
+		inner join Tabla_M_Detalle as TbUnd 
+					on
+			pro.UndPro = TbUnd.Cod_Argumento
+			and (TbUnd.Cod_Tabla = 'TUND')
+		inner join Tabla_M_Detalle as TbCol 
+					on
+			pro.ColPro = TbCol.Cod_Argumento
+			and (TbCol.Cod_Tabla = 'TCOL')
+		inner join Tabla_M_Detalle as TbTal 
+					on
+			pro.TalPro = TbTal.Cod_Argumento
+			and (TbTal.Cod_Tabla = 'TTAL')
+		inner join tabla_m_detalle as tblin
+			on
+			left(pro.fampro,
+			3) = tblin.Des_Corta
+			and tblin.Cod_Tabla = 'TLIN'
+		order by
+			pro.codfab");
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt->close();
+
+		$stmt = null;
+	}
+
+	static public function mdlMPStockInicial()
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT
+				Cod_Argumento as codpro,
+				Valor_1 as cantidad
+			from
+				tabla_m_detalle
+			where
+				cod_tabla = 'INVI'
+				and des_corta = '2023'");
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt->close();
+
+		$stmt = null;
+	}
+
+	static public function mdlMPIngresos($anio, $fecha)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT
+				codpro,
+				sum(cansol) as cantidad 
+			from
+				neadet
+			where
+				year(fecemi)= '$anio'
+				and fecemi <= '$fecha'
+			group by codpro");
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt->close();
+
+		$stmt = null;
+	}
+
+	static public function mdlMPIngresosOS($anio, $fecha)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT
+				codprodestino,
+				sum(cansol) as cantidad
+			from
+				nea_os_det
+			where
+				year(fecemi)= '$anio'
+				and fecemi <= '$fecha'
+			group by codprodestino");
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt->close();
+
+		$stmt = null;
+	}
+
+	static public function mdlMPSalidas($anio, $fecha)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT
+				codpro,
+				sum(CanVta) as cantidad
+			from
+				venta_det
+			where
+				year(fecemi)= '$anio'
+				and fecemi <= '$fecha'
+			group by codpro");
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt->close();
+
+		$stmt = null;
+	}
+
+	static public function mdlMPSalidasOS($anio, $fecha)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT
+				codproorigen,
+				sum(cantidadini) as cantidad
+			from
+				oserviciodet
+			where
+				year(fecemi)= '$anio'
+				and fecemi <= '$fecha'
+			group by codproorigen");
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt->close();
+
+		$stmt = null;
+	}
 }
