@@ -147,7 +147,7 @@ $objWriter = new PHPExcel_Writer_Excel5($objPHPExcel); //Escribir archivo
 header("Content-Type: application/vnd.ms-excel");
 
 // nombre del archivo
-header('Content-Disposition: attachment; filename="Saldos MP a ' . $fecha . '.xls"');
+header('Content-Disposition: attachment; filename="Saldos MP a ' . $fin . '.xls"');
 
 //forzar a descarga por el navegador
 $objWriter->save('php://output');
