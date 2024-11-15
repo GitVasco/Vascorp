@@ -334,6 +334,7 @@ CUERPO DOCUMENTO
                 $_GET["ruta"] == "crear-almacencorte" ||
                 $_GET["ruta"] == "editar-almacencorte" ||
                 $_GET["ruta"] == "editar-almacencorte-lote" ||
+                $_GET["ruta"] == "editar-consumo" ||
                 $_GET["ruta"] == "editar-almacencorte-mp" ||
                 $_GET["ruta"] == "consumo-telas" ||
                 $_GET["ruta"] == "urgencias" ||

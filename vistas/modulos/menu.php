@@ -524,7 +524,7 @@
 
                 <?php
                 $rutasActivasProduccion = [
-                    "ordencorte", "crear-ordencorte", "editar-detalle-ordencorte", "editar-almacencorte-lote", "almacencorte",
+                    "ordencorte", "crear-ordencorte", "editar-detalle-ordencorte", "editar-almacencorte-lote", "editar-consumo", "almacencorte",
                     "crear-almacencorte", "en-cortes", "en-taller", "marcar-taller", "en-tallert",
                     "en-tallerp", "ingresos", "crear-ingresos", "crear-segunda", "asistencia",
                     "quincena", "eficiencia-global", "produccion-trusas", "produccion-brasier",

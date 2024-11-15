@@ -71,12 +71,17 @@ class TablaAlmacenCorte
                     <i class='fa fa-cubes'></i>
                 </button>";
 
+                $consumoAction = "<button class='btn btn-xs btn-info btnEditarConsumo' title='Editar consumo' codigoAC='{$almacencorte[$i]["codigo"]}'>
+                    <i class='fa fa-shopping-cart'></i>
+                </button>";
+
 
                 $botones =  "<div class='btn-group'>
                     {$viewAction}                    
                     {$reportAction}
                     {$editAction}
                     {$loteAction}
+                    {$consumoAction}
                 </div>";
 
                 $botones = ControladorPlantilla::htmlClean($botones);

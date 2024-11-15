@@ -1456,6 +1456,11 @@ $(".tablaAlmacenCorte").on("click", "button.btnEditarLote", function () {
         "index.php?ruta=editar-almacencorte-lote&codigo=" + codigo;
 });
 
+$(".tablaAlmacenCorte").on("click", "button.btnEditarConsumo", function () {
+    var codigo = $(this).attr("codigoAC");
+    window.location = "index.php?ruta=editar-consumo&codigo=" + codigo;
+});
+
 //actualizar lote
 $("#guardarCambios").click(function (e) {
     e.preventDefault();
@@ -1527,3 +1532,68 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+function calcularDiferencia(id) {
+    const consTotal =
+        parseFloat(document.getElementById("cons_total_" + id).value) || 0;
+    const consReal =
+        parseFloat(document.getElementById("cons_real_" + id).value) || 0;
+
+    const diferencia = consReal - consTotal;
+
+    document.getElementById("diferencia_" + id).value = diferencia.toFixed(2);
+}
+
+function calcularMpDisponible(id) {
+    const cantEntregada =
+        parseFloat(document.getElementById("cant_entregada_" + id).value) || 0;
+    const merma = parseFloat(document.getElementById("merma_" + id).value) || 0;
+    const consReal =
+        parseFloat(document.getElementById("cons_real_" + id).value) || 0;
+
+    const mpDisponible = cantEntregada - (merma + consReal);
+
+    // console.log("ID:", id);
+    // console.log("Cantidad Recibida:", cantEntregada);
+    // console.log("Merma:", merma);
+    // console.log("Consumo Real:", consReal);
+    // console.log("MP Disponible Calculado:", mpDisponible);
+
+    document.getElementById("mp_sinuso_" + id).value = mpDisponible.toFixed(2);
+}
+
+function guardarCambios(id) {
+    const consReal =
+        parseFloat(document.getElementById("cons_real_" + id).value) || 0;
+    const cantEntregada =
+        parseFloat(document.getElementById("cant_entregada_" + id).value) || 0;
+    const merma = parseFloat(document.getElementById("merma_" + id).value) || 0;
+    const mpDisponible =
+        parseFloat(document.getElementById("mp_sinuso_" + id).value) || 0;
+
+    const datos = {
+        id: id,
+        cons_real: consReal,
+        cant_entregada: cantEntregada,
+        merma: merma,
+        mp_disponible: mpDisponible,
+    };
+    console.log("🚀 ~ guardarCambios ~ datos:", datos);
+
+    // fetch("ruta_al_backend.php", {
+    //     method: "POST",
+    //     headers: {
+    //         "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(datos),
+    // })
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //         if (data.success) {
+    //             alert("Datos guardados correctamente");
+    //         } else {
+    //             alert("Error al guardar los datos");
+    //         }
+    //     })
+    //     .catch((error) => console.error("Error:", error));
+}

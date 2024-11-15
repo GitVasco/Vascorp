@@ -1319,6 +1319,52 @@ class ModeloAlmacenCorte
 		$stmt = null;
 	}
 
+	static public function mdlVerConsumos($ac)
+	{
+		$familias = FAMILIA_TELA;
+
+		$stmt = Conexion::conectar()->prepare("SELECT
+				adm.id ,
+				adm.almacencorte ,
+				adm.mat_pri ,
+				p.codfab ,
+				p.despro ,
+				p.colpro,
+				tmd.des_larga,
+				p.talpro,
+				p.undpro,
+				adm.cons_total ,
+				adm.cons_real ,
+				adm.diferencia ,
+				adm.can_entregada ,
+				adm.merma ,
+				adm.mp_sinuso ,
+				adm.notificacion ,
+				adm.nota_salida
+			from
+				almacencorte_detalle_mpjf adm
+			left join producto p 
+				on
+				adm.mat_pri = p.codpro
+			left join tabla_m_detalle tmd 
+			on
+				p.colpro = tmd.cod_argumento
+				and tmd.cod_tabla = 'TCOL'
+			where
+				adm.almacencorte = '$ac'
+				and left(p.codfab,
+				3) in ($familias)
+			order by
+				p.codfab
+	");
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt = null;
+	}
+
 	// actualizamos el lote
 	static public function mdlActualizarLotes($articulo, $lote)
 	{
