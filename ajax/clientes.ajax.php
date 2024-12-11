@@ -59,7 +59,7 @@ class AjaxClientes
 		$curl = curl_init();
 
 		curl_setopt_array($curl, array(
-			CURLOPT_URL => 'http://apiperu.net/api/dni/' . $valor,
+			CURLOPT_URL => 'https://api.factiliza.com/pe/v1/dni/info/' . $valor,
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_ENCODING => '',
 			CURLOPT_MAXREDIRS => 10,
@@ -69,8 +69,7 @@ class AjaxClientes
 			CURLOPT_CUSTOMREQUEST => 'GET',
 			CURLOPT_HTTPHEADER => array(
 				'Content-Type: application/json',
-				'Authorization: Bearer RFn95FIYnAIMEFW8rwKhldz0XhYB6jVWuVSdnV3n5hYioSxbff',
-				'Cookie: apiperu_session=A6AHDx3uMmcwmJC0NYIlwIFBk7pg9N8v1ogr6eBP'
+				'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0MzQiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJjb25zdWx0b3IifQ.jZ8p-bhKWZskL9WsxY_BFUH0TQ6uHQ9etpQ6yS7Od3M'
 			),
 			CURLOPT_SSL_VERIFYPEER => false, // Desactivar la verificación de SSL
 		));
