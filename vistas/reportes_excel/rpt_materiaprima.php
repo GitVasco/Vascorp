@@ -375,6 +375,10 @@ $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", 'COSTO');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "J$fila");
 $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
+$objPHPExcel->getActiveSheet()->SetCellValue("K$fila", 'ESTADO');
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "K$fila");
+$objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
 #query para sacar los datos deL detalle
 
 if ($linea == "TODOS") {
@@ -389,7 +393,8 @@ if ($linea == "TODOS") {
             IFNULL(ROUND(s.prom, 4), 0) AS prom,
             tb.Des_Larga AS color,
             tb2.Des_Corta AS unidad,
-            p.cospro 
+            p.cospro,
+            p.estpro
             FROM
             producto AS p 
             LEFT JOIN 
@@ -435,7 +440,8 @@ if ($linea == "TODOS") {
     IFNULL(ROUND(s.prom, 4), 0) AS prom,
     tb.Des_Larga AS color,
     tb2.Des_Corta AS unidad,
-    p.cospro 
+    p.cospro,
+    p.estpro
     FROM
     producto AS p 
     LEFT JOIN 
@@ -481,6 +487,8 @@ while ($respDetalle = mysql_fetch_array($sqlDetalle)) {
 
     $fila += 1;
 
+    $estado = $respDetalle["estpro"] == 1 ? "ACTIVO" : "INACTIVO";
+
     $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", $cont);
 
     $objPHPExcel->getActiveSheet()->setCellValueExplicit("B$fila", utf8_encode($respDetalle["codigo"]), PHPExcel_Cell_DataType::TYPE_STRING);
@@ -500,6 +508,8 @@ while ($respDetalle = mysql_fetch_array($sqlDetalle)) {
     $objPHPExcel->getActiveSheet()->SetCellValue("I$fila", utf8_encode($respDetalle["unidad"]));
 
     $objPHPExcel->getActiveSheet()->SetCellValue("J$fila", utf8_encode($respDetalle["cospro"]));
+
+    $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", utf8_encode($estado));
 
 
 
@@ -533,6 +543,9 @@ while ($respDetalle = mysql_fetch_array($sqlDetalle)) {
 
     $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "J$fila");
     $objPHPExcel->getActiveSheet()->getStyle("J$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+    $objPHPExcel->getActiveSheet()->setSharedStyle($borde5, "K$fila");
+    $objPHPExcel->getActiveSheet()->getStyle("K$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 }
 
 # Ajustar el tamaño de las columnas
@@ -546,6 +559,7 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(10.87);
 $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(10.57);
 $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth(10.29);
 $objPHPExcel->getActiveSheet()->getColumnDimension('J')->setWidth(15.29);
+$objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(10.29);
 /* 
 * CREAR EL ARCHIVO
 */

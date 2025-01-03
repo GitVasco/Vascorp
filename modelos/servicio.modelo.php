@@ -1893,4 +1893,28 @@ class ModeloServicios
 
 		$stmt = null;
 	}
+
+	/***************************************
+	 * Actualizar la guia en la tabla servicios
+	 ***************************************/
+	static public function mdlActualizarGuia($datos)
+	{
+
+		$stmt = Conexion::conectar()->prepare("UPDATE serviciosjf SET guia = :guia WHERE codigo = :codigo");
+
+		$stmt->bindParam(":guia", $datos["guia"], PDO::PARAM_STR);
+		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return "error";
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+	}
 }

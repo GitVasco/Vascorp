@@ -5,65 +5,69 @@ use Mike42\Escpos\EscposImage;
 use Mike42\Escpos\PrintConnectors\FilePrintConnector;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 
-class ControladorServicios{
+class ControladorServicios
+{
 
 	/*=============================================
 	MOSTRAR SERVICIOS
 	=============================================*/
 
-	static public function ctrMostrarServicios($item, $valor){
+	static public function ctrMostrarServicios($item, $valor)
+	{
 
 		$tabla = "serviciosjf";
 
 		$respuesta = ModeloServicios::mdlMostrarServicios($tabla, $item, $valor);
 
 		return $respuesta;
-
 	}
 
 	/*=============================================
 	MOSTRAR SERVICIOS
 	=============================================*/
 
-	static public function ctrMostrarDetallesServicios($item, $valor){
+	static public function ctrMostrarDetallesServicios($item, $valor)
+	{
 
 		$tabla = "servicios_detallejf";
 
 		$respuesta = ModeloServicios::mdlMostraDetallesServicios($tabla, $item, $valor);
 
 		return $respuesta;
-
 	}
 
 	/*=============================================
 	MOSTRAR SERVICIOS
 	=============================================*/
 
-	static public function ctrMostrarDetallesServicioUnico($item, $valor){
+	static public function ctrMostrarDetallesServicioUnico($item, $valor)
+	{
 
 		$tabla = "servicios_detallejf";
 
 		$respuesta = ModeloServicios::mdlMostraDetallesServicioUnico($tabla, $item, $valor);
 
 		return $respuesta;
-
 	}
 
 	/*=============================================
 	CREAR SERVICIO
 	=============================================*/
 
-	static public function ctrCrearServicio(){
+	static public function ctrCrearServicio()
+	{
 
 		/* veriaficamos que venta traiga datos */
 
-		if(isset($_POST["nuevoServicio"]) && 
-		   isset($_POST["seleccionarSector"]) && 
-		   isset($_POST["listaProductos"])){
+		if (
+			isset($_POST["nuevoServicio"]) &&
+			isset($_POST["seleccionarSector"]) &&
+			isset($_POST["listaProductos"])
+		) {
 
 			/* alerta  si la lista de productos viene vacia  */
 
-			if($_POST["listaProductos"]==""){
+			if ($_POST["listaProductos"] == "") {
 				# Mostramos una alerta suave
 				echo '<script>
 						swal({
@@ -77,60 +81,61 @@ class ControladorServicios{
 								window.location="crear-servicio";}
 						});
 					</script>';
-			}else{
+			} else {
 
 				# Modificamos la información de los productos comprados en un array
 
-				$listaProductos=json_decode($_POST["listaProductos"],true);
-				
-				$comprasTotales=0;
+				$listaProductos = json_decode($_POST["listaProductos"], true);
 
-				foreach($listaProductos as $key=>$value){
+				$comprasTotales = 0;
 
-					$tabla="articulojf";
-					$valor=$value["articulo"];
-					$respuestaProducto=ModeloArticulos::mdlMostrarArticulos($valor);
+				foreach ($listaProductos as $key => $value) {
+
+					$tabla = "articulojf";
+					$valor = $value["articulo"];
+					$respuestaProducto = ModeloArticulos::mdlMostrarArticulos($valor);
 					$item1 = "taller";
-					$valor1 = $respuestaProducto["taller"]-$value["cantidad"];
+					$valor1 = $respuestaProducto["taller"] - $value["cantidad"];
 					ModeloArticulos::mdlActualizarUnDato($tabla, $item1, $valor1, $valor);
 					$item2 = "servicio";
-					$valor2 = $respuestaProducto["servicio"]+$value["cantidad"];
+					$valor2 = $respuestaProducto["servicio"] + $value["cantidad"];
 					ModeloArticulos::mdlActualizarUnDato($tabla, $item2, $valor2, $valor);
-					
-
 				}
 
-			
+
 
 				# Actualizamos ultima_compra en la tabla Clientes
 				date_default_timezone_set('America/Lima');
-				$fecha=new DateTime();
-				
+				$fecha = new DateTime();
+
 				/* ==============================================
 				GUARDAMOS LA VENTA
 				============================================== */
 
-				$datos=array("codigo"=>$_POST["nuevoServicio"],
-							 "taller"=>$_POST["seleccionarSector"],
-							 "usuario"=>$_POST["idVendedor"],
-							 "total"=>$_POST["totalVenta"],
-							 "fecha"=>$fecha->format("Y-m-d H:i:s"),
-							 "estado"=>"ACTIVO");
+				$datos = array(
+					"codigo" => $_POST["nuevoServicio"],
+					"taller" => $_POST["seleccionarSector"],
+					"usuario" => $_POST["idVendedor"],
+					"total" => $_POST["totalVenta"],
+					"fecha" => $fecha->format("Y-m-d H:i:s"),
+					"estado" => "ACTIVO"
+				);
 
-				$respuesta=ModeloServicios::mdlGuardarServicios("serviciosjf",$datos);
+				$respuesta = ModeloServicios::mdlGuardarServicios("serviciosjf", $datos);
 
-				if($respuesta=="ok"){
+				if ($respuesta == "ok") {
 
 
-					foreach($listaProductos as $key=>$value){
+					foreach ($listaProductos as $key => $value) {
 
-						$datos=array("articulo"=>$value["articulo"],
-									 "cantidad"=>$value["cantidad"],
-									 "codigo"=>$_POST["nuevoServicio"],
-									 "saldo"=>$value["cantidad"]);
+						$datos = array(
+							"articulo" => $value["articulo"],
+							"cantidad" => $value["cantidad"],
+							"codigo" => $_POST["nuevoServicio"],
+							"saldo" => $value["cantidad"]
+						);
 
-									 ModeloServicios::mdlGuardarDetallesServicios("servicios_detallejf",$datos);
-					
+						ModeloServicios::mdlGuardarDetallesServicios("servicios_detallejf", $datos);
 					}
 
 					# Mostramos una alerta suave
@@ -146,7 +151,7 @@ class ControladorServicios{
 									window.location="servicios";}
 							});
 						</script>';
-					}else{
+				} else {
 
 					# Mostramos una alerta suave
 					echo '<script>
@@ -161,106 +166,103 @@ class ControladorServicios{
 									window.location="crear-servicio";}
 							});
 						</script>';
-					}				
-			}			
+				}
+			}
 		}
-
-	}	
+	}
 
 	/*=============================================
 	EDITAR VENTA
 	=============================================*/
 
-	public function ctrEditarServicios(){
+	public function ctrEditarServicios()
+	{
 
-		if(isset($_POST["editarServicio"]) && isset($_POST["idSectorVenta"]) && isset($_POST["listaProductos"])){
+		if (isset($_POST["editarServicio"]) && isset($_POST["idSectorVenta"]) && isset($_POST["listaProductos"])) {
 
 			# Formateamos la tabla de Productos y de Clientes
 			# Traemos los detalles asociados a la venta a editar
-		
-			$detaProductos=ModeloServicios::mdlMostraDetallesServicios("servicios_detallejf","codigo",$_POST["editarServicio"]);
-		
+
+			$detaProductos = ModeloServicios::mdlMostraDetallesServicios("servicios_detallejf", "codigo", $_POST["editarServicio"]);
+
 			# Cambiamos los id de la lista por los id de los Productos
-			foreach($detaProductos as $key=>$value){
+			foreach ($detaProductos as $key => $value) {
 
-				$infoPro=controladorArticulos::ctrMostrarArticulos($value["articulo"]);
-				$detaProductos[$key]["articulo"]=$infoPro["articulo"];
-				
-			
-			}	
-
-			if($_POST["listaProductos"]==""){
-
-				$listaProductos=$detaProductos;
-				$validarCambio=false;
-
-			}else{
-
-				$listaProductos=json_decode($_POST["listaProductos"],true);
-				$validarCambio=true;
-
+				$infoPro = controladorArticulos::ctrMostrarArticulos($value["articulo"]);
+				$detaProductos[$key]["articulo"] = $infoPro["articulo"];
 			}
-			
-			if($validarCambio){
+
+			if ($_POST["listaProductos"] == "") {
+
+				$listaProductos = $detaProductos;
+				$validarCambio = false;
+			} else {
+
+				$listaProductos = json_decode($_POST["listaProductos"], true);
+				$validarCambio = true;
+			}
+
+			if ($validarCambio) {
 
 
-				foreach($listaProductos as $key=>$value){
+				foreach ($listaProductos as $key => $value) {
 					# Traemos los productos por ID en cada interacción
-					$valor=$value["articulo"];
+					$valor = $value["articulo"];
 
-					$respuestaProducto=ModeloArticulos::mdlMostrarArticulos($valor);
+					$respuestaProducto = ModeloArticulos::mdlMostrarArticulos($valor);
 
 
 					# Actualizamos las ventas en la tabla productos
-					$item1="taller";
-					$valor1=$value["taller"]-$value["cantidad"];
+					$item1 = "taller";
+					$valor1 = $value["taller"] - $value["cantidad"];
 
 					ModeloArticulos::mdlActualizarUnDato("articulojf", $item1, $valor1, $valor);
-					$item2="servicio";
-					$valor2 = $value["servicio"]+$value["cantidad"];
+					$item2 = "servicio";
+					$valor2 = $value["servicio"] + $value["cantidad"];
 					ModeloArticulos::mdlActualizarUnDato("articulojf", $item2, $valor2, $valor);
 				}
 
 
 				# Actualizamos ultima_compra en la tabla Clientes
 				date_default_timezone_set('America/Lima');
-				$fecha= new DateTime();
-
+				$fecha = new DateTime();
 			}
-			
+
 			/* ==============================================
 			EDITAMOS LOS CAMBIOS DE LA VENTA listaMetodoPago
 			============================================== */
-			$datos=array("codigo"=>$_POST["editarServicio"],
-						 "usuario"=>$_POST["idVendedor"],
-						 "taller"=>$_POST["idSectorVenta"],
-						 "total"=>$_POST["totalVenta"],
-						 "fecha"=>$fecha->format("Y-m-d H:i:s"));
-						 						
+			$datos = array(
+				"codigo" => $_POST["editarServicio"],
+				"usuario" => $_POST["idVendedor"],
+				"taller" => $_POST["idSectorVenta"],
+				"total" => $_POST["totalVenta"],
+				"fecha" => $fecha->format("Y-m-d H:i:s")
+			);
 
-			$respuesta=ModeloServicios::mdlEditarServicios("serviciosjf",$datos);
+
+			$respuesta = ModeloServicios::mdlEditarServicios("serviciosjf", $datos);
 
 
 			/* var_dump("datos", $datos); */
 
-			if($respuesta=="ok"){
+			if ($respuesta == "ok") {
 
 				# Eliminamos los detalles de la venta
-				$eliminarDeta=ModeloServicios::mdlEliminarDato("servicios_detallejf","codigo",$_POST["editarServicio"]);
+				$eliminarDeta = ModeloServicios::mdlEliminarDato("servicios_detallejf", "codigo", $_POST["editarServicio"]);
 
-				if($eliminarDeta=="ok"){
+				if ($eliminarDeta == "ok") {
 
 					# Guardamos los nuevos detalles de la venta
-					foreach($listaProductos as $key=>$value){
+					foreach ($listaProductos as $key => $value) {
 
-						$datos=array("codigo"=>$_POST["editarServicio"],
-									 "articulo"=>$value["articulo"],
-									 "cantidad"=>$value["cantidad"],
-									 "saldo"=>$value["cantidad"]);
+						$datos = array(
+							"codigo" => $_POST["editarServicio"],
+							"articulo" => $value["articulo"],
+							"cantidad" => $value["cantidad"],
+							"saldo" => $value["cantidad"]
+						);
 
-									 ModeloServicios::mdlGuardarDetallesServicios("servicios_detallejf",$datos);
-					
-					
+						ModeloServicios::mdlGuardarDetallesServicios("servicios_detallejf", $datos);
 					}
 					# Mostramos una alerta suave
 					echo '<script>
@@ -275,7 +277,7 @@ class ControladorServicios{
 									window.location="servicios";}
 							});
 						</script>';
-				}else{
+				} else {
 					# Mostramos una alerta suave
 					echo '<script>
 							swal({
@@ -290,8 +292,7 @@ class ControladorServicios{
 							});
 						</script>';
 				}
-					
-			}else{
+			} else {
 				# Mostramos una alerta suave
 				echo '<script>
 						swal({
@@ -305,105 +306,96 @@ class ControladorServicios{
 								window.location="servicios";}
 						});
 					</script>';
-				
-			}			
-
-
-
-		}		
-	} 
+			}
+		}
+	}
 
 
 	/*=============================================
 	ELIMINAR SERVICIO
 	=============================================*/
 
-	static public function ctrEliminarServicio($codigo){
+	static public function ctrEliminarServicio($codigo)
+	{
 
 		$item = "codigo";
-        $infoServicio = ModeloServicios::mdlMostrarServicios("serviciosjf", $item, $codigo);
-    	
+		$infoServicio = ModeloServicios::mdlMostrarServicios("serviciosjf", $item, $codigo);
 
-        $detaServicio = ModeloServicios::mdlMostraDetallesServicios("servicios_detallejf", "codigo", $codigo);
-        
 
-        /* 
+		$detaServicio = ModeloServicios::mdlMostraDetallesServicios("servicios_detallejf", "codigo", $codigo);
+
+
+		/* 
         todo: Actualizamos orden de corte en Articulojf
         */
-        foreach($detaServicio as $key=>$value){
+		foreach ($detaServicio as $key => $value) {
 
-            $valorA = $value["articulo"];
+			$valorA = $value["articulo"];
 
-            $infoA = ModeloArticulos::mdlMostrarArticulos($valorA);
-            // var_dump("infoA", $infoA);
-            #var_dump("infoA", $infoA["ord_corte"]);
-            #var_dump("cantidad", $value["cantidad"]);
+			$infoA = ModeloArticulos::mdlMostrarArticulos($valorA);
+			// var_dump("infoA", $infoA);
+			#var_dump("infoA", $infoA["ord_corte"]);
+			#var_dump("cantidad", $value["cantidad"]);
 
-            $taller = $infoA["taller"] + $value["cantidad"];
-            #var_dump("ord_corte", $ord_corte);
+			$taller = $infoA["taller"] + $value["cantidad"];
+			#var_dump("ord_corte", $ord_corte);
 
 			ModeloArticulos::mdlActualizarUnDato("articulojf", "taller", $taller, $value["articulo"]);
 
-			$servicio = $infoA["servicio"]-$value["cantidad"];
+			$servicio = $infoA["servicio"] - $value["cantidad"];
 			ModeloArticulos::mdlActualizarUnDato("articulojf", "servicio", $servicio, $value["articulo"]);
-			
-			
+		}
 
-        }
-
-        /* 
+		/* 
         todo: Eliminamos la cabecera de Orden de corte
         */
-        $tablaServicio = "serviciosjf";
-        $itemServicio = "codigo";
-        $valorServicio = $codigo;
+		$tablaServicio = "serviciosjf";
+		$itemServicio = "codigo";
+		$valorServicio = $codigo;
 
-        $respuesta = ModeloServicios::mdlEliminarDato($tablaServicio, $itemServicio, $valorServicio);
+		$respuesta = ModeloServicios::mdlEliminarDato($tablaServicio, $itemServicio, $valorServicio);
 
-        if($respuesta == "ok"){
+		if ($respuesta == "ok") {
 
-            /* 
+			/* 
             todo: Eliminamos el detalle de Orden de corte
             */
-            $tablaDSer = "servicios_detallejf";
-            $itemDSer = "codigo";
-            $valorDSer = $codigo;
+			$tablaDSer = "servicios_detallejf";
+			$itemDSer = "codigo";
+			$valorDSer = $codigo;
 
-            ModeloServicios::mdlEliminarDato($tablaDSer, $itemDSer, $valorDSer);
+			ModeloServicios::mdlEliminarDato($tablaDSer, $itemDSer, $valorDSer);
+		}
 
-        }
-
-        return $respuesta;
-
-
+		return $respuesta;
 	}
 
 	/*=============================================
 	SUMA TOTAL VENTAS
 	=============================================*/
 
-	public function ctrSumaTotalVentas(){
+	public function ctrSumaTotalVentas()
+	{
 
 		$tabla = "serviciosjf";
 
 		$respuesta = ModeloServicios::mdlSumaTotalServicios($tabla);
 
 		return $respuesta;
-
 	}
 
 	/*=============================================
 	MOSTRAR ULTIMO SERVICIOS
 	=============================================*/
 
-	static public function ctrMostrarUltimoServicio(){
+	static public function ctrMostrarUltimoServicio()
+	{
 
 		$tabla = "serviciosjf";
 
 		$respuesta = ModeloServicios::mdlUltimoServicio($tabla);
 
 		return $respuesta;
-
 	}
 
 
@@ -411,20 +403,23 @@ class ControladorServicios{
 	CREAR PRECIO SERVICIO
 	=============================================*/
 
-	static public function ctrCrearPrecioServicio(){
+	static public function ctrCrearPrecioServicio()
+	{
 
-		if(isset($_POST["nuevoPrecioDocenaServicio"])){
+		if (isset($_POST["nuevoPrecioDocenaServicio"])) {
 
-				$tabla="precio_serviciojf";
-			   	$datos = array("taller"=>$_POST["nuevoTallerPrecio"],
-							   "modelo"=>$_POST["nuevoModeloPrecio"],
-							   "precio_doc"=>$_POST["nuevoPrecioDocenaServicio"]);
+			$tabla = "precio_serviciojf";
+			$datos = array(
+				"taller" => $_POST["nuevoTallerPrecio"],
+				"modelo" => $_POST["nuevoModeloPrecio"],
+				"precio_doc" => $_POST["nuevoPrecioDocenaServicio"]
+			);
 
-			   	$respuesta = ModeloServicios::mdlIngresarPrecioServicio($tabla,$datos);
+			$respuesta = ModeloServicios::mdlIngresarPrecioServicio($tabla, $datos);
 
-			   	if($respuesta == "ok"){
+			if ($respuesta == "ok") {
 
-					echo'<script>
+				echo '<script>
 
 					swal({
 						  type: "success",
@@ -440,48 +435,46 @@ class ControladorServicios{
 								})
 
 					</script>';
-
-				}
-
-			
-
+			}
 		}
+	}
 
-    }
-    
 
 	/*=============================================
 	MOSTRAR PRECIO DE SERVICIOS
 	=============================================*/
 
-	static public function ctrMostrarPrecioServicios($item,$valor){
-		$tabla="precio_serviciojf";
-		$respuesta = ModeloServicios::mdlMostrarPrecioServicios($tabla,$item,$valor);
+	static public function ctrMostrarPrecioServicios($item, $valor)
+	{
+		$tabla = "precio_serviciojf";
+		$respuesta = ModeloServicios::mdlMostrarPrecioServicios($tabla, $item, $valor);
 
 		return $respuesta;
+	}
 
-    }
-    
 	/*=============================================
 	EDITAR PRECIO SERVICIO
 	=============================================*/
 
-	static public function ctrEditarPrecioServicio(){
+	static public function ctrEditarPrecioServicio()
+	{
 
-		if(isset($_POST["editarPrecioDocenaServicio"])){
+		if (isset($_POST["editarPrecioDocenaServicio"])) {
 
-				$tabla="precio_serviciojf";
+			$tabla = "precio_serviciojf";
 
-				$datos = array("id"=>$_POST["idPrecioServicio"],
-				   				"taller"=> $_POST["editarTallerPrecio"],
-							   "modelo"=>$_POST["editarModeloPrecio"],
-							   "precio_doc"=> $_POST["editarPrecioDocenaServicio"]);
+			$datos = array(
+				"id" => $_POST["idPrecioServicio"],
+				"taller" => $_POST["editarTallerPrecio"],
+				"modelo" => $_POST["editarModeloPrecio"],
+				"precio_doc" => $_POST["editarPrecioDocenaServicio"]
+			);
 
-			   	$respuesta = ModeloServicios::mdlEditarPrecioServicio($tabla,$datos);
+			$respuesta = ModeloServicios::mdlEditarPrecioServicio($tabla, $datos);
 
-			   	if($respuesta == "ok"){
+			if ($respuesta == "ok") {
 
-					echo'<script>
+				echo '<script>
 
 					swal({
 						  type: "success",
@@ -497,46 +490,46 @@ class ControladorServicios{
 								})
 
 					</script>';
-
-
 			}
 		}
+	}
 
-    }
-    
 	/*=============================================
 	ELIMINAR PRECIO SERVICIO
 	=============================================*/
 
-	static public function ctrEliminarPrecioServicio(){
+	static public function ctrEliminarPrecioServicio()
+	{
 
-		if(isset($_GET["idPrecioServicio"])){
+		if (isset($_GET["idPrecioServicio"])) {
 
 			$datos = $_GET["idPrecioServicio"];
-			$tabla="precio_serviciojf";
+			$tabla = "precio_serviciojf";
 			date_default_timezone_set('America/Lima');
 			$fecha = new DateTime();
-			$precios=ControladorServicios::ctrMostrarPrecioServicios("id",$datos);
-			$usuario= $_SESSION["nombre"];
+			$precios = ControladorServicios::ctrMostrarPrecioServicios("id", $datos);
+			$usuario = $_SESSION["nombre"];
 			$para      = 'notificacionesvascorp@gmail.com';
 			$asunto    = 'Se elimino un precio servicio';
-			$descripcion   = 'El usuario '.$usuario.' elimino el precio servicio '.$precios["taller"].' - '.$precios["modelo"];
+			$descripcion   = 'El usuario ' . $usuario . ' elimino el precio servicio ' . $precios["taller"] . ' - ' . $precios["modelo"];
 			$de = 'From: notificacionesvascorp@gmail.com';
-			if($_SESSION["correo"] == 1){
+			if ($_SESSION["correo"] == 1) {
 				mail($para, $asunto, $descripcion, $de);
 			}
-			if($_SESSION["datos"] == 1){
-				$datos2= array( "usuario" => $usuario,
-								"concepto" => $descripcion,
-								"fecha" => $fecha->format("Y-m-d H:i:s"));
-				$auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
+			if ($_SESSION["datos"] == 1) {
+				$datos2 = array(
+					"usuario" => $usuario,
+					"concepto" => $descripcion,
+					"fecha" => $fecha->format("Y-m-d H:i:s")
+				);
+				$auditoria = ModeloUsuarios::mdlIngresarAuditoria("auditoriajf", $datos2);
 			}
-			
-			$respuesta = ModeloServicios::mdlEliminarPrecioServicio($tabla,$datos);
-			if($respuesta == "ok"){
-				
-				
-				echo'<script>
+
+			$respuesta = ModeloServicios::mdlEliminarPrecioServicio($tabla, $datos);
+			if ($respuesta == "ok") {
+
+
+				echo '<script>
 
 				swal({
 					  type: "success",
@@ -553,104 +546,104 @@ class ControladorServicios{
 							})
 
 				</script>';
-
-			}		
-
+			}
 		}
-
-	}    
+	}
 
 
 	// VISUALIZAR CIERRE DETALLE
-	static public function ctrVisualizarServicioDetalle($valor){
+	static public function ctrVisualizarServicioDetalle($valor)
+	{
 
-        $respuesta = ModeloServicios::mdlVisualizarServicioDetalle($valor);
-        
+		$respuesta = ModeloServicios::mdlVisualizarServicioDetalle($valor);
+
 		return $respuesta;
-
-	} 
+	}
 
 	/* 
     *MOSTRAR PAGO SERVICIOS SEMANALES
     */
-    static public function ctrMostrarPagoServicios($valor){
+	static public function ctrMostrarPagoServicios($valor)
+	{
 
 		$respuesta = ModeloServicios::mdlMostrarPagoServicios($valor);
 
 		return $respuesta;
-
 	}
 
 	/* 
     *MOSTRAR PAGO SERVICIOS SEMANALES
     */
-    static public function ctrMostrarEtiquetas($id,$sector){
+	static public function ctrMostrarEtiquetas($id, $sector)
+	{
 
-		$respuesta = ModeloServicios::mdlMostrarEtiquetas($id,$sector);
+		$respuesta = ModeloServicios::mdlMostrarEtiquetas($id, $sector);
 
 		return $respuesta;
-
 	}
 
-	static public function ctrVerPagoServicios($inicio,$fin){
+	static public function ctrVerPagoServicios($inicio, $fin)
+	{
 
-		$respuesta = ModeloServicios::mdlVerPagoServicios($inicio,$fin);
+		$respuesta = ModeloServicios::mdlVerPagoServicios($inicio, $fin);
 
 		return $respuesta;
-
 	}
 
-	static public function ctrVerSectores($inicio,$fin){
+	static public function ctrVerSectores($inicio, $fin)
+	{
 
-		$respuesta = ModeloServicios::mdlVerSectores($inicio,$fin);
+		$respuesta = ModeloServicios::mdlVerSectores($inicio, $fin);
 
 		return $respuesta;
-
 	}
 
-	static public function ctrVerTotalPagar($inicio,$fin,$sector){
+	static public function ctrVerTotalPagar($inicio, $fin, $sector)
+	{
 
-		$respuesta = ModeloServicios::mdlVerTotalPagar($inicio,$fin,$sector);
+		$respuesta = ModeloServicios::mdlVerTotalPagar($inicio, $fin, $sector);
 
 		return $respuesta;
-
 	}
 
-	static public function ctrVerPagoServicioSector($inicio,$fin,$sector){
+	static public function ctrVerPagoServicioSector($inicio, $fin, $sector)
+	{
 
-		$respuesta = ModeloServicios::mdlVerPagoServicioSector($inicio,$fin,$sector);
+		$respuesta = ModeloServicios::mdlVerPagoServicioSector($inicio, $fin, $sector);
 
 		return $respuesta;
-
 	}
 
-	static public function ctrVerSumaPagos($inicio,$fin,$sector){
+	static public function ctrVerSumaPagos($inicio, $fin, $sector)
+	{
 
-		$respuesta = ModeloServicios::mdlVerSumaPagos($inicio,$fin,$sector);
+		$respuesta = ModeloServicios::mdlVerSumaPagos($inicio, $fin, $sector);
 
 		return $respuesta;
-
 	}
 
 	/* 
 	* CREAR QUINCENA
 	*/
-	static public function ctrCrearPagoServicios(){
+	static public function ctrCrearPagoServicios()
+	{
 
-        if(isset($_POST["mes"])){
+		if (isset($_POST["mes"])) {
 
-            $datos = array( "ano" => $_POST["año"],
-                            "mes" => $_POST["mes"],
-                            "inicio" => $_POST["inicio"],
-                            "fin" => $_POST["fin"],
-                            "usuario" => $_POST["usuario"]);
-            //var_dump($datos);
+			$datos = array(
+				"ano" => $_POST["año"],
+				"mes" => $_POST["mes"],
+				"inicio" => $_POST["inicio"],
+				"fin" => $_POST["fin"],
+				"usuario" => $_POST["usuario"]
+			);
+			//var_dump($datos);
 
-            $respuesta = ModeloServicios::mdlCrearPagoServicio($datos);
-                
-            if($respuesta == "ok"){
+			$respuesta = ModeloServicios::mdlCrearPagoServicio($datos);
 
-                echo'<script>
+			if ($respuesta == "ok") {
+
+				echo '<script>
 
                     swal({
                           type: "success",
@@ -666,35 +659,34 @@ class ControladorServicios{
                                 })
 
                     </script>';
-
-            }  
-
-
+			}
 		}
+	}
 
-    }
-    
-    /* 
+	/* 
     *EDITAR QUINCENA
     */
 
-	static public function ctrEditarPagoServicio(){
+	static public function ctrEditarPagoServicio()
+	{
 
-		if(isset($_POST["editarMes"])){
+		if (isset($_POST["editarMes"])) {
 
-            $datos = array( "id" => $_POST["id"],
-                            "ano" => $_POST["editarAño"],
-                            "mes" => $_POST["editarMes"],
-                            "inicio" => $_POST["editarInicio"],
-                            "fin" => $_POST["editarFin"],
-                            "usuario" => $_POST["editarUsuario"]);
-            // var_dump($datos);
+			$datos = array(
+				"id" => $_POST["id"],
+				"ano" => $_POST["editarAño"],
+				"mes" => $_POST["editarMes"],
+				"inicio" => $_POST["editarInicio"],
+				"fin" => $_POST["editarFin"],
+				"usuario" => $_POST["editarUsuario"]
+			);
+			// var_dump($datos);
 
-            $respuesta = ModeloServicios::mdlEditarPagoServicio($datos);
+			$respuesta = ModeloServicios::mdlEditarPagoServicio($datos);
 
-            if($respuesta == "ok"){
+			if ($respuesta == "ok") {
 
-                echo'<script>
+				echo '<script>
 
                 swal({
                       type: "success",
@@ -710,46 +702,46 @@ class ControladorServicios{
                             })
 
                 </script>';
-
-            }
-
+			}
 		}
+	}
 
-    }    
+	static public function ctrEliminarPagoServicio()
+	{
 
-	static public function ctrEliminarPagoServicio(){
+		if (isset($_GET["idPagoServicio"])) {
 
-		if(isset($_GET["idPagoServicio"])){
-
-      //var_dump($_GET["idQuincena"]);
+			//var_dump($_GET["idQuincena"]);
 
 			$id = $_GET["idPagoServicio"];
 
 			date_default_timezone_set('America/Lima');
 			$fecha = new DateTime();
-			$precios=ControladorServicios::ctrMostrarPagoServicios("id",$datos);
-			$usuario= $_SESSION["nombre"];
+			$precios = ControladorServicios::ctrMostrarPagoServicios("id", $id);
+			$usuario = $_SESSION["nombre"];
 			$para      = 'notificacionesvascorp@gmail.com';
 			$asunto    = 'Se elimino un precio servicio';
-			$descripcion   = 'El usuario '.$usuario.' elimino el pago servicio '.$precios["ano"].' - '.$precios["mes"];
+			$descripcion   = 'El usuario ' . $usuario . ' elimino el pago servicio ' . $precios["ano"] . ' - ' . $precios["mes"];
 			$de = 'From: notificacionesvascorp@gmail.com';
-			if($_SESSION["correo"] == 1){
+			if ($_SESSION["correo"] == 1) {
 				mail($para, $asunto, $descripcion, $de);
 			}
-			if($_SESSION["datos"] == 1){
-				$datos2= array( "usuario" => $usuario,
-								"concepto" => $descripcion,
-								"fecha" => $fecha->format("Y-m-d H:i:s"));
-				$auditoria=ModeloUsuarios::mdlIngresarAuditoria("auditoriajf",$datos2);
+			if ($_SESSION["datos"] == 1) {
+				$datos2 = array(
+					"usuario" => $usuario,
+					"concepto" => $descripcion,
+					"fecha" => $fecha->format("Y-m-d H:i:s")
+				);
+				$auditoria = ModeloUsuarios::mdlIngresarAuditoria("auditoriajf", $datos2);
 			}
 
 			$respuesta = ModeloServicios::mdlEliminarPagoServicio($id);
 
-			if($respuesta == "ok"){
+			if ($respuesta == "ok") {
 
-        //var_dump($respuesta);
-				
-				echo'<script>
+				//var_dump($respuesta);
+
+				echo '<script>
 
 				swal({
 					  type: "success",
@@ -765,72 +757,71 @@ class ControladorServicios{
 							})
 
 				</script>';
-
-			}		
+			}
 		}
-
-
-	}	  
+	}
 
 	/*=============================================
 	RANGO FECHAS
-	=============================================*/	
+	=============================================*/
 
-	static public function ctrRangoFechasServicios($fechaInicial, $fechaFinal){
+	static public function ctrRangoFechasServicios($fechaInicial, $fechaFinal)
+	{
 
 		$tabla = "serviciosjf";
 
 		$respuesta = ModeloServicios::mdlRangoFechasServicios($tabla, $fechaInicial, $fechaFinal);
 
 		return $respuesta;
-		
 	}
-	
+
 	/*=============================================
 	RANGO FECHAS
-	=============================================*/	
+	=============================================*/
 
-	static public function ctrRangoFechasVerServicios($fechaInicial, $fechaFinal){
+	static public function ctrRangoFechasVerServicios($fechaInicial, $fechaFinal)
+	{
 
 		$tabla = "serviciosjf";
 
 		$respuesta = ModeloServicios::mdlRangoFechasVerServicios($tabla, $fechaInicial, $fechaFinal);
 
 		return $respuesta;
-		
-    }
+	}
 
 	/*=============================================
 	EDITAR ETIQUETA
 	=============================================*/
 
-	static public function ctrEditarEtiqueta(){
+	static public function ctrEditarEtiqueta()
+	{
 
-		if(isset($_POST["id2"])){
-				
-			   	$datos = array("id"=>$_POST["id2"],
-							   "taller1"=>$_POST["taller1"],
-							   "taller2"=>$_POST["taller2"],
-							   "taller3"=>$_POST["taller3"],
-							   "taller4"=>$_POST["taller4"],
-							   "taller5"=>$_POST["taller5"],
-							   "taller6"=>$_POST["taller6"],
-							   "taller7"=>$_POST["taller7"],
-							   "taller8"=>$_POST["taller8"],
-							   "taller9"=>$_POST["taller9"],
-							   "taller10"=>$_POST["taller10"],
-							   "taller11"=>$_POST["taller11"],
-							   "taller12"=>$_POST["taller12"],
-							   "taller13"=>$_POST["taller13"],
-							   "taller14"=>$_POST["taller14"],
-							   "taller15"=>$_POST["taller15"]
-							);
+		if (isset($_POST["id2"])) {
 
-				   $respuesta = ModeloServicios::mdlEditarEtiqueta($datos);
-							
-			   	if($respuesta == "ok"){
+			$datos = array(
+				"id" => $_POST["id2"],
+				"taller1" => $_POST["taller1"],
+				"taller2" => $_POST["taller2"],
+				"taller3" => $_POST["taller3"],
+				"taller4" => $_POST["taller4"],
+				"taller5" => $_POST["taller5"],
+				"taller6" => $_POST["taller6"],
+				"taller7" => $_POST["taller7"],
+				"taller8" => $_POST["taller8"],
+				"taller9" => $_POST["taller9"],
+				"taller10" => $_POST["taller10"],
+				"taller11" => $_POST["taller11"],
+				"taller12" => $_POST["taller12"],
+				"taller13" => $_POST["taller13"],
+				"taller14" => $_POST["taller14"],
+				"taller15" => $_POST["taller15"]
+			);
 
-					echo'<script>
+			$respuesta = ModeloServicios::mdlEditarEtiqueta($datos);
+
+			if ($respuesta == "ok") {
+
+				echo '<script>
 
 					swal({
 						  type: "success",
@@ -846,14 +837,47 @@ class ControladorServicios{
 								})
 
 					</script>';
-
-				}
-
-			
-
+			}
 		}
-
 	}
-	
 
+	/***************************************
+	 * Actualizar guia en Servicios
+	 ***************************************/
+	static public function ctrActualizarGuiaServicio()
+	{
+
+		if (isset($_POST["servicio"])) {
+
+			$servicio = $_POST["servicio"];
+			$guia = $_POST["guia"];
+
+			$datos = array(
+				"codigo" => $servicio,
+				"guia" => $guia
+			);
+
+			$respuesta = ModeloServicios::mdlActualizarGuia($datos);
+
+			if ($respuesta == "ok") {
+
+				echo '<script>
+
+					swal({
+						  type: "success",
+						  title: "La guia del servicio ha sido guardada correctamente",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+									if (result.value) {
+
+									window.location = "servicios";
+
+									}
+								})
+
+					</script>';
+			}
+		}
+	}
 }
