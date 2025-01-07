@@ -122,6 +122,8 @@ require_once "controladores/evaluacion.controlador.php";
 
 require_once "controladores/transferencias.controlador.php";
 
+require_once "controladores/arreglos.controlador.php";
+
 require_once "controladores/config.php";
 
 /* 
@@ -236,6 +238,8 @@ require_once "modelos/contabilidad.modelo.php";
 require_once "modelos/evaluacion.modelo.php";
 
 require_once "modelos/transferencias.modelo.php";
+
+require_once "modelos/arreglos.modelo.php";
 
 require_once "extensiones/vendor/autoload.php";
 

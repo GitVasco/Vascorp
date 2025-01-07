@@ -383,7 +383,10 @@ CUERPO DOCUMENTO
                 $_GET["ruta"] == "crear-transferencias-apt" ||
                 $_GET["ruta"] == "estampado" ||
                 $_GET["ruta"] == "tampografia" ||
-                $_GET["ruta"] == "prehormado"
+                $_GET["ruta"] == "prehormado" ||
+                $_GET["ruta"] == "arreglos" ||
+                $_GET["ruta"] == "crear-arreglos" ||
+                $_GET["ruta"] == "cerrar-arreglos"
             ) {
 
                 include "modulos/produccion/" . $_GET["ruta"] . ".php";
@@ -583,6 +586,7 @@ CUERPO DOCUMENTO
     <script src="vistas/js/compras.js"></script>
     <script src="vistas/js/mantenimiento.js"></script>
     <script src="vistas/js/transferencia.js"></script>
+    <script src="vistas/js/arreglos.js"></script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {

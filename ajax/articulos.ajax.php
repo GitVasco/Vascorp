@@ -150,6 +150,17 @@ class AjaxArticulos
 
 		echo json_encode($respuesta);
 	}
+
+	public $articuloArreglo;
+	public function ajaxMostrarArticuloArreglo()
+	{
+
+		$valor = $this->articuloArreglo;
+
+		$respuesta = ModeloArticulos::mdlMostrarArticulosArreglosUnicos($valor);
+
+		echo json_encode($respuesta);
+	}
 }
 
 //OBJETOS
@@ -239,4 +250,12 @@ if (isset($_POST["modcol"])) {
 	$mostrarArticulo = new AjaxArticulos();
 	$mostrarArticulo->modcol = $_POST["modcol"];
 	$mostrarArticulo->ajaxMostrarModCol();
+}
+
+// Mostrar los articulos en arreglos
+if (isset($_POST["articuloArreglo"])) {
+
+	$mostrarArticuloArreglo = new AjaxArticulos();
+	$mostrarArticuloArreglo->articuloArreglo = $_POST["articuloArreglo"];
+	$mostrarArticuloArreglo->ajaxMostrarArticuloArreglo();
 }

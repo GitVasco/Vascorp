@@ -533,7 +533,7 @@
                     "salidas-varios", "crear-salidas-varios", "operacion-taller", "sublimados",
                     "seguimiento", "enviados-taller", "listar-documento", "ajuste-taller",
                     "urgencias-produccion", "urgencias-almacen", "urgencias-corte", "urgencias-plan",
-                    "urgencias-maestro", "transferencias-apt", "crear-transferencias-apt", "estampado", "tampografia", "prehormado"
+                    "urgencias-maestro", "transferencias-apt", "crear-transferencias-apt", "estampado", "tampografia", "prehormado", "arreglos", "crear-arreglos", "cerrar-arreglos"
                 ];
 
                 $isActiveProduccion = in_array($_GET["ruta"], $rutasActivasProduccion) ? 'active' : '';
@@ -580,6 +580,11 @@
                                 <!-- CIERRES -->
                                 <li class="<?= $_GET['ruta'] == 'cierres' ? 'active' : '' ?>">
                                     <a href="cierres"><i class="fa fa-circle-o"></i> Cierres</a>
+                                </li>
+
+                                <!-- ARREGLOS -->
+                                <li class="<?= $_GET['ruta'] == 'arreglos' ? 'active' : '' ?>">
+                                    <a href="arreglos"><i class="fa fa-circle-o"></i> Arreglos</a>
                                 </li>
 
                                 <!-- INGRESOS -->

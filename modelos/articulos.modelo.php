@@ -520,6 +520,88 @@ class ModeloArticulos
 		$stmt = null;
 	}
 
+	static public function mdlMostrarArticulosArreglos($taller)
+	{
+
+		$stmt = Conexion::conectar()
+			->prepare("SELECT
+				ad.id,
+				a2.taller ,
+				ad.codigo,
+				a2.guia,
+				a.articulo ,
+				a.modelo,
+				a.color ,
+				a.talla,
+				a.stock,
+				a.arreglos,
+				ad.pendiente,
+				ad.id_cierre
+			from
+				arreglos_detallejf ad
+			left join articulojf a 
+				on
+				ad.articulo = a.articulo
+			left join arreglos a2 
+				on
+				ad.codigo = a2.codigo
+			where
+				a2.taller = '{$taller}'
+				and ad.pendiente > 0
+				and a2.tipo = 1
+			order by
+				ad.codigo,
+				a.articulo");
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlMostrarArticulosArreglosUnicos($valor)
+	{
+
+		$stmt = Conexion::conectar()
+			->prepare("SELECT
+				ad.id,
+				a2.taller ,
+				ad.codigo,
+				a2.guia,
+				a.articulo ,
+				a.modelo,
+				a.color ,
+				a.talla,
+				a.stock,
+				a.arreglos,
+				ad.pendiente,
+				ad.id_cierre
+			from
+				arreglos_detallejf ad
+			left join articulojf a 
+				on
+				ad.articulo = a.articulo
+			left join arreglos a2 
+				on
+				ad.codigo = a2.codigo
+			where
+				ad.id = '{$valor}'
+			order by
+				ad.codigo,
+				a.articulo");
+
+		$stmt->execute();
+
+		return $stmt->fetch();
+
+
+		$stmt->close();
+		$stmt = null;
+	}
+
 	/* 
 	* MOSTRAR ARTICULOS PARA LA TABLA URGENCIA
 	*/
