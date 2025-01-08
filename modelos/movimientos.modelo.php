@@ -115,7 +115,7 @@ class ModeloMovimientos
                 from
                     almacencorte_detallejf ad
                 where
-                    year(ad.fecha) = '2024'
+                    year(ad.fecha) = '2025'
                 group by month(ad.fecha)");
 
       $stmt->execute();
@@ -134,7 +134,7 @@ class ModeloMovimientos
                     s.nom_sector,
                     sum(m.cantidad) as produccion
                 FROM
-                    movimientosjf_2024 m
+                    movimientosjf_2025 m
                 LEFT JOIN sectorjf s 
                     ON m.taller = s.cod_sector 
                 WHERE
@@ -149,7 +149,7 @@ class ModeloMovimientos
                     s.nom_sector,
                     sum(m.cantidad) as produccion
                 FROM
-                    movimientosjf_2024 m
+                    movimientosjf_2025 m
                 LEFT JOIN sectorjf s 
                     ON m.taller = s.cod_sector 
                 WHERE
@@ -573,7 +573,7 @@ class ModeloMovimientos
                      ) AS '12',
                      ROUND(SUM(m.cantidad)) AS total 
                   FROM
-                  movimientosjf_2024 m 
+                  movimientosjf_2025 m 
                      LEFT JOIN articulojf a1 
                      ON m.articulo = a1.articulo 
                   WHERE YEAR(m.fecha) = YEAR(NOW()) 
@@ -680,7 +680,7 @@ class ModeloMovimientos
                      ) AS '12',
                      ROUND(SUM(m.cantidad)) AS total 
                   FROM
-                  movimientosjf_2024 m 
+                  movimientosjf_2025 m 
                      LEFT JOIN articulojf a2 
                      ON m.articulo = a2.articulo 
                      LEFT JOIN modelojf mo 
@@ -794,7 +794,7 @@ class ModeloMovimientos
                      ) AS '12',
                      ROUND(SUM(m.cantidad)) AS total 
                   FROM
-                  movimientosjf_2024 m 
+                  movimientosjf_2025 m 
                      LEFT JOIN articulojf a1 
                      ON m.articulo = a1.articulo 
                   WHERE YEAR(m.fecha) = YEAR(NOW()) 
@@ -902,7 +902,7 @@ class ModeloMovimientos
                      ) AS '12',
                      ROUND(SUM(m.cantidad)) AS total 
                   FROM
-                  movimientosjf_2024 m 
+                  movimientosjf_2025 m 
                      LEFT JOIN articulojf a2 
                      ON m.articulo = a2.articulo 
                      LEFT JOIN modelojf mo 
@@ -1029,7 +1029,7 @@ class ModeloMovimientos
                   ) AS '12',
                   ROUND(SUM(m.cantidad)) AS total 
                FROM
-               movimientosjf_2024 m 
+               movimientosjf_2025 m 
                   LEFT JOIN articulojf a1 
                   ON m.articulo = a1.articulo 
                WHERE YEAR(m.fecha) = YEAR(NOW()) 
@@ -1136,7 +1136,7 @@ class ModeloMovimientos
                   ) AS '12',
                   ROUND(SUM(m.cantidad)) AS total 
                FROM
-               movimientosjf_2024 m 
+               movimientosjf_2025 m 
                   LEFT JOIN articulojf a2 
                   ON m.articulo = a2.articulo 
                WHERE YEAR(m.fecha) = YEAR(NOW()) 
@@ -1247,7 +1247,7 @@ class ModeloMovimientos
                ) AS '12',
                ROUND(SUM(m.cantidad)) AS total 
             FROM
-            movimientosjf_2024 m 
+            movimientosjf_2025 m 
                LEFT JOIN articulojf a1 
                ON m.articulo = a1.articulo 
             WHERE YEAR(m.fecha) = YEAR(NOW()) 
@@ -1355,7 +1355,7 @@ class ModeloMovimientos
                ) AS '12',
                ROUND(SUM(m.cantidad)) AS total 
             FROM
-            movimientosjf_2024 m 
+            movimientosjf_2025 m 
                LEFT JOIN articulojf a2 
                ON m.articulo = a2.articulo 
             WHERE YEAR(m.fecha) = YEAR(NOW()) 

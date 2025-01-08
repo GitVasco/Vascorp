@@ -12,7 +12,7 @@ class ModeloFacturacion
   static public function mdlRegistrarMovimientos($detalle)
   {
 
-    $stmt = Conexion::conectar()->prepare("INSERT INTO movimientosjf_2024 (
+    $stmt = Conexion::conectar()->prepare("INSERT INTO movimientosjf_2025 (
                                                     tipo,
                                                     documento,
                                                     fecha,
@@ -527,7 +527,7 @@ class ModeloFacturacion
   static public function mdlFacturarGuiaM($datos)
   {
 
-    $stmt = Conexion::conectar()->prepare("INSERT INTO movimientosjf_2024 (
+    $stmt = Conexion::conectar()->prepare("INSERT INTO movimientosjf_2025 (
                                                             tipo,
                                                             documento,
                                                             fecha,
@@ -553,7 +553,7 @@ class ModeloFacturacion
                                                             m.total,
                                                             :nombre_tipo
                                                         FROM
-                                                            movimientosjf_2024 m
+                                                            movimientosjf_2025 m
                                                         WHERE m.documento = :codigo
                                                             AND m.tipo = :tipo_documento)");
 
@@ -993,7 +993,7 @@ class ModeloFacturacion
             ROUND(m.dscto1, 2) AS dscto1,
             ROUND(SUM(m.cantidad * m.precio), 2) AS total 
             FROM
-            movimientosjf_2024 m 
+            movimientosjf_2025 m 
             LEFT JOIN articulojf a 
                 ON m.articulo = a.articulo 
             WHERE m.tipo = :tipo_doc 
@@ -1133,7 +1133,7 @@ class ModeloFacturacion
       m.documento,
       ROUND(SUM(cantidad), 2) AS cantidad 
     FROM
-      movimientosjf_2024 m 
+      movimientosjf_2025 m 
     WHERE m.tipo = :tipo_doc 
       AND m.documento = :codigo 
     GROUP BY m.documento  ";
@@ -7404,7 +7404,7 @@ class ModeloFacturacion
                   a.modelo,
                   SUM(m.cantidad) AS cantidad 
                 FROM
-                  movimientosjf_2024 m 
+                  movimientosjf_2025 m 
                   LEFT JOIN articulojf a 
                     ON m.articulo = a.articulo 
                 WHERE m.tipo = :tipo 
@@ -7465,7 +7465,7 @@ class ModeloFacturacion
       ) AS ak9,
       ROUND((m.precio * SUM(m.cantidad))*1.18, 2) AS al9
     FROM
-      movimientosjf_2024 m 
+      movimientosjf_2025 m 
       LEFT JOIN articulojf a 
         ON m.articulo = a.articulo 
     WHERE m.tipo = :tipo 
@@ -7648,7 +7648,7 @@ class ModeloFacturacion
                         a.modelo,
                         SUM(m.cantidad) AS cantidad 
                     FROM
-                        movimientosjf_2024 m 
+                        movimientosjf_2025 m 
                         LEFT JOIN articulojf a 
                         ON m.articulo = a.articulo 
                     WHERE m.tipo = :tipo
@@ -7805,7 +7805,7 @@ class ModeloFacturacion
                     a.modelo,
                     SUM(m.cantidad) as cantidad
                 from
-                    movimientosjf_2024 m
+                    movimientosjf_2025 m
                 left join articulojf a
             on
                     m.articulo = a.articulo
@@ -8094,7 +8094,7 @@ class ModeloFacturacion
             a.modelo,
             SUM(m.cantidad) AS cantidad 
           FROM
-            movimientosjf_2024 m 
+            movimientosjf_2025 m 
             LEFT JOIN articulojf a 
               ON m.articulo = a.articulo 
           WHERE m.tipo = 'S01' 
@@ -8168,7 +8168,7 @@ class ModeloFacturacion
                     2
                 ) AS ap9 
       FROM
-        movimientosjf_2024 m 
+        movimientosjf_2025 m 
         LEFT JOIN articulojf a 
           ON m.articulo = a.articulo 
       WHERE m.tipo = :tipo 
@@ -8233,7 +8233,7 @@ class ModeloFacturacion
                 ) as al9,
                     0 as ap9
             from
-                movimientosjf_2024 m
+                movimientosjf_2025 m
             left join articulojf a
             on
                 m.articulo = a.articulo
@@ -8277,7 +8277,7 @@ class ModeloFacturacion
                     REPLACE(a.nombre, 'Ñ', 'N') AS e12,
                     a.modelo AS f12 
                 FROM
-                    movimientosjf_2024 m 
+                    movimientosjf_2025 m 
                     LEFT JOIN articulojf a 
                     ON m.articulo = a.articulo 
                 WHERE m.tipo = :tipo
@@ -8396,7 +8396,7 @@ class ModeloFacturacion
                       a.modelo,
                       SUM(m.cantidad) AS cantidad 
                     FROM
-                      movimientosjf_2024 m 
+                      movimientosjf_2025 m 
                       LEFT JOIN articulojf a 
                         ON m.articulo = a.articulo 
                     WHERE m.tipo = :tipo 
@@ -8469,7 +8469,7 @@ class ModeloFacturacion
                     2
                 ) AS ad9 
                     FROM
-                    movimientosjf_2024 m 
+                    movimientosjf_2025 m 
                     LEFT JOIN articulojf a 
                         ON m.articulo = a.articulo 
                     WHERE m.tipo = :tipo 
@@ -8717,7 +8717,7 @@ class ModeloFacturacion
                     a.modelo,
                     SUM(m.cantidad) AS cantidad 
                   FROM
-                    movimientosjf_2024 m 
+                    movimientosjf_2025 m 
                     LEFT JOIN articulojf a 
                       ON m.articulo = a.articulo 
                   WHERE m.tipo = :tipo 
@@ -8829,7 +8829,7 @@ class ModeloFacturacion
 
     $sql = "UPDATE 
             articulojf a 
-            LEFT JOIN movimientosjf_2024 m 
+            LEFT JOIN movimientosjf_2025 m 
               ON a.articulo = m.articulo SET a.stock = a.stock + m.cantidad 
           WHERE m.tipo = :tipo 
             AND m.documento = :documento";
@@ -8855,7 +8855,7 @@ class ModeloFacturacion
 
     $sql = "DELETE 
               FROM
-                movimientosjf_2024  
+                movimientosjf_2025  
               WHERE tipo = :tipo
                 AND documento = :documento";
 
@@ -9146,7 +9146,7 @@ class ModeloFacturacion
                     m.documento,
                     SUM(m.total) AS total 
                 FROM
-                    movimientosjf_2024 m 
+                    movimientosjf_2025 m 
                 WHERE m.tipo IN ('S02', 'S03', 'E05', 'S05') 
                 GROUP BY m.tipo,
                     m.documento) m 
@@ -9211,7 +9211,7 @@ class ModeloFacturacion
                         m.documento,
                         SUM(m.total) AS total 
                     FROM
-                        movimientosjf_2024 m 
+                        movimientosjf_2025 m 
                     WHERE m.tipo IN ('S02', 'S03', 'E05', 'S05') 
                     GROUP BY m.tipo,
                         m.documento) m 

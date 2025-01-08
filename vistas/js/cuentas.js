@@ -941,7 +941,7 @@ $(".btnGenerarLetra").click(function () {
                     index +
                     '" value="' +
                     nuevoMonto.toFixed(2) +
-                    '" readonly required>' +
+                    '" required>' +
                     "</div>" +
                     '<div class="col-lg-12"></div><br>' +
                     "</div>"
@@ -1008,7 +1008,7 @@ $(".btnGenerarLetra").click(function () {
                     index +
                     '" value="' +
                     montoLetra.toFixed(2) +
-                    '" readonly required>' +
+                    '" required>' +
                     "</div>" +
                     '<div class="col-lg-12"></div><br>' +
                     "</div>"

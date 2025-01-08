@@ -84,7 +84,7 @@ foreach ($ano3 as $key => $value) {
     var areaChartData = {
         labels: ['ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO', 'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE'],
         datasets: [{
-                label: '2022',
+                label: '2023',
                 fillColor: 'rgba(200, 56, 56, 0.7)',
                 strokeColor: 'rgba(200, 56, 56, 0.7)',
                 pointColor: 'rgba(200, 56, 56, 0.7)',
@@ -114,7 +114,7 @@ foreach ($ano3 as $key => $value) {
                 ]
             },
             {
-                label: '2023',
+                label: '2024',
                 fillColor: 'rgba(95, 214, 167, 0.8)',
                 strokeColor: 'rgba(95, 214, 167, 0.8)',
                 pointColor: '#5FD6A7',
@@ -144,7 +144,7 @@ foreach ($ano3 as $key => $value) {
                 ]
             },
             {
-                label: '2024',
+                label: '2025',
                 fillColor: 'rgba(21, 117, 146, 1)',
                 strokeColor: 'rgba(21, 117, 146, 1)',
                 pointColor: 'rgba(21, 117, 146, 1)',
@@ -199,7 +199,7 @@ foreach ($ano3 as $key => $value) {
         responsive: true,
         multiTooltipTemplate: '<%= datasetLabel %> - <%= value %> Mil',
         scaleOverride: true,
-        scaleSteps: 24,
+        scaleSteps: 26,
         scaleStepWidth: 100,
         scaleStartValue: 0
 

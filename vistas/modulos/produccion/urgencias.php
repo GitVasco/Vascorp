@@ -1,19 +1,19 @@
 <div class="content-wrapper">
 
   <section class="content-header">
-    
+
     <h1>
-      
+
       Urgencias Articulos
-    
+
     </h1>
 
     <ol class="breadcrumb">
-      
+
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
-      
+
       <li class="active">Urgencias</li>
-    
+
     </ol>
 
   </section>
@@ -24,44 +24,43 @@
 
       <div class="box-header with-border">
 
-      <div class="col-lg-2">
-                <select name="selectArticuloUrgencia" id="selectArticuloUrgencia" class="form-control input-lg selectpicker" data-live-search="true" data-size="10">
-                <option value="">--------Seleccionar articulo-------</option>
-                <?php
-                    $modelos =controladorModelos::ctrMostrarModelosActivos();
-                    // var_dump($modelos);
-                    foreach ($modelos as $key => $value) {
-                            echo '<option value="'.$value["modelo"].'">'.$value["nombre"].'</option>';
+        <div class="col-lg-2">
+          <select name="selectArticuloUrgencia" id="selectArticuloUrgencia" class="form-control input-lg selectpicker" data-live-search="true" data-size="10">
+            <option value="">--------Seleccionar articulo-------</option>
+            <?php
+            $modelos = controladorModelos::ctrMostrarModelosActivos();
+            // var_dump($modelos);
+            foreach ($modelos as $key => $value) {
+              echo '<option value="' . $value["modelo"] . '">' . $value["nombre"] . '</option>';
+            }
 
-                    }
+            ?>
+          </select>
+        </div>
 
-                ?>
-                </select>
-            </div>
+        <div class="col-lg-1">
+          <button class="btn btn-primary btnLimpiarArticuloUrgencia" name="btnLimpiarArticuloUrgencia"><i class="fa fa-refresh"></i> Limpiar</button>
+        </div>
+        <?php
 
-            <div class="col-lg-1">
-                <button class="btn btn-primary btnLimpiarArticuloUrgencia"  name="btnLimpiarArticuloUrgencia"><i class="fa fa-refresh"></i> Limpiar</button>
-            </div>
-      <?php
-      
-      // if( $_SESSION["perfil"] == 'Supervisores' ||
-      //     $_SESSION["perfil"] == 'Sistemas'){
+        // if( $_SESSION["perfil"] == 'Supervisores' ||
+        //     $_SESSION["perfil"] == 'Sistemas'){
 
-        
-  
+
+
         echo '<button class="btn btn-success" data-toggle="modal" data-target="#modalConfigurarUrgencia">
 
                 Configuracion Actual: ';
 
-                $configuracion = controladorArticulos::ctrConfiguracion();
+        $configuracion = controladorArticulos::ctrConfiguracion();
 
-                #var_dump("configuracion", $configuracion);
-        
-                $urgencia = $configuracion["urgencia"];
+        #var_dump("configuracion", $configuracion);
 
-                $urgencia;
+        $urgencia = $configuracion["urgencia"];
 
-                echo $urgencia;
+        $urgencia;
+
+        echo $urgencia;
 
         echo ' %</button>
 
@@ -73,66 +72,67 @@
 
                </div>';
 
-      // }else{
+        // }else{
 
-      //   echo '<div class="box-header with-border">
+        //   echo '<div class="box-header with-border">
 
-      //           <a href="vistas/reportes_excel/rpt_urgencias.php" class="btn btn-default pull-right" style="border:green 1px solid">
+        //           <a href="vistas/reportes_excel/rpt_urgencias.php" class="btn btn-default pull-right" style="border:green 1px solid">
 
-      //             <img src="vistas/img/plantilla/excel.png" width="20px"> URGENCIAS
-                
-      //           </a>
-  
-      //       </div>';
+        //             <img src="vistas/img/plantilla/excel.png" width="20px"> URGENCIAS
 
-      // }
+        //           </a>
 
-      ?>
+        //       </div>';
 
+        // }
 
+        ?>
 
 
-      <div class="box-body">
 
-        <input type="hidden" value="<?=$_SESSION["perfil"];?>" id="perfilOculto"> 
 
-       <table class="table table-bordered table-striped dt-responsive tablaUrgencias" width="100%">
-         
-        <thead>
+        <div class="box-body">
 
-          <tr>
-           
-           <th>Modelo</th>
-           <th>Nombre</th>
-           <th>Color</th>
-           <th>Talla</th>
-           <th>Estado</th>
-           <th>Proyección</th>
-           <th>% Avance</th>
-           <th>Stock</th>
-           <th>Pedidos</th>
-           <th>En Taller</th>
-           <th>En Servicio</th>
-           <th>Alm. Corte</th>
-           <th>Ord. Corte</th>
-           <th>Ult 30d</th>
-           <th>MP Faltante</th>
-           <th>Acciones</th>
+          <input type="hidden" value="<?= $_SESSION["perfil"]; ?>" id="perfilOculto">
 
-         </tr>
+          <table class="table table-bordered table-striped dt-responsive tablaUrgencias" width="100%">
 
-        </thead>
+            <thead>
 
-        <tbody>
+              <tr>
 
-        
-        </tbody>
+                <th>Modelo</th>
+                <th>Nombre</th>
+                <th>Color</th>
+                <th>Talla</th>
+                <th>Estado</th>
+                <th>Proyección</th>
+                <th>% Avance</th>
+                <th>Stock</th>
+                <th>Pedidos</th>
+                <th>En Taller</th>
+                <th>En Servicio</th>
+                <th>Arreglos</th>
+                <th>Alm. Corte</th>
+                <th>Ord. Corte</th>
+                <th>Ult 30d</th>
+                <th>MP Faltante</th>
+                <th>Acciones</th>
 
-       </table>
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+
+            </tbody>
+
+          </table>
+
+        </div>
 
       </div>
-
-    </div>
 
   </section>
 
@@ -143,7 +143,7 @@ MODAL CONFIGURAR % DE URGENCIAS
 ======================================-->
 
 <div id="modalConfigurarUrgencia" class="modal fade" role="dialog">
-  
+
   <div class="modal-dialog">
 
     <div class="modal-content">
@@ -174,16 +174,16 @@ MODAL CONFIGURAR % DE URGENCIAS
             <!-- ENTRADA PARA PORCENTAJE -->
 
             <div class="form-group">
-              
+
               <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-percent"></i></span> 
+
+                <span class="input-group-addon"><i class="fa fa-percent"></i></span>
 
                 <input type="text" class="form-control input-md" name="urgencia" id="urgencia" required>
-                
+
               </div>
 
-            </div>       
+            </div>
 
           </div>
 
@@ -205,10 +205,10 @@ MODAL CONFIGURAR % DE URGENCIAS
 
       <?php
 
-        $configurarUrgenciaLista = new controladorArticulos();
-        $configurarUrgenciaLista -> ctrConfigurarUrgenciaLista();
+      $configurarUrgenciaLista = new controladorArticulos();
+      $configurarUrgenciaLista->ctrConfigurarUrgenciaLista();
 
-      ?>  
+      ?>
 
 
     </div>
@@ -222,7 +222,7 @@ MODAL VISUALIZAR MP URGENCIA
 ======================================-->
 
 <div id="modalVisualizarUrgencias" class="modal fade" role="dialog">
-  
+
   <div class="modal-dialog" style="width: 70% !important;">
 
     <div class="modal-content">
@@ -250,30 +250,30 @@ MODAL VISUALIZAR MP URGENCIA
           <div class="box-body">
 
             <!-- ENTRADA PARA CODIGO DEL ARTICULO-->
-            
+
             <div class="form-group col-lg-2">
-              
+
               <label>Artículo</label>
 
               <div class="input-group">
 
-              <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
                 <b><input type="text" class="form-control input-sm" name="articulo" id="articulo" required readonly></b>
 
               </div>
 
-            </div>          
+            </div>
 
             <!-- ENTRADA PARA EL MODELO-->
-            
+
             <div class="form-group col-lg-2">
-              
+
               <label>Modelo</label>
 
               <div class="input-group">
 
-              <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
                 <input type="text" class="form-control input-sm" name="modelo" id="modelo" required readonly>
 
@@ -282,62 +282,62 @@ MODAL VISUALIZAR MP URGENCIA
             </div>
 
             <!-- ENTRADA PARA LA DESCRIPCION-->
-            
+
             <div class="form-group col-lg-4">
 
               <label>Descripción</label>
-              
+
               <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
                 <b><input type="text" class="form-control input-sm" name="nombre" id="nombre" required readonly></b>
 
               </div>
 
-            </div>            
+            </div>
 
             <!-- ENTRADA PARA EL COLOR -->
-            
+
             <div class="form-group col-lg-2">
 
               <label>Color</label>
-              
+
               <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
                 <b><input type="text" class="form-control input-sm" name="color" id="color" required readonly></b>
 
               </div>
 
-            </div>      
-            
+            </div>
+
             <!-- ENTRADA PARA LA TALLA-->
-            
+
             <div class="form-group col-lg-2">
 
               <label>Talla</label>
-              
+
               <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
                 <b><input type="text" class="form-control input-sm" name="talla" id="talla" required readonly></b>
 
               </div>
 
             </div>
-            
+
             <!-- ENTRADA PARA EL STOCK-->
-            
+
             <div class="form-group col-lg-2">
 
               <label>Stock</label>
-              
+
               <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
                 <b><input type="text" class="form-control input-sm" name="stock" id="stock" required readonly></b>
 
@@ -346,14 +346,14 @@ MODAL VISUALIZAR MP URGENCIA
             </div>
 
             <!-- ENTRADA PARA LOS PEDIDOS-->
-            
+
             <div class="form-group col-lg-2">
 
               <label>Pedidos</label>
-              
+
               <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
                 <input type="text" class="form-control input-sm" name="pedidos" id="pedidos" required readonly>
 
@@ -362,75 +362,75 @@ MODAL VISUALIZAR MP URGENCIA
             </div>
 
             <!-- ENTRADA PARA EN TALLER-->
-            
+
             <div class="form-group col-lg-2">
 
               <label>En Taller</label>
-              
+
               <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
                 <input type="text" class="form-control input-sm" name="taller" id="taller" required readonly>
 
               </div>
 
-            </div>       
-            
+            </div>
+
             <!-- ENTRADA PARA EN ALM. CORTE-->
-            
+
             <div class="form-group col-lg-2">
 
               <label>Alm. Corte</label>
-              
+
               <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
                 <input type="text" class="form-control input-sm" name="alm_corte" id="alm_corte" required readonly>
 
               </div>
 
-            </div>                
-                       
+            </div>
+
             <!-- ENTRADA PARA EN ORD. CORTE-->
-            
+
             <div class="form-group col-lg-2">
 
               <label>Ord. Corte</label>
-              
+
               <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
                 <input type="text" class="form-control input-sm" name="ord_corte" id="ord_corte" required readonly>
 
               </div>
 
-            </div>     
-            
+            </div>
+
             <!-- ENTRADA PARA ESTADO-->
-            
+
             <div class="form-group col-lg-2">
 
               <label>Estado</label>
-              
+
               <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
                 <b><input type="text" class="form-control input-sm" name="estado" id="estado" required readonly></b>
 
               </div>
 
-            </div>                
-            
+            </div>
+
 
 
             <!-- TABLA DE DETALLES -->
 
             <div class="form-group col-lg-12">
-            <label>TABLA DETALLES</label>
+              <label>TABLA DETALLES</label>
             </div>
 
             <div class="box-body">
@@ -493,7 +493,7 @@ MODAL CONFIGURAR MATERIA PRIMA FALTANTE
 ======================================-->
 
 <div id="modalMpFaltante" class="modal fade" role="dialog">
-  
+
   <div class="modal-dialog" style="width: 70% !important;">
 
     <div class="modal-content">
@@ -528,7 +528,7 @@ MODAL CONFIGURAR MATERIA PRIMA FALTANTE
 
               <div class="input-group">
 
-              <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
                 <b><input type="text" class="form-control input-sm" name="articuloA" id="articuloA" required readonly></b>
 
@@ -544,7 +544,7 @@ MODAL CONFIGURAR MATERIA PRIMA FALTANTE
 
               <div class="input-group">
 
-              <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
                 <input type="text" class="form-control input-sm" name="modeloA" id="modeloA" required readonly>
 
@@ -560,7 +560,7 @@ MODAL CONFIGURAR MATERIA PRIMA FALTANTE
 
               <div class="input-group">
 
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
                 <b><input type="text" class="form-control input-sm" name="nombreA" id="nombreA" required readonly></b>
 
@@ -576,7 +576,7 @@ MODAL CONFIGURAR MATERIA PRIMA FALTANTE
 
               <div class="input-group">
 
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
                 <b><input type="text" class="form-control input-sm" name="colorA" id="colorA" required readonly></b>
 
@@ -594,7 +594,7 @@ MODAL CONFIGURAR MATERIA PRIMA FALTANTE
 
               <div class="input-group">
 
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
                 <b><input type="text" class="form-control input-sm" name="tallaA" id="tallaA" required readonly></b>
 
@@ -610,7 +610,7 @@ MODAL CONFIGURAR MATERIA PRIMA FALTANTE
 
               <div class="input-group">
 
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
                 <b><input type="text" class="form-control input-sm" name="stockA" id="stockA" required readonly></b>
 
@@ -626,7 +626,7 @@ MODAL CONFIGURAR MATERIA PRIMA FALTANTE
 
               <div class="input-group">
 
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
                 <input type="text" class="form-control input-sm" name="pedidosA" id="pedidosA" required readonly>
 
@@ -642,7 +642,7 @@ MODAL CONFIGURAR MATERIA PRIMA FALTANTE
 
               <div class="input-group">
 
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
                 <b><input type="text" class="form-control input-sm" name="estadoA" id="estadoA" required readonly></b>
 
@@ -658,7 +658,7 @@ MODAL CONFIGURAR MATERIA PRIMA FALTANTE
 
               <div class="input-group">
 
-                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span> 
+                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
                 <b><input type="text" class="form-control input-sm" name="mpFaltante" id="mpFaltante"></b>
 
@@ -687,9 +687,9 @@ MODAL CONFIGURAR MATERIA PRIMA FALTANTE
       <?php
 
       $mpFaltante = new controladorArticulos();
-      $mpFaltante -> ctrMpFaltante();
+      $mpFaltante->ctrMpFaltante();
 
-      ?>  
+      ?>
 
 
     </div>
@@ -699,5 +699,5 @@ MODAL CONFIGURAR MATERIA PRIMA FALTANTE
 </div>
 
 <script>
-window.document.title = "Urgencias APT"
+  window.document.title = "Urgencias APT"
 </script>

@@ -133,33 +133,37 @@ $objPHPExcel->getActiveSheet()->SetCellValue("M$fila", 'En Servicio');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "M$fila");
 $objPHPExcel->getActiveSheet()->getStyle("M$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("N$fila", 'Alm. Corte');
+$objPHPExcel->getActiveSheet()->SetCellValue("N$fila", 'En Arreglos');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "N$fila");
 $objPHPExcel->getActiveSheet()->getStyle("N$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("O$fila", 'Ord. Corte');
+$objPHPExcel->getActiveSheet()->SetCellValue("O$fila", 'Alm. Corte');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "O$fila");
 $objPHPExcel->getActiveSheet()->getStyle("O$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("P$fila", 'Ult 30d');
+$objPHPExcel->getActiveSheet()->SetCellValue("P$fila", 'Ord. Corte');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "P$fila");
 $objPHPExcel->getActiveSheet()->getStyle("P$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("Q$fila", 'Duración Mes');
+$objPHPExcel->getActiveSheet()->SetCellValue("Q$fila", 'Ult 30d');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "Q$fila");
 $objPHPExcel->getActiveSheet()->getStyle("Q$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("R$fila", 'Und. Faltantes');
+$objPHPExcel->getActiveSheet()->SetCellValue("R$fila", 'Duración Mes');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "R$fila");
 $objPHPExcel->getActiveSheet()->getStyle("R$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("S$fila", 'MP Faltante');
+$objPHPExcel->getActiveSheet()->SetCellValue("S$fila", 'Und. Faltantes');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "S$fila");
 $objPHPExcel->getActiveSheet()->getStyle("S$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-$objPHPExcel->getActiveSheet()->SetCellValue("T$fila", 'Articulo');
+$objPHPExcel->getActiveSheet()->SetCellValue("T$fila", 'MP Faltante');
 $objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "T$fila");
 $objPHPExcel->getActiveSheet()->getStyle("T$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+$objPHPExcel->getActiveSheet()->SetCellValue("U$fila", 'Articulo');
+$objPHPExcel->getActiveSheet()->setSharedStyle($borde2, "U$fila");
+$objPHPExcel->getActiveSheet()->getStyle("U$fila")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 $consulta = ModeloArticulos::mdlMostrarSeguimiento("null");
 
@@ -180,13 +184,14 @@ foreach ($consulta as $key => $value) {
     $objPHPExcel->getActiveSheet()->SetCellValue("K$fila", $value["pedidos"]);
     $objPHPExcel->getActiveSheet()->SetCellValue("L$fila", $value["taller"]);
     $objPHPExcel->getActiveSheet()->SetCellValue("M$fila", $value["servicio"]);
-    $objPHPExcel->getActiveSheet()->SetCellValue("N$fila", $value["alm_corte"]);
-    $objPHPExcel->getActiveSheet()->SetCellValue("O$fila", $value["ord_corte"]);
-    $objPHPExcel->getActiveSheet()->SetCellValue("P$fila", $value["ult_mes"]);
-    $objPHPExcel->getActiveSheet()->SetCellValue("Q$fila", $value["dura_tc"]);
-    $objPHPExcel->getActiveSheet()->SetCellValue("R$fila", $value["faltantes"]);
-    $objPHPExcel->getActiveSheet()->SetCellValue("S$fila", $value["mp_faltante"]);
-    $objPHPExcel->getActiveSheet()->setCellValueExplicit("T$fila", $value["articulo"], PHPExcel_Cell_DataType::TYPE_STRING);
+    $objPHPExcel->getActiveSheet()->SetCellValue("N$fila", $value["arreglos"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("O$fila", $value["alm_corte"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("P$fila", $value["ord_corte"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("Q$fila", $value["ult_mes"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("R$fila", $value["dura_tc"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("S$fila", $value["faltantes"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("T$fila", $value["mp_faltante"]);
+    $objPHPExcel->getActiveSheet()->setCellValueExplicit("U$fila", $value["articulo"], PHPExcel_Cell_DataType::TYPE_STRING);
 
     $fila += 1;
 }

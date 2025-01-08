@@ -534,7 +534,7 @@ class ModeloArticulos
 				a.color ,
 				a.talla,
 				a.stock,
-				a.arreglos,
+				a.arregloss,
 				ad.pendiente,
 				ad.id_cierre
 			from
@@ -576,7 +576,7 @@ class ModeloArticulos
 				a.color ,
 				a.talla,
 				a.stock,
-				a.arreglos,
+				a.arregloss,
 				ad.pendiente,
 				ad.id_cierre
 			from
@@ -630,6 +630,7 @@ class ModeloArticulos
 			a.cod_talla,
 			a.talla,
 			a.servicio,
+			a.arreglos,
 			a.estado,
 			a.urgencia,
 			a.mp_faltante,
@@ -1166,6 +1167,7 @@ class ModeloArticulos
 							a.taller,
 							sc.servicio,
 							sc.cierre,
+							a.arreglos,
 							a.alm_corte,
 							a.ord_corte,
 							a.ult_mes,
@@ -1174,19 +1176,19 @@ class ModeloArticulos
 							ROUND((a.stock - a.pedidos) / (a.ult_mes), 2) AS urg_prod,
 							ROUND(
 							(
-								(a.stock - a.pedidos) + a.taller + a.servicio
+								(a.stock - a.pedidos) + a.taller + a.servicio + a.arreglos
 							) / (a.ult_mes),
 							2
 							) AS urg_alm,
 							ROUND(
 							(
-								(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte
+								(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.arreglos
 							) / (a.ult_mes),
 							2
 							) AS urg_corte,
 							ROUND(
 							(
-								(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte
+								(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte + a.arreglos
 							) / (a.ult_mes),
 							2
 							) AS urg_plan,
@@ -1269,6 +1271,7 @@ class ModeloArticulos
 							a.taller,
 							a.servicio,
 							0 AS cierre,
+							a.arreglos,
 							a.alm_corte,
 							a.ord_corte,
 							a.ult_mes,
@@ -1277,19 +1280,19 @@ class ModeloArticulos
 							ROUND((a.stock - a.pedidos) / (a.ult_mes), 2) AS urg_prod,
 							ROUND(
 							(
-								(a.stock - a.pedidos) + a.taller + a.servicio
+								(a.stock - a.pedidos) + a.taller + a.servicio + a.arreglos
 							) / (a.ult_mes),
 							2
 							) AS urg_alm,
 							ROUND(
 							(
-								(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte
+								(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.arreglos
 							) / (a.ult_mes),
 							2
 							) AS urg_corte,
 							ROUND(
 							(
-								(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte
+								(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte + a.arreglos
 							) / (a.ult_mes),
 							2
 							) AS urg_plan,
@@ -1332,6 +1335,7 @@ class ModeloArticulos
 						(a.stock - a.pedidos) AS stockB,
 						a.taller,
 						a.servicio,
+						a.arreglos,
 						a.alm_corte,
 						a.ord_corte,
 						a.ult_mes,
@@ -1343,19 +1347,19 @@ class ModeloArticulos
 						) AS urg_prod,
 						ROUND(
 							(
-							(a.stock - a.pedidos) + a.taller + a.servicio
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.arreglos
 							) / (a.ult_mes),
 							2
 						) AS urg_alm,
 						ROUND(
 							(
-							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.arreglos
 							) / (a.ult_mes),
 							2
 						) AS urg_corte,
 						ROUND(
 							(
-							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte + a.arreglos
 							) / (a.ult_mes),
 							2
 						) AS urg_plan,
@@ -1398,6 +1402,7 @@ class ModeloArticulos
 						(a.stock - a.pedidos) AS stockB,
 						a.taller,
 						a.servicio,
+						a.arreglos,
 						a.alm_corte,
 						a.ord_corte,
 						a.ult_mes,
@@ -1409,19 +1414,19 @@ class ModeloArticulos
 						) AS urg_prod,
 						ROUND(
 							(
-							(a.stock - a.pedidos) + a.taller + a.servicio
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.arreglos
 							) / (a.ult_mes),
 							2
 						) AS urg_alm,
 						ROUND(
 							(
-							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.arreglos
 							) / (a.ult_mes),
 							2
 						) AS urg_corte,
 						ROUND(
 							(
-							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte + a.arreglos
 							) / (a.ult_mes),
 							2
 						) AS urg_plan,
@@ -1463,6 +1468,7 @@ class ModeloArticulos
 						(a.stock - a.pedidos) AS stockB,
 						a.taller,
 						a.servicio,
+						a.arreglos,
 						a.alm_corte,
 						a.ord_corte,
 						a.ult_mes,
@@ -1474,19 +1480,19 @@ class ModeloArticulos
 						) AS urg_prod,
 						ROUND(
 							(
-							(a.stock - a.pedidos) + a.taller + a.servicio
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.arreglos
 							) / (a.ult_mes),
 							2
 						) AS urg_alm,
 						ROUND(
 							(
-							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.arreglos
 							) / (a.ult_mes),
 							2
 						) AS urg_corte,
 						ROUND(
 							(
-							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte + a.arreglos
 							) / (a.ult_mes),
 							2
 						) AS urg_plan ,
@@ -1522,6 +1528,7 @@ class ModeloArticulos
 						(a.stock - a.pedidos) AS stockB,
 						a.taller,
 						a.servicio,
+						a.arreglos,
 						a.alm_corte,
 						a.ord_corte,
 						a.ult_mes,
@@ -1533,19 +1540,19 @@ class ModeloArticulos
 						) AS urg_prod,
 						ROUND(
 							(
-							(a.stock - a.pedidos) + a.taller + a.servicio
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.arreglos
 							) / (a.ult_mes),
 							2
 						) AS urg_alm,
 						ROUND(
 							(
-							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.arreglos
 							) / (a.ult_mes),
 							2
 						) AS urg_corte,
 						ROUND(
 							(
-							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte
+							(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte + a.arreglos
 							) / (a.ult_mes),
 							2
 						) AS urg_plan,
@@ -1566,19 +1573,19 @@ class ModeloArticulos
 							) <= (SELECT m.argumento FROM maestrajf m WHERE m.tipo_dato='TURG' AND codigo = 'prod')
 							OR ROUND(
 							(
-								(a.stock - a.pedidos) + a.taller + a.servicio
+								(a.stock - a.pedidos) + a.taller + a.servicio + a.arreglos
 							) / (a.ult_mes),
 							2
 							) <= (SELECT m.argumento FROM maestrajf m WHERE m.tipo_dato='TURG' AND codigo = 'alm') 
 							OR ROUND(
 							(
-								(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte
+								(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.arreglos
 							) / (a.ult_mes),
 							2
 							) <= (SELECT m.argumento FROM maestrajf m WHERE m.tipo_dato='TURG' AND codigo = 'corte') 
 							OR ROUND(
 							(
-								(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte
+								(a.stock - a.pedidos) + a.taller + a.servicio + a.alm_corte + a.ord_corte + a.arreglos
 							) / (a.ult_mes),
 							2
 							) <= (SELECT m.argumento FROM maestrajf m WHERE m.tipo_dato='TURG' AND codigo = 'plan')
@@ -1629,6 +1636,7 @@ class ModeloArticulos
 			a.alm_corte,
 			a.taller,
 			a.servicio,
+			a.arreglos,
 			IFNULL(ROUND(a.ult_mes, 0), 0) AS ventas,
 			a.urgencia,
 			ROUND(
@@ -1648,13 +1656,13 @@ class ModeloArticulos
 			a.mes,
 			ROUND(
 				((a.ult_mes * a.urgencia / 100) * 3) - (
-				(a.stock - a.pedidos) + a.alm_corte + a.servicio + a.taller
+				(a.stock - a.pedidos) + a.alm_corte + a.servicio + a.taller + a.arreglos
 				),
 				0
 			) AS faltantes,
 			ROUND(
 				(
-				(a.stock - a.pedidos) + a.taller + servicio + a.alm_corte
+				(a.stock - a.pedidos) + a.taller + servicio + a.alm_corte + a.arreglos
 				) / (a.ult_mes * a.urgencia / 100),
 				1
 			) AS dura_tc,
@@ -1699,6 +1707,7 @@ class ModeloArticulos
 			a.alm_corte,
 			a.taller,
 			a.servicio,
+			a.arreglos,
 			IFNULL(ROUND(a.ult_mes, 0), 0) AS ventas,
 			a.urgencia,
 			ROUND(
@@ -1718,13 +1727,13 @@ class ModeloArticulos
 			a.mes,
 			ROUND(
 				((a.ult_mes * a.urgencia / 100) * 3) - (
-				(a.stock - a.pedidos) + a.alm_corte + a.servicio + a.taller
+				(a.stock - a.pedidos) + a.alm_corte + a.servicio + a.taller + a.arreglos
 				),
 				0
 			) AS faltantes,
 			ROUND(
 				(
-				(a.stock - a.pedidos) + a.taller + servicio + a.alm_corte
+				(a.stock - a.pedidos) + a.taller + servicio + a.alm_corte + a.arreglos
 				) / (a.ult_mes * a.urgencia / 100),
 				1
 			) AS dura_tc,

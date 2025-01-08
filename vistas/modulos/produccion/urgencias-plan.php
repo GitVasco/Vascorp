@@ -50,6 +50,7 @@
                                 <th>Stock Min</th>
                                 <th>Taller</th>
                                 <th>Servicio</th>
+                                <th>Arreglos</th>
                                 <th>Alm. Corte</th>
                                 <th>Ord. Corte</th>
                                 <th>Ult. Mes</th>

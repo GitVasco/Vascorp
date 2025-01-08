@@ -288,6 +288,15 @@ class TablaUrgencias
                     $servicio = "<center><b><span style='font-size:100%' class='text-primary'>" . $servicioI . "</span></b></center>";
                 }
 
+                // Arreglos
+                if ($articulos[$i]["arreglos"] <= 0) {
+                    $arreglosI = number_format($articulos[$i]["arreglos"], 0);
+                    $arreglos = "<center><b><span style='font-size:100%' class='text-danger'>" . $arreglosI . "</span></b></center>";
+                } else {
+                    $arreglosI = number_format($articulos[$i]["arreglos"], 0);
+                    $arreglos = "<center><b><span style='font-size:100%' class='text-primary'>" . $arreglosI . "</span></b></center>";
+                }
+
                 /* 
             todo: Almacen de corte
             */
@@ -414,6 +423,7 @@ class TablaUrgencias
                         "' . $stockmin . '",
                         "' . $taller . '",
                         "' . $servicio . '",
+                        "' . $arreglos . '",
                         "' . $alm_corte . '",
                         "' . $ord_corte . '",
                         "' . $ult_mes . '",
@@ -447,6 +457,7 @@ class TablaUrgencias
                         "' . $taller . '",
                         "' . $servicio . '",
                         "' . $cierre . '",
+                        "' . $arreglos . '",
                         "' . $alm_corte . '",
                         "' . $ord_corte . '",
                         "' . $ult_mes . '",
@@ -467,6 +478,7 @@ class TablaUrgencias
                         "' . $stockmin . '",
                         "' . $taller . '",
                         "' . $servicio . '",
+                        "' . $arreglos . '",
                         "' . $alm_corte . '",
                         "' . $ord_corte . '",
                         "' . $ult_mes . '",
