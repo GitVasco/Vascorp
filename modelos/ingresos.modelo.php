@@ -1286,4 +1286,43 @@ class ModeloIngresos
 
 		$stmt = null;
 	}
+
+	static public function buscarEnTaller($articulo)
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT
+				*
+			from
+				entaller_cabjf ec
+			where
+				ec.articulo = '$articulo'
+				and ec.taller = 'VC'
+				and ec.saldo > 0
+				and year(ec.fecha) = year(now())");
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+
+		$stmt->close();
+
+		$stmt = null;
+	}
+
+	static public function mdlActualizarSaldoEnTaller($id, $cantidad)
+	{
+		$sql = "UPDATE entaller_cabjf SET saldo = $cantidad WHERE id = $id";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		if ($stmt->execute()) {
+
+			return "ok";
+		} else {
+
+			return $stmt->errorInfo();
+		}
+
+		$stmt = null;
+	}
 }

@@ -286,14 +286,16 @@ class ControladorCortes
 
             foreach ($listaTallas as $key => $value) {
                 $datosCab = array(
-                    "usuario"   => $_POST["usuario"],
                     "articulo"  => $value["articulo"],
+                    "usuario"   => $_POST["usuario"],
                     "cantidad"  => $value["nuevaCantidad"],
+                    "saldo"     => $value["nuevaCantidad"],
                     "estado"    => "0",
+                    "guia"      => $_POST["nuevaGuia"],
                     "taller"    => $tallerCab
                 );
 
-                $respuestaCab = ModeloCortes::mdlMandarTallerCab($datosCab);
+                $respuestaCab = ModeloCortes::mdlMandarTallerCabV2($datosCab);
 
                 if ($respuestaCab == "ok") {
                     //* ultimo codigo

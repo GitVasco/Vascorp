@@ -1126,10 +1126,19 @@ class ControladorIngresos
 
         if (isset($_POST["nuevoTalleres"]) && isset($_POST["idUsuario"])) {
 
+
             if ($_POST["listaArticulosIngreso"] == "") {
                 self::mostrarAlertaError("¡No se seleccionó ningún artículo. Por favor, intenteló de nuevo!", "crear-ingresos");
             } else {
                 $listaArticulos = json_decode($_POST["listaArticulosIngreso"], true);
+                $entaller = self::ActualizarEnTaller($listaArticulos);
+
+                foreach ($entaller as $id => $cantidad) {
+                    $idEntrada = $id;
+                    $cantidadRestante = $cantidad;
+
+                    ModeloIngresos::mdlActualizarSaldoEnTaller($idEntrada, $cantidadRestante);
+                }
 
                 if ($_POST["nuevoTipoSector"] == "0") {
                     self::actualizarArticulos($listaArticulos);
@@ -1270,6 +1279,54 @@ class ControladorIngresos
 
             ModeloIngresos::mdlGuardarDetalleIngreso("movimientosjf_2025", $datosD);
         }
+    }
+
+    public static function ActualizarEnTaller($listaArticulos)
+    {
+        // Array para almacenar las cantidades pendientes por cada entrada en el taller
+        $resultado = [];
+
+        foreach ($listaArticulos as $item) {
+            $articulo = $item["articulo"];
+            $cantidadConsumir = $item["cantidad"];
+
+            // Obtener todas las entradas en el taller para el artículo actual
+            $enTaller = ModeloIngresos::buscarEnTaller($articulo);
+
+            // Si no hay entradas en el taller, continuar con el siguiente artículo
+            if (empty($enTaller)) {
+                continue;
+            }
+
+            // Variable para acumular la cantidad restante a consumir
+            $restante = $cantidadConsumir;
+
+            foreach ($enTaller as &$entrada) {
+                if ($restante <= 0) {
+                    // No se necesita consumir más de esta entrada
+                    $resultado[$entrada["id"]] = $entrada["saldo"];
+                    continue;
+                }
+
+                // Obtener la cantidad pendiente en esta entrada del taller
+                $saldoDisponible = $entrada["saldo"];
+
+                if ($saldoDisponible >= $restante) {
+                    // Si el saldo disponible es suficiente para cubrir el restante
+                    $entrada["saldo"] -= $restante;
+                    $resultado[$entrada["id"]] = $entrada["saldo"];
+                    $restante = 0;
+                } else {
+                    // Si no es suficiente, restar todo lo disponible y continuar
+                    $restante -= $saldoDisponible;
+                    $entrada["saldo"] = 0;
+                    $resultado[$entrada["id"]] = 0;
+                }
+            }
+            unset($entrada); // Romper la referencia
+        }
+
+        return $resultado;
     }
 
     static public function convertirFechaExcel($fecha)

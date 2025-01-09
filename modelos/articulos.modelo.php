@@ -45,7 +45,8 @@ class ModeloArticulos
 							* 
 						FROM
 							articulojf a 
-						WHERE a.articulo LIKE '%$valor%'");
+						WHERE a.articulo LIKE '%$valor%'
+						and a.alm_corte >0");
 
 		$stmt->execute();
 

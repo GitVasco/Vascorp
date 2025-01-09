@@ -193,32 +193,20 @@ $(".tablaCortes tbody").on("click", "button.btnMandarTallerTotal", function () {
         success: function (respuesta) {
             for (let i = 0; i < respuesta.length; i++) {
                 $(".nuevasTallas").append(
-                    '<div class="row borrameAC" style="padding:5px 15px" id="borrameAC">' +
-                        "<!-- TALLAS -->" +
-                        '<div class="col-xs-6" style="padding-right:0px">' +
-                        '<input type="text" class="form-control nuevaDescripcionTalla input-sm" name="" value="' +
-                        respuesta[i]["cod_color"] +
-                        " - " +
-                        respuesta[i]["color"] +
-                        '" articulo="' +
-                        respuesta[i]["articulo"] +
-                        '" readonly required>' +
-                        "</div>" +
-                        "<!-- Cantidad -->" +
-                        '<div class="col-xs-3">' +
-                        '<input type="number" class="form-control nuevaCantidad input-sm" name="nuevaCantidad" id="nuevaCantidad" min="1" max="' +
-                        respuesta[i]["alm_corte"] +
-                        '" required>' +
-                        "</div>" +
-                        "<!-- Saldo -->" +
-                        '<div class="col-xs-3 ingresarSaldo">' +
-                        '<input type="number" class="form-control nuevoSaldo input-sm" name="nuevoSaldo" id="nuevoSaldo" min="0" value="' +
-                        respuesta[i]["alm_corte"] +
-                        '" saldoReal="' +
-                        respuesta[i]["alm_corte"] +
-                        '" readonly required>' +
-                        "</div>" +
-                        "</div>"
+                    `<div class="row borrameAC" style="padding:5px 15px" id="borrameAC">
+                        <!-- TALLAS -->
+                        <div class="col-xs-6" style="padding-right:0px">
+                            <input type="text" class="form-control nuevaDescripcionTalla input-sm" name="" value="${respuesta[i]["cod_color"]} - ${respuesta[i]["color"]} - ${respuesta[i]["talla"]}" articulo="${respuesta[i]["articulo"]}" readonly required>
+                        </div>
+                        <!-- Cantidad -->
+                        <div class="col-xs-3">
+                            <input type="number" class="form-control nuevaCantidad input-sm" name="nuevaCantidad" id="nuevaCantidad" min="1" max="${respuesta[i]["alm_corte"]}" required>
+                        </div>
+                        <!-- Saldo -->
+                        <div class="col-xs-3 ingresarSaldo">
+                            <input type="number" class="form-control nuevoSaldo input-sm" name="nuevoSaldo" id="nuevoSaldo" min="0" value="${respuesta[i]["alm_corte"]}" saldoReal="${respuesta[i]["alm_corte"]}" readonly required>
+                        </div>
+                    </div>`
                 );
             }
         },
@@ -228,6 +216,10 @@ $(".tablaCortes tbody").on("click", "button.btnMandarTallerTotal", function () {
 $("#imprimirTicketTotal").change(function () {
     if (this.checked == false) {
         $(".campoSectorTotal").removeClass("hidden");
+        // EL INPUT nuevaGuia se pone readonly y se quita el required ademas se limpia el valor
+        $("#nuevaGuia").attr("readonly", true);
+        $("#nuevaGuia").removeAttr("required");
+        $("#nuevaGuia").val("");
     } else {
         $(".campoSectorTotal").addClass("hidden");
     }

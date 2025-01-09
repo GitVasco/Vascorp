@@ -369,7 +369,7 @@ MODAL MANDAR A TALLER TOTAL
 
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-                    <h4 class="modal-title">Mandar a Taller</h4>
+                    <h4 class="modal-title">Mandar a Taller Global</h4>
 
                 </div>
 
@@ -428,7 +428,21 @@ MODAL MANDAR A TALLER TOTAL
 
                         </div>
 
-                        <div class="form-group col-lg-6" style="padding-top:15px">
+                        <!-- ENTRADA PARA LA GUIA -->
+                        <div class="form-group col-lg-4">
+
+                            <label>Guía</label>
+
+                            <div class="input-group">
+
+                                <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+
+                                <input type="text" class="form-control input-sm" id="nuevaGuia" name="nuevaGuia" required>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group col-lg-4" style="padding-top:15px">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="1" id="imprimirTicketTotal" name="ticketTotal" checked>
                                 <label class="form-check-label" for="imprimirTicketTotal">

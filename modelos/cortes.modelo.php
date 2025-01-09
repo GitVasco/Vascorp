@@ -560,6 +560,34 @@ class ModeloCortes
         $stmt = null;
     }
 
+    static public function mdlMandarTallerCabV2($datos)
+    {
+
+        $stmt = Conexion::conectar()->prepare("INSERT INTO entaller_cabjf
+        (articulo,usuario,cantidad,saldo,estado,guia,taller) 
+        VALUES
+        (:articulo,:usuario,:cantidad,:saldo,:estado,:guia,:taller)");
+
+        $stmt->bindParam(":articulo", $datos["articulo"], PDO::PARAM_STR);
+        $stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+        $stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_INT);
+        $stmt->bindParam(":saldo", $datos["saldo"], PDO::PARAM_INT);
+        $stmt->bindParam(":estado", $datos["estado"], PDO::PARAM_STR);
+        $stmt->bindParam(":guia", $datos["guia"], PDO::PARAM_STR);
+        $stmt->bindParam(":taller", $datos["taller"], PDO::PARAM_STR);
+
+        if ($stmt->execute()) {
+
+            return "ok";
+        } else {
+
+            return "error";
+        }
+
+        $stmt->close();
+        $stmt = null;
+    }
+
     /*
 	* MOSTRAR EN TALLERES
 	*/
