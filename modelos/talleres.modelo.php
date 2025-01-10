@@ -2684,4 +2684,86 @@ class ModeloTalleres
 
         $stmt = null;
     }
+
+    static public function mdlEnTalleres($taller)
+    {
+
+        $stmt = Conexion::conectar()->prepare("SELECT
+                sd.id ,
+                date(s.fecha) as fecha ,
+                s.guia ,
+                s.taller ,
+                s2.nom_sector ,
+                sd.articulo ,
+                a.marca ,
+                a.modelo ,
+                a.nombre ,
+                a.cod_color ,
+                a.color ,
+                a.cod_talla ,
+                a.talla ,
+                sd.cantidad ,
+                sd.saldo
+            from
+                servicios_detallejf sd
+            left join serviciosjf s on
+                sd.codigo = s.codigo
+            left join articulojf a
+            on
+                sd.articulo = a.articulo
+            left join sectorjf s2 
+            on
+                s.taller = s2.cod_sector
+            where
+                year(s.fecha) = '2025'
+                and sd.cerrar = 0
+                and sd.saldo > 0
+            union 
+                select
+                ec.id ,
+                date(ec.fecha) as fecha,
+                ec.guia,
+                case 
+                    when m.tipo = 'BRASIER' then 'T1'
+                    else 'T3'
+                end as taller ,
+                case 
+                    when m.tipo = 'BRASIER' then 'BRASIER'
+                    else 'TRUSAS'
+                end as nomtaller ,
+                ec.articulo ,
+                a.marca ,
+                a.modelo ,
+                a.nombre ,
+                a.cod_color ,
+                a.color ,
+                a.cod_talla ,
+                a.talla ,
+                ec.cantidad ,
+                ec.saldo
+            from
+                entaller_cabjf ec
+            left join articulojf a
+                on
+                ec.articulo = a.articulo
+            left join modelojf m 
+                on
+                a.modelo = m.modelo
+            where
+                year(ec.fecha) = '2025'
+                and ec.taller = 'VC'
+                and ec.saldo > 0
+            order by
+                fecha desc,
+                taller,
+                articulo");
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+
+        $stmt->close();
+
+        $stmt = null;
+    }
 }

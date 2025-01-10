@@ -533,7 +533,7 @@
                     "salidas-varios", "crear-salidas-varios", "operacion-taller", "sublimados",
                     "seguimiento", "enviados-taller", "listar-documento", "ajuste-taller",
                     "urgencias-produccion", "urgencias-almacen", "urgencias-corte", "urgencias-plan",
-                    "urgencias-maestro", "transferencias-apt", "crear-transferencias-apt", "estampado", "tampografia", "prehormado", "arreglos", "crear-arreglos", "cerrar-arreglos"
+                    "urgencias-maestro", "transferencias-apt", "crear-transferencias-apt", "estampado", "tampografia", "prehormado", "arreglos", "crear-arreglos", "cerrar-arreglos", "en-talleres"
                 ];
 
                 $isActiveProduccion = in_array($_GET["ruta"], $rutasActivasProduccion) ? 'active' : '';
@@ -717,7 +717,7 @@
 
                         <!-- REPORTES -->
                         <?php
-                        $rutasActivasResumen = ["seguimiento", 'urgencias', 'urgencias-maestro', 'urgencias-produccion', 'urgencias-almacen', 'urgencias-corte', 'urgencias-plan'];
+                        $rutasActivasResumen = ["seguimiento", 'urgencias', 'urgencias-maestro', 'urgencias-produccion', 'urgencias-almacen', 'urgencias-corte', 'urgencias-plan', 'en-talleres'];
                         $isActiveResumen = in_array($_GET["ruta"], $rutasActivasResumen) ? 'active' : '';
                         ?>
                         <li class="treeview <?= $isActiveResumen; ?>">
@@ -729,6 +729,9 @@
                             <ul class="treeview-menu">
                                 <li class="<?= $_GET['ruta'] == 'seguimiento' ? 'active' : '' ?>">
                                     <a href="seguimiento"><i class="fa fa-circle-o"></i> Seguimiento</a>
+                                </li>
+                                <li class="<?= $_GET['ruta'] == 'en-talleres' ? 'active' : '' ?>">
+                                    <a href="en-talleres"><i class="fa fa-circle-o"></i> En Talleres</a>
                                 </li>
                                 <?php
                                 $rutasActivasUrgencia = ['urgencias', 'urgencias-maestro', 'urgencias-produccion', 'urgencias-almacen', 'urgencias-corte', 'urgencias-plan'];
