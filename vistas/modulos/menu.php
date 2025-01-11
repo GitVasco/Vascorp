@@ -1272,7 +1272,8 @@
                                         $_GET["ruta"] == "consultar-cuentas" ||
                                         $_GET["ruta"] == "ver-envio-letras" ||
                                         $_GET["ruta"] == "envio-letras" ||
-                                        $_GET["ruta"] == "reportes-generales"
+                                        $_GET["ruta"] == "reportes-generales" ||
+                                        $_GET["ruta"] == "notificaciones"
                                     ) echo 'active'; ?>">
 
                     <a href="#">
@@ -1298,7 +1299,8 @@
                                                 $_GET["ruta"] == "cancelar-abonos" ||
                                                 $_GET["ruta"] == "consultar-cuentas" ||
                                                 $_GET["ruta"] == "ver-envio-letras" ||
-                                                $_GET["ruta"] == "reportes-generales"
+                                                $_GET["ruta"] == "reportes-generales" ||
+                                                $_GET["ruta"] == "notificaciones"
                                             ) echo 'active'; ?>">
 
                             <a href="#"><i class="fa fa-clipboard"></i> Cuentas
@@ -1346,6 +1348,17 @@
 
 
                             </ul>
+
+                        </li>
+
+                        <li class="<?php if ($_GET["ruta"] == "notificaciones") echo 'active'; ?>">
+
+                            <a href="notificaciones">
+
+                                <i class="fa fa-bell"></i>
+                                <span>Notificaciones</span>
+
+                            </a>
 
                         </li>
 

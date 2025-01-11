@@ -246,7 +246,6 @@ class ModeloCuentas
 	static public function mdlMostrarCuentasV2($numCta, $tipoDoc)
 	{
 
-
 		$stmt = Conexion::conectar()->prepare("SELECT 
 						c.id,
 						c.num_cta,
@@ -280,6 +279,44 @@ class ModeloCuentas
 
 		$stmt = null;
 	}
+
+	static public function mdlNotificacionesPendientes()
+	{
+		$stmt = Conexion::conectar()->prepare("SELECT
+				cc.tipo_doc ,
+				cc.num_cta ,
+				cc.doc_origen ,
+				cc.fecha ,
+				cc.fecha_ven ,
+				cc.vendedor ,
+				cc.monto ,
+				cc.saldo ,
+				cc.num_unico ,
+				cc.cliente ,
+				c.nombre ,
+				replace(c.telefono,' ','') as telefono
+			from
+				cuenta_ctejf cc
+				left join clientesjf c 
+				on cc.cliente = c.codigo 
+			where
+				cc.estado = 'PENDIENTE'
+				and cc.tip_mov = '+'
+				and cc.tipo_doc = '85'
+				and cc.vendedor in ('04', '05')
+				and cc.protesta = '0'
+				and cc.fecha_ven BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 8 DAY)
+			order by cc.fecha_ven");
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt->close();
+
+		$stmt = null;
+	}
+
 
 	/*=============================================
 	VALIDAR CUENTA

@@ -454,7 +454,8 @@ CUERPO DOCUMENTO
                 $_GET["ruta"] == "cuentas-pendientes" ||
                 $_GET["ruta"] == "cuentas-canceladas" ||
                 $_GET["ruta"] == "consultar-cuentas" ||
-                $_GET["ruta"] == "reportes-generales"
+                $_GET["ruta"] == "reportes-generales" ||
+                $_GET["ruta"] == "notificaciones"
             ) {
 
                 include "modulos/cuentas-corrientes/" . $_GET["ruta"] . ".php";

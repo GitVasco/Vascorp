@@ -143,6 +143,13 @@ class ControladorCuentas
 		return $respuesta;
 	}
 
+	static public function ctrNotificacionesPendientes()
+	{
+		$respuesta = ModeloCuentas::mdlNotificacionesPendientes();
+
+		return $respuesta;
+	}
+
 
 	/*=============================================
 	MOSTRAR CUENTAS

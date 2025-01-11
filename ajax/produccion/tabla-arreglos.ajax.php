@@ -38,16 +38,6 @@ class TablaArreglos
                     $estado = "<button class='btn btn-success btn-xs btnActivarCierre' >Activo</button>";
                 }
 
-                if ($arreglos[$i]["estado_pago"] == "POR PAGAR") {
-
-                    /* $estado = "<button class='btn btn-danger btn-xs btnActivar'>".$articulos[$i]["id"]."</button>"; */
-                    $estado_pago = "<button class='btn btn-warning btn-xs btnPagarCierre' guiaCierre='" . $arreglos[$i]["guia"] . "' estadoPago='PAGADO'>POR PAGAR</button>";
-                } else {
-
-                    /* $estado = "<button class='btn btn-success btn-xs btnActivarArt'>".$articulos[$i]["id"]."</button>"; */
-                    $estado_pago = "<button class='btn btn-primary btn-xs btnPagarCierre' guiaCierre='" . $arreglos[$i]["guia"] . "' estadoPago='POR PAGAR'>PAGADO</button>";
-                }
-
                 //tipo
 
                 if ($arreglos[$i]["tipo"] == 1) {
