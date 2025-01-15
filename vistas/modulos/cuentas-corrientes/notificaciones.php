@@ -95,6 +95,7 @@ foreach ($cuentas as $key => $value) {
                                     <th>Num. Uni.</th>
                                     <th>Cliente</th>
                                     <th>Telefono</th>
+                                    <th>Estado</th>
                                     <th>Acciones</th>
                                 </tr>
 

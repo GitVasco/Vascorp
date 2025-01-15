@@ -86,11 +86,13 @@ class ControladorCortes
                 "usuario"   => $_POST["usuario"],
                 "articulo"  => $_POST["nuevoArticulo"],
                 "cantidad"  => $_POST["nuevoAlmCorte"],
+                "saldo"     => $_POST["nuevoAlmCorte"],
                 "estado"    => "0",
+                "guia"      => $_POST["nuevaGuia"],
                 "taller"    => $tallerCab
             );
 
-            $respuestaCab = ModeloCortes::mdlMandarTallerCab($datosCab);
+            $respuestaCab = ModeloCortes::mdlMandarTallerCabV2($datosCab);
 
             if ($respuestaCab == "ok") {
 
@@ -291,7 +293,7 @@ class ControladorCortes
                     "cantidad"  => $value["nuevaCantidad"],
                     "saldo"     => $value["nuevaCantidad"],
                     "estado"    => "0",
-                    "guia"      => $_POST["nuevaGuia"],
+                    "guia"      => $_POST["nuevaGuiaT"],
                     "taller"    => $tallerCab
                 );
 

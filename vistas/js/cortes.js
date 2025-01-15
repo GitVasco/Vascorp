@@ -217,11 +217,14 @@ $("#imprimirTicketTotal").change(function () {
     if (this.checked == false) {
         $(".campoSectorTotal").removeClass("hidden");
         // EL INPUT nuevaGuia se pone readonly y se quita el required ademas se limpia el valor
-        $("#nuevaGuia").attr("readonly", true);
-        $("#nuevaGuia").removeAttr("required");
-        $("#nuevaGuia").val("");
+        $("#nuevaGuiaT").attr("readonly", true);
+        $("#nuevaGuiaT").removeAttr("required");
+        $("#nuevaGuiaT").val("");
     } else {
         $(".campoSectorTotal").addClass("hidden");
+        $("#nuevaGuiaT").attr("readonly", false);
+        $("#nuevaGuiaT").attr("required", true);
+        $("#nuevaGuiaT").val("");
     }
 });
 
@@ -317,8 +320,14 @@ $(".box").on("click", ".btnLimpiarModeloCorte", function () {
 $("#imprimirTicket").change(function () {
     if (this.checked == false) {
         $(".campoSector").removeClass("hidden");
+        $("#nuevaGuia").attr("readonly", true);
+        $("#nuevaGuia").removeAttr("required");
+        $("#nuevaGuia").val("");
     } else {
         $(".campoSector").addClass("hidden");
+        $("#nuevaGuia").attr("readonly", false);
+        $("#nuevaGuia").attr("required", true);
+        $("#nuevaGuia").val("");
     }
 });
 

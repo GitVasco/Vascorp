@@ -288,25 +288,31 @@ class ModeloCuentas
 				cc.doc_origen ,
 				cc.fecha ,
 				cc.fecha_ven ,
+				case
+					when cc.fecha_ven = CURDATE() then 'VENCIMIENTO'
+					when cc.fecha_ven = DATE_SUB(CURDATE(), interval 5 day) then 'RECORDATORIO'
+				end as tipo_notificacion,
 				cc.vendedor ,
 				cc.monto ,
 				cc.saldo ,
 				cc.num_unico ,
 				cc.cliente ,
 				c.nombre ,
-				replace(c.telefono,' ','') as telefono
+				replace(c.telefono, ' ', '') as telefono
 			from
 				cuenta_ctejf cc
-				left join clientesjf c 
-				on cc.cliente = c.codigo 
+			left join clientesjf c 
+				on
+				cc.cliente = c.codigo
 			where
 				cc.estado = 'PENDIENTE'
 				and cc.tip_mov = '+'
 				and cc.tipo_doc = '85'
 				and cc.vendedor in ('04', '05')
 				and cc.protesta = '0'
-				and cc.fecha_ven BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 8 DAY)
-			order by cc.fecha_ven");
+				and cc.fecha_ven in (DATE_ADD(CURDATE(), interval -5 day) , curdate())
+			order by
+				cc.fecha_ven");
 
 		$stmt->execute();
 

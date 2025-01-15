@@ -136,3 +136,5 @@ dist
 config.php
 /efact
 mensajes.txt
+registro_notificaciones.json
+resumen_envios.json

@@ -271,4 +271,47 @@ class ModeloArreglos
             return $stmt->fetchAll();
         }
     }
+
+    static public function verArreglosReporte($id)
+    {
+        if ($id == null) {
+            $stmt = Conexion::conectar()->prepare("SELECT
+                    a2.fecha ,
+                    a2.codigo ,
+                    a2.guia ,
+                    a2.taller ,
+                    s.nom_sector ,
+                    ad.articulo ,
+                    a.marca,
+                    a.modelo,
+                    a.nombre,
+                    a.cod_color,
+                    a.color,
+                    a.cod_talla,
+                    a.talla,
+                    ad.cantidad ,
+                    ad.pendiente
+                from
+                    arreglos_detallejf ad
+                left join articulojf a
+                    on
+                    ad.articulo = a.articulo
+                left join arreglos a2 
+                    on
+                    ad.codigo = a2.codigo
+                left join sectorjf s 
+                    on
+                    a2.taller = s.cod_sector
+                order by
+                    a2.fecha desc");
+        } else {
+            $stmt = Conexion::conectar()->prepare("");
+        }
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+
+        $stmt = null;
+    }
 }

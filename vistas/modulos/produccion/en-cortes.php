@@ -249,7 +249,7 @@ MODAL MANDAR A TALLER
                         <div class="form-group ">
 
 
-                            <div class="col-xs-6">
+                            <div class="col-xs-3">
                                 <label>Enviar a talleres</label>
                                 <div class="input-group">
 
@@ -263,7 +263,7 @@ MODAL MANDAR A TALLER
 
                             <!-- ENTRADA PARA EL TOTAL DEL CORTE -->
 
-                            <div class="col-xs-6" style="padding-top:25px">
+                            <div class="col-xs-3" style="padding-top:25px">
                                 <div class="input-group">
 
                                     <span class="input-group-addon"><i class="fa fa-arrow-down"></i></span>
@@ -272,6 +272,18 @@ MODAL MANDAR A TALLER
 
                                 </div>
 
+                            </div>
+
+                            <!-- ENTRADA PARA LA GUIA -->
+                            <div class="col-xs-6">
+                                <label>Guía</label>
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+
+                                    <input type="text" class="form-control input-sm" id="nuevaGuia" name="nuevaGuia" required>
+
+                                </div>
                             </div>
 
                         </div>
@@ -437,7 +449,7 @@ MODAL MANDAR A TALLER TOTAL
 
                                 <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
 
-                                <input type="text" class="form-control input-sm" id="nuevaGuia" name="nuevaGuia" required>
+                                <input type="text" class="form-control input-sm" id="nuevaGuiaT" name="nuevaGuiaT" required>
 
                             </div>
                         </div>

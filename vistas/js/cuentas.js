@@ -2686,8 +2686,8 @@ $(".tablaNotificacionesPendientes").DataTable({
     order: [[2, "asc"]],
     pageLength: 20,
     lengthMenu: [
-        [20, 40, 60, -1],
-        [20, 40, 60, "Todos"],
+        [30, 40, 60, -1],
+        [30, 40, 60, "Todos"],
     ],
     language: {
         sProcessing: "Procesando...",
