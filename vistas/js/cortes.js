@@ -65,7 +65,7 @@ $("#selectModeloTaller").change(function () {
     $(".tablaEnvTaller").DataTable().destroy();
     var modeloTaller = $(this).val();
     localStorage.setItem("modeloTaller", modeloTaller);
-    cargarTablaEnTaller(localStorage.getItem("modeloTaller"));
+    cargarTablaEnTallerEnv(localStorage.getItem("modeloTaller"));
 });
 
 $(".box").on("click", ".btnLimpiarModeloTaller", function () {
@@ -78,14 +78,14 @@ if (localStorage.getItem("modeloTaller") != null) {
     $("#selectModeloTaller").val(localStorage.getItem("modeloTaller"));
     $("#selectModeloTaller").selectpicker("refresh");
 
-    cargarTablaEnTaller(localStorage.getItem("modeloTaller"));
+    cargarTablaEnTallerEnv(localStorage.getItem("modeloTaller"));
     // console.log("lleno");
 } else {
-    cargarTablaEnTaller(null);
+    cargarTablaEnTallerEnv(null);
     // console.log("vacio");
 }
 
-function cargarTablaEnTaller(modeloTaller) {
+function cargarTablaEnTallerEnv(modeloTaller) {
     $(".tablaEnvTaller").DataTable({
         ajax:
             "ajax/produccion/tabla-enviados-taller.ajax.php?perfil=" +
