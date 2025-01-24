@@ -384,3 +384,76 @@ function listarArticulosArreglos() {
 
     $("#listaArticulosArreglos").val(JSON.stringify(listaArticulos));
 }
+
+//#region Detalles
+$(".tablaArreglos").on("click", ".btnVisualizarArreglos", function () {
+    let codigoArreglo = $(this).attr("codigoArreglo");
+    let guiaArreglo = $(this).attr("guiaArreglo");
+    let fecha = $(this).attr("fecha");
+    let total = $(this).attr("total");
+
+    $("#arreglos").val(codigoArreglo);
+    $("#guia").val(guiaArreglo);
+    $("#fecha").val(fecha);
+    $("#total").val(total);
+
+    let datos = new FormData();
+    datos.append("codigoArreglo", codigoArreglo);
+
+    $.ajax({
+        url: "ajax/arreglos.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (respuestaDetalle) {
+            console.log("🚀 ~ respuestaDetalle:", respuestaDetalle);
+
+            $(".detalleMP").remove();
+
+            let previousModelo = "";
+            respuestaDetalle.forEach((id) => {
+                if (id.modelo !== previousModelo) {
+                    $(".tablaDetalleArre").append(`
+                        <tr>
+                            <td colspan="13" style="border-top:1px solid #000; font-weight:bold;"></td>
+                        </tr>
+                    `);
+                    previousModelo = id.modelo;
+                }
+
+                const getValue = (val) => (val > 0 ? val : "");
+
+                const t1 = getValue(id.t1);
+                const t2 = getValue(id.t2);
+                const t3 = getValue(id.t3);
+                const t4 = getValue(id.t4);
+                const t5 = getValue(id.t5);
+                const t6 = getValue(id.t6);
+                const t7 = getValue(id.t7);
+                const t8 = getValue(id.t8);
+
+                $(".tablaDetalleArre").append(`
+                    <tr class="detalleMP" style="border-bottom:1px solid #000;">
+                        <td>${id.cod_sector} - ${id.nom_sector}</td>
+                        <td>${id.codigo}</td>
+                        <td><b>${id.modelo}</b></td>
+                        <td>${id.nombre}</td>
+                        <td>${id.color}</td>
+                        <td><b>${t1}</b></td>
+                        <td><b>${t2}</b></td>
+                        <td><b>${t3}</b></td>
+                        <td><b>${t4}</b></td>
+                        <td><b>${t5}</b></td>
+                        <td><b>${t6}</b></td>
+                        <td><b>${t7}</b></td>
+                        <td><b>${t8}</b></td>
+                        <td><b>${id.total}</b></td>
+                    </tr>
+                `);
+            });
+        },
+    });
+});

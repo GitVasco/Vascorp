@@ -50,7 +50,7 @@ class TablaArreglos
         TRAEMOS LAS ACCIONES
         =============================================*/
                 $fecha = substr($arreglos[$i]["fecha"], 0, 10);
-                $botones =  "<div class='btn-group'><button class='btn btn-xs btn-info btnVisualizarCierre' title='Visualizar Cierre' data-toggle='modal' data-target='#modalVisualizarCierre' codigoCierre='" . $arreglos[$i]["codigo"] . "'><i class='fa fa-eye'></i></button></div>";
+                $botones =  "<div class='btn-group'><button class='btn btn-xs btn-info btnVisualizarArreglos' title='Visualizar Arreglo' data-toggle='modal' data-target='#modalVisualizarArreglos' codigoArreglo='{$arreglos[$i]["codigo"]}' guiaArreglo='{$arreglos[$i]["guia"]}' fecha='{$fecha}' total='{$arreglos[$i]["total"]}' pendiente='{$arreglos[$i]["pendiente"]}'><i class='fa fa-eye'></i></button></div>";
 
                 $datosJson .= '[
             "' . ($i + 1) . '",

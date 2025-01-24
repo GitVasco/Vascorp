@@ -193,23 +193,6 @@
 
                         </div>
 
-                        <!-- ENTRADA PARA LA RESPONSABLE-->
-
-                        <div class="form-group col-lg-2">
-
-                            <label>Responsable</label>
-
-                            <div class="input-group">
-
-                                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
-
-                                <strong><input type="text" class="form-control input-sm" name="nombre" id="nombre" required readonly></strong>
-
-                            </div>
-
-                        </div>
-
-
                         <!-- ENTRADA PARA LA CANTIDAD-->
 
                         <div class="form-group col-lg-2">
@@ -220,23 +203,7 @@
 
                                 <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
 
-                                <strong><input type="text" class="form-control input-sm" name="cantidad" id="cantidad" required readonly></strong>
-
-                            </div>
-
-                        </div>
-
-                        <!-- ENTRADA PARA EL ESTADO-->
-
-                        <div class="form-group col-lg-2">
-
-                            <label>Estado</label>
-
-                            <div class="input-group">
-
-                                <span class="input-group-addon"><i class="fa fa-caret-square-o-right"></i></span>
-
-                                <strong><input type="text" class="form-control input-sm" name="estado" id="estado" required readonly></strong>
+                                <strong><input type="text" class="form-control input-sm" name="total" id="total" required readonly></strong>
 
                             </div>
 
@@ -250,7 +217,7 @@
 
                         <div class="box-body">
 
-                            <table class="table table-bordered table-striped dt-responsive tablaDetalleOC" width="100%">
+                            <table class="table table-bordered table-striped dt-responsive tablaDetalleArre" width="100%">
 
                                 <thead>
 

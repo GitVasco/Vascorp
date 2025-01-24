@@ -58,6 +58,7 @@ foreach ($detalles as $detalle) {
     $objPHPExcel->getActiveSheet()->SetCellValue("A$fila", date('d/m/Y', strtotime($detalle["fecha"])));
     $objPHPExcel->getActiveSheet()->SetCellValueExplicit("B$fila", $detalle["guia"], PHPExcel_Cell_DataType::TYPE_STRING);
     $objPHPExcel->getActiveSheet()->SetCellValue("C$fila", $detalle["taller"] . ' - ' . $detalle["nom_sector"]);
+    $objPHPExcel->getActiveSheet()->SetCellValue("D$fila", $detalle["modelo"]);
     $objPHPExcel->getActiveSheet()->getStyle("D$fila")->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
     $objPHPExcel->getActiveSheet()->SetCellValue("E$fila", $detalle["nombre"]);
     $objPHPExcel->getActiveSheet()->SetCellValue("F$fila", $detalle["color"]);
