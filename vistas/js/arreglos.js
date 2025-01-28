@@ -411,12 +411,13 @@ $(".tablaArreglos").on("click", ".btnVisualizarArreglos", function () {
         success: function (respuestaDetalle) {
             console.log("🚀 ~ respuestaDetalle:", respuestaDetalle);
 
-            $(".detalleMP").remove();
+            // Limpiar el contenido del tbody antes de agregar nuevas filas
+            $(".tablaDetalleArre tbody").empty();
 
             let previousModelo = "";
             respuestaDetalle.forEach((id) => {
                 if (id.modelo !== previousModelo) {
-                    $(".tablaDetalleArre").append(`
+                    $(".tablaDetalleArre tbody").append(`
                         <tr>
                             <td colspan="13" style="border-top:1px solid #000; font-weight:bold;"></td>
                         </tr>
@@ -435,7 +436,7 @@ $(".tablaArreglos").on("click", ".btnVisualizarArreglos", function () {
                 const t7 = getValue(id.t7);
                 const t8 = getValue(id.t8);
 
-                $(".tablaDetalleArre").append(`
+                $(".tablaDetalleArre tbody").append(`
                     <tr class="detalleMP" style="border-bottom:1px solid #000;">
                         <td>${id.cod_sector} - ${id.nom_sector}</td>
                         <td>${id.codigo}</td>

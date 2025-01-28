@@ -535,7 +535,7 @@ class ModeloArticulos
 				a.color ,
 				a.talla,
 				a.stock,
-				a.arregloss,
+				a.arreglos,
 				ad.pendiente,
 				ad.id_cierre
 			from

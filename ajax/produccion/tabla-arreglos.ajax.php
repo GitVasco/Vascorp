@@ -50,7 +50,7 @@ class TablaArreglos
         TRAEMOS LAS ACCIONES
         =============================================*/
                 $fecha = substr($arreglos[$i]["fecha"], 0, 10);
-                $botones =  "<div class='btn-group'><button class='btn btn-xs btn-info btnVisualizarArreglos' title='Visualizar Arreglo' data-toggle='modal' data-target='#modalVisualizarArreglos' codigoArreglo='{$arreglos[$i]["codigo"]}' guiaArreglo='{$arreglos[$i]["guia"]}' fecha='{$fecha}' total='{$arreglos[$i]["total"]}' pendiente='{$arreglos[$i]["pendiente"]}'><i class='fa fa-eye'></i></button></div>";
+                $botones =  "<div class='btn-group'><button class='btn btn-xs btn-info btnVisualizarArreglos' title='Visualizar Arreglo' data-toggle='modal' data-target='#modalVisualizarArreglos' codigoArreglo='{$arreglos[$i]["codigo"]}' guiaArreglo='{$arreglos[$i]["guia"]}' fecha='{$fecha}' total='{$arreglos[$i]["total"]}' pendiente='{$arreglos[$i]["pendiente"]}'><i class='fa fa-eye'></i></button><a type='button' href='vistas/reportes_excel/rpt_enarreglos.php?codigo={$arreglos[$i]["codigo"]}' class='btn btn-success btn-xs' title='Exportar a Excel'><i class='fa fa-file'></i></a></div>";
 
                 $datosJson .= '[
             "' . ($i + 1) . '",
