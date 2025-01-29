@@ -178,6 +178,18 @@ class ControladorArreglos
                     ];
 
                     $detalle = ModeloArreglos::mdlCrearArreglosDetalle($datosDetalle);
+
+                    $datosMovimientos = [
+                        "tipo" => "E33",
+                        "documento" => $_POST["nuevoCodigoCe"],
+                        "taller" => $_POST["nuevoTalleresA"],
+                        "fecha" => $fecha,
+                        "articulo" => $value["articulo"],
+                        "cantidad" => $value["cantidad"],
+                        "almacen" => "01",
+                        "idcierre" => $value["id"]
+                    ];
+                    ModeloIngresos::mdlGuardarDetalleIngreso("movimientosjf_2025", $datosMovimientos);
                 }
 
                 if ($detalle == "ok") {
