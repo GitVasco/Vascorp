@@ -110,13 +110,15 @@ class ModeloMovimientos
    {
 
       $stmt = Conexion::conectar()->prepare("SELECT
-                    month(ad.fecha) as mes,
-                    sum(ad.cantidad) as total_mesC
-                from
-                    almacencorte_detallejf ad
-                where
-                    year(ad.fecha) = '2025'
-                group by month(ad.fecha)");
+            month(ad.fecha) as mes,
+            sum(ad.cantidad) as total_mesC
+         from
+            almacencorte_detallejf ad
+         where
+            year(ad.fecha) = '2025'
+            and date(ad.fecha) not like '%2025-01-01%'
+         group by
+            month(ad.fecha)");
 
       $stmt->execute();
 
