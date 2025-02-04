@@ -118,7 +118,7 @@
                                             <?php
 
                                             // creamos un array para configurar los talleres
-                                            $taller = ["T0", "T1", "T2", "T3", "T4", "T5", "T6", "T8", "T9", "TA", "TB", "TC", "TD"];
+                                            $taller = ["T0", "T1", "T2", "T3", "T4", "T5", "T6", "T8", "T9", "TA", "TB", "TC", "TD", "T11"];
 
                                             $sector = ControladorSectores::ctrMostrarSectores(null);
                                             foreach ($sector as $key => $value) {
